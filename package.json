@@ -49,6 +49,7 @@
     "stylelint-config-recommended": "3.0.0",
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
+    "swr": "0.3.2",
     "ts-node": "8.8.2",
     "typescript": "3.8.2"
   },
@@ -68,7 +69,12 @@
     "prettify": "prettier --write"
   },
   "browserslist": {
-    "production": [">1%", "not IE 11", "not dead", "not op_mini all"],
+    "production": [
+      ">1%",
+      "not IE 11",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -80,8 +86,12 @@
     "node": ">=10.13.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["npm run eslint -- --fix"],
-    "*.{md,json}": ["prettier --write"]
+    "*.{ts,tsx,js,jsx}": [
+      "npm run eslint -- --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {
