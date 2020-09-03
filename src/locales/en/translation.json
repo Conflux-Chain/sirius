@@ -1,3 +1,7 @@
 {
-  "title": "welcome"
+  "homepage": {
+    "title": "Conlfux BlockChain Explorer",
+    "description": "BlockChain Explorer for Conflux Network"
+  },
+  "general": {}
 }

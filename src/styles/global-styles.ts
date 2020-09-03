@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   html,
   body {
+    font-size: 14px;
     height: 100%;
     width: 100%;
   }
