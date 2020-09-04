@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> should match the snapshot 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 5rem;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid red;
+}
+
+<header
+  class="c0"
+>
+  <nav
+    class="c1"
+  >
+    <div
+      class=""
+    >
+      <span>
+        header logo
+      </span>
+    </div>
+    <div
+      class=""
+    >
+      <span>
+        Blocks&Transaction
+      </span>
+    </div>
+    <div
+      class=""
+    >
+      <span>
+        EN
+      </span>
+    </div>
+  </nav>
+</header>
+`;

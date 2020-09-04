@@ -158,8 +158,6 @@ async function generateContainer() {
         ComponentName: name,
         wantMemo: true,
         wantHeaders: values[0],
-        wantSaga: values[1],
-        wantSlice: values[2],
         wantStyledComponents: true,
         wantLoadable: true,
         wantTranslations: values[3],

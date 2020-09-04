@@ -9,9 +9,7 @@ import { useTranslation } from 'react-i18next';
 // import styled from 'styled-components/macro';
 import { Footer as FooterComp } from '../../components/Footer/Loadable';
 
-interface Props {}
-
-export function Footer(props: Props) {
+export function Footer() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t, i18n } = useTranslation();
 

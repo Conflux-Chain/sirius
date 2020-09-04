@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer  /> should match snapshot 1`] = `
+.c0 {
+  border: 1px solid green;
+}
+
+<footer
+  class="c0"
+>
+  <div
+    class=""
+  >
+    <span>
+      left
+    </span>
+  </div>
+  <div
+    class=""
+  >
+    <span>
+      right
+    </span>
+  </div>
+  <div
+    class=""
+  >
+    <span>
+      @2020 Conflux. All Rights Reserved
+    </span>
+  </div>
+</footer>
+`;
