@@ -13,3 +13,9 @@
 ```shell
 yarn start
 ```
+
+## Add new container or component
+
+```shell
+yarn generate
+```
