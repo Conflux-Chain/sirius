@@ -26,7 +26,6 @@ const NAMESPACE = 'RbGenerated';
 
 const componentsPath = path.join(process.cwd(), '../../src/app/components');
 const containersPath = path.join(process.cwd(), '../../src/app/containers');
-const rootStatePath = path.join(process.cwd(), '../../src/types/RootState.ts');
 
 function runLinting() {
   return new Promise((resolve, reject) => {
@@ -146,8 +145,6 @@ async function generateComponent() {
 async function generateContainer() {
   const containerNameBase = `${NAMESPACE}Container`;
 
-  backupFile(rootStatePath);
-
   const allCombinations = permuatateBooleans(5);
   const containerNames: string[] = [];
   for (let i = 0; i < allCombinations.length; i++) {
@@ -171,8 +168,6 @@ async function generateContainer() {
 
   // return a cleanup function
   const cleanup = () => {
-    restoreBackupFile(rootStatePath);
-
     for (const container of containerNames) {
       removeContainer(container);
       feedbackToUser(`Cleaned '${container}'`)();
