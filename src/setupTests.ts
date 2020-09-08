@@ -8,3 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import 'react-app-polyfill/stable';
 
 import 'jest-styled-components';
+
+import { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks();
+fetchMock.dontMock();

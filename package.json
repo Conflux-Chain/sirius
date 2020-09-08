@@ -29,6 +29,7 @@
     "node-plop": "0.25.0",
     "plop": "2.6.0",
     "prettier": "2.0.1",
+    "query-string": "6.13.1",
     "react": "16.13.0",
     "react-app-polyfill": "1.0.6",
     "react-dom": "16.13.0",
@@ -131,6 +132,7 @@
   },
   "devDependencies": {
     "cz-conventional-changelog": "3.3.0",
+    "jest-fetch-mock": "3.0.3",
     "semantic-release": "17.1.1"
   },
   "config": {

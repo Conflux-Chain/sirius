@@ -1,41 +1,31 @@
-import useSWR from 'swr';
-
-export const dynamicSWRFetcher = async ([input, init]) => {
-  const res = await fetch(input, init);
-  let result: any;
-
-  try {
-    result = await res.json();
-  } catch {
-    (result as string) = await res.text();
-  } finally {
-    (result as Blob) = await res.blob();
-  }
-
-  return result;
-};
+import useSWR, { responseInterface } from 'swr';
+import qs from 'query-string';
 
 const appendApiPrefix = (url: string) => `/api${url}`;
 
-interface Params {
+export interface Params {
   [name: string]: string;
 }
 
-const simpleGetFetcher = async (args: any[]) => {
-  const [url, params] = args;
-  const body = new FormData();
-  if (params) {
-    Object.keys(params).forEach(k => {
-      body.append(k, params[k]);
-    });
+export type useApi = (
+  params?: Params | any[],
+  ...rest: any[]
+) => responseInterface<any, any>;
+
+const simpleGetFetcher = async (...args: any[]) => {
+  let [url, query] = args;
+  if (query) {
+    url = qs.stringifyUrl({ url, query });
   }
 
-  const res = await fetch(appendApiPrefix(url), { method: 'get', body });
+  const res = await fetch(appendApiPrefix(url), {
+    method: 'get',
+  });
   const json = await res.json();
   return json;
 };
 
-export const useDashboardDag = (params?: Params | any[], ...rest: any[]) => {
+export const useDashboardDag: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/dashboard/dag', ...params],
@@ -43,7 +33,7 @@ export const useDashboardDag = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useDashboardEpoch = (params?: Params | any[], ...rest: any[]) => {
+export const useDashboardEpoch: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/dashboard/epoch', ...params],
@@ -51,7 +41,7 @@ export const useDashboardEpoch = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useDashboardPlot = (params?: Params | any[], ...rest: any[]) => {
+export const useDashboardPlot: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/dashboard/plot', ...params],
@@ -59,7 +49,7 @@ export const useDashboardPlot = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useDashboardTrend = (params?: Params | any[], ...rest: any[]) => {
+export const useDashboardTrend: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/dashboard/trend', ...params],
@@ -67,7 +57,7 @@ export const useDashboardTrend = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useAddressQuery = (params?: Params | any[], ...rest: any[]) => {
+export const useAddressQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/address/query', ...params],
@@ -75,7 +65,7 @@ export const useAddressQuery = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useBlockList = (params?: Params | any[], ...rest: any[]) => {
+export const useBlockList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/block/list', ...params],
@@ -83,7 +73,7 @@ export const useBlockList = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useBlockQuery = (params?: Params | any[], ...rest: any[]) => {
+export const useBlockQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/block/query', ...params],
@@ -91,7 +81,7 @@ export const useBlockQuery = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useTransactionList = (params?: Params | any[], ...rest: any[]) => {
+export const useTransactionList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/transaction/list', ...params],
@@ -110,7 +100,7 @@ export const useTransactionQuery = (
     rest[0],
   );
 };
-export const useTransferList = (params?: Params | any[], ...rest: any[]) => {
+export const useTransferList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/transfer/list', ...params],
@@ -118,7 +108,7 @@ export const useTransferList = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useContractList = (params?: Params | any[], ...rest: any[]) => {
+export const useContractList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/contract/list', ...params],
@@ -126,7 +116,7 @@ export const useContractList = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useTokenList = (params?: Params | any[], ...rest: any[]) => {
+export const useTokenList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/token/list', ...params],
@@ -134,7 +124,7 @@ export const useTokenList = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useTokenQuery = (params?: Params | any[], ...rest: any[]) => {
+export const useTokenQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/token/query', ...params],
@@ -142,7 +132,7 @@ export const useTokenQuery = (params?: Params | any[], ...rest: any[]) => {
     rest[0],
   );
 };
-export const useUtilType = (params?: Params | any[], ...rest: any[]) => {
+export const useUtilType: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
     ['/util/type', ...params],

@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet-async';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { SWRConfig } from 'swr';
-import { dynamicSWRFetcher } from '../utils/api';
 
 import { GlobalStyle } from 'styles/global-styles';
 
@@ -25,11 +24,7 @@ import { translations } from 'locales/i18n';
 export function App() {
   const { t } = useTranslation();
   return (
-    <SWRConfig
-      value={{
-        fetcher: dynamicSWRFetcher,
-      }}
-    >
+    <SWRConfig value={{}}>
       <BrowserRouter>
         <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
           <meta
