@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> should render and match the snapshot 1`] = `
+<Context.Provider
+  value={Object {}}
+>
+  <BrowserRouter>
+    <Helmet
+      defaultTitle="ConfluxScan"
+      defer={true}
+      encodeSpecialCharacters={true}
+      titleTemplate="%s - ConfluxScan"
+    >
+      <meta
+        content="BlockChain Explorer for Conflux Network"
+        name="description"
+      />
+    </Helmet>
+    <UNDEFINED />
+    <ForwardRef(app__Main)>
+      <Switch>
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/"
+        />
+        <Route
+          component={[Function]}
+        />
+      </Switch>
+    </ForwardRef(app__Main)>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <UNDEFINED />
+  </BrowserRouter>
+</Context.Provider>
+`;
