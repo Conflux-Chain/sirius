@@ -740,7 +740,7 @@ describe('api', () => {
         headers: { 'Content-Type': 'application/json' },
       });
       r = TestRenderer.create(
-        <MockComp f={api.useCMContractCreate} p={{ foo: 'bar' }} />,
+        <MockComp f={api.useCMContractCreate} p={[{ foo: 'bar' }]} />,
       );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
@@ -781,7 +781,7 @@ describe('api', () => {
         headers: { 'Content-Type': 'application/json' },
       });
       r = TestRenderer.create(
-        <MockComp f={api.useCMContractUpdate} p={{ foo: 'bar' }} />,
+        <MockComp f={api.useCMContractUpdate} p={[{ foo: 'bar' }]} />,
       );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
@@ -822,7 +822,7 @@ describe('api', () => {
         headers: { 'Content-Type': 'application/json' },
       });
       r = TestRenderer.create(
-        <MockComp f={api.useCMContractDelete} p={{ foo: 'bar' }} />,
+        <MockComp f={api.useCMContractDelete} p={[{ foo: 'bar' }]} />,
       );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });

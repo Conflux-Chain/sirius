@@ -28,13 +28,13 @@ interface Props {
   Component: typeof App;
 }
 const ConnectedApp = ({ Component }: Props) => (
-  <RecoilRoot>
-    <HelmetProvider>
+  <HelmetProvider>
+    <RecoilRoot>
       <React.StrictMode>
         <Component />
       </React.StrictMode>
-    </HelmetProvider>
-  </RecoilRoot>
+    </RecoilRoot>
+  </HelmetProvider>
 );
 const render = (Component: typeof App) => {
   ReactDOM.render(<ConnectedApp Component={Component} />, MOUNT_NODE);
