@@ -12,6 +12,8 @@ import {
   FlattenInterpolation,
 } from 'styled-components/macro';
 
+import { createBreakpoint } from 'react-use';
+
 /*
  * Taken from https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32914
  */
@@ -23,6 +25,13 @@ export const sizes = {
   large: 1440,
   xlarge: 1920,
 };
+
+export const useBreakpoint = createBreakpoint({
+  s: sizes.small,
+  m: sizes.medium,
+  l: sizes.large,
+  xl: sizes.xlarge,
+});
 
 // Iterate through the sizes and create a media template
 export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce(
