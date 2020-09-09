@@ -25,6 +25,23 @@ const simpleGetFetcher = async (...args: any[]) => {
   return json;
 };
 
+const simplePostFetcher = async (...args: any[]) => {
+  let [url, params] = args;
+  const body = new FormData();
+  if (params) {
+    Object.keys(params).forEach(k => {
+      body.append(k, params[k]);
+    });
+  }
+
+  const res = await fetch(appendApiPrefix(url), {
+    method: 'post',
+    body,
+  });
+  const json = await res.json();
+  return json;
+};
+
 export const useDashboardDag: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   return useSWR(
@@ -137,6 +154,55 @@ export const useUtilType: useApi = (params, ...rest) => {
   return useSWR(
     ['/util/type', ...params],
     rest[1] || simpleGetFetcher,
+    rest[0],
+  );
+};
+
+export const useCMAccountTokenList: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/account/token/list', ...params],
+    rest[1] || simpleGetFetcher,
+    rest[0],
+  );
+};
+export const useCMContractQuery: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/contract/query', ...params],
+    rest[1] || simpleGetFetcher,
+    rest[0],
+  );
+};
+export const useCMContractList: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/contract/list', ...params],
+    rest[1] || simpleGetFetcher,
+    rest[0],
+  );
+};
+export const useCMContractCreate: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/contract/create', ...params],
+    rest[1] || simplePostFetcher,
+    rest[0],
+  );
+};
+export const useCMContractUpdate: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/contract/update', ...params],
+    rest[1] || simplePostFetcher,
+    rest[0],
+  );
+};
+export const useCMContractDelete: useApi = (params, ...rest) => {
+  if (!Array.isArray(params)) params = [params];
+  return useSWR(
+    ['/contract-manager/contract/delete', ...params],
+    rest[1] || simplePostFetcher,
     rest[0],
   );
 };
