@@ -6,32 +6,101 @@
 
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
-
-import { Header as HeaderComp } from '../../components/Header';
+import { TextLogo } from './TextLogo';
+import { media, useBreakpoint } from 'styles/media';
+import { Nav } from '../../components/Nav';
+import { generateHeaderLinksJSX, HeaderLinks } from './HeaderLink';
+import { Check } from '@geist-ui/react-icons';
+import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 
 export const Header = memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t, i18n } = useTranslation();
+  const zh = '中文';
+  const en = 'EN';
+  const iszh = i18n.language.includes('zh');
+  const isTestnet = useTestnet();
 
-  const logo = <span key="1">header logo</span>;
-  const left = [<span key="1">Blocks&Transaction</span>];
-  const right = [<span key="1">EN</span>];
+  const bp = useBreakpoint();
+  const startLinks: HeaderLinks = [
+    'Home',
+    '/',
+    'Blocks & Transaction',
+    '/blocktxn',
+    'Tokens',
+    '/tokens',
+    'Contract',
+    [
+      ['Contract Creation', <Check key="check" />],
+      '/contract-creatation',
+      ['Contract Sponsor', <Check key="check" />],
+      '/contract-sponsor',
+    ],
+    'Charts',
+    '/charts',
+  ];
+
+  const endLinks: HeaderLinks = [
+    iszh ? zh : en,
+    [iszh ? en : zh, () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN')],
+    isTestnet ? 'TESTNET' : 'OCEANUS',
+    [isTestnet ? 'OCEANUS' : 'TESTNET', isTestnet ? toMainnet : toTestnet],
+  ];
+
+  const startLinksJSX = generateHeaderLinksJSX(startLinks);
+  const endLinksJSX = generateHeaderLinksJSX(endLinks);
+
+  const brand = (
+    <LogoWrapper>
+      <Link>
+        <img alt="conflux scan logo" src="confi-planet.png" />
+        <TextLogo />
+      </Link>
+    </LogoWrapper>
+  );
+  const menuStart = [bp === 's' && <TextLogo />, ...startLinksJSX];
+  const menuEnd = endLinksJSX;
 
   return (
     <Wrapper>
-      <HeaderComp logo={logo} left={left} right={right} />
+      <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />
     </Wrapper>
   );
 });
 
+const LogoWrapper = styled.div`
+  a.link {
+    dislay: flex;
+    align-items: center;
+
+    svg {
+      ${media.s} {
+        display: none;
+      }
+    }
+  }
+`;
 const Wrapper = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 5rem;
-  align-items: stretch;
-  display: flex;
-  border: 1px solid red;
+  ${media.s} {
+    .navbar-menu {
+      background-color: #4a5064;
+      padding: 1.64rem 5.14rem;
+      padding-bottom: 3.86rem;
+      .navbar-end {
+        flex-direction: row;
+      }
+      .navbar-start {
+        .navbar-item:nth-child(1) {
+          margin-bottom: 3rem;
+        }
+      }
+      .navbar-end {
+        .header-link-menu {
+          padding-left: 0;
+        }
+      }
+    }
+  }
 `;

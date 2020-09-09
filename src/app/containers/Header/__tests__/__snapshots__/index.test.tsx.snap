@@ -1,19 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Header /> should match the snapshot 1`] = `
-.c1 {
+.c4 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  min-height: 5rem;
 }
 
-.c0 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 5rem;
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  margin-right: 4rem;
+}
+
+.c3 .navbar-burger {
+  color: #4c4d52;
+  display: none;
+}
+
+.c6 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -22,7 +56,294 @@ exports[`<Header /> should match the snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  border: 1px solid red;
+}
+
+.c7 {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-right: auto;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c9 {
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  margin-left: auto;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 2.86rem;
+}
+
+.c1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100vw;
+  z-index: 30;
+  min-height: 5rem;
+}
+
+.c8 .navbar-link-menu {
+  position: relative;
+  cursor: pointer;
+}
+
+.c8 .navbar-link-menu > a.link.navbar-link {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c8 .navbar-link-menu > a.link.navbar-link svg {
+  -webkit-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.c8 .navbar-link-menu.expanded > a.link.navbar-link svg {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.c8 a.link.navbar-link {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 500;
+  color: #65709a;
+  padding: 0.43rem 1.5rem;
+}
+
+.c8 a.link.navbar-link:hover {
+  color: #65709a;
+}
+
+.c8 a.link.navbar-link.matched {
+  color: #65709a;
+  background-color: #fede1b;
+}
+
+.c8 a.link.navbar-link.matched:hover {
+  color: #65709a;
+}
+
+.c5 a.link {
+  dislay: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media (max-width:600px) {
+  .c4 {
+    min-height: 2.14rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 {
+    margin-right: 0;
+  }
+
+  .c3 .navbar-burger {
+    cursor: pointer;
+    display: block;
+    height: 4rem;
+    position: relative;
+    width: 3.25rem;
+    margin-left: auto;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+  }
+
+  .c3 .navbar-burger span {
+    background-color: currentColor;
+    display: block;
+    height: 2px;
+    left: calc(50% - 8px);
+    position: absolute;
+    -webkit-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center;
+    -webkit-transition-duration: 86ms;
+    transition-duration: 86ms;
+    -webkit-transition-property: background-color,opacity,-webkit-transform;
+    -webkit-transition-property: background-color,opacity,transform;
+    transition-property: background-color,opacity,transform;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    width: 18px;
+  }
+
+  .c3 .navbar-burger span:nth-child(1) {
+    top: calc(50% - 6px);
+  }
+
+  .c3 .navbar-burger span:nth-child(2) {
+    top: calc(50% - 1px);
+  }
+
+  .c3 .navbar-burger span:nth-child(3) {
+    top: calc(50% + 4px);
+  }
+
+  .c3 .navbar-burger.is-active span:nth-child(1) {
+    -webkit-transform: translateY(5px) rotate(45deg);
+    -ms-transform: translateY(5px) rotate(45deg);
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .c3 .navbar-burger.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .c3 .navbar-burger.is-active span:nth-child(3) {
+    -webkit-transform: translateY(-5px) rotate(-45deg);
+    -ms-transform: translateY(-5px) rotate(-45deg);
+    transform: translateY(-5px) rotate(-45deg);
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .c7 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 4.43rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c9 {
+    -webkit-align-items: baseline;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c2 {
+    display: block;
+    padding: 0 1.71rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 {
+    min-height: 4rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c8 a.link.navbar-link {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    color: #aab9eb;
+  }
+
+  .c8 a.link.navbar-link:hover {
+    color: #aab9eb;
+  }
+}
+
+@media (max-width:600px) {
+  .c5 a.link svg {
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 .navbar-menu {
+    background-color: #4a5064;
+    padding: 1.64rem 5.14rem;
+    padding-bottom: 3.86rem;
+  }
+
+  .c0 .navbar-menu .navbar-end {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+
+  .c0 .navbar-menu .navbar-start .navbar-item:nth-child(1) {
+    margin-bottom: 3rem;
+  }
+
+  .c0 .navbar-menu .navbar-end .header-link-menu {
+    padding-left: 0;
+  }
 }
 
 <header
@@ -32,25 +353,266 @@ exports[`<Header /> should match the snapshot 1`] = `
     class="c1"
   >
     <div
-      class=""
+      class="c2"
     >
-      <span>
-        header logo
-      </span>
-    </div>
-    <div
-      class=""
-    >
-      <span>
-        Blocks&Transaction
-      </span>
-    </div>
-    <div
-      class=""
-    >
-      <span>
-        EN
-      </span>
+      <div
+        class="c3 navbar-brand"
+      >
+        <div
+          class="c4 navbar-item"
+        >
+          <div
+            class="c5"
+          >
+            <a
+              class="jsx-3955402335 link "
+              href=""
+            >
+              <img
+                alt="conflux scan logo"
+                src="confi-planet.png"
+              />
+              <svg
+                height="22px"
+                viewBox="0 0 79 30"
+                width="58px"
+              >
+                <title>
+                  scan text
+                </title>
+                <g
+                  fill="none"
+                  fill-rule="evenodd"
+                  id="Page-1"
+                  stroke-width="1"
+                >
+                  <g
+                    fill-rule="nonzero"
+                    id="scan-text"
+                  >
+                    <path
+                      d="M9.4198632,0.271168831 L9.4198632,2.39953901 L2.26599481,2.39953901 L2.26599481,7.41818623 L9.4198632,7.41818623 L9.4198632,9.54655641 L0.135584416,9.54655641 L0.135584416,0.271168831 L9.4198632,0.271168831 Z M20.6704196,0.271168831 L20.6704196,9.54655641 L11.3861408,9.54655641 L11.3861408,0.271168831 L20.6704196,0.271168831 Z M31.9209759,0.271168831 L31.9209759,9.54655641 L29.7905655,9.54655641 L29.7905655,2.39953901 L24.7654496,2.39953901 L24.7654496,9.54655641 L22.6366972,9.54655641 L22.6366972,0.271168831 L31.9209759,0.271168831 Z M43.0621104,0.271168831 L43.0621104,2.39953901 L35.9612952,2.39953901 L35.9612952,3.81734827 L40.7128565,3.81734827 L40.7128565,6.00037697 L35.9612952,6.00037697 L35.9612952,9.54655641 L33.7778317,9.54655641 L33.7778317,0.271168831 L43.0621104,0.271168831 Z M47.1571406,0.271168831 L47.1571406,7.41818623 L52.1822565,7.41818623 L52.1822565,4.90886262 L54.3126669,4.90886262 L54.3126669,9.54655641 L45.0283882,9.54655641 L45.0283882,0.271168831 L47.1571406,0.271168831 Z M58.1905112,0.271168831 L58.1905112,7.41818623 L63.2139691,7.41818623 L63.2139691,0.271168831 L65.3443795,0.271168831 L65.3443795,9.54655641 L56.0601008,9.54655641 L56.0601008,0.271168831 L58.1905112,0.271168831 Z M69.7676753,0.271168831 L69.7676753,1.21030182 L72.1699824,3.61030837 L74.5739475,1.21030182 L74.5739475,0.271168831 L76.8121217,0.271168831 L76.8121217,2.44260332 L74.3451562,4.90886262 L74.5739475,5.13743466 L76.8121217,7.37512193 L76.8121217,9.54655641 L74.5739475,9.54655641 L74.5739475,8.60742343 L72.1699824,6.20576057 L69.7676753,8.60742343 L69.7676753,9.54655641 L67.527843,9.54655641 L67.527843,7.37512193 L69.7676753,5.13743466 L69.9964664,4.90886262 L67.527843,2.44260332 L67.527843,0.271168831 L69.7676753,0.271168831 Z M18.5383513,2.39953901 L13.5165511,2.39953901 L13.5165511,7.41818623 L18.5383513,7.41818623 L18.5383513,2.39953901 Z"
+                      fill="#676A71"
+                      fill-opacity="0.8"
+                      id="Conflux"
+                    />
+                    <path
+                      d="M18.0680004,29.4675208 L18.0680004,18.2585447 L4.62112091,18.2585447 L4.62112091,16.0206414 L18.0680004,16.0206414 L18.0680004,11.5351049 L0.135584416,11.5351049 L0.135584416,22.7440811 L13.582464,22.7440811 L13.582464,24.9819843 L0.135584416,24.9819843 L0.135584416,29.4675208 L18.0680004,29.4675208 Z M37.8554938,29.4675208 L37.8554938,24.9819843 L24.4086145,24.9819843 L24.4086145,16.0206414 L37.8554938,16.0206414 L37.8554938,11.5351049 L19.9230779,11.5351049 L19.9230779,29.4675208 L37.8554938,29.4675208 Z M57.5149678,29.3395012 L57.5149678,11.5351049 L39.7105715,11.5351049 L39.7105715,15.9807691 L53.0693034,15.9807691 L53.0693034,18.2090361 L39.7105715,18.2090361 L39.7105715,24.8829673 L39.7105715,29.3395012 L57.5149678,29.3395012 Z M53.0693034,24.8829673 L43.6544227,24.8829673 L43.6544227,22.6764395 L53.0693034,22.6818743 L53.0693034,24.8829673 Z M63.9836014,29.4675208 L63.9836014,16.0206414 L72.9449444,16.0206414 L72.9449444,29.4675208 L77.4304809,29.4675208 L77.4304809,11.5351049 L59.4980649,11.5351049 L59.4980649,29.4675208 L63.9836014,29.4675208 Z"
+                      fill="#4C4D52"
+                      id="SCAN"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <a
+          aria-expanded="true"
+          aria-label="menu"
+          class="navbar-burger"
+          data-target="navbar"
+          role="button"
+        >
+          <span
+            aria-hidden="true"
+          />
+          <span
+            aria-hidden="true"
+          />
+          <span
+            aria-hidden="true"
+          />
+        </a>
+      </div>
+      <div
+        class="c6 navbar-menu"
+      >
+        <div
+          class="c7 navbar-start"
+        >
+          <div
+            class="c4 navbar-item"
+          />
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+            >
+              <a
+                class="jsx-3955402335 link navbar-link level-0 matched"
+                href="/"
+              >
+                Home
+              </a>
+            </span>
+          </div>
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+            >
+              <a
+                class="jsx-3955402335 link navbar-link level-0 matched"
+                href="/blocktxn"
+              >
+                Blocks & Transaction
+              </a>
+            </span>
+          </div>
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+            >
+              <a
+                class="jsx-3955402335 link navbar-link level-0 matched"
+                href="/tokens"
+              >
+                Tokens
+              </a>
+            </span>
+          </div>
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+              style="margin-left: 0px;"
+            >
+              <div
+                class="link navbar-link-menu navbar-link"
+              >
+                <span
+                  class="c8"
+                >
+                  <a
+                    class="jsx-3955402335 link navbar-link level-0"
+                    href=""
+                  >
+                    Contract
+                    <svg
+                      fill="none"
+                      height="18"
+                      shape-rendering="geometricPrecision"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      style="color: currentColor;"
+                      viewBox="0 0 24 24"
+                      width="18"
+                    >
+                      <path
+                        d="M18 15l-6-6-6 6"
+                      />
+                    </svg>
+                  </a>
+                </span>
+              </div>
+            </span>
+          </div>
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+            >
+              <a
+                class="jsx-3955402335 link navbar-link level-0 matched"
+                href="/charts"
+              >
+                Charts
+              </a>
+            </span>
+          </div>
+        </div>
+        <div
+          class="c9 navbar-end"
+        >
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+              style="margin-left: 0px;"
+            >
+              <div
+                class="link navbar-link-menu navbar-link"
+              >
+                <span
+                  class="c8"
+                >
+                  <a
+                    class="jsx-3955402335 link navbar-link level-0"
+                    href=""
+                  >
+                    EN
+                    <svg
+                      fill="none"
+                      height="18"
+                      shape-rendering="geometricPrecision"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      style="color: currentColor;"
+                      viewBox="0 0 24 24"
+                      width="18"
+                    >
+                      <path
+                        d="M18 15l-6-6-6 6"
+                      />
+                    </svg>
+                  </a>
+                </span>
+              </div>
+            </span>
+          </div>
+          <div
+            class="c4 navbar-item"
+          >
+            <span
+              class="c8"
+              style="margin-left: 0px;"
+            >
+              <div
+                class="link navbar-link-menu navbar-link"
+              >
+                <span
+                  class="c8"
+                >
+                  <a
+                    class="jsx-3955402335 link navbar-link level-0"
+                    href=""
+                  >
+                    OCEANUS
+                    <svg
+                      fill="none"
+                      height="18"
+                      shape-rendering="geometricPrecision"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      style="color: currentColor;"
+                      viewBox="0 0 24 24"
+                      width="18"
+                    >
+                      <path
+                        d="M18 15l-6-6-6 6"
+                      />
+                    </svg>
+                  </a>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
