@@ -3,5 +3,9 @@
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "blocksAndTransactions": {
+    "title": "Blocks and Transactions",
+    "description": "Blocks and Transactions"
+  },
   "general": {}
 }

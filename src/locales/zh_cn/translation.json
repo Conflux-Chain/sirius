@@ -3,5 +3,9 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "blocksAndTransactions": {
+    "title": "出块和交易",
+    "description": "出块和交易"
+  },
   "general": {}
 }
