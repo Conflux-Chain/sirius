@@ -2,35 +2,103 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Tabs, Table, Pagination } from '@cfxjs/react-ui';
-
-export type columnsType = {
-  title: string;
-  dataIndex: string;
-  key: string;
-  width: number;
-};
-
-export type columnsDataType = {
-  a?: string;
-  b?: string;
-  c?: string;
-  d?: string | number;
-  key: string | number;
-};
+import TabsTable, { columnsType } from './TablePage';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
-
-  const columns: Array<columnsType> = [
-    { title: 'title1', dataIndex: 'a', key: 'a', width: 100 },
-    { title: 'title2', dataIndex: 'b', key: 'b', width: 100 },
-    { title: 'title3', dataIndex: 'c', key: 'c', width: 100 },
+  const columnsBlocks: Array<columnsType> = [
+    {
+      title: 'Epoch',
+      dataIndex: 'epochNumber',
+      key: 'epochNumber',
+      width: 100,
+    },
+    {
+      title: 'Position',
+      dataIndex: 'blockIndex',
+      key: 'blockIndex',
+      width: 100,
+    },
+    {
+      title: 'Txns',
+      dataIndex: 'transactionCount',
+      key: 'transactionCount',
+      width: 100,
+      ellipsis: true,
+    },
+    { title: 'Miner', dataIndex: 'miner', key: 'miner', width: 100 },
+    { title: 'Avg.Gas Price', dataIndex: 'gas', key: 'gas', width: 100 }, // todo, no gas price
+    {
+      title: 'Gas Used/Limit',
+      dataIndex: 'gasLimit',
+      key: 'gasLimit',
+      width: 100,
+    },
+    { title: 'Reward', dataIndex: 'reward', key: 'reward', width: 100 }, // todo, no reward
+    {
+      title: 'Age',
+      dataIndex: 'syncTimestamp',
+      key: 'syncTimestamp',
+      width: 100,
+    }, // todo, how to calculate age value ?
   ];
-  const data: Array<columnsDataType> = [
-    { a: '123', key: '1' },
-    { a: 'cdd', b: 'edd', key: '2' },
-    { a: '1333', c: 'eee', d: 2, key: '3' },
+  const columnsTransactions: Array<columnsType> = [
+    {
+      title: 'Hash',
+      dataIndex: 'hash',
+      key: 'hash',
+      width: 100,
+    },
+    {
+      title: 'From',
+      dataIndex: 'from',
+      key: 'from',
+      width: 100,
+    },
+    {
+      title: 'To',
+      dataIndex: 'to',
+      key: 'to',
+      width: 100,
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'value',
+      width: 100,
+    },
+    {
+      title: 'Gas Price',
+      dataIndex: 'gasPrice',
+      key: 'gasPrice',
+      width: 100,
+    },
+    {
+      title: 'Gas Fee',
+      dataIndex: 'gas',
+      key: 'gas',
+      width: 100,
+    },
+    {
+      title: 'Age',
+      dataIndex: 'syncTimestamp',
+      key: 'syncTimestamp',
+      width: 100,
+    },
+  ];
+  const tabs = [
+    {
+      value: 'blocks',
+      label: 'Blocks',
+      url: '/block/list',
+      columns: columnsBlocks,
+    },
+    {
+      value: 'transaction',
+      label: 'Transaction',
+      url: '/transaction/list',
+      columns: columnsTransactions,
+    },
   ];
 
   return (
@@ -42,28 +110,7 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
-      <Tabs initialValue="blocks">
-        <Tabs.Item label="Blocks" value="blocks">
-          A total of 642,127 blocks found (Showing the last 10k records)
-          <Table tableLayout="fixed" columns={columns} data={data} />
-          <Pagination
-            size="small"
-            total={data.length}
-            showPageSizeChanger
-            showQuickJumper
-          />
-        </Tabs.Item>
-        <Tabs.Item label="Transactions" value="transactions">
-          A total of 642,127 transactions found (Showing the last 10k records)
-          <Table tableLayout="fixed" columns={columns} data={data} />
-          <Pagination
-            size="small"
-            total={data.length}
-            showPageSizeChanger
-            showQuickJumper
-          />
-        </Tabs.Item>
-      </Tabs>
+      <TabsTable tabs={tabs} />
     </>
   );
 }

@@ -5,7 +5,9 @@
   },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
-    "description": "Blocks and Transactions"
+    "description": "Blocks and Transactions",
+    "totalBefore": "A total of",
+    "totalAfter": "{{type}} found (Showing the last 10k records)"
   },
   "general": {}
 }

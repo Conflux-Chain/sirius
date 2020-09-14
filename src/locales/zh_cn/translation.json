@@ -5,7 +5,9 @@
   },
   "blocksAndTransactions": {
     "title": "出块和交易",
-    "description": "出块和交易"
+    "description": "出块和交易",
+    "totalBefore": "共计找到",
+    "totalAfter": "条 {{type}} 记录 (显示最新的 10k 条数据)"
   },
   "general": {}
 }

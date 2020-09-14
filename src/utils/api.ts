@@ -14,7 +14,7 @@ export type useApi = (
   ...rest: any[]
 ) => responseInterface<any, any>;
 
-const simpleGetFetcher = async (...args: any[]) => {
+export const simpleGetFetcher = async (...args: any[]) => {
   let [url, query] = args;
   if (query) {
     url = qs.stringifyUrl({ url, query });

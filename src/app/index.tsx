@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { SWRConfig } from 'swr';
 
@@ -37,9 +37,14 @@ export function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Redirect
+              exact
+              from="/blocks-and-transactions"
+              to="/blocks-and-transactions/blocks"
+            />
             <Route
               exact
-              path="/blocks-and-transactions"
+              path="/blocks-and-transactions/:type"
               component={BlocksAndTransactions}
             />
             <Route component={NotFoundPage} />
