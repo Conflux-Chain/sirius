@@ -2,7 +2,7 @@
  * Media queries utility
  */
 
-import { createBreakpoint } from 'react-use';
+import createBreakpoint from './createBreakpoint';
 
 /*
  * Taken from https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32914
@@ -22,6 +22,17 @@ export const useBreakpoint = createBreakpoint({
   l: sizes.l,
   xl: sizes.xl,
 });
+
+/* Example
+   const Demo = () => {
+    const breakpoint = useBreakpoint();
+
+    if (breakpoint === "xl") return <div>xl</div>;
+    else if (breakpoint == "l") return <div>l</div>;
+    else if (breakpoint == "m") return <div>m</div>;
+    else return <div>s</div>;
+   };
+  */
 
 const customMediaQuery = (size: keyof typeof sizes) =>
   `@media (max-width:${sizes[size]}px)`;
