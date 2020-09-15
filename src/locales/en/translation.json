@@ -12,7 +12,8 @@
     "contractSponsor": "Contract Sponsor",
     "charts": "Charts",
     "testnet": "TESTNET",
-    "oceanus": "OCEANUS"
+    "oceanus": "OCEANUS",
+    "searchPlaceHolder": "Address / Block hash / Epoch"
   },
   "general": {}
 }

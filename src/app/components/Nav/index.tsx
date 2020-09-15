@@ -150,6 +150,7 @@ const Menu = styled.div<{ visible: boolean }>`
   }
 `;
 const MenuStart = styled.div`
+  flex-grow: 0;
   justify-content: flex-start;
   margin-right: auto;
   align-items: stretch;
@@ -161,9 +162,10 @@ const MenuStart = styled.div`
   }
 `;
 const MenuEnd = styled.div`
+  flex-grow: 1;
   justify-content: flex-end;
   margin-left: auto;
-  align-items: stretch;
+  align-items: flex-end;
   display: flex;
 
   ${media.s} {
