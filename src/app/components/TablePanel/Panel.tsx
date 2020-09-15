@@ -3,15 +3,48 @@ import PropTypes from 'prop-types';
 import { Tabs } from '@cfxjs/react-ui';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
+import styled from 'styled-components';
 import PanelTable from './PanelTable';
 import PanelTip from './PanelTip';
+
+const StyledTabsWrapper = styled.div`
+  .tab {
+    .label {
+      font-size: 16px;
+      font-family: CircularStd-Medium, CircularStd;
+      font-weight: normal;
+      color: rgba(11, 19, 46, 0.6);
+      line-height: 24px;
+      padding: 8px 3px;
+    }
+    .nav {
+      margin: 0 8px;
+    }
+    &.active,
+    &:hover {
+      .label {
+        font-weight: 500;
+        color: #0b132e !important;
+      }
+    }
+    .bottom {
+      height: 6px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+  }
+  header + .content {
+    margin-top: 18px;
+  }
+`;
 
 export type columnsType = {
   title: string;
   dataIndex: string;
-  key: string;
-  width: number;
+  key?: string;
+  width?: number;
   ellipsis?: boolean;
+  render?: (value?: any, row?: object, index?: number) => any;
 };
 
 export const PanelContext = React.createContext({
@@ -27,6 +60,7 @@ export const TablePanelConfig = {
     showQuickJumper: true,
     size: 'small',
     show: true,
+    variant: 'solid',
   },
   table: {
     rowKey: 'key',
@@ -66,46 +100,48 @@ export default function Panel({ tabs, config }) {
       }}
     >
       <PanelTip tipsShow={config.tipsShow} />
-      <Tabs initialValue={type} onChange={handleTabsChange}>
-        {tabs.map(item => {
-          // merged pagination config
-          const pagination = {
-            ...TablePanelConfig.pagination,
-            ...config.pagination,
-            ...item.pagination,
-          };
-          // merged table config
-          const table = {
-            ...TablePanelConfig.table,
-            ...config.table,
-            ...item.table,
-          };
-          // merged url query config
-          const query = {
-            page: pagination.page,
-            pageSize: pagination.pageSize,
-            ...queryString.parse(location.search),
-          };
-          const search = queryString.stringify(query);
-          const url = `${item.url}?${search}`;
-          return (
-            <Tabs.Item label={item.label} value={item.value} key={item.value}>
-              <PanelTable
-                {...table}
-                url={`${url}`}
-                onChange={handleTotalChange}
-                pagination={{
-                  ...pagination,
-                  onPageChange: handlePaginationChange,
-                  onPageSizeChange: handlePaginationChange,
-                  page: Number(query.page),
-                  pageSize: Number(query.pageSize),
-                }}
-              />
-            </Tabs.Item>
-          );
-        })}
-      </Tabs>
+      <StyledTabsWrapper>
+        <Tabs initialValue={type} onChange={handleTabsChange}>
+          {tabs.map(item => {
+            // merged pagination config
+            const pagination = {
+              ...TablePanelConfig.pagination,
+              ...config.pagination,
+              ...item.pagination,
+            };
+            // merged table config
+            const table = {
+              ...TablePanelConfig.table,
+              ...config.table,
+              ...item.table,
+            };
+            // merged url query config
+            const query = {
+              page: pagination.page,
+              pageSize: pagination.pageSize,
+              ...queryString.parse(location.search),
+            };
+            const search = queryString.stringify(query);
+            const url = `${item.url}?${search}`;
+            return (
+              <Tabs.Item label={item.label} value={item.value} key={item.value}>
+                <PanelTable
+                  {...table}
+                  url={`${url}`}
+                  onChange={handleTotalChange}
+                  pagination={{
+                    ...pagination,
+                    onPageChange: handlePaginationChange,
+                    onPageSizeChange: handlePaginationChange,
+                    page: Number(query.page),
+                    pageSize: Number(query.pageSize),
+                  }}
+                />
+              </Tabs.Item>
+            );
+          })}
+        </Tabs>
+      </StyledTabsWrapper>
     </PanelContext.Provider>
   );
 }
