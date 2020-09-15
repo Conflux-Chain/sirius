@@ -14,6 +14,7 @@ import { Nav } from '../../components/Nav';
 import { generateHeaderLinksJSX, HeaderLinks } from './HeaderLink';
 import { Check } from '@geist-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
+import { translations } from 'locales/i18n';
 
 export const Header = memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,28 +26,33 @@ export const Header = memo(() => {
 
   const bp = useBreakpoint();
   const startLinks: HeaderLinks = [
-    'Home',
+    t(translations.header.home),
     '/',
-    'Blocks & Transaction',
+    t(translations.header.bnt),
     '/blocktxn',
-    'Tokens',
+    t(translations.header.tokens),
     '/tokens',
-    'Contract',
+    t(translations.header.contract),
     [
-      ['Contract Creation', <Check key="check" />],
+      [t(translations.header.contractCreation), <Check key="check" />],
       '/contract-creatation',
-      ['Contract Sponsor', <Check key="check" />],
+      [t(translations.header.contractSponsor), <Check key="check" />],
       '/contract-sponsor',
     ],
-    'Charts',
+    t(translations.header.charts),
     '/charts',
   ];
 
   const endLinks: HeaderLinks = [
     iszh ? zh : en,
     [iszh ? en : zh, () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN')],
-    isTestnet ? 'TESTNET' : 'OCEANUS',
-    [isTestnet ? 'OCEANUS' : 'TESTNET', isTestnet ? toMainnet : toTestnet],
+    isTestnet ? t(translations.header.testnet) : t(translations.header.oceanus),
+    [
+      isTestnet
+        ? t(translations.header.oceanus)
+        : t(translations.header.testnet),
+      isTestnet ? toMainnet : toTestnet,
+    ],
   ];
 
   const startLinksJSX = generateHeaderLinksJSX(startLinks);

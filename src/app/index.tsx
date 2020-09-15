@@ -39,7 +39,7 @@ export function App() {
           <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
             <meta
               name="description"
-              content={t(translations.homepage.description)}
+              content={t(translations.metadata.description)}
             />
           </Helmet>
 
