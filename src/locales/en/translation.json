@@ -1,7 +1,18 @@
 {
-  "homepage": {
+  "metadata": {
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
+  },
+  "header": {
+    "home": "Home",
+    "bnt": "Blocks & Transaction",
+    "tokens": "Tokens",
+    "contract": "Contract",
+    "contractCreation": "Contract Creation",
+    "contractSponsor": "Contract Sponsor",
+    "charts": "Charts",
+    "testnet": "TESTNET",
+    "oceanus": "OCEANUS"
   },
   "general": {}
 }

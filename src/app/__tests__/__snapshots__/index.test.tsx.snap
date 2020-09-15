@@ -14,7 +14,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
         titleTemplate="%s - ConfluxScan"
       >
         <meta
-          content="translated"
+          content="BlockChain Explorer for Conflux Network"
           name="description"
         />
       </Helmet>

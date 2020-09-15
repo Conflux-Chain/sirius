@@ -13,14 +13,16 @@ import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks();
 fetchMock.dontMock();
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: () => 'translated', i18n: { language: 'en' } }),
-  initReactI18next: {
-    type: '3rdParty',
-    init: () => {},
-  },
-}));
+// jest.mock('react-i18next', () => ({
+//   useTranslation: () => ({ t: () => 'translated', i18n: { language: 'en' } }),
+//   initReactI18next: {
+//     type: '3rdParty',
+//     init: () => {},
+//   },
+// }));
 
 jest.mock('react-router-dom', () => ({
   useRouteMatch: () => ({ isExact: true }),
 }));
+
+window.document.cookie = 'next-18next=en';

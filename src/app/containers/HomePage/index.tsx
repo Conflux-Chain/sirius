@@ -8,10 +8,10 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.homepage.title)}</title>
+        <title>{t(translations.metadata.title)}</title>
         <meta
           name="description"
-          content={t(translations.homepage.description)}
+          content={t(translations.metadata.description)}
         />
       </Helmet>
       <span>HomePage container</span>
