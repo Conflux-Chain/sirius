@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TabsTable, { columnsType } from './TablePage';
+import TabsTable, { columnsType } from '../../components/TablePanel';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();

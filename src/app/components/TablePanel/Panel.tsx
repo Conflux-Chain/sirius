@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
-import { Tabs, Table, Pagination } from '@cfxjs/react-ui';
-import { simpleGetFetcher, useApi } from '../../../utils/api';
-import useSWR from 'swr';
+import { Tabs } from '@cfxjs/react-ui';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
+import PanelTable from './PanelTable';
+import PanelTip from './PanelTip';
 
 export type columnsType = {
   title: string;
@@ -16,72 +14,21 @@ export type columnsType = {
   ellipsis?: boolean;
 };
 
-const TablePageContext = React.createContext({
+export const PanelContext = React.createContext({
   total: 0,
   type: 'blocks',
 });
 
-function TabsTable({ url, columns, onChange, pagination }) {
-  const { data, error } = useSWR([url], simpleGetFetcher);
-  useEffect(() => {
-    onChange && onChange(data);
-  }, [data, onChange]);
-  if (error) return <div>no data.</div>;
-  if (!data) return <div>loading</div>;
-  return (
-    <>
-      <Table
-        tableLayout="fixed"
-        columns={columns}
-        data={data.result?.list || []}
-      />
-      <Pagination
-        size="small"
-        total={data.result.total}
-        showPageSizeChanger
-        showQuickJumper
-        {...pagination}
-      />
-    </>
-  );
-}
-TabsTable.defaultProps = {
-  onChange: () => {}, // emit total count
-  url: '',
-  columns: [],
-  // pagination component config, see https://react-ui-git-master.conflux-chain.vercel.app/en-us/components/pagination
-  pagination: {},
-};
-
-function TabsTip({ tipsShow }) {
-  const data = useContext(TablePageContext);
-  const { t } = useTranslation();
-  if (!tipsShow) return null;
-  return (
-    <div>
-      {t(translations.blocksAndTransactions.totalBefore)} {data.total}{' '}
-      {t(translations.blocksAndTransactions.totalAfter, {
-        type: data.type,
-      })}
-    </div>
-  );
-}
-TabsTip.defaultProps = {
-  tipsShow: true,
-};
-TabsTip.propTypes = {
-  tipsShow: PropTypes.bool,
-};
-
-export default function TablePage({ tabs, tipsShow, config }) {
+export default function Panel({ tabs, tipsShow, config }) {
   let history = useHistory();
   let location = useLocation();
   let { type } = useParams();
   const [total, setTotal] = useState(0);
-  const handleChange = data => {
+
+  const handleTotalChange = data => {
     setTotal(data?.result?.total || 0);
   };
-  const handlePageChange = (page, pageSize) => {
+  const handlePaginationChange = (page, pageSize) => {
     const search = queryString.stringify({
       ...queryString.parse(location.search),
       page,
@@ -94,14 +41,15 @@ export default function TablePage({ tabs, tipsShow, config }) {
       `${location.pathname.split('/').slice(0, 2).join('/')}/${value}`,
     );
   };
+
   return (
-    <TablePageContext.Provider
+    <PanelContext.Provider
       value={{
         total,
         type,
       }}
     >
-      <TabsTip tipsShow={tipsShow} />
+      <PanelTip tipsShow={tipsShow} />
       <Tabs initialValue={type} onChange={handleTabsChange}>
         {tabs.map(item => {
           const query = {
@@ -113,13 +61,13 @@ export default function TablePage({ tabs, tipsShow, config }) {
           const url = `${item.url}?${search}`;
           return (
             <Tabs.Item label={item.label} value={item.value} key={item.value}>
-              <TabsTable
+              <PanelTable
                 columns={item.columns}
                 url={`${url}`}
-                onChange={handleChange}
+                onChange={handleTotalChange}
                 pagination={{
-                  onPageChange: handlePageChange,
-                  onPageSizeChange: handlePageChange,
+                  onPageChange: handlePaginationChange,
+                  onPageSizeChange: handlePaginationChange,
                   page: Number(query.page),
                   pageSize: Number(query.pageSize),
                 }}
@@ -128,11 +76,11 @@ export default function TablePage({ tabs, tipsShow, config }) {
           );
         })}
       </Tabs>
-    </TablePageContext.Provider>
+    </PanelContext.Provider>
   );
 }
 
-TablePage.defaultProps = {
+Panel.defaultProps = {
   /**
    const columns: Array<columnsType> = [{
       title: 'Epoch',
@@ -177,8 +125,10 @@ TablePage.defaultProps = {
     },
   },
   tipsShow: true,
+  paginationShow: true,
 };
-TablePage.propTypes = {
+
+Panel.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
@@ -193,11 +143,12 @@ TablePage.propTypes = {
       columns: PropTypes.array,
     }),
   ),
-  tipsShow: PropTypes.bool,
   config: PropTypes.shape({
     query: PropTypes.shape({
       page: PropTypes.number,
       pageSize: PropTypes.number,
     }),
   }),
+  tipsShow: PropTypes.bool,
+  paginationShow: PropTypes.bool,
 };
