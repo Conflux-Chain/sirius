@@ -19,7 +19,23 @@ export const PanelContext = React.createContext({
   type: 'blocks',
 });
 
-export default function Panel({ tabs, tipsShow, config }) {
+export const TablePanelConfig = {
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    showPageSizeChanger: true,
+    showQuickJumper: true,
+    size: 'small',
+    show: true,
+  },
+  table: {
+    rowKey: 'key',
+    columns: [],
+  },
+  tipsShow: true,
+};
+
+export default function Panel({ tabs, config }) {
   let history = useHistory();
   let location = useLocation();
   let { type } = useParams();
@@ -49,12 +65,25 @@ export default function Panel({ tabs, tipsShow, config }) {
         type,
       }}
     >
-      <PanelTip tipsShow={tipsShow} />
+      <PanelTip tipsShow={config.tipsShow} />
       <Tabs initialValue={type} onChange={handleTabsChange}>
         {tabs.map(item => {
+          // merged pagination config
+          const pagination = {
+            ...TablePanelConfig.pagination,
+            ...config.pagination,
+            ...item.pagination,
+          };
+          // merged table config
+          const table = {
+            ...TablePanelConfig.table,
+            ...config.table,
+            ...item.table,
+          };
+          // merged url query config
           const query = {
-            ...config.query,
-            ...item.query,
+            page: pagination.page,
+            pageSize: pagination.pageSize,
             ...queryString.parse(location.search),
           };
           const search = queryString.stringify(query);
@@ -62,10 +91,11 @@ export default function Panel({ tabs, tipsShow, config }) {
           return (
             <Tabs.Item label={item.label} value={item.value} key={item.value}>
               <PanelTable
-                columns={item.columns}
+                {...table}
                 url={`${url}`}
                 onChange={handleTotalChange}
                 pagination={{
+                  ...pagination,
                   onPageChange: handlePaginationChange,
                   onPageSizeChange: handlePaginationChange,
                   page: Number(query.page),
@@ -80,52 +110,33 @@ export default function Panel({ tabs, tipsShow, config }) {
   );
 }
 
-Panel.defaultProps = {
-  /**
-   const columns: Array<columnsType> = [{
+/**
+  const columns: Array<columnsType> = [{
       title: 'Epoch',
       dataIndex: 'epochNumber',
       key: 'epochNumber',
       width: 100,
-   }];
-   const tabs = [
+  }];
+  const tabs = [
     {
       value: 'blocks', // Tabs value
       label: 'blocks', // Tabs label
       url: '/blocks/list', // SWR url
-      config: {
-        query: {
-          page: 1,
-          pageSize: 10,
-        }, // SWR url query
-      } // default config
-      columns: columns, // Table columns,
+      pagination: {
+        page: 1,
+        pageSize: 10,
+      }, // table pagination config, also used for SWR url query
+      table: {
+        columns: columns, 
+        rowKey: 'hash', 
+      }, // table config
       tips: count => (`total ${count} blocks`)
     },
-    {
-      value: 'transactions',
-      label: 'transactions',
-      url: '/transactions/list',
-      config: {
-        query: {
-          page: 1,
-          pageSize: 10,
-        }, // SWR url query
-      } // default config
-      columns: columns,
-      tips: count => (`total ${count} transactions`)
-    },
-  ],
-   */
+  ]
+  */
+Panel.defaultProps = {
   tabs: [],
-  config: {
-    query: {
-      page: 1,
-      pageSize: 10,
-    },
-  },
-  tipsShow: true,
-  paginationShow: true,
+  config: TablePanelConfig,
 };
 
 Panel.propTypes = {
@@ -134,21 +145,33 @@ Panel.propTypes = {
       value: PropTypes.string,
       label: PropTypes.string,
       url: PropTypes.string,
-      config: PropTypes.shape({
-        query: PropTypes.shape({
-          page: PropTypes.number,
-          pageSize: PropTypes.number,
-        }),
+      pagination: PropTypes.shape({
+        page: PropTypes.number,
+        pageSize: PropTypes.number,
+        showPageSizeChanger: PropTypes.bool,
+        showQuickJumper: PropTypes.bool,
+        size: PropTypes.string,
+        show: PropTypes.bool,
       }),
-      columns: PropTypes.array,
+      table: PropTypes.shape({
+        columns: PropTypes.array,
+        rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+      }),
     }),
   ),
   config: PropTypes.shape({
-    query: PropTypes.shape({
+    pagination: PropTypes.shape({
       page: PropTypes.number,
       pageSize: PropTypes.number,
+      showPageSizeChanger: PropTypes.bool,
+      showQuickJumper: PropTypes.bool,
+      size: PropTypes.string,
+      show: PropTypes.bool,
     }),
+    table: PropTypes.shape({
+      columns: PropTypes.array,
+      rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    }),
+    tipsShow: PropTypes.bool,
   }),
-  tipsShow: PropTypes.bool,
-  paginationShow: PropTypes.bool,
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TabsTable, { columnsType } from '../../components/TablePanel';
+import TablePanel, { columnsType } from '../../components/TablePanel';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
@@ -91,13 +91,19 @@ export function BlocksAndTransactions() {
       value: 'blocks',
       label: 'Blocks',
       url: '/block/list',
-      columns: columnsBlocks,
+      table: {
+        columns: columnsBlocks,
+        rowKey: 'hash',
+      },
     },
     {
       value: 'transaction',
       label: 'Transaction',
       url: '/transaction/list',
-      columns: columnsTransactions,
+      table: {
+        columns: columnsTransactions,
+        rowKey: 'hash',
+      },
     },
   ];
 
@@ -110,7 +116,7 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
-      <TabsTable tabs={tabs} />
+      <TablePanel tabs={tabs} />
     </>
   );
 }

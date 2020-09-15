@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from './../../../utils/api';
 
-function PanelTable({ url, columns, onChange, pagination }) {
+function PanelTable({ url, columns, onChange, pagination, rowKey }) {
   const { data, error } = useSWR([url], simpleGetFetcher);
 
   useEffect(() => {
@@ -19,15 +19,10 @@ function PanelTable({ url, columns, onChange, pagination }) {
       <Table
         tableLayout="fixed"
         columns={columns}
+        rowKey={rowKey}
         data={data.result?.list || []}
       />
-      <Pagination
-        size="small"
-        total={data.result.total}
-        showPageSizeChanger
-        showQuickJumper
-        {...pagination}
-      />
+      <Pagination total={data.result.total} {...pagination} />
     </>
   );
 }
@@ -38,6 +33,7 @@ PanelTable.defaultProps = {
   columns: [],
   // pagination component config, see https://react-ui-git-master.conflux-chain.vercel.app/en-us/components/pagination
   pagination: {},
+  rowKey: 'key',
 };
 
 PanelTable.propTypes = {
@@ -50,6 +46,7 @@ PanelTable.propTypes = {
     onPageChange: PropTypes.func,
     onPageSizeChange: PropTypes.func,
   }),
+  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default PanelTable;
