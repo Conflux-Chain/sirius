@@ -35,7 +35,7 @@ export const Nav = memo(({ brand, menuStart, menuEnd, ...props }: Props) => {
   menuEnd = toWrappedArray(menuEnd);
 
   return (
-    <Outter {...props}>
+    <Outer {...props}>
       <Container>
         <Brand className="navbar-brand">
           {brand}
@@ -61,7 +61,7 @@ export const Nav = memo(({ brand, menuStart, menuEnd, ...props }: Props) => {
           <MenuEnd className="navbar-end">{menuEnd}</MenuEnd>
         </Menu>
       </Container>
-    </Outter>
+    </Outer>
   );
 });
 
@@ -186,7 +186,7 @@ const Container = styled.div`
     padding: 0 1.71rem;
   }
 `;
-const Outter = styled.nav`
+const Outer = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
