@@ -4,8 +4,8 @@ import { Tabs } from '@cfxjs/react-ui';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
 import styled from 'styled-components';
-import PanelTable from './PanelTable';
-import PanelTip from './PanelTip';
+import PanelTable from './Table';
+import PanelTip from './Tip';
 
 const StyledTabsWrapper = styled.div`
   .tab {
@@ -44,13 +44,18 @@ export type columnsType = {
   key?: string;
   width?: number;
   ellipsis?: boolean;
-  render?: (value?: any, row?: object, index?: number) => any;
+  render?: (value: any, row?: object, index?: number) => any;
+};
+
+export type PanelContextType = {
+  total: number;
+  type: string;
 };
 
 export const PanelContext = React.createContext({
   total: 0,
   type: 'blocks',
-});
+} as PanelContextType);
 
 export const TablePanelConfig = {
   pagination: {
@@ -66,13 +71,15 @@ export const TablePanelConfig = {
     rowKey: 'key',
     columns: [],
   },
-  tipsShow: true,
+  tip: {
+    show: true,
+  },
 };
 
 export default function Panel({ tabs, config }) {
   let history = useHistory();
   let location = useLocation();
-  let { type } = useParams();
+  let { type } = { type: '', ...useParams() };
   const [total, setTotal] = useState(0);
 
   const handleTotalChange = data => {
@@ -99,7 +106,7 @@ export default function Panel({ tabs, config }) {
         type,
       }}
     >
-      <PanelTip tipsShow={config.tipsShow} />
+      <PanelTip show={config.tip.show} />
       <StyledTabsWrapper>
         <Tabs initialValue={type} onChange={handleTabsChange}>
           {tabs.map(item => {
@@ -208,6 +215,8 @@ Panel.propTypes = {
       columns: PropTypes.array,
       rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     }),
-    tipsShow: PropTypes.bool,
+    tip: PropTypes.shape({
+      show: PropTypes.bool,
+    }),
   }),
 };

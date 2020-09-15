@@ -3,6 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import TablePanel, { columnsType } from '../../components/TablePanel';
+import Layout from './../../components/Layout';
+
+// util fn for text ellipsis
+const textEllipsis = (text: number | string, number?: number): string => {
+  return text.toString().substr(0, number || 8) + '...';
+};
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
@@ -26,7 +32,13 @@ export function BlocksAndTransactions() {
       width: 100,
       ellipsis: true,
     },
-    { title: 'Miner', dataIndex: 'miner', key: 'miner', width: 100 },
+    {
+      title: 'Miner',
+      dataIndex: 'miner',
+      key: 'miner',
+      width: 100,
+      render: value => textEllipsis(value),
+    },
     { title: 'Avg.Gas Price', dataIndex: 'gas', key: 'gas', width: 100 }, // todo, no gas price
     {
       title: 'Gas Used/Limit',
@@ -48,18 +60,21 @@ export function BlocksAndTransactions() {
       dataIndex: 'hash',
       key: 'hash',
       width: 100,
+      render: value => textEllipsis(value),
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: 'from',
       width: 100,
+      render: value => textEllipsis(value),
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: 'to',
       width: 100,
+      render: value => textEllipsis(value),
     },
     {
       title: 'Value',

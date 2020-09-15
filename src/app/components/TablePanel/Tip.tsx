@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { PanelContext } from './Panel';
 import styled from 'styled-components';
-import numeral from 'numeral';
+import currency from 'currency.js';
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   font-size: 14px;
   font-family: CircularStd-Book, CircularStd;
   font-weight: normal;
@@ -18,35 +18,37 @@ const StyledContainer = styled.div`
 const StyledSpan = styled.span`
   font-size: 14px;
   font-family: CircularStd-Bold, CircularStd;
-  font-weight: bold;
+  font-weight: 500;
   color: #0054fe;
   line-height: 24px;
   padding: 0 5px;
 `;
 
-function PanelTip({ tipsShow }) {
+function PanelTip({ show }) {
   const data = useContext(PanelContext);
   const { t } = useTranslation();
 
-  if (!tipsShow) return null;
+  if (!show) return null;
 
   return (
-    <StyledContainer>
+    <StyledWrapper>
       {t(translations.blocksAndTransactions.totalBefore)}
-      <StyledSpan>{numeral(data.total).format('0,0')}</StyledSpan>
+      <StyledSpan>
+        {currency(data.total, { symbol: '', precision: 0 }).format()}
+      </StyledSpan>
       {t(translations.blocksAndTransactions.totalAfter, {
         type: data.type,
       })}
-    </StyledContainer>
+    </StyledWrapper>
   );
 }
 
 PanelTip.defaultProps = {
-  tipsShow: true,
+  show: true,
 };
 
 PanelTip.propTypes = {
-  tipsShow: PropTypes.bool,
+  show: PropTypes.bool,
 };
 
 export default PanelTip;
