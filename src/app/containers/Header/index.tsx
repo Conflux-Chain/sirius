@@ -5,10 +5,11 @@
  */
 
 import React, { memo } from 'react';
+import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@cfxjs/react-ui';
-import styled from 'styled-components/macro';
 import { TextLogo } from './TextLogo';
+import { Search } from './Search/Loadable';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
 import { generateHeaderLinksJSX, HeaderLinks } from './HeaderLink';
@@ -17,7 +18,6 @@ import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 
 export const Header = memo(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t, i18n } = useTranslation();
   const zh = '中文';
   const en = 'EN';
@@ -67,7 +67,7 @@ export const Header = memo(() => {
     </LogoWrapper>
   );
   const menuStart = [bp === 's' && <TextLogo />, ...startLinksJSX];
-  const menuEnd = endLinksJSX;
+  const menuEnd = [<Search />, endLinksJSX];
 
   return (
     <Wrapper>
@@ -89,22 +89,53 @@ const LogoWrapper = styled.div`
   }
 `;
 const Wrapper = styled.header`
+  .navbar-menu {
+    .navbar-end {
+      .navbar-item {
+        .navbar-link-menu {
+          .navbar-link {
+            padding: 0 0.57rem;
+            svg {
+              display: none;
+            }
+          }
+        }
+        &:nth-child(1) {
+          flex-grow: 1;
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+
   ${media.s} {
     .navbar-menu {
       background-color: #4a5064;
       padding: 1.64rem 5.14rem;
       padding-bottom: 3.86rem;
-      .navbar-end {
-        flex-direction: row;
-      }
+
       .navbar-start {
         .navbar-item:nth-child(1) {
           margin-bottom: 3rem;
         }
       }
+
       .navbar-end {
-        .header-link-menu {
-          padding-left: 0;
+        .navbar-item {
+          flex-direction: row;
+
+          .header-link-menu {
+            padding-left: 0;
+          }
+          .navbar-link-menu {
+            .navbar-link {
+              padding: 0.43rem 1.5rem;
+            }
+          }
+
+          &:nth-child(1) {
+            flex-grow: 0;
+          }
         }
       }
     }
