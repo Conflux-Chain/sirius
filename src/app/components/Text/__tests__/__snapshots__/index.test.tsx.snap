@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs  /> should match snapshot 1`] = `
+.c0 {
+  color: red;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 40px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+<div
+  class="jsx-418573366 tooltip "
+>
+  <span
+    class="c0"
+  >
+    <span>
+      1234567890
+    </span>
+  </span>
+</div>
+`;
