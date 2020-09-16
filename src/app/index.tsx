@@ -21,6 +21,8 @@ import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
+import Text from './components/Text';
+
 export function App() {
   const { t } = useTranslation();
   return (
@@ -35,6 +37,14 @@ export function App() {
 
         <Header />
         <Main>
+          <div
+            style={{
+              padding: '200px',
+            }}
+          >
+            <Text maxWidth={'40px'}>1234567890</Text>
+          </div>
+          <br />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route component={NotFoundPage} />
