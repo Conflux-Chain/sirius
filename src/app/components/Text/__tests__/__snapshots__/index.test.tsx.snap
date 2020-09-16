@@ -23,3 +23,24 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   </span>
 </div>
 `;
+
+exports[`<Tabs  /> should match snapshot when set maxCount 1`] = `
+.c0 {
+  color: red;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inherit;
+  cursor: pointer;
+}
+
+<div
+  class="jsx-418573366 tooltip "
+>
+  <span
+    class="c0"
+  >
+    12345...
+  </span>
+</div>
+`;

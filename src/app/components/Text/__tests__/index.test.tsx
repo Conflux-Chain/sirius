@@ -11,4 +11,9 @@ describe('<Tabs  />', () => {
     );
     expect(loadingIndicator.container.firstChild).toMatchSnapshot();
   });
+
+  it('should match snapshot when set maxCount', () => {
+    const loadingIndicator = render(<Text maxCount={5}>1234567890</Text>);
+    expect(loadingIndicator.container.firstChild).toMatchSnapshot();
+  });
 });
