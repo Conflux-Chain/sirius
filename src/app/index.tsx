@@ -17,6 +17,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { Header } from './containers/Header/index';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
+import { Contract } from './containers/Contract/Loadable';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -37,6 +38,11 @@ export function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route
+              exact
+              path="/contract/:contractAddress"
+              component={Contract}
+            />
             <Route component={NotFoundPage} />
           </Switch>
         </Main>
@@ -48,6 +54,6 @@ export function App() {
 }
 
 const Main = styled.div`
-  border: 1px solid blue;
   margin-top: 5rem;
+  background: #f5f6fa;
 `;

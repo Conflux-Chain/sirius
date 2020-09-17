@@ -1,7 +1,7 @@
 import useSWR, { responseInterface } from 'swr';
 import qs from 'query-string';
 
-const appendApiPrefix = (url: string) => `/api${url}`;
+export const appendApiPrefix = (url: string) => `/api${url}`;
 
 export interface Params {
   [name: string]: string;

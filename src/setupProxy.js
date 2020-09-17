@@ -6,7 +6,7 @@ module.exports = app => {
   app.use(
     '/api/contract-manager',
     createProxyMiddleware({
-      target: 'https://scantest.confluxscan.io',
+      target: 'https://testnet-scantest.confluxscan.io',
       pathRewrite: {
         '/api/contract-manager': '/contract-manager/api',
       },
@@ -17,7 +17,7 @@ module.exports = app => {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://scantest.confluxscan.io',
+      target: 'https://testnet-scantest.confluxscan.io',
       changeOrigin: true,
       secure: false,
     }),

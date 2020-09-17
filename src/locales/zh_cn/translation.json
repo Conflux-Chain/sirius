@@ -3,5 +3,22 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
-  "general": {}
+  "general": {},
+  "contract": {
+    "address": "合约地址",
+    "nameTag": "合约名称标签",
+    "site": "官方网站",
+    "contractIcon": "合约图标",
+    "remove": "移除",
+    "tokenIcon": "代币图标",
+    "sourceCode": "源码",
+    "abi": "Contract ABI",
+    "enterPassword": "请输入管理员口令",
+    "create": {
+      "title": "创建合约"
+    },
+    "edit": {
+      "title": "编辑合约"
+    }
+  }
 }

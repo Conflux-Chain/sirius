@@ -3,5 +3,24 @@
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
-  "general": {}
+  "general": {
+    "submit": "Submit"
+  },
+  "contract": {
+    "address": "Contract Address",
+    "nameTag": "Contract Name Tag",
+    "site": "Official Site",
+    "contractIcon": "Contract Icon",
+    "remove": "Remove",
+    "tokenIcon": "Token Icon",
+    "sourceCode": "Contract Source Code",
+    "abi": "Contract ABI",
+    "enterPassword": "Please enter your admin password",
+    "create": {
+      "title": "Contract Creation"
+    },
+    "edit": {
+      "title": "Contract Edit"
+    }
+  }
 }
