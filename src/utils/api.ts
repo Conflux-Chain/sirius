@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import useSWR, { responseInterface } from 'swr';
 import qs from 'query-string';
 
@@ -44,6 +45,7 @@ const simplePostFetcher = async (...args: any[]) => {
 
 export const useDashboardDag: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/dashboard/dag', ...params],
     rest[1] || simpleGetFetcher,
@@ -52,6 +54,7 @@ export const useDashboardDag: useApi = (params, ...rest) => {
 };
 export const useDashboardEpoch: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/dashboard/epoch', ...params],
     rest[1] || simpleGetFetcher,
@@ -60,6 +63,7 @@ export const useDashboardEpoch: useApi = (params, ...rest) => {
 };
 export const useDashboardPlot: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/dashboard/plot', ...params],
     rest[1] || simpleGetFetcher,
@@ -68,6 +72,7 @@ export const useDashboardPlot: useApi = (params, ...rest) => {
 };
 export const useDashboardTrend: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/dashboard/trend', ...params],
     rest[1] || simpleGetFetcher,
@@ -76,6 +81,7 @@ export const useDashboardTrend: useApi = (params, ...rest) => {
 };
 export const useAddressQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/address/query', ...params],
     rest[1] || simpleGetFetcher,
@@ -84,6 +90,7 @@ export const useAddressQuery: useApi = (params, ...rest) => {
 };
 export const useBlockList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/block/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -92,6 +99,7 @@ export const useBlockList: useApi = (params, ...rest) => {
 };
 export const useBlockQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/block/query', ...params],
     rest[1] || simpleGetFetcher,
@@ -100,6 +108,7 @@ export const useBlockQuery: useApi = (params, ...rest) => {
 };
 export const useTransactionList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/transaction/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -111,6 +120,7 @@ export const useTransactionQuery = (
   ...rest: any[]
 ) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/transaction/query', ...params],
     rest[1] || simpleGetFetcher,
@@ -119,6 +129,7 @@ export const useTransactionQuery = (
 };
 export const useTransferList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/transfer/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -127,6 +138,7 @@ export const useTransferList: useApi = (params, ...rest) => {
 };
 export const useContractList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -135,6 +147,7 @@ export const useContractList: useApi = (params, ...rest) => {
 };
 export const useTokenList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/token/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -143,6 +156,7 @@ export const useTokenList: useApi = (params, ...rest) => {
 };
 export const useTokenQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/token/query', ...params],
     rest[1] || simpleGetFetcher,
@@ -151,6 +165,7 @@ export const useTokenQuery: useApi = (params, ...rest) => {
 };
 export const useUtilType: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/util/type', ...params],
     rest[1] || simpleGetFetcher,
@@ -160,6 +175,7 @@ export const useUtilType: useApi = (params, ...rest) => {
 
 export const useCMAccountTokenList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/account/token/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -168,6 +184,7 @@ export const useCMAccountTokenList: useApi = (params, ...rest) => {
 };
 export const useCMContractQuery: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/contract/query', ...params],
     rest[1] || simpleGetFetcher,
@@ -176,6 +193,7 @@ export const useCMContractQuery: useApi = (params, ...rest) => {
 };
 export const useCMContractList: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/contract/list', ...params],
     rest[1] || simpleGetFetcher,
@@ -184,6 +202,7 @@ export const useCMContractList: useApi = (params, ...rest) => {
 };
 export const useCMContractCreate: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/contract/create', ...params],
     rest[1] || simplePostFetcher,
@@ -192,6 +211,7 @@ export const useCMContractCreate: useApi = (params, ...rest) => {
 };
 export const useCMContractUpdate: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/contract/update', ...params],
     rest[1] || simplePostFetcher,
@@ -200,6 +220,7 @@ export const useCMContractUpdate: useApi = (params, ...rest) => {
 };
 export const useCMContractDelete: useApi = (params, ...rest) => {
   if (!Array.isArray(params)) params = [params];
+  params = useRef(params).current;
   return useSWR(
     ['/contract-manager/contract/delete', ...params],
     rest[1] || simplePostFetcher,
