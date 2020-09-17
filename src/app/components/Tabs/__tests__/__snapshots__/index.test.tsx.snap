@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs  /> should match snapshot 1`] = `
+.c0 .tab .label {
+  font-size: 16px;
+  font-family: CircularStd-Medium,CircularStd;
+  font-weight: normal;
+  color: rgba(11,19,46,0.6);
+  line-height: 24px;
+  padding: 8px 3px;
+  font-weight: 500;
+}
+
+.c0 .tab .nav {
+  margin: 0 8px;
+}
+
+.c0 .tab.active .label,
+.c0 .tab:hover .label {
+  font-weight: 500;
+  color: #0b132e !important;
+}
+
+.c0 .tab .bottom {
+  height: 6px;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.c0 header + .content {
+  margin-top: 18px;
+}
+
+<div
+  class="jsx-2839662092 c0"
+>
+  <header
+    class="jsx-2839662092"
+  >
+    <div
+      class="jsx-2839662092 tab "
+      role="button"
+    >
+      <div
+        class="jsx-868734247 nav"
+      >
+        <div
+          class="jsx-868734247 label"
+          style="color: rgb(68, 68, 68);"
+        >
+          label1
+        </div>
+        <div
+          class="jsx-868734247 bottom"
+        />
+      </div>
+    </div>
+    <div
+      class="jsx-2839662092 tab "
+      role="button"
+    >
+      <div
+        class="jsx-868734247 nav"
+      >
+        <div
+          class="jsx-868734247 label"
+          style="color: rgb(68, 68, 68);"
+        >
+          label2
+        </div>
+        <div
+          class="jsx-868734247 bottom"
+        />
+      </div>
+    </div>
+  </header>
+  <div
+    class="jsx-2839662092 content"
+  />
+</div>
+`;
