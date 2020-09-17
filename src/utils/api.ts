@@ -10,6 +10,7 @@ export interface Params {
 
 export type useApi = (
   params?: Params | any[],
+  shouldFetch?: boolean,
   ...rest: any[]
 ) => responseInterface<any, any>;
 
@@ -43,186 +44,243 @@ const simplePostFetcher = async (...args: any[]) => {
   return json;
 };
 
-export const useDashboardDag: useApi = (params, ...rest) => {
+export const useDashboardDag: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/dashboard/dag', ...params],
+    shouldFetch ? ['/dashboard/dag', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useDashboardEpoch: useApi = (params, ...rest) => {
+export const useDashboardEpoch: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/dashboard/epoch', ...params],
+    shouldFetch ? ['/dashboard/epoch', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useDashboardPlot: useApi = (params, ...rest) => {
+export const useDashboardPlot: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/dashboard/plot', ...params],
+    shouldFetch ? ['/dashboard/plot', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useDashboardTrend: useApi = (params, ...rest) => {
+export const useDashboardTrend: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/dashboard/trend', ...params],
+    shouldFetch ? ['/dashboard/trend', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useAddressQuery: useApi = (params, ...rest) => {
+export const useAddressQuery: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/address/query', ...params],
+    shouldFetch ? ['/address/query', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useBlockList: useApi = (params, ...rest) => {
+export const useBlockList: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/block/list', ...params],
+    shouldFetch ? ['/block/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useBlockQuery: useApi = (params, ...rest) => {
+export const useBlockQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/block/query', ...params],
+    shouldFetch ? ['/block/query', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useTransactionList: useApi = (params, ...rest) => {
+export const useTransactionList: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/transaction/list', ...params],
+    shouldFetch ? ['/transaction/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
 export const useTransactionQuery = (
   params?: Params | any[],
+  shouldFetch = true,
   ...rest: any[]
 ) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/transaction/query', ...params],
+    shouldFetch ? ['/transaction/query', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useTransferList: useApi = (params, ...rest) => {
+export const useTransferList: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/transfer/list', ...params],
+    shouldFetch ? ['/transfer/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useContractList: useApi = (params, ...rest) => {
+export const useContractList: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract/list', ...params],
+    shouldFetch ? ['/contract/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useTokenList: useApi = (params, ...rest) => {
+export const useTokenList: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/token/list', ...params],
+    shouldFetch ? ['/token/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useTokenQuery: useApi = (params, ...rest) => {
+export const useTokenQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/token/query', ...params],
+    shouldFetch ? ['/token/query', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useUtilType: useApi = (params, ...rest) => {
+export const useUtilType: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/util/type', ...params],
+    shouldFetch ? ['/util/type', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
 
-export const useCMAccountTokenList: useApi = (params, ...rest) => {
+export const useCMAccountTokenList: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/account/token/list', ...params],
+    shouldFetch ? ['/contract-manager/account/token/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useCMContractQuery: useApi = (params, ...rest) => {
+export const useCMContractQuery: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/contract/query', ...params],
+    shouldFetch ? ['/contract-manager/contract/query', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useCMContractList: useApi = (params, ...rest) => {
+export const useCMContractList: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/contract/list', ...params],
+    shouldFetch ? ['/contract-manager/contract/list', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
 };
-export const useCMContractCreate: useApi = (params, ...rest) => {
+export const useCMContractCreate: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/contract/create', ...params],
+    shouldFetch ? ['/contract-manager/contract/create', ...params] : null,
     rest[1] || simplePostFetcher,
     rest[0],
   );
 };
-export const useCMContractUpdate: useApi = (params, ...rest) => {
+export const useCMContractUpdate: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/contract/update', ...params],
+    shouldFetch ? ['/contract-manager/contract/update', ...params] : null,
     rest[1] || simplePostFetcher,
     rest[0],
   );
 };
-export const useCMContractDelete: useApi = (params, ...rest) => {
+export const useCMContractDelete: useApi = (
+  params,
+  shouldFetch = true,
+  ...rest
+) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    ['/contract-manager/contract/delete', ...params],
+    shouldFetch ? ['/contract-manager/contract/delete', ...params] : null,
     rest[1] || simplePostFetcher,
     rest[0],
   );
