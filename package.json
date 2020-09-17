@@ -95,7 +95,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run checkTs && lint-staged"
+      "pre-commit": "npm run checkTs && lint-staged",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "jest": {
