@@ -7,7 +7,7 @@ import styled from 'styled-components/macro';
 
 type MyTextProps = {
   children?: React.ReactNode;
-  maxWidth?: string;
+  maxwidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
   tooltipConfig?: Partial<TooltipProps>;
@@ -15,49 +15,47 @@ type MyTextProps = {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof MyTextProps>;
 export declare type Props = MyTextProps & NativeAttrs;
 
-const Wrapper = styled(Text)<{ maxWidth: string }>`
+const Wrapper = styled(Text)<{ maxwidth: string }>`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: ${props => props.maxWidth};
+  max-width: ${props => props.maxwidth};
   display: ${props =>
-    props.maxWidth === undefined ? 'inherit' : 'inline-block'};
+    props.maxwidth === undefined ? 'inherit' : 'inline-block'};
   cursor: pointer;
-` as typeof Text & React.FC<Props & { maxWidth?: string }>;
+` as typeof Text & React.FC<Props & { maxwidth?: string }>;
 
 // note:
-// 1. maxWidth priority is higher than maxCount
-// 2. maxCount obly apply to string
-// 3. if hoverValue if provide, use hoverValue as Tooltip text, other wise use children
+// 1. maxwidth priority is higher than maxCount
+// 2. maxCount only apply to string
+// 3. if hoverValue is provided, use hoverValue as Tooltip text, otherwise use children
 const TextComponent = ({
   children,
-  maxWidth,
+  maxwidth,
   maxCount,
   hoverValue,
   tooltipConfig,
   ...props
 }: Props) => {
   let child: any = children || '';
-  if (maxWidth === undefined && maxCount && typeof children === 'string') {
+  if (maxwidth === undefined && maxCount && typeof children === 'string') {
     child = child.substr(0, maxCount) + '...';
   }
   const tooltipValue = hoverValue || children;
   return (
     <Tooltip {...tooltipConfig} text={tooltipValue}>
-      <Wrapper maxWidth={maxWidth} {...props}>
+      <Wrapper maxwidth={maxwidth} {...props}>
         {child}
       </Wrapper>
     </Tooltip>
   );
 };
 
-TextComponent.defaultProps = {
-  maxCount: 8,
-};
+TextComponent.defaultProps = {};
 
 TextComponent.propTypes = {
   maxCount: PropTypes.number,
-  maxWidth: PropTypes.string,
+  maxwidth: PropTypes.string,
   hoverValue: PropTypes.node,
   tooltipConfig: PropTypes.object,
 };

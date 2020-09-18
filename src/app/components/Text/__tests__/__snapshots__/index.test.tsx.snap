@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Tabs  /> should match snapshot 1`] = `
+exports[`<Text  /> should match snapshot 1`] = `
 .c0 {
-  color: red;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -14,19 +13,19 @@ exports[`<Tabs  /> should match snapshot 1`] = `
 <div
   class="jsx-418573366 tooltip "
 >
-  <span
-    class="c0"
+  <p
+    class="jsx-3390086683  c0"
+    maxwidth="40px"
   >
     <span>
       1234567890
     </span>
-  </span>
+  </p>
 </div>
 `;
 
-exports[`<Tabs  /> should match snapshot when set maxCount 1`] = `
+exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 .c0 {
-  color: red;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -37,10 +36,10 @@ exports[`<Tabs  /> should match snapshot when set maxCount 1`] = `
 <div
   class="jsx-418573366 tooltip "
 >
-  <span
-    class="c0"
+  <p
+    class="jsx-3390086683  c0"
   >
     12345...
-  </span>
+  </p>
 </div>
 `;

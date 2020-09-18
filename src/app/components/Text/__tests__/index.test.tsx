@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Text from '..';
 
-describe('<Tabs  />', () => {
+describe('<Text  />', () => {
   it('should match snapshot', () => {
     const loadingIndicator = render(
-      <Text maxWidth={'40px'}>
+      <Text maxwidth={'40px'}>
         <span>1234567890</span>
       </Text>,
     );
