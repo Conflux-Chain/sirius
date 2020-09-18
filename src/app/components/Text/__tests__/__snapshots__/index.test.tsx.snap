@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text  /> should match snapshot 1`] = `
+.c0 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 40px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+<div
+  class="jsx-418573366 tooltip "
+>
+  <p
+    class="jsx-3390086683  c0"
+    maxwidth="40px"
+  >
+    <span>
+      1234567890
+    </span>
+  </p>
+</div>
+`;
+
+exports[`<Text  /> should match snapshot when set maxCount 1`] = `
+.c0 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inherit;
+  cursor: pointer;
+}
+
+<div
+  class="jsx-418573366 tooltip "
+>
+  <p
+    class="jsx-3390086683  c0"
+  >
+    12345...
+  </p>
+</div>
+`;
