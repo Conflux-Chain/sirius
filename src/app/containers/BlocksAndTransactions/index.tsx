@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TablePanel, { columnsType } from '../../components/TablePanel';
-import Layout from './../../components/Layout';
+import TablePanel, {
+  columnsType,
+  TabLabel,
+  TipLabel,
+} from '../../components/TablePanel';
+import styled from 'styled-components';
 
 // util fn for text ellipsis
 const textEllipsis = (text: number | string, number?: number): string => {
-  return text.toString().substr(0, number || 8) + '...';
+  return (text || '').toString().substr(0, number || 8) + '...';
 };
 
-export function BlocksAndTransactions() {
+export const BlocksAndTransactions = () => {
   const { t } = useTranslation();
+  const [tip, setTip] = useState<any>();
+
   const columnsBlocks: Array<columnsType> = [
     {
       title: 'Epoch',
@@ -54,6 +60,7 @@ export function BlocksAndTransactions() {
       width: 100,
     }, // todo, how to calculate age value ?
   ];
+
   const columnsTransactions: Array<columnsType> = [
     {
       title: 'Hash',
@@ -101,29 +108,80 @@ export function BlocksAndTransactions() {
       width: 100,
     },
   ];
+
   const tabs = [
     {
       value: 'blocks',
-      label: 'Blocks',
-      url: '/block/list',
+      // label: 'Blocks',
+      label: count => {
+        const left = t(translations.blocksAndTransactions.labelCountBefore);
+        const right = t(translations.blocksAndTransactions.labelCountAfter, {
+          type: 'blocks',
+        });
+        return (
+          <TabLabel left={left} right={right} count={count}>
+            Blocks
+          </TabLabel>
+        );
+      },
+      url: '/block/list?name=1',
       table: {
         columns: columnsBlocks,
         rowKey: 'hash',
       },
+      onDataChange: data => {
+        const left = t(translations.blocksAndTransactions.tipCountBefore);
+        const right = t(translations.blocksAndTransactions.tipCountAfter, {
+          type: 'blocks',
+        });
+        setTip(
+          <TipLabel
+            count={data ? data.result?.total : 0}
+            left={left}
+            right={right}
+            key="blocks"
+          />,
+        );
+      },
     },
     {
       value: 'transaction',
-      label: 'Transaction',
+      label: 'Transactions',
+      // label: count => {
+      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
+      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
+      //     type: 'transactions',
+      //   });
+      //   return (
+      //     <TabLabel left={left} right={right} count={count}>
+      //       Transactions
+      //     </TabLabel>
+      //   );
+      // },
       url: '/transaction/list',
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
+      onDataChange: (data, error) => {
+        const left = t(translations.blocksAndTransactions.tipCountBefore);
+        const right = t(translations.blocksAndTransactions.tipCountAfter, {
+          type: 'transactions',
+        });
+        setTip(
+          <TipLabel
+            count={data ? data.result?.total : 0}
+            left={left}
+            right={right}
+            key="transactions"
+          />,
+        );
+      },
     },
   ];
 
   return (
-    <>
+    <BlocksAndTransactionsWrapper>
       <Helmet>
         <title>{t(translations.blocksAndTransactions.title)}</title>
         <meta
@@ -131,7 +189,13 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
+      {tip}
       <TablePanel tabs={tabs} />
-    </>
+    </BlocksAndTransactionsWrapper>
   );
-}
+};
+
+const BlocksAndTransactionsWrapper = styled.div`
+  max-width: 1024px;
+  margin: 0 auto;
+`;

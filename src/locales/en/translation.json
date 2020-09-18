@@ -6,8 +6,10 @@
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
     "description": "Blocks and Transactions",
-    "totalBefore": "A total of",
-    "totalAfter": "{{type}} found (Showing the last 10k records)"
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
+    "labelCountBefore": "A total of",
+    "labelCountAfter": "{{type}} found"
   },
   "general": {}
 }

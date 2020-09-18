@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Table, Pagination, Card } from '@cfxjs/react-ui';
+import React, { useEffect, useContext } from 'react';
+import { Table, Pagination, Card, Loading } from '@cfxjs/react-ui';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from './../../../utils/api';
@@ -45,15 +45,25 @@ const StyledTableWrapper = styled.div`
   }
 `;
 
-function PanelTable({ url, columns, onChange, pagination, rowKey }) {
+function PanelTable({ url, pagination, table, onDataChange }) {
   const { data, error } = useSWR([url], simpleGetFetcher);
 
   useEffect(() => {
-    onChange && onChange(data);
-  }, [data, onChange]);
+    onDataChange && onDataChange(data, error);
+  }, [data]); // eslint-disable-line
 
-  if (error) return <div>no data.</div>;
-  if (!data) return <div>loading</div>;
+  let emptyText: React.ReactNode | string = 'No data.';
+  let tableData = table.data;
+  let paginationTotal = 0;
+
+  if (!data && !error) {
+    emptyText = <Loading />;
+  }
+
+  if (data && !error) {
+    tableData = data.result?.list || table.data;
+    paginationTotal = data.result?.total || 0;
+  }
 
   return (
     <>
@@ -61,39 +71,47 @@ function PanelTable({ url, columns, onChange, pagination, rowKey }) {
         <StyledTableWrapper>
           <Table
             tableLayout="fixed"
-            columns={columns}
-            rowKey={rowKey}
-            data={data.result?.list || []}
+            columns={table.columns}
+            rowKey={table.rowKey}
+            data={tableData}
+            emptyText={emptyText}
           />
         </StyledTableWrapper>
       </Card>
       <StyledPaginationWrapper>
-        <Pagination total={data.result.total} {...pagination} />
+        {pagination.show && (
+          <Pagination total={paginationTotal} {...pagination} />
+        )}
       </StyledPaginationWrapper>
     </>
   );
 }
 
 PanelTable.defaultProps = {
-  onChange: () => {}, // emit total count
   url: '',
   columns: [],
   // pagination component config, see https://react-ui-git-master.conflux-chain.vercel.app/en-us/components/pagination
   pagination: {},
-  rowKey: 'key',
+  table: {
+    data: [],
+    columns: [],
+    rowKey: 'key',
+  },
 };
 
 PanelTable.propTypes = {
-  onChange: PropTypes.func,
   url: PropTypes.string,
-  columns: PropTypes.array,
   pagination: PropTypes.shape({
     page: PropTypes.number,
     pageSize: PropTypes.number,
     onPageChange: PropTypes.func,
     onPageSizeChange: PropTypes.func,
   }),
-  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  table: PropTypes.shape({
+    columns: PropTypes.array,
+    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  }),
+  onDataChange: PropTypes.func,
 };
 
 export default PanelTable;

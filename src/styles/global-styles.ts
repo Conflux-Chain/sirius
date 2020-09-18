@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #F5F6FA;
   }
 
   #root {
@@ -26,5 +27,16 @@ export const GlobalStyle = createGlobalStyle`
   input, select {
     font-family: inherit;
     font-size: inherit;
+  }
+
+  .siriui-tooltip-square {
+    border-radius: 0 !important;
+    .inner {
+      font-family: CircularStd-Book, CircularStd;
+      font-weight: 400;
+      color: #CDCDCD;
+      line-height: 11px;
+      border-radius: 0;
+    }
   }
 `;

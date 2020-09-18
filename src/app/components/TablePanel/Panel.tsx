@@ -1,42 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs } from '@cfxjs/react-ui';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
-import styled from 'styled-components';
+import Tabs from './../Tabs';
 import PanelTable from './Table';
-import PanelTip from './Tip';
-
-const StyledTabsWrapper = styled.div`
-  .tab {
-    .label {
-      font-size: 16px;
-      font-family: CircularStd-Medium, CircularStd;
-      font-weight: normal;
-      color: rgba(11, 19, 46, 0.6);
-      line-height: 24px;
-      padding: 8px 3px;
-    }
-    .nav {
-      margin: 0 8px;
-    }
-    &.active,
-    &:hover {
-      .label {
-        font-weight: 500;
-        color: #0b132e !important;
-      }
-    }
-    .bottom {
-      height: 6px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
-  }
-  header + .content {
-    margin-top: 18px;
-  }
-`;
+import GetTotalCount from './GetTotalCount';
 
 export type columnsType = {
   title: string;
@@ -46,16 +14,6 @@ export type columnsType = {
   ellipsis?: boolean;
   render?: (value: any, row?: object, index?: number) => any;
 };
-
-export type PanelContextType = {
-  total: number;
-  type: string;
-};
-
-export const PanelContext = React.createContext({
-  total: 0,
-  type: 'blocks',
-} as PanelContextType);
 
 export const TablePanelConfig = {
   pagination: {
@@ -71,20 +29,15 @@ export const TablePanelConfig = {
     rowKey: 'key',
     columns: [],
   },
-  tip: {
-    show: true,
-  },
+  onDataChange: (data: any) => {},
 };
 
-export default function Panel({ tabs, config }) {
-  let history = useHistory();
-  let location = useLocation();
-  let { type } = { type: '', ...useParams() };
-  const [total, setTotal] = useState(0);
+export default function Panel({ tabs }) {
+  const history = useHistory();
+  const location = useLocation();
+  const { type } = { type: '', ...useParams() };
+  const [labelCountMap, setLabelCountMap] = useState({});
 
-  const handleTotalChange = data => {
-    setTotal(data?.result?.total || 0);
-  };
   const handlePaginationChange = (page, pageSize) => {
     const search = queryString.stringify({
       ...queryString.parse(location.search),
@@ -98,58 +51,100 @@ export default function Panel({ tabs, config }) {
       `${location.pathname.split('/').slice(0, 2).join('/')}/${value}`,
     );
   };
+  const handleLabelCountChange = newLabelCountMap => {
+    setLabelCountMap({
+      ...labelCountMap,
+      ...newLabelCountMap,
+    });
+  };
+
+  const tabsItems: Array<React.ReactNode> = [];
+  const tabsLabelCountItems: Array<React.ReactNode> = [];
+
+  tabs.forEach(item => {
+    // merged pagination config
+    const pagination = {
+      ...TablePanelConfig.pagination,
+      ...(typeof item.pagination === 'boolean'
+        ? { show: item.pagination }
+        : item.pagination),
+    };
+    // merged table config
+    const table = {
+      ...TablePanelConfig.table,
+      ...item.table,
+    };
+    // merged onDataChange config
+    const handleDataChange = function (data) {
+      const fn = item.onDataChange || TablePanelConfig.onDataChange;
+      if (data) {
+        handleLabelCountChange({
+          [item.value]: data.result?.total,
+        });
+      }
+      fn.apply({}, arguments);
+    };
+    // merged url query config
+    const itemUrlFragment = item.url.split('?');
+    let itemUrl = '';
+    let itemQuery = {};
+    if (itemUrlFragment.length > 0) {
+      itemUrl = itemUrlFragment[0];
+    }
+    if (itemUrlFragment.length > 1) {
+      itemQuery = queryString.parse(itemUrlFragment[1]);
+    }
+    const query = {
+      ...itemQuery,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      ...queryString.parse(location.search),
+    };
+    const search = queryString.stringify(query);
+    const url = `${itemUrl}?${search}`;
+
+    const itemLabel =
+      typeof item.label === 'function'
+        ? item.label(labelCountMap[item.value] || 0, item) || item.value
+        : item.label;
+
+    tabsItems.push(
+      <Tabs.Item label={itemLabel} value={item.value} key={item.value}>
+        <PanelTable
+          url={url}
+          pagination={{
+            ...pagination,
+            onPageChange: handlePaginationChange,
+            onPageSizeChange: handlePaginationChange,
+            page: Number(query.page),
+            pageSize: Number(query.pageSize),
+          }}
+          table={table}
+          onDataChange={handleDataChange}
+        />
+      </Tabs.Item>,
+    );
+
+    const tabsLabelCountKeysLength = Object.keys(labelCountMap).length;
+    // render once
+    tabsLabelCountKeysLength < 2 &&
+      tabsLabelCountItems.push(
+        <GetTotalCount
+          url={url}
+          type={item.value}
+          key={item.value}
+          onChange={handleLabelCountChange}
+        />,
+      );
+  });
 
   return (
-    <PanelContext.Provider
-      value={{
-        total,
-        type,
-      }}
-    >
-      <PanelTip show={config.tip.show} />
-      <StyledTabsWrapper>
-        <Tabs initialValue={type} onChange={handleTabsChange}>
-          {tabs.map(item => {
-            // merged pagination config
-            const pagination = {
-              ...TablePanelConfig.pagination,
-              ...config.pagination,
-              ...item.pagination,
-            };
-            // merged table config
-            const table = {
-              ...TablePanelConfig.table,
-              ...config.table,
-              ...item.table,
-            };
-            // merged url query config
-            const query = {
-              page: pagination.page,
-              pageSize: pagination.pageSize,
-              ...queryString.parse(location.search),
-            };
-            const search = queryString.stringify(query);
-            const url = `${item.url}?${search}`;
-            return (
-              <Tabs.Item label={item.label} value={item.value} key={item.value}>
-                <PanelTable
-                  {...table}
-                  url={`${url}`}
-                  onChange={handleTotalChange}
-                  pagination={{
-                    ...pagination,
-                    onPageChange: handlePaginationChange,
-                    onPageSizeChange: handlePaginationChange,
-                    page: Number(query.page),
-                    pageSize: Number(query.pageSize),
-                  }}
-                />
-              </Tabs.Item>
-            );
-          })}
-        </Tabs>
-      </StyledTabsWrapper>
-    </PanelContext.Provider>
+    <>
+      {tabsLabelCountItems}
+      <Tabs initialValue={type} onChange={handleTabsChange}>
+        {tabsItems}
+      </Tabs>
+    </>
   );
 }
 
@@ -160,6 +155,7 @@ export default function Panel({ tabs, config }) {
       key: 'epochNumber',
       width: 100,
   }];
+  // for example:
   const tabs = [
     {
       value: 'blocks', // Tabs value
@@ -167,56 +163,54 @@ export default function Panel({ tabs, config }) {
       url: '/blocks/list', // SWR url
       pagination: {
         page: 1,
-        pageSize: 10,
+        pageSize: 50,
       }, // table pagination config, also used for SWR url query
       table: {
         columns: columns, 
         rowKey: 'hash', 
       }, // table config
-      tips: count => (`total ${count} blocks`)
+      onDataChange: ()=>{} // when table data changed, execute callback
     },
   ]
   */
 Panel.defaultProps = {
   tabs: [],
-  config: TablePanelConfig,
 };
 
 Panel.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
+      // value: Tabs item unique ident value, used as key
       value: PropTypes.string,
-      label: PropTypes.string,
+      // label: tab item's label, there are two types:
+      //  1. string
+      //  2. function - (count: number) => React.ReactNode | undefined.
+      //     Parameter is table list total count, return value can be react node or undefined
+      //     If return value is undefined, use 'value' as default
+      label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+      // url: request url, contain location search
       url: PropTypes.string,
-      pagination: PropTypes.shape({
-        page: PropTypes.number,
-        pageSize: PropTypes.number,
-        showPageSizeChanger: PropTypes.bool,
-        showQuickJumper: PropTypes.bool,
-        size: PropTypes.string,
-        show: PropTypes.bool,
-      }),
+      // pagination: Pagination component config, there are two types:
+      //  1. object: Pagination component config
+      //  2. boolean - if false then hide the pagination, if true then use default pagination config
+      pagination: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.shape({
+          page: PropTypes.number,
+          pageSize: PropTypes.number,
+          showPageSizeChanger: PropTypes.bool,
+          showQuickJumper: PropTypes.bool,
+          size: PropTypes.string,
+          show: PropTypes.bool,
+        }),
+      ]),
+      // table: Table component config
       table: PropTypes.shape({
         columns: PropTypes.array,
         rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       }),
+      // onDataChange: fetch response callback
+      onDataChange: PropTypes.func,
     }),
   ),
-  config: PropTypes.shape({
-    pagination: PropTypes.shape({
-      page: PropTypes.number,
-      pageSize: PropTypes.number,
-      showPageSizeChanger: PropTypes.bool,
-      showQuickJumper: PropTypes.bool,
-      size: PropTypes.string,
-      show: PropTypes.bool,
-    }),
-    table: PropTypes.shape({
-      columns: PropTypes.array,
-      rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    }),
-    tip: PropTypes.shape({
-      show: PropTypes.bool,
-    }),
-  }),
 };
