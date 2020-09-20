@@ -7,46 +7,59 @@ import PanelTable from './Table';
 import GetTotalCount from './GetTotalCount';
 import { useBreakpoint } from './../../../styles/media';
 
-export type columnsType = {
-  title: string;
-  dataIndex: string;
-  key?: string;
-  width?: number;
-  ellipsis?: boolean;
-  render?: (value: any, row?: object, index?: number) => any;
+import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
+import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
+export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
+
+type TablePanelConfigType = {
+  value: string;
+  label: string;
+  url: string | Function;
+  pagination?: PaginationProps;
+  table: TableProps<unknown>;
+  onDataChange?: Function;
 };
 
-export const TablePanelConfig = {
-  pagination: {
-    page: 1,
-    pageSize: 10,
-    showPageSizeChanger: true,
-    showQuickJumper: true,
-    size: 'small',
-    show: true,
-    variant: 'solid',
-  },
-  table: {
-    rowKey: 'key',
-    columns: [],
-  },
-  onDataChange: (data: any) => {},
+type LabelCountMapType = {
+  [key: string]: number;
 };
 
-export const TablePanelMobileConfig = {
-  pagination: {
-    page: 1,
-    pageSize: 10,
-    showPageSizeChanger: true,
-    showQuickJumper: true,
-    size: 'small',
-    show: true,
-    variant: 'solid',
-
-    labelPageSizeBefore: '',
-    labelPageSizeAfter: '',
-    limit: 3,
-  },
+// pagination default config
+const paginationConfig: PaginationProps & { show: boolean } = {
+  total: 0,
+  page: 1,
+  pageSize: 10,
+  showPageSizeChanger: true,
+  showQuickJumper: true,
+  size: 'small',
+  variant: 'solid',
+  show: true,
+};
+// pagination mobile default config
+const paginationMobileConfig: PaginationProps = {
+  ...paginationConfig,
+  labelPageSizeBefore: '',
+  labelPageSizeAfter: '',
+  limit: 3,
+};
+// table default config
+const tableConfig: TableProps<unknown> = {
+  rowKey: 'key',
+  columns: [],
+  variant: 'solid',
+};
+// TablePanel component default props
+const tablePanelConfig: TablePanelConfigType = {
+  value: '',
+  label: '',
+  url: '',
+  pagination: paginationConfig,
+  table: tableConfig,
+  onDataChange: function (data: any): any {},
+};
+const tablePanelMobileConfig: TablePanelConfigType = {
+  ...tablePanelConfig,
+  pagination: paginationMobileConfig,
 };
 
 export default function Panel({ tabs }) {
@@ -55,8 +68,9 @@ export default function Panel({ tabs }) {
   const location = useLocation();
   const { type } = { type: '', ...useParams() };
   const [labelCountMap, setLabelCountMap] = useState({});
+  const config = breakpoint === 's' ? tablePanelMobileConfig : tablePanelConfig;
 
-  const handlePaginationChange = (page, pageSize) => {
+  const handlePaginationChange = (page: number, pageSize: number): void => {
     const search = queryString.stringify({
       ...queryString.parse(location.search),
       page,
@@ -64,12 +78,14 @@ export default function Panel({ tabs }) {
     });
     history.push(`${location.pathname}?${search}`);
   };
-  const handleTabsChange = value => {
+  const handleTabsChange = (value: string): void => {
     history.push(
       `${location.pathname.split('/').slice(0, 2).join('/')}/${value}`,
     );
   };
-  const handleLabelCountChange = newLabelCountMap => {
+  const handleLabelCountChange = (
+    newLabelCountMap: LabelCountMapType,
+  ): void => {
     setLabelCountMap({
       ...labelCountMap,
       ...newLabelCountMap,
@@ -82,21 +98,19 @@ export default function Panel({ tabs }) {
   tabs.forEach(item => {
     // merged pagination config
     const pagination = {
-      ...(breakpoint === 'm' || breakpoint === 's'
-        ? TablePanelMobileConfig.pagination
-        : TablePanelConfig.pagination),
+      ...config.pagination,
       ...(typeof item.pagination === 'boolean'
         ? { show: item.pagination }
         : item.pagination),
     };
     // merged table config
     const table = {
-      ...TablePanelConfig.table,
+      ...config.table,
       ...item.table,
     };
     // merged onDataChange config
     const handleDataChange = function (data) {
-      const fn = item.onDataChange || TablePanelConfig.onDataChange;
+      const fn = item.onDataChange || config.onDataChange;
       if (data) {
         handleLabelCountChange({
           [item.value]: data.result?.total,
@@ -106,8 +120,8 @@ export default function Panel({ tabs }) {
     };
     // merged url query config
     const itemUrlFragment = item.url.split('?');
-    let itemUrl = '';
-    let itemQuery = {};
+    let itemUrl: string = '';
+    let itemQuery: { [key: string]: any } = {};
     if (itemUrlFragment.length > 0) {
       itemUrl = itemUrlFragment[0];
     }
@@ -169,12 +183,6 @@ export default function Panel({ tabs }) {
 }
 
 /**
-  const columns: Array<columnsType> = [{
-      title: 'Epoch',
-      dataIndex: 'epochNumber',
-      key: 'epochNumber',
-      width: 100,
-  }];
   // for example:
   const tabs = [
     {

@@ -81,7 +81,7 @@ function PanelTable({ url, pagination, table, onDataChange }) {
 
   let emptyText: React.ReactNode | string = 'No data.';
   let tableData = table.data;
-  let paginationTotal = 0;
+  let paginationTotal: number = 0;
 
   if (!data && !error) {
     emptyText = <Loading />;
@@ -108,7 +108,7 @@ function PanelTable({ url, pagination, table, onDataChange }) {
       </StyledCard>
       <StyledPaginationWrapper>
         {pagination.show && (
-          <Pagination total={paginationTotal} {...pagination} />
+          <Pagination {...pagination} total={paginationTotal} />
         )}
       </StyledPaginationWrapper>
     </>
@@ -125,6 +125,7 @@ PanelTable.defaultProps = {
     columns: [],
     rowKey: 'key',
   },
+  onDataChange: () => {},
 };
 
 PanelTable.propTypes = {
@@ -136,6 +137,7 @@ PanelTable.propTypes = {
     onPageSizeChange: PropTypes.func,
   }),
   table: PropTypes.shape({
+    data: PropTypes.array,
     columns: PropTypes.array,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   }),

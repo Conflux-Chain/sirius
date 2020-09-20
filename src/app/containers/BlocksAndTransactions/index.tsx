@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import TablePanel, {
-  columnsType,
+  ColumnsType,
   TabLabel,
   TipLabel,
 } from '../../components/TablePanel';
@@ -18,7 +18,7 @@ export const BlocksAndTransactions = () => {
   const { t } = useTranslation();
   const [tip, setTip] = useState<any>();
 
-  const columnsBlocks: Array<columnsType> = [
+  const columnsBlocks: ColumnsType = [
     {
       title: 'Epoch',
       dataIndex: 'epochNumber',
@@ -61,7 +61,7 @@ export const BlocksAndTransactions = () => {
     }, // todo, how to calculate age value ?
   ];
 
-  const columnsTransactions: Array<columnsType> = [
+  const columnsTransactions: ColumnsType = [
     {
       title: 'Hash',
       dataIndex: 'hash',

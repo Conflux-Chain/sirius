@@ -1,7 +1,7 @@
 import Panel from './Panel';
-import { columnsType } from './Panel';
+import { ColumnsType } from './Panel';
 import { TabLabel, TipLabel } from './Label';
 
 export default Panel;
-export type { columnsType };
+export type { ColumnsType };
 export { TabLabel, TipLabel };
