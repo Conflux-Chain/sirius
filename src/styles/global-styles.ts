@@ -31,12 +31,14 @@ export const GlobalStyle = createGlobalStyle`
 
   .siriui-tooltip-square {
     border-radius: 0 !important;
-    .inner {
+    div.inner {
       font-family: CircularStd-Book, CircularStd;
       font-weight: 400;
-      color: #CDCDCD;
-      line-height: 11px;
       border-radius: 0;
+      font-size: 12px;
+      color: #E9E9E9;
+      line-height: 15px;
+      padding: 8px 12px;
     }
   }
 `;

@@ -11,7 +11,7 @@ const TabLabelCount = ({ type, url, onChange }) => {
           [type]: data.result?.total,
         });
     }
-  }, [data, error, onChange, type]);
+  }, [data, error, type]); // eslint-disable-line
   return null;
 };
 

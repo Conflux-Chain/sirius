@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import Tabs from './../Tabs';
 import PanelTable from './Table';
 import GetTotalCount from './GetTotalCount';
+import { useBreakpoint } from './../../../styles/media';
 
 export type columnsType = {
   title: string;
@@ -32,7 +33,24 @@ export const TablePanelConfig = {
   onDataChange: (data: any) => {},
 };
 
+export const TablePanelMobileConfig = {
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    showPageSizeChanger: true,
+    showQuickJumper: true,
+    size: 'small',
+    show: true,
+    variant: 'solid',
+
+    labelPageSizeBefore: '',
+    labelPageSizeAfter: '',
+    limit: 3,
+  },
+};
+
 export default function Panel({ tabs }) {
+  const breakpoint = useBreakpoint();
   const history = useHistory();
   const location = useLocation();
   const { type } = { type: '', ...useParams() };
@@ -64,7 +82,9 @@ export default function Panel({ tabs }) {
   tabs.forEach(item => {
     // merged pagination config
     const pagination = {
-      ...TablePanelConfig.pagination,
+      ...(breakpoint === 'm' || breakpoint === 's'
+        ? TablePanelMobileConfig.pagination
+        : TablePanelConfig.pagination),
       ...(typeof item.pagination === 'boolean'
         ? { show: item.pagination }
         : item.pagination),

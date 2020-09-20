@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import currency from 'currency.js';
 import { Tooltip } from '@cfxjs/react-ui';
+import { media } from './../../../styles/media';
 
-const StyledToolTip = createGlobalStyle`
+const StyledToolTipLabel = createGlobalStyle`
   .tab-label-tooltip {
     .count {
       color: #DEDEDE;
@@ -19,7 +20,7 @@ const StyledCount = styled.span`
 export function TabLabel({ left, right, count, children }) {
   return (
     <>
-      <StyledToolTip />
+      <StyledToolTipLabel />
       {children}
       <span> </span>
       {count ? (
@@ -52,21 +53,24 @@ TabLabel.propTypes = {
   count: PropTypes.number,
 };
 
-const StyledWrapper = styled.p`
+const StyledTipLabelWrapper = styled.p`
   font-size: 14px;
   font-family: CircularStd-Book, CircularStd;
-  font-weight: normal;
+  font-weight: 400;
   color: #74798c;
   line-height: 18px;
   margin-top: 32px;
   margin-bottom: 24px;
+
+  ${media.m} {
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
 `;
 const StyledSpan = styled.span`
-  font-size: 14px;
-  font-family: CircularStd-Bold, CircularStd;
-  font-weight: 500;
   color: #0054fe;
-  line-height: 24px;
   padding: 0 5px;
 `;
 export function TipLabel({ count, left, right }) {
@@ -76,13 +80,13 @@ export function TipLabel({ count, left, right }) {
     if (count) setCount(count);
   }, [count]);
   return (
-    <StyledWrapper>
+    <StyledTipLabelWrapper>
       {left}
       <StyledSpan>
         {currency(number, { symbol: '', precision: 0 }).format()}
       </StyledSpan>
       {right}
-    </StyledWrapper>
+    </StyledTipLabelWrapper>
   );
 }
 TipLabel.defaultProps = {

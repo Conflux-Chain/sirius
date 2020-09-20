@@ -1,9 +1,18 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Table, Pagination, Card, Loading } from '@cfxjs/react-ui';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from './../../../utils/api';
 import styled from 'styled-components';
+import { media } from './../../../styles/media';
+
+const StyledCard = styled(Card)`
+  ${media.m} {
+    div.content {
+      padding: 12px;
+    }
+  }
+`;
 
 const StyledPaginationWrapper = styled.div`
   margin: 24px 0;
@@ -31,17 +40,35 @@ const StyledPaginationWrapper = styled.div`
   button.active {
     color: #fff !important;
   }
+
+  ${media.m} {
+    margin: 12px 0;
+  }
 `;
 const StyledTableWrapper = styled.div`
   .table thead th {
     padding-top: 0;
+    white-space: nowrap !important;
   }
-  .table td {
+  .table td.table-cell {
     font-size: 14px;
     font-family: CircularStd-Book, CircularStd;
     color: #20253a;
     line-height: 24px;
-    padding: 18px calc((8px / 2) * 3) !important;
+    padding: 18px calc((8px / 2) * 3);
+    white-space: nowrap !important;
+  }
+
+  ${media.m} {
+    .table {
+      td.table-cell {
+        padding: 16px;
+        line-height: 16px;
+      }
+      th.table-cell {
+        padding-bottom: 12px;
+      }
+    }
   }
 `;
 
@@ -67,7 +94,7 @@ function PanelTable({ url, pagination, table, onDataChange }) {
 
   return (
     <>
-      <Card>
+      <StyledCard>
         <StyledTableWrapper>
           <Table
             tableLayout="fixed"
@@ -75,9 +102,10 @@ function PanelTable({ url, pagination, table, onDataChange }) {
             rowKey={table.rowKey}
             data={tableData}
             emptyText={emptyText}
+            scroll={{ x: 800 }}
           />
         </StyledTableWrapper>
-      </Card>
+      </StyledCard>
       <StyledPaginationWrapper>
         {pagination.show && (
           <Pagination total={paginationTotal} {...pagination} />

@@ -134,6 +134,7 @@ export const BlocksAndTransactions = () => {
         const right = t(translations.blocksAndTransactions.tipCountAfter, {
           type: 'blocks',
         });
+
         setTip(
           <TipLabel
             count={data ? data.result?.total : 0}
@@ -146,18 +147,18 @@ export const BlocksAndTransactions = () => {
     },
     {
       value: 'transaction',
-      label: 'Transactions',
-      // label: count => {
-      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
-      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
-      //     type: 'transactions',
-      //   });
-      //   return (
-      //     <TabLabel left={left} right={right} count={count}>
-      //       Transactions
-      //     </TabLabel>
-      //   );
-      // },
+      // label: 'Transactions',
+      label: count => {
+        const left = t(translations.blocksAndTransactions.labelCountBefore);
+        const right = t(translations.blocksAndTransactions.labelCountAfter, {
+          type: 'transactions',
+        });
+        return (
+          <TabLabel left={left} right={right} count={count}>
+            Transactions
+          </TabLabel>
+        );
+      },
       url: '/transaction/list',
       table: {
         columns: columnsTransactions,
