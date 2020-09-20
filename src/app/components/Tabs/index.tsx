@@ -32,7 +32,7 @@ const TabsComponent = styled(Tabs)`
     padding-top: 18px;
   }
 
-  ${media.m} {
+  ${media.s} {
     .tab {
       .nav {
         margin: 0 16px 0 0;

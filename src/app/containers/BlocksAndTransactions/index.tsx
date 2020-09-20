@@ -8,10 +8,35 @@ import TablePanel, {
   TipLabel,
 } from '../../components/TablePanel';
 import styled from 'styled-components';
+import Text from './../../components/Text';
+import { media } from './../../../styles/media';
 
-// util fn for text ellipsis
-const textEllipsis = (text: number | string, number?: number): string => {
-  return (text || '').toString().substr(0, number || 8) + '...';
+const StyledBlocksAndTransactionsWrapper = styled.div`
+  max-width: 1024px;
+  margin: 0 auto;
+  padding-top: 12px;
+
+  ${media.s} {
+    padding: 4px 16px 16px;
+  }
+`;
+
+const StyledTextWrapper = styled.span`
+  font-family: CircularStd-Book, CircularStd;
+  font-weight: 400;
+  &:hover {
+    font-family: CircularStd-Bold, CircularStd;
+    font-weight: 500;
+    color: #0054fe;
+  }
+`;
+
+const renderTextEllipsis = value => {
+  return (
+    <Text span maxwidth={'80px'} hoverValue={value}>
+      <StyledTextWrapper>{value}</StyledTextWrapper>
+    </Text>
+  );
 };
 
 export const BlocksAndTransactions = () => {
@@ -24,6 +49,7 @@ export const BlocksAndTransactions = () => {
       dataIndex: 'epochNumber',
       key: 'epochNumber',
       width: 100,
+      render: renderTextEllipsis,
     },
     {
       title: 'Position',
@@ -43,7 +69,7 @@ export const BlocksAndTransactions = () => {
       dataIndex: 'miner',
       key: 'miner',
       width: 100,
-      render: value => textEllipsis(value),
+      render: value => renderTextEllipsis(value),
     },
     { title: 'Avg.Gas Price', dataIndex: 'gas', key: 'gas', width: 100 }, // todo, no gas price
     {
@@ -67,21 +93,21 @@ export const BlocksAndTransactions = () => {
       dataIndex: 'hash',
       key: 'hash',
       width: 100,
-      render: value => textEllipsis(value),
+      render: value => renderTextEllipsis(value),
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: 'from',
       width: 100,
-      render: value => textEllipsis(value),
+      render: value => renderTextEllipsis(value),
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: 'to',
       width: 100,
-      render: value => textEllipsis(value),
+      render: value => renderTextEllipsis(value),
     },
     {
       title: 'Value',
@@ -112,18 +138,18 @@ export const BlocksAndTransactions = () => {
   const tabs = [
     {
       value: 'blocks',
-      // label: 'Blocks',
-      label: count => {
-        const left = t(translations.blocksAndTransactions.labelCountBefore);
-        const right = t(translations.blocksAndTransactions.labelCountAfter, {
-          type: 'blocks',
-        });
-        return (
-          <TabLabel left={left} right={right} count={count}>
-            Blocks
-          </TabLabel>
-        );
-      },
+      label: 'Blocks',
+      // label: count => {
+      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
+      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
+      //     type: 'blocks',
+      //   });
+      //   return (
+      //     <TabLabel left={left} right={right} count={count}>
+      //       Blocks
+      //     </TabLabel>
+      //   );
+      // },
       url: '/block/list?name=1',
       table: {
         columns: columnsBlocks,
@@ -147,18 +173,18 @@ export const BlocksAndTransactions = () => {
     },
     {
       value: 'transaction',
-      // label: 'Transactions',
-      label: count => {
-        const left = t(translations.blocksAndTransactions.labelCountBefore);
-        const right = t(translations.blocksAndTransactions.labelCountAfter, {
-          type: 'transactions',
-        });
-        return (
-          <TabLabel left={left} right={right} count={count}>
-            Transactions
-          </TabLabel>
-        );
-      },
+      label: 'Transactions',
+      // label: count => {
+      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
+      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
+      //     type: 'transactions',
+      //   });
+      //   return (
+      //     <TabLabel left={left} right={right} count={count}>
+      //       Transactions
+      //     </TabLabel>
+      //   );
+      // },
       url: '/transaction/list',
       table: {
         columns: columnsTransactions,
@@ -182,7 +208,7 @@ export const BlocksAndTransactions = () => {
   ];
 
   return (
-    <BlocksAndTransactionsWrapper>
+    <StyledBlocksAndTransactionsWrapper>
       <Helmet>
         <title>{t(translations.blocksAndTransactions.title)}</title>
         <meta
@@ -192,11 +218,6 @@ export const BlocksAndTransactions = () => {
       </Helmet>
       {tip}
       <TablePanel tabs={tabs} />
-    </BlocksAndTransactionsWrapper>
+    </StyledBlocksAndTransactionsWrapper>
   );
 };
-
-const BlocksAndTransactionsWrapper = styled.div`
-  max-width: 1024px;
-  margin: 0 auto;
-`;

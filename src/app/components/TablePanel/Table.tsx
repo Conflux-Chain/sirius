@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { media } from './../../../styles/media';
 
 const StyledCard = styled(Card)`
-  ${media.m} {
+  ${media.s} {
     div.content {
       padding: 12px;
     }
@@ -41,7 +41,7 @@ const StyledPaginationWrapper = styled.div`
     color: #fff !important;
   }
 
-  ${media.m} {
+  ${media.s} {
     margin: 12px 0;
   }
 `;
@@ -59,7 +59,7 @@ const StyledTableWrapper = styled.div`
     white-space: nowrap !important;
   }
 
-  ${media.m} {
+  ${media.s} {
     .table {
       td.table-cell {
         padding: 16px;
