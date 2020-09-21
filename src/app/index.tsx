@@ -38,6 +38,7 @@ export function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route exact path="/contract/" component={Contract} />
             <Route
               exact
               path="/contract/:contractAddress"

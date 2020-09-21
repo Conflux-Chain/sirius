@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Contract as ContractBody } from '../../components/Contract';
-import { appendApiPrefix } from '../../../utils/api';
-import useSWR from 'swr';
-import qs from 'query-string';
-const fetcher = url => fetch(url).then(res => res.json());
+import { useCMContractQuery } from '../../../utils/api';
+import { isCfxAddress } from '../../../utils';
 export function Contract(props) {
   const { t } = useTranslation();
   const [contractDetail, setContractDetail] = useState({});
@@ -25,20 +23,14 @@ export function Contract(props) {
     'sourceCode',
     'typeCode',
   ];
-  const queryParams = { address: contractAddress, fields };
-  const queryParamsStr = qs.stringify(queryParams);
-  const { data, error } = useSWR(
-    contractAddress
-      ? appendApiPrefix('/contract-manager/contract/query?' + queryParamsStr)
-      : null,
-    fetcher,
-  );
+  const params = { address: contractAddress, fields };
+  const { data } = useCMContractQuery(params, isCfxAddress(contractAddress));
   useEffect(() => {
     if (data && data.code === 0) {
       setContractDetail(data.result);
       setType('edit');
     }
-  }, [data]);
+  }, [data, contractAddress]);
   return (
     <>
       <Helmet>

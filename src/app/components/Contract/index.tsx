@@ -3,12 +3,12 @@
  * Contract Detail
  *
  */
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect, useRef, ReactNode } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
-import { Input, Tabs, Button } from '@cfxjs/react-ui';
+import { Input, Button } from '@cfxjs/react-ui';
 import iconContractRemove from './../../../images/contract/remove.png';
 import iconContractUpload from './../../../images/contract/upload.png';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
@@ -16,9 +16,8 @@ import { tranferToLowerCase } from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/theme-github';
-import useSWR from 'swr';
-import qs from 'query-string';
-import { appendApiPrefix } from '../../../utils/api';
+import Tabs from './../Tabs';
+import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
 interface Props {
   contractDetail: any;
   type: string;
@@ -96,6 +95,14 @@ const LabelWithIcon = styled.div`
     top: -0.0714rem;
     color: #ff5599;
     font-size: 1rem;
+  }
+  &.tabs {
+    width: initial;
+    color: inherit;
+    font-size: inherit;
+    .labelIcon {
+      left: -7px;
+    }
   }
 `;
 const TopContainer = styled.div`
@@ -264,37 +271,7 @@ const StyledTabelWrapper = styled.div`
   &.right {
     margin-left: 1.1429rem;
   }
-
   .abiContainer {
-    height: 17.8571rem;
-    width: 100%;
-    border: none;
-  }
-  .abiItem {
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    display: block;
-    color: #1e2022;
-    resize: both;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow: auto;
-    font-size: 1.1429rem;
-    height: 200px;
-    max-height: 400px;
-  }
-  .textAreaContainer {
-    width: 100%;
-    padding: 0.8571rem;
-    border-radius: 0px 0rem 0.2857rem 0.2857rem;
-    font-size: 14px;
-    font-weight: 400;
-    color: #585858;
-    line-height: 1.5714rem;
-    height: 14.2857rem;
-    max-height: 35.7143rem;
-    outline: none;
-    resize: none;
     border: none;
   }
   .contentHeader {
@@ -356,7 +333,7 @@ interface RequestBody {
   [key: string]: any;
 }
 export const Contract = ({ contractDetail, type, history, address }: Props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
   const [contractName, setContractName] = useState('');
@@ -372,6 +349,25 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
   const [addressDisabled, setAddressDisabled] = useState(true);
   const submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
   const inputStyle = { margin: '0' };
+  const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
+  const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
+  const [requestParams, setReuqestParams] = useState({});
+  const { data: dataResCreated } = useCMContractCreate(
+    requestParams,
+    shouldFetchCreate,
+  );
+  const { data: dataResUpdated } = useCMContractUpdate(
+    requestParams,
+    shouldFetchUpdate,
+  );
+  if (dataResCreated && dataResCreated['code'] === 0) {
+    //TODO: modify the router
+    history.replace('/');
+  }
+  if (dataResUpdated && dataResUpdated['code'] === 0) {
+    //TODO: modify the router
+    history.replace('/');
+  }
   const displayNone = {
     display: 'none',
   };
@@ -457,8 +453,8 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
   const handleSourceChange = code => {
     setSourceCode(code);
   };
-  const abiChangeHandler = e => {
-    setAbi(e.target.value);
+  const abiChangeHandler = abi => {
+    setAbi(abi);
   };
   const handleContractIconChange = e => {
     e.preventDefault();
@@ -485,7 +481,6 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
     e.target.value = '';
   };
   const submitClick = () => {
-    const fetcher = url => fetch(url).then(res => res.json());
     const bodyParams: RequestBody = {};
     bodyParams.address = tranferToLowerCase(addressVal);
     bodyParams.name = contractName;
@@ -496,59 +491,30 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
     bodyParams.sourceCode = sourceCode;
     bodyParams.abi = abi;
     bodyParams.password = password;
+    setReuqestParams(bodyParams);
     switch (type) {
       case 'create':
-        // const { data, error } = useSWR(
-        //   '/contract-manager/contract/create',
-        //   url =>
-        //     fetch(url, {
-        //       method: 'POST',
-        //       headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //       },
-        //       body: JSON.stringify(bodyParams),
-        //     }),
-        // );
-        fetch(appendApiPrefix('/contract-manager/contract/create'), {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bodyParams),
-        }).then(res => {
-          //TODO: replace the router
-          history.replace('/');
-        });
-        break;
+        setShouldFetchCreate(true);
       case 'edit':
-        // const { data:resData, error:resError } = useSWR(
-        //   '/contract-manager/contract/update',
-        //   url =>
-        //     fetch(url, {
-        //       method: 'POST',
-        //       headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //       },
-        //       body: JSON.stringify(bodyParams),
-        //     }),
-        // );
-        fetch(appendApiPrefix('/contract-manager/contract/update'), {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bodyParams),
-        }).then(res => {
-          //TODO: replace the router
-          history.replace('/');
-        });
+        setShouldFetchUpdate(true);
         break;
     }
   };
+  //TODO: modity the types of div to RreactNode
+  let tabsLabelAddress = (
+    <LabelWithIcon className="tabs">
+      <span className="labelIcon">*</span>
+      {t(translations.contract.address)}
+    </LabelWithIcon>
+  ) as any;
+  //TODO: modity the types of div to RreactNode
+  let tabsLabelAbi = (
+    <LabelWithIcon className="tabs">
+      <span className="labelIcon">*</span>
+      {t(translations.contract.abi)}
+    </LabelWithIcon>
+  ) as any;
+
   return (
     <Wrapper>
       <Header>{title}</Header>
@@ -662,7 +628,7 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
       </TopContainer>
       <TabContainer>
         <Tabs initialValue="1">
-          <Tabs.Item label="Contract Source Code" value="1">
+          <Tabs.Item label={tabsLabelAddress} value="1">
             <StyledTabelWrapper>
               <div className="ui fluid card">
                 <div className="content">
@@ -684,17 +650,23 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
               </div>
             </StyledTabelWrapper>
           </Tabs.Item>
-          <Tabs.Item label="Contract ABI" value="2">
+          <Tabs.Item label={tabsLabelAbi} value="2">
             <StyledTabelWrapper>
               <div className="ui fluid card">
                 <div className="content abiContainer">
                   <div className="contentHeader" />
-                  <textarea
-                    spellCheck="false"
-                    name="inputData"
-                    value={abi}
-                    className="textAreaContainer"
+                  <AceEditor
+                    style={AceEditorStyle}
+                    mode="json"
+                    theme="github"
+                    name="UNIQUE_ID_OF_DIV"
+                    setOptions={{
+                      showLineNumbers: true,
+                    }}
+                    showGutter={false}
+                    showPrintMargin={false}
                     onChange={abiChangeHandler}
+                    value={abi}
                   />
                 </div>
               </div>
