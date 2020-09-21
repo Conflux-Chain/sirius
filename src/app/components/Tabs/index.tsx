@@ -31,25 +31,6 @@ const TabsComponent = styled(Tabs)`
   header + .content {
     padding-top: 18px;
   }
-
-  ${media.s} {
-    .tab {
-      .nav {
-        margin: 0 16px 0 0;
-      }
-      .label {
-        padding: 2px 3px;
-        font-size: 14px;
-        line-height: 18px;
-      }
-      .bottom {
-        height: 4px;
-      }
-    }
-    header + .content {
-      padding-top: 12px;
-    }
-  }
 `;
 
 export default TabsComponent;

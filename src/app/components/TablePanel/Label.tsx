@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import currency from 'currency.js';
 import { Tooltip } from '@cfxjs/react-ui';
-import { media } from './../../../styles/media';
 
 const StyledToolTipLabel = createGlobalStyle`
   .tab-label-tooltip {
@@ -60,13 +59,6 @@ const StyledTipLabelWrapper = styled.p`
   color: #74798c;
   line-height: 18px;
   margin: 24px 0;
-
-  ${media.s} {
-    font-size: 12px;
-    line-height: 15px;
-    margin-top: 16px;
-    margin: 12px 0;
-  }
 `;
 const StyledSpan = styled.span`
   color: #0054fe;

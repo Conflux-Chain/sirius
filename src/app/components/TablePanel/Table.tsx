@@ -4,15 +4,6 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from './../../../utils/api';
 import styled from 'styled-components';
-import { media } from './../../../styles/media';
-
-const StyledCard = styled(Card)`
-  ${media.s} {
-    div.content {
-      padding: 12px;
-    }
-  }
-`;
 
 const StyledPaginationWrapper = styled.div`
   margin: 24px 0;
@@ -40,14 +31,9 @@ const StyledPaginationWrapper = styled.div`
   button.active {
     color: #fff !important;
   }
-
-  ${media.s} {
-    margin: 12px 0;
-  }
 `;
 const StyledTableWrapper = styled.div`
   .table thead th {
-    padding-top: 0;
     white-space: nowrap !important;
   }
   .table td.table-cell {
@@ -57,18 +43,6 @@ const StyledTableWrapper = styled.div`
     line-height: 24px;
     padding: 18px calc((8px / 2) * 3);
     white-space: nowrap !important;
-  }
-
-  ${media.s} {
-    .table {
-      td.table-cell {
-        padding: 16px;
-        line-height: 16px;
-      }
-      th.table-cell {
-        padding-bottom: 12px;
-      }
-    }
   }
 `;
 
@@ -94,18 +68,16 @@ function PanelTable({ url, pagination, table, onDataChange }) {
 
   return (
     <>
-      <StyledCard>
-        <StyledTableWrapper>
-          <Table
-            tableLayout="fixed"
-            columns={table.columns}
-            rowKey={table.rowKey}
-            data={tableData}
-            emptyText={emptyText}
-            scroll={{ x: 800 }}
-          />
-        </StyledTableWrapper>
-      </StyledCard>
+      <StyledTableWrapper>
+        <Table
+          tableLayout="fixed"
+          columns={table.columns}
+          rowKey={table.rowKey}
+          data={tableData}
+          emptyText={emptyText}
+          scroll={{ x: 800 }}
+        />
+      </StyledTableWrapper>
       <StyledPaginationWrapper>
         {pagination.show && (
           <Pagination {...pagination} total={paginationTotal} />

@@ -138,18 +138,22 @@ export const BlocksAndTransactions = () => {
   const tabs = [
     {
       value: 'blocks',
-      label: 'Blocks',
-      // label: count => {
-      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
-      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
-      //     type: 'blocks',
-      //   });
-      //   return (
-      //     <TabLabel left={left} right={right} count={count}>
-      //       Blocks
-      //     </TabLabel>
-      //   );
-      // },
+      // label: 'Blocks',
+      label: count => {
+        const left = t(translations.blocksAndTransactions.labelCountBefore);
+        const right = t(translations.blocksAndTransactions.labelCountAfter, {
+          type: 'blocks',
+        });
+        return (
+          <TabLabel left={left} right={right} count={count}>
+            Blocks
+          </TabLabel>
+        );
+      },
+      pagination: {
+        page: 2,
+        pageSize: 20,
+      },
       url: '/block/list?name=1',
       table: {
         columns: columnsBlocks,
