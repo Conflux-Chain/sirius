@@ -4,16 +4,15 @@ import styled from 'styled-components/macro';
 const TabsComponent = styled(Tabs)`
   .tab {
     .label {
-      font-size: 16px;
+      font-size: 1.142857rem;
       font-family: CircularStd-Medium, CircularStd;
-      font-weight: normal;
       color: rgba(11, 19, 46, 0.6);
-      line-height: 24px;
-      padding: 8px 3px;
+      line-height: 1.714286rem;
+      padding: 0.571429rem 0.285714rem;
       font-weight: 500;
     }
     .nav {
-      margin: 0 8px;
+      margin: 0 0.571429rem;
     }
     &.active,
     &:hover {
@@ -23,14 +22,14 @@ const TabsComponent = styled(Tabs)`
       }
     }
     .bottom {
-      height: 6px;
-      transform: scale(1);
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+      height: 0.428571rem;
+      border-top-left-radius: 0.571429rem;
+      border-top-right-radius: 0.571429rem;
     }
   }
   header + .content {
-    margin-top: 18px;
+    margin-top: 1.285714rem;
+    padding-top: 0;
   }
 `;
 
