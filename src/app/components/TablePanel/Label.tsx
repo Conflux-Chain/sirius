@@ -53,16 +53,16 @@ TabLabel.propTypes = {
 };
 
 const StyledTipLabelWrapper = styled.p`
-  font-size: 14px;
+  font-size: 1rem;
   font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
   color: #74798c;
-  line-height: 18px;
-  margin: 24px 0;
+  line-height: 1.2857rem;
+  margin: 1.7143rem 0;
 `;
 const StyledSpan = styled.span`
   color: #0054fe;
-  padding: 0 5px;
+  padding: 0 0.4286rem;
 `;
 export function TipLabel({ count, left, right }) {
   const [number, setCount] = useState(count);

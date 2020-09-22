@@ -5,6 +5,7 @@ exports[`<Text  /> should match snapshot 1`] = `
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: bottom;
   max-width: 40px;
   display: inline-block;
   cursor: pointer;
@@ -29,6 +30,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: bottom;
   display: inherit;
   cursor: pointer;
 }

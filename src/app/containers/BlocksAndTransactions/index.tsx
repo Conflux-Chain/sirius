@@ -2,28 +2,26 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TablePanel, {
-  ColumnsType,
-  TabLabel,
-  TipLabel,
-} from '../../components/TablePanel';
+import TablePanel, { ColumnsType, TipLabel } from '../../components/TablePanel';
 import styled from 'styled-components';
 import Text from './../../components/Text';
 import { media } from './../../../styles/media';
 
 const StyledBlocksAndTransactionsWrapper = styled.div`
-  max-width: 1024px;
+  max-width: 73.1429rem;
   margin: 0 auto;
-  padding-top: 12px;
+  padding-top: 0.8571rem;
 
   ${media.s} {
-    padding: 4px 16px 16px;
+    padding: 0.2857rem 1.1429rem 1.1429rem;
   }
 `;
 
 const StyledTextWrapper = styled.span`
   font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
+  line-height: 1.7143rem;
+  font-size: 1rem;
   &:hover {
     font-family: CircularStd-Bold, CircularStd;
     font-weight: 500;
@@ -33,7 +31,7 @@ const StyledTextWrapper = styled.span`
 
 const renderTextEllipsis = value => {
   return (
-    <Text span maxwidth={'80px'} hoverValue={value}>
+    <Text span maxwidth={'5.7143rem'} hoverValue={value}>
       <StyledTextWrapper>{value}</StyledTextWrapper>
     </Text>
   );
@@ -138,23 +136,19 @@ export const BlocksAndTransactions = () => {
   const tabs = [
     {
       value: 'blocks',
-      // label: 'Blocks',
-      label: count => {
-        const left = t(translations.blocksAndTransactions.labelCountBefore);
-        const right = t(translations.blocksAndTransactions.labelCountAfter, {
-          type: 'blocks',
-        });
-        return (
-          <TabLabel left={left} right={right} count={count}>
-            Blocks
-          </TabLabel>
-        );
-      },
-      pagination: {
-        page: 2,
-        pageSize: 20,
-      },
-      url: '/block/list?name=1',
+      label: 'Blocks',
+      // label: count => {
+      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
+      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
+      //     type: 'blocks',
+      //   });
+      //   return (
+      //     <TabLabel left={left} right={right} count={count}>
+      //       Blocks
+      //     </TabLabel>
+      //   );
+      // },
+      url: '/block/list',
       table: {
         columns: columnsBlocks,
         rowKey: 'hash',

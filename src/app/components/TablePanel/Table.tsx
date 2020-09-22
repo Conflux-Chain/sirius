@@ -1,48 +1,65 @@
 import React, { useEffect } from 'react';
-import { Table, Pagination, Card, Loading } from '@cfxjs/react-ui';
+import { Table, Pagination, Loading } from '@cfxjs/react-ui';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from './../../../utils/api';
 import styled from 'styled-components';
+import { media } from './../../../styles/media';
 
 const StyledPaginationWrapper = styled.div`
-  margin: 24px 0;
+  margin: 1.7143rem 0;
   li button {
     background-color: rgba(0, 84, 254, 0.04);
   }
   .input-wrapper.solid,
-  .select {
+  div.select {
     background-color: rgba(0, 84, 254, 0.04) !important;
-    border-color: transparent !important;
+    border-color: transparent;
     &.hover,
     &:hover {
       background-color: #e0eaff !important;
+      border-color: transparent;
+    }
+    input {
+      color: #74798c !important;
+      font-size: 1rem;
+      font-family: CircularStd-Medium, CircularStd;
+      font-weight: 500;
     }
   }
-  .text,
+
+  div.text,
   button,
-  .option span {
-    font-size: 14px !important;
+  div.option span {
+    font-size: 1rem !important;
     font-family: CircularStd-Medium, CircularStd;
-    font-weight: 500 !important;
+    font-weight: 500;
     color: #74798c !important;
-    line-height: 18px;
+    line-height: 1.2857rem !important;
   }
   button.active {
     color: #fff !important;
   }
 `;
 const StyledTableWrapper = styled.div`
-  .table thead th {
-    white-space: nowrap !important;
+  .table-content {
+    padding: 0 1.2857rem 1.2857rem;
+  }
+  .table th.table-cell {
+    white-space: nowrap;
   }
   .table td.table-cell {
-    font-size: 14px;
+    font-size: 1rem;
     font-family: CircularStd-Book, CircularStd;
+    font-weight: 400;
     color: #20253a;
-    line-height: 24px;
-    padding: 18px calc((8px / 2) * 3);
-    white-space: nowrap !important;
+    padding: 1.2857rem calc((0.5714rem / 2) * 3);
+    white-space: nowrap;
+    line-height: 1;
+
+    ${media.s} {
+      padding: 1.1429rem;
+    }
   }
 `;
 

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { media } from './media';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -35,10 +36,16 @@ export const GlobalStyle = createGlobalStyle`
       font-family: CircularStd-Book, CircularStd;
       font-weight: 400;
       border-radius: 0;
-      font-size: 12px;
+      font-size: 0.8571rem;
       color: #E9E9E9;
-      line-height: 15px;
-      padding: 8px 12px;
+      line-height: 1.0714rem;
+      padding: 0.5714rem 0.8571rem;
+    }
+  }
+
+  ${media.s} {
+    html {
+      font-size: 12px;
     }
   }
 `;

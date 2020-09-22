@@ -19,15 +19,11 @@ const Wrapper = styled(Text)<{ maxwidth: string }>`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: bottom;
   max-width: ${props => props.maxwidth};
   display: ${props =>
     props.maxwidth === undefined ? 'inherit' : 'inline-block'};
   cursor: pointer;
-  font-size: 14px;
-  font-family: CircularStd-Book, CircularStd;
-  font-weight: 400;
-  color: #20253a;
-  line-height: 24px;
 ` as typeof Text & React.FC<Props & { maxwidth?: string }>;
 
 // note:

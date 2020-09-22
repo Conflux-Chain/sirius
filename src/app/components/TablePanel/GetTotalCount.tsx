@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 import { simpleGetFetcher } from '../../../utils/api';
 

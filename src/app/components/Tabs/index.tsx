@@ -1,19 +1,18 @@
 import { Tabs } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
-import { media } from './../../../styles/media';
 
 const TabsComponent = styled(Tabs)`
   .tab {
     .label {
-      font-size: 16px;
+      font-size: 1.1429rem;
       font-family: CircularStd-Medium, CircularStd;
       color: rgba(11, 19, 46, 0.6) !important;
-      line-height: 24px;
-      padding: 8px 3px;
+      line-height: 1.7143rem;
+      padding: 0.5714rem 0.2857rem;
       font-weight: 500;
     }
     .nav {
-      margin: 0 8px;
+      margin: 0 0.5714rem;
     }
     &.active,
     &:hover {
@@ -23,13 +22,14 @@ const TabsComponent = styled(Tabs)`
       }
     }
     .bottom {
-      height: 6px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
+      height: 0.4286rem;
+      border-top-left-radius: 0.5714rem;
+      border-top-right-radius: 0.5714rem;
     }
   }
   header + .content {
-    padding-top: 18px;
+    margin-top: 1.2857rem;
+    padding-top: 0;
   }
 `;
 
