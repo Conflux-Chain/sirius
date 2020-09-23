@@ -62,7 +62,7 @@ const tablePanelMobileConfig: TablePanelConfigType = {
   pagination: paginationMobileConfig,
 };
 
-export default function Panel({ tabs }) {
+export default function Panel({ tabs, onTabsChange }) {
   const breakpoint = useBreakpoint();
   const history = useHistory();
   const location = useLocation();
@@ -87,6 +87,9 @@ export default function Panel({ tabs }) {
     history.push(`${location.pathname}?${search}`);
   };
   const handleTabsChange = (value: string): void => {
+    if (typeof onTabsChange === 'function') {
+      onTabsChange(value);
+    }
     history.push(
       `${location.pathname.split('/').slice(0, 2).join('/')}/${value}`,
     );
@@ -103,88 +106,96 @@ export default function Panel({ tabs }) {
   const tabsItems: Array<React.ReactNode> = [];
   const tabsLabelCountItems: Array<React.ReactNode> = [];
 
-  tabs.forEach(item => {
-    // merged pagination config
-    const pagination = {
-      ...config.pagination,
-      ...(typeof item.pagination === 'boolean'
-        ? { show: item.pagination }
-        : item.pagination),
-    };
-    // merged table config
-    const table = {
-      ...config.table,
-      ...item.table,
-    };
-    // merged onDataChange config
-    const handleDataChange = function ({ data }) {
-      const fn = item.onDataChange || config.onDataChange;
-      if (data) {
-        handleLabelCountChange({
-          [item.value]: data.result?.total,
-        });
+  cachedTabs.current.forEach(item => {
+    if (item.url && item.table) {
+      // merged pagination config
+      const pagination = {
+        ...config.pagination,
+        ...(typeof item.pagination === 'boolean'
+          ? { show: item.pagination }
+          : item.pagination),
+      };
+      // merged table config
+      const table = {
+        ...config.table,
+        ...item.table,
+      };
+      // merged onDataChange config
+      const handleDataChange = function ({ data }) {
+        const fn = item.onDataChange || config.onDataChange;
+        if (data) {
+          handleLabelCountChange({
+            [item.value]: data.result?.total,
+          });
+        }
+        fn.apply({}, arguments);
+      };
+      // merged url query config
+      const itemUrlFragment = item.url.split('?');
+      let itemUrl: string = '';
+      let itemQuery: { [key: string]: any } = {};
+      if (itemUrlFragment.length > 0) {
+        itemUrl = itemUrlFragment[0];
       }
-      fn.apply({}, arguments);
-    };
-    // merged url query config
-    const itemUrlFragment = item.url.split('?');
-    let itemUrl: string = '';
-    let itemQuery: { [key: string]: any } = {};
-    if (itemUrlFragment.length > 0) {
-      itemUrl = itemUrlFragment[0];
-    }
-    if (itemUrlFragment.length > 1) {
-      itemQuery = queryString.parse(itemUrlFragment[1]);
-    }
-    const query = {
-      page: pagination.page,
-      pageSize: pagination.pageSize,
-      ...itemQuery,
-      ...queryString.parse(location.search),
-    };
+      if (itemUrlFragment.length > 1) {
+        itemQuery = queryString.parse(itemUrlFragment[1]);
+      }
+      const query = {
+        page: pagination.page,
+        pageSize: pagination.pageSize,
+        ...itemQuery,
+        ...queryString.parse(location.search),
+      };
 
-    // get real request url
-    const search = queryString.stringify(query);
-    const url = `${itemUrl}?${search}`;
+      // get real request url
+      const search = queryString.stringify(query);
+      const url = `${itemUrl}?${search}`;
 
-    const itemLabel =
-      typeof item.label === 'function'
-        ? item.label(labelCountMap[item.value] || 0, item) || item.value
-        : item.label;
+      const itemLabel =
+        typeof item.label === 'function'
+          ? item.label(labelCountMap[item.value] || 0, item) || item.value
+          : item.label;
 
-    tabsItems.push(
-      <Tabs.Item label={itemLabel} value={item.value} key={item.value}>
-        <PanelTable
-          url={url}
-          pagination={{
-            ...pagination,
-            onPageChange: handlePaginationChange,
-            onPageSizeChange: handlePaginationChange,
-            page: Number(query.page),
-            pageSize: Number(query.pageSize),
-          }}
-          table={table}
-          onDataChange={handleDataChange}
-        />
-      </Tabs.Item>,
-    );
+      tabsItems.push(
+        <Tabs.Item label={itemLabel} value={item.value} key={item.value}>
+          <PanelTable
+            url={url}
+            pagination={{
+              ...pagination,
+              onPageChange: handlePaginationChange,
+              onPageSizeChange: handlePaginationChange,
+              page: Number(query.page),
+              pageSize: Number(query.pageSize),
+            }}
+            table={table}
+            onDataChange={handleDataChange}
+          />
+        </Tabs.Item>,
+      );
 
-    // there are three condition here
-    // 1. make sure only excute when not get all tab total success
-    // 2. only excute on tabs which need to get total
-    // 3. skip actived tab
-    if (
-      Object.keys(labelCountMap).length < tabsNeedToGetTotal.length &&
-      tabsNeedToGetTotal.some(t => t.value === item.value) &&
-      item.value !== type
-    ) {
-      tabsLabelCountItems.push(
-        <GetTotalCount
-          url={item.url}
-          type={item.value}
-          key={item.value}
-          onChange={handleLabelCountChange}
-        />,
+      // there are three condition here
+      // 1. make sure only excute when not get all tab total success
+      // 2. only excute on tabs which need to get total
+      // 3. skip actived tab
+      if (
+        Object.keys(labelCountMap).length < tabsNeedToGetTotal.length &&
+        tabsNeedToGetTotal.some(t => t.value === item.value) &&
+        item.value !== type
+      ) {
+        tabsLabelCountItems.push(
+          <GetTotalCount
+            url={item.url}
+            type={item.value}
+            key={item.value}
+            onChange={handleLabelCountChange}
+          />,
+        );
+      }
+    } else {
+      tabsItems.push(
+        <Tabs.Item label={item.label} value={item.value} key={item.value}>
+          {item.content}
+        </Tabs.Item>,
       );
     }
   });
@@ -220,6 +231,7 @@ export default function Panel({ tabs }) {
   */
 Panel.defaultProps = {
   tabs: [],
+  onTabsChange: () => {},
 };
 
 Panel.propTypes = {
@@ -233,6 +245,8 @@ Panel.propTypes = {
       //     Parameter is table list total count, return value can be react node or undefined
       //     If return value is undefined, use 'value' as default
       label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+      // base content to show, if there is table config, ignore it
+      content: PropTypes.node,
       // url: optional, request url, contain location search
       url: PropTypes.string,
       // pagination: optional, Pagination component config, there are two types:
@@ -256,8 +270,8 @@ Panel.propTypes = {
       }),
       // onDataChange: optional, only for table type content, fetch response callback
       onDataChange: PropTypes.func,
-      // base content to show, if there is table config, ignore it
-      content: PropTypes.node,
     }),
   ),
+  // onTabsChange: optional, Tabs component onTabsChange props
+  onTabsChange: PropTypes.func,
 };
