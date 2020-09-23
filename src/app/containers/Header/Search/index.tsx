@@ -3,7 +3,7 @@
  * Search
  *
  */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Logo as SearchIcon } from './Logo';
 import { Input } from '@cfxjs/react-ui';
@@ -13,15 +13,20 @@ import { media } from 'styles/media';
 
 export function Search() {
   const { t } = useTranslation();
+  const [focused, setFocused] = useState(false);
 
   return (
     <Outer>
       <Input
+        clearable
         width="100%"
         color="primary"
-        iconRight={<SearchIcon />}
+        icon={focused && <SearchIcon />}
+        iconRight={!focused && <SearchIcon />}
         placeholder={t(translations.header.searchPlaceHolder)}
         className="header-search-bar"
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
       />
     </Outer>
   );
