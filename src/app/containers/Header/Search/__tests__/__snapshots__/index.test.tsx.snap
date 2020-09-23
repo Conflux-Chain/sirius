@@ -7,6 +7,7 @@ exports[`<Search  /> should match snapshot 1`] = `
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
+  padding: 0 1.5rem;
 }
 
 .c0 .header-search-bar.input-container {
@@ -34,7 +35,7 @@ exports[`<Search  /> should match snapshot 1`] = `
   color: #20253a;
 }
 
-@media (max-width:600px) {
+@media (max-width:1024px) {
   .c0 {
     display: none;
   }

@@ -72,7 +72,7 @@ const Item = styled.div`
   flex-shrink: 0;
   min-height: 5rem;
 
-  ${media.s} {
+  ${media.m} {
     min-height: 2.14rem;
   }
 `;
@@ -86,7 +86,7 @@ const Brand = styled.div`
     display: none;
   }
 
-  ${media.s} {
+  ${media.m} {
     margin-right: 0;
 
     .navbar-burger {
@@ -142,7 +142,7 @@ const Menu = styled.div<{ visible: boolean }>`
   align-items: stretch;
   display: flex;
 
-  ${media.s} {
+  ${media.m} {
     width: 100vw;
     position: absolute;
     left: 0;
@@ -156,7 +156,7 @@ const MenuStart = styled.div`
   align-items: stretch;
   display: flex;
 
-  ${media.s} {
+  ${media.m} {
     flex-direction: column;
     margin-bottom: 4.43rem;
   }
@@ -168,7 +168,7 @@ const MenuEnd = styled.div`
   align-items: flex-end;
   display: flex;
 
-  ${media.s} {
+  ${media.m} {
     align-items: baseline;
     justify-content: flex-start;
     flex-direction: column;
@@ -183,7 +183,7 @@ const Container = styled.div`
   padding: 0 2.86rem;
 
   // mobile
-  ${media.s} {
+  ${media.m} {
     display: block;
     padding: 0 1.71rem;
   }
@@ -200,7 +200,7 @@ const Outer = styled.nav`
   min-height: 5rem;
 
   // mobile
-  ${media.s} {
+  ${media.m} {
     min-height: 4rem;
   }
 `;

@@ -86,7 +86,7 @@ const Menu = styled.div`
     }
   }
 
-  ${media.s} {
+  ${media.m} {
     position: inherit;
     background-color: transparent;
     padding-left: 2.43rem;
@@ -127,7 +127,7 @@ export const HeaderLink: React.FC<{
               onClick(e);
             }}
           >
-            {bp === 's' && <ChevronUp size={18} />}
+            {(bp === 'm' || bp === 's') && <ChevronUp size={18} />}
             {children}
           </Link>
         </div>
@@ -137,7 +137,7 @@ export const HeaderLink: React.FC<{
     const [text, links] = children as ReactNode[];
 
     return (
-      <WrappLink style={{ marginLeft: bp === 's' ? '-18px' : 0 }}>
+      <WrappLink style={{ marginLeft: bp === 'm' || bp === 's' ? '-18px' : 0 }}>
         <div
           className={clsx([
             'link navbar-link-menu navbar-link',
@@ -152,9 +152,9 @@ export const HeaderLink: React.FC<{
                 e.preventDefault();
               }}
             >
-              {bp === 's' && <ChevronUp size={18} />}
+              {(bp === 'm' || bp === 's') && <ChevronUp size={18} />}
               {text}
-              {bp !== 's' && <ChevronUp size={18} />}
+              {bp !== 's' && bp !== 'm' && <ChevronUp size={18} />}
             </Link>
           </WrappLink>
           {expanded && <Menu className="header-link-menu">{links}</Menu>}
@@ -205,7 +205,7 @@ const WrappLink = styled.span`
     }
   }
 
-  ${media.s} {
+  ${media.m} {
     a.link.navbar-link {
       flex-direction: row;
       color: #aab9eb;
