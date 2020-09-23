@@ -189,6 +189,7 @@ const Container = styled.div`
   }
 `;
 const Outer = styled.nav`
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;

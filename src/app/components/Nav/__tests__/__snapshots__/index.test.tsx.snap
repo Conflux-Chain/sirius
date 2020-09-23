@@ -117,6 +117,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
 }
 
 .c0 {
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -432,6 +433,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
 }
 
 .c0 {
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;
