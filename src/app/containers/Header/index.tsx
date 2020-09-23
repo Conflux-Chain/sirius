@@ -66,7 +66,10 @@ export const Header = memo(() => {
       </Link>
     </LogoWrapper>
   );
-  const menuStart = [bp === 's' && <TextLogo />, ...startLinksJSX];
+  const menuStart = [
+    (bp === 'm' || bp === 's') && <TextLogo />,
+    ...startLinksJSX,
+  ];
   const menuEnd = [<Search />, endLinksJSX];
 
   return (
@@ -82,7 +85,7 @@ const LogoWrapper = styled.div`
     align-items: center;
 
     svg {
-      ${media.s} {
+      ${media.m} {
         display: none;
       }
     }
@@ -108,7 +111,7 @@ const Wrapper = styled.header`
     }
   }
 
-  ${media.s} {
+  ${media.m} {
     .navbar-menu {
       background-color: #4a5064;
       padding: 1.64rem 5.14rem;

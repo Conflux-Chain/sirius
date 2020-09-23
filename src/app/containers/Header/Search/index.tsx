@@ -30,6 +30,7 @@ export function Search() {
 const Outer = styled.div`
   max-width: 40rem;
   flex-grow: 1;
+  padding: 0 1.5rem;
   .header-search-bar.input-container {
     height: 2.28rem;
     .input-wrapper {
@@ -42,7 +43,7 @@ const Outer = styled.div`
       }
     }
   }
-  ${media.s} {
+  ${media.m} {
     display: none;
   }
 `;
