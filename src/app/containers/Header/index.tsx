@@ -8,7 +8,7 @@ import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@cfxjs/react-ui';
-import { TextLogo } from './TextLogo';
+import { TextLogo } from '../../components/TextLogo';
 import { Search } from './Search/Loadable';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
