@@ -1,11 +1,11 @@
-import React, { ReactNode, MouseEventHandler } from 'react';
+import React, { ReactNode, MouseEventHandler, useRef } from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { Link } from '@cfxjs/react-ui';
 import { useRouteMatch, match } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
 import { ChevronUp } from '@geist-ui/react-icons';
-import { useToggle } from 'react-use';
+import { useToggle, useClickAway } from 'react-use';
 
 export type HeaderLinkTitle = string | Array<string | ReactNode>;
 export type HeaderLinkHref = string | string[] | MouseEventHandler;
@@ -100,6 +100,10 @@ export const HeaderLink: React.FC<{
   onClick?: MouseEventHandler;
 }> = ({ className, href, matched, children, onClick }) => {
   const [expanded, toggle] = useToggle(false);
+  const ref = useRef(null);
+  useClickAway(ref, () => {
+    if (expanded) setTimeout(() => toggle(), 200);
+  });
   const bp = useBreakpoint();
 
   if (href) {
@@ -146,6 +150,7 @@ export const HeaderLink: React.FC<{
         >
           <WrappLink>
             <Link
+              ref={ref}
               className={className}
               onClick={e => {
                 toggle();
