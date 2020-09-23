@@ -314,3 +314,322 @@ exports[`<Nav  /> should match snapshot 1`] = `
   </div>
 </nav>
 `;
+
+exports[`<Nav  /> should match snapshot on mobile 1`] = `
+.c3 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  min-height: 5rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  margin-right: 4rem;
+}
+
+.c2 .navbar-burger {
+  color: #4c4d52;
+  display: none;
+}
+
+.c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c5 {
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-right: auto;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c6 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  margin-left: auto;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 2.86rem;
+}
+
+.c0 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100vw;
+  z-index: 30;
+  min-height: 5rem;
+}
+
+@media (max-width:1024px) {
+  .c3 {
+    min-height: 2.14rem;
+  }
+}
+
+@media (max-width:1024px) {
+  .c2 {
+    margin-right: 0;
+  }
+
+  .c2 .navbar-burger {
+    cursor: pointer;
+    display: block;
+    height: 4rem;
+    position: relative;
+    width: 3.25rem;
+    margin-left: auto;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+  }
+
+  .c2 .navbar-burger span {
+    background-color: currentColor;
+    display: block;
+    height: 2px;
+    left: calc(50% - 8px);
+    position: absolute;
+    -webkit-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center;
+    -webkit-transition-duration: 86ms;
+    transition-duration: 86ms;
+    -webkit-transition-property: background-color,opacity,-webkit-transform;
+    -webkit-transition-property: background-color,opacity,transform;
+    transition-property: background-color,opacity,transform;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    width: 18px;
+  }
+
+  .c2 .navbar-burger span:nth-child(1) {
+    top: calc(50% - 6px);
+  }
+
+  .c2 .navbar-burger span:nth-child(2) {
+    top: calc(50% - 1px);
+  }
+
+  .c2 .navbar-burger span:nth-child(3) {
+    top: calc(50% + 4px);
+  }
+
+  .c2 .navbar-burger.is-active span:nth-child(1) {
+    -webkit-transform: translateY(5px) rotate(45deg);
+    -ms-transform: translateY(5px) rotate(45deg);
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .c2 .navbar-burger.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .c2 .navbar-burger.is-active span:nth-child(3) {
+    -webkit-transform: translateY(-5px) rotate(-45deg);
+    -ms-transform: translateY(-5px) rotate(-45deg);
+    transform: translateY(-5px) rotate(-45deg);
+  }
+}
+
+@media (max-width:1024px) {
+
+}
+
+@media (max-width:1024px) {
+  .c4 {
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    display: block;
+  }
+}
+
+@media (max-width:1024px) {
+  .c5 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 4.43rem;
+  }
+}
+
+@media (max-width:1024px) {
+  .c6 {
+    -webkit-align-items: baseline;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:1024px) {
+  .c1 {
+    display: block;
+    padding: 0 1.71rem;
+  }
+}
+
+@media (max-width:1024px) {
+  .c0 {
+    min-height: 4rem;
+  }
+}
+
+<nav
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    <div
+      class="c2 navbar-brand"
+    >
+      <div
+        class="c3 navbar-item"
+      >
+        <span>
+          header brand
+        </span>
+      </div>
+      <a
+        aria-expanded="true"
+        aria-label="menu"
+        class="navbar-burger is-active"
+        data-target="navbar"
+        role="button"
+      >
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+        <span
+          aria-hidden="true"
+        />
+      </a>
+    </div>
+    <div
+      class="c4 navbar-menu is-active"
+    >
+      <div
+        class="c5 navbar-start"
+      >
+        <div
+          class="c3 navbar-item"
+        >
+          <span>
+            Blocks&Transaction
+          </span>
+        </div>
+      </div>
+      <div
+        class="c6 navbar-end"
+      >
+        <div
+          class="c3 navbar-item"
+        >
+          <span>
+            EN
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+`;

@@ -129,6 +129,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/user-event": "12.1.6",
     "cz-conventional-changelog": "3.3.0",
     "http-proxy-middleware": "1.0.5",
     "jest-fetch-mock": "3.0.3",
