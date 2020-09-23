@@ -1,3 +1,8 @@
+/**
+ *
+ * TextLogo
+ *
+ */
 import React from 'react';
 import { useBreakpoint } from 'styles/media';
 
