@@ -1,33 +1,115 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Footer  /> should match snapshot 1`] = `
+.c2 {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+  padding-right: 11.57rem;
+}
+
+.c1 {
+  margin-right: 2.93rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
 .c0 {
-  border: 1px solid green;
+  box-sizing: border-box;
+  background-color: #e0e3f2;
+  width: 100vw;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  padding: 3.29rem 2.29rem 3.29rem 3.36rem;
+}
+
+.c0 .footer-bottom-divider.divider {
+  background-color: #d1d5ea;
+  margin-top: 1.07rem;
+  margin-bottom: 0.57rem;
+}
+
+@media (max-width:600px) {
+  .c2 {
+    padding: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 {
+    padding: 0 0.21rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c4 {
+    padding: 0 0.21rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 {
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 1.14rem 0.93rem;
+  }
+
+  .c0 .footer-bottom-divider.divider {
+    margin-top: 0.79rem;
+    margin-bottom: 0.29rem;
+  }
 }
 
 <footer
   class="c0"
 >
   <div
-    class=""
+    class="c1"
   >
     <span>
       left
     </span>
   </div>
   <div
-    class=""
+    class="c2"
   >
-    <span>
-      right
-    </span>
-  </div>
-  <div
-    class=""
-  >
-    <span>
-      @2020 Conflux. All Rights Reserved
-    </span>
+    <div
+      class="c3"
+    >
+      <span>
+        rightTop
+      </span>
+    </div>
+    <div
+      class="jsx-2262921535 divider footer-bottom-divider"
+      role="separator"
+    />
+    <div
+      class="c4"
+    >
+      <span>
+        @2020 Conflux. All Rights Reserved
+      </span>
+    </div>
   </div>
 </footer>
 `;

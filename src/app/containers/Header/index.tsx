@@ -62,7 +62,7 @@ export const Header = memo(() => {
     <LogoWrapper>
       <Link>
         <img alt="conflux scan logo" src="confi-planet.png" />
-        <TextLogo />
+        <TextLogo changeColorOnMobile />
       </Link>
     </LogoWrapper>
   );
