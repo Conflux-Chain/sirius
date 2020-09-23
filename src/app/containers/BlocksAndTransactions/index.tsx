@@ -137,23 +137,12 @@ export const BlocksAndTransactions = () => {
     {
       value: 'blocks',
       label: 'Blocks',
-      // label: count => {
-      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
-      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
-      //     type: 'blocks',
-      //   });
-      //   return (
-      //     <TabLabel left={left} right={right} count={count}>
-      //       Blocks
-      //     </TabLabel>
-      //   );
-      // },
       url: '/block/list',
       table: {
         columns: columnsBlocks,
         rowKey: 'hash',
       },
-      onDataChange: data => {
+      onDataChange: ({ data }) => {
         const left = t(translations.blocksAndTransactions.tipCountBefore);
         const right = t(translations.blocksAndTransactions.tipCountAfter, {
           type: 'blocks',
@@ -172,23 +161,12 @@ export const BlocksAndTransactions = () => {
     {
       value: 'transaction',
       label: 'Transactions',
-      // label: count => {
-      //   const left = t(translations.blocksAndTransactions.labelCountBefore);
-      //   const right = t(translations.blocksAndTransactions.labelCountAfter, {
-      //     type: 'transactions',
-      //   });
-      //   return (
-      //     <TabLabel left={left} right={right} count={count}>
-      //       Transactions
-      //     </TabLabel>
-      //   );
-      // },
       url: '/transaction/list',
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
-      onDataChange: (data, error) => {
+      onDataChange: ({ data }) => {
         const left = t(translations.blocksAndTransactions.tipCountBefore);
         const right = t(translations.blocksAndTransactions.tipCountAfter, {
           type: 'transactions',

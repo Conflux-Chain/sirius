@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
@@ -70,6 +70,14 @@ export default function Panel({ tabs }) {
   const [labelCountMap, setLabelCountMap] = useState({});
   const config = breakpoint === 's' ? tablePanelMobileConfig : tablePanelConfig;
 
+  const cachedTabs = useRef(tabs);
+  // tabsNeedToGetTotal: one tab contain a table, need to fetch total count and show in tab header
+  const tabsNeedToGetTotal = useMemo(() => {
+    return cachedTabs.current.filter(
+      item => item.url && item.table && typeof item.label === 'function',
+    );
+  }, []);
+
   const handlePaginationChange = (page: number, pageSize: number): void => {
     const search = queryString.stringify({
       ...queryString.parse(location.search),
@@ -109,7 +117,7 @@ export default function Panel({ tabs }) {
       ...item.table,
     };
     // merged onDataChange config
-    const handleDataChange = function (data) {
+    const handleDataChange = function ({ data }) {
       const fn = item.onDataChange || config.onDataChange;
       if (data) {
         handleLabelCountChange({
@@ -129,11 +137,13 @@ export default function Panel({ tabs }) {
       itemQuery = queryString.parse(itemUrlFragment[1]);
     }
     const query = {
-      ...itemQuery,
       page: pagination.page,
       pageSize: pagination.pageSize,
+      ...itemQuery,
       ...queryString.parse(location.search),
     };
+
+    // get real request url
     const search = queryString.stringify(query);
     const url = `${itemUrl}?${search}`;
 
@@ -159,17 +169,24 @@ export default function Panel({ tabs }) {
       </Tabs.Item>,
     );
 
-    const tabsLabelCountKeysLength = Object.keys(labelCountMap).length;
-    // render once
-    tabsLabelCountKeysLength < 2 &&
+    // there are three condition here
+    // 1. make sure only excute when not get all tab total success
+    // 2. only excute on tabs which need to get total
+    // 3. skip actived tab
+    if (
+      Object.keys(labelCountMap).length < tabsNeedToGetTotal.length &&
+      tabsNeedToGetTotal.some(t => t.value === item.value) &&
+      item.value !== type
+    ) {
       tabsLabelCountItems.push(
         <GetTotalCount
-          url={url}
+          url={item.url}
           type={item.value}
           key={item.value}
           onChange={handleLabelCountChange}
         />,
       );
+    }
   });
 
   return (
@@ -208,17 +225,17 @@ Panel.defaultProps = {
 Panel.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
-      // value: Tabs item unique ident value, used as key
+      // value: required, Tabs item unique ident value, used as key
       value: PropTypes.string,
-      // label: tab item's label, there are two types:
+      // label: required, tab item's label, there are two types:
       //  1. string
       //  2. function - (count: number) => React.ReactNode | undefined.
       //     Parameter is table list total count, return value can be react node or undefined
       //     If return value is undefined, use 'value' as default
       label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-      // url: request url, contain location search
+      // url: optional, request url, contain location search
       url: PropTypes.string,
-      // pagination: Pagination component config, there are two types:
+      // pagination: optional, Pagination component config, there are two types:
       //  1. object: Pagination component config
       //  2. boolean - if false then hide the pagination, if true then use default pagination config
       pagination: PropTypes.oneOfType([
@@ -232,13 +249,15 @@ Panel.propTypes = {
           show: PropTypes.bool,
         }),
       ]),
-      // table: Table component config
+      // table: optional, Table component config
       table: PropTypes.shape({
         columns: PropTypes.array,
         rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       }),
-      // onDataChange: fetch response callback
+      // onDataChange: optional, only for table type content, fetch response callback
       onDataChange: PropTypes.func,
+      // base content to show, if there is table config, ignore it
+      content: PropTypes.node,
     }),
   ),
 };

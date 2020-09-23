@@ -67,7 +67,7 @@ function PanelTable({ url, pagination, table, onDataChange }) {
   const { data, error } = useSWR([url], simpleGetFetcher);
 
   useEffect(() => {
-    onDataChange && onDataChange(data, error);
+    onDataChange && onDataChange({ data, error });
   }, [data]); // eslint-disable-line
 
   let emptyText: React.ReactNode | string = 'No data.';
