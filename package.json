@@ -57,7 +57,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
     "start:prod": "yarn build && serve -s build",
@@ -132,6 +132,7 @@
     "@testing-library/user-event": "12.1.6",
     "cz-conventional-changelog": "3.3.0",
     "http-proxy-middleware": "1.0.5",
+    "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-fetch-mock": "3.0.3",
     "semantic-release": "17.1.1"
   },
