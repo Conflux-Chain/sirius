@@ -196,11 +196,11 @@ exports[`<Header /> should match the snapshot 1`] = `
   align-items: center;
 }
 
-.c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link {
+.c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
   padding: 0 0.57rem;
 }
 
-.c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link svg {
+.c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 svg {
   display: none;
 }
 
@@ -366,6 +366,10 @@ exports[`<Header /> should match the snapshot 1`] = `
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-align-items: baseline;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
   }
 
   .c0 .navbar-menu .navbar-end .navbar-item .header-link-menu {
@@ -374,6 +378,14 @@ exports[`<Header /> should match the snapshot 1`] = `
 
   .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link {
     padding: 0.43rem 1.5rem;
+  }
+
+  .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
+    padding: 0.43rem 1.5rem;
+  }
+
+  .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 svg {
+    display: block;
   }
 
   .c0 .navbar-menu .navbar-end .navbar-item:nth-child(1) {

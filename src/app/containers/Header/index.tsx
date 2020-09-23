@@ -96,7 +96,7 @@ const Wrapper = styled.header`
     .navbar-end {
       .navbar-item {
         .navbar-link-menu {
-          .navbar-link {
+          .navbar-link.level-0 {
             padding: 0 0.57rem;
             svg {
               display: none;
@@ -126,6 +126,7 @@ const Wrapper = styled.header`
       .navbar-end {
         .navbar-item {
           flex-direction: row;
+          align-items: baseline;
 
           .header-link-menu {
             padding-left: 0;
@@ -133,6 +134,12 @@ const Wrapper = styled.header`
           .navbar-link-menu {
             .navbar-link {
               padding: 0.43rem 1.5rem;
+              &.level-0 {
+                padding: 0.43rem 1.5rem;
+                svg {
+                  display: block;
+                }
+              }
             }
           }
 
