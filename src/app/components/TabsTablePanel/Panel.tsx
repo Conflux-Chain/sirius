@@ -1,6 +1,6 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import Tabs from '../Tabs';
 import TablePanel from '../TablePanel';
@@ -8,7 +8,6 @@ import GetTotalCount from './GetTotalCount';
 
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
-import { constSelector } from 'recoil';
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
 type TablePanelConfigType = {
@@ -50,21 +49,8 @@ export default function TabsTablePanel({ tabs, onTabsChange }) {
     });
     history.push(`${location.pathname}?${search}`);
   };
-  const tabValueArray = tabs.map(i => i.value);
-  const tabValue = queryString.parse(location.search).tab || tabValueArray[0];
-
-  useEffect(() => {
-    if (location.search.indexOf('tab') === -1) {
-      updateLocationSearch({
-        tab: tabValueArray[0],
-      });
-    }
-  }, [location.search]); // eslint-disable-line
-
-  // if no tab in location search, rewrite url and rerender again
-  if (location.search.indexOf('tab') === -1) {
-    return null;
-  }
+  const tabValue =
+    queryString.parse(location.search).tab || tabs.map(i => i.value)[0];
 
   const handleTabsChange = (value: string): void => {
     if (typeof onTabsChange === 'function') {
