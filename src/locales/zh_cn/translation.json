@@ -11,5 +11,15 @@
     "labelCountBefore": "共计找到",
     "labelCountAfter": "条 {{type}} 记录"
   },
-  "general": {}
+  "general": {
+    "table": {
+      "noData": "无数据"
+    },
+    "pagination": {
+      "labelPageSizeBefore": "每页",
+      "labelPageSizeAfter": "条",
+      "labelJumperBefore": "跳转到",
+      "labelJumperAfter": "页"
+    }
+  }
 }

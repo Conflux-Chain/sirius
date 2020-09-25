@@ -11,5 +11,15 @@
     "labelCountBefore": "A total of",
     "labelCountAfter": "{{type}} found"
   },
-  "general": {}
+  "general": {
+    "table": {
+      "noData": "No data."
+    },
+    "pagination": {
+      "labelPageSizeBefore": "Show",
+      "labelPageSizeAfter": "Records",
+      "labelJumperBefore": "Go to",
+      "labelJumperAfter": "Page"
+    }
+  }
 }
