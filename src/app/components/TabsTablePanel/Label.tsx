@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
-import currency from 'currency.js';
+import numeral from 'numeral';
 import { Tooltip } from '@cfxjs/react-ui';
 
 const StyledToolTipLabel = createGlobalStyle`
@@ -73,9 +73,7 @@ export function TipLabel({ count, left, right }) {
   return (
     <StyledTipLabelWrapper>
       {left}
-      <StyledSpan>
-        {currency(number, { symbol: '', precision: 0 }).format()}
-      </StyledSpan>
+      <StyledSpan>{numeral(number).format('0,0')}</StyledSpan>
       {right}
     </StyledTipLabelWrapper>
   );
