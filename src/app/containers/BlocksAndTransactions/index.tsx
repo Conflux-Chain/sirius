@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TablePanel, { ColumnsType, TipLabel } from '../../components/TablePanel';
+import TabsTablePanel, {
+  ColumnsType,
+  TipLabel,
+} from '../../components/TabsTablePanel';
+import TablePanel from '../../components/TablePanel';
 import styled from 'styled-components';
 import Text from './../../components/Text';
 import { media } from './../../../styles/media';
@@ -193,7 +197,7 @@ export const BlocksAndTransactions = () => {
         />
       </Helmet>
       {tip}
-      <TablePanel tabs={tabs} />
+      <TabsTablePanel tabs={tabs} />
     </StyledBlocksAndTransactionsWrapper>
   );
 };

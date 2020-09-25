@@ -37,14 +37,9 @@ export function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Redirect
-              exact
-              from="/blocks-and-transactions"
-              to="/blocks-and-transactions/blocks"
-            />
             <Route
               exact
-              path="/blocks-and-transactions/:type"
+              path="/blocks-and-transactions"
               component={BlocksAndTransactions}
             />
             <Route component={NotFoundPage} />

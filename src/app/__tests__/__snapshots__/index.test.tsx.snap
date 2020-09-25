@@ -24,15 +24,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
           exact={true}
           path="/"
         />
-        <Redirect
-          exact={true}
-          from="/blocks-and-transactions"
-          to="/blocks-and-transactions/blocks"
-        />
         <Route
           component={[Function]}
           exact={true}
-          path="/blocks-and-transactions/:type"
+          path="/blocks-and-transactions"
         />
         <Route
           component={[Function]}
