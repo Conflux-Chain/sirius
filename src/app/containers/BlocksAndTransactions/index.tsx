@@ -6,7 +6,6 @@ import TabsTablePanel, {
   ColumnsType,
   TipLabel,
 } from '../../components/TabsTablePanel';
-import TablePanel from '../../components/TablePanel';
 import styled from 'styled-components';
 import Text from './../../components/Text';
 import { media } from './../../../styles/media';
@@ -47,42 +46,52 @@ export const BlocksAndTransactions = () => {
 
   const columnsBlocks: ColumnsType = [
     {
-      title: 'Epoch',
+      title: t(translations.blocksAndTransactions.table.block.epoch),
       dataIndex: 'epochNumber',
       key: 'epochNumber',
       width: 100,
       render: renderTextEllipsis,
     },
     {
-      title: 'Position',
+      title: t(translations.blocksAndTransactions.table.block.position),
       dataIndex: 'blockIndex',
       key: 'blockIndex',
       width: 100,
     },
     {
-      title: 'Txns',
+      title: t(translations.blocksAndTransactions.table.block.txns),
       dataIndex: 'transactionCount',
       key: 'transactionCount',
       width: 100,
       ellipsis: true,
     },
     {
-      title: 'Miner',
+      title: t(translations.blocksAndTransactions.table.block.miner),
       dataIndex: 'miner',
       key: 'miner',
       width: 100,
       render: value => renderTextEllipsis(value),
     },
-    { title: 'Avg.Gas Price', dataIndex: 'gas', key: 'gas', width: 100 }, // todo, no gas price
     {
-      title: 'Gas Used/Limit',
+      title: t(translations.blocksAndTransactions.table.block.avgGasPrice),
+      dataIndex: 'gas',
+      key: 'gas',
+      width: 100,
+    }, // todo, no gas price
+    {
+      title: t(translations.blocksAndTransactions.table.block.gasUsedPercent),
       dataIndex: 'gasLimit',
       key: 'gasLimit',
       width: 100,
     },
-    { title: 'Reward', dataIndex: 'reward', key: 'reward', width: 100 }, // todo, no reward
     {
-      title: 'Age',
+      title: t(translations.blocksAndTransactions.table.block.reward),
+      dataIndex: 'reward',
+      key: 'reward',
+      width: 100,
+    }, // todo, no reward
+    {
+      title: t(translations.blocksAndTransactions.table.block.age),
       dataIndex: 'syncTimestamp',
       key: 'syncTimestamp',
       width: 100,
@@ -91,46 +100,46 @@ export const BlocksAndTransactions = () => {
 
   const columnsTransactions: ColumnsType = [
     {
-      title: 'Hash',
+      title: t(translations.blocksAndTransactions.table.transactions.hash),
       dataIndex: 'hash',
       key: 'hash',
       width: 100,
       render: value => renderTextEllipsis(value),
     },
     {
-      title: 'From',
+      title: t(translations.blocksAndTransactions.table.transactions.from),
       dataIndex: 'from',
       key: 'from',
       width: 100,
       render: value => renderTextEllipsis(value),
     },
     {
-      title: 'To',
+      title: t(translations.blocksAndTransactions.table.transactions.to),
       dataIndex: 'to',
       key: 'to',
       width: 100,
       render: value => renderTextEllipsis(value),
     },
     {
-      title: 'Value',
+      title: t(translations.blocksAndTransactions.table.transactions.value),
       dataIndex: 'value',
       key: 'value',
       width: 100,
     },
     {
-      title: 'Gas Price',
+      title: t(translations.blocksAndTransactions.table.transactions.gasPrice),
       dataIndex: 'gasPrice',
       key: 'gasPrice',
       width: 100,
     },
     {
-      title: 'Gas Fee',
+      title: t(translations.blocksAndTransactions.table.transactions.gasFee),
       dataIndex: 'gas',
       key: 'gas',
       width: 100,
     },
     {
-      title: 'Age',
+      title: t(translations.blocksAndTransactions.table.transactions.age),
       dataIndex: 'syncTimestamp',
       key: 'syncTimestamp',
       width: 100,
@@ -140,7 +149,7 @@ export const BlocksAndTransactions = () => {
   const tabs = [
     {
       value: 'blocks',
-      label: 'Blocks',
+      label: t(translations.blocksAndTransactions.blocks),
       url: '/block/list',
       table: {
         columns: columnsBlocks,
@@ -164,7 +173,7 @@ export const BlocksAndTransactions = () => {
     },
     {
       value: 'transaction',
-      label: 'Transactions',
+      label: t(translations.blocksAndTransactions.transactions),
       url: '/transaction/list',
       table: {
         columns: columnsTransactions,
