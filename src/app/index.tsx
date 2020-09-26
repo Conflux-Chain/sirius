@@ -18,6 +18,7 @@ import { Header } from './containers/Header/index';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
+import { Tokens } from './containers/Tokens/Loadable';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -47,6 +48,7 @@ export function App() {
               path="/blocks-and-transactions"
               component={BlocksAndTransactions}
             />
+            <Route exact path="/tokens" component={Tokens} />
             <Route component={NotFoundPage} />
           </Switch>
         </Main>
