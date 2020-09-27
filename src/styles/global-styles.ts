@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ${media.s} {
-    html {
+    html, body {
       font-size: 12px;
     }
   }
