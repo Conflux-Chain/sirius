@@ -18,12 +18,7 @@ export function Footer() {
   const bp = useBreakpoint();
   const isS = bp === 's';
 
-  const left = [
-    <TextLogo key="logo" />,
-    <FooterDescription key="des">
-      Confluxscan provides faster and decentralized experience
-    </FooterDescription>,
-  ];
+  const left = [<TextLogo key="logo" />];
 
   const websiteLink = (
     <Link className="footer-link" href="https://confluxnetwork.org">
@@ -33,11 +28,6 @@ export function Footer() {
   const portalLink = (
     <Link className="footer-link" href="https://portal.conflux-chain.org">
       Conflux Portal
-    </Link>
-  );
-  const grantsLink = (
-    <Link className="footer-link" href="https://grants.confluxnetwork.org/">
-      Grants
     </Link>
   );
   const bountyLink = (
@@ -72,14 +62,9 @@ export function Footer() {
       {!isS && (
         <FooterContent key="content">
           <FooterContentRow>
-            <FooterContentColumn key="1">
-              <FooterContentLink key="1">{websiteLink}</FooterContentLink>
-              <FooterContentLink key="2">{grantsLink}</FooterContentLink>
-            </FooterContentColumn>
-            <FooterContentColumn key="2">
-              <FooterContentLink key="1">{portalLink}</FooterContentLink>
-              <FooterContentLink key="2">{bountyLink}</FooterContentLink>
-            </FooterContentColumn>
+            <FooterContentLink key="1">{websiteLink}</FooterContentLink>
+            <FooterContentLink key="2">{portalLink}</FooterContentLink>
+            <FooterContentLink key="3">{bountyLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       )}
