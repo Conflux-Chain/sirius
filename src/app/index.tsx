@@ -33,7 +33,6 @@ export function App() {
             content={t(translations.homepage.description)}
           />
         </Helmet>
-
         <Header />
         <Main>
           <Switch>
