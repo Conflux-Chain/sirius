@@ -7,7 +7,7 @@ import React, { memo, useState, useEffect, useRef, ReactNode } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { Input, Button } from '@cfxjs/react-ui';
 import iconContractRemove from './../../../images/contract/remove.png';
 import iconContractUpload from './../../../images/contract/upload.png';
@@ -45,8 +45,13 @@ const Wrapper = styled.div`
   }
   .submitInput {
     .input-wrapper {
-      height: 2.2857rem;
       border: none;
+      ${media.xl} {
+        height: 2.2857rem;
+      }
+      ${media.s} {
+        height: 2.6667rem;
+      }
     }
   }
   .input-container.submitInput {
@@ -59,9 +64,9 @@ const Wrapper = styled.div`
   }
   ${media.s} {
     max-width: initial;
-    margin: 0 1.1429rem;
+    margin: 0 1.3333rem;
     .inputComp {
-      margin-top: 0.3571rem;
+      margin-top: 0.4167rem;
     }
   }
 `;
@@ -74,9 +79,9 @@ const Header = styled.div`
     font-size: 24px;
   }
   ${media.s} {
-    padding-top: 12px;
-    margin-bottom: 20px;
-    font-size: 18px;
+    padding-top: 1rem;
+    margin-bottom: 1.6667rem;
+    font-size: 1.5rem;
   }
 `;
 const LabelWithIcon = styled.div`
@@ -130,7 +135,7 @@ const TopContainer = styled.div`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 0.8571rem 0;
+      padding: 1rem 0;
       border-bottom: 1px solid #e8e9ea;
       .with-label {
         width: 100%;
@@ -162,7 +167,7 @@ const TopContainer = styled.div`
     flex-direction: row;
     background: #f5f6fa;
     ${media.s} {
-      margin-top: 0.9286rem;
+      margin-top: 1.0833rem;
     }
   }
   .innerContainer {
@@ -177,7 +182,7 @@ const TopContainer = styled.div`
       padding: 2.8571rem 1.2857rem;
     }
     ${media.s} {
-      padding: 0.7143rem;
+      padding: 0.8333rem;
     }
     .itemContainer {
       width: 100%;
@@ -211,8 +216,8 @@ const TopContainer = styled.div`
         }
 
         ${media.s} {
-          width: 3.1429rem;
-          height: 3.1429rem;
+          width: 3.6667rem;
+          height: 3.6667rem;
         }
       }
     }
@@ -227,7 +232,7 @@ const TopContainer = styled.div`
         font-size: 1rem;
       }
       ${media.s} {
-        font-size: 0.8571rem;
+        font-size: 1rem;
       }
     }
     .contractIcon {
@@ -239,7 +244,7 @@ const TopContainer = styled.div`
         margin-right: 1.7143rem;
       }
       ${media.s} {
-        margin-right: 1.0714rem;
+        margin-right: 1.25rem;
       }
     }
   }
@@ -285,7 +290,7 @@ const TabContainer = styled.div`
     margin-top: 2.3571rem;
   }
   ${media.s} {
-    margin-top: 1.7143rem;
+    margin-top: 2rem;
   }
 `;
 const SubmitContainer = styled.div`
@@ -311,7 +316,7 @@ const SubmitContainer = styled.div`
       margin-left: 0.3571rem;
     }
     ${media.s} {
-      margin-top: 0.2857rem;
+      margin-top: 0.3333rem;
       width: 100%;
       margin-left: initial;
     }
@@ -325,7 +330,7 @@ const SubmitContainer = styled.div`
       width: 10rem;
     }
     ${media.s} {
-      width: 6.0714rem;
+      width: 7.0833rem;
     }
   }
 `;
@@ -347,7 +352,13 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
   const [password, setPassword] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
   const [addressDisabled, setAddressDisabled] = useState(true);
-  const submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
+  const breakpoint = useBreakpoint();
+  let submitBtnStyle;
+  if (breakpoint === 's') {
+    submitBtnStyle = { height: '2.6667rem', lineHeight: '2.6667rem' };
+  } else {
+    submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
+  }
   const inputStyle = { margin: '0' };
   const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
   const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
