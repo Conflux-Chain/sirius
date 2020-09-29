@@ -8,10 +8,9 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { simpleGetFetcher } from '../../../utils/api';
 import styled from 'styled-components';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
-import { useBreakpoint } from '../../../styles/media';
 
 const StyledPaginationWrapper = styled.div`
   margin: 1.7143rem 0;
@@ -187,6 +186,7 @@ function TablePanel({
             page={Number(query.page)}
             pageSize={Number(query.pageSize)}
             total={paginationTotal}
+            simple={breakpoint === 's'}
           />
         )}
       </StyledPaginationWrapper>
