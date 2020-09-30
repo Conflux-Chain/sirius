@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -9,6 +9,7 @@ import TabsTablePanel, {
 import styled from 'styled-components';
 import Text from './../../components/Text';
 import { media } from './../../../styles/media';
+import useTabTableData from '../../components/TabsTablePanel/useTabTableData';
 
 const StyledBlocksAndTransactionsWrapper = styled.div`
   max-width: 73.1429rem;
@@ -42,7 +43,6 @@ const renderTextEllipsis = value => {
 
 export const BlocksAndTransactions = () => {
   const { t } = useTranslation();
-  const [tip, setTip] = useState<any>();
 
   const columnsBlocks: ColumnsType = [
     {
@@ -155,21 +155,6 @@ export const BlocksAndTransactions = () => {
         columns: columnsBlocks,
         rowKey: 'hash',
       },
-      onDataChange: ({ data }) => {
-        const left = t(translations.blocksAndTransactions.tipCountBefore);
-        const right = t(translations.blocksAndTransactions.tipCountAfter, {
-          type: 'blocks',
-        });
-
-        setTip(
-          <TipLabel
-            count={data ? data.result?.total : 0}
-            left={left}
-            right={right}
-            key="blocks"
-          />,
-        );
-      },
     },
     {
       value: 'transaction',
@@ -179,22 +164,10 @@ export const BlocksAndTransactions = () => {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
-      onDataChange: ({ data }) => {
-        const left = t(translations.blocksAndTransactions.tipCountBefore);
-        const right = t(translations.blocksAndTransactions.tipCountAfter, {
-          type: 'transactions',
-        });
-        setTip(
-          <TipLabel
-            count={data ? data.result?.total : 0}
-            left={left}
-            right={right}
-            key="transactions"
-          />,
-        );
-      },
     },
   ];
+
+  const { currentTabTotal, currentTabValue } = useTabTableData(tabs);
 
   return (
     <StyledBlocksAndTransactionsWrapper>
@@ -205,7 +178,14 @@ export const BlocksAndTransactions = () => {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
-      {tip}
+      <TipLabel
+        count={currentTabTotal}
+        left={t(translations.blocksAndTransactions.tipCountBefore)}
+        right={t(translations.blocksAndTransactions.tipCountAfter, {
+          type: currentTabValue,
+        })}
+        key="transactions"
+      />
       <TabsTablePanel tabs={tabs} />
     </StyledBlocksAndTransactionsWrapper>
   );

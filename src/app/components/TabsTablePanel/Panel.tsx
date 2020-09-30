@@ -1,139 +1,32 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
 import Tabs from '../Tabs';
 import TablePanel from '../TablePanel';
-import GetTotalCount from './GetTotalCount';
+import useTabTableData from './useTabTableData';
 
-import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
-import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
-type TablePanelConfigType = {
-  value: string;
-  label: string | Function;
-  url: string;
-  pagination?: PaginationProps & { total?: number };
-  table: TableProps<unknown>;
-  onDataChange?: Function;
-};
+export default function TabsTablePanel({ tabs }) {
+  const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
 
-type LabelCountMapType = {
-  [key: string]: number;
-};
-
-// TablePanel component default props
-const tablePanelConfig: TablePanelConfigType = {
-  value: '',
-  label: '',
-  url: '',
-  table: {},
-};
-
-export default function TabsTablePanel({ tabs, onTabsChange }) {
-  const history = useHistory();
-  const location = useLocation();
-  const [labelCountMap, setLabelCountMap] = useState({});
-  const cachedTabs = useRef(tabs);
-  const tabsNeedToGetTotal = useMemo(() => {
-    // only table kind tab need to get total count
-    return cachedTabs.current.filter(
-      item => item.url && item.table && typeof item.label === 'function',
+  const ui = tabs.map((item, i) => {
+    return (
+      <Tabs.Item
+        label={
+          typeof item.label === 'function' ? item.label(total[i]) : item.label
+        }
+        value={item.value}
+        key={item.value}
+      >
+        <TablePanel total={total[i]} onDataChange={() => {}} {...item} />
+      </Tabs.Item>
     );
-  }, []);
-  const updateLocationSearch = newQuery => {
-    const search = queryString.stringify({
-      ...queryString.parse(location.search),
-      ...newQuery,
-    });
-    history.push(`${location.pathname}?${search}`);
-  };
-  const tabValue =
-    queryString.parse(location.search).tab || tabs.map(i => i.value)[0];
-
-  const handleTabsChange = (value: string): void => {
-    if (typeof onTabsChange === 'function') {
-      onTabsChange(value);
-    }
-    updateLocationSearch({
-      tab: value,
-    });
-  };
-
-  const handleLabelCountChange = (
-    newLabelCountMap: LabelCountMapType,
-  ): void => {
-    setLabelCountMap({
-      ...labelCountMap,
-      ...newLabelCountMap,
-    });
-  };
-
-  const tabsItems: Array<React.ReactNode> = [];
-  const tabsLabelCountItems: Array<React.ReactNode> = [];
-
-  cachedTabs.current.forEach(t => {
-    const item = {
-      ...tablePanelConfig,
-      ...t,
-    };
-    if (item.url && item.table) {
-      const handleDataChange = function ({ data }) {
-        const fn = item.onDataChange;
-        if (data) {
-          handleLabelCountChange({
-            [item.value]: data.result?.total,
-          });
-        }
-        if (fn && typeof fn === 'function') {
-          fn.apply({}, arguments);
-        }
-      };
-
-      const itemLabel =
-        typeof item.label === 'function'
-          ? item.label(labelCountMap[item.value] || 0, item) || item.value
-          : item.label;
-
-      tabsItems.push(
-        <Tabs.Item label={itemLabel} value={item.value} key={item.value}>
-          <TablePanel {...item} onDataChange={handleDataChange} />
-        </Tabs.Item>,
-      );
-
-      // there are three condition here
-      // 1. make sure only excute when not get all tab total success
-      // 2. only excute on tabs which need to get total
-      // 3. skip actived tab
-      if (
-        Object.keys(labelCountMap).length < tabsNeedToGetTotal.length &&
-        tabsNeedToGetTotal.some(t => t.value === item.value) &&
-        item.value !== tabValue
-      ) {
-        tabsLabelCountItems.push(
-          <GetTotalCount
-            url={item.url}
-            type={item.value}
-            key={item.value}
-            onChange={handleLabelCountChange}
-          />,
-        );
-      }
-    } else {
-      tabsItems.push(
-        <Tabs.Item label={item.label} value={item.value} key={item.value}>
-          {item.content}
-        </Tabs.Item>,
-      );
-    }
   });
 
   return (
     <>
-      {tabsLabelCountItems}
-      <Tabs initialValue={tabValue} onChange={handleTabsChange}>
-        {tabsItems}
+      <Tabs initialValue={currentTabValue} onChange={switchToTab}>
+        {ui}
       </Tabs>
     </>
   );

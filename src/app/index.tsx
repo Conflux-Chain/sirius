@@ -25,7 +25,12 @@ import { translations } from 'locales/i18n';
 export function App() {
   const { t } = useTranslation();
   return (
-    <SWRConfig value={{}}>
+    <SWRConfig
+      value={{
+        revalidateOnFocus: false,
+        refreshInterval: 0,
+      }}
+    >
       <BrowserRouter>
         <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
           <meta
