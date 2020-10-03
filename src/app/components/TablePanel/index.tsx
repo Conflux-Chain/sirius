@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Table, Pagination, Loading } from '@cfxjs/react-ui';
-import { useHistory, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
 import PropTypes from 'prop-types';
-import useSWR from 'swr';
-import { simpleGetFetcher } from '../../../utils/api';
 import styled from 'styled-components';
 import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
+import useTableData from '../TabsTablePanel/useTableData';
 
 const StyledPaginationWrapper = styled.div`
   margin: 1.7143rem 0;
@@ -74,7 +71,7 @@ type TablePanelConfigType = {
   url: string;
   pagination?: PaginationProps & boolean;
   table: TableProps<unknown>;
-  onDataChange?: Function;
+  // onDataChange?: Function;
 };
 
 // pagination default config
@@ -108,13 +105,20 @@ function TablePanel({
   url,
   pagination,
   table,
-  onDataChange,
-}: TablePanelConfigType) {
+}: // onDataChange,
+TablePanelConfigType) {
+  const {
+    pageNumber,
+    pageSize,
+    total,
+    data,
+    error,
+    gotoPage,
+    setPageSize,
+  } = useTableData(url);
+
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
-  const history = useHistory();
-  const location = useLocation();
-  // merged pagination config
   const paginationObject = typeof pagination === 'boolean' ? {} : pagination;
   const mergedPaginationConfig = {
     labelPageSizeBefore: t(translations.general.pagination.labelPageSizeBefore),
@@ -126,25 +130,10 @@ function TablePanel({
       : defaultPaginationConfig),
     ...paginationObject,
   };
-  const parsedUrl = queryString.parseUrl(url);
-  const query = {
-    page: mergedPaginationConfig.page,
-    pageSize: mergedPaginationConfig.pageSize,
-    ...parsedUrl.query,
-    ...queryString.parse(location.search),
-  };
-
-  const { data, error } = useSWR([url + location.search], simpleGetFetcher);
-
-  useEffect(() => {
-    onDataChange && onDataChange({ data, error });
-  }, [data]); // eslint-disable-line
-
   let emptyText: React.ReactNode | string = t(
     translations.general.table.noData,
   );
   let tableData = table.data;
-  let paginationTotal: number = 0;
 
   if (!data && !error) {
     emptyText = <Loading />;
@@ -152,18 +141,7 @@ function TablePanel({
 
   if (data && !error) {
     tableData = data.result?.list || table.data;
-    paginationTotal = data.result?.total || defaultPaginationConfig.total;
   }
-
-  const handlePaginationChange = (page: number, pageSize: number): void => {
-    const search = queryString.stringify({
-      ...parsedUrl.query,
-      ...queryString.parse(location.search),
-      page,
-      pageSize,
-    });
-    history.push(`${location.pathname}?${search}`);
-  };
 
   return (
     <>
@@ -181,12 +159,11 @@ function TablePanel({
         {pagination !== false && (
           <Pagination
             {...mergedPaginationConfig}
-            onPageChange={handlePaginationChange}
-            onPageSizeChange={handlePaginationChange}
-            page={Number(query.page)}
-            pageSize={Number(query.pageSize)}
-            total={paginationTotal}
-            simple={breakpoint === 's'}
+            onPageChange={(page: number) => gotoPage(page)}
+            onPageSizeChange={(pageSize: number) => setPageSize(pageSize)}
+            page={Number(pageNumber)}
+            pageSize={Number(pageSize)}
+            total={total}
           />
         )}
       </StyledPaginationWrapper>
@@ -198,7 +175,6 @@ TablePanel.defaultProps = {
   url: '',
   pagination: defaultPaginationConfig,
   table: defaultTableConfig,
-  onDataChange: () => {},
 };
 
 TablePanel.propTypes = {
@@ -214,7 +190,6 @@ TablePanel.propTypes = {
     columns: PropTypes.array,
     rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   }),
-  onDataChange: PropTypes.func,
 };
 
 export default TablePanel;
