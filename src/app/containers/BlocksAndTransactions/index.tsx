@@ -184,7 +184,7 @@ export const BlocksAndTransactions = () => {
         right={t(translations.blocksAndTransactions.tipCountAfter, {
           type: currentTabValue,
         })}
-        key="transactions"
+        key={currentTabValue}
       />
       <TabsTablePanel tabs={tabs} />
     </StyledBlocksAndTransactionsWrapper>
