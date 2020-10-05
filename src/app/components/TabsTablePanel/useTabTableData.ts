@@ -2,7 +2,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import useTableData from './useTableData';
 
-export default function useTabTableData(tabs) {
+export default function useTabTableData(t) {
+  const tabs = t.filter(item => item.table);
   const location = useLocation();
   const history = useHistory();
   let { tab: currentTab, ...others } = queryString.parse(location.search);

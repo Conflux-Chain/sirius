@@ -6,9 +6,12 @@ import useTabTableData from './useTabTableData';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
-export default function TabsTablePanel({ tabs }) {
+export default function TabsTablePanel({ tabs, onTabsChange }) {
   const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
-
+  const handleTabsChange = function (value: string) {
+    switchToTab(value);
+    onTabsChange(value);
+  };
   const ui = tabs.map((item, i) => {
     return (
       <Tabs.Item
@@ -18,14 +21,14 @@ export default function TabsTablePanel({ tabs }) {
         value={item.value}
         key={item.value}
       >
-        <TablePanel total={total[i]} onDataChange={() => {}} {...item} />
+        {item.table ? <TablePanel total={total[i]} {...item} /> : item.content}
       </Tabs.Item>
     );
   });
 
   return (
     <>
-      <Tabs initialValue={currentTabValue} onChange={switchToTab}>
+      <Tabs initialValue={currentTabValue} onChange={handleTabsChange}>
         {ui}
       </Tabs>
     </>
@@ -47,7 +50,6 @@ export default function TabsTablePanel({ tabs }) {
         columns: columns, 
         rowKey: 'hash', 
       }, // table config
-      onDataChange: ()=>{} // when table data changed, execute callback
     },
   ]
   */
@@ -90,8 +92,6 @@ TabsTablePanel.propTypes = {
         columns: PropTypes.array,
         rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       }),
-      // onDataChange: optional, only for table type content, fetch response callback
-      onDataChange: PropTypes.func,
     }),
   ),
   // onTabsChange: optional, Tabs component onTabsChange props

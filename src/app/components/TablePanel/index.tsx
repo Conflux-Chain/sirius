@@ -71,7 +71,6 @@ type TablePanelConfigType = {
   url: string;
   pagination?: PaginationProps & boolean;
   table: TableProps<unknown>;
-  // onDataChange?: Function;
 };
 
 // pagination default config
@@ -101,12 +100,7 @@ const defaultTableConfig: TableProps<unknown> = {
   variant: 'solid',
 };
 
-function TablePanel({
-  url,
-  pagination,
-  table,
-}: // onDataChange,
-TablePanelConfigType) {
+function TablePanel({ url, pagination, table }: TablePanelConfigType) {
   const {
     pageNumber,
     pageSize,
@@ -125,6 +119,7 @@ TablePanelConfigType) {
     labelPageSizeAfter: t(translations.general.pagination.labelPageSizeAfter),
     labelJumperBefore: t(translations.general.pagination.labelJumperBefore),
     labelJumperAfter: t(translations.general.pagination.labelJumperAfter),
+    simple: breakpoint === 's',
     ...(breakpoint === 's'
       ? defaultPaginationMobileConfig
       : defaultPaginationConfig),
