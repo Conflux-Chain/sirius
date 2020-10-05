@@ -9,6 +9,7 @@ import Text from '../../components/Text';
 import PageHeader from '../../components/PageHeader';
 import { media } from '../../../styles/media';
 import numeral from 'numeral';
+import useTableData from './../../components/TabsTablePanel/useTableData';
 
 const StyledTokensWrapper = styled.div`
   max-width: 73.1429rem;
@@ -65,7 +66,6 @@ const renderTextEllipsis = value => {
 
 export const Tokens = () => {
   const { t } = useTranslation();
-  const [tip, setTip] = useState<any>();
 
   const columns: ColumnsType = [
     {
@@ -117,6 +117,8 @@ export const Tokens = () => {
       render: renderTextEllipsis,
     },
   ];
+  const url = '/token/list';
+  const { total } = useTableData(url);
 
   return (
     <StyledTokensWrapper>
@@ -124,31 +126,23 @@ export const Tokens = () => {
         <title>{t(translations.tokens.title)}</title>
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
-      {tip}
-      <PageHeader>{t(translations.tokens.title)}</PageHeader>
+      <StyledTipLabelWrapper>
+        <TipLabel
+          count={total}
+          left={t(translations.tokens.tipCountBefore)}
+          right={t(translations.tokens.tipCountAfter, {
+            type: 'blocks',
+          })}
+          key="blocks"
+        />
+      </StyledTipLabelWrapper>
+      ,<PageHeader>{t(translations.tokens.title)}</PageHeader>
       <TablePanel
         table={{
           columns: columns,
           rowKey: 'address',
         }}
-        url="/token/list"
-        onDataChange={({ data }) => {
-          const left = t(translations.tokens.tipCountBefore);
-          const right = t(translations.tokens.tipCountAfter, {
-            type: 'blocks',
-          });
-
-          setTip(
-            <StyledTipLabelWrapper>
-              <TipLabel
-                count={data ? data.result?.total : 0}
-                left={left}
-                right={right}
-                key="blocks"
-              />
-            </StyledTipLabelWrapper>,
-          );
-        }}
+        url={url}
       />
     </StyledTokensWrapper>
   );
