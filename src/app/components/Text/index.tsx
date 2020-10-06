@@ -11,8 +11,12 @@ type TextProps = {
   maxwidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
+<<<<<<< HEAD
   hovercolor?: string;
   tooltip?: Partial<TooltipProps>;
+=======
+  tooltipConfig?: Partial<TooltipProps>;
+>>>>>>> feat(text): add text select, update font style
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
@@ -28,12 +32,23 @@ const Wrapper = styled(Text)<any>`
   cursor: pointer;
   font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
+<<<<<<< HEAD
   &:hover {
     font-family: CircularStd-Bold, CircularStd;
     font-weight: 500;
     color: ${props => props.hovercolor};
   }
 ` as React.FC<Props>;
+=======
+  line-height: 1.7143rem;
+  font-size: 1rem;
+  &:hover {
+    font-family: CircularStd-Bold, CircularStd;
+    font-weight: 500;
+    color: #0054fe;
+  }
+` as typeof Text & React.FC<Props & { maxwidth?: string }>;
+>>>>>>> feat(text): add text select, update font style
 
 // note:
 // 1. maxwidth priority is higher than maxCount
@@ -52,7 +67,11 @@ const TextComponent = ({
   if (maxwidth === undefined && maxCount && typeof children === 'string') {
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
+<<<<<<< HEAD
   const tooltipText = (
+=======
+  const tooltipValue = (
+>>>>>>> feat(text): add text select, update font style
     <div onClick={e => selectText(e.currentTarget)}>
       {hoverValue || children}
     </div>
