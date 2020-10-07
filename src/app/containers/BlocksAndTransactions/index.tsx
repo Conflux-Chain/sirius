@@ -21,25 +21,11 @@ const StyledBlocksAndTransactionsWrapper = styled.div`
   }
 `;
 
-const StyledTextWrapper = styled.span`
-  font-family: CircularStd-Book, CircularStd;
-  font-weight: 400;
-  line-height: 1.7143rem;
-  font-size: 1rem;
-  &:hover {
-    font-family: CircularStd-Bold, CircularStd;
-    font-weight: 500;
-    color: #0054fe;
-  }
-`;
-
-const renderTextEllipsis = value => {
-  return (
-    <Text span maxwidth={'5.7143rem'} hoverValue={value}>
-      <StyledTextWrapper>{value}</StyledTextWrapper>
-    </Text>
-  );
-};
+const renderTextEllipsis = value => (
+  <Text span maxwidth={'5.7143rem'} hoverValue={value}>
+    {value}
+  </Text>
+);
 
 export const BlocksAndTransactions = () => {
   const { t } = useTranslation();

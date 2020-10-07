@@ -59,7 +59,6 @@ const StyledTableWrapper = styled.div`
     color: #20253a;
     padding: 1.2857rem calc((0.5714rem / 2) * 3);
     white-space: nowrap;
-    line-height: 1;
 
     ${media.s} {
       padding: 1.1429rem;

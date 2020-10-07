@@ -2,20 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip, Text } from '@cfxjs/react-ui';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
-import { TextProps } from '@cfxjs/react-ui/dist/text/text';
+import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
+import { selectText } from './../../../utils/util';
 
-type MyTextProps = {
+type TextProps = {
   children?: React.ReactNode;
   maxwidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
-  tooltipConfig?: Partial<TooltipProps>;
-} & Partial<TextProps>;
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof MyTextProps>;
-export declare type Props = MyTextProps & NativeAttrs;
+  hovercolor?: string;
+  tooltip?: Partial<TooltipProps>;
+} & Partial<ReactUITextProps>;
+type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
+export declare type Props = TextProps & NativeAttrs;
 
-const Wrapper = styled(Text)<{ maxwidth: string }>`
+const Wrapper = styled(Text)<any>`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -24,30 +26,42 @@ const Wrapper = styled(Text)<{ maxwidth: string }>`
   display: ${props =>
     props.maxwidth === undefined ? 'inherit' : 'inline-block'};
   cursor: pointer;
-` as typeof Text & React.FC<Props & { maxwidth?: string }>;
+  font-family: CircularStd-Book, CircularStd;
+  font-weight: 400;
+  &:hover {
+    font-family: CircularStd-Bold, CircularStd;
+    font-weight: 500;
+    color: ${props => props.hovercolor};
+  }
+` as React.FC<Props>;
 
 // note:
 // 1. maxwidth priority is higher than maxCount
 // 2. maxCount only apply to string
 // 3. if hoverValue is provided, use hoverValue as Tooltip text, otherwise use children
+//    if text of prop tooltip is provided, use as Tooltip text
 const TextComponent = ({
   children,
   maxwidth,
   maxCount,
   hoverValue,
-  tooltipConfig,
+  tooltip,
   ...props
 }: Props) => {
-  let child: any = children || '';
+  let child: React.ReactNode = children;
   if (maxwidth === undefined && maxCount && typeof children === 'string') {
-    child = child.substr(0, maxCount) + '...';
+    child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
-  const tooltipValue = hoverValue || children;
+  const tooltipText = (
+    <div onClick={e => selectText(e.currentTarget)}>
+      {hoverValue || children}
+    </div>
+  );
   return (
     <Tooltip
       portalClassName="siriui-tooltip-square"
-      {...tooltipConfig}
-      text={tooltipValue}
+      text={tooltipText}
+      {...tooltip}
     >
       <Wrapper maxwidth={maxwidth} {...props}>
         {child}
@@ -56,13 +70,16 @@ const TextComponent = ({
   );
 };
 
-TextComponent.defaultProps = {};
+TextComponent.defaultProps = {
+  hovercolor: '#0054fe',
+};
 
 TextComponent.propTypes = {
   maxCount: PropTypes.number,
   maxwidth: PropTypes.string,
   hoverValue: PropTypes.node,
-  tooltipConfig: PropTypes.object,
+  hovercolor: PropTypes.string,
+  tooltip: PropTypes.object,
 };
 
 export default TextComponent;
