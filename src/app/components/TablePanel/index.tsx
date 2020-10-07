@@ -8,6 +8,24 @@ import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import useTableData from '../TabsTablePanel/useTableData';
+import { Skeleton } from '@cfxjs/react-ui';
+
+// mock table config for Skeleton
+let mockTableColumns: Array<{
+  id: number;
+  dataIndex: string;
+  render: () => {};
+}> = [];
+let mockTableData: Array<{ id: number }> = [];
+let mockTableRowKey = 'id';
+for (let i = 0; i < 8; i++) {
+  mockTableColumns.push({
+    id: i,
+    dataIndex: 'key',
+    render: () => <Skeleton />,
+  });
+  mockTableData.push({ id: i });
+}
 
 const StyledPaginationWrapper = styled.div`
   margin: 1.7143rem 0;
@@ -124,13 +142,14 @@ function TablePanel({ url, pagination, table }: TablePanelConfigType) {
       : defaultPaginationConfig),
     ...paginationObject,
   };
-  let emptyText: React.ReactNode | string = t(
-    translations.general.table.noData,
-  );
   let tableData = table.data;
+  let tableColumns = table.columns;
+  let tableRowKey = table.rowKey;
 
   if (!data && !error) {
-    emptyText = <Loading />;
+    tableData = mockTableData;
+    tableColumns = mockTableColumns;
+    tableRowKey = mockTableRowKey;
   }
 
   if (data && !error) {
@@ -142,10 +161,9 @@ function TablePanel({ url, pagination, table }: TablePanelConfigType) {
       <StyledTableWrapper>
         <Table
           tableLayout="fixed"
-          columns={table.columns}
-          rowKey={table.rowKey}
+          columns={tableColumns}
           data={tableData}
-          emptyText={emptyText}
+          rowKey={tableRowKey}
           scroll={{ x: 800 }}
         />
       </StyledTableWrapper>
