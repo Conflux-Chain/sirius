@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -84,7 +84,7 @@ export const Tokens = () => {
         return (
           <>
             <StyledIconWrapper>
-              <img src={item.icon} />
+              <img src={item.icon} alt="token icon" />
               {item.name} ({item.symbol})
             </StyledIconWrapper>
           </>
