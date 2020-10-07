@@ -8,29 +8,31 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media, useBreakpoint } from '../../../styles/media';
-import { Input, Button } from '@cfxjs/react-ui';
+import { Input, Button, Skeleton } from '@cfxjs/react-ui';
 import iconContractRemove from './../../../images/contract/remove.png';
 import iconContractUpload from './../../../images/contract/upload.png';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { tranferToLowerCase } from '../../../utils';
 import AceEditor from 'react-ace';
+import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
+import 'ace-builds/src-noconflict/worker-json';
+import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import Tabs from './../Tabs';
 import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
+import SkelontonContainer from '../SkeletonContainer';
 interface Props {
   contractDetail: any;
   type: string;
   history: any;
   address?: string;
+  loading?: boolean;
 }
 
 const Wrapper = styled.div`
   background: #f5f6fa;
   padding-bottom: 8.3571rem;
-  .test1 {
-    flex: 1;
-  }
   .inputComp {
     .input-wrapper {
       margin: 0;
@@ -118,7 +120,7 @@ const TopContainer = styled.div`
     .lineContainer {
       display: flex;
       align-items: center;
-      padding: 0.8571rem 0;
+      padding: 0.8571rem 0.3571rem 0.8571rem 0;
       border-bottom: 0.0714rem solid #e8e9ea;
       .with-label {
         flex: 1;
@@ -337,7 +339,13 @@ const SubmitContainer = styled.div`
 interface RequestBody {
   [key: string]: any;
 }
-export const Contract = ({ contractDetail, type, history, address }: Props) => {
+export const Contract = ({
+  contractDetail,
+  type,
+  history,
+  address,
+  loading,
+}: Props) => {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -512,10 +520,10 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
     }
   };
   //TODO: modity the types of div to RreactNode
-  let tabsLabelAddress = (
+  let tabsLabelSourceCode = (
     <LabelWithIcon className="tabs">
       <span className="labelIcon">*</span>
-      {t(translations.contract.address)}
+      {t(translations.contract.sourceCode)}
     </LabelWithIcon>
   ) as any;
   //TODO: modity the types of div to RreactNode
@@ -536,34 +544,40 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
               <span className="labelIcon">*</span>
               {t(translations.contract.address)}
             </LabelWithIcon>
-            <Input
-              className="inputComp"
-              style={inputStyle}
-              defaultValue={addressVal}
-              onChange={addressInputChanger}
-              readOnly={addressDisabled}
-            />
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                style={inputStyle}
+                defaultValue={addressVal}
+                onChange={addressInputChanger}
+                readOnly={addressDisabled}
+              />
+            </SkelontonContainer>
           </div>
           <div className="lineContainer">
             <LabelWithIcon>
               <span className="labelIcon">*</span>
               {t(translations.contract.nameTag)}
             </LabelWithIcon>
-            <Input
-              className="inputComp"
-              defaultValue={contractName}
-              style={inputStyle}
-              onChange={nameInputChanger}
-            />
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                defaultValue={contractName}
+                style={inputStyle}
+                onChange={nameInputChanger}
+              />
+            </SkelontonContainer>
           </div>
           <div className="lineContainer">
             <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
-            <Input
-              className="inputComp"
-              defaultValue={site}
-              style={inputStyle}
-              onChange={siteInputChanger}
-            />
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                defaultValue={site}
+                style={inputStyle}
+                onChange={siteInputChanger}
+              />
+            </SkelontonContainer>
           </div>
         </div>
         <div className="bodyContainer second">
@@ -592,12 +606,14 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
                 </div>
               </div>
               <div className="item right">
-                <div className="iconContainer">
-                  <img
-                    src={contractImgSrc || defaultContractIcon}
-                    className="contractIcon"
-                  ></img>
-                </div>
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={contractImgSrc || defaultContractIcon}
+                      className="contractIcon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
               </div>
             </div>
           </div>
@@ -626,12 +642,14 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
                 </div>
               </div>
               <div className="item right">
-                <div className="iconContainer">
-                  <img
-                    src={tokenImgSrc || defaultTokenIcon}
-                    className="contractIcon"
-                  ></img>
-                </div>
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={tokenImgSrc || defaultTokenIcon}
+                      className="contractIcon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
               </div>
             </div>
           </div>
@@ -639,49 +657,53 @@ export const Contract = ({ contractDetail, type, history, address }: Props) => {
       </TopContainer>
       <TabContainer>
         <Tabs initialValue="1">
-          <Tabs.Item label={tabsLabelAddress} value="1">
-            <StyledTabelWrapper>
-              <div className="ui fluid card">
-                <div className="content">
-                  <div className="contentHeader" />
-                  <AceEditor
-                    style={AceEditorStyle}
-                    mode="solidity"
-                    theme="github"
-                    name="UNIQUE_ID_OF_DIV"
-                    setOptions={{
-                      showLineNumbers: true,
-                    }}
-                    showGutter={false}
-                    showPrintMargin={false}
-                    onChange={handleSourceChange}
-                    value={sourceCode}
-                  />
+          <Tabs.Item label={tabsLabelSourceCode} value="1">
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      style={AceEditorStyle}
+                      mode="solidity"
+                      theme="github"
+                      name="UNIQUE_ID_OF_DIV"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={handleSourceChange}
+                      value={sourceCode}
+                    />
+                  </div>
                 </div>
-              </div>
-            </StyledTabelWrapper>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
           </Tabs.Item>
           <Tabs.Item label={tabsLabelAbi} value="2">
-            <StyledTabelWrapper>
-              <div className="ui fluid card">
-                <div className="content abiContainer">
-                  <div className="contentHeader" />
-                  <AceEditor
-                    style={AceEditorStyle}
-                    mode="json"
-                    theme="github"
-                    name="UNIQUE_ID_OF_DIV"
-                    setOptions={{
-                      showLineNumbers: true,
-                    }}
-                    showGutter={false}
-                    showPrintMargin={false}
-                    onChange={abiChangeHandler}
-                    value={abi}
-                  />
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content abiContainer">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      style={AceEditorStyle}
+                      mode="json"
+                      theme="github"
+                      name="UNIQUE_ID_OF_DIV_ABI"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={abiChangeHandler}
+                      value={abi}
+                    />
+                  </div>
                 </div>
-              </div>
-            </StyledTabelWrapper>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
           </Tabs.Item>
         </Tabs>
       </TabContainer>

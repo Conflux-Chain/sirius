@@ -8,6 +8,7 @@ import { isCfxAddress } from '../../../utils';
 export function Contract(props) {
   const { t } = useTranslation();
   const [contractDetail, setContractDetail] = useState({});
+  const [loading, setLoading] = useState(false);
   const [type, setType] = useState('create');
   const matchParams = props.match.params;
   const contractAddress = matchParams.contractAddress;
@@ -26,9 +27,17 @@ export function Contract(props) {
   const params = { address: contractAddress, fields };
   const { data } = useCMContractQuery(params, isCfxAddress(contractAddress));
   useEffect(() => {
-    if (data && data.code === 0) {
-      setContractDetail(data.result);
-      setType('edit');
+    if (isCfxAddress(contractAddress)) {
+      setLoading(true);
+      if (data) {
+        setLoading(false);
+        if (data.code === 0) {
+          setContractDetail(data.result);
+          setType('edit');
+        }
+      }
+    } else {
+      setLoading(false);
     }
   }, [data, contractAddress]);
   return (
@@ -45,6 +54,7 @@ export function Contract(props) {
         type={type}
         address={contractAddress}
         history={props.history}
+        loading={loading}
       ></ContractBody>
     </>
   );
