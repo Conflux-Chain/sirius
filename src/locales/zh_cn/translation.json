@@ -3,5 +3,46 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
-  "general": {}
+  "blocksAndTransactions": {
+    "title": "出块和交易",
+    "description": "出块和交易",
+    "tipCountBefore": "共计找到",
+    "tipCountAfter": "条 {{type}} 记录 (显示最新的 10k 条数据)",
+    "labelCountBefore": "共计找到",
+    "labelCountAfter": "条 {{type}} 记录",
+    "blocks": "区块",
+    "transactions": "交易",
+    "table": {
+      "block": {
+        "epoch": "纪元",
+        "position": "位置",
+        "txns": "交易数",
+        "miner": "矿工",
+        "avgGasPrice": "燃料价格",
+        "gasUsedPercent": "燃料使用量",
+        "reward": "奖励",
+        "age": "块龄"
+      },
+      "transactions": {
+        "hash": "哈希",
+        "from": "发送方",
+        "to": "接收方",
+        "value": "价值",
+        "gasPrice": "燃料价格",
+        "gasFee": "燃料使用量",
+        "age": "块龄"
+      }
+    }
+  },
+  "general": {
+    "table": {
+      "noData": "无数据"
+    },
+    "pagination": {
+      "labelPageSizeBefore": "每页",
+      "labelPageSizeAfter": "条",
+      "labelJumperBefore": "跳转到",
+      "labelJumperAfter": "页"
+    }
+  }
 }

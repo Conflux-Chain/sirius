@@ -17,6 +17,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { Header } from './containers/Header/index';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
+import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './components/NotFoundPage/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -24,7 +25,12 @@ import { translations } from 'locales/i18n';
 export function App() {
   const { t } = useTranslation();
   return (
-    <SWRConfig value={{}}>
+    <SWRConfig
+      value={{
+        revalidateOnFocus: false,
+        refreshInterval: 0,
+      }}
+    >
       <BrowserRouter>
         <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
           <meta
@@ -36,10 +42,15 @@ export function App() {
         <Main>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route
+              exact
+              path="/blocks-and-transactions"
+              component={BlocksAndTransactions}
+            />
             <Route component={NotFoundPage} />
           </Switch>
         </Main>
-        <Route exact path="/" component={Footer} />
+        <Route component={Footer} />
         <GlobalStyle />
       </BrowserRouter>
     </SWRConfig>

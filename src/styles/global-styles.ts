@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { media } from './media';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -10,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #F5F6FA;
   }
 
   #root {
@@ -26,5 +28,24 @@ export const GlobalStyle = createGlobalStyle`
   input, select {
     font-family: inherit;
     font-size: inherit;
+  }
+
+  .siriui-tooltip-square {
+    border-radius: 0 !important;
+    div.inner {
+      font-family: CircularStd-Book, CircularStd;
+      font-weight: 400;
+      border-radius: 0;
+      font-size: 0.8571rem;
+      color: #E9E9E9;
+      line-height: 1.0714rem;
+      padding: 0.5714rem 0.8571rem;
+    }
+  }
+
+  ${media.s} {
+    html, body {
+      font-size: 12px;
+    }
   }
 `;

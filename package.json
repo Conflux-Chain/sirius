@@ -28,6 +28,7 @@
     "jest-styled-components": "7.0.2",
     "lint-staged": "10.0.8",
     "node-plop": "0.25.0",
+    "numeral": "2.0.6",
     "plop": "2.6.0",
     "prettier": "2.0.1",
     "query-string": "6.13.1",
