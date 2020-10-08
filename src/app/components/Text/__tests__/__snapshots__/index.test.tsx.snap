@@ -9,12 +9,10 @@ exports[`<Text  /> should match snapshot 1`] = `
   max-width: 40px;
   display: inline-block;
   cursor: pointer;
-  font-family: CircularStd-Book,CircularStd;
   font-weight: 400;
 }
 
 .c0:hover {
-  font-family: CircularStd-Bold,CircularStd;
   font-weight: 500;
   color: #0054fe;
 }
@@ -42,12 +40,10 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   vertical-align: bottom;
   display: inherit;
   cursor: pointer;
-  font-family: CircularStd-Book,CircularStd;
   font-weight: 400;
 }
 
 .c0:hover {
-  font-family: CircularStd-Bold,CircularStd;
   font-weight: 500;
   color: #0054fe;
 }

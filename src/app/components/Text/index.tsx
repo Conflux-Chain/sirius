@@ -26,10 +26,8 @@ const Wrapper = styled(Text)<any>`
   display: ${props =>
     props.maxwidth === undefined ? 'inherit' : 'inline-block'};
   cursor: pointer;
-  font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
   &:hover {
-    font-family: CircularStd-Bold, CircularStd;
     font-weight: 500;
     color: ${props => props.hovercolor};
   }

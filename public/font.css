@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Medium.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Medium.woff)
+      format('woff');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-MediumItalic.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-MediumItalic.woff)
+      format('woff');
+  font-style: italic;
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Bold.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Bold.woff)
+      format('woff');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-BoldItalic.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-BoldItalic.woff)
+      format('woff');
+  font-style: italic;
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Black.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-Black.woff)
+      format('woff');
+  font-weight: 800;
+}
+@font-face {
+  font-family: 'Circular Std';
+  src: url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-BlackItalic.woff2)
+      format('woff2'),
+    url(https://conflux-static.oss-cn-beijing.aliyuncs.com/fonts/CircularStd-BlackItalic.woff)
+      format('woff');
+  font-style: italic;
+  font-weight: 800;
+}
