@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const createBreakpoint = (
   breakpoints: { [name: string]: number } = {
