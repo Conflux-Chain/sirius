@@ -100,7 +100,7 @@ exports[`<Footer  /> should match snapshot 1`] = `
       </span>
     </div>
     <div
-      class="jsx-2262921535 divider footer-bottom-divider"
+      class="jsx-847016443 divider footer-bottom-divider"
       role="separator"
     />
     <div
