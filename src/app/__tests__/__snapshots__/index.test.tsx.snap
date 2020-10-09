@@ -2,7 +2,12 @@
 
 exports[`<App /> should render and match the snapshot 1`] = `
 <Context.Provider
-  value={Object {}}
+  value={
+    Object {
+      "refreshInterval": 0,
+      "revalidateOnFocus": false,
+    }
+  }
 >
   <BrowserRouter>
     <Helmet
@@ -26,13 +31,16 @@ exports[`<App /> should render and match the snapshot 1`] = `
         />
         <Route
           component={[Function]}
+          exact={true}
+          path="/blocks-and-transactions"
+        />
+        <Route
+          component={[Function]}
         />
       </Switch>
     </ForwardRef(app__Main)>
     <Route
       component={[Function]}
-      exact={true}
-      path="/"
     />
     <UNDEFINED />
   </BrowserRouter>

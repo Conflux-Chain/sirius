@@ -5,9 +5,18 @@ exports[`<Text  /> should match snapshot 1`] = `
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: bottom;
   max-width: 40px;
   display: inline-block;
   cursor: pointer;
+  font-family: CircularStd-Book,CircularStd;
+  font-weight: 400;
+}
+
+.c0:hover {
+  font-family: CircularStd-Bold,CircularStd;
+  font-weight: 500;
+  color: #0054fe;
 }
 
 <div
@@ -15,6 +24,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 >
   <p
     class="jsx-3390086683  c0"
+    hovercolor="#0054fe"
     maxwidth="40px"
   >
     <span>
@@ -29,8 +39,17 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: bottom;
   display: inherit;
   cursor: pointer;
+  font-family: CircularStd-Book,CircularStd;
+  font-weight: 400;
+}
+
+.c0:hover {
+  font-family: CircularStd-Bold,CircularStd;
+  font-weight: 500;
+  color: #0054fe;
 }
 
 <div
@@ -38,6 +57,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 >
   <p
     class="jsx-3390086683  c0"
+    hovercolor="#0054fe"
   >
     12345...
   </p>

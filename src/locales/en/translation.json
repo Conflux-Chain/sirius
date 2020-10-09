@@ -3,9 +3,6 @@
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
-  "general": {
-    "submit": "Submit"
-  },
   "contract": {
     "address": "Contract Address",
     "nameTag": "Contract Name Tag",
@@ -22,5 +19,48 @@
     "edit": {
       "title": "Contract Edit"
     }
+  },
+  "blocksAndTransactions": {
+    "title": "Blocks and Transactions",
+    "description": "Blocks and Transactions",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
+    "labelCountBefore": "A total of",
+    "labelCountAfter": "{{type}} found",
+    "blocks": "Blocks",
+    "transactions": "Transactions",
+    "table": {
+      "block": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "txns": "Txns",
+        "miner": "Miner",
+        "avgGasPrice": "Avg.Gas Price",
+        "gasUsedPercent": "Gas Used/Limit",
+        "reward": "Reward",
+        "age": "Age"
+      },
+      "transactions": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "gasPrice": "Gas Price",
+        "gasFee": "Gas Fee",
+        "age": "Age"
+      }
+    }
+  },
+  "general": {
+    "table": {
+      "noData": "No data."
+    },
+    "pagination": {
+      "labelPageSizeBefore": "Show",
+      "labelPageSizeAfter": "Records",
+      "labelJumperBefore": "Go to",
+      "labelJumperAfter": "Page"
+    },
+    "submit": "Submit"
   }
 }
