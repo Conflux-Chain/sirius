@@ -3,12 +3,12 @@
  * Contract Detail
  *
  */
-import React, { memo, useState, useEffect, useRef, ReactNode } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media, useBreakpoint } from '../../../styles/media';
-import { Input, Button, Skeleton } from '@cfxjs/react-ui';
+import { Input, Button } from '@cfxjs/react-ui';
 import iconContractRemove from './../../../images/contract/remove.png';
 import iconContractUpload from './../../../images/contract/upload.png';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
@@ -402,13 +402,13 @@ export const Contract = ({
     setSite(e.target.value);
   };
 
-  const updateCanSubmit = () => {
+  const updateCanSubmit = useCallback(() => {
     let isSubmitable = false;
     if (addressVal && contractName && sourceCode && abi && password) {
       isSubmitable = true;
     }
     setBtnShouldClick(!isSubmitable);
-  };
+  }, [abi, addressVal, contractName, password, sourceCode]);
   useEffect(() => {
     setContractImgSrc(contractDetail.icon);
     setTokenImgSrc(contractDetail.tokenIcon);
@@ -514,6 +514,7 @@ export const Contract = ({
     switch (type) {
       case 'create':
         setShouldFetchCreate(true);
+        break;
       case 'edit':
         setShouldFetchUpdate(true);
         break;
@@ -593,13 +594,21 @@ export const Contract = ({
                   onChange={handleContractIconChange}
                 />
                 <div className="firstItem" onClick={uploadContractIcon}>
-                  <img src={iconContractUpload} className="labelIcon"></img>
+                  <img
+                    src={iconContractUpload}
+                    className="labelIcon"
+                    alt={t(translations.contract.contractIcon)}
+                  ></img>
                   <span className="labelText">
                     {t(translations.contract.contractIcon)}
                   </span>
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
-                  <img src={iconContractRemove} className="labelIcon"></img>
+                  <img
+                    src={iconContractRemove}
+                    className="labelIcon"
+                    alt={t(translations.contract.remove)}
+                  ></img>
                   <span className="labelText">
                     {t(translations.contract.remove)}
                   </span>
@@ -611,6 +620,7 @@ export const Contract = ({
                     <img
                       src={contractImgSrc || defaultContractIcon}
                       className="contractIcon"
+                      alt="contract icon"
                     ></img>
                   </div>
                 </SkelontonContainer>
@@ -629,13 +639,21 @@ export const Contract = ({
                   onChange={handleTokenIconChange}
                 />
                 <div className="firstItem" onClick={uploadTokenIcon}>
-                  <img src={iconContractUpload} className="labelIcon"></img>
+                  <img
+                    src={iconContractUpload}
+                    className="labelIcon"
+                    alt="upload"
+                  ></img>
                   <span className="labelText">
                     {t(translations.contract.tokenIcon)}
                   </span>
                 </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
-                  <img src={iconContractRemove} className="labelIcon"></img>
+                  <img
+                    src={iconContractRemove}
+                    className="labelIcon"
+                    alt="remove"
+                  ></img>
                   <span className="labelText">
                     {t(translations.contract.remove)}
                   </span>
@@ -647,6 +665,7 @@ export const Contract = ({
                     <img
                       src={tokenImgSrc || defaultTokenIcon}
                       className="contractIcon"
+                      alt="token icon"
                     ></img>
                   </div>
                 </SkelontonContainer>
