@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #F5F6FA;
   }
 
@@ -33,7 +33,7 @@ export const GlobalStyle = createGlobalStyle`
   .siriui-tooltip-square {
     border-radius: 0 !important;
     div.inner {
-      font-family: CircularStd-Book, CircularStd;
+      font-family: 'Circular Std';
       font-weight: 400;
       border-radius: 0;
       font-size: 0.8571rem;
