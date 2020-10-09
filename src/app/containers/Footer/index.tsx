@@ -97,10 +97,10 @@ const FooterWrapper = styled.div`
 `;
 
 // left
-const FooterDescription = styled.p`
-  font-size: 0.86rem;
-  max-width: 8.59rem;
-`;
+// const FooterDescription = styled.p`
+//   font-size: 0.86rem;
+//   max-width: 8.59rem;
+// `;
 
 // right top
 const FooterContentTitle = styled.span`
@@ -122,10 +122,10 @@ const FooterContentRow = styled.div`
   display: flex;
   flex-direction: row;
 `;
-const FooterContentColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const FooterContentColumn = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 const FooterContentLink = styled.span`
   .link.footer-link {

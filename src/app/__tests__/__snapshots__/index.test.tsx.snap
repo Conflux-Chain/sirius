@@ -41,11 +41,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
           />
         </UNDEFINED>
       </ForwardRef(app__Main)>
-      <UNDEFINED
-        component={[Function]}
-        exact={true}
-        path="/"
-      />
+      <Unknown />
       <UNDEFINED />
     </CfxProvider>
   </UNDEFINED>

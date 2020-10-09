@@ -55,7 +55,7 @@ export function App() {
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
-          <Route exact path="/" component={Footer} />
+          <Footer />
           <GlobalStyle />
         </CfxProvider>
       </BrowserRouter>
