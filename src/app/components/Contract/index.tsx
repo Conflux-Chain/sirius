@@ -16,7 +16,6 @@ import { tranferToLowerCase } from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
-import 'ace-builds/src-noconflict/worker-json';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import Tabs from './../Tabs';
