@@ -1169,10 +1169,10 @@
     rc-util "^5.0.4"
     shallowequal "^1.1.0"
 
-"@cfxjs/react-ui@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@cfxjs/react-ui/-/react-ui-1.1.0.tgz#79b225416d90f9d3ceeb25a52eeba4b45b0ed75a"
-  integrity sha512-KYiSpCppalJH+vBphuhDyeqKF6WdvzIaN3FlM4uJNobX6yEX+RMS+hSbvn1rMF+0m/K3rzZeafPHbeWciwElgQ==
+"@cfxjs/react-ui@2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@cfxjs/react-ui/-/react-ui-2.0.0-alpha.1.tgz#c40b93505b564457ebbae46348422eaff9f8462c"
+  integrity sha512-XxYNUxRpr473hfvAJfNcC7kzpMv/IY5qI2rW6w0MtaTGhBkk8iRGLpYCqqYTdzp2G/c6BCZRWONTasJzpqirGQ==
   dependencies:
     "@cfxjs/rc-table" "^1.0.0"
     "@jnoodle/rc-picker" "^2.0.10"
