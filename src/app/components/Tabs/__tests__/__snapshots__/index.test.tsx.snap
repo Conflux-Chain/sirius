@@ -42,16 +42,16 @@ exports[`<Tabs  /> should match snapshot 1`] = `
       role="button"
     >
       <div
-        class="jsx-868734247 nav"
+        class="jsx-252575312 nav"
       >
         <div
-          class="jsx-868734247 label"
+          class="jsx-252575312 label"
           style="color: rgb(68, 68, 68);"
         >
           label1
         </div>
         <div
-          class="jsx-868734247 bottom"
+          class="jsx-252575312 bottom"
         />
       </div>
     </div>
@@ -60,16 +60,16 @@ exports[`<Tabs  /> should match snapshot 1`] = `
       role="button"
     >
       <div
-        class="jsx-868734247 nav"
+        class="jsx-252575312 nav"
       >
         <div
-          class="jsx-868734247 label"
+          class="jsx-252575312 label"
           style="color: rgb(68, 68, 68);"
         >
           label2
         </div>
         <div
-          class="jsx-868734247 bottom"
+          class="jsx-252575312 bottom"
         />
       </div>
     </div>
