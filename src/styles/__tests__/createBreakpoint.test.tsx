@@ -2,7 +2,7 @@
 import React from 'react';
 import createBreakpoint from '../createBreakpoint';
 import { render } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 
 describe('createBreakpoint', () => {
   it('should return the right useBreakpoint', async () => {
