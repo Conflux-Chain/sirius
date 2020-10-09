@@ -10,22 +10,24 @@ import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import useTableData from '../TabsTablePanel/useTableData';
 import { Skeleton } from '@cfxjs/react-ui';
 
-// mock table config for Skeleton
-let mockTableColumns: Array<{
-  id: number;
-  dataIndex: string;
-  render: () => {};
-}> = [];
-let mockTableData: Array<{ id: number }> = [];
-let mockTableRowKey = 'id';
-for (let i = 0; i < 8; i++) {
-  mockTableColumns.push({
+const mockTableConfig = columns => {
+  const mockTableColumns = columns.map((item, i) => ({
     id: i,
     dataIndex: 'key',
+    width: item.width,
     render: () => <Skeleton />,
-  });
-  mockTableData.push({ id: i });
-}
+  }));
+  let mockTableData: Array<{ id: number }> = [];
+  const mockTableRowKey: string = 'id';
+  for (let i = 0; i < 10; i++) {
+    mockTableData.push({ id: i });
+  }
+  return {
+    mockTableColumns,
+    mockTableData,
+    mockTableRowKey,
+  };
+};
 
 const StyledPaginationWrapper = styled.div`
   margin: 1.7143rem 0;
@@ -145,6 +147,10 @@ function TablePanel({ url, pagination, table }: TablePanelConfigType) {
   let tableData = table.data;
   let tableColumns = table.columns;
   let tableRowKey = table.rowKey;
+
+  let { mockTableColumns, mockTableData, mockTableRowKey } = mockTableConfig(
+    table.columns,
+  );
 
   if (!data && !error) {
     tableData = mockTableData;
