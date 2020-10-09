@@ -9,40 +9,41 @@ exports[`<App /> should render and match the snapshot 1`] = `
     }
   }
 >
-  <BrowserRouter>
-    <Helmet
-      defaultTitle="ConfluxScan"
-      defer={true}
-      encodeSpecialCharacters={true}
-      titleTemplate="%s - ConfluxScan"
-    >
-      <meta
-        content="BlockChain Explorer for Conflux Network"
-        name="description"
-      />
-    </Helmet>
-    <UNDEFINED />
-    <ForwardRef(app__Main)>
-      <Switch>
-        <Route
-          component={[Function]}
-          exact={true}
-          path="/"
+  <UNDEFINED>
+    <CfxProvider>
+      <UNDEFINED />
+      <Helmet
+        defaultTitle="ConfluxScan"
+        defer={true}
+        encodeSpecialCharacters={true}
+        titleTemplate="%s - ConfluxScan"
+      >
+        <meta
+          content="BlockChain Explorer for Conflux Network"
+          name="description"
         />
-        <Route
-          component={[Function]}
-          exact={true}
-          path="/blocks-and-transactions"
-        />
-        <Route
-          component={[Function]}
-        />
-      </Switch>
-    </ForwardRef(app__Main)>
-    <Route
-      component={[Function]}
-    />
-    <UNDEFINED />
-  </BrowserRouter>
+      </Helmet>
+      <UNDEFINED />
+      <ForwardRef(app__Main)>
+        <UNDEFINED>
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
+            path="/"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
+            path="/blocks-and-transactions"
+          />
+          <UNDEFINED
+            component={[Function]}
+          />
+        </UNDEFINED>
+      </ForwardRef(app__Main)>
+      <Unknown />
+      <UNDEFINED />
+    </CfxProvider>
+  </UNDEFINED>
 </Context.Provider>
 `;
