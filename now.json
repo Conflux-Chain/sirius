@@ -1,5 +1,15 @@
 {
   "github": {
     "silent": true
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/contract-manager/(?<req>.*)",
+      "dest": "https://scantest.confluxscan.io/contract-manager/api/$req"
+    },
+    {
+      "src": "/api/(?<req>.*)",
+      "dest": "https://scantest.confluxscan.io/$req"
+    }
+  ]
 }
