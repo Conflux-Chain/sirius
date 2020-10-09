@@ -32,6 +32,16 @@ exports[`<App /> should render and match the snapshot 1`] = `
         <Route
           component={[Function]}
           exact={true}
+          path="/contract/"
+        />
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/contract/:contractAddress"
+        />
+        <Route
+          component={[Function]}
+          exact={true}
           path="/blocks-and-transactions"
         />
         <Route
