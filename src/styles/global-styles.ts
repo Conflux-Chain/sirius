@@ -5,13 +5,14 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     font-size: 14px;
+    font-weight: 500;
     height: 100%;
     width: 100%;
   }
 
   body {
     font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #F5F6FA;
+    background-color: #f5f6fa;
   }
 
   #root {

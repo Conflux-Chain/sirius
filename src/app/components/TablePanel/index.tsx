@@ -26,7 +26,6 @@ const StyledPaginationWrapper = styled.div`
     input {
       color: #74798c !important;
       font-size: 1rem;
-      font-weight: 500;
     }
   }
 
