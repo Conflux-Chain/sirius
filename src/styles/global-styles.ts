@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     height: 100%;
     width: 100%;
   }
