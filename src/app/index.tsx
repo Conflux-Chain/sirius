@@ -23,6 +23,14 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
+import WebFontLoader from 'webfontloader';
+
+WebFontLoader.load({
+  custom: {
+    families: ['Circular Std:n4,i4,n7,i7,n8,i8'],
+    urls: ['/font.css'],
+  },
+});
 
 export function App() {
   const { t } = useTranslation();
