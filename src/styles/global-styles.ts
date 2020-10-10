@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
       font-family: 'Circular Std';
       font-weight: 400;
       border-radius: 0;
-      font-size: 0.8571rem;
+      font-size: 12px;
       color: #E9E9E9;
       line-height: 1.0714rem;
       padding: 0.5714rem 0.8571rem;
