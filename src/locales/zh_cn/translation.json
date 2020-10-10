@@ -34,6 +34,10 @@
       }
     }
   },
+  "packing": {
+    "title": "Plz wait, your transaction is packing",
+    "btn": "GO TO HOMEPAGE"
+  },
   "general": {
     "table": {
       "noData": "无数据"
