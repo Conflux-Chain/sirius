@@ -7,7 +7,7 @@ import { TablePanel } from '../../components/TablePanel';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { Text } from '../../components/Text';
-import { PageHeader } from '../../components/PageHeader';
+import { PageHeader } from '../../components/PageHeader/Loadable';
 import numeral from 'numeral';
 import { useTableData } from './../../components/TabsTablePanel/useTableData';
 

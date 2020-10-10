@@ -31,6 +31,7 @@ import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
+import { Epochs } from './containers/Epochs/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -92,6 +93,7 @@ export function App() {
                 component={Transactions}
               />
               <Route exact path="/blocks/:hash" component={Blocks} />
+              <Route exact path="/epochs/:number" component={Epochs} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
