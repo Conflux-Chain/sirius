@@ -57,7 +57,7 @@ const StyledTipLabelWrapper = styled.p`
   font-weight: 400;
   color: #74798c;
   line-height: 1.2857rem;
-  margin: 1.7143rem 0;
+  margin: 1.7143rem 0 0.8571rem;
 `;
 const StyledSpan = styled.span`
   color: #0054fe;

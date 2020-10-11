@@ -53,7 +53,6 @@ const StyledPaginationWrapper = styled.div`
     input {
       color: #74798c !important;
       font-size: 1rem;
-      font-family: CircularStd-Medium, CircularStd;
       font-weight: 500;
     }
   }
@@ -62,7 +61,6 @@ const StyledPaginationWrapper = styled.div`
   button,
   div.option span {
     font-size: 1rem !important;
-    font-family: CircularStd-Medium, CircularStd;
     font-weight: 500;
     color: #74798c !important;
     line-height: 1.2857rem !important;
@@ -81,7 +79,6 @@ const StyledTableWrapper = styled.div`
   }
   .table td.table-cell {
     font-size: 1rem;
-    font-family: CircularStd-Book, CircularStd;
     font-weight: 400;
     color: #20253a;
     padding: 1.2857rem calc((0.5714rem / 2) * 3);

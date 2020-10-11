@@ -14,10 +14,10 @@ import useTabTableData from '../../components/TabsTablePanel/useTabTableData';
 const StyledBlocksAndTransactionsWrapper = styled.div`
   max-width: 73.1429rem;
   margin: 0 auto;
-  padding-top: 0.8571rem;
+  overflow: hidden;
 
   ${media.s} {
-    padding: 0.2857rem 1.1429rem 1.1429rem;
+    padding: 0 1.1429rem;
   }
 `;
 

@@ -34,6 +34,20 @@
       }
     }
   },
+  "tokens": {
+    "title": "代币",
+    "description": "代币",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
+    "table": {
+      "number": "Number",
+      "token": "代币",
+      "transfer": "转移",
+      "totalSupply": "总供应量",
+      "holders": "持有人",
+      "contract": "合约"
+    }
+  },
   "general": {
     "table": {
       "noData": "无数据"
