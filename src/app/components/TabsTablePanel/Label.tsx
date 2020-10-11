@@ -54,7 +54,6 @@ TabLabel.propTypes = {
 
 const StyledTipLabelWrapper = styled.p`
   font-size: 1rem;
-  font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
   color: #74798c;
   line-height: 1.2857rem;

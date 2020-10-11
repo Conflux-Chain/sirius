@@ -29,7 +29,7 @@ export const Header = memo(() => {
     t(translations.header.home),
     '/',
     t(translations.header.bnt),
-    '/blocktxn',
+    '/blocks-and-transactions',
     t(translations.header.tokens),
     '/tokens',
     t(translations.header.contract),

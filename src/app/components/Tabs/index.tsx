@@ -5,7 +5,6 @@ const TabsComponent = styled(Tabs)`
   .tab {
     .label {
       font-size: 1.1429rem;
-      font-family: CircularStd-Medium, CircularStd;
       color: rgba(11, 19, 46, 0.6) !important;
       line-height: 1.7143rem;
       padding: 0.5714rem 0.2857rem;

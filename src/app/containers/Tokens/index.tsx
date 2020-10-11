@@ -22,12 +22,10 @@ const StyledTokensWrapper = styled.div`
 `;
 
 const StyledTextWrapper = styled.span`
-  font-family: CircularStd-Book, CircularStd;
   font-weight: 400;
   line-height: 1.7143rem;
   font-size: 1rem;
   &:hover {
-    font-family: CircularStd-Bold, CircularStd;
     font-weight: 500;
     color: #0054fe;
   }

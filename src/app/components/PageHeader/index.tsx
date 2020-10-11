@@ -9,7 +9,6 @@ import { media } from './../../../styles/media';
 
 const Wrapper = styled.div`
   font-size: 1.7143rem;
-  font-family: CircularStd-Bold, CircularStd;
   font-weight: 500;
   color: #0f1327;
   line-height: 2.2857rem;
