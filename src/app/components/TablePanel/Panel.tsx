@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Table, Pagination, Loading } from '@cfxjs/react-ui';
+import { Table, Pagination } from '@cfxjs/react-ui';
 import styled from 'styled-components';
 import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import useTableData from '../TabsTablePanel/useTableData';
+import { Skeleton } from '@cfxjs/react-ui';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
@@ -14,6 +15,25 @@ export type TablePanelType = {
   url: string;
   pagination?: PaginationProps | boolean;
   table: TableProps<unknown>;
+};
+
+const mockTableConfig = columns => {
+  const mockTableColumns = columns.map((item, i) => ({
+    id: i,
+    dataIndex: 'key',
+    width: item.width,
+    render: () => <Skeleton />,
+  }));
+  let mockTableData: Array<{ id: number }> = [];
+  const mockTableRowKey: string = 'id';
+  for (let i = 0; i < 10; i++) {
+    mockTableData.push({ id: i });
+  }
+  return {
+    mockTableColumns,
+    mockTableData,
+    mockTableRowKey,
+  };
 };
 
 const StyledPaginationWrapper = styled.div`
@@ -122,13 +142,18 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
       : defaultPaginationConfig),
     ...paginationObject,
   };
-  let emptyText: React.ReactNode | string = t(
-    translations.general.table.noData,
-  );
   let tableData = table.data;
+  let tableColumns = table.columns;
+  let tableRowKey = table.rowKey;
+
+  let { mockTableColumns, mockTableData, mockTableRowKey } = mockTableConfig(
+    table.columns,
+  );
 
   if (!data && !error) {
-    emptyText = <Loading />;
+    tableData = mockTableData;
+    tableColumns = mockTableColumns;
+    tableRowKey = mockTableRowKey;
   }
 
   if (data && !error) {
@@ -140,10 +165,9 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
       <StyledTableWrapper>
         <Table
           tableLayout="fixed"
-          columns={table.columns}
-          rowKey={table.rowKey}
+          columns={tableColumns}
           data={tableData}
-          emptyText={emptyText}
+          rowKey={tableRowKey}
           scroll={{ x: 800 }}
         />
       </StyledTableWrapper>
