@@ -11,12 +11,12 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #F5F6FA;
   }
 
   #root {
     min-height: 100%;
     min-width: 100%;
+    background-color: #F5F6FA;
   }
 
   p,

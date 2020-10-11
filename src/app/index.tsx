@@ -65,7 +65,6 @@ export function App() {
 }
 
 const Main = styled.div`
-  border: 1px solid blue;
   margin-top: 5rem;
 
   ${media.s} {
