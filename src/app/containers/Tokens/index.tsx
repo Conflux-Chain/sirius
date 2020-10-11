@@ -14,9 +14,10 @@ import useTableData from './../../components/TabsTablePanel/useTableData';
 const StyledTokensWrapper = styled.div`
   max-width: 73.1429rem;
   margin: 0 auto;
+  overflow: hidden;
 
   ${media.s} {
-    padding: 0.2857rem 1.1429rem 1.1429rem;
+    padding: 0 1.1429rem;
   }
 `;
 
@@ -39,20 +40,6 @@ const StyledIconWrapper = styled.div`
     width: 1.1429rem;
     height: 1.1429rem;
     margin-right: 0.5714rem;
-  }
-`;
-
-const StyledTipLabelWrapper = styled.div`
-  p {
-    margin-top: 2.1429rem;
-    margin-bottom: 0.8571rem;
-  }
-
-  ${media.s} {
-    p {
-      margin-top: 1.1429rem;
-      margin-bottom: 0.4286rem;
-    }
   }
 `;
 
@@ -126,17 +113,12 @@ export const Tokens = () => {
         <title>{t(translations.tokens.title)}</title>
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
-      <StyledTipLabelWrapper>
-        <TipLabel
-          count={total}
-          left={t(translations.tokens.tipCountBefore)}
-          right={t(translations.tokens.tipCountAfter, {
-            type: 'blocks',
-          })}
-          key="blocks"
-        />
-      </StyledTipLabelWrapper>
-      ,<PageHeader>{t(translations.tokens.title)}</PageHeader>
+      <TipLabel
+        count={total}
+        left={t(translations.tokens.tipCountBefore)}
+        right={t(translations.tokens.tipCountAfter)}
+      />
+      <PageHeader>{t(translations.tokens.title)}</PageHeader>
       <TablePanel
         table={{
           columns: columns,
