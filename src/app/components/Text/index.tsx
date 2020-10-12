@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Tooltip, Text } from '@cfxjs/react-ui';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
@@ -11,7 +10,7 @@ type TextProps = {
   maxwidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
-  tooltip?: Partial<TooltipProps>;
+  tooltipProps?: Partial<TooltipProps>;
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
@@ -37,23 +36,24 @@ const TextComponent = ({
   maxwidth,
   maxCount,
   hoverValue,
-  tooltip,
+  tooltipProps,
   ...props
 }: Props) => {
+  const { text, ...others } = tooltipProps || {};
   let child: React.ReactNode = children;
   if (maxwidth === undefined && maxCount && typeof children === 'string') {
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
   const tooltipText = (
     <div onClick={e => selectText(e.currentTarget)}>
-      {hoverValue || children}
+      {text || hoverValue || children}
     </div>
   );
   return (
     <Tooltip
       portalClassName="siriui-tooltip-square"
       text={tooltipText}
-      {...tooltip}
+      {...others}
     >
       <Wrapper maxwidth={maxwidth} {...props}>
         {child}
@@ -63,12 +63,5 @@ const TextComponent = ({
 };
 
 TextComponent.defaultProps = {};
-
-TextComponent.propTypes = {
-  maxCount: PropTypes.number,
-  maxwidth: PropTypes.string,
-  hoverValue: PropTypes.node,
-  tooltip: PropTypes.object,
-};
 
 export default TextComponent;
