@@ -3,7 +3,7 @@
 exports[`<Tabs  /> should match snapshot 1`] = `
 .c0 .tab .label {
   font-size: 1.1429rem;
-  color: rgba(11,19,46,0.6) !important;
+  color: rgba(11,19,46,0.6);
   line-height: 1.7143rem;
   padding: 0.5714rem 0.2857rem;
   font-weight: 500;
@@ -16,7 +16,7 @@ exports[`<Tabs  /> should match snapshot 1`] = `
 .c0 .tab.active .label,
 .c0 .tab:hover .label {
   font-weight: 500;
-  color: #0b132e !important;
+  color: #0b132e;
 }
 
 .c0 .tab .bottom {

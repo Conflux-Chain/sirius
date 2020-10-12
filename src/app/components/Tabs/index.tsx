@@ -5,7 +5,7 @@ const TabsComponent = styled(Tabs)`
   .tab {
     .label {
       font-size: 1.1429rem;
-      color: rgba(11, 19, 46, 0.6) !important;
+      color: rgba(11, 19, 46, 0.6);
       line-height: 1.7143rem;
       padding: 0.5714rem 0.2857rem;
       font-weight: 500;
@@ -17,7 +17,7 @@ const TabsComponent = styled(Tabs)`
     &:hover {
       .label {
         font-weight: 500;
-        color: #0b132e !important;
+        color: #0b132e;
       }
     }
     .bottom {
