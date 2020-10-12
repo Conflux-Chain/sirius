@@ -73,7 +73,7 @@ export function App() {
 }
 
 const Main = styled.div`
-  margin-top: 5rem;
+  padding-top: 5rem;
 
   ${media.s} {
     margin-top: 4rem;
