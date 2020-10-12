@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Logo: React.FC<Props> = props => {
-  const { color = '#1E3DE4' } = props;
+  const { color = '#1e3de4' } = props;
   return (
     <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
       <g id="Web" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
