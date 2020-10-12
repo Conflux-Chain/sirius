@@ -11,7 +11,6 @@ type TextProps = {
   maxwidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
-  hovercolor?: string;
   tooltip?: Partial<TooltipProps>;
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
@@ -26,11 +25,6 @@ const Wrapper = styled(Text)<any>`
   display: ${props =>
     props.maxwidth === undefined ? 'inherit' : 'inline-block'};
   cursor: pointer;
-  font-weight: 400;
-  &:hover {
-    font-weight: 500;
-    color: ${props => props.hovercolor};
-  }
 ` as React.FC<Props>;
 
 // note:
@@ -68,15 +62,12 @@ const TextComponent = ({
   );
 };
 
-TextComponent.defaultProps = {
-  hovercolor: '#1E3DE4',
-};
+TextComponent.defaultProps = {};
 
 TextComponent.propTypes = {
   maxCount: PropTypes.number,
   maxwidth: PropTypes.string,
   hoverValue: PropTypes.node,
-  hovercolor: PropTypes.string,
   tooltip: PropTypes.object,
 };
 
