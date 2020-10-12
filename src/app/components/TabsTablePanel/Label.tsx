@@ -7,7 +7,7 @@ import { Tooltip } from '@cfxjs/react-ui';
 const StyledToolTipLabel = createGlobalStyle`
   .tab-label-tooltip {
     .count {
-      color: #DEDEDE;
+      color: #dedede;
     }
   }
 `;
