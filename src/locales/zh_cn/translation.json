@@ -148,5 +148,9 @@
     "searchAddress": "搜索合约地址",
     "applicationUnit": "次",
     "tx": "交易"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions"
   }
 }

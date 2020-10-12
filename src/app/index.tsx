@@ -28,7 +28,8 @@ import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
-// import { Chart } from './containers/Charts/Loadable';
+import { Chart } from './containers/Charts/Loadable';
+import { Transactions } from './containers/Transactions/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -83,6 +84,8 @@ export function App() {
                 path="/sponsor/:contractAddress"
                 component={Sponsor}
               />
+              <Route path="/charts" component={Chart} />
+              <Route exact path="/transactions" component={Transactions} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
