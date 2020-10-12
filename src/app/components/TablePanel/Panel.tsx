@@ -8,6 +8,7 @@ import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import useTableData from '../TabsTablePanel/useTableData';
 import { Skeleton } from '@cfxjs/react-ui';
+import clsx from 'clsx';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
@@ -45,36 +46,47 @@ const StyledCardWrapper = styled.div`
 `;
 
 const StyledPaginationWrapper = styled.div`
-  margin: 1.7143rem 0;
-  li button {
-    background-color: rgba(0, 84, 254, 0.04);
-  }
-  .input-wrapper.solid,
-  div.select {
-    background-color: rgba(0, 84, 254, 0.04) !important;
-    border-color: transparent;
-    &.hover,
-    &:hover {
-      background-color: #e0eaff !important;
-      border-color: transparent;
+  .pagination.sirius-TablePanel-pagination {
+    margin: 1.7143rem 0;
+    .left,
+    .right {
+      margin-top: 0;
     }
-    input {
-      color: #74798c !important;
+    button:not(.active) {
+      background-color: rgba(0, 84, 254, 0.04);
+      &:not(.disabled):hover {
+        background-color: rgba(0, 84, 254, 0.1);
+      }
+    }
+    .input-wrapper.solid,
+    .select {
+      background-color: rgba(0, 84, 254, 0.04);
+      border-color: transparent;
+      &.hover,
+      &:hover {
+        background-color: #e0eaff;
+        border-color: transparent;
+      }
+      input {
+        color: #74798c;
+        font-size: 1rem;
+        font-weight: 500;
+        &.
+      }
+      &.focus:not(.disabled), &.hover:not(.disabled) {
+        input {
+          color: #74798c;
+        }
+      }
+    }
+    div.text,
+    button:not(.active),
+    .option span {
       font-size: 1rem;
       font-weight: 500;
+      color: #74798c;
+      line-height: 1.2857rem;
     }
-  }
-
-  div.text,
-  button,
-  div.option span {
-    font-size: 1rem !important;
-    font-weight: 500;
-    color: #74798c !important;
-    line-height: 1.2857rem !important;
-  }
-  button.active {
-    color: #fff !important;
   }
 `;
 
@@ -186,6 +198,7 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
       <StyledPaginationWrapper>
         {pagination !== false && (
           <Pagination
+            className={clsx('sirius-TablePanel-pagination', table.className)}
             {...mergedPaginationConfig}
             onPageChange={(page: number) => gotoPage(page)}
             onPageSizeChange={(pageSize: number) => setPageSize(pageSize)}
