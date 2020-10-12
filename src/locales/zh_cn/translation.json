@@ -57,6 +57,11 @@
       "labelPageSizeAfter": "条",
       "labelJumperBefore": "跳转到",
       "labelJumperAfter": "页"
+    },
+    "copyButton": {
+      "copyToClipboard": "复制到剪切板",
+      "success": "已复制",
+      "failed": "复制失败"
     }
   }
 }
