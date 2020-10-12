@@ -72,7 +72,12 @@
     "prettify": "prettier --write"
   },
   "browserslist": {
-    "production": [">1%", "not IE 11", "not dead", "not op_mini all"],
+    "production": [
+      ">1%",
+      "not IE 11",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -84,8 +89,12 @@
     "node": ">=10.13.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["npm run eslint -- --fix"],
-    "*.{md,json}": ["prettier --write"]
+    "*.{ts,tsx,js,jsx}": [
+      "npm run eslint -- --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {

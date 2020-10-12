@@ -19,6 +19,7 @@ import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
+import { Tokens } from './containers/Tokens/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
@@ -50,7 +51,6 @@ export function App() {
               content={t(translations.metadata.description)}
             />
           </Helmet>
-
           <Header />
           <Main>
             <Switch>
@@ -60,6 +60,7 @@ export function App() {
                 path="/blocks-and-transactions"
                 component={BlocksAndTransactions}
               />
+              <Route exact path="/tokens" component={Tokens} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
@@ -72,7 +73,6 @@ export function App() {
 }
 
 const Main = styled.div`
-  border: 1px solid blue;
   margin-top: 5rem;
 
   ${media.s} {

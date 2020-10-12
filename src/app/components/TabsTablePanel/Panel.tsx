@@ -1,16 +1,32 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Tabs from '../Tabs';
 import TablePanel from '../TablePanel';
 import useTabTableData from './useTabTableData';
+import { TablePanelType } from './../TablePanel';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
-export default function TabsTablePanel({ tabs, onTabsChange, hideTotalZero }) {
+export type TabsTablePanelType = {
+  tabs: Array<
+    {
+      value: string;
+      label: ((count: number) => React.ReactNode) | string;
+      content?: React.ReactNode;
+    } & Partial<TablePanelType>
+  >;
+  onTabsChange?: (value: string) => void;
+  hideTotalZero?: boolean;
+};
+
+function TabsTablePanel({
+  tabs,
+  onTabsChange,
+  hideTotalZero,
+}: TabsTablePanelType) {
   const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
   const handleTabsChange = function (value: string) {
     switchToTab(value);
-    onTabsChange(value);
+    onTabsChange && onTabsChange(value);
   };
   const ui = tabs
     .filter((_, i) => {
@@ -28,11 +44,7 @@ export default function TabsTablePanel({ tabs, onTabsChange, hideTotalZero }) {
           value={item.value}
           key={item.value}
         >
-          {item.table ? (
-            <TablePanel total={total[i]} {...item} />
-          ) : (
-            item.content
-          )}
+          {item.table ? <TablePanel {...item} /> : item.content}
         </Tabs.Item>
       );
     });
@@ -46,29 +58,15 @@ export default function TabsTablePanel({ tabs, onTabsChange, hideTotalZero }) {
   );
 }
 
-/**
-  // for example:
-  const tabs = [
-    {
-      value: 'blocks', // Tabs value
-      label: 'blocks', // Tabs label
-      url: '/blocks/list', // SWR url
-      pagination: {
-        page: 1,
-        pageSize: 50,
-      }, // table pagination config, also used for SWR url query
-      table: {
-        columns: columns, 
-        rowKey: 'hash', 
-      }, // table config
-    },
-  ]
-  */
 TabsTablePanel.defaultProps = {
   tabs: [],
   onTabsChange: () => {},
+  hideTotalZero: false,
 };
 
+export default TabsTablePanel;
+
+/**
 TabsTablePanel.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
@@ -110,3 +108,4 @@ TabsTablePanel.propTypes = {
   // hideTotalZero: optional, determine whether to hide 0 total tab panel, default is false
   hideTotalZero: PropTypes.bool,
 };
+ */
