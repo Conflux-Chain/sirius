@@ -7,7 +7,7 @@ import { selectText } from './../../../utils/util';
 
 type TextProps = {
   children?: React.ReactNode;
-  maxwidth?: string;
+  maxwidth?: string; // todo, camel-case naming will cause warning in console, keep now and will resolve later
   maxCount?: number;
   hoverValue?: React.ReactNode;
   tooltipProps?: Partial<TooltipProps>;
