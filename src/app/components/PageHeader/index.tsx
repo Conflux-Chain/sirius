@@ -10,7 +10,7 @@ import { media } from './../../../styles/media';
 const Wrapper = styled.div`
   font-size: 1.7143rem;
   font-weight: 500;
-  color: #0f1327;
+  color: #1a1a1a;
   line-height: 2.2857rem;
   margin-bottom: 1.1429rem;
 

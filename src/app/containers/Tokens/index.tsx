@@ -27,7 +27,7 @@ const StyledTextWrapper = styled.span`
   font-size: 1rem;
   &:hover {
     font-weight: 500;
-    color: #0054fe;
+    color: #1e3de4;
   }
 `;
 
