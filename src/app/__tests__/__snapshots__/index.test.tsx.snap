@@ -66,6 +66,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
             path="/charts"
           />
           <Route
+            exact={true}
+            path="/transactions"
+          />
+          <UNDEFINED
             component={[Function]}
           />
         </Switch>

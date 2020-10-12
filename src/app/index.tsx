@@ -24,7 +24,7 @@ import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
-
+import { Transactions } from './containers/Transactions/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
@@ -75,6 +75,7 @@ export function App() {
               <Route exact path="/tokens" component={Tokens} />
               <Route exact path="/sponsor" component={Sponsor} />
               <Route path="/charts" component={Chart} />
+              <Route exact path="/transactions" component={Transactions} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

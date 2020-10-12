@@ -91,5 +91,9 @@
       "failed": "复制失败"
     },
     "submit": "提交"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions"
   }
 }

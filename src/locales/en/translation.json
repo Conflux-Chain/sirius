@@ -111,5 +111,9 @@
       }
     },
     "submit": "Submit"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions"
   }
 }
