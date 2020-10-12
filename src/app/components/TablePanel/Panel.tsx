@@ -80,7 +80,7 @@ const StyledTableWrapper = styled.div`
   .table td.table-cell {
     font-size: 1rem;
     font-weight: 400;
-    color: #20253a;
+    color: #333333;
     padding: 1.2857rem calc((0.5714rem / 2) * 3);
     white-space: nowrap;
 

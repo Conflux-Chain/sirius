@@ -14,7 +14,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 
 .c0:hover {
   font-weight: 500;
-  color: #0054fe;
+  color: #1E3DE4;
 }
 
 <div
@@ -22,7 +22,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 >
   <p
     class="jsx-3390086683  c0"
-    hovercolor="#0054fe"
+    hovercolor="#1E3DE4"
     maxwidth="40px"
   >
     <span>
@@ -45,7 +45,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 
 .c0:hover {
   font-weight: 500;
-  color: #0054fe;
+  color: #1E3DE4;
 }
 
 <div
@@ -53,7 +53,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 >
   <p
     class="jsx-3390086683  c0"
-    hovercolor="#0054fe"
+    hovercolor="#1E3DE4"
   >
     12345...
   </p>

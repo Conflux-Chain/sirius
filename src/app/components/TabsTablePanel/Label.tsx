@@ -60,7 +60,7 @@ const StyledTipLabelWrapper = styled.p`
   margin: 1.7143rem 0 0.8571rem;
 `;
 const StyledSpan = styled.span`
-  color: #0054fe;
+  color: #1e3de4;
   padding: 0 0.4286rem;
 `;
 export function TipLabel({ count, left, right }) {

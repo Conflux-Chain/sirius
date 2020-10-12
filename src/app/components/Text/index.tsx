@@ -69,7 +69,7 @@ const TextComponent = ({
 };
 
 TextComponent.defaultProps = {
-  hovercolor: '#0054fe',
+  hovercolor: '#1E3DE4',
 };
 
 TextComponent.propTypes = {
