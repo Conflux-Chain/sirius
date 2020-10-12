@@ -60,6 +60,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
             component={[Function]}
             exact={true}
             path="/tokens"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
             path="/epochs/:number"
           />
           <Route

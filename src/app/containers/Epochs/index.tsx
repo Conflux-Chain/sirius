@@ -17,11 +17,17 @@ interface epochNumber {
 const StyledEpochWrapper = styled.div`
   max-width: 73.1429rem;
   margin: 0 auto;
-  padding-top: 0.8571rem;
+  padding-top: 2.2857rem;
 
   ${media.s} {
-    padding: 0.2857rem 1.1429rem 1.1429rem;
+    padding: 1.1429rem;
   }
+`;
+const StyledSubtitleWrapper = styled.p`
+  color: #74798c;
+  font-size: 1rem;
+  line-height: 1.2857rem;
+  margin: 1.1429rem 0 1.7143rem;
 `;
 
 const renderTextEllipsis = value => (
@@ -89,6 +95,7 @@ export const Epochs = () => {
         <meta name="description" content={t(translations.epochs.description)} />
       </Helmet>
       <PageHeader>{t(translations.epochs.title)}</PageHeader>
+      <StyledSubtitleWrapper>{number}</StyledSubtitleWrapper>
       <TablePanel
         url={`/block/list?epochNumber=${number}`}
         table={{ columns: columnsBlocks, rowKey: 'hash' }}
