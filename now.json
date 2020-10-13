@@ -4,6 +4,10 @@
   },
   "routes": [
     {
+      "src": "/api/token/list/",
+      "dest": "https://yapi.conflux-chain.org/mock/65/token/list"
+    },
+    {
       "src": "/api/contract-manager/(?<req>.*)",
       "dest": "https://scantest.confluxscan.io/contract-manager/api/$req"
     },
