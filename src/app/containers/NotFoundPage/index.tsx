@@ -34,7 +34,6 @@ const PageWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 21.3rem);
   background: #f5f6fa;
 `;
 
