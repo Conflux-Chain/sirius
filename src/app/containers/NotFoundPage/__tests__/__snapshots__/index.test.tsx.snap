@@ -50,6 +50,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   font-weight: 500;
   line-height: 1.2857rem;
   margin-bottom: 1rem;
+  max-width: 540px;
 }
 
 .c5 {
