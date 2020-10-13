@@ -31,7 +31,7 @@ export function TabLabel({ left, right, count, children }) {
               {right}
             </>
           }
-          portalClassName="tab-label-tooltip siriui-tooltip-square"
+          contentClassName="tab-label-tooltip siriui-tooltip-square"
         >
           <StyledCount>({count > 9999 ? '9999+' : count})</StyledCount>
         </Tooltip>
