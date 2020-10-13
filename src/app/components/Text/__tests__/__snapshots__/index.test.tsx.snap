@@ -12,16 +12,20 @@ exports[`<Text  /> should match snapshot 1`] = `
 }
 
 <div
-  class="jsx-418573366 tooltip "
+  class="jsx-64609884"
 >
-  <p
-    class="jsx-3390086683  c0"
-    maxwidth="40px"
+  <div
+    class="jsx-64609884 tooltip "
   >
-    <span>
-      1234567890
-    </span>
-  </p>
+    <p
+      class="jsx-3390086683  text c0"
+      maxwidth="40px"
+    >
+      <span>
+        1234567890
+      </span>
+    </p>
+  </div>
 </div>
 `;
 
@@ -36,12 +40,16 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 }
 
 <div
-  class="jsx-418573366 tooltip "
+  class="jsx-64609884"
 >
-  <p
-    class="jsx-3390086683  c0"
+  <div
+    class="jsx-64609884 tooltip "
   >
-    12345...
-  </p>
+    <p
+      class="jsx-3390086683  text c0"
+    >
+      12345...
+    </p>
+  </div>
 </div>
 `;

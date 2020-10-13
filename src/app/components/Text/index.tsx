@@ -49,9 +49,10 @@ const TextComponent = ({
       {text || hoverValue || children}
     </div>
   );
+
   return (
     <Tooltip
-      portalClassName="siriui-tooltip-square"
+      contentClassName="siriui-tooltip-square"
       text={tooltipText}
       {...others}
     >

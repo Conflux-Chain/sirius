@@ -61,7 +61,7 @@ export const Header = memo(() => {
   const brand = (
     <LogoWrapper>
       <Link>
-        <img alt="conflux scan logo" src="confi-planet.png" />
+        <img alt="conflux scan logo" src="/confi-planet.png" />
         <TextLogo changeColorOnMobile />
       </Link>
     </LogoWrapper>

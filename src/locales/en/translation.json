@@ -84,6 +84,8 @@
     "btn": "GO TO HOMEPAGE"
   },
   "general": {
+    "viewAll": "View All",
+    "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "table": {
       "noData": "No data."
     },

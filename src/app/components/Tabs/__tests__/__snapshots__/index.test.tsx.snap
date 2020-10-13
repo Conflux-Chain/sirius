@@ -31,44 +31,42 @@ exports[`<Tabs  /> should match snapshot 1`] = `
 }
 
 <div
-  class="jsx-2839662092 c0"
+  class="jsx-2839662092 tabs c0"
 >
   <header
     class="jsx-2839662092"
   >
     <div
-      class="jsx-2839662092 tab "
+      class="jsx-2839662092 tab  "
       role="button"
     >
       <div
-        class="jsx-252575312 nav"
+        class="jsx-3391162855 nav"
       >
         <div
-          class="jsx-252575312 label"
-          style="color: rgb(68, 68, 68);"
+          class="jsx-3391162855 label"
         >
           label1
         </div>
         <div
-          class="jsx-252575312 bottom"
+          class="jsx-3391162855 bottom"
         />
       </div>
     </div>
     <div
-      class="jsx-2839662092 tab "
+      class="jsx-2839662092 tab  "
       role="button"
     >
       <div
-        class="jsx-252575312 nav"
+        class="jsx-3391162855 nav"
       >
         <div
-          class="jsx-252575312 label"
-          style="color: rgb(68, 68, 68);"
+          class="jsx-3391162855 label"
         >
           label2
         </div>
         <div
-          class="jsx-252575312 bottom"
+          class="jsx-3391162855 bottom"
         />
       </div>
     </div>

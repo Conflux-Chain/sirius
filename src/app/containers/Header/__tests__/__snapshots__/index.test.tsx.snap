@@ -419,12 +419,12 @@ exports[`<Header /> should match the snapshot 1`] = `
             class="c5"
           >
             <a
-              class="jsx-3955402335 link "
+              class="jsx-1150746702 link "
               href=""
             >
               <img
                 alt="conflux scan logo"
-                src="confi-planet.png"
+                src="/confi-planet.png"
               />
               <svg
                 height="22px"
@@ -528,7 +528,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/"
               >
                 Home
@@ -542,7 +542,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/blocks-and-transactions"
               >
                 Blocks & Transaction
@@ -556,7 +556,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/tokens"
               >
                 Tokens
@@ -577,7 +577,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
@@ -609,7 +609,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/charts"
               >
                 Charts
@@ -637,7 +637,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
@@ -672,7 +672,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
@@ -1163,12 +1163,12 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
             class="c5"
           >
             <a
-              class="jsx-3955402335 link "
+              class="jsx-1150746702 link "
               href=""
             >
               <img
                 alt="conflux scan logo"
-                src="confi-planet.png"
+                src="/confi-planet.png"
               />
               <svg
                 height="22px"
@@ -1272,7 +1272,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/"
               >
                 Home
@@ -1286,7 +1286,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/blocks-and-transactions"
               >
                 Blocks & Transaction
@@ -1300,7 +1300,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/tokens"
               >
                 Tokens
@@ -1321,7 +1321,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
@@ -1353,7 +1353,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-3955402335 link navbar-link level-0 matched"
+                class="jsx-1150746702 link navbar-link level-0 matched"
                 href="/charts"
               >
                 Charts
@@ -1371,32 +1371,32 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c10"
             >
               <div
-                class="jsx-2724022412 with-label"
+                class="jsx-1159070929 with-label"
               >
                 <div
-                  class="jsx-2724022412 input-container header-search-bar"
+                  class="jsx-1159070929 input-container header-search-bar"
                 >
                   <div
-                    class="jsx-2724022412 input-wrapper line    "
+                    class="jsx-1159070929 input-wrapper line    "
                   >
                     <input
                       autocomplete="off"
-                      class="jsx-2724022412 right-icon"
+                      class="jsx-1159070929 right-icon"
                       placeholder="Address / Block hash / Epoch"
                       type="text"
                     />
                     <div
-                      class="jsx-1654924257 clear-icon "
+                      class="jsx-1309396301 clear-icon "
                     >
                       <svg
-                        class="jsx-1654924257"
+                        class="jsx-1309396301"
                         height="14"
                         viewBox="0 0 14 14"
                         width="14"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          class="jsx-1654924257"
+                          class="jsx-1309396301"
                           d="M7 1.75C4.1125 1.75 1.75 4.1125 1.75 7C1.75 9.8875 4.1125 12.25 7 12.25C9.8875 12.25 12.25 9.8875 12.25 7C12.25 4.1125 9.8875 1.75 7 1.75ZM9.29688 8.37812L8.37812 9.29688L7 7.91875L5.62188 9.29688L4.70312 8.37812L6.08125 7L4.70312 5.62188L5.62188 4.70312L7 6.08125L8.37812 4.70312L9.29688 5.62188L7.91875 7L9.29688 8.37812Z"
                           fill="currentColor"
                         />
@@ -1465,7 +1465,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
@@ -1500,7 +1500,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                   class="c8"
                 >
                   <a
-                    class="jsx-3955402335 link navbar-link level-0"
+                    class="jsx-1150746702 link navbar-link level-0"
                     href=""
                   >
                     <svg
