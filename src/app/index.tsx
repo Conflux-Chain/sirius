@@ -85,7 +85,7 @@ const Main = styled.div`
   max-width: 73.1429rem;
   margin: 0 auto;
   padding-top: 5rem;
-
+  min-height: calc(100vh - 21.3rem);
   ${media.s} {
     padding: 4rem 1.1429rem 1.1429rem;
   }
