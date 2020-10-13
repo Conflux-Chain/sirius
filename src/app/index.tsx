@@ -80,9 +80,11 @@ export function App() {
 }
 
 const Main = styled.div`
-  margin-top: 5rem;
-  background: #f5f6fa;
+  max-width: 73.1429rem;
+  margin: 0 auto;
+  padding-top: 5rem;
+
   ${media.s} {
-    margin-top: 4rem;
+    padding: 4rem 1.1429rem 1.1429rem;
   }
 `;
