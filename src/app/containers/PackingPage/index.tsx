@@ -1,28 +1,36 @@
 /**
  *
- * NotFoundPage
+ * PackingPage
  *
  */
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import leftImage from '../../../images/home/404.svg';
+import leftImage from '../../../images/home/packing.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
+import { useParams } from 'react-router-dom';
+import { CopyButton } from '../../components/CopyButton/Loadable';
 
-export function NotFoundPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { t, i18n } = useTranslation();
+interface RouteParams {
+  txHash: string;
+}
+
+export function PackingPage() {
+  const { t } = useTranslation();
+  const { txHash } = useParams<RouteParams>();
 
   return (
     <PageWrapper>
       <LeftImage src={leftImage} />
       <RightWrap>
-        <ErrorTitle>{t(translations.notFound.title)}</ErrorTitle>
-        <ErrorLabel>{t(translations.notFound.label)}</ErrorLabel>
-        <ErrorLabel>{t(translations.notFound.addressTip)}</ErrorLabel>
-        <GoTo href="/">{t(translations.notFound.btn)}</GoTo>
+        <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
+        <ErrorLabel>
+          <span>{txHash}</span>
+          <CopyButton copyText={txHash} />
+        </ErrorLabel>
+        <GoTo href="/">{t(translations.packing.btn)}</GoTo>
       </RightWrap>
     </PageWrapper>
   );
@@ -48,6 +56,7 @@ const LeftImage = styled.img`
 const RightWrap = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
   ${media.m} {
     padding: 1rem;
   }
@@ -57,18 +66,22 @@ const ErrorTitle = styled.span`
   display: inline-block;
   font-size: 1.5714rem;
   line-height: 2rem;
-  color: #424242;
+  color: #555;
   font-weight: 500;
   margin-bottom: 1rem;
 `;
 
-const ErrorLabel = styled.span`
-  display: inline-block;
-  color: #4b4b4b;
-  font-weight: 500;
-  line-height: 1.2857rem;
-  margin-bottom: 1rem;
-  max-width: 540px;
+const ErrorLabel = styled.div`
+  display: flex;
+  margin-bottom: 2.3571rem;
+  align-items: center;
+  span {
+    display: inline-block;
+    color: #6a6a6a;
+    font-weight: 500;
+    line-height: 1.2857rem;
+    margin-right: 3px;
+  }
 `;
 
 const GoTo = styled.a`

@@ -20,6 +20,7 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
+import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -56,6 +57,7 @@ export function App() {
           <Main>
             <Switch>
               <Route exact path="/" component={HomePage} />
+              <Route exact path="/packing/:txHash" component={PackingPage} />
               <Route exact path="/contract/" component={Contract} />
               <Route
                 exact

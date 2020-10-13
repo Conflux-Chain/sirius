@@ -77,6 +77,10 @@
     "oceanus": "OCEANUS",
     "searchPlaceHolder": "Address / Block hash / Epoch"
   },
+  "packing": {
+    "title": "Plz wait, your transaction is packing",
+    "btn": "GO TO HOMEPAGE"
+  },
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",

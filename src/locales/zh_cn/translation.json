@@ -51,6 +51,10 @@
       }
     }
   },
+  "packing": {
+    "title": "Plz wait, your transaction is packing",
+    "btn": "GO TO HOMEPAGE"
+  },
   "tokens": {
     "title": "代币",
     "description": "代币",

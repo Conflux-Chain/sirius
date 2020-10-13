@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<NotFoundPage /> should match the snapshot 1`] = `
+exports[`<PackingPage /> should match the snapshot 1`] = `
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -33,24 +33,36 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  margin-top: 1rem;
 }
 
 .c3 {
   display: inline-block;
   font-size: 1.5714rem;
   line-height: 2rem;
-  color: #424242;
+  color: #555;
   font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 2.3571rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 span {
   display: inline-block;
-  color: #4b4b4b;
+  color: #6a6a6a;
   font-weight: 500;
   line-height: 1.2857rem;
-  margin-bottom: 1rem;
-  max-width: 540px;
+  margin-right: 3px;
 }
 
 .c5 {
@@ -91,7 +103,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
 >
   <img
     class="c1"
-    src="404.svg"
+    src="packing.svg"
   />
   <div
     class="c2"
@@ -99,18 +111,15 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
     <span
       class="c3"
     >
-      There’s nothing here!
+      Plz wait, your transaction is packing
     </span>
-    <span
+    <div
       class="c4"
     >
-      Sorry! This is an invalid search string.
-    </span>
-    <span
-      class="c4"
-    >
-      If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).
-    </span>
+      <span>
+        0x87455a2f9bcaf8421927575d98852c8e43ff6fe8
+      </span>
+    </div>
     <a
       class="c5"
       href="/"
