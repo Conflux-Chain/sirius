@@ -13,12 +13,14 @@ type CopyButtonProps = {
   size?: number;
   copyText: string;
   tooltipText?: string;
+  color?: string;
 };
 
 export const CopyButton = ({
   size,
   copyText,
   tooltipText,
+  color,
 }: CopyButtonProps) => {
   const { t } = useTranslation();
   const [text, setText] = useState(
@@ -48,7 +50,7 @@ export const CopyButton = ({
   return (
     <Tooltip text={text} onVisibleChange={handleChange}>
       <div onClick={handleClick}>
-        <Copy size={size || 14} />
+        <Copy size={size || 14} color={color || '#4b4b4b'} />
       </div>
     </Tooltip>
   );

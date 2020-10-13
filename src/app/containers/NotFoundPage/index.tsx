@@ -68,6 +68,7 @@ const ErrorLabel = styled.span`
   font-weight: 500;
   line-height: 1.2857rem;
   margin-bottom: 1rem;
+  max-width: 540px;
 `;
 
 const GoTo = styled.a`

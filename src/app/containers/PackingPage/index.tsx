@@ -11,6 +11,7 @@ import leftImage from '../../../images/home/packing.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
+import { CopyButton } from '../../components/CopyButton/Loadable';
 
 interface RouteParams {
   txHash: string;
@@ -25,7 +26,10 @@ export function PackingPage() {
       <LeftImage src={leftImage} />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
-        <ErrorLabel>{txHash}</ErrorLabel>
+        <ErrorLabel>
+          <span>{txHash}</span>
+          <CopyButton copyText={txHash} />
+        </ErrorLabel>
         <GoTo href="/">{t(translations.packing.btn)}</GoTo>
       </RightWrap>
     </PageWrapper>
@@ -67,12 +71,17 @@ const ErrorTitle = styled.span`
   margin-bottom: 1rem;
 `;
 
-const ErrorLabel = styled.span`
-  display: inline-block;
-  color: #6a6a6a;
-  font-weight: 500;
-  line-height: 1.2857rem;
+const ErrorLabel = styled.div`
+  display: flex;
   margin-bottom: 2.3571rem;
+  align-items: center;
+  span {
+    display: inline-block;
+    color: #6a6a6a;
+    font-weight: 500;
+    line-height: 1.2857rem;
+    margin-right: 3px;
+  }
 `;
 
 const GoTo = styled.a`
