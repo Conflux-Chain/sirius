@@ -3,6 +3,23 @@
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "contract": {
+    "address": "Contract Address",
+    "nameTag": "Contract Name Tag",
+    "site": "Official Site",
+    "contractIcon": "Contract Icon",
+    "remove": "Remove",
+    "tokenIcon": "Token Icon",
+    "sourceCode": "Contract Source Code",
+    "abi": "Contract ABI",
+    "enterPassword": "Please enter your admin password",
+    "create": {
+      "title": "Contract Creation"
+    },
+    "edit": {
+      "title": "Contract Edit"
+    }
+  },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
     "description": "Blocks and Transactions",
@@ -75,6 +92,12 @@
       "labelPageSizeAfter": "Records",
       "labelJumperBefore": "Go to",
       "labelJumperAfter": "Page"
-    }
+    },
+    "copyButton": {
+      "copyToClipboard": "复制到剪切板",
+      "success": "已复制",
+      "failed": "复制失败"
+    },
+    "submit": "Submit"
   }
 }

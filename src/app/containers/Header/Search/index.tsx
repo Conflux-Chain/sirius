@@ -40,10 +40,10 @@ const Outer = styled.div`
     height: 2.28rem;
     .input-wrapper {
       border-radius: 1.14rem;
-      border-color: #0054fe;
+      border-color: #1e3de4;
       input {
         ::placeholder {
-          color: #20253a;
+          color: #333333;
         }
       }
     }

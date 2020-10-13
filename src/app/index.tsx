@@ -17,6 +17,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { Header } from './containers/Header/index';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
+import { Contract } from './containers/Contract/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
@@ -55,6 +56,12 @@ export function App() {
           <Main>
             <Switch>
               <Route exact path="/" component={HomePage} />
+              <Route exact path="/contract/" component={Contract} />
+              <Route
+                exact
+                path="/contract/:contractAddress"
+                component={Contract}
+              />
               <Route
                 exact
                 path="/blocks-and-transactions"
@@ -73,9 +80,11 @@ export function App() {
 }
 
 const Main = styled.div`
-  margin-top: 5rem;
+  max-width: 73.1429rem;
+  margin: 0 auto;
+  padding-top: 5rem;
 
   ${media.s} {
-    margin-top: 4rem;
+    padding: 4rem 1.1429rem 1.1429rem;
   }
 `;

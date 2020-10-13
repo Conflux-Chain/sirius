@@ -6,7 +6,7 @@ Object {
   "baseElement": .c0 {
   font-size: 1.7143rem;
   font-weight: 500;
-  color: #0f1327;
+  color: #1a1a1a;
   line-height: 2.2857rem;
   margin-bottom: 1.1429rem;
 }
@@ -31,7 +31,7 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="PageHeader__Wrapper-se2wca-0 bAanhF"
+      class="PageHeader__Wrapper-se2wca-0 ihAuek"
     >
       PageHeader
     </div>

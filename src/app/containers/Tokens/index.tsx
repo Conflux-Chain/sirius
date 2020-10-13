@@ -7,19 +7,8 @@ import { TipLabel, ColumnsType } from '../../components/TabsTablePanel';
 import styled from 'styled-components';
 import Text from '../../components/Text';
 import PageHeader from '../../components/PageHeader';
-import { media } from '../../../styles/media';
 import numeral from 'numeral';
 import useTableData from './../../components/TabsTablePanel/useTableData';
-
-const StyledTokensWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  overflow: hidden;
-
-  ${media.s} {
-    padding: 0 1.1429rem;
-  }
-`;
 
 const StyledTextWrapper = styled.span`
   font-weight: 400;
@@ -27,7 +16,7 @@ const StyledTextWrapper = styled.span`
   font-size: 1rem;
   &:hover {
     font-weight: 500;
-    color: #0054fe;
+    color: #1e3de4;
   }
 `;
 
@@ -106,7 +95,7 @@ export const Tokens = () => {
   const { total } = useTableData(url);
 
   return (
-    <StyledTokensWrapper>
+    <>
       <Helmet>
         <title>{t(translations.tokens.title)}</title>
         <meta name="description" content={t(translations.tokens.description)} />
@@ -124,6 +113,6 @@ export const Tokens = () => {
         }}
         url={url}
       />
-    </StyledTokensWrapper>
+    </>
   );
 };

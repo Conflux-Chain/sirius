@@ -81,7 +81,7 @@ export const Header = memo(() => {
 
 const LogoWrapper = styled.div`
   a.link {
-    dislay: flex;
+    display: flex;
     align-items: center;
 
     svg {

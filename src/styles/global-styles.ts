@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
       font-weight: 400;
       border-radius: 0;
       font-size: 12px;
-      color: #E9E9E9;
+      color: #e9e9e9;
       line-height: 1.0714rem;
       padding: 0.5714rem 0.8571rem;
     }

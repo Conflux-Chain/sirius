@@ -1,3 +1,4 @@
+/*global window:writable*/
 import React from 'react';
 import createBreakpoint from '../createBreakpoint';
 import { render } from '@testing-library/react';
