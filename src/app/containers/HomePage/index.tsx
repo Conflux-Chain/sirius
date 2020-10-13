@@ -174,6 +174,10 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 4.57rem;
+  ${media.s} {
+    margin-bottom: 2rem;
+  }
 `;
 const Top = styled.section``;
 const Bottom = styled.section`

@@ -45,32 +45,32 @@ exports[`<Search  /> should match snapshot 1`] = `
   class="c0"
 >
   <div
-    class="jsx-2724022412 with-label"
+    class="jsx-1159070929 with-label"
   >
     <div
-      class="jsx-2724022412 input-container header-search-bar"
+      class="jsx-1159070929 input-container header-search-bar"
     >
       <div
-        class="jsx-2724022412 input-wrapper line    "
+        class="jsx-1159070929 input-wrapper line    "
       >
         <input
           autocomplete="off"
-          class="jsx-2724022412 right-icon"
+          class="jsx-1159070929 right-icon"
           placeholder="Address / Block hash / Epoch"
           type="text"
         />
         <div
-          class="jsx-1654924257 clear-icon "
+          class="jsx-1309396301 clear-icon "
         >
           <svg
-            class="jsx-1654924257"
+            class="jsx-1309396301"
             height="14"
             viewBox="0 0 14 14"
             width="14"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              class="jsx-1654924257"
+              class="jsx-1309396301"
               d="M7 1.75C4.1125 1.75 1.75 4.1125 1.75 7C1.75 9.8875 4.1125 12.25 7 12.25C9.8875 12.25 12.25 9.8875 12.25 7C12.25 4.1125 9.8875 1.75 7 1.75ZM9.29688 8.37812L8.37812 9.29688L7 7.91875L5.62188 9.29688L4.70312 8.37812L6.08125 7L4.70312 5.62188L5.62188 4.70312L7 6.08125L8.37812 4.70312L9.29688 5.62188L7.91875 7L9.29688 8.37812Z"
               fill="currentColor"
             />
