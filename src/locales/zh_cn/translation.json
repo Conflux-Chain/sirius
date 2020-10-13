@@ -3,6 +3,23 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "contract": {
+    "address": "合约地址",
+    "nameTag": "合约名称标签",
+    "site": "官方网站",
+    "contractIcon": "合约图标",
+    "remove": "移除",
+    "tokenIcon": "代币图标",
+    "sourceCode": "源码",
+    "abi": "Contract ABI",
+    "enterPassword": "请输入管理员口令",
+    "create": {
+      "title": "创建合约"
+    },
+    "edit": {
+      "title": "编辑合约"
+    }
+  },
   "blocksAndTransactions": {
     "title": "出块和交易",
     "description": "出块和交易",
@@ -38,6 +55,26 @@
     "title": "Plz wait, your transaction is packing",
     "btn": "GO TO HOMEPAGE"
   },
+  "tokens": {
+    "title": "代币",
+    "description": "代币",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
+    "table": {
+      "number": "Number",
+      "token": "代币",
+      "transfer": "转移",
+      "totalSupply": "总供应量",
+      "holders": "持有人",
+      "contract": "合约"
+    }
+  },
+  "notFound": {
+    "title": "There’s nothing here!",
+    "label": "Sorry! This is an invalid search string.",
+    "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
+    "btn": "GO TO HOMEPAGE"
+  },
   "general": {
     "table": {
       "noData": "无数据"
@@ -47,6 +84,12 @@
       "labelPageSizeAfter": "条",
       "labelJumperBefore": "跳转到",
       "labelJumperAfter": "页"
-    }
+    },
+    "copyButton": {
+      "copyToClipboard": "复制到剪切板",
+      "success": "已复制",
+      "failed": "复制失败"
+    },
+    "submit": "提交"
   }
 }

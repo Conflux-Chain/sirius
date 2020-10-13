@@ -5,7 +5,7 @@ import qs from 'query-string';
 export const appendApiPrefix = (url: string) => `/api${url}`;
 
 export interface Params {
-  [name: string]: string;
+  [name: string]: string | string[];
 }
 
 export type useApi = (
@@ -29,16 +29,13 @@ export const simpleGetFetcher = async (...args: any[]) => {
 
 const simplePostFetcher = async (...args: any[]) => {
   let [url, params] = args;
-  const body = new FormData();
-  if (params) {
-    Object.keys(params).forEach(k => {
-      body.append(k, params[k]);
-    });
-  }
-
   const res = await fetch(appendApiPrefix(url), {
     method: 'post',
-    body,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
   });
   const json = await res.json();
   return json;
@@ -252,7 +249,7 @@ export const useCMContractCreate: useApi = (
   ...rest
 ) => {
   if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
+  // params = useRef(params).current;
   return useSWR(
     shouldFetch ? ['/contract-manager/contract/create', ...params] : null,
     rest[1] || simplePostFetcher,
@@ -265,7 +262,7 @@ export const useCMContractUpdate: useApi = (
   ...rest
 ) => {
   if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
+  // params = useRef(params).current;
   return useSWR(
     shouldFetch ? ['/contract-manager/contract/update', ...params] : null,
     rest[1] || simplePostFetcher,

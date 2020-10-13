@@ -3,6 +3,23 @@
     "title": "Conlfux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "contract": {
+    "address": "Contract Address",
+    "nameTag": "Contract Name Tag",
+    "site": "Official Site",
+    "contractIcon": "Contract Icon",
+    "remove": "Remove",
+    "tokenIcon": "Token Icon",
+    "sourceCode": "Contract Source Code",
+    "abi": "Contract ABI",
+    "enterPassword": "Please enter your admin password",
+    "create": {
+      "title": "Contract Creation"
+    },
+    "edit": {
+      "title": "Contract Edit"
+    }
+  },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
     "description": "Blocks and Transactions",
@@ -34,6 +51,20 @@
       }
     }
   },
+  "tokens": {
+    "title": "Tokens",
+    "description": "Tokens",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
+    "table": {
+      "number": "Number",
+      "token": "Token",
+      "transfer": "Transfer",
+      "totalSupply": "Total Supply",
+      "holders": "Holders",
+      "contract": "Contract"
+    }
+  },
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transaction",
@@ -47,7 +78,12 @@
     "searchPlaceHolder": "Address / Block hash / Epoch"
   },
   "packing": {
-    "title": "Plz wait, your transaction is packing",
+    "title": "Plz wait, your transaction is packing"
+  },
+  "notFound": {
+    "title": "There’s nothing here!",
+    "label": "Sorry! This is an invalid search string.",
+    "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
     "btn": "GO TO HOMEPAGE"
   },
   "general": {
@@ -59,6 +95,12 @@
       "labelPageSizeAfter": "Records",
       "labelJumperBefore": "Go to",
       "labelJumperAfter": "Page"
-    }
+    },
+    "copyButton": {
+      "copyToClipboard": "复制到剪切板",
+      "success": "已复制",
+      "failed": "复制失败"
+    },
+    "submit": "Submit"
   }
 }

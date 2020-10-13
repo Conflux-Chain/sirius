@@ -34,7 +34,22 @@ exports[`<App /> should render and match the snapshot 1`] = `
           <UNDEFINED
             component={[Function]}
             exact={true}
+            path="/contract/"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
+            path="/contract/:contractAddress"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
             path="/blocks-and-transactions"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
+            path="/tokens"
           />
           <UNDEFINED
             component={[Function]}

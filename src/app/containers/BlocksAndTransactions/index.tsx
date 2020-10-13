@@ -6,20 +6,8 @@ import TabsTablePanel, {
   ColumnsType,
   TipLabel,
 } from '../../components/TabsTablePanel';
-import styled from 'styled-components';
 import Text from './../../components/Text';
-import { media } from './../../../styles/media';
 import useTabTableData from '../../components/TabsTablePanel/useTabTableData';
-
-const StyledBlocksAndTransactionsWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding-top: 0.8571rem;
-
-  ${media.s} {
-    padding: 0.2857rem 1.1429rem 1.1429rem;
-  }
-`;
 
 const renderTextEllipsis = value => (
   <Text span maxwidth={'5.7143rem'} hoverValue={value}>
@@ -156,7 +144,7 @@ export const BlocksAndTransactions = () => {
   const { currentTabTotal, currentTabValue } = useTabTableData(tabs);
 
   return (
-    <StyledBlocksAndTransactionsWrapper>
+    <>
       <Helmet>
         <title>{t(translations.blocksAndTransactions.title)}</title>
         <meta
@@ -173,6 +161,6 @@ export const BlocksAndTransactions = () => {
         key={currentTabValue}
       />
       <TabsTablePanel tabs={tabs} />
-    </StyledBlocksAndTransactionsWrapper>
+    </>
   );
 };
