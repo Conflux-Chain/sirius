@@ -540,7 +540,7 @@ exports[`<Header /> should match the snapshot 1`] = `
             >
               <a
                 class="jsx-3955402335 link navbar-link level-0 matched"
-                href="/blocktxn"
+                href="/blocks-and-transactions"
               >
                 Blocks & Transaction
               </a>
@@ -932,23 +932,23 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 
 .c10 .header-search-bar.input-container .input-wrapper {
   border-radius: 1.14rem;
-  border-color: #0054fe;
+  border-color: #1e3de4;
 }
 
 .c10 .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
-  color: #20253a;
+  color: #333333;
 }
 
 .c10 .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
-  color: #20253a;
+  color: #333333;
 }
 
 .c10 .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
-  color: #20253a;
+  color: #333333;
 }
 
 .c10 .header-search-bar.input-container .input-wrapper input::placeholder {
-  color: #20253a;
+  color: #333333;
 }
 
 @media (max-width:1024px) {
@@ -1281,7 +1281,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
             >
               <a
                 class="jsx-3955402335 link navbar-link level-0 matched"
-                href="/blocktxn"
+                href="/blocks-and-transactions"
               >
                 Blocks & Transaction
               </a>
@@ -1429,7 +1429,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                                 />
                                 <path
                                   d="M7,13 C10.3137085,13 13,10.3137085 13,7 C13,3.6862915 10.3137085,1 7,1 C3.6862915,1 1,3.6862915 1,7 C1,10.3137085 3.6862915,13 7,13 Z M15,15 L12,12"
-                                  stroke="#0054FE"
+                                  stroke="#1e3de4"
                                   stroke-linecap="round"
                                   stroke-linejoin="round"
                                   stroke-width="2"

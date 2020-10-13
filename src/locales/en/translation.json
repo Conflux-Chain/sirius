@@ -51,6 +51,20 @@
       }
     }
   },
+  "tokens": {
+    "title": "Tokens",
+    "description": "Tokens",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
+    "table": {
+      "number": "Number",
+      "token": "Token",
+      "transfer": "Transfer",
+      "totalSupply": "Total Supply",
+      "holders": "Holders",
+      "contract": "Contract"
+    }
+  },
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transaction",
