@@ -32,7 +32,7 @@ yarn && yarn build
             script {
               sh (label: 'move to nginx www', script: """
 sudo rm -rf /www/sirius/
-sudo cp -r public /www/sirius
+sudo cp -r build /www/sirius
 """)
             }
           }
@@ -56,7 +56,7 @@ yarn && yarn build
             script {
               sh (label: 'move builds', script: """
 sudo rm -rf /www/sirius/
-sudo cp -r public /www/sirius
+sudo cp -r build /www/sirius
 """)
             }
           }
