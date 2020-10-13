@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Table, Pagination } from '@cfxjs/react-ui';
+import { Table, Pagination, Card } from '@cfxjs/react-ui';
 import styled from 'styled-components';
 import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
@@ -35,6 +35,14 @@ const mockTableConfig = columns => {
     mockTableRowKey,
   };
 };
+
+const StyledCardWrapper = styled.div`
+  .card.sirius-TablePanel-card {
+    .content {
+      padding: 0;
+    }
+  }
+`;
 
 const StyledPaginationWrapper = styled.div`
   margin: 1.7143rem 0;
@@ -162,15 +170,19 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
 
   return (
     <>
-      <StyledTableWrapper>
-        <Table
-          tableLayout="fixed"
-          columns={tableColumns}
-          data={tableData}
-          rowKey={tableRowKey}
-          scroll={{ x: 800 }}
-        />
-      </StyledTableWrapper>
+      <StyledCardWrapper>
+        <Card className="sirius-TablePanel-card">
+          <StyledTableWrapper>
+            <Table
+              tableLayout="fixed"
+              columns={tableColumns}
+              data={tableData}
+              rowKey={tableRowKey}
+              scroll={{ x: 800 }}
+            />
+          </StyledTableWrapper>
+        </Card>
+      </StyledCardWrapper>
       <StyledPaginationWrapper>
         {pagination !== false && (
           <Pagination

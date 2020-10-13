@@ -3,6 +3,23 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "contract": {
+    "address": "合约地址",
+    "nameTag": "合约名称标签",
+    "site": "官方网站",
+    "contractIcon": "合约图标",
+    "remove": "移除",
+    "tokenIcon": "代币图标",
+    "sourceCode": "源码",
+    "abi": "Contract ABI",
+    "enterPassword": "请输入管理员口令",
+    "create": {
+      "title": "创建合约"
+    },
+    "edit": {
+      "title": "编辑合约"
+    }
+  },
   "blocksAndTransactions": {
     "title": "出块和交易",
     "description": "出块和交易",
@@ -62,6 +79,7 @@
       "copyToClipboard": "复制到剪切板",
       "success": "已复制",
       "failed": "复制失败"
-    }
+    },
+    "submit": "提交"
   }
 }
