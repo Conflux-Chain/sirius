@@ -17,7 +17,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: calc(100vh - 16rem);
+  height: calc(100vh - 21.3rem);
   background: #f5f6fa;
 }
 
