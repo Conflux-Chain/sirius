@@ -190,7 +190,10 @@ exports[`<Header /> should match the snapshot 1`] = `
 }
 
 .c5 a.link {
-  dislay: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -891,7 +894,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 }
 
 .c5 a.link {
-  dislay: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
