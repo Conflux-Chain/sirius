@@ -1,10 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { HelmetProvider } from 'react-helmet-async';
+import Tooltip from '..';
 
-describe('<Tooltip />', () => {
-  it('should match the snapshot', () => {
-    const component = <div>Todo. Tooltip</div>;
-    expect(component).toMatchSnapshot();
+describe('<Tooltip  />', () => {
+  it('should match snapshot', () => {
+    const loadingIndicator = render(
+      <Tooltip text="test text">test content</Tooltip>,
+    );
+    expect(loadingIndicator.container.firstChild).toMatchSnapshot();
   });
 });
