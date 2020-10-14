@@ -39,7 +39,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
           <UNDEFINED
             component={[Function]}
             exact={true}
-            path="/contract/"
+            path="/contract"
           />
           <UNDEFINED
             component={[Function]}
@@ -55,6 +55,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
             component={[Function]}
             exact={true}
             path="/tokens"
+          />
+          <UNDEFINED
+            component={[Function]}
+            exact={true}
+            path="/sponsor"
           />
           <UNDEFINED
             component={[Function]}
