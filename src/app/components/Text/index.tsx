@@ -1,5 +1,6 @@
 import React from 'react';
-import { Tooltip, Text } from '@cfxjs/react-ui';
+import { Text } from '@cfxjs/react-ui';
+import Tooltip from '../Tooltip';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
@@ -51,11 +52,7 @@ const TextComponent = ({
   );
 
   return (
-    <Tooltip
-      contentClassName="siriui-tooltip-square"
-      text={tooltipText}
-      {...others}
-    >
+    <Tooltip text={tooltipText} placement="top" {...others}>
       <Wrapper maxwidth={maxwidth} {...props}>
         {child}
       </Wrapper>

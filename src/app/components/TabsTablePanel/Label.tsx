@@ -2,36 +2,29 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import numeral from 'numeral';
-import { Tooltip } from '@cfxjs/react-ui';
+import Tooltip from '../Tooltip';
 
-const StyledToolTipLabel = createGlobalStyle`
-  .tab-label-tooltip {
-    .count {
-      color: #dedede;
-    }
-  }
-`;
-const StyledCount = styled.span`
-  &:hover {
-    color: #004fff;
-  }
-`;
+const Text = ({ left, right, count }) => (
+  <>
+    {left}
+    <span className="count"> {count} </span>
+    {right}
+  </>
+);
+
 export function TabLabel({ left, right, count, children }) {
   return (
     <>
-      <StyledToolTipLabel />
       {children}
       <span> </span>
       {count ? (
         <Tooltip
+          placement="top"
           text={
-            <>
-              {left}
-              <span className="count"> {count} </span>
-              {right}
-            </>
+            <StyledTextWrapper>
+              <Text left={left} right={right} count={count}></Text>
+            </StyledTextWrapper>
           }
-          contentClassName="tab-label-tooltip siriui-tooltip-square"
         >
           <StyledCount>({count > 9999 ? '9999+' : count})</StyledCount>
         </Tooltip>
@@ -87,3 +80,14 @@ TipLabel.propTypes = {
   right: PropTypes.string,
   count: PropTypes.number,
 };
+
+const StyledCount = styled.span`
+  &:hover {
+    color: #004fff;
+  }
+`;
+const StyledTextWrapper = styled.span`
+  .count {
+    color: #ffffff;
+  }
+`;
