@@ -29,6 +29,10 @@ import { Tokens } from './containers/Tokens/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 // import { Chart } from './containers/Charts/Loadable';
+import {
+  ContractDetail,
+  AddressDetail,
+} from './containers/AddressContractDetail/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -83,6 +87,8 @@ export function App() {
                 path="/sponsor/:contractAddress"
                 component={Sponsor}
               />
+              <Route path="/accounts/:address" component={AddressDetail} />
+              <Route path="/contracts/:address" component={ContractDetail} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

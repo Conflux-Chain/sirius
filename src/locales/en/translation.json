@@ -88,6 +88,13 @@
     "btn": "GO TO HOMEPAGE"
   },
   "general": {
+    "contract": "contract",
+    "balance": "balance",
+    "token": "token",
+    "storageStaking": "storage staking",
+    "nonce": "nonce",
+    "transactions": "transactions",
+    "tokenTxns": "Token Txns",
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "table": {
