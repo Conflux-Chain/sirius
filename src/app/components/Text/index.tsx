@@ -5,10 +5,11 @@ import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
 import { selectText } from './../../../utils/util';
+import clsx from 'clsx';
 
 type TextProps = {
   children?: React.ReactNode;
-  maxwidth?: string; // todo, camel-case naming will cause warning in console, keep now and will resolve later
+  maxWidth?: string; // todo, camel-case naming will cause warning in console, keep now and will resolve later
   maxCount?: number;
   hoverValue?: React.ReactNode;
   tooltipProps?: Partial<TooltipProps>;
@@ -16,25 +17,15 @@ type TextProps = {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
 
-const Wrapper = styled(Text)<any>`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: bottom;
-  max-width: ${props => props.maxwidth};
-  display: ${props =>
-    props.maxwidth === undefined ? 'inherit' : 'inline-block'};
-  cursor: pointer;
-` as React.FC<Props>;
-
 // note:
-// 1. maxwidth priority is higher than maxCount
+// 1. maxWidth priority is higher than maxCount
 // 2. maxCount only apply to string
 // 3. if hoverValue is provided, use hoverValue as Tooltip text, otherwise use children
 //    if text of prop tooltip is provided, use as Tooltip text
 const TextComponent = ({
+  className,
   children,
-  maxwidth,
+  maxWidth,
   maxCount,
   hoverValue,
   tooltipProps,
@@ -42,7 +33,7 @@ const TextComponent = ({
 }: Props) => {
   const { text, ...others } = tooltipProps || {};
   let child: React.ReactNode = children;
-  if (maxwidth === undefined && maxCount && typeof children === 'string') {
+  if (maxWidth === undefined && maxCount && typeof children === 'string') {
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
   const tooltipText = (
@@ -53,13 +44,26 @@ const TextComponent = ({
 
   return (
     <Tooltip text={tooltipText} placement="top" {...others}>
-      <Wrapper maxwidth={maxwidth} {...props}>
-        {child}
-      </Wrapper>
+      <StyledTextWrapper maxWidth={maxWidth}>
+        <Text className={clsx('sirius-Text', className)} {...props}>
+          {child}
+        </Text>
+      </StyledTextWrapper>
     </Tooltip>
   );
 };
 
-TextComponent.defaultProps = {};
+const StyledTextWrapper = styled.span<any>`
+  .text.sirius-Text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    max-width: ${props => props.maxWidth};
+    display: ${props =>
+      props.maxWidth === undefined ? 'inherit' : 'inline-block'};
+    cursor: pointer;
+  }
+`;
 
 export default TextComponent;

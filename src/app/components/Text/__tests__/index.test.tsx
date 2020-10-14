@@ -5,7 +5,7 @@ import Text from '..';
 describe('<Text  />', () => {
   it('should match snapshot', () => {
     const loadingIndicator = render(
-      <Text maxwidth={'40px'}>
+      <Text maxWidth={'40px'}>
         <span>1234567890</span>
       </Text>,
     );

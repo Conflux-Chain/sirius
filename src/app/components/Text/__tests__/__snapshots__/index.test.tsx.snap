@@ -11,7 +11,7 @@ exports[`<Text  /> should match snapshot 1`] = `
   line-height: 1.1429rem;
 }
 
-.c1 {
+.c1 .text.sirius-Text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -30,14 +30,17 @@ exports[`<Text  /> should match snapshot 1`] = `
     <div
       class="jsx-64609884 tooltip "
     >
-      <p
-        class="jsx-3390086683  text c1"
-        maxwidth="40px"
+      <span
+        class="c1"
       >
-        <span>
-          1234567890
-        </span>
-      </p>
+        <p
+          class="jsx-3390086683  text sirius-Text"
+        >
+          <span>
+            1234567890
+          </span>
+        </p>
+      </span>
     </div>
   </div>
 </div>
@@ -54,7 +57,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   line-height: 1.1429rem;
 }
 
-.c1 {
+.c1 .text.sirius-Text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -72,11 +75,15 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
     <div
       class="jsx-64609884 tooltip "
     >
-      <p
-        class="jsx-3390086683  text c1"
+      <span
+        class="c1"
       >
-        12345...
-      </p>
+        <p
+          class="jsx-3390086683  text sirius-Text"
+        >
+          12345...
+        </p>
+      </span>
     </div>
   </div>
 </div>
