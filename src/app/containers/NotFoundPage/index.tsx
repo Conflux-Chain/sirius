@@ -31,6 +31,7 @@ export function NotFoundPage() {
 // wrapper
 const PageWrapper = styled.div`
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -64,6 +65,7 @@ const ErrorTitle = styled.span`
 const ErrorLabel = styled.span`
   display: inline-block;
   color: #4b4b4b;
+  opacity: 0.4;
   font-weight: 500;
   line-height: 1.2857rem;
   margin-bottom: 1rem;

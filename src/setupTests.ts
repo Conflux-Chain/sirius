@@ -14,9 +14,9 @@ enableFetchMocks();
 fetchMock.dontMock();
 
 // TODO: find better way to test this
-jest.mock('react-router-dom', () => ({
-  useRouteMatch: () => ({ isExact: true }),
-}));
+// jest.mock('react-router-dom', () => ({
+//   useRouteMatch: () => ({ isExact: true }),
+// }));
 
 // so that i18next can detect lang in test env
 window.document.cookie = 'react-18next=en';

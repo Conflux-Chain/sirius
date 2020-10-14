@@ -1,25 +1,24 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 
 import { Header } from '..';
 
-const renderComponent = () => render(<Header />);
+const renderComponent = () =>
+  render(
+    <MemoryRouter>
+      <Header />
+    </MemoryRouter>,
+  );
 
 describe('<Header />', () => {
   it('should match the snapshot', () => {
     const ui = renderComponent();
     expect(ui.container.firstChild).toMatchSnapshot();
   });
+
   it('should match the snapshot when link is matched', () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
-      useParams: () => ({
-        companyId: 'company-id1',
-        teamId: 'team-id1',
-      }),
-      useRouteMatch: () => ({ isExact: true }),
-    }));
     const ui = renderComponent();
     expect(ui.container.firstChild).toMatchSnapshot();
   });
