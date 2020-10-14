@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Table, Pagination, Card } from '@cfxjs/react-ui';
+import { Table, Pagination } from '@cfxjs/react-ui';
+import Card from '../Card';
 import styled from 'styled-components';
 import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
