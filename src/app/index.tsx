@@ -73,9 +73,17 @@ export function App() {
                 component={BlocksAndTransactions}
               />
               <Route exact path="/tokens" component={Tokens} />
+<<<<<<< HEAD
               <Route exact path="/sponsor" component={Sponsor} />
               <Route path="/charts" component={Chart} />
               <Route exact path="/transactions" component={Transactions} />
+=======
+              <Route
+                exact
+                path="/transactions/:hash"
+                component={Transactions}
+              />
+>>>>>>> feat(transactions): add hash params
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

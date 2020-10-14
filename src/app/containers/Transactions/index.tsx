@@ -7,15 +7,15 @@ import Text from '../../components/Text';
 import PageHeader from '../../components/PageHeader';
 import { media } from '../../../styles/media';
 import numeral from 'numeral';
-import { Card } from '@cfxjs/react-ui';
+import { Card, Textarea } from '@cfxjs/react-ui';
+import { Description } from '../../components/Description';
+import { useParams } from 'react-router-dom';
 
 const StyledTokensWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding: 2.2857rem 0;
+  padding: 32px 0;
 
   ${media.s} {
-    padding: 1.1429rem;
+    padding-bottom: 0;
   }
 `;
 
@@ -39,6 +39,9 @@ const renderTextEllipsis = value => {
 
 export const Transactions = () => {
   const { t } = useTranslation();
+  const { hash } = useParams<{
+    hash: string;
+  }>();
 
   return (
     <StyledTokensWrapper>
@@ -50,9 +53,32 @@ export const Transactions = () => {
         />
       </Helmet>
       <PageHeader>{t(translations.transactions.title)}</PageHeader>
-      <Card>
-        <Text p>一个基础的卡片。</Text>
-      </Card>
+      <StyledCardWrapper>
+        <Card className="sirius-Transactions-card">
+          <Description title={'Transation Hash'}>
+            0x6e2861532a6a6935cc88bf7a55e60a25d66cc61b384e23636dea103083a3460e
+          </Description>
+          <Description title={'Executed Epoch'}>12</Description>
+          <Description title={'Input Data'}>
+            <Textarea
+              width="100%"
+              placeholder="CSS（层叠样式表）用于设置和布置网页 - 例如，更改内容的字体，颜色，大小和间距，将其拆分为多个列，或添加动画和其他装饰功能。"
+              value=""
+              defaultValue=""
+              minHeight="118px"
+              variant="solid"
+            />
+          </Description>
+        </Card>
+      </StyledCardWrapper>
     </StyledTokensWrapper>
   );
 };
+
+const StyledCardWrapper = styled.div`
+  .card.sirius-Transactions-card {
+    .content {
+      padding: 0 18px;
+    }
+  }
+`;
