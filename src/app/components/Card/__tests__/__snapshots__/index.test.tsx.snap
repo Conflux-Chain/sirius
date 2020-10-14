@@ -1,7 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Tooltip /> should match the snapshot 1`] = `
-<div>
-  Todo. Tooltip
+exports[`<Card  /> should match snapshot 1`] = `
+.c0 .card.sirius-Card {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+  padding: 0.7143rem;
+}
+
+.c0 .card.sirius-Card:hover {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="jsx-2441804542 card sirius-Card"
+  >
+    <div
+      class="jsx-178616938 content "
+    >
+      test content
+    </div>
+  </div>
 </div>
 `;

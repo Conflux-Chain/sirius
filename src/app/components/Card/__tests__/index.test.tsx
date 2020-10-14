@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { HelmetProvider } from 'react-helmet-async';
+import Card from '..';
 
-describe('<Tooltip />', () => {
-  it('should match the snapshot', () => {
-    const component = <div>Todo. Tooltip</div>;
-    expect(component).toMatchSnapshot();
+describe('<Card  />', () => {
+  it('should match snapshot', () => {
+    const loadingIndicator = render(<Card>test content</Card>);
+    expect(loadingIndicator.container.firstChild).toMatchSnapshot();
   });
 });
