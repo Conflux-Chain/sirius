@@ -10,7 +10,7 @@ import Text from './../../components/Text';
 import useTabTableData from '../../components/TabsTablePanel/useTabTableData';
 
 const renderTextEllipsis = value => (
-  <Text span maxWidth={'5.7143rem'} hoverValue={value}>
+  <Text span maxWidth="5.7143rem" hoverValue={value}>
     {value}
   </Text>
 );

@@ -32,7 +32,7 @@ const StyledIconWrapper = styled.div`
 
 const renderTextEllipsis = value => {
   return (
-    <Text span maxWidth={'5.7143rem'} hoverValue={value}>
+    <Text span maxWidth="5.7143rem" hoverValue={value}>
       <StyledTextWrapper>{value}</StyledTextWrapper>
     </Text>
   );
