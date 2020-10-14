@@ -84,6 +84,7 @@ export function App() {
 }
 
 const Main = styled.div`
+  display: flex;
   max-width: 73.1429rem;
   margin: 0 auto;
   padding-top: 5rem;
