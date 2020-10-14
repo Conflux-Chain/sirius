@@ -22,6 +22,7 @@ import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadab
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
+import { Sponsor } from './containers/Sponsor/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
@@ -58,7 +59,7 @@ export function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/packing/:txHash" component={PackingPage} />
-              <Route exact path="/contract/" component={Contract} />
+              <Route exact path="/contract" component={Contract} />
               <Route
                 exact
                 path="/contract/:contractAddress"
@@ -70,6 +71,7 @@ export function App() {
                 component={BlocksAndTransactions}
               />
               <Route exact path="/tokens" component={Tokens} />
+              <Route exact path="/sponsor" component={Sponsor} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

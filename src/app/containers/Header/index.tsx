@@ -35,9 +35,9 @@ export const Header = memo(() => {
     t(translations.header.contract),
     [
       [t(translations.header.contractCreation), <Check key="check" />],
-      '/contract-creatation',
+      '/contract',
       [t(translations.header.contractSponsor), <Check key="check" />],
-      '/contract-sponsor',
+      '/sponsor',
     ],
     t(translations.header.charts),
     '/charts',
