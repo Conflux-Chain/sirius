@@ -4,18 +4,6 @@ import styled from 'styled-components/macro';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import clsx from 'clsx';
 
-const TooltipWrapper = styled.div`
-  .tooltip-content.siriui-tooltip-square {
-    border-radius: 0;
-    padding: 0.2857rem 0.7143rem;
-    font-weight: 400;
-    border-radius: 0;
-    font-size: 12px;
-    color: #cdcdcd;
-    line-height: 1.1429rem;
-  }
-`;
-
 export default ({
   children,
   contentClassName,
@@ -34,3 +22,15 @@ export default ({
     </TooltipWrapper>
   );
 };
+
+const TooltipWrapper = styled.div`
+  .tooltip-content.siriui-tooltip-square {
+    border-radius: 0;
+    padding: 0.2857rem 0.7143rem;
+    font-weight: 400;
+    border-radius: 0;
+    font-size: 12px;
+    color: #cdcdcd;
+    line-height: 1.1429rem;
+  }
+`;
