@@ -32,6 +32,7 @@ import { Chart } from './containers/Charts/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Epochs } from './containers/Epochs/Loadable';
+import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -94,6 +95,10 @@ export function App() {
               />
               <Route exact path="/blocks/:hash" component={Blocks} />
               <Route exact path="/epochs/:number" component={Epochs} />
+              <Route
+                path="/address/:address"
+                component={AddressContractDetailPage}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

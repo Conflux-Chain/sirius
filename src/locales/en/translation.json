@@ -9,16 +9,29 @@
     "site": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
+    "tokenTracker": "Token Tracker",
     "tokenIcon": "Token Icon",
     "sourceCode": "Contract Source Code",
     "abi": "Contract ABI",
     "enterPassword": "Please enter your admin password",
+    "contractAdmin": "Contract Admin",
+    "creator": "Contract Creator",
+    "storageSponsor": "Storage Sponsor",
+    "gasSponsor": "Gas Fee Sponsor",
     "create": {
       "title": "Contract Creation"
     },
     "edit": {
       "title": "Contract Edit"
     }
+  },
+  "contractDetail": {
+    "title": "Contract Detail",
+    "content": "Details of contract"
+  },
+  "addressDetail": {
+    "title": "Address Detail",
+    "content": "Details of Address"
   },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
@@ -81,6 +94,19 @@
     }
   },
   "general": {
+    "address": {
+      "editContract": "Click to edit contract",
+      "website": "Click to open website",
+      "address": "address"
+    },
+    "contract": "contract",
+    "balance": "balance",
+    "token": "token",
+    "storageStaking": "storage staking",
+    "nonce": "nonce",
+    "transaction": "transaction",
+    "transactions": "transactions",
+    "tokenTxns": "Token Txns",
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "table": {
@@ -138,6 +164,7 @@
     "qrcodeButton": {
       "clickToShow": "click to view qrcode"
     },
+    "notAvailable": "Not Available",
     "security": {
       "notAvailable": "Not Available",
       "high": "High",
@@ -145,6 +172,7 @@
       "low": "Low",
       "veryLow": "Very Low"
     },
+    "loading": "loading...",
     "status": {
       "skip": {
         "text": "Skip",

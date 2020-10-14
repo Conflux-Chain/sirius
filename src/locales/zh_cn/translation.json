@@ -69,6 +69,7 @@
     "btn": "GO TO HOMEPAGE"
   },
   "general": {
+    "loading": "加载中...",
     "table": {
       "noData": "无数据",
       "block": {
