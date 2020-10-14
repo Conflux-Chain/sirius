@@ -9,7 +9,7 @@ import clsx from 'clsx';
 
 type TextProps = {
   children?: React.ReactNode;
-  maxWidth?: string; // todo, camel-case naming will cause warning in console, keep now and will resolve later
+  maxWidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
   tooltipProps?: Partial<TooltipProps>;
