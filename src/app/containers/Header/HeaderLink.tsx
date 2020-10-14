@@ -1,14 +1,18 @@
 import React, { ReactNode, MouseEventHandler, useRef } from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
-import { Link } from '@cfxjs/react-ui';
-import { useRouteMatch, match } from 'react-router-dom';
+import { Link as UILink } from '@cfxjs/react-ui';
+import { useRouteMatch, match, Link as RouterLink } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
 import { ChevronUp } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
 export type HeaderLinkTitle = string | Array<string | ReactNode>;
-export type HeaderLinkHref = string | string[] | MouseEventHandler;
+export type HeaderLinkHref =
+  | string
+  | string[]
+  | MouseEventHandler
+  | [MouseEventHandler, (title: HeaderLinkTitle) => boolean];
 export type HeaderLinks = Array<HeaderLinkTitle | HeaderLinkHref>;
 
 export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
@@ -16,13 +20,37 @@ export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
 
   for (let i = 0; i < links.length - 1; i += 2) {
     const [title, href] = [links[i], links[i + 1]];
+
+    // for the matched route style
     let matched;
     if (typeof href === 'string' && href.startsWith('/'))
       // eslint-disable-next-line react-hooks/rules-of-hooks
       matched = useRouteMatch(href as string);
-    if (Array.isArray(href)) {
+
+    // href is a array of two funcs means this is a link with [onClick, isMatchFn]
+    if (
+      Array.isArray(href) &&
+      typeof href[0] == 'function' &&
+      typeof href[1] === 'function'
+    ) {
+      matched = href[1](title as HeaderLinkTitle);
       linksJSX.push(
-        <HeaderLink key={i} className={`navbar-link level-${level}`}>
+        <HeaderLink
+          key={i}
+          className={`navbar-link level-${level}`}
+          onClick={href[0] as MouseEventHandler}
+          matched={Boolean(matched)}
+        >
+          {title}
+        </HeaderLink>,
+      );
+      continue;
+    }
+
+    // href is a array means this is a menu with multiple links
+    if (Array.isArray(href) && typeof href[0] !== 'function') {
+      linksJSX.push(
+        <HeaderLink isMenu key={i} className={`navbar-link level-${level}`}>
           {title}
           {generateHeaderLinksJSX(href as HeaderLinks, level + 1)}
         </HeaderLink>,
@@ -30,6 +58,7 @@ export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
       continue;
     }
 
+    // href is function means this is a link with on click function
     if (typeof href === 'function') {
       linksJSX.push(
         <HeaderLink
@@ -44,11 +73,12 @@ export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
       continue;
     }
 
+    // rest are normal links with normal href
     linksJSX.push(
       <HeaderLink
         key={i}
         className={`navbar-link level-${level}`}
-        href={href}
+        href={href as string}
         matched={Boolean(matched) && (matched as match<{}>).isExact}
       >
         {title}
@@ -81,12 +111,15 @@ const Menu = styled.div`
       }
 
       svg {
+        margin-left: 1rem;
         visibility: visible;
       }
     }
   }
 
   ${media.m} {
+    box-shadow: none;
+
     position: inherit;
     background-color: transparent;
     padding-left: 2.43rem;
@@ -94,11 +127,12 @@ const Menu = styled.div`
 `;
 
 export const HeaderLink: React.FC<{
+  isMenu?: boolean;
   className: string;
   href?: string;
   matched?: boolean;
   onClick?: MouseEventHandler;
-}> = ({ className, href, matched, children, onClick }) => {
+}> = ({ className, href, matched, children, onClick, isMenu }) => {
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
   useClickAway(ref, () => {
@@ -109,9 +143,12 @@ export const HeaderLink: React.FC<{
   if (href) {
     return (
       <WrappLink>
-        <Link className={clsx(className, matched && 'matched')} href={href}>
+        <RouterLink
+          className={clsx('link', className, matched && 'matched')}
+          to={href}
+        >
           {children}
-        </Link>
+        </RouterLink>
       </WrappLink>
     );
   } else if (onClick) {
@@ -119,21 +156,26 @@ export const HeaderLink: React.FC<{
     return (
       <WrappLink>
         <div
-          className={clsx([
+          className={clsx(
             'link navbar-link-menu navbar-link',
-            expanded ? 'expanded' : '',
-          ])}
+            isMenu && expanded && 'expanded',
+          )}
         >
-          <Link
-            className={className}
+          <UILink
+            className={clsx(
+              className,
+              expanded && 'expanded',
+              matched && 'matched',
+            )}
             onClick={e => {
               e.preventDefault();
+              toggle();
               onClick(e);
             }}
           >
-            {(bp === 'm' || bp === 's') && <ChevronUp size={18} />}
+            {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
             {children}
-          </Link>
+          </UILink>
         </div>
       </WrappLink>
     );
@@ -145,11 +187,11 @@ export const HeaderLink: React.FC<{
         <div
           className={clsx([
             'link navbar-link-menu navbar-link',
-            expanded ? 'expanded' : '',
+            isMenu && expanded ? 'expanded' : '',
           ])}
         >
           <WrappLink>
-            <Link
+            <UILink
               ref={ref}
               className={className}
               onClick={e => {
@@ -157,10 +199,10 @@ export const HeaderLink: React.FC<{
                 e.preventDefault();
               }}
             >
-              {(bp === 'm' || bp === 's') && <ChevronUp size={18} />}
+              {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
               {text}
-              {bp !== 's' && bp !== 'm' && <ChevronUp size={18} />}
-            </Link>
+              {bp !== 's' && bp !== 'm' && isMenu && <ChevronUp size={18} />}
+            </UILink>
           </WrappLink>
           {expanded && <Menu className="header-link-menu">{links}</Menu>}
         </div>
@@ -170,6 +212,7 @@ export const HeaderLink: React.FC<{
 };
 
 const WrappLink = styled.span`
+  min-height: 2.14rem;
   .navbar-link-menu {
     position: relative;
     cursor: pointer;
@@ -182,7 +225,7 @@ const WrappLink = styled.span`
       }
     }
     &.expanded {
-      > a.link.navbar-link {
+      > span > a.link.navbar-link {
         svg {
           transform: rotate(180deg);
         }

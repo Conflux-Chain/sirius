@@ -135,6 +135,10 @@ exports[`<Header /> should match the snapshot 1`] = `
   min-height: 5rem;
 }
 
+.c8 {
+  min-height: 2.14rem;
+}
+
 .c8 .navbar-link-menu {
   position: relative;
   cursor: pointer;
@@ -156,7 +160,7 @@ exports[`<Header /> should match the snapshot 1`] = `
   transition: all 0.2s ease-out;
 }
 
-.c8 .navbar-link-menu.expanded > a.link.navbar-link svg {
+.c8 .navbar-link-menu.expanded > span > a.link.navbar-link svg {
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -419,8 +423,7 @@ exports[`<Header /> should match the snapshot 1`] = `
             class="c5"
           >
             <a
-              class="jsx-1150746702 link "
-              href=""
+              href="/"
             >
               <img
                 alt="conflux scan logo"
@@ -528,7 +531,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0 matched"
                 href="/"
               >
                 Home
@@ -542,7 +545,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/blocks-and-transactions"
               >
                 Blocks & Transaction
@@ -556,7 +559,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/tokens"
               >
                 Tokens
@@ -609,7 +612,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/charts"
               >
                 Charts
@@ -839,6 +842,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   min-height: 5rem;
 }
 
+.c8 {
+  min-height: 2.14rem;
+}
+
 .c8 .navbar-link-menu {
   position: relative;
   cursor: pointer;
@@ -860,7 +867,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   transition: all 0.2s ease-out;
 }
 
-.c8 .navbar-link-menu.expanded > a.link.navbar-link svg {
+.c8 .navbar-link-menu.expanded > span > a.link.navbar-link svg {
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -1163,8 +1170,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
             class="c5"
           >
             <a
-              class="jsx-1150746702 link "
-              href=""
+              href="/"
             >
               <img
                 alt="conflux scan logo"
@@ -1272,7 +1278,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0 matched"
                 href="/"
               >
                 Home
@@ -1286,7 +1292,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/blocks-and-transactions"
               >
                 Blocks & Transaction
@@ -1300,7 +1306,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/tokens"
               >
                 Tokens
@@ -1353,7 +1359,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               class="c8"
             >
               <a
-                class="jsx-1150746702 link navbar-link level-0 matched"
+                class="link navbar-link level-0"
                 href="/charts"
               >
                 Charts

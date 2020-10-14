@@ -7,7 +7,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@cfxjs/react-ui';
+import { Link as RouterLink } from 'react-router-dom';
 import { TextLogo } from '../../components/TextLogo';
 import { Search } from './Search/Loadable';
 import { media, useBreakpoint } from 'styles/media';
@@ -26,17 +26,23 @@ export const Header = memo(() => {
 
   const bp = useBreakpoint();
   const startLinks: HeaderLinks = [
-    t(translations.header.home),
-    '/',
+    t(translations.header.home), // title
+    '/', // href
     t(translations.header.bnt),
     '/blocks-and-transactions',
     t(translations.header.tokens),
     '/tokens',
-    t(translations.header.contract),
+    t(translations.header.contract), // menu title
+    // menu href -> menu item
     [
-      [t(translations.header.contractCreation), <Check key="check" />],
-      '/contract',
-      [t(translations.header.contractSponsor), <Check key="check" />],
+      // title
+      [
+        t(translations.header.contractCreation),
+        <Check size={18} key="check" />,
+      ],
+
+      '/contract', // href
+      [t(translations.header.contractSponsor), <Check size={18} key="check" />],
       '/sponsor',
     ],
     t(translations.header.charts),
@@ -44,14 +50,26 @@ export const Header = memo(() => {
   ];
 
   const endLinks: HeaderLinks = [
-    iszh ? zh : en,
-    [iszh ? en : zh, () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN')],
+    iszh ? zh : en, // level 0 title
+    [
+      iszh ? en : zh, // level 1 title
+      () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'),
+      [iszh ? zh : en, <Check size={18} key="check" />],
+      [() => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'), () => true],
+    ],
     isTestnet ? t(translations.header.testnet) : t(translations.header.oceanus),
     [
       isTestnet
         ? t(translations.header.oceanus)
         : t(translations.header.testnet),
       isTestnet ? toMainnet : toTestnet,
+      [
+        isTestnet
+          ? t(translations.header.testnet)
+          : t(translations.header.oceanus),
+        <Check size={18} key="check" />,
+      ],
+      [isTestnet ? toMainnet : toTestnet, () => true],
     ],
   ];
 
@@ -60,10 +78,10 @@ export const Header = memo(() => {
 
   const brand = (
     <LogoWrapper>
-      <Link>
+      <RouterLink to="/">
         <img alt="conflux scan logo" src="/confi-planet.png" />
         <TextLogo changeColorOnMobile />
-      </Link>
+      </RouterLink>
     </LogoWrapper>
   );
   const menuStart = [
