@@ -9,7 +9,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
     }
   }
 >
-  <UNDEFINED>
+  <BrowserRouter>
     <CfxProvider>
       <UNDEFINED />
       <Helmet
@@ -25,50 +25,50 @@ exports[`<App /> should render and match the snapshot 1`] = `
       </Helmet>
       <UNDEFINED />
       <ForwardRef(app__Main)>
-        <UNDEFINED>
-          <UNDEFINED
+        <Switch>
+          <Route
             component={[Function]}
             exact={true}
             path="/"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/packing/:txHash"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/contract"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/contract/:contractAddress"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/blocks-and-transactions"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/tokens"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
             exact={true}
             path="/sponsor"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
           />
-        </UNDEFINED>
+        </Switch>
       </ForwardRef(app__Main)>
       <Unknown />
       <UNDEFINED />
     </CfxProvider>
-  </UNDEFINED>
+  </BrowserRouter>
 </Context.Provider>
 `;
