@@ -85,7 +85,11 @@ export function App() {
                 component={Sponsor}
               />
               <Route path="/charts" component={Chart} />
-              <Route exact path="/transactions" component={Transactions} />
+              <Route
+                exact
+                path="/transactions/:hash"
+                component={Transactions}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
