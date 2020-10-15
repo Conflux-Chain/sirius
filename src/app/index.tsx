@@ -38,6 +38,8 @@ WebFontLoader.load({
   },
 });
 
+console.log(Route);
+
 export function App() {
   const { t } = useTranslation();
   return (

@@ -106,17 +106,19 @@ function Draw({
       plot,
       indicator,
     });
-    draw();
-    const listener = event => {
-      const { offsetX } = event;
-      cursorX = Math.round(xScale1.invert(offsetX));
-      draw({
-        cursorX,
-      });
-    };
-    const container = containerRef.current;
-    container.addEventListener('mousemove', listener);
-    return () => container.removeEventListener('mousemove', listener);
+    if (draw) {
+      draw();
+      const listener = event => {
+        const { offsetX } = event;
+        cursorX = Math.round(xScale1.invert(offsetX));
+        draw({
+          cursorX,
+        });
+      };
+      const container = containerRef.current;
+      container.addEventListener('mousemove', listener);
+      return () => container.removeEventListener('mousemove', listener);
+    }
   }, [height, indicator, plot, width]);
 
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from '../../components/Chart/Chart';
-function App() {
+function ChartRoute() {
   return (
     <div className="App">
       <Chart width={500} />
@@ -11,4 +11,4 @@ function App() {
   );
 }
 
-export default App;
+export default ChartRoute;

@@ -34,6 +34,9 @@ export default function createDraw({
   indicator,
   isSolid,
 }) {
+  if (!plot) {
+    return false;
+  }
   const xData = [],
     yData = [],
     data = [];
