@@ -1,8 +1,8 @@
 import React from 'react';
-import Chart from '../../components/Chart/Chart';
+import { Chart } from '../../components/Chart/Loadable';
 function ChartRoute() {
   return (
-    <div className="App">
+    <div>
       <Chart width={500} />
       <Chart width={450} indicator="tps" />
       <Chart width={403} indicator="difficulty" />

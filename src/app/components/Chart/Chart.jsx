@@ -29,7 +29,7 @@ const DURATIONS = [
   ['all', 'ALL'],
 ];
 export default function Chart({ width = 500, indicator = 'blockTime' }) {
-  const { plot, isLoading, isError, setDuration, duration } = usePlot('day');
+  const { plot, isError, setDuration, duration } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
   if (isError) {
@@ -119,7 +119,16 @@ function Draw({
       container.addEventListener('mousemove', listener);
       return () => container.removeEventListener('mousemove', listener);
     }
-  }, [height, indicator, plot, width]);
+  }, [
+    height,
+    indicator,
+    plot,
+    width,
+    TRI_HEIGHT,
+    X_AXIS_HEIGHT,
+    Y_AXIS_WIDTH,
+    POPUP_PADDING,
+  ]);
 
   return (
     <CanvasContainer small={small} ref={containerRef} style={{ width, height }}>
