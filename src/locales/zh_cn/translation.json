@@ -151,6 +151,28 @@
   },
   "transactions": {
     "title": "Transactions",
-    "description": "Transactions"
+    "description": "Transactions",
+    "hash": "hash",
+    "executedEpoch": "Executed Epoch",
+    "proposedEpoch": "Proposed Epoch",
+    "timestamp": "Timestamp",
+    "status": "Status",
+    "from": "From",
+    "to": "To",
+    "tokenTransferred": "Token Transferred",
+    "value": "Value",
+    "gasUsed": "Gas Used/Limit",
+    "gasPrice": "Gas Price",
+    "gasFee": "Gas Fee",
+    "nounce": "Nounce",
+    "blockHash": "Block Hash",
+    "position": "Position",
+    "storageLimit": "Storage Limit",
+    "chainID": "Chain ID",
+    "inputData": "Input Data",
+    "select": {
+      "original": "original",
+      "utf8": "UTF-8"
+    }
   }
 }
