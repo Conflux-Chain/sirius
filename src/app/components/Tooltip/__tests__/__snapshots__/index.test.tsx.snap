@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tooltip  /> should match snapshot 1`] = `
+.c0 .tooltip-content.siriui-tooltip-square {
+  border-radius: 0;
+  padding: 0.2857rem 0.7143rem;
+  font-weight: 400;
+  border-radius: 0;
+  font-size: 12px;
+  color: #cdcdcd;
+  line-height: 1.1429rem;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="jsx-64609884"
+  >
+    <div
+      class="jsx-64609884 tooltip "
+    >
+      test content
+    </div>
+  </div>
+</div>
+`;
