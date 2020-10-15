@@ -39,7 +39,8 @@ export function PackingPage() {
 // wrapper
 const PageWrapper = styled.div`
   display: flex;
-  flex: 1;
+  position: absolute;
+  height: calc(100% - 5rem);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
