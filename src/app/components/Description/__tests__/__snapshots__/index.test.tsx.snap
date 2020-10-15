@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Description  /> should match snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 3.2857rem;
+  line-height: 3.2857rem;
+  border-bottom: 1px solid #e8e9ea;
+}
+
+.c0.no-border {
+  border-bottom: none;
+}
+
+.c0.small .left {
+  width: 10.8571rem;
+}
+
+.c0 .left {
+  padding: 0.8571rem 0;
+  line-height: calc(3.2857rem - 1.7143rem);
+  width: 16.4286rem;
+  color: #002257;
+}
+
+.c0 .right {
+  padding: 0.8571rem 0;
+  line-height: calc(3.2857rem - 1.7143rem);
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  color: #97a3b4;
+}
+
+@media (max-width:600px) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 .right {
+    padding-top: 0;
+  }
+}
+
+<div
+  class="c0 description"
+>
+  <div
+    class="left"
+  >
+    title
+  </div>
+  <div
+    class="right"
+  >
+    content
+  </div>
+</div>
+`;
