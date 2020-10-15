@@ -26,6 +26,7 @@ export const Description = ({
   children,
   small,
   noBorder,
+  ...others
 }: DescriptionProps) => {
   return (
     <Wrapper
@@ -34,6 +35,7 @@ export const Description = ({
         small: small,
         'no-border': noBorder,
       })}
+      {...others}
     >
       <div className="left">{title}</div>
       <div className="right">{children}</div>
