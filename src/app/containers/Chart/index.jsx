@@ -1,14 +1,14 @@
 import React from 'react';
-import { Chart } from '../../components/Chart/Loadable';
-function ChartRoute() {
+import { Chart as ChartComponent } from '../../components/Chart/Loadable';
+function Chart() {
   return (
     <div>
-      <Chart width={500} />
-      <Chart width={450} indicator="tps" />
-      <Chart width={403} indicator="difficulty" />
-      <Chart width={343} indicator="hashRate" />
+      <ChartComponent width={500} />
+      <ChartComponent width={450} indicator="tps" />
+      <ChartComponent width={403} indicator="difficulty" />
+      <ChartComponent width={343} indicator="hashRate" />
     </div>
   );
 }
 
-export default ChartRoute;
+export default Chart;
