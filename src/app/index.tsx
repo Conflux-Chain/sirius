@@ -23,7 +23,7 @@ import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
-import { Chart } from './containers/Chart/Loadable';
+import { Chart } from './containers/Charts/Loadable';
 
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
