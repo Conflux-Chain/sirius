@@ -1,7 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Text  /> should match snapshot 1`] = `
-.c0 {
+.c0 .tooltip-content.siriui-tooltip-square {
+  border-radius: 0;
+  padding: 0.2857rem 0.7143rem;
+  font-weight: 400;
+  border-radius: 0;
+  font-size: 12px;
+  color: #cdcdcd;
+  line-height: 1.1429rem;
+}
+
+.c1 .text.sirius-Text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -12,25 +22,42 @@ exports[`<Text  /> should match snapshot 1`] = `
 }
 
 <div
-  class="jsx-64609884"
+  class="c0"
 >
   <div
-    class="jsx-64609884 tooltip "
+    class="jsx-64609884"
   >
-    <p
-      class="jsx-3390086683  text c0"
-      maxwidth="40px"
+    <div
+      class="jsx-64609884 tooltip "
     >
-      <span>
-        1234567890
+      <span
+        class="c1"
+      >
+        <p
+          class="jsx-3390086683  text sirius-Text"
+        >
+          <span>
+            1234567890
+          </span>
+        </p>
       </span>
-    </p>
+    </div>
   </div>
 </div>
 `;
 
 exports[`<Text  /> should match snapshot when set maxCount 1`] = `
-.c0 {
+.c0 .tooltip-content.siriui-tooltip-square {
+  border-radius: 0;
+  padding: 0.2857rem 0.7143rem;
+  font-weight: 400;
+  border-radius: 0;
+  font-size: 12px;
+  color: #cdcdcd;
+  line-height: 1.1429rem;
+}
+
+.c1 .text.sirius-Text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -40,16 +67,24 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 }
 
 <div
-  class="jsx-64609884"
+  class="c0"
 >
   <div
-    class="jsx-64609884 tooltip "
+    class="jsx-64609884"
   >
-    <p
-      class="jsx-3390086683  text c0"
+    <div
+      class="jsx-64609884 tooltip "
     >
-      12345...
-    </p>
+      <span
+        class="c1"
+      >
+        <p
+          class="jsx-3390086683  text sirius-Text"
+        >
+          12345...
+        </p>
+      </span>
+    </div>
   </div>
 </div>
 `;
