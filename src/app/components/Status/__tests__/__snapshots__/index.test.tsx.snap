@@ -12,24 +12,24 @@ exports[`<Status  /> should match snapshot 1`] = `
   align-items: center;
 }
 
-.c0 .status {
+.c0 .type {
   margin-left: 0.8571rem;
   line-height: 1.5714rem;
 }
 
-.c0 .status.success {
+.c0 .type.success {
   color: #7cd77b;
 }
 
-.c0 .status.error {
+.c0 .type.error {
   color: #c65252;
 }
 
-.c0 .status.skip {
+.c0 .type.skip {
   color: #fede1b;
 }
 
-.c0 .status.unexecuted {
+.c0 .type.unexecuted {
   color: #b178c8;
 }
 
@@ -39,7 +39,7 @@ exports[`<Status  /> should match snapshot 1`] = `
 }
 
 <span
-  class="c0"
+  class="c0 status"
 >
   <img
     alt="1"
@@ -47,7 +47,7 @@ exports[`<Status  /> should match snapshot 1`] = `
     src="error.png"
   />
   <span
-    class="status error"
+    class="type error"
   >
     Error
   </span>

@@ -21,7 +21,12 @@ interface Props {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
 export declare type StatusProps = React.PropsWithChildren<Props & NativeAttrs>;
 
-export const Status = ({ type: outerType }: StatusProps) => {
+export const Status = ({
+  type: outerType,
+  className,
+  style,
+  ...others
+}: StatusProps) => {
   const { t } = useTranslation();
   const type = String(outerType);
   const map = useMemo(
@@ -51,11 +56,9 @@ export const Status = ({ type: outerType }: StatusProps) => {
   );
   if (type !== undefined) {
     return (
-      <Wrapper>
+      <Wrapper style={style} className={clsx('status', className)} {...others}>
         <img className="icon" src={map[type].icon} alt={type} />
-        <span className={clsx('status', map[type].status)}>
-          {map[type].name}
-        </span>
+        <span className={clsx('type', map[type].status)}>{map[type].name}</span>
       </Wrapper>
     );
   } else {
@@ -66,7 +69,7 @@ export const Status = ({ type: outerType }: StatusProps) => {
 const Wrapper = styled.span`
   display: flex;
   align-items: center;
-  .status {
+  .type {
     margin-left: 0.8571rem;
     line-height: 1.5714rem;
     &.success {
