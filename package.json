@@ -138,6 +138,7 @@
   },
   "devDependencies": {
     "@testing-library/user-event": "12.1.6",
+    "canvas": "2.6.1",
     "cz-conventional-changelog": "3.3.0",
     "http-proxy-middleware": "1.0.5",
     "jest-environment-jsdom-sixteen": "1.0.3",

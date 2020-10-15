@@ -39,6 +39,7 @@ export function PackingPage() {
 // wrapper
 const PageWrapper = styled.div`
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -77,6 +78,7 @@ const ErrorLabel = styled.div`
   span {
     display: inline-block;
     color: #6a6a6a;
+    opacity: 0.4;
     font-weight: 500;
     line-height: 1.2857rem;
     margin-right: 3px;
