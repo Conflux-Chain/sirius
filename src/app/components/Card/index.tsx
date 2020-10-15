@@ -1,21 +1,25 @@
 import React from 'react';
-import { Card } from '@cfxjs/react-ui';
+import { Card as UICard } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { CardProps } from '@cfxjs/react-ui/dist/card/card';
 import clsx from 'clsx';
 
-export default ({ children, className, ...others }: Partial<CardProps>) => {
+export const Card = ({
+  children,
+  className,
+  ...others
+}: Partial<CardProps>) => {
   return (
     <CardWrapper>
-      <Card className={clsx('sirius-Card', className)} {...others}>
+      <UICard className={clsx('sirius-card', className)} {...others}>
         {children}
-      </Card>
+      </UICard>
     </CardWrapper>
   );
 };
 
 const CardWrapper = styled.div`
-  .card.sirius-Card {
+  .card.sirius-card {
     box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
     padding: 0.7143rem;
     &:hover {

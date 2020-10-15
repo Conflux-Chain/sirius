@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text } from '@cfxjs/react-ui';
-import Tooltip from '../Tooltip';
+import { Text as UIText } from '@cfxjs/react-ui';
+import { Tooltip } from '../Tooltip';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
@@ -22,7 +22,7 @@ export declare type Props = TextProps & NativeAttrs;
 // 2. maxCount only apply to string
 // 3. if hoverValue is provided, use hoverValue as Tooltip text, otherwise use children
 //    if text of prop tooltip is provided, use as Tooltip text
-const TextComponent = ({
+export const Text = ({
   className,
   children,
   maxWidth,
@@ -45,16 +45,16 @@ const TextComponent = ({
   return (
     <Tooltip text={tooltipText} placement="top" {...others}>
       <StyledTextWrapper maxWidth={maxWidth}>
-        <Text className={clsx('sirius-Text', className)} {...props}>
+        <UIText className={clsx('sirius-text', className)} {...props}>
           {child}
-        </Text>
+        </UIText>
       </StyledTextWrapper>
     </Tooltip>
   );
 };
 
 const StyledTextWrapper = styled.span<any>`
-  .text.sirius-Text {
+  .text.sirius-text {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -65,5 +65,3 @@ const StyledTextWrapper = styled.span<any>`
     cursor: pointer;
   }
 `;
-
-export default TextComponent;

@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import Text from './../../components/Text';
+import { Text } from './../../components/Text';
 import { Link } from '@cfxjs/react-ui';
-import TabsTablePanel, { ColumnsType } from '../../components/TabsTablePanel';
-import styled from 'styled-components';
+import { TabsTablePanel, ColumnsType } from '../../components/TabsTablePanel';
+import styled from 'styled-components/macro';
 import { useBreakpoint, media } from 'styles/media';
 
 const renderTextEllipsis = value => (

@@ -1,24 +1,24 @@
 import React from 'react';
-import { Tabs } from '@cfxjs/react-ui';
+import { Tabs as UITabs } from '@cfxjs/react-ui';
 import { TabsProps } from '@cfxjs/react-ui/dist/tabs/tabs';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 
-const TabsComponent = ({ children, className, ...others }: TabsProps) => {
+const Tabs = ({ children, className, ...others }: TabsProps) => {
   return (
     <StyledTabsWrapper>
-      <Tabs className={clsx(className, 'sirius-Tabs')} {...others}>
+      <UITabs className={clsx(className, 'sirius-tabs')} {...others}>
         {children}
-      </Tabs>
+      </UITabs>
     </StyledTabsWrapper>
   );
 };
 
-TabsComponent.Item = Tabs.Item;
-TabsComponent.useTabsHandle = Tabs.useTabsHandle;
+Tabs.Item = UITabs.Item;
+Tabs.useTabsHandle = UITabs.useTabsHandle;
 
 const StyledTabsWrapper = styled.div`
-  .tabs.sirius-Tabs {
+  .tabs.sirius-tabs {
     .tab {
       .label {
         font-size: 1.1429rem;
@@ -50,4 +50,4 @@ const StyledTabsWrapper = styled.div`
   }
 `;
 
-export default TabsComponent;
+export { Tabs };

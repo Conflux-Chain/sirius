@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import numeral from 'numeral';
-import Tooltip from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 
 const Text = ({ left, right, count }) => (
   <>
@@ -12,7 +12,7 @@ const Text = ({ left, right, count }) => (
   </>
 );
 
-export function TabLabel({ left, right, count, children }) {
+export const TabLabel = ({ left, right, count, children }) => {
   return (
     <>
       {children}
@@ -33,7 +33,7 @@ export function TabLabel({ left, right, count, children }) {
       )}
     </>
   );
-}
+};
 TabLabel.defaultProps = {
   left: '',
   right: '',
@@ -56,7 +56,7 @@ const StyledSpan = styled.span`
   color: #1e3de4;
   padding: 0 0.4286rem;
 `;
-export function TipLabel({ count, left, right }) {
+export const TipLabel = ({ count, left, right }) => {
   const [number, setCount] = useState(count);
   useEffect(() => {
     // cache count number
@@ -69,7 +69,7 @@ export function TipLabel({ count, left, right }) {
       {right}
     </StyledTipLabelWrapper>
   );
-}
+};
 TipLabel.defaultProps = {
   left: '',
   right: '',

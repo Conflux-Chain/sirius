@@ -1,10 +1,10 @@
 import React from 'react';
-import { Tooltip } from '@cfxjs/react-ui';
+import { Tooltip as UITooltip } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import clsx from 'clsx';
 
-export default ({
+export const Tooltip = ({
   children,
   contentClassName,
   text,
@@ -12,19 +12,19 @@ export default ({
 }: TooltipProps) => {
   return (
     <TooltipWrapper>
-      <Tooltip
-        contentClassName={clsx('siriui-tooltip-square', contentClassName)}
+      <UITooltip
+        contentClassName={clsx('sirius-tooltip', contentClassName)}
         text={text}
         {...others}
       >
         {children}
-      </Tooltip>
+      </UITooltip>
     </TooltipWrapper>
   );
 };
 
 const TooltipWrapper = styled.div`
-  .tooltip-content.siriui-tooltip-square {
+  .tooltip-content.sirius-tooltip {
     border-radius: 0;
     padding: 0.2857rem 0.7143rem;
     font-weight: 400;

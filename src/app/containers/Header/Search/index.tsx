@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 
-export function Search() {
+export const Search = () => {
   const { t } = useTranslation();
   const [focused, setFocused] = useState(false);
 
@@ -30,7 +30,7 @@ export function Search() {
       />
     </Outer>
   );
-}
+};
 
 const Outer = styled.div`
   max-width: 40rem;

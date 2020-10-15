@@ -1,8 +1,6 @@
 import { lazyLoad } from 'utils/loadable';
 
-const Card = lazyLoad(
+export const Card = lazyLoad(
   () => import('./index'),
-  module => module.default,
+  module => module.Card,
 );
-
-export default Card;

@@ -8,7 +8,7 @@ import { lazyLoad } from 'utils/loadable';
 
 export const TablePanel = lazyLoad(
   () => import('./index'),
-  module => module.default,
+  module => module.TabsTablePanel,
 );
 
 export const TabLabel = lazyLoad(

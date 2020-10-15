@@ -18,7 +18,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
-import Tabs from './../Tabs';
+import { Tabs } from './../Tabs';
 import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
 interface Props {

@@ -5,6 +5,7 @@ import { translations } from '../../../locales/i18n';
 import { Contract as ContractBody } from '../../components/Contract';
 import { useCMContractQuery } from '../../../utils/api';
 import { isCfxAddress } from '../../../utils';
+
 export function Contract(props) {
   const { t } = useTranslation();
   const [contractDetail, setContractDetail] = useState({});

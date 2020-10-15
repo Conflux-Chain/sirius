@@ -9,12 +9,12 @@ import { Tooltip } from '@cfxjs/react-ui';
 import { Copy } from '@geist-ui/react-icons';
 import { translations } from 'locales/i18n';
 
-type CopyButtonProps = {
+interface CopyButtonProps {
   size?: number;
   copyText: string;
   tooltipText?: string;
   color?: string;
-};
+}
 
 export const CopyButton = ({
   size,

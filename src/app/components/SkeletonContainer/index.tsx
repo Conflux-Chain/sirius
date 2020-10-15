@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Skeleton } from '@cfxjs/react-ui';
-type SkeletonContainerProps = {
+
+interface SkeletonContainerProps {
   children?: React.ReactNode;
   shown?: boolean;
-};
+}
 type NativeAttrs = Omit<
   React.HTMLAttributes<any>,
   keyof SkeletonContainerProps
