@@ -1,12 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Description } from '..';
+import { Status } from '..';
 
-describe('<Description  />', () => {
+describe('<Status  />', () => {
   it('should match snapshot', () => {
-    const loadingIndicator = render(
-      <Description title={'title'}>content</Description>,
-    );
+    const loadingIndicator = render(<Status type={1}></Status>);
     expect(loadingIndicator.container.firstChild).toMatchSnapshot();
   });
 });

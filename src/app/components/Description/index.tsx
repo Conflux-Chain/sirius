@@ -3,41 +3,79 @@
  * Description
  *
  */
-import React, { memo } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
+import clsx from 'clsx';
 
 interface Props {
   title: React.ReactNode;
+  small?: boolean;
   children: React.ReactNode;
+  noBorder?: boolean;
 }
+type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
+export declare type DescriptionProps = React.PropsWithChildren<
+  Props & NativeAttrs
+>;
 
-export const Description = memo(({ title, children }: Props) => {
+export const Description = ({
+  title,
+  style,
+  className,
+  children,
+  small,
+  noBorder,
+}: DescriptionProps) => {
   return (
-    <Wrapper>
-      <Left>{title}</Left>
-      <Right>{children}</Right>
+    <Wrapper
+      style={style}
+      className={clsx('description', className, {
+        small: small,
+        'no-border': noBorder,
+      })}
+    >
+      <div className="left">{title}</div>
+      <div className="right">{children}</div>
     </Wrapper>
   );
-});
+};
 
 const Wrapper = styled.div`
-  min-height: 46px;
-  line-height: 46px;
-  border-bottom: 1px solid #e8e9ea;
   display: flex;
-  &:last-child {
+  min-height: 3.2857rem;
+  line-height: 3.2857rem;
+  border-bottom: 1px solid #e8e9ea;
+
+  ${media.s} {
+    flex-direction: column;
+  }
+
+  &.no-border {
     border-bottom: none;
   }
-`;
-const Line = styled.div`
-  padding: 12px 0;
-  line-height: calc(46px - 24px);
-`;
-const Left = styled(Line)`
-  width: 230px;
-  color: #002257;
-`;
-const Right = styled(Line)`
-  flex-grow: 1;
+
+  &.small {
+    .left {
+      width: 10.8571rem;
+    }
+  }
+
+  .left {
+    padding: 0.8571rem 0;
+    line-height: calc(3.2857rem - 1.7143rem);
+    width: 16.4286rem;
+    color: #002257;
+  }
+
+  .right {
+    padding: 0.8571rem 0;
+    line-height: calc(3.2857rem - 1.7143rem);
+    flex-grow: 1;
+    color: #97a3b4;
+
+    ${media.s} {
+      padding-top: 0;
+    }
+  }
 `;

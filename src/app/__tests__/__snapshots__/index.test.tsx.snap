@@ -69,7 +69,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
             exact={true}
             path="/transactions/:hash"
           />
-          <UNDEFINED
+          <Route
             component={[Function]}
           />
         </Switch>
