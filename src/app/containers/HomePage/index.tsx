@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useBreakpoint, media } from 'styles/media';
 
 const renderTextEllipsis = value => (
-  <Text span maxwidth={'5.7143rem'} hoverValue={value}>
+  <Text span maxWidth="5.7143rem" hoverValue={value}>
     {value}
   </Text>
 );
