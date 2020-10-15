@@ -110,6 +110,12 @@
         "description": "tps description"
       }
     },
-    "submit": "Submit"
+    "submit": "Submit",
+    "status": {
+      "skip": "Skip",
+      "error": "Error",
+      "success": "Success",
+      "unexecuted": "Unexecuted"
+    }
   }
 }

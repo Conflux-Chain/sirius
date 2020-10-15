@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Status  /> should match snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .status {
+  margin-left: 0.8571rem;
+  line-height: 1.5714rem;
+}
+
+.c0 .status.success {
+  color: #7cd77b;
+}
+
+.c0 .status.error {
+  color: #c65252;
+}
+
+.c0 .status.skip {
+  color: #fede1b;
+}
+
+.c0 .status.unexecuted {
+  color: #b178c8;
+}
+
+.c0 .icon {
+  width: 1.1429rem;
+  height: 1.1429rem;
+}
+
+<span
+  class="c0"
+>
+  <img
+    alt="1"
+    class="icon"
+    src="error.png"
+  />
+  <span
+    class="status error"
+  >
+    Error
+  </span>
+</span>
+`;
