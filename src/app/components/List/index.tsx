@@ -17,51 +17,56 @@ export const List = ({ list }: ListProps) => {
   const bp = useBreakpoint();
   const isS = bp === 's';
 
-  const hasBorder = (index: number) => {
+  const noBorder = (index: number) => {
     const length = list.length;
     // mobile one column
     if (isS && index === length - 1) {
-      return false;
+      return true;
     }
     // pc
     if (index % 2 === 0) {
       if (index === length - 1 || index === length - 2) {
-        return false;
+        return true;
       }
     } else {
       if (index === length - 1) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   };
 
   return (
-    <Card>
-      {list.map((item, index) => (
-        <ItemWrap>
+    <CardWrap>
+      <Card className="sirius-list-card">
+        {list.map((item, index) => (
           <Description
+            small
             className="list-desp"
             title={item.title}
-            children={item.children}
-            noBorder={hasBorder(index)}
-          ></Description>
-        </ItemWrap>
-      ))}
-    </Card>
+            noBorder={noBorder(index)}
+          >
+            {item.children}
+          </Description>
+        ))}
+      </Card>
+    </CardWrap>
   );
 };
 
-const ItemWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0 18px;
-  .list-desp {
-    width: 48%;
+const CardWrap = styled.div`
+  .card.sirius-list-card {
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .list-desp {
+      width: 48%;
 
-    ${media.s} {
-      width: 100%;
+      ${media.s} {
+        width: 100%;
+      }
     }
   }
 `;

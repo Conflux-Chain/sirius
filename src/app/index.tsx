@@ -26,6 +26,7 @@ import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadab
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
+import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
 
@@ -64,6 +65,11 @@ export function App() {
                 exact
                 path="/contract/:contractAddress"
                 component={Contract}
+              />
+              <Route
+                exact
+                path="/token/:tokenAddress"
+                component={TokenDetail}
               />
               <Route
                 exact

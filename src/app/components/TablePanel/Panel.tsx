@@ -110,20 +110,18 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
 
   return (
     <>
-      <StyledCardWrapper>
-        <Card className="sirius-table-card">
-          <StyledTableWrapper>
-            <Table
-              className={clsx('sirius-table', table.className)}
-              tableLayout="fixed"
-              columns={tableColumns}
-              data={tableData}
-              rowKey={tableRowKey}
-              scroll={{ x: 800 }}
-            />
-          </StyledTableWrapper>
+      <StyledTableWrapper>
+        <Card>
+          <Table
+            className={clsx('sirius-table', table.className)}
+            tableLayout="fixed"
+            columns={tableColumns}
+            data={tableData}
+            rowKey={tableRowKey}
+            scroll={{ x: 800 }}
+          />
         </Card>
-      </StyledCardWrapper>
+      </StyledTableWrapper>
       {pagination !== false && (
         <StyledPaginationWrapper>
           <Pagination
@@ -150,10 +148,26 @@ TablePanel.defaultProps = {
   table: defaultTableConfig,
 };
 
-const StyledCardWrapper = styled.div`
-  .card.sirius-table-card {
-    .content {
-      padding: 0;
+const StyledTableWrapper = styled.div`
+  .table.sirius-table {
+    line-height: 1.7143rem;
+    .table-content {
+      padding: 0 0 1rem;
+    }
+    th.table-cell {
+      white-space: nowrap;
+      padding: 1.1429rem calc((0.5714rem / 2) * 3);
+    }
+    td.table-cell {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #333333;
+      padding: 1.2857rem calc((0.5714rem / 2) * 3);
+      white-space: nowrap;
+
+      ${media.s} {
+        padding: 1.1429rem;
+      }
     }
   }
 `;
@@ -203,28 +217,6 @@ const StyledPaginationWrapper = styled.div`
 
     ${media.s} {
       margin-bottom: 0.4286rem;
-    }
-  }
-`;
-
-const StyledTableWrapper = styled.div`
-  .table.sirius-table {
-    .table-content {
-      padding: 0 1.2857rem 1.2857rem;
-    }
-    th.table-cell {
-      white-space: nowrap;
-    }
-    td.table-cell {
-      font-size: 1rem;
-      font-weight: 400;
-      color: #333333;
-      padding: 1.2857rem calc((0.5714rem / 2) * 3);
-      white-space: nowrap;
-
-      ${media.s} {
-        padding: 1.1429rem;
-      }
     }
   }
 `;

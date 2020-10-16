@@ -4,7 +4,7 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const Tokens = lazyLoad(
+export const TokenDetail = lazyLoad(
   () => import('./index'),
-  module => module.Tokens,
+  module => module.TokenDetail,
 );
