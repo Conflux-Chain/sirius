@@ -3,11 +3,15 @@
 exports[`<Card  /> should match snapshot 1`] = `
 .c0 .card.sirius-card {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
-  padding: 0.7143rem;
+  padding: 0 1.2857rem;
 }
 
 .c0 .card.sirius-card:hover {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+.c0 .card.sirius-card .content {
+  padding: 0;
 }
 
 <div
