@@ -7,7 +7,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import leftImage from '../../../images/home/404.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 
@@ -17,7 +16,7 @@ export function NotFoundPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src={leftImage} />
+      <LeftImage src="/home/404.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.notFound.title)}</ErrorTitle>
         <ErrorLabel>{t(translations.notFound.label)}</ErrorLabel>

@@ -93,7 +93,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
 >
   <img
     class="c1"
-    src="404.svg"
+    src="/home/404.svg"
   />
   <div
     class="c2"

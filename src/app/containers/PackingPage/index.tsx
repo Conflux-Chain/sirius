@@ -7,7 +7,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import leftImage from '../../../images/home/packing.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
@@ -23,7 +22,7 @@ export function PackingPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src={leftImage} />
+      <LeftImage src="/home/packing.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
         <ErrorLabel>
