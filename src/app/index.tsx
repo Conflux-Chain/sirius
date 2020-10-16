@@ -23,6 +23,8 @@ import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
+import { Chart } from './containers/Charts/Loadable';
+
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
@@ -72,6 +74,7 @@ export function App() {
               />
               <Route exact path="/tokens" component={Tokens} />
               <Route exact path="/sponsor" component={Sponsor} />
+              <Route path="/charts" component={Chart} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
