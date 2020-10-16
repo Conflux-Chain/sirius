@@ -1,12 +1,13 @@
 import React from 'react';
+import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
+import { Link } from '@cfxjs/react-ui';
+import { useBreakpoint, media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import Text from './../../components/Text';
-import { Link } from '@cfxjs/react-ui';
-import TabsTablePanel, { ColumnsType } from '../../components/TabsTablePanel';
-import styled from 'styled-components';
-import { useBreakpoint, media } from 'styles/media';
+import { Text } from './../../components/Text/Loadable';
+import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
+import { ColumnsType } from '../../components/TabsTablePanel';
 
 const renderTextEllipsis = value => (
   <Text span maxWidth="5.7143rem" hoverValue={value}>

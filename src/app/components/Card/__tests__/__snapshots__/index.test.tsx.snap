@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Card  /> should match snapshot 1`] = `
-.c0 .card.sirius-Card {
+.c0 .card.sirius-card {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
   padding: 0.7143rem;
 }
 
-.c0 .card.sirius-Card:hover {
+.c0 .card.sirius-card:hover {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
 }
 
@@ -14,7 +14,7 @@ exports[`<Card  /> should match snapshot 1`] = `
   class="c0"
 >
   <div
-    class="jsx-2441804542 card sirius-Card"
+    class="jsx-2441804542 card sirius-card"
   >
     <div
       class="jsx-178616938 content "

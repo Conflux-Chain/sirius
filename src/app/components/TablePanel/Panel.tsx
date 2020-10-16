@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Table, Pagination } from '@cfxjs/react-ui';
-import Card from '../Card';
-import styled from 'styled-components';
+import { Card } from '../Card';
+import styled from 'styled-components/macro';
 import { media, useBreakpoint } from '../../../styles/media';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
-import useTableData from '../TabsTablePanel/useTableData';
+import { useTableData } from '../TabsTablePanel/useTableData';
 import { Skeleton } from '@cfxjs/react-ui';
 import clsx from 'clsx';
 
@@ -65,7 +65,7 @@ const defaultTableConfig: TableProps<unknown> = {
   variant: 'solid',
 };
 
-function TablePanel({ url, pagination, table }: TablePanelType) {
+export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
   const {
     pageNumber,
     pageSize,
@@ -111,10 +111,10 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
   return (
     <>
       <StyledCardWrapper>
-        <Card className="sirius-TablePanel-card">
+        <Card className="sirius-table-card">
           <StyledTableWrapper>
             <Table
-              className={clsx('sirius-TablePanel-table', table.className)}
+              className={clsx('sirius-table', table.className)}
               tableLayout="fixed"
               columns={tableColumns}
               data={tableData}
@@ -129,7 +129,7 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
           <Pagination
             {...mergedPaginationConfig}
             className={clsx(
-              'sirius-TablePanel-pagination',
+              'sirius-pagination',
               mergedPaginationConfig.className,
             )}
             onPageChange={(page: number) => gotoPage(page)}
@@ -142,7 +142,7 @@ function TablePanel({ url, pagination, table }: TablePanelType) {
       )}
     </>
   );
-}
+};
 
 TablePanel.defaultProps = {
   url: '',
@@ -151,7 +151,7 @@ TablePanel.defaultProps = {
 };
 
 const StyledCardWrapper = styled.div`
-  .card.sirius-TablePanel-card {
+  .card.sirius-table-card {
     .content {
       padding: 0;
     }
@@ -159,7 +159,7 @@ const StyledCardWrapper = styled.div`
 `;
 
 const StyledPaginationWrapper = styled.div`
-  .pagination.sirius-TablePanel-pagination {
+  .pagination.sirius-pagination {
     margin: 1.7143rem 0;
     .left,
     .right {
@@ -208,7 +208,7 @@ const StyledPaginationWrapper = styled.div`
 `;
 
 const StyledTableWrapper = styled.div`
-  .table.sirius-TablePanel-table {
+  .table.sirius-table {
     .table-content {
       padding: 0 1.2857rem 1.2857rem;
     }
@@ -228,5 +228,3 @@ const StyledTableWrapper = styled.div`
     }
   }
 `;
-
-export default TablePanel;

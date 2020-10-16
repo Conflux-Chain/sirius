@@ -1,8 +1,6 @@
 import { lazyLoad } from 'utils/loadable';
 
-const Tooltip = lazyLoad(
+export const Tooltip = lazyLoad(
   () => import('./index'),
-  module => module.default,
+  module => module.Tooltip,
 );
-
-export default Tooltip;

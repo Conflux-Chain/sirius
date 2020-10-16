@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import useSWR from 'swr';
 import { simpleGetFetcher } from '../../../utils/api';
 
-export default function useTableData(url: string) {
+export const useTableData = (url: string) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -69,4 +69,4 @@ export default function useTableData(url: string) {
     gotoPage: setPageNumberAndAlterHistory,
     setPageSize: setPageSizeAndAlterHistory,
   };
-}
+};

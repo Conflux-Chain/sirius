@@ -10,11 +10,15 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
-
+import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
+import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 
-import { Header } from './containers/Header/index';
+import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
@@ -24,12 +28,6 @@ import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
-
-import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
-import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
-import WebFontLoader from 'webfontloader';
 
 WebFontLoader.load({
   custom: {

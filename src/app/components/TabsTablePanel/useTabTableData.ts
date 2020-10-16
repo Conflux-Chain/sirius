@@ -1,8 +1,8 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import useTableData from './useTableData';
+import { useTableData } from './useTableData';
 
-export default function useTabTableData(t) {
+export const useTabTableData = t => {
   const tabs = t.filter(item => item.table);
   const location = useLocation();
   const history = useHistory();
@@ -114,4 +114,4 @@ export default function useTabTableData(t) {
     setPageSize,
     tabs,
   };
-}
+};

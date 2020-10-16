@@ -22,8 +22,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const PageHeader = memo(({ children }) => {
+export const PageHeader = memo(({ children }) => {
   return <Wrapper>{children}</Wrapper>;
 });
-
-export default PageHeader;

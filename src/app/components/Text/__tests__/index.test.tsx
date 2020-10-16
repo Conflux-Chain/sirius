@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Text from '..';
+import { Text } from '..';
 
 describe('<Text  />', () => {
   it('should match snapshot', () => {
