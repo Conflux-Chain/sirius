@@ -110,6 +110,24 @@
         "description": "tps description"
       }
     },
-    "submit": "Submit"
+    "submit": "Submit",
+    "status": {
+      "skip": {
+        "text": "Skip",
+        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+      },
+      "error": {
+        "text": "Error",
+        "explanation": "Encountered during contract execution, or out of gas."
+      },
+      "success": {
+        "text": "Success",
+        "explanation": ""
+      },
+      "unexecuted": {
+        "text": "Unexecuted",
+        "explanation": "Transaction has not been executed yet, please wait."
+      }
+    }
   }
 }
