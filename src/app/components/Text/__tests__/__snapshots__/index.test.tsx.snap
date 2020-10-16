@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Text  /> should match snapshot 1`] = `
-.c0 .tooltip-content.siriui-tooltip-square {
+.c0 .tooltip-content.sirius-tooltip {
   border-radius: 0;
   padding: 0.2857rem 0.7143rem;
   font-weight: 400;
@@ -11,7 +11,7 @@ exports[`<Text  /> should match snapshot 1`] = `
   line-height: 1.1429rem;
 }
 
-.c1 .text.sirius-Text {
+.c1 .text.sirius-text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -34,7 +34,7 @@ exports[`<Text  /> should match snapshot 1`] = `
         class="c1"
       >
         <p
-          class="jsx-3390086683  text sirius-Text"
+          class="jsx-3390086683  text sirius-text"
         >
           <span>
             1234567890
@@ -47,7 +47,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 `;
 
 exports[`<Text  /> should match snapshot when set maxCount 1`] = `
-.c0 .tooltip-content.siriui-tooltip-square {
+.c0 .tooltip-content.sirius-tooltip {
   border-radius: 0;
   padding: 0.2857rem 0.7143rem;
   font-weight: 400;
@@ -57,7 +57,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   line-height: 1.1429rem;
 }
 
-.c1 .text.sirius-Text {
+.c1 .text.sirius-text {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -79,7 +79,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
         class="c1"
       >
         <p
-          class="jsx-3390086683  text sirius-Text"
+          class="jsx-3390086683  text sirius-text"
         >
           12345...
         </p>

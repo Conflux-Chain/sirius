@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Tabs  /> should match snapshot 1`] = `
-.c0 .tabs.sirius-Tabs .tab .label {
+.c0 .tabs.sirius-tabs .tab .label {
   font-size: 1.1429rem;
   color: rgba(11,19,46,0.6);
   line-height: 1.7143rem;
@@ -9,23 +9,23 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   font-weight: 500;
 }
 
-.c0 .tabs.sirius-Tabs .tab .nav {
+.c0 .tabs.sirius-tabs .tab .nav {
   margin: 0 0.5714rem;
 }
 
-.c0 .tabs.sirius-Tabs .tab.active .label,
-.c0 .tabs.sirius-Tabs .tab:hover .label {
+.c0 .tabs.sirius-tabs .tab.active .label,
+.c0 .tabs.sirius-tabs .tab:hover .label {
   font-weight: 500;
   color: #0b132e;
 }
 
-.c0 .tabs.sirius-Tabs .tab .bottom {
+.c0 .tabs.sirius-tabs .tab .bottom {
   height: 0.4286rem;
   border-top-left-radius: 0.5714rem;
   border-top-right-radius: 0.5714rem;
 }
 
-.c0 .tabs.sirius-Tabs header + .content {
+.c0 .tabs.sirius-tabs header + .content {
   margin-top: 1.2857rem;
   padding-top: 0;
 }
@@ -34,7 +34,7 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   class="c0"
 >
   <div
-    class="jsx-2839662092 tabs sirius-Tabs"
+    class="jsx-2839662092 tabs sirius-tabs"
   >
     <header
       class="jsx-2839662092"
