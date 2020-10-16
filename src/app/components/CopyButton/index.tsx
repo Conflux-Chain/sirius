@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip } from '@cfxjs/react-ui';
+import Tooltip from '../Tooltip';
 import { Copy } from '@geist-ui/react-icons';
 import { translations } from 'locales/i18n';
 
@@ -48,8 +48,13 @@ export const CopyButton = ({
     }
   };
   return (
-    <Tooltip text={text} onVisibleChange={handleChange}>
-      <div onClick={handleClick}>
+    <Tooltip placement="top" text={text} onVisibleChange={handleChange}>
+      <div
+        onClick={handleClick}
+        style={{
+          cursor: 'pointer',
+        }}
+      >
         <Copy size={size || 14} color={color || '#4b4b4b'} />
       </div>
     </Tooltip>
