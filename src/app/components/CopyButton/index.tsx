@@ -5,7 +5,7 @@
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Tooltip from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 import { Copy } from '@geist-ui/react-icons';
 import { translations } from 'locales/i18n';
 
