@@ -5,58 +5,58 @@
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+// import styled from 'styled-components/macro';
+import QRCode from 'qrcode.react';
+import { Modal } from '@cfxjs/react-ui';
 import { Tooltip } from '../Tooltip';
-import { Copy } from '@geist-ui/react-icons';
 import { translations } from 'locales/i18n';
 
-interface CopyButtonProps {
-  size?: number;
-  copyText: string;
+interface QrcodeButtonProps {
+  value: string;
   tooltipText?: string;
-  color?: string;
+  title?: string;
 }
 
 export const QrcodeButton = ({
-  size,
-  copyText,
+  value,
   tooltipText,
-  color,
-}: CopyButtonProps) => {
+  title,
+}: QrcodeButtonProps) => {
   const { t } = useTranslation();
-  const [text, setText] = useState(
-    tooltipText || t(translations.general.copyButton.copyToClipboard),
-  );
+  const [visible, setVisible] = useState(false);
   const handleClick = () => {
-    const oInput = document.createElement('input');
-    oInput.value = copyText;
-    document.body.appendChild(oInput);
-    oInput.select();
-    const copyResult = document.execCommand('copy');
-    document.body.removeChild(oInput);
-    if (copyResult) {
-      setText(t(translations.general.copyButton.success));
-    } else {
-      setText(t(translations.general.copyButton.failed));
-    }
+    setVisible(true);
+  };
+  const handleClose = () => {
+    setVisible(false);
   };
 
-  const handleChange = visible => {
-    if (!visible) {
-      setText(
-        tooltipText || t(translations.general.copyButton.copyToClipboard),
-      );
-    }
-  };
   return (
-    <Tooltip placement="top" text={text} onVisibleChange={handleChange}>
-      <div
-        onClick={handleClick}
-        style={{
-          cursor: 'pointer',
-        }}
+    <>
+      <Tooltip
+        placement="top"
+        text={tooltipText || t(translations.general.qrcodeButton.clickToShow)}
       >
-        <Copy size={size || 14} color={color || '#4b4b4b'} />
-      </div>
-    </Tooltip>
+        <div
+          onClick={handleClick}
+          style={{
+            cursor: 'pointer',
+          }}
+        >
+          <img alt="qrcode" src="/qrcode.svg" />
+        </div>
+      </Tooltip>
+      <Modal
+        wrapClassName="qrcode-modal"
+        width="20rem"
+        open={visible}
+        onClose={handleClose}
+      >
+        <Modal.Title>{title}</Modal.Title>
+        <Modal.Content>
+          <QRCode size={200} value={value} />
+        </Modal.Content>
+      </Modal>
+    </>
   );
 };

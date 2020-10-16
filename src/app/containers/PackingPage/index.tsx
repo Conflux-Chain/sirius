@@ -22,7 +22,7 @@ export function PackingPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src="/home/packing.svg" />
+      <LeftImage alt="packing" src="/home/packing.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
         <ErrorLabel>

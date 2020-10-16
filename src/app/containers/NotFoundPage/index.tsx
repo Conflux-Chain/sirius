@@ -16,7 +16,7 @@ export function NotFoundPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src="/home/404.svg" />
+      <LeftImage alt="404" src="/home/404.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.notFound.title)}</ErrorTitle>
         <ErrorLabel>{t(translations.notFound.label)}</ErrorLabel>
