@@ -1,6 +1,6 @@
 import React from 'react';
-import { Chart } from '../../components/Chart/Loadable';
-function Charts() {
+import { Chart } from '../../components/Chart';
+export function Charts() {
   return (
     <div>
       <Chart width={500} />
@@ -10,5 +10,3 @@ function Charts() {
     </div>
   );
 }
-
-export default Charts;

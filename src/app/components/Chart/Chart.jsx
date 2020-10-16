@@ -28,7 +28,7 @@ const DURATIONS = [
   ['month', '1M'],
   ['all', 'ALL'],
 ];
-export default function Chart({ width = 500, indicator = 'blockTime' }) {
+export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
   const { plot, isError, setDuration, duration } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
@@ -63,7 +63,7 @@ export default function Chart({ width = 500, indicator = 'blockTime' }) {
       </Container>
     );
   }
-}
+};
 
 function Draw({
   plot,

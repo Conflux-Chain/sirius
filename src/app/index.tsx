@@ -38,7 +38,7 @@ WebFontLoader.load({
   },
 });
 
-export const App = () => {
+export function App() {
   const { t } = useTranslation();
   return (
     <SWRConfig
@@ -84,7 +84,7 @@ export const App = () => {
       </BrowserRouter>
     </SWRConfig>
   );
-};
+}
 
 const Main = styled.div`
   position: relative;
