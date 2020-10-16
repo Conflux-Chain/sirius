@@ -24,6 +24,9 @@ exports[`<Description  /> should match snapshot 1`] = `
   line-height: calc(3.2857rem - 1.7143rem);
   width: 16.4286rem;
   color: #002257;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c0 .right {

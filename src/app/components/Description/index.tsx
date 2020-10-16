@@ -68,6 +68,7 @@ const Wrapper = styled.div`
     line-height: calc(3.2857rem - 1.7143rem);
     width: 16.4286rem;
     color: #002257;
+    flex-shrink: 0;
   }
 
   .right {
