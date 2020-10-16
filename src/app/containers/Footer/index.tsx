@@ -7,10 +7,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Footer as FooterComp } from '../../components/Footer/Loadable';
-import { TextLogo } from '../../components/TextLogo';
 import { Link } from '@cfxjs/react-ui';
 import { useBreakpoint, media } from 'styles/media';
+import { Footer as FooterComp } from '../../components/Footer/Loadable';
+import { TextLogo } from '../../components/TextLogo/Loadable';
 
 export function Footer() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

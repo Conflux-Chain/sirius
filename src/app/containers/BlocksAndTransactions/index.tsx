@@ -2,12 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
+import { ColumnsType } from '../../components/TabsTablePanel';
 import {
   TabsTablePanel,
-  ColumnsType,
   TipLabel,
-} from '../../components/TabsTablePanel';
-import { Text } from './../../components/Text';
+} from '../../components/TabsTablePanel/Loadable';
+import { Text } from './../../components/Text/Loadable';
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
 
 const renderTextEllipsis = value => (

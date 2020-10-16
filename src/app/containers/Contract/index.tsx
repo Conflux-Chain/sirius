@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Contract as ContractBody } from '../../components/Contract';
+import { Contract as ContractBody } from '../../components/Contract/Loadable';
 import { useCMContractQuery } from '../../../utils/api';
 import { isCfxAddress } from '../../../utils';
 
