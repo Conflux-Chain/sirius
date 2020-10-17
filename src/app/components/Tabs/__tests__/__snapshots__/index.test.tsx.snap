@@ -25,6 +25,10 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   border-top-right-radius: 0.5714rem;
 }
 
+.c0 .tabs.sirius-tabs header {
+  overflow: visible;
+}
+
 .c0 .tabs.sirius-tabs header + .content {
   margin-top: 1.2857rem;
   padding-top: 0;

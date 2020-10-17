@@ -43,6 +43,9 @@ const StyledTabsWrapper = styled.div`
         border-top-right-radius: 0.5714rem;
       }
     }
+    header {
+      overflow: visible;
+    }
     header + .content {
       margin-top: 1.2857rem;
       padding-top: 0;

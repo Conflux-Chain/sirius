@@ -108,6 +108,13 @@
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
       }
+    },
+    "security": {
+      "notAvailable": "Not Available",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "veryLow": "Very Low"
     }
   }
 }
