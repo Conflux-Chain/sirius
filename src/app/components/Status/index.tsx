@@ -11,11 +11,6 @@ import { translations } from '../../../locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 
-const skip = require('../../../images/status/skip.png');
-const error = require('../../../images/status/error.png');
-const success = require('../../../images/status/success.png');
-const unexecuted = require('../../../images/status/unexecuted.png');
-
 interface Props {
   type: string | number;
   variant?: 'dot' | 'text';
@@ -39,22 +34,22 @@ export const Status = ({
       '0': {
         status: 'success',
         name: t(translations.general.status.success.text),
-        icon: success,
+        icon: '/status/success',
       },
       '1': {
         status: 'error',
         name: t(translations.general.status.error.text),
-        icon: error,
+        icon: '/status/error',
       },
       '2': {
         status: 'skip',
         name: t(translations.general.status.skip.text),
-        icon: skip,
+        icon: '/status/skip',
       },
       '3': {
         status: 'unexecuted',
         name: t(translations.general.status.unexecuted.text),
-        icon: unexecuted,
+        icon: '/status/unexecuted',
       },
     }),
     [t],

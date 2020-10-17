@@ -29,6 +29,12 @@ export const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
 
+  .qrcode-modal.wrapper {
+    .content {
+      margin: 0 auto;
+    }
+  }
+
   ${media.s} {
     html, body {
       font-size: 12px;

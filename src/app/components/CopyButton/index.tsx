@@ -40,7 +40,7 @@ export const CopyButton = ({
     }
   };
 
-  const handleChange = visible => {
+  const handleChange = (visible: boolean) => {
     if (!visible) {
       setText(
         tooltipText || t(translations.general.copyButton.copyToClipboard),

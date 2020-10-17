@@ -69,7 +69,7 @@ exports[`<Status  /> should match snapshot 1`] = `
   <img
     alt="1"
     class="icon"
-    src="error.png"
+    src="/status/error"
   />
   <span
     class="text"

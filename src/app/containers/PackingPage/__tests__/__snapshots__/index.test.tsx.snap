@@ -104,8 +104,9 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
   class="c0"
 >
   <img
+    alt="packing"
     class="c1"
-    src="packing.svg"
+    src="/home/packing.svg"
   />
   <div
     class="c2"
