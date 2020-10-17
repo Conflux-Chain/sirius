@@ -213,6 +213,33 @@
     "timestamp": "Timestamp",
     "size": "Size",
     "transactions": "Transactions",
-    "referenceBlocks": "Reference Blocks"
+    "referenceBlocks": "Reference Blocks",
+    "tabs": {
+      "transactions": "Transactions",
+      "referenceBlocks": "Reference Blocks",
+      "labelCountBefore": "A total of",
+      "labelCountAfter": "{{type}} found"
+    },
+    "table": {
+      "transactions": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "fee": "Fee",
+        "gasPrice": "Gas Price",
+        "age": "Age"
+      },
+      "referenceBlocks": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "hash": "Hash",
+        "transactionCount": "Txns",
+        "miner": "Miner",
+        "difficulty": "Difficulty",
+        "gasLimit": "Gas Used/Gas Limit",
+        "age": "Age"
+      }
+    }
   }
 }

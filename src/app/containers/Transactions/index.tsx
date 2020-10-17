@@ -13,7 +13,7 @@ import { CopyButton } from '../../components/CopyButton/Loadable';
 import { Link } from 'react-router-dom';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Status } from '../../components/Status/Loadable';
-import Tooltip from '../../components/Tooltip';
+import { Tooltip } from '../../components/Tooltip/Loadable';
 
 export const Transactions = () => {
   const { t } = useTranslation();

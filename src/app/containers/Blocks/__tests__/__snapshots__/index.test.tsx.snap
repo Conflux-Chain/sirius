@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Transactions /> should match the snapshot 1`] = `
+exports[`<Blocks /> should match the snapshot 1`] = `
 <div>
-  Todo. Transactions
+  Todo. Blocks
 </div>
 `;
