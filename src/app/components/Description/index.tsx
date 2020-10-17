@@ -15,9 +15,7 @@ interface Props {
   noBorder?: boolean;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
-export declare type DescriptionProps = React.PropsWithChildren<
-  Props & NativeAttrs
->;
+export type DescriptionProps = React.PropsWithChildren<Props & NativeAttrs>;
 
 export const Description = ({
   title,
