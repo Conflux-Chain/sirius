@@ -22,7 +22,7 @@ Select.Option = UISelect.Option;
 
 const SelectWrapper = styled.div`
   .select.sirius-select {
-    height: 32px;
+    height: 2.2857rem;
   }
 `;
 

@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .sirius-select-dropdown.select-dropdown {
     .option {
-      height: 30px;
+      height: 2.1429rem;
       color: #65709a;
       background-color: #fff;
     }
