@@ -34,22 +34,22 @@ export const Status = ({
       '0': {
         status: 'success',
         name: t(translations.general.status.success.text),
-        icon: '/status/success',
+        icon: '/status/success.svg',
       },
       '1': {
         status: 'error',
         name: t(translations.general.status.error.text),
-        icon: '/status/error',
+        icon: '/status/error.svg',
       },
       '2': {
         status: 'skip',
         name: t(translations.general.status.skip.text),
-        icon: '/status/skip',
+        icon: '/status/skip.svg',
       },
       '3': {
         status: 'unexecuted',
         name: t(translations.general.status.unexecuted.text),
-        icon: '/status/unexecuted',
+        icon: '/status/unexecuted.svg',
       },
     }),
     [t],
