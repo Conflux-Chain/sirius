@@ -21,6 +21,10 @@ exports[`<Text  /> should match snapshot 1`] = `
   cursor: pointer;
 }
 
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
+}
+
 <div
   class="c0"
 >
@@ -64,6 +68,10 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   vertical-align: bottom;
   display: inherit;
   cursor: pointer;
+}
+
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
 }
 
 <div
