@@ -8,6 +8,7 @@ export const Tooltip = ({
   children,
   contentClassName,
   text,
+  placement,
   ...others
 }: TooltipProps) => {
   return (
@@ -15,6 +16,7 @@ export const Tooltip = ({
       <UITooltip
         contentClassName={clsx('sirius-tooltip', contentClassName)}
         text={text}
+        placement={placement || 'top'}
         {...others}
       >
         {children}

@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Skeleton } from '@cfxjs/react-ui';
 import { useBreakpoint, media } from 'styles/media';
 import { Card } from '../Card';
 import { Description, DescriptionProps } from '../Description';
@@ -41,12 +42,13 @@ export const List = ({ list }: ListProps) => {
       <Card className="sirius-list-card">
         {list.map((item, index) => (
           <Description
+            key={`desc_${index}`}
             small
             className="list-desp"
             title={item.title}
             noBorder={noBorder(index)}
           >
-            {item.children}
+            {item.children || <Skeleton />}
           </Description>
         ))}
       </Card>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Error备份</title>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Security/-Status" transform="translate(-485.000000, -75.000000)">
+            <g id="Error备份" transform="translate(485.000000, 75.000000)">
+                <circle id="椭圆形" fill="#E64E4E" cx="8" cy="8" r="8"></circle>
+                <line x1="10.4" y1="5.6" x2="5.6" y2="10.4" id="路径" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="5.6" y1="5.6" x2="10.4" y2="10.4" id="路径" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

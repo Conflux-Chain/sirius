@@ -1,8 +1,9 @@
 import { lazyLoad } from 'utils/loadable';
 
-const TabsComponent = lazyLoad(
+const Tabs = lazyLoad(
   () => import('./index'),
   module => module.Tabs,
 );
 
-export default TabsComponent;
+// can't export Tabs.Item
+export default Tabs;

@@ -21,14 +21,18 @@ exports[`<Text  /> should match snapshot 1`] = `
   cursor: pointer;
 }
 
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
+}
+
 <div
   class="c0"
 >
   <div
-    class="jsx-64609884"
+    class="jsx-726172838 tooltip-wrapper"
   >
     <div
-      class="jsx-64609884 tooltip "
+      class="jsx-726172838 tooltip "
     >
       <span
         class="c1"
@@ -66,14 +70,18 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   cursor: pointer;
 }
 
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
+}
+
 <div
   class="c0"
 >
   <div
-    class="jsx-64609884"
+    class="jsx-726172838 tooltip-wrapper"
   >
     <div
-      class="jsx-64609884 tooltip "
+      class="jsx-726172838 tooltip "
     >
       <span
         class="c1"

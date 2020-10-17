@@ -29,6 +29,24 @@ export const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
 
+  .qrcode-modal.wrapper {
+    .content {
+      margin: 0 auto;
+    }
+  }
+
+  .sirius-select-dropdown.select-dropdown {
+    .option {
+      height: 2.1429rem;
+      color: #65709a;
+      background-color: #fff;
+    }
+    .option.selected {
+      color: #fff;
+      background-color: #65709a;
+    }
+  }
+
   ${media.s} {
     html, body {
       font-size: 12px;

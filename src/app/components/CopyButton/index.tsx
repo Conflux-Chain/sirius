@@ -40,7 +40,7 @@ export const CopyButton = ({
     }
   };
 
-  const handleChange = visible => {
+  const handleChange = (visible: boolean) => {
     if (!visible) {
       setText(
         tooltipText || t(translations.general.copyButton.copyToClipboard),
@@ -48,7 +48,7 @@ export const CopyButton = ({
     }
   };
   return (
-    <Tooltip placement="top" text={text} onVisibleChange={handleChange}>
+    <Tooltip text={text} onVisibleChange={handleChange}>
       <div
         onClick={handleClick}
         style={{
