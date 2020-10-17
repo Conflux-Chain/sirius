@@ -72,6 +72,11 @@ export function App() {
               />
               <Route exact path="/tokens" component={Tokens} />
               <Route exact path="/sponsor" component={Sponsor} />
+              <Route
+                exact
+                path="/sponsor/:contractAddress"
+                component={Sponsor}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

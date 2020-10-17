@@ -40,6 +40,30 @@ export const GlobalStyle = createGlobalStyle`
       padding: 0.5714rem 0.8571rem;
     }
   }
+  .transactionModalContainer{
+    .contentContainer{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:30px;
+      .successImg{
+        width:56px;
+      }
+      .submitted{
+        margin-top:13px;
+        font-size:14px;
+        color: #282D30;
+      }
+      .label{
+        color: #A4A8B6;
+        line-height: 18px;
+        font-size: 14px;
+      }
+      .content{
+        color: #0054FE;
+      }
+    }
+  }
 
   ${media.s} {
     html, body {

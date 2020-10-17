@@ -90,6 +90,25 @@
       "success": "已复制",
       "failed": "复制失败"
     },
-    "submit": "提交"
+    "submit": "提交",
+    "apply": "申请",
+    "search": "搜索"
+  },
+  "sponsor": {
+    "title": "Contract Sponsor",
+    "storageSponsor": "STORAGE SPONSOR",
+    "gasFeeSponsor": "GAS FEE SPONSOR",
+    "currentAvialStorageFee": "Current available storage fee",
+    "currentAvialGasFee": "Current available gas fee",
+    "providedStorage": "Conflux Foundation Provided Storage Fee",
+    "providedGas": "Conflux Foundation Provided Gas Fee",
+    "availStorage": "Conflux Foundation Available Storage Fee",
+    "availGas": "Conflux Foundation Available Gas Fee",
+    "connectToApply": "Connect wallet to apply",
+    "notice": "Notice",
+    "noticeFirst": "Each contract has a maximum of 5 sponsorship opportunities. The sponsor will provide a storage fee of 500cfx and a gas fee of up to 100cfx.",
+    "noticeSecond": "For the first application, you need to connect to conflux portal to confirm that you are the contract manager; after the connection is completed, click apply again to get sponsorship.",
+    "noticeThirdOne": "If you have not installed confluxportal in your browser, please enter",
+    "noticeThirdTwo": "to download"
   }
 }

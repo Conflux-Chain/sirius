@@ -104,6 +104,31 @@
       "success": "已复制",
       "failed": "复制失败"
     },
-    "submit": "Submit"
+    "submit": "Submit",
+    "apply": "Apply",
+    "search": "Search"
+  },
+  "sponsor": {
+    "title": "Contract Sponsor",
+    "storageSponsor": "STORAGE SPONSOR",
+    "gasFeeSponsor": "GAS FEE SPONSOR",
+    "currentAvialStorageFee": "Available Storage Fee Balance",
+    "currentAvialGasFee": "Available Gas Fee Balance",
+    "providedStorage": "Storage Fees Provided By Conflux Foundation",
+    "providedGas": "Gas Fees Provided By Conflux Foundation",
+    "availStorage": "Remaining Storage Fees By Conflux Foundation",
+    "availGas": "Remaining Gas Fees By Conflux Foundation",
+    "connectToApply": "Connect wallet to apply",
+    "notice": "Notice",
+    "noticeFirst": "Each contract has a maximum of 5 sponsorship opportunities. The sponsor will provide a storage fee of 500cfx and a gas fee of up to 100cfx.",
+    "noticeSecond": "For the first application, you need to connect to conflux portal to confirm that you are the contract manager; after the connection is completed, click apply again to get sponsorship.",
+    "noticeThirdOne": "If you have not installed confluxportal in your browser, please enter",
+    "noticeThirdTwo": "to download",
+    "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
+    "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
+    "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
+    "upperBound": "Upper Bound",
+    "submitted": "Transaction Submitted",
+    "txHash": "Transaction Hash"
   }
 }
