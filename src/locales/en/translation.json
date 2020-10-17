@@ -195,5 +195,24 @@
       "original": "Original",
       "utf8": "UTF-8"
     }
+  },
+  "blocks": {
+    "title": "Blocks",
+    "description": "Blocks",
+    "blockHeight": "Block Height",
+    "epoch": "Epoch",
+    "difficulty": "Difficulty",
+    "miner": "Miner",
+    "reward": "Reward",
+    "security": "Security",
+    "blame": "Blame",
+    "blockHash": "Block Hash",
+    "parentHash": "Parent Hash",
+    "nonce": "Nonce",
+    "gasUsed": "Gas Used/Limit",
+    "timestamp": "Timestamp",
+    "size": "Size",
+    "transactions": "Transactions",
+    "referenceBlocks": "Reference Blocks"
   }
 }
