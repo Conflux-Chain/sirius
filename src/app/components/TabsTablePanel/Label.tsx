@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import numeral from 'numeral';
 import { Tooltip } from '../Tooltip';
+
+interface LabelProps {
+  left?: string;
+  right?: string;
+  count?: number;
+}
+
+const defaultProps = {
+  left: '',
+  right: '',
+  count: 0,
+};
 
 const Text = ({ left, right, count }) => (
   <>
@@ -12,14 +23,19 @@ const Text = ({ left, right, count }) => (
   </>
 );
 
-export const TabLabel = ({ left, right, count, children }) => {
+const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
+  left,
+  right,
+  count,
+  children,
+}) => {
   return (
     <>
       {children}
       <span> </span>
       {count ? (
         <Tooltip
-          placement="top"
+          placement="right"
           text={
             <StyledTextWrapper>
               <Text left={left} right={right} count={count}></Text>
@@ -34,16 +50,8 @@ export const TabLabel = ({ left, right, count, children }) => {
     </>
   );
 };
-TabLabel.defaultProps = {
-  left: '',
-  right: '',
-  count: 0,
-};
-TabLabel.propTypes = {
-  left: PropTypes.string,
-  right: PropTypes.string,
-  count: PropTypes.number,
-};
+TabLabel.defaultProps = defaultProps;
+export { TabLabel };
 
 const StyledTipLabelWrapper = styled.p`
   font-size: 1rem;
@@ -56,7 +64,11 @@ const StyledSpan = styled.span`
   color: #1e3de4;
   padding: 0 0.4286rem;
 `;
-export const TipLabel = ({ count, left, right }) => {
+const TipLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
+  count,
+  left,
+  right,
+}) => {
   const [number, setCount] = useState(count);
   useEffect(() => {
     // cache count number
@@ -70,21 +82,11 @@ export const TipLabel = ({ count, left, right }) => {
     </StyledTipLabelWrapper>
   );
 };
-TipLabel.defaultProps = {
-  left: '',
-  right: '',
-  count: 0,
-};
-TipLabel.propTypes = {
-  left: PropTypes.string,
-  right: PropTypes.string,
-  count: PropTypes.number,
-};
+TipLabel.defaultProps = defaultProps;
+export { TipLabel };
 
 const StyledCount = styled.span`
-  &:hover {
-    color: #004fff;
-  }
+  color: #004fff;
 `;
 const StyledTextWrapper = styled.span`
   .count {

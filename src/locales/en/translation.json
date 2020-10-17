@@ -75,7 +75,7 @@
     "charts": "Charts",
     "testnet": "TESTNET",
     "oceanus": "OCEANUS",
-    "searchPlaceHolder": "Address / Block hash / Epoch"
+    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address"
   },
   "packing": {
     "title": "Plz wait, your transaction is packing",
@@ -86,6 +86,24 @@
     "label": "Sorry! This is an invalid search string.",
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
     "btn": "GO TO HOMEPAGE"
+  },
+  "tokenDetail": {
+    "totalSupplay": "Total Supply",
+    "contract": "Contract",
+    "holders": "Holders",
+    "decimals": "Decimals",
+    "transfers": "Transfers",
+    "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
+    "transferList": {
+      "txnHash": "txnHash",
+      "age": "Age",
+      "from": "From",
+      "to": "To",
+      "quantity": "Quantity",
+      "searchPlaceHolder": "Txn hash / Holder address",
+      "searchError": "search value is valid",
+      "balance": "Balance: "
+    }
   },
   "general": {
     "viewAll": "View All",

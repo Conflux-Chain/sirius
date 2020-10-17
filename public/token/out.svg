@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="20px" viewBox="0 0 36 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Out 2</title>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Scan-V2-Token-Detail-Search-popout" transform="translate(-774.000000, -457.000000)" fill="#7360E4">
+            <g id="Recent-History" transform="translate(208.000000, 330.000000)">
+                <g id="Out" transform="translate(566.000000, 127.000000)">
+                    <rect id="Tag-background" fill-opacity="0.1" x="0" y="0" width="36" height="20" rx="9.5"></rect>
+                    <text font-family="CircularStd-Medium, Circular Std" font-size="10" font-weight="400" line-spacing="12">
+                        <tspan x="8.755" y="14">Out</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

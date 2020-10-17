@@ -93,7 +93,12 @@ export const useTabTableData = t => {
   );
 
   const switchToTab = (v: string) => {
-    const index = tabs.reduce((acc, { value }, i) => (v === value ? i : 0));
+    let index;
+    if (tabs.length === 1) {
+      index = 0;
+    } else {
+      index = tabs.reduce((acc, { value }, i) => (v === value ? i : 0));
+    }
     return switchToThisTab[index]();
   };
 
