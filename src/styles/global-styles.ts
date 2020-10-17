@@ -35,6 +35,18 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .sirius-select-dropdown.select-dropdown {
+    .option {
+      height: 30px;
+      color: #65709a;
+      background-color: #fff;
+    }
+    .option.selected {
+      color: #fff;
+      background-color: #65709a;
+    }
+  }
+
   ${media.s} {
     html, body {
       font-size: 12px;
