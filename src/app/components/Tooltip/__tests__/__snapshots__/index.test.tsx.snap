@@ -11,7 +11,7 @@ exports[`<Tooltip  /> should match snapshot 1`] = `
   line-height: 1.1429rem;
 }
 
-<div
+<span
   class="c0"
 >
   <div
@@ -23,5 +23,5 @@ exports[`<Tooltip  /> should match snapshot 1`] = `
       test content
     </div>
   </div>
-</div>
+</span>
 `;

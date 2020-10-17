@@ -25,7 +25,7 @@ export const Tooltip = ({
   );
 };
 
-const TooltipWrapper = styled.div`
+const TooltipWrapper = styled.span`
   .tooltip-content.sirius-tooltip {
     border-radius: 0;
     padding: 0.2857rem 0.7143rem;

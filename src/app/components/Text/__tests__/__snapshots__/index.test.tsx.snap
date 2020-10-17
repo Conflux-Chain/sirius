@@ -47,7 +47,7 @@ exports[`<Text  /> should match snapshot 1`] = `
       </span>
     </div>
   </div>
-</div>
+</span>
 `;
 
 exports[`<Text  /> should match snapshot when set maxCount 1`] = `
@@ -94,5 +94,5 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
       </span>
     </div>
   </div>
-</div>
+</span>
 `;
