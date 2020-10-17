@@ -3,14 +3,22 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Card } from '@cfxjs/react-ui';
+import { useParams } from 'react-router-dom';
+import { useBlockQuery } from '../../../utils/api';
 import { Description } from '../../components/Description/Loadable';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { Link } from 'react-router-dom';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 
-export function DescriptionPanel({ data, loading }) {
+export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
+
+  let loading = false;
+  const { data, error } = useBlockQuery({ hash: blockHash });
+
+  if (!data && !error) loading = true;
+
   const {
     hash,
     height,
@@ -22,7 +30,7 @@ export function DescriptionPanel({ data, loading }) {
     nonce,
     blame,
     blockIndex,
-  } = data;
+  } = data?.result || {};
   /**
    * ISSUE LIST:
    * - gas used/limit: 用哪两个值算? - miss gas used, backend will provide later

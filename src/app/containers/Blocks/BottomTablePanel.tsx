@@ -9,17 +9,13 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { Text } from '../../components/Text/Loadable';
 
-interface Props {
-  hash: string;
-}
-
 const renderTextEllipsis = (children, text?) => (
   <Text span maxWidth="5.7143rem" hoverValue={text || children}>
     {children}
   </Text>
 );
 
-export function BottomTablePanel({ hash: blockHash }: Props) {
+export function BottomTablePanel({ hash: blockHash }) {
   const { t } = useTranslation();
 
   const columnsTransactions: ColumnsType = [
