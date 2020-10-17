@@ -41,6 +41,7 @@ export const List = ({ list }: ListProps) => {
       <Card className="sirius-list-card">
         {list.map((item, index) => (
           <Description
+            key={`desc_${index}`}
             small
             className="list-desp"
             title={item.title}
