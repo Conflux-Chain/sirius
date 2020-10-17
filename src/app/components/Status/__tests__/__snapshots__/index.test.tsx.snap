@@ -179,10 +179,10 @@ exports[`<Status  /> should render dot status correct 1`] = `
     class="c1"
   >
     <div
-      class="jsx-751065770"
+      class="jsx-4035882128 tooltip-wrapper"
     >
       <div
-        class="jsx-751065770 tooltip popover "
+        class="jsx-4035882128 tooltip popover "
       >
         <span
           class="dot"

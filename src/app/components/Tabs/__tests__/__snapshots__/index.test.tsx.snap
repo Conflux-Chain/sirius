@@ -34,7 +34,7 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   class="c0"
 >
   <div
-    class="jsx-2839662092 tabs sirius-tabs"
+    class="jsx-2839662092 tabs sirius-tabs line"
   >
     <header
       class="jsx-2839662092"
