@@ -18,7 +18,7 @@ exports[`<Card  /> should match snapshot 1`] = `
   class="c0"
 >
   <div
-    class="jsx-2441804542 card sirius-card"
+    class="jsx-2527601167 card sirius-card solid"
   >
     <div
       class="jsx-178616938 content "
