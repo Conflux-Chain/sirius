@@ -45,19 +45,22 @@ export const GlobalStyle = createGlobalStyle`
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding-top:30px;
+      padding-top:2.1429rem;
       .successImg{
-        width:56px;
+        width:4rem;
       }
       .submitted{
-        margin-top:13px;
-        font-size:14px;
+        margin-top:0.9286rem;
+        font-size:1rem;
         color: #282D30;
+      }
+      .txContainer{
+        margin-top:0.8571rem;
       }
       .label{
         color: #A4A8B6;
-        line-height: 18px;
-        font-size: 14px;
+        line-height: 1.2857rem;
+        font-size: 1rem;
       }
       .content{
         color: #0054FE;

@@ -4,17 +4,13 @@ export const tranferToLowerCase = (str: string) => {
 export const isCfxAddress = (address: string) => {
   return /^0x[0-9a-f]{40}$/.test(address);
 };
-export const getEllipsisAddress = (
-  address: string,
-  frontNum: number,
-  endNum: number,
-) => {
-  if (isCfxAddress(address)) {
-    const length = address.length;
+export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
+  if (str) {
+    const length = str.length;
     return (
-      address.substring(0, frontNum) +
+      str.substring(0, frontNum) +
       '...' +
-      address.substring(length - endNum, length)
+      str.substring(length - endNum, length)
     );
   }
   return '';
