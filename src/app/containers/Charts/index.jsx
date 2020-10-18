@@ -48,6 +48,7 @@ const ChartsWrap = styled.div`
   > div {
     margin-right: 0;
     margin-bottom: 24px;
+    background-color: #fff;
   }
   @media (min-width: 872px) {
     justify-content: center;
