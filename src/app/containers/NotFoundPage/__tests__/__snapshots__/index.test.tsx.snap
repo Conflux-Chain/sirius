@@ -6,6 +6,8 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  position: absolute;
+  height: calc(100% - 5rem);
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -46,6 +48,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
 .c4 {
   display: inline-block;
   color: #4b4b4b;
+  opacity: 0.4;
   font-weight: 500;
   line-height: 1.2857rem;
   margin-bottom: 1rem;
@@ -89,8 +92,9 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   class="c0"
 >
   <img
+    alt="404"
     class="c1"
-    src="404.svg"
+    src="/home/404.svg"
   />
   <div
     class="c2"

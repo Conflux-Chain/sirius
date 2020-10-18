@@ -1,14 +1,15 @@
 import React from 'react';
+import numeral from 'numeral';
+import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TablePanel from '../../components/TablePanel';
-import { TipLabel, ColumnsType } from '../../components/TabsTablePanel';
-import styled from 'styled-components';
-import Text from '../../components/Text';
-import PageHeader from '../../components/PageHeader';
-import numeral from 'numeral';
-import useTableData from './../../components/TabsTablePanel/useTableData';
+import { TablePanel } from '../../components/TablePanel/Loadable';
+import { ColumnsType } from '../../components/TabsTablePanel';
+import { TipLabel } from '../../components/TabsTablePanel/Loadable';
+import { Text } from '../../components/Text/Loadable';
+import { PageHeader } from '../../components/PageHeader/Loadable';
+import { useTableData } from './../../components/TabsTablePanel/useTableData';
 
 const StyledTextWrapper = styled.span`
   font-weight: 400;
@@ -32,13 +33,13 @@ const StyledIconWrapper = styled.div`
 
 const renderTextEllipsis = value => {
   return (
-    <Text span maxwidth={'5.7143rem'} hoverValue={value}>
+    <Text span maxWidth="5.7143rem" hoverValue={value}>
       <StyledTextWrapper>{value}</StyledTextWrapper>
     </Text>
   );
 };
 
-export const Tokens = () => {
+export function Tokens() {
   const { t } = useTranslation();
 
   const columns: ColumnsType = [
@@ -115,4 +116,4 @@ export const Tokens = () => {
       />
     </>
   );
-};
+}

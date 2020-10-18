@@ -29,15 +29,21 @@ export const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
 
-  .siriui-tooltip-square {
-    border-radius: 0 !important;
-    div.inner {
-      font-weight: 400;
-      border-radius: 0;
-      font-size: 12px;
-      color: #e9e9e9;
-      line-height: 1.0714rem;
-      padding: 0.5714rem 0.8571rem;
+  .qrcode-modal.wrapper {
+    .content {
+      margin: 0 auto;
+    }
+  }
+
+  .sirius-select-dropdown.select-dropdown {
+    .option {
+      height: 2.1429rem;
+      color: #65709a;
+      background-color: #fff;
+    }
+    .option.selected {
+      color: #fff;
+      background-color: #65709a;
     }
   }
   .transactionModalContainer{

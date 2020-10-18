@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Status  /> should match snapshot 1`] = `
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.c0.success {
+  color: #7cd77b;
+}
+
+.c0.success .dot {
+  background-color: #7cd77b;
+}
+
+.c0.error {
+  color: #c65252;
+}
+
+.c0.error .dot {
+  background-color: #c65252;
+}
+
+.c0.skip {
+  color: #fede1b;
+}
+
+.c0.skip .dot {
+  background-color: #fede1b;
+}
+
+.c0.unexecuted {
+  color: #b178c8;
+}
+
+.c0.unexecuted .dot {
+  background-color: #b178c8;
+}
+
+.c0 .dot {
+  display: inline-block;
+  width: 0.5714rem;
+  height: 0.5714rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.c0 .icon {
+  width: 1.1429rem;
+  height: 1.1429rem;
+}
+
+.c0 .text {
+  margin-left: 0.8571rem;
+  line-height: 1.5714rem;
+}
+
+<span
+  class="c0 status error"
+>
+  <img
+    alt="1"
+    class="icon"
+    src="/status/error.svg"
+  />
+  <span
+    class="text"
+  >
+    Error
+  </span>
+</span>
+`;
+
+exports[`<Status  /> should render dot status correct 1`] = `
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.c0.success {
+  color: #7cd77b;
+}
+
+.c0.success .dot {
+  background-color: #7cd77b;
+}
+
+.c0.error {
+  color: #c65252;
+}
+
+.c0.error .dot {
+  background-color: #c65252;
+}
+
+.c0.skip {
+  color: #fede1b;
+}
+
+.c0.skip .dot {
+  background-color: #fede1b;
+}
+
+.c0.unexecuted {
+  color: #b178c8;
+}
+
+.c0.unexecuted .dot {
+  background-color: #b178c8;
+}
+
+.c0 .dot {
+  display: inline-block;
+  width: 0.5714rem;
+  height: 0.5714rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.c0 .icon {
+  width: 1.1429rem;
+  height: 1.1429rem;
+}
+
+.c0 .text {
+  margin-left: 0.8571rem;
+  line-height: 1.5714rem;
+}
+
+.c1 .tooltip-content.siriuse-status-popover {
+  padding: 0.2857rem 0.8571rem;
+}
+
+.c1 .tooltip-content.siriuse-status-popover .item.title {
+  padding: 0;
+}
+
+.c1 .tooltip-content.siriuse-status-popover .item.title .icon {
+  width: 0.8571rem;
+  height: 0.8571rem;
+}
+
+.c1 .tooltip-content.siriuse-status-popover .item.title .text {
+  margin-left: 0.2857rem;
+  color: #20253a;
+  text-shadow: 0rem 0.4286rem 1.1429rem rgba(0,0,0,0.08);
+}
+
+.c1 .tooltip-content.siriuse-status-popover .items {
+  color: #a4a8b6;
+  text-shadow: 0rem 0.4286rem 1.1429rem rgba(0,0,0,0.08);
+  max-width: 14.2857rem;
+  line-height: 1.0714rem;
+}
+
+.c1 .tooltip-content.siriuse-status-popover .inner {
+  min-width: inherit;
+}
+
+<span
+  class="c0 status unexecuted"
+>
+  <div
+    class="c1"
+  >
+    <div
+      class="jsx-4035882128 tooltip-wrapper"
+    >
+      <div
+        class="jsx-4035882128 tooltip popover "
+      >
+        <span
+          class="dot"
+        />
+      </div>
+    </div>
+  </div>
+</span>
+`;

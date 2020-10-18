@@ -6,6 +6,8 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  position: absolute;
+  height: calc(100% - 5rem);
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -59,6 +61,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
 .c4 span {
   display: inline-block;
   color: #6a6a6a;
+  opacity: 0.4;
   font-weight: 500;
   line-height: 1.2857rem;
   margin-right: 3px;
@@ -101,8 +104,9 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
   class="c0"
 >
   <img
+    alt="packing"
     class="c1"
-    src="packing.svg"
+    src="/home/packing.svg"
   />
   <div
     class="c2"
@@ -115,9 +119,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
     <div
       class="c4"
     >
-      <span>
-        0x87455a2f9bcaf8421927575d98852c8e43ff6fe8
-      </span>
+      <span />
     </div>
     <a
       class="c5"

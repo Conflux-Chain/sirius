@@ -1,13 +1,15 @@
 import React from 'react';
-import { Tooltip, Text } from '@cfxjs/react-ui';
+import { Text as UIText } from '@cfxjs/react-ui';
+import { Tooltip } from '../Tooltip';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
 import { selectText } from './../../../utils/util';
+import clsx from 'clsx';
 
 type TextProps = {
   children?: React.ReactNode;
-  maxwidth?: string; // todo, camel-case naming will cause warning in console, keep now and will resolve later
+  maxWidth?: string;
   maxCount?: number;
   hoverValue?: React.ReactNode;
   tooltipProps?: Partial<TooltipProps>;
@@ -15,25 +17,15 @@ type TextProps = {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
 
-const Wrapper = styled(Text)<any>`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: bottom;
-  max-width: ${props => props.maxwidth};
-  display: ${props =>
-    props.maxwidth === undefined ? 'inherit' : 'inline-block'};
-  cursor: pointer;
-` as React.FC<Props>;
-
 // note:
-// 1. maxwidth priority is higher than maxCount
+// 1. maxWidth priority is higher than maxCount
 // 2. maxCount only apply to string
 // 3. if hoverValue is provided, use hoverValue as Tooltip text, otherwise use children
 //    if text of prop tooltip is provided, use as Tooltip text
-const TextComponent = ({
+export const Text = ({
+  className,
   children,
-  maxwidth,
+  maxWidth,
   maxCount,
   hoverValue,
   tooltipProps,
@@ -41,7 +33,7 @@ const TextComponent = ({
 }: Props) => {
   const { text, ...others } = tooltipProps || {};
   let child: React.ReactNode = children;
-  if (maxwidth === undefined && maxCount && typeof children === 'string') {
+  if (maxWidth === undefined && maxCount && typeof children === 'string') {
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
   const tooltipText = (
@@ -51,18 +43,25 @@ const TextComponent = ({
   );
 
   return (
-    <Tooltip
-      contentClassName="siriui-tooltip-square"
-      text={tooltipText}
-      {...others}
-    >
-      <Wrapper maxwidth={maxwidth} {...props}>
-        {child}
-      </Wrapper>
+    <Tooltip text={tooltipText} placement="top" {...others}>
+      <StyledTextWrapper maxWidth={maxWidth}>
+        <UIText className={clsx('sirius-text', className)} {...props}>
+          {child}
+        </UIText>
+      </StyledTextWrapper>
     </Tooltip>
   );
 };
 
-TextComponent.defaultProps = {};
-
-export default TextComponent;
+const StyledTextWrapper = styled.span<any>`
+  .text.sirius-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    max-width: ${props => props.maxWidth};
+    display: ${props =>
+      props.maxWidth === undefined ? 'inherit' : 'inline-block'};
+    cursor: pointer;
+  }
+`;

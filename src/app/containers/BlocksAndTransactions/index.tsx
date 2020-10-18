@@ -2,20 +2,21 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import TabsTablePanel, {
-  ColumnsType,
+import { ColumnsType } from '../../components/TabsTablePanel';
+import {
+  TabsTablePanel,
   TipLabel,
-} from '../../components/TabsTablePanel';
-import Text from './../../components/Text';
-import useTabTableData from '../../components/TabsTablePanel/useTabTableData';
+} from '../../components/TabsTablePanel/Loadable';
+import { Text } from './../../components/Text/Loadable';
+import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
 
 const renderTextEllipsis = value => (
-  <Text span maxwidth={'5.7143rem'} hoverValue={value}>
+  <Text span maxWidth="5.7143rem" hoverValue={value}>
     {value}
   </Text>
 );
 
-export const BlocksAndTransactions = () => {
+export function BlocksAndTransactions() {
   const { t } = useTranslation();
 
   const columnsBlocks: ColumnsType = [
@@ -163,4 +164,4 @@ export const BlocksAndTransactions = () => {
       <TabsTablePanel tabs={tabs} />
     </>
   );
-};
+}

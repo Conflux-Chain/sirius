@@ -106,7 +106,35 @@
     },
     "submit": "Submit",
     "apply": "Apply",
-    "search": "Search"
+    "search": "Search",
+    "qrcodeButton": {
+      "clickToShow": "click to view qrcode"
+    },
+    "security": {
+      "notAvailable": "Not Available",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "veryLow": "Very Low"
+    },
+    "status": {
+      "skip": {
+        "text": "Skip",
+        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+      },
+      "error": {
+        "text": "Error",
+        "explanation": "Encountered during contract execution, or out of gas."
+      },
+      "success": {
+        "text": "Success",
+        "explanation": ""
+      },
+      "unexecuted": {
+        "text": "Unexecuted",
+        "explanation": "Transaction has not been executed yet, please wait."
+      }
+    }
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -134,5 +162,12 @@
     "searchAddress": "Search contract address",
     "applicationUnit": "application",
     "tx": "tx"
-  }
+  },
+  "chart": {
+    "tps": {
+      "title": "tps title",
+      "description": "tps description"
+    }
+  },
+  "submit": "Submit"
 }

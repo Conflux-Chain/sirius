@@ -5,9 +5,6 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
 import { Input, Button, Modal } from '@cfxjs/react-ui';
-import iconSuccess from './../../../images/success.png';
-import iconSuccessBig from './../../../images/success_big.png';
-import iconWarning from './../../../images/warning.png';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import { util as cfxUtil } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import SkelontonContainer from '../../components/SkeletonContainer';
@@ -347,7 +344,7 @@ export function Sponsor() {
             {applyText}
           </Button>
           <img
-            src={iconSuccess}
+            src="/success.png"
             alt="success"
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
@@ -356,7 +353,7 @@ export function Sponsor() {
           </span>
         </ApplyContainer>
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
-          <img src={iconWarning} alt="warning" className="icon" />
+          <img src="/warning.png" alt="warning" className="icon" />
           <span className="text">{errorMsgForApply}</span>
         </ErrorMsgContainer>
         <NoticeContainer>
@@ -386,7 +383,11 @@ export function Sponsor() {
         >
           <Modal.Content>
             <div className="contentContainer">
-              <img src={iconSuccessBig} alt="success" className="successImg" />
+              <img
+                src="/success_big.png"
+                alt="success"
+                className="successImg"
+              />
               <div className="submitted">
                 {t(translations.sponsor.submitted)}.
               </div>

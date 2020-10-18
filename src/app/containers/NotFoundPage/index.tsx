@@ -7,7 +7,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import leftImage from '../../../images/home/404.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 
@@ -17,7 +16,7 @@ export function NotFoundPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src={leftImage} />
+      <LeftImage alt="404" src="/home/404.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.notFound.title)}</ErrorTitle>
         <ErrorLabel>{t(translations.notFound.label)}</ErrorLabel>
@@ -31,6 +30,8 @@ export function NotFoundPage() {
 // wrapper
 const PageWrapper = styled.div`
   display: flex;
+  position: absolute;
+  height: calc(100% - 5rem);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -64,6 +65,7 @@ const ErrorTitle = styled.span`
 const ErrorLabel = styled.span`
   display: inline-block;
   color: #4b4b4b;
+  opacity: 0.4;
   font-weight: 500;
   line-height: 1.2857rem;
   margin-bottom: 1rem;

@@ -1,8 +1,6 @@
 import { lazyLoad } from 'utils/loadable';
 
-const Text = lazyLoad(
+export const Text = lazyLoad(
   () => import('./index'),
-  module => module.default,
+  module => module.Text,
 );
-
-export default Text;

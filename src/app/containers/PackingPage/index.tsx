@@ -7,7 +7,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import leftImage from '../../../images/home/packing.svg';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
@@ -23,7 +22,7 @@ export function PackingPage() {
 
   return (
     <PageWrapper>
-      <LeftImage src={leftImage} />
+      <LeftImage alt="packing" src="/home/packing.svg" />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
         <ErrorLabel>
@@ -39,6 +38,8 @@ export function PackingPage() {
 // wrapper
 const PageWrapper = styled.div`
   display: flex;
+  position: absolute;
+  height: calc(100% - 5rem);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -77,6 +78,7 @@ const ErrorLabel = styled.div`
   span {
     display: inline-block;
     color: #6a6a6a;
+    opacity: 0.4;
     font-weight: 500;
     line-height: 1.2857rem;
     margin-right: 3px;

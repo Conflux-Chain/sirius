@@ -9,8 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media, useBreakpoint } from '../../../styles/media';
 import { Input, Button } from '@cfxjs/react-ui';
-import iconContractRemove from './../../../images/contract/remove.png';
-import iconContractUpload from './../../../images/contract/upload.png';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { tranferToLowerCase } from '../../../utils';
 import AceEditor from 'react-ace';
@@ -18,7 +16,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
-import Tabs from './../Tabs';
+import { Tabs } from './../Tabs';
 import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
 interface Props {
@@ -594,7 +592,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadContractIcon}>
                   <img
-                    src={iconContractUpload}
+                    src="/contract/upload"
                     className="labelIcon"
                     alt={t(translations.contract.contractIcon)}
                   ></img>
@@ -604,7 +602,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
                   <img
-                    src={iconContractRemove}
+                    src="/contract/remove"
                     className="labelIcon"
                     alt={t(translations.contract.remove)}
                   ></img>
@@ -639,7 +637,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadTokenIcon}>
                   <img
-                    src={iconContractUpload}
+                    src="/contract/upload"
                     className="labelIcon"
                     alt="upload"
                   ></img>
@@ -649,7 +647,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
                   <img
-                    src={iconContractRemove}
+                    src="/contract/remove"
                     className="labelIcon"
                     alt="remove"
                   ></img>

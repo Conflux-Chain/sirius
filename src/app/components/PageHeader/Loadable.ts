@@ -6,7 +6,7 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const Footer = lazyLoad(
+export const PageHeader = lazyLoad(
   () => import('./index'),
-  module => module.default,
+  module => module.PageHeader,
 );

@@ -1,7 +1,7 @@
 import React from 'react';
-import Tabs from '../Tabs';
-import TablePanel from '../TablePanel';
-import useTabTableData from './useTabTableData';
+import { Tabs } from '../Tabs';
+import { TablePanel } from '../TablePanel';
+import { useTabTableData } from './useTabTableData';
 import { TablePanelType } from './../TablePanel';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
@@ -18,11 +18,11 @@ export type TabsTablePanelType = {
   hideTotalZero?: boolean;
 };
 
-function TabsTablePanel({
+export const TabsTablePanel = ({
   tabs,
   onTabsChange,
   hideTotalZero,
-}: TabsTablePanelType) {
+}: TabsTablePanelType) => {
   const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
   const handleTabsChange = function (value: string) {
     switchToTab(value);
@@ -56,15 +56,13 @@ function TabsTablePanel({
       </Tabs>
     </>
   );
-}
+};
 
 TabsTablePanel.defaultProps = {
   tabs: [],
   onTabsChange: () => {},
   hideTotalZero: false,
 };
-
-export default TabsTablePanel;
 
 /**
 TabsTablePanel.propTypes = {

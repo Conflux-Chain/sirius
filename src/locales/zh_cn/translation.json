@@ -92,7 +92,35 @@
     },
     "submit": "提交",
     "apply": "申请",
-    "search": "搜索"
+    "search": "搜索",
+    "qrcodeButton": {
+      "clickToShow": "click to view qrcode"
+    },
+    "security": {
+      "notAvailable": "Not Available",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "veryLow": "Very Low"
+    },
+    "status": {
+      "skip": {
+        "text": "Skip",
+        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+      },
+      "error": {
+        "text": "Error",
+        "explanation": "Encountered during contract execution, or out of gas."
+      },
+      "success": {
+        "text": "Success",
+        "explanation": ""
+      },
+      "unexecuted": {
+        "text": "Unexecuted",
+        "explanation": "Transaction has not been executed yet, please wait."
+      }
+    }
   },
   "sponsor": {
     "title": "赞助合约",

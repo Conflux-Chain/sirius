@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Tabs from '..';
+import { Tabs } from '..';
 
 describe('<Tabs  />', () => {
   it('should match snapshot', () => {

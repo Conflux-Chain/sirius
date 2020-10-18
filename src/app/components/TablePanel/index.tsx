@@ -1,4 +1,4 @@
-import Panel from './Panel';
+import { TablePanel } from './Panel';
 
 export type { ColumnsType, TablePanelType } from './Panel';
-export default Panel;
+export { TablePanel };

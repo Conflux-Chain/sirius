@@ -2,7 +2,7 @@ interface BodyElement extends HTMLBodyElement {
   createTextRange?(): Range;
 }
 
-export function selectText(element: HTMLElement) {
+export const selectText = (element: HTMLElement) => {
   var range,
     selection,
     body = document.body as BodyElement;
@@ -17,4 +17,4 @@ export function selectText(element: HTMLElement) {
     selection.removeAllRanges();
     selection.addRange(range);
   }
-}
+};
