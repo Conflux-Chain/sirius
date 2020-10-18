@@ -87,6 +87,14 @@
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
     "btn": "GO TO HOMEPAGE"
   },
+  "charts": {
+    "subtitle": "Blockchain Data",
+    "title": "Charts",
+    "tps": {
+      "title": "tps title",
+      "description": "tps description"
+    }
+  },
   "general": {
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
@@ -106,12 +114,6 @@
     },
     "qrcodeButton": {
       "clickToShow": "click to view qrcode"
-    },
-    "chart": {
-      "tps": {
-        "title": "tps title",
-        "description": "tps description"
-      }
     },
     "submit": "Submit",
     "status": {

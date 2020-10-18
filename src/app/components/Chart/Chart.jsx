@@ -173,7 +173,7 @@ function usePlot(defaultDuration = 'day') {
 const Container = styled.div`
   display: inline-block;
   position: relative;
-  padding: ${props => (props.small ? '8px' : '24px')};
+  padding: 0;
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   border-radius: 5px;
 `;
