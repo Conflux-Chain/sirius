@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Chart } from '../../components/Chart/Loadable';
+import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 
@@ -50,6 +51,10 @@ const ChartsWrap = styled.div`
     margin-bottom: 24px;
     background-color: #fff;
   }
+  > div:last-child {
+    margin-bottom: 0;
+  }
+
   @media (min-width: 872px) {
     justify-content: center;
     flex-direction: row;
@@ -57,9 +62,8 @@ const ChartsWrap = styled.div`
     > div:nth-of-type(odd) {
       margin-right: 24px;
     }
-    > div:nth-of-type(1),
-    > div:nth-of-type(2) {
-      margin-bottom: 24px;
+    > div {
+      margin-bottom: 24px !important;
     }
   }
 `;
@@ -67,7 +71,10 @@ const ChartsWrap = styled.div`
 const PageWrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 32px 0;
+  padding: 32px 0 8px;
+  ${media.s} {
+    padding: 16px 0;
+  }
 `;
 
 const HeaderWrap = styled.div`

@@ -32,6 +32,7 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
   const { plot, isError, setDuration, duration } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
+  const padding = small ? 16 : 48;
   if (isError) {
     return <div>Error</div>;
   } else {
@@ -42,7 +43,7 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
         {true && (
           <Draw
             plot={plot}
-            width={width * 0.83}
+            width={(width - padding) * 0.83}
             indicator={indicator}
             small={small}
           >
@@ -199,6 +200,7 @@ const Buttons = styled.div`
   flex-direction: column;
   right: -4rem;
   top: 1rem;
+  box-sizing: content-box;
 `;
 
 const Button = styled.button`
