@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Link } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
+import { media } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
 import {
   TabsTablePanel,
@@ -60,7 +61,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
   };
   const renderTextEllipsis = (value: string | number) => {
     return (
-      <Text span maxWidth={'5.7143rem'} hoverValue={value}>
+      <Text span maxWidth={'80.0002px'} hoverValue={value}>
         <StyledTextWrapper>{value}</StyledTextWrapper>
       </Text>
     );
@@ -68,7 +69,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
 
   const renderAddressEllipsis = (value: string) => {
     return (
-      <Text span maxWidth={'5.7143rem'} hoverValue={value}>
+      <Text span maxWidth={'80.0002px'} hoverValue={value}>
         <Link onClick={() => onFilter(value)}>{value}</Link>
       </Text>
     );
@@ -164,19 +165,22 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
 
 const StyledTextWrapper = styled.span`
   font-weight: 400;
-  line-height: 1.7143rem;
-  font-size: 1rem;
+  line-height: 24.0002px;
+  font-size: 14px;
 `;
 
 const TransfersWrap = styled.div`
   position: relative;
+  ${media.s} {
+    padding-top: 4rem;
+  }
 `;
 
 const LabelWrap = styled.div`
   display: flex;
   color: #0f1327;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1.1429rem;
 `;
 
 const FromWrap = styled.div`
@@ -187,4 +191,7 @@ const ImgWrap = styled.img`
   position: absolute;
   right: -12px;
   top: 2px;
+  ${media.s} {
+    right: -16px;
+  }
 `;

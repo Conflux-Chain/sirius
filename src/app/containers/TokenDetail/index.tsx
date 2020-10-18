@@ -58,22 +58,22 @@ export function TokenDetail() {
 }
 
 const TokenDetailWrap = styled.div`
-  padding: 32px 0;
+  padding: 2.2857rem 0;
 `;
 
 const HeaderWrap = styled.div`
   display: flex;
   align-items: center;
-  line-height: 2.2857rem;
-  margin-bottom: 1.7143rem;
+  line-height: 31.9998px;
+  margin-bottom: 24.0002px;
   .basic-name {
-    font-size: 1.7143rem;
+    font-size: 24.0002px;
     font-weight: 500;
     color: #0f1327;
-    margin: 0 0.5714rem;
+    margin: 0 7.9996px;
   }
   .basic-symbol {
     color: #74798c;
-    font-size: 1rem;
+    font-size: 14px;
   }
 `;

@@ -81,18 +81,19 @@ const FilterWrap = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  padding: 4px 16px;
+  padding: 0.2857rem 1.1429rem;
   background: rgba(0, 84, 254, 0.04);
-  border-radius: 2px;
+  border-radius: 0.1429rem;
   display: flex;
   align-items: center;
 `;
 
 const BalanceWrap = styled.div`
   background-color: #4b5fe3;
-  border-radius: 16px;
-  height: 24px;
+  border-radius: 1.1429rem;
+  height: 1.7143rem;
   color: #fff;
-  padding: 4px 24px;
-  margin-left: 18px;
+  padding: 0.2857rem 1.7143rem;
+  margin-left: 1.2857rem;
+  white-space: nowrap;
 `;
