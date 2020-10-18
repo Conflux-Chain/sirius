@@ -68,7 +68,8 @@ exports[`<App /> should render and match the snapshot 1`] = `
           />
           <Route
             component={[Function]}
-            path="/charts"
+            exact={true}
+            path="/sponsor/:contractAddress"
           />
           <Route
             component={[Function]}
