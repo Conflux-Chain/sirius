@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { List } from '../../components/List/Loadable';
 import { QrcodeButton } from '../../components/QrcodeButton/Loadable';
+import { Select } from '../../components/Select';
 
 export function TokenDetail() {
   const { t } = useTranslation();
@@ -27,6 +28,10 @@ export function TokenDetail() {
         title="0x87010faf5964d67ed070bc4b8dcafa1e1adc0997"
         value="http://www.baidu.com"
       />
+      <Select value="1" placeholder="请选择" width="140px">
+        <Select.Option value="1">Original</Select.Option>
+        <Select.Option>UTF-8</Select.Option>
+      </Select>
     </>
   );
 }

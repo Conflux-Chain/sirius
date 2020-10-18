@@ -21,14 +21,14 @@ exports[`<Text  /> should match snapshot 1`] = `
   cursor: pointer;
 }
 
-<div
+<span
   class="c0"
 >
   <div
-    class="jsx-64609884"
+    class="jsx-726172838 tooltip-wrapper"
   >
     <div
-      class="jsx-64609884 tooltip "
+      class="jsx-726172838 tooltip "
     >
       <span
         class="c1"
@@ -43,7 +43,7 @@ exports[`<Text  /> should match snapshot 1`] = `
       </span>
     </div>
   </div>
-</div>
+</span>
 `;
 
 exports[`<Text  /> should match snapshot when set maxCount 1`] = `
@@ -66,14 +66,14 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   cursor: pointer;
 }
 
-<div
+<span
   class="c0"
 >
   <div
-    class="jsx-64609884"
+    class="jsx-726172838 tooltip-wrapper"
   >
     <div
-      class="jsx-64609884 tooltip "
+      class="jsx-726172838 tooltip "
     >
       <span
         class="c1"
@@ -86,5 +86,5 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
       </span>
     </div>
   </div>
-</div>
+</span>
 `;

@@ -11,17 +11,17 @@ exports[`<Tooltip  /> should match snapshot 1`] = `
   line-height: 1.1429rem;
 }
 
-<div
+<span
   class="c0"
 >
   <div
-    class="jsx-64609884"
+    class="jsx-726172838 tooltip-wrapper"
   >
     <div
-      class="jsx-64609884 tooltip "
+      class="jsx-726172838 tooltip "
     >
       test content
     </div>
   </div>
-</div>
+</span>
 `;
