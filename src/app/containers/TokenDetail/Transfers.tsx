@@ -61,7 +61,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
   };
   const renderTextEllipsis = (value: string | number) => {
     return (
-      <Text span maxWidth={'80.0002px'} hoverValue={value}>
+      <Text span maxWidth="5.7143rem" hoverValue={value}>
         <StyledTextWrapper>{value}</StyledTextWrapper>
       </Text>
     );
@@ -69,7 +69,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
 
   const renderAddressEllipsis = (value: string) => {
     return (
-      <Text span maxWidth={'80.0002px'} hoverValue={value}>
+      <Text span maxWidth="5.7143rem" hoverValue={value}>
         <Link onClick={() => onFilter(value)}>{value}</Link>
       </Text>
     );
@@ -165,7 +165,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
 
 const StyledTextWrapper = styled.span`
   font-weight: 400;
-  line-height: 24.0002px;
+  line-height: 1.7143rem;
   font-size: 14px;
 `;
 

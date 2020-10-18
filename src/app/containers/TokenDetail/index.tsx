@@ -64,16 +64,16 @@ const TokenDetailWrap = styled.div`
 const HeaderWrap = styled.div`
   display: flex;
   align-items: center;
-  line-height: 31.9998px;
-  margin-bottom: 24.0002px;
+  line-height: 2.2857rem;
+  margin-bottom: 1.7143rem;
   .basic-name {
-    font-size: 24.0002px;
+    font-size: 1.7143rem;
     font-weight: 500;
     color: #0f1327;
-    margin: 0 7.9996px;
+    margin: 0 0.5714rem;
   }
   .basic-symbol {
     color: #74798c;
-    font-size: 14px;
+    font-size: 1rem;
   }
 `;

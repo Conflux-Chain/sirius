@@ -47,6 +47,21 @@ export const Basic = ({
     },
   ];
 
+  if (totalSupply && !accountTotal) {
+    list.splice(
+      2,
+      3,
+      {
+        title: t(translations.tokenDetail.transfers),
+        children: transferCount,
+      },
+      {
+        title: t(translations.tokenDetail.decimals),
+        children: decimals,
+      },
+    );
+  }
+
   return (
     <BasicWrap>
       <List list={list} />
