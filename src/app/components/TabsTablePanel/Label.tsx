@@ -35,7 +35,6 @@ const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
       <span> </span>
       {count ? (
         <Tooltip
-          placement="right"
           text={
             <StyledTextWrapper>
               <Text left={left} right={right} count={count}></Text>
