@@ -225,7 +225,7 @@ export const useCMContractQuery: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/contract-manager/contract/query', ...params] : null,
+    shouldFetch ? ['/contract', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -251,20 +251,7 @@ export const useCMContractCreate: useApi = (
   if (!Array.isArray(params)) params = [params];
   // params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/contract-manager/contract/create', ...params] : null,
-    rest[1] || simplePostFetcher,
-    rest[0],
-  );
-};
-export const useCMContractUpdate: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  // params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/contract-manager/contract/update', ...params] : null,
+    shouldFetch ? ['/contract', ...params] : null,
     rest[1] || simplePostFetcher,
     rest[0],
   );

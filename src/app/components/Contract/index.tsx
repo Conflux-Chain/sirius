@@ -17,7 +17,7 @@ import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { Tabs } from './../Tabs';
-import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
+import { useCMContractCreate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
 interface Props {
   contractDetail: any;
@@ -372,15 +372,15 @@ export const Contract = ({
     requestParams,
     shouldFetchCreate,
   );
-  const { data: dataResUpdated } = useCMContractUpdate(
+  const { data: dataResUpdated } = useCMContractCreate(
     requestParams,
     shouldFetchUpdate,
   );
-  if (dataResCreated && dataResCreated['code'] === 0) {
+  if (dataResCreated) {
     //TODO: modify the router
     history.replace('/');
   }
-  if (dataResUpdated && dataResUpdated['code'] === 0) {
+  if (dataResUpdated) {
     //TODO: modify the router
     history.replace('/');
   }

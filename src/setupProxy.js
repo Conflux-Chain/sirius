@@ -4,22 +4,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // http-proxy-middleware doc https://www.npmjs.com/package/http-proxy-middleware#example
 module.exports = app => {
   app.use(
-    '/api/token/list',
+    '/api',
     createProxyMiddleware({
-      target: 'https://yapi.conflux-chain.org/mock/',
+      target: 'http://182.92.71.168:8885/v1',
       pathRewrite: {
-        '/api/token/list': '/65/token/list',
-      },
-      changeOrigin: true,
-      secure: false,
-    }),
-  );
-  app.use(
-    '/api/contract-manager',
-    createProxyMiddleware({
-      target: 'https://testnet-scantest.confluxscan.io',
-      pathRewrite: {
-        '/api/contract-manager': '/contract-manager/api',
+        '/api': '',
       },
       changeOrigin: true,
       secure: false,
