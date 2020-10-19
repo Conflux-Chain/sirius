@@ -75,7 +75,7 @@ export const useTableData = (url: string) => {
   return {
     pageNumber: parsedPageNumber,
     pageSize: parsedPageSize,
-    total: data?.result?.total,
+    total: data?.total,
     data,
     error,
     mutate,
