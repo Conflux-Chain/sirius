@@ -218,5 +218,24 @@
         "age": "Age"
       }
     }
+  },
+  "epochs": {
+    "title": "Epochs",
+    "description": "Epochs",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
+    "labelCountBefore": "A total of",
+    "labelCountAfter": "{{type}} found",
+    "blocks": "Blocks",
+    "transactions": "Transactions",
+    "table": {
+      "position": "Position",
+      "hash": "Hash",
+      "txns": "Txns",
+      "miner": "Miner",
+      "difficulty": "Difficulty",
+      "gasUsedPercent": "Gas Used/Limit",
+      "age": "Age"
+    }
   }
 }
