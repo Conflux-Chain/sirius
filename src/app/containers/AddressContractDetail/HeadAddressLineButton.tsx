@@ -26,13 +26,21 @@ const Button = styled.div<ButtonHTMLAttributes<HTMLDivElement>>`
   height: 1.15rem;
   border-radius: 50%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background-color: #dbdde4;
+  line-height: 12px;
+  .address-icon {
+    path {
+      fill: #737682;
+    }
+  }
   &:hover {
     background-color: #63688a;
-    svg {
-      fill: #fff;
+    .address-icon {
+      path {
+        fill: #fff;
+      }
     }
   }
 `;

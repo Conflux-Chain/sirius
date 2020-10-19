@@ -176,5 +176,9 @@
       "description": "tps description"
     }
   },
-  "submit": "Submit"
+  "submit": "Submit",
+  "address": {
+    "editContract": "Click to edit contract",
+    "website": "Click to open website"
+  }
 }
