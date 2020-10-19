@@ -2,13 +2,12 @@
  * TokenDetail
  */
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { List } from '../../components/List/Loadable';
 import { useTokenQuery } from '../../../utils/api';
 
 export const Basic = ({ tokenAddr }) => {
-  const { t } = useTranslation();
   const params = { address: tokenAddr };
   const { data } = useTokenQuery(params);
 

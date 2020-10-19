@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@cfxjs/react-hooks": "0.1.6",
     "@cfxjs/react-ui": "^2.0.0-alpha.7",
     "@geist-ui/react-icons": "1.0.0",
     "@testing-library/jest-dom": "5.1.1",
@@ -32,6 +33,7 @@
     "i18next": "19.3.4",
     "i18next-browser-languagedetector": "4.0.2",
     "jest-styled-components": "7.0.2",
+    "js-conflux-sdk": "0.13.5",
     "lint-staged": "10.0.8",
     "node-plop": "0.25.0",
     "numeral": "2.0.6",
@@ -53,6 +55,7 @@
     "sanitize.css": "11.0.0",
     "serve": "11.3.0",
     "shelljs": "0.8.3",
+    "sponsorfaucet": "https://github.com/oo7ww/conflux-sponsor-faucet.git",
     "styled-components": "5.0.1",
     "stylelint": "13.2.1",
     "stylelint-config-recommended": "3.0.0",
