@@ -8,6 +8,11 @@ import { translations } from '../../../locales/i18n';
 import { Text } from './../../components/Text/Loadable';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
+import { Status } from '../../components/Status/Loadable';
+
+/**
+ * Note: The table list is same as block&transaction page.
+ */
 
 const renderTextEllipsis = value => (
   <Text span maxWidth="5.7143rem" hoverValue={value}>
@@ -24,53 +29,82 @@ export function HomePage() {
       title: t(translations.blocksAndTransactions.table.block.epoch),
       dataIndex: 'epochNumber',
       key: 'epochNumber',
-      width: 100,
-      render: renderTextEllipsis,
+      width: 1,
+      render: (value, row: any) => {
+        let pivotTag: React.ReactNode = null;
+        if (row.pivotHash === row.hash) {
+          pivotTag = <img className="img" src="/pivot.svg" alt="pivot"></img>;
+        }
+        return (
+          <StyledEpochWrapper>
+            <Link href={`/epochs/${value}`}>{renderTextEllipsis(value)}</Link>
+            {pivotTag}
+          </StyledEpochWrapper>
+        );
+      },
     },
     {
       title: t(translations.blocksAndTransactions.table.block.position),
       dataIndex: 'blockIndex',
       key: 'blockIndex',
-      width: 100,
+      width: 1,
     },
     {
       title: t(translations.blocksAndTransactions.table.block.txns),
       dataIndex: 'transactionCount',
       key: 'transactionCount',
-      width: 100,
-      ellipsis: true,
+      width: 1,
+    },
+    {
+      title: t(translations.blocksAndTransactions.table.block.hash),
+      dataIndex: 'hash',
+      key: 'hash',
+      width: 1,
+      render: value => (
+        <Link href={`/blocks/${value}`}>{renderTextEllipsis(value)}</Link>
+      ),
     },
     {
       title: t(translations.blocksAndTransactions.table.block.miner),
       dataIndex: 'miner',
       key: 'miner',
-      width: 100,
-      render: value => renderTextEllipsis(value),
+      width: 1,
+      render: value => (
+        <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+      ),
     },
     {
       title: t(translations.blocksAndTransactions.table.block.avgGasPrice),
-      dataIndex: 'gas',
-      key: 'gas',
-      width: 100,
-    }, // todo, no gas price
+      dataIndex: 'avgGasPrice',
+      key: 'avgGasPrice',
+      width: 1,
+    },
     {
       title: t(translations.blocksAndTransactions.table.block.gasUsedPercent),
-      dataIndex: 'gasLimit',
-      key: 'gasLimit',
-      width: 100,
+      dataIndex: 'gasUsed',
+      key: 'gasUsed',
+      width: 1,
+      render: (value, row: any) => {
+        if (value) {
+          return `${row.gasUsed}/${row.gasLimit}`; // todo, need real division
+        } else {
+          return '--';
+        }
+      },
     },
     {
       title: t(translations.blocksAndTransactions.table.block.reward),
-      dataIndex: 'reward',
-      key: 'reward',
-      width: 100,
-    }, // todo, no reward
+      dataIndex: 'totalReward',
+      key: 'totalReward',
+      width: 1,
+      render: value => (value ? `${value} CFX` : '--'),
+    },
     {
       title: t(translations.blocksAndTransactions.table.block.age),
       dataIndex: 'syncTimestamp',
       key: 'syncTimestamp',
-      width: 100,
-    }, // todo, how to calculate age value ?
+      width: 1,
+    },
   ];
 
   const columnsTransactions: ColumnsType = [
@@ -78,46 +112,63 @@ export function HomePage() {
       title: t(translations.blocksAndTransactions.table.transactions.hash),
       dataIndex: 'hash',
       key: 'hash',
-      width: 100,
-      render: value => renderTextEllipsis(value),
+      width: 1,
+      render: (value, row: any) => {
+        return (
+          <StyledTransactionHashWrapper>
+            {row.status != '0' && <Status type={row.status} variant="dot" />}
+            <Link href={`/transactions/${value}`}>
+              {renderTextEllipsis(value)}
+            </Link>
+          </StyledTransactionHashWrapper>
+        );
+      },
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.from),
       dataIndex: 'from',
       key: 'from',
-      width: 100,
-      render: value => renderTextEllipsis(value),
+      width: 1,
+      render: value => (
+        <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+      ),
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.to),
       dataIndex: 'to',
       key: 'to',
-      width: 100,
-      render: value => renderTextEllipsis(value),
+      width: 1,
+      render: value =>
+        value ? (
+          <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+        ) : (
+          '--'
+        ),
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.value),
       dataIndex: 'value',
       key: 'value',
-      width: 100,
+      width: 1,
+      render: value => `${value} CFX`,
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.gasPrice),
       dataIndex: 'gasPrice',
       key: 'gasPrice',
-      width: 100,
+      width: 1,
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.gasFee),
       dataIndex: 'gas',
       key: 'gas',
-      width: 100,
+      width: 1,
     },
     {
       title: t(translations.blocksAndTransactions.table.transactions.age),
       dataIndex: 'syncTimestamp',
       key: 'syncTimestamp',
-      width: 100,
+      width: 1,
     },
   ];
 
@@ -125,7 +176,7 @@ export function HomePage() {
     {
       value: 'blocks',
       label: t(translations.blocksAndTransactions.blocks),
-      url: '/block/list',
+      url: '/block',
       pagination: false,
       table: {
         columns: columnsBlocks,
@@ -135,7 +186,7 @@ export function HomePage() {
     {
       value: 'transaction',
       label: t(translations.blocksAndTransactions.transactions),
-      url: '/transaction/list',
+      url: '/transaction',
       pagination: false,
       table: {
         columns: columnsTransactions,
@@ -169,6 +220,26 @@ export function HomePage() {
     </>
   );
 }
+
+const StyledTransactionHashWrapper = styled.span`
+  display: flex;
+  align-items: center;
+
+  .status {
+    margin-right: 0.5714rem;
+  }
+`;
+
+const StyledEpochWrapper = styled.span`
+  display: flex;
+  align-items: center;
+
+  .img {
+    width: 3rem;
+    height: 1.4286rem;
+    margin-left: 0.5714rem;
+  }
+`;
 
 const Main = styled.div`
   max-width: 73.1429rem;
