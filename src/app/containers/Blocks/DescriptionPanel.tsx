@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Card } from '@cfxjs/react-ui';
-import { useParams } from 'react-router-dom';
 import { useBlockQuery } from '../../../utils/api';
 import { Description } from '../../components/Description/Loadable';
 import { CopyButton } from '../../components/CopyButton/Loadable';
