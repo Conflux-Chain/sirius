@@ -43,7 +43,7 @@ export const Text = ({
   );
 
   return (
-    <Tooltip text={tooltipText} placement="top" {...others}>
+    <Tooltip hoverable text={tooltipText} {...others}>
       <StyledTextWrapper maxWidth={maxWidth}>
         <UIText className={clsx('sirius-text', className)} {...props}>
           {child}
@@ -63,5 +63,18 @@ const StyledTextWrapper = styled.span<any>`
     display: ${props =>
       props.maxWidth === undefined ? 'inherit' : 'inline-block'};
     cursor: pointer;
+    a {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      vertical-align: bottom;
+      max-width: ${props => props.maxWidth};
+      display: ${props =>
+        props.maxWidth === undefined ? 'inherit' : 'inline-block'};
+      cursor: pointer;
+    }
+    a:hover {
+      color: 0626ae;
+    }
   }
 `;

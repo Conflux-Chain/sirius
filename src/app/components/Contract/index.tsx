@@ -592,7 +592,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadContractIcon}>
                   <img
-                    src="/contract/upload"
+                    src="/contract/upload.svg"
                     className="labelIcon"
                     alt={t(translations.contract.contractIcon)}
                   ></img>
@@ -602,7 +602,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
                   <img
-                    src="/contract/remove"
+                    src="/contract/remove.svg"
                     className="labelIcon"
                     alt={t(translations.contract.remove)}
                   ></img>
@@ -637,7 +637,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadTokenIcon}>
                   <img
-                    src="/contract/upload"
+                    src="/contract/upload.svg"
                     className="labelIcon"
                     alt="upload"
                   ></img>
@@ -647,7 +647,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
                   <img
-                    src="/contract/remove"
+                    src="/contract/remove.svg"
                     className="labelIcon"
                     alt="remove"
                   ></img>
