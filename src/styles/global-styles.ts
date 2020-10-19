@@ -46,6 +46,33 @@ export const GlobalStyle = createGlobalStyle`
       background-color: #65709a;
     }
   }
+  .transactionModalContainer{
+    .contentContainer{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:2.1429rem;
+      .successImg{
+        width:4rem;
+      }
+      .submitted{
+        margin-top:0.9286rem;
+        font-size:1rem;
+        color: #282D30;
+      }
+      .txContainer{
+        margin-top:0.8571rem;
+      }
+      .label{
+        color: #A4A8B6;
+        line-height: 1.2857rem;
+        font-size: 1rem;
+      }
+      .content{
+        color: #0054FE;
+      }
+    }
+  }
 
   ${media.s} {
     html, body {
