@@ -33,4 +33,10 @@ module.exports = app => {
       secure: false,
     }),
   );
+  app.use(
+    '/rpc',
+    createProxyMiddleware({
+      target: 'http://testnet-jsonrpc.conflux-chain.org:12537',
+    }),
+  );
 };

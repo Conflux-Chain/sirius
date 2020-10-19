@@ -122,16 +122,19 @@
       "success": "已复制",
       "failed": "复制失败"
     },
+    "submit": "Submit",
+    "apply": "Apply",
+    "search": "Search",
     "qrcodeButton": {
       "clickToShow": "click to view qrcode"
     },
-    "chart": {
-      "tps": {
-        "title": "tps title",
-        "description": "tps description"
-      }
+    "security": {
+      "notAvailable": "Not Available",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "veryLow": "Very Low"
     },
-    "submit": "Submit",
     "status": {
       "skip": {
         "text": "Skip",
@@ -149,13 +152,131 @@
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
       }
+    }
+  },
+  "sponsor": {
+    "title": "Contract Sponsor",
+    "storageSponsor": "STORAGE SPONSOR",
+    "gasFeeSponsor": "GAS FEE SPONSOR",
+    "currentAvialStorageFee": "Available Storage Fee Balance",
+    "currentAvialGasFee": "Available Gas Fee Balance",
+    "providedStorage": "Storage Fees Provided By Conflux Foundation",
+    "providedGas": "Gas Fees Provided By Conflux Foundation",
+    "availStorage": "Remaining Storage Fees By Conflux Foundation",
+    "availGas": "Remaining Gas Fees By Conflux Foundation",
+    "connectToApply": "Connect wallet to apply",
+    "notice": "Notice",
+    "noticeFirst": "Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
+    "noticeSecond": "To request the Smart Contract Sponsorship, you need to connect via ConfluxPortal that you are the smart contract admin and/or creator; after the successful connection you may apply for the sponsorship.",
+    "noticeThird": " If you are using wallet address that is not the smart contract admin nor creator, your request will fail. Please use the correct wallet address to request for the Smart Contract Sponsorship.",
+    "noticeFourthOne": "If you don't have ConfluxPortal as a browser extension installed yet, please visit",
+    "noticeFourthTwo": "for instructions.",
+    "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
+    "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
+    "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
+    "upperBound": "Upper Bound",
+    "submitted": "Transaction Submitted",
+    "txHash": "Transaction Hash",
+    "searchAddress": "Search contract address",
+    "applicationUnit": "application",
+    "tx": "tx"
+  },
+  "chart": {
+    "tps": {
+      "title": "tps title",
+      "description": "tps description"
+    }
+  },
+  "submit": "Submit",
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions",
+    "hash": "hash",
+    "executedEpoch": "Executed Epoch",
+    "proposedEpoch": "Proposed Epoch",
+    "timestamp": "Timestamp",
+    "status": "Status",
+    "from": "From",
+    "to": "To",
+    "tokenTransferred": "Token Transferred",
+    "value": "Value",
+    "gasUsed": "Gas Used/Limit",
+    "gasPrice": "Gas Price",
+    "gasFee": "Gas Fee",
+    "nounce": "Nounce",
+    "blockHash": "Block Hash",
+    "position": "Position",
+    "storageLimit": "Storage Limit",
+    "chainID": "Chain ID",
+    "inputData": "Input Data",
+    "select": {
+      "original": "Original",
+      "utf8": "UTF-8"
+    }
+  },
+  "blocks": {
+    "title": "Blocks",
+    "description": "Blocks",
+    "blockHeight": "Block Height",
+    "epoch": "Epoch",
+    "difficulty": "Difficulty",
+    "miner": "Miner",
+    "reward": "Reward",
+    "security": "Security",
+    "blame": "Blame",
+    "blockHash": "Block Hash",
+    "parentHash": "Parent Hash",
+    "nonce": "Nonce",
+    "gasUsed": "Gas Used/Limit",
+    "timestamp": "Timestamp",
+    "size": "Size",
+    "transactions": "Transactions",
+    "referenceBlocks": "Reference Blocks",
+    "tabs": {
+      "transactions": "Transactions",
+      "referenceBlocks": "Reference Blocks",
+      "labelCountBefore": "A total of",
+      "labelCountAfter": "{{type}} found"
     },
-    "security": {
-      "notAvailable": "Not Available",
-      "high": "High",
-      "medium": "Medium",
-      "low": "Low",
-      "veryLow": "Very Low"
+    "table": {
+      "transactions": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "fee": "Fee",
+        "gasPrice": "Gas Price",
+        "age": "Age"
+      },
+      "referenceBlocks": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "hash": "Hash",
+        "transactionCount": "Txns",
+        "miner": "Miner",
+        "difficulty": "Difficulty",
+        "gasLimit": "Gas Used/Gas Limit",
+        "age": "Age"
+      }
+    }
+  },
+  "epochs": {
+    "title": "Epochs",
+    "description": "Epochs",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
+    "labelCountBefore": "A total of",
+    "labelCountAfter": "{{type}} found",
+    "blocks": "Blocks",
+    "transactions": "Transactions",
+    "table": {
+      "position": "Position",
+      "hash": "Hash",
+      "txns": "Txns",
+      "miner": "Miner",
+      "difficulty": "Difficulty",
+      "gasUsedPercent": "Gas Used/Limit",
+      "age": "Age"
     }
   }
 }
