@@ -105,6 +105,14 @@
       "balance": "Balance: "
     }
   },
+  "charts": {
+    "subtitle": "Blockchain Data",
+    "title": "Charts",
+    "tps": {
+      "title": "tps title",
+      "description": "tps description"
+    }
+  },
   "general": {
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
@@ -181,13 +189,6 @@
     "applicationUnit": "application",
     "tx": "tx"
   },
-  "chart": {
-    "tps": {
-      "title": "tps title",
-      "description": "tps description"
-    }
-  },
-  "submit": "Submit",
   "transactions": {
     "title": "Transactions",
     "description": "Transactions",

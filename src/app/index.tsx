@@ -107,11 +107,11 @@ export function App() {
 
 const Main = styled.div`
   position: relative;
-  max-width: 73.1429rem;
+  max-width: 1024px;
   margin: 0 auto;
-  padding-top: 5rem;
-  min-height: calc(100vh - 21.2821rem);
+  padding-top: 70px;
+  min-height: calc(100vh - 298px);
   ${media.s} {
-    padding: 4rem 1.1429rem 1.1429rem;
+    padding: 100px 16px 16px;
   }
 `;
