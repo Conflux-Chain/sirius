@@ -12,20 +12,27 @@ export function HeadAddressLineButton({ children }) {
   const [pressed, setPressed] = useState<boolean>(false);
   return (
     <Button
-      pressed={pressed}
-      onMouseDown={() => setPressed(true)}
-      onMouseUp={() => setPressed(false)}
+    // pressed={pressed}
+    // onMouseDown={() => setPressed(true)}
+    // onMouseUp={() => setPressed(false)}
     >
       {children}
     </Button>
   );
 }
 
-const Button = styled.div<
-  ButtonHTMLAttributes<HTMLDivElement> & { pressed: boolean }
->`
+const Button = styled.div<ButtonHTMLAttributes<HTMLDivElement>>`
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
-  background-color: ${props => (props.pressed ? '#63688a' : '#dbdde4')};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dbdde4;
+  &:hover {
+    background-color: #63688a;
+    svg {
+      fill: #fff;
+    }
+  }
 `;

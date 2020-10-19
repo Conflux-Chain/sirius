@@ -55,7 +55,7 @@ export const CopyButton = ({
           cursor: 'pointer',
         }}
       >
-        <Copy size={size || 14} color={color || '#4b4b4b'} />
+        <img alt="copy" src="/copy.svg" />
       </div>
     </Tooltip>
   );

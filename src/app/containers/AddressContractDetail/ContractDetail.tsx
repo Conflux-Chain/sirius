@@ -177,7 +177,8 @@ const HeadAddressLine = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  * {
+  > p,
+  > div {
     margin-right: 0.58rem;
   }
 `;
@@ -195,11 +196,7 @@ const Top = styled.section`
   }
 `;
 const Middle = styled.section`
-  position: relative;
-  width: 100%;
   border: 1px red solid;
-  display: flex;
-  flex-direction: row;
   margin-bottom: 2.29rem;
 
   ${media.s} {
