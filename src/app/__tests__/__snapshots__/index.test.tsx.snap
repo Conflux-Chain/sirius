@@ -73,6 +73,20 @@ exports[`<App /> should render and match the snapshot 1`] = `
           />
           <Route
             component={[Function]}
+            path="/charts"
+          />
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/transactions/:hash"
+          />
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/blocks/:hash"
+          />
+          <Route
+            component={[Function]}
           />
         </Switch>
       </ForwardRef(app__Main)>

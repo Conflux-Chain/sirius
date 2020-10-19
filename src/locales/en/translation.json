@@ -169,5 +169,77 @@
       "description": "tps description"
     }
   },
-  "submit": "Submit"
+  "submit": "Submit",
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions",
+    "hash": "hash",
+    "executedEpoch": "Executed Epoch",
+    "proposedEpoch": "Proposed Epoch",
+    "timestamp": "Timestamp",
+    "status": "Status",
+    "from": "From",
+    "to": "To",
+    "tokenTransferred": "Token Transferred",
+    "value": "Value",
+    "gasUsed": "Gas Used/Limit",
+    "gasPrice": "Gas Price",
+    "gasFee": "Gas Fee",
+    "nounce": "Nounce",
+    "blockHash": "Block Hash",
+    "position": "Position",
+    "storageLimit": "Storage Limit",
+    "chainID": "Chain ID",
+    "inputData": "Input Data",
+    "select": {
+      "original": "Original",
+      "utf8": "UTF-8"
+    }
+  },
+  "blocks": {
+    "title": "Blocks",
+    "description": "Blocks",
+    "blockHeight": "Block Height",
+    "epoch": "Epoch",
+    "difficulty": "Difficulty",
+    "miner": "Miner",
+    "reward": "Reward",
+    "security": "Security",
+    "blame": "Blame",
+    "blockHash": "Block Hash",
+    "parentHash": "Parent Hash",
+    "nonce": "Nonce",
+    "gasUsed": "Gas Used/Limit",
+    "timestamp": "Timestamp",
+    "size": "Size",
+    "transactions": "Transactions",
+    "referenceBlocks": "Reference Blocks",
+    "tabs": {
+      "transactions": "Transactions",
+      "referenceBlocks": "Reference Blocks",
+      "labelCountBefore": "A total of",
+      "labelCountAfter": "{{type}} found"
+    },
+    "table": {
+      "transactions": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "fee": "Fee",
+        "gasPrice": "Gas Price",
+        "age": "Age"
+      },
+      "referenceBlocks": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "hash": "Hash",
+        "transactionCount": "Txns",
+        "miner": "Miner",
+        "difficulty": "Difficulty",
+        "gasLimit": "Gas Used/Gas Limit",
+        "age": "Age"
+      }
+    }
+  }
 }
