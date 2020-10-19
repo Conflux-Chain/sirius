@@ -87,7 +87,7 @@
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
     "btn": "GO TO HOMEPAGE"
   },
-  "tokenDetail": {
+  "token": {
     "totalSupplay": "Total Supply",
     "contract": "Contract",
     "holders": "Holders",

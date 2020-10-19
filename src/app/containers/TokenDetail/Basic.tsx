@@ -26,23 +26,23 @@ export const Basic = ({
 
   const list = [
     {
-      title: t(translations.tokenDetail.totalSupplay),
+      title: t(translations.token.totalSupplay),
       children: totalSupply,
     },
     {
-      title: t(translations.tokenDetail.contract),
+      title: t(translations.token.contract),
       children: tokenAddress,
     },
     {
-      title: t(translations.tokenDetail.holders),
+      title: t(translations.token.holders),
       children: accountTotal,
     },
     {
-      title: t(translations.tokenDetail.decimals),
+      title: t(translations.token.decimals),
       children: decimals,
     },
     {
-      title: t(translations.tokenDetail.transfers),
+      title: t(translations.token.transfers),
       children: transferCount,
     },
   ];
@@ -52,11 +52,11 @@ export const Basic = ({
       2,
       3,
       {
-        title: t(translations.tokenDetail.transfers),
+        title: t(translations.token.transfers),
         children: transferCount,
       },
       {
-        title: t(translations.tokenDetail.decimals),
+        title: t(translations.token.decimals),
         children: decimals,
       },
     );

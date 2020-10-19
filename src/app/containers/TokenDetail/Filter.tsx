@@ -40,7 +40,7 @@ export const Filter = ({
       return;
     }
     if (!isAddress(value) && !isHash(value)) {
-      setMessage(t(translations.tokenDetail.transferList.searchError));
+      setMessage(t(translations.token.transferList.searchError));
       return;
     }
     if (value !== filter) {
@@ -62,7 +62,7 @@ export const Filter = ({
         iconClickable
         clearable
         value={value}
-        placeholder={t(translations.tokenDetail.transferList.searchPlaceHolder)}
+        placeholder={t(translations.token.transferList.searchPlaceHolder)}
         onChange={e => setValue(e.target.value)}
         onIconClick={onIconClick}
         onClearClick={onClearClick}
@@ -70,7 +70,7 @@ export const Filter = ({
       />
       {tokenBalance && (
         <BalanceWrap>{`${t(
-          translations.tokenDetail.transferList.balance,
+          translations.token.transferList.balance,
         )}${tokenBalance}${symbol}`}</BalanceWrap>
       )}
     </FilterWrap>

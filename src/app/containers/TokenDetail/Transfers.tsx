@@ -77,7 +77,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
 
   const columns: ColumnsType = [
     {
-      title: t(translations.tokenDetail.transferList.txnHash),
+      title: t(translations.token.transferList.txnHash),
       dataIndex: 'transactionHash',
       key: 'transactionHash',
       render: value =>
@@ -86,13 +86,13 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
           : renderAddressEllipsis(value),
     },
     {
-      title: t(translations.tokenDetail.transferList.age),
+      title: t(translations.token.transferList.age),
       dataIndex: 'timestamp',
       key: 'age',
       render: renderTextEllipsis,
     },
     {
-      title: t(translations.tokenDetail.transferList.from),
+      title: t(translations.token.transferList.from),
       dataIndex: 'from',
       key: 'from',
       render: value => {
@@ -115,7 +115,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
       },
     },
     {
-      title: t(translations.tokenDetail.transferList.to),
+      title: t(translations.token.transferList.to),
       dataIndex: 'to',
       key: 'to',
       render: value =>
@@ -124,7 +124,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
           : renderAddressEllipsis(value),
     },
     {
-      title: t(translations.tokenDetail.transferList.quantity),
+      title: t(translations.token.transferList.quantity),
       dataIndex: 'value',
       key: 'value',
       render: renderTextEllipsis,
@@ -137,7 +137,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
       label: (count: number) => {
         return (
           <LabelWrap>
-            {t(translations.tokenDetail.transfers)}
+            {t(translations.token.transfers)}
             <TabLabel count={count} />
           </LabelWrap>
         );

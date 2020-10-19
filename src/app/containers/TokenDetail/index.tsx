@@ -39,7 +39,7 @@ export function TokenDetail() {
               hoverable
               text={
                 <span>
-                  {t(translations.tokenDetail.shuttleflow)}
+                  {t(translations.token.shuttleflow)}
                   <Link>Shuttleflow</Link>
                 </span>
               }
