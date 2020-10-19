@@ -8,23 +8,39 @@ export const useTableData = (url: string) => {
   const history = useHistory();
 
   let {
-    page: parsedPageNumber,
-    pageSize: parsedPageSize,
+    page: searchPageNumber,
+    pageSize: searchPageSize,
     tab,
     ...others
   } = queryString.parse(location.search);
 
-  if (!parsedPageNumber && !parsedPageSize) {
-    parsedPageNumber = '1';
-    parsedPageSize = '10';
-  }
+  let parsedPageNumber = '1';
+  let parsedPageSize = '10';
+  let skip = '0';
+
+  try {
+    const page = (Number(searchPageNumber) - 1) * Number(searchPageSize);
+    if (window.isNaN(page) || page < 0) {
+      throw new Error('invalid page');
+    }
+    parsedPageNumber = String(searchPageNumber);
+    skip = String(page);
+  } catch (e) {}
+
+  try {
+    const pageSize = Number(searchPageSize);
+    if (window.isNaN(pageSize) || pageSize < 0) {
+      throw new Error('invalid pageSize');
+    }
+    parsedPageSize = String(pageSize);
+  } catch (e) {}
 
   const urlWithQuery = queryString.stringifyUrl({
     url,
     query: {
       ...others,
-      page: parsedPageNumber as string,
-      pageSize: parsedPageSize as string,
+      limit: parsedPageSize as string,
+      skip: skip as string,
     },
   });
 
