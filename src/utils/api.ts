@@ -23,8 +23,16 @@ export const simpleGetFetcher = async (...args: any[]) => {
   const res = await fetch(appendApiPrefix(url), {
     method: 'get',
   });
-  const json = await res.json();
-  return json;
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    // Attach extra info to the error object.
+    error['info'] = await res.json();
+    error['status'] = res.status;
+    throw error;
+  }
+  return await res.json();
 };
 
 const simplePostFetcher = async (...args: any[]) => {
@@ -37,8 +45,14 @@ const simplePostFetcher = async (...args: any[]) => {
     },
     body: JSON.stringify(params),
   });
-  const json = await res.json();
-  return json;
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    // Attach extra info to the error object.
+    error['info'] = await res.json();
+    error['status'] = res.status;
+    throw error;
+  }
+  return await res.json();
 };
 
 export const useDashboardDag: useApi = (
@@ -225,7 +239,7 @@ export const useCMContractQuery: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/contract', ...params] : null,
+    shouldFetch ? [`/contract/${params[0].address}`, ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
