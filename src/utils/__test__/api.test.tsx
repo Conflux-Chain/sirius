@@ -639,7 +639,12 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useCMContractQuery} />);
+      r = TestRenderer.create(
+        <MockComp
+          f={api.useCMContractQuery}
+          p={[{ address: '0x86f7006d534dad36d56d10531ecd2fd2c6eedb78' }]}
+        />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 

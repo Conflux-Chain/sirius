@@ -165,7 +165,9 @@ exports[`<Status  /> should render dot status correct 1`] = `
   color: #a4a8b6;
   text-shadow: 0rem 0.4286rem 1.1429rem rgba(0,0,0,0.08);
   max-width: 14.2857rem;
+  min-width: 11.7143rem;
   line-height: 1.0714rem;
+  white-space: break-spaces;
 }
 
 .c1 .tooltip-content.siriuse-status-popover .inner {
