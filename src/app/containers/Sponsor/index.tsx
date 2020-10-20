@@ -11,6 +11,7 @@ import SkelontonContainer from '../../components/SkeletonContainer';
 import { isCfxAddress, getEllipsStr } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
+import { Big } from '@cfxjs/react-hooks';
 interface RouteParams {
   contractAddress: string;
 }
@@ -40,10 +41,8 @@ export function Sponsor() {
   const getSponsorInfo = async address => {
     setLoading(true);
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
-    console.log('sponsorInfo', sponsorInfo);
     await fetchIsAppliable(address);
     const faucetParams = await faucet.getFaucetParams();
-    console.log('faucetParams', faucetParams);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     setLoading(false);
     if (sponsorInfo && faucetParams && amountAccumulated) {
@@ -56,31 +55,51 @@ export function Sponsor() {
       );
       setCurrentGasFee(getDecimalFromDrip(sponsorInfo.sponsorBalanceForGas));
       setProvidedStorageFee(
-        getDecimalFromDrip(amountAccumulated.collateral_amount_accumulated),
+        cfxUtil.unit.fromDripToCFX(
+          amountAccumulated.collateral_amount_accumulated,
+        ),
       );
       setUpperBound(
-        cfxUtil.unit.fromDripToGDrip(parseInt(faucetParams.upper_bound, 16)),
+        new Big(
+          Number(cfxUtil.unit.fromDripToGDrip(faucetParams.upper_bound)),
+        ).toFixed(0),
       );
-      setGasBound(getDecimalFromDrip(faucetParams.gas_bound));
-      setStorageBound(getDecimalFromDrip(faucetParams.collateral_bound));
+      setGasBound(cfxUtil.unit.fromDripToCFX(faucetParams.gas_bound));
+      setStorageBound(
+        cfxUtil.unit.fromDripToCFX(faucetParams.collateral_bound),
+      );
       setAvialStorageFee(
-        getDecimalFromDrip(
-          (
-            Number(faucetParams.collateral_total_limit) -
-            Number(amountAccumulated.collateral_amount_accumulated)
-          ).toString(),
-        ),
+        new Big(
+          Number(
+            cfxUtil.unit.fromDripToCFX(faucetParams.collateral_total_limit),
+          ),
+        )
+          .minus(
+            new Big(
+              Number(
+                cfxUtil.unit.fromDripToCFX(
+                  amountAccumulated.collateral_amount_accumulated,
+                ),
+              ),
+            ),
+          )
+          .toFixed(),
       );
       setProvidedGasFee(
-        getDecimalFromDrip(amountAccumulated.gas_amount_accumulated),
+        cfxUtil.unit.fromDripToCFX(amountAccumulated.gas_amount_accumulated),
       );
       setAvialGasFee(
-        getDecimalFromDrip(
-          (
-            Number(faucetParams.gas_total_limit) -
-            Number(amountAccumulated.gas_amount_accumulated)
-          ).toString(),
-        ),
+        new Big(
+          Number(cfxUtil.unit.fromDripToCFX(faucetParams.gas_total_limit)),
+        )
+          .minus(
+            Number(
+              cfxUtil.unit.fromDripToCFX(
+                amountAccumulated.gas_amount_accumulated,
+              ),
+            ),
+          )
+          .toFixed(),
       );
     }
   };

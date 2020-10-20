@@ -1176,10 +1176,10 @@
     rc-util "^5.0.4"
     shallowequal "^1.1.0"
 
-"@cfxjs/react-hooks@0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@cfxjs/react-hooks/-/react-hooks-0.1.6.tgz#4c4e2b4e8e6cd7eb48cd6d30be23c459c65bd51d"
-  integrity sha512-tlnjUIACrZGUTswwJiHFcfZosvcrE4KemafNHO/luNdCvNyREf9ihp3ILUt4gYDB+h44DJo2ln5v3D0bYxVwsA==
+"@cfxjs/react-hooks@0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@cfxjs/react-hooks/-/react-hooks-0.1.7.tgz#593c9ae5589cd8a7668a6793316f1addd6f1b9c1"
+  integrity sha512-+HCV3NwJOWxTYZf8j1gke80zBYEC64nulL4CFdHgljAJjOVe1gQIQdPE1KxwvF1CyYwMPd6QweCAdqqMypvo5g==
   dependencies:
     big.js "^6.0.1"
     react-use "^15.3.4"
@@ -16275,9 +16275,9 @@ swr@0.3.2:
     fast-deep-equal "2.0.1"
 
 swr@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.5.tgz#848a80e7b23b96d7221468555d8688d3efdecbc7"
-  integrity sha512-sZNed7JBEnFC42+XFWJ+aYGGVg5D3qNyISZOke3oL/gM1UNm0tsj9mbhTPT99SV9DzbKbT1NFTTRandPdhvpUA==
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.6.tgz#b1d59439e5114fdf95bb408e1c628ff48f967aac"
+  integrity sha512-LHbX9vVQSW8Kgyr86zz2fVVKmmT13qxB61uXuUAg6NT4cGu6afzAzT2SVCGEh8pJAD2o8NTZMgclIUxIAbvk7Q==
   dependencies:
     dequal "2.0.2"
 
