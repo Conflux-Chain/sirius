@@ -34,15 +34,7 @@
     "title": "Tokens",
     "description": "Tokens",
     "tipCountBefore": "Showing",
-    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
-    "table": {
-      "number": "Number",
-      "token": "Token",
-      "transfer": "Transfer",
-      "totalSupply": "Total Supply",
-      "holders": "Holders",
-      "contract": "Contract"
-    }
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)"
   },
   "header": {
     "home": "Home",
@@ -110,7 +102,7 @@
         "difficulty": "Difficulty",
         "gasLimit": "Gas Limit"
       },
-      "transactions": {
+      "transaction": {
         "hash": "Hash",
         "from": "From",
         "to": "To",
@@ -118,6 +110,14 @@
         "gasPrice": "Gas Price",
         "gasFee": "Gas Fee",
         "age": "Age"
+      },
+      "token": {
+        "number": "Number",
+        "token": "Token",
+        "transfer": "Transfer",
+        "totalSupply": "Total Supply",
+        "holders": "Holders",
+        "contract": "Contract"
       }
     },
     "pagination": {
