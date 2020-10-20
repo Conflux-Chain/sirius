@@ -21,6 +21,20 @@ exports[`<Text  /> should match snapshot 1`] = `
   cursor: pointer;
 }
 
+.c1 .text.sirius-text a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  max-width: 40px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
+}
+
 <span
   class="c0"
 >
@@ -64,6 +78,19 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   vertical-align: bottom;
   display: inherit;
   cursor: pointer;
+}
+
+.c1 .text.sirius-text a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  display: inherit;
+  cursor: pointer;
+}
+
+.c1 .text.sirius-text a:hover {
+  color: 0626ae;
 }
 
 <span

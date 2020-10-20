@@ -1,119 +1,197 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Helmet } from 'react-helmet-async';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
+import { Link } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
+import { media } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
-import { TablePanel } from '../../components/TablePanel';
+import {
+  TabsTablePanel,
+  TabLabel,
+} from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
-import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { Text } from '../../components/Text';
-import { PageHeader } from '../../components/PageHeader/Loadable';
-import numeral from 'numeral';
-import { useTableData } from './../../components/TabsTablePanel/useTableData';
+import { Filter } from './Filter';
+import { isAddress, isHash } from '../../../utils/util';
 
-const StyledTextWrapper = styled.span`
-  font-weight: 400;
-  line-height: 1.7143rem;
-  font-size: 1rem;
-  &:hover {
-    font-weight: 500;
-    color: #1e3de4;
-  }
-`;
+interface TransferProps {
+  tokenAddress: string;
+  symbol: string;
+}
 
-const StyledIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    width: 1.1429rem;
-    height: 1.1429rem;
-    margin-right: 0.5714rem;
-  }
-`;
+interface Query {
+  accountAddress?: string;
+  transactionHash?: string;
+}
 
-const renderTextEllipsis = value => {
-  return (
-    <Text span maxWidth={'5.7143rem'} hoverValue={value}>
-      <StyledTextWrapper>{value}</StyledTextWrapper>
-    </Text>
-  );
-};
-
-export function Transfers() {
+export function Transfers({ tokenAddress, symbol }: TransferProps) {
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
+  let {
+    pageSize: parsedPageSize,
+    accountAddress: filterAddr,
+    transactionHash: filterHash,
+    ...others
+  } = queryString.parse(location.search);
+  if (!parsedPageSize) {
+    parsedPageSize = '10';
+  }
+
+  const filter = (filterAddr as string) || (filterHash as string) || '';
+
+  const onFilter = (filter: string) => {
+    let object: Query = {};
+    if (isAddress(filter)) {
+      object.accountAddress = filter;
+    } else if (isHash(filter)) {
+      object.transactionHash = filter;
+    }
+    const urlWithQuery = queryString.stringifyUrl({
+      url: location.pathname,
+      query: {
+        ...others,
+        page: '1',
+        pageSize: parsedPageSize as string,
+        ...object,
+      },
+    });
+    history.push(urlWithQuery);
+  };
+  const renderTextEllipsis = (value: string | number) => {
+    return (
+      <Text span maxWidth="5.7143rem" hoverValue={value}>
+        <StyledTextWrapper>{value}</StyledTextWrapper>
+      </Text>
+    );
+  };
+
+  const renderAddressEllipsis = (value: string) => {
+    return (
+      <Text span maxWidth="5.7143rem" hoverValue={value}>
+        <Link onClick={() => onFilter(value)}>{value}</Link>
+      </Text>
+    );
+  };
 
   const columns: ColumnsType = [
     {
-      title: t(translations.tokens.table.number),
-      dataIndex: 'epochNumber',
-      key: 'epochNumber',
-      width: 80,
-      render: (value, row, index) => {
-        return index + 1;
-      },
+      title: t(translations.token.transferList.txnHash),
+      dataIndex: 'transactionHash',
+      key: 'transactionHash',
+      render: value =>
+        filter === value
+          ? renderTextEllipsis(value)
+          : renderAddressEllipsis(value),
     },
     {
-      title: t(translations.tokens.table.token),
-      key: 'blockIndex',
-      render: item => {
+      title: t(translations.token.transferList.age),
+      dataIndex: 'timestamp',
+      key: 'age',
+      render: renderTextEllipsis,
+    },
+    {
+      title: t(translations.token.transferList.from),
+      dataIndex: 'from',
+      key: 'from',
+      render: value => {
         return (
-          <>
-            <StyledIconWrapper>
-              <img src={item.icon} alt="token icon" />
-              {item.name} ({item.symbol})
-            </StyledIconWrapper>
-          </>
+          <FromWrap>
+            {filter === value
+              ? renderTextEllipsis(value)
+              : renderAddressEllipsis(value)}
+            <ImgWrap
+              src={
+                !filter
+                  ? '/token/arrow.svg'
+                  : filter === value
+                  ? '/token/out.svg'
+                  : '/token/in.svg'
+              }
+            />
+          </FromWrap>
         );
       },
     },
     {
-      title: t(translations.tokens.table.transfer),
-      dataIndex: 'transferCount',
-      key: 'transferCount',
+      title: t(translations.token.transferList.to),
+      dataIndex: 'to',
+      key: 'to',
+      render: value =>
+        filter === value
+          ? renderTextEllipsis(value)
+          : renderAddressEllipsis(value),
     },
     {
-      title: t(translations.tokens.table.totalSupply),
-      dataIndex: 'totalSupply',
-      key: 'totalSupply',
-      render: renderTextEllipsis,
-    },
-    {
-      title: t(translations.tokens.table.holders),
-      dataIndex: 'accountTotal',
-      key: 'accountTotal',
-      render: count => {
-        return numeral(count).format('0,0');
-      },
-    },
-    {
-      title: t(translations.tokens.table.contract),
-      dataIndex: 'address',
-      key: 'address',
+      title: t(translations.token.transferList.quantity),
+      dataIndex: 'value',
+      key: 'value',
       render: renderTextEllipsis,
     },
   ];
-  const url = '/token/list';
-  const { total } = useTableData(url);
+
+  const tabs = [
+    {
+      value: 'transfers',
+      label: (count: number) => {
+        return (
+          <LabelWrap>
+            {t(translations.token.transfers)}
+            <TabLabel count={count} />
+          </LabelWrap>
+        );
+      },
+      url: `/transfer/list?tokenAddress=${tokenAddress}`,
+      table: {
+        columns: columns,
+        rowKey: 'transactionHash',
+      },
+    },
+  ];
 
   return (
-    <>
-      <Helmet>
-        <title>{t(translations.tokens.title)}</title>
-        <meta name="description" content={t(translations.tokens.description)} />
-      </Helmet>
-      <TipLabel
-        count={total}
-        left={t(translations.tokens.tipCountBefore)}
-        right={t(translations.tokens.tipCountAfter)}
+    <TransfersWrap>
+      <TabsTablePanel tabs={tabs} />
+      <Filter
+        symbol={symbol}
+        filter={filter}
+        tokenAddress={tokenAddress}
+        onFilter={onFilter}
       />
-      <PageHeader>{t(translations.tokens.title)}</PageHeader>
-      <TablePanel
-        table={{
-          columns: columns,
-          rowKey: 'address',
-        }}
-        url={url}
-      />
-    </>
+    </TransfersWrap>
   );
 }
+
+const StyledTextWrapper = styled.span`
+  font-weight: 400;
+  line-height: 1.7143rem;
+  font-size: 14px;
+`;
+
+const TransfersWrap = styled.div`
+  position: relative;
+  ${media.s} {
+    padding-top: 4rem;
+  }
+`;
+
+const LabelWrap = styled.div`
+  display: flex;
+  color: #0f1327;
+  font-weight: 700;
+  font-size: 1.1429rem;
+`;
+
+const FromWrap = styled.div`
+  position: relative;
+`;
+
+const ImgWrap = styled.img`
+  position: absolute;
+  right: -12px;
+  top: 2px;
+  ${media.s} {
+    right: -16px;
+  }
+`;

@@ -34,7 +34,6 @@ export const QrcodeButton = ({
   return (
     <>
       <Tooltip
-        placement="top"
         text={tooltipText || t(translations.general.qrcodeButton.clickToShow)}
       >
         <div
