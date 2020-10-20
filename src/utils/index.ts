@@ -15,3 +15,7 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
   }
   return '';
 };
+
+export const delay = (ms: number) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};

@@ -270,7 +270,9 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useBlockQuery} />);
+      r = TestRenderer.create(
+        <MockComp f={api.useBlockQuery} p={{ hash: 'a' }} />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 

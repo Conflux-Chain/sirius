@@ -133,7 +133,9 @@ export const useBlockQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/block/query', ...params] : null,
+    shouldFetch
+      ? [`/block/${params[0].hash}?${params[0].hash}:''`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
