@@ -75,6 +75,22 @@ export const hash = {
   ),
 };
 
+export const hashWithPivot = {
+  ...hash,
+  render: (value, row: any) => {
+    let pivotTag: React.ReactNode = null;
+    if (row.pivotHash === row.hash) {
+      pivotTag = <img className="img" src="/pivot.svg" alt="pivot"></img>;
+    }
+    return (
+      <StyledEpochWrapper>
+        <Link href={`/blocks/${value}`}>{renderTextEllipsis(value)}</Link>
+        {pivotTag}
+      </StyledEpochWrapper>
+    );
+  },
+};
+
 export const miner = {
   title: (
     <Translation>{t => t(translations.general.table.block.miner)}</Translation>
