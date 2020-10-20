@@ -408,7 +408,7 @@ export const Contract = ({
   }, [abi, addressVal, contractName, password, sourceCode]);
   useEffect(() => {
     setContractImgSrc(contractDetail.icon);
-    setTokenImgSrc(contractDetail.tokenIcon);
+    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
     setContractName(contractDetail.name);
     setSourceCode(contractDetail.sourceCode);
     setAbi(contractDetail.abi);
@@ -432,6 +432,7 @@ export const Contract = ({
     contractDetail.icon,
     contractDetail.name,
     contractDetail.sourceCode,
+    contractDetail.token,
     contractDetail.tokenIcon,
     contractDetail.website,
     t,
@@ -503,7 +504,8 @@ export const Contract = ({
     bodyParams.website = site;
     bodyParams.icon = contractImgSrc;
     bodyParams.typeCode = 1;
-    bodyParams.tokenIcon = tokenImgSrc;
+    bodyParams.token = {};
+    bodyParams.token.icon = tokenImgSrc;
     bodyParams.sourceCode = sourceCode;
     bodyParams.abi = abi;
     bodyParams.password = password;

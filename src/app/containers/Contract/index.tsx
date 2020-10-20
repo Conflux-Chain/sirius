@@ -18,7 +18,7 @@ export function Contract(props) {
     'type',
     'name',
     'website',
-    'tokenIcon',
+    'token',
     'abi',
     'bytecode',
     'icon',
