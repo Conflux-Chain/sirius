@@ -24,7 +24,7 @@ const StyledTransactionHashWrapper = styled.span`
 export const hash = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.hash)}
+      {t => t(translations.general.table.transactions.hash)}
     </Translation>
   ),
   dataIndex: 'hash',
@@ -43,7 +43,7 @@ export const hash = {
 export const from = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.from)}
+      {t => t(translations.general.table.transactions.from)}
     </Translation>
   ),
   dataIndex: 'from',
@@ -57,7 +57,7 @@ export const from = {
 export const to = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.to)}
+      {t => t(translations.general.table.transactions.to)}
     </Translation>
   ),
   dataIndex: 'to',
@@ -74,7 +74,7 @@ export const to = {
 export const value = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.value)}
+      {t => t(translations.general.table.transactions.value)}
     </Translation>
   ),
   dataIndex: 'value',
@@ -86,7 +86,7 @@ export const value = {
 export const gasPrice = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.gasPrice)}
+      {t => t(translations.general.table.transactions.gasPrice)}
     </Translation>
   ),
   dataIndex: 'gasPrice',
@@ -97,7 +97,7 @@ export const gasPrice = {
 export const gasFee = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.gasFee)}
+      {t => t(translations.general.table.transactions.gasFee)}
     </Translation>
   ),
   dataIndex: 'gas',
@@ -108,7 +108,7 @@ export const gasFee = {
 export const age = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.transactions.age)}
+      {t => t(translations.general.table.transactions.age)}
     </Translation>
   ),
   dataIndex: 'syncTimestamp',

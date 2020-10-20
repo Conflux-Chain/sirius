@@ -24,9 +24,7 @@ const StyledEpochWrapper = styled.span`
 
 export const epoch = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.epoch)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.epoch)}</Translation>
   ),
   dataIndex: 'epochNumber',
   key: 'epochNumber',
@@ -48,7 +46,7 @@ export const epoch = {
 export const position = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.position)}
+      {t => t(translations.general.table.block.position)}
     </Translation>
   ),
   dataIndex: 'blockIndex',
@@ -58,9 +56,7 @@ export const position = {
 
 export const txns = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.txns)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.txns)}</Translation>
   ),
   dataIndex: 'transactionCount',
   key: 'transactionCount',
@@ -69,9 +65,7 @@ export const txns = {
 
 export const hash = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.hash)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.hash)}</Translation>
   ),
   dataIndex: 'hash',
   key: 'hash',
@@ -83,9 +77,7 @@ export const hash = {
 
 export const miner = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.miner)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.miner)}</Translation>
   ),
   dataIndex: 'miner',
   key: 'miner',
@@ -98,7 +90,7 @@ export const miner = {
 export const avgGasPrice = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.avgGasPrice)}
+      {t => t(translations.general.table.block.avgGasPrice)}
     </Translation>
   ),
   dataIndex: 'avgGasPrice',
@@ -109,7 +101,7 @@ export const avgGasPrice = {
 export const gasUsedPercent = {
   title: (
     <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.gasUsedPercent)}
+      {t => t(translations.general.table.block.gasUsedPercent)}
     </Translation>
   ),
   dataIndex: 'gasUsed',
@@ -126,9 +118,7 @@ export const gasUsedPercent = {
 
 export const reward = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.reward)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.reward)}</Translation>
   ),
   dataIndex: 'totalReward',
   key: 'totalReward',
@@ -138,11 +128,31 @@ export const reward = {
 
 export const age = {
   title: (
-    <Translation>
-      {t => t(translations.blocksAndTransactions.table.block.age)}
-    </Translation>
+    <Translation>{t => t(translations.general.table.block.age)}</Translation>
   ),
   dataIndex: 'syncTimestamp',
   key: 'syncTimestamp',
+  width: 1,
+};
+
+export const difficulty = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.block.difficulty)}
+    </Translation>
+  ),
+  dataIndex: 'difficulty',
+  key: 'difficulty',
+  width: 1,
+};
+
+export const gasLimit = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.block.gasLimit)}
+    </Translation>
+  ),
+  dataIndex: 'gasLimit',
+  key: 'gasLimit',
   width: 1,
 };

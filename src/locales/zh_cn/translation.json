@@ -28,29 +28,7 @@
     "labelCountBefore": "共计找到",
     "labelCountAfter": "条 {{type}} 记录",
     "blocks": "区块",
-    "transactions": "交易",
-    "table": {
-      "block": {
-        "epoch": "纪元",
-        "position": "位置",
-        "txns": "交易数",
-        "hash": "哈希",
-        "miner": "矿工",
-        "avgGasPrice": "燃料价格",
-        "gasUsedPercent": "燃料使用量",
-        "reward": "奖励",
-        "age": "块龄"
-      },
-      "transactions": {
-        "hash": "哈希",
-        "from": "发送方",
-        "to": "接收方",
-        "value": "价值",
-        "gasPrice": "燃料价格",
-        "gasFee": "燃料使用量",
-        "age": "块龄"
-      }
-    }
+    "transactions": "交易"
   },
   "packing": {
     "title": "Plz wait, your transaction is packing",
@@ -78,7 +56,29 @@
   },
   "general": {
     "table": {
-      "noData": "无数据"
+      "noData": "无数据",
+      "block": {
+        "epoch": "纪元",
+        "position": "位置",
+        "txns": "交易数",
+        "hash": "哈希",
+        "miner": "矿工",
+        "avgGasPrice": "燃料价格",
+        "gasUsedPercent": "燃料使用量",
+        "reward": "奖励",
+        "age": "块龄",
+        "difficulty": "难度",
+        "gasLimit": "Gas Limit"
+      },
+      "transactions": {
+        "hash": "哈希",
+        "from": "发送方",
+        "to": "接收方",
+        "value": "价值",
+        "gasPrice": "燃料价格",
+        "gasFee": "燃料使用量",
+        "age": "块龄"
+      }
     },
     "pagination": {
       "labelPageSizeBefore": "每页",
@@ -197,27 +197,6 @@
     "tabs": {
       "transactions": "Transactions",
       "referenceBlocks": "Reference Blocks"
-    },
-    "table": {
-      "transactions": {
-        "hash": "Hash",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "fee": "Fee",
-        "gasPrice": "Gas Price",
-        "age": "Age"
-      },
-      "referenceBlocks": {
-        "epoch": "Epoch",
-        "position": "Position",
-        "hash": "Hash",
-        "transactionCount": "Txns",
-        "miner": "Miner",
-        "difficulty": "Difficulty",
-        "gasLimit": "Gas Limit",
-        "age": "Age"
-      }
     }
   },
   "epochs": {

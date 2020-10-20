@@ -28,29 +28,7 @@
     "labelCountBefore": "A total of",
     "labelCountAfter": "{{type}} found",
     "blocks": "Blocks",
-    "transactions": "Transactions",
-    "table": {
-      "block": {
-        "epoch": "Epoch",
-        "position": "Position",
-        "txns": "Txns",
-        "hash": "Hash",
-        "miner": "Miner",
-        "avgGasPrice": "Avg.Gas Price",
-        "gasUsedPercent": "Gas Used/Limit",
-        "reward": "Reward",
-        "age": "Age"
-      },
-      "transactions": {
-        "hash": "Hash",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "gasPrice": "Gas Price",
-        "gasFee": "Gas Fee",
-        "age": "Age"
-      }
-    }
+    "transactions": "Transactions"
   },
   "tokens": {
     "title": "Tokens",
@@ -118,7 +96,29 @@
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "table": {
-      "noData": "No data."
+      "noData": "No data.",
+      "block": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "txns": "Txns",
+        "hash": "Hash",
+        "miner": "Miner",
+        "avgGasPrice": "Avg.Gas Price",
+        "gasUsedPercent": "Gas Used/Limit",
+        "reward": "Reward",
+        "age": "Age",
+        "difficulty": "Difficulty",
+        "gasLimit": "Gas Limit"
+      },
+      "transactions": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "gasPrice": "Gas Price",
+        "gasFee": "Gas Fee",
+        "age": "Age"
+      }
     },
     "pagination": {
       "labelPageSizeBefore": "Show",
@@ -239,27 +239,6 @@
       "referenceBlocks": "Reference Blocks",
       "labelCountBefore": "A total of",
       "labelCountAfter": "{{type}} found"
-    },
-    "table": {
-      "transactions": {
-        "hash": "Hash",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "fee": "Fee",
-        "gasPrice": "Gas Price",
-        "age": "Age"
-      },
-      "referenceBlocks": {
-        "epoch": "Epoch",
-        "position": "Position",
-        "hash": "Hash",
-        "transactionCount": "Txns",
-        "miner": "Miner",
-        "difficulty": "Difficulty",
-        "gasLimit": "Gas Used/Gas Limit",
-        "age": "Age"
-      }
     }
   },
   "epochs": {
