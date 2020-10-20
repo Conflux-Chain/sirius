@@ -48,6 +48,25 @@
       "contract": "合约"
     }
   },
+  "token": {
+    "totalSupplay": "Total Supply",
+    "contract": "Contract",
+    "holders": "Holders",
+    "decimals": "Decimals",
+    "transfers": "Transfers",
+    "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
+    "address": "addresses",
+    "transferList": {
+      "txnHash": "txnHash",
+      "age": "Age",
+      "from": "From",
+      "to": "To",
+      "quantity": "Quantity",
+      "searchPlaceHolder": "Txn hash / Holder address",
+      "searchError": "search value is valid",
+      "balance": "Balance: "
+    }
+  },
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",

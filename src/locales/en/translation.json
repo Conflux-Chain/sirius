@@ -65,6 +65,7 @@
     "decimals": "Decimals",
     "transfers": "Transfers",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
+    "address": "addresses",
     "transferList": {
       "txnHash": "txnHash",
       "age": "Age",

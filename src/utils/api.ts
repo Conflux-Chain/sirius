@@ -174,7 +174,7 @@ export const useTransferList: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/transfer/list', ...params] : null,
+    shouldFetch ? ['/transfer', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -196,7 +196,7 @@ export const useTokenList: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/token/list', ...params] : null,
+    shouldFetch ? ['/token', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -205,7 +205,9 @@ export const useTokenQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/token/query', ...params] : null,
+    shouldFetch
+      ? [`/token/${params[0].address}?${params[0].address}:''`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );

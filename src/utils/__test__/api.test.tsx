@@ -518,7 +518,12 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useTokenQuery} />);
+      r = TestRenderer.create(
+        <MockComp
+          f={api.useTokenQuery}
+          p={[{ address: 0x874db763d8f81da57cdfaf34ce01afc181a11df4 }]}
+        />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 

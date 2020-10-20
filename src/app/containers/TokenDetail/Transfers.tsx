@@ -14,6 +14,7 @@ import { ColumnsType } from '../../components/TabsTablePanel';
 import { Text } from '../../components/Text';
 import { Filter } from './Filter';
 import { isAddress, isHash } from '../../../utils/util';
+import numeral from 'numeral';
 
 interface TransferProps {
   tokenAddress: string;
@@ -80,16 +81,14 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
       title: t(translations.token.transferList.txnHash),
       dataIndex: 'transactionHash',
       key: 'transactionHash',
-      render: value =>
-        filter === value
-          ? renderTextEllipsis(value)
-          : renderAddressEllipsis(value),
+      render: value => (
+        <Link href={`/transactions/${value}`}>{renderTextEllipsis(value)}</Link>
+      ),
     },
     {
       title: t(translations.token.transferList.age),
-      dataIndex: 'timestamp',
+      dataIndex: 'syncTimestamp',
       key: 'age',
-      render: renderTextEllipsis,
     },
     {
       title: t(translations.token.transferList.from),
@@ -127,7 +126,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
       title: t(translations.token.transferList.quantity),
       dataIndex: 'value',
       key: 'value',
-      render: renderTextEllipsis,
+      render: value => renderTextEllipsis(numeral(value).format(0, 0)), // todo, big number will transfer to NaN
     },
   ];
 
@@ -142,7 +141,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
           </LabelWrap>
         );
       },
-      url: `/transfer/list?tokenAddress=${tokenAddress}`,
+      url: `/transfer?tokenAddress=${tokenAddress}`,
       table: {
         columns: columns,
         rowKey: 'transactionHash',
@@ -189,9 +188,9 @@ const FromWrap = styled.div`
 
 const ImgWrap = styled.img`
   position: absolute;
-  right: -12px;
-  top: 2px;
+  right: -0.8571rem;
+  top: 0.1429rem;
   ${media.s} {
-    right: -16px;
+    right: -1.1429rem;
   }
 `;

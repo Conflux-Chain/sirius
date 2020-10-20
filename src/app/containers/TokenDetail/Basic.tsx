@@ -6,9 +6,13 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
+import { Link } from '@cfxjs/react-ui';
+import numeral from 'numeral';
 
 export interface BasicProps {
   totalSupply?: string;
+  symbol?: string;
+  name?: string;
   tokenAddress?: string;
   accountTotal?: number;
   decimals?: number;
@@ -17,9 +21,10 @@ export interface BasicProps {
 
 export const Basic = ({
   totalSupply,
+  symbol,
+  decimals,
   tokenAddress,
   accountTotal,
-  decimals,
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
@@ -27,15 +32,17 @@ export const Basic = ({
   const list = [
     {
       title: t(translations.token.totalSupplay),
-      children: totalSupply,
+      children: `${totalSupply} ${symbol}`,
     },
     {
       title: t(translations.token.contract),
-      children: tokenAddress,
+      children: <Link href={`/address/${tokenAddress}`}>{tokenAddress}</Link>,
     },
     {
       title: t(translations.token.holders),
-      children: accountTotal,
+      children: `${numeral(accountTotal).format(0, 0)} ${t(
+        translations.token.address,
+      )}`,
     },
     {
       title: t(translations.token.decimals),
@@ -43,23 +50,12 @@ export const Basic = ({
     },
     {
       title: t(translations.token.transfers),
-      children: transferCount,
+      children: numeral(transferCount).format(0, 0),
     },
   ];
 
-  if (totalSupply && !accountTotal) {
-    list.splice(
-      2,
-      3,
-      {
-        title: t(translations.token.transfers),
-        children: transferCount,
-      },
-      {
-        title: t(translations.token.decimals),
-        children: decimals,
-      },
-    );
+  if (!accountTotal) {
+    list.splice(2, 1);
   }
 
   return (
