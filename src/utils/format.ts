@@ -32,3 +32,9 @@ export function transferRisk(riskStr) {
 
   return 'lv0';
 }
+export const devidedByDecimals = (number, decimals) => {
+  const bignumber =
+    number instanceof BigNumber ? number : new BigNumber(number);
+  const result = bignumber.dividedBy(10 ** decimals);
+  return result.toString(10);
+};

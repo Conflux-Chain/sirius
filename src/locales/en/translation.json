@@ -206,7 +206,7 @@
     "gasUsed": "Gas Used/Limit",
     "gasPrice": "Gas Price",
     "gasFee": "Gas Fee",
-    "nounce": "Nounce",
+    "nonce": "Nonce",
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
@@ -215,7 +215,11 @@
     "select": {
       "original": "Original",
       "utf8": "UTF-8"
-    }
+    },
+    "contract": "Contract",
+    "created": "Created",
+    "contractCreation": "Contract Creation",
+    "for": "For"
   },
   "blocks": {
     "title": "Blocks",
