@@ -161,7 +161,9 @@ export const useTransactionQuery = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/transaction/query', ...params] : null,
+    shouldFetch
+      ? [`/transaction/${params[0].hash}?${params[0].hash}:''}`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -174,7 +176,7 @@ export const useTransferList: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/transfer/list', ...params] : null,
+    shouldFetch ? ['/transfer', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );

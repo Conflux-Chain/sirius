@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
-import { reqConfirmationRiskByHash } from '../../../utils/cfx';
+import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
 import { util as cfxUtil } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { delay } from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
