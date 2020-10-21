@@ -69,7 +69,8 @@
     "charts": "Charts",
     "testnet": "TESTNET",
     "oceanus": "Tethys",
-    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address"
+    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address",
+    "searchPlaceHolderMobile": "Address / Block hash / Epoch"
   },
   "footer": {
     "product": "Product",
