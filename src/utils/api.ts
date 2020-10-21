@@ -23,8 +23,16 @@ export const simpleGetFetcher = async (...args: any[]) => {
   const res = await fetch(appendApiPrefix(url), {
     method: 'get',
   });
-  const json = await res.json();
-  return json;
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    // Attach extra info to the error object.
+    error['info'] = await res.json();
+    error['status'] = res.status;
+    throw error;
+  }
+  return await res.json();
 };
 
 const simplePostFetcher = async (...args: any[]) => {
@@ -37,8 +45,14 @@ const simplePostFetcher = async (...args: any[]) => {
     },
     body: JSON.stringify(params),
   });
-  const json = await res.json();
-  return json;
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the data.');
+    // Attach extra info to the error object.
+    error['info'] = await res.json();
+    error['status'] = res.status;
+    throw error;
+  }
+  return await res.json();
 };
 
 export const useDashboardDag: useApi = (
@@ -119,7 +133,9 @@ export const useBlockQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/block/query', ...params] : null,
+    shouldFetch
+      ? [`/block/${params[0].hash}?${params[0].hash}:''`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -145,7 +161,9 @@ export const useTransactionQuery = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/transaction/query', ...params] : null,
+    shouldFetch
+      ? [`/transaction/${params[0].hash}?${params[0].hash}:''}`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -158,7 +176,7 @@ export const useTransferList: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/transfer/list', ...params] : null,
+    shouldFetch ? ['/transfer', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -180,7 +198,7 @@ export const useTokenList: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/token/list', ...params] : null,
+    shouldFetch ? ['/token', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -189,7 +207,9 @@ export const useTokenQuery: useApi = (params, shouldFetch = true, ...rest) => {
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/token/query', ...params] : null,
+    shouldFetch
+      ? [`/token/${params[0].address}?${params[0].address}:''`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -225,7 +245,9 @@ export const useCMContractQuery: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/contract-manager/contract/query', ...params] : null,
+    shouldFetch
+      ? [`/contract/${params[0].address}?${params[0].address}:''`, ...params]
+      : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -251,20 +273,7 @@ export const useCMContractCreate: useApi = (
   if (!Array.isArray(params)) params = [params];
   // params = useRef(params).current;
   return useSWR(
-    shouldFetch ? ['/contract-manager/contract/create', ...params] : null,
-    rest[1] || simplePostFetcher,
-    rest[0],
-  );
-};
-export const useCMContractUpdate: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  // params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/contract-manager/contract/update', ...params] : null,
+    shouldFetch ? ['/contract', ...params] : null,
     rest[1] || simplePostFetcher,
     rest[0],
   );

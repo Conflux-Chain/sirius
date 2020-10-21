@@ -5,10 +5,10 @@ import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel/Loadable';
 import styled from 'styled-components';
-import { Text } from '../../components/Text/Loadable';
 import { media } from '../../../styles/media';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { blockColunms } from '../../../utils/tableColumns';
 
 interface epochNumber {
   number: string;
@@ -30,62 +30,18 @@ const StyledSubtitleWrapper = styled.p`
   margin: 1.1429rem 0 1.7143rem;
 `;
 
-const renderTextEllipsis = value => (
-  <Text span maxWidth={'5.7143rem'} hoverValue={value}>
-    {value}
-  </Text>
-);
-
 export const Epochs = () => {
   const { number } = useParams<epochNumber>();
   const { t } = useTranslation();
 
   const columnsBlocks: ColumnsType = [
-    {
-      title: t(translations.epochs.table.position),
-      dataIndex: 'blockIndex',
-      key: 'blockIndex',
-      width: 100,
-    },
-    {
-      title: t(translations.epochs.table.hash),
-      dataIndex: 'hash',
-      key: 'hash',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.epochs.table.txns),
-      dataIndex: 'transactionCount',
-      key: 'transactionCount',
-      width: 100,
-      ellipsis: true,
-    },
-    {
-      title: t(translations.epochs.table.miner),
-      dataIndex: 'miner',
-      key: 'miner',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.epochs.table.difficulty),
-      dataIndex: 'gasLimit',
-      key: 'gasLimit',
-      width: 100,
-    },
-    {
-      title: t(translations.epochs.table.gasUsedPercent),
-      dataIndex: 'gasLimit',
-      key: 'gasLimit',
-      width: 100,
-    },
-    {
-      title: t(translations.epochs.table.age),
-      dataIndex: 'syncTimestamp',
-      key: 'syncTimestamp',
-      width: 100,
-    }, // todo, how to calculate age value ?
+    blockColunms.position,
+    blockColunms.hashWithPivot,
+    blockColunms.txns,
+    blockColunms.miner,
+    blockColunms.difficulty,
+    blockColunms.gasUsedPercent,
+    blockColunms.age,
   ];
 
   return (
@@ -97,7 +53,7 @@ export const Epochs = () => {
       <PageHeader>{t(translations.epochs.title)}</PageHeader>
       <StyledSubtitleWrapper>{number}</StyledSubtitleWrapper>
       <TablePanel
-        url={`/block/list?epochNumber=${number}`}
+        url={`/block?epochNumber=${number}`}
         table={{ columns: columnsBlocks, rowKey: 'hash' }}
       />
     </StyledEpochWrapper>

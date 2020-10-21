@@ -1,134 +1,35 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import {
   TabsTablePanel,
   TabLabel,
 } from '../../components/TabsTablePanel/Loadable';
-import { Text } from '../../components/Text/Loadable';
-
-const renderTextEllipsis = (children, text?) => (
-  <Text span maxWidth="5.7143rem" hoverValue={text || children}>
-    {children}
-  </Text>
-);
+import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 
 export function BottomTablePanel({ hash: blockHash }) {
   const { t } = useTranslation();
 
   const columnsTransactions: ColumnsType = [
-    {
-      title: t(translations.blocks.table.transactions.hash),
-      dataIndex: 'hash',
-      key: 'hash',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(
-          <Link to={`/transactions/${text}`}>{text}</Link>,
-          text,
-        ),
-    },
-    {
-      title: t(translations.blocks.table.transactions.from),
-      dataIndex: 'from',
-      key: 'from',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(<Link to={`/address/${text}`}>{text}</Link>, text),
-    },
-    {
-      title: t(translations.blocks.table.transactions.to),
-      dataIndex: 'to',
-      key: 'to',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(<Link to={`/address/${text}`}>{text}</Link>, text),
-    },
-    {
-      title: t(translations.blocks.table.transactions.value),
-      dataIndex: 'value',
-      key: 'value',
-      width: 100,
-    },
-    {
-      title: t(translations.blocks.table.transactions.fee),
-      dataIndex: 'gas',
-      key: 'gas',
-      width: 100,
-    },
-    {
-      title: t(translations.blocks.table.transactions.gasPrice),
-      dataIndex: 'gasPrice',
-      key: 'gasPrice',
-      width: 100,
-    },
-    {
-      title: t(translations.blocks.table.transactions.age),
-      dataIndex: 'timestamp',
-      key: 'timestamp',
-      width: 100,
-    },
+    transactionColunms.hash,
+    transactionColunms.from,
+    transactionColunms.to,
+    transactionColunms.value,
+    transactionColunms.gasFee,
+    transactionColunms.gasPrice,
+    transactionColunms.age,
   ];
 
-  const columnsReferenceBlocks: ColumnsType = [
-    {
-      title: t(translations.blocks.table.referenceBlocks.epoch),
-      dataIndex: 'epochNumber',
-      key: 'epochNumber',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(<Link to={`/epochs/${text}`}>{text}</Link>, text),
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.position),
-      dataIndex: 'blockIndex',
-      key: 'blockIndex',
-      width: 50,
-      render: value => value + 1,
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.hash),
-      dataIndex: 'hash',
-      key: 'hash',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(<Link to={`/blocks/${text}`}>{text}</Link>, text),
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.transactionCount),
-      dataIndex: 'transactionCount',
-      key: 'transactionCount',
-      width: 100,
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.miner),
-      dataIndex: 'miner',
-      key: 'miner',
-      width: 100,
-      render: text =>
-        renderTextEllipsis(<Link to={`/address/${text}`}>{text}</Link>, text),
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.difficulty),
-      dataIndex: 'difficulty',
-      key: 'difficulty',
-      width: 100,
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.gasLimit),
-      dataIndex: 'gasLimit',
-      key: 'gasLimit',
-      width: 150,
-      // todo, miss gas used
-    },
-    {
-      title: t(translations.blocks.table.referenceBlocks.age),
-      dataIndex: 'timestamp',
-      key: 'timestamp',
-      width: 100,
-    },
+  const columnsBlocks: ColumnsType = [
+    blockColunms.epoch,
+    blockColunms.position,
+    blockColunms.hash,
+    blockColunms.txns,
+    blockColunms.miner,
+    blockColunms.difficulty,
+    blockColunms.gasUsedPercent,
+    blockColunms.age,
   ];
 
   const tabs = [
@@ -137,13 +38,15 @@ export function BottomTablePanel({ hash: blockHash }) {
       label: count => (
         <TabLabel
           left={t(translations.blocks.tabs.labelCountBefore)}
-          right={t(translations.blocks.tabs.labelCountAfter)}
+          right={t(translations.blocks.tabs.labelCountAfter, {
+            type: 'blocks',
+          })}
           count={count}
         >
           {t(translations.blocks.tabs.transactions)}
         </TabLabel>
       ),
-      url: `/transaction/list?blockHash=${blockHash}`,
+      url: `/transaction?blockHash=${blockHash}`,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
@@ -154,15 +57,17 @@ export function BottomTablePanel({ hash: blockHash }) {
       label: count => (
         <TabLabel
           left={t(translations.blocks.tabs.labelCountBefore)}
-          right={t(translations.blocks.tabs.labelCountAfter)}
+          right={t(translations.blocks.tabs.labelCountAfter, {
+            type: 'transactions',
+          })}
           count={count}
         >
           {t(translations.blocks.tabs.referenceBlocks)}
         </TabLabel>
       ),
-      url: `/block/list?referredBy=${blockHash}`,
+      url: `/block?referredBy=${blockHash}`,
       table: {
-        columns: columnsReferenceBlocks,
+        columns: columnsBlocks,
         rowKey: 'hash',
       },
     },

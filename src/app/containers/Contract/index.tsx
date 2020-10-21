@@ -18,7 +18,7 @@ export function Contract(props) {
     'type',
     'name',
     'website',
-    'tokenIcon',
+    'token',
     'abi',
     'bytecode',
     'icon',
@@ -32,10 +32,8 @@ export function Contract(props) {
       setLoading(true);
       if (data) {
         setLoading(false);
-        if (data.code === 0) {
-          setContractDetail(data.result);
-          setType('edit');
-        }
+        setContractDetail(data);
+        setType('edit');
       }
     } else {
       setLoading(false);

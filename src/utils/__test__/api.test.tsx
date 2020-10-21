@@ -270,7 +270,9 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useBlockQuery} />);
+      r = TestRenderer.create(
+        <MockComp f={api.useBlockQuery} p={{ hash: 'a' }} />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 
@@ -352,7 +354,9 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useTransactionQuery} />);
+      r = TestRenderer.create(
+        <MockComp f={api.useTransactionQuery} p={{ hash: 'a' }} />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 
@@ -516,7 +520,12 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useTokenQuery} />);
+      r = TestRenderer.create(
+        <MockComp
+          f={api.useTokenQuery}
+          p={[{ address: 0x874db763d8f81da57cdfaf34ce01afc181a11df4 }]}
+        />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 
@@ -639,7 +648,12 @@ describe('api', () => {
       fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
         headers: { 'Content-Type': 'application/json' },
       });
-      r = TestRenderer.create(<MockComp f={api.useCMContractQuery} />);
+      r = TestRenderer.create(
+        <MockComp
+          f={api.useCMContractQuery}
+          p={[{ address: '0x86f7006d534dad36d56d10531ecd2fd2c6eedb78' }]}
+        />,
+      );
       await updateWrapper(r, 0);
       expect(getData).toBeCalledWith({ data: 'json' });
 
@@ -749,47 +763,6 @@ describe('api', () => {
       fetchMock.mockRejectOnce(new Error('err'));
       r = TestRenderer.create(
         <MockComp f={api.useCMContractCreate} p={{ foo: 'bar' }} />,
-      );
-      await updateWrapper(r, 0);
-      expect(getError).toBeCalledWith('err');
-    });
-  });
-  describe('useCMContractUpdate', () => {
-    it('should return the data', async () => {
-      let r: TestRenderer.ReactTestRenderer;
-
-      // no params
-      fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      r = TestRenderer.create(<MockComp f={api.useCMContractUpdate} />);
-      await updateWrapper(r, 0);
-      expect(getData).toBeCalledWith({ data: 'json' });
-
-      // json
-      fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      r = TestRenderer.create(
-        <MockComp f={api.useCMContractUpdate} p={{ foo: 'bar' }} />,
-      );
-      await updateWrapper(r, 0);
-      expect(getData).toBeCalledWith({ data: 'json' });
-
-      // array params
-      fetchMock.mockOnce(JSON.stringify({ data: 'json' }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      r = TestRenderer.create(
-        <MockComp f={api.useCMContractUpdate} p={[{ foo: 'bar' }]} />,
-      );
-      await updateWrapper(r, 0);
-      expect(getData).toBeCalledWith({ data: 'json' });
-
-      // err
-      fetchMock.mockRejectOnce(new Error('err'));
-      r = TestRenderer.create(
-        <MockComp f={api.useCMContractUpdate} p={{ foo: 'bar' }} />,
       );
       await updateWrapper(r, 0);
       expect(getError).toBeCalledWith('err');
