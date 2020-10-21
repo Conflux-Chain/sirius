@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Link  /> should match snapshot 1`] = `
+<a
+  class="jsx-1150746702 link "
+  href="/tokens"
+>
+  content
+</a>
+`;
