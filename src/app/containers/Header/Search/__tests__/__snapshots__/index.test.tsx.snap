@@ -37,7 +37,56 @@ exports[`<Search  /> should match snapshot 1`] = `
 
 @media (max-width:1024px) {
   .c0 {
-    display: none;
+    max-width: unset;
+    left: 20rem;
+    right: 5rem;
+    position: fixed;
+    top: 0.68rem;
+    z-index: 2000;
+    padding: 0;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+
+  .c0 .header-search-bar.input-container {
+    height: 2.67rem;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper {
+    background-color: rgba(0,84,254,0.04);
+    border: 0;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    position: absolute;
+    left: 1.33rem;
+    right: 1.33rem;
+    top: 5.67rem;
+    z-index: 100;
   }
 }
 
@@ -56,7 +105,7 @@ exports[`<Search  /> should match snapshot 1`] = `
         <input
           autocomplete="off"
           class="jsx-1159070929 right-icon"
-          placeholder="Epoch / Block hash / Txn has / Address"
+          placeholder="Address / Block hash / Epoch"
           type="text"
         />
         <div

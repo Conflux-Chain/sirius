@@ -61,7 +61,8 @@
     "charts": "Charts",
     "testnet": "TESTNET",
     "oceanus": "OCEANUS",
-    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address"
+    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address",
+    "searchPlaceHolderMobile": "Address / Block hash / Epoch"
   },
   "packing": {
     "title": "Plz wait, your transaction is packing",
