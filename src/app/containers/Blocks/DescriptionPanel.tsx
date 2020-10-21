@@ -6,7 +6,7 @@ import { Card } from '@cfxjs/react-ui';
 import { useBlockQuery } from '../../../utils/api';
 import { Description } from '../../components/Description/Loadable';
 import { CopyButton } from '../../components/CopyButton/Loadable';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/Link/Loadable';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
@@ -85,7 +85,7 @@ export function DescriptionPanel({ hash: blockHash }) {
         </Description>
         <Description title={t(translations.blocks.epoch)}>
           <SkeletonContainer shown={loading}>
-            {<Link to={`/epoch/${epochNumber}`}>{epochNumber}</Link>}
+            {<Link href={`/epoch/${epochNumber}`}>{epochNumber}</Link>}
           </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.difficulty)}>
@@ -95,7 +95,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           <SkeletonContainer shown={loading}>
             {
               <>
-                <Link to={`/address/${miner}`}>{miner}</Link>{' '}
+                <Link href={`/address/${miner}`}>{miner}</Link>{' '}
                 <CopyButton copyText={miner} />
               </>
             }
@@ -129,7 +129,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           <SkeletonContainer shown={loading}>
             {
               <>
-                <Link to={`/blocks/${parentHash}`}>{parentHash}</Link>{' '}
+                <Link href={`/blocks/${parentHash}`}>{parentHash}</Link>{' '}
                 <CopyButton copyText={parentHash} />
               </>
             }

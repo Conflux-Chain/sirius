@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import { useBreakpoint, media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';

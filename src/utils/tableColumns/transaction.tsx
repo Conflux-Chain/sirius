@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { Status } from '../../app/components/Status/Loadable';
 

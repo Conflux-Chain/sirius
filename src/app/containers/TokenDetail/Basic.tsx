@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import numeral from 'numeral';
 
 export interface BasicProps {
