@@ -8,6 +8,7 @@ import { translations } from '../../../locales/i18n';
 import { Text } from './../../components/Text/Loadable';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
+import { SmallChart } from '../../components/Chart/Loadable';
 
 const renderTextEllipsis = value => (
   <Text span maxWidth="5.7143rem" hoverValue={value}>
@@ -154,7 +155,12 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
-        <Top>Top part</Top>
+        <Top>
+          <SmallChart width={238} />
+          <SmallChart width={238} indicator="hashRate" />
+          <SmallChart width={165} indicator="tps" />
+          <SmallChart width={165} indicator="difficulty" />
+        </Top>
         <Bottom>
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
