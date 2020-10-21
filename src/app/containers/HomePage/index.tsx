@@ -156,9 +156,9 @@ export function HomePage() {
       </Helmet>
       <Main>
         <Top>
-          {/* <SmallChart width={238} />
+          <SmallChart width={238} />
           <SmallChart width={238} indicator="hashRate" />
-          <SmallChart width={165} indicator="tps" /> */}
+          <SmallChart width={165} indicator="tps" />
           <SmallChart width={165} indicator="difficulty" />
         </Top>
         <Bottom>
