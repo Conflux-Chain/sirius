@@ -23,7 +23,7 @@ import {
   reqTokenList,
 } from '../../../utils/httpRequest';
 import { delay, getAddressType, hex2utf8 } from '../../../utils';
-import { devidedByDecimals } from '../../../utils/format';
+import { devidedByDecimals } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';

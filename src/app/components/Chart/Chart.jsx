@@ -1,26 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import useSWR from 'swr';
+import React, { useRef, useEffect } from 'react';
+
+import usePlot from './usePlot';
 import createDraw from './draw';
-import { appendApiPrefix } from 'utils/api';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { PIXEL_RATIO } from './draw';
 
 const RECT_HEIGHT = 40;
 const RECT_WIDTH = 90;
-
-const PIXEL_RATIO = (function () {
-  var ctx = document.createElement('canvas').getContext('2d'),
-    dpr = window.devicePixelRatio || 1,
-    bsr =
-      ctx.webkitBackingStorePixelRatio ||
-      ctx.mozBackingStorePixelRatio ||
-      ctx.msBackingStorePixelRatio ||
-      ctx.oBackingStorePixelRatio ||
-      ctx.backingStorePixelRatio ||
-      1;
-
-  return dpr / bsr;
-})();
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -148,27 +135,6 @@ function Draw({
       {children}
     </CanvasContainer>
   );
-}
-
-function usePlot(defaultDuration = 'day') {
-  const [duration, setDuration] = useState(defaultDuration);
-  const { data, error } = useSWR(`/dashboard/plot?duration=${duration}`, url =>
-    fetch(appendApiPrefix(url)).then(response => response.json()),
-  );
-  let listData;
-  if (data) {
-    const {
-      result: { list },
-    } = data;
-    listData = list;
-  }
-  return {
-    plot: listData,
-    isLoading: !error && !data,
-    isError: error,
-    setDuration,
-    duration,
-  };
 }
 
 const Container = styled.div`

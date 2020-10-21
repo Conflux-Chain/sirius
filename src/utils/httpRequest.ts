@@ -1,7 +1,7 @@
 import superagent from 'superagent';
 import { cfx, cfxUtil } from './cfx';
 import { delay } from './index';
-import { transferRisk } from './format';
+import { transferRisk } from './index';
 export const apiPrefix = '/api';
 export const sendRequest = config => {
   const reqType = config.type || 'GET';
