@@ -214,12 +214,14 @@
     "inputData": "Input Data",
     "select": {
       "original": "Original",
-      "utf8": "UTF-8"
+      "utf8": "UTF-8",
+      "decodeInputData": "Decode Input Data"
     },
     "contract": "Contract",
     "created": "Created",
     "contractCreation": "Contract Creation",
-    "for": "For"
+    "for": "For",
+    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation"
   },
   "blocks": {
     "title": "Blocks",
