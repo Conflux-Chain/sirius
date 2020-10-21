@@ -12,15 +12,6 @@ const renderTextEllipsis = value => (
   </Text>
 );
 
-const StyledTransactionHashWrapper = styled.span`
-  display: flex;
-  align-items: center;
-
-  .status {
-    margin-right: 0.5714rem;
-  }
-`;
-
 export const hash = {
   title: (
     <Translation>
@@ -115,3 +106,12 @@ export const age = {
   key: 'syncTimestamp',
   width: 1,
 };
+
+const StyledTransactionHashWrapper = styled.span`
+  display: flex;
+  align-items: center;
+
+  .status {
+    margin-right: 0.5714rem;
+  }
+`;

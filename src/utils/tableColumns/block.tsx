@@ -11,17 +11,6 @@ const renderTextEllipsis = value => (
   </Text>
 );
 
-const StyledEpochWrapper = styled.span`
-  display: flex;
-  align-items: center;
-
-  .img {
-    width: 3rem;
-    height: 1.4286rem;
-    margin-left: 0.5714rem;
-  }
-`;
-
 export const epoch = {
   title: (
     <Translation>{t => t(translations.general.table.block.epoch)}</Translation>
@@ -172,3 +161,14 @@ export const gasLimit = {
   key: 'gasLimit',
   width: 1,
 };
+
+const StyledEpochWrapper = styled.span`
+  display: flex;
+  align-items: center;
+
+  .img {
+    width: 3rem;
+    height: 1.4286rem;
+    margin-left: 0.5714rem;
+  }
+`;

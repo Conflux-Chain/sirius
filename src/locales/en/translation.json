@@ -67,11 +67,6 @@
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "address": "addresses",
     "transferList": {
-      "txnHash": "txnHash",
-      "age": "Age",
-      "from": "From",
-      "to": "To",
-      "quantity": "Quantity",
       "searchPlaceHolder": "Txn hash / Holder address",
       "searchError": "search value is valid",
       "balance": "Balance: "
@@ -118,7 +113,12 @@
         "transfer": "Transfer",
         "totalSupply": "Total Supply",
         "holders": "Holders",
-        "contract": "Contract"
+        "contract": "Contract",
+        "txnHash": "txnHash",
+        "age": "Age",
+        "from": "From",
+        "to": "To",
+        "quantity": "Quantity"
       }
     },
     "pagination": {
