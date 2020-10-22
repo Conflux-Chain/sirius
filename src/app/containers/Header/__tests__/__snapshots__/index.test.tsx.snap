@@ -694,7 +694,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    OCEANUS
+                    Tethys
                   </a>
                 </span>
               </div>
@@ -1525,7 +1525,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    OCEANUS
+                    Tethys
                   </a>
                 </span>
               </div>
