@@ -105,7 +105,7 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
   }
 
   if (data && !error) {
-    tableData = data.result?.list || table.data;
+    tableData = data?.list || table.data;
   }
 
   return (

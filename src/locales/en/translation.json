@@ -28,42 +28,13 @@
     "labelCountBefore": "A total of",
     "labelCountAfter": "{{type}} found",
     "blocks": "Blocks",
-    "transactions": "Transactions",
-    "table": {
-      "block": {
-        "epoch": "Epoch",
-        "position": "Position",
-        "txns": "Txns",
-        "miner": "Miner",
-        "avgGasPrice": "Avg.Gas Price",
-        "gasUsedPercent": "Gas Used/Limit",
-        "reward": "Reward",
-        "age": "Age"
-      },
-      "transactions": {
-        "hash": "Hash",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "gasPrice": "Gas Price",
-        "gasFee": "Gas Fee",
-        "age": "Age"
-      }
-    }
+    "transactions": "Transactions"
   },
   "tokens": {
     "title": "Tokens",
     "description": "Tokens",
     "tipCountBefore": "Showing",
-    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
-    "table": {
-      "number": "Number",
-      "token": "Token",
-      "transfer": "Transfer",
-      "totalSupply": "Total Supply",
-      "holders": "Holders",
-      "contract": "Contract"
-    }
+    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)"
   },
   "header": {
     "home": "Home",
@@ -94,12 +65,8 @@
     "decimals": "Decimals",
     "transfers": "Transfers",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
+    "address": "addresses",
     "transferList": {
-      "txnHash": "txnHash",
-      "age": "Age",
-      "from": "From",
-      "to": "To",
-      "quantity": "Quantity",
       "searchPlaceHolder": "Txn hash / Holder address",
       "searchError": "search value is valid",
       "balance": "Balance: "
@@ -117,7 +84,42 @@
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "table": {
-      "noData": "No data."
+      "noData": "No data.",
+      "block": {
+        "epoch": "Epoch",
+        "position": "Position",
+        "txns": "Txns",
+        "hash": "Hash",
+        "miner": "Miner",
+        "avgGasPrice": "Avg.Gas Price",
+        "gasUsedPercent": "Gas Used/Limit",
+        "reward": "Reward",
+        "age": "Age",
+        "difficulty": "Difficulty",
+        "gasLimit": "Gas Limit"
+      },
+      "transaction": {
+        "hash": "Hash",
+        "from": "From",
+        "to": "To",
+        "value": "Value",
+        "gasPrice": "Gas Price",
+        "gasFee": "Gas Fee",
+        "age": "Age"
+      },
+      "token": {
+        "number": "Number",
+        "token": "Token",
+        "transfer": "Transfer",
+        "totalSupply": "Total Supply",
+        "holders": "Holders",
+        "contract": "Contract",
+        "txnHash": "txnHash",
+        "age": "Age",
+        "from": "From",
+        "to": "To",
+        "quantity": "Quantity"
+      }
     },
     "pagination": {
       "labelPageSizeBefore": "Show",
@@ -204,7 +206,7 @@
     "gasUsed": "Gas Used/Limit",
     "gasPrice": "Gas Price",
     "gasFee": "Gas Fee",
-    "nounce": "Nounce",
+    "nonce": "Nonce",
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
@@ -213,7 +215,11 @@
     "select": {
       "original": "Original",
       "utf8": "UTF-8"
-    }
+    },
+    "contract": "Contract",
+    "created": "Created",
+    "contractCreation": "Contract Creation",
+    "for": "For"
   },
   "blocks": {
     "title": "Blocks",
@@ -238,27 +244,6 @@
       "referenceBlocks": "Reference Blocks",
       "labelCountBefore": "A total of",
       "labelCountAfter": "{{type}} found"
-    },
-    "table": {
-      "transactions": {
-        "hash": "Hash",
-        "from": "From",
-        "to": "To",
-        "value": "Value",
-        "fee": "Fee",
-        "gasPrice": "Gas Price",
-        "age": "Age"
-      },
-      "referenceBlocks": {
-        "epoch": "Epoch",
-        "position": "Position",
-        "hash": "Hash",
-        "transactionCount": "Txns",
-        "miner": "Miner",
-        "difficulty": "Difficulty",
-        "gasLimit": "Gas Used/Gas Limit",
-        "age": "Age"
-      }
     }
   },
   "epochs": {

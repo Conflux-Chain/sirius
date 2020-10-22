@@ -7,7 +7,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import { useBreakpoint, media } from 'styles/media';
 import { Footer as FooterComp } from '../../components/Footer/Loadable';
 import { TextLogo } from '../../components/TextLogo/Loadable';

@@ -1,132 +1,47 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import { useBreakpoint, media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Text } from './../../components/Text/Loadable';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 
-const renderTextEllipsis = value => (
-  <Text span maxWidth="5.7143rem" hoverValue={value}>
-    {value}
-  </Text>
-);
+import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 
 export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
   const columnsBlocks: ColumnsType = [
-    {
-      title: t(translations.blocksAndTransactions.table.block.epoch),
-      dataIndex: 'epochNumber',
-      key: 'epochNumber',
-      width: 100,
-      render: renderTextEllipsis,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.block.position),
-      dataIndex: 'blockIndex',
-      key: 'blockIndex',
-      width: 100,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.block.txns),
-      dataIndex: 'transactionCount',
-      key: 'transactionCount',
-      width: 100,
-      ellipsis: true,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.block.miner),
-      dataIndex: 'miner',
-      key: 'miner',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.block.avgGasPrice),
-      dataIndex: 'gas',
-      key: 'gas',
-      width: 100,
-    }, // todo, no gas price
-    {
-      title: t(translations.blocksAndTransactions.table.block.gasUsedPercent),
-      dataIndex: 'gasLimit',
-      key: 'gasLimit',
-      width: 100,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.block.reward),
-      dataIndex: 'reward',
-      key: 'reward',
-      width: 100,
-    }, // todo, no reward
-    {
-      title: t(translations.blocksAndTransactions.table.block.age),
-      dataIndex: 'syncTimestamp',
-      key: 'syncTimestamp',
-      width: 100,
-    }, // todo, how to calculate age value ?
+    blockColunms.epoch,
+    blockColunms.position,
+    blockColunms.txns,
+    blockColunms.hash,
+    blockColunms.miner,
+    blockColunms.avgGasPrice,
+    blockColunms.gasUsedPercent,
+    blockColunms.reward,
+    blockColunms.age,
   ];
 
   const columnsTransactions: ColumnsType = [
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.hash),
-      dataIndex: 'hash',
-      key: 'hash',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.from),
-      dataIndex: 'from',
-      key: 'from',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.to),
-      dataIndex: 'to',
-      key: 'to',
-      width: 100,
-      render: value => renderTextEllipsis(value),
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.value),
-      dataIndex: 'value',
-      key: 'value',
-      width: 100,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.gasPrice),
-      dataIndex: 'gasPrice',
-      key: 'gasPrice',
-      width: 100,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.gasFee),
-      dataIndex: 'gas',
-      key: 'gas',
-      width: 100,
-    },
-    {
-      title: t(translations.blocksAndTransactions.table.transactions.age),
-      dataIndex: 'syncTimestamp',
-      key: 'syncTimestamp',
-      width: 100,
-    },
+    transactionColunms.hash,
+    transactionColunms.from,
+    transactionColunms.to,
+    transactionColunms.value,
+    transactionColunms.gasPrice,
+    transactionColunms.gasFee,
+    transactionColunms.age,
   ];
 
   const tabs = [
     {
       value: 'blocks',
       label: t(translations.blocksAndTransactions.blocks),
-      url: '/block/list',
+      url: '/block',
       pagination: false,
       table: {
         columns: columnsBlocks,
@@ -136,7 +51,7 @@ export function HomePage() {
     {
       value: 'transaction',
       label: t(translations.blocksAndTransactions.transactions),
-      url: '/transaction/list',
+      url: '/transaction',
       pagination: false,
       table: {
         columns: columnsTransactions,
