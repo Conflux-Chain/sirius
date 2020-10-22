@@ -5,9 +5,17 @@ import styled from 'styled-components/macro';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { Status } from '../../app/components/Status/Loadable';
+import { CountDown } from '../../app/components/CountDown/Loadable';
+import {
+  formatString,
+  formatNumber,
+  getPercent,
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '../../utils/';
 
-const renderTextEllipsis = value => (
-  <Text span maxWidth="5.7143rem" hoverValue={value}>
+const renderText = (value, hoverValue?) => (
+  <Text span hoverValue={hoverValue || value}>
     {value}
   </Text>
 );
@@ -25,7 +33,9 @@ export const hash = {
     return (
       <StyledTransactionHashWrapper>
         {row.status !== 0 && <Status type={row.status} variant="dot" />}
-        <Link href={`/transactions/${value}`}>{renderTextEllipsis(value)}</Link>
+        <Link href={`/transactions/${value}`}>
+          {renderText(formatString(value, 'hash'), value)}
+        </Link>
       </StyledTransactionHashWrapper>
     );
   },
@@ -41,7 +51,9 @@ export const from = {
   key: 'from',
   width: 1,
   render: value => (
-    <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/address/${value}`}>
+      {renderText(formatString(value, 'address'), value)}
+    </Link>
   ),
 };
 
@@ -56,7 +68,9 @@ export const to = {
   width: 1,
   render: value =>
     value ? (
-      <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+      <Link href={`/address/${value}`}>
+        {renderText(formatString(value, 'address'), value)}
+      </Link>
     ) : (
       '--'
     ),
@@ -71,7 +85,7 @@ export const value = {
   dataIndex: 'value',
   key: 'value',
   width: 1,
-  render: value => `${value} CFX`,
+  render: value => (value ? `${fromDripToCfx(value)}` : '--'),
 };
 
 export const gasPrice = {
@@ -83,6 +97,7 @@ export const gasPrice = {
   dataIndex: 'gasPrice',
   key: 'gasPrice',
   width: 1,
+  render: fromDripToGdrip,
 };
 
 export const gasFee = {
@@ -94,6 +109,7 @@ export const gasFee = {
   dataIndex: 'gas',
   key: 'gas',
   width: 1,
+  render: formatNumber,
 };
 
 export const age = {
@@ -105,6 +121,7 @@ export const age = {
   dataIndex: 'syncTimestamp',
   key: 'syncTimestamp',
   width: 1,
+  render: value => <CountDown from={value} />,
 };
 
 const StyledTransactionHashWrapper = styled.span`

@@ -9,21 +9,27 @@ import { isAddress, isHash } from '../util';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
+import { CountDown } from '../../app/components/CountDown/Loadable';
+import {
+  formatString,
+  formatNumber,
+  getPercent,
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '../../utils/';
 
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
 }
 
-const renderTextEllipsis = (value, hoverValue?) => {
-  return (
-    <Text span maxWidth="5.7143rem" hoverValue={hoverValue || value}>
-      {value}
-    </Text>
-  );
-};
+const renderText = (value, hoverValue?) => (
+  <Text span hoverValue={hoverValue || value}>
+    {value}
+  </Text>
+);
 
-const renderFilterableAddress = (value, row, index, type: string) => {
+const renderFilterableAddress = (value, row, index, type?: string) => {
   const { accountAddress, transactionHash } = queryString.parse(
     window.location.search,
   );
@@ -33,8 +39,14 @@ const renderFilterableAddress = (value, row, index, type: string) => {
   return (
     <FromWrap>
       {filter === value
-        ? renderTextEllipsis(value)
-        : renderTextEllipsis(<LinkWidthFilter href={value} />, value)}
+        ? renderText(formatString(value, 'address'), value)
+        : renderText(
+            <LinkWidthFilter
+              href={value}
+              children={formatString(value, 'address')}
+            />,
+            value,
+          )}
       {type === 'from' && (
         <ImgWrap
           src={
@@ -50,7 +62,7 @@ const renderFilterableAddress = (value, row, index, type: string) => {
   );
 };
 
-const LinkWidthFilter = ({ href }) => {
+const LinkWidthFilter = ({ href, children }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -86,7 +98,7 @@ const LinkWidthFilter = ({ href }) => {
         onFilter(href);
       }}
     >
-      {href}
+      {children}
     </Link>
   );
 };
@@ -127,6 +139,7 @@ export const transfer = {
   ),
   dataIndex: 'transferCount',
   key: 'transferCount',
+  render: formatNumber,
 };
 
 export const totalSupply = {
@@ -138,7 +151,7 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
-  render: value => renderTextEllipsis(numeral(value).format('0,0')),
+  render: value => renderText(formatString(formatNumber(value)), value),
 };
 
 export const holders = {
@@ -150,7 +163,7 @@ export const holders = {
   ),
   dataIndex: 'accountTotal',
   key: 'accountTotal',
-  render: value => numeral(value).format('0,0'),
+  render: formatNumber,
 };
 
 export const contract = {
@@ -163,7 +176,9 @@ export const contract = {
   dataIndex: 'address',
   key: 'address',
   render: value => (
-    <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/address/${value}`}>
+      {renderText(formatString(value, 'address'))}
+    </Link>
   ),
 };
 
@@ -178,7 +193,9 @@ export const txnHash = {
   dataIndex: 'transactionHash',
   key: 'transactionHash',
   render: value => (
-    <Link href={`/transactions/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/transactions/${value}`}>
+      {renderText(formatString(value, 'hash'))}
+    </Link>
   ),
 };
 
@@ -189,6 +206,7 @@ export const age = {
   ),
   dataIndex: 'syncTimestamp',
   key: 'age',
+  render: value => <CountDown from={value} />,
 };
 
 export const quantity = {
@@ -200,7 +218,7 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: value => renderTextEllipsis(numeral(value).format('0,0')), // todo, big number will transfer to NaN
+  render: fromDripToGdrip,
 };
 
 export const to = {

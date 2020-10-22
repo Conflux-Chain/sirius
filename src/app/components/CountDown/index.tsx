@@ -27,5 +27,9 @@ export const CountDown = ({ from, to }: CountDownProps) => {
     return acc;
   }, '');
 
-  return <>{label}</>;
+  return (
+    <>
+      {label} {t(translations.general.countdown.ago)}
+    </>
+  );
 };

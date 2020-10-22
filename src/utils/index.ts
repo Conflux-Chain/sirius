@@ -104,7 +104,7 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
 
 /**
  * 格式化数字
- * @param { number } number 数字或字符串
+ * @param { number | string } number 数字或字符串，字符串用来处理 big int
  * @return { string } 数字 n 的整数部分超过3位后，根据千分符使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
  */
 export const formatNumber = (num: number | string) => {
@@ -135,6 +135,7 @@ export const formatString = (
     default:
       result = getEllipsStr(str, 12, 0);
   }
+  return result;
 };
 
 /**
@@ -142,22 +143,67 @@ export const formatString = (
  * @param {string | number} from syncTimestamp
  * @param {string | number} to current serverTimestamp or current browserTimestamp
  */
-export const getDuration = (from: number, pTo?: number) => {
-  const to = pTo || +new Date();
+export const getDuration = (pFrom: number, pTo?: number) => {
+  try {
+    const to = pTo || +new Date();
+    const from = pFrom * 1000;
 
-  if (from > to) {
-    console.log('invalid timestamp pair');
+    if (from > to) {
+      throw new Error('invalid timestamp pair');
+    }
+
+    const fullDay = dayjs(to).diff(from, 'day');
+    const fullHour = dayjs(to).diff(from, 'hour');
+    const fullMinute = dayjs(to).diff(from, 'minute');
+
+    const day = dayjs(to).diff(from, 'day');
+    const hour = dayjs(to).subtract(fullDay, 'day').diff(from, 'hour');
+    const minute = dayjs(to).subtract(fullHour, 'hour').diff(from, 'minute');
+    const second = dayjs(to)
+      .subtract(fullMinute, 'minute')
+      .diff(from, 'second');
+
+    return [day, hour, minute, second];
+  } catch (e) {
     return [0, 0, 0, 0];
   }
+};
 
-  const fullDay = dayjs(to).diff(from, 'day');
-  const fullHour = dayjs(to).diff(from, 'hour');
-  const fullMinute = dayjs(to).diff(from, 'minute');
+export const convertToValueorFee = bigNumber => {
+  const result = new BigNumber(bigNumber).dividedBy(10 ** 18);
+  if (result.toNumber() === 0) return '0';
+  if (result.toNumber() < 0.00001) return `< 0.00001`;
+  return `${result.toString(10)}`;
+};
 
-  const day = dayjs(to).diff(from, 'day');
-  const hour = dayjs(to).subtract(fullDay, 'day').diff(from, 'hour');
-  const minute = dayjs(to).subtract(fullHour, 'hour').diff(from, 'minute');
-  const second = dayjs(to).subtract(fullMinute, 'minute').diff(from, 'second');
+export const fromDripToCfx = (num: number | string) => {
+  if (!num) return 0;
+  const bn = new BigNumber(num).dividedBy(10 ** 18);
+  return bn.toNumber() < 0.001
+    ? '< 0.001 CFX'
+    : formatNumber(bn.toNumber()) + ' CFX';
+};
 
-  return [day, hour, minute, second];
+export const fromDripToGdrip = (num: number | string) => {
+  if (!num) return 0;
+  const bn = new BigNumber(num).dividedBy(10 ** 9);
+  return bn.toNumber() < 0.001
+    ? '< 0.001 Gdrip'
+    : formatNumber(bn.toNumber()) + ' Gdrip';
+};
+
+export const fromGdripToDrip = (num: number | string) =>
+  new BigNumber(num).multipliedBy(10 ** 9);
+
+export const fromCfxToDrip = (num: number | string) =>
+  new BigNumber(num).multipliedBy(10 ** 18);
+
+export const getPercent = (
+  divisor: number | string,
+  dividend: number | string,
+) => {
+  if (Number(dividend) === 0) return 0 + '%';
+  const bnDivisor = new BigNumber(divisor);
+  const bnDividend = new BigNumber(dividend);
+  return formatNumber(bnDivisor.dividedBy(bnDividend).toNumber()) + '%';
 };
