@@ -264,5 +264,22 @@
       "gasUsedPercent": "Gas Used/Limit",
       "age": "Age"
     }
+  },
+
+  "tps": {
+    "title": "TPS",
+    "description": "blocks produced.."
+  },
+  "blockTime": {
+    "title": "Block Time",
+    "description": "blocks produced.."
+  },
+  "difficulty": {
+    "title": "Difficulty",
+    "description": "blocks produced.."
+  },
+  "hashRate": {
+    "title": "Hash Rate",
+    "description": "blocks produced.."
   }
 }

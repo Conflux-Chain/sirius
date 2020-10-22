@@ -118,6 +118,8 @@ const Title = styled.div`
 const Value = styled.div`
   color: #314449;
   font-weight: bold;
+  position: relative;
+  z-index: 1;
   font-size: ${props => (props.small ? '18px' : '24px')};
   margin-top: ${props => (props.small ? '10%' : '0')};
 `;
