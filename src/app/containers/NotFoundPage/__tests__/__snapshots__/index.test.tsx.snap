@@ -118,7 +118,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
       class="c5"
       href="/"
     >
-      GO TO HOMEPAGE
+      Go to homepage
     </a>
   </div>
 </div>

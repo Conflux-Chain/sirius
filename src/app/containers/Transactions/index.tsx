@@ -5,7 +5,7 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
-import { Card, Textarea, Select } from '@cfxjs/react-ui';
+import { Card, Select } from '@cfxjs/react-ui';
 import { Description } from '../../components/Description/Loadable';
 import { useParams } from 'react-router-dom';
 // import { useTransactionQuery,useCMContractQuery,useTransferList } from '../../../utils/api';
@@ -15,6 +15,7 @@ import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Text } from '../../components/Text/Loadable';
+import { InputData } from '../../components/InputData/Loadable';
 import {
   reqTransactionDetail,
   reqContract,
@@ -22,7 +23,7 @@ import {
   reqConfirmationRiskByHash,
   reqTokenList,
 } from '../../../utils/httpRequest';
-import { delay, getAddressType, hex2utf8 } from '../../../utils';
+import { delay, getAddressType } from '../../../utils';
 import { devidedByDecimals } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
@@ -34,17 +35,16 @@ export const Transactions = () => {
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState({});
   const [decodedData, setDecodedData] = useState({});
-  const [innerData, setInnerData] = useState('');
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [tokenList, setTokenList] = useState([]);
+  const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
   let loading = false;
   // const { data, error } = useTransactionQuery({ hash });
   const [dataType, setDataType] = useState('original');
-
   /**
    * ISSUE LIST:
    * - executed Epoch: ? - backend will provide later
@@ -94,6 +94,8 @@ export const Transactions = () => {
     gasUsed,
     // @ts-ignore
     status,
+    // @ts-ignore
+    data,
   } = transactionDetail || {};
   const getConfirmRisk = async blockHash => {
     let looping = true;
@@ -109,23 +111,6 @@ export const Transactions = () => {
         await delay(10 * 1000);
       }
     }
-  };
-  const getStrByType = (byteCode, type, decodedDataStr) => {
-    let str = '';
-    switch (type) {
-      case 'original':
-        str = byteCode;
-        break;
-      case 'utf8':
-        str = hex2utf8(byteCode);
-        break;
-      case 'decodeInputData':
-        str = decodedDataStr;
-        break;
-      default:
-        break;
-    }
-    return str;
   };
   const fetchTxDetail = useCallback(
     txnhash => {
@@ -179,12 +164,7 @@ export const Transactions = () => {
               transacionData: txDetailDta.data,
             });
             setDecodedData(decodedData);
-            const str = getStrByType(
-              txDetailDta['data'],
-              'original',
-              JSON.stringify(decodedData),
-            );
-            setInnerData(str);
+            setDataTypeList(['original', 'utf8', 'decodeInputData']);
             const resultTransferList = transferListReponse;
             const list = resultTransferList['list'];
             setTransferList(list);
@@ -204,12 +184,6 @@ export const Transactions = () => {
 
   const handleDataTypeChange = type => {
     setDataType(type);
-    const str = getStrByType(
-      transactionDetail['data'],
-      type,
-      JSON.stringify(decodedData),
-    );
-    setInnerData(str);
   };
   useEffect(() => {
     fetchTxDetail(routeHash);
@@ -432,9 +406,18 @@ export const Transactions = () => {
           <Description title={t(translations.transactions.chainID)}>
             {chainId}
           </Description>
-          <Description title={t(translations.transactions.inputData)} noBorder>
+          <Description
+            title={t(translations.transactions.inputData)}
+            noBorder
+            className="inputLine"
+          >
+            <InputData
+              byteCode={data}
+              inputType={dataType}
+              decodedDataStr={JSON.stringify(decodedData)}
+            ></InputData>
             {/* todo, need to be formatted */}
-            <StyledTextareaWrapper>
+            {/* <StyledTextareaWrapper>
               <Textarea
                 className="sirius-Transactions-Textarea"
                 width="100%"
@@ -444,19 +427,27 @@ export const Transactions = () => {
                 minHeight="118px"
                 variant="solid"
               />
-            </StyledTextareaWrapper>
+            </StyledTextareaWrapper> */}
             {/* todo, need to replace with styled select */}
             <Select
               value={dataType}
               onChange={handleDataTypeChange}
+              disableMatchWidth
               size="small"
             >
-              <Select.Option value="original">
+              {dataTypeList.map(dataTypeItem => {
+                return (
+                  <Select.Option value={dataTypeItem}>
+                    {`${t(translations.transactions.select[dataTypeItem])}`}
+                  </Select.Option>
+                );
+              })}
+              {/* <Select.Option value="original">
                 {t(translations.transactions.select.original)}
               </Select.Option>
               <Select.Option value="utf8">
                 {t(translations.transactions.select.utf8)}
-              </Select.Option>
+              </Select.Option> */}
             </Select>
           </Description>
         </Card>
@@ -466,6 +457,11 @@ export const Transactions = () => {
 };
 
 const StyledCardWrapper = styled.div`
+  .inputLine {
+    .tooltip-wrapper {
+      width: 100% !important;
+    }
+  }
   .card.sirius-Transactions-card {
     .content {
       padding: 0 18px;
@@ -505,14 +501,5 @@ const StyledTransactionsWrapper = styled.div`
 
   ${media.s} {
     padding-bottom: 0;
-  }
-`;
-
-const StyledTextareaWrapper = styled.span`
-  .sirius-Transactions-Textarea {
-    textarea {
-      color: #a1acbb;
-    }
-    margin-bottom: 0.8571rem;
   }
 `;
