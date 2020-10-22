@@ -9,16 +9,31 @@
     "site": "官方网站",
     "contractIcon": "合约图标",
     "remove": "移除",
+    "tokenTracker": "代币搜索器",
     "tokenIcon": "代币图标",
     "sourceCode": "源码",
     "abi": "合约ABI",
     "enterPassword": "请输入管理员口令",
+    "contractAdmin": "合约管理者",
+    "creator": "合约创建者",
+    "storageSponsor": "存储费赞助",
+    "gasSponsor": "燃气费赞助",
     "create": {
       "title": "合约创建"
     },
     "edit": {
       "title": "合约编辑"
     }
+  },
+  "contractDetail": {
+    "title": "合约详情",
+    "content": "合约详情",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。"
+  },
+  "addressDetail": {
+    "minedBlocks": "挖出区块",
+    "title": "地址详情",
+    "content": "地址详情"
   },
   "blocksAndTransactions": {
     "title": "出块和交易",
@@ -96,8 +111,23 @@
     }
   },
   "general": {
+    "viewMore": "查看更多",
     "viewAll": "查看所有交易",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
+    "address": {
+      "editContract": "点击编辑合同",
+      "website": "点击进入官方网站",
+      "address": "地址"
+    },
+    "loading": "加载中...",
+    "contract": "合约",
+    "balance": "余额",
+    "token": "代币",
+    "storageStaking": "抵押存储",
+    "nonce": "随机数",
+    "transaction": "交易",
+    "transactions": "交易",
+    "tokenTxns": "代币交易",
     "table": {
       "noData": "无数据",
       "block": {
@@ -143,7 +173,7 @@
       "labelJumperAfter": "页"
     },
     "copyButton": {
-      "copyToClipboard": "复制到粘贴板",
+      "copyToClipboard": "复制到剪切板",
       "success": "已复制",
       "failed": "复制失败"
     },
@@ -153,6 +183,7 @@
     "qrcodeButton": {
       "clickToShow": "点击查看二维码"
     },
+    "notAvailable": "暂无",
     "security": {
       "notAvailable": "暂无",
       "high": "High",
@@ -207,6 +238,8 @@
     "tx": "交易"
   },
   "transactions": {
+    "viewOutgoingTxns": "查看发送交易",
+    "viewIncomingTxns": "查看接收交易",
     "title": "交易",
     "description": "交易",
     "hash": "哈希",

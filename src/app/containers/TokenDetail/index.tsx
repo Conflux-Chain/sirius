@@ -61,7 +61,11 @@ export function TokenDetail() {
           </SkeletonWrap>
         )}
         <Basic {...data} tokenAddress={tokenAddress} />
-        <Transfers tokenAddress={tokenAddress} symbol={data.symbol} />
+        <Transfers
+          decimals={data.decimals}
+          tokenAddress={tokenAddress}
+          symbol={data.symbol}
+        />
       </TokenDetailWrap>
     </>
   );
