@@ -39,7 +39,11 @@ export function Notice() {
       );
     }
   }
-  return <Main>{notices}</Main>;
+  return (
+    <Main style={{ textAlign: notices.length > 1 ? 'left' : 'center' }}>
+      {notices}
+    </Main>
+  );
 }
 
 const Main = styled.div`
@@ -49,7 +53,7 @@ const Main = styled.div`
 
   ${media.s} {
     margin-bottom: 1.5rem;
-    margin-top: unset;
+    margin-top: 1.5rem;
     font-size: 0.9rem;
   }
 `;
