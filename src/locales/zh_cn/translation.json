@@ -9,38 +9,49 @@
     "site": "官方网站",
     "contractIcon": "合约图标",
     "remove": "移除",
+    "tokenTracker": "代币搜索器",
     "tokenIcon": "代币图标",
     "sourceCode": "源码",
-    "abi": "Contract ABI",
+    "abi": "合约ABI",
     "enterPassword": "请输入管理员口令",
+    "contractAdmin": "合约管理者",
+    "creator": "合约创建者",
+    "storageSponsor": "存储费赞助",
+    "gasSponsor": "燃气费赞助",
     "create": {
-      "title": "创建合约"
+      "title": "合约创建"
     },
     "edit": {
-      "title": "编辑合约"
+      "title": "合约编辑"
     }
+  },
+  "contractDetail": {
+    "title": "合约详情",
+    "content": "合约详情",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。"
+  },
+  "addressDetail": {
+    "minedBlocks": "挖出区块",
+    "title": "地址详情",
+    "content": "地址详情"
   },
   "blocksAndTransactions": {
     "title": "出块和交易",
     "description": "出块和交易",
-    "tipCountBefore": "共计找到",
+    "tipCountBefore": "共计",
     "tipCountAfter": "条 {{type}} 记录 (显示最新的 10k 条数据)",
-    "labelCountBefore": "共计找到",
+    "labelCountBefore": "共计",
     "labelCountAfter": "条 {{type}} 记录",
     "blocks": "区块",
     "transactions": "交易"
   },
-  "packing": {
-    "title": "Plz wait, your transaction is packing",
-    "btn": "GO TO HOMEPAGE"
-  },
   "tokens": {
     "title": "代币",
     "description": "代币",
-    "tipCountBefore": "Showing",
-    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "共展示N个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
     "table": {
-      "number": "Number",
+      "number": "数字",
       "token": "代币",
       "transfer": "转移",
       "totalSupply": "总供应量",
@@ -48,33 +59,75 @@
       "contract": "合约"
     }
   },
-  "token": {
-    "totalSupplay": "Total Supply",
-    "contract": "Contract",
-    "holders": "Holders",
-    "decimals": "Decimals",
-    "transfers": "Transfers",
-    "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
-    "address": "addresses",
-    "transferList": {
-      "searchPlaceHolder": "Txn hash / Holder address",
-      "searchError": "search value is valid",
-      "balance": "Balance: "
-    }
+  "header": {
+    "home": "首页",
+    "bnt": "区块&交易",
+    "tokens": "代币",
+    "contract": "合约",
+    "contractCreation": "创建合约",
+    "contractSponsor": "赞助合约",
+    "charts": "图表",
+    "testnet": "Testnet",
+    "oceanus": "Tethys",
+    "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址"
+  },
+  "footer": {
+    "product": "产品",
+    "confluxnetwork": "Conflux Network",
+    "confluxportal": "ConfluxPortal",
+    "confluxbounty": "ConfluxBounty",
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+  },
+  "packing": {
+    "title": "您的交易正在打包，请稍后...",
+    "btn": "前往首页"
   },
   "notFound": {
-    "title": "There’s nothing here!",
-    "label": "Sorry! This is an invalid search string.",
-    "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
-    "btn": "GO TO HOMEPAGE"
+    "title": "无法查询到相关结果",
+    "label": "抱歉！您搜索的字符串无效。",
+    "addressTip": "如果您在搜索 Conflux 地址，请搜索以 0x0 (内置合约），0x1（用户账户），或者 0x8（智能合约）开头的地址。",
+    "btn": "前往首页"
+  },
+  "token": {
+    "totalSupplay": "总供应量",
+    "contract": "合约",
+    "holders": "持有人",
+    "decimals": "小数精度",
+    "transfers": "转移",
+    "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
+    "address": "地址",
+    "transferList": {
+      "searchPlaceHolder": "交易哈希值 / 持有人地址",
+      "searchError": "抱歉！您搜索的字符串无效。",
+      "balance": "余额: "
+    }
+  },
+  "charts": {
+    "subtitle": "区块链数据",
+    "title": "图标",
+    "tps": {
+      "title": "tps title",
+      "description": "tps description"
+    }
   },
   "general": {
-    "copyButton": {
-      "copyToClipboard": "复制到剪切板",
-      "success": "已复制",
-      "failed": "复制失败"
+    "viewMore": "查看更多",
+    "viewAll": "查看所有交易",
+    "viewAllBlocksAndTxs": "查看所有区块&交易",
+    "address": {
+      "editContract": "点击编辑合同",
+      "website": "点击进入官方网站",
+      "address": "地址"
     },
     "loading": "加载中...",
+    "contract": "合约",
+    "balance": "余额",
+    "token": "代币",
+    "storageStaking": "抵押存储",
+    "nonce": "随机数",
+    "transaction": "交易",
+    "transactions": "交易",
+    "tokenTxns": "代币交易",
     "table": {
       "noData": "无数据",
       "block": {
@@ -83,12 +136,12 @@
         "txns": "交易数",
         "hash": "哈希",
         "miner": "矿工",
-        "avgGasPrice": "燃料价格",
-        "gasUsedPercent": "燃料使用量",
+        "avgGasPrice": "平均燃料价格",
+        "gasUsedPercent": "燃料用量/限制",
         "reward": "奖励",
         "age": "块龄",
         "difficulty": "难度",
-        "gasLimit": "Gas Limit"
+        "gasLimit": "燃料限制"
       },
       "transactions": {
         "hash": "哈希",
@@ -96,21 +149,21 @@
         "to": "接收方",
         "value": "价值",
         "gasPrice": "燃料价格",
-        "gasFee": "燃料使用量",
+        "gasFee": "燃气费",
         "age": "块龄"
       },
       "token": {
-        "number": "Number",
-        "token": "Token",
-        "transfer": "Transfer",
-        "totalSupply": "Total Supply",
-        "holders": "Holders",
-        "contract": "Contract",
-        "txnHash": "txnHash",
-        "age": "Age",
-        "from": "From",
-        "to": "To",
-        "quantity": "Quantity"
+        "number": "数字",
+        "token": "代币",
+        "transfer": "转移",
+        "totalSupply": "总供应量",
+        "holders": "持有人",
+        "contract": "合约",
+        "txnHash": "交易哈希",
+        "age": "块龄",
+        "from": "发送方",
+        "to": "接收方",
+        "quantity": "数量"
       }
     },
     "pagination": {
@@ -128,10 +181,11 @@
     "apply": "申请",
     "search": "搜索",
     "qrcodeButton": {
-      "clickToShow": "click to view qrcode"
+      "clickToShow": "点击查看二维码"
     },
+    "notAvailable": "暂无",
     "security": {
-      "notAvailable": "Not Available",
+      "notAvailable": "暂无",
       "high": "High",
       "medium": "Medium",
       "low": "Low",
@@ -139,15 +193,15 @@
     },
     "status": {
       "skip": {
-        "text": "Skip",
-        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+        "text": "跳过",
+        "explanation": "随机数错误，签名验证失败，或余额不足"
       },
       "error": {
-        "text": "Error",
-        "explanation": "Encountered during contract execution, or out of gas."
+        "text": "失败",
+        "explanation": "智能合约执行错误，或燃气费不足。"
       },
       "success": {
-        "text": "Success",
+        "text": "成功",
         "explanation": ""
       },
       "unexecuted": {
@@ -167,7 +221,7 @@
     "availStorage": "基金会剩余可提供存储费",
     "availGas": "基金会剩余可提供燃气费",
     "connectToApply": "连接钱包以申请",
-    "notice": "Notice",
+    "notice": "说明",
     "noticeFirst": "基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
     "noticeSecond": "申请前需要先连接 ConfluxPortal 以确认您是合约管理者或合约创建者；连接完成后点击申请即可获得赞助。",
     "noticeThird": "若您的 Portal 已连接非该合约管理者或创建者的地址，请先断开连接，否则申请将会失败。",
@@ -184,75 +238,81 @@
     "tx": "交易"
   },
   "transactions": {
-    "title": "Transactions",
-    "description": "Transactions",
-    "hash": "hash",
-    "executedEpoch": "Executed Epoch",
-    "proposedEpoch": "Proposed Epoch",
-    "timestamp": "Timestamp",
-    "status": "Status",
-    "from": "From",
-    "to": "To",
-    "tokenTransferred": "Token Transferred",
-    "value": "Value",
-    "gasUsed": "Gas Used/Limit",
-    "gasPrice": "Gas Price",
-    "gasFee": "Gas Fee",
-    "nonce": "Nonce",
-    "blockHash": "Block Hash",
-    "position": "Position",
-    "storageLimit": "Storage Limit",
-    "chainID": "Chain ID",
-    "inputData": "Input Data",
+    "viewOutgoingTxns": "查看发送交易",
+    "viewIncomingTxns": "查看接收交易",
+    "title": "交易",
+    "description": "交易",
+    "hash": "哈希",
+    "executedEpoch": "执行纪元",
+    "proposedEpoch": "目标纪元",
+    "timestamp": "时间戳",
+    "status": "状态",
+    "from": "发送方",
+    "to": "接收方",
+    "tokenTransferred": "代币转移",
+    "value": "价值",
+    "gasUsed": "燃料用量/限制",
+    "gasPrice": "燃料价格",
+    "gasFee": "燃气费",
+    "nonce": "随机数",
+    "blockHash": "区块哈希",
+    "position": "位置",
+    "storageLimit": "存储限制",
+    "chainID": "区块链编号",
+    "inputData": "输入数据",
     "select": {
-      "original": "original",
-      "utf8": "UTF-8"
+      "original": "原始数据",
+      "utf8": "UTF-8",
+      "decodeInputData": "解码输入数据"
     },
-    "contract": "Contract",
+    "contract": "合约",
     "created": "已创建",
     "contractCreation": "合约创建",
-    "for": "For"
+    "for": "For",
+    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化"
   },
   "blocks": {
-    "title": "Blocks",
-    "description": "Blocks",
-    "blockHeight": "Block Height",
-    "epoch": "Epoch",
-    "difficulty": "Difficulty",
-    "miner": "Miner",
-    "reward": "Reward",
-    "security": "Security",
-    "blame": "Blame",
-    "blockHash": "Block Hash",
-    "parentHash": "Parent Hash",
-    "nonce": "Nonce",
-    "gasUsed": "Gas Used/Limit",
-    "timestamp": "Timestamp",
-    "size": "Size",
-    "transactions": "Transactions",
-    "referenceBlocks": "Reference Blocks",
+    "title": "区块",
+    "description": "区块",
+    "blockHeight": "区块高度",
+    "epoch": "纪元",
+    "difficulty": "难度",
+    "miner": "矿工",
+    "reward": "奖励",
+    "security": "安全等级",
+    "blame": "修订",
+    "blockHash": "区块哈希",
+    "parentHash": "父区块哈希",
+    "nonce": "随机数",
+    "gasUsed": "燃料用量/限制",
+    "timestamp": "时间戳",
+    "size": "容量",
+    "transactions": "交易",
+    "referenceBlocks": "引用区块",
     "tabs": {
-      "transactions": "Transactions",
-      "referenceBlocks": "Reference Blocks"
+      "transactions": "交易",
+      "referenceBlocks": "引用区块",
+      "labelCountBefore": "共计",
+      "labelCountAfter": "{{type}}记录"
     }
   },
   "epochs": {
-    "title": "Epochs",
-    "description": "Epochs",
-    "tipCountBefore": "A total of",
-    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
-    "labelCountBefore": "A total of",
-    "labelCountAfter": "{{type}} found",
-    "blocks": "Blocks",
-    "transactions": "Transactions",
+    "title": "纪元",
+    "description": "纪元",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "{{type}}记录",
+    "labelCountBefore": "共计",
+    "labelCountAfter": "{{type}}记录",
+    "blocks": "区块",
+    "transactions": "交易",
     "table": {
-      "position": "Position",
-      "hash": "Hash",
-      "txns": "Txns",
-      "miner": "Miner",
-      "difficulty": "Difficulty",
-      "gasUsedPercent": "Gas Used/Limit",
-      "age": "Age"
+      "position": "位置",
+      "hash": "哈希",
+      "txns": "交易数",
+      "miner": "矿工",
+      "difficulty": "难度",
+      "gasUsedPercent": "燃料用量/限制",
+      "age": "块龄"
     }
   }
 }
