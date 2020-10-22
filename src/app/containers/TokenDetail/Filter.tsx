@@ -10,10 +10,13 @@ import { Search } from '@geist-ui/react-icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { isAddress, isHash } from '../../../utils/util';
+import { useBalance, Big } from '@cfxjs/react-hooks';
+import 'utils/lazyJSSDK';
 
 interface FilterProps {
   tokenAddress: string;
   symbol: string;
+  decimals: number;
 }
 
 interface Query {
@@ -21,7 +24,7 @@ interface Query {
   transactionHash?: string;
 }
 
-export const Filter = ({ tokenAddress, symbol }: FilterProps) => {
+export const Filter = ({ tokenAddress, symbol, decimals }: FilterProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
@@ -61,9 +64,13 @@ export const Filter = ({ tokenAddress, symbol }: FilterProps) => {
   const [messages, setMessage] = useMessages();
   const [value, setValue] = useState(filter);
 
-  // const tokenAddrs = [tokenAddress];
-  // const [balance, [tokenBalance]] = useBalance(filter, tokenAddrs);
-  const tokenBalance = '125';
+  const tokenAddrs = [tokenAddress];
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [balance, [tokenBalanceRaw]] = useBalance(filter, tokenAddrs);
+  const tokenBalance = Big(tokenBalanceRaw || '0')
+    .div(Big(10).pow(decimals || 18))
+    .toString();
 
   useEffect(() => {
     setValue(filter);

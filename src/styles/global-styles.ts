@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 import { media } from './media';
 
 export const GlobalStyle = createGlobalStyle`
@@ -34,6 +35,7 @@ export const GlobalStyle = createGlobalStyle`
       margin: 0 auto;
     }
   }
+
 
   .sirius-select-dropdown.select-dropdown {
     .option {
@@ -77,6 +79,16 @@ export const GlobalStyle = createGlobalStyle`
   ${media.s} {
     html, body {
       font-size: 12px;
+    }
+    .cfx-picker-dropdown {
+      max-width: 90vw;
+      .cfx-picker-panel-container {
+        max-width: 90vw;
+        .cfx-picker-month-panel {
+          max-width: 90vw;
+          width: 100%;
+        }
+      }
     }
   }
 `;

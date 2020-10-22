@@ -35,8 +35,30 @@ export default function createDraw({
   isSolid,
   small,
 }) {
-  if (!plot) {
-    return false;
+  if (!plot || plot.length <= 1) {
+    return {
+      xScale1: false,
+      draw() {
+        if (!small) {
+          ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+          ctxBg.moveTo(Y_AXIS_WIDTH, 0);
+          ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
+          ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+          ctxBg.stroke();
+        }
+      },
+      first: 0,
+      last: 0,
+    };
+    // return function () {
+    //   if (!small) {
+    //     ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+    //     ctxBg.moveTo(Y_AXIS_WIDTH, 0);
+    //     ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
+    //     ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+    //     ctxBg.stroke();
+    //   }
+    // };
   }
   const xData = [],
     yData = [],

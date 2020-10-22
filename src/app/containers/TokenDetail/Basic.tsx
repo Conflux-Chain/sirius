@@ -40,7 +40,7 @@ export const Basic = ({
     },
     {
       title: t(translations.token.holders),
-      children: `${numeral(accountTotal).format(0, 0)} ${t(
+      children: `${numeral(accountTotal).format('0,0')} ${t(
         translations.token.address,
       )}`,
     },
@@ -50,7 +50,7 @@ export const Basic = ({
     },
     {
       title: t(translations.token.transfers),
-      children: numeral(transferCount).format(0, 0),
+      children: numeral(transferCount).format('0,0'),
     },
   ];
 
