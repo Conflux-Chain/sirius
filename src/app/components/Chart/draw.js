@@ -267,7 +267,6 @@ function format(v) {
 }
 
 function range(start, end, num) {
-  debugger;
   const step = Math.ceil((end - start) / num);
   const result = [end]; //make sure end in the list but not start
   let i = end;
