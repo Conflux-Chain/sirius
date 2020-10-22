@@ -1,98 +1,27 @@
 import React from 'react';
-import numeral from 'numeral';
-import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TablePanel } from '../../components/TablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TipLabel } from '../../components/TabsTablePanel/Loadable';
-import { Text } from '../../components/Text/Loadable';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTableData } from './../../components/TabsTablePanel/useTableData';
-
-const StyledTextWrapper = styled.span`
-  font-weight: 400;
-  line-height: 1.7143rem;
-  font-size: 1rem;
-  &:hover {
-    font-weight: 500;
-    color: #1e3de4;
-  }
-`;
-
-const StyledIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    width: 1.1429rem;
-    height: 1.1429rem;
-    margin-right: 0.5714rem;
-  }
-`;
-
-const renderTextEllipsis = value => {
-  return (
-    <Text span maxWidth="5.7143rem" hoverValue={value}>
-      <StyledTextWrapper>{value}</StyledTextWrapper>
-    </Text>
-  );
-};
+import { tokenColunms } from '../../../utils/tableColumns';
 
 export function Tokens() {
   const { t } = useTranslation();
 
   const columns: ColumnsType = [
-    {
-      title: t(translations.tokens.table.number),
-      dataIndex: 'epochNumber',
-      key: 'epochNumber',
-      width: 80,
-      render: (value, row, index) => {
-        return index + 1;
-      },
-    },
-    {
-      title: t(translations.tokens.table.token),
-      key: 'blockIndex',
-      render: item => {
-        return (
-          <>
-            <StyledIconWrapper>
-              <img src={item.icon} alt="token icon" />
-              {item.name} ({item.symbol})
-            </StyledIconWrapper>
-          </>
-        );
-      },
-    },
-    {
-      title: t(translations.tokens.table.transfer),
-      dataIndex: 'transferCount',
-      key: 'transferCount',
-    },
-    {
-      title: t(translations.tokens.table.totalSupply),
-      dataIndex: 'totalSupply',
-      key: 'totalSupply',
-      render: renderTextEllipsis,
-    },
-    {
-      title: t(translations.tokens.table.holders),
-      dataIndex: 'accountTotal',
-      key: 'accountTotal',
-      render: count => {
-        return numeral(count).format('0,0');
-      },
-    },
-    {
-      title: t(translations.tokens.table.contract),
-      dataIndex: 'address',
-      key: 'address',
-      render: renderTextEllipsis,
-    },
+    tokenColunms.number,
+    tokenColunms.token,
+    tokenColunms.transfer,
+    tokenColunms.totalSupply,
+    tokenColunms.holders,
+    tokenColunms.contract,
   ];
-  const url = '/token/list';
+
+  const url = `/token?fields=transferCount,icon`;
   const { total } = useTableData(url);
 
   return (

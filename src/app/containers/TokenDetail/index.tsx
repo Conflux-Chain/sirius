@@ -3,7 +3,8 @@ import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@cfxjs/react-ui';
+import { Skeleton } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
@@ -17,11 +18,14 @@ interface RouteParams {
 export function TokenDetail() {
   const { t } = useTranslation();
   const { tokenAddress } = useParams<RouteParams>();
-  const params = { address: tokenAddress };
+  const params = {
+    address: tokenAddress,
+    fields: 'transferCount,icon',
+  };
   let { data, error } = useTokenQuery(params, !!tokenAddress);
 
   if (!data && !error) {
-    data = { result: {} };
+    data = {};
   }
 
   return (
@@ -31,27 +35,33 @@ export function TokenDetail() {
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
       <TokenDetailWrap>
-        <HeaderWrap>
-          {!data.result?.isShuttleflow ? (
-            <img alt="icon" src={data.result?.icon} />
-          ) : (
-            <Tooltip
-              hoverable
-              text={
-                <span>
-                  {t(translations.token.shuttleflow)}
-                  <Link>Shuttleflow</Link>
-                </span>
-              }
-            >
-              <img alt="icon" src={data.result?.icon} />
-            </Tooltip>
-          )}
-          <div className="basic-name">{data.result?.name}</div>
-          <div className="basic-symbol">{`(${data.result?.symbol})`}</div>
-        </HeaderWrap>
-        <Basic {...data.result} tokenAddress={tokenAddress} />
-        <Transfers tokenAddress={tokenAddress} symbol={data.result?.symbol} />
+        {data.name ? (
+          <HeaderWrap>
+            {!data.isShuttleflow ? (
+              <img className="img" alt="icon" src={data.icon} />
+            ) : (
+              <Tooltip
+                hoverable
+                text={
+                  <span>
+                    {t(translations.token.shuttleflow)}
+                    <Link>Shuttleflow</Link>
+                  </span>
+                }
+              >
+                <img alt="icon" src={data.icon} />
+              </Tooltip>
+            )}
+            <div className="basic-name">{data.name}</div>
+            <div className="basic-symbol">{`(${data.symbol})`}</div>
+          </HeaderWrap>
+        ) : (
+          <SkeletonWrap>
+            <Skeleton className="sirius-tokendetail-skeleton"></Skeleton>
+          </SkeletonWrap>
+        )}
+        <Basic {...data} tokenAddress={tokenAddress} />
+        <Transfers tokenAddress={tokenAddress} symbol={data.symbol} />
       </TokenDetailWrap>
     </>
   );
@@ -61,11 +71,23 @@ const TokenDetailWrap = styled.div`
   padding: 2.2857rem 0;
 `;
 
+const SkeletonWrap = styled.div`
+  .skeleton.sirius-tokendetail-skeleton.text {
+    width: 8.5714rem;
+    height: 2.5714rem;
+    margin-bottom: 1.7143rem;
+  }
+`;
+
 const HeaderWrap = styled.div`
   display: flex;
   align-items: center;
   line-height: 2.2857rem;
   margin-bottom: 1.7143rem;
+  .img {
+    width: 20px;
+    height: 20px;
+  }
   .basic-name {
     font-size: 1.7143rem;
     font-weight: 500;

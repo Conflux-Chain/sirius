@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
+import { useBreakpoint } from 'styles/media';
 
 interface Props {
   type: string | number;
@@ -27,6 +28,7 @@ export const Status = ({
   popoverProps,
   ...others
 }: StatusProps) => {
+  const breakpoint = useBreakpoint();
   const { t } = useTranslation();
   const type = String(outerType);
   const typeMap = useMemo(
@@ -80,6 +82,7 @@ export const Status = ({
                 translations.general.status[typeMap[type].status].explanation,
               )}
               placement="left"
+              trigger={breakpoint === 's' ? 'click' : 'hover'}
               contentClassName={clsx(
                 'siriuse-status-popover',
                 popoverContentClassName,
@@ -163,7 +166,9 @@ const StyledPopoverWrapper = styled.div`
       color: #a4a8b6;
       text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       max-width: 14.2857rem;
+      min-width: 11.7143rem;
       line-height: 1.0714rem;
+      white-space: break-spaces;
     }
     .inner {
       min-width: inherit;
