@@ -12,7 +12,7 @@
     "tokenIcon": "Token Icon",
     "sourceCode": "Contract Source Code",
     "abi": "Contract ABI",
-    "enterPassword": "Please enter your admin password",
+    "enterPassword": "Please enter your password",
     "create": {
       "title": "Contract Creation"
     },
@@ -34,7 +34,15 @@
     "title": "Tokens",
     "description": "Tokens",
     "tipCountBefore": "Showing",
-    "tipCountAfter": "Token (The list only shows part of tokens. Other tokens could be found by searching contract address.)"
+    "tipCountAfter": "Showing N tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "table": {
+      "number": "Number",
+      "token": "Token",
+      "transfer": "Transfers",
+      "totalSupply": "Total Supply",
+      "holders": "Holders",
+      "contract": "Contract"
+    }
   },
   "header": {
     "home": "Home",
@@ -45,18 +53,25 @@
     "contractSponsor": "Contract Sponsor",
     "charts": "Charts",
     "testnet": "TESTNET",
-    "oceanus": "OCEANUS",
+    "oceanus": "Tethys",
     "searchPlaceHolder": "Epoch / Block hash / Txn has / Address"
   },
+  "footer": {
+    "product": "Product",
+    "confluxnetwork": "Conflux Network",
+    "confluxportal": "ConfluxPortal",
+    "confluxbounty": "ConfluxBounty",
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+  },
   "packing": {
-    "title": "Plz wait, your transaction is packing",
-    "btn": "GO TO HOMEPAGE"
+    "title": "Your transaction is packing，please wait...",
+    "btn": "Go to homepage"
   },
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
-    "btn": "GO TO HOMEPAGE"
+    "btn": "Go to homepage"
   },
   "token": {
     "totalSupplay": "Total Supply",
@@ -68,7 +83,7 @@
     "address": "addresses",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
-      "searchError": "search value is valid",
+      "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }
   },
@@ -114,7 +129,7 @@
         "totalSupply": "Total Supply",
         "holders": "Holders",
         "contract": "Contract",
-        "txnHash": "txnHash",
+        "txnHash": "Txn Hash",
         "age": "Age",
         "from": "From",
         "to": "To",
@@ -128,15 +143,15 @@
       "labelJumperAfter": "Page"
     },
     "copyButton": {
-      "copyToClipboard": "复制到剪切板",
-      "success": "已复制",
-      "failed": "复制失败"
+      "copyToClipboard": "Copy to clipboard",
+      "success": "Copied",
+      "failed": "Copy failed"
     },
     "submit": "Submit",
     "apply": "Apply",
     "search": "Search",
     "qrcodeButton": {
-      "clickToShow": "click to view qrcode"
+      "clickToShow": "Click to view QR code"
     },
     "security": {
       "notAvailable": "Not Available",
@@ -175,7 +190,7 @@
     "availStorage": "Remaining Storage Fees By Conflux Foundation",
     "availGas": "Remaining Gas Fees By Conflux Foundation",
     "connectToApply": "Connect wallet to apply",
-    "notice": "Notice",
+    "notice": "Remark",
     "noticeFirst": "Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
     "noticeSecond": "To request the Smart Contract Sponsorship, you need to connect via ConfluxPortal that you are the smart contract admin and/or creator; after the successful connection you may apply for the sponsorship.",
     "noticeThird": " If you are using wallet address that is not the smart contract admin nor creator, your request will fail. Please use the correct wallet address to request for the Smart Contract Sponsorship.",
@@ -252,7 +267,7 @@
     "title": "Epochs",
     "description": "Epochs",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
+    "tipCountAfter": "{{type}} found",
     "labelCountBefore": "A total of",
     "labelCountAfter": "{{type}} found",
     "blocks": "Blocks",
