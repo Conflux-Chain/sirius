@@ -73,7 +73,6 @@ export default function createDraw({
 
   const first = yData[0],
     last = yData[yData.length - 1];
-  console.log('draw', indicator, first, last);
   const color = COLORS[first > last ? 1 : -1];
   const yGridRanges = getYScaleRange([height - X_AXIS_HEIGHT, 0], NUM_Y_GRID);
 

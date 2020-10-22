@@ -18,11 +18,8 @@ export function SmallChart({
     return <Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
-  console.log(indicator, firstlast, diff);
   const small = width < 200;
   const isDown = diff ? diff.startsWith('-') : null;
-
-  // console.log('first, last', indicator, first, last);
 
   return (
     <Container style={{ width, height }}>

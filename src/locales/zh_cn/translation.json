@@ -254,5 +254,21 @@
       "gasUsedPercent": "Gas Used/Limit",
       "age": "Age"
     }
+  },
+  "tps": {
+    "title": "吞吐率",
+    "description": "每秒链上的交易数量"
+  },
+  "blockTime": {
+    "title": "出块间隔",
+    "description": "生成一个区块所需花费时间"
+  },
+  "difficulty": {
+    "title": "难度",
+    "description": "当前生成所有区块的计算难度"
+  },
+  "hashRate": {
+    "title": "哈希算力",
+    "description": "矿工每秒计算哈希值的次数"
   }
 }

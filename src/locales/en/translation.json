@@ -301,18 +301,18 @@
 
   "tps": {
     "title": "TPS",
-    "description": "blocks produced.."
+    "description": "Number of transactions on the chain per second"
   },
   "blockTime": {
     "title": "Block Time",
-    "description": "blocks produced.."
+    "description": "The time required to generate a block"
   },
   "difficulty": {
     "title": "Difficulty",
-    "description": "blocks produced.."
+    "description": "ulation difficulty of all blocks currently generated"
   },
   "hashRate": {
     "title": "Hash Rate",
-    "description": "blocks produced.."
+    "description": "The number of times a miner calculates hashes per second"
   }
 }
