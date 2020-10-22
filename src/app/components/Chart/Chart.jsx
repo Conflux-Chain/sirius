@@ -26,7 +26,7 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
     return (
       <Container style={{ width }} small={small}>
         <Title>{t(`${indicator}.title`)}</Title>
-        <Description>{t(`${indicator}.desciption`)}</Description>
+        <Description>{t(`${indicator}.description`)}</Description>
         {true && (
           <Draw
             plot={plot}
@@ -97,11 +97,13 @@ function Draw({
     if (draw) {
       draw();
       const listener = event => {
-        const { offsetX } = event;
-        cursorX = Math.round(xScale1.invert(offsetX));
-        draw({
-          cursorX,
-        });
+        if (xScale1) {
+          const { offsetX } = event;
+          cursorX = Math.round(xScale1.invert(offsetX));
+          draw({
+            cursorX,
+          });
+        }
       };
       const container = containerRef.current;
       container.addEventListener('mousemove', listener);

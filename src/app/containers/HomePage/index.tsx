@@ -7,8 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
-import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { SmallChart } from '../../components/Chart/Loadable';
+
+import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 
 export function HomePage() {
   const { t } = useTranslation();
