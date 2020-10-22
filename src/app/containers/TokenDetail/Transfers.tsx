@@ -13,9 +13,10 @@ import { tokenColunms } from '../../../utils/tableColumns';
 interface TransferProps {
   tokenAddress: string;
   symbol: string;
+  decimals: number;
 }
 
-export function Transfers({ tokenAddress, symbol }: TransferProps) {
+export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   const { t } = useTranslation();
 
   const columns = [
@@ -48,7 +49,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
   return (
     <TransfersWrap>
       <TabsTablePanel tabs={tabs} />
-      <Filter symbol={symbol} tokenAddress={tokenAddress} />
+      <Filter decimals={decimals} symbol={symbol} tokenAddress={tokenAddress} />
     </TransfersWrap>
   );
 }
