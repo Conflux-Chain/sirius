@@ -114,7 +114,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
     <span
       class="c3"
     >
-      Plz wait, your transaction is packing
+      Your transaction is packing，please wait...
     </span>
     <div
       class="c4"
@@ -125,7 +125,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
       class="c5"
       href="/"
     >
-      GO TO HOMEPAGE
+      Go to homepage
     </a>
   </div>
 </div>

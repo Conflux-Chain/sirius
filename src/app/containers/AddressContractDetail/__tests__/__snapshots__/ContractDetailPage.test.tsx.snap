@@ -668,7 +668,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               <div
                 class="c10"
               >
-                storage staking
+                Storage Collateral
               </div>
               <div
                 class="c11"
@@ -693,7 +693,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                     class="c14"
                   >
                     <img
-                      alt="storage staking"
+                      alt="Storage Collateral"
                       class="icon"
                       src="/contract-address/storage.svg"
                     />

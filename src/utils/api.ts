@@ -288,19 +288,6 @@ export const useCMContractCreate: useApi = (
     rest[0],
   );
 };
-export const useCMContractDelete: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/contract-manager/contract/delete', ...params] : null,
-    rest[1] || simplePostFetcher,
-    rest[0],
-  );
-};
 
 export const useAccountTokenList = (
   accountAddress: string,
