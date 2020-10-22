@@ -6,7 +6,6 @@
  */
 import React, { useCallback } from 'react';
 import clsx from 'clsx';
-
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import { List } from '../../components/List/';
@@ -16,6 +15,7 @@ import { useContract, useToken } from 'utils/api';
 import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
+import { Link as UILink } from '@cfxjs/react-ui';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -23,25 +23,59 @@ const WarnningButton = () => {
   const { t } = useTranslation();
 
   return (
-    <IconButton
-      className="metadata-tooltip-btn"
-      size={16}
-      tooltipText={t(translations.general.address.editContract)}
-    >
-      <path
-        d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
-        fill="#FFB84B"
-        p-id={950}
-      />
-    </IconButton>
+    <WarnningButtonWrapper>
+      <IconButton
+        className="metadata-tooltip-btn"
+        size={16}
+        tooltipContentClassName="warnning-tooltip"
+        tooltipText={
+          <WarnningTooltipWrapper>
+            <p className="warnning-text">
+              {t(translations.contractDetail.contractAdminWarning)}
+              <br />
+              <UILink className="warnning-tooltip-link" href="/tbd">
+                {t(translations.general.viewMore)}
+              </UILink>
+            </p>
+          </WarnningTooltipWrapper>
+        }
+      >
+        <path
+          d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
+          fill="#FFB84B"
+          p-id={950}
+        />
+      </IconButton>
+    </WarnningButtonWrapper>
   );
 };
 
-const EditButton = () => {
+const WarnningButtonWrapper = styled.div`
+  .warnning-tooltip.tooltip-content {
+    max-width: 30rem;
+    text-align: center;
+    padding: 0.43rem 0.86rem;
+
+    ${media.s} {
+      max-width: 15rem;
+    }
+  }
+`;
+const WarnningTooltipWrapper = styled.div`
+  p.warnning-text {
+    margin: 0;
+  }
+  .warnning-tooltip-link.link {
+    color: #008dff;
+  }
+`;
+
+const EditButton = ({ url }) => {
   const { t } = useTranslation();
 
   return (
     <IconButton
+      url={url}
       className="metadata-tooltip-btn"
       size={16}
       tooltipText={t(translations.general.address.editContract)}
@@ -98,7 +132,7 @@ export function ContractMetadata({ address }) {
             <CenterLine>
               <Content>
                 {isAvaiable(contractInfo.admin) ? (
-                  <Link to={`/addresses/${contractInfo.admin}`}>
+                  <Link to={`/address/${contractInfo.admin}`}>
                     <Text span maxCount={11}>
                       {contractInfo.admin}
                     </Text>
@@ -144,11 +178,11 @@ export function ContractMetadata({ address }) {
                   ? [
                       <Link
                         key="content"
-                        to={`/addresses/${contractInfo.sponsorForCollateral}`}
+                        to={`/address/${contractInfo.sponsorForCollateral}`}
                       >
                         {contractInfo.sponsorForCollateral}
                       </Link>,
-                      <EditButton key="edit" />,
+                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   : contractInfo.sponsorForCollateral}
               </Content>
@@ -166,7 +200,7 @@ export function ContractMetadata({ address }) {
                 )}
               >
                 {isAvaiable(contractInfo.from) ? (
-                  <Link to={`/addresses/${contractInfo.from}`}>
+                  <Link to={`/address/${contractInfo.from}`}>
                     <Text span maxCount={11}>
                       {contractInfo.from}
                     </Text>
@@ -197,11 +231,11 @@ export function ContractMetadata({ address }) {
                   ? [
                       <Link
                         key="content"
-                        to={`/addresses/${contractInfo.sponsorForGas}`}
+                        to={`/address/${contractInfo.sponsorForGas}`}
                       >
                         {contractInfo.sponsorForGas}
                       </Link>,
-                      <EditButton key="edit" />,
+                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   : contractInfo.sponsorForGas}
               </Content>

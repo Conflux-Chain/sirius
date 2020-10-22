@@ -37,7 +37,7 @@ export function Transfers({ tokenAddress, symbol }: TransferProps) {
           </LabelWrap>
         );
       },
-      url: `/transfer?tokenAddress=${tokenAddress}`,
+      url: `/transfer?address=${tokenAddress}`,
       table: {
         columns: columns,
         rowKey: 'transactionHash',

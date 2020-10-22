@@ -200,7 +200,7 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: value => renderTextEllipsis(numeral(value).format(0, 0)), // todo, big number will transfer to NaN
+  render: value => renderTextEllipsis(numeral(value).format('0,0')), // todo, big number will transfer to NaN
 };
 
 export const to = {

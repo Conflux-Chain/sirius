@@ -27,9 +27,11 @@
   },
   "contractDetail": {
     "title": "Contract Detail",
-    "content": "Details of contract"
+    "content": "Details of contract",
+    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero."
   },
   "addressDetail": {
+    "minedBlocks": "Mined Blocks",
     "title": "Address Detail",
     "content": "Details of Address"
   },
@@ -94,6 +96,7 @@
     }
   },
   "general": {
+    "viewMore": "View More",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to open website",
@@ -220,6 +223,8 @@
     "tx": "tx"
   },
   "transactions": {
+    "viewOutgoingTxns": "View Outgoing Txns",
+    "viewIncomingTxns": "View Incoming Txns",
     "title": "Transactions",
     "description": "Transactions",
     "hash": "hash",

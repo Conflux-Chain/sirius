@@ -18,7 +18,7 @@ import {
   NonceCard,
 } from './AddressInfoCards';
 import { ContractMetadata } from './ContractMetadata';
-import { ContractTabsTablePanel } from './ContractTabsTablePanel';
+import { Table } from './Table';
 import { Text } from 'app/components/Text';
 import { useContract } from 'utils/api';
 import {
@@ -53,7 +53,7 @@ export const ContractDetailPage = memo(() => {
         />
       </Helmet>
       <Main>
-        <Head>
+        <Head key="head">
           <Title>{t(translations.general.contract)}</Title>
           <HeadAddressLine>
             {bp === 's' ? (
@@ -69,17 +69,17 @@ export const ContractDetailPage = memo(() => {
             )}
           </HeadAddressLine>
         </Head>
-        <Top>
+        <Top key="top">
           <BalanceCard address={address} />
           <TokensCard address={address} />
           <StorageStakingCard address={address} />
           <NonceCard address={address} />
         </Top>
-        <Middle>
+        <Middle key="middle">
           <ContractMetadata address={address} />
         </Middle>
-        <Bottom>
-          <ContractTabsTablePanel key="table" address={address} />
+        <Bottom key="bottom">
+          <Table key="table" address={address} />
         </Bottom>
       </Main>
     </>

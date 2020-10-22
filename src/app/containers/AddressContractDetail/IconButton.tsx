@@ -10,43 +10,53 @@ import { Tooltip } from '../../components/Tooltip';
 
 interface IconButtonProps {
   size?: number;
-  tooltipText?: string;
+  tooltipText?: React.ReactNode | string;
   url?: string;
   className?: string;
   blank?: boolean;
+  tooltipContentClassName?: string;
 }
 
 export const IconButton = ({
   size,
   tooltipText,
   className,
+  tooltipContentClassName = '',
   children,
   url,
   blank,
 }: React.PropsWithChildren<IconButtonProps>) => {
+  const svg = (
+    <svg
+      className={`icon ${className}`}
+      viewBox="0 0 1024 1024"
+      width={size || 8}
+      height={size || 8}
+    >
+      {children}
+    </svg>
+  );
+
   return (
     <IconButtonWrap>
-      <Tooltip placement="top" text={tooltipText}>
-        <RouterLink
-          target={blank ? '_blank' : '_self'}
-          to={url || ''}
-          className={className}
-          style={{
-            cursor: 'pointer',
-          }}
-        >
-          <svg
-            className={`icon ${className}`}
-            viewBox="0 0 1024 1024"
-            width={size || 8}
-            height={size || 8}
+      <Tooltip
+        placement="top"
+        text={tooltipText}
+        contentClassName={tooltipContentClassName}
+      >
+        {url && (
+          <RouterLink
+            target={blank ? '_blank' : '_self'}
+            to={url || ''}
+            className={className}
+            style={{
+              cursor: 'pointer',
+            }}
           >
-            <defs>
-              <style type="text/css" />
-            </defs>
-            {children}
-          </svg>
-        </RouterLink>
+            {svg}
+          </RouterLink>
+        )}
+        {!url && svg}
       </Tooltip>
     </IconButtonWrap>
   );

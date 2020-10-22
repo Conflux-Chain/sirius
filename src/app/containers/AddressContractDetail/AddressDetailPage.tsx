@@ -19,6 +19,7 @@ import {
 } from './AddressInfoCards';
 import { Text } from 'app/components/Text';
 import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
+import { Table } from './Table';
 
 interface RouteParams {
   address: string;
@@ -57,7 +58,9 @@ export const AddressDetailPage = memo(() => {
           <StorageStakingCard address={address} />
           <NonceCard address={address} />
         </Top>
-        <Bottom></Bottom>
+        <Bottom>
+          <Table address={address} />
+        </Bottom>
       </Main>
     </>
   );

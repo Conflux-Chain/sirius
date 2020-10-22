@@ -23,7 +23,7 @@ export const AddressContractDetailPage = () => {
   const history = useHistory();
 
   useEffectOnce(() => {
-    if (!isValidAddr) history.push('/');
+    if (!isValidAddr) history.push('/404');
   });
 
   return isValidContractAddress ? (
