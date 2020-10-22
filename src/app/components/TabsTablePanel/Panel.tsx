@@ -51,7 +51,11 @@ export const TabsTablePanel = ({
 
   return (
     <>
-      <Tabs initialValue={currentTabValue} onChange={handleTabsChange}>
+      <Tabs
+        key="table-panel-tabs"
+        initialValue={currentTabValue}
+        onChange={handleTabsChange}
+      >
         {ui}
       </Tabs>
     </>

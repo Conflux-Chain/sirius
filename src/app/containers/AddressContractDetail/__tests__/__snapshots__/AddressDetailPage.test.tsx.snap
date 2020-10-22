@@ -1,0 +1,684 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddressDetailPage /> should match the snapshot 1`] = `
+.c5 .tooltip-content.sirius-tooltip {
+  border-radius: 0;
+  padding: 0.2857rem 0.7143rem;
+  font-weight: 400;
+  border-radius: 0;
+  font-size: 12px;
+  color: #cdcdcd;
+  line-height: 1.1429rem;
+}
+
+.c4 {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #dbdde4;
+  line-height: 12px;
+}
+
+.c4 .address-line-icon path {
+  fill: #737682;
+}
+
+.c4:hover {
+  background-color: #63688a;
+}
+
+.c4:hover .address-line-icon path {
+  fill: #fff;
+}
+
+.c7 {
+  min-width: 17rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c10 {
+  color: #74798c;
+  text-transform: capitalize;
+}
+
+.c11 {
+  font-weight: bold;
+  color: #282d30;
+  font-size: 1.71rem;
+}
+
+.c12 {
+  position: relative;
+}
+
+.c13 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #0054FE;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c19 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #16DBCC;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c20 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #FFBB37;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c21 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #FF82AC;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c14 {
+  position: absolute;
+  top: 1.64rem;
+  margin-top: -5px;
+  left: 1.5rem;
+}
+
+.c15 {
+  font-size: 1rem;
+}
+
+.c16 {
+  min-width: 9rem;
+  height: 2.57rem;
+  border-radius: 0.29rem;
+  border: 0.07rem solid #e8e9ea;
+  padding: 0.64rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c17 {
+  font-size: 1.27rem;
+  font-weight: bold;
+}
+
+.c18 {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.c0 {
+  padding: 2.29rem 0;
+  max-width: 73.1429rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-bottom: 4.57rem;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.71rem;
+}
+
+.c2 {
+  font-size: 1.71rem;
+  text-transform: capitalize;
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.86rem;
+}
+
+.c3 {
+  line-height: 1.29rem;
+  color: #74798c;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 > span,
+.c3 > div {
+  margin-right: 0.58rem;
+}
+
+.c6 {
+  position: relative;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: 1.71rem;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c22 {
+  position: relative;
+  width: 100%;
+}
+
+@media (max-width:600px) {
+  .c7 {
+    min-width: 13.67rem;
+  }
+
+  .c7 .detail-page-card.card div.content {
+    padding: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c8 {
+    padding: 0.83rem 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c11 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c13 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c19 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c20 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c21 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c14 {
+    top: 1.34rem;
+    left: 1.14rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c16 {
+    min-width: 6.67rem;
+    height: 1.84rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c2 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 1rem;
+  }
+
+  .c6 > div {
+    margin-bottom: 1rem;
+  }
+}
+
+<div
+  class="c0"
+>
+  <section
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      address
+    </div>
+    <span
+      class="c3"
+    >
+      <span />
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          <div
+            class="jsx-726172838 tooltip-wrapper"
+          >
+            <div
+              class="jsx-726172838 tooltip "
+            >
+              <div
+                style="cursor: pointer;"
+              >
+                <svg
+                  class="icon address-line-icon"
+                  height="8"
+                  viewBox="0 0 1024 1024"
+                  width="8"
+                >
+                  <defs>
+                    <style
+                      type="text/css"
+                    />
+                  </defs>
+                  <path
+                    d="M967.552 760.448H304.896a41.472 41.472 0 0 1-41.344-41.344V56.32c0-22.912 18.56-41.344 41.344-41.344H967.68c22.912 0 41.344 18.432 41.344 41.344v662.656a41.472 41.472 0 0 1-41.344 41.344z m-621.184-82.816h579.84V97.792h-579.84v579.84z"
+                    fill="#4b4b4b"
+                  />
+                  <path
+                    d="M719.104 1008.896H56.32a41.472 41.472 0 0 1-41.344-41.344V304.896c0-22.784 18.432-41.344 41.344-41.344h124.16v82.816H98.048v579.84h579.84V847.36h82.688v120.064a41.472 41.472 0 0 1-41.344 41.344z"
+                    fill="#4b4b4b"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          <div
+            class="jsx-726172838 tooltip-wrapper"
+          >
+            <div
+              class="jsx-726172838 tooltip "
+            >
+              <div
+                style="cursor: pointer;"
+              >
+                <svg
+                  class="icon address-line-icon"
+                  height="8"
+                  viewBox="0 0 1024 1024"
+                  width="8"
+                >
+                  <defs>
+                    <style
+                      type="text/css"
+                    />
+                  </defs>
+                  <path
+                    d="M639.488 484.864a106.88 106.88 0 0 1-106.88-106.752V124.544c0-58.88 47.872-106.752 106.752-106.752h258.176c58.88 0 106.752 47.744 106.88 106.752v253.44c0 59.008-47.872 106.752-106.752 106.88H639.36zM897.536 93.056H639.488a31.488 31.488 0 0 0-31.616 31.488v253.44c0 17.408 14.08 31.488 31.616 31.488h258.048c17.408 0 31.488-14.08 31.488-31.36V124.544a31.488 31.488 0 0 0-31.488-31.488zM113.92 1015.04a107.008 107.008 0 0 1-106.752-106.88v-253.44c0-59.008 47.744-106.752 106.752-106.88h258.048c59.008 0 106.88 47.872 107.008 106.88v253.44c-0.128 58.88-47.872 106.752-106.88 106.88H113.92z m258.048-391.808H113.92a31.488 31.488 0 0 0-31.488 31.488v253.44c0 17.408 14.08 31.488 31.488 31.488h258.048c17.536 0 31.616-14.08 31.616-31.488v-253.44a31.488 31.488 0 0 0-31.488-31.488zM113.92 484.864a106.88 106.88 0 0 1-106.752-106.752V124.544c0-58.88 47.744-106.752 106.752-106.752h258.048c59.008 0 106.88 47.744 107.008 106.752v253.44c-0.128 59.008-47.872 106.88-106.88 106.88H113.92zM371.968 93.056H113.92a31.488 31.488 0 0 0-31.488 31.488v253.44c0 17.408 14.08 31.488 31.488 31.488h258.048c17.536 0 31.616-14.08 31.616-31.36V124.544a31.488 31.488 0 0 0-31.488-31.488zM570.24 547.84h396.544a37.76 37.76 0 1 1 0 75.392H570.24a37.76 37.76 0 1 1 0-75.392z m54.4 171.904v257.664a37.76 37.76 0 0 1-75.392 0V719.744a37.76 37.76 0 1 1 75.392 0z m181.504 0v151.808a37.632 37.632 0 1 1-75.392 0V719.744a37.632 37.632 0 1 1 75.52 0z m181.504 0v226.944a37.632 37.632 0 1 1-75.392 0V719.744a37.632 37.632 0 1 1 75.52 0z"
+                    p-id="8134"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+    </span>
+  </section>
+  <section
+    class="c6"
+  >
+    <div
+      class="c7"
+    >
+      <div
+        class="jsx-2527601167 card detail-page-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                balance
+              </div>
+              <div
+                class="c11"
+              >
+                loading...
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="c12"
+                >
+                  <div
+                    class="c13"
+                    color="#0054FE"
+                  />
+                  <div
+                    class="c14"
+                  >
+                    <img
+                      alt="balance"
+                      class="icon"
+                      src="/contract-address/balance.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="jsx-2527601167 card detail-page-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                token
+              </div>
+              <div
+                class="c11"
+              >
+                <div
+                  class="c15"
+                >
+                  <div
+                    class="c16"
+                  >
+                    <div
+                      class="c17"
+                    >
+                      0
+                    </div>
+                    <div
+                      class="c18"
+                    >
+                      <svg
+                        fill="none"
+                        height="24"
+                        shape-rendering="geometricPrecision"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        style="color: rgb(126, 130, 149);"
+                        viewBox="0 0 24 24"
+                        width="24"
+                      >
+                        <path
+                          d="M18 15l-6-6-6 6"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="c12"
+                >
+                  <div
+                    class="c19"
+                    color="#16DBCC"
+                  />
+                  <div
+                    class="c14"
+                  >
+                    <img
+                      alt="token"
+                      class="icon"
+                      src="/contract-address/token.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="jsx-2527601167 card detail-page-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                storage staking
+              </div>
+              <div
+                class="c11"
+              >
+                loading...
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="c12"
+                >
+                  <div
+                    class="c20"
+                    color="#FFBB37"
+                  />
+                  <div
+                    class="c14"
+                  >
+                    <img
+                      alt="storage staking"
+                      class="icon"
+                      src="/contract-address/storage.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="jsx-2527601167 card detail-page-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          <div
+            class="c8"
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                nonce
+              </div>
+              <div
+                class="c11"
+              >
+                loading...
+              </div>
+            </div>
+            <div
+              class=""
+            >
+              <div
+                class=""
+              >
+                <div
+                  class="c12"
+                >
+                  <div
+                    class="c21"
+                    color="#FF82AC"
+                  />
+                  <div
+                    class="c14"
+                  >
+                    <img
+                      alt="nonce"
+                      class="icon"
+                      src="/contract-address/nonce.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    class="c22"
+  />
+</div>
+`;
