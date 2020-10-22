@@ -56,6 +56,9 @@ function Draw({
   const lineCanvasRef = useRef(null);
 
   useEffect(() => {
+    // if (plot.length <= 1) {
+    //   return null;
+    // }
     const ctxBg = backgroundCanvasRef.current.getContext('2d');
     ctxBg.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
 
@@ -76,6 +79,9 @@ function Draw({
     }
     setFirstLast([first, last]);
   }, [width, height, plot, indicator, setFirstLast]);
+  // if (plot.length <= 1) {
+  //   return null;
+  // }
   return (
     <CanvasContainer small={small} style={{ width, height }}>
       <canvas
@@ -148,6 +154,8 @@ function format(v, d = 6) {
 
 function change(end, start) {
   const [s, e] = [start, end].map(x => parseFloat(x));
-  const diff = format(((s - e) / s) * 100, 1);
+  const diff = isNaN(format(((s - e) / s) * 100, 1))
+    ? '0.0'
+    : format(((s - e) / s) * 100, 1);
   return (diff > 0 ? '+' + diff : diff) + '%';
 }

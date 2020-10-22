@@ -97,11 +97,13 @@ function Draw({
     if (draw) {
       draw();
       const listener = event => {
-        const { offsetX } = event;
-        cursorX = Math.round(xScale1.invert(offsetX));
-        draw({
-          cursorX,
-        });
+        if (xScale1) {
+          const { offsetX } = event;
+          cursorX = Math.round(xScale1.invert(offsetX));
+          draw({
+            cursorX,
+          });
+        }
       };
       const container = containerRef.current;
       container.addEventListener('mousemove', listener);
