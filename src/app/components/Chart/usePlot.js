@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import { appendApiPrefix } from 'utils/api';
-const isNew = true;
 const durations = {
   day: 'interval=3600&limit=24',
   hour: 'interval=60&limit=60',
