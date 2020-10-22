@@ -267,10 +267,10 @@ function format(v) {
 }
 
 function range(start, end, num) {
-  const step = Math.round((end - start) / num);
+  const step = Math.ceil((end - start) / num);
   const result = [end]; //make sure end in the list but not start
   let i = end;
-  while ((i -= step) >= start) {
+  while ((i -= step) > start) {
     result.unshift(i);
   }
   return result;
