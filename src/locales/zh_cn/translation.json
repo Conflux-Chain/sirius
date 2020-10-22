@@ -154,6 +154,15 @@
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
       }
+    },
+    "countdown": {
+      "year": "{{count}} 年",
+      "month": "{{count}} 月",
+      "day": "{{count}} 日",
+      "hour": "{{count}} 小时",
+      "minute": "{{count}} 分钟",
+      "second": "{{count}} 秒",
+      "ago": "前"
     }
   },
   "sponsor": {

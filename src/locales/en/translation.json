@@ -193,6 +193,21 @@
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
       }
+    },
+    "countdown": {
+      "year": "{{count}} year",
+      "year_plural": "{{count}} years",
+      "month": "{{count}} month",
+      "month_plural": "{{count}} months",
+      "day": "{{count}} day",
+      "day_plural": "{{count}} days",
+      "hour": "{{count}} hr",
+      "hour_plural": "{{count}} hrs",
+      "minute": "{{count}} min",
+      "minute_plural": "{{count}} mins",
+      "second": "{{count}} sec",
+      "second_plural": "{{count}} secs",
+      "ago": "ago"
     }
   },
   "sponsor": {
