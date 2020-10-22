@@ -19,7 +19,7 @@ import {
 } from './AddressInfoCards';
 import { Text } from 'app/components/Text';
 import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
-import { Table } from './Table';
+import { Table } from './Loadable';
 
 interface RouteParams {
   address: string;

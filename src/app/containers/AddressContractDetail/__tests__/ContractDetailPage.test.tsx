@@ -1,13 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
+import { MemoryRouter } from 'react-router';
 
 import { ContractDetailPage } from '../ContractDetailPage';
 
 const renderComponent = () =>
   render(
     <HelmetProvider>
-      <ContractDetailPage />
+      <MemoryRouter>
+        <ContractDetailPage />
+      </MemoryRouter>
     </HelmetProvider>,
   );
 

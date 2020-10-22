@@ -17,8 +17,8 @@ import {
   StorageStakingCard,
   NonceCard,
 } from './AddressInfoCards';
-import { ContractMetadata } from './ContractMetadata';
-import { Table } from './Table';
+import { ContractMetadata } from './Loadable';
+import { Table } from './Loadable';
 import { Text } from 'app/components/Text';
 import { useContract } from 'utils/api';
 import {

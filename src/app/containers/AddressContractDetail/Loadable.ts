@@ -25,3 +25,13 @@ export const DetailPageCard = lazyLoad(
   () => import('./DetailPageCard'),
   module => module.DetailPageCard,
 );
+
+export const Table = lazyLoad(
+  () => import('./Table'),
+  module => module.Table,
+);
+
+export const ContractMetadata = lazyLoad(
+  () => import('./ContractMetadata'),
+  module => module.ContractMetadata,
+);

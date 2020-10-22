@@ -1176,10 +1176,10 @@
     rc-util "^5.0.4"
     shallowequal "^1.1.0"
 
-"@cfxjs/react-hooks@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@cfxjs/react-hooks/-/react-hooks-0.1.7.tgz#593c9ae5589cd8a7668a6793316f1addd6f1b9c1"
-  integrity sha512-+HCV3NwJOWxTYZf8j1gke80zBYEC64nulL4CFdHgljAJjOVe1gQIQdPE1KxwvF1CyYwMPd6QweCAdqqMypvo5g==
+"@cfxjs/react-hooks@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@cfxjs/react-hooks/-/react-hooks-0.1.8.tgz#4365f91981ed26554a17ef76938b027f6a97f8d5"
+  integrity sha512-8NE1Fgxl7xX7zvtJ2neCthKfy/zDPZdoQk55nKJFTjT5w73gKiuR/p/2bA1ddTSJx4soSheKoOn6fPKHqImNuw==
   dependencies:
     big.js "^6.0.1"
     react-use "^15.3.4"

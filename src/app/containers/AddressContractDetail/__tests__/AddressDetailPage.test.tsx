@@ -1,13 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
+import { MemoryRouter } from 'react-router';
 
 import { AddressDetailPage } from '../AddressDetailPage';
 
 const renderComponent = () =>
   render(
     <HelmetProvider>
-      <AddressDetailPage />
+      <MemoryRouter>
+        <AddressDetailPage />
+      </MemoryRouter>
     </HelmetProvider>,
   );
 
