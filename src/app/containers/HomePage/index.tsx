@@ -8,6 +8,7 @@ import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
+import { Notice } from './Notice';
 
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 
@@ -70,6 +71,7 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
+        <Notice />
         <Top>
           <SmallChart width={238} />
           <SmallChart width={238} indicator="hashRate" />
