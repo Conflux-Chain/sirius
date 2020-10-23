@@ -16,12 +16,6 @@ interface Query {
   transactionHash?: string;
 }
 
-const renderText = (value, hoverValue?) => (
-  <Text span hoverValue={hoverValue || value}>
-    {value}
-  </Text>
-);
-
 const renderFilterableAddress = (
   value,
   row,

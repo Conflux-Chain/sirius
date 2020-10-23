@@ -6,10 +6,14 @@ import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
 import { Input, Button, Modal } from '@cfxjs/react-ui';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
-import { util as cfxUtil } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
-import { isCfxAddress, getEllipsStr } from '../../../utils';
+import {
+  isCfxAddress,
+  getEllipsStr,
+  fromDripToGdrip,
+  fromDripToCfx,
+} from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import { Big } from '@cfxjs/react-hooks';
@@ -49,56 +53,24 @@ export function Sponsor() {
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
       setGasFeeAddress(sponsorInfo.sponsorForGas);
-      setCurrentStorageFee(
-        getDecimalFromDrip(sponsorInfo.sponsorBalanceForCollateral),
-      );
-      setCurrentGasFee(getDecimalFromDrip(sponsorInfo.sponsorBalanceForGas));
-      setProvidedStorageFee(
-        cfxUtil.unit.fromDripToCFX(
-          amountAccumulated.collateral_amount_accumulated,
-        ),
-      );
-      setUpperBound(
-        new Big(
-          Number(cfxUtil.unit.fromDripToGDrip(faucetParams.upper_bound)),
-        ).toFixed(0),
-      );
-      setGasBound(cfxUtil.unit.fromDripToCFX(faucetParams.gas_bound));
-      setStorageBound(
-        cfxUtil.unit.fromDripToCFX(faucetParams.collateral_bound),
-      );
+      setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
+      setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
+      setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
+      setUpperBound(faucetParams.upper_bound);
+      setGasBound(faucetParams.gas_bound);
+      setStorageBound(faucetParams.collateral_bound);
       setAvialStorageFee(
-        new Big(
-          Number(
-            cfxUtil.unit.fromDripToCFX(faucetParams.collateral_total_limit),
-          ),
-        )
+        new Big(Number(faucetParams.collateral_total_limit))
           .minus(
-            new Big(
-              Number(
-                cfxUtil.unit.fromDripToCFX(
-                  amountAccumulated.collateral_amount_accumulated,
-                ),
-              ),
-            ),
+            new Big(Number(amountAccumulated.collateral_amount_accumulated)),
           )
-          .toFixed(),
+          .toNumber(),
       );
-      setProvidedGasFee(
-        cfxUtil.unit.fromDripToCFX(amountAccumulated.gas_amount_accumulated),
-      );
+      setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
       setAvialGasFee(
-        new Big(
-          Number(cfxUtil.unit.fromDripToCFX(faucetParams.gas_total_limit)),
-        )
-          .minus(
-            Number(
-              cfxUtil.unit.fromDripToCFX(
-                amountAccumulated.gas_amount_accumulated,
-              ),
-            ),
-          )
-          .toFixed(),
+        new Big(Number(faucetParams.gas_total_limit))
+          .minus(Number(amountAccumulated.gas_amount_accumulated))
+          .toNumber(),
       );
     }
   };
@@ -199,13 +171,6 @@ export function Sponsor() {
     }
   };
 
-  const getDecimalFromDrip = (dripStr: string) => {
-    if (dripStr) {
-      return cfxUtil.unit.fromDripToCFX(parseInt(dripStr, 16));
-    }
-    return '';
-  };
-
   useEffect(() => {
     if (portalInstalled) {
       setApplyText(t(translations.general.apply));
@@ -271,7 +236,11 @@ export function Sponsor() {
             </div>
             <div className="currentFeeContainer">
               <SkelontonContainer shown={loading}>
-                <span className="fee">{currentStorageFee}</span>
+                <span className="fee">
+                  {currentStorageFee !== defaultStr
+                    ? fromDripToCfx(currentStorageFee)
+                    : defaultStr}
+                </span>
                 <span className="unit">CFX</span>
               </SkelontonContainer>
             </div>
@@ -283,7 +252,11 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span>{providedStorageFee}</span>
+                    <span>
+                      {providedStorageFee !== defaultStr
+                        ? fromDripToCfx(providedStorageFee)
+                        : defaultStr}
+                    </span>
                     <span className="unit">CFX</span>
                   </SkelontonContainer>
                 </div>
@@ -294,9 +267,17 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span className="fee">{avialStorageFee}</span>
+                    <span className="fee">
+                      {avialStorageFee !== defaultStr
+                        ? fromDripToCfx(avialStorageFee)
+                        : defaultStr}
+                    </span>
                     <span className="unit">CFX</span>
-                    <span className="secondFee">{storageBound}</span>
+                    <span className="secondFee">
+                      {storageBound !== defaultStr
+                        ? fromDripToCfx(storageBound)
+                        : defaultStr}
+                    </span>
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
@@ -321,7 +302,11 @@ export function Sponsor() {
             </div>
             <div className="currentFeeContainer">
               <SkelontonContainer shown={loading}>
-                <span className="fee">{currentGasFee}</span>
+                <span className="fee">
+                  {currentGasFee !== defaultStr
+                    ? fromDripToCfx(currentGasFee)
+                    : defaultStr}
+                </span>
                 <span className="unit">CFX</span>
               </SkelontonContainer>
             </div>
@@ -330,7 +315,12 @@ export function Sponsor() {
                 <span className="label">
                   {t(translations.sponsor.upperBound)}:&nbsp;
                 </span>
-                <span className="fee">{upperBound}</span>&nbsp;
+                <span className="fee">
+                  {upperBound !== defaultStr
+                    ? fromDripToGdrip(upperBound)
+                    : defaultStr}
+                </span>
+                &nbsp;
                 <span className="unit">Gdrip/{t(translations.sponsor.tx)}</span>
               </SkelontonContainer>
             </div>
@@ -342,7 +332,11 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span>{providedGasFee}</span>
+                    <span>
+                      {providedGasFee !== defaultStr
+                        ? fromDripToCfx(providedGasFee)
+                        : defaultStr}
+                    </span>
                     <span className="unit">CFX</span>
                   </SkelontonContainer>
                 </div>
@@ -351,9 +345,17 @@ export function Sponsor() {
                 <div className="label">{t(translations.sponsor.availGas)}</div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span className="fee">{avialGasFee}</span>
+                    <span className="fee">
+                      {avialGasFee !== defaultStr
+                        ? fromDripToCfx(avialGasFee)
+                        : defaultStr}
+                    </span>
                     <span className="unit">CFX</span>
-                    <span className="secondFee">{gasBound}</span>
+                    <span className="secondFee">
+                      {gasBound !== defaultStr
+                        ? fromDripToCfx(gasBound)
+                        : defaultStr}
+                    </span>
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
