@@ -20,3 +20,8 @@ yarn-error.log*
 generated-cra-app
 .cra-template-rb
 template
+/public/0.conflux-dag.js
+/public/2.conflux-dag.js
+/public/conflux-dag.js
+/public/vendors~@tweenjs/
+/public/vendors~pixi.js.conflux-dag.js

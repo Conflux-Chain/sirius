@@ -30,8 +30,11 @@ yarn && yarn build
               )
             }
             script {
+              build 'Conflux-dev/conflux-dag/master'
+              copyArtifacts(projectName: 'Conflux-dev/conflux-dag/master')
               sh (label: 'move to nginx www', script: """
-sudo rm -rf /www/sirius/
+sudo cp -r dist/* build/
+sudo rm -rf /www/sirius/ || true
 sudo cp -r build /www/sirius
 """)
             }
@@ -54,8 +57,11 @@ yarn && yarn build
               )
             }
             script {
+              build 'Conflux-dev/conflux-dag/master'
+              copyArtifacts(projectName: 'Conflux-dev/conflux-dag/master')
               sh (label: 'move builds', script: """
-sudo rm -rf /www/sirius/
+sudo cp -r dist/* build/
+sudo rm -rf /www/sirius/ || true
 sudo cp -r build /www/sirius
 """)
             }

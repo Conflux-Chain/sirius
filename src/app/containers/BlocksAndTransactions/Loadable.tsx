@@ -8,3 +8,8 @@ export const BlocksAndTransactions = lazyLoad(
   () => import('./index'),
   module => module.BlocksAndTransactions,
 );
+
+export const Dag = lazyLoad(
+  () => import('./Dag'),
+  module => module.Dag,
+);

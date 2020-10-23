@@ -593,3 +593,14 @@ export const useTransfers = (query = {}, opts = {}) => {
     },
   );
 };
+
+export const fetchRecentDagBlock = async (opts = {}) => {
+  let data;
+  try {
+    data = await fetch(appendApiPrefix('/dag')).then(res => res.json());
+  } catch (err) {
+    data = { total: 0, list: [] };
+  }
+
+  return data;
+};
