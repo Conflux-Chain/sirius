@@ -18,11 +18,8 @@ export function SmallChart({
     return <Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
-  console.log(indicator, firstlast, diff);
   const small = width < 200;
   const isDown = diff ? diff.startsWith('-') : null;
-
-  // console.log('first, last', indicator, first, last);
 
   return (
     <Container style={{ width, height }}>
@@ -56,6 +53,9 @@ function Draw({
   const lineCanvasRef = useRef(null);
 
   useEffect(() => {
+    // if (plot.length <= 1) {
+    //   return null;
+    // }
     const ctxBg = backgroundCanvasRef.current.getContext('2d');
     ctxBg.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
 
@@ -76,6 +76,9 @@ function Draw({
     }
     setFirstLast([first, last]);
   }, [width, height, plot, indicator, setFirstLast]);
+  // if (plot.length <= 1) {
+  //   return null;
+  // }
   return (
     <CanvasContainer small={small} style={{ width, height }}>
       <canvas
@@ -118,6 +121,8 @@ const Title = styled.div`
 const Value = styled.div`
   color: #314449;
   font-weight: bold;
+  position: relative;
+  z-index: 1;
   font-size: ${props => (props.small ? '18px' : '24px')};
   margin-top: ${props => (props.small ? '10%' : '0')};
 `;
@@ -148,6 +153,8 @@ function format(v, d = 6) {
 
 function change(end, start) {
   const [s, e] = [start, end].map(x => parseFloat(x));
-  const diff = format(((s - e) / s) * 100, 1);
+  const diff = isNaN(format(((s - e) / s) * 100, 1))
+    ? '0.0'
+    : format(((s - e) / s) * 100, 1);
   return (diff > 0 ? '+' + diff : diff) + '%';
 }
