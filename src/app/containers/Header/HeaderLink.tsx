@@ -7,10 +7,11 @@ import { media, useBreakpoint } from 'styles/media';
 import { ChevronUp } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
-export type HeaderLinkTitle = string | Array<string | ReactNode>;
+export type Node = string | ReactNode | JSX.Element;
+export type HeaderLinkTitle = Node | Array<Node>;
 export type HeaderLinkHref =
-  | string
-  | string[]
+  | Node
+  | Array<Node>
   | MouseEventHandler
   | [MouseEventHandler, (title: HeaderLinkTitle) => boolean];
 export type HeaderLinks = Array<HeaderLinkTitle | HeaderLinkHref>;
@@ -64,7 +65,7 @@ export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
         <HeaderLink
           key={i}
           className={`navbar-link level-${level}`}
-          onClick={href}
+          onClick={href as MouseEventHandler}
           matched={Boolean(matched) && (matched as match<{}>).isExact}
         >
           {title}
@@ -136,7 +137,7 @@ export const HeaderLink: React.FC<{
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
   useClickAway(ref, () => {
-    if (expanded) setTimeout(() => toggle(), 200);
+    if (expanded) setTimeout(() => toggle(false), 200);
   });
   const bp = useBreakpoint();
 
@@ -154,7 +155,13 @@ export const HeaderLink: React.FC<{
   } else if (onClick) {
     // select
     return (
-      <WrappLink>
+      <WrappLink
+        onClick={e => {
+          e.preventDefault();
+          toggle();
+          onClick(e);
+        }}
+      >
         <div
           className={clsx(
             'link navbar-link-menu navbar-link',
@@ -167,11 +174,6 @@ export const HeaderLink: React.FC<{
               expanded && 'expanded',
               matched && 'matched',
             )}
-            onClick={e => {
-              e.preventDefault();
-              toggle();
-              onClick(e);
-            }}
           >
             {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
             {children}
@@ -183,7 +185,13 @@ export const HeaderLink: React.FC<{
     const [text, links] = children as ReactNode[];
 
     return (
-      <WrappLink style={{ marginLeft: bp === 'm' || bp === 's' ? '-18px' : 0 }}>
+      <WrappLink
+        style={{ marginLeft: bp === 'm' || bp === 's' ? '-18px' : 0 }}
+        onClick={e => {
+          toggle();
+          e.preventDefault();
+        }}
+      >
         <div
           className={clsx([
             'link navbar-link-menu navbar-link',
@@ -191,14 +199,7 @@ export const HeaderLink: React.FC<{
           ])}
         >
           <WrappLink>
-            <UILink
-              ref={ref}
-              className={className}
-              onClick={e => {
-                toggle();
-                e.preventDefault();
-              }}
-            >
+            <UILink ref={ref} className={className}>
               {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
               {text}
               {bp !== 's' && bp !== 'm' && isMenu && <ChevronUp size={18} />}
@@ -225,6 +226,9 @@ const WrappLink = styled.span`
       }
     }
     &.expanded {
+      .header-link-menu > span {
+        width: 100%;
+      }
       > span > a.link.navbar-link {
         svg {
           transform: rotate(180deg);
