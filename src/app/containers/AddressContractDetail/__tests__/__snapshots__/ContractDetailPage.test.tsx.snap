@@ -530,9 +530,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               </div>
               <div
                 class="c11"
-              >
-                loading...
-              </div>
+              />
             </div>
             <div
               class=""
@@ -672,9 +670,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               </div>
               <div
                 class="c11"
-              >
-                loading...
-              </div>
+              />
             </div>
             <div
               class=""
@@ -727,9 +723,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               </div>
               <div
                 class="c11"
-              >
-                loading...
-              </div>
+              />
             </div>
             <div
               class=""

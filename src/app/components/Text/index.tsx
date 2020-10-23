@@ -37,7 +37,13 @@ export const Text = ({
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
   const tooltipText = (
-    <div onClick={e => selectText(e.currentTarget)}>
+    <div
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        selectText(e.currentTarget);
+      }}
+    >
       {text || hoverValue || children}
     </div>
   );
