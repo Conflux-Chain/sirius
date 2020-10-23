@@ -5,10 +5,10 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
-import { Card, Select } from '@cfxjs/react-ui';
+import { Card } from '@cfxjs/react-ui';
+import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
 import { useParams } from 'react-router-dom';
-// import { useTransactionQuery,useCMContractQuery,useTransferList } from '../../../utils/api';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { Link } from 'react-router-dom';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
@@ -40,7 +40,7 @@ export const Transactions = () => {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   const [isContract, setIsContract] = useState(false);
-  const [transactionDetail, setTransactionDetail] = useState({});
+  const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
@@ -50,60 +50,26 @@ export const Transactions = () => {
     hash: string;
   }>();
   let loading = false;
-  // const { data, error } = useTransactionQuery({ hash });
   const [dataType, setDataType] = useState('original');
-  /**
-   * ISSUE LIST:
-   * - executed Epoch: ? - backend will provide later
-   * - gas used/limit: 用哪两个值算? - miss gas used, backend will provide later
-   * - timestamp: todo, need to be formatted
-   * - inputData: todo, need to be formatted
-   * - to: todo, need to get token info, API: /contract-manager/api/contract/query?<params query>
-   * - token transfer: todo, need to get token list, API: /api/transfer/list?transactionHash=<transaction hash>
-   * - others:
-   *  - CopyButton: 目前是 block 的，后续 react-ui/Tooltip 更新后会解决
-   *  - Status: 图片显示有问题 - 后续 react-ui/Card 更新后会解决
-   *  - Select: 样式不统一 - 后续 Select 会单独封装组件
-   *  - Skeleton: 显示文字 - 后续 react-ui/Skeleton 更新后会解决
-   *  - title tooltip: 需要给定文案后确定哪些需要添加
-   */
-
   const {
-    // @ts-ignore
     epochHeight,
-    // @ts-ignore
     from,
-    // @ts-ignore
     to,
-    // @ts-ignore
     value,
-    // @ts-ignore
     gasPrice,
-    // @ts-ignore
     gas,
-    // @ts-ignore
     nonce,
-    // @ts-ignore
     blockHash,
-    // @ts-ignore
     storageLimit,
-    // @ts-ignore
     chainId,
-    // @ts-ignore
     transactionIndex,
-    // @ts-ignore
     epochNumber,
-    // @ts-ignore
     syncTimestamp,
-    // @ts-ignore
     gasFee,
-    // @ts-ignore
     gasUsed,
-    // @ts-ignore
     status,
-    // @ts-ignore
     data,
-  } = transactionDetail || {};
+  } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     let looping = true;
     let riskLevel;
@@ -125,7 +91,7 @@ export const Transactions = () => {
         hash: txnhash,
       }).then(body => {
         const txDetailDta = body;
-        setTransactionDetail(txDetailDta);
+        setTransactionDetail(txDetailDta || {});
         if (txnhash !== routeHash) {
           return;
         }
@@ -422,19 +388,6 @@ export const Transactions = () => {
               inputType={dataType}
               decodedDataStr={JSON.stringify(decodedData)}
             ></InputData>
-            {/* todo, need to be formatted */}
-            {/* <StyledTextareaWrapper>
-              <Textarea
-                className="sirius-Transactions-Textarea"
-                width="100%"
-                placeholder=""
-                value={innerData}
-                defaultValue=""
-                minHeight="118px"
-                variant="solid"
-              />
-            </StyledTextareaWrapper> */}
-            {/* todo, need to replace with styled select */}
             <Select
               value={dataType}
               onChange={handleDataTypeChange}
@@ -443,17 +396,11 @@ export const Transactions = () => {
             >
               {dataTypeList.map(dataTypeItem => {
                 return (
-                  <Select.Option value={dataTypeItem}>
+                  <Select.Option key={dataTypeItem} value={dataTypeItem}>
                     {`${t(translations.transactions.select[dataTypeItem])}`}
                   </Select.Option>
                 );
               })}
-              {/* <Select.Option value="original">
-                {t(translations.transactions.select.original)}
-              </Select.Option>
-              <Select.Option value="utf8">
-                {t(translations.transactions.select.utf8)}
-              </Select.Option> */}
             </Select>
           </Description>
         </Card>
