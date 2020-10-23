@@ -47,7 +47,7 @@ export function Notice() {
 }
 
 const Main = styled.div`
-  margin-top: 1.71rem;
+  margin-top: 0.7143rem;
   color: #212121;
   margin-bottom: 3rem;
 
