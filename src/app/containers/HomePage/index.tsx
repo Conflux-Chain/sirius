@@ -61,6 +61,14 @@ export function HomePage() {
     },
   ];
 
+  const clientWidth = document.body.clientWidth;
+  let chartWidth;
+  if (clientWidth < 1024) {
+    chartWidth = (clientWidth - 44) / 2;
+  } else {
+    chartWidth = 238;
+  }
+
   return (
     <>
       <Helmet>
@@ -73,10 +81,18 @@ export function HomePage() {
       <Main>
         <Notice />
         <Top>
-          <SmallChart width={238} />
-          <SmallChart width={238} indicator="hashRate" />
-          <SmallChart width={165} indicator="tps" />
-          <SmallChart width={165} indicator="difficulty" />
+          <SmallChartWrap>
+            <SmallChart width={chartWidth} />
+          </SmallChartWrap>
+          <SmallChartWrap>
+            <SmallChart width={chartWidth} indicator="hashRate" />
+          </SmallChartWrap>
+          <SmallChartWrap>
+            <SmallChart width={chartWidth} indicator="tps" />
+          </SmallChartWrap>
+          <SmallChartWrap>
+            <SmallChart width={chartWidth} indicator="difficulty" />
+          </SmallChartWrap>
         </Top>
         <Bottom>
           <TabsTablePanel tabs={tabs} />
@@ -103,7 +119,25 @@ const Main = styled.div`
     margin-bottom: 2rem;
   }
 `;
-const Top = styled.section``;
+const Top = styled.section`
+  display: flex;
+  margin-right: -1.7143rem;
+  margin-bottom: 2.2857rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  ${media.m} {
+    margin-right: -1rem;
+    margin-bottom: 1.7143rem;
+  }
+`;
+
+const SmallChartWrap = styled.div`
+  margin-right: 24px;
+  ${media.m} {
+    margin-right: 0.8571rem;
+  }
+`;
+
 const Bottom = styled.section`
   position: relative;
   width: 100%;

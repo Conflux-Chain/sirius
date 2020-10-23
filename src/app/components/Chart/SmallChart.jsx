@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import up from './up.svg';
 import down from './down.svg';
 
-export function SmallChart({
+export const SmallChart = ({
   width,
   height = width * 0.52,
   indicator = 'blockTime',
-} = {}) {
+} = {}) => {
   const { plot } = usePlot('day');
   const { t } = useTranslation();
   const [firstlast, setFirstLast] = useState(null);
@@ -38,7 +38,7 @@ export function SmallChart({
       />
     </Container>
   );
-}
+};
 
 function Draw({
   width,
