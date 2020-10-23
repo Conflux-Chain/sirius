@@ -69,7 +69,8 @@
     "charts": "Charts",
     "testnet": "TESTNET",
     "oceanus": "Tethys",
-    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address"
+    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address",
+    "searchPlaceHolderMobile": "Address / Block hash / Epoch"
   },
   "footer": {
     "product": "Product",
@@ -315,7 +316,6 @@
       "age": "Age"
     }
   },
-
   "tps": {
     "title": "TPS",
     "description": "Number of transactions on the chain per second"
@@ -331,5 +331,8 @@
   "hashRate": {
     "title": "Hash Rate",
     "description": "The number of times a miner calculates hashes per second"
-  }
+  },
+  "notice": [
+    "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
+  ]
 }
