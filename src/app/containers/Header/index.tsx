@@ -50,13 +50,6 @@ export const Header = memo(() => {
   ];
 
   const endLinks: HeaderLinks = [
-    iszh ? zh : en, // level 0 title
-    [
-      iszh ? en : zh, // level 1 title
-      () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'),
-      [iszh ? zh : en, <Check size={18} key="check" />],
-      [() => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'), () => true],
-    ],
     isTestnet ? t(translations.header.testnet) : t(translations.header.oceanus),
     [
       isTestnet
@@ -70,6 +63,15 @@ export const Header = memo(() => {
         <Check size={18} key="check" />,
       ],
       [isTestnet ? toMainnet : toTestnet, () => true],
+    ],
+    <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
+      {iszh ? zh : en}
+    </div>, // level 0 title
+    [
+      iszh ? en : zh, // level 1 title
+      () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'),
+      [iszh ? zh : en, <Check size={18} key="check" />],
+      [() => {}, () => true],
     ],
   ];
 
@@ -88,11 +90,12 @@ export const Header = memo(() => {
     (bp === 'm' || bp === 's') && <TextLogo />,
     ...startLinksJSX,
   ];
-  const menuEnd = [<Search />, endLinksJSX];
+  const menuEnd = [bp !== 'm' && bp !== 's' && <Search />, endLinksJSX];
 
   return (
     <Wrapper>
       <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />
+      {(bp === 's' || bp === 'm') && <Search />}
     </Wrapper>
   );
 });
