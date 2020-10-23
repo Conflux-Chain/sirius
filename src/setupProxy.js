@@ -45,7 +45,7 @@ module.exports = app => {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://182.92.71.168:8885/v1',
+      target: 'http://39.107.143.161:8885/v1',
       pathRewrite: {
         '/api': '',
       },
