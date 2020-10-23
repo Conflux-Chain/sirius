@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
+import { Big } from '@cfxjs/react-hooks';
 dayjs.extend(relativeTime);
 
 export const isCfxAddress = (address: string) => {
@@ -261,4 +261,30 @@ export const formatTimeStamp = (
     result = '';
   }
   return result;
+};
+
+export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
+  try {
+    if (isShowFull) {
+      return Big(balance).div(Big(10).pow(decimals)).toString();
+    }
+    return formatNumber(Big(balance).div(Big(10).pow(decimals)).toString());
+  } catch {}
+};
+
+export const getUnitByCfxNum = (num: number | string) => {
+  const bn = new BigNumber(num).toNumber();
+  let numFormatted: number | string = '';
+  let unit = '';
+  if (bn < 10 ** 9) {
+    numFormatted = formatNumber(bn);
+    unit = 'Drip';
+  } else if (10 ** 9 <= bn && bn < 10 ** 18) {
+    numFormatted = fromDripToGdrip(bn);
+    unit = 'Gdrip';
+  } else {
+    numFormatted = fromDripToCfx(bn);
+    unit = 'CFX';
+  }
+  return { num: numFormatted, unit };
 };

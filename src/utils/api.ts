@@ -1,18 +1,10 @@
 import { useRef } from 'react';
 import useSWR, { responseInterface } from 'swr';
 import qs from 'query-string';
-import { Big } from '@cfxjs/react-hooks';
-import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-
+import { formatBalance } from './index';
 export const appendApiPrefix = (url: string) => `/api${url}`;
-
-function formatBalance(balance, decimals = 18) {
-  return numeral(Big(balance).div(Big(10).pow(decimals)).toString()).format(
-    '0,0.[123456]',
-  );
-}
 
 export interface Params {
   [name: string]: string | string[];
@@ -347,7 +339,6 @@ export const useAccount = (
         .then(rst => {
           return {
             ...rst,
-            balance: rst.balance ? formatBalance(rst.balance) : notAvaiableText,
           };
         })
         .catch(() => ({
