@@ -22,8 +22,7 @@ export function Notice() {
   let v = useClientVersion();
   const loadingText = t(translations.general.loading);
 
-  const match = v?.match(/(\d+\.)?(\d+\.)?(\*|\d+)$/);
-  const version = (match && match[0]) || loadingText;
+  const version = (v && v?.replace('conflux-rust-', '')) || loadingText;
 
   const notices: React.ReactNode[] = [];
   for (const n in translations.notice) {
