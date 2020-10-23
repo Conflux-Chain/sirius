@@ -1,7 +1,6 @@
 import { addressTypeContract, addressTypeCommon } from './constants';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
-
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -240,4 +239,26 @@ export const getPercent = (
   const bnDivisor = new BigNumber(divisor);
   const bnDividend = new BigNumber(dividend);
   return formatNumber(bnDivisor.dividedBy(bnDividend).toNumber()) + '%';
+};
+
+export const formatTimeStamp = (
+  time: number,
+  type?: 'standard' | 'timezone',
+) => {
+  let result: string;
+  try {
+    switch (type) {
+      case 'standard':
+        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss');
+        break;
+      case 'timezone':
+        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss Z');
+        break;
+      default:
+        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss');
+    }
+  } catch (error) {
+    result = '';
+  }
+  return result;
 };
