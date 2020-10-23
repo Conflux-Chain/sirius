@@ -9,28 +9,24 @@ export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 export type TabsTablePanelType = {
   tabs: Array<
     {
+      hideTotalZero?: boolean;
       value: string;
       label: ((count: number) => React.ReactNode) | string;
       content?: React.ReactNode;
     } & Partial<TablePanelType>
   >;
   onTabsChange?: (value: string) => void;
-  hideTotalZero?: boolean;
 };
 
-export const TabsTablePanel = ({
-  tabs,
-  onTabsChange,
-  hideTotalZero,
-}: TabsTablePanelType) => {
+export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
   const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
   const handleTabsChange = function (value: string) {
     switchToTab(value);
     onTabsChange && onTabsChange(value);
   };
   const ui = tabs
-    .filter((_, i) => {
-      if (hideTotalZero && typeof total[i] === 'number') {
+    .filter((item, i) => {
+      if (item.hideTotalZero && typeof total[i] === 'number') {
         return total[i];
       }
       return true;
@@ -65,7 +61,6 @@ export const TabsTablePanel = ({
 TabsTablePanel.defaultProps = {
   tabs: [],
   onTabsChange: () => {},
-  hideTotalZero: false,
 };
 
 /**
@@ -103,11 +98,11 @@ TabsTablePanel.propTypes = {
         columns: PropTypes.array,
         rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
       }),
+      // hideTotalZero: optional, determine whether to this tab if total is 0
+      hideTotalZero: PropTypes.bool,
     }),
   ),
   // onTabsChange: optional, Tabs component onTabsChange props
   onTabsChange: PropTypes.func,
-  // hideTotalZero: optional, determine whether to hide 0 total tab panel, default is false
-  hideTotalZero: PropTypes.bool,
 };
  */
