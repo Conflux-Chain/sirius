@@ -160,6 +160,10 @@ exports[`<Header /> should match the snapshot 1`] = `
   transition: all 0.2s ease-out;
 }
 
+.c8 .navbar-link-menu.expanded .header-link-menu > span {
+  width: 100%;
+}
+
 .c8 .navbar-link-menu.expanded > span > a.link.navbar-link svg {
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
@@ -659,7 +663,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    EN
+                    Tethys
                   </a>
                 </span>
               </div>
@@ -694,7 +698,12 @@ exports[`<Header /> should match the snapshot 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    Tethys
+                    <div
+                      class="header-link-lang-title"
+                      style="min-width: 2.1rem;"
+                    >
+                      EN
+                    </div>
                   </a>
                 </span>
               </div>
@@ -865,6 +874,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 .c8 .navbar-link-menu > a.link.navbar-link svg {
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
+}
+
+.c8 .navbar-link-menu.expanded .header-link-menu > span {
+  width: 100%;
 }
 
 .c8 .navbar-link-menu.expanded > span > a.link.navbar-link svg {
@@ -1490,7 +1503,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    EN
+                    Tethys
                   </a>
                 </span>
               </div>
@@ -1525,7 +1538,12 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    Tethys
+                    <div
+                      class="header-link-lang-title"
+                      style="min-width: 2.1rem;"
+                    >
+                      EN
+                    </div>
                   </a>
                 </span>
               </div>
