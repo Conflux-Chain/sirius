@@ -176,20 +176,54 @@ export const convertToValueorFee = bigNumber => {
   return `${result.toString(10)}`;
 };
 
-export const fromDripToCfx = (num: number | string) => {
+/**
+ *
+ * @param num original number
+ * @param isOmitting whether omiting the number when it is less than 0.01
+ * @param isShowFull Whether to show all numbers
+ */
+export const fromDripToCfx = (
+  num: number | string,
+  isOmitting = true,
+  isShowFull = false,
+) => {
   if (!num) return 0;
   const bn = new BigNumber(num).dividedBy(10 ** 18);
-  return bn.toNumber() < 0.001
-    ? '< 0.001 CFX'
-    : formatNumber(bn.toNumber()) + ' CFX';
+  if (isShowFull) {
+    return bn.toNumber() + ' CFX';
+  }
+  if (isOmitting) {
+    return bn.toNumber() < 0.001
+      ? '< 0.001 CFX'
+      : formatNumber(bn.toNumber()) + ' CFX';
+  } else {
+    return formatNumber(bn.toNumber()) + ' CFX';
+  }
 };
 
-export const fromDripToGdrip = (num: number | string) => {
+/**
+ *
+ * @param num original number
+ * @param isOmitting whether omiting the number when it is less than 0.01
+ * @param isShowFull Whether to show all numbers
+ */
+export const fromDripToGdrip = (
+  num: number | string,
+  isOmitting = true,
+  isShowFull = false,
+) => {
   if (!num) return 0;
   const bn = new BigNumber(num).dividedBy(10 ** 9);
-  return bn.toNumber() < 0.001
-    ? '< 0.001 Gdrip'
-    : formatNumber(bn.toNumber()) + ' Gdrip';
+  if (isShowFull) {
+    return bn.toNumber() + ' Gdrip';
+  }
+  if (isOmitting) {
+    return bn.toNumber() < 0.001
+      ? '< 0.001 Gdrip'
+      : formatNumber(bn.toNumber()) + ' Gdrip';
+  } else {
+    return formatNumber(bn.toNumber()) + ' Gdrip';
+  }
 };
 
 export const fromGdripToDrip = (num: number | string) =>

@@ -4,19 +4,12 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
-import numeral from 'numeral';
 import { isAddress, isHash } from '../util';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
-import {
-  formatString,
-  formatNumber,
-  getPercent,
-  fromDripToCfx,
-  fromDripToGdrip,
-} from '../../utils/';
+import { formatString, formatNumber, fromDripToGdrip } from '../../utils/';
 
 interface Query {
   accountAddress?: string;
@@ -218,7 +211,7 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: fromDripToGdrip,
+  render: fromDripToGdrip as any,
 };
 
 export const to = {
