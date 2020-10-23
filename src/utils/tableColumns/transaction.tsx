@@ -9,7 +9,6 @@ import { CountDown } from '../../app/components/CountDown/Loadable';
 import {
   formatString,
   formatNumber,
-  getPercent,
   fromDripToCfx,
   fromDripToGdrip,
 } from '../../utils/';
@@ -97,7 +96,7 @@ export const gasPrice = {
   dataIndex: 'gasPrice',
   key: 'gasPrice',
   width: 1,
-  render: fromDripToGdrip,
+  render: fromDripToGdrip as any,
 };
 
 export const gasFee = {

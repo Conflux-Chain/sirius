@@ -11,8 +11,7 @@ import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
 import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
-import { util as cfxUtil } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { delay } from '../../../utils';
+import { delay, getDuration, getPercent, fromDripToCfx } from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
@@ -35,13 +34,6 @@ export function DescriptionPanel({ hash: blockHash }) {
         await delay(10 * 1000);
       }
     }
-  };
-
-  const transferDrip = (dripStr: string) => {
-    if (dripStr) {
-      return cfxUtil.unit.fromDripToCFX(Number(dripStr));
-    }
-    return '--';
   };
 
   const {
@@ -103,7 +95,7 @@ export function DescriptionPanel({ hash: blockHash }) {
         </Description>
         <Description title={t(translations.blocks.reward)}>
           <SkeletonContainer shown={loading}>
-            {transferDrip(totalReward)}
+            {totalReward ? fromDripToCfx(totalReward, false, true) : '--'}
           </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.security)}>
@@ -141,10 +133,13 @@ export function DescriptionPanel({ hash: blockHash }) {
         <Description title={t(translations.blocks.gasUsed)}>
           <SkeletonContainer shown={loading}>
             {gasUsed || '--'}/{gasLimit || '--'}
+            {`(${getPercent(gasUsed, gasLimit)})`}
           </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.timestamp)}>
-          <SkeletonContainer shown={loading}>{syncTimestamp}</SkeletonContainer>
+          <SkeletonContainer shown={loading}>
+            {getDuration(syncTimestamp)}
+          </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.size)} noBorder>
           <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
