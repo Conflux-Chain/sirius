@@ -172,7 +172,7 @@ export const getDuration = (pFrom: number, pTo?: number) => {
 export const convertToValueorFee = bigNumber => {
   const result = new BigNumber(bigNumber).dividedBy(10 ** 18);
   if (result.toNumber() === 0) return '0';
-  if (result.toNumber() < 0.00001) return `< 0.00001`;
+  if (result.toNumber() < 0.001) return `< 0.001`;
   return `${result.toString(10)}`;
 };
 
