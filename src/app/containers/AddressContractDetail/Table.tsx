@@ -168,6 +168,7 @@ const TxDirectionFilter = ({ onChange }) => {
     translations.transactions.viewIncomingTxns,
   ].map((text, idx) => (
     <div
+      key={idx}
       onClick={() => select(idx)}
       className={clsx('opt', selected === idx && 'selected')}
     >
@@ -177,8 +178,9 @@ const TxDirectionFilter = ({ onChange }) => {
   ));
 
   return (
-    <TxDirectionFilterWrap>
+    <TxDirectionFilterWrap key="tx-filter">
       <Button
+        key="tx-filter-button"
         color="secondary"
         variant="text"
         className="filter-button"
@@ -190,7 +192,7 @@ const TxDirectionFilter = ({ onChange }) => {
         />
       </Button>
       {visible && (
-        <TxDirectionFilterDropdown ref={dropdownRef}>
+        <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
           {opts}
         </TxDirectionFilterDropdown>
       )}
@@ -361,6 +363,7 @@ export function Table({ address }) {
         }
       : {
           value: 'mined-blocks',
+          hideTotalZero: true,
           label: (count: number) => {
             return (
               <LabelWrap>
@@ -438,6 +441,7 @@ export function Table({ address }) {
           )}
           {txFilterVisible && (
             <TxDirectionFilter
+              key="tx-filter"
               onChange={txType => {
                 if (queries?.txType !== txType)
                   history.push(
