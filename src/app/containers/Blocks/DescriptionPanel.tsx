@@ -11,7 +11,12 @@ import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
 import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
-import { delay, getDuration, getPercent, fromDripToCfx } from '../../../utils';
+import {
+  delay,
+  getPercent,
+  fromDripToCfx,
+  formatTimeStamp,
+} from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
@@ -138,7 +143,7 @@ export function DescriptionPanel({ hash: blockHash }) {
         </Description>
         <Description title={t(translations.blocks.timestamp)}>
           <SkeletonContainer shown={loading}>
-            {getDuration(syncTimestamp)}
+            {formatTimeStamp(syncTimestamp * 1000, 'timezone')}
           </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.size)} noBorder>
