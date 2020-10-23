@@ -65,6 +65,7 @@ export function BottomTablePanel({ hash: blockHash }) {
           {t(translations.blocks.tabs.referenceBlocks)}
         </TabLabel>
       ),
+      hideTotalZero: true,
       url: `/block?referredBy=${blockHash}`,
       table: {
         columns: columnsBlocks,
