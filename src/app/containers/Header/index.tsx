@@ -115,7 +115,7 @@ const Wrapper = styled.header`
       .navbar-item {
         .navbar-link-menu {
           .navbar-link.level-0 {
-            padding: 0 0.57rem;
+            padding: 0.43rem 0.57rem;
             svg {
               display: none;
             }
