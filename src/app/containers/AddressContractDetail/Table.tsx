@@ -289,8 +289,20 @@ export function Table({ address }) {
 
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,

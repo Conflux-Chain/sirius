@@ -22,37 +22,64 @@ const renderText = (value, hoverValue?) => (
   </Text>
 );
 
-const renderFilterableAddress = (value, row, index, type?: string) => {
+const renderFilterableAddress = (
+  value,
+  row,
+  index,
+  pOpt?: {
+    type?: 'to' | 'from';
+    accountFilter?: boolean;
+  },
+) => {
+  const opt = {
+    type: 'to',
+    accountFilter: true,
+    ...pOpt,
+  };
   const { accountAddress, transactionHash } = queryString.parse(
     window.location.search,
   );
   const filter =
     (accountAddress as string) || (transactionHash as string) || '';
 
-  return (
-    <FromWrap>
-      {filter === value
-        ? renderText(formatString(value, 'address'), value)
-        : renderText(
-            <LinkWidthFilter
-              href={value}
-              children={formatString(value, 'address')}
-            />,
-            value,
-          )}
-      {type === 'from' && (
-        <ImgWrap
-          src={
-            !filter
-              ? '/token/arrow.svg'
-              : filter === value
-              ? '/token/out.svg'
-              : '/token/in.svg'
+  if (opt.accountFilter) {
+    return (
+      <FromWrap>
+        {filter === value
+          ? renderText(formatString(value, 'address'), value)
+          : renderText(
+              <LinkWidthFilter href={value}>
+                {formatString(value, 'address')}
+              </LinkWidthFilter>,
+              value,
+            )}
+        {opt.type === 'from' && (
+          <ImgWrap
+            src={
+              !filter
+                ? '/token/arrow.svg'
+                : filter === value
+                ? '/token/out.svg'
+                : '/token/in.svg'
+            }
+          />
+        )}
+      </FromWrap>
+    );
+  } else {
+    return (
+      <FromWrap>
+        <Link href={`/address/${value}`}>
+          {
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
           }
-        />
-      )}
-    </FromWrap>
-  );
+        </Link>
+        {opt.type === 'from' && <ImgWrap src="/token/arrow.svg" />}
+      </FromWrap>
+    );
+  }
 };
 
 const LinkWidthFilter = ({ href, children }) => {
@@ -221,7 +248,11 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: renderFilterableAddress,
+  render: (value, row, index, opt) =>
+    renderFilterableAddress(value, row, index, {
+      type: 'to',
+      ...opt,
+    }),
 };
 
 export const from = {
@@ -231,8 +262,11 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row, index) =>
-    renderFilterableAddress(value, row, index, 'from'),
+  render: (value, row, index, opt) =>
+    renderFilterableAddress(value, row, index, {
+      type: 'from',
+      ...opt,
+    }),
 };
 
 const StyledIconWrapper = styled.div`
