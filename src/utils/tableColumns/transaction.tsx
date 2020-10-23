@@ -13,12 +13,6 @@ import {
   fromDripToGdrip,
 } from '../../utils/';
 
-const renderText = (value, hoverValue?) => (
-  <Text span hoverValue={hoverValue || value}>
-    {value}
-  </Text>
-);
-
 export const hash = {
   title: (
     <Translation>
@@ -33,7 +27,9 @@ export const hash = {
       <StyledTransactionHashWrapper>
         {row.status !== 0 && <Status type={row.status} variant="dot" />}
         <Link href={`/transactions/${value}`}>
-          {renderText(formatString(value, 'hash'), value)}
+          <Text span hoverValue={value}>
+            {formatString(value, 'hash')}
+          </Text>
         </Link>
       </StyledTransactionHashWrapper>
     );
@@ -51,7 +47,9 @@ export const from = {
   width: 1,
   render: value => (
     <Link href={`/address/${value}`}>
-      {renderText(formatString(value, 'address'), value)}
+      <Text span hoverValue={value}>
+        {formatString(value, 'address')}
+      </Text>
     </Link>
   ),
 };
@@ -68,7 +66,9 @@ export const to = {
   render: value =>
     value ? (
       <Link href={`/address/${value}`}>
-        {renderText(formatString(value, 'address'), value)}
+        <Text span hoverValue={value}>
+          {formatString(value, 'address')}
+        </Text>
       </Link>
     ) : (
       '--'
@@ -84,7 +84,14 @@ export const value = {
   dataIndex: 'value',
   key: 'value',
   width: 1,
-  render: value => (value ? `${fromDripToCfx(value)}` : '--'),
+  render: value =>
+    value ? (
+      <Text span hoverValue={value}>
+        {fromDripToCfx(value)}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 export const gasPrice = {
@@ -96,7 +103,11 @@ export const gasPrice = {
   dataIndex: 'gasPrice',
   key: 'gasPrice',
   width: 1,
-  render: fromDripToGdrip as any,
+  render: value => (
+    <Text span hoverValue={value}>
+      {fromDripToGdrip(value)}
+    </Text>
+  ),
 };
 
 export const gasFee = {

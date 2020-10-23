@@ -178,51 +178,51 @@ export const convertToValueorFee = bigNumber => {
 /**
  *
  * @param num original number
- * @param isOmitting whether omiting the number when it is less than 0.01
  * @param isShowFull Whether to show all numbers
  */
 export const fromDripToCfx = (
   num: number | string,
-  isOmitting = true,
-  isShowFull = false,
+  isShowFull: boolean = false,
 ) => {
-  if (!num) return 0;
-  const bn = new BigNumber(num).dividedBy(10 ** 18);
-  if (isShowFull) {
-    return bn.toNumber() + ' CFX';
+  const bn = new BigNumber(num);
+  let result: string = '0';
+  if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
+    const divideBn = bn.dividedBy(10 ** 18);
+    if (isShowFull) {
+      result = divideBn.toString();
+    } else {
+      result =
+        divideBn.toNumber() < 0.001
+          ? '< 0.001'
+          : formatNumber(divideBn.toNumber());
+    }
   }
-  if (isOmitting) {
-    return bn.toNumber() < 0.001
-      ? '< 0.001 CFX'
-      : formatNumber(bn.toNumber()) + ' CFX';
-  } else {
-    return formatNumber(bn.toNumber()) + ' CFX';
-  }
+  return `${result} CFX`;
 };
 
 /**
  *
  * @param num original number
- * @param isOmitting whether omiting the number when it is less than 0.01
  * @param isShowFull Whether to show all numbers
  */
 export const fromDripToGdrip = (
   num: number | string,
-  isOmitting = true,
-  isShowFull = false,
+  isShowFull: boolean = false,
 ) => {
-  if (!num) return 0;
-  const bn = new BigNumber(num).dividedBy(10 ** 9);
-  if (isShowFull) {
-    return bn.toNumber() + ' Gdrip';
+  const bn = new BigNumber(num);
+  let result: string = '0';
+  if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
+    const divideBn = bn.dividedBy(10 ** 9);
+    if (isShowFull) {
+      result = divideBn.toString();
+    } else {
+      result =
+        divideBn.toNumber() < 0.001
+          ? '< 0.001'
+          : formatNumber(divideBn.toNumber());
+    }
   }
-  if (isOmitting) {
-    return bn.toNumber() < 0.001
-      ? '< 0.001 Gdrip'
-      : formatNumber(bn.toNumber()) + ' Gdrip';
-  } else {
-    return formatNumber(bn.toNumber()) + ' Gdrip';
-  }
+  return `${result} Gdrip`;
 };
 
 export const fromGdripToDrip = (num: number | string) =>

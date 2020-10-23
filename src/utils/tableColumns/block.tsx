@@ -13,12 +13,6 @@ import {
   fromDripToGdrip,
 } from '../../utils/';
 
-const renderText = (value, hoverValue?) => (
-  <Text span hoverValue={hoverValue || value}>
-    {value}
-  </Text>
-);
-
 export const epoch = {
   title: (
     <Translation>{t => t(translations.general.table.block.epoch)}</Translation>
@@ -33,7 +27,9 @@ export const epoch = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/epochs/${value}`}>{renderText(value)}</Link>
+        <Link href={`/epochs/${value}`}>
+          <Text span>{value}</Text>
+        </Link>
         {pivotTag}
       </StyledEpochWrapper>
     );
@@ -70,7 +66,9 @@ export const hash = {
   width: 1,
   render: value => (
     <Link href={`/blocks/${value}`}>
-      {renderText(formatString(value, 'hash'), value)}
+      <Text span hoverValue={value}>
+        {formatString(value, 'hash')}
+      </Text>
     </Link>
   ),
 };
@@ -85,7 +83,9 @@ export const hashWithPivot = {
     return (
       <StyledEpochWrapper>
         <Link href={`/blocks/${value}`}>
-          {renderText(formatString(value, 'hash'), value)}
+          <Text span hoverValue={value}>
+            {formatString(value, 'hash')}
+          </Text>
         </Link>
         {pivotTag}
       </StyledEpochWrapper>
@@ -102,7 +102,9 @@ export const miner = {
   width: 1,
   render: value => (
     <Link href={`/address/${value}`}>
-      {renderText(formatString(value, 'address'), value)}
+      <Text span hoverValue={value}>
+        {formatString(value, 'address')}
+      </Text>
     </Link>
   ),
 };
@@ -116,7 +118,11 @@ export const avgGasPrice = {
   dataIndex: 'avgGasPrice',
   key: 'avgGasPrice',
   width: 1,
-  render: fromDripToGdrip,
+  render: value => (
+    <Text span hoverValue={value}>
+      {fromDripToGdrip(value)}
+    </Text>
+  ),
 };
 
 export const gasUsedPercent = {
@@ -144,7 +150,14 @@ export const reward = {
   dataIndex: 'totalReward',
   key: 'totalReward',
   width: 1,
-  render: value => (value ? `${fromDripToCfx(value)}` : '--'),
+  render: value =>
+    value ? (
+      <Text span hoverValue={value}>
+        {fromDripToCfx(value)}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 export const age = {

@@ -100,7 +100,7 @@ export function DescriptionPanel({ hash: blockHash }) {
         </Description>
         <Description title={t(translations.blocks.reward)}>
           <SkeletonContainer shown={loading}>
-            {totalReward ? fromDripToCfx(totalReward, false, true) : '--'}
+            {totalReward ? fromDripToCfx(totalReward, true) : '--'}
           </SkeletonContainer>
         </Description>
         <Description title={t(translations.blocks.security)}>
