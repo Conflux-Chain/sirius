@@ -43,6 +43,7 @@ WebFontLoader.load({
 
 export function App() {
   const { t } = useTranslation();
+
   return (
     <SWRConfig
       value={{

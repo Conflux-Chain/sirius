@@ -330,5 +330,8 @@
   "hashRate": {
     "title": "哈希算力",
     "description": "矿工每秒计算哈希值的次数"
-  }
+  },
+  "notice": [
+    "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
+  ]
 }

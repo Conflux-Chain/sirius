@@ -197,7 +197,7 @@ const Outer = styled.nav`
   display: flex;
   align-items: stretch;
   width: 100vw;
-  z-index: 30;
+  z-index: 1000;
   min-height: 5rem;
 
   // mobile

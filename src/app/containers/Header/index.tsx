@@ -90,11 +90,12 @@ export const Header = memo(() => {
     (bp === 'm' || bp === 's') && <TextLogo />,
     ...startLinksJSX,
   ];
-  const menuEnd = [<Search />, endLinksJSX];
+  const menuEnd = [bp !== 'm' && bp !== 's' && <Search />, endLinksJSX];
 
   return (
     <Wrapper>
       <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />
+      {(bp === 's' || bp === 'm') && <Search />}
     </Wrapper>
   );
 });
