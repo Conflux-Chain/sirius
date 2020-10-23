@@ -349,7 +349,7 @@ export const Transactions = () => {
             </Description>
           )}
           <Description title={t(translations.transactions.value)}>
-            {value ? fromDripToCfx(value, true) : '--'}
+            {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
           </Description>
           <Description title={t(translations.transactions.gasUsed)}>
             {/* todo, the value is 'gas used/gas limit', no gas limit from response */}

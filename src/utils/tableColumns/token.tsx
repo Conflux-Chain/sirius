@@ -9,7 +9,7 @@ import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
-import { formatString, formatNumber, fromDripToGdrip } from '../../utils/';
+import { formatString, formatNumber, fromDripToCfx } from '../../utils/';
 
 interface Query {
   accountAddress?: string;
@@ -45,14 +45,17 @@ const renderFilterableAddress = (
   if (opt.accountFilter) {
     return (
       <FromWrap>
-        {filter === value
-          ? renderText(formatString(value, 'address'), value)
-          : renderText(
-              <LinkWidthFilter href={value}>
-                {formatString(value, 'address')}
-              </LinkWidthFilter>,
-              value,
-            )}
+        {filter === value ? (
+          <Text span hoverValue={value}>
+            {formatString(value, 'address')}
+          </Text>
+        ) : (
+          <LinkWidthFilter href={value}>
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
+          </LinkWidthFilter>
+        )}
         {opt.type === 'from' && (
           <ImgWrap
             src={
@@ -144,7 +147,9 @@ export const token = {
     <StyledIconWrapper>
       <img src={row.icon} alt="token icon" />
       <Link href={`/token/${row.address}`}>
-        {row.name} ({row.symbol})
+        <Text span hoverValue={`${row.name} (${row.symbol})`}>
+          {formatString(`${row.name} (${row.symbol})`)}
+        </Text>
       </Link>
     </StyledIconWrapper>
   ),
@@ -159,7 +164,7 @@ export const transfer = {
   ),
   dataIndex: 'transferCount',
   key: 'transferCount',
-  render: formatNumber,
+  render: value => <span>{formatNumber(value)}</span>,
 };
 
 export const totalSupply = {
@@ -171,7 +176,11 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
-  render: value => renderText(formatString(formatNumber(value)), value),
+  render: value => (
+    <Text span hoverValue={value}>
+      {formatString(formatNumber(value))}
+    </Text>
+  ),
 };
 
 export const holders = {
@@ -183,7 +192,7 @@ export const holders = {
   ),
   dataIndex: 'accountTotal',
   key: 'accountTotal',
-  render: formatNumber,
+  render: value => <span>{formatNumber(value)}</span>,
 };
 
 export const contract = {
@@ -197,7 +206,9 @@ export const contract = {
   key: 'address',
   render: value => (
     <Link href={`/address/${value}`}>
-      {renderText(formatString(value, 'address'))}
+      <Text span hoverValue={value}>
+        {formatString(value, 'address')}
+      </Text>
     </Link>
   ),
 };
@@ -214,7 +225,9 @@ export const txnHash = {
   key: 'transactionHash',
   render: value => (
     <Link href={`/transactions/${value}`}>
-      {renderText(formatString(value, 'hash'))}
+      <Text span hoverValue={value}>
+        {formatString(value, 'hash')}
+      </Text>
     </Link>
   ),
 };
@@ -238,7 +251,15 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: fromDripToGdrip as any,
+  render: value => {
+    return value ? (
+      <Text span hoverValue={value}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    );
+  },
 };
 
 export const to = {
@@ -248,7 +269,7 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row, index, opt) =>
+  render: (value, row, index, opt?) =>
     renderFilterableAddress(value, row, index, {
       type: 'to',
       ...opt,
@@ -262,7 +283,7 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row, index, opt) =>
+  render: (value, row, index, opt?) =>
     renderFilterableAddress(value, row, index, {
       type: 'from',
       ...opt,

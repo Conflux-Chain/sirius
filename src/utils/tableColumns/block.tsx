@@ -27,9 +27,7 @@ export const epoch = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/epochs/${value}`}>
-          <Text span>{value}</Text>
-        </Link>
+        <Link href={`/epochs/${value}`}>{value}</Link>
         {pivotTag}
       </StyledEpochWrapper>
     );
@@ -120,7 +118,7 @@ export const avgGasPrice = {
   width: 1,
   render: value => (
     <Text span hoverValue={value}>
-      {fromDripToGdrip(value)}
+      {`${fromDripToGdrip(value)} Gdrip`}
     </Text>
   ),
 };
@@ -153,7 +151,7 @@ export const reward = {
   render: value =>
     value ? (
       <Text span hoverValue={value}>
-        {fromDripToCfx(value)}
+        {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (
       '--'
