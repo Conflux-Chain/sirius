@@ -274,7 +274,10 @@ export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
   } catch {}
 };
 
-export const getUnitByCfxNum = (num: number | string) => {
+export const getUnitByCfxNum = (
+  num: number | string,
+  isShowFull: boolean = false,
+) => {
   const bn = new BigNumber(num).toNumber();
   let numFormatted: number | string = '';
   let unit = '';
@@ -287,6 +290,9 @@ export const getUnitByCfxNum = (num: number | string) => {
   } else {
     numFormatted = fromDripToCfx(bn);
     unit = 'CFX';
+  }
+  if (isShowFull) {
+    numFormatted = bn;
   }
   return { num: numFormatted, unit };
 };

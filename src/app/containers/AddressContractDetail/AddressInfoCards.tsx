@@ -6,7 +6,7 @@ import { InfoImage } from './InfoImage';
 import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from '../../components/Text/Loadable';
-import { formatBalance, getUnitByCfxNum } from '../../../utils';
+import { getUnitByCfxNum } from '../../../utils';
 export function BalanceCard({ address }) {
   const { t } = useTranslation();
   const title = t(translations.general.balance);
@@ -15,11 +15,13 @@ export function BalanceCard({ address }) {
     <DetailPageCard
       title={title}
       content={
-        accountInfo?.balance ? (
+        accountInfo ? (
           <Text
-            hoverValue={`${formatBalance(accountInfo.balance, 18, true)} CFX`}
+            hoverValue={`${getUnitByCfxNum(accountInfo.balance, true).num} ${
+              getUnitByCfxNum(accountInfo.balance, true).unit
+            }`}
           >
-            {formatBalance(accountInfo.balance)}
+            {getUnitByCfxNum(accountInfo.balance).num}
           </Text>
         ) : (
           ''
@@ -66,7 +68,7 @@ export function StorageStakingCard({ address }) {
         accountInfo?.collateralForStorage ? (
           <Text
             hoverValue={`${
-              getUnitByCfxNum(accountInfo.collateralForStorage).num
+              getUnitByCfxNum(accountInfo.collateralForStorage, true).num
             } ${getUnitByCfxNum(accountInfo.collateralForStorage).unit}`}
           >
             {getUnitByCfxNum(accountInfo.collateralForStorage).num}
