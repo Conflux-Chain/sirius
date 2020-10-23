@@ -9,6 +9,7 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
+import { Dag } from './Loadable';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
@@ -75,6 +76,7 @@ export function BlocksAndTransactions() {
         })}
         key={currentTabValue}
       />
+      <Dag />
       <TabsTablePanel tabs={tabs} />
     </>
   );
