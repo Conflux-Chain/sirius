@@ -16,6 +16,7 @@ import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
+import { CountDown } from '../../components/CountDown/Loadable';
 import {
   reqTransactionDetail,
   reqContract,
@@ -23,8 +24,14 @@ import {
   reqConfirmationRiskByHash,
   reqTokenList,
 } from '../../../utils/httpRequest';
-import { delay, getAddressType } from '../../../utils';
-import { devidedByDecimals } from '../../../utils';
+import {
+  delay,
+  getAddressType,
+  formatTimeStamp,
+  devidedByDecimals,
+  fromDripToCfx,
+  getPercent,
+} from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
@@ -302,7 +309,7 @@ export const Transactions = () => {
           <span className="for">{t(translations.transactions.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'
-              ? devidedByDecimals(transferItem['value'], tokenDecimals)
+              ? `${devidedByDecimals(transferItem['value'], tokenDecimals)}`
               : transferItem['value']}
           </span>
           <span>{imgIcon}</span>
@@ -350,8 +357,8 @@ export const Transactions = () => {
             {epochHeight}
           </Description>
           <Description title={t(translations.transactions.timestamp)}>
-            {/* todo, need to be formatted */}
-            {syncTimestamp}
+            <CountDown from={syncTimestamp * 1000} />
+            {`(${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
           </Description>
           <Description title={t(translations.transactions.status)}>
             <Status type={status} />
@@ -376,12 +383,11 @@ export const Transactions = () => {
             </Description>
           )}
           <Description title={t(translations.transactions.value)}>
-            {/* todo, need to format to cfx */}
-            {value}
+            {fromDripToCfx(value, false, true)}
           </Description>
           <Description title={t(translations.transactions.gasUsed)}>
             {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
-            {`${gasUsed}/${gas}`}
+            {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
           <Description title={t(translations.transactions.gasPrice)}>
             {/* todo, need to format to Gdrip */}
@@ -464,40 +470,40 @@ const StyledCardWrapper = styled.div`
   }
   .card.sirius-Transactions-card {
     .content {
-      padding: 0 18px;
+      padding: 0 1.2857rem;
     }
   }
   .logo {
-    width: 16px;
-    margin: 0 8px;
+    width: 1.1429rem;
+    margin: 0 0.5714rem;
   }
   .linkMargin {
-    margin-left: 8px;
+    margin-left: 0.5714rem;
   }
   .transferListContainer {
     .lineContainer {
-      line-height: 24px;
+      line-height: 1.7143rem;
     }
     .from {
-      margin-right: 2px;
+      margin-right: 0.1429rem;
     }
     .to {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
     .for {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
     .value {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
   }
   .label {
-    margin-right: 4px;
+    margin-right: 0.2857rem;
   }
 `;
 
 const StyledTransactionsWrapper = styled.div`
-  padding: 32px 0;
+  padding: 2.2857rem 0;
 
   ${media.s} {
     padding-bottom: 0;
