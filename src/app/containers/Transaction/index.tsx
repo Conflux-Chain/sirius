@@ -36,7 +36,7 @@ import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
-export const Transactions = () => {
+export const Transaction = () => {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   const [isContract, setIsContract] = useState(false);
@@ -166,8 +166,8 @@ export const Transactions = () => {
     if (transactionDetail['to']) {
       if (isContract) {
         return (
-          <Description title={t(translations.transactions.to)}>
-            {t(translations.transactions.contract)}{' '}
+          <Description title={t(translations.transaction.to)}>
+            {t(translations.transaction.contract)}{' '}
             <img
               className="logo"
               src={
@@ -188,26 +188,26 @@ export const Transactions = () => {
         );
       } else {
         return (
-          <Description title={t(translations.transactions.to)}>
+          <Description title={t(translations.transaction.to)}>
             <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
           </Description>
         );
       }
     } else if (transactionDetail['contractCreated']) {
       return (
-        <Description title={t(translations.transactions.to)}>
-          <span className="label">{t(translations.transactions.contract)}</span>
+        <Description title={t(translations.transaction.to)}>
+          <span className="label">{t(translations.transaction.contract)}</span>
           <Link to={`/address/${transactionDetail['contractCreated']}`}>
             {transactionDetail['contractCreated']}
           </Link>{' '}
           <CopyButton copyText={transactionDetail['contractCreated']} />
-          &nbsp; {t(translations.transactions.created)}
+          &nbsp; {t(translations.transaction.created)}
         </Description>
       );
     } else {
       return (
-        <Description title={t(translations.transactions.to)}>
-          {t(translations.transactions.contractCreation)}
+        <Description title={t(translations.transaction.to)}>
+          {t(translations.transaction.contractCreation)}
         </Description>
       );
     }
@@ -260,19 +260,19 @@ export const Transactions = () => {
       );
       transferListContainer.push(
         <div className="lineContainer">
-          <span className="from">{t(translations.transactions.from)}</span>
+          <span className="from">{t(translations.transaction.from)}</span>
           <Link to={`/address/${transferItem['from']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['from']}>
               {transferItem['from']}
             </Text>
           </Link>
-          <span className="to">{t(translations.transactions.to)}</span>
+          <span className="to">{t(translations.transaction.to)}</span>
           <Link to={`/address/${transferItem['to']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['to']}>
               {transferItem['to']}
             </Text>
           </Link>
-          <span className="for">{t(translations.transactions.for)}</span>
+          <span className="for">{t(translations.transaction.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'
               ? `${devidedByDecimals(transferItem['value'], tokenDecimals)}`
@@ -295,19 +295,19 @@ export const Transactions = () => {
   return (
     <StyledTransactionsWrapper>
       <Helmet>
-        <title>{t(translations.transactions.title)}</title>
+        <title>{t(translations.transaction.title)}</title>
         <meta
           name="description"
-          content={t(translations.transactions.description)}
+          content={t(translations.transaction.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.transactions.title)}</PageHeader>
+      <PageHeader>{t(translations.transaction.title)}</PageHeader>
       <StyledCardWrapper>
         <Card className="sirius-Transactions-card">
           <Description
             title={
-              <Tooltip text={t(translations.transactions.hash)} placement="top">
-                {t(translations.transactions.hash)}
+              <Tooltip text={t(translations.transaction.hash)} placement="top">
+                {t(translations.transaction.hash)}
               </Tooltip>
             }
           >
@@ -315,18 +315,18 @@ export const Transactions = () => {
               {routeHash} <CopyButton copyText={routeHash} />
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transactions.executedEpoch)}>
+          <Description title={t(translations.transaction.executedEpoch)}>
             {epochNumber}
             <Link to={`/epoch/${epochNumber}`}></Link>
           </Description>
-          <Description title={t(translations.transactions.proposedEpoch)}>
+          <Description title={t(translations.transaction.proposedEpoch)}>
             {epochHeight}
           </Description>
-          <Description title={t(translations.transactions.timestamp)}>
+          <Description title={t(translations.transaction.timestamp)}>
             <CountDown from={syncTimestamp * 1000} />
             {`(${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
           </Description>
-          <Description title={t(translations.transactions.status)}>
+          <Description title={t(translations.transaction.status)}>
             <Status type={status} />
           </Description>
           <Description title={t(translations.blocks.security)}>
@@ -334,52 +334,52 @@ export const Transactions = () => {
               <Security type={risk}></Security>
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transactions.from)}>
+          <Description title={t(translations.transaction.from)}>
             <Link to={`/address/${from}`}>{from}</Link>{' '}
             <CopyButton copyText={from} />
           </Description>
           {generatedDiv()}
           {transferList.length > 0 && (
             <Description
-              title={`${t(translations.transactions.tokenTransferred)}(${
+              title={`${t(translations.transaction.tokenTransferred)}(${
                 transferList.length
               })`}
             >
               {getTransferListDiv()}
             </Description>
           )}
-          <Description title={t(translations.transactions.value)}>
+          <Description title={t(translations.transaction.value)}>
             {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
           </Description>
-          <Description title={t(translations.transactions.gasUsed)}>
+          <Description title={t(translations.transaction.gasUsed)}>
             {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
             {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
-          <Description title={t(translations.transactions.gasPrice)}>
+          <Description title={t(translations.transaction.gasPrice)}>
             {/* todo, need to format to Gdrip */}
             {gasPrice}
           </Description>
-          <Description title={t(translations.transactions.gasFee)}>
+          <Description title={t(translations.transaction.gasFee)}>
             {gasFee}
           </Description>
-          <Description title={t(translations.transactions.nonce)}>
+          <Description title={t(translations.transaction.nonce)}>
             {nonce}
           </Description>
-          <Description title={t(translations.transactions.blockHash)}>
+          <Description title={t(translations.transaction.blockHash)}>
             <Link to={`/blocks/${blockHash}`}>{blockHash}</Link>{' '}
             <CopyButton copyText={blockHash} />
           </Description>
-          <Description title={t(translations.transactions.position)}>
+          <Description title={t(translations.transaction.position)}>
             {transactionIndex}
           </Description>
-          <Description title={t(translations.transactions.storageLimit)}>
+          <Description title={t(translations.transaction.storageLimit)}>
             {storageLimit}
           </Description>
-          <Description title={t(translations.transactions.chainID)}>
+          <Description title={t(translations.transaction.chainID)}>
             {chainId}
           </Description>
           <Description
-            title={t(translations.transactions.inputData)}
+            title={t(translations.transaction.inputData)}
             noBorder
             className="inputLine"
           >
@@ -397,7 +397,7 @@ export const Transactions = () => {
               {dataTypeList.map(dataTypeItem => {
                 return (
                   <Select.Option key={dataTypeItem} value={dataTypeItem}>
-                    {`${t(translations.transactions.select[dataTypeItem])}`}
+                    {`${t(translations.transaction.select[dataTypeItem])}`}
                   </Select.Option>
                 );
               })}

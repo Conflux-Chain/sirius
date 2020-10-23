@@ -164,8 +164,8 @@ const TxDirectionFilter = ({ onChange }) => {
 
   const opts = [
     translations.general.viewAll,
-    translations.transactions.viewOutgoingTxns,
-    translations.transactions.viewIncomingTxns,
+    translations.transaction.viewOutgoingTxns,
+    translations.transaction.viewIncomingTxns,
   ].map((text, idx) => (
     <div
       key={idx}

@@ -253,7 +253,7 @@
     "applicationUnit": "application",
     "tx": "tx"
   },
-  "transactions": {
+  "transaction": {
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
     "title": "Transactions",

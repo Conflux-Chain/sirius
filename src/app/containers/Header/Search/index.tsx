@@ -49,7 +49,7 @@ export const Search = () => {
       }
 
       if (isHash(inputValue as string)) {
-        history.push(`/transactions/${inputValue}`);
+        history.push(`/transaction/${inputValue}`);
         return;
       }
 

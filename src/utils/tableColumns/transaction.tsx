@@ -26,7 +26,7 @@ export const hash = {
     return (
       <StyledTransactionHashWrapper>
         {row.status !== 0 && <Status type={row.status} variant="dot" />}
-        <Link href={`/transactions/${value}`}>
+        <Link href={`/transaction/${value}`}>
           <Text span hoverValue={value}>
             {formatString(value, 'hash')}
           </Text>

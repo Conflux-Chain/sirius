@@ -218,7 +218,7 @@ export const txnHash = {
   dataIndex: 'transactionHash',
   key: 'transactionHash',
   render: value => (
-    <Link href={`/transactions/${value}`}>
+    <Link href={`/transaction/${value}`}>
       <Text span hoverValue={value}>
         {formatString(value, 'hash')}
       </Text>
