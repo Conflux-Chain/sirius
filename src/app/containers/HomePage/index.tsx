@@ -101,7 +101,9 @@ const Main = styled.div`
     margin-bottom: 2rem;
   }
 `;
-const Top = styled.section``;
+const Top = styled.section`
+  display: flex;
+`;
 const Bottom = styled.section`
   position: relative;
   width: 100%;
