@@ -197,7 +197,7 @@ export const fromDripToCfx = (
           : formatNumber(divideBn.toNumber());
     }
   }
-  return `${result} CFX`;
+  return `${result}`;
 };
 
 /**
@@ -222,7 +222,7 @@ export const fromDripToGdrip = (
           : formatNumber(divideBn.toNumber());
     }
   }
-  return `${result} Gdrip`;
+  return `${result}`;
 };
 
 export const fromGdripToDrip = (num: number | string) =>
