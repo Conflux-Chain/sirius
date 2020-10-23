@@ -21,15 +21,22 @@ export const CountDown = ({ from, to }: CountDownProps) => {
     translations.general.countdown.minute,
     translations.general.countdown.second,
   ];
-  const label = duration.reduce((acc, cur, index) => {
-    const next = t(str[index], { count: cur });
-    acc = acc ? `${acc} ${next}` : `${next}`;
-    return acc;
-  }, '');
+  const label = duration.reduce(
+    (acc, cur, index) => {
+      // max to retain 2 duration, and min to retain 1 duration
+      if (acc[1] < 2 && (cur > 0 || index === 3)) {
+        const next = t(str[index], { count: cur });
+        acc[0] = acc[0] ? `${acc[0]} ${next}` : `${next}`;
+        acc[1] = Number(acc[1]) + 1;
+      }
+      return acc;
+    },
+    ['', 0],
+  );
 
   return (
     <>
-      {label} {t(translations.general.countdown.ago)}
+      {label[0]} {t(translations.general.countdown.ago)}
     </>
   );
 };
