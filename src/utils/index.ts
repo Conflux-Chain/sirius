@@ -238,7 +238,9 @@ export const getPercent = (
   if (Number(dividend) === 0) return 0 + '%';
   const bnDivisor = new BigNumber(divisor);
   const bnDividend = new BigNumber(dividend);
-  return formatNumber(bnDivisor.dividedBy(bnDividend).toNumber()) + '%';
+  return `${formatNumber(
+    bnDivisor.dividedBy(bnDividend).multipliedBy(100).toNumber(),
+  )}%`;
 };
 
 export const formatTimeStamp = (
