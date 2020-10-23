@@ -29,6 +29,10 @@ import { Tokens } from './containers/Tokens/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
+import { Transactions } from './containers/Transactions/Loadable';
+import { Blocks } from './containers/Blocks/Loadable';
+import { Epochs } from './containers/Epochs/Loadable';
+import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -78,7 +82,23 @@ export function App() {
               />
               <Route exact path="/tokens" component={Tokens} />
               <Route exact path="/sponsor" component={Sponsor} />
+              <Route
+                exact
+                path="/sponsor/:contractAddress"
+                component={Sponsor}
+              />
               <Route path="/charts" component={Chart} />
+              <Route
+                exact
+                path="/transactions/:hash"
+                component={Transactions}
+              />
+              <Route exact path="/blocks/:hash" component={Blocks} />
+              <Route exact path="/epochs/:number" component={Epochs} />
+              <Route
+                path="/address/:address"
+                component={AddressContractDetailPage}
+              />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
@@ -92,11 +112,11 @@ export function App() {
 
 const Main = styled.div`
   position: relative;
-  max-width: 73.1429rem;
+  max-width: 1024px;
   margin: 0 auto;
-  padding-top: 5rem;
-  min-height: calc(100vh - 21.2821rem);
+  padding-top: 70px;
+  min-height: calc(100vh - 298px);
   ${media.s} {
-    padding: 4rem 1.1429rem 1.1429rem;
+    padding: 100px 16px 16px;
   }
 `;

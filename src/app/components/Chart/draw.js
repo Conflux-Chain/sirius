@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 
-const NUM_X_GRID = 7;
+// const NUM_X_GRID = 7;
 const NUM_Y_GRID = 5;
 
 const COLORS = {
@@ -18,14 +18,14 @@ const COLORS = {
   },
 };
 
-const X_AXIS_HEIGHT = 40;
 export default function createDraw({
-  TRI_HEIGHT,
-  POPUP_PADDING,
-  RECT_WIDTH,
-  RECT_HEIGHT,
-  Y_AXIS_WIDTH,
-  // X_AXIS_HEIGHT,
+  TRI_HEIGHT = 0,
+  POPUP_PADDING = 0,
+  RECT_WIDTH = 0,
+  RECT_HEIGHT = 0,
+  Y_AXIS_WIDTH = 0,
+  X_AXIS_HEIGHT = 0,
+  NUM_X_GRID = 7,
   width,
   height,
   ctxBg,
@@ -33,9 +33,32 @@ export default function createDraw({
   plot,
   indicator,
   isSolid,
+  small,
 }) {
-  if (!plot) {
-    return false;
+  if (!plot || plot.length <= 1) {
+    return {
+      xScale1: false,
+      draw() {
+        if (!small) {
+          ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+          ctxBg.moveTo(Y_AXIS_WIDTH, 0);
+          ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
+          ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+          ctxBg.stroke();
+        }
+      },
+      first: 0,
+      last: 0,
+    };
+    // return function () {
+    //   if (!small) {
+    //     ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+    //     ctxBg.moveTo(Y_AXIS_WIDTH, 0);
+    //     ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
+    //     ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+    //     ctxBg.stroke();
+    //   }
+    // };
   }
   const xData = [],
     yData = [],
@@ -55,13 +78,13 @@ export default function createDraw({
 
   const xScale = scaleLinear()
     .domain(extent(xData))
-    .range([Y_AXIS_WIDTH + 10, width - 20]);
+    .range([Y_AXIS_WIDTH + (small ? 5 : 10), width - (small ? 5 : 20)]);
   const xScale1 = xScale.copy().domain([0, xData.length - 1]);
   const yScale = scaleLinear()
     .domain(extent(yData))
     .range([
-      height - X_AXIS_HEIGHT - 20,
-      RECT_HEIGHT + POPUP_PADDING + TRI_HEIGHT,
+      height - X_AXIS_HEIGHT - (small ? 5 : 20),
+      small ? 5 : RECT_HEIGHT + POPUP_PADDING + TRI_HEIGHT,
     ]);
   function draw({ cursorX } = {}) {
     ///////////////// background canvas ///////////////////
@@ -70,12 +93,15 @@ export default function createDraw({
     ctxBg.beginPath();
     ctxBg.fillStyle = 'rgba(0,0,0,0.87)';
     ctxBg.font = '12px';
+
     //draw borders
-    ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
-    ctxBg.moveTo(Y_AXIS_WIDTH, 0);
-    ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
-    ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
-    ctxBg.stroke();
+    if (!small) {
+      ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+      ctxBg.moveTo(Y_AXIS_WIDTH, 0);
+      ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
+      ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+      ctxBg.stroke();
+    }
 
     //draw grid
     ctxBg.beginPath();
@@ -229,7 +255,7 @@ export default function createDraw({
     });
     drawCurrent && drawCurrent();
   }
-  return { xScale1, draw };
+  return { xScale1, draw, first, last };
 }
 
 function format(v) {
@@ -241,10 +267,10 @@ function format(v) {
 }
 
 function range(start, end, num) {
-  const step = Math.round((end - start) / num);
+  const step = Math.ceil((end - start) / num);
   const result = [end]; //make sure end in the list but not start
   let i = end;
-  while ((i -= step) >= start) {
+  while ((i -= step) > start) {
     result.unshift(i);
   }
   return result;
@@ -260,3 +286,17 @@ function getYScaleRange(range, num) {
   }
   return result;
 }
+
+export const PIXEL_RATIO = (function () {
+  var ctx = document.createElement('canvas').getContext('2d'),
+    dpr = window.devicePixelRatio || 1,
+    bsr =
+      ctx.webkitBackingStorePixelRatio ||
+      ctx.mozBackingStorePixelRatio ||
+      ctx.msBackingStorePixelRatio ||
+      ctx.oBackingStorePixelRatio ||
+      ctx.backingStorePixelRatio ||
+      1;
+
+  return dpr / bsr;
+})();

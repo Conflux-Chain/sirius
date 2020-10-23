@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+
 import { media } from './media';
 
 export const GlobalStyle = createGlobalStyle`
@@ -35,6 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+
   .sirius-select-dropdown.select-dropdown {
     .option {
       height: 2.1429rem;
@@ -46,10 +48,47 @@ export const GlobalStyle = createGlobalStyle`
       background-color: #65709a;
     }
   }
+  .transactionModalContainer{
+    .contentContainer{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:2.1429rem;
+      .successImg{
+        width:4rem;
+      }
+      .submitted{
+        margin-top:0.9286rem;
+        font-size:1rem;
+        color: #282D30;
+      }
+      .txContainer{
+        margin-top:0.8571rem;
+      }
+      .label{
+        color: #A4A8B6;
+        line-height: 1.2857rem;
+        font-size: 1rem;
+      }
+      .content{
+        color: #0054FE;
+      }
+    }
+  }
 
   ${media.s} {
     html, body {
       font-size: 12px;
+    }
+    .cfx-picker-dropdown {
+      max-width: 90vw;
+      .cfx-picker-panel-container {
+        max-width: 90vw;
+        .cfx-picker-month-panel {
+          max-width: 90vw;
+          width: 100%;
+        }
+      }
     }
   }
 `;

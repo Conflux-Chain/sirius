@@ -694,7 +694,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    OCEANUS
+                    Tethys
                   </a>
                 </span>
               </div>
@@ -1388,7 +1388,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                     <input
                       autocomplete="off"
                       class="jsx-1159070929 right-icon"
-                      placeholder="Address / Block hash / Epoch"
+                      placeholder="Epoch / Block hash / Txn has / Address"
                       type="text"
                     />
                     <div
@@ -1525,7 +1525,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                         d="M18 15l-6-6-6 6"
                       />
                     </svg>
-                    OCEANUS
+                    Tethys
                   </a>
                 </span>
               </div>

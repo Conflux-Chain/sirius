@@ -18,3 +18,15 @@ export const selectText = (element: HTMLElement) => {
     selection.addRange(range);
   }
 };
+
+export const isAddress = (str: string) => {
+  return /^0x[0-9a-fA-F]{40}$/.test(str);
+};
+
+export const isContractAddress = (str: string) => {
+  return /^0x8[0-9a-fA-F]{39}$/.test(str);
+};
+
+export const isHash = (str: string) => {
+  return /^0x[0-9a-fA-F]{64}$/.test(str);
+};

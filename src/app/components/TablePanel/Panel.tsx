@@ -105,7 +105,7 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
   }
 
   if (data && !error) {
-    tableData = data.result?.list || table.data;
+    tableData = data?.list || table.data;
   }
 
   return (
@@ -131,7 +131,9 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
               mergedPaginationConfig.className,
             )}
             onPageChange={(page: number) => gotoPage(page)}
-            onPageSizeChange={(pageSize: number) => setPageSize(pageSize)}
+            onPageSizeChange={(page: number, pageSize: number) =>
+              setPageSize(pageSize)
+            }
             page={Number(pageNumber)}
             pageSize={Number(pageSize)}
             total={total}

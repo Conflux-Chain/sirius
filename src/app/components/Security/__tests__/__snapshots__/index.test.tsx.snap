@@ -95,6 +95,7 @@ exports[`<Security  /> should match snapshot 1`] = `
           r="5"
         />
         <circle
+          class="last-circle"
           cx="43"
           cy="5"
           r="5"

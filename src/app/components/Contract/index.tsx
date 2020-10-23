@@ -17,7 +17,7 @@ import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { Tabs } from './../Tabs';
-import { useCMContractCreate, useCMContractUpdate } from '../../../utils/api';
+import { useCMContractCreate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
 interface Props {
   contractDetail: any;
@@ -372,15 +372,15 @@ export const Contract = ({
     requestParams,
     shouldFetchCreate,
   );
-  const { data: dataResUpdated } = useCMContractUpdate(
+  const { data: dataResUpdated } = useCMContractCreate(
     requestParams,
     shouldFetchUpdate,
   );
-  if (dataResCreated && dataResCreated['code'] === 0) {
+  if (dataResCreated) {
     //TODO: modify the router
     history.replace('/');
   }
-  if (dataResUpdated && dataResUpdated['code'] === 0) {
+  if (dataResUpdated) {
     //TODO: modify the router
     history.replace('/');
   }
@@ -408,7 +408,7 @@ export const Contract = ({
   }, [abi, addressVal, contractName, password, sourceCode]);
   useEffect(() => {
     setContractImgSrc(contractDetail.icon);
-    setTokenImgSrc(contractDetail.tokenIcon);
+    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
     setContractName(contractDetail.name);
     setSourceCode(contractDetail.sourceCode);
     setAbi(contractDetail.abi);
@@ -432,6 +432,7 @@ export const Contract = ({
     contractDetail.icon,
     contractDetail.name,
     contractDetail.sourceCode,
+    contractDetail.token,
     contractDetail.tokenIcon,
     contractDetail.website,
     t,
@@ -503,7 +504,8 @@ export const Contract = ({
     bodyParams.website = site;
     bodyParams.icon = contractImgSrc;
     bodyParams.typeCode = 1;
-    bodyParams.tokenIcon = tokenImgSrc;
+    bodyParams.token = {};
+    bodyParams.token.icon = tokenImgSrc;
     bodyParams.sourceCode = sourceCode;
     bodyParams.abi = abi;
     bodyParams.password = password;
@@ -592,7 +594,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadContractIcon}>
                   <img
-                    src="/contract/upload"
+                    src="/contract/upload.svg"
                     className="labelIcon"
                     alt={t(translations.contract.contractIcon)}
                   ></img>
@@ -602,7 +604,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
                   <img
-                    src="/contract/remove"
+                    src="/contract/remove.svg"
                     className="labelIcon"
                     alt={t(translations.contract.remove)}
                   ></img>
@@ -637,7 +639,7 @@ export const Contract = ({
                 />
                 <div className="firstItem" onClick={uploadTokenIcon}>
                   <img
-                    src="/contract/upload"
+                    src="/contract/upload.svg"
                     className="labelIcon"
                     alt="upload"
                   ></img>
@@ -647,7 +649,7 @@ export const Contract = ({
                 </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
                   <img
-                    src="/contract/remove"
+                    src="/contract/remove.svg"
                     className="labelIcon"
                     alt="remove"
                   ></img>

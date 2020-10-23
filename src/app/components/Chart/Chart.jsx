@@ -1,26 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import useSWR from 'swr';
+import React, { useRef, useEffect } from 'react';
+
+import usePlot from './usePlot';
 import createDraw from './draw';
-import { appendApiPrefix } from 'utils/api';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { PIXEL_RATIO } from './draw';
 
 const RECT_HEIGHT = 40;
 const RECT_WIDTH = 90;
-
-const PIXEL_RATIO = (function () {
-  var ctx = document.createElement('canvas').getContext('2d'),
-    dpr = window.devicePixelRatio || 1,
-    bsr =
-      ctx.webkitBackingStorePixelRatio ||
-      ctx.mozBackingStorePixelRatio ||
-      ctx.msBackingStorePixelRatio ||
-      ctx.oBackingStorePixelRatio ||
-      ctx.backingStorePixelRatio ||
-      1;
-
-  return dpr / bsr;
-})();
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -32,17 +19,18 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
   const { plot, isError, setDuration, duration } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
+  const padding = small ? 16 : 48;
   if (isError) {
     return <div>Error</div>;
   } else {
     return (
       <Container style={{ width }} small={small}>
         <Title>{t(`${indicator}.title`)}</Title>
-        <Description>{t(`${indicator}.desciption`)}</Description>
+        <Description>{t(`${indicator}.description`)}</Description>
         {true && (
           <Draw
             plot={plot}
-            width={width * 0.83}
+            width={(width - padding) * 0.83}
             indicator={indicator}
             small={small}
           >
@@ -109,11 +97,13 @@ function Draw({
     if (draw) {
       draw();
       const listener = event => {
-        const { offsetX } = event;
-        cursorX = Math.round(xScale1.invert(offsetX));
-        draw({
-          cursorX,
-        });
+        if (xScale1) {
+          const { offsetX } = event;
+          cursorX = Math.round(xScale1.invert(offsetX));
+          draw({
+            cursorX,
+          });
+        }
       };
       const container = containerRef.current;
       container.addEventListener('mousemove', listener);
@@ -149,30 +139,10 @@ function Draw({
   );
 }
 
-function usePlot(defaultDuration = 'day') {
-  const [duration, setDuration] = useState(defaultDuration);
-  const { data, error } = useSWR(`/dashboard/plot?duration=${duration}`, url =>
-    fetch(appendApiPrefix(url)).then(response => response.json()),
-  );
-  let listData;
-  if (data) {
-    const {
-      result: { list },
-    } = data;
-    listData = list;
-  }
-  return {
-    plot: listData,
-    isLoading: !error && !data,
-    isError: error,
-    setDuration,
-    duration,
-  };
-}
-
 const Container = styled.div`
   display: inline-block;
   position: relative;
+  box-sizing: border-box;
   padding: ${props => (props.small ? '8px' : '24px')};
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   border-radius: 5px;
@@ -198,6 +168,7 @@ const Buttons = styled.div`
   flex-direction: column;
   right: -4rem;
   top: 1rem;
+  box-sizing: content-box;
 `;
 
 const Button = styled.button`

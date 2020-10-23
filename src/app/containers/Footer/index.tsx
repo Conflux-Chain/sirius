@@ -7,14 +7,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '../../components/Link/Loadable';
 import { useBreakpoint, media } from 'styles/media';
 import { Footer as FooterComp } from '../../components/Footer/Loadable';
 import { TextLogo } from '../../components/TextLogo/Loadable';
-
+import { translations } from 'locales/i18n';
 export function Footer() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const bp = useBreakpoint();
   const isS = bp === 's';
 
@@ -22,17 +21,17 @@ export function Footer() {
 
   const websiteLink = (
     <Link className="footer-link" href="https://confluxnetwork.org">
-      Conflux Official Site
+      {t(translations.footer.confluxnetwork)}
     </Link>
   );
   const portalLink = (
     <Link className="footer-link" href="https://portal.conflux-chain.org">
-      Conflux Portal
+      {t(translations.footer.confluxportal)}
     </Link>
   );
   const bountyLink = (
     <Link className="footer-link" href="https://bounty.conflux-chain.org">
-      Conflux Bounty
+      {t(translations.footer.confluxbounty)}
     </Link>
   );
 
@@ -58,7 +57,9 @@ export function Footer() {
 
   const rightTop = [
     <FooterWrapper key="right-top">
-      <FooterContentTitle key="title">Products</FooterContentTitle>
+      <FooterContentTitle key="title">
+        {t(translations.footer.product)}
+      </FooterContentTitle>
       {!isS && (
         <FooterContent key="content">
           <FooterContentRow>
@@ -81,7 +82,7 @@ export function Footer() {
     </FooterWrapper>,
   ];
   const rightBottom = [
-    <CopyRight key="copyright">@2020 Conflux. All Rights Reserved</CopyRight>,
+    <CopyRight key="copyright">{t(translations.footer.copryRight)}</CopyRight>,
   ];
 
   return (

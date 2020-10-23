@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Skeleton } from '@cfxjs/react-ui';
 import { useBreakpoint, media } from 'styles/media';
 import { Card } from '../Card';
 import { Description, DescriptionProps } from '../Description';
@@ -47,7 +48,7 @@ export const List = ({ list }: ListProps) => {
             title={item.title}
             noBorder={noBorder(index)}
           >
-            {item.children}
+            {item.children || <Skeleton />}
           </Description>
         ))}
       </Card>

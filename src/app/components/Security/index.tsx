@@ -46,7 +46,7 @@ export function Security({ type }: SecurityProps) {
             <circle cx="5" cy="5" r="5" />
             <circle cx="18" cy="5" r="5" />
             <circle cx="31" cy="5" r="5" />
-            <circle cx="43" cy="5" r="5" />
+            <circle cx="43" cy="5" r="5" className="last-circle" />
           </mask>
         </defs>
         <rect
