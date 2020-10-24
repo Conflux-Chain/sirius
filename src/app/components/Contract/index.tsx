@@ -69,7 +69,7 @@ const Wrapper = styled.div`
   }
 `;
 const Header = styled.div`
-  color: #0f1327;
+  color: #1a1a1a;
   font-weight: bold;
   padding-top: 2.2857rem;
   margin-bottom: 1.7143rem;

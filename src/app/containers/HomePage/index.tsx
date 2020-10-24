@@ -149,7 +149,7 @@ const ViewAllLinkWrapper = styled.div`
   position: absolute;
   top: 1rem;
   right: 0;
-  border-bottom: 2px solid #0054fe;
+  border-bottom: 2px solid #1e3de4;
   ${media.s} {
     top: 0.6429rem;
   }

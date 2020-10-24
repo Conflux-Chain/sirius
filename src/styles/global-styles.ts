@@ -71,7 +71,7 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 1rem;
       }
       .content{
-        color: #0054FE;
+        color: #1e3de4;
       }
     }
   }

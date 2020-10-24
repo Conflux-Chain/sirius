@@ -82,7 +82,7 @@ const ButtonWrapper = styled.div`
   }
   .enabled.btn {
     color: #ffffff;
-    background-color: #0054fe;
+    background-color: #1e3de4;
   }
 
   .abi-btn.btn {
@@ -510,7 +510,7 @@ const FilterWrap = styled.div`
 
 const LabelWrap = styled.div`
   display: flex;
-  color: #0f1327;
+  color: #1a1a1a;
   font-weight: 700;
   font-size: 1.1429rem;
 `;

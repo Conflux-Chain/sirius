@@ -64,7 +64,7 @@ const TransfersWrap = styled.div`
 
 const LabelWrap = styled.div`
   display: flex;
-  color: #0f1327;
+  color: #1a1a1a;
   font-weight: 700;
   font-size: 1.1429rem;
 `;
