@@ -38,7 +38,7 @@ export const Search = () => {
     }
 
     if (isEpochNumber(inputValue)) {
-      history.push(`/epochs/${inputValue}`);
+      history.push(`/epoch/${inputValue}`);
       return;
     }
 

@@ -312,7 +312,7 @@
       "labelCountAfter": "{{type}} found"
     }
   },
-  "epochs": {
+  "epoch": {
     "title": "Epochs",
     "description": "Epochs",
     "tipCountBefore": "A total of",

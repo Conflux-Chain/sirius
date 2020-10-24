@@ -305,7 +305,7 @@
       "labelCountAfter": "{{type}}记录"
     }
   },
-  "epochs": {
+  "epoch": {
     "title": "纪元",
     "description": "纪元",
     "tipCountBefore": "共计",

@@ -31,7 +31,7 @@ import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
-import { Epochs } from './containers/Epochs/Loadable';
+import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 
 WebFontLoader.load({
@@ -91,7 +91,7 @@ export function App() {
               <Route path="/charts" component={Chart} />
               <Route exact path="/transaction/:hash" component={Transaction} />
               <Route exact path="/block/:hash" component={Block} />
-              <Route exact path="/epochs/:number" component={Epochs} />
+              <Route exact path="/epoch/:number" component={Epoch} />
               <Route
                 path="/address/:address"
                 component={AddressContractDetailPage}

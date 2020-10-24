@@ -27,7 +27,7 @@ export const epoch = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/epochs/${value}`}>{value}</Link>
+        <Link href={`/epoch/${value}`}>{value}</Link>
         {pivotTag}
       </StyledEpochWrapper>
     );
