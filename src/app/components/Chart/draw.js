@@ -143,7 +143,6 @@ export default function createDraw({
       if (Y_AXIS_WIDTH) {
         ctxBg.save();
         ctxBg.fillStyle = 'rgba(0,0,0,0.87)';
-        // ctxBg.fillStyle = 'red';
         ctxBg.textAlign = 'end';
         ctxBg.textBaseline = 'middle';
         ctxBg.fillText(formatNumber(v), Y_AXIS_WIDTH - 6, y);
