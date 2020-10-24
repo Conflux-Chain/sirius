@@ -91,4 +91,9 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
+
+  /* to solve black line issue in Chrome */
+  .skeleton::after {
+    border-left: 1px solid #EFF2FA;
+  }
 `;
