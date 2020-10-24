@@ -28,7 +28,10 @@ export const SmallChart = ({
         {t(`${indicator}.title`)}
         <Change isDown={isDown}>{diff}</Change>
       </Title>
-      <Value small={small}>{firstlast && formatNumber(firstlast[1])}</Value>
+      <Value small={small}>
+        {firstlast &&
+          formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
+      </Value>
 
       <Draw
         setFirstLast={setFirstLast}
@@ -151,8 +154,11 @@ function format(v, d = 6) {
 
 function change(end, start) {
   const [s, e] = [start, end].map(x => parseFloat(x));
-  const diff = isNaN(format(((s - e) / s) * 100, 1))
-    ? '0.0'
-    : format(((s - e) / s) * 100, 1);
+  const diff =
+    s === 0
+      ? '--'
+      : isNaN(format(((s - e) / s) * 100, 1))
+      ? '0.0'
+      : format(((s - e) / s) * 100, 1);
   return (diff > 0 ? '+' + diff : diff) + '%';
 }
