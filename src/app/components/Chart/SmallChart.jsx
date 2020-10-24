@@ -151,8 +151,11 @@ function format(v, d = 6) {
 
 function change(end, start) {
   const [s, e] = [start, end].map(x => parseFloat(x));
-  const diff = isNaN(format(((s - e) / s) * 100, 1))
-    ? '0.0'
-    : format(((s - e) / s) * 100, 1);
+  const diff =
+    s === 0
+      ? '--'
+      : isNaN(format(((s - e) / s) * 100, 1))
+      ? '0.0'
+      : format(((s - e) / s) * 100, 1);
   return (diff > 0 ? '+' + diff : diff) + '%';
 }
