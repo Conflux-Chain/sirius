@@ -313,8 +313,8 @@
     }
   },
   "epoch": {
-    "title": "Epochs",
-    "description": "Epochs",
+    "title": "Epoch",
+    "description": "Epoch",
     "tipCountBefore": "A total of",
     "tipCountAfter": "{{type}} found",
     "labelCountBefore": "A total of",
