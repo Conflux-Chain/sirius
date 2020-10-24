@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
+import { formatNumber } from 'utils';
 
 // const NUM_X_GRID = 7;
 const NUM_Y_GRID = 5;
@@ -145,7 +146,7 @@ export default function createDraw({
         // ctxBg.fillStyle = 'red';
         ctxBg.textAlign = 'end';
         ctxBg.textBaseline = 'middle';
-        ctxBg.fillText(format(v), Y_AXIS_WIDTH - 10, y);
+        ctxBg.fillText(formatNumber(v), Y_AXIS_WIDTH - 6, y);
         ctxBg.restore();
       }
 
@@ -222,7 +223,8 @@ export default function createDraw({
           );
           ctxLine.font = 'bold 12px CircularStd';
           ctxLine.fillText(
-            v.toPrecision(5),
+            formatNumber(v),
+            // v.toPrecision(5),
             rectTL + 5,
             y - POPUP_PADDING - TRI_HEIGHT - RECT_HEIGHT * 0.2,
           );
