@@ -8,6 +8,7 @@ import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
+import { Tooltip } from '../../components/Tooltip/Loadable';
 import numeral from 'numeral';
 import { fromDripToGdrip, formatString } from '../../../utils';
 
@@ -33,7 +34,14 @@ export const Basic = ({
 
   const list = [
     {
-      title: t(translations.token.totalSupplay),
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.token.totalSupply)}
+          placement="top"
+        >
+          {t(translations.token.totalSupplay)}
+        </Tooltip>
+      ),
       children: (
         <Text hoverValue={`${totalSupply || 0} ${symbol}`}>{`${fromDripToGdrip(
           totalSupply || 0,
@@ -41,7 +49,11 @@ export const Basic = ({
       ),
     },
     {
-      title: t(translations.token.contract),
+      title: (
+        <Tooltip text={t(translations.toolTip.token.contract)} placement="top">
+          {t(translations.token.contract)}
+        </Tooltip>
+      ),
       children: (
         <Text span hoverValue={tokenAddress}>
           {
@@ -53,17 +65,29 @@ export const Basic = ({
       ),
     },
     {
-      title: t(translations.token.holders),
+      title: (
+        <Tooltip text={t(translations.toolTip.token.holders)} placement="top">
+          {t(translations.token.holders)}
+        </Tooltip>
+      ),
       children: `${numeral(accountTotal).format('0,0')} ${t(
         translations.token.address,
       )}`,
     },
     {
-      title: t(translations.token.decimals),
+      title: (
+        <Tooltip text={t(translations.toolTip.token.decimals)} placement="top">
+          {t(translations.token.decimals)}
+        </Tooltip>
+      ),
       children: decimals,
     },
     {
-      title: t(translations.token.transfers),
+      title: (
+        <Tooltip text={t(translations.toolTip.token.transfers)} placement="top">
+          {t(translations.token.transfers)}
+        </Tooltip>
+      ),
       children: numeral(transferCount).format('0,0'),
     },
   ];
