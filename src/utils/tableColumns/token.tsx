@@ -253,7 +253,7 @@ export const quantity = {
   render: value => {
     return value ? (
       <Text span hoverValue={value}>
-        {`${fromDripToCfx(value)} CFX`}
+        {`${fromDripToCfx(value)}`}
       </Text>
     ) : (
       '--'
