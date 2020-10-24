@@ -89,7 +89,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 .c13 {
   min-width: 4.29rem;
   min-height: 4.29rem;
-  background-color: #0054FE;
+  background-color: #1e3de4;
   border-radius: 0.43rem;
   opacity: 0.06;
 }
@@ -459,7 +459,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                 >
                   <div
                     class="c13"
-                    color="#0054FE"
+                    color="#1e3de4"
                   />
                   <div
                     class="c14"

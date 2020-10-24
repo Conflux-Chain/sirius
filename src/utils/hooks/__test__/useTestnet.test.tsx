@@ -41,11 +41,11 @@ describe('toTestnet', () => {
     // @ts-ignore
     window.location = {
       assign: mockAssign,
-      hostname: 'scantest.confluxscan.io',
+      hostname: 'scantest.confluxnetwork.org',
     };
     toTestnet();
     expect(mockAssign).toHaveBeenCalledWith(
-      '//testnet.scantest.confluxscan.io',
+      '//testnet-scantest.confluxnetwork.org',
     );
     mockAssign.mockClear();
   });
@@ -68,10 +68,10 @@ describe('toMainnet', () => {
     // @ts-ignore
     window.location = {
       assign: mockAssign,
-      hostname: 'testnet.scantest.confluxscan.io',
+      hostname: 'testnet-scantest.confluxnetwork.org',
     };
     toMainnet();
-    expect(mockAssign).toHaveBeenCalledWith('//scantest.confluxscan.io');
+    expect(mockAssign).toHaveBeenCalledWith('//scantest.confluxnetwork.org');
     mockAssign.mockClear();
   });
   it('should call location.assign with mainnet url', () => {

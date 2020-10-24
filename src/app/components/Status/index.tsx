@@ -158,7 +158,7 @@ const StyledPopoverWrapper = styled.div`
       }
       .text {
         margin-left: 0.2857rem;
-        color: #20253a;
+        color: #333333;
         text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       }
     }
