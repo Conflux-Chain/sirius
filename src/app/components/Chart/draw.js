@@ -222,8 +222,7 @@ export default function createDraw({
           );
           ctxLine.font = 'bold 12px CircularStd';
           ctxLine.fillText(
-            formatNumber(v),
-            // v.toPrecision(5),
+            formatNumber(v) + (indicator === 'blockTime' ? 's' : ''),
             rectTL + 5,
             y - POPUP_PADDING - TRI_HEIGHT - RECT_HEIGHT * 0.2,
           );

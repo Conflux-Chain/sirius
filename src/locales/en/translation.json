@@ -49,7 +49,7 @@
     "title": "Tokens",
     "description": "Tokens",
     "tipCountBefore": "Showing",
-    "tipCountAfter": "Showing N tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "table": {
       "number": "Number",
       "token": "Token",
