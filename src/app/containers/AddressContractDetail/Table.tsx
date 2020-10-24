@@ -287,6 +287,7 @@ export function Table({ address }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
+  const columnsTransactionsWidth = [4, 5, 4, 3, 4, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     {
@@ -307,16 +308,18 @@ export function Table({ address }) {
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
+  const columnsTokensWidth = [3, 4, 4, 4, 2];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
+  const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -326,7 +329,7 @@ export function Table({ address }) {
     blockColunms.difficulty,
     blockColunms.gasUsedPercent,
     blockColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const tabs = [
     {

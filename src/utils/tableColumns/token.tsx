@@ -147,7 +147,7 @@ export const token = {
       <img src={row.icon} alt="token icon" />
       <Link href={`/token/${row.address}`}>
         <Text span hoverValue={`${row.name} (${row.symbol})`}>
-          {formatString(`${row.name} (${row.symbol})`)}
+          {formatString(`${row.name} (${row.symbol})`, 28)}
         </Text>
       </Link>
     </StyledIconWrapper>

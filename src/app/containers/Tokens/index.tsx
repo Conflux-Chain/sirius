@@ -12,6 +12,7 @@ import { tokenColunms } from '../../../utils/tableColumns';
 export function Tokens() {
   const { t } = useTranslation();
 
+  const columnsWidth = [2, 6, 3, 4, 3, 3];
   const columns: ColumnsType = [
     tokenColunms.number,
     tokenColunms.token,
@@ -19,7 +20,7 @@ export function Tokens() {
     tokenColunms.totalSupply,
     tokenColunms.holders,
     tokenColunms.contract,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const url = `/token?fields=transferCount,icon`;
   const { total } = useTableData(url);
