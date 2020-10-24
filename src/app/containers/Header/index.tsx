@@ -81,7 +81,11 @@ export const Header = memo(() => {
   const brand = (
     <LogoWrapper>
       <RouterLink to="/">
-        <img alt="conflux scan logo" src="/confi-planet.png" />
+        <img
+          className="confi-logo"
+          alt="conflux scan logo"
+          src="/confi-planet.png"
+        />
         {bp !== 's' && bp !== 'm' && <TextLogo changeColorOnMobile />}
       </RouterLink>
     </LogoWrapper>
@@ -101,6 +105,9 @@ export const Header = memo(() => {
 });
 
 const LogoWrapper = styled.div`
+  .confi-logo {
+    margin-right: 0.57rem;
+  }
   a.link {
     display: flex;
     align-items: center;
