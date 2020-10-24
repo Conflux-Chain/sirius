@@ -49,7 +49,7 @@
     "title": "代币",
     "description": "代币",
     "tipCountBefore": "共展示",
-    "tipCountAfter": "共展示N个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
     "table": {
       "number": "数字",
       "token": "代币",

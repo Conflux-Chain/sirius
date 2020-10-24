@@ -129,13 +129,14 @@ export const Transaction = () => {
             const contractResponse = proRes[0];
             setContractInfo(contractResponse);
             const transferListReponse = proRes[1];
-
             let decodedData = {};
-            decodedData = decodeContract({
-              abi: JSON.parse(contractResponse['abi']),
-              address: contractResponse['address'],
-              transacionData: txDetailDta.data,
-            });
+            try {
+              decodedData = decodeContract({
+                abi: JSON.parse(contractResponse['abi']),
+                address: contractResponse['address'],
+                transacionData: txDetailDta.data,
+              });
+            } catch {}
             setDecodedData(decodedData);
             setDataTypeList(['original', 'utf8', 'decodeInputData']);
             const resultTransferList = transferListReponse;
