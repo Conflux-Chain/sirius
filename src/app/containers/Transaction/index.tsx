@@ -329,7 +329,7 @@ export const Transaction = () => {
           <Description title={t(translations.transaction.status)}>
             <Status type={status} />
           </Description>
-          <Description title={t(translations.blocks.security)}>
+          <Description title={t(translations.block.security)}>
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
             </SkeletonContainer>
@@ -366,7 +366,7 @@ export const Transaction = () => {
             {nonce}
           </Description>
           <Description title={t(translations.transaction.blockHash)}>
-            <Link to={`/blocks/${blockHash}`}>{blockHash}</Link>{' '}
+            <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
             <CopyButton copyText={blockHash} />
           </Description>
           <Description title={t(translations.transaction.position)}>

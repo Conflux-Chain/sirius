@@ -37,13 +37,13 @@ export function BottomTablePanel({ hash: blockHash }) {
       value: 'blocks',
       label: count => (
         <TabLabel
-          left={t(translations.blocks.tabs.labelCountBefore)}
-          right={t(translations.blocks.tabs.labelCountAfter, {
+          left={t(translations.block.tabs.labelCountBefore)}
+          right={t(translations.block.tabs.labelCountAfter, {
             type: 'blocks',
           })}
           count={count}
         >
-          {t(translations.blocks.tabs.transactions)}
+          {t(translations.block.tabs.transactions)}
         </TabLabel>
       ),
       url: `/transaction?blockHash=${blockHash}`,
@@ -56,13 +56,13 @@ export function BottomTablePanel({ hash: blockHash }) {
       value: 'transaction',
       label: count => (
         <TabLabel
-          left={t(translations.blocks.tabs.labelCountBefore)}
-          right={t(translations.blocks.tabs.labelCountAfter, {
+          left={t(translations.block.tabs.labelCountBefore)}
+          right={t(translations.block.tabs.labelCountAfter, {
             type: 'transactions',
           })}
           count={count}
         >
-          {t(translations.blocks.tabs.referenceBlocks)}
+          {t(translations.block.tabs.referenceBlocks)}
         </TabLabel>
       ),
       hideTotalZero: true,

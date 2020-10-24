@@ -63,7 +63,7 @@ export const hash = {
   key: 'hash',
   width: 1,
   render: value => (
-    <Link href={`/blocks/${value}`}>
+    <Link href={`/block/${value}`}>
       <Text span hoverValue={value}>
         {formatString(value, 'hash')}
       </Text>
@@ -80,7 +80,7 @@ export const hashWithPivot = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/blocks/${value}`}>
+        <Link href={`/block/${value}`}>
           <Text span hoverValue={value}>
             {formatString(value, 'hash')}
           </Text>

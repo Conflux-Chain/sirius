@@ -30,7 +30,7 @@ import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
-import { Blocks } from './containers/Blocks/Loadable';
+import { Block } from './containers/Block/Loadable';
 import { Epochs } from './containers/Epochs/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 
@@ -90,7 +90,7 @@ export function App() {
               />
               <Route path="/charts" component={Chart} />
               <Route exact path="/transaction/:hash" component={Transaction} />
-              <Route exact path="/blocks/:hash" component={Blocks} />
+              <Route exact path="/block/:hash" component={Block} />
               <Route exact path="/epochs/:number" component={Epochs} />
               <Route
                 path="/address/:address"

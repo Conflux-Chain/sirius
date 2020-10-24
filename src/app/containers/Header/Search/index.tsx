@@ -44,7 +44,7 @@ export const Search = () => {
 
     isBlockHash(inputValue).then(isBlock => {
       if (isBlock) {
-        history.push(`/blocks/${inputValue}`);
+        history.push(`/block/${inputValue}`);
         return;
       }
 

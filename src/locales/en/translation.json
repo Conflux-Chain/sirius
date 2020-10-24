@@ -287,7 +287,7 @@
     "for": "For",
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation"
   },
-  "blocks": {
+  "block": {
     "title": "Blocks",
     "description": "Blocks",
     "blockHeight": "Block Height",
