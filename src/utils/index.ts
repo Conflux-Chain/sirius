@@ -113,11 +113,11 @@ export const formatNumber = (num: number | string) => {
 /**
  * 格式化字符串
  * @param {string} str
- * @param {string} type 可能取值为：tag - contract name tag, hash, address
+ * @param {string} type 可能取值为：tag - contract name tag, hash, address; 如果 type 为数字，则截取对应数字 + ...，默认值为 12
  */
 export const formatString = (
   str: string,
-  type?: 'tag' | 'hash' | 'address',
+  type?: 'tag' | 'hash' | 'address' | number,
 ) => {
   let result: string;
   switch (type) {
@@ -131,7 +131,13 @@ export const formatString = (
       result = getEllipsStr(str, 6, 4);
       break;
     default:
-      result = getEllipsStr(str, 12, 0);
+      let num = 12;
+      if (typeof type === 'number') num = type;
+      if (str.length > num) {
+        result = getEllipsStr(str, num, 0);
+      } else {
+        result = str;
+      }
   }
   return result;
 };

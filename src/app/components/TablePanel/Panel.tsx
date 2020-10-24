@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Table, Pagination } from '@cfxjs/react-ui';
@@ -75,6 +75,11 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
     gotoPage,
     setPageSize,
   } = useTableData(url);
+  const [cacheTotal, setCacheTotal] = useState(total);
+
+  useEffect(() => {
+    total && total !== cacheTotal && setCacheTotal(total);
+  }, [cacheTotal, total]);
 
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
@@ -136,7 +141,7 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
             }
             page={Number(pageNumber)}
             pageSize={Number(pageSize)}
-            total={total}
+            total={cacheTotal}
           />
         </StyledPaginationWrapper>
       )}

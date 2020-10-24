@@ -29,7 +29,7 @@ export function BalanceCard({ address }) {
       }
       icon={
         <InfoImage
-          color="#0054FE"
+          color="#1e3de4"
           alt={title}
           icon="/contract-address/balance.svg"
         />
