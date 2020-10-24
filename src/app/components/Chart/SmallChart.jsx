@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import up from './up.svg';
 import down from './down.svg';
+import { formatNumber } from 'utils';
 
 export const SmallChart = ({
   width,
@@ -27,7 +28,7 @@ export const SmallChart = ({
         {t(`${indicator}.title`)}
         <Change isDown={isDown}>{diff}</Change>
       </Title>
-      <Value small={small}>{firstlast && format(firstlast[1])}</Value>
+      <Value small={small}>{firstlast && formatNumber(firstlast[1])}</Value>
 
       <Draw
         setFirstLast={setFirstLast}
@@ -53,9 +54,6 @@ function Draw({
   const lineCanvasRef = useRef(null);
 
   useEffect(() => {
-    // if (plot.length <= 1) {
-    //   return null;
-    // }
     const ctxBg = backgroundCanvasRef.current.getContext('2d');
     ctxBg.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
 
