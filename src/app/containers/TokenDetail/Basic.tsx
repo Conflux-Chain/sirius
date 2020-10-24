@@ -9,7 +9,7 @@ import { List } from '../../components/List/Loadable';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import numeral from 'numeral';
-import { fromDripToGdrip } from '../../../utils';
+import { fromDripToGdrip, formatString } from '../../../utils';
 
 export interface BasicProps {
   totalSupply?: string;
@@ -42,7 +42,15 @@ export const Basic = ({
     },
     {
       title: t(translations.token.contract),
-      children: <Link href={`/address/${tokenAddress}`}>{tokenAddress}</Link>,
+      children: (
+        <Text span hoverValue={tokenAddress}>
+          {
+            <Link href={`/address/${tokenAddress}`}>
+              {formatString(tokenAddress || '', 'address')}
+            </Link>
+          }
+        </Text>
+      ),
     },
     {
       title: t(translations.token.holders),
