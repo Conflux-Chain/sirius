@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Contract as ContractBody } from '../../components/Contract/Loadable';
 import { useCMContractQuery } from '../../../utils/api';
-import { isCfxAddress } from '../../../utils';
+import { isAddress } from '../../../utils';
 
 export function Contract(props) {
   const { t } = useTranslation();
@@ -26,9 +26,9 @@ export function Contract(props) {
     'typeCode',
   ];
   const params = { address: contractAddress, fields };
-  const { data } = useCMContractQuery(params, isCfxAddress(contractAddress));
+  const { data } = useCMContractQuery(params, isAddress(contractAddress));
   useEffect(() => {
-    if (isCfxAddress(contractAddress)) {
+    if (isAddress(contractAddress)) {
       setLoading(true);
       if (data) {
         setLoading(false);

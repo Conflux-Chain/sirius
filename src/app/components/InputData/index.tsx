@@ -48,7 +48,7 @@ export const InputData = ({
   return (
     <Wrap>
       <Tooltip
-        text={t(translations.transactions.inputTips)}
+        text={t(translations.transaction.inputTips)}
         className="tips"
         contentClassName="testaaaa"
       >

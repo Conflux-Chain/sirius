@@ -8,7 +8,7 @@ const cfxUrl = window.location.origin + '/rpc';
 const cfx = new Conflux({
   url: cfxUrl,
 });
-const faucetAddress = '0x8bf6b31e46d54e511b0547a397458922e83d9d28';
+const faucetAddress = '0x87db0af39274b50e1e15aedc0d3a9316a7b00ce7';
 const faucet = new Faucet(cfxUrl, faucetAddress);
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });

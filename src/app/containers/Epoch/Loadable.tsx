@@ -4,7 +4,7 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const Epochs = lazyLoad(
+export const Epoch = lazyLoad(
   () => import('./index'),
-  module => module.Epochs,
+  module => module.Epoch,
 );

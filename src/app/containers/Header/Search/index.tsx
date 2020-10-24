@@ -17,7 +17,7 @@ import {
   isBlockHash,
   isHash,
   isEpochNumber,
-} from 'utils/util';
+} from 'utils';
 
 export const Search = () => {
   const { t } = useTranslation();
@@ -38,18 +38,18 @@ export const Search = () => {
     }
 
     if (isEpochNumber(inputValue)) {
-      history.push(`/epochs/${inputValue}`);
+      history.push(`/epoch/${inputValue}`);
       return;
     }
 
     isBlockHash(inputValue).then(isBlock => {
       if (isBlock) {
-        history.push(`/blocks/${inputValue}`);
+        history.push(`/block/${inputValue}`);
         return;
       }
 
       if (isHash(inputValue as string)) {
-        history.push(`/transactions/${inputValue}`);
+        history.push(`/transaction/${inputValue}`);
         return;
       }
 

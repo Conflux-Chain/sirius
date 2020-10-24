@@ -30,7 +30,7 @@ const StyledSubtitleWrapper = styled.p`
   margin: 1.1429rem 0 1.7143rem;
 `;
 
-export const Epochs = () => {
+export const Epoch = () => {
   const { number } = useParams<epochNumber>();
   const { t } = useTranslation();
 
@@ -47,10 +47,10 @@ export const Epochs = () => {
   return (
     <StyledEpochWrapper>
       <Helmet>
-        <title>{t(translations.epochs.title)}</title>
-        <meta name="description" content={t(translations.epochs.description)} />
+        <title>{t(translations.epoch.title)}</title>
+        <meta name="description" content={t(translations.epoch.description)} />
       </Helmet>
-      <PageHeader>{t(translations.epochs.title)}</PageHeader>
+      <PageHeader>{t(translations.epoch.title)}</PageHeader>
       <StyledSubtitleWrapper>{number}</StyledSubtitleWrapper>
       <TablePanel
         url={`/block?epochNumber=${number}`}

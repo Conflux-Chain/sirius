@@ -7,7 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
 import { Link } from '../../components/Link/Loadable';
+import { Text } from '../../components/Text/Loadable';
 import numeral from 'numeral';
+import { fromDripToGdrip } from '../../../utils';
 
 export interface BasicProps {
   totalSupply?: string;
@@ -32,7 +34,11 @@ export const Basic = ({
   const list = [
     {
       title: t(translations.token.totalSupplay),
-      children: `${totalSupply} ${symbol}`,
+      children: (
+        <Text hoverValue={`${totalSupply || 0} ${symbol}`}>{`${fromDripToGdrip(
+          totalSupply || 0,
+        )} ${symbol}`}</Text>
+      ),
     },
     {
       title: t(translations.token.contract),

@@ -9,8 +9,9 @@ import { Input, useMessages } from '@cfxjs/react-ui';
 import { Search } from '@geist-ui/react-icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { isAddress, isHash } from '../../../utils/util';
-import { useBalance, Big } from '@cfxjs/react-hooks';
+import { isAddress, isHash } from '../../../utils';
+import { formatBalance } from '../../../utils';
+import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 
 interface FilterProps {
@@ -68,9 +69,7 @@ export const Filter = ({ tokenAddress, symbol, decimals }: FilterProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [balance, [tokenBalanceRaw]] = useBalance(filter, tokenAddrs);
-  const tokenBalance = Big(tokenBalanceRaw || '0')
-    .div(Big(10).pow(decimals || 18))
-    .toString();
+  const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
 
   useEffect(() => {
     setValue(filter);

@@ -52,7 +52,7 @@ export const ContractDetailPage = memo(() => {
           content={`${t(translations.contractDetail.content)} ${address}`}
         />
       </Helmet>
-      <Main>
+      <Main key="main">
         <Head key="head">
           <Title>{t(translations.general.contract)}</Title>
           <HeadAddressLine>

@@ -210,7 +210,7 @@ export function ContractMetadata({ address }) {
                 )}
                 {' at txn '}
                 {isAvaiable(contractInfo.from) ? (
-                  <Link to={`/transactions/${contractInfo.transactionHash}`}>
+                  <Link to={`/transaction/${contractInfo.transactionHash}`}>
                     <Text span maxCount={11}>
                       {contractInfo.transactionHash}
                     </Text>
