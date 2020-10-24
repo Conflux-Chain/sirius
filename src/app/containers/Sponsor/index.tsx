@@ -467,7 +467,7 @@ const Wrapper = styled.div`
   }
 `;
 const Header = styled.div`
-  color: #0f1327;
+  color: #1a1a1a;
   font-weight: bold;
   padding-top: 2.2857rem;
   margin-bottom: 1.7143rem;
@@ -540,7 +540,7 @@ const BlockContainer = styled.div`
       .address {
         font-size: 0.7143rem;
         font-weight: normal;
-        color: #0054fe;
+        color: #1e3de4;
         margin-left: 0.5714rem;
       }
     }
@@ -548,13 +548,13 @@ const BlockContainer = styled.div`
       margin-top: 0.7143rem;
       font-size: 20px;
       font-weight: 500;
-      color: #0f1327;
+      color: #1a1a1a;
     }
     .currentFeeContainer {
       margin-top: 0.5714rem;
       .fee {
         font-weight: bold;
-        color: #0054fe;
+        color: #1e3de4;
         font-size: 1.7143rem;
         line-height: 1.7143rem;
       }
@@ -588,7 +588,7 @@ const BlockContainer = styled.div`
           color: #002e74;
           margin-top: 0.3571rem;
           .fee {
-            color: #0054fe;
+            color: #1e3de4;
           }
           .unit {
             margin-left: 0.1429rem;
@@ -656,7 +656,7 @@ const NoticeContainer = styled.div`
   .title {
     font-size: 1.1429rem;
     font-weight: bold;
-    color: #0f1327;
+    color: #1a1a1a;
   }
   .content {
     margin-top: 0.8571rem;

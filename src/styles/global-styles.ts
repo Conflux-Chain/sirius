@@ -71,7 +71,7 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 1rem;
       }
       .content{
-        color: #0054FE;
+        color: #1e3de4;
       }
     }
   }
@@ -90,5 +90,10 @@ export const GlobalStyle = createGlobalStyle`
         }
       }
     }
+  }
+
+  /* to solve black line issue in Chrome */
+  .skeleton::after {
+    border-left: 1px solid #EFF2FA;
   }
 `;

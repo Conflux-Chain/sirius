@@ -16,6 +16,7 @@ export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
+  const columnsBlocksWidth = [4, 2, 2, 3, 4, 4, 4, 3, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -26,8 +27,9 @@ export function HomePage() {
     blockColunms.gasUsedPercent,
     blockColunms.reward,
     blockColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
+  const columnsTransactionsWidth = [4, 4, 4, 4, 4, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,
@@ -36,7 +38,7 @@ export function HomePage() {
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
   const tabs = [
     {
@@ -147,7 +149,7 @@ const ViewAllLinkWrapper = styled.div`
   position: absolute;
   top: 1rem;
   right: 0;
-  border-bottom: 2px solid #0054fe;
+  border-bottom: 2px solid #1e3de4;
   ${media.s} {
     top: 0.6429rem;
   }

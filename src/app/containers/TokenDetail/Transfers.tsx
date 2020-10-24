@@ -19,13 +19,14 @@ interface TransferProps {
 export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   const { t } = useTranslation();
 
+  const columnsWidth = [3, 4, 4, 4, 3];
   const columns = [
     tokenColunms.txnHash,
     tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const tabs = [
     {
@@ -63,7 +64,7 @@ const TransfersWrap = styled.div`
 
 const LabelWrap = styled.div`
   display: flex;
-  color: #0f1327;
+  color: #1a1a1a;
   font-weight: 700;
   font-size: 1.1429rem;
 `;

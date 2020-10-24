@@ -97,7 +97,7 @@ const HeaderWrap = styled.div`
   .basic-name {
     font-size: 1.7143rem;
     font-weight: 500;
-    color: #0f1327;
+    color: #1a1a1a;
     margin: 0 0.5714rem;
   }
   .basic-symbol {
