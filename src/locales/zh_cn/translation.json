@@ -51,7 +51,7 @@
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
     "table": {
-      "number": "数字",
+      "number": "#",
       "token": "代币",
       "transfer": "转移",
       "totalSupply": "总供应量",
@@ -153,7 +153,7 @@
         "age": "块龄"
       },
       "token": {
-        "number": "数字",
+        "number": "#",
         "token": "代币",
         "transfer": "转移",
         "totalSupply": "总供应量",
