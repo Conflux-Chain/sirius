@@ -185,7 +185,7 @@ export const fromDripToCfx = (
   if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
     const divideBn = bn.dividedBy(10 ** 18);
     if (isShowFull) {
-      result = divideBn.toString();
+      result = divideBn.toFixed();
     } else {
       result =
         divideBn.toNumber() < 0.001
@@ -210,7 +210,7 @@ export const fromDripToGdrip = (
   if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
     const divideBn = bn.dividedBy(10 ** 9);
     if (isShowFull) {
-      result = divideBn.toString();
+      result = divideBn.toFixed();
     } else {
       result =
         divideBn.toNumber() < 0.001
@@ -264,7 +264,7 @@ export const formatTimeStamp = (
 export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
   try {
     if (isShowFull) {
-      return Big(balance).div(Big(10).pow(decimals)).toString();
+      return Big(balance).div(Big(10).pow(decimals)).toFixed();
     }
     return formatNumber(Big(balance).div(Big(10).pow(decimals)).toString());
   } catch {}
@@ -274,21 +274,22 @@ export const getUnitByCfxNum = (
   num: number | string,
   isShowFull: boolean = false,
 ) => {
-  const bn = new BigNumber(num).toNumber();
+  const bn = new BigNumber(num);
   let numFormatted: number | string = '';
   let unit = '';
-  if (bn < 10 ** 9) {
-    numFormatted = formatNumber(bn);
+  if (bn.toNumber() < 10 ** 9) {
+    numFormatted = formatNumber(bn.toNumber());
     unit = 'Drip';
-  } else if (10 ** 9 <= bn && bn < 10 ** 18) {
-    numFormatted = fromDripToGdrip(bn);
+  } else if (10 ** 9 <= bn.toNumber() && bn.toNumber() < 10 ** 18) {
+    numFormatted = fromDripToGdrip(bn.toNumber());
     unit = 'Gdrip';
   } else {
-    numFormatted = fromDripToCfx(bn);
+    numFormatted = fromDripToCfx(bn.toNumber());
     unit = 'CFX';
   }
+
   if (isShowFull) {
-    numFormatted = bn;
+    numFormatted = bn.toFixed();
   }
   return { num: numFormatted, unit };
 };
