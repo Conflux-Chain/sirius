@@ -2,6 +2,7 @@
 
 exports[`<Text  /> should match snapshot 1`] = `
 .c0 .tooltip-content.sirius-tooltip {
+  text-transform: initial;
   border-radius: 0;
   padding: 0.2857rem 0.7143rem;
   font-weight: 400;
@@ -62,6 +63,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 
 exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 .c0 .tooltip-content.sirius-tooltip {
+  text-transform: initial;
   border-radius: 0;
   padding: 0.2857rem 0.7143rem;
   font-weight: 400;

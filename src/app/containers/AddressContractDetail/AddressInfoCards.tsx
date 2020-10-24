@@ -7,13 +7,17 @@ import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from '../../components/Text/Loadable';
 import { getUnitByCfxNum } from '../../../utils';
+import { Tooltip } from '../../components/Tooltip/Loadable';
 export function BalanceCard({ address }) {
   const { t } = useTranslation();
-  const title = t(translations.general.balance);
   const { data: accountInfo } = useAccount(address);
   return (
     <DetailPageCard
-      title={title}
+      title={
+        <Tooltip text={t(translations.toolTip.address.balance)} placement="top">
+          {t(translations.general.balance)}
+        </Tooltip>
+      }
       content={
         accountInfo ? (
           <Text
@@ -30,7 +34,7 @@ export function BalanceCard({ address }) {
       icon={
         <InfoImage
           color="#1e3de4"
-          alt={title}
+          alt={t(translations.general.balance)}
           icon="/contract-address/balance.svg"
         />
       }
@@ -40,16 +44,19 @@ export function BalanceCard({ address }) {
 
 export function TokensCard({ address }) {
   const { t } = useTranslation();
-  const title = t(translations.general.token);
 
   return (
     <DetailPageCard
-      title={title}
+      title={
+        <Tooltip text={t(translations.toolTip.address.token)} placement="top">
+          {t(translations.general.token)}
+        </Tooltip>
+      }
       content={<TokenBalanceSelect address={address} />}
       icon={
         <InfoImage
           color="#16DBCC"
-          alt={title}
+          alt={t(translations.general.token)}
           icon="/contract-address/token.svg"
         />
       }
@@ -60,10 +67,16 @@ export function TokensCard({ address }) {
 export function StorageStakingCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
-  const title = t(translations.general.storageStaking);
   return (
     <DetailPageCard
-      title={title}
+      title={
+        <Tooltip
+          text={t(translations.toolTip.address.storageCollateral)}
+          placement="top"
+        >
+          {t(translations.general.storageStaking)}
+        </Tooltip>
+      }
       content={
         accountInfo?.collateralForStorage ? (
           <Text
@@ -80,7 +93,7 @@ export function StorageStakingCard({ address }) {
       icon={
         <InfoImage
           color="#FFBB37"
-          alt={title}
+          alt={t(translations.general.storageStaking)}
           icon="/contract-address/storage.svg"
         />
       }
@@ -91,11 +104,14 @@ export function StorageStakingCard({ address }) {
 export function NonceCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
-  const title = t(translations.general.nonce);
 
   return (
     <DetailPageCard
-      title={title}
+      title={
+        <Tooltip text={t(translations.toolTip.address.nonce)} placement="top">
+          {t(translations.general.nonce)}
+        </Tooltip>
+      }
       content={
         accountInfo ? (
           <Text hoverValue={accountInfo.transactionCount}>
@@ -108,7 +124,7 @@ export function NonceCard({ address }) {
       icon={
         <InfoImage
           color="#FF82AC"
-          alt={title}
+          alt={t(translations.general.nonce)}
           icon="/contract-address/nonce.svg"
         />
       }

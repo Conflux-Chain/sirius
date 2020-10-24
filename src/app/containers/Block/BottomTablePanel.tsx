@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
+import { Tooltip } from '../../components/Tooltip/Loadable';
 import {
   TabsTablePanel,
   TabLabel,
@@ -43,7 +44,12 @@ export function BottomTablePanel({ hash: blockHash }) {
           })}
           count={count}
         >
-          {t(translations.block.tabs.transactions)}
+          <Tooltip
+            text={t(translations.toolTip.block.transactions)}
+            placement="top"
+          >
+            {t(translations.block.tabs.transactions)}
+          </Tooltip>
         </TabLabel>
       ),
       url: `/transaction?blockHash=${blockHash}`,
@@ -62,7 +68,12 @@ export function BottomTablePanel({ hash: blockHash }) {
           })}
           count={count}
         >
-          {t(translations.block.tabs.referenceBlocks)}
+          <Tooltip
+            text={t(translations.toolTip.block.referenceBlocks)}
+            placement="top"
+          >
+            {t(translations.block.tabs.referenceBlocks)}
+          </Tooltip>
         </TabLabel>
       ),
       hideTotalZero: true,

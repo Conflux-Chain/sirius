@@ -73,22 +73,46 @@ export function DescriptionPanel({ hash: blockHash }) {
       <Card className="sirius-blocks-card">
         <Description
           title={
-            <Tooltip text={t(translations.block.blockHeight)} placement="top">
+            <Tooltip
+              text={t(translations.toolTip.block.blockHeight)}
+              placement="top"
+            >
               {t(translations.block.blockHeight)}
             </Tooltip>
           }
         >
           <SkeletonContainer shown={loading}>{height}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.epoch)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.block.epoch)} placement="top">
+              {t(translations.block.epoch)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {<Link href={`/epoch/${epochNumber}`}>{epochNumber}</Link>}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.difficulty)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.difficulty)}
+              placement="top"
+            >
+              {t(translations.block.difficulty)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>{difficulty}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.miner)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.block.miner)} placement="top">
+              {t(translations.block.miner)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {
               <>
@@ -98,22 +122,49 @@ export function DescriptionPanel({ hash: blockHash }) {
             }
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.reward)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.reward)}
+              placement="top"
+            >
+              {t(translations.block.reward)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {totalReward ? `${fromDripToCfx(totalReward, true)} CFX` : '--'}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.security)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.security)}
+              placement="top"
+            >
+              {t(translations.block.security)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             <Security type={risk}></Security>
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.blame)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.block.blame)} placement="top">
+              {t(translations.block.blame)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>{blame}</SkeletonContainer>
         </Description>
         <Description
           title={
-            <Tooltip text={t(translations.block.blockHash)} placement="top">
+            <Tooltip
+              text={t(translations.toolTip.block.blockHash)}
+              placement="top"
+            >
               {t(translations.block.blockHash)}
             </Tooltip>
           }
@@ -122,7 +173,16 @@ export function DescriptionPanel({ hash: blockHash }) {
             {hash} <CopyButton copyText={hash} />
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.parentHash)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.parentHash)}
+              placement="top"
+            >
+              {t(translations.block.parentHash)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {
               <>
@@ -132,21 +192,52 @@ export function DescriptionPanel({ hash: blockHash }) {
             }
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.nonce)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.block.nonce)} placement="top">
+              {t(translations.block.nonce)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.gasUsed)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.gasUsedLimit)}
+              placement="top"
+            >
+              {t(translations.block.gasUsed)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {gasUsed || '--'}/{gasLimit || '--'}
             {`(${getPercent(gasUsed, gasLimit)})`}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.timestamp)}>
+        <Description
+          title={
+            <Tooltip
+              text={t(translations.toolTip.block.timestamp)}
+              placement="top"
+            >
+              {t(translations.block.timestamp)}
+            </Tooltip>
+          }
+        >
           <SkeletonContainer shown={loading}>
             {formatTimeStamp(syncTimestamp * 1000, 'timezone')}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.block.size)} noBorder>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.block.size)} placement="top">
+              {t(translations.block.size)}
+            </Tooltip>
+          }
+          noBorder
+        >
           <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
         </Description>
       </Card>

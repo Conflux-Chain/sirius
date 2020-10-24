@@ -167,7 +167,13 @@ export const Transaction = () => {
     if (transactionDetail['to']) {
       if (isContract) {
         return (
-          <Description title={t(translations.transaction.to)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.to)} placement="top">
+                {t(translations.transaction.to)}
+              </Tooltip>
+            }
+          >
             {t(translations.transaction.contract)}{' '}
             <img
               className="logo"
@@ -189,14 +195,26 @@ export const Transaction = () => {
         );
       } else {
         return (
-          <Description title={t(translations.transaction.to)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.to)} placement="top">
+                {t(translations.transaction.to)}
+              </Tooltip>
+            }
+          >
             <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
           </Description>
         );
       }
     } else if (transactionDetail['contractCreated']) {
       return (
-        <Description title={t(translations.transaction.to)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.tx.to)} placement="top">
+              {t(translations.transaction.to)}
+            </Tooltip>
+          }
+        >
           <span className="label">{t(translations.transaction.contract)}</span>
           <Link to={`/address/${transactionDetail['contractCreated']}`}>
             {transactionDetail['contractCreated']}
@@ -207,7 +225,13 @@ export const Transaction = () => {
       );
     } else {
       return (
-        <Description title={t(translations.transaction.to)}>
+        <Description
+          title={
+            <Tooltip text={t(translations.toolTip.tx.to)} placement="top">
+              {t(translations.transaction.to)}
+            </Tooltip>
+          }
+        >
           {t(translations.transaction.contractCreation)}
         </Description>
       );
@@ -307,7 +331,10 @@ export const Transaction = () => {
         <Card className="sirius-Transactions-card">
           <Description
             title={
-              <Tooltip text={t(translations.transaction.hash)} placement="top">
+              <Tooltip
+                text={t(translations.toolTip.tx.transactionHash)}
+                placement="top"
+              >
                 {t(translations.transaction.hash)}
               </Tooltip>
             }
@@ -316,71 +343,204 @@ export const Transaction = () => {
               {routeHash} <CopyButton copyText={routeHash} />
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transaction.executedEpoch)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.executedEpoch)}
+                placement="top"
+              >
+                {t(translations.transaction.executedEpoch)}
+              </Tooltip>
+            }
+          >
             {epochNumber}
             <Link to={`/epoch/${epochNumber}`}></Link>
           </Description>
-          <Description title={t(translations.transaction.proposedEpoch)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.proposedEpoch)}
+                placement="top"
+              >
+                {t(translations.transaction.proposedEpoch)}
+              </Tooltip>
+            }
+          >
             {epochHeight}
           </Description>
-          <Description title={t(translations.transaction.timestamp)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.timestamp)}
+                placement="top"
+              >
+                {t(translations.transaction.timestamp)}
+              </Tooltip>
+            }
+          >
             <CountDown from={syncTimestamp} />
             {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
           </Description>
-          <Description title={t(translations.transaction.status)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.status)} placement="top">
+                {t(translations.transaction.status)}
+              </Tooltip>
+            }
+          >
             <Status type={status} />
           </Description>
-          <Description title={t(translations.block.security)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.security)}
+                placement="top"
+              >
+                {t(translations.block.security)}
+              </Tooltip>
+            }
+          >
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transaction.from)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.from)} placement="top">
+                {t(translations.transaction.from)}
+              </Tooltip>
+            }
+          >
             <Link to={`/address/${from}`}>{from}</Link>{' '}
             <CopyButton copyText={from} />
           </Description>
           {generatedDiv()}
           {transferList.length > 0 && (
             <Description
-              title={`${t(translations.transaction.tokenTransferred)}(${
-                transferList.length
-              })`}
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.tokenTransferred)}
+                  placement="top"
+                >
+                  {t(translations.transaction.tokenTransferred)}(
+                  {transferList.length})
+                </Tooltip>
+              }
             >
               {getTransferListDiv()}
             </Description>
           )}
-          <Description title={t(translations.transaction.value)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
+                {t(translations.transaction.value)}
+              </Tooltip>
+            }
+          >
             {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
           </Description>
-          <Description title={t(translations.transaction.gasUsed)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasUsedLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.gasUsed)}
+              </Tooltip>
+            }
+          >
             {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
             {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
-          <Description title={t(translations.transaction.gasPrice)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasPrice)}
+                placement="top"
+              >
+                {t(translations.transaction.gasPrice)}
+              </Tooltip>
+            }
+          >
             {/* todo, need to format to Gdrip */}
             {gasPrice}
           </Description>
-          <Description title={t(translations.transaction.gasFee)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.gasFee)} placement="top">
+                {t(translations.transaction.gasFee)}
+              </Tooltip>
+            }
+          >
             {gasFee}
           </Description>
-          <Description title={t(translations.transaction.nonce)}>
+          <Description
+            title={
+              <Tooltip text={t(translations.toolTip.tx.nonce)} placement="top">
+                {t(translations.transaction.nonce)}
+              </Tooltip>
+            }
+          >
             {nonce}
           </Description>
-          <Description title={t(translations.transaction.blockHash)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.blockHash)}
+                placement="top"
+              >
+                {t(translations.transaction.blockHash)}
+              </Tooltip>
+            }
+          >
             <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
             <CopyButton copyText={blockHash} />
           </Description>
-          <Description title={t(translations.transaction.position)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.position)}
+                placement="top"
+              >
+                {t(translations.transaction.position)}
+              </Tooltip>
+            }
+          >
             {transactionIndex}
           </Description>
-          <Description title={t(translations.transaction.storageLimit)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
             {storageLimit}
           </Description>
-          <Description title={t(translations.transaction.chainID)}>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.chainID)}
+                placement="top"
+              >
+                {t(translations.transaction.chainID)}
+              </Tooltip>
+            }
+          >
             {chainId}
           </Description>
           <Description
-            title={t(translations.transaction.inputData)}
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.inputData)}
+                placement="top"
+              >
+                {t(translations.transaction.inputData)}
+              </Tooltip>
+            }
             noBorder
             className="inputLine"
           >
