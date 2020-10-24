@@ -45,10 +45,7 @@ module.exports = app => {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://39.107.143.161:8885/v1',
-      pathRewrite: {
-        '/api': '',
-      },
+      target: 'http://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
@@ -57,6 +54,14 @@ module.exports = app => {
     '/rpc',
     createProxyMiddleware({
       target: 'http://testnet-jsonrpc.conflux-chain.org:12537',
+    }),
+  );
+  app.use(
+    /\/\d?\.?conflux-dag\.js/,
+    createProxyMiddleware({
+      target: 'http://scantest.confluxnetwork.org',
+      changeOrigin: true,
+      secure: false,
     }),
   );
 };
