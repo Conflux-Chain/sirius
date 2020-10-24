@@ -159,6 +159,7 @@ const StyledTableWrapper = styled.div`
     th.table-cell {
       white-space: nowrap;
       padding: 1.1429rem calc((0.5714rem / 2) * 3);
+      color: #9b9eac;
     }
     td.table-cell {
       font-size: 1rem;
