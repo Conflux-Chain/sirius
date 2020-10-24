@@ -45,7 +45,9 @@ export function TokenDetail() {
                 text={
                   <span>
                     {t(translations.token.shuttleflow)}
-                    <Link href="https//shuttleflow.io">Shuttleflow</Link>
+                    <Link href="https//shuttleflow.io" target="_blank">
+                      Shuttleflow
+                    </Link>
                   </span>
                 }
               >
