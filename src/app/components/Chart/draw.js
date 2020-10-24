@@ -259,14 +259,6 @@ export default function createDraw({
   return { xScale1, draw, first, last };
 }
 
-function format(v) {
-  if (Math.round(v / 100) > 0) {
-    return Math.round(v);
-  } else {
-    return v.toPrecision(3);
-  }
-}
-
 function range(start, end, num) {
   const step = Math.ceil((end - start) / num);
   const result = [end]; //make sure end in the list but not start
