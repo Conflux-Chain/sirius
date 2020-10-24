@@ -8,6 +8,7 @@ import { Input, Button, Modal } from '@cfxjs/react-ui';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
+import { Text } from '../../components/Text/Loadable';
 import {
   isAddress,
   getEllipsStr,
@@ -272,12 +273,8 @@ export function Sponsor() {
                         ? fromDripToCfx(avialStorageFee)
                         : defaultStr}
                     </span>
-                    <span className="unit">CFX</span>
-                    <span className="secondFee">
-                      {storageBound !== defaultStr
-                        ? fromDripToCfx(storageBound)
-                        : defaultStr}
-                    </span>
+                    <span className="unit">CFX</span>{/* prettier-ignore */}
+                    <span className="secondFee">{storageBound !== defaultStr? fromDripToCfx(storageBound): defaultStr}</span>
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
@@ -315,11 +312,14 @@ export function Sponsor() {
                 <span className="label">
                   {t(translations.sponsor.upperBound)}:&nbsp;
                 </span>
-                <span className="fee">
+                <Text
+                  className="fee"
+                  hoverValue={fromDripToGdrip(upperBound, true)}
+                >
                   {upperBound !== defaultStr
                     ? fromDripToGdrip(upperBound)
                     : defaultStr}
-                </span>
+                </Text>
                 &nbsp;
                 <span className="unit">Gdrip/{t(translations.sponsor.tx)}</span>
               </SkelontonContainer>
@@ -350,12 +350,14 @@ export function Sponsor() {
                         ? fromDripToCfx(avialGasFee)
                         : defaultStr}
                     </span>
+                    {/* prettier-ignore */}
                     <span className="unit">CFX</span>
                     <span className="secondFee">
                       {gasBound !== defaultStr
                         ? fromDripToCfx(gasBound)
                         : defaultStr}
                     </span>
+                    {/* prettier-ignore */}
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
