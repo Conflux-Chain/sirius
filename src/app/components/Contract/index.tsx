@@ -45,10 +45,11 @@ const Wrapper = styled.div`
   .submitInput {
     .input-wrapper {
       border: none;
-      ${media.xl} {
-        height: 2.2857rem;
-      }
+      height: 2.2857rem;
+      margin-left: 0.3571rem;
       ${media.s} {
+        margin-left: initial;
+        margin-top: 0.4167rem;
         height: 2.6667rem;
       }
     }
@@ -56,8 +57,6 @@ const Wrapper = styled.div`
   .input-container.submitInput {
     height: 2.2857rem;
     width: 100%;
-  }
-  ${media.xl} {
     max-width: 73.1429rem;
     margin: 0 auto;
   }
@@ -72,11 +71,9 @@ const Wrapper = styled.div`
 const Header = styled.div`
   color: #0f1327;
   font-weight: bold;
-  ${media.xl} {
-    padding-top: 32px;
-    margin-bottom: 24px;
-    font-size: 24px;
-  }
+  padding-top: 2.2857rem;
+  margin-bottom: 1.7143rem;
+  font-size: 1.7143rem;
   ${media.s} {
     padding-top: 1rem;
     margin-bottom: 1.6667rem;
@@ -112,19 +109,17 @@ const LabelWithIcon = styled.div`
 const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
-  ${media.xl} {
-    flex-direction: row;
-    .lineContainer {
-      display: flex;
-      align-items: center;
-      padding: 0.8571rem 0.3571rem 0.8571rem 0;
-      border-bottom: 0.0714rem solid #e8e9ea;
-      .with-label {
-        flex: 1;
-      }
-      &:last-child {
-        border: none;
-      }
+  flex-direction: row;
+  .lineContainer {
+    display: flex;
+    align-items: center;
+    padding: 0.8571rem 0.3571rem 0.8571rem 0;
+    border-bottom: 0.0714rem solid #e8e9ea;
+    .with-label {
+      flex: 1;
+    }
+    &:last-child {
+      border: none;
     }
   }
 
@@ -155,9 +150,7 @@ const TopContainer = styled.div`
 
     background: #fff;
     padding-left: 1.2857rem;
-    ${media.xl} {
-      margin-right: 1.7143rem;
-    }
+    margin-right: 1.7143rem;
     ${media.s} {
       margin-right: initial;
     }
@@ -177,9 +170,7 @@ const TopContainer = styled.div`
 
     display: flex;
     align-items: center;
-    ${media.xl} {
-      padding: 2.8571rem 1.2857rem;
-    }
+    padding: 2.8571rem 1.2857rem;
     ${media.s} {
       padding: 0.8333rem;
     }
@@ -189,9 +180,6 @@ const TopContainer = styled.div`
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-
-      ${media.xl} {
-      }
       ${media.s} {
       }
       .item {
@@ -209,11 +197,8 @@ const TopContainer = styled.div`
         border-radius: 0.2857rem;
         justify-content: center;
         align-items: center;
-        ${media.xl} {
-          width: 4.2857rem;
-          height: 4.2857rem;
-        }
-
+        width: 4.2857rem;
+        height: 4.2857rem;
         ${media.s} {
           width: 3.6667rem;
           height: 3.6667rem;
@@ -227,8 +212,9 @@ const TopContainer = styled.div`
     .labelText {
       margin-left: 0.3571rem;
       color: #002257;
-      ${media.xl} {
-        font-size: 1rem;
+      font-size: 1rem;
+      &:hover {
+        color: #0070ff;
       }
       ${media.s} {
         font-size: 1rem;
@@ -239,9 +225,7 @@ const TopContainer = styled.div`
     }
 
     &:first-child {
-      ${media.xl} {
-        margin-right: 1.7143rem;
-      }
+      margin-right: 1.7143rem;
       ${media.s} {
         margin-right: 1.25rem;
       }
@@ -285,9 +269,8 @@ const StyledTabelWrapper = styled.div`
   }
 `;
 const TabContainer = styled.div`
-  ${media.xl} {
-    margin-top: 2.3571rem;
-  }
+  margin-top: 2.3571rem;
+
   ${media.s} {
     margin-top: 2rem;
   }
@@ -311,9 +294,7 @@ const SubmitContainer = styled.div`
     align-items: flex-end;
   }
   .submitInput {
-    ${media.xl} {
-      margin-left: 0.3571rem;
-    }
+    margin-left: 0.3571rem;
     ${media.s} {
       margin-top: 0.3333rem;
       width: 100%;
@@ -325,9 +306,7 @@ const SubmitContainer = styled.div`
   }
   .btn.submitBtn {
     min-width: initial;
-    ${media.xl} {
-      width: 10rem;
-    }
+    width: 10rem;
     ${media.s} {
       width: 7.0833rem;
     }
@@ -731,12 +710,12 @@ export const Contract = ({
             <span className="labelIcon">*</span>
             {t(translations.contract.enterPassword)}
           </LabelWithIcon>
-          <Input.Password
+          <Input
             className="submitInput"
             style={inputStyle}
             value={password}
             onChange={passwordChangeHandle}
-          ></Input.Password>
+          ></Input>
         </div>
         <div className="submitRightContainer">
           <Button
