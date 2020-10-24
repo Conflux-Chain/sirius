@@ -258,7 +258,7 @@
     "viewIncomingTxns": "查看接收交易",
     "title": "交易",
     "description": "交易",
-    "hash": "哈希",
+    "hash": "交易哈希",
     "executedEpoch": "执行纪元",
     "proposedEpoch": "目标纪元",
     "timestamp": "时间戳",
