@@ -46,7 +46,10 @@ const Wrapper = styled.div`
     .input-wrapper {
       border: none;
       height: 2.2857rem;
+      margin-left: 0.3571rem;
       ${media.s} {
+        margin-left: initial;
+        margin-top: 0.4167rem;
         height: 2.6667rem;
       }
     }
@@ -704,12 +707,12 @@ export const Contract = ({
             <span className="labelIcon">*</span>
             {t(translations.contract.enterPassword)}
           </LabelWithIcon>
-          <Input.Password
+          <Input
             className="submitInput"
             style={inputStyle}
             value={password}
             onChange={passwordChangeHandle}
-          ></Input.Password>
+          ></Input>
         </div>
         <div className="submitRightContainer">
           <Button
