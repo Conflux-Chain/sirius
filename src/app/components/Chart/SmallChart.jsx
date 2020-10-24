@@ -28,7 +28,10 @@ export const SmallChart = ({
         {t(`${indicator}.title`)}
         <Change isDown={isDown}>{diff}</Change>
       </Title>
-      <Value small={small}>{firstlast && formatNumber(firstlast[1])}</Value>
+      <Value small={small}>
+        {firstlast &&
+          formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
+      </Value>
 
       <Draw
         setFirstLast={setFirstLast}
