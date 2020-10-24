@@ -213,6 +213,9 @@ const TopContainer = styled.div`
       margin-left: 0.3571rem;
       color: #002257;
       font-size: 1rem;
+      &:hover {
+        color: #0070ff;
+      }
       ${media.s} {
         font-size: 1rem;
       }
