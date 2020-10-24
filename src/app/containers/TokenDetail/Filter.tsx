@@ -9,7 +9,7 @@ import { Input, useMessages } from '@cfxjs/react-ui';
 import { Search } from '@geist-ui/react-icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { isAddress, isHash } from '../../../utils/util';
+import { isAddress, isHash } from '../../../utils';
 import { formatBalance } from '../../../utils';
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';

@@ -17,7 +17,7 @@ import {
   isBlockHash,
   isHash,
   isEpochNumber,
-} from 'utils/util';
+} from 'utils';
 
 export const Search = () => {
   const { t } = useTranslation();

@@ -9,7 +9,7 @@ import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
 import {
-  isCfxAddress,
+  isAddress,
   getEllipsStr,
   fromDripToGdrip,
   fromDripToCfx,
@@ -93,7 +93,7 @@ export function Sponsor() {
   };
 
   const searchClick = async () => {
-    if (isCfxAddress(inputAddressVal)) {
+    if (isAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
     } else {
       resetParams();
@@ -152,7 +152,7 @@ export function Sponsor() {
     } else {
       if (address) {
         //Portal has already installed and the portal has already got the account
-        if (isCfxAddress(inputAddressVal)) {
+        if (isAddress(inputAddressVal)) {
           const txHash = await applyToTx(inputAddressVal);
           setTxHash(txHash);
           setShownDialog(true);
@@ -166,7 +166,7 @@ export function Sponsor() {
   };
   const closeDialog = () => {
     setShownDialog(false);
-    if (isCfxAddress(inputAddressVal)) {
+    if (isAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
     }
   };
@@ -183,7 +183,7 @@ export function Sponsor() {
 
   useEffect(() => {
     setInputAddressVal(contractAddress);
-    if (isCfxAddress(contractAddress)) {
+    if (isAddress(contractAddress)) {
       getSponsorInfo(contractAddress);
     }
     // eslint-disable-next-line
@@ -426,7 +426,7 @@ export function Sponsor() {
               <div className="txContainer">
                 <span className="label">{t(translations.sponsor.txHash)}:</span>
                 <a
-                  href={`https://testnet.confluxscan.io/transactionsdetail/${txHash}`}
+                  href={`/transaction/${txHash}`}
                   target="_blank"
                   className="content"
                   rel="noopener noreferrer"

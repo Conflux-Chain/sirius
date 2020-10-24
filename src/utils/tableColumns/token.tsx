@@ -4,12 +4,17 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
-import { isAddress, isHash } from '../util';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
-import { formatString, formatNumber, fromDripToCfx } from '../../utils/';
+import {
+  formatString,
+  formatNumber,
+  fromDripToCfx,
+  isAddress,
+  isHash,
+} from '../../utils';
 
 interface Query {
   accountAddress?: string;
