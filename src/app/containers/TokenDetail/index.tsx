@@ -37,7 +37,7 @@ export function TokenDetail() {
       <TokenDetailWrap>
         {data.name ? (
           <HeaderWrap>
-            {!data.isShuttleflow ? (
+            {!data.isCustodianToken ? (
               <img className="img" alt="icon" src={data.icon} />
             ) : (
               <Tooltip
@@ -45,7 +45,7 @@ export function TokenDetail() {
                 text={
                   <span>
                     {t(translations.token.shuttleflow)}
-                    <Link>Shuttleflow</Link>
+                    <Link href="https//shuttleflow.io">Shuttleflow</Link>
                   </span>
                 }
               >
