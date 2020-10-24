@@ -323,8 +323,8 @@ export const Transaction = () => {
             {epochHeight}
           </Description>
           <Description title={t(translations.transaction.timestamp)}>
-            <CountDown from={syncTimestamp * 1000} />
-            {`(${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+            <CountDown from={syncTimestamp} />
+            {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
           </Description>
           <Description title={t(translations.transaction.status)}>
             <Status type={status} />
