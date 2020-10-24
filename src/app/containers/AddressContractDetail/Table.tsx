@@ -23,7 +23,7 @@ import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { isContractAddress } from 'utils/util';
+import { isContractAddress } from 'utils';
 import { useContract } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
@@ -164,8 +164,8 @@ const TxDirectionFilter = ({ onChange }) => {
 
   const opts = [
     translations.general.viewAll,
-    translations.transactions.viewOutgoingTxns,
-    translations.transactions.viewIncomingTxns,
+    translations.transaction.viewOutgoingTxns,
+    translations.transaction.viewIncomingTxns,
   ].map((text, idx) => (
     <div
       key={idx}
@@ -289,8 +289,20 @@ export function Table({ address }) {
 
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,

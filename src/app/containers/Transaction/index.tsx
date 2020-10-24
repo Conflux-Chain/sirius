@@ -5,10 +5,10 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
-import { Card, Select } from '@cfxjs/react-ui';
+import { Card } from '@cfxjs/react-ui';
+import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
 import { useParams } from 'react-router-dom';
-// import { useTransactionQuery,useCMContractQuery,useTransferList } from '../../../utils/api';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { Link } from 'react-router-dom';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
@@ -16,6 +16,7 @@ import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
+import { CountDown } from '../../components/CountDown/Loadable';
 import {
   reqTransactionDetail,
   reqContract,
@@ -23,17 +24,23 @@ import {
   reqConfirmationRiskByHash,
   reqTokenList,
 } from '../../../utils/httpRequest';
-import { delay, getAddressType } from '../../../utils';
-import { devidedByDecimals } from '../../../utils';
+import {
+  delay,
+  getAddressType,
+  formatTimeStamp,
+  devidedByDecimals,
+  fromDripToCfx,
+  getPercent,
+} from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
-export const Transactions = () => {
+export const Transaction = () => {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   const [isContract, setIsContract] = useState(false);
-  const [transactionDetail, setTransactionDetail] = useState({});
+  const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
@@ -43,60 +50,26 @@ export const Transactions = () => {
     hash: string;
   }>();
   let loading = false;
-  // const { data, error } = useTransactionQuery({ hash });
   const [dataType, setDataType] = useState('original');
-  /**
-   * ISSUE LIST:
-   * - executed Epoch: ? - backend will provide later
-   * - gas used/limit: 用哪两个值算? - miss gas used, backend will provide later
-   * - timestamp: todo, need to be formatted
-   * - inputData: todo, need to be formatted
-   * - to: todo, need to get token info, API: /contract-manager/api/contract/query?<params query>
-   * - token transfer: todo, need to get token list, API: /api/transfer/list?transactionHash=<transaction hash>
-   * - others:
-   *  - CopyButton: 目前是 block 的，后续 react-ui/Tooltip 更新后会解决
-   *  - Status: 图片显示有问题 - 后续 react-ui/Card 更新后会解决
-   *  - Select: 样式不统一 - 后续 Select 会单独封装组件
-   *  - Skeleton: 显示文字 - 后续 react-ui/Skeleton 更新后会解决
-   *  - title tooltip: 需要给定文案后确定哪些需要添加
-   */
-
   const {
-    // @ts-ignore
     epochHeight,
-    // @ts-ignore
     from,
-    // @ts-ignore
     to,
-    // @ts-ignore
     value,
-    // @ts-ignore
     gasPrice,
-    // @ts-ignore
     gas,
-    // @ts-ignore
     nonce,
-    // @ts-ignore
     blockHash,
-    // @ts-ignore
     storageLimit,
-    // @ts-ignore
     chainId,
-    // @ts-ignore
     transactionIndex,
-    // @ts-ignore
     epochNumber,
-    // @ts-ignore
     syncTimestamp,
-    // @ts-ignore
     gasFee,
-    // @ts-ignore
     gasUsed,
-    // @ts-ignore
     status,
-    // @ts-ignore
     data,
-  } = transactionDetail || {};
+  } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     let looping = true;
     let riskLevel;
@@ -118,7 +91,7 @@ export const Transactions = () => {
         hash: txnhash,
       }).then(body => {
         const txDetailDta = body;
-        setTransactionDetail(txDetailDta);
+        setTransactionDetail(txDetailDta || {});
         if (txnhash !== routeHash) {
           return;
         }
@@ -193,8 +166,8 @@ export const Transactions = () => {
     if (transactionDetail['to']) {
       if (isContract) {
         return (
-          <Description title={t(translations.transactions.to)}>
-            {t(translations.transactions.contract)}{' '}
+          <Description title={t(translations.transaction.to)}>
+            {t(translations.transaction.contract)}{' '}
             <img
               className="logo"
               src={
@@ -215,26 +188,26 @@ export const Transactions = () => {
         );
       } else {
         return (
-          <Description title={t(translations.transactions.to)}>
+          <Description title={t(translations.transaction.to)}>
             <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
           </Description>
         );
       }
     } else if (transactionDetail['contractCreated']) {
       return (
-        <Description title={t(translations.transactions.to)}>
-          <span className="label">{t(translations.transactions.contract)}</span>
+        <Description title={t(translations.transaction.to)}>
+          <span className="label">{t(translations.transaction.contract)}</span>
           <Link to={`/address/${transactionDetail['contractCreated']}`}>
             {transactionDetail['contractCreated']}
           </Link>{' '}
           <CopyButton copyText={transactionDetail['contractCreated']} />
-          &nbsp; {t(translations.transactions.created)}
+          &nbsp; {t(translations.transaction.created)}
         </Description>
       );
     } else {
       return (
-        <Description title={t(translations.transactions.to)}>
-          {t(translations.transactions.contractCreation)}
+        <Description title={t(translations.transaction.to)}>
+          {t(translations.transaction.contractCreation)}
         </Description>
       );
     }
@@ -287,22 +260,22 @@ export const Transactions = () => {
       );
       transferListContainer.push(
         <div className="lineContainer">
-          <span className="from">{t(translations.transactions.from)}</span>
+          <span className="from">{t(translations.transaction.from)}</span>
           <Link to={`/address/${transferItem['from']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['from']}>
               {transferItem['from']}
             </Text>
           </Link>
-          <span className="to">{t(translations.transactions.to)}</span>
+          <span className="to">{t(translations.transaction.to)}</span>
           <Link to={`/address/${transferItem['to']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['to']}>
               {transferItem['to']}
             </Text>
           </Link>
-          <span className="for">{t(translations.transactions.for)}</span>
+          <span className="for">{t(translations.transaction.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'
-              ? devidedByDecimals(transferItem['value'], tokenDecimals)
+              ? `${devidedByDecimals(transferItem['value'], tokenDecimals)}`
               : transferItem['value']}
           </span>
           <span>{imgIcon}</span>
@@ -322,19 +295,19 @@ export const Transactions = () => {
   return (
     <StyledTransactionsWrapper>
       <Helmet>
-        <title>{t(translations.transactions.title)}</title>
+        <title>{t(translations.transaction.title)}</title>
         <meta
           name="description"
-          content={t(translations.transactions.description)}
+          content={t(translations.transaction.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.transactions.title)}</PageHeader>
+      <PageHeader>{t(translations.transaction.title)}</PageHeader>
       <StyledCardWrapper>
         <Card className="sirius-Transactions-card">
           <Description
             title={
-              <Tooltip text={t(translations.transactions.hash)} placement="top">
-                {t(translations.transactions.hash)}
+              <Tooltip text={t(translations.transaction.hash)} placement="top">
+                {t(translations.transaction.hash)}
               </Tooltip>
             }
           >
@@ -342,72 +315,71 @@ export const Transactions = () => {
               {routeHash} <CopyButton copyText={routeHash} />
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transactions.executedEpoch)}>
+          <Description title={t(translations.transaction.executedEpoch)}>
             {epochNumber}
             <Link to={`/epoch/${epochNumber}`}></Link>
           </Description>
-          <Description title={t(translations.transactions.proposedEpoch)}>
+          <Description title={t(translations.transaction.proposedEpoch)}>
             {epochHeight}
           </Description>
-          <Description title={t(translations.transactions.timestamp)}>
-            {/* todo, need to be formatted */}
-            {syncTimestamp}
+          <Description title={t(translations.transaction.timestamp)}>
+            <CountDown from={syncTimestamp * 1000} />
+            {`(${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
           </Description>
-          <Description title={t(translations.transactions.status)}>
+          <Description title={t(translations.transaction.status)}>
             <Status type={status} />
           </Description>
-          <Description title={t(translations.blocks.security)}>
+          <Description title={t(translations.block.security)}>
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
             </SkeletonContainer>
           </Description>
-          <Description title={t(translations.transactions.from)}>
+          <Description title={t(translations.transaction.from)}>
             <Link to={`/address/${from}`}>{from}</Link>{' '}
             <CopyButton copyText={from} />
           </Description>
           {generatedDiv()}
           {transferList.length > 0 && (
             <Description
-              title={`${t(translations.transactions.tokenTransferred)}(${
+              title={`${t(translations.transaction.tokenTransferred)}(${
                 transferList.length
               })`}
             >
               {getTransferListDiv()}
             </Description>
           )}
-          <Description title={t(translations.transactions.value)}>
-            {/* todo, need to format to cfx */}
-            {value}
+          <Description title={t(translations.transaction.value)}>
+            {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
           </Description>
-          <Description title={t(translations.transactions.gasUsed)}>
+          <Description title={t(translations.transaction.gasUsed)}>
             {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
-            {`${gasUsed}/${gas}`}
+            {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
-          <Description title={t(translations.transactions.gasPrice)}>
+          <Description title={t(translations.transaction.gasPrice)}>
             {/* todo, need to format to Gdrip */}
             {gasPrice}
           </Description>
-          <Description title={t(translations.transactions.gasFee)}>
+          <Description title={t(translations.transaction.gasFee)}>
             {gasFee}
           </Description>
-          <Description title={t(translations.transactions.nonce)}>
+          <Description title={t(translations.transaction.nonce)}>
             {nonce}
           </Description>
-          <Description title={t(translations.transactions.blockHash)}>
-            <Link to={`/blocks/${blockHash}`}>{blockHash}</Link>{' '}
+          <Description title={t(translations.transaction.blockHash)}>
+            <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
             <CopyButton copyText={blockHash} />
           </Description>
-          <Description title={t(translations.transactions.position)}>
+          <Description title={t(translations.transaction.position)}>
             {transactionIndex}
           </Description>
-          <Description title={t(translations.transactions.storageLimit)}>
+          <Description title={t(translations.transaction.storageLimit)}>
             {storageLimit}
           </Description>
-          <Description title={t(translations.transactions.chainID)}>
+          <Description title={t(translations.transaction.chainID)}>
             {chainId}
           </Description>
           <Description
-            title={t(translations.transactions.inputData)}
+            title={t(translations.transaction.inputData)}
             noBorder
             className="inputLine"
           >
@@ -416,19 +388,6 @@ export const Transactions = () => {
               inputType={dataType}
               decodedDataStr={JSON.stringify(decodedData)}
             ></InputData>
-            {/* todo, need to be formatted */}
-            {/* <StyledTextareaWrapper>
-              <Textarea
-                className="sirius-Transactions-Textarea"
-                width="100%"
-                placeholder=""
-                value={innerData}
-                defaultValue=""
-                minHeight="118px"
-                variant="solid"
-              />
-            </StyledTextareaWrapper> */}
-            {/* todo, need to replace with styled select */}
             <Select
               value={dataType}
               onChange={handleDataTypeChange}
@@ -437,17 +396,11 @@ export const Transactions = () => {
             >
               {dataTypeList.map(dataTypeItem => {
                 return (
-                  <Select.Option value={dataTypeItem}>
-                    {`${t(translations.transactions.select[dataTypeItem])}`}
+                  <Select.Option key={dataTypeItem} value={dataTypeItem}>
+                    {`${t(translations.transaction.select[dataTypeItem])}`}
                   </Select.Option>
                 );
               })}
-              {/* <Select.Option value="original">
-                {t(translations.transactions.select.original)}
-              </Select.Option>
-              <Select.Option value="utf8">
-                {t(translations.transactions.select.utf8)}
-              </Select.Option> */}
             </Select>
           </Description>
         </Card>
@@ -464,40 +417,40 @@ const StyledCardWrapper = styled.div`
   }
   .card.sirius-Transactions-card {
     .content {
-      padding: 0 18px;
+      padding: 0 1.2857rem;
     }
   }
   .logo {
-    width: 16px;
-    margin: 0 8px;
+    width: 1.1429rem;
+    margin: 0 0.5714rem;
   }
   .linkMargin {
-    margin-left: 8px;
+    margin-left: 0.5714rem;
   }
   .transferListContainer {
     .lineContainer {
-      line-height: 24px;
+      line-height: 1.7143rem;
     }
     .from {
-      margin-right: 2px;
+      margin-right: 0.1429rem;
     }
     .to {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
     .for {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
     .value {
-      margin: 0 2px;
+      margin: 0 0.1429rem;
     }
   }
   .label {
-    margin-right: 4px;
+    margin-right: 0.2857rem;
   }
 `;
 
 const StyledTransactionsWrapper = styled.div`
-  padding: 32px 0;
+  padding: 2.2857rem 0;
 
   ${media.s} {
     padding-bottom: 0;

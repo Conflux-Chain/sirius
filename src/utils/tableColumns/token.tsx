@@ -4,53 +4,87 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
-import numeral from 'numeral';
-import { isAddress, isHash } from '../util';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
+import { CountDown } from '../../app/components/CountDown/Loadable';
+import {
+  formatString,
+  formatNumber,
+  fromDripToCfx,
+  isAddress,
+  isHash,
+} from '../../utils';
 
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
 }
 
-const renderTextEllipsis = (value, hoverValue?) => {
-  return (
-    <Text span maxWidth="5.7143rem" hoverValue={hoverValue || value}>
-      {value}
-    </Text>
-  );
-};
-
-const renderFilterableAddress = (value, row, index, type: string) => {
+const renderFilterableAddress = (
+  value,
+  row,
+  index,
+  pOpt?: {
+    type?: 'to' | 'from';
+    accountFilter?: boolean;
+  },
+) => {
+  const opt = {
+    type: 'to',
+    accountFilter: true,
+    ...pOpt,
+  };
   const { accountAddress, transactionHash } = queryString.parse(
     window.location.search,
   );
   const filter =
     (accountAddress as string) || (transactionHash as string) || '';
 
-  return (
-    <FromWrap>
-      {filter === value
-        ? renderTextEllipsis(value)
-        : renderTextEllipsis(<LinkWidthFilter href={value} />, value)}
-      {type === 'from' && (
-        <ImgWrap
-          src={
-            !filter
-              ? '/token/arrow.svg'
-              : filter === value
-              ? '/token/out.svg'
-              : '/token/in.svg'
+  if (opt.accountFilter) {
+    return (
+      <FromWrap>
+        {filter === value ? (
+          <Text span hoverValue={value}>
+            {formatString(value, 'address')}
+          </Text>
+        ) : (
+          <LinkWidthFilter href={value}>
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
+          </LinkWidthFilter>
+        )}
+        {opt.type === 'from' && (
+          <ImgWrap
+            src={
+              !filter
+                ? '/token/arrow.svg'
+                : filter === value
+                ? '/token/out.svg'
+                : '/token/in.svg'
+            }
+          />
+        )}
+      </FromWrap>
+    );
+  } else {
+    return (
+      <FromWrap>
+        <Link href={`/address/${value}`}>
+          {
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
           }
-        />
-      )}
-    </FromWrap>
-  );
+        </Link>
+        {opt.type === 'from' && <ImgWrap src="/token/arrow.svg" />}
+      </FromWrap>
+    );
+  }
 };
 
-const LinkWidthFilter = ({ href }) => {
+const LinkWidthFilter = ({ href, children }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -86,7 +120,7 @@ const LinkWidthFilter = ({ href }) => {
         onFilter(href);
       }}
     >
-      {href}
+      {children}
     </Link>
   );
 };
@@ -112,7 +146,9 @@ export const token = {
     <StyledIconWrapper>
       <img src={row.icon} alt="token icon" />
       <Link href={`/token/${row.address}`}>
-        {row.name} ({row.symbol})
+        <Text span hoverValue={`${row.name} (${row.symbol})`}>
+          {formatString(`${row.name} (${row.symbol})`)}
+        </Text>
       </Link>
     </StyledIconWrapper>
   ),
@@ -127,6 +163,7 @@ export const transfer = {
   ),
   dataIndex: 'transferCount',
   key: 'transferCount',
+  render: value => <span>{formatNumber(value)}</span>,
 };
 
 export const totalSupply = {
@@ -138,7 +175,11 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
-  render: value => renderTextEllipsis(numeral(value).format('0,0')),
+  render: value => (
+    <Text span hoverValue={value}>
+      {formatString(formatNumber(value))}
+    </Text>
+  ),
 };
 
 export const holders = {
@@ -150,7 +191,7 @@ export const holders = {
   ),
   dataIndex: 'accountTotal',
   key: 'accountTotal',
-  render: value => numeral(value).format('0,0'),
+  render: value => <span>{formatNumber(value)}</span>,
 };
 
 export const contract = {
@@ -163,7 +204,11 @@ export const contract = {
   dataIndex: 'address',
   key: 'address',
   render: value => (
-    <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/address/${value}`}>
+      <Text span hoverValue={value}>
+        {formatString(value, 'address')}
+      </Text>
+    </Link>
   ),
 };
 
@@ -178,7 +223,11 @@ export const txnHash = {
   dataIndex: 'transactionHash',
   key: 'transactionHash',
   render: value => (
-    <Link href={`/transactions/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/transaction/${value}`}>
+      <Text span hoverValue={value}>
+        {formatString(value, 'hash')}
+      </Text>
+    </Link>
   ),
 };
 
@@ -189,6 +238,7 @@ export const age = {
   ),
   dataIndex: 'syncTimestamp',
   key: 'age',
+  render: value => <CountDown from={value} />,
 };
 
 export const quantity = {
@@ -200,7 +250,15 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: value => renderTextEllipsis(numeral(value).format('0,0')), // todo, big number will transfer to NaN
+  render: value => {
+    return value ? (
+      <Text span hoverValue={value}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    );
+  },
 };
 
 export const to = {
@@ -210,7 +268,11 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: renderFilterableAddress,
+  render: (value, row, index, opt?) =>
+    renderFilterableAddress(value, row, index, {
+      type: 'to',
+      ...opt,
+    }),
 };
 
 export const from = {
@@ -220,8 +282,11 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row, index) =>
-    renderFilterableAddress(value, row, index, 'from'),
+  render: (value, row, index, opt?) =>
+    renderFilterableAddress(value, row, index, {
+      type: 'from',
+      ...opt,
+    }),
 };
 
 const StyledIconWrapper = styled.div`

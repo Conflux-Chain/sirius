@@ -5,16 +5,28 @@ import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
-
+import { Text } from '../../components/Text/Loadable';
+import { getUnitByCfxNum } from '../../../utils';
 export function BalanceCard({ address }) {
   const { t } = useTranslation();
   const title = t(translations.general.balance);
   const { data: accountInfo } = useAccount(address);
-
   return (
     <DetailPageCard
       title={title}
-      content={accountInfo?.balance}
+      content={
+        accountInfo ? (
+          <Text
+            hoverValue={`${getUnitByCfxNum(accountInfo.balance, true).num} ${
+              getUnitByCfxNum(accountInfo.balance, true).unit
+            }`}
+          >
+            {getUnitByCfxNum(accountInfo.balance).num}
+          </Text>
+        ) : (
+          ''
+        )
+      }
       icon={
         <InfoImage
           color="#0054FE"
@@ -49,11 +61,22 @@ export function StorageStakingCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
   const title = t(translations.general.storageStaking);
-
   return (
     <DetailPageCard
       title={title}
-      content={accountInfo?.collateralForStorage}
+      content={
+        accountInfo?.collateralForStorage ? (
+          <Text
+            hoverValue={`${
+              getUnitByCfxNum(accountInfo.collateralForStorage, true).num
+            } ${getUnitByCfxNum(accountInfo.collateralForStorage).unit}`}
+          >
+            {getUnitByCfxNum(accountInfo.collateralForStorage).num}
+          </Text>
+        ) : (
+          ''
+        )
+      }
       icon={
         <InfoImage
           color="#FFBB37"
@@ -73,7 +96,15 @@ export function NonceCard({ address }) {
   return (
     <DetailPageCard
       title={title}
-      content={accountInfo?.transactionCount}
+      content={
+        accountInfo ? (
+          <Text hoverValue={accountInfo.transactionCount}>
+            {accountInfo.transactionCount}
+          </Text>
+        ) : (
+          ''
+        )
+      }
       icon={
         <InfoImage
           color="#FF82AC"

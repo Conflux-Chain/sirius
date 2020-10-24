@@ -15,6 +15,9 @@ export const sendRequest = config => {
       }
       return false;
     });
+  reqPromise.catch(error => {
+    //TODO: upload log to Sentry
+  });
   return reqPromise;
 };
 

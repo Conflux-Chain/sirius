@@ -4,12 +4,14 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Text } from '../../app/components/Text/Loadable';
 import { Link } from '../../app/components/Link/Loadable';
-
-const renderTextEllipsis = value => (
-  <Text span maxWidth="5.7143rem" hoverValue={value}>
-    {value}
-  </Text>
-);
+import { CountDown } from '../../app/components/CountDown/Loadable';
+import {
+  formatString,
+  formatNumber,
+  getPercent,
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '../../utils/';
 
 export const epoch = {
   title: (
@@ -25,7 +27,7 @@ export const epoch = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/epochs/${value}`}>{renderTextEllipsis(value)}</Link>
+        <Link href={`/epoch/${value}`}>{value}</Link>
         {pivotTag}
       </StyledEpochWrapper>
     );
@@ -50,6 +52,7 @@ export const txns = {
   dataIndex: 'transactionCount',
   key: 'transactionCount',
   width: 1,
+  render: formatNumber,
 };
 
 export const hash = {
@@ -60,7 +63,11 @@ export const hash = {
   key: 'hash',
   width: 1,
   render: value => (
-    <Link href={`/blocks/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/block/${value}`}>
+      <Text span hoverValue={value}>
+        {formatString(value, 'hash')}
+      </Text>
+    </Link>
   ),
 };
 
@@ -73,7 +80,11 @@ export const hashWithPivot = {
     }
     return (
       <StyledEpochWrapper>
-        <Link href={`/blocks/${value}`}>{renderTextEllipsis(value)}</Link>
+        <Link href={`/block/${value}`}>
+          <Text span hoverValue={value}>
+            {formatString(value, 'hash')}
+          </Text>
+        </Link>
         {pivotTag}
       </StyledEpochWrapper>
     );
@@ -88,7 +99,11 @@ export const miner = {
   key: 'miner',
   width: 1,
   render: value => (
-    <Link href={`/address/${value}`}>{renderTextEllipsis(value)}</Link>
+    <Link href={`/address/${value}`}>
+      <Text span hoverValue={value}>
+        {formatString(value, 'address')}
+      </Text>
+    </Link>
   ),
 };
 
@@ -101,6 +116,11 @@ export const avgGasPrice = {
   dataIndex: 'avgGasPrice',
   key: 'avgGasPrice',
   width: 1,
+  render: value => (
+    <Text span hoverValue={value}>
+      {`${fromDripToGdrip(value)} Gdrip`}
+    </Text>
+  ),
 };
 
 export const gasUsedPercent = {
@@ -114,7 +134,7 @@ export const gasUsedPercent = {
   width: 1,
   render: (value, row: any) => {
     if (value) {
-      return `${row.gasUsed}/${row.gasLimit}`; // todo, need real division
+      return getPercent(row.gasUsed, row.gasLimit);
     } else {
       return '--';
     }
@@ -128,7 +148,14 @@ export const reward = {
   dataIndex: 'totalReward',
   key: 'totalReward',
   width: 1,
-  render: value => (value ? `${value} CFX` : '--'),
+  render: value =>
+    value ? (
+      <Text span hoverValue={value}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 export const age = {
@@ -138,6 +165,7 @@ export const age = {
   dataIndex: 'syncTimestamp',
   key: 'syncTimestamp',
   width: 1,
+  render: value => <CountDown from={value} />,
 };
 
 export const difficulty = {
@@ -149,6 +177,7 @@ export const difficulty = {
   dataIndex: 'difficulty',
   key: 'difficulty',
   width: 1,
+  render: formatNumber,
 };
 
 export const gasLimit = {
@@ -160,6 +189,7 @@ export const gasLimit = {
   dataIndex: 'gasLimit',
   key: 'gasLimit',
   width: 1,
+  render: formatNumber,
 };
 
 const StyledEpochWrapper = styled.span`

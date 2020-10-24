@@ -4,7 +4,7 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const Transactions = lazyLoad(
+export const Transaction = lazyLoad(
   () => import('./index'),
-  module => module.Transactions,
+  module => module.Transaction,
 );

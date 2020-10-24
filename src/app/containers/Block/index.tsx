@@ -9,7 +9,7 @@ import { media } from '../../../styles/media';
 import { DescriptionPanel } from './DescriptionPanel';
 import { BottomTablePanel } from './BottomTablePanel';
 
-export function Blocks() {
+export function Block() {
   const { t } = useTranslation();
   const { hash } = useParams<{
     hash: string;
@@ -18,10 +18,10 @@ export function Blocks() {
   return (
     <StyledblocksWrapper>
       <Helmet>
-        <title>{t(translations.blocks.title)}</title>
-        <meta name="description" content={t(translations.blocks.description)} />
+        <title>{t(translations.block.title)}</title>
+        <meta name="description" content={t(translations.block.description)} />
       </Helmet>
-      <PageHeader>{t(translations.blocks.title)}</PageHeader>
+      <PageHeader>{t(translations.block.title)}</PageHeader>
       <DescriptionPanel hash={hash} />
       <br className="sirius-blocks-br" />
       <BottomTablePanel hash={hash} />

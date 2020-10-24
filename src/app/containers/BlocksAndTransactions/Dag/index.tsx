@@ -13,7 +13,7 @@ export function Dag() {
     <DagContainer>
       {bp !== 's' && (
         <DagGraph>
-          <DagTitle>{t(translations.blocks.title)}</DagTitle>
+          <DagTitle>{t(translations.block.title)}</DagTitle>
         </DagGraph>
       )}
     </DagContainer>

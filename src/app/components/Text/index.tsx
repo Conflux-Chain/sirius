@@ -4,7 +4,7 @@ import { Tooltip } from '../Tooltip';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
-import { selectText } from './../../../utils/util';
+import { selectText } from './../../../utils';
 import clsx from 'clsx';
 
 type TextProps = {
@@ -37,7 +37,13 @@ export const Text = ({
     child = String.prototype.substr.call(children, 0, maxCount) + '...';
   }
   const tooltipText = (
-    <div onClick={e => selectText(e.currentTarget)}>
+    <div
+      onClick={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        selectText(e.currentTarget);
+      }}
+    >
       {text || hoverValue || children}
     </div>
   );

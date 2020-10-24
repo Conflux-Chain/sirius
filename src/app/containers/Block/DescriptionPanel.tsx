@@ -11,8 +11,12 @@ import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
 import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
-import { util as cfxUtil } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { delay } from '../../../utils';
+import {
+  delay,
+  getPercent,
+  fromDripToCfx,
+  formatTimeStamp,
+} from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
@@ -35,13 +39,6 @@ export function DescriptionPanel({ hash: blockHash }) {
         await delay(10 * 1000);
       }
     }
-  };
-
-  const transferDrip = (dripStr: string) => {
-    if (dripStr) {
-      return cfxUtil.unit.fromDripToCFX(Number(dripStr));
-    }
-    return '--';
   };
 
   const {
@@ -76,22 +73,22 @@ export function DescriptionPanel({ hash: blockHash }) {
       <Card className="sirius-blocks-card">
         <Description
           title={
-            <Tooltip text={t(translations.blocks.blockHeight)} placement="top">
-              {t(translations.blocks.blockHeight)}
+            <Tooltip text={t(translations.block.blockHeight)} placement="top">
+              {t(translations.block.blockHeight)}
             </Tooltip>
           }
         >
           <SkeletonContainer shown={loading}>{height}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.epoch)}>
+        <Description title={t(translations.block.epoch)}>
           <SkeletonContainer shown={loading}>
             {<Link href={`/epoch/${epochNumber}`}>{epochNumber}</Link>}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.difficulty)}>
+        <Description title={t(translations.block.difficulty)}>
           <SkeletonContainer shown={loading}>{difficulty}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.miner)}>
+        <Description title={t(translations.block.miner)}>
           <SkeletonContainer shown={loading}>
             {
               <>
@@ -101,23 +98,23 @@ export function DescriptionPanel({ hash: blockHash }) {
             }
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.reward)}>
+        <Description title={t(translations.block.reward)}>
           <SkeletonContainer shown={loading}>
-            {transferDrip(totalReward)}
+            {totalReward ? `${fromDripToCfx(totalReward, true)} CFX` : '--'}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.security)}>
+        <Description title={t(translations.block.security)}>
           <SkeletonContainer shown={loading}>
             <Security type={risk}></Security>
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.blame)}>
+        <Description title={t(translations.block.blame)}>
           <SkeletonContainer shown={loading}>{blame}</SkeletonContainer>
         </Description>
         <Description
           title={
-            <Tooltip text={t(translations.blocks.blockHash)} placement="top">
-              {t(translations.blocks.blockHash)}
+            <Tooltip text={t(translations.block.blockHash)} placement="top">
+              {t(translations.block.blockHash)}
             </Tooltip>
           }
         >
@@ -125,28 +122,31 @@ export function DescriptionPanel({ hash: blockHash }) {
             {hash} <CopyButton copyText={hash} />
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.parentHash)}>
+        <Description title={t(translations.block.parentHash)}>
           <SkeletonContainer shown={loading}>
             {
               <>
-                <Link href={`/blocks/${parentHash}`}>{parentHash}</Link>{' '}
+                <Link href={`/block/${parentHash}`}>{parentHash}</Link>{' '}
                 <CopyButton copyText={parentHash} />
               </>
             }
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.nonce)}>
+        <Description title={t(translations.block.nonce)}>
           <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.gasUsed)}>
+        <Description title={t(translations.block.gasUsed)}>
           <SkeletonContainer shown={loading}>
             {gasUsed || '--'}/{gasLimit || '--'}
+            {`(${getPercent(gasUsed, gasLimit)})`}
           </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.timestamp)}>
-          <SkeletonContainer shown={loading}>{syncTimestamp}</SkeletonContainer>
+        <Description title={t(translations.block.timestamp)}>
+          <SkeletonContainer shown={loading}>
+            {formatTimeStamp(syncTimestamp * 1000, 'timezone')}
+          </SkeletonContainer>
         </Description>
-        <Description title={t(translations.blocks.size)} noBorder>
+        <Description title={t(translations.block.size)} noBorder>
           <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
         </Description>
       </Card>
