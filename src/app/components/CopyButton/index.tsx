@@ -47,7 +47,7 @@ export const CopyButton = ({
     }
   };
   return (
-    <Tooltip text={text} onVisibleChange={handleChange}>
+    <Tooltip text={text} onVisibleChange={handleChange} placement="top-start">
       <div
         onClick={handleClick}
         style={{
