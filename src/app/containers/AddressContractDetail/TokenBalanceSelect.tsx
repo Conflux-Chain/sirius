@@ -33,14 +33,14 @@ function Select({ children = [] } = {}) {
         <SelectTokenDropdownIcon expanded={expanded}>
           <ChevronUp color="#7e8295" />
         </SelectTokenDropdownIcon>
+        {expanded && (
+          <SelectDropdown>
+            <Card className="token-balance-select-content">
+              {childrenWithDivider}
+            </Card>
+          </SelectDropdown>
+        )}
       </SelectTokenBox>
-      {expanded && (
-        <SelectDropdown>
-          <Card className="token-balance-select-content">
-            {childrenWithDivider}
-          </Card>
-        </SelectDropdown>
-      )}
     </SelectWrapper>
   );
 }
@@ -100,12 +100,17 @@ const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
   transform: ${props => (props.expanded ? 'unset' : 'rotate(180deg)')};
 `;
 const SelectDropdown = styled.div`
+  z-index: 100;
   position: absolute;
-  margin-top: 2rem;
-  margin-left: -1.1429rem;
+  margin-left: -2.1429rem;
+  top: 8rem;
   .token-balance-select-content.card > .content {
     padding-top: unset;
     padding-bottom: unset;
+  }
+  ${media.s} {
+    top: 5rem;
+    right: 5.5rem;
   }
 `;
 
