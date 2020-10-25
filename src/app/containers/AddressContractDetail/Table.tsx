@@ -270,10 +270,12 @@ export function Table({ address }) {
   const [filterVisible, setFilterVisible] = useState(
     queries?.tab !== 'contract',
   );
-  const [txFilterVisible, setTxFilterVisible] = useState(
-    queries?.tab !== 'mined-blocks' && queries?.tab !== 'transfers',
-  );
   const isContract = useMemo(() => isContractAddress(address), [address]);
+  const [txFilterVisible, setTxFilterVisible] = useState(
+    queries?.tab !== 'mined-blocks' &&
+      queries?.tab !== 'transfers' &&
+      !isContract,
+  );
 
   const { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
@@ -316,10 +318,9 @@ export function Table({ address }) {
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 4, 4, 4, 2];
+  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
-    tokenColunms.age,
     {
       ...tokenColunms.from,
       render: (value, row, index) =>
@@ -335,6 +336,8 @@ export function Table({ address }) {
         }),
     },
     tokenColunms.quantity,
+    tokenColunms.token,
+    tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
   const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
@@ -497,7 +500,7 @@ export function Table({ address }) {
         key="table"
         tabs={tabs}
         onTabsChange={value => {
-          if (value === 'transfers' || value === 'mined-blocks')
+          if (value === 'transfers' || value === 'mined-blocks' || isContract)
             setTxFilterVisible(false);
           else setTxFilterVisible(true);
           if (value === 'contract-viewer') return setFilterVisible(false);
