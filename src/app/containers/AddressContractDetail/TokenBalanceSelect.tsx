@@ -118,6 +118,7 @@ const SelectItemTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-weight: 500;
 `;
 const SelectItemTokenIcon = styled.img`
   margin-right: 0.86rem;
@@ -131,6 +132,7 @@ const SelectItemContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-weight: 500;
 `;
 const SelectItemContentBalance = styled.span``;
 // const SelectItemContentSymbol = styled.span``;
