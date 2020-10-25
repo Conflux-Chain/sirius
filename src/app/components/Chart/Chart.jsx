@@ -70,7 +70,7 @@ function Draw({
   let POPUP_PADDING = 12 * scale;
 
   let X_AXIS_HEIGHT = 38 * scale;
-  let Y_AXIS_WIDTH = 45 * scale;
+  let Y_AXIS_WIDTH = 50 * scale;
 
   useEffect(() => {
     let cursorX;
@@ -96,7 +96,7 @@ function Draw({
     });
     if (draw) {
       draw();
-      const listener = event => {
+      const movelistener = event => {
         if (xScale1) {
           const { offsetX } = event;
           cursorX = Math.round(xScale1.invert(offsetX));
@@ -105,9 +105,16 @@ function Draw({
           });
         }
       };
+      const leaveListener = event => {
+        draw();
+      };
       const container = containerRef.current;
-      container.addEventListener('mousemove', listener);
-      return () => container.removeEventListener('mousemove', listener);
+      container.addEventListener('mousemove', movelistener);
+      container.addEventListener('mouseleave', leaveListener);
+      return () => {
+        container.removeEventListener('mousemove', movelistener);
+        container.removeEventListener('mouseleave', leaveListener);
+      };
     }
   }, [
     height,

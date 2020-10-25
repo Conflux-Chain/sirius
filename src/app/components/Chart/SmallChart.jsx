@@ -124,7 +124,9 @@ const Value = styled.div`
   font-weight: bold;
   position: relative;
   z-index: 1;
+  position: relative;
   font-size: ${props => (props.small ? '18px' : '24px')};
+  top: ${props => (props.small ? '0px' : '-5px')};
   margin-top: ${props => (props.small ? '10%' : '0')};
 `;
 
@@ -139,8 +141,8 @@ const Change = styled.div`
 
 const CanvasContainer = styled.div`
   position: absolute;
-  right: ${props => (props.small ? '8px' : '12px')};
-  bottom: ${props => (props.small ? '8px' : '12px')};
+  right: ${props => (props.small ? '8px' : '20px')};
+  bottom: ${props => (props.small ? '8px' : '26px')};
   canvas {
     position: absolute;
     left: 0;
