@@ -34,7 +34,8 @@ export const Epoch = () => {
   const { number } = useParams<epochNumber>();
   const { t } = useTranslation();
 
-  const columnsBlocks: ColumnsType = [
+  const columnsWidth = [2, 4, 2, 4, 3, 3, 4];
+  const columns: ColumnsType = [
     blockColunms.position,
     blockColunms.hashWithPivot,
     blockColunms.txns,
@@ -42,7 +43,7 @@ export const Epoch = () => {
     blockColunms.difficulty,
     blockColunms.gasUsedPercent,
     blockColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (
     <StyledEpochWrapper>
@@ -54,7 +55,7 @@ export const Epoch = () => {
       <StyledSubtitleWrapper>{number}</StyledSubtitleWrapper>
       <TablePanel
         url={`/block?epochNumber=${number}`}
-        table={{ columns: columnsBlocks, rowKey: 'hash' }}
+        table={{ columns: columns, rowKey: 'hash' }}
       />
     </StyledEpochWrapper>
   );

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
 import { Card } from '@cfxjs/react-ui';
@@ -46,6 +47,7 @@ export const Transaction = () => {
   const [transferList, setTransferList] = useState([]);
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
+  const history = useHistory();
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
@@ -90,70 +92,80 @@ export const Transaction = () => {
       reqTransactionDetail({
         hash: txnhash,
       }).then(body => {
-        const txDetailDta = body;
-        setTransactionDetail(txDetailDta || {});
-        if (txnhash !== routeHash) {
-          return;
-        }
-        if (body.blockHash) {
-          getConfirmRisk(body.blockHash);
-        }
-        let toAddress = txDetailDta.to;
-        if (getAddressType(toAddress) === addressTypeContract) {
-          setIsContract(true);
-          const fields = [
-            'address',
-            'type',
-            'name',
-            'website',
-            'tokenName',
-            'tokenSymbol',
-            'token',
-            'tokenDecimal',
-            'abi',
-            'bytecode',
-            'icon',
-            'sourceCode',
-            'typeCode',
-          ].join(',');
-          const proArr: Array<any> = [];
-          proArr.push(reqContract({ address: toAddress, fields: fields }));
-          proArr.push(
-            reqTransferList({
-              transactionHash: txnhash,
-              fields: 'token',
-              limit: 100,
-            }),
-          );
-          Promise.all(proArr).then(proRes => {
-            const contractResponse = proRes[0];
-            setContractInfo(contractResponse);
-            const transferListReponse = proRes[1];
-            let decodedData = {};
-            try {
-              decodedData = decodeContract({
-                abi: JSON.parse(contractResponse['abi']),
-                address: contractResponse['address'],
-                transacionData: txDetailDta.data,
-              });
-            } catch {}
-            setDecodedData(decodedData);
-            setDataTypeList(['original', 'utf8', 'decodeInputData']);
-            const resultTransferList = transferListReponse;
-            const list = resultTransferList['list'];
-            setTransferList(list);
-            let addressList = list.map(v => v.address);
-            addressList = Array.from(new Set(addressList));
-            reqTokenList({ addressArray: addressList, fields: ['icon'] }).then(
-              res => {
-                setTokenList(res.list);
-              },
+        if (body.code) {
+          switch (body.code) {
+            case 30404:
+              history.replace(`/packing/${txnhash}`);
+              break;
+          }
+        } else {
+          //success
+          const txDetailDta = body;
+          setTransactionDetail(txDetailDta || {});
+          if (txnhash !== routeHash) {
+            return;
+          }
+          if (body.blockHash) {
+            getConfirmRisk(body.blockHash);
+          }
+          let toAddress = txDetailDta.to;
+          if (getAddressType(toAddress) === addressTypeContract) {
+            setIsContract(true);
+            const fields = [
+              'address',
+              'type',
+              'name',
+              'website',
+              'tokenName',
+              'tokenSymbol',
+              'token',
+              'tokenDecimal',
+              'abi',
+              'bytecode',
+              'icon',
+              'sourceCode',
+              'typeCode',
+            ].join(',');
+            const proArr: Array<any> = [];
+            proArr.push(reqContract({ address: toAddress, fields: fields }));
+            proArr.push(
+              reqTransferList({
+                transactionHash: txnhash,
+                fields: 'token',
+                limit: 100,
+              }),
             );
-          });
+            Promise.all(proArr).then(proRes => {
+              const contractResponse = proRes[0];
+              setContractInfo(contractResponse);
+              const transferListReponse = proRes[1];
+              let decodedData = {};
+              try {
+                decodedData = decodeContract({
+                  abi: JSON.parse(contractResponse['abi']),
+                  address: contractResponse['address'],
+                  transacionData: txDetailDta.data,
+                });
+              } catch {}
+              setDecodedData(decodedData);
+              setDataTypeList(['original', 'utf8', 'decodeInputData']);
+              const resultTransferList = transferListReponse;
+              const list = resultTransferList['list'];
+              setTransferList(list);
+              let addressList = list.map(v => v.address);
+              addressList = Array.from(new Set(addressList));
+              reqTokenList({
+                addressArray: addressList,
+                fields: ['icon'],
+              }).then(res => {
+                setTokenList(res.list);
+              });
+            });
+          }
         }
       });
     },
-    [routeHash],
+    [history, routeHash],
   );
 
   const handleDataTypeChange = type => {
@@ -353,8 +365,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochNumber}
-            <Link to={`/epoch/${epochNumber}`}></Link>
+            <Link to={`/epoch/${epochNumber}`}>{epochNumber}</Link>
           </Description>
           <Description
             title={
@@ -366,7 +377,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochHeight}
+            <Link to={`/epoch/${epochHeight}`}>{epochHeight}</Link>
           </Description>
           <Description
             title={

@@ -197,6 +197,10 @@ exports[`<Header /> should match the snapshot 1`] = `
   color: #65709a;
 }
 
+.c5 .confi-logo {
+  margin-right: 0.57rem;
+}
+
 .c5 a.link {
   display: -webkit-box;
   display: -webkit-flex;
@@ -431,6 +435,7 @@ exports[`<Header /> should match the snapshot 1`] = `
             >
               <img
                 alt="conflux scan logo"
+                class="confi-logo"
                 src="/confi-planet.png"
               />
             </a>
@@ -568,7 +573,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Contract
@@ -628,7 +633,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Tethys
@@ -663,7 +668,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     <div
@@ -879,6 +884,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 
 .c8 a.link.navbar-link.matched:hover {
   color: #65709a;
+}
+
+.c5 .confi-logo {
+  margin-right: 0.57rem;
 }
 
 .c5 a.link {
@@ -1204,6 +1213,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
             >
               <img
                 alt="conflux scan logo"
+                class="confi-logo"
                 src="/confi-planet.png"
               />
             </a>
@@ -1341,7 +1351,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Contract
@@ -1401,7 +1411,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Tethys
@@ -1436,7 +1446,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     <div
