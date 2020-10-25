@@ -25,8 +25,8 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
   } else {
     return (
       <Container style={{ width }} small={small}>
-        <Title>{t(`${indicator}.title`)}</Title>
-        <Description>{t(`${indicator}.description`)}</Description>
+        <Title>{t(`charts.${indicator}.title`)}</Title>
+        <Description>{t(`charts.${indicator}.description`)}</Description>
         {true && (
           <Draw
             plot={plot}
