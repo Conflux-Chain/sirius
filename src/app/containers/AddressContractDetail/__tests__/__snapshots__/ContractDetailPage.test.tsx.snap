@@ -2,6 +2,7 @@
 
 exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 .c5 .tooltip-content.sirius-tooltip {
+  font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
   padding: 0.2857rem 0.7143rem;
