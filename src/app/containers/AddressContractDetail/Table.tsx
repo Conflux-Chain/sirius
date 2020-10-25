@@ -342,14 +342,14 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) =>
         tokenColunms.from.render(value, row, index, {
-          accountFilter: true,
+          isToken: false,
         }),
     },
     {
       ...tokenColunms.to,
       render: (value, row, index) =>
         tokenColunms.to.render(value, row, index, {
-          accountFilter: true,
+          isToken: false,
         }),
     },
     tokenColunms.quantity,
