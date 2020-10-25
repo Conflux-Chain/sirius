@@ -19,7 +19,12 @@ export const Link = ({
       href={href}
       onClick={e => {
         e.preventDefault();
-        href && history.push(href);
+        if (!href) return;
+        if (/^http/.test(href)) {
+          window.open(href);
+        } else {
+          history.push(href);
+        }
       }}
       {...others}
     >

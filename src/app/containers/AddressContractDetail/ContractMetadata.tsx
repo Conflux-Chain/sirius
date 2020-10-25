@@ -8,7 +8,7 @@ import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
-import { List } from '../../components/List/';
+import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useContract, useToken } from 'utils/api';
@@ -16,6 +16,7 @@ import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
+import { formatString } from 'utils';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -147,12 +148,14 @@ export function ContractMetadata({ address }) {
               <Content>
                 {isAvaiable(contractInfo.admin) ? (
                   <Link to={`/address/${contractInfo.admin}`}>
-                    <Text span maxCount={11}>
-                      {contractInfo.admin}
+                    <Text span hoverValue={contractInfo.admin}>
+                      {formatString(contractInfo.admin, 'address')}
                     </Text>
                   </Link>
                 ) : (
-                  contractInfo.admin
+                  <Text span hoverValue={contractInfo.admin}>
+                    {formatString(contractInfo.admin, 'address')}
+                  </Text>
                 )}
               </Content>
               <WarnningButton key="warning" />
@@ -236,22 +239,26 @@ export function ContractMetadata({ address }) {
               >
                 {isAvaiable(contractInfo.from) ? (
                   <Link to={`/address/${contractInfo.from}`}>
-                    <Text span maxCount={11}>
-                      {contractInfo.from}
+                    <Text span hoverValue={contractInfo.from}>
+                      {formatString(contractInfo.from, 'address')}
                     </Text>
                   </Link>
                 ) : (
-                  contractInfo.from
+                  <Text span hoverValue={contractInfo.from}>
+                    {formatString(contractInfo.from, 'address')}
+                  </Text>
                 )}
                 {' at txn '}
                 {isAvaiable(contractInfo.from) ? (
                   <Link to={`/transaction/${contractInfo.transactionHash}`}>
-                    <Text span maxCount={11}>
-                      {contractInfo.transactionHash}
+                    <Text span hoverValue={contractInfo.transactionHash}>
+                      {formatString(contractInfo.transactionHash, 'address')}
                     </Text>
                   </Link>
                 ) : (
-                  contractInfo.transactionHash
+                  <Text span hoverValue={contractInfo.transactionHash}>
+                    {formatString(contractInfo.transactionHash, 'address')}
+                  </Text>
                 )}
               </Content>
             </CenterLine>

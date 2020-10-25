@@ -42,7 +42,7 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
       url: `/transfer?address=${tokenAddress}`,
       table: {
         columns: columns,
-        rowKey: 'transactionHash',
+        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
       },
     },
   ];
