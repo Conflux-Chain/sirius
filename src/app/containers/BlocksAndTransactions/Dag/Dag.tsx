@@ -24,8 +24,9 @@ function appendAllSubChain(player, subChains) {
 
 function fetchDagData() {
   return fetchRecentDagBlock().then(({ list = [], total = 0 } = {}) => {
-    if (this && this instanceof window.ConfluxDagPlayer)
+    if (this && this instanceof window.ConfluxDagPlayer) {
       return appendAllSubChain(this, list);
+    }
     return list;
   });
 }
@@ -33,6 +34,7 @@ function fetchDagData() {
 let fetchTimer;
 function startFechingDagData() {
   if (window.navigator.onLine) {
+    typeof this.onLoaded === 'function' && this.onLoaded();
     fetchTimer = setInterval(fetchDagData.bind(this), 5000);
   }
 }
@@ -77,7 +79,7 @@ const ArrowRight = styled.div`
 const pointSize = 24;
 
 let player;
-function DagComp({ id = 'dag-viewer', children } = {}) {
+function DagComp({ id = 'dag-viewer', children, onLoaded } = {}) {
   const [mouseOverBlockWithRef, setMouseOverBlockWithRef] = useState(false);
   const [mouseOverTooltip, setMouseOverTooltip] = useState(false);
   const [tooltipOpt, setTooltipOpt] = useState({
@@ -156,11 +158,12 @@ function DagComp({ id = 'dag-viewer', children } = {}) {
       }
       if (!player) return;
       appendAllSubChain(player, initialSubChains);
+      player.onLoaded = onLoaded;
       startFechingDagData.call(player);
     },
     () => {
       if (player) {
-        player.destroy();
+        player.destroy && player.destroy();
         player = null;
       }
       if (fetchTimer) {
