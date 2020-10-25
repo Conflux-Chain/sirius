@@ -372,7 +372,7 @@ export function Table({ address }) {
       label: (count: number) => {
         return (
           <LabelWrap>
-            {t(translations.token.transfers)}
+            {t(translations.general.tokenTxns)}
             <TabLabel count={count} />
           </LabelWrap>
         );
