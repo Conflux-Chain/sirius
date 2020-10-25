@@ -57,6 +57,51 @@ const simplePostFetcher = async (...args: any[]) => {
   return await res.json();
 };
 
+export const useSWRWithGetFecher = (key, swrOpts = {}) => {
+  const isTransferReq =
+    (typeof key === 'string' && key.startsWith('/transfer')) ||
+    (Array.isArray(key) &&
+      typeof key[0] === 'string' &&
+      key[0].startsWith('/transfer'));
+
+  const { data, error, mutate } = useSWR(key, simpleGetFetcher, { ...swrOpts });
+
+  let tokenAddress;
+
+  if (isTransferReq && data && data.list) {
+    tokenAddress = data.list.reduce((acc, trans) => {
+      if (trans.address && !acc.includes(trans.address))
+        acc.push(trans.address);
+      return acc;
+    }, []);
+  }
+
+  const { data: tokenData } = useSWR(
+    tokenAddress
+      ? qs.stringifyUrl({
+          url: '/token',
+          query: { addressArray: tokenAddress },
+        })
+      : null,
+    simpleGetFetcher,
+  );
+
+  if (tokenData && tokenData.list) {
+    const newTransferList = data.list.map(trans => {
+      if (tokenAddress.includes(trans.address)) {
+        const tokenIdx = tokenAddress.indexOf(trans.address);
+        if (tokenData.list[tokenIdx]) trans.token = tokenData.list[tokenIdx];
+      }
+
+      return trans;
+    });
+
+    mutate({ ...data, list: newTransferList }, false);
+  }
+
+  return { data, error, mutate };
+};
+
 export const useDashboardDag: useApi = (
   params,
   shouldFetch = true,
