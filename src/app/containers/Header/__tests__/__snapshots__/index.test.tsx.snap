@@ -573,7 +573,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Contract
@@ -633,7 +633,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Tethys
@@ -668,7 +668,7 @@ exports[`<Header /> should match the snapshot 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     <div
@@ -1351,7 +1351,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Contract
@@ -1411,7 +1411,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     Tethys
@@ -1446,7 +1446,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
                       width="18"
                     >
                       <path
-                        d="M18 15l-6-6-6 6"
+                        d="M6 9l6 6 6-6"
                       />
                     </svg>
                     <div
