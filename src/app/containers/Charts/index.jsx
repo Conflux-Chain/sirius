@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { Helmet } from 'react-helmet-async';
 import { Chart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
@@ -27,18 +28,24 @@ export function Charts() {
     headerPadding = 0;
   }
   return (
-    <PageWrap>
-      <HeaderWrap padding={headerPadding}>
-        <div className="subtitle">{t(translations.charts.subtitle)}</div>
-        <div className="title">{t(translations.charts.title)}</div>
-      </HeaderWrap>
-      <ChartsWrap>
-        <Chart width={chartWidth} />
-        <Chart width={chartWidth} indicator="tps" />
-        <Chart width={chartWidth} indicator="difficulty" />
-        <Chart width={chartWidth} indicator="hashRate" />
-      </ChartsWrap>
-    </PageWrap>
+    <>
+      <Helmet>
+        <title>{t(translations.charts.title)}</title>
+        <meta name="description" content={t(translations.charts.description)} />
+      </Helmet>
+      <PageWrap>
+        <HeaderWrap padding={headerPadding}>
+          <div className="subtitle">{t(translations.charts.subtitle)}</div>
+          <div className="title">{t(translations.charts.title)}</div>
+        </HeaderWrap>
+        <ChartsWrap>
+          <Chart width={chartWidth} />
+          <Chart width={chartWidth} indicator="tps" />
+          <Chart width={chartWidth} indicator="difficulty" />
+          <Chart width={chartWidth} indicator="hashRate" />
+        </ChartsWrap>
+      </PageWrap>
+    </>
   );
 }
 

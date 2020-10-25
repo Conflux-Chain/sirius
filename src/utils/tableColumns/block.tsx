@@ -1,6 +1,7 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
+import numeral from 'numeral';
 import styled from 'styled-components/macro';
 import { Text } from '../../app/components/Text/Loadable';
 import { Link } from '../../app/components/Link/Loadable';
@@ -10,7 +11,6 @@ import {
   formatNumber,
   getPercent,
   fromDripToCfx,
-  fromDripToGdrip,
 } from '../../utils/';
 
 export const epoch = {
@@ -117,8 +117,8 @@ export const avgGasPrice = {
   key: 'avgGasPrice',
   width: 1,
   render: value => (
-    <Text span hoverValue={value}>
-      {`${fromDripToGdrip(value)} Gdrip`}
+    <Text span hoverValue={`${numeral(value).format('0,0')} drip`}>
+      {`${formatNumber(value)} drip`}
     </Text>
   ),
 };

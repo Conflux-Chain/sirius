@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
@@ -88,7 +89,9 @@ export function DescriptionPanel({ hash: blockHash }) {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading}>{height}</SkeletonContainer>
+          <SkeletonContainer shown={loading}>
+            {numeral(height).format('0,0')}
+          </SkeletonContainer>
         </Description>
         <Description
           title={
@@ -98,7 +101,11 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {<Link href={`/epoch/${epochNumber}`}>{epochNumber}</Link>}
+            {
+              <Link href={`/epoch/${epochNumber}`}>
+                {numeral(epochNumber).format('0,0')}
+              </Link>
+            }
           </SkeletonContainer>
         </Description>
         <Description
@@ -111,7 +118,9 @@ export function DescriptionPanel({ hash: blockHash }) {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading}>{difficulty}</SkeletonContainer>
+          <SkeletonContainer shown={loading}>
+            {numeral(difficulty).format('0,0')}
+          </SkeletonContainer>
         </Description>
         <Description
           title={
@@ -206,7 +215,9 @@ export function DescriptionPanel({ hash: blockHash }) {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
+          <SkeletonContainer shown={loading}>
+            {numeral(nonce).format('0,0')}
+          </SkeletonContainer>
         </Description>
         <Description
           title={
@@ -219,8 +230,10 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {gasUsed || '--'}/{gasLimit || '--'}
-            {`(${getPercent(gasUsed, gasLimit)})`}
+            {`${gasUsed || '--'}/${gasLimit || '--'} (${getPercent(
+              gasUsed,
+              gasLimit,
+            )})`}
           </SkeletonContainer>
         </Description>
         <Description

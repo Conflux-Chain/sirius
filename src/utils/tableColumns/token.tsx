@@ -11,9 +11,9 @@ import { CountDown } from '../../app/components/CountDown/Loadable';
 import {
   formatString,
   formatNumber,
-  fromDripToCfx,
   isAddress,
   isHash,
+  formatBalance,
 } from '../../utils';
 
 interface Query {
@@ -177,7 +177,7 @@ export const totalSupply = {
   key: 'totalSupply',
   render: value => (
     <Text span hoverValue={value}>
-      {formatString(formatNumber(value))}
+      {formatNumber(value)}
     </Text>
   ),
 };
@@ -250,10 +250,13 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: value => {
+  render: (value, row, index, opt?) => {
+    const decimals = opt
+      ? opt.decimals
+      : row.token?.decimals || row.token?.decimal || 18;
     return value ? (
-      <Text span hoverValue={value}>
-        {`${fromDripToCfx(value)}`}
+      <Text span hoverValue={formatBalance(value, decimals, true)}>
+        {`${formatBalance(value, decimals)}`}
       </Text>
     ) : (
       '--'
