@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -23,19 +23,19 @@ export function DescriptionPanel({ hash: blockHash }) {
   const [risk, setRisk] = useState('');
   let loading = false;
   const { data, error } = useBlockQuery({ hash: blockHash });
-
+  const intervalToClear = useRef(false);
   if (!data && !error) loading = true;
 
   const getConfirmRisk = async blockHash => {
-    let looping = true;
+    intervalToClear.current = true;
     let riskLevel;
-    while (looping) {
+    while (intervalToClear.current) {
       riskLevel = await reqConfirmationRiskByHash(blockHash);
       setRisk(riskLevel);
       if (riskLevel === '') {
         await delay(1000);
       } else if (riskLevel === 'lv0') {
-        looping = false;
+        intervalToClear.current = false;
       } else {
         await delay(10 * 1000);
       }
@@ -58,8 +58,15 @@ export function DescriptionPanel({ hash: blockHash }) {
     gasLimit,
   } = data || {};
   if (data) {
+    console.log('data', data);
     getConfirmRisk(hash);
   }
+
+  useEffect(() => {
+    return () => {
+      intervalToClear.current = false;
+    };
+  }, [intervalToClear]);
   /**
    * ISSUE LIST:
    * - security: todo, extract a Security component
