@@ -361,7 +361,7 @@ export function Table({ address }) {
         );
       },
       url: `/transaction?accountAddress=${address}`,
-      pagination: false,
+      pagination: true,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
@@ -377,6 +377,7 @@ export function Table({ address }) {
           </LabelWrap>
         );
       },
+      pagination: true,
       url: `/transfer?accountAddress=${address}`,
       table: {
         columns: columnsTokenTrasfers,
@@ -397,6 +398,7 @@ export function Table({ address }) {
       : {
           value: 'mined-blocks',
           hideTotalZero: true,
+          pagination: true,
           label: (count: number) => {
             return (
               <LabelWrap>
