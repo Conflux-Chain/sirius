@@ -246,6 +246,7 @@
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
     "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",
+    "errContractNotFound": "无法查询到该合约",
     "upperBound": "上限",
     "submitted": "交易已发出",
     "txHash": "交易哈希",
