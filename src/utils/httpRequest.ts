@@ -9,11 +9,8 @@ export const sendRequest = config => {
     .set(config.headers || {})
     .query(config.query || {})
     .send(config.body)
-    .ok(res => {
-      if (res.status === 200 || res.status === 304) {
-        return true;
-      }
-      return false;
+    .ok(() => {
+      return true;
     });
   reqPromise.catch(error => {
     //TODO: upload log to Sentry

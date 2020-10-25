@@ -101,7 +101,7 @@ export function Sponsor() {
     }
   };
   const fetchIsAppliable = async (address: string) => {
-    const { flag, message } = await faucet.isAppliable(address);
+    const { flag, message } = await faucet.checkAppliable(address);
     if (!flag) {
       //can not apply sponsor this contract
       switch (message) {
@@ -117,6 +117,9 @@ export function Sponsor() {
           break;
         case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
           setErrorMsgForApply(t(translations.sponsor.errReplaceThird));
+          break;
+        case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
+          setErrorMsgForApply(t(translations.sponsor.errContractNotFound));
           break;
         default:
           setErrorMsgForApply('');
@@ -228,7 +231,7 @@ export function Sponsor() {
                   href={`/address/${storageSponsorAddress}`}
                   className="address"
                 >
-                  {getEllipsStr(storageSponsorAddress, 12, 4)}
+                  {getEllipsStr(storageSponsorAddress, 6, 4)}
                 </Link>
               </SkelontonContainer>
             </div>
@@ -290,7 +293,7 @@ export function Sponsor() {
               </span>
               <SkelontonContainer shown={loading}>
                 <Link href={`/address/${gasFeeAddress}`} className="address">
-                  {getEllipsStr(gasFeeAddress, 12, 4)}
+                  {getEllipsStr(gasFeeAddress, 6, 4)}
                 </Link>
               </SkelontonContainer>
             </div>
@@ -433,7 +436,7 @@ export function Sponsor() {
                   className="content"
                   rel="noopener noreferrer"
                 >
-                  {getEllipsStr(txHash, 12, 0)}
+                  {getEllipsStr(txHash, 8, 0)}
                 </a>
               </div>
             </div>

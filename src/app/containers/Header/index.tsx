@@ -52,26 +52,25 @@ export const Header = memo(() => {
   const endLinks: HeaderLinks = [
     isTestnet ? t(translations.header.testnet) : t(translations.header.oceanus),
     [
-      isTestnet
-        ? t(translations.header.oceanus)
-        : t(translations.header.testnet),
-      isTestnet ? toMainnet : toTestnet,
       [
-        isTestnet
-          ? t(translations.header.testnet)
-          : t(translations.header.oceanus),
-        <Check size={18} key="check" />,
+        t(translations.header.oceanus),
+        !isTestnet && <Check size={18} key="check" />,
       ],
-      [isTestnet ? toMainnet : toTestnet, () => true],
+      [() => isTestnet && toMainnet(), () => !isTestnet],
+      [
+        t(translations.header.testnet),
+        isTestnet && <Check size={18} key="check" />,
+      ],
+      [() => !isTestnet && toTestnet(), () => isTestnet],
     ],
     <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
       {iszh ? zh : en}
     </div>, // level 0 title
     [
-      iszh ? en : zh, // level 1 title
-      () => i18n.changeLanguage(iszh ? 'en' : 'zh-CN'),
-      [iszh ? zh : en, <Check size={18} key="check" />],
-      [() => {}, () => true],
+      [en, !iszh && <Check size={18} key="check" />],
+      [() => iszh && i18n.changeLanguage('en'), () => !iszh],
+      [zh, iszh && <Check size={18} key="check" />],
+      [() => !iszh && i18n.changeLanguage('zh-CN'), () => iszh],
     ],
   ];
 
@@ -81,7 +80,11 @@ export const Header = memo(() => {
   const brand = (
     <LogoWrapper>
       <RouterLink to="/">
-        <img alt="conflux scan logo" src="/confi-planet.png" />
+        <img
+          className="confi-logo"
+          alt="conflux scan logo"
+          src="/confi-planet.png"
+        />
         {bp !== 's' && bp !== 'm' && <TextLogo changeColorOnMobile />}
       </RouterLink>
     </LogoWrapper>
@@ -101,6 +104,9 @@ export const Header = memo(() => {
 });
 
 const LogoWrapper = styled.div`
+  .confi-logo {
+    margin-right: 0.57rem;
+  }
   a.link {
     display: flex;
     align-items: center;

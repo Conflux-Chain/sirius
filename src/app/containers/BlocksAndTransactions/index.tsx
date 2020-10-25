@@ -60,7 +60,6 @@ export function BlocksAndTransactions() {
   ];
 
   const { currentTabTotal, currentTabValue } = useTabTableData(tabs);
-
   return (
     <>
       <Helmet>
@@ -74,7 +73,7 @@ export function BlocksAndTransactions() {
         count={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
         right={t(translations.blocksAndTransactions.tipCountAfter, {
-          type: currentTabValue,
+          type: t(translations.blocksAndTransactions[currentTabValue]),
         })}
         key={currentTabValue}
       />

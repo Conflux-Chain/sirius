@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import numeral from 'numeral';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
 import { Card } from '@cfxjs/react-ui';
@@ -30,6 +32,7 @@ import {
   formatTimeStamp,
   devidedByDecimals,
   fromDripToCfx,
+  formatString,
   getPercent,
 } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
@@ -46,6 +49,8 @@ export const Transaction = () => {
   const [transferList, setTransferList] = useState([]);
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
+  const history = useHistory();
+  const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
@@ -71,15 +76,15 @@ export const Transaction = () => {
     data,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
-    let looping = true;
+    intervalToClear.current = true;
     let riskLevel;
-    while (looping) {
+    while (intervalToClear.current) {
       riskLevel = await reqConfirmationRiskByHash(blockHash);
       setRisk(riskLevel);
       if (riskLevel === '') {
         await delay(1000);
       } else if (riskLevel === 'lv0') {
-        looping = false;
+        intervalToClear.current = false;
       } else {
         await delay(10 * 1000);
       }
@@ -90,70 +95,80 @@ export const Transaction = () => {
       reqTransactionDetail({
         hash: txnhash,
       }).then(body => {
-        const txDetailDta = body;
-        setTransactionDetail(txDetailDta || {});
-        if (txnhash !== routeHash) {
-          return;
-        }
-        if (body.blockHash) {
-          getConfirmRisk(body.blockHash);
-        }
-        let toAddress = txDetailDta.to;
-        if (getAddressType(toAddress) === addressTypeContract) {
-          setIsContract(true);
-          const fields = [
-            'address',
-            'type',
-            'name',
-            'website',
-            'tokenName',
-            'tokenSymbol',
-            'token',
-            'tokenDecimal',
-            'abi',
-            'bytecode',
-            'icon',
-            'sourceCode',
-            'typeCode',
-          ].join(',');
-          const proArr: Array<any> = [];
-          proArr.push(reqContract({ address: toAddress, fields: fields }));
-          proArr.push(
-            reqTransferList({
-              transactionHash: txnhash,
-              fields: 'token',
-              limit: 100,
-            }),
-          );
-          Promise.all(proArr).then(proRes => {
-            const contractResponse = proRes[0];
-            setContractInfo(contractResponse);
-            const transferListReponse = proRes[1];
-            let decodedData = {};
-            try {
-              decodedData = decodeContract({
-                abi: JSON.parse(contractResponse['abi']),
-                address: contractResponse['address'],
-                transacionData: txDetailDta.data,
-              });
-            } catch {}
-            setDecodedData(decodedData);
-            setDataTypeList(['original', 'utf8', 'decodeInputData']);
-            const resultTransferList = transferListReponse;
-            const list = resultTransferList['list'];
-            setTransferList(list);
-            let addressList = list.map(v => v.address);
-            addressList = Array.from(new Set(addressList));
-            reqTokenList({ addressArray: addressList, fields: ['icon'] }).then(
-              res => {
-                setTokenList(res.list);
-              },
+        if (body.code) {
+          switch (body.code) {
+            case 30404:
+              history.replace(`/packing/${txnhash}`);
+              break;
+          }
+        } else {
+          //success
+          const txDetailDta = body;
+          setTransactionDetail(txDetailDta || {});
+          if (txnhash !== routeHash) {
+            return;
+          }
+          if (body.blockHash) {
+            getConfirmRisk(body.blockHash);
+          }
+          let toAddress = txDetailDta.to;
+          if (getAddressType(toAddress) === addressTypeContract) {
+            setIsContract(true);
+            const fields = [
+              'address',
+              'type',
+              'name',
+              'website',
+              'tokenName',
+              'tokenSymbol',
+              'token',
+              'tokenDecimal',
+              'abi',
+              'bytecode',
+              'icon',
+              'sourceCode',
+              'typeCode',
+            ].join(',');
+            const proArr: Array<any> = [];
+            proArr.push(reqContract({ address: toAddress, fields: fields }));
+            proArr.push(
+              reqTransferList({
+                transactionHash: txnhash,
+                fields: 'token',
+                limit: 100,
+              }),
             );
-          });
+            Promise.all(proArr).then(proRes => {
+              const contractResponse = proRes[0];
+              setContractInfo(contractResponse);
+              const transferListReponse = proRes[1];
+              let decodedData = {};
+              try {
+                decodedData = decodeContract({
+                  abi: JSON.parse(contractResponse['abi']),
+                  address: contractResponse['address'],
+                  transacionData: txDetailDta.data,
+                });
+              } catch {}
+              setDecodedData(decodedData);
+              setDataTypeList(['original', 'utf8', 'decodeInputData']);
+              const resultTransferList = transferListReponse;
+              const list = resultTransferList['list'];
+              setTransferList(list);
+              let addressList = list.map(v => v.address);
+              addressList = Array.from(new Set(addressList));
+              reqTokenList({
+                addressArray: addressList,
+                fields: ['icon'],
+              }).then(res => {
+                setTokenList(res.list);
+              });
+            });
+          }
         }
       });
     },
-    [routeHash],
+    [history, routeHash],
   );
 
   const handleDataTypeChange = type => {
@@ -163,6 +178,11 @@ export const Transaction = () => {
     fetchTxDetail(routeHash);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchTxDetail, routeHash]);
+  useEffect(() => {
+    return () => {
+      intervalToClear.current = false;
+    };
+  }, [intervalToClear]);
   const generatedDiv = () => {
     if (transactionDetail['to']) {
       if (isContract) {
@@ -284,17 +304,17 @@ export const Transaction = () => {
         </Link>
       );
       transferListContainer.push(
-        <div className="lineContainer">
+        <div className="lineContainer" key={`transfer${i + 1}`}>
           <span className="from">{t(translations.transaction.from)}</span>
           <Link to={`/address/${transferItem['from']}`}>
-            <Text span maxWidth="91px" hoverValue={transferItem['from']}>
-              {transferItem['from']}
+            <Text span hoverValue={transferItem['from']}>
+              {formatString(transferItem['from'], 'address')}
             </Text>
           </Link>
           <span className="to">{t(translations.transaction.to)}</span>
           <Link to={`/address/${transferItem['to']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['to']}>
-              {transferItem['to']}
+              {formatString(transferItem['to'], 'address')}
             </Text>
           </Link>
           <span className="for">{t(translations.transaction.for)}</span>
@@ -353,8 +373,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochNumber}
-            <Link to={`/epoch/${epochNumber}`}></Link>
+            <Link to={`/epoch/${epochNumber}`}>
+              {numeral(epochNumber).format('0,0')}
+            </Link>
           </Description>
           <Description
             title={
@@ -366,7 +387,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochHeight}
+            <Link to={`/epoch/${epochHeight}`}>
+              {numeral(epochHeight).format('0,0')}
+            </Link>
           </Description>
           <Description
             title={
@@ -422,8 +445,9 @@ export const Transaction = () => {
                   text={t(translations.toolTip.tx.tokenTransferred)}
                   placement="top"
                 >
-                  {t(translations.transaction.tokenTransferred)}(
-                  {transferList.length})
+                  {`${t(translations.transaction.tokenTransferred)} (${
+                    transferList.length
+                  })`}
                 </Tooltip>
               }
             >
@@ -449,7 +473,6 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
             {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
           <Description
@@ -463,7 +486,7 @@ export const Transaction = () => {
             }
           >
             {/* todo, need to format to Gdrip */}
-            {gasPrice}
+            {`${numeral(gasPrice).format('0,0')} drip`}
           </Description>
           <Description
             title={
@@ -472,7 +495,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {gasFee}
+            {`${numeral(gasFee).format('0,0')} drip`}
           </Description>
           <Description
             title={
@@ -481,7 +504,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {nonce}
+            {numeral(nonce).format('0,0')}
           </Description>
           <Description
             title={
@@ -518,7 +541,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {storageLimit}
+            {numeral(storageLimit).format('0,0')}
           </Description>
           <Description
             title={

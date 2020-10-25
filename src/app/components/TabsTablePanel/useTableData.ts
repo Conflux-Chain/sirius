@@ -1,7 +1,6 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import useSWR from 'swr';
-import { simpleGetFetcher } from '../../../utils/api';
+import { useSWRWithGetFecher } from '../../../utils/api';
 
 export const useTableData = (url: string) => {
   const location = useLocation();
@@ -44,8 +43,7 @@ export const useTableData = (url: string) => {
     },
   });
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data, error, mutate } = useSWR([urlWithQuery], simpleGetFetcher);
+  const { data, error, mutate } = useSWRWithGetFecher([urlWithQuery]);
   const setPageNumberAndAlterHistory = (pageNumber: number) => {
     const pathNameWithQuery = queryString.stringifyUrl({
       url: location.pathname,

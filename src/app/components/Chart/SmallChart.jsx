@@ -25,7 +25,7 @@ export const SmallChart = ({
   return (
     <Container style={{ width, height }}>
       <Title>
-        {t(`${indicator}.title`)}
+        {t(`charts.${indicator}.title`)}
         <Change isDown={isDown}>{diff}</Change>
       </Title>
       <Value small={small}>
@@ -124,7 +124,9 @@ const Value = styled.div`
   font-weight: bold;
   position: relative;
   z-index: 1;
+  position: relative;
   font-size: ${props => (props.small ? '18px' : '24px')};
+  top: ${props => (props.small ? '0px' : '-5px')};
   margin-top: ${props => (props.small ? '10%' : '0')};
 `;
 
@@ -139,8 +141,8 @@ const Change = styled.div`
 
 const CanvasContainer = styled.div`
   position: absolute;
-  right: ${props => (props.small ? '8px' : '12px')};
-  bottom: ${props => (props.small ? '8px' : '12px')};
+  right: ${props => (props.small ? '8px' : '20px')};
+  bottom: ${props => (props.small ? '8px' : '26px')};
   canvas {
     position: absolute;
     left: 0;
@@ -155,10 +157,10 @@ function format(v, d = 6) {
 function change(end, start) {
   const [s, e] = [start, end].map(x => parseFloat(x));
   const diff =
-    s === 0
+    e === 0
       ? '--'
-      : isNaN(format(((s - e) / s) * 100, 1))
-      ? '0.0'
-      : format(((s - e) / s) * 100, 1);
+      : isNaN(format(((s - e) / e) * 100, 1))
+      ? '--'
+      : format(((s - e) / e) * 100, 1);
   return (diff > 0 ? '+' + diff : diff) + '%';
 }

@@ -25,7 +25,13 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
     tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,
-    tokenColunms.quantity,
+    {
+      ...tokenColunms.quantity,
+      render: (value, row, index) =>
+        tokenColunms.quantity.render(value, row, index, {
+          decimals,
+        }),
+    },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const tabs = [
@@ -42,7 +48,7 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
       url: `/transfer?address=${tokenAddress}`,
       table: {
         columns: columns,
-        rowKey: 'transactionHash',
+        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
       },
     },
   ];

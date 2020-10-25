@@ -51,7 +51,7 @@
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
     "table": {
-      "number": "数字",
+      "number": "#",
       "token": "代币",
       "transfer": "转移",
       "totalSupply": "总供应量",
@@ -104,11 +104,23 @@
     }
   },
   "charts": {
-    "subtitle": "区块链数据",
-    "title": "图标",
+    "title": "图表",
+    "description": "图表",
     "tps": {
-      "title": "tps title",
-      "description": "tps description"
+      "title": "吞吐率",
+      "description": "每秒链上的交易数量"
+    },
+    "blockTime": {
+      "title": "出块间隔",
+      "description": "生成一个区块所需花费时间"
+    },
+    "difficulty": {
+      "title": "难度",
+      "description": "当前生成所有区块的计算难度"
+    },
+    "hashRate": {
+      "title": "哈希算力",
+      "description": "矿工每秒计算哈希值的次数"
     }
   },
   "general": {
@@ -144,7 +156,7 @@
         "difficulty": "难度",
         "gasLimit": "燃料限制"
       },
-      "transactions": {
+      "transaction": {
         "hash": "哈希",
         "from": "发送方",
         "to": "接收方",
@@ -154,7 +166,7 @@
         "age": "块龄"
       },
       "token": {
-        "number": "数字",
+        "number": "#",
         "token": "代币",
         "transfer": "转移",
         "totalSupply": "总供应量",
@@ -246,6 +258,7 @@
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
     "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",
+    "errContractNotFound": "无法查询到该合约",
     "upperBound": "上限",
     "submitted": "交易已发出",
     "txHash": "交易哈希",
@@ -330,22 +343,6 @@
       "gasUsedPercent": "燃料用量/限制",
       "age": "块龄"
     }
-  },
-  "tps": {
-    "title": "吞吐率",
-    "description": "每秒链上的交易数量"
-  },
-  "blockTime": {
-    "title": "出块间隔",
-    "description": "生成一个区块所需花费时间"
-  },
-  "difficulty": {
-    "title": "难度",
-    "description": "当前生成所有区块的计算难度"
-  },
-  "hashRate": {
-    "title": "哈希算力",
-    "description": "矿工每秒计算哈希值的次数"
   },
   "notice": [
     "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"

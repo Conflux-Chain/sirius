@@ -151,15 +151,21 @@ const DatePickerWrap = styled.div`
 const TX_DIRECTION = ['all', 'outgoing', 'incoming'];
 
 const TxDirectionFilter = ({ onChange }) => {
+  const location = useLocation();
+  const { txType } = queryString.parse(location.search || '');
+  const defaultDirection = TX_DIRECTION.indexOf(txType as string);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(
+    defaultDirection === -1 ? 0 : defaultDirection,
+  );
   useClickAway(dropdownRef, () => visible && setVisible(false));
   const { t } = useTranslation();
 
   const select = selected => {
     setSelected(selected);
     onChange && onChange(TX_DIRECTION[selected]);
+    setVisible(false);
   };
 
   const opts = [
@@ -264,10 +270,12 @@ export function Table({ address }) {
   const [filterVisible, setFilterVisible] = useState(
     queries?.tab !== 'contract',
   );
-  const [txFilterVisible, setTxFilterVisible] = useState(
-    queries?.tab !== 'mined-blocks' && queries?.tab !== 'transfers',
-  );
   const isContract = useMemo(() => isContractAddress(address), [address]);
+  const [txFilterVisible, setTxFilterVisible] = useState(
+    queries?.tab !== 'mined-blocks' &&
+      queries?.tab !== 'transfers' &&
+      !isContract,
+  );
 
   const { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
@@ -310,13 +318,26 @@ export function Table({ address }) {
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 4, 4, 4, 2];
+  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
-    tokenColunms.age,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
     tokenColunms.quantity,
+    tokenColunms.token,
+    tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
   const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
@@ -343,7 +364,7 @@ export function Table({ address }) {
         );
       },
       url: `/transaction?accountAddress=${address}`,
-      pagination: false,
+      pagination: true,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
@@ -354,11 +375,12 @@ export function Table({ address }) {
       label: (count: number) => {
         return (
           <LabelWrap>
-            {t(translations.token.transfers)}
+            {t(translations.general.tokenTxns)}
             <TabLabel count={count} />
           </LabelWrap>
         );
       },
+      pagination: true,
       url: `/transfer?accountAddress=${address}`,
       table: {
         columns: columnsTokenTrasfers,
@@ -379,6 +401,7 @@ export function Table({ address }) {
       : {
           value: 'mined-blocks',
           hideTotalZero: true,
+          pagination: true,
           label: (count: number) => {
             return (
               <LabelWrap>
@@ -388,7 +411,7 @@ export function Table({ address }) {
             );
           },
 
-          url: '/block',
+          url: `/block?miner=${address}`,
           table: {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
@@ -477,7 +500,7 @@ export function Table({ address }) {
         key="table"
         tabs={tabs}
         onTabsChange={value => {
-          if (value === 'transfers' || value === 'mined-blocks')
+          if (value === 'transfers' || value === 'mined-blocks' || isContract)
             setTxFilterVisible(false);
           else setTxFilterVisible(true);
           if (value === 'contract-viewer') return setFilterVisible(false);

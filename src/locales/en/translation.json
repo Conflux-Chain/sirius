@@ -61,7 +61,7 @@
   },
   "header": {
     "home": "Home",
-    "bnt": "Blocks & Transaction",
+    "bnt": "Blocks & Transactions",
     "tokens": "Tokens",
     "contract": "Contract",
     "contractCreation": "Contract Creation",
@@ -104,11 +104,23 @@
     }
   },
   "charts": {
-    "subtitle": "Blockchain Data",
     "title": "Charts",
+    "description": "Charts",
     "tps": {
-      "title": "tps title",
-      "description": "tps description"
+      "title": "TPS",
+      "description": "Number of transactions on the chain per second"
+    },
+    "blockTime": {
+      "title": "Block Time",
+      "description": "The time required to generate a block"
+    },
+    "difficulty": {
+      "title": "Difficulty",
+      "description": "ulation difficulty of all blocks currently generated"
+    },
+    "hashRate": {
+      "title": "Hash Rate",
+      "description": "The number of times a miner calculates hashes per second"
     }
   },
   "general": {
@@ -134,7 +146,7 @@
       "block": {
         "epoch": "Epoch",
         "position": "Position",
-        "txns": "Txns",
+        "txns": "Txn",
         "hash": "Hash",
         "miner": "Miner",
         "avgGasPrice": "Avg.Gas Price",
@@ -246,6 +258,7 @@
     "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
     "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
     "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
+    "errContractNotFound": "The contract cannot be found",
     "upperBound": "Upper Bound",
     "submitted": "Transaction Submitted",
     "txHash": "Transaction Hash",
@@ -313,8 +326,8 @@
     }
   },
   "epoch": {
-    "title": "Epochs",
-    "description": "Epochs",
+    "title": "Epoch",
+    "description": "Epoch",
     "tipCountBefore": "A total of",
     "tipCountAfter": "{{type}} found",
     "labelCountBefore": "A total of",
@@ -324,28 +337,12 @@
     "table": {
       "position": "Position",
       "hash": "Hash",
-      "txns": "Txns",
+      "txns": "Txn",
       "miner": "Miner",
       "difficulty": "Difficulty",
       "gasUsedPercent": "Gas Used/Limit",
       "age": "Age"
     }
-  },
-  "tps": {
-    "title": "TPS",
-    "description": "Number of transactions on the chain per second"
-  },
-  "blockTime": {
-    "title": "Block Time",
-    "description": "The time required to generate a block"
-  },
-  "difficulty": {
-    "title": "Difficulty",
-    "description": "ulation difficulty of all blocks currently generated"
-  },
-  "hashRate": {
-    "title": "Hash Rate",
-    "description": "The number of times a miner calculates hashes per second"
   },
   "notice": [
     "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"

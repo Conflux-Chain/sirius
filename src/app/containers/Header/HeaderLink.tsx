@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { useRouteMatch, match, Link as RouterLink } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
-import { ChevronUp } from '@geist-ui/react-icons';
+import { ChevronDown } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
 export type Node = string | ReactNode | JSX.Element;
@@ -175,7 +175,7 @@ export const HeaderLink: React.FC<{
               matched && 'matched',
             )}
           >
-            {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
+            {(bp === 'm' || bp === 's') && isMenu && <ChevronDown size={18} />}
             {children}
           </UILink>
         </div>
@@ -200,9 +200,11 @@ export const HeaderLink: React.FC<{
         >
           <WrappLink>
             <UILink ref={ref} className={className}>
-              {(bp === 'm' || bp === 's') && isMenu && <ChevronUp size={18} />}
+              {(bp === 'm' || bp === 's') && isMenu && (
+                <ChevronDown size={18} />
+              )}
               {text}
-              {bp !== 's' && bp !== 'm' && isMenu && <ChevronUp size={18} />}
+              {bp !== 's' && bp !== 'm' && isMenu && <ChevronDown size={18} />}
             </UILink>
           </WrappLink>
           {expanded && <Menu className="header-link-menu">{links}</Menu>}

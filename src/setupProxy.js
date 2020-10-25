@@ -45,7 +45,7 @@ module.exports = app => {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://scantest.confluxnetwork.org',
+      target: 'https://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
@@ -59,7 +59,7 @@ module.exports = app => {
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
-      target: 'http://scantest.confluxnetwork.org',
+      target: 'https://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
