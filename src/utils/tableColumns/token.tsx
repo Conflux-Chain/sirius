@@ -292,7 +292,7 @@ export const from = {
     }),
 };
 
-const StyledIconWrapper = styled.div`
+export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
   img {
