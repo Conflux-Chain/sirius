@@ -353,8 +353,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochNumber}
-            <Link to={`/epoch/${epochNumber}`}></Link>
+            <Link to={`/epoch/${epochNumber}`}>{epochNumber}</Link>
           </Description>
           <Description
             title={
@@ -366,7 +365,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {epochHeight}
+            <Link to={`/epoch/${epochHeight}`}>{epochHeight}</Link>
           </Description>
           <Description
             title={
