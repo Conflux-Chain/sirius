@@ -25,7 +25,7 @@ export const SmallChart = ({
   return (
     <Container style={{ width, height }}>
       <Title>
-        {t(`${indicator}.title`)}
+        {t(`charts.${indicator}.title`)}
         <Change isDown={isDown}>{diff}</Change>
       </Title>
       <Value small={small}>
