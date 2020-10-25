@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import numeral from 'numeral';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -50,6 +50,7 @@ export const Transaction = () => {
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
   const history = useHistory();
+  const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
@@ -75,15 +76,15 @@ export const Transaction = () => {
     data,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
-    let looping = true;
+    intervalToClear.current = true;
     let riskLevel;
-    while (looping) {
+    while (intervalToClear.current) {
       riskLevel = await reqConfirmationRiskByHash(blockHash);
       setRisk(riskLevel);
       if (riskLevel === '') {
         await delay(1000);
       } else if (riskLevel === 'lv0') {
-        looping = false;
+        intervalToClear.current = false;
       } else {
         await delay(10 * 1000);
       }
@@ -177,6 +178,11 @@ export const Transaction = () => {
     fetchTxDetail(routeHash);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchTxDetail, routeHash]);
+  useEffect(() => {
+    return () => {
+      intervalToClear.current = false;
+    };
+  }, [intervalToClear]);
   const generatedDiv = () => {
     if (transactionDetail['to']) {
       if (isContract) {
