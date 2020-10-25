@@ -18,12 +18,15 @@ import {
   tokenColunms,
   blockColunms,
 } from 'utils/tableColumns';
+import { StyledIconWrapper } from 'utils/tableColumns/token';
+import { Link } from 'app/components/Link';
+import { Text } from 'app/components/Text';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { isContractAddress } from 'utils';
+import { isContractAddress, formatString } from 'utils';
 import { useContract } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
@@ -263,6 +266,7 @@ const TxDirectionFilterDropdown = styled.div`
 
 export function Table({ address }) {
   const { t } = useTranslation();
+  const loadingText = t(translations.general.loading);
   const bp = useBreakpoint();
   const location = useLocation();
   const history = useHistory();
@@ -336,7 +340,31 @@ export function Table({ address }) {
         }),
     },
     tokenColunms.quantity,
-    tokenColunms.token,
+    {
+      ...tokenColunms.token,
+      render: row => (
+        <StyledIconWrapper>
+          {row?.token
+            ? [
+                row?.token?.icon && (
+                  <img src={row.token.icon} alt="token icon" />
+                ),
+                <Link href={`/token/${row?.token?.address}`}>
+                  <Text
+                    span
+                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                  >
+                    {formatString(
+                      `${row?.token?.name} (${row?.token?.symbol})`,
+                      28,
+                    )}
+                  </Text>
+                </Link>,
+              ]
+            : loadingText}
+        </StyledIconWrapper>
+      ),
+    },
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
