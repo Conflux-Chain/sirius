@@ -90,7 +90,8 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
     const newTransferList = data.list.map(trans => {
       if (tokenAddress.includes(trans.address)) {
         const tokenIdx = tokenAddress.indexOf(trans.address);
-        if (tokenData.list[tokenIdx]) trans.token = tokenData.list[tokenIdx];
+        if (tokenData.list[tokenIdx])
+          return { ...trans, token: tokenData.list[tokenIdx] };
       }
 
       return trans;

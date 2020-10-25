@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { simpleGetFetcher, useSWRWithGetFecher } from '../../../utils/api';
+import { useSWRWithGetFecher } from '../../../utils/api';
 
 export const useTableData = (url: string) => {
   const location = useLocation();
