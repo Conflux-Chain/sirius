@@ -151,9 +151,14 @@ const DatePickerWrap = styled.div`
 const TX_DIRECTION = ['all', 'outgoing', 'incoming'];
 
 const TxDirectionFilter = ({ onChange }) => {
+  const location = useLocation();
+  const { txType } = queryString.parse(location.search || '');
+  const defaultDirection = TX_DIRECTION.indexOf(txType as string);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(
+    defaultDirection === -1 ? 0 : defaultDirection,
+  );
   useClickAway(dropdownRef, () => visible && setVisible(false));
   const { t } = useTranslation();
 
