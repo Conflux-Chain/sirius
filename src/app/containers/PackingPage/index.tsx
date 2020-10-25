@@ -26,7 +26,7 @@ export function PackingPage() {
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
         <ErrorLabel>
-          <span>{txHash}</span>
+          <span className="hash">{txHash}</span>
           <CopyButton copyText={txHash} />
         </ErrorLabel>
         <GoTo href="/">{t(translations.packing.btn)}</GoTo>
@@ -75,7 +75,7 @@ const ErrorLabel = styled.div`
   display: flex;
   margin-bottom: 2.3571rem;
   align-items: center;
-  span {
+  .hash {
     display: inline-block;
     color: #6a6a6a;
     opacity: 0.4;

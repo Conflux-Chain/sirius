@@ -17,7 +17,7 @@ import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
-
+import { Tooltip } from '../../components/Tooltip/Loadable';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = () => {
@@ -114,7 +114,14 @@ export function ContractMetadata({ address }) {
     <List
       list={[
         {
-          title: <span>{t(translations.contract.nameTag)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.nameTag)}
+              placement="top"
+            >
+              {t(translations.contract.nameTag)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               {contractInfo.icon && (
@@ -128,7 +135,14 @@ export function ContractMetadata({ address }) {
           ),
         },
         {
-          title: <span>{t(translations.contract.contractAdmin)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.contractAdmin)}
+              placement="top"
+            >
+              {t(translations.contract.contractAdmin)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               <Content>
@@ -149,7 +163,14 @@ export function ContractMetadata({ address }) {
           ),
         },
         {
-          title: <span>{t(translations.contract.tokenTracker)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.tokenTracker)}
+              placement="top"
+            >
+              {t(translations.contract.tokenTracker)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               {tokenInfo.icon && (
@@ -168,7 +189,14 @@ export function ContractMetadata({ address }) {
           ),
         },
         {
-          title: <span>{t(translations.contract.storageSponsor)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.storageSponsor)}
+              placement="top"
+            >
+              {t(translations.contract.storageSponsor)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               <Content
@@ -193,7 +221,14 @@ export function ContractMetadata({ address }) {
           ),
         },
         {
-          title: <span>{t(translations.contract.creator)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.contractCreator)}
+              placement="top"
+            >
+              {t(translations.contract.creator)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               <Content
@@ -230,7 +265,14 @@ export function ContractMetadata({ address }) {
           ),
         },
         {
-          title: <span>{t(translations.contract.gasSponsor)}</span>,
+          title: (
+            <Tooltip
+              text={t(translations.toolTip.contract.gasFeeSponsor)}
+              placement="top"
+            >
+              {t(translations.contract.gasSponsor)}
+            </Tooltip>
+          ),
           children: (
             <CenterLine>
               <Content>

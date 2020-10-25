@@ -160,6 +160,7 @@ const TxDirectionFilter = ({ onChange }) => {
   const select = selected => {
     setSelected(selected);
     onChange && onChange(TX_DIRECTION[selected]);
+    setVisible(false);
   };
 
   const opts = [

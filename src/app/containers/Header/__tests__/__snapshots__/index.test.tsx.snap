@@ -197,6 +197,10 @@ exports[`<Header /> should match the snapshot 1`] = `
   color: #65709a;
 }
 
+.c5 .confi-logo {
+  margin-right: 0.57rem;
+}
+
 .c5 a.link {
   display: -webkit-box;
   display: -webkit-flex;
@@ -431,6 +435,7 @@ exports[`<Header /> should match the snapshot 1`] = `
             >
               <img
                 alt="conflux scan logo"
+                class="confi-logo"
                 src="/confi-planet.png"
               />
             </a>
@@ -881,6 +886,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   color: #65709a;
 }
 
+.c5 .confi-logo {
+  margin-right: 0.57rem;
+}
+
 .c5 a.link {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1204,6 +1213,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
             >
               <img
                 alt="conflux scan logo"
+                class="confi-logo"
                 src="/confi-planet.png"
               />
             </a>
@@ -1469,7 +1479,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
           <input
             autocomplete="off"
             class="jsx-1159070929 right-icon"
-            placeholder="Address / Block hash / Epoch"
+            placeholder="Epoch / Block hash / Txn Hash / Address"
             type="text"
           />
           <div

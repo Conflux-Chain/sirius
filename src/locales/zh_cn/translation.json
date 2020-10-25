@@ -69,7 +69,8 @@
     "charts": "图表",
     "testnet": "Testnet",
     "oceanus": "Tethys",
-    "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址"
+    "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
+    "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址"
   },
   "footer": {
     "product": "产品",
@@ -211,11 +212,17 @@
     },
     "countdown": {
       "year": "{{count}} 年",
+      "year_plural": "{{count}} years",
       "month": "{{count}} 月",
+      "month_plural": "{{count}} months",
       "day": "{{count}} 日",
+      "day_plural": "{{count}} days",
       "hour": "{{count}} 小时",
+      "hour_plural": "{{count}} hrs",
       "minute": "{{count}} 分钟",
+      "minute_plural": "{{count}} mins",
       "second": "{{count}} 秒",
+      "second_plural": "{{count}} secs",
       "ago": "前"
     }
   },
@@ -251,7 +258,7 @@
     "viewIncomingTxns": "查看接收交易",
     "title": "交易",
     "description": "交易",
-    "hash": "哈希",
+    "hash": "交易哈希",
     "executedEpoch": "执行纪元",
     "proposedEpoch": "目标纪元",
     "timestamp": "时间戳",
@@ -342,5 +349,69 @@
   },
   "notice": [
     "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
-  ]
+  ],
+  "toolTip": {
+    "block": {
+      "blockHeight": "区块高度是指从当前区块经过父边引用到达创世区块经过的区块数量。新区块的区块高度比它的父区块高度增加 1。特别的，创世块的区块高度为 0。",
+      "epoch": "区块所属的纪元是枢轴链上首个（直接或间接地）引用这个区块的枢轴区块的高度，代表了枢轴链视角下观察到该区块的时间。处于较早纪元的区块在所有区块的全序中的位置总是在处于较晚纪元的区块之前。",
+      "difficulty": "开采一个区块平均所需要的运算次数。 难度根据时间进行调整。",
+      "miner": "生成该区块的矿工。",
+      "reward": "挖出该区块矿工将得到的奖励，包括区块奖励，存储押金利息，交易费。",
+      "security": "该区块的安全性，更高的安全性需要得到更多的区块确认。",
+      "blame": "表示（该区块认为的）需要修订关于状态的承诺的连续祖先区块的数量。关于状态的承诺可以理解为对于交易执行结果和账户状态的摘要。关于状态的承诺出错会影响矿工的收益，但不影响对于区块排序的共识。",
+      "blockHash": "该区块的块头的哈希值。",
+      "parentHash": "该区块的父区块的区块哈希，也称为父区块哈希。",
+      "nonce": "区块随机数是在挖矿过程中用来演示区块工作量证明的值。",
+      "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
+      "timestamp": "开采该区块的日期和时间。",
+      "size": "区块容量取决于燃料限制。",
+      "transactions": "该区块发生的交易数量。",
+      "referenceBlocks": "该区块引用的其他区块。"
+    },
+    "tx": {
+      "transactionHash": "交易哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
+      "executedEpoch": "交易被实际执行的纪元。",
+      "proposedEpoch": "交易发送者希望该笔交易被执行的纪元。交易只能在与期望被执行纪元相差不超过 100,000 的纪元中执行。",
+      "timestamp": "交易数据记录的日期和时间。",
+      "status": "交易的状态。",
+      "security": "该笔交易的安全性，交易需要更多的确认区块提高安全性。",
+      "from": "交易的发送方（可能来自合约地址）。",
+      "to": "交易的接收方（可以是合约地址）。",
+      "tokenTransferred": "交易中代币转让的列表。",
+      "value": "该交易金额是以CFX显示。 ",
+      "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
+      "gasPrice": "交易指定的每单位燃料成本，GDrip为支付单位。燃料费用越高，被写入区块的机会就越大。",
+      "gasFee": "交易所使用的燃料费用。",
+      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
+      "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
+      "position": "交易在区块中的索引位置。",
+      "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
+      "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",
+      "inputData": "自定义数据，该交易中附加的信息。"
+    },
+    "address": {
+      "balance": "该地址的资产余额。",
+      "token": "该地址持有的代币。",
+      "storageCollateral": "该地址支付的存储押金总量，其单位为CFX。",
+      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。"
+    },
+    "token": {
+      "totalSupply": "该代币的总发行量。",
+      "holders": "持有该代币的所有地址数量。",
+      "transfers": "该合约地址发生的代币交易总数",
+      "contract": "部署该代币的合约。",
+      "decimals": "该代币的小数精度位数。"
+    },
+    "contract": {
+      "balance": "该合约地址的资产余额。",
+      "token": "该合约地址持有的代币。",
+      "storageCollateral": "该合约赞助者支付的存储押金总量，其单位为CFX。",
+      "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
+      "tokenTracker": "该合约上部署的代币。",
+      "contractCreator": "创建该合约的地址。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+      "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
+      "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
+    }
+  }
 }

@@ -69,8 +69,8 @@
     "charts": "Charts",
     "testnet": "TESTNET",
     "oceanus": "Tethys",
-    "searchPlaceHolder": "Epoch / Block hash / Txn has / Address",
-    "searchPlaceHolderMobile": "Address / Block hash / Epoch"
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
+    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address"
   },
   "footer": {
     "product": "Product",
@@ -117,7 +117,7 @@
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "address": {
       "editContract": "Click to edit contract",
-      "website": "Click enter the official site",
+      "website": "Click to enter the official site",
       "address": "address"
     },
     "loading": "loading...",
@@ -258,7 +258,7 @@
     "viewIncomingTxns": "View Incoming Txns",
     "title": "Transactions",
     "description": "Transactions",
-    "hash": "Hash",
+    "hash": "Transaction Hash",
     "executedEpoch": "Executed Epoch",
     "proposedEpoch": "Proposed Epoch",
     "timestamp": "Timestamp",
@@ -349,5 +349,69 @@
   },
   "notice": [
     "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
-  ]
+  ],
+  "toolTip": {
+    "block": {
+      "blockHeight": "The number of blocks on the path to Genesis block via parent references. The block height of a newly mined block is obtained by increasing the height of its parent block by 1. In particular, the block height of Genesis block is 0.",
+      "epoch": "Epoch refers to the block height of the first pivot block that (directly or indirectly) references this block. The epoch number of a block represents the time when this block is first observed by pivot blocks. A block in an earlier epoch always precedes blocks in later epoches in the total order of all blocks.",
+      "difficulty": "The amount of effort required to mine a new block. The difficulty may adjust according to time.",
+      "miner": "Miner who successfully generate the block onto the blockchain.",
+      "reward": "The miner of this block is rewarded with a finite amount of CFX, consists of base reward, reward from storage collateral interest and transaction fee.",
+      "security": "The security of block, higher security requires more block confirmations.",
+      "blame": "The number of consecutive ancestor blocks whose state commitments are incorrect and need revision. The state commitments can be realized as digests of transaction execution receipts and account status. An incorrect state commitment may affect the miner's reward, but has nothing to do with the consensus of total order of all blocks.",
+      "blockHash": "The hash of the block header of the current block.",
+      "parentHash": "The hash of the block from which this block was generated, also known as its parent block.",
+      "nonce": "Block nonce is a value used during mining to demonstrate proof of work for a block.",
+      "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
+      "timestamp": "The date and time at which a block is mined.",
+      "size": "The block size is actually determined by the block's gas limit.",
+      "transactions": "The amout of transactions which belong to the block.",
+      "referenceBlocks": "The other blocks referred by the current block."
+    },
+    "tx": {
+      "transactionHash": "A TxHash or transaction hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
+      "executedEpoch": "The epoch when the transaction is actually executed.",
+      "proposedEpoch": "The epoch that the sender wants the transaction to be executed. The transaction cannot be executed in epochs of number more than 100,000 from the proposed epoch number.",
+      "timestamp": "The date and time at which a transaction is mined.",
+      "status": "The status of the transaction.",
+      "security": "The security of block, higher security requires more block confirmations.",
+      "from": "The sending party of the transaction (could be from a contract address).",
+      "to": "The receiving party of the transaction (could be a contract address).",
+      "tokenTransferred": "List of token transferred in the transaction.",
+      "value": "The value being transacted in CFX. ",
+      "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
+      "gasPrice": "Cost per unit of gas specified for the transaction in GDrip. The higher the gas price the higher chance of getting included in a block.",
+      "gasFee": "The exact fee of gas that was used for the transaction.",
+      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
+      "blockHash": "A block hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
+      "position": "Index position of Transaction in the block.",
+      "storageLimit": "Maximum amount of storage (bytes) the sender is willing to pay for storage collateral.",
+      "chainID": "The ID indicating which blockchain this transaction is meant to send to. Provides protection against replay-attack.",
+      "inputData": "Additional information that is required for the transaction."
+    },
+    "address": {
+      "balance": "The amout of assets which belong to the address.",
+      "token": "The amout of tokens which belong to the address.",
+      "storageCollateral": "The amount of storage collaterals paid by the current address, the unit is the CFX. ",
+      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."
+    },
+    "token": {
+      "totalSupply": "Total supply of the token.",
+      "holders": "The amout of addresses which hold the token.",
+      "transfers": "The amout of token transactions which belongs to the address.",
+      "contract": "The contract which deploys the token.",
+      "decimals": "Decimals of the token. "
+    },
+    "contract": {
+      "balance": "The amout of assets which belongs to the address.",
+      "token": "The amout of tokens which belongs to the address.",
+      "storageCollateral": "The amount of storage collaterals paid by the contract sponsor, the unit is the CFX.",
+      "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
+      "tokenTracker": "The token which was deployed by the contract.",
+      "contractCreator": "The address which deploys the contract.",
+      "contractAdmin": "The address which owns the contract administration authority. The contract could be modified by the address with non zero.",
+      "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
+      "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
+    }
+  }
 }

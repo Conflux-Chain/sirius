@@ -105,7 +105,7 @@ exports[`<Search  /> should match snapshot 1`] = `
         <input
           autocomplete="off"
           class="jsx-1159070929 right-icon"
-          placeholder="Address / Block hash / Epoch"
+          placeholder="Epoch / Block hash / Txn Hash / Address"
           type="text"
         />
         <div
