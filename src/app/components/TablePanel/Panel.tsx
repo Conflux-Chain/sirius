@@ -22,6 +22,7 @@ export type TablePanelType = {
 const mockTableConfig = columns => {
   const mockTableColumns = columns.map((item, i) => ({
     id: i,
+    key: i,
     dataIndex: 'key',
     width: item.width,
     render: () => <Skeleton />,

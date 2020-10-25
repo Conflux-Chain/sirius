@@ -74,6 +74,7 @@ export const Transaction = () => {
     gasUsed,
     status,
     data,
+    contractCreated,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
@@ -128,7 +129,7 @@ export const Transaction = () => {
               'icon',
               'sourceCode',
               'typeCode',
-            ].join(',');
+            ];
             const proArr: Array<any> = [];
             proArr.push(reqContract({ address: toAddress, fields: fields }));
             proArr.push(
@@ -184,7 +185,7 @@ export const Transaction = () => {
     };
   }, [intervalToClear]);
   const generatedDiv = () => {
-    if (transactionDetail['to']) {
+    if (to) {
       if (isContract) {
         return (
           <Description
@@ -195,21 +196,21 @@ export const Transaction = () => {
             }
           >
             {t(translations.transaction.contract)}{' '}
-            <img
-              className="logo"
-              src={
-                (contractInfo &&
-                  contractInfo['token'] &&
-                  contractInfo['token']['icon']) ||
-                defaultContractIcon
-              }
-              alt="icon"
-            />{' '}
-            <Link to={`/address/${transactionDetail['to']}`}>
-              {contractInfo &&
-                contractInfo['token'] &&
-                contractInfo['token']['name']}
-            </Link>{' '}
+            {contractInfo && contractInfo['name'] && (
+              <>
+                <img
+                  className="logo"
+                  src={
+                    (contractInfo && contractInfo['icon']) ||
+                    defaultContractIcon
+                  }
+                  alt="icon"
+                />{' '}
+                <Link to={`/address/${to}`}>
+                  {contractInfo && contractInfo['name']}
+                </Link>{' '}
+              </>
+            )}
             <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
           </Description>
         );
@@ -226,7 +227,7 @@ export const Transaction = () => {
           </Description>
         );
       }
-    } else if (transactionDetail['contractCreated']) {
+    } else if (contractCreated) {
       return (
         <Description
           title={

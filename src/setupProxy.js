@@ -53,7 +53,7 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target: 'http://testnet-jsonrpc.conflux-chain.org:12537',
+      target: 'http://mainnet-jsonrpc.conflux-chain.org:12537',
     }),
   );
   app.use(

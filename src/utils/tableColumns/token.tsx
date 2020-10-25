@@ -27,64 +27,99 @@ const renderFilterableAddress = (
   index,
   pOpt?: {
     type?: 'to' | 'from';
-    accountFilter?: boolean;
+    isToken?: boolean;
+    nameTag?: string;
   },
 ) => {
   const opt = {
     type: 'to',
-    accountFilter: true,
+    isToken: true,
     ...pOpt,
   };
-  const { accountAddress, transactionHash } = queryString.parse(
-    window.location.search,
-  );
-  const filter =
-    (accountAddress as string) || (transactionHash as string) || '';
+  const { accountAddress } = queryString.parse(window.location.search);
+  const filter = (accountAddress as string) || '';
 
-  if (opt.accountFilter) {
-    return (
-      <FromWrap>
-        {filter === value ? (
+  const renderTo = () => {
+    if (filter === value) {
+      if (opt.nameTag) {
+        return (
+          <Text span hoverValue={value}>
+            {opt.nameTag}
+          </Text>
+        );
+      } else {
+        return (
           <Text span hoverValue={value}>
             {formatString(value, 'address')}
           </Text>
-        ) : (
-          <LinkWidthFilter href={value}>
+        );
+      }
+    } else if (value) {
+      if (opt.isToken) {
+        return (
+          <LinkWithFilter href={value}>
             <Text span hoverValue={value}>
               {formatString(value, 'address')}
             </Text>
-          </LinkWidthFilter>
-        )}
-        {opt.type === 'from' && (
-          <ImgWrap
-            src={
-              !filter
-                ? '/token/arrow.svg'
-                : filter === value
-                ? '/token/out.svg'
-                : '/token/in.svg'
-            }
-          />
-        )}
-      </FromWrap>
-    );
-  } else {
-    return (
-      <FromWrap>
-        <Link href={`/address/${value}`}>
-          {
+          </LinkWithFilter>
+        );
+      } else {
+        return (
+          <Link href={`/address/${value}`}>
             <Text span hoverValue={value}>
               {formatString(value, 'address')}
             </Text>
+          </Link>
+        );
+      }
+    } else {
+      if (row.contractCreated) {
+        if (row.contractCreated === filter) {
+          return (
+            <Text span hoverValue={row.contractCreated}>
+              <Translation>
+                {t => t(translations.transaction.contractCreation)}
+              </Translation>
+            </Text>
+          );
+        }
+        return (
+          <Link href={`/address/${row.contractCreated}`}>
+            <Text span hoverValue={row.contractCreated}>
+              <Translation>
+                {t => t(translations.transaction.contractCreation)}
+              </Translation>
+            </Text>
+          </Link>
+        );
+      } else {
+        return (
+          <Translation>
+            {t => t(translations.transaction.contractCreation)}
+          </Translation>
+        );
+      }
+    }
+  };
+  return (
+    <FromWrap>
+      {renderTo()}
+      {opt.type === 'from' && (
+        <ImgWrap
+          src={
+            !filter
+              ? '/token/arrow.svg'
+              : filter === value
+              ? '/token/out.svg'
+              : '/token/in.svg'
           }
-        </Link>
-        {opt.type === 'from' && <ImgWrap src="/token/arrow.svg" />}
-      </FromWrap>
-    );
-  }
+        />
+      )}
+    </FromWrap>
+  );
 };
 
-const LinkWidthFilter = ({ href, children }) => {
+const LinkWithFilter = ({ href, children }) => {
   const history = useHistory();
   const location = useLocation();
 

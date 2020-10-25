@@ -149,7 +149,7 @@ const TopContainer = styled.div`
     flex-direction: column;
 
     background: #fff;
-    padding-left: 1.2857rem;
+    padding: 0 1.2857rem;
     margin-right: 1.7143rem;
     ${media.s} {
       margin-right: initial;

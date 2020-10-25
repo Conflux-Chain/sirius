@@ -6,7 +6,7 @@
 
 import React, { memo, ReactNode } from 'react';
 import styled from 'styled-components/macro';
-import { Card } from '@cfxjs/react-ui';
+import { Card } from '../../components/Card';
 import { media } from 'styles/media';
 
 interface Props {
@@ -36,6 +36,9 @@ export const DetailPageCard = memo((props: Props) => {
 
 const Main = styled.div`
   min-width: 17rem;
+  .detail-page-card.card div.content {
+    padding: 16px 0;
+  }
 
   ${media.s} {
     min-width: 13.67rem;

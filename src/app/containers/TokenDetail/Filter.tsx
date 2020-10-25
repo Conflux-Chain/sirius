@@ -7,17 +7,17 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import { Search } from '@geist-ui/react-icons';
-import { useHistory, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
 import { isAddress, isHash } from '../../../utils';
 import { formatBalance } from '../../../utils';
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 
 interface FilterProps {
+  filter: string;
   tokenAddress: string;
   symbol: string;
   decimals: number;
+  onFilter: (value: string) => void;
 }
 
 interface Query {
@@ -25,42 +25,14 @@ interface Query {
   transactionHash?: string;
 }
 
-export const Filter = ({ tokenAddress, symbol, decimals }: FilterProps) => {
+export const Filter = ({
+  filter,
+  tokenAddress,
+  symbol,
+  decimals,
+  onFilter,
+}: FilterProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
-
-  let {
-    pageSize: parsedPageSize,
-    accountAddress: filterAddr,
-    transactionHash: filterHash,
-    ...others
-  } = queryString.parse(location.search);
-  if (!parsedPageSize) {
-    parsedPageSize = '10';
-  }
-
-  const filter = (filterAddr as string) || (filterHash as string) || '';
-
-  const onFilter = (filter: string) => {
-    let object: Query = {};
-    if (isAddress(filter)) {
-      object.accountAddress = filter;
-    } else if (isHash(filter)) {
-      object.transactionHash = filter;
-    }
-    const urlWithQuery = queryString.stringifyUrl({
-      url: location.pathname,
-      query: {
-        ...others,
-        page: '1',
-        pageSize: parsedPageSize as string,
-        ...object,
-      },
-    });
-    history.push(urlWithQuery);
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessage] = useMessages();
   const [value, setValue] = useState(filter);
