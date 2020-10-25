@@ -389,7 +389,7 @@ export function Table({ address }) {
             );
           },
 
-          url: '/block',
+          url: `/block?miner=${address}`,
           table: {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
