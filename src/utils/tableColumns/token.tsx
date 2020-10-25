@@ -28,11 +28,13 @@ const renderFilterableAddress = (
   pOpt?: {
     type?: 'to' | 'from';
     accountFilter?: boolean;
+    baseAddress?: string;
   },
 ) => {
   const opt = {
     type: 'to',
     accountFilter: true,
+    baseAddress: '',
     ...pOpt,
   };
   const { accountAddress, transactionHash } = queryString.parse(
@@ -40,20 +42,19 @@ const renderFilterableAddress = (
   );
   const filter =
     (accountAddress as string) || (transactionHash as string) || '';
+  const text = (
+    <Text span hoverValue={value}>
+      {formatString(value, 'address')}
+    </Text>
+  );
 
   if (opt.accountFilter) {
     return (
       <FromWrap>
-        {filter === value ? (
-          <Text span hoverValue={value}>
-            {formatString(value, 'address')}
-          </Text>
+        {filter === value || opt.baseAddress === value ? (
+          text
         ) : (
-          <LinkWidthFilter href={value}>
-            <Text span hoverValue={value}>
-              {formatString(value, 'address')}
-            </Text>
-          </LinkWidthFilter>
+          <LinkWidthFilter href={value}>{text}</LinkWidthFilter>
         )}
         {opt.type === 'from' && (
           <ImgWrap
@@ -71,13 +72,11 @@ const renderFilterableAddress = (
   } else {
     return (
       <FromWrap>
-        <Link href={`/address/${value}`}>
-          {
-            <Text span hoverValue={value}>
-              {formatString(value, 'address')}
-            </Text>
-          }
-        </Link>
+        {opt.baseAddress === value ? (
+          text
+        ) : (
+          <Link href={`/address/${value}`}>{text}</Link>
+        )}
         {opt.type === 'from' && <ImgWrap src="/token/arrow.svg" />}
       </FromWrap>
     );

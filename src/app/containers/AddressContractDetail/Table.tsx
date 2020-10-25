@@ -302,6 +302,7 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) =>
         tokenColunms.from.render(value, row, index, {
+          baseAddress: address,
           accountFilter: false,
         }),
     },
@@ -309,6 +310,7 @@ export function Table({ address }) {
       ...tokenColunms.to,
       render: (value, row, index) =>
         tokenColunms.to.render(value, row, index, {
+          baseAddress: address,
           accountFilter: false,
         }),
     },
@@ -326,6 +328,7 @@ export function Table({ address }) {
       render: (value, row, index) =>
         tokenColunms.from.render(value, row, index, {
           accountFilter: false,
+          baseAddress: address,
         }),
     },
     {
@@ -333,6 +336,7 @@ export function Table({ address }) {
       render: (value, row, index) =>
         tokenColunms.to.render(value, row, index, {
           accountFilter: false,
+          baseAddress: address,
         }),
     },
     tokenColunms.quantity,
