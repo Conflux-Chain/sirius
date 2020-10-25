@@ -316,7 +316,7 @@ export function Table({ address }) {
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 4, 4, 4, 2];
+  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
     {
@@ -335,7 +335,7 @@ export function Table({ address }) {
     },
     tokenColunms.quantity,
     tokenColunms.token,
-    // tokenColunms.age,
+    tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
   const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
