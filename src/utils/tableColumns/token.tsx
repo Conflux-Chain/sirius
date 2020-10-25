@@ -144,10 +144,10 @@ export const token = {
   key: 'blockIndex',
   render: row => (
     <StyledIconWrapper>
-      {row?.token?.icon && <img src={row.icon} alt="token icon" />}
+      {row?.icon && <img src={row.icon} alt="token icon" />}
       <Link href={`/token/${row.address}`}>
-        <Text span hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}>
-          {formatString(`${row?.token?.name} (${row?.token?.symbol})`, 28)}
+        <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
+          {formatString(`${row?.name} (${row?.symbol})`, 28)}
         </Text>
       </Link>
     </StyledIconWrapper>
