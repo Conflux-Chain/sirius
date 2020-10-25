@@ -151,9 +151,14 @@ const DatePickerWrap = styled.div`
 const TX_DIRECTION = ['all', 'outgoing', 'incoming'];
 
 const TxDirectionFilter = ({ onChange }) => {
+  const location = useLocation();
+  const { txType } = queryString.parse(location.search || '');
+  const defaultDirection = TX_DIRECTION.indexOf(txType as string);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(
+    defaultDirection === -1 ? 0 : defaultDirection,
+  );
   useClickAway(dropdownRef, () => visible && setVisible(false));
   const { t } = useTranslation();
 
@@ -315,8 +320,20 @@ export function Table({ address }) {
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.age,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
     tokenColunms.quantity,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
@@ -344,7 +361,7 @@ export function Table({ address }) {
         );
       },
       url: `/transaction?accountAddress=${address}`,
-      pagination: false,
+      pagination: true,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
@@ -355,11 +372,12 @@ export function Table({ address }) {
       label: (count: number) => {
         return (
           <LabelWrap>
-            {t(translations.token.transfers)}
+            {t(translations.general.tokenTxns)}
             <TabLabel count={count} />
           </LabelWrap>
         );
       },
+      pagination: true,
       url: `/transfer?accountAddress=${address}`,
       table: {
         columns: columnsTokenTrasfers,
@@ -380,6 +398,7 @@ export function Table({ address }) {
       : {
           value: 'mined-blocks',
           hideTotalZero: true,
+          pagination: true,
           label: (count: number) => {
             return (
               <LabelWrap>
@@ -389,7 +408,7 @@ export function Table({ address }) {
             );
           },
 
-          url: '/block',
+          url: `/block?miner=${address}`,
           table: {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
