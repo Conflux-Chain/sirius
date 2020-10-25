@@ -320,8 +320,20 @@ export function Table({ address }) {
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.age,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          accountFilter: false,
+        }),
+    },
     tokenColunms.quantity,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
