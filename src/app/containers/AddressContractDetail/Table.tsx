@@ -27,7 +27,7 @@ import {
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString } from 'utils';
-import { useContract } from 'utils/api';
+import { useContract, useToken } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 
@@ -111,7 +111,7 @@ const DatePickerWithQuery = ({ onChange }) => {
   );
 
   return (
-    <DatePickerWrap key="date-picker">
+    <DatePickerWrap key="date-picker-wrap">
       {bp !== 's' && (
         <DatePicker.RangePicker
           // @ts-ignore
@@ -187,7 +187,7 @@ const TxDirectionFilter = ({ onChange }) => {
   ));
 
   return (
-    <TxDirectionFilterWrap key="tx-filter">
+    <TxDirectionFilterWrap key="tx-filter-wrap">
       <Button
         key="tx-filter-button"
         color="secondary"
@@ -285,6 +285,7 @@ export function Table({ address }) {
     'sourceCode',
     'abi',
   ]);
+  const { data: tokenInfo } = useToken(address, ['name', 'icon']);
 
   useEffect(() => {
     history.replace(
@@ -304,17 +305,29 @@ export function Table({ address }) {
     transactionColunms.hash,
     {
       ...tokenColunms.from,
-      render: (value, row, index) =>
-        tokenColunms.from.render(value, row, index, {
-          accountFilter: false,
-        }),
+      render: (value, row, index) => {
+        let nameTag;
+        if (value === address && tokenInfo && tokenInfo.name) {
+          nameTag = tokenInfo.name;
+        }
+        return tokenColunms.from.render(value, row, index, {
+          isToken: false,
+          nameTag,
+        });
+      },
     },
     {
       ...tokenColunms.to,
-      render: (value, row, index) =>
-        tokenColunms.to.render(value, row, index, {
-          accountFilter: false,
-        }),
+      render: (value, row, index) => {
+        let nameTag;
+        if (value === address && tokenInfo && tokenInfo.name) {
+          nameTag = tokenInfo.name;
+        }
+        return tokenColunms.to.render(value, row, index, {
+          isToken: false,
+          nameTag,
+        });
+      },
     },
     transactionColunms.value,
     transactionColunms.gasPrice,
@@ -329,41 +342,43 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) =>
         tokenColunms.from.render(value, row, index, {
-          accountFilter: false,
+          accountFilter: true,
         }),
     },
     {
       ...tokenColunms.to,
       render: (value, row, index) =>
         tokenColunms.to.render(value, row, index, {
-          accountFilter: false,
+          accountFilter: true,
         }),
     },
     tokenColunms.quantity,
     {
       ...tokenColunms.token,
-      render: row => (
-        <StyledIconWrapper>
-          {row?.token
-            ? [
-                row?.token?.icon && (
-                  <img src={row.token.icon} alt="token icon" />
-                ),
-                <Link href={`/token/${row?.token?.address}`}>
-                  <Text
-                    span
-                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
-                  >
-                    {formatString(
-                      `${row?.token?.name} (${row?.token?.symbol})`,
-                      28,
-                    )}
-                  </Text>
-                </Link>,
-              ]
-            : loadingText}
-        </StyledIconWrapper>
-      ),
+      render: row => {
+        return (
+          <StyledIconWrapper>
+            {row?.token
+              ? [
+                  row?.token?.icon && (
+                    <img src={row.token.icon} alt="token icon" />
+                  ),
+                  <Link href={`/token/${row?.token?.address}`}>
+                    <Text
+                      span
+                      hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                    >
+                      {formatString(
+                        `${row?.token?.name} (${row?.token?.symbol})`,
+                        'tag',
+                      )}
+                    </Text>
+                  </Link>,
+                ]
+              : loadingText}
+          </StyledIconWrapper>
+        );
+      },
     },
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
@@ -453,7 +468,7 @@ export function Table({ address }) {
         <FilterWrap>
           {bp !== 's' && (
             <DatePickerWithQuery
-              key="date-picker"
+              key="date-picker-query"
               onChange={dateQuery => {
                 if (!dateQuery)
                   return history.push(

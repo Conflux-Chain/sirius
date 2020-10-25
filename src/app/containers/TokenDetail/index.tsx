@@ -20,7 +20,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: 'transferCount,icon',
+    fields: 'icon',
   };
   let { data, error } = useTokenQuery(params, !!tokenAddress);
 

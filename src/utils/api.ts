@@ -80,7 +80,7 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
     tokenAddress
       ? qs.stringifyUrl({
           url: '/token',
-          query: { addressArray: tokenAddress },
+          query: { addressArray: tokenAddress, fields: 'icon' },
         })
       : null,
     simpleGetFetcher,

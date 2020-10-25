@@ -303,6 +303,7 @@ const CenterLine = styled.div`
 
   .metadata-tooltip-btn {
     margin-left: 0.5rem;
+    margin-bottom: 0.2857rem;
     ${media.s} {
       margin-left: 1rem;
     }

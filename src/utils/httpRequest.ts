@@ -21,7 +21,6 @@ export const sendRequest = config => {
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
-    query: param,
     ...extra,
   }).then(res => res.body);
 };
