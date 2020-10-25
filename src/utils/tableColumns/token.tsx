@@ -177,7 +177,7 @@ export const totalSupply = {
   key: 'totalSupply',
   render: value => (
     <Text span hoverValue={value}>
-      {formatString(formatNumber(value))}
+      {formatNumber(value)}
     </Text>
   ),
 };
