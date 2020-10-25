@@ -360,9 +360,9 @@ export function Table({ address }) {
           {row?.token
             ? [
                 row?.token?.icon && (
-                  <img src={row.token.icon} alt="token icon" />
+                  <img key="img" src={row.token.icon} alt="token icon" />
                 ),
-                <Link href={`/token/${row?.token?.address}`}>
+                <Link key="link" href={`/token/${row?.token?.address}`}>
                   <Text
                     span
                     hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
