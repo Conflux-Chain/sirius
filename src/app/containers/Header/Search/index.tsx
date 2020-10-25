@@ -3,7 +3,7 @@
  * Search
  *
  */
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styled from 'styled-components/macro';
 import { Logo as SearchIcon } from './Logo';
 import { Input } from '@cfxjs/react-ui';
@@ -23,7 +23,20 @@ export const Search = () => {
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const history = useHistory();
+  const focusTimer = useRef<number>();
   const [focused, setFocused] = useState(false);
+
+  const delayedFocus = useCallback(
+    newFocused => {
+      if (focusTimer?.current) {
+        clearTimeout(focusTimer.current);
+      }
+
+      focusTimer.current = window.setTimeout(() => setFocused(newFocused), 100);
+    },
+    [setFocused],
+  );
+
   const { ref: inputRef, getValue: getInputValue } = Input.useInputHandle();
   const onEnterPress = () => {
     let inputValue = getInputValue();
@@ -76,8 +89,8 @@ export const Search = () => {
         onKeyPress={e => {
           if (e.key === 'Enter') onEnterPress();
         }}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        onFocus={() => delayedFocus(true)}
+        onBlur={() => delayedFocus(false)}
       />
     </Outer>
   );
