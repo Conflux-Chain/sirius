@@ -101,7 +101,7 @@ export function Sponsor() {
     }
   };
   const fetchIsAppliable = async (address: string) => {
-    const { flag, message } = await faucet.isAppliable(address);
+    const { flag, message } = await faucet.checkAppliable(address);
     if (!flag) {
       //can not apply sponsor this contract
       switch (message) {
@@ -117,6 +117,9 @@ export function Sponsor() {
           break;
         case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
           setErrorMsgForApply(t(translations.sponsor.errReplaceThird));
+          break;
+        case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
+          setErrorMsgForApply(t(translations.sponsor.errContractNotFound));
           break;
         default:
           setErrorMsgForApply('');
