@@ -32,7 +32,6 @@ const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   return (
     <>
       {children}
-      <span> </span>
       {count ? (
         <Tooltip
           text={
@@ -86,6 +85,7 @@ export { TipLabel };
 
 const StyledCount = styled.span`
   color: #004fff;
+  margin-left: 0.2857rem;
 `;
 const StyledTextWrapper = styled.span`
   .count {
