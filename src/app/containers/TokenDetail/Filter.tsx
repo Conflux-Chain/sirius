@@ -108,7 +108,7 @@ export const Filter = ({ tokenAddress, symbol, decimals }: FilterProps) => {
         onClearClick={onClearClick}
         icon={<Search />}
       />
-      {tokenBalance && (
+      {tokenBalance !== '0' && (
         <BalanceWrap>{`${t(
           translations.token.transferList.balance,
         )}${tokenBalance}${symbol}`}</BalanceWrap>

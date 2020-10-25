@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import numeral from 'numeral';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -31,6 +32,7 @@ import {
   formatTimeStamp,
   devidedByDecimals,
   fromDripToCfx,
+  formatString,
   getPercent,
 } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
@@ -296,17 +298,17 @@ export const Transaction = () => {
         </Link>
       );
       transferListContainer.push(
-        <div className="lineContainer">
+        <div className="lineContainer" key={`transfer${i + 1}`}>
           <span className="from">{t(translations.transaction.from)}</span>
           <Link to={`/address/${transferItem['from']}`}>
-            <Text span maxWidth="91px" hoverValue={transferItem['from']}>
-              {transferItem['from']}
+            <Text span hoverValue={transferItem['from']}>
+              {formatString(transferItem['from'], 'address')}
             </Text>
           </Link>
           <span className="to">{t(translations.transaction.to)}</span>
           <Link to={`/address/${transferItem['to']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['to']}>
-              {transferItem['to']}
+              {formatString(transferItem['to'], 'address')}
             </Text>
           </Link>
           <span className="for">{t(translations.transaction.for)}</span>
@@ -365,7 +367,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/epoch/${epochNumber}`}>{epochNumber}</Link>
+            <Link to={`/epoch/${epochNumber}`}>
+              {numeral(epochNumber).format('0,0')}
+            </Link>
           </Description>
           <Description
             title={
@@ -377,7 +381,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/epoch/${epochHeight}`}>{epochHeight}</Link>
+            <Link to={`/epoch/${epochHeight}`}>
+              {numeral(epochHeight).format('0,0')}
+            </Link>
           </Description>
           <Description
             title={
@@ -433,8 +439,9 @@ export const Transaction = () => {
                   text={t(translations.toolTip.tx.tokenTransferred)}
                   placement="top"
                 >
-                  {t(translations.transaction.tokenTransferred)}(
-                  {transferList.length})
+                  {`${t(translations.transaction.tokenTransferred)} (${
+                    transferList.length
+                  })`}
                 </Tooltip>
               }
             >
@@ -460,7 +467,6 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {/* todo, the value is 'gas used/gas limit', no gas limit from response */}
             {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
           </Description>
           <Description
@@ -474,7 +480,7 @@ export const Transaction = () => {
             }
           >
             {/* todo, need to format to Gdrip */}
-            {gasPrice}
+            {`${numeral(gasPrice).format('0,0')} drip`}
           </Description>
           <Description
             title={
@@ -483,7 +489,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {gasFee}
+            {`${numeral(gasFee).format('0,0')} drip`}
           </Description>
           <Description
             title={
@@ -492,7 +498,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {nonce}
+            {numeral(nonce).format('0,0')}
           </Description>
           <Description
             title={
@@ -529,7 +535,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {storageLimit}
+            {numeral(storageLimit).format('0,0')}
           </Description>
           <Description
             title={
