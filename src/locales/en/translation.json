@@ -117,7 +117,7 @@
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "address": {
       "editContract": "Click to edit contract",
-      "website": "Click enter the official site",
+      "website": "Click to enter the official site",
       "address": "address"
     },
     "loading": "loading...",
