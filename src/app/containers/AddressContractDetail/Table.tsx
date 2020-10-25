@@ -270,10 +270,12 @@ export function Table({ address }) {
   const [filterVisible, setFilterVisible] = useState(
     queries?.tab !== 'contract',
   );
-  const [txFilterVisible, setTxFilterVisible] = useState(
-    queries?.tab !== 'mined-blocks' && queries?.tab !== 'transfers',
-  );
   const isContract = useMemo(() => isContractAddress(address), [address]);
+  const [txFilterVisible, setTxFilterVisible] = useState(
+    queries?.tab !== 'mined-blocks' &&
+      queries?.tab !== 'transfers' &&
+      !isContract,
+  );
 
   const { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
@@ -498,7 +500,7 @@ export function Table({ address }) {
         key="table"
         tabs={tabs}
         onTabsChange={value => {
-          if (value === 'transfers' || value === 'mined-blocks')
+          if (value === 'transfers' || value === 'mined-blocks' || isContract)
             setTxFilterVisible(false);
           else setTxFilterVisible(true);
           if (value === 'contract-viewer') return setFilterVisible(false);
