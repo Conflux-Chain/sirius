@@ -144,7 +144,7 @@
         "difficulty": "难度",
         "gasLimit": "燃料限制"
       },
-      "transactions": {
+      "transaction": {
         "hash": "哈希",
         "from": "发送方",
         "to": "接收方",
