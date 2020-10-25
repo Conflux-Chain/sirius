@@ -355,30 +355,28 @@ export function Table({ address }) {
     tokenColunms.quantity,
     {
       ...tokenColunms.token,
-      render: row => {
-        return (
-          <StyledIconWrapper>
-            {row?.token
-              ? [
-                  row?.token?.icon && (
-                    <img src={row.token.icon} alt="token icon" />
-                  ),
-                  <Link href={`/token/${row?.token?.address}`}>
-                    <Text
-                      span
-                      hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
-                    >
-                      {formatString(
-                        `${row?.token?.name} (${row?.token?.symbol})`,
-                        'tag',
-                      )}
-                    </Text>
-                  </Link>,
-                ]
-              : loadingText}
-          </StyledIconWrapper>
-        );
-      },
+      render: row => (
+        <StyledIconWrapper>
+          {row?.token
+            ? [
+                row?.token?.icon && (
+                  <img src={row.token.icon} alt="token icon" />
+                ),
+                <Link href={`/token/${row?.token?.address}`}>
+                  <Text
+                    span
+                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                  >
+                    {formatString(
+                      `${row?.token?.name} (${row?.token?.symbol})`,
+                      'tag',
+                    )}
+                  </Text>
+                </Link>,
+              ]
+            : loadingText}
+        </StyledIconWrapper>
+      ),
     },
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
