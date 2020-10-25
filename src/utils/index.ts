@@ -46,16 +46,6 @@ export const hex2utf8 = pStr => {
 
 const riskDivided = new BigNumber(2).pow(256).minus(1);
 const eps = new BigNumber(1e-6);
-/**
- * convert number to thousands-string
- * @param {*} num
- */
-export const toThousands = num => {
-  let str = num + '';
-  let re = /(?=(?!(\b))(\d{3})+$)/g;
-  str = str.replace(re, ',');
-  return str;
-};
 
 export function transferRisk(riskStr) {
   const riskNum = new BigNumber(riskStr, 16).dividedBy(riskDivided);
@@ -103,11 +93,7 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
  * @return { string } 数字 n 的整数部分超过3位后，使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
  */
 export const formatNumber = (num: number | string) => {
-  return numeral(num)
-    .format('0,0a.[000]')
-    .toUpperCase()
-    .replace('B', 'G')
-    .replace('K', 'k');
+  return numeral(num).format('0,0a.[000]').toUpperCase().replace('B', 'G');
 };
 
 /**
