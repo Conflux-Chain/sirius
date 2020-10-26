@@ -150,6 +150,7 @@ export const Header = memo(() => {
 const LogoWrapper = styled.div`
   .confi-logo {
     margin-right: 0.57rem;
+    width: 3.3571rem;
   }
   a.link {
     display: flex;
