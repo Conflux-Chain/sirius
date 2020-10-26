@@ -180,8 +180,7 @@ export const Transaction = () => {
                 // setLoading(false);
               });
           } else {
-            //TODO: In the first stage, a temporary solution:no need to cancel loading
-            // setLoading(false);
+            setLoading(false);
           }
         }
       });
