@@ -51,15 +51,6 @@ export default function createDraw({
       first: 0,
       last: 0,
     };
-    // return function () {
-    //   if (!small) {
-    //     ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
-    //     ctxBg.moveTo(Y_AXIS_WIDTH, 0);
-    //     ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
-    //     ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
-    //     ctxBg.stroke();
-    //   }
-    // };
   }
   const xData = [],
     yData = [],
@@ -103,6 +94,19 @@ export default function createDraw({
       ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
       ctxBg.stroke();
     }
+    console.log('before', Y_AXIS_WIDTH);
+    if (Y_AXIS_WIDTH) {
+      let maxYTxtWidth = 0;
+      yGridRanges.forEach(y => {
+        const v = yScale.invert(y);
+        const { width } = ctxBg.measureText(formatNumber(v));
+        if (width > maxYTxtWidth) {
+          maxYTxtWidth = width;
+        }
+      });
+      Y_AXIS_WIDTH = maxYTxtWidth + 6;
+    }
+    console.log('after', Y_AXIS_WIDTH);
 
     //draw grid
     ctxBg.beginPath();
@@ -145,7 +149,9 @@ export default function createDraw({
         ctxBg.fillStyle = 'rgba(0,0,0,0.87)';
         ctxBg.textAlign = 'end';
         ctxBg.textBaseline = 'middle';
-        ctxBg.fillText(formatNumber(v), Y_AXIS_WIDTH - 6, y);
+        // if(ctxBg.measu)
+
+        ctxBg.fillText(formatNumber(v), Y_AXIS_WIDTH - 5, y);
         ctxBg.restore();
       }
 

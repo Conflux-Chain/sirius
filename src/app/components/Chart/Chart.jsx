@@ -96,6 +96,7 @@ function Draw({
     });
     if (draw) {
       draw();
+      draw();
       const movelistener = event => {
         if (xScale1) {
           const { offsetX } = event;
