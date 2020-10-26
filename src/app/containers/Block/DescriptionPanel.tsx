@@ -58,7 +58,6 @@ export function DescriptionPanel({ hash: blockHash }) {
     gasLimit,
   } = data || {};
   if (data) {
-    console.log('data', data);
     getConfirmRisk(hash);
   }
 
