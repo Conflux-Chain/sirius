@@ -96,7 +96,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 }
 
 .c12 {
-  font-weight: bold;
+  font-weight: 700;
   color: #282d30;
   font-size: 1.71rem;
 }
@@ -168,6 +168,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   position: relative;
   width: 100%;
   margin-bottom: 0.86rem;
+  font-weight: 700;
 }
 
 .c3 {
