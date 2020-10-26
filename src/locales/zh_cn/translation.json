@@ -236,7 +236,9 @@
       "second": "{{count}} 秒",
       "second_plural": "{{count}} secs",
       "ago": "前"
-    }
+    },
+    "startDate": "开始日期",
+    "endDate": "结束日期"
   },
   "sponsor": {
     "title": "赞助合约",

@@ -95,6 +95,7 @@ const ButtonWrapper = styled.div`
 
 const DatePickerWithQuery = ({ onChange }) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const { minTimestamp, maxTimestamp } = queryString.parse(
     location.search || '',
   );
@@ -109,7 +110,10 @@ const DatePickerWithQuery = ({ onChange }) => {
         : undefined,
     [minTimestamp, maxTimestamp],
   );
-
+  const datePlaceholder = [
+    t(translations.general.startDate),
+    t(translations.general.endDate),
+  ];
   return (
     <DatePickerWrap key="date-picker-wrap">
       {bp !== 's' && (
@@ -119,6 +123,8 @@ const DatePickerWithQuery = ({ onChange }) => {
           color="primary"
           variant="solid"
           key="date-picker"
+          // @ts-ignore
+          placeholder={datePlaceholder}
           onChange={onChange}
         />
       )}

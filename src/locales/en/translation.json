@@ -236,7 +236,9 @@
       "second": "{{count}} sec",
       "second_plural": "{{count}} secs",
       "ago": "ago"
-    }
+    },
+    "startDate": "Start date",
+    "endDate": "End date"
   },
   "sponsor": {
     "title": "Contract Sponsor",
