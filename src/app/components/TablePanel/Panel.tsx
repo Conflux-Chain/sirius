@@ -105,13 +105,11 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
     table.columns,
   );
 
-  if (!data && !error) {
+  if (!data) {
     tableData = mockTableData;
     tableColumns = mockTableColumns;
     tableRowKey = mockTableRowKey;
-  }
-
-  if (data && !error) {
+  } else {
     tableData = data?.list || table.data;
   }
 

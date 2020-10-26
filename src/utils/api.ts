@@ -444,40 +444,40 @@ export const useContract = (
         .then(rst => {
           const { sponsorBalanceForGas, sponsorBalanceForCollateral } = rst;
           return {
-            name: notAvaiableText,
-            website: notAvaiableText,
-            admin: notAvaiableText,
-            abi: notAvaiableText,
-            sourceCode: notAvaiableText,
-            sponsorForGas: notAvaiableText,
-            sponsorForCollateral: notAvaiableText,
+            name: null,
+            website: null,
+            admin: null,
+            abi: null,
+            sourceCode: null,
+            sponsorForGas: null,
+            sponsorForCollateral: null,
             ...rst,
             sponsorBalanceForGas:
               sponsorBalanceForGas !== undefined
                 ? formatBalance(sponsorBalanceForGas)
-                : notAvaiableText,
+                : null,
             sponsorBalanceForCollateral:
               sponsorBalanceForCollateral !== undefined
                 ? formatBalance(sponsorBalanceForCollateral)
-                : notAvaiableText,
+                : null,
           };
         })
         .catch(() => ({
           epochNumber: 0,
           address: contractAddress,
-          from: notAvaiableText,
-          transactionHash: notAvaiableText,
-          admin: notAvaiableText,
+          from: null,
+          transactionHash: null,
+          admin: null,
           collateralForStorage: '0',
           sponsorGasBound: '0',
           sponsorBalanceForGas: '0',
           sponsorBalanceForCollateral: '0',
-          sponsorForGas: notAvaiableText,
-          sponsorForCollateral: notAvaiableText,
-          name: notAvaiableText,
-          website: notAvaiableText,
-          abi: notAvaiableText,
-          sourceCode: notAvaiableText,
+          sponsorForGas: null,
+          sponsorForCollateral: null,
+          name: null,
+          website: null,
+          abi: null,
+          sourceCode: null,
           icon: undefined,
         })),
     {
