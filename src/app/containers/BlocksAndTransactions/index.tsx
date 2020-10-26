@@ -49,7 +49,7 @@ export function BlocksAndTransactions() {
       },
     },
     {
-      value: 'transaction',
+      value: 'transactions',
       label: t(translations.blocksAndTransactions.transactions),
       url: '/transaction',
       table: {
