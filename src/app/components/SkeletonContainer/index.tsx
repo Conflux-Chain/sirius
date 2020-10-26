@@ -5,6 +5,7 @@ import { Skeleton } from '@cfxjs/react-ui';
 interface SkeletonContainerProps {
   children?: React.ReactNode;
   shown?: boolean;
+  style?: React.CSSProperties;
 }
 type NativeAttrs = Omit<
   React.HTMLAttributes<any>,
@@ -12,10 +13,14 @@ type NativeAttrs = Omit<
 >;
 export declare type Props = SkeletonContainerProps & NativeAttrs;
 const SkeletonStyle = { display: 'flex', flex: 1, maxWidth: 'initial' };
-const SkeletonContainerComp = ({ children, shown }: Props) => {
+const SkeletonContainerComp = ({ children, shown, style }: Props) => {
   return (
     <>
-      {shown ? <Skeleton style={SkeletonStyle}>{children}</Skeleton> : children}
+      {shown ? (
+        <Skeleton style={{ ...SkeletonStyle, ...style }}>{children}</Skeleton>
+      ) : (
+        children
+      )}
     </>
   );
 };

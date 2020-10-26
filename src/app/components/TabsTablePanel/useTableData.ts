@@ -77,7 +77,7 @@ export const useTableData = (url: string, inactive = false) => {
   return {
     pageNumber: parsedPageNumber,
     pageSize: parsedPageSize,
-    total: data?.total,
+    total: Math.min(data?.total, data?.listLimit) || data?.total || 0,
     data,
     error,
     mutate,

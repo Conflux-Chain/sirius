@@ -6,14 +6,23 @@ import { Card } from '@cfxjs/react-ui';
 import { ChevronUp } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 import { media } from 'styles/media';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+
+const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
 export function TokenBalanceSelect({ address = '' } = {}) {
   const { data: tokensData } = useAccountTokenList(address, ['icon']);
   const tokens = tokensData?.list || [];
+  const loading = tokensData?.loading;
   const tokenItems = tokens.map((t, idx) => (
     <SelectItem key={idx} isLastOne={idx === tokens.length - 1} {...t} />
   ));
-  return <Select>{tokenItems}</Select>;
+
+  return (
+    <SkeletonContainer shown={loading} style={skeletonStyle}>
+      <Select>{tokenItems}</Select>
+    </SkeletonContainer>
+  );
 }
 
 function Select({ children = [] } = {}) {

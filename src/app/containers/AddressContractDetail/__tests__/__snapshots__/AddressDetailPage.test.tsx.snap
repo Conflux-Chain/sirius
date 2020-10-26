@@ -113,7 +113,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c20 {
+.c16 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #16DBCC;
@@ -121,7 +121,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c21 {
+.c17 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FFBB37;
@@ -129,7 +129,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c22 {
+.c18 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FF82AC;
@@ -144,46 +144,8 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   left: 1.5rem;
 }
 
-.c16 {
-  font-size: 1rem;
-}
-
-.c17 {
-  min-width: 9rem;
-  height: 2.57rem;
-  border-radius: 0.29rem;
-  border: 0.07rem solid #e8e9ea;
-  padding: 0.64rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c18 {
-  font-size: 1.27rem;
-  font-weight: bold;
-}
-
-.c19 {
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
 .c0 {
-  padding: 2.29rem 0;
+  padding: 2.29rem 0 0;
   max-width: 73.1429rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -192,7 +154,6 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-bottom: 4.57rem;
 }
 
 .c1 {
@@ -250,7 +211,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c23 {
+.c19 {
   position: relative;
   width: 100%;
 }
@@ -258,6 +219,10 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 @media (max-width:600px) {
   .c7 {
     min-width: 13.67rem;
+  }
+
+  .c7 .detail-page-card.card {
+    padding: 0;
   }
 
   .c7 .detail-page-card.card div.content {
@@ -285,21 +250,21 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c20 {
+  .c16 {
     min-width: 3.67rem;
     min-height: 3.67rem;
   }
 }
 
 @media (max-width:600px) {
-  .c21 {
+  .c17 {
     min-width: 3.67rem;
     min-height: 3.67rem;
   }
 }
 
 @media (max-width:600px) {
-  .c22 {
+  .c18 {
     min-width: 3.67rem;
     min-height: 3.67rem;
   }
@@ -313,15 +278,8 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c17 {
-    min-width: 6.67rem;
-    height: 1.84rem;
-  }
-}
-
-@media (max-width:600px) {
   .c0 {
-    padding: 2rem 0;
+    padding: 2rem 0 0;
   }
 }
 
@@ -521,41 +479,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                 />
                 <div
                   class="c12"
-                >
-                  <div
-                    class="c16"
-                  >
-                    <div
-                      class="c17"
-                    >
-                      <div
-                        class="c18"
-                      >
-                        0
-                      </div>
-                      <div
-                        class="c19"
-                      >
-                        <svg
-                          fill="none"
-                          height="24"
-                          shape-rendering="geometricPrecision"
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="1.5"
-                          style="color: rgb(126, 130, 149);"
-                          viewBox="0 0 24 24"
-                          width="24"
-                        >
-                          <path
-                            d="M18 15l-6-6-6 6"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                />
               </div>
               <div
                 class=""
@@ -567,7 +491,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                     class="c13"
                   >
                     <div
-                      class="c20"
+                      class="c16"
                       color="#16DBCC"
                     />
                     <div
@@ -622,7 +546,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                     class="c13"
                   >
                     <div
-                      class="c21"
+                      class="c17"
                       color="#FFBB37"
                     />
                     <div
@@ -677,7 +601,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                     class="c13"
                   >
                     <div
-                      class="c22"
+                      class="c18"
                       color="#FF82AC"
                     />
                     <div
@@ -699,7 +623,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
     </div>
   </section>
   <section
-    class="c23"
+    class="c19"
   />
 </div>
 `;
