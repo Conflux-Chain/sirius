@@ -28,7 +28,10 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero."
+    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero.",
+    "at": "at",
+    "txOnlyEn": "txn",
+    "txOnlyZh": ""
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",

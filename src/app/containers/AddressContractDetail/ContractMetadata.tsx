@@ -248,7 +248,9 @@ export function ContractMetadata({ address }) {
                     {formatString(contractInfo.from, 'address')}
                   </Text>
                 )}
-                {' at txn '}
+                {` ${t(translations.contractDetail.at)} ${t(
+                  translations.contractDetail.txOnlyEn,
+                )} `}
                 {isAvaiable(contractInfo.from) ? (
                   <Link to={`/transaction/${contractInfo.transactionHash}`}>
                     <Text span hoverValue={contractInfo.transactionHash}>
@@ -260,6 +262,7 @@ export function ContractMetadata({ address }) {
                     {formatString(contractInfo.transactionHash, 'address')}
                   </Text>
                 )}
+                {` ${t(translations.contractDetail.txOnlyZh)} `}
               </Content>
             </CenterLine>
           ),
