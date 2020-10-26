@@ -97,7 +97,14 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
       return trans;
     });
 
-    mutate({ ...data, list: newTransferList }, false);
+    return {
+      data: {
+        ...data,
+        list: newTransferList,
+      },
+      error,
+      mutate,
+    };
   }
 
   return { data, error, mutate };

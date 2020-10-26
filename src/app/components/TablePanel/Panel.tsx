@@ -80,7 +80,8 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
 
   useEffect(() => {
     total && total !== cacheTotal && setCacheTotal(total);
-  }, [cacheTotal, total]);
+    /* eslint-disable-next-line */
+  }, [total]);
 
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
