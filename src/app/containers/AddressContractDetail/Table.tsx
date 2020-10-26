@@ -491,8 +491,12 @@ export function Table({ address }) {
 
                 let minTimestamp, maxTimestamp;
                 if (Array.isArray(dateQuery) && dateQuery.length > 1) {
-                  minTimestamp = new Date(dateQuery[0].toISOString()).getTime();
-                  maxTimestamp = new Date(dateQuery[0].toISOString()).getTime();
+                  minTimestamp = Math.round(
+                    new Date(dateQuery[0].toISOString()).getTime() / 1000,
+                  );
+                  maxTimestamp = Math.round(
+                    new Date(dateQuery[1].toISOString()).getTime(),
+                  );
                 }
 
                 if (typeof dateQuery?.toISOString === 'function') {
