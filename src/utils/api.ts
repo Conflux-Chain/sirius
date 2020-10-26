@@ -57,6 +57,59 @@ const simplePostFetcher = async (...args: any[]) => {
   return await res.json();
 };
 
+export const useSWRWithGetFecher = (key, swrOpts = {}) => {
+  const isTransferReq =
+    (typeof key === 'string' && key.startsWith('/transfer')) ||
+    (Array.isArray(key) &&
+      typeof key[0] === 'string' &&
+      key[0].startsWith('/transfer'));
+
+  const { data, error, mutate } = useSWR(key, simpleGetFetcher, { ...swrOpts });
+
+  let tokenAddress;
+
+  if (isTransferReq && data && data.list) {
+    tokenAddress = data.list.reduce((acc, trans) => {
+      if (trans.address && !acc.includes(trans.address))
+        acc.push(trans.address);
+      return acc;
+    }, []);
+  }
+
+  const { data: tokenData } = useSWR(
+    tokenAddress
+      ? qs.stringifyUrl({
+          url: '/token',
+          query: { addressArray: tokenAddress, fields: 'icon' },
+        })
+      : null,
+    simpleGetFetcher,
+  );
+
+  if (tokenData && tokenData.list) {
+    const newTransferList = data.list.map(trans => {
+      if (tokenAddress.includes(trans.address)) {
+        const tokenIdx = tokenAddress.indexOf(trans.address);
+        if (tokenData.list[tokenIdx])
+          return { ...trans, token: tokenData.list[tokenIdx] };
+      }
+
+      return trans;
+    });
+
+    return {
+      data: {
+        ...data,
+        list: newTransferList,
+      },
+      error,
+      mutate,
+    };
+  }
+
+  return { data, error, mutate };
+};
+
 export const useDashboardDag: useApi = (
   params,
   shouldFetch = true,
@@ -295,6 +348,7 @@ export const useAccountTokenList = (
         .then(res => res.json())
         .then(({ total, list }) => {
           return {
+            loading: false,
             total,
             list: list.map(t => {
               const { balance, decimals } = t;
@@ -304,9 +358,17 @@ export const useAccountTokenList = (
               };
             }),
           };
+        })
+        .catch(e => {
+          return {
+            loading: false,
+            total: 0,
+            list: [],
+          };
         }),
     {
       initialData: {
+        loading: true,
         total: 0,
         list: [],
       },

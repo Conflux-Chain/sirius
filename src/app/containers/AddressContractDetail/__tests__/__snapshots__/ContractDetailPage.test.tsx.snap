@@ -45,11 +45,28 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   fill: #fff;
 }
 
+.c8 .card.sirius-card {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+  padding: 0 1.2857rem;
+}
+
+.c8 .card.sirius-card:hover {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+.c8 .card.sirius-card .content {
+  padding: 0;
+}
+
 .c7 {
   min-width: 17rem;
 }
 
-.c8 {
+.c7 .detail-page-card.card div.content {
+  padding: 16px 0;
+}
+
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -63,7 +80,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   justify-content: space-between;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -73,22 +90,22 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   flex-direction: column;
 }
 
-.c10 {
+.c11 {
   color: #74798c;
   text-transform: capitalize;
 }
 
-.c11 {
+.c12 {
   font-weight: bold;
   color: #282d30;
   font-size: 1.71rem;
 }
 
-.c12 {
+.c13 {
   position: relative;
 }
 
-.c13 {
+.c14 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #1e3de4;
@@ -96,7 +113,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c19 {
+.c16 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #16DBCC;
@@ -104,7 +121,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c20 {
+.c17 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FFBB37;
@@ -112,7 +129,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c21 {
+.c18 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FF82AC;
@@ -120,53 +137,15 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c14 {
+.c15 {
   position: absolute;
   top: 1.64rem;
   margin-top: -5px;
   left: 1.5rem;
 }
 
-.c15 {
-  font-size: 1rem;
-}
-
-.c16 {
-  min-width: 9rem;
-  height: 2.57rem;
-  border-radius: 0.29rem;
-  border: 0.07rem solid #e8e9ea;
-  padding: 0.64rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c17 {
-  font-size: 1.27rem;
-  font-weight: bold;
-}
-
-.c18 {
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
 .c0 {
-  padding: 2.29rem 0;
+  padding: 2.29rem 0 0;
   max-width: 73.1429rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -175,7 +154,6 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-bottom: 4.57rem;
 }
 
 .c1 {
@@ -233,11 +211,11 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c22 {
+.c19 {
   margin-bottom: 2.29rem;
 }
 
-.c23 {
+.c20 {
   position: relative;
   width: 100%;
 }
@@ -247,68 +225,65 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     min-width: 13.67rem;
   }
 
+  .c7 .detail-page-card.card {
+    padding: 0;
+  }
+
   .c7 .detail-page-card.card div.content {
     padding: 0;
   }
 }
 
 @media (max-width:600px) {
-  .c8 {
+  .c9 {
     padding: 0.83rem 1rem;
   }
 }
 
 @media (max-width:600px) {
-  .c11 {
+  .c12 {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width:600px) {
-  .c13 {
-    min-width: 3.67rem;
-    min-height: 3.67rem;
-  }
-}
-
-@media (max-width:600px) {
-  .c19 {
-    min-width: 3.67rem;
-    min-height: 3.67rem;
-  }
-}
-
-@media (max-width:600px) {
-  .c20 {
-    min-width: 3.67rem;
-    min-height: 3.67rem;
-  }
-}
-
-@media (max-width:600px) {
-  .c21 {
-    min-width: 3.67rem;
-    min-height: 3.67rem;
-  }
-}
-
-@media (max-width:600px) {
   .c14 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c16 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c18 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c15 {
     top: 1.34rem;
     left: 1.14rem;
   }
 }
 
 @media (max-width:600px) {
-  .c16 {
-    min-width: 6.67rem;
-    height: 1.84rem;
-  }
-}
-
-@media (max-width:600px) {
   .c0 {
-    padding: 2rem 0;
+    padding: 2rem 0 0;
   }
 }
 
@@ -335,7 +310,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c22 {
+  .c19 {
     margin-bottom: 2rem;
   }
 }
@@ -514,45 +489,49 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
       class="c7"
     >
       <div
-        class="jsx-2527601167 card detail-page-card solid"
+        class="c8"
       >
         <div
-          class="jsx-178616938 content "
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
         >
           <div
-            class="c8"
+            class="jsx-178616938 content "
           >
             <div
               class="c9"
             >
               <div
                 class="c10"
-              />
-              <div
-                class="c11"
-              />
-            </div>
-            <div
-              class=""
-            >
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
               <div
                 class=""
               >
                 <div
-                  class="c12"
+                  class=""
                 >
                   <div
                     class="c13"
-                    color="#1e3de4"
-                  />
-                  <div
-                    class="c14"
                   >
-                    <img
-                      alt="balance"
-                      class="icon"
-                      src="/contract-address/balance.svg"
+                    <div
+                      class="c14"
+                      color="#1e3de4"
                     />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="balance"
+                        class="icon"
+                        src="/contract-address/balance.svg"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -565,181 +544,159 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
       class="c7"
     >
       <div
-        class="jsx-2527601167 card detail-page-card solid"
+        class="c8"
       >
         <div
-          class="jsx-178616938 content "
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
         >
           <div
-            class="c8"
+            class="jsx-178616938 content "
           >
             <div
               class="c9"
             >
               <div
                 class="c10"
-              />
-              <div
-                class="c11"
               >
                 <div
-                  class="c15"
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
                 >
                   <div
-                    class="c16"
+                    class="c13"
+                  >
+                    <div
+                      class="c16"
+                      color="#16DBCC"
+                    />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="token"
+                        class="icon"
+                        src="/contract-address/token.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
                   >
                     <div
                       class="c17"
+                      color="#FFBB37"
+                    />
+                    <div
+                      class="c15"
                     >
-                      0
+                      <img
+                        alt="Storage Collateral"
+                        class="icon"
+                        src="/contract-address/storage.svg"
+                      />
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
+                  >
                     <div
                       class="c18"
+                      color="#FF82AC"
+                    />
+                    <div
+                      class="c15"
                     >
-                      <svg
-                        fill="none"
-                        height="24"
-                        shape-rendering="geometricPrecision"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="1.5"
-                        style="color: rgb(126, 130, 149);"
-                        viewBox="0 0 24 24"
-                        width="24"
-                      >
-                        <path
-                          d="M18 15l-6-6-6 6"
-                        />
-                      </svg>
+                      <img
+                        alt="nonce"
+                        class="icon"
+                        src="/contract-address/nonce.svg"
+                      />
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class=""
-            >
-              <div
-                class=""
-              >
-                <div
-                  class="c12"
-                >
-                  <div
-                    class="c19"
-                    color="#16DBCC"
-                  />
-                  <div
-                    class="c14"
-                  >
-                    <img
-                      alt="token"
-                      class="icon"
-                      src="/contract-address/token.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="c7"
-    >
-      <div
-        class="jsx-2527601167 card detail-page-card solid"
-      >
-        <div
-          class="jsx-178616938 content "
-        >
-          <div
-            class="c8"
-          >
-            <div
-              class="c9"
-            >
-              <div
-                class="c10"
-              />
-              <div
-                class="c11"
-              />
-            </div>
-            <div
-              class=""
-            >
-              <div
-                class=""
-              >
-                <div
-                  class="c12"
-                >
-                  <div
-                    class="c20"
-                    color="#FFBB37"
-                  />
-                  <div
-                    class="c14"
-                  >
-                    <img
-                      alt="Storage Collateral"
-                      class="icon"
-                      src="/contract-address/storage.svg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="c7"
-    >
-      <div
-        class="jsx-2527601167 card detail-page-card solid"
-      >
-        <div
-          class="jsx-178616938 content "
-        >
-          <div
-            class="c8"
-          >
-            <div
-              class="c9"
-            >
-              <div
-                class="c10"
-              />
-              <div
-                class="c11"
-              />
-            </div>
-            <div
-              class=""
-            >
-              <div
-                class=""
-              >
-                <div
-                  class="c12"
-                >
-                  <div
-                    class="c21"
-                    color="#FF82AC"
-                  />
-                  <div
-                    class="c14"
-                  >
-                    <img
-                      alt="nonce"
-                      class="icon"
-                      src="/contract-address/nonce.svg"
-                    />
                   </div>
                 </div>
               </div>
@@ -750,10 +707,10 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     </div>
   </section>
   <section
-    class="c22"
+    class="c19"
   />
   <section
-    class="c23"
+    class="c20"
   />
 </div>
 `;

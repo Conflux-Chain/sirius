@@ -40,6 +40,7 @@ export const IconButton = ({
   return (
     <IconButtonWrap>
       <Tooltip
+        hoverable
         placement="top"
         text={tooltipText}
         contentClassName={tooltipContentClassName}

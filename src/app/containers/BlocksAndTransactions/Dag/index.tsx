@@ -9,19 +9,21 @@ import SkeletonContainer from '../../../components/SkeletonContainer/Loadable';
 export function Dag() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   return (
     <>
       {bp !== 's' && [
         loading && (
-          <SkeletonContainer shown={true}>
+          <SkeletonContainer key="skeleton" shown={true}>
             <FakeDag />
           </SkeletonContainer>
         ),
-        <DagContainer loading={loading}>
+        <DagContainer key="dag" isLoading={loading}>
           <DagGraph onLoaded={() => setLoading(false)}>
-            <DagTitle loading={loading}>{t(translations.block.title)}</DagTitle>
+            <DagTitle isLoading={loading}>
+              {t(translations.block.title)}
+            </DagTitle>
           </DagGraph>
         </DagContainer>,
       ]}
@@ -35,8 +37,8 @@ const FakeDag = styled.div`
   border-radius: 0.2857rem;
 `;
 
-const DagContainer = styled.div<{ loading: boolean }>`
-  position: ${props => (props.loading ? 'absolute' : 'relative')};
+const DagContainer = styled.div<{ isLoading: boolean }>`
+  position: ${props => (props.isLoading ? 'absolute' : 'relative')};
   margin-top: 1.71rem;
   margin-bottom: 1.14rem;
   width: 100%;
@@ -49,8 +51,8 @@ const DagContainer = styled.div<{ loading: boolean }>`
     }
   }
 `;
-const DagTitle = styled.div<{ loading: boolean }>`
-  display: ${props => (props.loading ? 'none' : 'block')};
+const DagTitle = styled.div<{ isLoading: boolean }>`
+  display: ${props => (props.isLoading ? 'none' : 'block')};
   position: absolute;
   top: 1rem;
   left: 2rem;

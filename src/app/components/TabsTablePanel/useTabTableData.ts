@@ -41,7 +41,7 @@ export const useTabTableData = t => {
         gotoPage,
         setPageSize,
         // eslint-disable-next-line react-hooks/rules-of-hooks
-      } = useTableData(url);
+      } = useTableData(url, !isCurrentTab);
       if (isCurrentTab) {
         currentTabTotal = total;
         acc.currentTabValue = value;
@@ -97,7 +97,10 @@ export const useTabTableData = t => {
     if (tabs.length === 1) {
       index = 0;
     } else {
-      index = tabs.reduce((acc, { value }, i) => (v === value ? i : 0));
+      index = tabs.reduce((acc, { value }, i) => {
+        if (acc === 0 && v === value) return i;
+        return acc;
+      }, 0);
     }
     return switchToThisTab[index]();
   };

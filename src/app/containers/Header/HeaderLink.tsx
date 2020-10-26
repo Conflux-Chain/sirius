@@ -2,92 +2,69 @@ import React, { ReactNode, MouseEventHandler, useRef } from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
-import { useRouteMatch, match, Link as RouterLink } from 'react-router-dom';
+import { useRouteMatch, Link as RouterLink } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
 import { ChevronDown } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
 export type Node = string | ReactNode | JSX.Element;
 export type HeaderLinkTitle = Node | Array<Node>;
-export type HeaderLinkHref =
-  | Node
-  | Array<Node>
-  | MouseEventHandler
-  | [MouseEventHandler, (title: HeaderLinkTitle) => boolean];
-export type HeaderLinks = Array<HeaderLinkTitle | HeaderLinkHref>;
 
-export function generateHeaderLinksJSX(links: HeaderLinks, level = 0) {
-  const linksJSX: ReactNode[] = [];
+export interface HeaderLink {
+  title: HeaderLinkTitle;
+  href?: string;
+  onClick?: MouseEventHandler;
+  children?: HeaderLink[];
+  isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
+  matched?: boolean;
+}
 
-  for (let i = 0; i < links.length - 1; i += 2) {
-    const [title, href] = [links[i], links[i + 1]];
+export type HeaderLinks = HeaderLink[];
 
-    // for the matched route style
-    let matched;
-    if (typeof href === 'string' && href.startsWith('/'))
+export function genParseLinkFn(links: HeaderLinks, level = 0) {
+  function parseLink(link: HeaderLink, idx: number) {
+    const {
+      title,
+      href,
+      onClick,
+      children,
+      isMatchedFn,
+      matched: customMatched,
+    } = link;
+
+    let matched: boolean = customMatched || false;
+    let childrenUI: ReactNode[] = [];
+    let isMenu = false;
+    if (href) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      matched = useRouteMatch(href as string);
-
-    // href is a array of two funcs means this is a link with [onClick, isMatchFn]
-    if (
-      Array.isArray(href) &&
-      typeof href[0] == 'function' &&
-      typeof href[1] === 'function'
-    ) {
-      matched = href[1](title as HeaderLinkTitle);
-      linksJSX.push(
-        <HeaderLink
-          key={i}
-          className={`navbar-link level-${level}`}
-          onClick={href[0] as MouseEventHandler}
-          matched={Boolean(matched)}
-        >
-          {title}
-        </HeaderLink>,
-      );
-      continue;
+      matched = Boolean(useRouteMatch(href as string)?.isExact);
     }
 
-    // href is a array means this is a menu with multiple links
-    if (Array.isArray(href) && typeof href[0] !== 'function') {
-      linksJSX.push(
-        <HeaderLink isMenu key={i} className={`navbar-link level-${level}`}>
-          {title}
-          {generateHeaderLinksJSX(href as HeaderLinks, level + 1)}
-        </HeaderLink>,
-      );
-      continue;
+    if (isMatchedFn) {
+      matched = isMatchedFn(link);
     }
 
-    // href is function means this is a link with on click function
-    if (typeof href === 'function') {
-      linksJSX.push(
-        <HeaderLink
-          key={i}
-          className={`navbar-link level-${level}`}
-          onClick={href as MouseEventHandler}
-          matched={Boolean(matched) && (matched as match<{}>).isExact}
-        >
-          {title}
-        </HeaderLink>,
-      );
-      continue;
+    if (children) {
+      childrenUI = genParseLinkFn(children, level + 1);
+      isMenu = true;
     }
 
-    // rest are normal links with normal href
-    linksJSX.push(
+    return (
       <HeaderLink
-        key={i}
+        isMenu={isMenu}
+        key={idx}
+        href={href}
         className={`navbar-link level-${level}`}
-        href={href as string}
-        matched={Boolean(matched) && (matched as match<{}>).isExact}
+        onClick={onClick}
+        matched={matched}
       >
         {title}
-      </HeaderLink>,
+        {childrenUI}
+      </HeaderLink>
     );
   }
 
-  return linksJSX;
+  return links.map(parseLink);
 }
 
 const Menu = styled.div`
@@ -199,7 +176,7 @@ export const HeaderLink: React.FC<{
           ])}
         >
           <WrappLink>
-            <UILink ref={ref} className={className}>
+            <UILink ref={ref} className={clsx(className, matched && 'matched')}>
               {(bp === 'm' || bp === 's') && isMenu && (
                 <ChevronDown size={18} />
               )}

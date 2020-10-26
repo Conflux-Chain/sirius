@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import { media } from 'styles/media';
 
 export const Main = styled.div`
-  padding: 2.29rem 0;
+  padding: 2.29rem 0 0;
   max-width: 73.1429rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: 4.57rem;
 
   ${media.s} {
-    padding: 2rem 0;
+    padding: 2rem 0 0;
   }
 `;
 

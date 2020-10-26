@@ -17,7 +17,8 @@ import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
-import { Tooltip } from '../../components/Tooltip/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = () => {
@@ -109,6 +110,8 @@ export function ContractMetadata({ address }) {
     'transactionHash',
   ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
+  const loading = contractInfo.name === 'loading...';
+  const skeletonStyle = { height: '1.5714rem' };
 
   return (
     <List
@@ -123,15 +126,17 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              {contractInfo.icon && (
-                <Icon
-                  src={contractInfo.icon}
-                  alt={`${contractInfo.name} logo`}
-                />
-              )}
-              <Content>{contractInfo.name}</Content>
-            </CenterLine>
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                {contractInfo.icon && (
+                  <Icon
+                    src={contractInfo.icon}
+                    alt={`${contractInfo.name} logo`}
+                  />
+                )}
+                <Content>{contractInfo.name}</Content>
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
         {
@@ -144,22 +149,24 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              <Content>
-                {isAvaiable(contractInfo.admin) ? (
-                  <Link to={`/address/${contractInfo.admin}`}>
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                <Content>
+                  {isAvaiable(contractInfo.admin) ? (
+                    <Link to={`/address/${contractInfo.admin}`}>
+                      <Text span hoverValue={contractInfo.admin}>
+                        {formatString(contractInfo.admin, 'address')}
+                      </Text>
+                    </Link>
+                  ) : (
                     <Text span hoverValue={contractInfo.admin}>
                       {formatString(contractInfo.admin, 'address')}
                     </Text>
-                  </Link>
-                ) : (
-                  <Text span hoverValue={contractInfo.admin}>
-                    {formatString(contractInfo.admin, 'address')}
-                  </Text>
-                )}
-              </Content>
-              <WarnningButton key="warning" />
-            </CenterLine>
+                  )}
+                </Content>
+                <WarnningButton key="warning" />
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
         {
@@ -172,20 +179,27 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              {tokenInfo.icon && (
-                <Icon src={tokenInfo.icon} alt={`${contractInfo.name} logo`} />
-              )}
-              <Content
-                className={clsx(!isAvaiable(tokenInfo.name) && 'not-avaiable')}
-              >
-                {isAvaiable(tokenInfo.name) ? (
-                  <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
-                ) : (
-                  tokenInfo.name
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                {tokenInfo.icon && (
+                  <Icon
+                    src={tokenInfo.icon}
+                    alt={`${contractInfo.name} logo`}
+                  />
                 )}
-              </Content>
-            </CenterLine>
+                <Content
+                  className={clsx(
+                    !isAvaiable(tokenInfo.name) && 'not-avaiable',
+                  )}
+                >
+                  {isAvaiable(tokenInfo.name) ? (
+                    <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
+                  ) : (
+                    tokenInfo.name
+                  )}
+                </Content>
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
         {
@@ -198,26 +212,28 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              <Content
-                className={clsx(
-                  !isAvaiable(contractInfo.sponsorForCollateral) &&
-                    'not-avaiable',
-                )}
-              >
-                {isAvaiable(contractInfo.sponsorForCollateral)
-                  ? [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsorForCollateral}`}
-                      >
-                        {contractInfo.sponsorForCollateral}
-                      </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
-                    ]
-                  : contractInfo.sponsorForCollateral}
-              </Content>
-            </CenterLine>
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                <Content
+                  className={clsx(
+                    !isAvaiable(contractInfo.sponsorForCollateral) &&
+                      'not-avaiable',
+                  )}
+                >
+                  {isAvaiable(contractInfo.sponsorForCollateral)
+                    ? [
+                        <Link
+                          key="content"
+                          to={`/address/${contractInfo.sponsorForCollateral}`}
+                        >
+                          {contractInfo.sponsorForCollateral}
+                        </Link>,
+                        <EditButton url={`/sponsor/${address}`} key="edit" />,
+                      ]
+                    : contractInfo.sponsorForCollateral}
+                </Content>
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
         {
@@ -230,38 +246,43 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              <Content
-                className={clsx(
-                  !isAvaiable(contractInfo.from) && 'not-avaiable',
-                  !isAvaiable(contractInfo.transactionHash) && 'not-avaiable',
-                )}
-              >
-                {isAvaiable(contractInfo.from) ? (
-                  <Link to={`/address/${contractInfo.from}`}>
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                <Content
+                  className={clsx(
+                    !isAvaiable(contractInfo.from) && 'not-avaiable',
+                    !isAvaiable(contractInfo.transactionHash) && 'not-avaiable',
+                  )}
+                >
+                  {isAvaiable(contractInfo.from) ? (
+                    <Link to={`/address/${contractInfo.from}`}>
+                      <Text span hoverValue={contractInfo.from}>
+                        {formatString(contractInfo.from, 'address')}
+                      </Text>
+                    </Link>
+                  ) : (
                     <Text span hoverValue={contractInfo.from}>
                       {formatString(contractInfo.from, 'address')}
                     </Text>
-                  </Link>
-                ) : (
-                  <Text span hoverValue={contractInfo.from}>
-                    {formatString(contractInfo.from, 'address')}
-                  </Text>
-                )}
-                {' at txn '}
-                {isAvaiable(contractInfo.from) ? (
-                  <Link to={`/transaction/${contractInfo.transactionHash}`}>
+                  )}
+                  {` ${t(translations.contractDetail.at)} ${t(
+                    translations.contractDetail.txOnlyEn,
+                  )} `}
+                  {isAvaiable(contractInfo.from) ? (
+                    <Link to={`/transaction/${contractInfo.transactionHash}`}>
+                      <Text span hoverValue={contractInfo.transactionHash}>
+                        {formatString(contractInfo.transactionHash, 'address')}
+                      </Text>
+                    </Link>
+                  ) : (
                     <Text span hoverValue={contractInfo.transactionHash}>
                       {formatString(contractInfo.transactionHash, 'address')}
                     </Text>
-                  </Link>
-                ) : (
-                  <Text span hoverValue={contractInfo.transactionHash}>
-                    {formatString(contractInfo.transactionHash, 'address')}
-                  </Text>
-                )}
-              </Content>
-            </CenterLine>
+                  )}
+                  {` ${t(translations.contractDetail.txOnlyZh)} `}
+                </Content>
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
         {
@@ -274,21 +295,23 @@ export function ContractMetadata({ address }) {
             </Tooltip>
           ),
           children: (
-            <CenterLine>
-              <Content>
-                {isAvaiable(contractInfo.sponsorForGas)
-                  ? [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsorForGas}`}
-                      >
-                        {contractInfo.sponsorForGas}
-                      </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
-                    ]
-                  : contractInfo.sponsorForGas}
-              </Content>
-            </CenterLine>
+            <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <CenterLine>
+                <Content>
+                  {isAvaiable(contractInfo.sponsorForGas)
+                    ? [
+                        <Link
+                          key="content"
+                          to={`/address/${contractInfo.sponsorForGas}`}
+                        >
+                          {contractInfo.sponsorForGas}
+                        </Link>,
+                        <EditButton url={`/sponsor/${address}`} key="edit" />,
+                      ]
+                    : contractInfo.sponsorForGas}
+                </Content>
+              </CenterLine>
+            </SkeletonContainer>
           ),
         },
       ]}
@@ -303,6 +326,7 @@ const CenterLine = styled.div`
 
   .metadata-tooltip-btn {
     margin-left: 0.5rem;
+    margin-bottom: 0.2857rem;
     ${media.s} {
       margin-left: 1rem;
     }

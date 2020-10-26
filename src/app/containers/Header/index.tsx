@@ -12,10 +12,11 @@ import { TextLogo } from '../../components/TextLogo';
 import { Search } from './Search/Loadable';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
-import { generateHeaderLinksJSX, HeaderLinks } from './HeaderLink';
+import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@geist-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
+import { useLocation } from 'react-use';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -24,58 +25,101 @@ export const Header = memo(() => {
   const iszh = i18n.language.includes('zh');
   const isTestnet = useTestnet();
 
+  const location = useLocation();
+  const contractMatched =
+    location?.pathname?.startsWith('/sponsor') ||
+    location?.pathname?.startsWith('/contract');
   const bp = useBreakpoint();
   const startLinks: HeaderLinks = [
-    t(translations.header.home), // title
-    '/', // href
-    t(translations.header.bnt),
-    '/blocks-and-transactions',
-    t(translations.header.tokens),
-    '/tokens',
-    t(translations.header.contract), // menu title
-    // menu href -> menu item
-    [
-      // title
-      [
-        t(translations.header.contractCreation),
-        <Check size={18} key="check" />,
+    {
+      // home
+      title: t(translations.header.home),
+      href: '/',
+    },
+    // blocks and transactions
+    { title: t(translations.header.bnt), href: '/blocks-and-transactions' },
+    // tokens
+    { title: t(translations.header.tokens), href: '/tokens' },
+    // contract
+    {
+      title: t(translations.header.contract),
+      matched: contractMatched,
+      children: [
+        {
+          // create contract
+          title: [
+            t(translations.header.contractCreation),
+            <Check size={18} key="check" />,
+          ],
+          href: '/contract',
+        },
+        {
+          // sponsor
+          title: [
+            t(translations.header.contractSponsor),
+            <Check size={18} key="check" />,
+          ],
+          href: '/sponsor',
+        },
       ],
-
-      '/contract', // href
-      [t(translations.header.contractSponsor), <Check size={18} key="check" />],
-      '/sponsor',
-    ],
-    t(translations.header.charts),
-    '/charts',
+    },
+    // charts
+    { title: t(translations.header.charts), href: '/charts' },
   ];
 
   const endLinks: HeaderLinks = [
-    isTestnet ? t(translations.header.testnet) : t(translations.header.oceanus),
-    [
-      [
-        t(translations.header.oceanus),
-        !isTestnet && <Check size={18} key="check" />,
+    {
+      // switch network
+      title: isTestnet
+        ? t(translations.header.testnet)
+        : t(translations.header.oceanus),
+      children: [
+        {
+          // oceanus
+          title: [
+            t(translations.header.oceanus),
+            !isTestnet && <Check size={18} key="check" />,
+          ],
+          onClick: () => isTestnet && toMainnet(),
+          isMatchedFn: () => !isTestnet,
+        },
+        {
+          // testnet
+          title: [
+            t(translations.header.testnet),
+            isTestnet && <Check size={18} key="check" />,
+          ],
+          onClick: () => !isTestnet && toTestnet(),
+          isMatchedFn: () => isTestnet,
+        },
       ],
-      [() => isTestnet && toMainnet(), () => !isTestnet],
-      [
-        t(translations.header.testnet),
-        isTestnet && <Check size={18} key="check" />,
+    },
+    {
+      // switch language
+      title: (
+        <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
+          {iszh ? zh : en}
+        </div>
+      ), // level 0 title
+      children: [
+        {
+          // en
+          title: [en, !iszh && <Check size={18} key="check" />],
+          onClick: () => iszh && i18n.changeLanguage('en'),
+          isMatchedFn: () => !iszh,
+        },
+        {
+          // zh
+          title: [zh, iszh && <Check size={18} key="check" />],
+          onClick: () => !iszh && i18n.changeLanguage('zh-CN'),
+          isMatchedFn: () => iszh,
+        },
       ],
-      [() => !isTestnet && toTestnet(), () => isTestnet],
-    ],
-    <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
-      {iszh ? zh : en}
-    </div>, // level 0 title
-    [
-      [en, !iszh && <Check size={18} key="check" />],
-      [() => iszh && i18n.changeLanguage('en'), () => !iszh],
-      [zh, iszh && <Check size={18} key="check" />],
-      [() => !iszh && i18n.changeLanguage('zh-CN'), () => iszh],
-    ],
+    },
   ];
 
-  const startLinksJSX = generateHeaderLinksJSX(startLinks);
-  const endLinksJSX = generateHeaderLinksJSX(endLinks);
+  const startLinksJSX = genParseLinkFn(startLinks);
+  const endLinksJSX = genParseLinkFn(endLinks);
 
   const brand = (
     <LogoWrapper>
@@ -106,6 +150,7 @@ export const Header = memo(() => {
 const LogoWrapper = styled.div`
   .confi-logo {
     margin-right: 0.57rem;
+    width: 3.3571rem;
   }
   a.link {
     display: flex;

@@ -28,7 +28,10 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero."
+    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero.",
+    "at": "at",
+    "txOnlyEn": "txn",
+    "txOnlyZh": ""
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",
@@ -38,10 +41,10 @@
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
     "description": "Blocks and Transactions",
-    "tipCountBefore": "A total of",
-    "tipCountAfter": "{{type}} found (Showing the last 10k records)",
-    "labelCountBefore": "A total of",
-    "labelCountAfter": "{{type}} found",
+    "tipCountBefore": "Total of",
+    "tipCountAfter": "{{type}}",
+    "labelCountBefore": "Total of",
+    "labelCountAfter": "{{type}}",
     "blocks": "Blocks",
     "transactions": "Transactions"
   },
@@ -236,7 +239,9 @@
       "second": "{{count}} sec",
       "second_plural": "{{count}} secs",
       "ago": "ago"
-    }
+    },
+    "startDate": "Start date",
+    "endDate": "End date"
   },
   "sponsor": {
     "title": "Contract Sponsor",

@@ -18,13 +18,16 @@ import {
   tokenColunms,
   blockColunms,
 } from 'utils/tableColumns';
+import { StyledIconWrapper } from 'utils/tableColumns/token';
+import { Link } from 'app/components/Link';
+import { Text } from 'app/components/Text';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { isContractAddress } from 'utils';
-import { useContract } from 'utils/api';
+import { isContractAddress, formatString } from 'utils';
+import { useContract, useToken } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 
@@ -92,6 +95,7 @@ const ButtonWrapper = styled.div`
 
 const DatePickerWithQuery = ({ onChange }) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const { minTimestamp, maxTimestamp } = queryString.parse(
     location.search || '',
   );
@@ -106,9 +110,12 @@ const DatePickerWithQuery = ({ onChange }) => {
         : undefined,
     [minTimestamp, maxTimestamp],
   );
-
+  const datePlaceholder = [
+    t(translations.general.startDate),
+    t(translations.general.endDate),
+  ];
   return (
-    <DatePickerWrap key="date-picker">
+    <DatePickerWrap key="date-picker-wrap">
       {bp !== 's' && (
         <DatePicker.RangePicker
           // @ts-ignore
@@ -116,6 +123,8 @@ const DatePickerWithQuery = ({ onChange }) => {
           color="primary"
           variant="solid"
           key="date-picker"
+          // @ts-ignore
+          placeholder={datePlaceholder}
           onChange={onChange}
         />
       )}
@@ -184,7 +193,7 @@ const TxDirectionFilter = ({ onChange }) => {
   ));
 
   return (
-    <TxDirectionFilterWrap key="tx-filter">
+    <TxDirectionFilterWrap key="tx-filter-wrap">
       <Button
         key="tx-filter-button"
         color="secondary"
@@ -263,6 +272,7 @@ const TxDirectionFilterDropdown = styled.div`
 
 export function Table({ address }) {
   const { t } = useTranslation();
+  const loadingText = t(translations.general.loading);
   const bp = useBreakpoint();
   const location = useLocation();
   const history = useHistory();
@@ -270,15 +280,18 @@ export function Table({ address }) {
   const [filterVisible, setFilterVisible] = useState(
     queries?.tab !== 'contract',
   );
-  const [txFilterVisible, setTxFilterVisible] = useState(
-    queries?.tab !== 'mined-blocks' && queries?.tab !== 'transfers',
-  );
   const isContract = useMemo(() => isContractAddress(address), [address]);
+  const [txFilterVisible, setTxFilterVisible] = useState(
+    queries?.tab !== 'mined-blocks' &&
+      queries?.tab !== 'transfers' &&
+      !isContract,
+  );
 
   const { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
   ]);
+  const { data: tokenInfo } = useToken(address, ['name', 'icon']);
 
   useEffect(() => {
     history.replace(
@@ -298,17 +311,29 @@ export function Table({ address }) {
     transactionColunms.hash,
     {
       ...tokenColunms.from,
-      render: (value, row, index) =>
-        tokenColunms.from.render(value, row, index, {
-          accountFilter: false,
-        }),
+      render: (value, row, index) => {
+        let nameTag;
+        if (value === address && tokenInfo && tokenInfo.name) {
+          nameTag = tokenInfo.name;
+        }
+        return tokenColunms.from.render(value, row, index, {
+          isToken: false,
+          nameTag,
+        });
+      },
     },
     {
       ...tokenColunms.to,
-      render: (value, row, index) =>
-        tokenColunms.to.render(value, row, index, {
-          accountFilter: false,
-        }),
+      render: (value, row, index) => {
+        let nameTag;
+        if (value === address && tokenInfo && tokenInfo.name) {
+          nameTag = tokenInfo.name;
+        }
+        return tokenColunms.to.render(value, row, index, {
+          isToken: false,
+          nameTag,
+        });
+      },
     },
     transactionColunms.value,
     transactionColunms.gasPrice,
@@ -316,25 +341,50 @@ export function Table({ address }) {
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 4, 4, 4, 2];
+  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
-    tokenColunms.age,
     {
       ...tokenColunms.from,
       render: (value, row, index) =>
         tokenColunms.from.render(value, row, index, {
-          accountFilter: false,
+          isToken: false,
         }),
     },
     {
       ...tokenColunms.to,
       render: (value, row, index) =>
         tokenColunms.to.render(value, row, index, {
-          accountFilter: false,
+          isToken: false,
         }),
     },
     tokenColunms.quantity,
+    {
+      ...tokenColunms.token,
+      render: row => (
+        <StyledIconWrapper>
+          {row?.token
+            ? [
+                row?.token?.icon && (
+                  <img key="img" src={row.token.icon} alt="token icon" />
+                ),
+                <Link key="link" href={`/token/${row?.token?.address}`}>
+                  <Text
+                    span
+                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                  >
+                    {formatString(
+                      `${row?.token?.name} (${row?.token?.symbol})`,
+                      'tag',
+                    )}
+                  </Text>
+                </Link>,
+              ]
+            : loadingText}
+        </StyledIconWrapper>
+      ),
+    },
+    tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
   const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
@@ -381,7 +431,7 @@ export function Table({ address }) {
       url: `/transfer?accountAddress=${address}`,
       table: {
         columns: columnsTokenTrasfers,
-        rowKey: 'transactionHash',
+        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
       },
     },
     isContract
@@ -422,7 +472,7 @@ export function Table({ address }) {
         <FilterWrap>
           {bp !== 's' && (
             <DatePickerWithQuery
-              key="date-picker"
+              key="date-picker-query"
               onChange={dateQuery => {
                 if (!dateQuery)
                   return history.push(
@@ -497,7 +547,7 @@ export function Table({ address }) {
         key="table"
         tabs={tabs}
         onTabsChange={value => {
-          if (value === 'transfers' || value === 'mined-blocks')
+          if (value === 'transfers' || value === 'mined-blocks' || isContract)
             setTxFilterVisible(false);
           else setTxFilterVisible(true);
           if (value === 'contract-viewer') return setFilterVisible(false);

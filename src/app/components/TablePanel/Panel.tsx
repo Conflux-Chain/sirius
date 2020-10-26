@@ -22,6 +22,7 @@ export type TablePanelType = {
 const mockTableConfig = columns => {
   const mockTableColumns = columns.map((item, i) => ({
     id: i,
+    key: i,
     dataIndex: 'key',
     width: item.width,
     render: () => <Skeleton />,
@@ -79,7 +80,8 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
 
   useEffect(() => {
     total && total !== cacheTotal && setCacheTotal(total);
-  }, [cacheTotal, total]);
+    /* eslint-disable-next-line */
+  }, [total]);
 
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();

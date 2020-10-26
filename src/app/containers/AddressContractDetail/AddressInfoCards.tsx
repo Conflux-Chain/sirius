@@ -5,12 +5,19 @@ import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
-import { Text } from '../../components/Text/Loadable';
-import { getUnitByCfxNum } from '../../../utils';
-import { Tooltip } from '../../components/Tooltip/Loadable';
+import { Text } from 'app/components/Text/Loadable';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { getUnitByCfxNum } from 'utils';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+
+// todo, need to refactor the request, and rewrite skeleton style
+const skeletonStyle = { width: '7rem', height: '2.4rem' };
+
 export function BalanceCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
+  const loading = accountInfo.balance === 'loading...';
+
   return (
     <DetailPageCard
       title={
@@ -19,7 +26,7 @@ export function BalanceCard({ address }) {
         </Tooltip>
       }
       content={
-        accountInfo ? (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
           <Text
             hoverValue={`${getUnitByCfxNum(accountInfo.balance, true).num} ${
               getUnitByCfxNum(accountInfo.balance, true).unit
@@ -27,9 +34,7 @@ export function BalanceCard({ address }) {
           >
             {getUnitByCfxNum(accountInfo.balance).num}
           </Text>
-        ) : (
-          ''
-        )
+        </SkeletonContainer>
       }
       icon={
         <InfoImage
@@ -67,18 +72,20 @@ export function TokensCard({ address }) {
 export function StorageStakingCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
+  const loading = accountInfo.balance === 'loading...';
+
   return (
     <DetailPageCard
       title={
-        <Tooltip
-          text={t(translations.toolTip.address.storageCollateral)}
-          placement="top"
+        <Text
+          hoverValue={t(translations.toolTip.address.storageCollateral)}
+          maxCount={10}
         >
           {t(translations.general.storageStaking)}
-        </Tooltip>
+        </Text>
       }
       content={
-        accountInfo?.collateralForStorage ? (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
           <Text
             hoverValue={`${
               getUnitByCfxNum(accountInfo.collateralForStorage, true).num
@@ -86,9 +93,7 @@ export function StorageStakingCard({ address }) {
           >
             {getUnitByCfxNum(accountInfo.collateralForStorage).num}
           </Text>
-        ) : (
-          ''
-        )
+        </SkeletonContainer>
       }
       icon={
         <InfoImage
@@ -104,6 +109,7 @@ export function StorageStakingCard({ address }) {
 export function NonceCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
+  const loading = accountInfo.balance === 'loading...';
 
   return (
     <DetailPageCard
@@ -113,13 +119,11 @@ export function NonceCard({ address }) {
         </Tooltip>
       }
       content={
-        accountInfo ? (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
           <Text hoverValue={accountInfo.transactionCount}>
             {accountInfo.transactionCount}
           </Text>
-        ) : (
-          ''
-        )
+        </SkeletonContainer>
       }
       icon={
         <InfoImage

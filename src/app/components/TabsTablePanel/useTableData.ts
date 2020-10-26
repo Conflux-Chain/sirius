@@ -1,9 +1,8 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import useSWR from 'swr';
-import { simpleGetFetcher } from '../../../utils/api';
+import { useSWRWithGetFecher } from '../../../utils/api';
 
-export const useTableData = (url: string) => {
+export const useTableData = (url: string, inactive = false) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -39,13 +38,16 @@ export const useTableData = (url: string) => {
     url,
     query: {
       ...others,
-      limit: parsedPageSize as string,
-      skip: skip as string,
+      // inactive is used in useTabTableData indicating the tab displaying this
+      // table is not the current tab, so there's no need to sync page info, but
+      // we still need to sync filter info cause the filters are applied to all
+      // tables
+      limit: inactive ? undefined : (parsedPageSize as string),
+      skip: inactive ? undefined : (skip as string),
     },
   });
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data, error, mutate } = useSWR([urlWithQuery], simpleGetFetcher);
+  const { data, error, mutate } = useSWRWithGetFecher([urlWithQuery]);
   const setPageNumberAndAlterHistory = (pageNumber: number) => {
     const pathNameWithQuery = queryString.stringifyUrl({
       url: location.pathname,
@@ -75,7 +77,7 @@ export const useTableData = (url: string) => {
   return {
     pageNumber: parsedPageNumber,
     pageSize: parsedPageSize,
-    total: data?.total,
+    total: Math.min(data?.total, data?.listLimit) || data?.total || 0,
     data,
     error,
     mutate,

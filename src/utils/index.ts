@@ -78,6 +78,9 @@ export const devidedByDecimals = (number, decimals) => {
 export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
   if (str) {
     const length = str.length;
+    if (endNum === 0 && length <= frontNum) {
+      return str.substring(0, frontNum);
+    }
     return (
       str.substring(0, frontNum) +
       '...' +
@@ -93,7 +96,10 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
  * @return { string } 数字 n 的整数部分超过3位后，使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
  */
 export const formatNumber = (num: number | string) => {
-  return numeral(num).format('0,0a.[000]').toUpperCase().replace('B', 'G');
+  return numeral(num)
+    .format('0,0a.[000]', Math.floor)
+    .toUpperCase()
+    .replace('B', 'G');
 };
 
 /**
@@ -273,18 +279,18 @@ export const getUnitByCfxNum = (
   let numFormatted: number | string = '';
   let unit = '';
   if (bn.toNumber() < 10 ** 9) {
-    numFormatted = formatNumber(bn.toNumber());
-    unit = 'Drip';
+    if (isShowFull) {
+      numFormatted = bn.toNumber();
+    } else {
+      numFormatted = formatNumber(bn.toNumber());
+    }
+    unit = 'drip';
   } else if (10 ** 9 <= bn.toNumber() && bn.toNumber() < 10 ** 18) {
-    numFormatted = fromDripToGdrip(bn.toNumber());
+    numFormatted = fromDripToGdrip(bn.toNumber(), isShowFull);
     unit = 'Gdrip';
   } else {
-    numFormatted = fromDripToCfx(bn.toNumber());
+    numFormatted = fromDripToCfx(bn.toNumber(), isShowFull);
     unit = 'CFX';
-  }
-
-  if (isShowFull) {
-    numFormatted = bn.toFixed();
   }
   return { num: numFormatted, unit };
 };

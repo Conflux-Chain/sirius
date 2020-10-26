@@ -49,7 +49,7 @@ export function BlocksAndTransactions() {
       },
     },
     {
-      value: 'transaction',
+      value: 'transactions',
       label: t(translations.blocksAndTransactions.transactions),
       url: '/transaction',
       table: {
@@ -60,7 +60,6 @@ export function BlocksAndTransactions() {
   ];
 
   const { currentTabTotal, currentTabValue } = useTabTableData(tabs);
-
   return (
     <>
       <Helmet>
@@ -70,15 +69,15 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
+      <Dag />
       <TipLabel
         count={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
         right={t(translations.blocksAndTransactions.tipCountAfter, {
-          type: currentTabValue,
+          type: t(translations.blocksAndTransactions[currentTabValue]),
         })}
         key={currentTabValue}
       />
-      <Dag />
       <TabsTablePanel tabs={tabs} />
     </>
   );
