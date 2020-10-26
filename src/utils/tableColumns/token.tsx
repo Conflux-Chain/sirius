@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
+import { defaultTokenIcon } from '../../constants';
 import {
   formatString,
   formatNumber,
@@ -44,7 +45,7 @@ const renderFilterableAddress = (
       if (opt.nameTag) {
         return (
           <Text span hoverValue={value}>
-            {opt.nameTag}
+            {formatString(opt.nameTag, 'tag')}
           </Text>
         );
       } else {
@@ -179,7 +180,7 @@ export const token = {
   key: 'blockIndex',
   render: row => (
     <StyledIconWrapper>
-      {row?.icon && <img src={row.icon} alt="token icon" />}
+      <img src={row?.icon || defaultTokenIcon} alt="token icon" />
       <Link href={`/token/${row.address}`}>
         <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
           {formatString(`${row?.name} (${row?.symbol})`, 28)}

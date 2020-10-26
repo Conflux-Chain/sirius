@@ -97,7 +97,7 @@ const HeaderWrap = styled.div`
   }
   .title {
     font-size: 1.7143rem;
-    font-weight: 500;
+    font-weight: 700;
     color: #1a1a1a;
     line-height: 2.2857rem;
   }

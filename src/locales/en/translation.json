@@ -108,6 +108,7 @@
   },
   "charts": {
     "title": "Charts",
+    "subtitle": "Blockchain Data",
     "description": "Charts",
     "tps": {
       "title": "TPS",

@@ -27,6 +27,7 @@ export const Title = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 0.86rem;
+  font-weight: 700;
 
   ${media.s} {
     margin-bottom: 1rem;

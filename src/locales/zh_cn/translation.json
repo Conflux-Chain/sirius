@@ -108,6 +108,7 @@
   },
   "charts": {
     "title": "图表",
+    "subtitle": "区块链数据",
     "description": "图表",
     "tps": {
       "title": "吞吐率",

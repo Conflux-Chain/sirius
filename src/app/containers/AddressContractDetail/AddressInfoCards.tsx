@@ -120,9 +120,7 @@ export function NonceCard({ address }) {
       }
       content={
         <SkeletonContainer shown={loading} style={skeletonStyle}>
-          <Text hoverValue={accountInfo.transactionCount}>
-            {accountInfo.transactionCount}
-          </Text>
+          <Text hoverValue={accountInfo.nonce}>{accountInfo.nonce}</Text>
         </SkeletonContainer>
       }
       icon={

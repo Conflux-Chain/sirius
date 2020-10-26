@@ -143,7 +143,6 @@ const SmallChartWrap = styled.div`
 const Bottom = styled.section`
   position: relative;
   width: 100%;
-  overflow-x: auto;
 `;
 const ViewAllLinkWrapper = styled.div`
   position: absolute;

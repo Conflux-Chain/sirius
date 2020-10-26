@@ -12,7 +12,7 @@ import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
 import { useParams } from 'react-router-dom';
 import { CopyButton } from '../../components/CopyButton/Loadable';
-import { Link } from 'react-router-dom';
+import { Link } from '../../components/Link';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
@@ -220,12 +220,12 @@ export const Transaction = () => {
                     }
                     alt="icon"
                   />{' '}
-                  <Link to={`/address/${to}`}>
+                  <Link href={`/address/${to}`}>
                     {contractInfo && contractInfo['name']}
                   </Link>{' '}
                 </>
               )}
-              <Link to={`/address/${to}`}>{to}</Link>{' '}
+              <Link href={`/address/${to}`}>{to}</Link>{' '}
               <CopyButton copyText={to} />
             </SkeletonContainer>
           </Description>
@@ -240,7 +240,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link to={`/address/${to}`}>{to}</Link>{' '}
+              <Link href={`/address/${to}`}>{to}</Link>{' '}
               <CopyButton copyText={to} />
             </SkeletonContainer>
           </Description>
@@ -259,7 +259,7 @@ export const Transaction = () => {
             <span className="label">
               {t(translations.transaction.contract)}
             </span>
-            <Link to={`/address/${transactionDetail['contractCreated']}`}>
+            <Link href={`/address/${transactionDetail['contractCreated']}`}>
               {transactionDetail['contractCreated']}
             </Link>{' '}
             <CopyButton copyText={transactionDetail['contractCreated']} />
@@ -325,20 +325,20 @@ export const Transaction = () => {
         />
       );
       const nameContainer = (
-        <Link to={`/token/${transferItem['address']}`} className="nameItem">
+        <Link href={`/token/${transferItem['address']}`} className="nameItem">
           {`${tokenName} (${tokenSymbol})`}
         </Link>
       );
       transferListContainer.push(
         <div className="lineContainer" key={`transfer${i + 1}`}>
           <span className="from">{t(translations.transaction.from)}</span>
-          <Link to={`/address/${transferItem['from']}`}>
+          <Link href={`/address/${transferItem['from']}`}>
             <Text span hoverValue={transferItem['from']}>
               {formatString(transferItem['from'], 'address')}
             </Text>
           </Link>
           <span className="to">{t(translations.transaction.to)}</span>
-          <Link to={`/address/${transferItem['to']}`}>
+          <Link href={`/address/${transferItem['to']}`}>
             <Text span maxWidth="91px" hoverValue={transferItem['to']}>
               {formatString(transferItem['to'], 'address')}
             </Text>
@@ -400,7 +400,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link to={`/epoch/${epochNumber}`}>
+              <Link href={`/epoch/${epochNumber}`}>
                 {numeral(epochNumber).format('0,0')}
               </Link>
             </SkeletonContainer>
@@ -416,7 +416,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link to={`/epoch/${epochHeight}`}>
+              <Link href={`/epoch/${epochHeight}`}>
                 {numeral(epochHeight).format('0,0')}
               </Link>
             </SkeletonContainer>
@@ -469,7 +469,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link to={`/address/${from}`}>{from}</Link>{' '}
+              <Link href={`/address/${from}`}>{from}</Link>{' '}
               <CopyButton copyText={from} />
             </SkeletonContainer>
           </Description>
@@ -565,7 +565,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+              <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
               <CopyButton copyText={blockHash} />
             </SkeletonContainer>
           </Description>
