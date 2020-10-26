@@ -97,7 +97,7 @@ const EditButton = ({ url }) => {
 export function ContractMetadata({ address }) {
   const { t } = useTranslation();
   const notAvaiableText = t(translations.general.security.notAvailable);
-  const isAvaiable = useCallback(t => t !== notAvaiableText, [notAvaiableText]);
+  const isAvaiable = useCallback(t => t !== null, []);
 
   const { data: contractInfo } = useContract(address, [
     'name',
@@ -110,7 +110,7 @@ export function ContractMetadata({ address }) {
     'transactionHash',
   ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
-  const loading = contractInfo.name === 'loading...';
+  const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
 
   return (
@@ -134,7 +134,7 @@ export function ContractMetadata({ address }) {
                     alt={`${contractInfo.name} logo`}
                   />
                 )}
-                <Content>{contractInfo.name}</Content>
+                <Content>{contractInfo.name || notAvaiableText}</Content>
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -159,9 +159,7 @@ export function ContractMetadata({ address }) {
                       </Text>
                     </Link>
                   ) : (
-                    <Text span hoverValue={contractInfo.admin}>
-                      {formatString(contractInfo.admin, 'address')}
-                    </Text>
+                    notAvaiableText
                   )}
                 </Content>
                 <WarnningButton key="warning" />
@@ -195,7 +193,7 @@ export function ContractMetadata({ address }) {
                   {isAvaiable(tokenInfo.name) ? (
                     <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
                   ) : (
-                    tokenInfo.name
+                    notAvaiableText
                   )}
                 </Content>
               </CenterLine>
@@ -230,7 +228,7 @@ export function ContractMetadata({ address }) {
                         </Link>,
                         <EditButton url={`/sponsor/${address}`} key="edit" />,
                       ]
-                    : contractInfo.sponsorForCollateral}
+                    : notAvaiableText}
                 </Content>
               </CenterLine>
             </SkeletonContainer>
@@ -261,9 +259,7 @@ export function ContractMetadata({ address }) {
                       </Text>
                     </Link>
                   ) : (
-                    <Text span hoverValue={contractInfo.from}>
-                      {formatString(contractInfo.from, 'address')}
-                    </Text>
+                    notAvaiableText
                   )}
                   {` ${t(translations.contractDetail.at)} ${t(
                     translations.contractDetail.txOnlyEn,
@@ -275,9 +271,7 @@ export function ContractMetadata({ address }) {
                       </Text>
                     </Link>
                   ) : (
-                    <Text span hoverValue={contractInfo.transactionHash}>
-                      {formatString(contractInfo.transactionHash, 'address')}
-                    </Text>
+                    notAvaiableText
                   )}
                   {` ${t(translations.contractDetail.txOnlyZh)} `}
                 </Content>
@@ -308,7 +302,7 @@ export function ContractMetadata({ address }) {
                         </Link>,
                         <EditButton url={`/sponsor/${address}`} key="edit" />,
                       ]
-                    : contractInfo.sponsorForGas}
+                    : notAvaiableText}
                 </Content>
               </CenterLine>
             </SkeletonContainer>
