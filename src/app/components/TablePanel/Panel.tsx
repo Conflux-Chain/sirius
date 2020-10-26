@@ -72,7 +72,6 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
     pageSize,
     total,
     data,
-    error,
     gotoPage,
     setPageSize,
   } = useTableData(url);

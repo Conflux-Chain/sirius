@@ -430,7 +430,6 @@ export const useContract = (
 ) => {
   const { t } = useTranslation();
   const loadingText = t(translations.general.loading);
-  const notAvaiableText = t(translations.general.security.notAvailable);
   const url = qs.stringifyUrl({
     url: `/contract/${contractAddress}`,
     query: { fields },
