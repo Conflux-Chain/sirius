@@ -2,7 +2,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useSWRWithGetFecher } from '../../../utils/api';
 
-export const useTableData = (url: string) => {
+export const useTableData = (url: string, inactive = false) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -38,8 +38,12 @@ export const useTableData = (url: string) => {
     url,
     query: {
       ...others,
-      limit: parsedPageSize as string,
-      skip: skip as string,
+      // inactive is used in useTabTableData indicating the tab displaying this
+      // table is not the current tab, so there's no need to sync page info, but
+      // we still need to sync filter info cause the filters are applied to all
+      // tables
+      limit: inactive ? undefined : (parsedPageSize as string),
+      skip: inactive ? undefined : (skip as string),
     },
   });
 

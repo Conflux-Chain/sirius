@@ -27,63 +27,99 @@ const renderFilterableAddress = (
   index,
   pOpt?: {
     type?: 'to' | 'from';
-    accountFilter?: boolean;
-    baseAddress?: string;
+    isToken?: boolean;
+    nameTag?: string;
   },
 ) => {
   const opt = {
     type: 'to',
-    accountFilter: true,
-    baseAddress: '',
+    isToken: true,
     ...pOpt,
   };
-  const { accountAddress, transactionHash } = queryString.parse(
-    window.location.search,
-  );
-  const filter =
-    (accountAddress as string) || (transactionHash as string) || '';
-  const text = (
-    <Text span hoverValue={value}>
-      {formatString(value, 'address')}
-    </Text>
-  );
+  const { accountAddress } = queryString.parse(window.location.search);
+  const filter = (accountAddress as string) || '';
 
-  if (opt.accountFilter) {
-    return (
-      <FromWrap>
-        {filter === value || opt.baseAddress === value ? (
-          text
-        ) : (
-          <LinkWidthFilter href={value}>{text}</LinkWidthFilter>
-        )}
-        {opt.type === 'from' && (
-          <ImgWrap
-            src={
-              !filter
-                ? '/token/arrow.svg'
-                : filter === value
-                ? '/token/out.svg'
-                : '/token/in.svg'
-            }
-          />
-        )}
-      </FromWrap>
-    );
-  } else {
-    return (
-      <FromWrap>
-        {opt.baseAddress === value ? (
-          text
-        ) : (
-          <Link href={`/address/${value}`}>{text}</Link>
-        )}
-        {opt.type === 'from' && <ImgWrap src="/token/arrow.svg" />}
-      </FromWrap>
-    );
-  }
+  const renderTo = () => {
+    if (filter === value) {
+      if (opt.nameTag) {
+        return (
+          <Text span hoverValue={value}>
+            {opt.nameTag}
+          </Text>
+        );
+      } else {
+        return (
+          <Text span hoverValue={value}>
+            {formatString(value, 'address')}
+          </Text>
+        );
+      }
+    } else if (value) {
+      if (opt.isToken) {
+        return (
+          <LinkWithFilter href={value}>
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
+          </LinkWithFilter>
+        );
+      } else {
+        return (
+          <Link href={`/address/${value}`}>
+            <Text span hoverValue={value}>
+              {formatString(value, 'address')}
+            </Text>
+          </Link>
+        );
+      }
+    } else {
+      if (row.contractCreated) {
+        if (row.contractCreated === filter) {
+          return (
+            <Text span hoverValue={row.contractCreated}>
+              <Translation>
+                {t => t(translations.transaction.contractCreation)}
+              </Translation>
+            </Text>
+          );
+        }
+        return (
+          <Link href={`/address/${row.contractCreated}`}>
+            <Text span hoverValue={row.contractCreated}>
+              <Translation>
+                {t => t(translations.transaction.contractCreation)}
+              </Translation>
+            </Text>
+          </Link>
+        );
+      } else {
+        return (
+          <Translation>
+            {t => t(translations.transaction.contractCreation)}
+          </Translation>
+        );
+      }
+    }
+  };
+  return (
+    <FromWrap>
+      {renderTo()}
+      {opt.type === 'from' && (
+        <ImgWrap
+          src={
+            !filter
+              ? '/token/arrow.svg'
+              : filter === value
+              ? '/token/out.svg'
+              : '/token/in.svg'
+          }
+        />
+      )}
+    </FromWrap>
+  );
 };
 
-const LinkWidthFilter = ({ href, children }) => {
+const LinkWithFilter = ({ href, children }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -143,10 +179,10 @@ export const token = {
   key: 'blockIndex',
   render: row => (
     <StyledIconWrapper>
-      {row?.token?.icon && <img src={row.icon} alt="token icon" />}
+      {row?.icon && <img src={row.icon} alt="token icon" />}
       <Link href={`/token/${row.address}`}>
-        <Text span hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}>
-          {formatString(`${row?.token?.name} (${row?.token?.symbol})`, 28)}
+        <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
+          {formatString(`${row?.name} (${row?.symbol})`, 28)}
         </Text>
       </Link>
     </StyledIconWrapper>
@@ -291,7 +327,7 @@ export const from = {
     }),
 };
 
-const StyledIconWrapper = styled.div`
+export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
   img {

@@ -38,7 +38,7 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
             typeof item.label === 'function' ? item.label(total[i]) : item.label
           }
           value={item.value}
-          key={item.value}
+          key={i}
         >
           {item.table ? <TablePanel {...item} /> : item.content}
         </Tabs.Item>

@@ -265,7 +265,9 @@ export function ContractMetadata({ address }) {
                       {formatString(contractInfo.from, 'address')}
                     </Text>
                   )}
-                  {' at txn '}
+                  {` ${t(translations.contractDetail.at)} ${t(
+                    translations.contractDetail.txOnlyEn,
+                  )} `}
                   {isAvaiable(contractInfo.from) ? (
                     <Link to={`/transaction/${contractInfo.transactionHash}`}>
                       <Text span hoverValue={contractInfo.transactionHash}>
@@ -277,6 +279,7 @@ export function ContractMetadata({ address }) {
                       {formatString(contractInfo.transactionHash, 'address')}
                     </Text>
                   )}
+                  {` ${t(translations.contractDetail.txOnlyZh)} `}
                 </Content>
               </CenterLine>
             </SkeletonContainer>
@@ -323,10 +326,7 @@ const CenterLine = styled.div`
 
   .metadata-tooltip-btn {
     margin-left: 0.5rem;
-    margin-top: -0.2857rem;
-    svg {
-      cursor: pointer;
-    }
+    margin-bottom: 0.2857rem;
     ${media.s} {
       margin-left: 1rem;
     }

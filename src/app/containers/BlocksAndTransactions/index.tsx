@@ -69,6 +69,7 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
+      <Dag />
       <TipLabel
         count={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
@@ -77,7 +78,6 @@ export function BlocksAndTransactions() {
         })}
         key={currentTabValue}
       />
-      <Dag />
       <TabsTablePanel tabs={tabs} />
     </>
   );

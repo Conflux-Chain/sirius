@@ -3,6 +3,11 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { media } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
+import { Text } from 'app/components/Text';
+import { Link } from 'app/components/Link/Loadable';
+import { formatString, isAddress, isHash } from 'utils';
 import {
   TabsTablePanel,
   TabLabel,
@@ -15,13 +20,59 @@ interface TransferProps {
   symbol: string;
   decimals: number;
 }
+interface Query {
+  accountAddress?: string;
+  transactionHash?: string;
+}
 
 export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
+
+  let {
+    pageSize: parsedPageSize,
+    accountAddress: filterAddr,
+    transactionHash: filterHash,
+    ...others
+  } = queryString.parse(location.search);
+  if (!parsedPageSize) {
+    parsedPageSize = '10';
+  }
+
+  const filter = (filterAddr as string) || (filterHash as string) || '';
+
+  const onFilter = (filter: string) => {
+    let object: Query = {};
+    if (isAddress(filter)) {
+      object.accountAddress = filter;
+    } else if (isHash(filter)) {
+      object.transactionHash = filter;
+    }
+    const urlWithQuery = queryString.stringifyUrl({
+      url: location.pathname,
+      query: {
+        ...others,
+        page: '1',
+        pageSize: parsedPageSize as string,
+        ...object,
+      },
+    });
+    history.push(urlWithQuery);
+  };
 
   const columnsWidth = [3, 4, 4, 4, 3];
   const columns = [
-    tokenColunms.txnHash,
+    {
+      ...tokenColunms.txnHash,
+      render: value => (
+        <Link>
+          <Text onClick={() => onFilter(value)} span hoverValue={value}>
+            {formatString(value, 'hash')}
+          </Text>
+        </Link>
+      ),
+    },
     tokenColunms.age,
     {
       ...tokenColunms.from,
@@ -68,7 +119,13 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   return (
     <TransfersWrap>
       <TabsTablePanel tabs={tabs} />
-      <Filter decimals={decimals} symbol={symbol} tokenAddress={tokenAddress} />
+      <Filter
+        decimals={decimals}
+        symbol={symbol}
+        tokenAddress={tokenAddress}
+        onFilter={onFilter}
+        filter={filter}
+      />
     </TransfersWrap>
   );
 }
