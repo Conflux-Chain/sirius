@@ -50,8 +50,8 @@ export function Sponsor() {
     await fetchIsAppliable(address);
     const faucetParams = await faucet.getFaucetParams();
     const amountAccumulated = await faucet.getAmountAccumulated(address);
-    setLoading(false);
     if (sponsorInfo && faucetParams && amountAccumulated) {
+      setLoading(false);
       setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
       setGasFeeAddress(sponsorInfo.sponsorForGas);
       setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
