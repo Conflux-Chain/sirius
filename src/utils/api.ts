@@ -341,6 +341,7 @@ export const useAccountTokenList = (
         .then(res => res.json())
         .then(({ total, list }) => {
           return {
+            loading: false,
             total,
             list: list.map(t => {
               const { balance, decimals } = t;
@@ -350,9 +351,17 @@ export const useAccountTokenList = (
               };
             }),
           };
+        })
+        .catch(e => {
+          return {
+            loading: false,
+            total: 0,
+            list: [],
+          };
         }),
     {
       initialData: {
+        loading: true,
         total: 0,
         list: [],
       },
