@@ -74,7 +74,9 @@ export function BlocksAndTransactions() {
         count={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
         right={t(translations.blocksAndTransactions.tipCountAfter, {
-          type: t(translations.blocksAndTransactions[currentTabValue]),
+          type: t(
+            translations.blocksAndTransactions[currentTabValue],
+          ).toLowerCase(),
         })}
         key={currentTabValue}
       />
