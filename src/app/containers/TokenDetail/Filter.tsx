@@ -38,9 +38,13 @@ export const Filter = ({
   const [value, setValue] = useState(filter);
 
   const tokenAddrs = [tokenAddress];
+  let addr: null | string = null;
+  if (isAddress(filter)) {
+    addr = filter;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [balance, [tokenBalanceRaw]] = useBalance(filter, tokenAddrs);
+  const [balance, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
   const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
 
   useEffect(() => {
@@ -108,4 +112,6 @@ const BalanceWrap = styled.div`
   padding: 0.2857rem 1.7143rem;
   margin-left: 1.2857rem;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 `;

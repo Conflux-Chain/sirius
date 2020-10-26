@@ -157,7 +157,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-weight: bolder;
+  font-weight: 700;
   font-size: 1.1429rem;
   color: black;
   line-height: 2.1429rem;
@@ -168,6 +168,7 @@ const Description = styled.div`
   line-height: 1.2143rem;
   font-size: 0.8571rem;
   color: #4a6078;
+  font-weight: 500;
 `;
 
 const Buttons = styled.div`

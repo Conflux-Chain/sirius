@@ -30,6 +30,7 @@ import { isContractAddress, formatString } from 'utils';
 import { useContract, useToken } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
+import { defaultTokenIcon } from '../../../constants';
 
 const AceEditorStyle = {
   width: '100%',
@@ -365,9 +366,11 @@ export function Table({ address }) {
         <StyledIconWrapper>
           {row?.token
             ? [
-                row?.token?.icon && (
-                  <img key="img" src={row.token.icon} alt="token icon" />
-                ),
+                <img
+                  key="img"
+                  src={row?.token?.icon || defaultTokenIcon}
+                  alt="token icon"
+                />,
                 <Link key="link" href={`/token/${row?.token?.address}`}>
                   <Text
                     span

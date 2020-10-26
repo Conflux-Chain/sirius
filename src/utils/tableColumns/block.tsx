@@ -150,7 +150,7 @@ export const reward = {
   width: 1,
   render: value =>
     value ? (
-      <Text span hoverValue={value}>
+      <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
         {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (

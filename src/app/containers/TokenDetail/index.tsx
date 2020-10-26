@@ -9,6 +9,7 @@ import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
+import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 
 interface RouteParams {
@@ -38,7 +39,11 @@ export function TokenDetail() {
         {data.name ? (
           <HeaderWrap>
             {!data.isCustodianToken ? (
-              <img className="img" alt="icon" src={data.icon} />
+              <img
+                className="img"
+                alt="icon"
+                src={data.icon || defaultTokenIcon}
+              />
             ) : (
               <Tooltip
                 hoverable

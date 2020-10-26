@@ -2,7 +2,7 @@ import React, { ReactNode, useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
 import { Description } from 'app/components/Description';
-import { Card } from '@cfxjs/react-ui';
+import { Card } from '../../components/Card';
 import { ChevronUp } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 import { media } from 'styles/media';
@@ -103,7 +103,7 @@ const SelectTokenBox = styled.div`
 `;
 const SelectTokenCount = styled.div`
   font-size: 1.27rem;
-  font-weight: bold;
+  font-weight: 700;
 `;
 const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
   transform: ${props => (props.expanded ? 'unset' : 'rotate(180deg)')};
@@ -114,8 +114,8 @@ const SelectDropdown = styled.div`
   margin-left: -2.1429rem;
   top: 8rem;
   .token-balance-select-content.card > .content {
-    padding-top: unset;
-    padding-bottom: unset;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
   ${media.s} {
     top: 5rem;

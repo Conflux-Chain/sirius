@@ -81,7 +81,7 @@ export const Status = ({
               content={t(
                 translations.general.status[typeMap[type].status].explanation,
               )}
-              placement="left"
+              placement="auto-start"
               trigger={breakpoint === 's' ? 'click' : 'hover'}
               contentClassName={clsx(
                 'siriuse-status-popover',

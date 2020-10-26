@@ -72,7 +72,7 @@ const Title = styled.div`
   text-transform: capitalize;
 `;
 const Content = styled.div`
-  font-weight: bold;
+  font-weight: 700;
   color: #282d30;
   font-size: 1.71rem;
 
