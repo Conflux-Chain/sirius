@@ -199,6 +199,7 @@ exports[`<Header /> should match the snapshot 1`] = `
 
 .c5 .confi-logo {
   margin-right: 0.57rem;
+  width: 3.3571rem;
 }
 
 .c5 a.link {
@@ -888,6 +889,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 
 .c5 .confi-logo {
   margin-right: 0.57rem;
+  width: 3.3571rem;
 }
 
 .c5 a.link {
