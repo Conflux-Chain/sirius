@@ -16,7 +16,7 @@ const skeletonStyle = { width: '7rem', height: '2.4rem' };
 export function BalanceCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
-  const loading = accountInfo.balance === 'loading...';
+  const loading = accountInfo.balance === t(translations.general.loading);
 
   return (
     <DetailPageCard
@@ -72,7 +72,7 @@ export function TokensCard({ address }) {
 export function StorageStakingCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
-  const loading = accountInfo.balance === 'loading...';
+  const loading = accountInfo.balance === t(translations.general.loading);
 
   return (
     <DetailPageCard
@@ -109,7 +109,7 @@ export function StorageStakingCard({ address }) {
 export function NonceCard({ address }) {
   const { t } = useTranslation();
   const { data: accountInfo } = useAccount(address);
-  const loading = accountInfo.balance === 'loading...';
+  const loading = accountInfo.balance === t(translations.general.loading);
 
   return (
     <DetailPageCard

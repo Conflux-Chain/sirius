@@ -22,9 +22,9 @@ export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   let loading = false;
-  const { data, error } = useBlockQuery({ hash: blockHash });
+  const { data } = useBlockQuery({ hash: blockHash });
   const intervalToClear = useRef(false);
-  if (!data && !error) loading = true;
+  if (!data) loading = true;
 
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
