@@ -39,9 +39,9 @@
     "title": "出块和交易",
     "description": "出块和交易",
     "tipCountBefore": "共计",
-    "tipCountAfter": "条 {{type}} 记录 (显示最新的 10k 条数据)",
+    "tipCountAfter": "个{{type}}",
     "labelCountBefore": "共计",
-    "labelCountAfter": "条 {{type}} 记录",
+    "labelCountAfter": "个 {{type}} ",
     "blocks": "区块",
     "transactions": "交易"
   },
