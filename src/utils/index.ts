@@ -96,7 +96,10 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
  * @return { string } 数字 n 的整数部分超过3位后，使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
  */
 export const formatNumber = (num: number | string) => {
-  return numeral(num).format('0,0a.[000]').toUpperCase().replace('B', 'G');
+  return numeral(num)
+    .format('0,0a.[000]', Math.floor)
+    .toUpperCase()
+    .replace('B', 'G');
 };
 
 /**
