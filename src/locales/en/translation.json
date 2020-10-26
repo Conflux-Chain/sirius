@@ -202,11 +202,11 @@
     },
     "notAvailable": "Not Available",
     "security": {
-      "notAvailable": "Not Available",
-      "high": "High",
-      "medium": "Medium",
-      "low": "Low",
-      "veryLow": "Very Low"
+      "notAvailable": "Not available",
+      "high": "Great",
+      "medium": "Good",
+      "low": "Weak",
+      "veryLow": "Poor"
     },
     "status": {
       "skip": {
