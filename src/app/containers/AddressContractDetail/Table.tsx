@@ -434,7 +434,7 @@ export function Table({ address }) {
       url: `/transfer?accountAddress=${address}`,
       table: {
         columns: columnsTokenTrasfers,
-        rowKey: 'transactionHash',
+        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
       },
     },
     isContract
