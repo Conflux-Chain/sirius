@@ -291,7 +291,7 @@ export const quantity = {
       : row.token?.decimals || row.token?.decimal || 18;
     return value ? (
       <Text span hoverValue={formatBalance(value, decimals, true)}>
-        {`${formatBalance(value, decimals)}`}
+        {formatBalance(value, decimals)}
       </Text>
     ) : (
       '--'
