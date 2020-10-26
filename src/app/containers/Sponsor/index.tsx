@@ -109,17 +109,17 @@ export function Sponsor() {
         case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
         case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
         case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
-          setErrorMsgForApply(t(translations.sponsor.errReachToMax));
+          setErrorMsgForApply('errReachToMax');
           break;
         case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
         case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
-          setErrorMsgForApply(t(translations.sponsor.errInsufficientFee));
+          setErrorMsgForApply('errInsufficientFee');
           break;
         case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-          setErrorMsgForApply(t(translations.sponsor.errReplaceThird));
+          setErrorMsgForApply('errReplaceThird');
           break;
         case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
-          setErrorMsgForApply(t(translations.sponsor.errContractNotFound));
+          setErrorMsgForApply('errContractNotFound');
           break;
         default:
           setErrorMsgForApply('');
@@ -177,10 +177,10 @@ export function Sponsor() {
 
   useEffect(() => {
     if (portalInstalled) {
-      setApplyText(t(translations.general.apply));
+      setApplyText('general.apply');
     } else {
       setCanApply(true);
-      setApplyText(t(translations.sponsor.connectToApply));
+      setApplyText('sponsor.connectToApply');
     }
     // eslint-disable-next-line
   }, [portalInstalled]);
@@ -378,7 +378,7 @@ export function Sponsor() {
             disabled={!canApply}
             onClick={applyClick}
           >
-            {applyText}
+            {t(applyText)}
           </Button>
           <img
             src="/success.png"
@@ -391,7 +391,9 @@ export function Sponsor() {
         </ApplyContainer>
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
           <img src="/warning.png" alt="warning" className="icon" />
-          <span className="text">{errorMsgForApply}</span>
+          <span className="text">
+            {t(translations.sponsor[errorMsgForApply])}
+          </span>
         </ErrorMsgContainer>
         <NoticeContainer>
           <div className="title">{t(translations.sponsor.notice)}:</div>
