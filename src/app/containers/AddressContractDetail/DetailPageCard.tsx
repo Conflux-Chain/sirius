@@ -36,15 +36,19 @@ export const DetailPageCard = memo((props: Props) => {
 
 const Main = styled.div`
   min-width: 17rem;
-  .detail-page-card.card div.content {
-    padding: 16px 0;
+  .detail-page-card.card {
+    div.content {
+      padding: 16px 0;
+    }
   }
 
   ${media.s} {
     min-width: 13.67rem;
-
-    .detail-page-card.card div.content {
+    .detail-page-card.card {
       padding: 0;
+      div.content {
+        padding: 0;
+      }
     }
   }
 `;

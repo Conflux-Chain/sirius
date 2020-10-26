@@ -22,6 +22,8 @@ export const Link = ({
         if (!href) return;
         if (/^http/.test(href)) {
           window.open(href);
+        } else if (e.metaKey) {
+          window.open(`${window.location.origin}${href}`);
         } else {
           history.push(href);
         }

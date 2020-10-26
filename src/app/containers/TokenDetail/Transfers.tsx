@@ -74,8 +74,20 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
       ),
     },
     tokenColunms.age,
-    tokenColunms.from,
-    tokenColunms.to,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, index, {
+          baseAddress: tokenAddress,
+        }),
+    },
+    {
+      ...tokenColunms.to,
+      render: (value, row, index) =>
+        tokenColunms.to.render(value, row, index, {
+          baseAddress: tokenAddress,
+        }),
+    },
     {
       ...tokenColunms.quantity,
       render: (value, row, index) =>
