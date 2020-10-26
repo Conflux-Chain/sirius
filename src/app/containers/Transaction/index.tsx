@@ -98,9 +98,9 @@ export const Transaction = () => {
         hash: txnhash,
       }).then(body => {
         if (body.code) {
-          setLoading(false);
           switch (body.code) {
             case 30404:
+              setLoading(false);
               history.replace(`/packing/${txnhash}`);
               break;
           }
@@ -171,14 +171,17 @@ export const Transaction = () => {
                     setTokenList(res.list);
                   })
                   .catch(() => {
-                    setLoading(false);
+                    //TODO: In the first stage, a temporary solution:no need to cancel loading
+                    // setLoading(false);
                   });
               })
               .catch(() => {
-                setLoading(false);
+                //TODO: In the first stage, a temporary solution:no need to cancel loading
+                // setLoading(false);
               });
           } else {
-            setLoading(false);
+            //TODO: In the first stage, a temporary solution:no need to cancel loading
+            // setLoading(false);
           }
         }
       });
@@ -445,7 +448,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Status type={status} />
+              {!loading && <Status type={status} />}
             </SkeletonContainer>
           </Description>
           <Description
