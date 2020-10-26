@@ -47,6 +47,7 @@ export const Transaction = () => {
   const [decodedData, setDecodedData] = useState({});
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
   const history = useHistory();
@@ -54,7 +55,6 @@ export const Transaction = () => {
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
-  let loading = false;
   const [dataType, setDataType] = useState('original');
   const {
     epochHeight,
@@ -93,10 +93,12 @@ export const Transaction = () => {
   };
   const fetchTxDetail = useCallback(
     txnhash => {
+      setLoading(true);
       reqTransactionDetail({
         hash: txnhash,
       }).then(body => {
         if (body.code) {
+          setLoading(false);
           switch (body.code) {
             case 30404:
               history.replace(`/packing/${txnhash}`);
@@ -139,32 +141,43 @@ export const Transaction = () => {
                 limit: 100,
               }),
             );
-            Promise.all(proArr).then(proRes => {
-              const contractResponse = proRes[0];
-              setContractInfo(contractResponse);
-              const transferListReponse = proRes[1];
-              let decodedData = {};
-              try {
-                decodedData = decodeContract({
-                  abi: JSON.parse(contractResponse['abi']),
-                  address: contractResponse['address'],
-                  transacionData: txDetailDta.data,
-                });
-              } catch {}
-              setDecodedData(decodedData);
-              setDataTypeList(['original', 'utf8', 'decodeInputData']);
-              const resultTransferList = transferListReponse;
-              const list = resultTransferList['list'];
-              setTransferList(list);
-              let addressList = list.map(v => v.address);
-              addressList = Array.from(new Set(addressList));
-              reqTokenList({
-                addressArray: addressList,
-                fields: ['icon'],
-              }).then(res => {
-                setTokenList(res.list);
+            Promise.all(proArr)
+              .then(proRes => {
+                const contractResponse = proRes[0];
+                setContractInfo(contractResponse);
+                const transferListReponse = proRes[1];
+                let decodedData = {};
+                try {
+                  decodedData = decodeContract({
+                    abi: JSON.parse(contractResponse['abi']),
+                    address: contractResponse['address'],
+                    transacionData: txDetailDta.data,
+                  });
+                } catch {}
+                setDecodedData(decodedData);
+                setDataTypeList(['original', 'utf8', 'decodeInputData']);
+                const resultTransferList = transferListReponse;
+                const list = resultTransferList['list'];
+                setTransferList(list);
+                let addressList = list.map(v => v.address);
+                addressList = Array.from(new Set(addressList));
+                reqTokenList({
+                  addressArray: addressList,
+                  fields: ['icon'],
+                })
+                  .then(res => {
+                    setLoading(false);
+                    setTokenList(res.list);
+                  })
+                  .catch(() => {
+                    setLoading(false);
+                  });
+              })
+              .catch(() => {
+                setLoading(false);
               });
-            });
+          } else {
+            setLoading(false);
           }
         }
       });
@@ -195,23 +208,26 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {t(translations.transaction.contract)}{' '}
-            {contractInfo && contractInfo['name'] && (
-              <>
-                <img
-                  className="logo"
-                  src={
-                    (contractInfo && contractInfo['icon']) ||
-                    defaultContractIcon
-                  }
-                  alt="icon"
-                />{' '}
-                <Link to={`/address/${to}`}>
-                  {contractInfo && contractInfo['name']}
-                </Link>{' '}
-              </>
-            )}
-            <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
+            <SkeletonContainer shown={loading}>
+              {t(translations.transaction.contract)}{' '}
+              {contractInfo && contractInfo['name'] && (
+                <>
+                  <img
+                    className="logo"
+                    src={
+                      (contractInfo && contractInfo['icon']) ||
+                      defaultContractIcon
+                    }
+                    alt="icon"
+                  />{' '}
+                  <Link to={`/address/${to}`}>
+                    {contractInfo && contractInfo['name']}
+                  </Link>{' '}
+                </>
+              )}
+              <Link to={`/address/${to}`}>{to}</Link>{' '}
+              <CopyButton copyText={to} />
+            </SkeletonContainer>
           </Description>
         );
       } else {
@@ -223,7 +239,10 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/address/${to}`}>{to}</Link> <CopyButton copyText={to} />
+            <SkeletonContainer shown={loading}>
+              <Link to={`/address/${to}`}>{to}</Link>{' '}
+              <CopyButton copyText={to} />
+            </SkeletonContainer>
           </Description>
         );
       }
@@ -236,12 +255,16 @@ export const Transaction = () => {
             </Tooltip>
           }
         >
-          <span className="label">{t(translations.transaction.contract)}</span>
-          <Link to={`/address/${transactionDetail['contractCreated']}`}>
-            {transactionDetail['contractCreated']}
-          </Link>{' '}
-          <CopyButton copyText={transactionDetail['contractCreated']} />
-          &nbsp; {t(translations.transaction.created)}
+          <SkeletonContainer shown={loading}>
+            <span className="label">
+              {t(translations.transaction.contract)}
+            </span>
+            <Link to={`/address/${transactionDetail['contractCreated']}`}>
+              {transactionDetail['contractCreated']}
+            </Link>{' '}
+            <CopyButton copyText={transactionDetail['contractCreated']} />
+            &nbsp; {t(translations.transaction.created)}
+          </SkeletonContainer>
         </Description>
       );
     } else {
@@ -253,7 +276,9 @@ export const Transaction = () => {
             </Tooltip>
           }
         >
-          {t(translations.transaction.contractCreation)}
+          <SkeletonContainer shown={loading}>
+            {t(translations.transaction.contractCreation)}
+          </SkeletonContainer>
         </Description>
       );
     }
@@ -374,9 +399,11 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/epoch/${epochNumber}`}>
-              {numeral(epochNumber).format('0,0')}
-            </Link>
+            <SkeletonContainer shown={loading}>
+              <Link to={`/epoch/${epochNumber}`}>
+                {numeral(epochNumber).format('0,0')}
+              </Link>
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -388,9 +415,11 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/epoch/${epochHeight}`}>
-              {numeral(epochHeight).format('0,0')}
-            </Link>
+            <SkeletonContainer shown={loading}>
+              <Link to={`/epoch/${epochHeight}`}>
+                {numeral(epochHeight).format('0,0')}
+              </Link>
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -402,8 +431,10 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <CountDown from={syncTimestamp} />
-            {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+            <SkeletonContainer shown={loading}>
+              <CountDown from={syncTimestamp} />
+              {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -412,7 +443,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Status type={status} />
+            <SkeletonContainer shown={loading}>
+              <Status type={status} />
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -435,8 +468,10 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/address/${from}`}>{from}</Link>{' '}
-            <CopyButton copyText={from} />
+            <SkeletonContainer shown={loading}>
+              <Link to={`/address/${from}`}>{from}</Link>{' '}
+              <CopyButton copyText={from} />
+            </SkeletonContainer>
           </Description>
           {generatedDiv()}
           {transferList.length > 0 && (
@@ -452,7 +487,9 @@ export const Transaction = () => {
                 </Tooltip>
               }
             >
-              {getTransferListDiv()}
+              <SkeletonContainer shown={loading}>
+                {getTransferListDiv()}
+              </SkeletonContainer>
             </Description>
           )}
           <Description
@@ -462,7 +499,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
+            <SkeletonContainer shown={loading}>
+              {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -474,7 +513,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
+            <SkeletonContainer shown={loading}>
+              {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -487,7 +528,9 @@ export const Transaction = () => {
             }
           >
             {/* todo, need to format to Gdrip */}
-            {`${numeral(gasPrice).format('0,0')} drip`}
+            <SkeletonContainer shown={loading}>
+              {`${numeral(gasPrice).format('0,0')} drip`}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -496,7 +539,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {`${numeral(gasFee).format('0,0')} drip`}
+            <SkeletonContainer shown={loading}>
+              {`${numeral(gasFee).format('0,0')} drip`}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -505,7 +550,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {numeral(nonce).format('0,0')}
+            <SkeletonContainer shown={loading}>
+              {numeral(nonce).format('0,0')}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -517,8 +564,10 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
-            <CopyButton copyText={blockHash} />
+            <SkeletonContainer shown={loading}>
+              <Link to={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+              <CopyButton copyText={blockHash} />
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -530,7 +579,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {transactionIndex}
+            <SkeletonContainer shown={loading}>
+              {!loading && transactionIndex}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -542,7 +593,9 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {numeral(storageLimit).format('0,0')}
+            <SkeletonContainer shown={loading}>
+              {numeral(storageLimit).format('0,0')}
+            </SkeletonContainer>
           </Description>
           <Description
             title={
@@ -554,7 +607,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {chainId}
+            <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
           <Description
             title={
@@ -568,25 +621,27 @@ export const Transaction = () => {
             noBorder
             className="inputLine"
           >
-            <InputData
-              byteCode={data}
-              inputType={dataType}
-              decodedDataStr={JSON.stringify(decodedData)}
-            ></InputData>
-            <Select
-              value={dataType}
-              onChange={handleDataTypeChange}
-              disableMatchWidth
-              size="small"
-            >
-              {dataTypeList.map(dataTypeItem => {
-                return (
-                  <Select.Option key={dataTypeItem} value={dataTypeItem}>
-                    {`${t(translations.transaction.select[dataTypeItem])}`}
-                  </Select.Option>
-                );
-              })}
-            </Select>
+            <SkeletonContainer shown={loading}>
+              <InputData
+                byteCode={data}
+                inputType={dataType}
+                decodedDataStr={JSON.stringify(decodedData)}
+              ></InputData>
+              <Select
+                value={dataType}
+                onChange={handleDataTypeChange}
+                disableMatchWidth
+                size="small"
+              >
+                {dataTypeList.map(dataTypeItem => {
+                  return (
+                    <Select.Option key={dataTypeItem} value={dataTypeItem}>
+                      {`${t(translations.transaction.select[dataTypeItem])}`}
+                    </Select.Option>
+                  );
+                })}
+              </Select>
+            </SkeletonContainer>
           </Description>
         </Card>
       </StyledCardWrapper>
