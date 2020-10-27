@@ -78,7 +78,7 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
 
 const ButtonWrapper = styled.div`
   float: right;
-  margin-top: 1.71rem;
+  margin: 1.71rem 0;
 
   .btn {
     background: rgba(0, 84, 254, 0.04);
@@ -491,8 +491,12 @@ export function Table({ address }) {
 
                 let minTimestamp, maxTimestamp;
                 if (Array.isArray(dateQuery) && dateQuery.length > 1) {
-                  minTimestamp = new Date(dateQuery[0].toISOString()).getTime();
-                  maxTimestamp = new Date(dateQuery[0].toISOString()).getTime();
+                  minTimestamp = Math.round(
+                    new Date(dateQuery[0].toISOString()).getTime() / 1000,
+                  );
+                  maxTimestamp = Math.round(
+                    new Date(dateQuery[1].toISOString()).getTime(),
+                  );
                 }
 
                 if (typeof dateQuery?.toISOString === 'function') {

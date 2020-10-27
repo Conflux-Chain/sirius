@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import numeral from 'numeral';
 import { Tooltip } from '../Tooltip';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
+import numeral from 'numeral';
 
 interface LabelProps {
   left?: string;
@@ -15,13 +17,20 @@ const defaultProps = {
   count: 0,
 };
 
-const Text = ({ left, right, count }) => (
-  <>
-    {left}
-    <span className="count"> {count} </span>
-    {right}
-  </>
-);
+const Text = ({ left, right, count = 0 }: LabelProps) => {
+  const { t } = useTranslation();
+  const translateText =
+    count < 10000
+      ? translations.general.tabLabel.lt10000
+      : translations.general.tabLabel.gte10000;
+  return (
+    <>
+      {t(translateText, {
+        sum: numeral(count).format('0,0'),
+      })}
+    </>
+  );
+};
 
 const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   left,

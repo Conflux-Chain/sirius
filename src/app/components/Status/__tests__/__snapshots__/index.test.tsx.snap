@@ -63,6 +63,11 @@ exports[`<Status  /> should match snapshot 1`] = `
   line-height: 1.5714rem;
 }
 
+.c0 .description {
+  color: #97a3b4;
+  margin-left: 0.5714rem;
+}
+
 <span
   class="c0 status error"
 >
@@ -75,6 +80,11 @@ exports[`<Status  /> should match snapshot 1`] = `
     class="text"
   >
     Error
+  </span>
+  <span
+    class="description"
+  >
+    Encountered during contract execution, or out of gas.
   </span>
 </span>
 `;
@@ -140,6 +150,11 @@ exports[`<Status  /> should render dot status correct 1`] = `
 .c0 .text {
   margin-left: 0.8571rem;
   line-height: 1.5714rem;
+}
+
+.c0 .description {
+  color: #97a3b4;
+  margin-left: 0.5714rem;
 }
 
 .c1 .tooltip-content.siriuse-status-popover {

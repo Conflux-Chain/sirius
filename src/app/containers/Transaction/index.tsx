@@ -349,7 +349,9 @@ export const Transaction = () => {
           <span className="for">{t(translations.transaction.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'
-              ? `${devidedByDecimals(transferItem['value'], tokenDecimals)}`
+              ? `${numeral(
+                  devidedByDecimals(transferItem['value'], tokenDecimals),
+                ).format('0,0')}`
               : transferItem['value']}
           </span>
           <span>{imgIcon}</span>

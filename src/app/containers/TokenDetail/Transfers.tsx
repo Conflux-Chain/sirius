@@ -65,13 +65,23 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   const columns = [
     {
       ...tokenColunms.txnHash,
-      render: value => (
-        <Link>
-          <Text onClick={() => onFilter(value)} span hoverValue={value}>
-            {formatString(value, 'hash')}
-          </Text>
-        </Link>
-      ),
+      render: value => {
+        if (value === filter) {
+          return (
+            <Text onClick={() => onFilter(value)} span hoverValue={value}>
+              {formatString(value, 'hash')}
+            </Text>
+          );
+        } else {
+          return (
+            <Link>
+              <Text onClick={() => onFilter(value)} span hoverValue={value}>
+                {formatString(value, 'hash')}
+              </Text>
+            </Link>
+          );
+        }
+      },
     },
     tokenColunms.age,
     {
@@ -102,10 +112,10 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
       value: 'transfers',
       label: (count: number) => {
         return (
-          <LabelWrap>
+          <>
             {t(translations.token.transfers)}
             <TabLabel count={count} />
-          </LabelWrap>
+          </>
         );
       },
       url: `/transfer?address=${tokenAddress}`,
@@ -135,11 +145,4 @@ const TransfersWrap = styled.div`
   ${media.s} {
     padding-top: 4rem;
   }
-`;
-
-const LabelWrap = styled.div`
-  display: flex;
-  color: #1a1a1a;
-  font-weight: 700;
-  font-size: 1.1429rem;
 `;

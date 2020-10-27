@@ -146,7 +146,8 @@
     "transactions": "交易",
     "tokenTxns": "代币交易",
     "table": {
-      "noData": "无数据",
+      "noData": "暂无相关记录",
+      "whoops": "哎呀！",
       "block": {
         "epoch": "纪元",
         "position": "位置",
@@ -200,7 +201,7 @@
     "qrcodeButton": {
       "clickToShow": "点击查看二维码"
     },
-    "notAvailable": "暂无",
+    "notAvailable": "暂无信息",
     "security": {
       "notAvailable": "暂无信息",
       "high": "高",
@@ -243,7 +244,11 @@
     },
     "startDate": "开始日期",
     "endDate": "结束日期",
-    "submitSucceed": "提交成功"
+    "submitSucceed": "提交成功",
+    "tabLabel": {
+      "lt10000": "共计 {{sum}} 个记录",
+      "gte10000": "仅展示最新 {{sum}} 条记录"
+    }
   },
   "sponsor": {
     "title": "赞助合约",
@@ -351,9 +356,15 @@
       "age": "块龄"
     }
   },
-  "notice": [
-    "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
-  ],
+  "notice": {
+    "mainnet": [
+      "当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}"
+    ],
+    "testnet": [
+      "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
+      "2. Conflux 主网第三阶段 Conflux Pontus 已于 2020.4.27 上线，欢迎体验。"
+    ]
+  },
   "toolTip": {
     "block": {
       "blockHeight": "区块高度是指从当前区块经过父边引用到达创世区块经过的区块数量。新区块的区块高度比它的父区块高度增加 1。特别的，创世块的区块高度为 0。",

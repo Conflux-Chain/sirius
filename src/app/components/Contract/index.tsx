@@ -470,16 +470,19 @@ const Wrapper = styled.div`
   background: #f5f6fa;
   padding-bottom: 8.3571rem;
   .inputComp {
+    background-color: #fafbfc;
     .input-wrapper {
+      background-color: #fafbfc;
       margin: 0;
-      height: 1.5714rem;
-      border: none;
+      border: transparent;
+      border-radius: 2px;
+      height: 2.1429rem;
       color: #97a3b4;
     }
   }
   .input-container.inputComp {
     width: 100%;
-    height: 1.5714rem;
+    height: 2.1429rem;
   }
   .submitInput {
     .input-wrapper {
