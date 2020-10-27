@@ -39,13 +39,7 @@ export function BottomTablePanel({ hash: blockHash }) {
     {
       value: 'blocks',
       label: count => (
-        <TabLabel
-          left={t(translations.block.tabs.labelCountBefore)}
-          right={t(translations.block.tabs.labelCountAfter, {
-            type: 'blocks',
-          })}
-          count={count}
-        >
+        <TabLabel count={count}>
           <Tooltip
             text={t(translations.toolTip.block.transactions)}
             placement="top"
@@ -63,13 +57,7 @@ export function BottomTablePanel({ hash: blockHash }) {
     {
       value: 'transaction',
       label: count => (
-        <TabLabel
-          left={t(translations.block.tabs.labelCountBefore)}
-          right={t(translations.block.tabs.labelCountAfter, {
-            type: 'transactions',
-          })}
-          count={count}
-        >
+        <TabLabel count={count}>
           <Tooltip
             text={t(translations.toolTip.block.referenceBlocks)}
             placement="top"

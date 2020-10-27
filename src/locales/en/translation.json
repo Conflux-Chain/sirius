@@ -146,7 +146,8 @@
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
     "table": {
-      "noData": "No data.",
+      "noData": "There are no matching entries.",
+      "whoops": "Whoops!",
       "block": {
         "epoch": "Epoch",
         "position": "Position",
@@ -242,7 +243,11 @@
       "ago": "ago"
     },
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "tabLabel": {
+      "lt10000": "Total of {{sum}} records",
+      "gte10000": "Showing the last {{sum}} records"
+    }
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -350,9 +355,15 @@
       "age": "Age"
     }
   },
-  "notice": [
-    "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
-  ],
+  "notice": {
+    "mainnet": [
+      "ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}"
+    ],
+    "testnet": [
+      "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet.",
+      "2. Conflux Pontus is now live."
+    ]
+  },
   "toolTip": {
     "block": {
       "blockHeight": "The number of blocks on the path to Genesis block via parent references. The block height of a newly mined block is obtained by increasing the height of its parent block by 1. In particular, the block height of Genesis block is 0.",
