@@ -243,7 +243,11 @@
       "ago": "前"
     },
     "startDate": "开始日期",
-    "endDate": "结束日期"
+    "endDate": "结束日期",
+    "tabLabel": {
+      "lt10000": "共计 {{sum}} 个记录",
+      "gte10000": "仅展示最新 {{sum}} 条记录"
+    }
   },
   "sponsor": {
     "title": "赞助合约",

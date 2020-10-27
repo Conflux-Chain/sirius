@@ -243,7 +243,11 @@
       "ago": "ago"
     },
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "tabLabel": {
+      "lt10000": "Total of {{sum}} records",
+      "gte10000": "Showing the last {{sum}} records"
+    }
   },
   "sponsor": {
     "title": "Contract Sponsor",
