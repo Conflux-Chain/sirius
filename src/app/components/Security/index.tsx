@@ -86,6 +86,10 @@ const StyledSecurityWrapper = styled.span`
     }
   }
 
+  svg:not([fill]) {
+    fill: black;
+  }
+
   &.high {
     .img {
       background: linear-gradient(270deg, #7cd77b 0%, #e5f456 100%);
@@ -125,6 +129,9 @@ const StyledSecurityWrapper = styled.span`
   &.not-available {
     .img {
       display: none;
+    }
+    .text {
+      margin-left: 0;
     }
   }
 `;
