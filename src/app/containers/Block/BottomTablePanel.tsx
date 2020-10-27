@@ -12,6 +12,7 @@ import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 export function BottomTablePanel({ hash: blockHash }) {
   const { t } = useTranslation();
 
+  const columnsTransactionsWidth = [4, 4, 4, 4, 4, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,
@@ -20,8 +21,9 @@ export function BottomTablePanel({ hash: blockHash }) {
     transactionColunms.gasFee,
     transactionColunms.gasPrice,
     transactionColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
+  const columnsBlocksWidth = [3, 2, 3, 2, 3, 3, 3, 4];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -31,7 +33,7 @@ export function BottomTablePanel({ hash: blockHash }) {
     blockColunms.difficulty,
     blockColunms.gasUsedPercent,
     blockColunms.age,
-  ];
+  ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const tabs = [
     {

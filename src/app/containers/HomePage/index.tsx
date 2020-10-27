@@ -116,15 +116,16 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 4.57rem;
+  margin-bottom: 2.57rem;
   ${media.s} {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
   }
 `;
 const Top = styled.section`
   display: flex;
   margin-right: -1.7143rem;
   margin-bottom: 2.2857rem;
+  margin-top: 1.5714rem;
   justify-content: center;
   flex-wrap: wrap;
   ${media.m} {

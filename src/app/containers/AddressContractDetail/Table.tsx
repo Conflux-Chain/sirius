@@ -407,10 +407,10 @@ export function Table({ address }) {
       value: 'transaction',
       label: (count: number) => {
         return (
-          <LabelWrap>
+          <>
             {t(translations.blocksAndTransactions.transactions)}
             <TabLabel count={count} />
-          </LabelWrap>
+          </>
         );
       },
       url: `/transaction?accountAddress=${address}`,
@@ -424,10 +424,10 @@ export function Table({ address }) {
       value: 'transfers',
       label: (count: number) => {
         return (
-          <LabelWrap>
+          <>
             {t(translations.general.tokenTxns)}
             <TabLabel count={count} />
-          </LabelWrap>
+          </>
         );
       },
       pagination: true,
@@ -454,10 +454,10 @@ export function Table({ address }) {
           pagination: true,
           label: (count: number) => {
             return (
-              <LabelWrap>
+              <>
                 {t(translations.addressDetail.minedBlocks)}
                 <TabLabel count={count} />
-              </LabelWrap>
+              </>
             );
           },
 
@@ -583,11 +583,4 @@ const FilterWrap = styled.div`
     top: 9.2rem;
     z-index: 10;
   }
-`;
-
-const LabelWrap = styled.div`
-  display: flex;
-  color: #1a1a1a;
-  font-weight: 700;
-  font-size: 1.1429rem;
 `;

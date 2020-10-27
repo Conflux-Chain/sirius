@@ -202,11 +202,11 @@
     },
     "notAvailable": "暂无",
     "security": {
-      "notAvailable": "暂无",
-      "high": "High",
-      "medium": "Medium",
-      "low": "Low",
-      "veryLow": "Very Low"
+      "notAvailable": "暂无信息",
+      "high": "高",
+      "medium": "中",
+      "low": "偏低",
+      "veryLow": "低"
     },
     "status": {
       "skip": {

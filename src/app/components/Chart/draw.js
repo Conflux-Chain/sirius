@@ -3,7 +3,7 @@ import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { formatNumber } from 'utils';
 
-// const NUM_X_GRID = 7;
+export const NUM_X_GRID = 7;
 const NUM_Y_GRID = 5;
 
 const COLORS = {
@@ -26,7 +26,7 @@ export default function createDraw({
   RECT_HEIGHT = 0,
   Y_AXIS_WIDTH = 0,
   X_AXIS_HEIGHT = 0,
-  NUM_X_GRID = 7,
+  // NUM_X_GRID = 7,
   width,
   height,
   ctxBg,
@@ -36,15 +36,19 @@ export default function createDraw({
   isSolid,
   small,
 }) {
-  if (!plot || plot.length <= 1) {
+  if (!plot || plot.length === 0) {
     return {
       xScale1: false,
       draw() {
         if (!small) {
+          ctxBg.clearRect(0, 0, width, height);
+          ctxLine.clearRect(0, 0, width, height);
           ctxBg.strokeStyle = 'rgba(0,0,0,0.12)';
+          ctxBg.beginPath();
           ctxBg.moveTo(Y_AXIS_WIDTH, 0);
           ctxBg.lineTo(Y_AXIS_WIDTH, height - X_AXIS_HEIGHT);
           ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
+
           ctxBg.stroke();
         }
       },
@@ -55,7 +59,9 @@ export default function createDraw({
   const xData = [],
     yData = [],
     data = [];
-  range(0, plot.length - 1, NUM_X_GRID)
+
+  range(0, NUM_X_GRID)
+    .filter(i => plot[i])
     .map(i => plot[i])
     .forEach(x => {
       xData.push(parseInt(x['timestamp']));
@@ -94,7 +100,6 @@ export default function createDraw({
       ctxBg.lineTo(width, height - X_AXIS_HEIGHT);
       ctxBg.stroke();
     }
-    console.log('before', Y_AXIS_WIDTH);
     if (Y_AXIS_WIDTH) {
       let maxYTxtWidth = 0;
       yGridRanges.forEach(y => {
@@ -106,7 +111,6 @@ export default function createDraw({
       });
       Y_AXIS_WIDTH = maxYTxtWidth + 6;
     }
-    console.log('after', Y_AXIS_WIDTH);
 
     //draw grid
     ctxBg.beginPath();
@@ -264,8 +268,8 @@ export default function createDraw({
   return { xScale1, draw, first, last };
 }
 
-function range(start, end, num) {
-  const step = Math.ceil((end - start) / num);
+function range(start, end) {
+  const step = 1;
   const result = [end]; //make sure end in the list but not start
   let i = end;
   while ((i -= step) > start) {
@@ -282,6 +286,7 @@ function getYScaleRange(range, num) {
   while ((i += step) < end) {
     result.push(i);
   }
+  result.push(end);
   return result;
 }
 
