@@ -120,7 +120,7 @@
     },
     "difficulty": {
       "title": "Difficulty",
-      "description": "ulation difficulty of all blocks currently generated"
+      "description": "Calculation difficulty of all blocks currently generated"
     },
     "hashRate": {
       "title": "Hash Rate",
