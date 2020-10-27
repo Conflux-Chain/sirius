@@ -355,9 +355,15 @@
       "age": "块龄"
     }
   },
-  "notice": [
-    "1. 当前网络为 Conflux 主网第二阶段 Conflux Oceanus，Conflux-Rust 版本号：{{version}}"
-  ],
+  "notice": {
+    "mainnet": [
+      "当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}"
+    ],
+    "testnet": [
+      "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
+      "2. Conflux 主网第三阶段 Conflux Pontus 已于 2020.4.27 上线，欢迎体验。"
+    ]
+  },
   "toolTip": {
     "block": {
       "blockHeight": "区块高度是指从当前区块经过父边引用到达创世区块经过的区块数量。新区块的区块高度比它的父区块高度增加 1。特别的，创世块的区块高度为 0。",
