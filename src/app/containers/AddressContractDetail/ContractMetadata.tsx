@@ -22,7 +22,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <WarnningButtonWrapper>
@@ -35,7 +35,15 @@ const WarnningButton = () => {
             <p className="warnning-text">
               {t(translations.contractDetail.contractAdminWarning)}
               <br />
-              <UILink className="warnning-tooltip-link" href="/tbd">
+              <UILink
+                target="_blank"
+                className="warnning-tooltip-link"
+                href={
+                  i18n.language?.startsWith('zh')
+                    ? 'https://juejin.im/post/6876330619798814728'
+                    : 'https://github.com/Conflux-Chain/conflux-rust/tree/master/internal_contract#admincontrol-contract'
+                }
+              >
                 {t(translations.general.viewMore)}
               </UILink>
             </p>
