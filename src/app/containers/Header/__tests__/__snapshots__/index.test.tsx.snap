@@ -213,6 +213,10 @@ exports[`<Header /> should match the snapshot 1`] = `
   align-items: center;
 }
 
+.c0 .navbar-menu .navbar-link.level-0:hover {
+  background-color: rgba(100%,87%,11%,70%);
+}
+
 .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
   padding: 0.43rem 0.57rem;
 }
@@ -901,6 +905,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.c0 .navbar-menu .navbar-link.level-0:hover {
+  background-color: rgba(100%,87%,11%,70%);
 }
 
 .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
