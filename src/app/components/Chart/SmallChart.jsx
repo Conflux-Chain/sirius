@@ -12,7 +12,7 @@ export const SmallChart = ({
   height = width * 0.52,
   indicator = 'blockTime',
 } = {}) => {
-  const { plot } = usePlot('day');
+  const { plot } = usePlot('hour');
   const { t } = useTranslation();
   const [firstlast, setFirstLast] = useState(null);
   if (!plot) {
