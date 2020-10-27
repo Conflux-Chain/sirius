@@ -218,17 +218,22 @@ export function ContractMetadata({ address }) {
                       'not-avaiable',
                   )}
                 >
-                  {isAvaiable(contractInfo.sponsorForCollateral)
-                    ? [
-                        <Link
-                          key="content"
-                          to={`/address/${contractInfo.sponsorForCollateral}`}
-                        >
-                          {contractInfo.sponsorForCollateral}
-                        </Link>,
-                        <EditButton url={`/sponsor/${address}`} key="edit" />,
-                      ]
-                    : notAvaiableText}
+                  {isAvaiable(contractInfo.sponsorForCollateral) ? (
+                    [
+                      <Link
+                        key="content"
+                        to={`/address/${contractInfo.sponsorForCollateral}`}
+                      >
+                        {contractInfo.sponsorForCollateral}
+                      </Link>,
+                      <EditButton url={`/sponsor/${address}`} key="edit" />,
+                    ]
+                  ) : (
+                    <CenterLine>
+                      {notAvaiableText}
+                      <EditButton url={`/sponsor/${address}`} key="edit" />
+                    </CenterLine>
+                  )}
                 </Content>
               </CenterLine>
             </SkeletonContainer>
@@ -292,17 +297,22 @@ export function ContractMetadata({ address }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 <Content>
-                  {isAvaiable(contractInfo.sponsorForGas)
-                    ? [
-                        <Link
-                          key="content"
-                          to={`/address/${contractInfo.sponsorForGas}`}
-                        >
-                          {contractInfo.sponsorForGas}
-                        </Link>,
-                        <EditButton url={`/sponsor/${address}`} key="edit" />,
-                      ]
-                    : notAvaiableText}
+                  {isAvaiable(contractInfo.sponsorForGas) ? (
+                    [
+                      <Link
+                        key="content"
+                        to={`/address/${contractInfo.sponsorForGas}`}
+                      >
+                        {contractInfo.sponsorForGas}
+                      </Link>,
+                      <EditButton url={`/sponsor/${address}`} key="edit" />,
+                    ]
+                  ) : (
+                    <CenterLine>
+                      {notAvaiableText}
+                      <EditButton url={`/sponsor/${address}`} key="edit" />
+                    </CenterLine>
+                  )}
                 </Content>
               </CenterLine>
             </SkeletonContainer>
