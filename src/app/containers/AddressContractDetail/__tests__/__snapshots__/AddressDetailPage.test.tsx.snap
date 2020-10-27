@@ -233,7 +233,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 
 @media (max-width:600px) {
   .c9 {
-    padding: 0.83rem 1rem;
+    padding: 0.83rem 0.98rem;
   }
 }
 

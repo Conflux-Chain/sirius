@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import up from './up.svg';
 import down from './down.svg';
 import { formatNumber } from 'utils';
+import { Tooltip } from '../Tooltip';
 
 export const SmallChart = ({
   width,
@@ -25,7 +26,9 @@ export const SmallChart = ({
   return (
     <Container style={{ width, height }}>
       <Title>
-        {t(`charts.${indicator}.title`)}
+        <Tooltip text={t(`charts.${indicator}.description`)}>
+          {t(`charts.${indicator}.title`)}
+        </Tooltip>
         <Change isDown={isDown}>{diff}</Change>
       </Title>
       <Value small={small}>
