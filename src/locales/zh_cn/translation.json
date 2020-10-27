@@ -242,7 +242,8 @@
       "ago": "前"
     },
     "startDate": "开始日期",
-    "endDate": "结束日期"
+    "endDate": "结束日期",
+    "submitSucceed": "提交成功"
   },
   "sponsor": {
     "title": "赞助合约",

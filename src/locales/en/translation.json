@@ -242,7 +242,8 @@
       "ago": "ago"
     },
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "submitSucceed": "Submit succeed"
   },
   "sponsor": {
     "title": "Contract Sponsor",

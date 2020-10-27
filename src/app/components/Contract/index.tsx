@@ -19,14 +19,453 @@ import 'ace-builds/src-noconflict/theme-github';
 import { Tabs } from './../Tabs';
 import { useCMContractCreate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
+import { useHistory } from 'react-router-dom';
 interface Props {
   contractDetail: any;
   type: string;
-  history: any;
   address?: string;
   loading?: boolean;
 }
 
+interface RequestBody {
+  [key: string]: any;
+}
+export const Contract = ({ contractDetail, type, address, loading }: Props) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  const [title, setTitle] = useState('');
+  const [addressVal, setAddressVal] = useState('');
+  const [contractName, setContractName] = useState('');
+  const [site, setSite] = useState('');
+  const [contractImgSrc, setContractImgSrc] = useState('');
+  const [tokenImgSrc, setTokenImgSrc] = useState('');
+  const [sourceCode, setSourceCode] = useState('');
+  const [abi, setAbi] = useState('');
+  const fileContractInputRef = React.createRef<any>();
+  const fileTokenInputRef = React.createRef<any>();
+  const [password, setPassword] = useState('');
+  const [btnShouldClick, setBtnShouldClick] = useState(true);
+  const [addressDisabled, setAddressDisabled] = useState(true);
+  const breakpoint = useBreakpoint();
+  const [btnLoading, setBtnLoading] = useState(false);
+  let submitBtnStyle;
+  if (breakpoint === 's') {
+    submitBtnStyle = { height: '2.6667rem', lineHeight: '2.6667rem' };
+  } else {
+    submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
+  }
+  const inputStyle = { margin: '0' };
+  const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
+  const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
+  const [requestParams, setReuqestParams] = useState({});
+  let { data: dataResCreated } = useCMContractCreate(
+    requestParams,
+    shouldFetchCreate,
+  );
+  let { data: dataResUpdated } = useCMContractCreate(
+    requestParams,
+    shouldFetchUpdate,
+  );
+  console.log(dataResCreated);
+  if (dataResCreated) {
+    console.log('dataResCreated');
+    console.log(dataResCreated);
+    setShouldFetchCreate(false);
+    dataResCreated = undefined;
+    setBtnLoading(false);
+    // setToast({
+    //   text:t(translations.general.submitSucceed),
+    //   type:'success'
+    // })
+    history.push(`/address/${tranferToLowerCase(addressVal)}`);
+  }
+  if (dataResUpdated) {
+    console.log('dataResUpdated');
+    console.log(dataResUpdated);
+    setShouldFetchUpdate(false);
+    setBtnLoading(false);
+    dataResUpdated = undefined;
+    // setToast({
+    //   text:t(translations.general.submitSucceed),
+    //   type:'success'
+    // })
+    history.push(`/address/${tranferToLowerCase(addressVal)}`);
+  }
+  const displayNone = {
+    display: 'none',
+  };
+  const addressInputChanger = e => {
+    setAddressVal(e.target.value);
+  };
+
+  const nameInputChanger = e => {
+    setContractName(e.target.value);
+  };
+
+  const siteInputChanger = e => {
+    setSite(e.target.value);
+  };
+
+  const updateCanSubmit = useCallback(() => {
+    let isSubmitable = false;
+    if (addressVal && contractName && sourceCode && abi && password) {
+      isSubmitable = true;
+    }
+    setBtnShouldClick(!isSubmitable);
+  }, [abi, addressVal, contractName, password, sourceCode]);
+  useEffect(() => {
+    setContractImgSrc(contractDetail.icon);
+    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
+    setContractName(contractDetail.name);
+    setSourceCode(contractDetail.sourceCode);
+    setAbi(contractDetail.abi);
+    setSite(contractDetail.website);
+    switch (type) {
+      case 'create':
+        setAddressVal(address || '');
+        setTitle(t(translations.contract.create.title));
+        setAddressDisabled(false);
+        break;
+      case 'edit':
+        setAddressVal(contractDetail.address);
+        setTitle(t(translations.contract.edit.title));
+        setAddressDisabled(true);
+        break;
+    }
+  }, [
+    address,
+    contractDetail.abi,
+    contractDetail.address,
+    contractDetail.icon,
+    contractDetail.name,
+    contractDetail.sourceCode,
+    contractDetail.token,
+    contractDetail.tokenIcon,
+    contractDetail.website,
+    t,
+    type,
+  ]);
+  useEffect(() => {
+    updateCanSubmit();
+  }, [
+    type,
+    addressVal,
+    contractName,
+    site,
+    sourceCode,
+    abi,
+    password,
+    updateCanSubmit,
+  ]);
+  const uploadContractIcon = () => {
+    fileContractInputRef.current.click();
+  };
+  const removeContractIcon = () => {
+    setContractImgSrc('');
+  };
+  const removeTokenIcon = () => {
+    setTokenImgSrc('');
+  };
+  const uploadTokenIcon = () => {
+    fileTokenInputRef.current.click();
+  };
+
+  const passwordChangeHandle = e => {
+    setPassword(e.target.value);
+  };
+
+  const handleSourceChange = code => {
+    setSourceCode(code);
+  };
+  const abiChangeHandler = abi => {
+    setAbi(abi);
+  };
+  const handleContractIconChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    if (file) {
+      reader.onloadend = () => {
+        setContractImgSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+    e.target.value = '';
+  };
+  const handleTokenIconChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    if (file) {
+      reader.onloadend = () => {
+        setTokenImgSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+    e.target.value = '';
+  };
+  const submitClick = () => {
+    const bodyParams: RequestBody = {};
+    bodyParams.address = tranferToLowerCase(addressVal);
+    bodyParams.name = contractName;
+    bodyParams.website = site;
+    bodyParams.icon = contractImgSrc;
+    bodyParams.typeCode = 1;
+    if (tokenImgSrc) {
+      bodyParams.token = {};
+      bodyParams.token.icon = tokenImgSrc;
+    }
+    bodyParams.sourceCode = sourceCode;
+    bodyParams.abi = abi;
+    bodyParams.password = password;
+    setReuqestParams(bodyParams);
+    switch (type) {
+      case 'create':
+        setBtnLoading(true);
+        setShouldFetchCreate(true);
+        break;
+      case 'edit':
+        setBtnLoading(true);
+        setShouldFetchUpdate(true);
+        break;
+    }
+  };
+  //TODO: modity the types of div to RreactNode
+  let tabsLabelSourceCode = (
+    <LabelWithIcon className="tabs">
+      <span className="labelIcon">*</span>
+      {t(translations.contract.sourceCode)}
+    </LabelWithIcon>
+  ) as any;
+  //TODO: modity the types of div to RreactNode
+  let tabsLabelAbi = (
+    <LabelWithIcon className="tabs">
+      <span className="labelIcon">*</span>
+      {t(translations.contract.abi)}
+    </LabelWithIcon>
+  ) as any;
+
+  return (
+    <Wrapper>
+      <Header>{title}</Header>
+      <TopContainer>
+        <div className="bodyContainer first">
+          <div className="lineContainer">
+            <LabelWithIcon>
+              <span className="labelIcon">*</span>
+              {t(translations.contract.address)}
+            </LabelWithIcon>
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                style={inputStyle}
+                defaultValue={addressVal}
+                onChange={addressInputChanger}
+                readOnly={addressDisabled}
+              />
+            </SkelontonContainer>
+          </div>
+          <div className="lineContainer">
+            <LabelWithIcon>
+              <span className="labelIcon">*</span>
+              {t(translations.contract.nameTag)}
+            </LabelWithIcon>
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                defaultValue={contractName}
+                style={inputStyle}
+                onChange={nameInputChanger}
+              />
+            </SkelontonContainer>
+          </div>
+          <div className="lineContainer">
+            <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
+            <SkelontonContainer shown={loading}>
+              <Input
+                className="inputComp"
+                defaultValue={site}
+                style={inputStyle}
+                onChange={siteInputChanger}
+              />
+            </SkelontonContainer>
+          </div>
+        </div>
+        <div className="bodyContainer second">
+          <div className="innerContainer firstInner">
+            <div className="itemContainer">
+              <div className="item left">
+                <input
+                  type="file"
+                  name="File"
+                  style={displayNone}
+                  accept="image/*"
+                  ref={fileContractInputRef}
+                  onChange={handleContractIconChange}
+                />
+                <div className="firstItem" onClick={uploadContractIcon}>
+                  <img
+                    src="/contract/upload.svg"
+                    className="labelIcon"
+                    alt={t(translations.contract.contractIcon)}
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.contractIcon)}
+                  </span>
+                </div>
+                <div className="secondItem" onClick={removeContractIcon}>
+                  <img
+                    src="/contract/remove.svg"
+                    className="labelIcon"
+                    alt={t(translations.contract.remove)}
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.remove)}
+                  </span>
+                </div>
+              </div>
+              <div className="item right">
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={contractImgSrc || defaultContractIcon}
+                      className="contractIcon"
+                      alt="contract icon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
+              </div>
+            </div>
+          </div>
+          <div className="innerContainer secondInner">
+            <div className="itemContainer">
+              <div className="item left">
+                <input
+                  type="file"
+                  name="File"
+                  style={displayNone}
+                  accept="image/*"
+                  ref={fileTokenInputRef}
+                  onChange={handleTokenIconChange}
+                />
+                <div className="firstItem" onClick={uploadTokenIcon}>
+                  <img
+                    src="/contract/upload.svg"
+                    className="labelIcon"
+                    alt="upload"
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.tokenIcon)}
+                  </span>
+                </div>
+                <div className="secondItem" onClick={removeTokenIcon}>
+                  <img
+                    src="/contract/remove.svg"
+                    className="labelIcon"
+                    alt="remove"
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.remove)}
+                  </span>
+                </div>
+              </div>
+              <div className="item right">
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={tokenImgSrc || defaultTokenIcon}
+                      className="contractIcon"
+                      alt="token icon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </TopContainer>
+      <TabContainer>
+        <Tabs initialValue="1">
+          <Tabs.Item label={tabsLabelSourceCode} value="1">
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      style={AceEditorStyle}
+                      mode="solidity"
+                      theme="github"
+                      name="UNIQUE_ID_OF_DIV"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={handleSourceChange}
+                      value={sourceCode}
+                    />
+                  </div>
+                </div>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
+          </Tabs.Item>
+          <Tabs.Item label={tabsLabelAbi} value="2">
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content abiContainer">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      style={AceEditorStyle}
+                      mode="json"
+                      theme="github"
+                      name="UNIQUE_ID_OF_DIV_ABI"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={abiChangeHandler}
+                      value={abi}
+                    />
+                  </div>
+                </div>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
+          </Tabs.Item>
+        </Tabs>
+      </TabContainer>
+      <SubmitContainer>
+        <div className="submitLeftContainer">
+          <LabelWithIcon className="init">
+            <span className="labelIcon">*</span>
+            {t(translations.contract.enterPassword)}
+          </LabelWithIcon>
+          <Input
+            className="submitInput"
+            style={inputStyle}
+            value={password}
+            onChange={passwordChangeHandle}
+          ></Input>
+        </div>
+        <div className="submitRightContainer">
+          <Button
+            variant="solid"
+            color="primary"
+            className="submitBtn"
+            style={submitBtnStyle}
+            onClick={submitClick}
+            disabled={btnShouldClick}
+            loading={btnLoading}
+          >
+            {t(translations.general.submit)}
+          </Button>
+        </div>
+      </SubmitContainer>
+    </Wrapper>
+  );
+};
 const Wrapper = styled.div`
   background: #f5f6fa;
   padding-bottom: 8.3571rem;
@@ -312,424 +751,3 @@ const SubmitContainer = styled.div`
     }
   }
 `;
-interface RequestBody {
-  [key: string]: any;
-}
-export const Contract = ({
-  contractDetail,
-  type,
-  history,
-  address,
-  loading,
-}: Props) => {
-  const { t } = useTranslation();
-  const [title, setTitle] = useState('');
-  const [addressVal, setAddressVal] = useState('');
-  const [contractName, setContractName] = useState('');
-  const [site, setSite] = useState('');
-  const [contractImgSrc, setContractImgSrc] = useState('');
-  const [tokenImgSrc, setTokenImgSrc] = useState('');
-  const [sourceCode, setSourceCode] = useState('');
-  const [abi, setAbi] = useState('');
-  const fileContractInputRef = React.createRef<any>();
-  const fileTokenInputRef = React.createRef<any>();
-  const [password, setPassword] = useState('');
-  const [btnShouldClick, setBtnShouldClick] = useState(true);
-  const [addressDisabled, setAddressDisabled] = useState(true);
-  const breakpoint = useBreakpoint();
-  let submitBtnStyle;
-  if (breakpoint === 's') {
-    submitBtnStyle = { height: '2.6667rem', lineHeight: '2.6667rem' };
-  } else {
-    submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
-  }
-  const inputStyle = { margin: '0' };
-  const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
-  const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
-  const [requestParams, setReuqestParams] = useState({});
-  const { data: dataResCreated } = useCMContractCreate(
-    requestParams,
-    shouldFetchCreate,
-  );
-  const { data: dataResUpdated } = useCMContractCreate(
-    requestParams,
-    shouldFetchUpdate,
-  );
-  if (dataResCreated) {
-    //TODO: modify the router
-    history.replace('/');
-  }
-  if (dataResUpdated) {
-    //TODO: modify the router
-    history.replace('/');
-  }
-  const displayNone = {
-    display: 'none',
-  };
-  const addressInputChanger = e => {
-    setAddressVal(e.target.value);
-  };
-
-  const nameInputChanger = e => {
-    setContractName(e.target.value);
-  };
-
-  const siteInputChanger = e => {
-    setSite(e.target.value);
-  };
-
-  const updateCanSubmit = useCallback(() => {
-    let isSubmitable = false;
-    if (addressVal && contractName && sourceCode && abi && password) {
-      isSubmitable = true;
-    }
-    setBtnShouldClick(!isSubmitable);
-  }, [abi, addressVal, contractName, password, sourceCode]);
-  useEffect(() => {
-    setContractImgSrc(contractDetail.icon);
-    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
-    setContractName(contractDetail.name);
-    setSourceCode(contractDetail.sourceCode);
-    setAbi(contractDetail.abi);
-    setSite(contractDetail.website);
-    switch (type) {
-      case 'create':
-        setAddressVal(address || '');
-        setTitle(t(translations.contract.create.title));
-        setAddressDisabled(false);
-        break;
-      case 'edit':
-        setAddressVal(contractDetail.address);
-        setTitle(t(translations.contract.edit.title));
-        setAddressDisabled(true);
-        break;
-    }
-  }, [
-    address,
-    contractDetail.abi,
-    contractDetail.address,
-    contractDetail.icon,
-    contractDetail.name,
-    contractDetail.sourceCode,
-    contractDetail.token,
-    contractDetail.tokenIcon,
-    contractDetail.website,
-    t,
-    type,
-  ]);
-  useEffect(() => {
-    updateCanSubmit();
-  }, [
-    type,
-    addressVal,
-    contractName,
-    site,
-    sourceCode,
-    abi,
-    password,
-    updateCanSubmit,
-  ]);
-  const uploadContractIcon = () => {
-    fileContractInputRef.current.click();
-  };
-  const removeContractIcon = () => {
-    setContractImgSrc('');
-  };
-  const removeTokenIcon = () => {
-    setTokenImgSrc('');
-  };
-  const uploadTokenIcon = () => {
-    fileTokenInputRef.current.click();
-  };
-
-  const passwordChangeHandle = e => {
-    setPassword(e.target.value);
-  };
-
-  const handleSourceChange = code => {
-    setSourceCode(code);
-  };
-  const abiChangeHandler = abi => {
-    setAbi(abi);
-  };
-  const handleContractIconChange = e => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    if (file) {
-      reader.onloadend = () => {
-        setContractImgSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-    e.target.value = '';
-  };
-  const handleTokenIconChange = e => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    if (file) {
-      reader.onloadend = () => {
-        setTokenImgSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-    e.target.value = '';
-  };
-  const submitClick = () => {
-    const bodyParams: RequestBody = {};
-    bodyParams.address = tranferToLowerCase(addressVal);
-    bodyParams.name = contractName;
-    bodyParams.website = site;
-    bodyParams.icon = contractImgSrc;
-    bodyParams.typeCode = 1;
-    bodyParams.token = {};
-    bodyParams.token.icon = tokenImgSrc;
-    bodyParams.sourceCode = sourceCode;
-    bodyParams.abi = abi;
-    bodyParams.password = password;
-    setReuqestParams(bodyParams);
-    switch (type) {
-      case 'create':
-        setShouldFetchCreate(true);
-        break;
-      case 'edit':
-        setShouldFetchUpdate(true);
-        break;
-    }
-  };
-  //TODO: modity the types of div to RreactNode
-  let tabsLabelSourceCode = (
-    <LabelWithIcon className="tabs">
-      <span className="labelIcon">*</span>
-      {t(translations.contract.sourceCode)}
-    </LabelWithIcon>
-  ) as any;
-  //TODO: modity the types of div to RreactNode
-  let tabsLabelAbi = (
-    <LabelWithIcon className="tabs">
-      <span className="labelIcon">*</span>
-      {t(translations.contract.abi)}
-    </LabelWithIcon>
-  ) as any;
-
-  return (
-    <Wrapper>
-      <Header>{title}</Header>
-      <TopContainer>
-        <div className="bodyContainer first">
-          <div className="lineContainer">
-            <LabelWithIcon>
-              <span className="labelIcon">*</span>
-              {t(translations.contract.address)}
-            </LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                style={inputStyle}
-                defaultValue={addressVal}
-                onChange={addressInputChanger}
-                readOnly={addressDisabled}
-              />
-            </SkelontonContainer>
-          </div>
-          <div className="lineContainer">
-            <LabelWithIcon>
-              <span className="labelIcon">*</span>
-              {t(translations.contract.nameTag)}
-            </LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                defaultValue={contractName}
-                style={inputStyle}
-                onChange={nameInputChanger}
-              />
-            </SkelontonContainer>
-          </div>
-          <div className="lineContainer">
-            <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                defaultValue={site}
-                style={inputStyle}
-                onChange={siteInputChanger}
-              />
-            </SkelontonContainer>
-          </div>
-        </div>
-        <div className="bodyContainer second">
-          <div className="innerContainer firstInner">
-            <div className="itemContainer">
-              <div className="item left">
-                <input
-                  type="file"
-                  name="File"
-                  style={displayNone}
-                  accept="image/*"
-                  ref={fileContractInputRef}
-                  onChange={handleContractIconChange}
-                />
-                <div className="firstItem" onClick={uploadContractIcon}>
-                  <img
-                    src="/contract/upload.svg"
-                    className="labelIcon"
-                    alt={t(translations.contract.contractIcon)}
-                  ></img>
-                  <span className="labelText">
-                    {t(translations.contract.contractIcon)}
-                  </span>
-                </div>
-                <div className="secondItem" onClick={removeContractIcon}>
-                  <img
-                    src="/contract/remove.svg"
-                    className="labelIcon"
-                    alt={t(translations.contract.remove)}
-                  ></img>
-                  <span className="labelText">
-                    {t(translations.contract.remove)}
-                  </span>
-                </div>
-              </div>
-              <div className="item right">
-                <SkelontonContainer shown={loading}>
-                  <div className="iconContainer">
-                    <img
-                      src={contractImgSrc || defaultContractIcon}
-                      className="contractIcon"
-                      alt="contract icon"
-                    ></img>
-                  </div>
-                </SkelontonContainer>
-              </div>
-            </div>
-          </div>
-          <div className="innerContainer secondInner">
-            <div className="itemContainer">
-              <div className="item left">
-                <input
-                  type="file"
-                  name="File"
-                  style={displayNone}
-                  accept="image/*"
-                  ref={fileTokenInputRef}
-                  onChange={handleTokenIconChange}
-                />
-                <div className="firstItem" onClick={uploadTokenIcon}>
-                  <img
-                    src="/contract/upload.svg"
-                    className="labelIcon"
-                    alt="upload"
-                  ></img>
-                  <span className="labelText">
-                    {t(translations.contract.tokenIcon)}
-                  </span>
-                </div>
-                <div className="secondItem" onClick={removeTokenIcon}>
-                  <img
-                    src="/contract/remove.svg"
-                    className="labelIcon"
-                    alt="remove"
-                  ></img>
-                  <span className="labelText">
-                    {t(translations.contract.remove)}
-                  </span>
-                </div>
-              </div>
-              <div className="item right">
-                <SkelontonContainer shown={loading}>
-                  <div className="iconContainer">
-                    <img
-                      src={tokenImgSrc || defaultTokenIcon}
-                      className="contractIcon"
-                      alt="token icon"
-                    ></img>
-                  </div>
-                </SkelontonContainer>
-              </div>
-            </div>
-          </div>
-        </div>
-      </TopContainer>
-      <TabContainer>
-        <Tabs initialValue="1">
-          <Tabs.Item label={tabsLabelSourceCode} value="1">
-            <SkelontonContainer shown={loading}>
-              <StyledTabelWrapper>
-                <div className="ui fluid card">
-                  <div className="content">
-                    <div className="contentHeader" />
-                    <AceEditor
-                      style={AceEditorStyle}
-                      mode="solidity"
-                      theme="github"
-                      name="UNIQUE_ID_OF_DIV"
-                      setOptions={{
-                        showLineNumbers: true,
-                      }}
-                      showGutter={false}
-                      showPrintMargin={false}
-                      onChange={handleSourceChange}
-                      value={sourceCode}
-                    />
-                  </div>
-                </div>
-              </StyledTabelWrapper>
-            </SkelontonContainer>
-          </Tabs.Item>
-          <Tabs.Item label={tabsLabelAbi} value="2">
-            <SkelontonContainer shown={loading}>
-              <StyledTabelWrapper>
-                <div className="ui fluid card">
-                  <div className="content abiContainer">
-                    <div className="contentHeader" />
-                    <AceEditor
-                      style={AceEditorStyle}
-                      mode="json"
-                      theme="github"
-                      name="UNIQUE_ID_OF_DIV_ABI"
-                      setOptions={{
-                        showLineNumbers: true,
-                      }}
-                      showGutter={false}
-                      showPrintMargin={false}
-                      onChange={abiChangeHandler}
-                      value={abi}
-                    />
-                  </div>
-                </div>
-              </StyledTabelWrapper>
-            </SkelontonContainer>
-          </Tabs.Item>
-        </Tabs>
-      </TabContainer>
-      <SubmitContainer>
-        <div className="submitLeftContainer">
-          <LabelWithIcon className="init">
-            <span className="labelIcon">*</span>
-            {t(translations.contract.enterPassword)}
-          </LabelWithIcon>
-          <Input
-            className="submitInput"
-            style={inputStyle}
-            value={password}
-            onChange={passwordChangeHandle}
-          ></Input>
-        </div>
-        <div className="submitRightContainer">
-          <Button
-            variant="solid"
-            color="primary"
-            className="submitBtn"
-            style={submitBtnStyle}
-            onClick={submitClick}
-            disabled={btnShouldClick}
-          >
-            {t(translations.general.submit)}
-          </Button>
-        </div>
-      </SubmitContainer>
-    </Wrapper>
-  );
-};

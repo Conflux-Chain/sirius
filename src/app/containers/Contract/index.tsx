@@ -52,7 +52,6 @@ export function Contract(props) {
         contractDetail={contractDetail}
         type={type}
         address={contractAddress}
-        history={props.history}
         loading={loading}
       ></ContractBody>
     </>
