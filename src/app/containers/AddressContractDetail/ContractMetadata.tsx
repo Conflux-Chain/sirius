@@ -4,7 +4,7 @@
  * @name ContractMetadata.tsx
  * @author yqrashawn <namy.19@gmail.com>
  */
-import React, { useCallback } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
@@ -105,7 +105,6 @@ const EditButton = ({ url }) => {
 export function ContractMetadata({ address }) {
   const { t } = useTranslation();
   const notAvaiableText = t(translations.general.security.notAvailable);
-  const isAvaiable = useCallback(t => t !== null, []);
 
   const { data: contractInfo } = useContract(address, [
     'name',
@@ -160,7 +159,7 @@ export function ContractMetadata({ address }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 <Content>
-                  {isAvaiable(contractInfo.admin) ? (
+                  {contractInfo.admin ? (
                     <Link to={`/address/${contractInfo.admin}`}>
                       <Text span hoverValue={contractInfo.admin}>
                         {formatString(contractInfo.admin, 'address')}
@@ -193,12 +192,8 @@ export function ContractMetadata({ address }) {
                     alt={`${contractInfo.name} logo`}
                   />
                 )}
-                <Content
-                  className={clsx(
-                    !isAvaiable(tokenInfo.name) && 'not-avaiable',
-                  )}
-                >
-                  {isAvaiable(tokenInfo.name) ? (
+                <Content className={clsx(!tokenInfo.name && 'not-avaiable')}>
+                  {tokenInfo.name ? (
                     <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
                   ) : (
                     notAvaiableText
@@ -222,11 +217,10 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content
                   className={clsx(
-                    !isAvaiable(contractInfo.sponsorForCollateral) &&
-                      'not-avaiable',
+                    !contractInfo.sponsorForCollateral && 'not-avaiable',
                   )}
                 >
-                  {isAvaiable(contractInfo.sponsorForCollateral) ? (
+                  {contractInfo.sponsorForCollateral ? (
                     [
                       <Link
                         key="content"
@@ -261,11 +255,11 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content
                   className={clsx(
-                    !isAvaiable(contractInfo.from) && 'not-avaiable',
-                    !isAvaiable(contractInfo.transactionHash) && 'not-avaiable',
+                    !contractInfo.from && 'not-avaiable',
+                    !contractInfo.transactionHash && 'not-avaiable',
                   )}
                 >
-                  {isAvaiable(contractInfo.from) ? (
+                  {contractInfo.from ? (
                     <Link to={`/address/${contractInfo.from}`}>
                       <Text span hoverValue={contractInfo.from}>
                         {formatString(contractInfo.from, 'address')}
@@ -277,7 +271,7 @@ export function ContractMetadata({ address }) {
                   {` ${t(translations.contractDetail.at)} ${t(
                     translations.contractDetail.txOnlyEn,
                   )} `}
-                  {isAvaiable(contractInfo.from) ? (
+                  {contractInfo.from ? (
                     <Link to={`/transaction/${contractInfo.transactionHash}`}>
                       <Text span hoverValue={contractInfo.transactionHash}>
                         {formatString(contractInfo.transactionHash, 'address')}
@@ -305,7 +299,7 @@ export function ContractMetadata({ address }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 <Content>
-                  {isAvaiable(contractInfo.sponsorForGas) ? (
+                  {contractInfo.sponsorForGas ? (
                     [
                       <Link
                         key="content"
