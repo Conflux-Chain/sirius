@@ -646,6 +646,8 @@ const ApplyContainer = styled.div`
 const ErrorMsgContainer = styled.div`
   margin-top: 0.5714rem;
   line-height: 1.5714rem;
+  display: flex;
+  align-items: center;
   .icon {
     width: 1rem;
   }
