@@ -44,6 +44,15 @@ export const hex2utf8 = pStr => {
   return tempstr;
 };
 
+export const toThousands = num => {
+  console.log(typeof num);
+  if ((typeof num !== 'number' || isNaN(num)) && typeof num !== 'string')
+    return null;
+  let str = num + '';
+  str = str.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, '$1,');
+  return str;
+};
+
 const riskDivided = new BigNumber(2).pow(256).minus(1);
 const eps = new BigNumber(1e-6);
 

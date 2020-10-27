@@ -59,7 +59,7 @@ const Inner = styled.div`
   justify-content: space-between;
 
   ${media.s} {
-    padding: 0.83rem 1rem;
+    padding: 0.83rem 0.98rem;
   }
 `;
 const Left = styled.div`

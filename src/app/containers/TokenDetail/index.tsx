@@ -56,7 +56,7 @@ export function TokenDetail() {
                   </span>
                 }
               >
-                <img alt="icon" src={data.icon} />
+                <img alt="icon" src={data.icon || defaultTokenIcon} />
               </Tooltip>
             )}
             <div className="basic-name">{data.name}</div>

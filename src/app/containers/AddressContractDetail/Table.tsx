@@ -78,7 +78,7 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
 
 const ButtonWrapper = styled.div`
   float: right;
-  margin-top: 1.71rem;
+  margin: 1.71rem 0;
 
   .btn {
     background: rgba(0, 84, 254, 0.04);
