@@ -10,7 +10,7 @@ import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import numeral from 'numeral';
-import { fromDripToGdrip, formatString } from '../../../utils';
+import { fromDripToGdrip, formatString, toThousands } from '../../../utils';
 
 export interface BasicProps {
   totalSupply?: string;
@@ -43,9 +43,9 @@ export const Basic = ({
         </Tooltip>
       ),
       children: (
-        <Text hoverValue={`${totalSupply || 0} ${symbol}`}>{`${fromDripToGdrip(
-          totalSupply || 0,
-        )} ${symbol}`}</Text>
+        <Text
+          hoverValue={`${toThousands(totalSupply) || 0} ${symbol}`}
+        >{`${fromDripToGdrip(totalSupply || 0)} ${symbol}`}</Text>
       ),
     },
     {

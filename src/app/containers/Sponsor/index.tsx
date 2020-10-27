@@ -490,25 +490,32 @@ const SearchContainer = styled.div`
   padding: 0.5714rem 1.1429rem;
   display: inline-block;
   ${media.s} {
+    display: flex;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
   }
   .input-container.inputComp {
     width: 34.8571rem;
-    height: 1.5714rem;
+    height: 2.1429rem;
+    margin-right: 2.4286rem;
     ${media.s} {
       width: 100%;
+      box-sizing: border-box;
     }
   }
   .inputComp {
     .input-wrapper {
+      background-color: #fafbfc;
       margin: 0;
-      height: 1.5714rem;
+      height: 2.1429rem;
       line-height: initial;
       border: none;
       color: #97a3b4;
       ${media.s} {
-        width: 18.3333rem;
+        height: 2.5rem;
+        margin-right: 2.0833rem;
+        width: 13.3333rem;
       }
     }
   }

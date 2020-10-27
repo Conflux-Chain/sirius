@@ -244,6 +244,7 @@
     },
     "startDate": "Start date",
     "endDate": "End date",
+    "submitSucceed": "Submit succeed",
     "tabLabel": {
       "lt10000": "Total of {{sum}} records",
       "gte10000": "Showing the last {{sum}} records"
