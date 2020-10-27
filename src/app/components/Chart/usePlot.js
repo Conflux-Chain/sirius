@@ -7,7 +7,7 @@ const durations = {
   hour: `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
   day: `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
   month: `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-  all: `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+  all: `limit=${NUM_X_GRID}`,
 };
 export default function usePlot(defaultDuration = 'day') {
   const [duration, setDuration] = useState(defaultDuration);

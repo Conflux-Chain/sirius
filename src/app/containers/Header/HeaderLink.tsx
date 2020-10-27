@@ -114,7 +114,9 @@ export const HeaderLink: React.FC<{
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
   useClickAway(ref, () => {
-    if (expanded) setTimeout(() => toggle(false), 200);
+    if (expanded) {
+      setTimeout(() => toggle(false), 200);
+    }
   });
   const bp = useBreakpoint();
 
@@ -135,8 +137,8 @@ export const HeaderLink: React.FC<{
       <WrappLink
         onClick={e => {
           e.preventDefault();
-          toggle();
           onClick(e);
+          toggle();
         }}
       >
         <div
@@ -163,6 +165,7 @@ export const HeaderLink: React.FC<{
 
     return (
       <WrappLink
+        ref={ref}
         style={{ marginLeft: bp === 'm' || bp === 's' ? '-18px' : 0 }}
         onClick={e => {
           toggle();
@@ -176,7 +179,7 @@ export const HeaderLink: React.FC<{
           ])}
         >
           <WrappLink>
-            <UILink ref={ref} className={clsx(className, matched && 'matched')}>
+            <UILink className={clsx(className, matched && 'matched')}>
               {(bp === 'm' || bp === 's') && isMenu && (
                 <ChevronDown size={18} />
               )}

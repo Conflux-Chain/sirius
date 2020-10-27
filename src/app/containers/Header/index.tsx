@@ -165,6 +165,9 @@ const LogoWrapper = styled.div`
 `;
 const Wrapper = styled.header`
   .navbar-menu {
+    .navbar-link.level-0 :hover {
+      background-color: rgba(100%, 87%, 11%, 70%);
+    }
     .navbar-end {
       .navbar-item {
         .navbar-link-menu {

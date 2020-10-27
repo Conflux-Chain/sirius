@@ -6,6 +6,7 @@ import 'utils/lazyJSSDK';
 import { useClientVersion } from '@cfxjs/react-hooks';
 import { media } from 'styles/media';
 import clsx from 'clsx';
+import { useTestnet } from 'utils/hooks/useTestnet';
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
@@ -18,31 +19,25 @@ const NoticeItem = ({ children }) => (
 
 export function Notice() {
   const { t } = useTranslation();
+  const isTestnet = useTestnet();
   let v = useClientVersion();
   const loadingText = t(translations.general.loading);
   const version = (v && v?.replace('conflux-rust-', '')) || loadingText;
   const notices: React.ReactNode[] = [];
+  const transationsNotice = isTestnet
+    ? translations.notice.testnet
+    : translations.notice.mainnet;
 
-  for (const n in translations.notice) {
+  for (const n in transationsNotice) {
     if (n === '0') {
       notices.push(
-        <NoticeItem key={n}>
-          {t(translations.notice[n], { version })}
-        </NoticeItem>,
+        <NoticeItem key={n}>{t(transationsNotice[n], { version })}</NoticeItem>,
       );
     } else {
-      notices.push(
-        <NoticeItem key={n}>{t(translations.notice[n])}</NoticeItem>,
-      );
+      notices.push(<NoticeItem key={n}>{t(transationsNotice[n])}</NoticeItem>);
     }
   }
-  return (
-    <Main
-      className={clsx('notice', notices.length > 1 ? 'multiple' : 'single')}
-    >
-      {notices}
-    </Main>
-  );
+  return <Main className={clsx('notice')}>{notices}</Main>;
 }
 
 const StyledNoticeItemWrapper = styled.div`
@@ -74,16 +69,6 @@ const Main = styled.div`
 
   &.placeholder {
     position: relative;
-  }
-
-  .notice-item-wrapper {
-    justify-content: center;
-  }
-
-  &.multiple {
-    .notice-item-wrapper {
-      justify-content: flex-start;
-    }
   }
 
   ${media.s} {

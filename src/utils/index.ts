@@ -331,7 +331,7 @@ export const isAddress = (str: string) => {
 };
 
 export function isAccountAddress(str: string) {
-  return /^0x1[0-9a-fA-F]{39}$/.test(str);
+  return /^0x[01][0-9a-fA-F]{39}$/.test(str);
 }
 
 export function isContractAddress(str: string) {
