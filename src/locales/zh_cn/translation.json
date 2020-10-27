@@ -200,7 +200,7 @@
     "qrcodeButton": {
       "clickToShow": "点击查看二维码"
     },
-    "notAvailable": "暂无",
+    "notAvailable": "暂无信息",
     "security": {
       "notAvailable": "暂无信息",
       "high": "高",
