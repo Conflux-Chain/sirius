@@ -10,22 +10,31 @@ import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import { useTableData } from '../TabsTablePanel/useTableData';
 import { Skeleton } from '@cfxjs/react-ui';
 import clsx from 'clsx';
+import { Placeholder } from './Placeholder';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
-
 export type TablePanelType = {
   url: string;
   pagination?: PaginationProps | boolean;
   table: TableProps<unknown>;
 };
 
-const mockTableConfig = columns => {
+const mockTableConfig = (columns, type = 'skeleton') => {
   const mockTableColumns = columns.map((item, i) => ({
+    title: item.title,
     id: i,
     key: i,
     dataIndex: 'key',
     width: item.width,
-    render: () => <Skeleton />,
+    render: () => (
+      <div
+        style={{
+          visibility: type === 'skeleton' ? 'visible' : 'hidden',
+        }}
+      >
+        <Skeleton />
+      </div>
+    ),
   }));
   let mockTableData: Array<{ id: number }> = [];
   const mockTableRowKey: string = 'id';
@@ -100,16 +109,33 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
   let tableColumns = table.columns;
   let tableRowKey = table.rowKey;
 
-  let { mockTableColumns, mockTableData, mockTableRowKey } = mockTableConfig(
-    table.columns,
-  );
-
+  // loading table
   if (!data) {
+    const {
+      mockTableColumns,
+      mockTableData,
+      mockTableRowKey,
+    } = mockTableConfig(table.columns, 'skeleton');
+
     tableData = mockTableData;
     tableColumns = mockTableColumns;
     tableRowKey = mockTableRowKey;
   } else {
     tableData = data?.list || table.data;
+  }
+
+  // empty table
+  const empty = !tableData?.length;
+  if (empty) {
+    const {
+      mockTableColumns,
+      mockTableData,
+      mockTableRowKey,
+    } = mockTableConfig(table.columns, 'empty');
+
+    tableData = mockTableData;
+    tableColumns = mockTableColumns;
+    tableRowKey = mockTableRowKey;
   }
 
   return (
@@ -124,6 +150,8 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
             rowKey={tableRowKey}
             scroll={{ x: 800 }}
           />
+          {/* may rewrite a new Table component with empty placeholder is better */}
+          <Placeholder show={empty} />
         </Card>
       </StyledTableWrapper>
       {pagination !== false && (
@@ -133,6 +161,9 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
             className={clsx(
               'sirius-pagination',
               mergedPaginationConfig.className,
+              {
+                hide: empty,
+              },
             )}
             onPageChange={(page: number) => gotoPage(page)}
             onPageSizeChange={(page: number, pageSize: number) =>
@@ -155,6 +186,10 @@ TablePanel.defaultProps = {
 };
 
 const StyledTableWrapper = styled.div`
+  .card {
+    position: relative;
+    background-color: red;
+  }
   .table.sirius-table {
     line-height: 1.7143rem;
     .table-content {
@@ -182,30 +217,41 @@ const StyledTableWrapper = styled.div`
 const StyledPaginationWrapper = styled.div`
   .pagination.sirius-pagination {
     margin: 1.7143rem 0;
+
+    &.hide {
+      visibility: hidden;
+    }
+
     .left,
     .right {
       margin-top: 0;
     }
+
     button:not(.active) {
       background-color: rgba(0, 84, 254, 0.04);
+
       &:not(.disabled):hover {
         background-color: rgba(0, 84, 254, 0.1);
       }
     }
+
     .input-wrapper.solid,
     .select {
       background-color: rgba(0, 84, 254, 0.04);
       border-color: transparent;
+
       &.hover,
       &:hover {
         background-color: #e0eaff;
         border-color: transparent;
       }
+
       input {
         color: #74798c;
         font-size: 1rem;
         font-weight: 500;
       }
+
       &.focus:not(.disabled),
       &.hover:not(.disabled) {
         input {
@@ -213,6 +259,7 @@ const StyledPaginationWrapper = styled.div`
         }
       }
     }
+
     div.text,
     button:not(.active),
     .option span {

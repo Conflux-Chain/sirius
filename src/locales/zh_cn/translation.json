@@ -146,7 +146,8 @@
     "transactions": "交易",
     "tokenTxns": "代币交易",
     "table": {
-      "noData": "无数据",
+      "noData": "暂无相关记录",
+      "whoops": "哎呀！",
       "block": {
         "epoch": "纪元",
         "position": "位置",

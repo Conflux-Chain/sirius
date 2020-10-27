@@ -146,7 +146,8 @@
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
     "table": {
-      "noData": "No data.",
+      "noData": "There are no matching entries.",
+      "whoops": "Whoops!",
       "block": {
         "epoch": "Epoch",
         "position": "Position",
