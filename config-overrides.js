@@ -1,11 +1,10 @@
 const path = require('path');
-console.log('path', path);
-module.exports = {
-  // The Webpack config to use when compiling your react app for development or production.
-  webpack: function (config, env) {
-    // ...add your webpack config
+module.exports = function (config, mode) {
+  if (mode === 'production') {
     return {
+      ...config,
       optimization: {
+        ...config.optimization,
         splitChunks: {
           chunks: 'all',
           minSize: 1,
@@ -30,7 +29,9 @@ module.exports = {
         },
       },
       resolve: {
+        ...config.resolve,
         alias: {
+          ...config.resolve.alias,
           'js-conflux-sdk': path.resolve(
             process.cwd(),
             'node_modules',
@@ -39,5 +40,6 @@ module.exports = {
         },
       },
     };
-  },
+  }
+  return config;
 };
