@@ -63,6 +63,9 @@ export const Status = ({
       <>
         <img className="icon" src={typeMap[type].icon} alt={type} />
         <span className="text">{typeMap[type].name}</span>
+        <span className="description">
+          {t(translations.general.status[typeMap[type].status].explanation)}
+        </span>
       </>
     );
     const { contentClassName: popoverContentClassName, ...popoverOthers } =
@@ -144,6 +147,10 @@ const Wrapper = styled.span`
   .text {
     margin-left: 0.8571rem;
     line-height: 1.5714rem;
+  }
+  .description {
+    color: #97a3b4;
+    margin-left: 0.5714rem;
   }
 `;
 
