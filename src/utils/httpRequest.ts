@@ -2,7 +2,7 @@ import superagent from 'superagent';
 import { cfx, cfxUtil } from './cfx';
 import { delay } from './index';
 import { transferRisk } from './index';
-export const apiPrefix = '/api';
+export const apiPrefix = '/v1';
 export const sendRequest = config => {
   const reqType = config.type || 'GET';
   const reqPromise = superagent(reqType, config.url)

@@ -43,7 +43,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = app => {
   app.use(
-    '/api',
+    '/v1',
     createProxyMiddleware({
       target: 'https://scantest.confluxnetwork.org',
       changeOrigin: true,
@@ -56,6 +56,7 @@ module.exports = app => {
       target: 'http://mainnet-jsonrpc.conflux-chain.org:12537',
     }),
   );
+
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
