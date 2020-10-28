@@ -45,12 +45,16 @@ export const hex2utf8 = pStr => {
 };
 
 export const toThousands = num => {
-  console.log(typeof num);
   if ((typeof num !== 'number' || isNaN(num)) && typeof num !== 'string')
-    return null;
+    return '';
   let str = num + '';
-  str = str.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, '$1,');
-  return str;
+  return str.split('.').reduce((acc, cur, index) => {
+    if (index) {
+      return `${acc}.${cur}`;
+    } else {
+      return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, '$1,');
+    }
+  }, '');
 };
 
 const riskDivided = new BigNumber(2).pow(256).minus(1);
@@ -196,7 +200,7 @@ export const fromDripToCfx = (
   if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
     const divideBn = bn.dividedBy(10 ** 18);
     if (isShowFull) {
-      result = divideBn.toFixed();
+      result = toThousands(divideBn.toFixed());
     } else {
       result =
         divideBn.toNumber() < 0.001
@@ -204,7 +208,7 @@ export const fromDripToCfx = (
           : formatNumber(divideBn.toNumber());
     }
   }
-  return `${result}`;
+  return result;
 };
 
 /**
@@ -221,7 +225,7 @@ export const fromDripToGdrip = (
   if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
     const divideBn = bn.dividedBy(10 ** 9);
     if (isShowFull) {
-      result = divideBn.toFixed();
+      result = toThousands(divideBn.toFixed());
     } else {
       result =
         divideBn.toNumber() < 0.001
@@ -275,7 +279,7 @@ export const formatTimeStamp = (
 export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
   try {
     if (isShowFull) {
-      return Big(balance).div(Big(10).pow(decimals)).toFixed();
+      return toThousands(Big(balance).div(Big(10).pow(decimals)).toFixed());
     }
     return formatNumber(Big(balance).div(Big(10).pow(decimals)).toString());
   } catch {}
@@ -290,7 +294,7 @@ export const getUnitByCfxNum = (
   let unit = '';
   if (bn.toNumber() < 10 ** 9) {
     if (isShowFull) {
-      numFormatted = bn.toNumber();
+      numFormatted = toThousands(bn.toNumber());
     } else {
       numFormatted = formatNumber(bn.toNumber());
     }

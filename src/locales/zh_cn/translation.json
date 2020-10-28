@@ -99,7 +99,7 @@
     "decimals": "小数精度",
     "transfers": "转移",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
-    "address": "地址",
+    "address": "个地址",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
       "searchError": "抱歉！您搜索的字符串无效。",
