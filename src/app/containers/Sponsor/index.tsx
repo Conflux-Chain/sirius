@@ -512,6 +512,12 @@ const SearchContainer = styled.div`
       line-height: initial;
       border: none;
       color: #97a3b4;
+      &.hover {
+        background-color: #fafbfc !important;
+      }
+      &.focus {
+        background-color: #fafbfc !important;
+      }
       ${media.s} {
         height: 2.5rem;
         margin-right: 2.0833rem;
