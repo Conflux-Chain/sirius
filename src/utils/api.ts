@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
-export const appendApiPrefix = (url: string) => `/api${url}`;
+export const appendApiPrefix = (url: string) => `/v1${url}`;
 
 export interface Params {
   [name: string]: string | string[];

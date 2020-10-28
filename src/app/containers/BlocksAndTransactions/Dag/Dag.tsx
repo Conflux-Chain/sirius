@@ -121,7 +121,7 @@ function DagComp({ id = 'dag-viewer', children, onLoaded } = {}) {
           ],
           chain: initialSubChains.pop().reverse(),
           onBlockClick: ({ hash }) => {
-            window.open(`/blocksdetail/${hash}`);
+            window.open(`/block/${hash}`);
           },
           onBlockMouseOver: ({ mesh, meshPosition }) => {
             if (mesh.refBlocksInfo.length) {

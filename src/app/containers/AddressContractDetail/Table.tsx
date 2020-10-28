@@ -105,8 +105,10 @@ const DatePickerWithQuery = ({ onChange }) => {
     () =>
       minTimestamp && maxTimestamp
         ? [
-            minTimestamp && dayjs(new Date(parseInt(minTimestamp as string))),
-            maxTimestamp && dayjs(new Date(parseInt(maxTimestamp as string))),
+            minTimestamp &&
+              dayjs(new Date(parseInt((minTimestamp + '000') as string))),
+            maxTimestamp &&
+              dayjs(new Date(parseInt((maxTimestamp + '000') as string))),
           ]
         : undefined,
     [minTimestamp, maxTimestamp],
@@ -495,7 +497,7 @@ export function Table({ address }) {
                     new Date(dateQuery[0].toISOString()).getTime() / 1000,
                   );
                   maxTimestamp = Math.round(
-                    new Date(dateQuery[1].toISOString()).getTime(),
+                    new Date(dateQuery[1].toISOString()).getTime() / 1000,
                   );
                 }
 
