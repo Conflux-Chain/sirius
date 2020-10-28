@@ -15,7 +15,6 @@ import {
   isAddress,
   isHash,
   formatBalance,
-  toThousands,
 } from '../../utils';
 
 interface Query {
@@ -212,9 +211,9 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
-  render: value => (
-    <Text span hoverValue={toThousands(value)}>
-      {formatNumber(value)}
+  render: (value, row) => (
+    <Text span hoverValue={formatBalance(value, row.decimals, true)}>
+      {formatBalance(value, row.decimals)}
     </Text>
   ),
 };

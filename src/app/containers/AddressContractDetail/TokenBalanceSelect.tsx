@@ -7,6 +7,7 @@ import { ChevronUp } from '@geist-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { defaultTokenIcon } from '../../../constants';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -57,7 +58,10 @@ function Select({ children = [] } = {}) {
 function SelectItem({ icon, balance, name, symbol, isLastOne }) {
   const title = (
     <SelectItemTitle key="title">
-      <SelectItemTokenIcon src={icon} alt={`${name} icon`} />
+      <SelectItemTokenIcon
+        src={icon || defaultTokenIcon}
+        alt={`${name} icon`}
+      />
       <SelectItemTextTitle>{`${name} (${symbol})`}</SelectItemTextTitle>
     </SelectItemTitle>
   );

@@ -10,7 +10,7 @@ import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import numeral from 'numeral';
-import { fromDripToGdrip, formatString, toThousands } from '../../../utils';
+import { formatBalance, formatString } from '../../../utils';
 
 export interface BasicProps {
   totalSupply?: string;
@@ -42,11 +42,13 @@ export const Basic = ({
           {t(translations.token.totalSupplay)}
         </Tooltip>
       ),
-      children: (
+      children: totalSupply ? (
         <Text
-          hoverValue={`${toThousands(totalSupply) || 0} ${symbol}`}
-        >{`${fromDripToGdrip(totalSupply || 0)} ${symbol}`}</Text>
-      ),
+          hoverValue={`${formatBalance(totalSupply, decimals, true)} ${symbol}`}
+        >
+          {`${formatBalance(totalSupply, decimals)} ${symbol}`}
+        </Text>
+      ) : undefined,
     },
     {
       title: (
@@ -54,7 +56,7 @@ export const Basic = ({
           {t(translations.token.contract)}
         </Tooltip>
       ),
-      children: (
+      children: tokenAddress ? (
         <Text span hoverValue={tokenAddress}>
           {
             <Link href={`/address/${tokenAddress}`}>
@@ -62,7 +64,7 @@ export const Basic = ({
             </Link>
           }
         </Text>
-      ),
+      ) : undefined,
     },
     {
       title: (
@@ -70,9 +72,11 @@ export const Basic = ({
           {t(translations.token.holders)}
         </Tooltip>
       ),
-      children: `${numeral(accountTotal).format('0,0')} ${t(
-        translations.token.address,
-      )}`,
+      children: accountTotal
+        ? `${numeral(accountTotal).format('0,0')} ${t(
+            translations.token.address,
+          )}`
+        : undefined,
     },
     {
       title: (
@@ -88,7 +92,9 @@ export const Basic = ({
           {t(translations.token.transfers)}
         </Tooltip>
       ),
-      children: numeral(transferCount).format('0,0'),
+      children: transferCount
+        ? numeral(transferCount).format('0,0')
+        : undefined,
     },
   ];
 
