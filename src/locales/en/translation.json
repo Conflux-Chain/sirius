@@ -426,7 +426,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The contract could be modified by the address with non zero.",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. A non-zero admin address implies that the contract is in debug mode.",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
