@@ -66,10 +66,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     requestParams,
     shouldFetchUpdate,
   );
-  console.log(dataResCreated);
   if (dataResCreated) {
-    console.log('dataResCreated');
-    console.log(dataResCreated);
     setShouldFetchCreate(false);
     dataResCreated = undefined;
     setBtnLoading(false);
@@ -80,8 +77,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     history.push(`/address/${tranferToLowerCase(addressVal)}`);
   }
   if (dataResUpdated) {
-    console.log('dataResUpdated');
-    console.log(dataResUpdated);
     setShouldFetchUpdate(false);
     setBtnLoading(false);
     dataResUpdated = undefined;
@@ -478,6 +473,12 @@ const Wrapper = styled.div`
       border-radius: 2px;
       height: 2.1429rem;
       color: #97a3b4;
+      &.hover {
+        background-color: #fafbfc !important;
+      }
+      &.focus {
+        background-color: #fafbfc !important;
+      }
     }
   }
   .input-container.inputComp {
