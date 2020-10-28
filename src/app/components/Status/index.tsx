@@ -63,9 +63,11 @@ export const Status = ({
       <>
         <img className="icon" src={typeMap[type].icon} alt={type} />
         <span className="text">{typeMap[type].name}</span>
-        <span className="description">
-          {t(translations.general.status[typeMap[type].status].explanation)}
-        </span>
+        {variant === 'dot' ? null : (
+          <span className="description">
+            {t(translations.general.status[typeMap[type].status].explanation)}
+          </span>
+        )}
       </>
     );
     const { contentClassName: popoverContentClassName, ...popoverOthers } =
