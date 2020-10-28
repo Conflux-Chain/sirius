@@ -358,11 +358,13 @@
   },
   "notice": {
     "mainnet": [
-      "当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}"
+      "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
+      "2. ConfluxPortal v0.5.0 以下版本将无法直接连接 Conflux Tethys 网络，请使用最新 v0.5.3 及以上版本的 ConfluxPortal。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. Conflux 主网第三阶段 Conflux Pontus 已于 2020.4.27 上线，欢迎体验。"
+      "2. Conflux 主网第三阶段 Conflux Tethys 已于 2020.10.29 上线，欢迎体验。",
+      "3. ConfluxPortal v0.5.0 以下版本将无法直接连接 Conflux Tethys 网络，请使用最新 v0.5.3 及以上版本的 ConfluxPortal。"
     ]
   },
   "toolTip": {
