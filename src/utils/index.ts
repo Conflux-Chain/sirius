@@ -196,7 +196,7 @@ export const fromDripToCfx = (
   if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
     const divideBn = bn.dividedBy(10 ** 18);
     if (isShowFull) {
-      result = divideBn.toFixed();
+      result = numeral(divideBn.toFixed()).format('0,0');
     } else {
       result =
         divideBn.toNumber() < 0.001
