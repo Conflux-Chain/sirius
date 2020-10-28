@@ -28,7 +28,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The contract could be modified by the address with non zero.",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. A non-zero admin address implies that the contract is in debug mode.",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": ""
