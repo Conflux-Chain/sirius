@@ -2,6 +2,7 @@ import superagent from 'superagent';
 import { cfx, cfxUtil } from './cfx';
 import { delay } from './index';
 import { transferRisk } from './index';
+import * as Sentry from '@sentry/browser';
 export const apiPrefix = '/v1';
 export const sendRequest = config => {
   const reqType = config.type || 'GET';
@@ -13,7 +14,7 @@ export const sendRequest = config => {
       return true;
     });
   reqPromise.catch(error => {
-    //TODO: upload log to Sentry
+    Sentry.captureException(error);
   });
   return reqPromise;
 };

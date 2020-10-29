@@ -4,6 +4,7 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
+import * as Sentry from '@sentry/browser';
 export const appendApiPrefix = (url: string) => `/v1${url}`;
 
 export interface Params {
@@ -32,6 +33,7 @@ export const simpleGetFetcher = async (...args: any[]) => {
     // Attach extra info to the error object.
     error['info'] = await res.json();
     error['status'] = res.status;
+    Sentry.captureException(error);
     throw error;
   }
   return await res.json();
@@ -52,6 +54,7 @@ const simplePostFetcher = async (...args: any[]) => {
     // Attach extra info to the error object.
     error['info'] = await res.json();
     error['status'] = res.status;
+    Sentry.captureException(error);
     throw error;
   }
   return await res.json();
@@ -359,7 +362,8 @@ export const useAccountTokenList = (
             }),
           };
         })
-        .catch(e => {
+        .catch(error => {
+          Sentry.captureException(error);
           return {
             loading: false,
             total: 0,
@@ -403,12 +407,15 @@ export const useAccount = (
             ...rst,
           };
         })
-        .catch(() => ({
-          address: accountAddress,
-          balance: notAvaiableText,
-          collateralForStorage: notAvaiableText,
-          transactionCount: notAvaiableText,
-        })),
+        .catch(error => {
+          Sentry.captureException(error);
+          return {
+            address: accountAddress,
+            balance: notAvaiableText,
+            collateralForStorage: notAvaiableText,
+            transactionCount: notAvaiableText,
+          };
+        }),
     {
       initialData: {
         address: accountAddress,
@@ -461,24 +468,27 @@ export const useContract = (
                 : null,
           };
         })
-        .catch(() => ({
-          epochNumber: 0,
-          address: contractAddress,
-          from: null,
-          transactionHash: null,
-          admin: null,
-          collateralForStorage: '0',
-          sponsorGasBound: '0',
-          sponsorBalanceForGas: '0',
-          sponsorBalanceForCollateral: '0',
-          sponsorForGas: null,
-          sponsorForCollateral: null,
-          name: null,
-          website: null,
-          abi: null,
-          sourceCode: null,
-          icon: undefined,
-        })),
+        .catch(error => {
+          Sentry.captureException(error);
+          return {
+            epochNumber: 0,
+            address: contractAddress,
+            from: null,
+            transactionHash: null,
+            admin: null,
+            collateralForStorage: '0',
+            sponsorGasBound: '0',
+            sponsorBalanceForGas: '0',
+            sponsorBalanceForCollateral: '0',
+            sponsorForGas: null,
+            sponsorForCollateral: null,
+            name: null,
+            website: null,
+            abi: null,
+            sourceCode: null,
+            icon: undefined,
+          };
+        }),
     {
       initialData: {
         epochNumber: 0,
@@ -533,18 +543,21 @@ export const useToken = (
                 : notAvaiableText,
           };
         })
-        .catch(() => ({
-          address: contractAddress,
-          name: notAvaiableText,
-          symbol: notAvaiableText,
-          decimals: 18,
-          isERC721: false,
-          totalSupply: '0',
-          accountTotal: '0',
-          transferCount: 0,
-          isCustodianToken: false,
-          icon: undefined,
-        })),
+        .catch(error => {
+          Sentry.captureException(error);
+          return {
+            address: contractAddress,
+            name: notAvaiableText,
+            symbol: notAvaiableText,
+            decimals: 18,
+            isERC721: false,
+            totalSupply: '0',
+            accountTotal: '0',
+            transferCount: 0,
+            isCustodianToken: false,
+            icon: undefined,
+          };
+        }),
     {
       initialData: {
         address: contractAddress,
@@ -589,11 +602,14 @@ export const useTransactions = (query = {}, opts = {}) => {
             }),
           };
         })
-        .catch(() => ({
-          total: 0,
-          listLimit: 0,
-          list: [],
-        })),
+        .catch(error => {
+          Sentry.captureException(error);
+          return {
+            total: 0,
+            listLimit: 0,
+            list: [],
+          };
+        }),
     {
       initialData: {
         total: 0,
@@ -629,11 +645,14 @@ export const useTransfers = (query = {}, opts = {}) => {
             }),
           };
         })
-        .catch(() => ({
-          total: 0,
-          listLimit: 0,
-          list: [],
-        })),
+        .catch(error => {
+          Sentry.captureException(error);
+          return {
+            total: 0,
+            listLimit: 0,
+            list: [],
+          };
+        }),
     {
       initialData: {
         total: 0,
@@ -650,7 +669,8 @@ export const fetchRecentDagBlock = async (opts = {}) => {
   let data;
   try {
     data = await fetch(appendApiPrefix('/dag')).then(res => res.json());
-  } catch (err) {
+  } catch (error) {
+    Sentry.captureException(error);
     data = { total: 0, list: [] };
   }
 
