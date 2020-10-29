@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -22,7 +22,8 @@ export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   let loading = false;
-  const { data } = useBlockQuery({ hash: blockHash });
+  const hashQuery = useMemo(() => ({ hash: blockHash }), [blockHash]);
+  const { data } = useBlockQuery(hashQuery);
   const intervalToClear = useRef(false);
   if (!data) loading = true;
 
