@@ -42,13 +42,18 @@ export const Basic = ({
           {t(translations.token.totalSupplay)}
         </Tooltip>
       ),
-      children: totalSupply ? (
-        <Text
-          hoverValue={`${formatBalance(totalSupply, decimals, true)} ${symbol}`}
-        >
-          {`${formatBalance(totalSupply, decimals)} ${symbol}`}
-        </Text>
-      ) : undefined,
+      children:
+        totalSupply !== undefined ? (
+          <Text
+            hoverValue={`${formatBalance(
+              totalSupply,
+              decimals,
+              true,
+            )} ${symbol}`}
+          >
+            {`${formatBalance(totalSupply, decimals)} ${symbol}`}
+          </Text>
+        ) : undefined,
     },
     {
       title: (
@@ -56,15 +61,16 @@ export const Basic = ({
           {t(translations.token.contract)}
         </Tooltip>
       ),
-      children: tokenAddress ? (
-        <Text span hoverValue={tokenAddress}>
-          {
-            <Link href={`/address/${tokenAddress}`}>
-              {formatString(tokenAddress || '', 'address')}
-            </Link>
-          }
-        </Text>
-      ) : undefined,
+      children:
+        tokenAddress !== undefined ? (
+          <Text span hoverValue={tokenAddress}>
+            {
+              <Link href={`/address/${tokenAddress}`}>
+                {formatString(tokenAddress || '', 'address')}
+              </Link>
+            }
+          </Text>
+        ) : undefined,
     },
     {
       title: (
@@ -72,11 +78,12 @@ export const Basic = ({
           {t(translations.token.holders)}
         </Tooltip>
       ),
-      children: accountTotal
-        ? `${numeral(accountTotal).format('0,0')} ${t(
-            translations.token.address,
-          )}`
-        : undefined,
+      children:
+        accountTotal !== undefined
+          ? `${numeral(accountTotal).format('0,0')} ${t(
+              translations.token.address,
+            )}`
+          : undefined,
     },
     {
       title: (
@@ -92,9 +99,10 @@ export const Basic = ({
           {t(translations.token.transfers)}
         </Tooltip>
       ),
-      children: transferCount
-        ? numeral(transferCount).format('0,0')
-        : undefined,
+      children:
+        transferCount !== undefined
+          ? numeral(transferCount).format('0,0')
+          : undefined,
     },
   ];
 
