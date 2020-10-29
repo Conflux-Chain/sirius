@@ -227,7 +227,8 @@ export const holders = {
   ),
   dataIndex: 'accountTotal',
   key: 'accountTotal',
-  render: value => <span>{formatNumber(value)}</span>,
+  // render: value => <span>{formatNumber(value)}</span>,
+  render: () => <span>--</span>,
 };
 
 export const contract = {
