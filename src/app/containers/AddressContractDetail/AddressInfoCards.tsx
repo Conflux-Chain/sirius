@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useBreakpoint } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
@@ -67,6 +68,7 @@ export function TokensCard({ address }) {
 
 export function StorageStakingCard({ address }) {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
   const { data: accountInfo } = useAccount(address);
   const loading = accountInfo.balance === t(translations.general.loading);
 
@@ -75,7 +77,7 @@ export function StorageStakingCard({ address }) {
       title={
         <Text
           hoverValue={t(translations.toolTip.address.storageCollateral)}
-          maxCount={10}
+          maxCount={bp === 's' ? 10 : undefined}
         >
           {t(translations.general.storageStaking)}
         </Text>
