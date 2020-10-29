@@ -33,19 +33,7 @@ import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
-import * as Sentry from '@sentry/browser';
-import { Integrations } from '@sentry/tracing';
 
-Sentry.init({
-  dsn:
-    'https://5be4347e031748e9afeb0a2c3f40c7e5@o339419.ingest.sentry.io/5497083',
-  integrations: [new Integrations.BrowserTracing()],
-  environment: process.env.NODE_ENV,
-
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-});
 WebFontLoader.load({
   custom: {
     families: ['Circular Std:n4,i4,n7,i7,n8,i8'],

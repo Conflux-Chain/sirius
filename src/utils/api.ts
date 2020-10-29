@@ -4,7 +4,6 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
-import * as Sentry from '@sentry/browser';
 export const appendApiPrefix = (url: string) => `/v1${url}`;
 
 export interface Params {
@@ -33,7 +32,6 @@ export const simpleGetFetcher = async (...args: any[]) => {
     // Attach extra info to the error object.
     error['info'] = await res.json();
     error['status'] = res.status;
-    Sentry.captureException(error);
     throw error;
   }
   return await res.json();
@@ -54,7 +52,6 @@ const simplePostFetcher = async (...args: any[]) => {
     // Attach extra info to the error object.
     error['info'] = await res.json();
     error['status'] = res.status;
-    Sentry.captureException(error);
     throw error;
   }
   return await res.json();
@@ -362,7 +359,6 @@ export const useAccountTokenList = (
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             loading: false,
             total: 0,
@@ -407,7 +403,6 @@ export const useAccount = (
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             address: accountAddress,
             balance: notAvaiableText,
@@ -468,7 +463,6 @@ export const useContract = (
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             epochNumber: 0,
             address: contractAddress,
@@ -543,7 +537,6 @@ export const useToken = (
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             address: contractAddress,
             name: notAvaiableText,
@@ -602,7 +595,6 @@ export const useTransactions = (query = {}, opts = {}) => {
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             total: 0,
             listLimit: 0,
@@ -645,7 +637,6 @@ export const useTransfers = (query = {}, opts = {}) => {
           };
         })
         .catch(error => {
-          Sentry.captureException(error);
           return {
             total: 0,
             listLimit: 0,
@@ -669,7 +660,6 @@ export const fetchRecentDagBlock = async (opts = {}) => {
   try {
     data = await fetch(appendApiPrefix('/dag')).then(res => res.json());
   } catch (error) {
-    Sentry.captureException(error);
     data = { total: 0, list: [] };
   }
 
