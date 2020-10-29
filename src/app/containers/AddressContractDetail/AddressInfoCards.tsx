@@ -7,7 +7,7 @@ import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from 'app/components/Text/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { getUnitByCfxNum } from 'utils';
+import { fromDripToCfx } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 
 // todo, need to refactor the request, and rewrite skeleton style
@@ -27,12 +27,8 @@ export function BalanceCard({ address }) {
       }
       content={
         <SkeletonContainer shown={loading} style={skeletonStyle}>
-          <Text
-            hoverValue={`${getUnitByCfxNum(accountInfo.balance, true).num} ${
-              getUnitByCfxNum(accountInfo.balance, true).unit
-            }`}
-          >
-            {getUnitByCfxNum(accountInfo.balance).num}
+          <Text hoverValue={`${fromDripToCfx(accountInfo.balance, true)} CFX`}>
+            {fromDripToCfx(accountInfo.balance)}
           </Text>
         </SkeletonContainer>
       }
@@ -87,11 +83,12 @@ export function StorageStakingCard({ address }) {
       content={
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <Text
-            hoverValue={`${
-              getUnitByCfxNum(accountInfo.collateralForStorage, true).num
-            } ${getUnitByCfxNum(accountInfo.collateralForStorage).unit}`}
+            hoverValue={`${fromDripToCfx(
+              accountInfo.collateralForStorage,
+              true,
+            )} CFX`}
           >
-            {getUnitByCfxNum(accountInfo.collateralForStorage).num}
+            {fromDripToCfx(accountInfo.collateralForStorage)}
           </Text>
         </SkeletonContainer>
       }

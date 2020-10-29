@@ -532,7 +532,6 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            {/* todo, need to format to Gdrip */}
             <SkeletonContainer shown={loading}>
               {`${numeral(gasPrice).format('0,0')} drip`}
             </SkeletonContainer>
