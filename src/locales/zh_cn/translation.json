@@ -129,7 +129,7 @@
   },
   "general": {
     "viewMore": "查看更多",
-    "viewAll": "查看所有交易",
+    "viewAll": "查看全部",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
     "address": {
       "editContract": "点击编辑合同",
@@ -321,7 +321,7 @@
     "miner": "矿工",
     "reward": "奖励",
     "security": "安全等级",
-    "blame": "修订",
+    "blame": "修订区块数",
     "blockHash": "区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",

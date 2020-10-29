@@ -101,7 +101,7 @@ export function HomePage() {
           <ViewAllLinkWrapper>
             <Link className="viewall-link" href="/blocks-and-transactions">
               {bp === 's'
-                ? t(translations.general.viewMore)
+                ? t(translations.general.viewAll)
                 : t(translations.general.viewAllBlocksAndTxs)}
             </Link>
           </ViewAllLinkWrapper>
