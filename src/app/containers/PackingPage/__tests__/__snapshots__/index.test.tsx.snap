@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PackingPage /> should match the snapshot 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  height: calc(100% - 5rem);
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #f5f6fa;
+}
+
+.c1 {
+  margin-right: 7rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.c3 {
+  display: inline-block;
+  font-size: 1.5714rem;
+  line-height: 2rem;
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 2.3571rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 .hash {
+  display: inline-block;
+  color: #6a6a6a;
+  opacity: 0.4;
+  font-weight: 500;
+  line-height: 1.2857rem;
+  margin-right: 3px;
+}
+
+.c5 {
+  width: 15.7143rem;
+  height: 3.5714rem;
+  background-color: #fff;
+  border-radius: 2.8571rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #545454;
+  font-size: 1.1429rem;
+}
+
+@media (max-width:600px) {
+  .c1 {
+    margin-right: 0;
+  }
+}
+
+@media (max-width:1024px) {
+  .c2 {
+    padding: 1rem;
+  }
+}
+
+<div
+  class="c0"
+>
+  <img
+    alt="packing"
+    class="c1"
+    src="/home/packing.svg"
+  />
+  <div
+    class="c2"
+  >
+    <span
+      class="c3"
+    >
+      Your transaction is packing，please wait...
+    </span>
+    <div
+      class="c4"
+    >
+      <span
+        class="hash"
+      />
+    </div>
+    <a
+      class="c5"
+      href="/"
+    >
+      Go to homepage
+    </a>
+  </div>
+</div>
+`;

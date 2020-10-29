@@ -1,0 +1,434 @@
+{
+  "metadata": {
+    "title": "树图区块链浏览器",
+    "description": "树图区块链浏览器"
+  },
+  "contract": {
+    "address": "合约地址",
+    "nameTag": "合约名称标签",
+    "site": "官方网站",
+    "contractIcon": "合约图标",
+    "remove": "移除",
+    "tokenTracker": "代币搜索器",
+    "tokenIcon": "代币图标",
+    "sourceCode": "源码",
+    "abi": "合约ABI",
+    "enterPassword": "请输入管理员口令",
+    "contractAdmin": "合约管理者",
+    "creator": "合约创建者",
+    "storageSponsor": "存储费赞助",
+    "gasSponsor": "燃气费赞助",
+    "create": {
+      "title": "合约创建"
+    },
+    "edit": {
+      "title": "合约编辑"
+    }
+  },
+  "contractDetail": {
+    "title": "合约详情",
+    "content": "合约详情",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+    "at": "在",
+    "txOnlyEn": "",
+    "txOnlyZh": "交易"
+  },
+  "addressDetail": {
+    "minedBlocks": "挖出区块",
+    "title": "地址详情",
+    "content": "地址详情"
+  },
+  "blocksAndTransactions": {
+    "title": "出块和交易",
+    "description": "出块和交易",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个{{type}}",
+    "labelCountBefore": "共计",
+    "labelCountAfter": "个 {{type}} ",
+    "blocks": "区块",
+    "transactions": "交易"
+  },
+  "tokens": {
+    "title": "代币",
+    "description": "代币",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "table": {
+      "number": "#",
+      "token": "代币",
+      "transfer": "转移",
+      "totalSupply": "总供应量",
+      "holders": "持有人",
+      "contract": "合约"
+    }
+  },
+  "header": {
+    "home": "首页",
+    "bnt": "区块&交易",
+    "tokens": "代币",
+    "contract": "合约",
+    "contractCreation": "创建合约",
+    "contractSponsor": "赞助合约",
+    "charts": "图表",
+    "testnet": "Testnet",
+    "oceanus": "Tethys",
+    "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
+    "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址"
+  },
+  "footer": {
+    "product": "产品",
+    "confluxnetwork": "Conflux Network",
+    "confluxportal": "ConfluxPortal",
+    "confluxbounty": "ConfluxBounty",
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+  },
+  "packing": {
+    "title": "您的交易正在打包，请稍后...",
+    "btn": "前往首页"
+  },
+  "notFound": {
+    "title": "无法查询到相关结果",
+    "label": "抱歉！您搜索的字符串无效。",
+    "addressTip": "如果您在搜索 Conflux 地址，请搜索以 0x0 (内置合约），0x1（用户账户），或者 0x8（智能合约）开头的地址。",
+    "btn": "前往首页"
+  },
+  "token": {
+    "totalSupplay": "总供应量",
+    "contract": "合约",
+    "holders": "持有人",
+    "decimals": "小数精度",
+    "transfers": "转移",
+    "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
+    "address": "个地址",
+    "transferList": {
+      "searchPlaceHolder": "交易哈希值 / 持有人地址",
+      "searchError": "抱歉！您搜索的字符串无效。",
+      "balance": "余额: "
+    }
+  },
+  "charts": {
+    "title": "图表",
+    "subtitle": "区块链数据",
+    "description": "图表",
+    "tps": {
+      "title": "吞吐率",
+      "description": "每秒链上的交易数量"
+    },
+    "blockTime": {
+      "title": "出块间隔",
+      "description": "生成一个区块所需花费时间"
+    },
+    "difficulty": {
+      "title": "难度",
+      "description": "当前生成所有区块的计算难度"
+    },
+    "hashRate": {
+      "title": "哈希算力",
+      "description": "矿工每秒计算哈希值的次数"
+    }
+  },
+  "general": {
+    "viewMore": "查看更多",
+    "viewAll": "查看全部",
+    "viewAllBlocksAndTxs": "查看所有区块&交易",
+    "address": {
+      "editContract": "点击编辑合同",
+      "website": "点击进入官方网站",
+      "address": "地址"
+    },
+    "loading": "加载中...",
+    "contract": "合约",
+    "balance": "余额",
+    "token": "代币",
+    "storageStaking": "抵押存储",
+    "nonce": "随机数",
+    "transaction": "交易",
+    "transactions": "交易",
+    "tokenTxns": "代币交易",
+    "table": {
+      "noData": "暂无相关记录",
+      "whoops": "哎呀！",
+      "block": {
+        "epoch": "纪元",
+        "position": "位置",
+        "txns": "交易数",
+        "hash": "哈希",
+        "miner": "矿工",
+        "avgGasPrice": "平均燃料价格",
+        "gasUsedPercent": "燃料用量/限制",
+        "reward": "奖励",
+        "age": "块龄",
+        "difficulty": "难度",
+        "gasLimit": "燃料限制"
+      },
+      "transaction": {
+        "hash": "哈希",
+        "from": "发送方",
+        "to": "接收方",
+        "value": "价值",
+        "gasPrice": "燃料价格",
+        "gasFee": "燃气费",
+        "age": "块龄"
+      },
+      "token": {
+        "number": "#",
+        "token": "代币",
+        "transfer": "转移",
+        "totalSupply": "总供应量",
+        "holders": "持有人",
+        "contract": "合约",
+        "txnHash": "交易哈希",
+        "age": "块龄",
+        "from": "发送方",
+        "to": "接收方",
+        "quantity": "数量"
+      }
+    },
+    "pagination": {
+      "labelPageSizeBefore": "每页",
+      "labelPageSizeAfter": "条",
+      "labelJumperBefore": "跳转到",
+      "labelJumperAfter": "页"
+    },
+    "copyButton": {
+      "copyToClipboard": "复制到剪切板",
+      "success": "已复制",
+      "failed": "复制失败"
+    },
+    "submit": "提交",
+    "apply": "申请",
+    "search": "搜索",
+    "qrcodeButton": {
+      "clickToShow": "点击查看二维码"
+    },
+    "notAvailable": "暂无信息",
+    "security": {
+      "notAvailable": "暂无信息",
+      "high": "高",
+      "medium": "中",
+      "low": "偏低",
+      "veryLow": "低"
+    },
+    "status": {
+      "skip": {
+        "text": "跳过",
+        "explanation": "随机数错误，签名验证失败，或余额不足"
+      },
+      "error": {
+        "text": "失败",
+        "explanation": "智能合约执行错误，或燃气费不足。"
+      },
+      "success": {
+        "text": "成功",
+        "explanation": ""
+      },
+      "unexecuted": {
+        "text": "Unexecuted",
+        "explanation": "Transaction has not been executed yet, please wait."
+      }
+    },
+    "countdown": {
+      "year": "{{count}} 年",
+      "year_plural": "{{count}} years",
+      "month": "{{count}} 月",
+      "month_plural": "{{count}} months",
+      "day": "{{count}} 日",
+      "day_plural": "{{count}} days",
+      "hour": "{{count}} 小时",
+      "hour_plural": "{{count}} hrs",
+      "minute": "{{count}} 分钟",
+      "minute_plural": "{{count}} mins",
+      "second": "{{count}} 秒",
+      "second_plural": "{{count}} secs",
+      "ago": "前"
+    },
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "submitSucceed": "提交成功",
+    "tabLabel": {
+      "lt10000": "共计 {{sum}} 个记录",
+      "gte10000": "仅展示最新 {{sum}} 条记录"
+    }
+  },
+  "sponsor": {
+    "title": "赞助合约",
+    "storageSponsor": "存储费赞助",
+    "gasFeeSponsor": "燃气费赞助",
+    "currentAvialStorageFee": "存储费当前可用余额",
+    "currentAvialGasFee": "燃气费当前可用余额",
+    "providedStorage": "基金会已累计提供存储费",
+    "providedGas": "基金会已累计提供燃气费",
+    "availStorage": "基金会剩余可提供存储费",
+    "availGas": "基金会剩余可提供燃气费",
+    "connectToApply": "连接钱包以申请",
+    "notice": "说明",
+    "noticeFirst": "基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
+    "noticeSecond": "申请前需要先连接 ConfluxPortal 以确认您是合约管理者或合约创建者；连接完成后点击申请即可获得赞助。",
+    "noticeThird": "若您的 Portal 已连接非该合约管理者或创建者的地址，请先断开连接，否则申请将会失败。",
+    "noticeFourthOne": "若您的浏览器中尚未安装 ConfluxPortal，请进入",
+    "noticeFourthTwo": "下载。",
+    "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
+    "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
+    "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",
+    "errContractNotFound": "无法查询到该合约",
+    "upperBound": "上限",
+    "submitted": "交易已发出",
+    "txHash": "交易哈希",
+    "searchAddress": "搜索合约地址",
+    "applicationUnit": "次",
+    "tx": "交易"
+  },
+  "transaction": {
+    "viewOutgoingTxns": "查看发送交易",
+    "viewIncomingTxns": "查看接收交易",
+    "title": "交易",
+    "description": "交易",
+    "hash": "交易哈希",
+    "executedEpoch": "执行纪元",
+    "proposedEpoch": "目标纪元",
+    "timestamp": "时间戳",
+    "status": "状态",
+    "from": "发送方",
+    "to": "接收方",
+    "tokenTransferred": "代币转移",
+    "value": "价值",
+    "gasUsed": "燃料用量/限制",
+    "gasPrice": "燃料价格",
+    "gasFee": "燃气费",
+    "nonce": "随机数",
+    "blockHash": "区块哈希",
+    "position": "位置",
+    "storageLimit": "存储限制",
+    "chainID": "区块链编号",
+    "inputData": "输入数据",
+    "select": {
+      "original": "原始数据",
+      "utf8": "UTF-8",
+      "decodeInputData": "解码输入数据"
+    },
+    "contract": "合约",
+    "created": "已创建",
+    "contractCreation": "合约创建",
+    "for": "For",
+    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化"
+  },
+  "block": {
+    "title": "区块",
+    "description": "区块",
+    "blockHeight": "区块高度",
+    "epoch": "纪元",
+    "difficulty": "难度",
+    "miner": "矿工",
+    "reward": "奖励",
+    "security": "安全等级",
+    "blame": "修订区块数",
+    "blockHash": "区块哈希",
+    "parentHash": "父区块哈希",
+    "nonce": "随机数",
+    "gasUsed": "燃料用量/限制",
+    "timestamp": "时间戳",
+    "size": "容量",
+    "transactions": "交易",
+    "referenceBlocks": "引用区块",
+    "tabs": {
+      "transactions": "交易",
+      "referenceBlocks": "引用区块",
+      "labelCountBefore": "共计",
+      "labelCountAfter": "{{type}}记录"
+    }
+  },
+  "epoch": {
+    "title": "纪元",
+    "description": "纪元",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "{{type}}记录",
+    "labelCountBefore": "共计",
+    "labelCountAfter": "{{type}}记录",
+    "blocks": "区块",
+    "transactions": "交易",
+    "table": {
+      "position": "位置",
+      "hash": "哈希",
+      "txns": "交易数",
+      "miner": "矿工",
+      "difficulty": "难度",
+      "gasUsedPercent": "燃料用量/限制",
+      "age": "块龄"
+    }
+  },
+  "notice": {
+    "mainnet": [
+      "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
+      "2. ConfluxPortal v0.5.0 以下版本将无法直接连接 Conflux Tethys 网络，请使用最新 v0.5.3 及以上版本的 ConfluxPortal。"
+    ],
+    "testnet": [
+      "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
+      "2. Conflux 主网第三阶段 Conflux Tethys 已于 2020.10.29 上线，欢迎体验。",
+      "3. ConfluxPortal v0.5.0 以下版本将无法直接连接 Conflux Tethys 网络，请使用最新 v0.5.3 及以上版本的 ConfluxPortal。"
+    ]
+  },
+  "toolTip": {
+    "block": {
+      "blockHeight": "区块高度是指从当前区块经过父边引用到达创世区块经过的区块数量。新区块的区块高度比它的父区块高度增加 1。特别的，创世块的区块高度为 0。",
+      "epoch": "区块所属的纪元是枢轴链上首个（直接或间接地）引用这个区块的枢轴区块的高度，代表了枢轴链视角下观察到该区块的时间。处于较早纪元的区块在所有区块的全序中的位置总是在处于较晚纪元的区块之前。",
+      "difficulty": "开采一个区块平均所需要的运算次数。 难度根据时间进行调整。",
+      "miner": "生成该区块的矿工。",
+      "reward": "挖出该区块矿工将得到的奖励，包括区块奖励，存储押金利息，交易费。",
+      "security": "该区块的安全性，更高的安全性需要得到更多的区块确认。",
+      "blame": "表示（该区块认为的）需要修订关于状态的承诺的连续祖先区块的数量。关于状态的承诺可以理解为对于交易执行结果和账户状态的摘要。关于状态的承诺出错会影响矿工的收益，但不影响对于区块排序的共识。",
+      "blockHash": "该区块的块头的哈希值。",
+      "parentHash": "该区块的父区块的区块哈希，也称为父区块哈希。",
+      "nonce": "区块随机数是在挖矿过程中用来演示区块工作量证明的值。",
+      "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
+      "timestamp": "开采该区块的日期和时间。",
+      "size": "区块容量取决于燃料限制。",
+      "transactions": "该区块发生的交易数量。",
+      "referenceBlocks": "该区块引用的其他区块。"
+    },
+    "tx": {
+      "transactionHash": "交易哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
+      "executedEpoch": "交易被实际执行的纪元。",
+      "proposedEpoch": "交易发送者希望该笔交易被执行的纪元。交易只能在与期望被执行纪元相差不超过 100,000 的纪元中执行。",
+      "timestamp": "交易数据记录的日期和时间。",
+      "status": "交易的状态。",
+      "security": "该笔交易的安全性，交易需要更多的确认区块提高安全性。",
+      "from": "交易的发送方（可能来自合约地址）。",
+      "to": "交易的接收方（可以是合约地址）。",
+      "tokenTransferred": "交易中代币转让的列表。",
+      "value": "该交易金额是以CFX显示。 ",
+      "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
+      "gasPrice": "交易指定的每单位燃料成本，GDrip为支付单位。燃料费用越高，被写入区块的机会就越大。",
+      "gasFee": "交易所使用的燃料费用。",
+      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
+      "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
+      "position": "交易在区块中的索引位置。",
+      "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
+      "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",
+      "inputData": "自定义数据，该交易中附加的信息。"
+    },
+    "address": {
+      "balance": "该地址的资产余额。",
+      "token": "该地址持有的代币。",
+      "storageCollateral": "该地址支付的存储押金总量，其单位为CFX。",
+      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。"
+    },
+    "token": {
+      "totalSupply": "该代币的总发行量。",
+      "holders": "持有该代币的所有地址数量。",
+      "transfers": "该合约地址发生的代币交易总数",
+      "contract": "部署该代币的合约。",
+      "decimals": "该代币的小数精度位数。"
+    },
+    "contract": {
+      "balance": "该合约地址的资产余额。",
+      "token": "该合约地址持有的代币。",
+      "storageCollateral": "该合约赞助者支付的存储押金总量，其单位为CFX。",
+      "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
+      "tokenTracker": "该合约上部署的代币。",
+      "contractCreator": "创建该合约的地址。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+      "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
+      "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
+    }
+  }
+}

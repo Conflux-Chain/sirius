@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs  /> should match snapshot 1`] = `
+.c0 .tabs.sirius-tabs .tab .label {
+  font-size: 1.1429rem;
+  color: rgba(11,19,46,0.6);
+  line-height: 1.7143rem;
+  padding: 0.5714rem 0.2857rem;
+  font-weight: 500;
+}
+
+.c0 .tabs.sirius-tabs .tab .nav {
+  margin: 0 0.5714rem;
+}
+
+.c0 .tabs.sirius-tabs .tab.active .label,
+.c0 .tabs.sirius-tabs .tab:hover .label {
+  font-weight: 500;
+  color: #0b132e;
+}
+
+.c0 .tabs.sirius-tabs .tab .bottom {
+  height: 0.4286rem;
+  border-top-left-radius: 0.5714rem;
+  border-top-right-radius: 0.5714rem;
+}
+
+.c0 .tabs.sirius-tabs header {
+  overflow: visible;
+}
+
+.c0 .tabs.sirius-tabs header + .content {
+  margin-top: 1.2857rem;
+  padding-top: 0;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="jsx-2839662092 tabs sirius-tabs line"
+  >
+    <header
+      class="jsx-2839662092"
+    >
+      <div
+        class="jsx-2839662092 tab  "
+        role="button"
+      >
+        <div
+          class="jsx-3391162855 nav"
+        >
+          <div
+            class="jsx-3391162855 label"
+          >
+            label1
+          </div>
+          <div
+            class="jsx-3391162855 bottom"
+          />
+        </div>
+      </div>
+      <div
+        class="jsx-2839662092 tab  "
+        role="button"
+      >
+        <div
+          class="jsx-3391162855 nav"
+        >
+          <div
+            class="jsx-3391162855 label"
+          >
+            label2
+          </div>
+          <div
+            class="jsx-3391162855 bottom"
+          />
+        </div>
+      </div>
+    </header>
+    <div
+      class="jsx-2839662092 content"
+    />
+  </div>
+</div>
+`;

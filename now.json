@@ -1,0 +1,11 @@
+{
+  "github": {
+    "silent": true
+  },
+  "routes": [
+    {
+      "src": "/v1/(?<req>.*)",
+      "dest": "https://scantest.confluxscan.io/v1/$req"
+    }
+  ]
+}

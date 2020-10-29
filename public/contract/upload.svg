@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="14px" viewBox="0 0 15 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>upload  2</title>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Scan-V2-Contract-Edit" transform="translate(-748.000000, -206.000000)" stroke="#1e3de4" stroke-width="1.5">
+            <g id="Contract-Detail-3" transform="translate(732.000000, 158.000000)">
+                <g id="upload--2" transform="translate(17.702479, 49.000000)">
+                    <g id="upload-" transform="translate(-0.000000, 0.000000)">
+                        <path d="M11.8016529,8 L11.8016529,10.6666667 C11.8016529,11.4030463 11.2145662,12 10.4903581,12 L1.31129477,12 C0.587086664,12 0,11.4030463 0,10.6666667 L0,8" id="路径"></path>
+                        <polyline id="路径" points="9.17906336 3.33333333 5.90082645 0 2.62258953 3.33333333"></polyline>
+                        <line x1="5.90082645" y1="0" x2="5.90082645" y2="8" id="路径"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

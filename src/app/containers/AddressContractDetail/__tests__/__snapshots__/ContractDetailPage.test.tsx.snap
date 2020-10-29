@@ -1,0 +1,717 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ContractDetailPage /> should match the snapshot 1`] = `
+.c5 .tooltip-content.sirius-tooltip {
+  font-variant-numeric: initial;
+  text-transform: initial;
+  border-radius: 0;
+  padding: 0.2857rem 0.7143rem;
+  font-weight: 400;
+  border-radius: 0;
+  font-size: 12px;
+  color: #cdcdcd;
+  line-height: 1.1429rem;
+}
+
+.c4 {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #dbdde4;
+  line-height: 12px;
+}
+
+.c4 .address-line-icon path {
+  fill: #737682;
+}
+
+.c4:hover {
+  background-color: #63688a;
+}
+
+.c4:hover .address-line-icon path {
+  fill: #fff;
+}
+
+.c8 .card.sirius-card {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+  padding: 0 1.2857rem;
+}
+
+.c8 .card.sirius-card:hover {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+.c8 .card.sirius-card .content {
+  padding: 0;
+}
+
+.c7 {
+  min-width: 17rem;
+}
+
+.c7 .detail-page-card.card div.content {
+  padding: 16px 0;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c11 {
+  color: #74798c;
+  text-transform: capitalize;
+}
+
+.c12 {
+  font-weight: 700;
+  color: #282d30;
+  font-size: 1.71rem;
+}
+
+.c13 {
+  position: relative;
+}
+
+.c14 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #1e3de4;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c16 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #16DBCC;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c17 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #FFBB37;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c18 {
+  min-width: 4.29rem;
+  min-height: 4.29rem;
+  background-color: #FF82AC;
+  border-radius: 0.43rem;
+  opacity: 0.06;
+}
+
+.c15 {
+  position: absolute;
+  top: 1.64rem;
+  margin-top: -5px;
+  left: 1.5rem;
+}
+
+.c0 {
+  padding: 2.29rem 0 0;
+  max-width: 73.1429rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c1 {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.71rem;
+}
+
+.c2 {
+  font-size: 1.71rem;
+  text-transform: capitalize;
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.86rem;
+  font-weight: 700;
+}
+
+.c3 {
+  line-height: 1.29rem;
+  color: #74798c;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 > span,
+.c3 > div {
+  margin-right: 0.58rem;
+}
+
+.c6 {
+  position: relative;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin-bottom: 1.71rem;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c19 {
+  margin-bottom: 2.29rem;
+}
+
+.c20 {
+  position: relative;
+  width: 100%;
+}
+
+@media (max-width:600px) {
+  .c7 {
+    min-width: 13.67rem;
+  }
+
+  .c7 .detail-page-card.card {
+    padding: 0;
+  }
+
+  .c7 .detail-page-card.card div.content {
+    padding: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c9 {
+    padding: 0.83rem 0.98rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c12 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c14 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c16 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c18 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c15 {
+    top: 1.34rem;
+    left: 1.14rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 2rem 0 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c1 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c2 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    margin-bottom: 1rem;
+  }
+
+  .c6 > div {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c19 {
+    margin-bottom: 2rem;
+  }
+}
+
+<div
+  class="c0"
+>
+  <section
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      contract
+    </div>
+    <span
+      class="c3"
+    >
+      <span />
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          <div
+            class="jsx-726172838 tooltip-wrapper"
+          >
+            <div
+              class="jsx-726172838 tooltip "
+            >
+              <div
+                style="cursor: pointer;"
+              >
+                <svg
+                  class="icon address-line-icon"
+                  height="8"
+                  viewBox="0 0 1024 1024"
+                  width="8"
+                >
+                  <defs>
+                    <style
+                      type="text/css"
+                    />
+                  </defs>
+                  <path
+                    d="M967.552 760.448H304.896a41.472 41.472 0 0 1-41.344-41.344V56.32c0-22.912 18.56-41.344 41.344-41.344H967.68c22.912 0 41.344 18.432 41.344 41.344v662.656a41.472 41.472 0 0 1-41.344 41.344z m-621.184-82.816h579.84V97.792h-579.84v579.84z"
+                    fill="#4b4b4b"
+                  />
+                  <path
+                    d="M719.104 1008.896H56.32a41.472 41.472 0 0 1-41.344-41.344V304.896c0-22.784 18.432-41.344 41.344-41.344h124.16v82.816H98.048v579.84h579.84V847.36h82.688v120.064a41.472 41.472 0 0 1-41.344 41.344z"
+                    fill="#4b4b4b"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          <div
+            class="jsx-726172838 tooltip-wrapper"
+          >
+            <div
+              class="jsx-726172838 tooltip "
+            >
+              <div
+                style="cursor: pointer;"
+              >
+                <svg
+                  class="icon address-line-icon"
+                  height="8"
+                  viewBox="0 0 1024 1024"
+                  width="8"
+                >
+                  <defs>
+                    <style
+                      type="text/css"
+                    />
+                  </defs>
+                  <path
+                    d="M639.488 484.864a106.88 106.88 0 0 1-106.88-106.752V124.544c0-58.88 47.872-106.752 106.752-106.752h258.176c58.88 0 106.752 47.744 106.88 106.752v253.44c0 59.008-47.872 106.752-106.752 106.88H639.36zM897.536 93.056H639.488a31.488 31.488 0 0 0-31.616 31.488v253.44c0 17.408 14.08 31.488 31.616 31.488h258.048c17.408 0 31.488-14.08 31.488-31.36V124.544a31.488 31.488 0 0 0-31.488-31.488zM113.92 1015.04a107.008 107.008 0 0 1-106.752-106.88v-253.44c0-59.008 47.744-106.752 106.752-106.88h258.048c59.008 0 106.88 47.872 107.008 106.88v253.44c-0.128 58.88-47.872 106.752-106.88 106.88H113.92z m258.048-391.808H113.92a31.488 31.488 0 0 0-31.488 31.488v253.44c0 17.408 14.08 31.488 31.488 31.488h258.048c17.536 0 31.616-14.08 31.616-31.488v-253.44a31.488 31.488 0 0 0-31.488-31.488zM113.92 484.864a106.88 106.88 0 0 1-106.752-106.752V124.544c0-58.88 47.744-106.752 106.752-106.752h258.048c59.008 0 106.88 47.744 107.008 106.752v253.44c-0.128 59.008-47.872 106.88-106.88 106.88H113.92zM371.968 93.056H113.92a31.488 31.488 0 0 0-31.488 31.488v253.44c0 17.408 14.08 31.488 31.488 31.488h258.048c17.536 0 31.616-14.08 31.616-31.36V124.544a31.488 31.488 0 0 0-31.488-31.488zM570.24 547.84h396.544a37.76 37.76 0 1 1 0 75.392H570.24a37.76 37.76 0 1 1 0-75.392z m54.4 171.904v257.664a37.76 37.76 0 0 1-75.392 0V719.744a37.76 37.76 0 1 1 75.392 0z m181.504 0v151.808a37.632 37.632 0 1 1-75.392 0V719.744a37.632 37.632 0 1 1 75.52 0z m181.504 0v226.944a37.632 37.632 0 1 1-75.392 0V719.744a37.632 37.632 0 1 1 75.52 0z"
+                    p-id="8134"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </span>
+      </div>
+      <div
+        class="c4"
+      >
+        <div
+          class=""
+        >
+          <span
+            class="c5"
+          >
+            <div
+              class="jsx-726172838 tooltip-wrapper"
+            >
+              <div
+                class="jsx-726172838 tooltip "
+              >
+                <a
+                  class="address-line-icon"
+                  href="/contract/"
+                  style="cursor: pointer;"
+                  target="_self"
+                >
+                  <svg
+                    class="icon address-line-icon"
+                    height="8"
+                    viewBox="0 0 1024 1024"
+                    width="8"
+                  >
+                    <path
+                      d="M880 1024h-736A144.128 144.128 0 0 1 0 880v-736C0 64.64 64.512 0.128 144 0h373.632a48 48 0 0 1 0 96H144a48 48 0 0 0-48 48v736c0 26.496 21.504 48 48 48h736a48 48 0 0 0 48-48V512A48 48 0 1 1 1024 512v368C1024 959.488 959.488 1023.872 880 1024zM517.632 560a48 48 0 0 1-34.176-81.664L941.696 14.336a48 48 0 1 1 68.48 67.456L551.68 545.792a47.872 47.872 0 0 1-34.176 14.208z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div
+        class="c4"
+      >
+        <div
+          class=""
+        >
+          <span
+            class="c5"
+          >
+            <div
+              class="jsx-726172838 tooltip-wrapper"
+            >
+              <div
+                class="jsx-726172838 tooltip "
+              >
+                
+                <svg
+                  class="icon address-line-icon"
+                  height="8"
+                  viewBox="0 0 1024 1024"
+                  width="8"
+                >
+                  <path
+                    d="M827.505778 941.624889H196.494222C119.466667 941.624889 57.002667 879.047111 56.888889 802.019556V171.008C56.888889 93.980444 119.466667 31.516444 196.494222 31.402667h241.664a47.331556 47.331556 0 1 1 0 94.549333H196.494222a45.056 45.056 0 0 0-45.056 45.056v631.011556c0 24.917333 20.252444 45.056 45.056 45.056h631.011556a45.056 45.056 0 0 0 45.056-45.056V545.678222a47.331556 47.331556 0 0 1 94.549333 0V802.133333a139.719111 139.719111 0 0 1-139.605333 139.605334z"
+                  />
+                  <path
+                    d="M513.024 512.796444a43.235556 43.235556 0 0 1-30.492444-73.728L860.16 61.44a43.235556 43.235556 0 0 1 60.984889 61.098667L543.516444 500.167111a43.008 43.008 0 0 1-30.492444 12.515556z"
+                  />
+                  <path
+                    d="M924.103111 373.304889a43.235556 43.235556 0 0 1-43.235555-43.235556V112.867556H641.137778a43.235556 43.235556 0 0 1 0-86.243556H903.395556c35.271111 0 63.715556 28.672 63.829333 63.829333v239.843556c0 23.893333-19.342222 43.235556-43.235556 43.235555z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </span>
+  </section>
+  <section
+    class="c6"
+  >
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c14"
+                      color="#1e3de4"
+                    />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="balance"
+                        class="icon"
+                        src="/contract-address/balance.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c16"
+                      color="#16DBCC"
+                    />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="token"
+                        class="icon"
+                        src="/contract-address/token.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c17"
+                      color="#FFBB37"
+                    />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="Storage Collateral"
+                        class="icon"
+                        src="/contract-address/storage.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <div
+        class="c8"
+      >
+        <div
+          class="jsx-2527601167 card sirius-card detail-page-card solid"
+        >
+          <div
+            class="jsx-178616938 content "
+          >
+            <div
+              class="c9"
+            >
+              <div
+                class="c10"
+              >
+                <div
+                  class="c11"
+                />
+                <div
+                  class="c12"
+                />
+              </div>
+              <div
+                class=""
+              >
+                <div
+                  class=""
+                >
+                  <div
+                    class="c13"
+                  >
+                    <div
+                      class="c18"
+                      color="#FF82AC"
+                    />
+                    <div
+                      class="c15"
+                    >
+                      <img
+                        alt="nonce"
+                        class="icon"
+                        src="/contract-address/nonce.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    class="c19"
+  />
+  <section
+    class="c20"
+  />
+</div>
+`;

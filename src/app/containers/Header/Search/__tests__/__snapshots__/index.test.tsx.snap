@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Search  /> should match snapshot 1`] = `
+.c0 {
+  max-width: 40rem;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0 1.5rem;
+}
+
+.c0 .header-search-bar.input-container {
+  height: 2.28rem;
+}
+
+.c0 .header-search-bar.input-container .input-wrapper {
+  border-radius: 1.14rem;
+  border-color: #1e3de4;
+}
+
+.c0 .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
+  color: #333333;
+}
+
+.c0 .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
+  color: #333333;
+}
+
+.c0 .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
+  color: #333333;
+}
+
+.c0 .header-search-bar.input-container .input-wrapper input::placeholder {
+  color: #333333;
+}
+
+@media (max-width:1024px) {
+  .c0 {
+    max-width: unset;
+    left: 20rem;
+    right: 5rem;
+    position: fixed;
+    top: 0.68rem;
+    z-index: 2000;
+    padding: 0;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+
+  .c0 .header-search-bar.input-container {
+    height: 2.67rem;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper {
+    background-color: rgba(0,84,254,0.04);
+    border: 0;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+
+  .c0 .header-search-bar.input-container .input-wrapper input::placeholder {
+    color: #222a44;
+    text-aight: end;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    position: absolute;
+    left: 1.33rem;
+    right: 1.33rem;
+    top: 5.67rem;
+    z-index: 100;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="jsx-1159070929 with-label"
+  >
+    <div
+      class="jsx-1159070929 input-container header-search-bar"
+    >
+      <div
+        class="jsx-1159070929 input-wrapper line    "
+      >
+        <input
+          autocomplete="off"
+          class="jsx-1159070929 right-icon"
+          placeholder="Epoch / Block hash / Txn Hash / Address"
+          type="text"
+        />
+        <div
+          class="jsx-1309396301 clear-icon "
+        >
+          <svg
+            class="jsx-1309396301"
+            height="14"
+            viewBox="0 0 14 14"
+            width="14"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="jsx-1309396301"
+              d="M7 1.75C4.1125 1.75 1.75 4.1125 1.75 7C1.75 9.8875 4.1125 12.25 7 12.25C9.8875 12.25 12.25 9.8875 12.25 7C12.25 4.1125 9.8875 1.75 7 1.75ZM9.29688 8.37812L8.37812 9.29688L7 7.91875L5.62188 9.29688L4.70312 8.37812L6.08125 7L4.70312 5.62188L5.62188 4.70312L7 6.08125L8.37812 4.70312L9.29688 5.62188L7.91875 7L9.29688 8.37812Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <span
+          class="jsx-2293214799 input-icon"
+        >
+          <svg
+            height="16px"
+            version="1.1"
+            viewBox="0 0 16 16"
+            width="16px"
+          >
+            <g
+              fill="none"
+              fill-rule="evenodd"
+              id="Web"
+              stroke="none"
+              stroke-width="1"
+            >
+              <g
+                transform="translate(-1208.000000, -28.000000)"
+              >
+                <g
+                  transform="translate(884.000000, 20.000000)"
+                >
+                  <g
+                    transform="translate(324.000000, 8.000000)"
+                  >
+                    <rect
+                      height="16"
+                      width="16"
+                      x="0"
+                      y="0"
+                    />
+                    <path
+                      d="M7,13 C10.3137085,13 13,10.3137085 13,7 C13,3.6862915 10.3137085,1 7,1 C3.6862915,1 1,3.6862915 1,7 C1,10.3137085 3.6862915,13 7,13 Z M15,15 L12,12"
+                      stroke="#1e3de4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
