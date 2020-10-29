@@ -130,8 +130,8 @@ export const gasFee = {
       {t => t(translations.general.table.transaction.gasFee)}
     </Translation>
   ),
-  dataIndex: 'gas',
-  key: 'gas',
+  dataIndex: 'gasFee',
+  key: 'gasFee',
   width: 1,
   render: value => (
     <Text span hoverValue={`${numeral(value).format('0,0')} drip`}>
