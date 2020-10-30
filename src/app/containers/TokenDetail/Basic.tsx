@@ -9,8 +9,7 @@ import { List } from '../../components/List/Loadable';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import numeral from 'numeral';
-import { formatBalance, formatString } from '../../../utils';
+import { formatBalance, formatString, toThousands } from '../../../utils';
 
 export interface BasicProps {
   totalSupply?: string;
@@ -80,9 +79,7 @@ export const Basic = ({
       ),
       children:
         accountTotal !== undefined
-          ? `${numeral(accountTotal).format('0,0')} ${t(
-              translations.token.address,
-            )}`
+          ? `${toThousands(accountTotal)} ${t(translations.token.address)}`
           : undefined,
     },
     {
@@ -100,9 +97,7 @@ export const Basic = ({
         </Tooltip>
       ),
       children:
-        transferCount !== undefined
-          ? numeral(transferCount).format('0,0')
-          : undefined,
+        transferCount !== undefined ? toThousands(transferCount) : undefined,
     },
   ];
 

@@ -81,13 +81,6 @@ export function transferRisk(riskStr) {
   return 'lv0';
 }
 
-export const devidedByDecimals = (number, decimals) => {
-  const bignumber =
-    number instanceof BigNumber ? number : new BigNumber(number);
-  const result = bignumber.dividedBy(10 ** decimals);
-  return result.toString(10);
-};
-
 export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
   if (str) {
     const length = str.length;
@@ -109,7 +102,8 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
  * @return { string } 数字 n 的整数部分超过3位后，使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
  */
 export const formatNumber = (num: number | string) => {
-  if (new BigNumber(num).lt(0.000001)) return '0';
+  if (num === 0 || num === '0') return '0';
+  if (new BigNumber(num).lt(0.001)) return '< 0.001';
   return numeral(num)
     .format('0,0a.[000]', Math.floor)
     .toUpperCase()
