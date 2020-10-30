@@ -77,10 +77,12 @@ export const Basic = ({
           {t(translations.token.holders)}
         </Tooltip>
       ),
-      children:
-        accountTotal !== undefined
-          ? `${toThousands(accountTotal)} ${t(translations.token.address)}`
-          : undefined,
+      children: <span>--</span>,
+      // accountTotal !== undefined
+      //   ? `${toThousands(accountTotal)} ${t(
+      //       translations.token.address,
+      //     )}`
+      //   : undefined,
     },
     {
       title: (
