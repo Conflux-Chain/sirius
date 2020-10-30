@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import 'utils/lazyJSSDK';
-import { useClientVersion } from '@cfxjs/react-hooks';
 import { media } from 'styles/media';
 import clsx from 'clsx';
 import { useTestnet } from 'utils/hooks/useTestnet';
+import { useClientVersion } from 'utils/api';
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
