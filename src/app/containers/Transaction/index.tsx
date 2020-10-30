@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import numeral from 'numeral';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -30,10 +29,11 @@ import {
   delay,
   getAddressType,
   formatTimeStamp,
-  devidedByDecimals,
+  formatBalance,
   fromDripToCfx,
   formatString,
   getPercent,
+  toThousands,
 } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
 import { addressTypeContract } from '../../../utils/constants';
@@ -349,9 +349,7 @@ export const Transaction = () => {
           <span className="for">{t(translations.transaction.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'
-              ? `${numeral(
-                  devidedByDecimals(transferItem['value'], tokenDecimals),
-                ).format('0,0')}`
+              ? `${formatBalance(transferItem['value'], tokenDecimals, true)}`
               : transferItem['value']}
           </span>
           <span>{imgIcon}</span>
@@ -406,7 +404,7 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <Link href={`/epoch/${epochNumber}`}>
-                {numeral(epochNumber).format('0,0')}
+                {toThousands(epochNumber)}
               </Link>
             </SkeletonContainer>
           </Description>
@@ -422,7 +420,7 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <Link href={`/epoch/${epochHeight}`}>
-                {numeral(epochHeight).format('0,0')}
+                {toThousands(epochHeight)}
               </Link>
             </SkeletonContainer>
           </Description>
@@ -533,7 +531,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${numeral(gasPrice).format('0,0')} drip`}
+              {`${toThousands(gasPrice)} drip`}
             </SkeletonContainer>
           </Description>
           <Description
@@ -544,7 +542,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${numeral(gasFee).format('0,0')} drip`}
+              {`${toThousands(gasFee)} drip`}
             </SkeletonContainer>
           </Description>
           <Description
@@ -555,7 +553,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {numeral(nonce).format('0,0')}
+              {toThousands(nonce)}
             </SkeletonContainer>
           </Description>
           <Description
@@ -598,7 +596,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {numeral(storageLimit).format('0,0')}
+              {toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
           <Description
