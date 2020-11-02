@@ -95,7 +95,7 @@ const HeaderWrap = styled.div`
   align-items: center;
   line-height: 2.2857rem;
   margin-bottom: 1.7143rem;
-  .img {
+  img {
     width: 20px;
     height: 20px;
   }
