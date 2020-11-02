@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
@@ -17,6 +16,7 @@ import {
   getPercent,
   fromDripToCfx,
   formatTimeStamp,
+  toThousands,
 } from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
   const { t } = useTranslation();
@@ -90,7 +90,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {numeral(height).format('0,0')}
+            {toThousands(height)}
           </SkeletonContainer>
         </Description>
         <Description
@@ -103,7 +103,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           <SkeletonContainer shown={loading}>
             {
               <Link href={`/epoch/${epochNumber}`}>
-                {numeral(epochNumber).format('0,0')}
+                {toThousands(epochNumber)}
               </Link>
             }
           </SkeletonContainer>
@@ -119,7 +119,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {numeral(difficulty).format('0,0')}
+            {toThousands(difficulty)}
           </SkeletonContainer>
         </Description>
         <Description
@@ -216,7 +216,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {numeral(nonce).format('0,0')}
+            {toThousands(nonce)}
           </SkeletonContainer>
         </Description>
         <Description

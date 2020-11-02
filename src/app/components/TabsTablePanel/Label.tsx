@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Tooltip } from '../Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import numeral from 'numeral';
+import { toThousands } from '../../../utils';
 
 interface LabelProps {
   left?: string;
@@ -26,7 +26,7 @@ const Text = ({ left, right, count = 0 }: LabelProps) => {
   return (
     <>
       {t(translateText, {
-        sum: numeral(count).format('0,0'),
+        sum: toThousands(count),
       })}
     </>
   );
@@ -84,7 +84,7 @@ const TipLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   return (
     <StyledTipLabelWrapper>
       {left}
-      <StyledSpan>{numeral(number).format('0,0')}</StyledSpan>
+      <StyledSpan>{toThousands(number)}</StyledSpan>
       {right}
     </StyledTipLabelWrapper>
   );
