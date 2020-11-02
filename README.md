@@ -1,21 +1,21 @@
-# Sirius
+<h1 align="center">Conflux Scan</h1>
 
----
+<p align="center">Blockchain Explorer for Conflux Network.</p>
 
-**📚Documentation:** [Gitbook](https://cansahin.gitbook.io/react-boilerplate-cra-template/)
+Source code of [Conflux Scan](https://confluxscan.io)
 
-**🚑 Collection of `'HOW TO'`s:** [Examples & Tutorials for common patterns](https://github.com/react-boilerplate/cra-template-examples)
+## What can I do?
 
----
+Conflux Scan is still in its early stages compared to [Etherscan](https://etherscan.io). So
+there's a lot features and improvements waiting there. You can find bugs,
+request new features, send PRs to improve the code and docs. Don't forget to
+check out the [Conflux Bounty](https://bounty.conflux-chain.org) to earn reward
+while improving scan.
 
-## Start
+## Contributing
 
-```shell
-yarn start
-```
+Please make sure to read the [Contributing Guide](.github/CONTRIBUTING.md) before making a pull request.
 
-## Add new container or component
+## License
 
-```shell
-yarn generate
-```
+[MIT](http://opensource.org/licenses/MIT)
