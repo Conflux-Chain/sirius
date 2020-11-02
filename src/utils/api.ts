@@ -38,8 +38,10 @@ export const simpleGetFetcher = async (...args: any[]) => {
 };
 
 const simplePostFetcher = async (...args: any[]) => {
-  let [url, params] = args;
-  const res = await fetch(appendApiPrefix(url), {
+  let [url, params, shouldAppendPrefix] = args;
+  shouldAppendPrefix =
+    shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
+  const res = await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
     method: 'post',
     headers: {
       Accept: 'application/json',
@@ -664,4 +666,23 @@ export const fetchRecentDagBlock = async (opts = {}) => {
   }
 
   return data;
+};
+
+const fetchClientVersion = async () => {
+  const version = await simplePostFetcher(
+    '/rpc',
+    {
+      jsonrpc: '2.0',
+      id: '0',
+      method: 'cfx_clientVersion',
+      params: [],
+    },
+    false,
+  ).catch(() => {});
+  return version;
+};
+
+export const useClientVersion = () => {
+  const { data: version } = useSWR('client version', fetchClientVersion);
+  return version?.result;
 };

@@ -45,7 +45,7 @@ module.exports = app => {
   app.use(
     '/v1',
     createProxyMiddleware({
-      target: 'https://scantest.confluxnetwork.org',
+      target: 'https://confluxscan.io',
       changeOrigin: true,
       secure: false,
     }),
@@ -53,14 +53,14 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target: 'http://mainnet-jsonrpc.conflux-chain.org:12537',
+      target: 'http://scanpage-main.confluxrpc.org:12537',
     }),
   );
 
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
-      target: 'https://scantest.confluxnetwork.org',
+      target: 'https://confluxscan.io',
       changeOrigin: true,
       secure: false,
     }),

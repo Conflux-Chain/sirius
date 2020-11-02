@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Conflux BlockChain Explorer",
+  "name": "BlockChain Explorer for Conflux Network",
   "icons": [
     {
       "src": "favicon.ico",
