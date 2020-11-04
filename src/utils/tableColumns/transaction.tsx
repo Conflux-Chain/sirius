@@ -2,6 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
+import clsx from 'clsx';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { Status } from '../../app/components/Status/Loadable';
@@ -13,11 +14,17 @@ import {
   toThousands,
 } from '../../utils/';
 
+const StyledHashWrapper = styled.span`
+  padding-left: 16px;
+`;
+
 export const hash = {
   title: (
-    <Translation>
-      {t => t(translations.general.table.transaction.hash)}
-    </Translation>
+    <StyledHashWrapper>
+      <Translation>
+        {t => t(translations.general.table.transaction.hash)}
+      </Translation>
+    </StyledHashWrapper>
   ),
   dataIndex: 'hash',
   key: 'hash',
@@ -25,7 +32,13 @@ export const hash = {
   render: (value, row: any) => {
     return (
       <StyledTransactionHashWrapper>
-        {row.status !== 0 && <Status type={row.status} variant="dot" />}
+        <StyledStatusWrapper
+          className={clsx({
+            show: row.status !== 0,
+          })}
+        >
+          <Status type={row.status} variant="dot" />
+        </StyledStatusWrapper>
         <Link href={`/transaction/${value}`}>
           <Text span hoverValue={value}>
             {formatString(value, 'hash')}
@@ -162,5 +175,12 @@ const StyledTransactionHashWrapper = styled.span`
 
   .status {
     margin-right: 0.5714rem;
+  }
+`;
+
+const StyledStatusWrapper = styled.span`
+  visibility: hidden;
+  &.show {
+    visibility: visible;
   }
 `;
