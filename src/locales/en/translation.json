@@ -31,7 +31,8 @@
     "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. A non-zero admin address implies that the contract is in debug mode.",
     "at": "at",
     "txOnlyEn": "txn",
-    "txOnlyZh": ""
+    "txOnlyZh": "",
+    "clickToApply": "Click to apply"
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",

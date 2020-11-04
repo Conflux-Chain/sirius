@@ -31,7 +31,8 @@
     "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
     "at": "在",
     "txOnlyEn": "",
-    "txOnlyZh": "交易"
+    "txOnlyZh": "交易",
+    "clickToApply": "点击以申请"
   },
   "addressDetail": {
     "minedBlocks": "挖出区块",
