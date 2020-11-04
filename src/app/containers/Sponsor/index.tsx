@@ -400,9 +400,8 @@ export function Sponsor() {
           <div className="content">
             <div>1. {t(translations.sponsor.noticeFirst)}</div>
             <div>2. {t(translations.sponsor.noticeSecond)}</div>
-            <div>3. {t(translations.sponsor.noticeThird)}</div>
             <div>
-              4. {t(translations.sponsor.noticeFourthOne)} &nbsp;
+              3. {t(translations.sponsor.noticeFourthOne)} &nbsp;
               <a
                 href="https://portal.conflux-chain.org/"
                 target="_blank"
