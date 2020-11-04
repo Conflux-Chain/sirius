@@ -172,7 +172,7 @@
         "age": "Age"
       },
       "token": {
-        "number": "Number",
+        "number": "#",
         "token": "Token",
         "transfer": "Transfer",
         "totalSupply": "Total Supply",
