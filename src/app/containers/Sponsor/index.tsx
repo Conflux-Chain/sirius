@@ -196,7 +196,7 @@ export function Sponsor() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.metadata.title)}</title>
+        <title>{t(translations.header.contract)}</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
