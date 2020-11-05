@@ -55,6 +55,7 @@ const StyledNoticeItemWrapper = styled.div`
     margin-right: 10px;
     img {
       max-width: inherit;
+      visibility: hidden;
     }
   }
 `;
@@ -68,6 +69,13 @@ const Main = styled.div`
 
   &.placeholder {
     position: relative;
+  }
+
+  /* only show the first one trumpet now, hide others, may show back in the future */
+  .notice-item-wrapper:first-child {
+    img {
+      visibility: visible;
+    }
   }
 
   ${media.s} {
