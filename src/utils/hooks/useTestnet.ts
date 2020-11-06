@@ -8,7 +8,7 @@ export const useTestnet = () => {
 };
 
 const isTestEnv = () => window.location.hostname.includes('scantest');
-
+export const isTestNetEnv = () => window.location.hostname.includes('testnet');
 export const toTestnet = () => {
   if (isTestEnv())
     return window.location.assign('//testnet-scantest.confluxnetwork.org');
