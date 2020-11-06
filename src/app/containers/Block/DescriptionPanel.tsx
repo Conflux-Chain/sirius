@@ -215,9 +215,7 @@ export function DescriptionPanel({ hash: blockHash }) {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading}>
-            {toThousands(nonce)}
-          </SkeletonContainer>
+          <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
         </Description>
         <Description
           title={

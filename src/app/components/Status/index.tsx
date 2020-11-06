@@ -178,6 +178,7 @@ const StyledPopoverWrapper = styled.div`
       min-width: 11.7143rem;
       line-height: 1.0714rem;
       white-space: break-spaces;
+      padding-bottom: 0.1429rem;
     }
     .inner {
       min-width: inherit;

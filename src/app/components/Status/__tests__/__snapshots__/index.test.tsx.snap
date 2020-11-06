@@ -183,6 +183,7 @@ exports[`<Status  /> should render dot status correct 1`] = `
   min-width: 11.7143rem;
   line-height: 1.0714rem;
   white-space: break-spaces;
+  padding-bottom: 0.1429rem;
 }
 
 .c1 .tooltip-content.siriuse-status-popover .inner {
