@@ -6,6 +6,7 @@ import { media } from 'styles/media';
 import clsx from 'clsx';
 import { useTestnet } from 'utils/hooks/useTestnet';
 import { useClientVersion } from 'utils/api';
+import { Link } from 'app/components/Link/Loadable';
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
@@ -17,7 +18,7 @@ const NoticeItem = ({ children }) => (
 );
 
 export function Notice() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isTestnet = useTestnet();
   let v = useClientVersion();
   const loadingText = t(translations.general.loading);
@@ -26,11 +27,22 @@ export function Notice() {
   const transationsNotice = isTestnet
     ? translations.notice.testnet
     : translations.notice.mainnet;
-
+  const isEn = i18n.language === 'en';
   for (const n in transationsNotice) {
     if (n === '0') {
       notices.push(
         <NoticeItem key={n}>{t(transationsNotice[n], { version })}</NoticeItem>,
+      );
+    } else if (n === '2') {
+      notices.push(
+        <NoticeItem key={n}>
+          {t(transationsNotice[n])}
+          {`${isEn ? ' (' : '（'}`}
+          <Link href={t(translations.notice.link)}>
+            {isEn ? 'Click to view details' : '详情链接'}
+          </Link>
+          {`${isEn ? ').' : '）。'}`}
+        </NoticeItem>,
       );
     } else {
       notices.push(<NoticeItem key={n}>{t(transationsNotice[n])}</NoticeItem>);
