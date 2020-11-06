@@ -367,7 +367,7 @@
       "2. Please note that the Conflux Tethys Network cannot be accessed by ConfluxPortal v0.5.0 and lower. Please make sure you are using ConfluxPortal v0.5.3 or higher.",
       "3. Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.2 to fix whitelist removal bugs in the build-in sponsor contracts. Please make sure to upgrade the node after 16:00 on Nov. 6, 2020"
     ],
-    "link": "https://forum.conflux.fun/t/topic/3775"
+    "link": "https://forum.conflux.fun/t/topic/3910"
   },
   "toolTip": {
     "block": {
