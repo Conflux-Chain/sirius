@@ -14,7 +14,6 @@ const testnetFaucetAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117';
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
   : mainnetFaucetAddress;
-console.log(faucetAddress);
 const faucet = new Faucet(cfxUrl, faucetAddress);
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
