@@ -36,6 +36,13 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
+
+  ${media.s} {
+    height: calc(100% - 116px);
+    width: calc(100% - 32px);
+    align-items: inherit;
+    align-content: center;
+  }
 `;
 
 // img
@@ -43,6 +50,7 @@ const LeftImage = styled.img`
   margin-right: 7rem;
   ${media.s} {
     margin-right: 0;
+    max-width: 80%;
   }
 `;
 const RightWrap = styled.div`
@@ -50,6 +58,8 @@ const RightWrap = styled.div`
   flex-direction: column;
   ${media.m} {
     padding: 1rem;
+    align-items: center;
+    text-align: center;
   }
 `;
 
@@ -82,4 +92,5 @@ const GoTo = styled.a`
   justify-content: center;
   color: #545454;
   font-size: 1.1429rem;
+  margin-top: 2rem;
 `;

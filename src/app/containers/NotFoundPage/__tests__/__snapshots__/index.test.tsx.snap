@@ -74,17 +74,38 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   justify-content: center;
   color: #545454;
   font-size: 1.1429rem;
+  margin-top: 2rem;
+}
+
+@media (max-width:600px) {
+  .c0 {
+    height: calc(100% - 116px);
+    width: calc(100% - 32px);
+    -webkit-align-items: inherit;
+    -webkit-box-align: inherit;
+    -ms-flex-align: inherit;
+    align-items: inherit;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+  }
 }
 
 @media (max-width:600px) {
   .c1 {
     margin-right: 0;
+    max-width: 80%;
   }
 }
 
 @media (max-width:1024px) {
   .c2 {
     padding: 1rem;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
   }
 }
 
