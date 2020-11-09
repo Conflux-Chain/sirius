@@ -118,9 +118,9 @@ const Wrapper = styled.span`
     }
   }
   &.error {
-    color: #c65252;
+    color: #e64e4e;
     .dot {
-      background-color: #c65252;
+      background-color: #e64e4e;
     }
   }
   &.skip {
@@ -130,9 +130,9 @@ const Wrapper = styled.span`
     }
   }
   &.unexecuted {
-    color: #b178c8;
+    color: #b279c9;
     .dot {
-      background-color: #b178c8;
+      background-color: #b279c9;
     }
   }
   .dot {
