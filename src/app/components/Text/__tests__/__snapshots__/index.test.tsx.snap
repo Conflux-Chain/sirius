@@ -5,12 +5,13 @@ exports[`<Text  /> should match snapshot 1`] = `
   font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
-  padding: 0.2857rem 0.7143rem;
+  padding: 0.2857rem 0.7143rem 0.3571rem;
   font-weight: 400;
   border-radius: 0;
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
+  max-width: 32.1429rem;
 }
 
 .c1 .text.sirius-text {
@@ -35,6 +36,12 @@ exports[`<Text  /> should match snapshot 1`] = `
 
 .c1 .text.sirius-text a:hover {
   color: 0626ae;
+}
+
+@media (max-width:600px) {
+  .c0 .tooltip-content.sirius-tooltip {
+    max-width: 19.4286rem;
+  }
 }
 
 <span
@@ -67,12 +74,13 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
-  padding: 0.2857rem 0.7143rem;
+  padding: 0.2857rem 0.7143rem 0.3571rem;
   font-weight: 400;
   border-radius: 0;
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
+  max-width: 32.1429rem;
 }
 
 .c1 .text.sirius-text {
@@ -95,6 +103,12 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 
 .c1 .text.sirius-text a:hover {
   color: 0626ae;
+}
+
+@media (max-width:600px) {
+  .c0 .tooltip-content.sirius-tooltip {
+    max-width: 19.4286rem;
+  }
 }
 
 <span
