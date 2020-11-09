@@ -108,7 +108,7 @@ export const Status = ({
 };
 
 const Wrapper = styled.span`
-  display: inline-flex;
+  display: flex;
   align-items: center;
   vertical-align: middle;
   &.success {
