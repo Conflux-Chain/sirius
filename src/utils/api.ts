@@ -444,24 +444,26 @@ export const useContract = (
       fetch(appendApiPrefix(url))
         .then(res => res.json())
         .then(rst => {
-          const { sponsorBalanceForGas, sponsorBalanceForCollateral } = rst;
           return {
             name: null,
             website: null,
             admin: null,
             abi: null,
             sourceCode: null,
-            sponsorForGas: null,
-            sponsorForCollateral: null,
             ...rst,
-            sponsorBalanceForGas:
-              sponsorBalanceForGas !== undefined
-                ? formatBalance(sponsorBalanceForGas)
-                : null,
-            sponsorBalanceForCollateral:
-              sponsorBalanceForCollateral !== undefined
-                ? formatBalance(sponsorBalanceForCollateral)
-                : null,
+            // sponsor: {
+            //   sponsorForGas: null,
+            //   sponsorForCollateral: null,
+            //   sponsorBalanceForGas:
+            //     sponsorInfo && sponsorInfo.sponsorBalanceForGas !== undefined
+            //       ? formatBalance(sponsorInfo.sponsorBalanceForGas)
+            //       : null,
+            //   sponsorBalanceForCollateral:
+            //     sponsorInfo &&
+            //     sponsorInfo.sponsorBalanceForCollateral !== undefined
+            //       ? formatBalance(sponsorInfo.sponsorBalanceForCollateral)
+            //       : null,
+            // },
           };
         })
         .catch(error => {
@@ -472,11 +474,13 @@ export const useContract = (
             transactionHash: null,
             admin: null,
             collateralForStorage: '0',
-            sponsorGasBound: '0',
-            sponsorBalanceForGas: '0',
-            sponsorBalanceForCollateral: '0',
-            sponsorForGas: null,
-            sponsorForCollateral: null,
+            sponsor: {
+              sponsorGasBound: '0',
+              sponsorBalanceForGas: '0',
+              sponsorBalanceForCollateral: '0',
+              sponsorForGas: null,
+              sponsorForCollateral: null,
+            },
             name: null,
             website: null,
             abi: null,
@@ -492,11 +496,13 @@ export const useContract = (
         transactionHash: loadingText,
         admin: loadingText,
         collateralForStorage: '0',
-        sponsorGasBound: '0',
-        sponsorBalanceForGas: '0',
-        sponsorBalanceForCollateral: '0',
-        sponsorForGas: loadingText,
-        sponsorForCollateral: loadingText,
+        sponsor: {
+          sponsorGasBound: '0',
+          sponsorBalanceForGas: '0',
+          sponsorBalanceForCollateral: '0',
+          sponsorForGas: loadingText,
+          sponsorForCollateral: loadingText,
+        },
         name: loadingText,
         website: loadingText,
         abi: loadingText,

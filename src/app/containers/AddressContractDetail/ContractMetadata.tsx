@@ -65,10 +65,12 @@ const WarnningButtonWrapper = styled.div`
     max-width: 30rem;
     text-align: center;
     padding: 0.43rem 0.86rem;
-
     ${media.s} {
       max-width: 15rem;
     }
+  }
+  .icon.metadata-tooltip-btn {
+    margin-left: 1rem;
   }
 `;
 const WarnningTooltipWrapper = styled.div`
@@ -88,7 +90,7 @@ const EditButton = ({ url }) => {
       url={url}
       className="metadata-tooltip-btn"
       size={16}
-      tooltipText={t(translations.general.address.editContract)}
+      tooltipText={t(translations.contractDetail.clickToApply)}
     >
       <path
         d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z"
@@ -109,8 +111,7 @@ export function ContractMetadata({ address }) {
   const { data: contractInfo } = useContract(address, [
     'name',
     'icon',
-    'sponsorForGas',
-    'sponsorForCollateral',
+    'sponsor',
     'website',
     'admin',
     'from',
@@ -217,26 +218,41 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content
                   className={clsx(
-                    !contractInfo.sponsorForCollateral && 'not-avaiable',
+                    !contractInfo.sponsor.sponsorForCollateral &&
+                      'not-avaiable',
                   )}
                 >
-                  {contractInfo.sponsorForCollateral ? (
+                  {contractInfo.sponsor &&
+                  contractInfo.sponsor.sponsorForCollateral ? (
                     [
                       <Link
                         key="content"
-                        to={`/address/${contractInfo.sponsorForCollateral}`}
+                        to={`/address/${contractInfo.sponsor.sponsorForCollateral}`}
                       >
-                        {contractInfo.sponsorForCollateral}
+                        <Text
+                          span
+                          hoverValue={contractInfo.sponsor.sponsorForCollateral}
+                        >
+                          {formatString(
+                            contractInfo.sponsor.sponsorForCollateral,
+                            'address',
+                          )}
+                        </Text>
                       </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   ) : (
-                    <CenterLine>
-                      {notAvaiableText}
-                      <EditButton url={`/sponsor/${address}`} key="edit" />
-                    </CenterLine>
+                    <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
+                {contractInfo.sponsor &&
+                contractInfo.sponsor.sponsorForCollateral ? (
+                  <EditButton
+                    url={`/sponsor/${contractInfo.sponsor.sponsorForCollateral}`}
+                    key="edit"
+                  />
+                ) : (
+                  <EditButton url={`/sponsor/${address}`} key="edit" />
+                )}
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -299,23 +315,36 @@ export function ContractMetadata({ address }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 <Content>
-                  {contractInfo.sponsorForGas ? (
+                  {contractInfo.sponsor &&
+                  contractInfo.sponsor.sponsorForGas ? (
                     [
                       <Link
                         key="content"
-                        to={`/address/${contractInfo.sponsorForGas}`}
+                        to={`/address/${contractInfo.sponsor.sponsorForGas}`}
                       >
-                        {contractInfo.sponsorForGas}
+                        <Text
+                          span
+                          hoverValue={contractInfo.sponsor.sponsorForGas}
+                        >
+                          {formatString(
+                            contractInfo.sponsor.sponsorForGas,
+                            'address',
+                          )}
+                        </Text>
                       </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   ) : (
-                    <CenterLine>
-                      {notAvaiableText}
-                      <EditButton url={`/sponsor/${address}`} key="edit" />
-                    </CenterLine>
+                    <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
+                {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
+                  <EditButton
+                    url={`/sponsor/${contractInfo.sponsor.sponsorForGas}`}
+                    key="edit"
+                  />
+                ) : (
+                  <EditButton url={`/sponsor/${address}`} key="edit" />
+                )}
               </CenterLine>
             </SkeletonContainer>
           ),
