@@ -27,7 +27,7 @@ export function Notice() {
   const transationsNotice = isTestnet
     ? translations.notice.testnet
     : translations.notice.mainnet;
-  const isEn = i18n.language === 'en';
+  const isEn = i18n.language === 'en' || i18n.language === 'en-US';
   for (const n in transationsNotice) {
     if (n === '0') {
       notices.push(
