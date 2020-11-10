@@ -20,6 +20,9 @@ import { Tabs } from './../Tabs';
 import { useCMContractCreate } from '../../../utils/api';
 import SkelontonContainer from '../SkeletonContainer';
 import { useHistory } from 'react-router-dom';
+import imgRemove from 'images/contract/remove.svg';
+import imgUpload from 'images/contract/upload.svg';
+
 interface Props {
   contractDetail: any;
   type: string;
@@ -300,7 +303,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                 />
                 <div className="firstItem" onClick={uploadContractIcon}>
                   <img
-                    src="/contract/upload.svg"
+                    src={imgUpload}
                     className="labelIcon"
                     alt={t(translations.contract.contractIcon)}
                   ></img>
@@ -310,7 +313,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
                   <img
-                    src="/contract/remove.svg"
+                    src={imgRemove}
                     className="labelIcon"
                     alt={t(translations.contract.remove)}
                   ></img>
@@ -344,21 +347,13 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   onChange={handleTokenIconChange}
                 />
                 <div className="firstItem" onClick={uploadTokenIcon}>
-                  <img
-                    src="/contract/upload.svg"
-                    className="labelIcon"
-                    alt="upload"
-                  ></img>
+                  <img src={imgUpload} className="labelIcon" alt="upload"></img>
                   <span className="labelText">
                     {t(translations.contract.tokenIcon)}
                   </span>
                 </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
-                  <img
-                    src="/contract/remove.svg"
-                    className="labelIcon"
-                    alt="remove"
-                  ></img>
+                  <img src={imgRemove} className="labelIcon" alt="remove"></img>
                   <span className="labelText">
                     {t(translations.contract.remove)}
                   </span>

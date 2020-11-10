@@ -17,6 +17,7 @@ import { Check } from '@geist-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-use';
+import imgConfiPlanet from 'images/confi-planet.png';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -127,7 +128,7 @@ export const Header = memo(() => {
         <img
           className="confi-logo"
           alt="conflux scan logo"
-          src="/confi-planet.png"
+          src={imgConfiPlanet}
         />
         {bp !== 's' && bp !== 'm' && <TextLogo changeColorOnMobile />}
       </RouterLink>

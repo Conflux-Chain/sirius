@@ -11,6 +11,7 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
 import { CopyButton } from '../../components/CopyButton/Loadable';
+import imgPacking from 'images/home/packing.svg';
 
 interface RouteParams {
   txHash: string;
@@ -22,7 +23,7 @@ export function PackingPage() {
 
   return (
     <PageWrapper>
-      <LeftImage alt="packing" src="/home/packing.svg" />
+      <LeftImage alt="packing" src={imgPacking} />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
         <ErrorLabel>

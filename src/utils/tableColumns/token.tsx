@@ -16,6 +16,9 @@ import {
   isHash,
   formatBalance,
 } from '../../utils';
+import imgArrow from 'images/token/arrow.svg';
+import imgOut from 'images/token/out.svg';
+import imgIn from 'images/token/in.svg';
 
 interface Query {
   accountAddress?: string;
@@ -106,15 +109,7 @@ const renderFilterableAddress = (
     <FromWrap>
       {renderTo()}
       {opt.type === 'from' && (
-        <ImgWrap
-          src={
-            !filter
-              ? '/token/arrow.svg'
-              : filter === value
-              ? '/token/out.svg'
-              : '/token/in.svg'
-          }
-        />
+        <ImgWrap src={!filter ? imgArrow : filter === value ? imgOut : imgIn} />
       )}
     </FromWrap>
   );
