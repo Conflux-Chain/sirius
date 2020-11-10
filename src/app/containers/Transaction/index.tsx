@@ -509,6 +509,20 @@ export const Transaction = () => {
           <Description
             title={
               <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {toThousands(storageLimit)}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
                 text={t(translations.toolTip.tx.gasUsedLimit)}
                 placement="top"
               >
@@ -583,20 +597,6 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               {!loading && transactionIndex}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.storageLimit)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
           <Description
