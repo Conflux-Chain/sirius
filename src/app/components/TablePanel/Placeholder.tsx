@@ -8,6 +8,7 @@ import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
+import imgTableWhoops from 'images/table-whoops.png';
 
 interface Props {
   show: boolean;
@@ -33,7 +34,7 @@ export const Placeholder = ({
       })}
       {...others}
     >
-      <img className="img" src="/table-whoops.png" alt="no data"></img>
+      <img className="img" src={imgTableWhoops} alt="no data"></img>
       <p className="title">{whoops}</p>
       <h1 className="description">{noData}</h1>
       {children}

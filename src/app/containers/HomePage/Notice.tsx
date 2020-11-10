@@ -7,11 +7,12 @@ import clsx from 'clsx';
 import { useTestnet } from 'utils/hooks/useTestnet';
 import { useClientVersion } from 'utils/api';
 import { Link } from 'app/components/Link/Loadable';
+import imgNotice from 'images/notice.svg';
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
     <div className="img">
-      <img src="/notice.svg" alt="notice indicator" />
+      <img src={imgNotice} alt="notice indicator" />
     </div>
     <div className="text">{children}</div>
   </StyledNoticeItemWrapper>

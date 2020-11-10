@@ -11,6 +11,10 @@ import { translations } from '../../../locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';
+import imgSuccess from 'images/status/success.svg';
+import imgError from 'images/status/error.svg';
+import imgSkip from 'images/status/skip.svg';
+import imgUnexecuted from 'images/status/unexecuted.svg';
 
 interface Props {
   type: string | number;
@@ -36,22 +40,22 @@ export const Status = ({
       '0': {
         status: 'success',
         name: t(translations.general.status.success.text),
-        icon: '/status/success.svg',
+        icon: imgSuccess,
       },
       '1': {
         status: 'error',
         name: t(translations.general.status.error.text),
-        icon: '/status/error.svg',
+        icon: imgError,
       },
       '2': {
         status: 'skip',
         name: t(translations.general.status.skip.text),
-        icon: '/status/skip.svg',
+        icon: imgSkip,
       },
       '3': {
         status: 'unexecuted',
         name: t(translations.general.status.unexecuted.text),
-        icon: '/status/unexecuted.svg',
+        icon: imgUnexecuted,
       },
     }),
     [t],

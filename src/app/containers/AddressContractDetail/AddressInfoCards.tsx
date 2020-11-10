@@ -10,6 +10,10 @@ import { Text } from 'app/components/Text/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { fromDripToCfx } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
+import imgBalance from 'images/contract-address/balance.svg';
+import imgToken from 'images/contract-address/token.svg';
+import imgStorage from 'images/contract-address/storage.svg';
+import imgNonce from 'images/contract-address/nonce.svg';
 
 // todo, need to refactor the request, and rewrite skeleton style
 const skeletonStyle = { width: '7rem', height: '2.4rem' };
@@ -37,7 +41,7 @@ export function BalanceCard({ address }) {
         <InfoImage
           color="#1e3de4"
           alt={t(translations.general.balance)}
-          icon="/contract-address/balance.svg"
+          icon={imgBalance}
         />
       }
     />
@@ -59,7 +63,7 @@ export function TokensCard({ address }) {
         <InfoImage
           color="#16DBCC"
           alt={t(translations.general.token)}
-          icon="/contract-address/token.svg"
+          icon={imgToken}
         />
       }
     />
@@ -98,7 +102,7 @@ export function StorageStakingCard({ address }) {
         <InfoImage
           color="#FFBB37"
           alt={t(translations.general.storageStaking)}
-          icon="/contract-address/storage.svg"
+          icon={imgStorage}
         />
       }
     />
@@ -126,7 +130,7 @@ export function NonceCard({ address }) {
         <InfoImage
           color="#FF82AC"
           alt={t(translations.general.nonce)}
-          icon="/contract-address/nonce.svg"
+          icon={imgNonce}
         />
       }
     />

@@ -18,6 +18,10 @@ import {
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import { Big } from '@cfxjs/react-hooks';
+import imgWarning from 'images/warning.png';
+import imgSuccess from 'images/success.png';
+import imgSuccessBig from 'images/success_big.png';
+
 interface RouteParams {
   contractAddress: string;
 }
@@ -381,7 +385,7 @@ export function Sponsor() {
             {t(applyText)}
           </Button>
           <img
-            src="/success.png"
+            src={imgSuccess}
             alt="success"
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
@@ -390,7 +394,7 @@ export function Sponsor() {
           </span>
         </ApplyContainer>
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
-          <img src="/warning.png" alt="warning" className="icon" />
+          <img src={imgWarning} alt="warning" className="icon" />
           <span className="text">
             {t(translations.sponsor[errorMsgForApply])}
           </span>
@@ -421,11 +425,7 @@ export function Sponsor() {
         >
           <Modal.Content>
             <div className="contentContainer">
-              <img
-                src="/success_big.png"
-                alt="success"
-                className="successImg"
-              />
+              <img src={imgSuccessBig} alt="success" className="successImg" />
               <div className="submitted">
                 {t(translations.sponsor.submitted)}.
               </div>
