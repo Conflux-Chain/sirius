@@ -195,7 +195,9 @@ export function ContractMetadata({ address }) {
                 )}
                 <Content className={clsx(!tokenInfo.name && 'not-avaiable')}>
                   {tokenInfo.name ? (
-                    <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
+                    <Link
+                      to={`/token/${address}`}
+                    >{`${tokenInfo.name} (${tokenInfo.symbol})`}</Link>
                   ) : (
                     notAvaiableText
                   )}
