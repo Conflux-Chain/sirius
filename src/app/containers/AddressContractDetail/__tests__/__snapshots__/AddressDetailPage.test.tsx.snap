@@ -453,7 +453,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="balance"
                         class="icon"
-                        src="/contract-address/balance.svg"
+                        src="balance.svg"
                       />
                     </div>
                   </div>
@@ -508,7 +508,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="token"
                         class="icon"
-                        src="/contract-address/token.svg"
+                        src="token.svg"
                       />
                     </div>
                   </div>
@@ -563,7 +563,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="Storage Collateral"
                         class="icon"
-                        src="/contract-address/storage.svg"
+                        src="storage.svg"
                       />
                     </div>
                   </div>
@@ -618,7 +618,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="nonce"
                         class="icon"
-                        src="/contract-address/nonce.svg"
+                        src="nonce.svg"
                       />
                     </div>
                   </div>

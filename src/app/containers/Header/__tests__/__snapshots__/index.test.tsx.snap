@@ -441,7 +441,7 @@ exports[`<Header /> should match the snapshot 1`] = `
               <img
                 alt="conflux scan logo"
                 class="confi-logo"
-                src="/confi-planet.png"
+                src="confi-planet.png"
               />
             </a>
           </div>
@@ -1224,7 +1224,7 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
               <img
                 alt="conflux scan logo"
                 class="confi-logo"
-                src="/confi-planet.png"
+                src="confi-planet.png"
               />
             </a>
           </div>
