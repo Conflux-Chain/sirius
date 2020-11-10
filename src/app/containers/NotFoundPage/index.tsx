@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
+import img404 from 'images/home/404.svg';
 
 export function NotFoundPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +17,7 @@ export function NotFoundPage() {
 
   return (
     <PageWrapper>
-      <LeftImage alt="404" src="/home/404.svg" />
+      <LeftImage alt="404" src={img404} />
       <RightWrap>
         <ErrorTitle>{t(translations.notFound.title)}</ErrorTitle>
         <ErrorLabel>{t(translations.notFound.label)}</ErrorLabel>
