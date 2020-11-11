@@ -15,6 +15,7 @@ interface IconButtonProps {
   className?: string;
   blank?: boolean;
   tooltipContentClassName?: string;
+  viewBox?: string;
 }
 
 export const IconButton = ({
@@ -25,11 +26,12 @@ export const IconButton = ({
   children,
   url,
   blank,
+  viewBox,
 }: React.PropsWithChildren<IconButtonProps>) => {
   const svg = (
     <svg
       className={`icon ${className}`}
-      viewBox="0 0 1024 1024"
+      viewBox={viewBox ? viewBox : '0 0 1024 1024'}
       width={size || 8}
       height={size || 8}
     >
