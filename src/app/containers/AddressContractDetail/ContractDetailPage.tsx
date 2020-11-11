@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
-import { Copy, Qrcode, Edit, Jump } from './HeadLineButtons';
+import { Copy, Qrcode, Edit, Jump, Apply } from './HeadLineButtons';
 import {
   BalanceCard,
   TokensCard,
@@ -64,6 +64,7 @@ export const ContractDetailPage = memo(() => {
             <Copy address={address} />
             <Qrcode address={address} />
             <Edit address={address} />
+            <Apply address={address} />
             {contractInfo?.website !== notAvaiableText && (
               <Jump url={address} />
             )}
