@@ -31,6 +31,7 @@ import { useContract, useToken } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
+import imgDot from 'images/contract-address/dot-dot-dot.svg';
 
 const AceEditorStyle = {
   width: '100%',
@@ -204,10 +205,7 @@ const TxDirectionFilter = ({ onChange }) => {
         className="filter-button"
         onClick={() => setVisible(!visible)}
       >
-        <img
-          src={'/contract-address/dot-dot-dot.svg'}
-          alt="transaction-direction-filter"
-        />
+        <img src={imgDot} alt="transaction-direction-filter" />
       </Button>
       {visible && (
         <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
@@ -407,11 +405,11 @@ export function Table({ address }) {
   const tabs = [
     {
       value: 'transaction',
-      label: (count: number) => {
+      label: (total: number, realTotal: number) => {
         return (
           <>
             {t(translations.blocksAndTransactions.transactions)}
-            <TabLabel count={count} />
+            <TabLabel total={total} realTotal={realTotal} />
           </>
         );
       },
@@ -424,11 +422,11 @@ export function Table({ address }) {
     },
     {
       value: 'transfers',
-      label: (count: number) => {
+      label: (total: number, realTotal: number) => {
         return (
           <>
             {t(translations.general.tokenTxns)}
-            <TabLabel count={count} />
+            <TabLabel total={total} realTotal={realTotal} />
           </>
         );
       },
@@ -454,11 +452,11 @@ export function Table({ address }) {
           value: 'mined-blocks',
           hideTotalZero: true,
           pagination: true,
-          label: (count: number) => {
+          label: (total: number, realTotal: number) => {
             return (
               <>
                 {t(translations.addressDetail.minedBlocks)}
-                <TabLabel count={count} />
+                <TabLabel total={total} realTotal={realTotal} />
               </>
             );
           },

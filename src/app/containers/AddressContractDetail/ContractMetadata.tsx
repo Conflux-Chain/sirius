@@ -82,28 +82,6 @@ const WarnningTooltipWrapper = styled.div`
   }
 `;
 
-const EditButton = ({ url }) => {
-  const { t } = useTranslation();
-
-  return (
-    <IconButton
-      url={url}
-      className="metadata-tooltip-btn"
-      size={16}
-      tooltipText={t(translations.contractDetail.clickToApply)}
-    >
-      <path
-        d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z"
-        fill="#DBDDE4"
-      />
-      <path
-        d="M696 768h-368A72.064 72.064 0 0 1 256 696v-368c0-39.68 32.256-71.936 72-72h186.816a24 24 0 0 1 0 48H328a24 24 0 0 0-24 24v368c0 13.248 10.752 24 24 24h368a24 24 0 0 0 24-24V512A24 24 0 1 1 768 512v184c0 39.744-32.256 71.936-72 72zM514.816 536a24 24 0 0 1-17.088-40.832l229.12-232a24 24 0 1 1 34.24 33.728L531.84 528.896a23.936 23.936 0 0 1-17.088 7.104z"
-        fill="#737682"
-      />
-    </IconButton>
-  );
-};
-
 export function ContractMetadata({ address }) {
   const { t } = useTranslation();
   const notAvaiableText = t(translations.general.security.notAvailable);
@@ -195,7 +173,9 @@ export function ContractMetadata({ address }) {
                 )}
                 <Content className={clsx(!tokenInfo.name && 'not-avaiable')}>
                   {tokenInfo.name ? (
-                    <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
+                    <Link
+                      to={`/token/${address}`}
+                    >{`${tokenInfo.name} (${tokenInfo.symbol})`}</Link>
                   ) : (
                     notAvaiableText
                   )}
@@ -244,15 +224,6 @@ export function ContractMetadata({ address }) {
                     <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
-                {contractInfo.sponsor &&
-                contractInfo.sponsor.sponsorForCollateral ? (
-                  <EditButton
-                    url={`/sponsor/${contractInfo.sponsor.sponsorForCollateral}`}
-                    key="edit"
-                  />
-                ) : (
-                  <EditButton url={`/sponsor/${address}`} key="edit" />
-                )}
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -337,14 +308,6 @@ export function ContractMetadata({ address }) {
                     <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
-                {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
-                  <EditButton
-                    url={`/sponsor/${contractInfo.sponsor.sponsorForGas}`}
-                    key="edit"
-                  />
-                ) : (
-                  <EditButton url={`/sponsor/${address}`} key="edit" />
-                )}
               </CenterLine>
             </SkeletonContainer>
           ),

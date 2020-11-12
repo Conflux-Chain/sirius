@@ -18,6 +18,7 @@ export const useTabTableData = t => {
     pageNumber,
     pageSize,
     total,
+    realTotal,
     data,
     error,
     mutate,
@@ -33,6 +34,7 @@ export const useTabTableData = t => {
         pageNumber,
         pageSize,
         total,
+        realTotal,
         data,
         error,
         mutate,
@@ -66,6 +68,7 @@ export const useTabTableData = t => {
       acc.pageNumber.push(pageNumber);
       acc.pageSize.push(pageSize);
       acc.total.push(total);
+      acc.realTotal.push(realTotal);
       acc.data.push(data);
       acc.error.push(error);
       acc.mutate.push(mutate);
@@ -81,6 +84,7 @@ export const useTabTableData = t => {
       pageNumber: [],
       pageSize: [],
       total: [],
+      realTotal: [],
       data: [],
       error: [],
       mutate: [],
@@ -113,6 +117,7 @@ export const useTabTableData = t => {
     pageNumber,
     pageSize,
     total,
+    realTotal,
     data,
     error,
     mutate,

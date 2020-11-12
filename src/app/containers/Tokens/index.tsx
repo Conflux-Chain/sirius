@@ -32,7 +32,7 @@ export function Tokens() {
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
       <TipLabel
-        count={total}
+        total={total}
         left={t(translations.tokens.tipCountBefore)}
         right={t(translations.tokens.tipCountAfter)}
       />

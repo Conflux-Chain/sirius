@@ -3,6 +3,7 @@ import { Tooltip as UITooltip } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import clsx from 'clsx';
+import { media } from 'styles/media';
 
 export const Tooltip = ({
   children,
@@ -30,11 +31,15 @@ const TooltipWrapper = styled.span`
     font-variant-numeric: initial;
     text-transform: initial;
     border-radius: 0;
-    padding: 0.2857rem 0.7143rem;
+    padding: 0.2857rem 0.7143rem 0.3571rem;
     font-weight: 400;
     border-radius: 0;
     font-size: 12px;
     color: #cdcdcd;
     line-height: 1.1429rem;
+    max-width: 32.1429rem; // min width of hash tooltip, longer content will fold with word break
+    ${media.s} {
+      max-width: 19.4286rem;
+    }
   }
 `;

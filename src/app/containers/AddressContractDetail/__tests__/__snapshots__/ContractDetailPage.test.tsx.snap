@@ -5,12 +5,13 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
-  padding: 0.2857rem 0.7143rem;
+  padding: 0.2857rem 0.7143rem 0.3571rem;
   font-weight: 400;
   border-radius: 0;
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
+  max-width: 32.1429rem;
 }
 
 .c4 {
@@ -219,6 +220,12 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 .c20 {
   position: relative;
   width: 100%;
+}
+
+@media (max-width:600px) {
+  .c5 .tooltip-content.sirius-tooltip {
+    max-width: 19.4286rem;
+  }
 }
 
 @media (max-width:600px) {
@@ -459,6 +466,44 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               <div
                 class="jsx-726172838 tooltip "
               >
+                <a
+                  class="address-line-icon"
+                  href="/sponsor/"
+                  style="cursor: pointer;"
+                  target="_self"
+                >
+                  <svg
+                    class="icon address-line-icon"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    width="16"
+                  >
+                    <path
+                      d="M4.0439812,1.00025396 C4.25108145,1.00025396 4.41896992,1.16814244 4.41896992,1.37524268 C4.41896993,1.58234292 4.25108145,1.7502314 4.0439812,1.7502314 L1.12496217,1.7502314 C0.917947088,1.75043811 0.750180486,1.91820503 0.749973455,2.12522012 L0.749973447,7.87503885 C0.750175592,8.08205393 0.917939267,8.24982444 1.12495357,8.25003538 L6.8747806,8.25003538 C7.08179568,8.24982866 7.24956228,8.08206174 7.24976931,7.87504666 L7.24976931,5.00013712 C7.24976928,4.79303688 7.41765701,4.6251484 7.62475803,4.6251484 C7.80597074,4.62514838 7.95716196,4.75368741 7.99212832,4.92456368 L7.99974677,5.00013712 L7.99974677,5.00013712 L7.99974677,7.87502708 C7.99906873,8.49604265 7.4958165,8.99930964 6.87480015,9.00001277 L1.12496222,9.00001277 C0.503946654,8.99932042 0.000687475014,8.4960595 -4.73446562e-08,7.87504706 L-4.73446562e-08,2.12523965 C0.000678021413,1.50422408 0.503930227,1.00095709 1.12494657,1.00025396 L4.0439812,1.00025396 Z M5.79405242,0.943371 C6.00119517,0.942077214 6.17016571,1.10895022 6.17145948,1.316093 L6.18299995,2.78736353 L7.657221,2.77542512 C7.8643637,2.77413134 8.03333424,2.94100487 8.034628,3.14814764 C8.03592179,3.3552904 7.86904878,3.52426094 7.661906,3.5255547 L6.18999995,3.53736353 L6.20265508,5.011262 C6.20336694,5.11156232 6.16378626,5.20795006 6.09279298,5.27880588 C5.94641885,5.42531675 5.70898901,5.42542983 5.56247659,5.27905828 C5.49260784,5.20925559 5.45309715,5.1147075 5.4525255,5.015946 L5.43999995,3.54436353 L3.966737,3.5567503 C3.86643668,3.55746216 3.77004794,3.51788148 3.69919249,3.44688783 C3.55268125,3.30051407 3.55256917,3.06308423 3.69894082,2.91657191 C3.76874341,2.84670307 3.8632915,2.80719238 3.962053,2.80662072 L5.43299995,2.79436353 L5.4213299,1.320778 C5.42003612,1.1136353 5.58690964,0.944664764 5.79405242,0.943371 Z"
+                      transform="translate(8.500000, 8.500000) scale(1, -1) translate(-8.500000, -8.500000) translate(4.000000, 4.000000)"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div
+        class="c4"
+      >
+        <div
+          class=""
+        >
+          <span
+            class="c5"
+          >
+            <div
+              class="jsx-726172838 tooltip-wrapper"
+            >
+              <div
+                class="jsx-726172838 tooltip "
+              >
                 
                 <svg
                   class="icon address-line-icon"
@@ -530,7 +575,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="balance"
                         class="icon"
-                        src="/contract-address/balance.svg"
+                        src="balance.svg"
                       />
                     </div>
                   </div>
@@ -585,7 +630,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="token"
                         class="icon"
-                        src="/contract-address/token.svg"
+                        src="token.svg"
                       />
                     </div>
                   </div>
@@ -640,7 +685,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="Storage Collateral"
                         class="icon"
-                        src="/contract-address/storage.svg"
+                        src="storage.svg"
                       />
                     </div>
                   </div>
@@ -695,7 +740,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="nonce"
                         class="icon"
-                        src="/contract-address/nonce.svg"
+                        src="nonce.svg"
                       />
                     </div>
                   </div>

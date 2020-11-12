@@ -71,7 +71,7 @@ export function BlocksAndTransactions() {
       </Helmet>
       <Dag />
       <TipLabel
-        count={currentTabTotal}
+        total={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
         right={t(translations.blocksAndTransactions.tipCountAfter, {
           type: t(
