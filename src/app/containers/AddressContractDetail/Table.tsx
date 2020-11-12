@@ -405,11 +405,11 @@ export function Table({ address }) {
   const tabs = [
     {
       value: 'transaction',
-      label: (count: number) => {
+      label: (total: number, realTotal: number) => {
         return (
           <>
             {t(translations.blocksAndTransactions.transactions)}
-            <TabLabel count={count} />
+            <TabLabel total={total} realTotal={realTotal} />
           </>
         );
       },
@@ -422,11 +422,11 @@ export function Table({ address }) {
     },
     {
       value: 'transfers',
-      label: (count: number) => {
+      label: (total: number, realTotal: number) => {
         return (
           <>
             {t(translations.general.tokenTxns)}
-            <TabLabel count={count} />
+            <TabLabel total={total} realTotal={realTotal} />
           </>
         );
       },
@@ -452,11 +452,11 @@ export function Table({ address }) {
           value: 'mined-blocks',
           hideTotalZero: true,
           pagination: true,
-          label: (count: number) => {
+          label: (total: number, realTotal: number) => {
             return (
               <>
                 {t(translations.addressDetail.minedBlocks)}
-                <TabLabel count={count} />
+                <TabLabel total={total} realTotal={realTotal} />
               </>
             );
           },

@@ -110,11 +110,11 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
   const tabs = [
     {
       value: 'transfers',
-      label: (count: number) => {
+      label: (total: number, realTotal: number) => {
         return (
           <>
             {t(translations.token.transfers)}
-            <TabLabel count={count} />
+            <TabLabel total={total} realTotal={realTotal} />
           </>
         );
       },

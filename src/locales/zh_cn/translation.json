@@ -247,8 +247,8 @@
     "endDate": "结束日期",
     "submitSucceed": "提交成功",
     "tabLabel": {
-      "lt10000": "共计 {{sum}} 个记录",
-      "gte10000": "仅展示最新 {{sum}} 条记录"
+      "lt10000": "共计 {{total}} 个记录",
+      "gte10000": "共找到 {{realTotal}} 个交易（仅展示最新 {{total}} 条记录）"
     }
   },
   "sponsor": {

@@ -11,7 +11,7 @@ export type TabsTablePanelType = {
     {
       hideTotalZero?: boolean;
       value: string;
-      label: ((count: number) => React.ReactNode) | string;
+      label: ((total: number, realTotal: number) => React.ReactNode) | string;
       content?: React.ReactNode;
     } & Partial<TablePanelType>
   >;
@@ -19,7 +19,9 @@ export type TabsTablePanelType = {
 };
 
 export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
-  const { total, switchToTab, currentTabValue } = useTabTableData(tabs);
+  const { total, realTotal, switchToTab, currentTabValue } = useTabTableData(
+    tabs,
+  );
   const handleTabsChange = function (value: string) {
     switchToTab(value);
     onTabsChange && onTabsChange(value);
@@ -35,7 +37,9 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
       return (
         <Tabs.Item
           label={
-            typeof item.label === 'function' ? item.label(total[i]) : item.label
+            typeof item.label === 'function'
+              ? item.label(total[i], realTotal[i])
+              : item.label
           }
           value={item.value}
           key={i}
@@ -71,8 +75,8 @@ TabsTablePanel.propTypes = {
       value: PropTypes.string,
       // label: required, tab item's label, there are two types:
       //  1. string
-      //  2. function - (count: number) => React.ReactNode | undefined.
-      //     Parameter is table list total count, return value can be react node or undefined
+      //  2. function - (total: number, realTotal: number) => React.ReactNode | undefined.
+      //     Parameter is table list total count and real total count, return value can be react node or undefined
       //     If return value is undefined, use 'value' as default
       label: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
       // base content to show, if there is table config, ignore it
