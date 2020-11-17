@@ -122,6 +122,7 @@ const DatePickerWithQuery = ({ onChange }) => {
     <DatePickerWrap key="date-picker-wrap">
       {bp !== 's' && (
         <DatePicker.RangePicker
+          className="address-table-datepicker"
           // @ts-ignore
           defaultValue={defaultDateRange}
           color="primary"
@@ -138,6 +139,18 @@ const DatePickerWithQuery = ({ onChange }) => {
 
 const DatePickerWrap = styled.div`
   cursor: pointer;
+
+  .address-table-datepicker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
+    background-color: rgba(0, 84, 254, 0.04);
+    height: 2.2857rem;
+    &:hover {
+      background-color: rgba(0, 84, 254, 0.1);
+    }
+    .cfx-picker-panel-container {
+      border: none;
+    }
+  }
+
   ${media.s} {
     position: absolute;
     z-index: 10;
@@ -151,7 +164,6 @@ const DatePickerWrap = styled.div`
       left: 0.92rem;
       top: 0.92rem;
     }
-
     .cfx-picker {
       background-color: #f5f6fa;
       opacity: 0;
@@ -220,15 +232,19 @@ const TxDirectionFilterWrap = styled.div`
   margin-left: 0.57rem;
   position: relative;
   .btn.filter-button {
+    display: flex;
+    align-items: center;
+    border-radius: 0.2857rem;
     background-color: rgba(0, 84, 254, 0.04);
     &:hover {
       background-color: #dfe8ff;
     }
-    width: 3rem;
-    min-width: 3rem;
+    width: 2.2857rem;
+    min-width: 2.2857rem;
+    height: 2.2857rem;
     padding: 0;
-    img {
-      transform: translateY(-3px);
+    .text {
+      top: 0;
     }
   }
 
@@ -572,6 +588,7 @@ const TableWrap = styled.div`
 const FilterWrap = styled.div`
   position: absolute;
   right: 0;
+  top: 0.7143rem;
   display: flex;
   flex-direction: row;
   align-items: center;
