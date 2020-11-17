@@ -14,6 +14,7 @@ import { useHistory } from 'react-router';
 import {
   isAccountAddress,
   isContractAddress,
+  isInnerContractAddress,
   isBlockHash,
   isHash,
   isEpochNumber,
@@ -45,7 +46,11 @@ export const Search = () => {
 
     if (inputValue === '') return;
 
-    if (isContractAddress(inputValue) || isAccountAddress(inputValue)) {
+    if (
+      isContractAddress(inputValue) ||
+      isAccountAddress(inputValue) ||
+      isInnerContractAddress(inputValue)
+    ) {
       history.push(`/address/${inputValue}`);
       return;
     }
