@@ -1,4 +1,8 @@
-import { addressTypeContract, addressTypeCommon } from './constants';
+import {
+  addressTypeContract,
+  addressTypeCommon,
+  addressTypeInternalContract,
+} from './constants';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
@@ -11,6 +15,9 @@ export const delay = (ms: number) => {
 };
 
 export const getAddressType = address => {
+  if (address && address.startsWith('0x0')) {
+    return addressTypeInternalContract;
+  }
   return address && address.startsWith('0x8')
     ? addressTypeContract
     : addressTypeCommon;
