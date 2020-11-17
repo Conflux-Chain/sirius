@@ -30,6 +30,7 @@ import {
   Top,
   Head,
 } from './layouts';
+import { isContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
@@ -75,9 +76,11 @@ export const ContractDetailPage = memo(() => {
           <StorageStakingCard address={address} />
           <NonceCard address={address} />
         </Top>
-        <Middle key="middle">
-          <ContractMetadata address={address} />
-        </Middle>
+        {isContractAddress(address) && (
+          <Middle key="middle">
+            <ContractMetadata address={address} />
+          </Middle>
+        )}
         <Bottom key="bottom">
           <Table key="table" address={address} />
         </Bottom>
