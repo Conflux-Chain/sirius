@@ -1,4 +1,8 @@
-import { addressTypeContract, addressTypeCommon } from './constants';
+import {
+  addressTypeContract,
+  addressTypeCommon,
+  addressTypeInternalContract,
+} from './constants';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
@@ -11,6 +15,9 @@ export const delay = (ms: number) => {
 };
 
 export const getAddressType = address => {
+  if (address && address.startsWith('0x0')) {
+    return addressTypeInternalContract;
+  }
   return address && address.startsWith('0x8')
     ? addressTypeContract
     : addressTypeCommon;
@@ -329,11 +336,15 @@ export const isAddress = (str: string) => {
 };
 
 export function isAccountAddress(str: string) {
-  return /^0x[01][0-9a-fA-F]{39}$/.test(str);
+  return /^0x1[0-9a-fA-F]{39}$/.test(str);
 }
 
 export function isContractAddress(str: string) {
   return /^0x8[0-9a-fA-F]{39}$/.test(str);
+}
+
+export function isInnerContractAddress(str: string) {
+  return /^0x0[0-9a-fA-F]{39}$/.test(str);
 }
 
 export const isHash = (str: string) => {

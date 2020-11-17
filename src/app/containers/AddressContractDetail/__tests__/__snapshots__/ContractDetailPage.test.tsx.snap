@@ -214,10 +214,6 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 .c19 {
-  margin-bottom: 2.29rem;
-}
-
-.c20 {
   position: relative;
   width: 100%;
 }
@@ -314,12 +310,6 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 
   .c6 > div {
     margin-bottom: 1rem;
-  }
-}
-
-@media (max-width:600px) {
-  .c19 {
-    margin-bottom: 2rem;
   }
 }
 
@@ -754,9 +744,6 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   </section>
   <section
     class="c19"
-  />
-  <section
-    class="c20"
   />
 </div>
 `;

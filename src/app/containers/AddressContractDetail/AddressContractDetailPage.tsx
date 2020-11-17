@@ -9,7 +9,7 @@ import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useEffectOnce } from 'react-use';
 import { AddressDetailPage, ContractDetailPage } from './Loadable';
-import { isAddress, isContractAddress } from '../../../utils';
+import { isAddress, isAccountAddress } from '../../../utils';
 interface RouteParams {
   address: string;
 }
@@ -22,9 +22,9 @@ export const AddressContractDetailPage = () => {
     if (!isAddress(address)) history.push('/404');
   });
 
-  return isContractAddress(address) ? (
-    <ContractDetailPage />
-  ) : (
+  return isAccountAddress(address) ? (
     <AddressDetailPage />
+  ) : (
+    <ContractDetailPage />
   );
 };
