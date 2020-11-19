@@ -92,7 +92,7 @@ function layout({ n, d, h: height, w = INIT_WIDTH }) {
       points.push([_x, _y]);
     }
   }
-  // console.length
+
   return {
     points: points.map(([x, y]) => [x + MAX_PIVOT_R, y + MAX_NON_PIVOT_R + 3]),
     width: w + MAX_PIVOT_R * 3,
@@ -171,7 +171,6 @@ function concat(newEpochs, oldEpochs) {
   const newInOld = oldEpochs[0].epochNumber;
   const overlap = newInOld - oldInNew;
   if (overlap < 0) {
-    console.error('data is disconnected');
   } else {
     oldEpochs = oldEpochs.slice(overlap + 1);
   }
@@ -186,8 +185,6 @@ Concrete.PIXEL_RATIO = (function () {
   // return 1
   return (window && window.devicePixelRatio) || 1;
 })();
-
-console.log('Concrete.PIXEL_RATIO', Concrete.PIXEL_RATIO);
 
 ////////////////////////////////////////////////////////////// VIEWPORT //////////////////////////////////////////////////////////////
 
@@ -770,8 +767,6 @@ function dag({ container, width, height }) {
   function addEpoch() {
     let bufferSize = epoches.length;
 
-    // console.log("==========");
-    console.log('bufferSize before', bufferSize);
     //too much buffer to go mainly because hover or inactive
     if (bufferSize > MAX_BUFFER_SIZE) {
       while (epoches.length > MIN_BUFFER_SIZE) {
@@ -806,8 +801,6 @@ function dag({ container, width, height }) {
         epochsToRender.length - RENDER_SIZE,
       );
     }
-
-    // console.log("to render", epochsToRender.length);
 
     growingEpoch = currentEpoch.epochNumber;
     growingRate = 0;
