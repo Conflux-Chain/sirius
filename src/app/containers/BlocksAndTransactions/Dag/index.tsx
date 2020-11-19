@@ -31,7 +31,7 @@ export function Dag() {
 
 const Container = styled.div`
   width: 100%;
-  height: 126px;
+  height: 127px;
   margin-top: 24px;
   background-color: #eceff8;
   box-shadow: 12px 8px 24px -12px rgba(20, 27, 50, 0.12);
