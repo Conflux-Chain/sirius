@@ -5,7 +5,11 @@
   "routes": [
     {
       "src": "/v1/(?<req>.*)",
-      "dest": "https://scantest.confluxscan.io/v1/$req"
+      "dest": "https://scantest.confluxnetwork.org/v1/$req"
+    },
+    {
+      "src": "/rpc",
+      "dest": "https://scantest.confluxnetwork.org/rpc"
     }
   ]
 }
