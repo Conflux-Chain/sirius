@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import dag from './lib';
+import dag from './lib-dag';
 
 export function Dag() {
   const ref = useRef<HTMLDivElement>(null);
