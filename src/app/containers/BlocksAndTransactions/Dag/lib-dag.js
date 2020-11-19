@@ -598,7 +598,6 @@ function createRender(viewport, height, viewport_width) {
           let pivotR;
           if (isPivot) {
             pivotR = pivotOuterR(offsetX);
-            console.log(pivotR, offsetX);
           }
           ctxHit.beginPath();
           ctxHit.fillStyle = hit.getColorFromIndex(hitIdx);
@@ -787,6 +786,7 @@ function dag({ container, width, height }) {
     //the epoches may contain data already in the queue
     while (
       epochsToRender.length > 0 &&
+      epoches.length > 0 &&
       epochsToRender[epochsToRender.length - 1].epochNumber >=
         epoches[epoches.length - 1].epochNumber
     ) {
@@ -798,8 +798,6 @@ function dag({ container, width, height }) {
     }
 
     bufferSize = epoches.length;
-    // console.log("bufferSize after", bufferSize);
-
     growthSpeed = getEpochSpeed(bufferSize);
 
     //clean up epochsToRender for sake of memory
