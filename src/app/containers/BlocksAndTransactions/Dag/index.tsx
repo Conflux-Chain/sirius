@@ -14,8 +14,8 @@ export function Dag() {
         } else {
           destory = dag({
             container: ref.current,
-            width: 1024,
-            height: 126,
+            width: width,
+            height: height,
           });
         }
       };
