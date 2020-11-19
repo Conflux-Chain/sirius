@@ -3,7 +3,7 @@ const MAX_BUFFER_SIZE = 25;
 const MIN_BUFFER_SIZE = 15;
 
 const INIT_EPOCH_WIDTH = 60;
-const PIVOT_R = [11, 14];
+const PIVOT_R = [11, 11];
 const NON_PIVOT_R = [6, 8];
 
 const MAX_PIVOT_R = PIVOT_R[1];
