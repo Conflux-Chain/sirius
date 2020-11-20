@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useBreakpoint } from 'styles/media';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import {
@@ -13,6 +14,7 @@ import { Dag } from './Loadable';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
 
   const columnsBlocksWidth = [4, 2, 2, 3, 4, 4, 4, 3, 5];
   const columnsBlocks: ColumnsType = [
@@ -69,9 +71,9 @@ export function BlocksAndTransactions() {
           content={t(translations.blocksAndTransactions.description)}
         />
       </Helmet>
-      <Dag />
+      {bp !== 's' && <Dag />}
       <TipLabel
-        count={currentTabTotal}
+        total={currentTabTotal}
         left={t(translations.blocksAndTransactions.tipCountBefore)}
         right={t(translations.blocksAndTransactions.tipCountAfter, {
           type: t(

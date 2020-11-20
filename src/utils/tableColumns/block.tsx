@@ -12,6 +12,7 @@ import {
   fromDripToCfx,
   toThousands,
 } from '../../utils/';
+import imgPivot from 'images/pivot.svg';
 
 export const epoch = {
   title: (
@@ -23,7 +24,7 @@ export const epoch = {
   render: (value, row: any) => {
     let pivotTag: React.ReactNode = null;
     if (row.pivotHash === row.hash) {
-      pivotTag = <img className="img" src="/pivot.svg" alt="pivot"></img>;
+      pivotTag = <img className="img" src={imgPivot} alt="pivot"></img>;
     }
     return (
       <StyledEpochWrapper>
@@ -76,7 +77,7 @@ export const hashWithPivot = {
   render: (value, row: any) => {
     let pivotTag: React.ReactNode = null;
     if (row.pivotHash === row.hash) {
-      pivotTag = <img className="img" src="/pivot.svg" alt="pivot"></img>;
+      pivotTag = <img className="img" src={imgPivot} alt="pivot"></img>;
     }
     return (
       <StyledEpochWrapper>

@@ -2,10 +2,10 @@
 
 exports[`<Status  /> should match snapshot 1`] = `
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -22,11 +22,11 @@ exports[`<Status  /> should match snapshot 1`] = `
 }
 
 .c0.error {
-  color: #c65252;
+  color: #e64e4e;
 }
 
 .c0.error .dot {
-  background-color: #c65252;
+  background-color: #e64e4e;
 }
 
 .c0.skip {
@@ -38,11 +38,11 @@ exports[`<Status  /> should match snapshot 1`] = `
 }
 
 .c0.unexecuted {
-  color: #b178c8;
+  color: #b279c9;
 }
 
 .c0.unexecuted .dot {
-  background-color: #b178c8;
+  background-color: #b279c9;
 }
 
 .c0 .dot {
@@ -74,7 +74,7 @@ exports[`<Status  /> should match snapshot 1`] = `
   <img
     alt="1"
     class="icon"
-    src="/status/error.svg"
+    src="error.svg"
   />
   <span
     class="text"
@@ -91,10 +91,10 @@ exports[`<Status  /> should match snapshot 1`] = `
 
 exports[`<Status  /> should render dot status correct 1`] = `
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -111,11 +111,11 @@ exports[`<Status  /> should render dot status correct 1`] = `
 }
 
 .c0.error {
-  color: #c65252;
+  color: #e64e4e;
 }
 
 .c0.error .dot {
-  background-color: #c65252;
+  background-color: #e64e4e;
 }
 
 .c0.skip {
@@ -127,11 +127,11 @@ exports[`<Status  /> should render dot status correct 1`] = `
 }
 
 .c0.unexecuted {
-  color: #b178c8;
+  color: #b279c9;
 }
 
 .c0.unexecuted .dot {
-  background-color: #b178c8;
+  background-color: #b279c9;
 }
 
 .c0 .dot {
@@ -183,6 +183,7 @@ exports[`<Status  /> should render dot status correct 1`] = `
   min-width: 11.7143rem;
   line-height: 1.0714rem;
   white-space: break-spaces;
+  padding-bottom: 0.1429rem;
 }
 
 .c1 .tooltip-content.siriuse-status-popover .inner {

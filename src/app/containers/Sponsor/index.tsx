@@ -18,6 +18,10 @@ import {
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import { Big } from '@cfxjs/react-hooks';
+import imgWarning from 'images/warning.png';
+import imgSuccess from 'images/success.png';
+import imgSuccessBig from 'images/success_big.png';
+
 interface RouteParams {
   contractAddress: string;
 }
@@ -196,7 +200,7 @@ export function Sponsor() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.metadata.title)}</title>
+        <title>{t(translations.header.contract)}</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
@@ -381,7 +385,7 @@ export function Sponsor() {
             {t(applyText)}
           </Button>
           <img
-            src="/success.png"
+            src={imgSuccess}
             alt="success"
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
@@ -390,7 +394,7 @@ export function Sponsor() {
           </span>
         </ApplyContainer>
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
-          <img src="/warning.png" alt="warning" className="icon" />
+          <img src={imgWarning} alt="warning" className="icon" />
           <span className="text">
             {t(translations.sponsor[errorMsgForApply])}
           </span>
@@ -400,9 +404,8 @@ export function Sponsor() {
           <div className="content">
             <div>1. {t(translations.sponsor.noticeFirst)}</div>
             <div>2. {t(translations.sponsor.noticeSecond)}</div>
-            <div>3. {t(translations.sponsor.noticeThird)}</div>
             <div>
-              4. {t(translations.sponsor.noticeFourthOne)} &nbsp;
+              3. {t(translations.sponsor.noticeFourthOne)} &nbsp;
               <a
                 href="https://portal.conflux-chain.org/"
                 target="_blank"
@@ -422,11 +425,7 @@ export function Sponsor() {
         >
           <Modal.Content>
             <div className="contentContainer">
-              <img
-                src="/success_big.png"
-                alt="success"
-                className="successImg"
-              />
+              <img src={imgSuccessBig} alt="success" className="successImg" />
               <div className="submitted">
                 {t(translations.sponsor.submitted)}.
               </div>

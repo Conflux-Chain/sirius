@@ -65,10 +65,12 @@ const WarnningButtonWrapper = styled.div`
     max-width: 30rem;
     text-align: center;
     padding: 0.43rem 0.86rem;
-
     ${media.s} {
       max-width: 15rem;
     }
+  }
+  .icon.metadata-tooltip-btn {
+    margin-left: 1rem;
   }
 `;
 const WarnningTooltipWrapper = styled.div`
@@ -80,28 +82,6 @@ const WarnningTooltipWrapper = styled.div`
   }
 `;
 
-const EditButton = ({ url }) => {
-  const { t } = useTranslation();
-
-  return (
-    <IconButton
-      url={url}
-      className="metadata-tooltip-btn"
-      size={16}
-      tooltipText={t(translations.general.address.editContract)}
-    >
-      <path
-        d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z"
-        fill="#DBDDE4"
-      />
-      <path
-        d="M696 768h-368A72.064 72.064 0 0 1 256 696v-368c0-39.68 32.256-71.936 72-72h186.816a24 24 0 0 1 0 48H328a24 24 0 0 0-24 24v368c0 13.248 10.752 24 24 24h368a24 24 0 0 0 24-24V512A24 24 0 1 1 768 512v184c0 39.744-32.256 71.936-72 72zM514.816 536a24 24 0 0 1-17.088-40.832l229.12-232a24 24 0 1 1 34.24 33.728L531.84 528.896a23.936 23.936 0 0 1-17.088 7.104z"
-        fill="#737682"
-      />
-    </IconButton>
-  );
-};
-
 export function ContractMetadata({ address }) {
   const { t } = useTranslation();
   const notAvaiableText = t(translations.general.security.notAvailable);
@@ -109,8 +89,7 @@ export function ContractMetadata({ address }) {
   const { data: contractInfo } = useContract(address, [
     'name',
     'icon',
-    'sponsorForGas',
-    'sponsorForCollateral',
+    'sponsor',
     'website',
     'admin',
     'from',
@@ -194,7 +173,9 @@ export function ContractMetadata({ address }) {
                 )}
                 <Content className={clsx(!tokenInfo.name && 'not-avaiable')}>
                   {tokenInfo.name ? (
-                    <Link to={`/token/${address}`}>{tokenInfo.name}</Link>
+                    <Link
+                      to={`/token/${address}`}
+                    >{`${tokenInfo.name} (${tokenInfo.symbol})`}</Link>
                   ) : (
                     notAvaiableText
                   )}
@@ -217,24 +198,30 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content
                   className={clsx(
-                    !contractInfo.sponsorForCollateral && 'not-avaiable',
+                    !contractInfo.sponsor.sponsorForCollateral &&
+                      'not-avaiable',
                   )}
                 >
-                  {contractInfo.sponsorForCollateral ? (
+                  {contractInfo.sponsor &&
+                  contractInfo.sponsor.sponsorForCollateral ? (
                     [
                       <Link
                         key="content"
-                        to={`/address/${contractInfo.sponsorForCollateral}`}
+                        to={`/address/${contractInfo.sponsor.sponsorForCollateral}`}
                       >
-                        {contractInfo.sponsorForCollateral}
+                        <Text
+                          span
+                          hoverValue={contractInfo.sponsor.sponsorForCollateral}
+                        >
+                          {formatString(
+                            contractInfo.sponsor.sponsorForCollateral,
+                            'address',
+                          )}
+                        </Text>
                       </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   ) : (
-                    <CenterLine>
-                      {notAvaiableText}
-                      <EditButton url={`/sponsor/${address}`} key="edit" />
-                    </CenterLine>
+                    <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
               </CenterLine>
@@ -299,21 +286,26 @@ export function ContractMetadata({ address }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 <Content>
-                  {contractInfo.sponsorForGas ? (
+                  {contractInfo.sponsor &&
+                  contractInfo.sponsor.sponsorForGas ? (
                     [
                       <Link
                         key="content"
-                        to={`/address/${contractInfo.sponsorForGas}`}
+                        to={`/address/${contractInfo.sponsor.sponsorForGas}`}
                       >
-                        {contractInfo.sponsorForGas}
+                        <Text
+                          span
+                          hoverValue={contractInfo.sponsor.sponsorForGas}
+                        >
+                          {formatString(
+                            contractInfo.sponsor.sponsorForGas,
+                            'address',
+                          )}
+                        </Text>
                       </Link>,
-                      <EditButton url={`/sponsor/${address}`} key="edit" />,
                     ]
                   ) : (
-                    <CenterLine>
-                      {notAvaiableText}
-                      <EditButton url={`/sponsor/${address}`} key="edit" />
-                    </CenterLine>
+                    <CenterLine>{notAvaiableText}</CenterLine>
                   )}
                 </Content>
               </CenterLine>

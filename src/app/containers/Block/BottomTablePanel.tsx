@@ -38,8 +38,8 @@ export function BottomTablePanel({ hash: blockHash }) {
   const tabs = [
     {
       value: 'blocks',
-      label: count => (
-        <TabLabel count={count}>
+      label: (total: number, realTotal: number) => (
+        <TabLabel total={total} realTotal={realTotal}>
           <Tooltip
             text={t(translations.toolTip.block.transactions)}
             placement="top"
@@ -56,8 +56,8 @@ export function BottomTablePanel({ hash: blockHash }) {
     },
     {
       value: 'transaction',
-      label: count => (
-        <TabLabel count={count}>
+      label: (total: number, realTotal: number) => (
+        <TabLabel total={total} realTotal={realTotal}>
           <Tooltip
             text={t(translations.toolTip.block.referenceBlocks)}
             placement="top"

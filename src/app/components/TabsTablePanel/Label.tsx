@@ -8,25 +8,28 @@ import { toThousands } from '../../../utils';
 interface LabelProps {
   left?: string;
   right?: string;
-  count?: number;
+  total?: number;
+  realTotal?: number;
 }
 
 const defaultProps = {
   left: '',
   right: '',
-  count: 0,
+  total: 0,
+  realTotal: 0,
 };
 
-const Text = ({ left, right, count = 0 }: LabelProps) => {
+const Text = ({ left, right, total = 0, realTotal = 0 }: LabelProps) => {
   const { t } = useTranslation();
   const translateText =
-    count < 10000
+    total === realTotal
       ? translations.general.tabLabel.lt10000
       : translations.general.tabLabel.gte10000;
   return (
     <>
       {t(translateText, {
-        sum: toThousands(count),
+        total: toThousands(total),
+        realTotal: toThousands(realTotal),
       })}
     </>
   );
@@ -35,21 +38,27 @@ const Text = ({ left, right, count = 0 }: LabelProps) => {
 const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   left,
   right,
-  count,
+  total,
+  realTotal,
   children,
 }) => {
   return (
     <>
       {children}
-      {count ? (
+      {total ? (
         <Tooltip
           text={
             <StyledTextWrapper>
-              <Text left={left} right={right} count={count}></Text>
+              <Text
+                left={left}
+                right={right}
+                total={total}
+                realTotal={realTotal}
+              ></Text>
             </StyledTextWrapper>
           }
         >
-          <StyledCount>({count > 9999 ? '9999+' : count})</StyledCount>
+          <StyledCount>({total > 9999 ? '9999+' : total})</StyledCount>
         </Tooltip>
       ) : (
         ''
@@ -72,15 +81,15 @@ const StyledSpan = styled.span`
   padding: 0 0.4286rem;
 `;
 const TipLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
-  count,
+  total,
   left,
   right,
 }) => {
-  const [number, setCount] = useState(count);
+  const [number, setCount] = useState(total);
   useEffect(() => {
-    // cache count number
-    if (count) setCount(count);
-  }, [count]);
+    // cache total number
+    if (total) setCount(total);
+  }, [total]);
   return (
     <StyledTipLabelWrapper>
       {left}
@@ -97,7 +106,7 @@ const StyledCount = styled.span`
   margin-left: 0.2857rem;
 `;
 const StyledTextWrapper = styled.span`
-  .count {
+  .total {
     color: #ffffff;
   }
 `;

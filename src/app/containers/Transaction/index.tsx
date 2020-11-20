@@ -36,7 +36,10 @@ import {
   toThousands,
 } from '../../../utils';
 import { decodeContract } from '../../../utils/cfx';
-import { addressTypeContract } from '../../../utils/constants';
+import {
+  addressTypeContract,
+  addressTypeInternalContract,
+} from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 export const Transaction = () => {
@@ -115,7 +118,10 @@ export const Transaction = () => {
             getConfirmRisk(body.blockHash);
           }
           let toAddress = txDetailDta.to;
-          if (getAddressType(toAddress) === addressTypeContract) {
+          if (
+            getAddressType(toAddress) === addressTypeContract ||
+            getAddressType(toAddress) === addressTypeInternalContract
+          ) {
             setIsContract(true);
             const fields = [
               'address',
@@ -509,6 +515,20 @@ export const Transaction = () => {
           <Description
             title={
               <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {toThousands(storageLimit)}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
                 text={t(translations.toolTip.tx.gasUsedLimit)}
                 placement="top"
               >
@@ -583,20 +603,6 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               {!loading && transactionIndex}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.storageLimit)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
           <Description

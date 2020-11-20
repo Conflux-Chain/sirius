@@ -12,6 +12,10 @@ import { useBreakpoint, media } from 'styles/media';
 import { Footer as FooterComp } from '../../components/Footer/Loadable';
 import { TextLogo } from '../../components/TextLogo/Loadable';
 import { translations } from 'locales/i18n';
+import imgIconTwitter from 'images/icon-twitter.svg';
+import imgIconGithub from 'images/icon-github.svg';
+import imgIconMedium from 'images/icon-medium.svg';
+
 export function Footer() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
@@ -39,17 +43,17 @@ export function Footer() {
     <FooterContentIconWrapper>
       <FooterContentIconLink key="1">
         <Link href="https://twitter.com/Conflux_Network">
-          <img alt="twitter icon" src="/icon-twitter.svg" />
+          <img alt="twitter icon" src={imgIconTwitter} />
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink key="2">
         <Link href="https://github.com/conflux-chain">
-          <img alt="github icon" src="/icon-github.svg" />
+          <img alt="github icon" src={imgIconGithub} />
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink key="3">
         <Link href="https://medium.com/conflux-network">
-          <img alt="medium icon" src="/icon-medium.svg" />
+          <img alt="medium icon" src={imgIconMedium} />
         </Link>
       </FooterContentIconLink>
     </FooterContentIconWrapper>

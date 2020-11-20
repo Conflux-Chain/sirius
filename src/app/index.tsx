@@ -115,5 +115,6 @@ const Main = styled.div`
   min-height: calc(100vh - 298px);
   ${media.s} {
     padding: 100px 16px 16px;
+    min-height: calc(100vh - 254px);
   }
 `;

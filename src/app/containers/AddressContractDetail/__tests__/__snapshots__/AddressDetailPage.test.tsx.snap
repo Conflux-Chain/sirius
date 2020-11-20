@@ -5,12 +5,13 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
-  padding: 0.2857rem 0.7143rem;
+  padding: 0.2857rem 0.7143rem 0.3571rem;
   font-weight: 400;
   border-radius: 0;
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
+  max-width: 32.1429rem;
 }
 
 .c4 {
@@ -215,6 +216,12 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 .c19 {
   position: relative;
   width: 100%;
+}
+
+@media (max-width:600px) {
+  .c5 .tooltip-content.sirius-tooltip {
+    max-width: 19.4286rem;
+  }
 }
 
 @media (max-width:600px) {
@@ -446,7 +453,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="balance"
                         class="icon"
-                        src="/contract-address/balance.svg"
+                        src="balance.svg"
                       />
                     </div>
                   </div>
@@ -501,7 +508,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="token"
                         class="icon"
-                        src="/contract-address/token.svg"
+                        src="token.svg"
                       />
                     </div>
                   </div>
@@ -556,7 +563,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="Storage Collateral"
                         class="icon"
-                        src="/contract-address/storage.svg"
+                        src="storage.svg"
                       />
                     </div>
                   </div>
@@ -611,7 +618,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
                       <img
                         alt="nonce"
                         class="icon"
-                        src="/contract-address/nonce.svg"
+                        src="nonce.svg"
                       />
                     </div>
                   </div>
