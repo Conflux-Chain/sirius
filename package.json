@@ -155,7 +155,7 @@
     "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-fetch-mock": "3.0.3",
     "react-app-rewired": "2.1.6",
-    "semantic-release": "17.1.1"
+    "semantic-release": "17.2.3"
   },
   "config": {
     "commitizen": {
