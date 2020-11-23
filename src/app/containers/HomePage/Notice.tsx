@@ -34,7 +34,7 @@ export function Notice() {
       notices.push(
         <NoticeItem key={n}>{t(transationsNotice[n], { version })}</NoticeItem>,
       );
-    } else if (n === '2') {
+    } else if (n === '1') {
       notices.push(
         <NoticeItem key={n}>
           {t(transationsNotice[n])}
