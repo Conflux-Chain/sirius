@@ -359,15 +359,12 @@
   "notice": {
     "mainnet": [
       "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",
-      "2. Please note that the Conflux Tethys Network cannot be accessed by ConfluxPortal v0.5.0 and lower. Please make sure you are using ConfluxPortal v0.5.3 or higher.",
-      "3. Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.2 to fix whitelist removal bugs in the build-in sponsor contracts. Please make sure to upgrade the node after 16:00 on Nov. 6, 2020"
+      "2. Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.3. In the latest version, more RPC interfaces are provided and the system stability is enhanced. Please make sure to upgrade the node after 16:00 on Nov. 20, 2020"
     ],
     "testnet": [
-      "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet.",
-      "2. Please note that the Conflux Tethys Network cannot be accessed by ConfluxPortal v0.5.0 and lower. Please make sure you are using ConfluxPortal v0.5.3 or higher.",
-      "3. Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.2 to fix whitelist removal bugs in the build-in sponsor contracts. Please make sure to upgrade the node after 16:00 on Nov. 6, 2020"
+      "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet."
     ],
-    "link": "https://forum.conflux.fun/t/topic/3910"
+    "link": "https://forum.conflux.fun/t/topic/4058"
   },
   "toolTip": {
     "block": {
