@@ -21,11 +21,14 @@ import { Big } from '@cfxjs/react-hooks';
 import imgWarning from 'images/warning.png';
 import imgSuccess from 'images/success.png';
 import imgSuccessBig from 'images/success_big.png';
-
 interface RouteParams {
   contractAddress: string;
 }
 const defaultStr = '--';
+const errReachToMax = 'errReachToMax';
+const errInsufficientFee = 'errInsufficientFee';
+const errReplaceThird = 'errReplaceThird';
+const errContractNotFound = 'errContractNotFound';
 export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
@@ -113,17 +116,17 @@ export function Sponsor() {
         case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
         case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
         case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
-          setErrorMsgForApply('errReachToMax');
+          setErrorMsgForApply(errReachToMax);
           break;
         case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
         case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
-          setErrorMsgForApply('errInsufficientFee');
+          setErrorMsgForApply(errInsufficientFee);
           break;
         case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-          setErrorMsgForApply('errReplaceThird');
+          setErrorMsgForApply(errReplaceThird);
           break;
         case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
-          setErrorMsgForApply('errContractNotFound');
+          setErrorMsgForApply(errContractNotFound);
           break;
         default:
           setErrorMsgForApply('');
@@ -150,8 +153,7 @@ export function Sponsor() {
         to: faucetAddress,
         data,
       };
-      const txHash = await confluxJS.sendTransaction(txParams);
-      return txHash;
+      return confluxJS.sendTransaction(txParams);
     }
   };
   const applyClick = async () => {
@@ -161,11 +163,17 @@ export function Sponsor() {
       if (address) {
         //Portal has already installed and the portal has already got the account
         if (isAddress(inputAddressVal)) {
-          const txHash = await applyToTx(inputAddressVal);
-          setTxHash(txHash);
-          setShownDialog(true);
-          setCanApply(false);
-          setErrorMsgForApply('');
+          applyToTx(inputAddressVal)
+            .then(txHash => {
+              setTxHash(txHash);
+              setShownDialog(true);
+              setCanApply(false);
+              setErrorMsgForApply('');
+            })
+            .catch(error => {
+              setCanApply(false);
+              setErrorMsgForApply(error.message);
+            });
         }
       } else {
         login();
@@ -396,7 +404,14 @@ export function Sponsor() {
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
           <img src={imgWarning} alt="warning" className="icon" />
           <span className="text">
-            {t(translations.sponsor[errorMsgForApply])}
+            {[
+              errReachToMax,
+              errInsufficientFee,
+              errReplaceThird,
+              errContractNotFound,
+            ].indexOf(errorMsgForApply) != -1
+              ? t(translations.sponsor[errorMsgForApply])
+              : errorMsgForApply}
           </span>
         </ErrorMsgContainer>
         <NoticeContainer>
