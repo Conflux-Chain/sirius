@@ -23,7 +23,9 @@
     },
     "edit": {
       "title": "合约编辑"
-    }
+    },
+    "sourceCodeShort": "源码",
+    "abiShort": "ABI"
   },
   "contractDetail": {
     "title": "合约详情",

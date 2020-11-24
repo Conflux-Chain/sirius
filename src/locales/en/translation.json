@@ -23,7 +23,9 @@
     },
     "edit": {
       "title": "Contract Edit"
-    }
+    },
+    "sourceCodeShort": "Source Code",
+    "abiShort": "ABI"
   },
   "contractDetail": {
     "title": "Contract Detail",

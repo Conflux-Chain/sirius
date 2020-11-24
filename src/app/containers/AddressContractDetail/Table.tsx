@@ -44,54 +44,91 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
 
   return (
     <>
-      <Card>
-        <AceEditor
-          readOnly
-          style={AceEditorStyle}
-          mode="solidity"
-          theme="github"
-          name="UNIQUE_ID_OF_DIV"
-          setOptions={{
-            showLineNumbers: true,
-          }}
-          showGutter={false}
-          showPrintMargin={false}
-          value={isSourceCode ? sourceCode : abi}
-        />
-      </Card>
-      <ButtonWrapper>
-        <Button
-          className={clsx(isSourceCode && 'enabled', 'source-btn')}
-          onClick={() => setIsSourceCode(true)}
-        >
-          {t(translations.contract.sourceCode)}
-        </Button>
-        <Button
-          className={clsx(!isSourceCode && 'enabled', 'abi-btn')}
-          onClick={() => setIsSourceCode(false)}
-        >
-          {t(translations.contract.abi)}
-        </Button>
-      </ButtonWrapper>
+      <ContractBody>
+        <ButtonWrapper>
+          <Button
+            className={clsx(
+              isSourceCode && 'enabled',
+              'source-btn',
+              'btnWeight',
+            )}
+            onClick={() => setIsSourceCode(true)}
+          >
+            {t(translations.contract.sourceCodeShort)}
+          </Button>
+          <Button
+            className={clsx(!isSourceCode && 'enabled', 'abi-btn', 'btnWeight')}
+            onClick={() => setIsSourceCode(false)}
+          >
+            {t(translations.contract.abiShort)}
+          </Button>
+          <div className="line"></div>
+        </ButtonWrapper>
+        <Card>
+          <AceEditor
+            readOnly
+            style={AceEditorStyle}
+            mode="solidity"
+            theme="github"
+            name="UNIQUE_ID_OF_DIV"
+            setOptions={{
+              showLineNumbers: true,
+            }}
+            showGutter={false}
+            showPrintMargin={false}
+            value={isSourceCode ? sourceCode : abi}
+          />
+        </Card>
+      </ContractBody>
     </>
   );
 }
-
+const ContractBody = styled.div`
+  padding-bottom: 3.5714rem;
+`;
 const ButtonWrapper = styled.div`
-  float: right;
-  margin: 1.71rem 0;
-
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+  padding: 0 1.2857rem;
+  margin: 0.5714rem 0;
+  .line {
+    height: 0.0714rem;
+    background-color: #e8e9ea;
+    margin-top: 0.5714rem;
+  }
   .btn {
-    background: rgba(0, 84, 254, 0.04);
     color: #74798c;
+    font-size: 14px;
+  }
+  .btn.btnWeight {
+    border-radius: 1.1429rem;
+    padding: 0 1rem;
+    min-width: initial;
+    height: 1.8571rem;
+    line-height: 1.8571rem;
+    border: none;
+    top: 0px;
+    background-color: rgba(0, 84, 254, 0.04);
+    &:hover {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+    &:active {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+    .text {
+      top: 0px !important;
+    }
   }
   .enabled.btn {
     color: #ffffff;
-    background-color: #1e3de4;
+    background-color: rgba(0, 84, 254, 0.8);
   }
 
   .abi-btn.btn {
-    margin-left: 0.57rem;
+    margin-left: 0.2857rem;
   }
 `;
 
