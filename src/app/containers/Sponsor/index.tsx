@@ -409,7 +409,7 @@ export function Sponsor() {
               errInsufficientFee,
               errReplaceThird,
               errContractNotFound,
-            ].indexOf(errorMsgForApply) != -1
+            ].indexOf(errorMsgForApply) !== -1
               ? t(translations.sponsor[errorMsgForApply])
               : errorMsgForApply}
           </span>
