@@ -2,11 +2,15 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useTableData } from './useTableData';
 
-export const useTabTableData = t => {
-  const tabs = t.filter(item => item.table);
+export const useTabTableData = tabs => {
   const location = useLocation();
   const history = useHistory();
-  let { tab: currentTab, ...others } = queryString.parse(location.search);
+  let {
+    tab: currentTab,
+    page: pageCurrent,
+    pageSize: pageSizeCurrent,
+    ...others
+  } = queryString.parse(location.search);
   if (!currentTab) {
     currentTab = tabs[0].value;
   }
@@ -28,7 +32,7 @@ export const useTabTableData = t => {
     setPageSize,
     currentTabValue,
   } = tabs.reduce(
-    (acc, { url, value }, i) => {
+    (acc, { url = '', value, table }, i) => {
       const isCurrentTab = value === currentTab;
       const {
         pageNumber,
@@ -43,22 +47,31 @@ export const useTabTableData = t => {
         gotoPage,
         setPageSize,
         // eslint-disable-next-line react-hooks/rules-of-hooks
-      } = useTableData(url, !isCurrentTab);
+      } = useTableData(url, !isCurrentTab && table);
       if (isCurrentTab) {
         currentTabTotal = total;
         acc.currentTabValue = value;
       }
 
       const switchToThisTab = () => {
+        let query = {};
+        if (table) {
+          query = {
+            ...others,
+            page: '1',
+            pageSize: '10',
+            tab: value,
+          };
+        } else {
+          query = {
+            ...others,
+            tab: value,
+          };
+        }
         history.push(
           queryString.stringifyUrl({
             url: location.pathname,
-            query: {
-              ...others,
-              page: '1',
-              pageSize: '10',
-              tab: value,
-            },
+            query,
           }),
         );
         // useSWR revalidate on mount
