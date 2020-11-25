@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -17,7 +18,6 @@ import {
 } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
-import { Big } from '@cfxjs/react-hooks';
 import imgWarning from 'images/warning.png';
 import imgSuccess from 'images/success.png';
 import imgSuccessBig from 'images/success_big.png';
@@ -68,17 +68,19 @@ export function Sponsor() {
       setGasBound(faucetParams.gas_bound);
       setStorageBound(faucetParams.collateral_bound);
       setAvialStorageFee(
-        new Big(Number(faucetParams.collateral_total_limit))
+        new BigNumber(Number(faucetParams.collateral_total_limit))
           .minus(
-            new Big(Number(amountAccumulated.collateral_amount_accumulated)),
+            new BigNumber(
+              Number(amountAccumulated.collateral_amount_accumulated),
+            ),
           )
-          .toNumber(),
+          .toFixed(),
       );
       setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
       setAvialGasFee(
-        new Big(Number(faucetParams.gas_total_limit))
+        new BigNumber(Number(faucetParams.gas_total_limit))
           .minus(Number(amountAccumulated.gas_amount_accumulated))
-          .toNumber(),
+          .toFixed(),
       );
     }
   };
