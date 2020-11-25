@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Big } from '@cfxjs/react-hooks';
 dayjs.extend(relativeTime);
 
 export const delay = (ms: number) => {
@@ -280,9 +279,13 @@ export const formatTimeStamp = (
 export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
   try {
     if (isShowFull) {
-      return toThousands(Big(balance).div(Big(10).pow(decimals)).toFixed());
+      return toThousands(
+        new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toFixed(),
+      );
     }
-    return formatNumber(Big(balance).div(Big(10).pow(decimals)).toString());
+    return formatNumber(
+      new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toString(),
+    );
   } catch {}
 };
 
