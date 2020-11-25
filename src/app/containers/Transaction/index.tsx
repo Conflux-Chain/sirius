@@ -340,6 +340,7 @@ export const Transaction = () => {
       );
       transferListContainer.push(
         <div className="lineContainer" key={`transfer${i + 1}`}>
+          <span>{`${i + 1} .`}</span>
           <span className="from">{t(translations.transaction.from)}</span>
           <Link href={`/address/${transferItem['from']}`}>
             <Text span hoverValue={transferItem['from']}>
