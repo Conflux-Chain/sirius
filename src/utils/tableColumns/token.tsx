@@ -220,10 +220,9 @@ export const holders = {
       {t => t(translations.general.table.token.holders)}
     </Translation>
   ),
-  dataIndex: 'accountTotal',
-  key: 'accountTotal',
-  // render: value => <span>{formatNumber(value)}</span>,
-  render: () => <span>--</span>,
+  dataIndex: 'holderCount',
+  key: 'holderCount',
+  render: value => <span>{formatNumber(value)}</span>,
 };
 
 export const contract = {
