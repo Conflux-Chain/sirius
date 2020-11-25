@@ -56,7 +56,9 @@ export const Filter = ({
       return;
     }
     if (!isAddress(value) && !isHash(value)) {
-      setMessage(t(translations.token.transferList.searchError));
+      setMessage({
+        text: t(translations.token.transferList.searchError),
+      });
       return;
     }
     if (value !== filter) {
@@ -81,6 +83,9 @@ export const Filter = ({
         placeholder={t(translations.token.transferList.searchPlaceHolder)}
         onChange={e => setValue(e.target.value)}
         onIconClick={onIconClick}
+        onKeyPress={e => {
+          if (e.key === 'Enter') onIconClick();
+        }}
         onClearClick={onClearClick}
         icon={<Search />}
       />

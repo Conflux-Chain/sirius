@@ -224,6 +224,9 @@ export function Sponsor() {
             onChange={addressInputChanger}
             value={inputAddressVal}
             placeholder={t(translations.sponsor.searchAddress)}
+            onKeyPress={e => {
+              if (e.key === 'Enter') searchClick();
+            }}
           ></Input>
           <Button
             variant="solid"
