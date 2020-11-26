@@ -1,11 +1,9 @@
 import React from 'react';
-import { Tooltip } from '../Tooltip';
 import 'react-json-pretty/themes/monikai.css';
-import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
 import { hex2utf8 } from '../../../utils';
-import JSONPretty from 'react-json-pretty';
+import ReactJson from 'react-json-view';
 import styled from 'styled-components/macro';
+import { Text } from '@cfxjs/react-ui';
 type InputDataProps = {
   byteCode?: string;
   inputType?: string;
@@ -20,7 +18,6 @@ export const InputData = ({
   decodedDataStr,
   ...props
 }: Props) => {
-  const { t } = useTranslation();
   const getStrByType = (byteCode, type, decodedDataStr) => {
     let str = '';
     switch (type) {
@@ -39,25 +36,33 @@ export const InputData = ({
     return str;
   };
   let strDecoded = getStrByType(byteCode, inputType, decodedDataStr);
+  let isJson = false;
   let str;
   try {
-    str = JSON.stringify(JSON.parse(strDecoded), null, 2);
+    isJson = true;
+    str = JSON.parse(strDecoded);
   } catch (error) {
+    isJson = false;
     str = strDecoded;
   }
   return (
     <Wrap>
-      <Tooltip
-        text={t(translations.transaction.inputTips)}
-        className="tips"
-        contentClassName="testaaaa"
-      >
-        <JSONPretty
-          id="json-pretty"
-          data={str}
-          themeClassName="custom-json-pretty"
+      {isJson ? (
+        <ReactJson
+          src={str}
+          enableClipboard
+          name={false}
+          style={{
+            height: '11.8571rem',
+            overflowY: 'auto',
+            background: '#FAFBFC',
+            borderRadius: '2px',
+          }}
+          displayDataTypes={false}
         />
-      </Tooltip>
+      ) : (
+        <Text className="textContainer">{str}</Text>
+      )}
     </Wrap>
   );
 };
@@ -66,49 +71,12 @@ const Wrap = styled.div`
   .tips {
     width: 100%;
   }
-  .__json-pretty-error__ {
-    margin-top: 0px;
-    background: #fafbfc;
-    line-height: 1.3;
-    color: #585858;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap;
-    word-wrap: break-word;
-    border-radius: 2px;
-    padding: 10px;
-    height: 166px;
+  .textContainer {
+    margin: initial;
+    height: 11.8571rem;
     overflow-y: auto;
-    border: none;
-  }
-  .custom-json-pretty {
-    width: 100%;
-    margin-top: 0px;
+    color: #97a3b4;
     background: #fafbfc;
-    line-height: 1.3;
-    color: #585858;
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap;
-    word-wrap: break-word;
-    border-radius: 2px;
-    padding: 10px;
-    height: 166px;
-    overflow-y: auto;
-    border: none;
-    .__json-key__ {
-      color: #000;
-    }
-    .__json-value__ {
-      color: #032f62;
-    }
-    .__json-string__ {
-      color: #032f62;
-    }
-    .__json-boolean__ {
-      color: #1e2022;
-    }
+    padding: 0.7143rem;
   }
 `;

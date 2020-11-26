@@ -621,7 +621,7 @@ export const Transaction = () => {
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.inputData)}
+                text={t(translations.transaction.inputTips)}
                 placement="top"
               >
                 {t(translations.transaction.inputData)}
@@ -641,6 +641,7 @@ export const Transaction = () => {
                 onChange={handleDataTypeChange}
                 disableMatchWidth
                 size="small"
+                className="btnSelectContainer"
               >
                 {dataTypeList.map(dataTypeItem => {
                   return (
@@ -695,6 +696,9 @@ const StyledCardWrapper = styled.div`
   }
   .label {
     margin-right: 0.2857rem;
+  }
+  .btnSelectContainer {
+    margin-top: 0.8571rem;
   }
 `;
 
