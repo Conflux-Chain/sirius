@@ -214,7 +214,7 @@ function createRender(container, width, height) {
   return function render({ epochsToRender, growingEpoch, growingRate, x, y }) {
     let hoveredBlock;
     if (x && y) {
-      const [r, g, b, a] = ctxHit.getImageData(x, y, 1, 1).data;
+      const [g, b, a] = ctxHit.getImageData(x, y, 1, 1).data.slice(1);
       if (a === 255) {
         hoveredBlock = [g, b];
       } else {
