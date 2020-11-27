@@ -29,6 +29,7 @@ const errReachToMax = 'errReachToMax';
 const errInsufficientFee = 'errInsufficientFee';
 const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
+const errCannotReplaced = 'errCannotReplaced';
 export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
@@ -129,6 +130,9 @@ export function Sponsor() {
           break;
         case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
           setErrorMsgForApply(errContractNotFound);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
+          setErrorMsgForApply(errCannotReplaced);
           break;
         default:
           setErrorMsgForApply('');
