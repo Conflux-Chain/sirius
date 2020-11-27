@@ -7,8 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import { Search } from '@geist-ui/react-icons';
-import { isAddress, isHash } from '../../../utils';
-import { formatBalance } from '../../../utils';
+import {
+  isAddress,
+  isHash,
+  tranferToLowerCase,
+  formatBalance,
+} from '../../../utils';
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 
@@ -33,14 +37,15 @@ export const Filter = ({
   onFilter,
 }: FilterProps) => {
   const { t } = useTranslation();
+  const lFilter = tranferToLowerCase(filter);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessage] = useMessages();
-  const [value, setValue] = useState(filter);
+  const [value, setValue] = useState(lFilter);
 
   const tokenAddrs = [tokenAddress];
   let addr: null | string = null;
-  if (isAddress(filter)) {
-    addr = filter;
+  if (isAddress(lFilter)) {
+    addr = lFilter;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,24 +53,26 @@ export const Filter = ({
   const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
 
   useEffect(() => {
-    setValue(filter);
-  }, [filter]);
+    setValue(lFilter);
+  }, [lFilter]);
 
   const onIconClick = () => {
     if (value === '') {
       return;
     }
     if (!isAddress(value) && !isHash(value)) {
-      setMessage(t(translations.token.transferList.searchError));
+      setMessage({
+        text: t(translations.token.transferList.searchError),
+      });
       return;
     }
-    if (value !== filter) {
+    if (value !== lFilter) {
       onFilter(value);
     }
   };
 
   const onClearClick = () => {
-    if (filter !== '') {
+    if (lFilter !== '') {
       onFilter('');
     } else {
       setValue('');
@@ -79,8 +86,11 @@ export const Filter = ({
         clearable
         value={value}
         placeholder={t(translations.token.transferList.searchPlaceHolder)}
-        onChange={e => setValue(e.target.value)}
+        onChange={e => setValue(tranferToLowerCase(e.target.value))}
         onIconClick={onIconClick}
+        onKeyPress={e => {
+          if (e.key === 'Enter') onIconClick();
+        }}
         onClearClick={onClearClick}
         icon={<Search />}
       />

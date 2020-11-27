@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -17,15 +18,18 @@ import {
 } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
-import { Big } from '@cfxjs/react-hooks';
 import imgWarning from 'images/warning.png';
 import imgSuccess from 'images/success.png';
 import imgSuccessBig from 'images/success_big.png';
-
 interface RouteParams {
   contractAddress: string;
 }
 const defaultStr = '--';
+const errReachToMax = 'errReachToMax';
+const errInsufficientFee = 'errInsufficientFee';
+const errReplaceThird = 'errReplaceThird';
+const errContractNotFound = 'errContractNotFound';
+const errCannotReplaced = 'errCannotReplaced';
 export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
@@ -65,17 +69,19 @@ export function Sponsor() {
       setGasBound(faucetParams.gas_bound);
       setStorageBound(faucetParams.collateral_bound);
       setAvialStorageFee(
-        new Big(Number(faucetParams.collateral_total_limit))
+        new BigNumber(Number(faucetParams.collateral_total_limit))
           .minus(
-            new Big(Number(amountAccumulated.collateral_amount_accumulated)),
+            new BigNumber(
+              Number(amountAccumulated.collateral_amount_accumulated),
+            ),
           )
-          .toNumber(),
+          .toFixed(),
       );
       setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
       setAvialGasFee(
-        new Big(Number(faucetParams.gas_total_limit))
+        new BigNumber(Number(faucetParams.gas_total_limit))
           .minus(Number(amountAccumulated.gas_amount_accumulated))
-          .toNumber(),
+          .toFixed(),
       );
     }
   };
@@ -113,17 +119,20 @@ export function Sponsor() {
         case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
         case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
         case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
-          setErrorMsgForApply('errReachToMax');
+          setErrorMsgForApply(errReachToMax);
           break;
         case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
         case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
-          setErrorMsgForApply('errInsufficientFee');
+          setErrorMsgForApply(errInsufficientFee);
           break;
         case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-          setErrorMsgForApply('errReplaceThird');
+          setErrorMsgForApply(errReplaceThird);
           break;
         case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
-          setErrorMsgForApply('errContractNotFound');
+          setErrorMsgForApply(errContractNotFound);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
+          setErrorMsgForApply(errCannotReplaced);
           break;
         default:
           setErrorMsgForApply('');
@@ -150,8 +159,7 @@ export function Sponsor() {
         to: faucetAddress,
         data,
       };
-      const txHash = await confluxJS.sendTransaction(txParams);
-      return txHash;
+      return confluxJS.sendTransaction(txParams);
     }
   };
   const applyClick = async () => {
@@ -161,11 +169,17 @@ export function Sponsor() {
       if (address) {
         //Portal has already installed and the portal has already got the account
         if (isAddress(inputAddressVal)) {
-          const txHash = await applyToTx(inputAddressVal);
-          setTxHash(txHash);
-          setShownDialog(true);
-          setCanApply(false);
-          setErrorMsgForApply('');
+          applyToTx(inputAddressVal)
+            .then(txHash => {
+              setTxHash(txHash);
+              setShownDialog(true);
+              setCanApply(false);
+              setErrorMsgForApply('');
+            })
+            .catch(error => {
+              setCanApply(false);
+              setErrorMsgForApply(error.message);
+            });
         }
       } else {
         login();
@@ -214,6 +228,9 @@ export function Sponsor() {
             onChange={addressInputChanger}
             value={inputAddressVal}
             placeholder={t(translations.sponsor.searchAddress)}
+            onKeyPress={e => {
+              if (e.key === 'Enter') searchClick();
+            }}
           ></Input>
           <Button
             variant="solid"
@@ -396,7 +413,14 @@ export function Sponsor() {
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
           <img src={imgWarning} alt="warning" className="icon" />
           <span className="text">
-            {t(translations.sponsor[errorMsgForApply])}
+            {[
+              errReachToMax,
+              errInsufficientFee,
+              errReplaceThird,
+              errContractNotFound,
+            ].indexOf(errorMsgForApply) !== -1
+              ? t(translations.sponsor[errorMsgForApply])
+              : errorMsgForApply}
           </span>
         </ErrorMsgContainer>
         <NoticeContainer>

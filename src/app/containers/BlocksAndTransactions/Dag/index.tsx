@@ -6,16 +6,13 @@ export function Dag() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (ref.current !== null) {
-      const { width, height } = ref.current.getBoundingClientRect();
-      let destory = dag({ container: ref.current, width, height });
+      let destory = dag({ container: ref.current });
       const visibilityChange = () => {
         if (document.hidden) {
           destory();
         } else {
           destory = dag({
             container: ref.current,
-            width: width,
-            height: height,
           });
         }
       };
@@ -26,7 +23,7 @@ export function Dag() {
       };
     }
   }, []);
-  return <Container ref={ref}>DAG</Container>;
+  return <Container ref={ref}></Container>;
 }
 
 const Container = styled.div`

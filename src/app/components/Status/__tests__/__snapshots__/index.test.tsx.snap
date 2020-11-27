@@ -61,6 +61,7 @@ exports[`<Status  /> should match snapshot 1`] = `
 .c0 .text {
   margin-left: 0.8571rem;
   line-height: 1.5714rem;
+  word-break: keep-all;
 }
 
 .c0 .description {
@@ -150,6 +151,7 @@ exports[`<Status  /> should render dot status correct 1`] = `
 .c0 .text {
   margin-left: 0.8571rem;
   line-height: 1.5714rem;
+  word-break: keep-all;
 }
 
 .c0 .description {

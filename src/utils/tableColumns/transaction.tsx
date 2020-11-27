@@ -37,7 +37,9 @@ export const hash = {
             show: row.status !== 0,
           })}
         >
-          <Status type={row.status} variant="dot" />
+          <Status type={row.status} variant="dot">
+            {row.txExecErrorMsg}
+          </Status>
         </StyledStatusWrapper>
         <Link href={`/transaction/${value}`}>
           <Text span hoverValue={value}>

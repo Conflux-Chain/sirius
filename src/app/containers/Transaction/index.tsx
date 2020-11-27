@@ -78,6 +78,7 @@ export const Transaction = () => {
     status,
     data,
     contractCreated,
+    txExecErrorMsg,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
@@ -340,6 +341,7 @@ export const Transaction = () => {
       );
       transferListContainer.push(
         <div className="lineContainer" key={`transfer${i + 1}`}>
+          <span>{`${i + 1} .`}</span>
           <span className="from">{t(translations.transaction.from)}</span>
           <Link href={`/address/${transferItem['from']}`}>
             <Text span hoverValue={transferItem['from']}>
@@ -453,7 +455,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && <Status type={status} />}
+              {!loading && <Status type={status}>{txExecErrorMsg}</Status>}
             </SkeletonContainer>
           </Description>
           <Description
@@ -620,7 +622,7 @@ export const Transaction = () => {
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.inputData)}
+                text={t(translations.transaction.inputTips)}
                 placement="top"
               >
                 {t(translations.transaction.inputData)}
@@ -640,6 +642,7 @@ export const Transaction = () => {
                 onChange={handleDataTypeChange}
                 disableMatchWidth
                 size="small"
+                className="btnSelectContainer"
               >
                 {dataTypeList.map(dataTypeItem => {
                   return (
@@ -694,6 +697,9 @@ const StyledCardWrapper = styled.div`
   }
   .label {
     margin-right: 0.2857rem;
+  }
+  .btnSelectContainer {
+    margin-top: 0.8571rem;
   }
 `;
 

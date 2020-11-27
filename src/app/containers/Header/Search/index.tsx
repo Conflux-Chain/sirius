@@ -18,6 +18,7 @@ import {
   isBlockHash,
   isHash,
   isEpochNumber,
+  tranferToLowerCase,
 } from 'utils';
 
 export const Search = () => {
@@ -38,7 +39,11 @@ export const Search = () => {
     [setFocused],
   );
 
-  const { ref: inputRef, getValue: getInputValue } = Input.useInputHandle();
+  const {
+    ref: inputRef,
+    getValue: getInputValue,
+    setValue: setInputValue,
+  } = Input.useInputHandle();
   const onEnterPress = () => {
     let inputValue = getInputValue();
     if (typeof inputValue !== 'string') return;
@@ -96,6 +101,7 @@ export const Search = () => {
         }}
         onFocus={() => delayedFocus(true)}
         onBlur={() => delayedFocus(false)}
+        onChange={e => setInputValue(tranferToLowerCase(e.target.value))}
       />
     </Outer>
   );

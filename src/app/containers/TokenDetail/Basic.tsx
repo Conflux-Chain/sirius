@@ -16,7 +16,7 @@ export interface BasicProps {
   symbol?: string;
   name?: string;
   tokenAddress?: string;
-  accountTotal?: number;
+  holderCount?: number;
   decimals?: number;
   transferCount?: number;
 }
@@ -26,7 +26,7 @@ export const Basic = ({
   symbol,
   decimals,
   tokenAddress,
-  accountTotal,
+  holderCount,
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
@@ -77,12 +77,10 @@ export const Basic = ({
           {t(translations.token.holders)}
         </Tooltip>
       ),
-      children: <span>--</span>,
-      // accountTotal !== undefined
-      //   ? `${toThousands(accountTotal)} ${t(
-      //       translations.token.address,
-      //     )}`
-      //   : undefined,
+      children:
+        holderCount !== undefined
+          ? `${toThousands(holderCount)} ${t(translations.token.address)}`
+          : undefined,
     },
     {
       title: (
@@ -102,10 +100,6 @@ export const Basic = ({
         transferCount !== undefined ? toThousands(transferCount) : undefined,
     },
   ];
-
-  if (!accountTotal) {
-    list.splice(2, 1);
-  }
 
   return (
     <BasicWrap>

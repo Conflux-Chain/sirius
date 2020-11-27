@@ -96,4 +96,27 @@ export const GlobalStyle = createGlobalStyle`
   .skeleton::after {
     border-left: 1px solid #EFF2FA;
   }
+
+  /* datepicker style reset */
+  .cfx-picker-dropdown {
+    .cfx-picker-header-view {
+      button:hover {
+        color: #65709A;
+      }
+    }
+    .cfx-picker-panel-container {
+      border: none;
+      box-shadow: 0rem 0.4286rem 1.1429rem 0rem rgba(20, 27, 50, 0.08);
+    }
+    .cfx-picker-cell.cfx-picker-cell-range-start, .cfx-picker-cell.cfx-picker-cell-range-end {
+      .cfx-picker-cell-inner {
+        background: #65709A;
+      }
+    }
+    .cfx-picker-cell-in-view.cfx-picker-cell-today .cfx-picker-cell-inner, tr>.cfx-picker-cell-in-view.cfx-picker-cell-range-hover:first-child::after, tr>.cfx-picker-cell-in-view.cfx-picker-cell-range-hover-end:first-child::after, tr>.cfx-picker-cell-in-view.cfx-picker-cell-in-range:first-child::after, tr>.cfx-picker-cell-in-view.cfx-picker-cell-range-edge-start:not(.cfx-picker-cell-range-hover-edge-end-near-range):not(.cfx-picker-cell-range-hover-end):not(.cfx-picker-cell-range-hover)::after, tr>.cfx-picker-cell-in-view.cfx-picker-cell-range-end:first-child::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-edge-start:not(.cfx-picker-cell-range-hover-edge-start-near-range)::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-start::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-start:not(.cfx-picker-cell-in-range):not(.cfx-picker-cell-range-start):not(.cfx-picker-cell-range-end)::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-end:not(.cfx-picker-cell-in-range):not(.cfx-picker-cell-range-start):not(.cfx-picker-cell-range-end)::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-start.cfx-picker-cell-range-start-single::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover-end.cfx-picker-cell-range-end-single::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-hover:not(.cfx-picker-cell-in-range)::after, .cfx-picker-cell-in-view.cfx-picker-cell-in-range::after, .cfx-picker-cell-in-view.cfx-picker-cell-range-start.cfx-picker-cell-range-hover-start::before, .cfx-picker-cell-in-view.cfx-picker-cell-range-start.cfx-picker-cell-selected::before, .cfx-picker-cell-in-view.cfx-picker-cell-range-start:not(.cfx-picker-cell-range-start-single)::before, .cfx-picker-cell-in-view.cfx-picker-cell-range-end.cfx-picker-cell-range-hover-end::before, .cfx-picker-cell-in-view.cfx-picker-cell-range-end.cfx-picker-cell-selected::before, .cfx-picker-cell-in-view.cfx-picker-cell-range-end:not(.cfx-picker-cell-range-end-single)::before {
+      border-color: #65709A;
+      border-color: #65709A;
+    }
+  }
+}
 `;
