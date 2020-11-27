@@ -30,6 +30,7 @@ export const Status = ({
   className,
   variant,
   popoverProps,
+  children,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
@@ -63,14 +64,19 @@ export const Status = ({
   const typeKeys = useMemo(() => Object.keys(typeMap), [typeMap]);
 
   if (typeKeys.includes(type)) {
+    let explanation: React.ReactNode = t(
+      translations.general.status[typeMap[type].status].explanation,
+    );
+    // only error message come from outside
+    if (type === '1' && children) {
+      explanation = children;
+    }
     const content = (
       <>
         <img className="icon" src={typeMap[type].icon} alt={type} />
         <span className="text">{typeMap[type].name}</span>
         {variant === 'dot' ? null : (
-          <span className="description">
-            {t(translations.general.status[typeMap[type].status].explanation)}
-          </span>
+          <span className="description">{explanation}</span>
         )}
       </>
     );
@@ -87,9 +93,7 @@ export const Status = ({
             <Popover
               notSeperateTitle
               title={content}
-              content={t(
-                translations.general.status[typeMap[type].status].explanation,
-              )}
+              content={explanation}
               placement="auto-start"
               trigger={breakpoint === 's' ? 'click' : 'hover'}
               contentClassName={clsx(
@@ -153,6 +157,7 @@ const Wrapper = styled.span`
   .text {
     margin-left: 0.8571rem;
     line-height: 1.5714rem;
+    word-break: keep-all;
   }
   .description {
     color: #97a3b4;

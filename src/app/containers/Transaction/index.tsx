@@ -78,6 +78,7 @@ export const Transaction = () => {
     status,
     data,
     contractCreated,
+    txExecErrorMsg,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
@@ -454,7 +455,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && <Status type={status} />}
+              {!loading && <Status type={status}>{txExecErrorMsg}</Status>}
             </SkeletonContainer>
           </Description>
           <Description
