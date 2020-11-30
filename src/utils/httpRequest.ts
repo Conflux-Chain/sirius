@@ -1,5 +1,5 @@
 import superagent from 'superagent';
-import { cfx, cfxUtil } from './cfx';
+import { cfx, cfxFormat } from './cfx';
 import { delay } from './index';
 import { transferRisk } from './index';
 export const apiPrefix = '/v1';
@@ -54,7 +54,7 @@ export const reqConfirmationRiskByHash = async (blockHash: string) => {
     const callProvider = () => {
       return cfx.provider.call(
         'cfx_getConfirmationRiskByHash',
-        cfxUtil.format.blockHash(blockHash),
+        cfxFormat.blockHash(blockHash),
       );
     };
     let result = await callProvider();

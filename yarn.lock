@@ -9008,21 +9008,7 @@ jest@24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-js-conflux-sdk@0.13.5:
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-0.13.5.tgz#ba1967a2d914a5a7ca6689dec26c94e30936cac3"
-  integrity sha512-MsCwAzBk1NPN9D3zv861Fdhn1RSjucnRQmp24MV2sJVWWdOP07pUmtGvzsPKDUWr+XiYGxr3yuA2vFKz7w3ONQ==
-  dependencies:
-    "@babel/runtime" "^7.8.4"
-    big.js "^5.2.2"
-    jsbi "^3.1.1"
-    keccak "^2.0.0"
-    lodash "^4.17.15"
-    scrypt-js "^3.0.1"
-    secp256k1 "^3.7.1"
-    superagent "^5.1.0"
-
-js-conflux-sdk@^1.1.0:
+js-conflux-sdk@1.1.4, js-conflux-sdk@^1.1.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.1.4.tgz#2079f95b9fe574d2afa7c7a4cdffb1b02f40a4ce"
   integrity sha512-OF5ibW1wQZ4uDqQN9QhSUXIU+brNJ0p8IwPLTe1fYjsZ29mt3eTomDK8Xtq5Yft6YhaTCq18YMbK16o6Xf9XGA==
@@ -9058,11 +9044,6 @@ js-yaml@^3.13.1:
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
-
-jsbi@^3.1.1:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.4.tgz#9654dd02207a66a4911b4e4bb74265bc2cbc9dd0"
-  integrity sha512-52QRRFSsi9impURE8ZUbzAMCLjPm4THO7H2fcuIvaaeFTbSysvkodbQQXIVsNgq/ypDbq6dJiuGKL0vZ/i9hUg==
 
 jsbn@~0.1.0:
   version "0.1.1"
