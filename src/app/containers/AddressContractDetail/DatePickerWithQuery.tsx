@@ -1,10 +1,9 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import dayjs from 'dayjs';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { DatePicker, Button } from '@cfxjs/react-ui';
-// import { useClickAway } from './../../components/use-click-away';
 import { media, useBreakpoint } from 'styles/media';
 import imgAlarm from 'images/contract-address/alarm.svg';
 
@@ -68,12 +67,34 @@ const MobileDatePickerWithQuery = ({
   maxTimestamp,
   onChange,
 }) => {
-  // const d1Ref = useRef<HTMLDivElement>(null);
-  // const d2Ref = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
-  // useClickAway([d1Ref, d2Ref, dropdownRef], () => visible && setVisible(false));
-  // useClickAway([dropdownRef], () => visible && setVisible(false));
+  useEffect(() => {
+    const handler = e => {
+      if (!filterButtonRef.current?.contains(e.target)) {
+        let isOutOfDatepicker = true;
+        const wrappers = document.querySelectorAll(
+          '.address-table-datepicker-input',
+        );
+        wrappers.forEach(el => {
+          if (el && el.contains(e.target)) {
+            isOutOfDatepicker = false;
+          }
+        });
+        if (e.target.className.indexOf('cfx-picker') > -1) {
+          isOutOfDatepicker = false;
+        }
+        if (isOutOfDatepicker) {
+          setVisible(false);
+        }
+      }
+    };
+    document.addEventListener('click', handler);
+    return () => {
+      document.removeEventListener('click', handler);
+    };
+  }, []);
   const { t } = useTranslation();
   const datePlaceholder = [
     t(translations.general.startDate),
@@ -102,7 +123,11 @@ const MobileDatePickerWithQuery = ({
   };
 
   return (
-    <MobileDatePickerWrap key="date-picker-mobile-wrap" ref={dropdownRef}>
+    <MobileDatePickerWrap
+      key="date-picker-mobile-wrap"
+      className="date-picker-mobile-wrap"
+      ref={dropdownRef}
+    >
       <GlobalStyle />
       <Button
         key="address-contract-alarm-button"
@@ -110,6 +135,7 @@ const MobileDatePickerWithQuery = ({
         variant="text"
         className="filter-button"
         onClick={() => setVisible(!visible)}
+        ref={filterButtonRef}
       >
         <img src={imgAlarm} alt="address-contract-alarm" />
       </Button>
@@ -124,8 +150,8 @@ const MobileDatePickerWithQuery = ({
             key="startTime"
             onChange={handleStartChange}
             defaultValue={innerMinTimestamp}
-            // ref={d1Ref}
             disabledDate={disabledDateD1}
+            allowClear={false}
           />
           <DatePicker
             className="address-table-datepicker-input"
@@ -136,8 +162,8 @@ const MobileDatePickerWithQuery = ({
             key="endTime"
             onChange={handleEndChange}
             defaultValue={innerMaxTimestamp}
-            // ref={d2Ref}
             disabledDate={disabledDateD2}
+            allowClear={false}
           />
         </>
       )}
