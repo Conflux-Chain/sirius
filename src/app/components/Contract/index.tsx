@@ -57,7 +57,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   } else {
     submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
   }
-  const inputStyle = { margin: '0' };
+  const inputStyle = { margin: '0 12px' };
   const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
   const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
   const [requestParams, setReuqestParams] = useState({});
