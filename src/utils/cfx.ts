@@ -1,6 +1,6 @@
 import {
   Conflux,
-  util as cfxUtil,
+  format as cfxFormat,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { Faucet } from 'conflux-sponsorfaucet';
 import { isTestNetEnv } from './hooks/useTestnet';
@@ -19,4 +19,4 @@ export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
   return contract.abi.decodeData(transacionData);
 };
-export { cfx, faucetAddress, faucet, cfxUtil };
+export { cfx, faucetAddress, faucet, cfxFormat };

@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 import queryString from 'query-string';
 import styled from 'styled-components';
 import AceEditor from 'react-ace';
@@ -10,7 +9,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { DatePicker, Button, useClickAway } from '@cfxjs/react-ui';
+import { Button, useClickAway } from '@cfxjs/react-ui';
 import { Card } from 'app/components/Card/Loadable';
 import { useLocation, useHistory } from 'react-router';
 import {
@@ -28,10 +27,12 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString } from 'utils';
 import { useContract, useToken } from 'utils/api';
-import { media, useBreakpoint } from 'styles/media';
+import { media } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
+import PickerWithQuery from './PickerWithQuery';
+import { ActionButton } from './ActionButton';
 
 const AceEditorStyle = {
   width: '100%',
@@ -44,120 +45,91 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
 
   return (
     <>
-      <Card>
-        <AceEditor
-          readOnly
-          style={AceEditorStyle}
-          mode="solidity"
-          theme="github"
-          name="UNIQUE_ID_OF_DIV"
-          setOptions={{
-            showLineNumbers: true,
-          }}
-          showGutter={false}
-          showPrintMargin={false}
-          value={isSourceCode ? sourceCode : abi}
-        />
-      </Card>
-      <ButtonWrapper>
-        <Button
-          className={clsx(isSourceCode && 'enabled', 'source-btn')}
-          onClick={() => setIsSourceCode(true)}
-        >
-          {t(translations.contract.sourceCode)}
-        </Button>
-        <Button
-          className={clsx(!isSourceCode && 'enabled', 'abi-btn')}
-          onClick={() => setIsSourceCode(false)}
-        >
-          {t(translations.contract.abi)}
-        </Button>
-      </ButtonWrapper>
+      <ContractBody>
+        <ButtonWrapper>
+          <Button
+            className={clsx(
+              isSourceCode && 'enabled',
+              'source-btn',
+              'btnWeight',
+            )}
+            onClick={() => setIsSourceCode(true)}
+          >
+            {t(translations.contract.sourceCodeShort)}
+          </Button>
+          <Button
+            className={clsx(!isSourceCode && 'enabled', 'abi-btn', 'btnWeight')}
+            onClick={() => setIsSourceCode(false)}
+          >
+            {t(translations.contract.abiShort)}
+          </Button>
+          <div className="line"></div>
+        </ButtonWrapper>
+        <Card>
+          <AceEditor
+            readOnly
+            style={AceEditorStyle}
+            mode="solidity"
+            theme="github"
+            name="UNIQUE_ID_OF_DIV"
+            setOptions={{
+              showLineNumbers: true,
+            }}
+            showGutter={false}
+            showPrintMargin={false}
+            value={isSourceCode ? sourceCode : abi}
+          />
+        </Card>
+      </ContractBody>
     </>
   );
 }
-
+const ContractBody = styled.div`
+  padding-bottom: 3.5714rem;
+`;
 const ButtonWrapper = styled.div`
-  float: right;
-  margin: 1.71rem 0;
-
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+  padding: 0 1.2857rem;
+  margin: 0.5714rem 0;
+  .line {
+    height: 0.0714rem;
+    background-color: #e8e9ea;
+    margin-top: 0.5714rem;
+  }
   .btn {
-    background: rgba(0, 84, 254, 0.04);
     color: #74798c;
+    font-size: 1rem;
+  }
+  .btn.btnWeight {
+    border-radius: 1.1429rem;
+    padding: 0 1rem;
+    min-width: initial;
+    height: 1.8571rem;
+    line-height: 1.8571rem;
+    border: none;
+    top: 0px;
+    background-color: #f5f8ff;
+    &:hover {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+    &:active {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+    .text {
+      top: 0px !important;
+    }
   }
   .enabled.btn {
     color: #ffffff;
-    background-color: #1e3de4;
+    background-color: rgba(0, 84, 254, 0.8);
   }
 
   .abi-btn.btn {
-    margin-left: 0.57rem;
-  }
-`;
-
-const DatePickerWithQuery = ({ onChange }) => {
-  const location = useLocation();
-  const { t } = useTranslation();
-  const { minTimestamp, maxTimestamp } = queryString.parse(
-    location.search || '',
-  );
-  const bp = useBreakpoint();
-  let defaultDateRange = useMemo(
-    () =>
-      minTimestamp && maxTimestamp
-        ? [
-            minTimestamp &&
-              dayjs(new Date(parseInt((minTimestamp + '000') as string))),
-            maxTimestamp &&
-              dayjs(new Date(parseInt((maxTimestamp + '000') as string))),
-          ]
-        : undefined,
-    [minTimestamp, maxTimestamp],
-  );
-  const datePlaceholder = [
-    t(translations.general.startDate),
-    t(translations.general.endDate),
-  ];
-  return (
-    <DatePickerWrap key="date-picker-wrap">
-      {bp !== 's' && (
-        <DatePicker.RangePicker
-          // @ts-ignore
-          defaultValue={defaultDateRange}
-          color="primary"
-          variant="solid"
-          key="date-picker"
-          // @ts-ignore
-          placeholder={datePlaceholder}
-          onChange={onChange}
-        />
-      )}
-    </DatePickerWrap>
-  );
-};
-
-const DatePickerWrap = styled.div`
-  cursor: pointer;
-  ${media.s} {
-    position: absolute;
-    z-index: 10;
-    width: 2.67rem;
-    height: 2.67rem;
-    background-color: rgb(0, 84, 254, 0.04);
-    left: 0;
-    right: unset;
-    .month-picker-icon {
-      position: absolute;
-      left: 0.92rem;
-      top: 0.92rem;
-    }
-
-    .cfx-picker {
-      background-color: #f5f6fa;
-      opacity: 0;
-      width: 2.67rem;
-      height: 2.67rem;
-    }
+    margin-left: 0.2857rem;
   }
 `;
 
@@ -197,45 +169,16 @@ const TxDirectionFilter = ({ onChange }) => {
   ));
 
   return (
-    <TxDirectionFilterWrap key="tx-filter-wrap">
-      <Button
-        key="tx-filter-button"
-        color="secondary"
-        variant="text"
-        className="filter-button"
-        onClick={() => setVisible(!visible)}
-      >
-        <img src={imgDot} alt="transaction-direction-filter" />
-      </Button>
+    <div>
+      <ActionButton onClick={() => setVisible(!visible)} src={imgDot} />
       {visible && (
         <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
           {opts}
         </TxDirectionFilterDropdown>
       )}
-    </TxDirectionFilterWrap>
+    </div>
   );
 };
-
-const TxDirectionFilterWrap = styled.div`
-  margin-left: 0.57rem;
-  position: relative;
-  .btn.filter-button {
-    background-color: rgba(0, 84, 254, 0.04);
-    &:hover {
-      background-color: #dfe8ff;
-    }
-    width: 3rem;
-    min-width: 3rem;
-    padding: 0;
-    img {
-      transform: translateY(-3px);
-    }
-  }
-
-  ${media.s} {
-    margin-left: unset;
-  }
-`;
 
 const TxDirectionFilterDropdown = styled.div`
   position: absolute;
@@ -244,7 +187,7 @@ const TxDirectionFilterDropdown = styled.div`
   border-radius: 0.14rem;
   background-color: white;
   width: max-content;
-  margin-top: 0.86rem;
+  margin-top: 0.7143rem;
   z-index: 10;
   div.opt {
     display: flex;
@@ -274,7 +217,6 @@ const TxDirectionFilterDropdown = styled.div`
 export function Table({ address }) {
   const { t } = useTranslation();
   const loadingText = t(translations.general.loading);
-  const bp = useBreakpoint();
   const location = useLocation();
   const history = useHistory();
   const queries = queryString.parse(location.search);
@@ -286,6 +228,9 @@ export function Table({ address }) {
     queries?.tab !== 'mined-blocks' &&
       queries?.tab !== 'transfers' &&
       !isContract,
+  );
+  const { minTimestamp, maxTimestamp } = queryString.parse(
+    location.search || '',
   );
 
   const { data: contractInfo } = useContract(isContract && address, [
@@ -473,64 +418,59 @@ export function Table({ address }) {
     <TableWrap>
       {filterVisible && (
         <FilterWrap>
-          {bp !== 's' && (
-            <DatePickerWithQuery
-              key="date-picker-query"
-              onChange={dateQuery => {
-                if (!dateQuery)
-                  return history.push(
-                    queryString.stringifyUrl({
-                      url: location.pathname,
-                      query: {
-                        ...queries,
-                        minTimestamp: undefined,
-                        maxTimestamp: undefined,
-                      },
-                    }),
-                  );
-
-                let minTimestamp, maxTimestamp;
-                if (Array.isArray(dateQuery) && dateQuery.length > 1) {
-                  minTimestamp = Math.round(
-                    new Date(dateQuery[0].toISOString()).getTime() / 1000,
-                  );
-                  maxTimestamp = Math.round(
-                    new Date(dateQuery[1].toISOString()).getTime() / 1000,
-                  );
-                }
-
-                if (typeof dateQuery?.toISOString === 'function') {
-                  minTimestamp = new Date(
-                    dateQuery.startOf('month').toISOString(),
-                  ).getTime();
-                  maxTimestamp = new Date(
-                    dateQuery.endOf('month').toISOString(),
-                  ).getTime();
-                }
-
-                if (
-                  minTimestamp !== undefined &&
-                  minTimestamp === queries.minTimestamp
-                )
-                  return;
-                if (
-                  maxTimestamp !== undefined &&
-                  maxTimestamp === queries.maxTimestamp
-                )
-                  return;
-                history.push(
+          <PickerWithQuery
+            key="date-picker-query"
+            minTimestamp={minTimestamp}
+            maxTimestamp={maxTimestamp}
+            onChange={dateQuery => {
+              if (!dateQuery)
+                return history.push(
                   queryString.stringifyUrl({
                     url: location.pathname,
                     query: {
                       ...queries,
-                      minTimestamp,
-                      maxTimestamp,
+                      minTimestamp: undefined,
+                      maxTimestamp: undefined,
                     },
                   }),
                 );
-              }}
-            />
-          )}
+
+              let minTimestamp, maxTimestamp;
+
+              if (dateQuery[0]) {
+                minTimestamp = Math.round(
+                  new Date(dateQuery[0].toISOString()).getTime() / 1000,
+                );
+              }
+
+              if (dateQuery[1]) {
+                maxTimestamp = Math.round(
+                  new Date(dateQuery[1].toISOString()).getTime() / 1000,
+                );
+              }
+
+              if (
+                minTimestamp !== undefined &&
+                minTimestamp === queries.minTimestamp
+              )
+                return;
+              if (
+                maxTimestamp !== undefined &&
+                maxTimestamp === queries.maxTimestamp
+              )
+                return;
+              history.push(
+                queryString.stringifyUrl({
+                  url: location.pathname,
+                  query: {
+                    ...queries,
+                    minTimestamp,
+                    maxTimestamp,
+                  },
+                }),
+              );
+            }}
+          />
           {txFilterVisible && (
             <TxDirectionFilter
               key="tx-filter"
@@ -572,15 +512,17 @@ const TableWrap = styled.div`
 const FilterWrap = styled.div`
   position: absolute;
   right: 0;
+  top: 0.7143rem;
   display: flex;
   flex-direction: row;
   align-items: center;
 
   ${media.s} {
     flex-direction: column;
+    align-items: flex-start;
     right: unset;
     left: 0;
-    top: 9.2rem;
+    top: 7rem;
     z-index: 10;
   }
 `;
