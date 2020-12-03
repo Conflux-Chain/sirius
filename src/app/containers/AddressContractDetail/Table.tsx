@@ -31,7 +31,8 @@ import { media } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
-import DatePickerWithQuery from './DatePickerWithQuery';
+import PickerWithQuery from './PickerWithQuery';
+import { ActionButton } from './ActionButton';
 
 const AceEditorStyle = {
   width: '100%',
@@ -168,49 +169,16 @@ const TxDirectionFilter = ({ onChange }) => {
   ));
 
   return (
-    <TxDirectionFilterWrap key="tx-filter-wrap">
-      <Button
-        key="tx-filter-button"
-        color="secondary"
-        variant="text"
-        className="filter-button"
-        onClick={() => setVisible(!visible)}
-      >
-        <img src={imgDot} alt="transaction-direction-filter" />
-      </Button>
+    <div>
+      <ActionButton onClick={() => setVisible(!visible)} src={imgDot} />
       {visible && (
         <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
           {opts}
         </TxDirectionFilterDropdown>
       )}
-    </TxDirectionFilterWrap>
+    </div>
   );
 };
-
-const TxDirectionFilterWrap = styled.div`
-  margin-left: 0.57rem;
-  position: relative;
-  .btn.filter-button {
-    display: flex;
-    align-items: center;
-    border-radius: 0.2857rem;
-    background-color: #f5f8ff;
-    &:hover {
-      background-color: #dfe8ff;
-    }
-    width: 2.2857rem;
-    min-width: 2.2857rem;
-    height: 2.2857rem;
-    padding: 0;
-    .text {
-      top: 0;
-    }
-  }
-
-  ${media.s} {
-    margin-left: unset;
-  }
-`;
 
 const TxDirectionFilterDropdown = styled.div`
   position: absolute;
@@ -450,7 +418,7 @@ export function Table({ address }) {
     <TableWrap>
       {filterVisible && (
         <FilterWrap>
-          <DatePickerWithQuery
+          <PickerWithQuery
             key="date-picker-query"
             minTimestamp={minTimestamp}
             maxTimestamp={maxTimestamp}

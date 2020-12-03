@@ -1,72 +1,44 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import dayjs from 'dayjs';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { DatePicker, Button } from '@cfxjs/react-ui';
-import { media, useBreakpoint } from 'styles/media';
+import { DatePicker } from '@cfxjs/react-ui';
+import { useBreakpoint } from 'styles/media';
 import imgAlarm from 'images/contract-address/alarm.svg';
+import { ActionButton } from './ActionButton';
 
-// mobile datepicker start
-const MobileDatePickerWrap = styled.div`
+// datepicker input common style
+const PickerWrap = styled.div`
+  margin-right: 0.57rem;
   cursor: pointer;
+  .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
+    background-color: rgba(0, 84, 254, 0.04);
+    height: 2.2857rem;
+    &:hover {
+      background-color: rgba(0, 84, 254, 0.1);
+    }
+    .cfx-picker-input {
+      input {
+        color: #7f8699;
+        &:hover {
+          color: #7f8699;
+        }
+      }
+    }
+  }
+`;
+
+// mobile picker start
+const MobilePickerWrap = styled(PickerWrap)`
+  display: flex;
   margin-bottom: 0.7143rem;
-  .address-table-datepicker-input.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
-    background-color: #f5f8ff;
-    height: 2.2857rem;
-    &:nth-of-type(1) {
-      margin-right: 0.7143rem;
-    }
-    &:hover {
-      background-color: #e4edfe;
-    }
-  }
-  ${media.s} {
-    display: flex;
-  }
-  .btn.filter-button {
-    display: flex;
-    align-items: center;
-    border-radius: 0.2857rem;
-    background-color: #f5f8ff;
-    &:hover {
-      background-color: #dfe8ff;
-    }
-    width: 2.2857rem;
-    min-width: 2.2857rem;
-    height: 2.2857rem;
-    padding: 0;
+  .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
     margin-right: 0.7143rem;
-    .text {
-      top: 0;
-    }
   }
 `;
 
-const GlobalStyle = createGlobalStyle`
-  .address-table-datepicker-calender {
-    left: calc(5vw) !important;
-    .cfx-picker-panel-container {
-      border: none;
-    }
-    .cfx-picker-panel,
-    .cfx-picker-date-panel, 
-    .cfx-picker-year-panel, 
-    .cfx-picker-month-panel {
-      width: 100%;
-    }
-    table.cfx-picker-content {
-      width: 100%;
-      table-layout: inherit;
-    }
-  }
-`;
-
-const MobileDatePickerWithQuery = ({
-  minTimestamp,
-  maxTimestamp,
-  onChange,
-}) => {
+const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
@@ -74,9 +46,7 @@ const MobileDatePickerWithQuery = ({
     const handler = e => {
       if (!filterButtonRef.current?.contains(e.target)) {
         let isOutOfDatepicker = true;
-        const wrappers = document.querySelectorAll(
-          '.address-table-datepicker-input',
-        );
+        const wrappers = document.querySelectorAll('.address-table-picker');
         wrappers.forEach(el => {
           if (el && el.contains(e.target)) {
             isOutOfDatepicker = false;
@@ -123,43 +93,31 @@ const MobileDatePickerWithQuery = ({
   };
 
   return (
-    <MobileDatePickerWrap
-      key="date-picker-mobile-wrap"
-      className="date-picker-mobile-wrap"
-      ref={dropdownRef}
-    >
-      <GlobalStyle />
-      <Button
-        key="address-contract-alarm-button"
-        color="secondary"
-        variant="text"
-        className="filter-button"
+    <MobilePickerWrap className="date-picker-mobile-wrap" ref={dropdownRef}>
+      <ActionButton
         onClick={() => setVisible(!visible)}
         ref={filterButtonRef}
-      >
-        <img src={imgAlarm} alt="address-contract-alarm" />
-      </Button>
+        src={imgAlarm}
+      ></ActionButton>
       {visible && (
         <>
           <DatePicker
-            className="address-table-datepicker-input"
-            dropdownClassName="address-table-datepicker-calender"
+            className="address-table-picker"
+            dropdownClassName="address-table-picker-calender"
             variant="solid"
             color="primary"
             placeholder={datePlaceholder[0]}
-            key="startTime"
             onChange={handleStartChange}
             defaultValue={innerMinTimestamp}
             disabledDate={disabledDateD1}
             allowClear={false}
           />
           <DatePicker
-            className="address-table-datepicker-input"
-            dropdownClassName="address-table-datepicker-calender"
+            className="address-table-picker"
+            dropdownClassName="address-table-picker-calender"
             variant="solid"
             color="primary"
             placeholder={datePlaceholder[1]}
-            key="endTime"
             onChange={handleEndChange}
             defaultValue={innerMaxTimestamp}
             disabledDate={disabledDateD2}
@@ -167,46 +125,13 @@ const MobileDatePickerWithQuery = ({
           />
         </>
       )}
-    </MobileDatePickerWrap>
+    </MobilePickerWrap>
   );
 };
-// mobile datepicker end
+// mobile picker end
 
-// PC datepicker start
-const DatePickerWrap = styled.div`
-  cursor: pointer;
-  .address-table-datepicker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
-    background-color: rgba(0, 84, 254, 0.04);
-    height: 2.2857rem;
-    &:hover {
-      background-color: rgba(0, 84, 254, 0.1);
-    }
-    .cfx-picker-panel-container {
-      border: none;
-    }
-  }
-  ${media.s} {
-    z-index: 10;
-    width: 2.67rem;
-    height: 2.67rem;
-    background-color: rgb(0, 84, 254, 0.04);
-    left: 0;
-    right: unset;
-    .month-picker-icon {
-      position: absolute;
-      left: 0.92rem;
-      top: 0.92rem;
-    }
-    .cfx-picker {
-      background-color: #f5f6fa;
-      opacity: 0;
-      width: 2.67rem;
-      height: 2.67rem;
-    }
-  }
-`;
-
-const DatePickerWithQuery = ({ minTimestamp, maxTimestamp, onChange }) => {
+// PC picker start
+const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
   const { t } = useTranslation();
   let defaultDateRange = useMemo(
     () =>
@@ -225,28 +150,23 @@ const DatePickerWithQuery = ({ minTimestamp, maxTimestamp, onChange }) => {
     t(translations.general.endDate),
   ];
   return (
-    <DatePickerWrap key="date-picker-wrap">
+    <PickerWrap>
       <DatePicker.RangePicker
-        className="address-table-datepicker"
+        className="address-table-picker"
         // @ts-ignore
         defaultValue={defaultDateRange}
         color="primary"
         variant="solid"
-        key="date-picker"
         // @ts-ignore
         placeholder={datePlaceholder}
         onChange={onChange}
       />
-    </DatePickerWrap>
+    </PickerWrap>
   );
 };
-// PC datepicker end
+// PC picker end
 
 export default function (props) {
   const bp = useBreakpoint();
-  return bp === 's' ? (
-    <MobileDatePickerWithQuery {...props} />
-  ) : (
-    <DatePickerWithQuery {...props} />
-  );
+  return bp === 's' ? <MobilePicker {...props} /> : <Picker {...props} />;
 }
