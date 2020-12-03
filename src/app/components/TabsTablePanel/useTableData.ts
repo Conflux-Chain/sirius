@@ -2,7 +2,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useSWRWithGetFecher } from '../../../utils/api';
 
-export const useTableData = (url: string, inactive = false) => {
+export const useTableData = (
+  url: string,
+  inactive = false,
+  shouldFetch = true,
+) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -47,7 +51,9 @@ export const useTableData = (url: string, inactive = false) => {
     },
   });
 
-  const { data, error, mutate } = useSWRWithGetFecher([urlWithQuery]);
+  const { data, error, mutate } = useSWRWithGetFecher(
+    shouldFetch ? [urlWithQuery] : null,
+  );
   const setPageNumberAndAlterHistory = (pageNumber: number) => {
     const pathNameWithQuery = queryString.stringifyUrl({
       url: location.pathname,

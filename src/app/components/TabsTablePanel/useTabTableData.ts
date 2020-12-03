@@ -47,7 +47,7 @@ export const useTabTableData = tabs => {
         gotoPage,
         setPageSize,
         // eslint-disable-next-line react-hooks/rules-of-hooks
-      } = useTableData(url, !isCurrentTab && table);
+      } = useTableData(url, !isCurrentTab, !!table);
       if (isCurrentTab) {
         currentTabTotal = total;
         acc.currentTabValue = value;
