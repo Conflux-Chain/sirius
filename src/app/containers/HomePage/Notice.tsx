@@ -28,6 +28,9 @@ export function Notice() {
   const transationsNotice = isTestnet
     ? translations.notice.testnet
     : translations.notice.mainnet;
+  const transationsNoticeLink = isTestnet
+    ? translations.notice.testnetLink
+    : translations.notice.link;
   const isEn = i18n.language.startsWith('en');
   for (const n in transationsNotice) {
     if (n === '0') {
@@ -39,7 +42,7 @@ export function Notice() {
         <NoticeItem key={n}>
           {t(transationsNotice[n])}
           {`${isEn ? ' (' : '（'}`}
-          <Link href={t(translations.notice.link)}>
+          <Link href={t(transationsNoticeLink)}>
             {isEn ? 'Click to view details' : '详情链接'}
           </Link>
           {`${isEn ? ').' : '）。'}`}
