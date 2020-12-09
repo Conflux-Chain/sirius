@@ -11,7 +11,7 @@ const cfx = new Conflux({
 });
 const mainnetFaucetAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
 const mainnetFaucetLastAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
-const testnetFaucetAddress = '0x82df2e26ca75a233205c1469b22b3eedb9d9d257';
+const testnetFaucetAddress = '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8';
 const testnetFaucetLastAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117';
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
