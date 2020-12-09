@@ -30,6 +30,7 @@ const errInsufficientFee = 'errInsufficientFee';
 const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
+const errUpgraded = 'errUpgraded';
 export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
@@ -56,7 +57,7 @@ export function Sponsor() {
     setLoading(true);
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
     await fetchIsAppliable(address);
-    const faucetParams = await faucet.getFaucetParams();
+    const faucetParams = await faucet.getFaucetParams(address);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
@@ -133,6 +134,9 @@ export function Sponsor() {
           break;
         case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
           setErrorMsgForApply(errCannotReplaced);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET':
+          setErrorMsgForApply(errUpgraded);
           break;
         default:
           setErrorMsgForApply('');
@@ -419,6 +423,7 @@ export function Sponsor() {
               errReplaceThird,
               errContractNotFound,
               errCannotReplaced,
+              errUpgraded,
             ].indexOf(errorMsgForApply) !== -1
               ? t(translations.sponsor[errorMsgForApply])
               : errorMsgForApply}

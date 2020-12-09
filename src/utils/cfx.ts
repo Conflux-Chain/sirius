@@ -10,11 +10,16 @@ const cfx = new Conflux({
   url: cfxUrl,
 });
 const mainnetFaucetAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
-const testnetFaucetAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117';
+const mainnetFaucetLastAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
+const testnetFaucetAddress = '0x82df2e26ca75a233205c1469b22b3eedb9d9d257';
+const testnetFaucetLastAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117';
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
   : mainnetFaucetAddress;
-const faucet = new Faucet(cfxUrl, faucetAddress);
+const faucetLastAddress = isTestNetEnv()
+  ? testnetFaucetLastAddress
+  : mainnetFaucetLastAddress;
+const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
   return contract.abi.decodeData(transacionData);

@@ -4350,12 +4350,12 @@ configstore@^3.0.0:
     write-file-atomic "^2.0.0"
     xdg-basedir "^3.0.0"
 
-conflux-sponsorfaucet@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/conflux-sponsorfaucet/-/conflux-sponsorfaucet-1.1.2.tgz#1f87e992d7b76e8733d831ce8b3e2b0ec28b09fa"
-  integrity sha512-56SWde3ZRfqSp/EFeASG1fRgZw6sS/RLUZDtLo0jKhAjL2mY8P+Yw/q2h4oyomYPlu8MbQzUC7739XcjcsdsJw==
+conflux-sponsorfaucet@1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/conflux-sponsorfaucet/-/conflux-sponsorfaucet-1.1.4.tgz#682013e2732a58c120d3f5ff5ac9a996c1b14432"
+  integrity sha512-E7A/4PwQ9qkX5Iq6/3081OV502EHYTxZ3W8YB+1ifPVfiLmGZ5nR9oNAzxQVV3vet8GfM1wWb3xCZxEBIXrB5g==
   dependencies:
-    js-conflux-sdk "^0.13.4"
+    js-conflux-sdk "^1.1.0"
 
 confusing-browser-globals@^1.0.9:
   version "1.0.9"
@@ -9022,19 +9022,19 @@ js-conflux-sdk@1.1.4:
     superagent "^5.1.0"
     websocket "^1.0.31"
 
-js-conflux-sdk@^0.13.4:
-  version "0.13.6"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-0.13.6.tgz#0820c377d9b537f11fd0c0b8874d8f8ce7c18b85"
-  integrity sha512-u/DHiPcoUWdPOB0Bx2+2FSESJP7I3mUl5GnBE2Mrx/WpIlzw8z5m0ecNuy7EBfGR7TpTHDxChd7Z+mhn5lmnEw==
+js-conflux-sdk@^1.1.0:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.1.5.tgz#fd9c9254f603458de187b77a2d82c19ce24864bb"
+  integrity sha512-bL/dl0k2UmeZ7CBpOHMvFnUub0rJxHNoXzEi52nHy+raiGU0c9q8ub+xJdCHLzegdnnwa4pShKjw9DLSz9YqvA==
   dependencies:
     "@babel/runtime" "^7.8.4"
     big.js "^5.2.2"
-    jsbi "^3.1.1"
     keccak "^2.0.0"
-    lodash "^4.17.15"
+    lodash "^4.17.19"
     scrypt-js "^3.0.1"
     secp256k1 "^3.7.1"
     superagent "^5.1.0"
+    websocket "^1.0.31"
 
 js-cookie@^2.2.1:
   version "2.2.1"
@@ -9058,11 +9058,6 @@ js-yaml@^3.13.1:
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
-
-jsbi@^3.1.1:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.1.4.tgz#9654dd02207a66a4911b4e4bb74265bc2cbc9dd0"
-  integrity sha512-52QRRFSsi9impURE8ZUbzAMCLjPm4THO7H2fcuIvaaeFTbSysvkodbQQXIVsNgq/ypDbq6dJiuGKL0vZ/i9hUg==
 
 jsbn@~0.1.0:
   version "0.1.1"

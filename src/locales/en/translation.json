@@ -274,6 +274,7 @@
     "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
     "errContractNotFound": "The contract cannot be found",
     "errCannotReplaced": "Third party sponsors cannot be replaced",
+    "errUpgraded": "Contract upgraded, please contact the administrator.",
     "upperBound": "Upper Bound",
     "submitted": "Transaction Submitted",
     "txHash": "Transaction Hash",
