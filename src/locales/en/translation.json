@@ -366,9 +366,11 @@
       "2. Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.3. In the latest version, more RPC interfaces are provided and the system stability is enhanced. Please make sure to upgrade the node after 16:00 on Nov. 20, 2020"
     ],
     "testnet": [
-      "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet."
+      "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet.",
+      "2. Conflux Testnet will be upgraded to Conflux v1.1.0-testnet to test the possible network upgrade in advance. If the proposal is abandoned, the changes will be reverted in the next release. The upgrade will be completed at the block height of 4,990,000 at about 16:00 (GMT+8) on Dec 8th, 2020"
     ],
-    "link": "https://forum.conflux.fun/t/topic/4058"
+    "link": "https://forum.conflux.fun/t/topic/4058",
+    "testnetLink": "https://forum.conflux.fun/t/topic/4319"
   },
   "toolTip": {
     "block": {
