@@ -7,6 +7,8 @@ import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { fetch } from './request';
+
 dayjs.extend(relativeTime);
 
 export const delay = (ms: number) => {

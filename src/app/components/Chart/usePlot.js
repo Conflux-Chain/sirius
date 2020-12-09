@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { appendApiPrefix } from 'utils/api';
 import { NUM_X_GRID } from './draw';
+import { fetch } from 'utils/request';
 // 2592000
 const durations = {
   hour: `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
