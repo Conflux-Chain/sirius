@@ -1,5 +1,8 @@
+import React from 'react';
 import { PromiseType } from 'react-use/lib/util';
 import superagent from 'superagent';
+import { Translation } from 'react-i18next';
+import { translations } from 'locales/i18n';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -10,31 +13,33 @@ type NotifyType = {
   message?: string;
 };
 
+const translationsErrors = translations.general.error;
+
+// 暂存默认 window fetch
 const windowFetch = window.fetch;
 
 // 默认的请求超时时间 60s
 const TIMEOUT_TIMESTAMP = 60000;
 // 默认的请求错误码文案
-// @todo 具体文案需要写在 locale 里面
 const ERROR_CODE_MESSAGE = {
   // 后端错误
-  10001: '参数错误，列表参数到达最大值。',
+  10001: <Translation>{t => t(translationsErrors[10001])}</Translation>, // The list parameter reached the maximum value.
   // 自定义错误
-  20000: '未知错误',
-  20001: '响应数据解析错误',
-  20002: '请求超时',
-  20003: '请求中止',
+  20000: <Translation>{t => t(translationsErrors[20000])}</Translation>, // Unknow error.
+  20001: <Translation>{t => t(translationsErrors[20001])}</Translation>, // Response data parsing error.
+  20002: <Translation>{t => t(translationsErrors[20002])}</Translation>, // Request timeout.
+  // 20003: <Translation>{t => t(translationsErrors[20003])}</Translation>, // Request abort. Commonly by manully abort, no need to notify
   // http 错误，只选择了常用的，参照 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
-  400: '错误请求', // bad request
-  401: '未授权', // Unauthorized
-  403: '服务器拒绝请求', // Forbidden
-  404: '未找到资源', // Not Found
-  405: '方法禁用', // Method Not Allowed
-  500: '服务器内部错误', // Internal Server Error
-  501: '服务器不支持请求的功能', // Not Implemented
-  502: '网关错误', // Bad Gateway
-  503: '服务不可用', // Service Unavailable
-  504: '网关超时', // Gateway Timeout
+  400: <Translation>{t => t(translationsErrors[400])}</Translation>, // bad request
+  401: <Translation>{t => t(translationsErrors[401])}</Translation>, // Unauthorized
+  403: <Translation>{t => t(translationsErrors[403])}</Translation>, // Forbidden
+  404: <Translation>{t => t(translationsErrors[404])}</Translation>, // Not Found
+  405: <Translation>{t => t(translationsErrors[405])}</Translation>, // Method Not Allowed
+  500: <Translation>{t => t(translationsErrors[500])}</Translation>, // Internal Server Error
+  501: <Translation>{t => t(translationsErrors[501])}</Translation>, // Not Implemented
+  502: <Translation>{t => t(translationsErrors[502])}</Translation>, // Bad Gateway
+  503: <Translation>{t => t(translationsErrors[503])}</Translation>, // Service Unavailable
+  504: <Translation>{t => t(translationsErrors[504])}</Translation>, // Gateway Timeout
 };
 const ERROR_CODE = Object.keys(ERROR_CODE_MESSAGE);
 
