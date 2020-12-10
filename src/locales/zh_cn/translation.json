@@ -362,13 +362,13 @@
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
-      "2. Conflux Tethys 网络升级公告：Conflux Tethys 网络将升级为 v1.0.3，本次升级添加了更多 RPC 接口并提升了系统稳定性。请于 2020 年 11 月 20 日 16:00 (GMT+8)之后升级您的节点"
+      "2. Conflux Tethys 网络 Tanzanite 升级公告：Conflux Tethys 网络将升级为 v1.1.0 ，请在 2020 年 12 月 11 日 15：30 (GMT+8) 之前升级您的节点。使用官方维护的 Tethys RPC 的开发者不会受到影响"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
       "2. Conflux 测试网络将升级为 Conflux v1.1.0-testnet，本次升级目的为可能的升级将要提前在测试网上进行测试。如果该提案没有通过，此变更将在下一个版本中恢复。本次升级将在 4,990,000 区块高度完成，约 2020 年 12 月 8 日 16：00 (GMT+8)"
     ],
-    "link": "https://forum.conflux.fun/t/topic/4056",
+    "link": "https://forum.conflux.fun/t/topic/4340",
     "testnetLink": "https://forum.conflux.fun/t/topic/4318"
   },
   "toolTip": {
