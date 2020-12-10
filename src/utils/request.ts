@@ -5,10 +5,9 @@ type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
 };
 
-type ErrorHandlerType = {
+type NotifyType = {
   code: number | string;
   message?: string;
-  data?: any;
 };
 
 const windowFetch = window.fetch;
@@ -47,9 +46,10 @@ const ERROR_CODE = Object.keys(ERROR_CODE_MESSAGE);
  * @param {*} option.data 返回值
  * @return void
  */
-const errorHandler = ({ code = '20000', message, data }: ErrorHandlerType) => {
+const notify = ({ code = '20000' }: NotifyType) => {
   // 只有在 ERROR_CODE_MESSAGE 定义的错误才会被捕捉处理
   if (ERROR_CODE.includes(String(code))) {
+    // @todo show Notification
     console.log(
       'global notification message: ',
       code,
@@ -65,10 +65,14 @@ const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
-    errorHandler({
+    notify({
       code: response.status,
-      message: response.statusText,
     });
+    // const error: Partial<ErrorEvent> & {
+    //   response?: ResponseType;
+    // } = new Error(response.statusText);
+    // error.response = response;
+    // throw error;
     return response;
   }
 };
@@ -86,9 +90,11 @@ const parseJSON = response => {
     }
     return response;
   } catch (error) {
-    errorHandler({
+    notify({
       code: 20001,
     });
+    // error.response = response;
+    // throw error;
     return response;
   }
 };
@@ -97,7 +103,7 @@ const parseJSON = response => {
 const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
   return new Promise((resolve, reject) => {
     var timeout = setTimeout(() => {
-      errorHandler({
+      notify({
         code: 20002,
       });
       reject(new Error('fetch timeout'));
@@ -119,7 +125,7 @@ const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
 const fetchWithAbort = (url, opts) => {
   return new Promise((resolve, reject) => {
     const abortPromise = () => {
-      errorHandler({
+      notify({
         code: 20003,
       });
       reject(new Error('fetch abort'));
@@ -144,7 +150,7 @@ const fetch = (url, opts = {}) => {
     })
     .catch(error => {
       console.log('request failed', error);
-      return error;
+      throw error;
     });
 };
 
