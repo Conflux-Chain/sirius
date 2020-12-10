@@ -1,6 +1,5 @@
 import React from 'react';
 import { PromiseType } from 'react-use/lib/util';
-import superagent from 'superagent';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
@@ -73,12 +72,11 @@ const checkStatus = response => {
     notify({
       code: response.status,
     });
-    // const error: Partial<ErrorEvent> & {
-    //   response?: ResponseType;
-    // } = new Error(response.statusText);
-    // error.response = response;
-    // throw error;
-    return response;
+    const error: Partial<ErrorEvent> & {
+      response?: ResponseType;
+    } = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
 };
 
@@ -87,20 +85,19 @@ const parseJSON = response => {
   const contentType = response.headers.get('content-type');
   try {
     if (contentType.includes('application/json')) {
-      // response.json(); // 只能执行一次，此处无法验证 .json() 是否报错
+      return response.json();
     } else if (contentType.includes('text/html')) {
-      // response.text(); // 只能执行一次，此处无法验证 .text() 是否报错
+      return response.text();
     } else {
+      // contentType 还有其他类型，目前项目中用不到，后续按照需求在此处再添加
       throw new Error(`Sorry, content-type ${contentType} not supported`);
     }
-    return response;
   } catch (error) {
     notify({
       code: 20001,
     });
-    // error.response = response;
-    // throw error;
-    return response;
+    error.response = response;
+    throw error;
   }
 };
 
@@ -144,7 +141,7 @@ const fetchWithAbort = (url, opts) => {
   });
 };
 
-// 添加请求日志输出
+// 添加请求日志输出，或者收集统计信息
 const fetch = (url, opts = {}) => {
   return fetchWithAbort(url, opts)
     .then(checkStatus)
@@ -159,8 +156,5 @@ const fetch = (url, opts = {}) => {
     });
 };
 
-// @todo superagent global error handle
-const superagentNext = () => {};
-
 window.fetch = fetch;
-export { fetch, superagentNext as superagent };
+export default fetch;

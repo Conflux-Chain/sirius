@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
-import { fetch } from './request';
+import fetch from './request';
 
 export const appendApiPrefix = (url: string) => `/v1${url}`;
 
@@ -23,27 +23,16 @@ export const simpleGetFetcher = async (...args: any[]) => {
   if (query) {
     url = qs.stringifyUrl({ url, query });
   }
-
-  const res = await fetch(appendApiPrefix(url), {
+  return await fetch(appendApiPrefix(url), {
     method: 'get',
   });
-  // If the status code is not in the range 200-299,
-  // we still try to parse and throw it.
-  if (!res.ok) {
-    const error = new Error('An error occurred while fetching the data.');
-    // Attach extra info to the error object.
-    error['info'] = await res.json();
-    error['status'] = res.status;
-    throw error;
-  }
-  return await res.json();
 };
 
 const simplePostFetcher = async (...args: any[]) => {
   let [url, params, shouldAppendPrefix] = args;
   shouldAppendPrefix =
     shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
-  const res = await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
+  return await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
     method: 'post',
     headers: {
       Accept: 'application/json',
@@ -51,14 +40,6 @@ const simplePostFetcher = async (...args: any[]) => {
     },
     body: JSON.stringify(params),
   });
-  if (!res.ok) {
-    const error = new Error('An error occurred while fetching the data.');
-    // Attach extra info to the error object.
-    error['info'] = await res.json();
-    error['status'] = res.status;
-    throw error;
-  }
-  return await res.json();
 };
 
 export const useSWRWithGetFecher = (key, swrOpts = {}) => {
@@ -348,7 +329,6 @@ export const useAccountTokenList = (
       : null,
     url =>
       fetch(appendApiPrefix(url))
-        .then(res => res.json())
         .then(({ total, list }) => {
           return {
             loading: false,
@@ -400,7 +380,6 @@ export const useAccount = (
     accountAddress ? url : null,
     url =>
       fetch(appendApiPrefix(url))
-        .then(res => res.json())
         .then(rst => {
           return {
             ...rst,
@@ -444,7 +423,6 @@ export const useContract = (
     contractAddress ? url : null,
     url =>
       fetch(appendApiPrefix(url))
-        .then(res => res.json())
         .then(rst => {
           return {
             name: null,
@@ -535,7 +513,6 @@ export const useToken = (
     contractAddress ? url : null,
     url =>
       fetch(appendApiPrefix(url))
-        .then(res => res.json())
         .then(rst => {
           const { totalSupply, decimals } = rst;
           return {
@@ -588,7 +565,6 @@ export const useTransactions = (query = {}, opts = {}) => {
     }),
     url =>
       fetch(url)
-        .then(res => res.json())
         .then(rst => {
           const { list } = rst;
           return {
@@ -632,7 +608,6 @@ export const useTransfers = (query = {}, opts = {}) => {
     }),
     url =>
       fetch(url)
-        .then(res => res.json())
         .then(rst => {
           const { list } = rst;
           return {
@@ -668,7 +643,7 @@ export const useTransfers = (query = {}, opts = {}) => {
 export const fetchRecentDagBlock = async (opts = {}) => {
   let data;
   try {
-    data = await fetch(appendApiPrefix('/dag')).then(res => res.json());
+    data = await fetch(appendApiPrefix('/dag'));
   } catch (error) {
     data = { total: 0, list: [] };
   }

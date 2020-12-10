@@ -1,9 +1,8 @@
 import qs from 'query-string';
-// import superagent from 'superagent';
 import { cfx, cfxFormat } from './cfx';
 import { delay } from './index';
 import { transferRisk } from './index';
-import { fetch } from './request';
+import fetch from './request';
 
 export const apiPrefix = '/v1';
 export const sendRequest = config => {
@@ -11,20 +10,7 @@ export const sendRequest = config => {
     method: config.type || 'GET',
     body: config.body,
     headers: config.headers,
-  }).then(response => response.json());
-
-  // const reqType = config.type || 'GET';
-  // const reqPromise = superagent(reqType, config.url)
-  //   .set(config.headers || {})
-  //   .query(config.query || {})
-  //   .send(config.body)
-  //   .ok(() => {
-  //     return true;
-  //   });
-  // reqPromise.catch(error => {
-  //   //TODO add sentry
-  // });
-  // return reqPromise;
+  });
 };
 
 export const reqTransactionDetail = (param?: object, extra?: object) => {
@@ -32,7 +18,6 @@ export const reqTransactionDetail = (param?: object, extra?: object) => {
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
     ...extra,
   });
-  // .then(res => res.body);
 };
 
 export const reqContract = (param?: object, extra?: object) => {
@@ -41,7 +26,6 @@ export const reqContract = (param?: object, extra?: object) => {
     query: param,
     ...extra,
   });
-  // .then(res => res.body);
 };
 
 export const reqTransferList = (param?: object, extra?: object) => {
@@ -50,7 +34,6 @@ export const reqTransferList = (param?: object, extra?: object) => {
     query: param,
     ...extra,
   });
-  // .then(res => res.body);
 };
 
 export const reqTokenList = (param?: object, extra?: object) => {
@@ -59,7 +42,6 @@ export const reqTokenList = (param?: object, extra?: object) => {
     query: param,
     ...extra,
   });
-  // .then(res => res.body);
 };
 
 export const reqConfirmationRiskByHash = async (blockHash: string) => {
