@@ -57,7 +57,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   } else {
     submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
   }
-  const inputStyle = { margin: '0 12px' };
+  const inputStyle = { margin: '0 0.8571rem' };
   const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
   const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
   const [requestParams, setReuqestParams] = useState({});
@@ -390,6 +390,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                       setOptions={{
                         showLineNumbers: true,
                       }}
+                      fontSize="1rem"
                       showGutter={false}
                       showPrintMargin={false}
                       onChange={handleSourceChange}
@@ -414,6 +415,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                       setOptions={{
                         showLineNumbers: true,
                       }}
+                      fontSize="1rem"
                       showGutter={false}
                       showPrintMargin={false}
                       onChange={abiChangeHandler}
@@ -671,7 +673,10 @@ const TopContainer = styled.div`
   }
 `;
 const AceEditorStyle = {
-  width: '100%',
+  width: 'initial',
+  backgroundColor: '#F8F9FB',
+  opacity: 0.62,
+  margin: '0 1.2857rem 1.7143rem 1.2857rem',
 };
 const StyledTabelWrapper = styled.div`
   overflow: hidden;
@@ -701,7 +706,7 @@ const StyledTabelWrapper = styled.div`
     border: none;
   }
   .contentHeader {
-    margin: 2.7857rem 1.2857rem 0.3571rem 1.2857rem;
+    margin: 2.8571rem 1.2857rem 0 1.2857rem;
     height: 1px;
     background: #e8e9ea;
   }
