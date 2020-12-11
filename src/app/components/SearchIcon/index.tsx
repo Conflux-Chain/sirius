@@ -9,7 +9,7 @@ interface Props {
   color?: string;
 }
 
-export const Logo: React.FC<Props> = props => {
+export const SearchIcon: React.FC<Props> = props => {
   const { color = '#1e3de4' } = props;
   return (
     <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">

@@ -10,6 +10,7 @@ import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
+import { Search as SearchComp } from '../../components/Search/Loadable';
 import {
   isAddress,
   getEllipsStr,
