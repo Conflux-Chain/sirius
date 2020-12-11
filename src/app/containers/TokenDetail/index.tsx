@@ -80,6 +80,9 @@ export function TokenDetail() {
 
 const TokenDetailWrap = styled.div`
   padding: 2.2857rem 0;
+  a {
+    color: #00acff !important;
+  }
 `;
 
 const SkeletonWrap = styled.div`
