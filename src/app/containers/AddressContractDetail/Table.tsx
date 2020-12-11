@@ -26,7 +26,7 @@ import {
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString } from 'utils';
-import { useContract, useToken } from 'utils/api';
+import { useContract } from 'utils/api';
 import { media } from 'styles/media';
 import { Check } from '@geist-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
@@ -236,8 +236,8 @@ export function Table({ address }) {
   const { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
+    'name',
   ]);
-  const { data: tokenInfo } = useToken(address, ['name', 'icon']);
 
   useEffect(() => {
     history.replace(
@@ -259,8 +259,8 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) => {
         let nameTag;
-        if (value === address && tokenInfo && tokenInfo.name) {
-          nameTag = tokenInfo.name;
+        if (value === address && contractInfo && contractInfo.name) {
+          nameTag = contractInfo.name;
         }
         return tokenColunms.from.render(value, row, index, {
           isToken: false,
@@ -272,8 +272,8 @@ export function Table({ address }) {
       ...tokenColunms.to,
       render: (value, row, index) => {
         let nameTag;
-        if (value === address && tokenInfo && tokenInfo.name) {
-          nameTag = tokenInfo.name;
+        if (value === address && contractInfo && contractInfo.name) {
+          nameTag = contractInfo.name;
         }
         return tokenColunms.to.render(value, row, index, {
           isToken: false,
