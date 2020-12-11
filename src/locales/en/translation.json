@@ -253,21 +253,24 @@
       "gte10000": "A total of {{realTotal}} records found (showing the last {{total}} records)"
     },
     "error": {
-      "10001": "The list parameter reached the maximum value.",
-      "20000": "Unknow error.",
-      "20001": "Response data parsing error.",
-      "20002": "Request timeout.",
-      "20003": "Request abort.",
-      "400": "Bad request.",
-      "401": "Unauthorized.",
-      "403": "Forbidden.",
-      "404": "Not Found.",
-      "405": "Method Not Allowed.",
-      "500": "Internal Server Error.",
-      "501": "Not Implemented.",
-      "502": "Bad Gateway.",
-      "503": "Service Unavailable.",
-      "504": "Gateway Timeout."
+      "title": "System Error",
+      "description": {
+        "10001": "The list parameter reached the maximum value.",
+        "20000": "Unknow error.",
+        "20001": "Response data parsing error.",
+        "20002": "Request timeout.",
+        "20003": "Request abort.",
+        "400": "Bad request.",
+        "401": "Unauthorized.",
+        "403": "Forbidden.",
+        "404": "Not Found.",
+        "405": "Method Not Allowed.",
+        "500": "Internal Server Error.",
+        "501": "Not Implemented.",
+        "502": "Bad Gateway.",
+        "503": "Service Unavailable.",
+        "504": "Gateway Timeout."
+      }
     }
   },
   "sponsor": {

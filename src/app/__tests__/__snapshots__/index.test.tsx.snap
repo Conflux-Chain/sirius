@@ -100,6 +100,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
         </Switch>
       </ForwardRef(app__Main)>
       <Unknown />
+      <GlobalNotify />
       <UNDEFINED />
     </CfxProvider>
   </BrowserRouter>
