@@ -26,6 +26,10 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.5em;
   }
 
+  a {
+    color: #1e3de4;
+  }
+
   input, select {
     font-size: inherit;
   }
