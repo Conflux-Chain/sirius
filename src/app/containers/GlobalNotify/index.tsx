@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import pubsubLib from 'utils/pubsub';
-import { useMessages } from '@cfxjs/react-ui';
+import { useNotifications } from '@cfxjs/react-ui';
 
 export function GlobalNotify() {
   const { t } = useTranslation();
-  const [, setMessages] = useMessages();
+  const [, setNotifications] = useNotifications();
 
   useEffect(() => {
     const unsubscribe = pubsubLib.subscribe(
@@ -21,17 +21,17 @@ export function GlobalNotify() {
           message ||
           t(translations.general.error.description[20000]); //
 
-        // @todo replace with Notification component
-        setMessages({
-          text: `${title}: ${code} - ${description}`,
-          color: 'error',
+        setNotifications({
+          title,
+          content: description,
         });
       },
     );
     return () => {
       unsubscribe();
     };
-  }, [setMessages, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 }
