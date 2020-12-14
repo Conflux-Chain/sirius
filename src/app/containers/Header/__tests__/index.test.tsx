@@ -22,6 +22,7 @@ describe('<Header />', () => {
     const ui = renderComponent();
     expect(ui.container.firstChild).toMatchSnapshot();
   });
+
   it('should support expanded menu', async () => {
     const ui = renderComponent();
     userEvent.click(ui.getByText('Contract'));
