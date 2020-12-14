@@ -1192,10 +1192,10 @@
     react-use "^15.3.4"
     swr "^0.3.5"
 
-"@cfxjs/react-ui@2.0.0-alpha.12":
-  version "2.0.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/@cfxjs/react-ui/-/react-ui-2.0.0-alpha.12.tgz#179bf20a6c418cafad95d09be711d6807e4ba546"
-  integrity sha512-jYDc+gwsoGoJpVmwgtKa5yiT1l3rw+U2D4orPbiGCVsm24+TdqufruC12qxRFKRqLAisk7Ci6dRsGOjm6PaadA==
+"@cfxjs/react-ui@2.0.0-alpha.13":
+  version "2.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/@cfxjs/react-ui/-/react-ui-2.0.0-alpha.13.tgz#38876e253221dd8747b19b67a01556a26d596bf8"
+  integrity sha512-Rr5FRd4Fc0a/9YEh7dQeU9T7nctxO4HfdFt2iv7OiAhN7mEZi+CS+qjfZPnUoTdyelqpkpJG/zw4eomj/7TRwg==
   dependencies:
     "@cfxjs/rc-table" "^1.0.0"
     "@jnoodle/rc-picker" "^2.0.10"
