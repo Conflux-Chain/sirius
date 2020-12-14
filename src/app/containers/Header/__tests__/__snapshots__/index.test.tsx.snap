@@ -948,26 +948,26 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 
 .c10 .outerContainer .header-search-bar.input-container .input-wrapper {
   border-radius: 1.14rem;
-  border-color: #0054FE;
+  border-color: #0054fe;
 }
 
 .c10 .outerContainer .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
-  color: #222A44;
+  color: #222a44;
   font-size: 12px;
 }
 
 .c10 .outerContainer .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
-  color: #222A44;
+  color: #222a44;
   font-size: 12px;
 }
 
 .c10 .outerContainer .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
-  color: #222A44;
+  color: #222a44;
   font-size: 12px;
 }
 
 .c10 .outerContainer .header-search-bar.input-container .input-wrapper input::placeholder {
-  color: #222A44;
+  color: #222a44;
   font-size: 12px;
 }
 
