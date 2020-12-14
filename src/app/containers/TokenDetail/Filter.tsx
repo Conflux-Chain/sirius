@@ -106,9 +106,22 @@ const FilterWrap = styled.div`
         border-radius: 1.14rem;
         background: rgba(0, 84, 254, 0.04);
         input {
+          color: #74798c;
           ::placeholder {
-            color: #222a44;
+            color: rgba(116, 121, 140, 0.6);
             font-size: 12px;
+          }
+        }
+        &.hover {
+          border: none;
+          input {
+            color: #74798c;
+          }
+        }
+        &.focus {
+          border: none;
+          input {
+            color: #74798c;
           }
         }
       }
