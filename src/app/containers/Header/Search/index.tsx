@@ -3,7 +3,7 @@
  * Search
  *
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import { Search as SearchComp } from '../../../components/Search/Loadable';
 

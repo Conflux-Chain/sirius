@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
 import { Input } from '@cfxjs/react-ui';
 import { SearchIcon } from '../SearchIcon/Loadable';
 import { DeleteIcon } from '../DeleteIcon/Loadable';
