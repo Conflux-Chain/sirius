@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { Input, Button, Modal } from '@cfxjs/react-ui';
+import { Button, Modal } from '@cfxjs/react-ui';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
