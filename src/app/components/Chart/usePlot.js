@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { appendApiPrefix } from 'utils/api';
 import { NUM_X_GRID } from './draw';
+import fetch from 'utils/request';
 // 2592000
 const durations = {
   hour: `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
@@ -12,9 +13,7 @@ const durations = {
 export default function usePlot(defaultDuration = 'day') {
   const [duration, setDuration] = useState(defaultDuration);
   const { data, error } = useSWR(`/dashboard/plot?duration=${duration}`, url =>
-    fetch(appendApiPrefix(`/plot?${durations[duration]}`)).then(response =>
-      response.json(),
-    ),
+    fetch(appendApiPrefix(`/plot?${durations[duration]}`)),
   );
   let listData;
   if (data) {
