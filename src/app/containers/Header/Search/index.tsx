@@ -105,7 +105,6 @@ const Container = styled.div`
       z-index: 2000;
       padding: 0;
       flex-grow: 0;
-
       .header-search-bar.input-container {
         height: 2.67rem;
         .input-wrapper {
