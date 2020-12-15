@@ -7,6 +7,8 @@ import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import fetch from './request';
+
 dayjs.extend(relativeTime);
 
 export const delay = (ms: number) => {
@@ -475,7 +477,7 @@ export const isBlockHash = async (str: string) => {
   if (!isHash(str)) return false;
   let isBlock = true;
   try {
-    const block = await fetch(`/v1/block/${str}`).then(res => res.json());
+    const block = await fetch(`/v1/block/${str}`);
     if (block.code !== undefined) isBlock = false;
   } catch (err) {
     isBlock = false;

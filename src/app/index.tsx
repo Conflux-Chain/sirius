@@ -33,6 +33,7 @@ import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
+import { GlobalNotify } from './containers/GlobalNotify';
 
 WebFontLoader.load({
   custom: {
@@ -100,6 +101,7 @@ export function App() {
             </Switch>
           </Main>
           <Footer />
+          <GlobalNotify />
           <GlobalStyle />
         </CfxProvider>
       </BrowserRouter>

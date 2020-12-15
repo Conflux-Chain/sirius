@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Input, useMessages } from '@cfxjs/react-ui';
-import { Search } from '@geist-ui/react-icons';
+import { useMessages } from '@cfxjs/react-ui';
 import {
   isAddress,
   isHash,
@@ -15,7 +14,7 @@ import {
 } from '../../../utils';
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
-
+import { Search as SearchComp } from '../../components/Search/Loadable';
 interface FilterProps {
   filter: string;
   tokenAddress: string;
@@ -41,7 +40,6 @@ export const Filter = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessage] = useMessages();
   const [value, setValue] = useState(lFilter);
-
   const tokenAddrs = [tokenAddress];
   let addr: null | string = null;
   if (isAddress(lFilter)) {
@@ -56,7 +54,7 @@ export const Filter = ({
     setValue(lFilter);
   }, [lFilter]);
 
-  const onIconClick = () => {
+  const onEnterPress = () => {
     if (value === '') {
       return;
     }
@@ -71,33 +69,23 @@ export const Filter = ({
     }
   };
 
-  const onClearClick = () => {
-    if (lFilter !== '') {
-      onFilter('');
-    } else {
-      setValue('');
-    }
-  };
-
   return (
     <FilterWrap>
-      <Input
-        iconClickable
-        clearable
-        value={value}
-        placeholder={t(translations.token.transferList.searchPlaceHolder)}
-        onChange={e => setValue(tranferToLowerCase(e.target.value))}
-        onIconClick={onIconClick}
-        onKeyPress={e => {
-          if (e.key === 'Enter') onIconClick();
-        }}
-        onClearClick={onClearClick}
-        icon={<Search />}
-      />
+      <SearchComp
+        outerClassname="outerContainer"
+        inputClassname="transfer-search"
+        iconColor="#74798C"
+        placeholderText={t(translations.token.transferList.searchPlaceHolder)}
+        onEnterPress={onEnterPress}
+        onChange={val => setValue(tranferToLowerCase(val))}
+        val={value}
+      ></SearchComp>
       {tokenBalance !== '0' && (
-        <BalanceWrap>{`${t(
-          translations.token.transferList.balance,
-        )}${tokenBalance}${symbol}`}</BalanceWrap>
+        <BalanceWrap>
+          {`${t(
+            translations.token.transferList.balance,
+          )}${tokenBalance}${symbol}`}{' '}
+        </BalanceWrap>
       )}
     </FilterWrap>
   );
@@ -107,11 +95,38 @@ const FilterWrap = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  padding: 0.2857rem 1.1429rem;
-  background: rgba(0, 84, 254, 0.04);
-  border-radius: 0.1429rem;
   display: flex;
   align-items: center;
+  .outerContainer {
+    flex-grow: 1;
+    width: 14.8571rem;
+    .transfer-search.input-container {
+      height: 2.28rem;
+      .input-wrapper {
+        border-radius: 1.14rem;
+        background: rgba(0, 84, 254, 0.04);
+        input {
+          color: #74798c;
+          ::placeholder {
+            color: rgba(116, 121, 140, 0.6);
+            font-size: 12px;
+          }
+        }
+        &.hover {
+          border: none;
+          input {
+            color: #74798c;
+          }
+        }
+        &.focus {
+          border: none;
+          input {
+            color: #74798c;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const BalanceWrap = styled.div`
