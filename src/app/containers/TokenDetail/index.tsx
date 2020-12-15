@@ -80,9 +80,6 @@ export function TokenDetail() {
 
 const TokenDetailWrap = styled.div`
   padding: 2.2857rem 0;
-  a {
-    color: #00acff !important;
-  }
 `;
 
 const SkeletonWrap = styled.div`
@@ -101,6 +98,9 @@ const HeaderWrap = styled.div`
   img {
     width: 20px;
     height: 20px;
+  }
+  a {
+    color: #00acff !important;
   }
   .basic-name {
     font-size: 1.7143rem;
