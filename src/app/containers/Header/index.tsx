@@ -9,7 +9,7 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { TextLogo } from '../../components/TextLogo';
-import { Search } from './Search/Loadable';
+import { Search } from './Search';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';

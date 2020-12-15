@@ -99,5 +99,32 @@ exports[`<Search  /> should match snapshot 1`] = `
 
 <div
   class="c0"
-/>
+>
+  <div
+    class="outerContainer"
+  >
+    <div
+      class="jsx-1159070929 with-label"
+    >
+      <div
+        class="jsx-1159070929 input-container header-search-bar"
+      >
+        <div
+          class="jsx-1159070929 input-wrapper line    "
+        >
+          <input
+            autocomplete="off"
+            class="jsx-1159070929 right-icon"
+            placeholder="Epoch / Block hash / Txn Hash / Address"
+            type="text"
+            value=""
+          />
+          <span
+            class="jsx-2293214799 input-icon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

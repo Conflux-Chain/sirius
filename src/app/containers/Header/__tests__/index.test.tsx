@@ -18,7 +18,7 @@ describe('<Header />', () => {
     expect(ui.container.firstChild).toMatchSnapshot();
   });
 
-  it.skip('should match the snapshot when link is matched', () => {
+  it('should match the snapshot when link is matched', () => {
     const ui = renderComponent();
     expect(ui.container.firstChild).toMatchSnapshot();
   });
@@ -29,7 +29,8 @@ describe('<Header />', () => {
     expect(
       ui.container.querySelector('.link.navbar-link-menu.navbar-link.expanded'),
     ).toBeDefined();
-    userEvent.click(ui.container.querySelector('input') as Element);
+
+    userEvent.click(ui.getByText('Contract'));
     await waitFor(
       () =>
         expect(

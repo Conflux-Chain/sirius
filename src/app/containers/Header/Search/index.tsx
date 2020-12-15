@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Search as SearchComp } from '../../../components/Search/Loadable';
+import { Search as SearchComp } from '../../../components/Search';
 
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
