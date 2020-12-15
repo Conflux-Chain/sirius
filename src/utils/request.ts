@@ -52,8 +52,10 @@ const parseJSON = response => {
     } else if (contentType.includes('text/html')) {
       return response.text();
     } else {
-      // contentType 还有其他类型，目前项目中用不到，后续按照需求在此处再添加
-      throw new Error(`Sorry, content-type ${contentType} not supported`);
+      // contentType 还有其他类型，目前项目中用不到
+      // 不能简单的报错，比如 image/x-icon 是 favicon 请求
+      // 此处直接返回 response，由业务代码处理其他类型的数据
+      return response;
     }
   } catch (error) {
     notify({
