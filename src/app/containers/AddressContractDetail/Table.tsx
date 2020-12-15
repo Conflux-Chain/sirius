@@ -28,7 +28,7 @@ import {
 import { isContractAddress, formatString } from 'utils';
 import { useContract } from 'utils/api';
 import { media } from 'styles/media';
-import { Check } from '@geist-ui/react-icons';
+import { Check } from '@zeit-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
 import PickerWithQuery from './PickerWithQuery';

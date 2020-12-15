@@ -13,7 +13,7 @@ import { Search } from './Search/Loadable';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
-import { Check } from '@geist-ui/react-icons';
+import { Check } from '@zeit-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-use';
