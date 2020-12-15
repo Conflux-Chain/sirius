@@ -29,8 +29,8 @@ export const Search = ({
   ...props
 }: Props) => {
   const [value, setValue] = useState(val);
-  const [type, setType] = useState('search');
-  const [clickable, setClickable] = useState(false);
+  const type = value ? 'delete' : 'search';
+  const clickable = !!value;
   const onIconRightClickHander = () => {
     if (type === 'delete') {
       setValue('');
@@ -41,20 +41,10 @@ export const Search = ({
     onChange && onChange(e.target.value);
   };
   useEffect(() => {
-    if (value) {
-      setType('delete');
-      setClickable(true);
-    } else {
-      setType('search');
-      setClickable(false);
-    }
-  }, [value]);
-
-  useEffect(() => {
     setValue(val);
   }, [val]);
   return (
-    <div className={outerClassname}>
+    <div className={`${outerClassname}`}>
       <Input
         value={value}
         width="100%"
@@ -69,7 +59,7 @@ export const Search = ({
         iconRightClickable={clickable}
         onIconRightClick={onIconRightClickHander}
         placeholder={placeholderText}
-        className={inputClassname}
+        className={`${inputClassname}`}
         onKeyPress={e => {
           if (e.key === 'Enter') onEnterPress && onEnterPress(e, value);
         }}

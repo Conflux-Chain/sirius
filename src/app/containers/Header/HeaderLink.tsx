@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { useRouteMatch, Link as RouterLink } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
-import { ChevronDown } from '@geist-ui/react-icons';
+import { ChevronDown } from '@zeit-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
 export type Node = string | ReactNode | JSX.Element;
