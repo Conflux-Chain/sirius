@@ -29,8 +29,8 @@ export const Search = ({
   ...props
 }: Props) => {
   const [value, setValue] = useState(val);
-  const [type, setType] = useState('search');
-  const [clickable, setClickable] = useState(false);
+  const type = value ? 'delete' : 'search';
+  const clickable = !!value;
   const onIconRightClickHander = () => {
     if (type === 'delete') {
       setValue('');
@@ -40,16 +40,6 @@ export const Search = ({
     setValue(e.target.value);
     onChange && onChange(e.target.value);
   };
-  useEffect(() => {
-    if (value) {
-      setType('delete');
-      setClickable(true);
-    } else {
-      setType('search');
-      setClickable(false);
-    }
-  }, [value]);
-
   useEffect(() => {
     setValue(val);
   }, [val]);
