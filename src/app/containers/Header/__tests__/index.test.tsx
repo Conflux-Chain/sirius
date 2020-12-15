@@ -18,7 +18,7 @@ describe('<Header />', () => {
     expect(ui.container.firstChild).toMatchSnapshot();
   });
 
-  it('should match the snapshot when link is matched', () => {
+  it.skip('should match the snapshot when link is matched', () => {
     const ui = renderComponent();
     expect(ui.container.firstChild).toMatchSnapshot();
   });
