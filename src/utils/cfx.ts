@@ -9,7 +9,7 @@ const cfxUrl = window.location.origin + '/rpc';
 const cfx = new Conflux({
   url: cfxUrl,
 });
-const mainnetFaucetAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
+const mainnetFaucetAddress = '0x829985ed802802e0e4bfbff25f79ccf5236016e9';
 const mainnetFaucetLastAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd';
 const testnetFaucetAddress = '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8';
 const testnetFaucetLastAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117';
