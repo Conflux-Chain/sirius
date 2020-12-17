@@ -154,7 +154,7 @@ export const formatNumber = (num, opt?) => {
   let result = '';
   /**
    * 1. 定义单位
-   * k - kilo, 10³
+   * K - kilo, 10³
    * M - mega, 10⁶
    * G - giga, 10⁹
    * T - tera, 10¹²
@@ -163,7 +163,7 @@ export const formatNumber = (num, opt?) => {
    * Z - zetta, 10²¹
    * Y - yotta, 10²⁴
    */
-  const UNITS = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+  const UNITS = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
   // 2. 拆分出整数和小数，小数默认值为 0
   const [intStr, decimalStr = '0'] = bNum.split('.');
   // 3. 只能处理 27 位数的单位，大于 27 位的字符串从头部截断保留
