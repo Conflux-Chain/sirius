@@ -99,6 +99,9 @@ const HeaderWrap = styled.div`
     width: 20px;
     height: 20px;
   }
+  a {
+    color: #00acff !important;
+  }
   .basic-name {
     font-size: 1.7143rem;
     font-weight: 500;

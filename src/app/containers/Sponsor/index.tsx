@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { Input, Button, Modal } from '@cfxjs/react-ui';
+import { Button, Modal } from '@cfxjs/react-ui';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
+import { Search as SearchComp } from '../../components/Search/Loadable';
 import {
   isAddress,
   getEllipsStr,
@@ -30,6 +31,7 @@ const errInsufficientFee = 'errInsufficientFee';
 const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
+const errUpgraded = 'errUpgraded';
 export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
@@ -56,7 +58,7 @@ export function Sponsor() {
     setLoading(true);
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
     await fetchIsAppliable(address);
-    const faucetParams = await faucet.getFaucetParams();
+    const faucetParams = await faucet.getFaucetParams(address);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
@@ -99,8 +101,8 @@ export function Sponsor() {
     setStorageBound(defaultStr);
     setCanApply(false);
   };
-  const addressInputChanger = e => {
-    setInputAddressVal(e.target.value);
+  const addressInputChanger = val => {
+    setInputAddressVal(val);
   };
 
   const searchClick = async () => {
@@ -133,6 +135,9 @@ export function Sponsor() {
           break;
         case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
           setErrorMsgForApply(errCannotReplaced);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET':
+          setErrorMsgForApply(errUpgraded);
           break;
         default:
           setErrorMsgForApply('');
@@ -223,23 +228,15 @@ export function Sponsor() {
       <Wrapper>
         <Header>{t(translations.sponsor.title)}</Header>
         <SearchContainer>
-          <Input
-            className="inputComp"
+          <SearchComp
+            outerClassname="outerContainer"
+            inputClassname="sponsor-search"
+            iconColor="#74798C"
+            placeholderText={t(translations.sponsor.searchAddress)}
+            onEnterPress={searchClick}
             onChange={addressInputChanger}
-            value={inputAddressVal}
-            placeholder={t(translations.sponsor.searchAddress)}
-            onKeyPress={e => {
-              if (e.key === 'Enter') searchClick();
-            }}
-          ></Input>
-          <Button
-            variant="solid"
-            color="primary"
-            className="searchBtn"
-            onClick={searchClick}
-          >
-            {t(translations.general.search)}
-          </Button>
+            val={inputAddressVal}
+          ></SearchComp>
         </SearchContainer>
         <BlockContainer>
           <div className="innerContainer">
@@ -419,6 +416,7 @@ export function Sponsor() {
               errReplaceThird,
               errContractNotFound,
               errCannotReplaced,
+              errUpgraded,
             ].indexOf(errorMsgForApply) !== -1
               ? t(translations.sponsor[errorMsgForApply])
               : errorMsgForApply}
@@ -508,46 +506,42 @@ const Header = styled.div`
   }
 `;
 const SearchContainer = styled.div`
-  background: #ffffff;
-  box-shadow: 12px 8px 24px -12px rgba(20, 27, 50, 0.12);
-  border-radius: 5px;
-  padding: 0.5714rem 1.1429rem;
   display: inline-block;
+  width: 28.5714rem;
+  .outerContainer {
+    flex-grow: 1;
+    .sponsor-search.input-container {
+      height: 2.28rem;
+      .input-wrapper {
+        border-radius: 1.14rem;
+        background: rgba(0, 84, 254, 0.04);
+        input {
+          color: #74798c;
+          ::placeholder {
+            font-size: 12px;
+            color: rgba(116, 121, 140, 0.6);
+          }
+        }
+        &.hover {
+          border: none;
+          input {
+            color: #74798c;
+          }
+        }
+        &.focus {
+          border: none;
+          input {
+            color: #74798c;
+          }
+        }
+      }
+    }
+  }
   ${media.s} {
     display: flex;
     align-items: center;
     width: 100%;
     box-sizing: border-box;
-  }
-  .input-container.inputComp {
-    width: 34.8571rem;
-    height: 2.1429rem;
-    margin-right: 2.4286rem;
-    ${media.s} {
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-  .inputComp {
-    .input-wrapper {
-      background-color: #fafbfc;
-      margin: 0;
-      height: 2.1429rem;
-      line-height: initial;
-      border: none;
-      color: #97a3b4;
-      &.hover {
-        background-color: #fafbfc !important;
-      }
-      &.focus {
-        background-color: #fafbfc !important;
-      }
-      ${media.s} {
-        height: 2.5rem;
-        margin-right: 2.0833rem;
-        width: 13.3333rem;
-      }
-    }
   }
 `;
 const BlockContainer = styled.div`

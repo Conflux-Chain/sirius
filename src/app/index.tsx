@@ -33,8 +33,8 @@ import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
+import { GlobalNotify } from './containers/GlobalNotify';
 
-import Loading from './components/Loading';
 WebFontLoader.load({
   custom: {
     families: ['Circular Std:n4,i4,n7,i7,n8,i8'],
@@ -64,7 +64,6 @@ export function App() {
           <Header />
           <Main>
             <Switch>
-              <Route exact path="/loading" component={Loading} />
               <Route exact path="/" component={HomePage} />
               <Route exact path="/packing/:txHash" component={PackingPage} />
               <Route exact path="/contract" component={Contract} />
@@ -102,6 +101,7 @@ export function App() {
             </Switch>
           </Main>
           <Footer />
+          <GlobalNotify />
           <GlobalStyle />
         </CfxProvider>
       </BrowserRouter>

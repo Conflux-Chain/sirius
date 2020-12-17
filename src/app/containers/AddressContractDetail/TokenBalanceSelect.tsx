@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
 import { Description } from 'app/components/Description';
 import { Card } from '../../components/Card';
-import { ChevronUp } from '@geist-ui/react-icons';
+import { ChevronUp } from '@zeit-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
