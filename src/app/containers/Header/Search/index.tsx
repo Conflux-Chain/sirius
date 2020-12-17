@@ -78,10 +78,11 @@ export const Search = () => {
 };
 
 const Container = styled.div`
-  width: 30rem;
+  max-width: 30rem;
+  flex-grow: 1;
+  padding: 0px 1.5rem;
   .outerContainer {
     flex-grow: 1;
-    padding: 0 1.5rem;
     .header-search-bar.input-container {
       height: 2.28rem;
       .input-wrapper {
