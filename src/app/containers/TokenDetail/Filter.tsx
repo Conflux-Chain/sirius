@@ -93,7 +93,7 @@ export const Filter = ({
 
 const FilterWrap = styled.div`
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
   display: flex;
   align-items: center;
