@@ -2,7 +2,12 @@
 
 exports[`<Search  /> should match snapshot 1`] = `
 .c0 {
-  width: 30rem;
+  max-width: 30rem;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0px 1.5rem;
 }
 
 .c0 .outerContainer {
@@ -10,7 +15,6 @@ exports[`<Search  /> should match snapshot 1`] = `
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  padding: 0 1.5rem;
 }
 
 .c0 .outerContainer .header-search-bar.input-container {
