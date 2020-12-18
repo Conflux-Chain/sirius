@@ -259,7 +259,11 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) => {
         let nameTag;
-        if (value === address && contractInfo && contractInfo.name) {
+        if (
+          value === address &&
+          contractInfo &&
+          contractInfo.name !== 'loading...'
+        ) {
           nameTag = contractInfo.name;
         }
         return tokenColunms.from.render(value, row, index, {
@@ -272,7 +276,11 @@ export function Table({ address }) {
       ...tokenColunms.to,
       render: (value, row, index) => {
         let nameTag;
-        if (value === address && contractInfo && contractInfo.name) {
+        if (
+          value === address &&
+          contractInfo &&
+          contractInfo.name !== 'loading...'
+        ) {
           nameTag = contractInfo.name;
         }
         return tokenColunms.to.render(value, row, index, {
