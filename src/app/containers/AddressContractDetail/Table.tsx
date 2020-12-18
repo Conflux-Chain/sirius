@@ -233,12 +233,14 @@ export function Table({ address }) {
     location.search || '',
   );
 
-  const { data: contractInfo } = useContract(isContract && address, [
+  let { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
     'name',
   ]);
-
+  if (!isContract) {
+    contractInfo = null;
+  }
   useEffect(() => {
     history.replace(
       queryString.stringifyUrl({
@@ -259,11 +261,7 @@ export function Table({ address }) {
       ...tokenColunms.from,
       render: (value, row, index) => {
         let nameTag;
-        if (
-          value === address &&
-          contractInfo &&
-          contractInfo.name !== t(translations.general.loading)
-        ) {
+        if (value === address && contractInfo && contractInfo.name) {
           nameTag = contractInfo.name;
         }
         return tokenColunms.from.render(value, row, index, {
@@ -276,11 +274,7 @@ export function Table({ address }) {
       ...tokenColunms.to,
       render: (value, row, index) => {
         let nameTag;
-        if (
-          value === address &&
-          contractInfo &&
-          contractInfo.name !== t(translations.general.loading)
-        ) {
+        if (value === address && contractInfo && contractInfo.name) {
           nameTag = contractInfo.name;
         }
         return tokenColunms.to.render(value, row, index, {
