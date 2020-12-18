@@ -262,7 +262,7 @@ export function Table({ address }) {
         if (
           value === address &&
           contractInfo &&
-          contractInfo.name !== 'loading...'
+          contractInfo.name !== t(translations.general.loading)
         ) {
           nameTag = contractInfo.name;
         }
@@ -279,7 +279,7 @@ export function Table({ address }) {
         if (
           value === address &&
           contractInfo &&
-          contractInfo.name !== 'loading...'
+          contractInfo.name !== t(translations.general.loading)
         ) {
           nameTag = contractInfo.name;
         }
