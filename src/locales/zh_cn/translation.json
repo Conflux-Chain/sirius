@@ -135,7 +135,7 @@
     "viewAll": "查看全部",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
     "address": {
-      "editContract": "点击编辑合同",
+      "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
       "address": "地址"
     },
