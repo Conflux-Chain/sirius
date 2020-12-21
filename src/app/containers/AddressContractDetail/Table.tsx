@@ -233,12 +233,14 @@ export function Table({ address }) {
     location.search || '',
   );
 
-  const { data: contractInfo } = useContract(isContract && address, [
+  let { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
     'name',
   ]);
-
+  if (!isContract) {
+    contractInfo = null;
+  }
   useEffect(() => {
     history.replace(
       queryString.stringifyUrl({
