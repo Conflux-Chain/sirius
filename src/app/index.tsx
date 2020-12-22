@@ -34,6 +34,7 @@ import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 import { GlobalNotify } from './containers/GlobalNotify';
+import { Search } from './containers/Search';
 
 WebFontLoader.load({
   custom: {
@@ -97,6 +98,7 @@ export function App() {
                 path="/address/:address"
                 component={AddressContractDetailPage}
               />
+              <Route path="/search/:text" component={Search} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>
