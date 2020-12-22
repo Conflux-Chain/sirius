@@ -16,7 +16,7 @@ const DURATIONS = [
   ['all', 'ALL'],
 ];
 export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
-  const { plot, isError, setDuration, duration } = usePlot('day');
+  const { plot, isError, setDuration, duration, format } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
   const padding = small ? 16 : 48;
@@ -27,27 +27,26 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
       <Container style={{ width }} small={small}>
         <Title>{t(`charts.${indicator}.title`)}</Title>
         <Description>{t(`charts.${indicator}.description`)}</Description>
-        {true && (
-          <Draw
-            plot={plot}
-            width={(width - padding) * 0.83}
-            indicator={indicator}
-            small={small}
-          >
-            <Buttons>
-              {DURATIONS.map(([d, key]) => (
-                <Button
-                  key={key}
-                  small={small}
-                  active={d === duration}
-                  onClick={() => setDuration(d)}
-                >
-                  {key}
-                </Button>
-              ))}
-            </Buttons>
-          </Draw>
-        )}
+        <Draw
+          plot={plot}
+          width={(width - padding) * 0.83}
+          indicator={indicator}
+          small={small}
+          format={format}
+        >
+          <Buttons>
+            {DURATIONS.map(([d, key]) => (
+              <Button
+                key={key}
+                small={small}
+                active={d === duration}
+                onClick={() => setDuration(d)}
+              >
+                {key}
+              </Button>
+            ))}
+          </Buttons>
+        </Draw>
       </Container>
     );
   }
@@ -60,6 +59,7 @@ function Draw({
   height = width * 0.55,
   small,
   children,
+  format,
 }) {
   const scale = width / 359;
   const containerRef = useRef(null);
@@ -89,6 +89,7 @@ function Draw({
       X_AXIS_HEIGHT,
       width,
       height,
+      format,
       ctxBg,
       ctxLine,
       plot,
@@ -122,6 +123,7 @@ function Draw({
     indicator,
     plot,
     width,
+    format,
     TRI_HEIGHT,
     X_AXIS_HEIGHT,
     Y_AXIS_WIDTH,
