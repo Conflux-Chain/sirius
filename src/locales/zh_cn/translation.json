@@ -271,7 +271,10 @@
         "503": "服务不可用。",
         "504": "网关超时。"
       }
-    }
+    },
+    "connnectWalletSubmit": "连接钱包以提交",
+    "waitForConfirm": "等待确认",
+    "txRejected": "交易已被拒绝"
   },
   "sponsor": {
     "title": "赞助合约",

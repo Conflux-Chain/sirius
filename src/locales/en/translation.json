@@ -271,7 +271,10 @@
         "503": "Service Unavailable.",
         "504": "Gateway Timeout."
       }
-    }
+    },
+    "connnectWalletSubmit": "Connect wallet to submit",
+    "waitForConfirm": "Waiting For Confirmation",
+    "txRejected": "Transaction Rejected"
   },
   "sponsor": {
     "title": "Contract Sponsor",
