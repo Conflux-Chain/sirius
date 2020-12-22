@@ -26,7 +26,7 @@ export default function createDraw({
   RECT_HEIGHT = 0,
   Y_AXIS_WIDTH = 0,
   X_AXIS_HEIGHT = 0,
-  // NUM_X_GRID = 7,
+  format,
   width,
   height,
   ctxBg,
@@ -135,8 +135,8 @@ export default function createDraw({
         ctxBg.translate(x, height - 12);
         ctxBg.rotate((-50 * Math.PI) / 180);
         const d = dayjs.unix(t);
-        ctxBg.fillText(d.format('MM/DD'), 0, -5);
-        ctxBg.fillText(d.format('HH:mm'), 0, 5);
+        ctxBg.fillText(d.format(format), 0, -5);
+        // ctxBg.fillText(d.format('HH:mm'), 0, 5);
         ctxBg.restore();
       }
 
@@ -226,7 +226,7 @@ export default function createDraw({
           ctxLine.textAlign = 'left';
           ctxLine.font = '10px Circular Std';
           ctxLine.fillText(
-            dayjs.unix(t).format('YYYY/MM/DD HH:mm'),
+            dayjs.unix(t).format(format),
             rectTL + 5,
             y - POPUP_PADDING - TRI_HEIGHT - RECT_HEIGHT * 0.6,
           );
