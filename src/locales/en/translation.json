@@ -272,7 +272,8 @@
         "503": "Service Unavailable.",
         "504": "Gateway Timeout."
       }
-    }
+    },
+    "exportRecords": "Export Current Records"
   },
   "sponsor": {
     "title": "Contract Sponsor",

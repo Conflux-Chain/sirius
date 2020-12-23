@@ -27,7 +27,7 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString } from 'utils';
 import { useContract } from 'utils/api';
-import { media } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@zeit-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
@@ -215,6 +215,7 @@ const TxDirectionFilterDropdown = styled.div`
 `;
 
 export function Table({ address }) {
+  const bp = useBreakpoint();
   const { t } = useTranslation();
   const loadingText = t(translations.general.loading);
   const location = useLocation();
@@ -229,10 +230,9 @@ export function Table({ address }) {
       queries?.tab !== 'transfers' &&
       !isContract,
   );
-  const { minTimestamp, maxTimestamp } = queryString.parse(
+  const { minTimestamp, maxTimestamp, tab } = queryString.parse(
     location.search || '',
   );
-
   let { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
@@ -416,10 +416,46 @@ export function Table({ address }) {
         },
   ];
 
+  const showExportRecordsButton =
+    bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
+  const handleExportRecords = () => {
+    const exportRecordsPathMap = {
+      transfers: 'transfer',
+      transaction: 'transaction',
+    };
+    const exportRecordsPath =
+      typeof tab === 'string' && exportRecordsPathMap[tab];
+    if (exportRecordsPath) {
+      // @todo why need transferType of /v1/report/transfer?
+      const url = queryString.stringifyUrl({
+        url: `/v1/report/${exportRecordsPath}`,
+        query: {
+          minTimestamp,
+          maxTimestamp,
+        },
+      });
+      window.open(url);
+    }
+  };
+
   return (
     <TableWrap>
       {filterVisible && (
         <FilterWrap>
+          <ExportRecordsButtonWrapper
+            className={clsx({
+              show: showExportRecordsButton,
+            })}
+          >
+            <Button
+              size="small"
+              variant="solid"
+              color="primary"
+              onClick={handleExportRecords}
+            >
+              {t(translations.general.exportRecords)}
+            </Button>
+          </ExportRecordsButtonWrapper>
           <PickerWithQuery
             key="date-picker-query"
             minTimestamp={minTimestamp}
@@ -523,5 +559,13 @@ const FilterWrap = styled.div`
     left: 0;
     top: 7rem;
     z-index: 10;
+  }
+`;
+
+const ExportRecordsButtonWrapper = styled.span`
+  display: none;
+  margin-right: 1rem;
+  &.show {
+    display: inherit;
   }
 `;
