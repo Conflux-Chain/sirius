@@ -49,8 +49,12 @@ export function App() {
   return (
     <SWRConfig
       value={{
+        // disable auto polling, reconnect or retry
         revalidateOnFocus: false,
+        revalidateOnReconnect: false,
         refreshInterval: 0,
+        shouldRetryOnError: false,
+        errorRetryCount: 0,
       }}
     >
       <BrowserRouter>

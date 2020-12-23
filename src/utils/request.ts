@@ -93,16 +93,15 @@ const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
       });
       reject(new Error('fetch timeout'));
     }, timestamp || TIMEOUT_TIMESTAMP);
-    windowFetch(url, opts).then(
-      response => {
+    windowFetch(url, opts)
+      .then(response => {
         clearTimeout(timeout);
         resolve(response);
-      },
-      error => {
+      })
+      .catch(error => {
         clearTimeout(timeout);
         reject(error);
-      },
-    );
+      });
   });
 };
 
@@ -130,6 +129,15 @@ const fetch = (url, opts = {}) => {
     .then(checkResponse)
     .catch(error => {
       // 添加错误请求日志输出，或者收集统计信息
+
+      // A fetch() promise will reject with a TypeError when a network error is encountered or CORS is misconfigured on the server-side,
+      // although this usually means permission issues or similar — a 404 does not constitute a network error, for example.
+      // For detail: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+      if (error.name === 'TypeError') {
+        notify({
+          code: 20004,
+        });
+      }
       throw error;
     });
 };

@@ -4,8 +4,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
 <Context.Provider
   value={
     Object {
+      "errorRetryCount": 0,
       "refreshInterval": 0,
       "revalidateOnFocus": false,
+      "revalidateOnReconnect": false,
+      "shouldRetryOnError": false,
     }
   }
 >
