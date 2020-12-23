@@ -49,7 +49,9 @@
     "labelCountBefore": "Total of",
     "labelCountAfter": "{{type}}",
     "blocks": "Blocks",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "latestBlocks": "Latest Blocks",
+    "latestTransactions": "Latest Transactions"
   },
   "tokens": {
     "title": "Tokens",

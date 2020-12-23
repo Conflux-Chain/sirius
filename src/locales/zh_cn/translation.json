@@ -49,7 +49,9 @@
     "labelCountBefore": "共计",
     "labelCountAfter": "个 {{type}} ",
     "blocks": "区块",
-    "transactions": "交易"
+    "transactions": "交易",
+    "latestBlocks": "最新区块",
+    "latestTransactions": "最新交易"
   },
   "tokens": {
     "title": "代币",
