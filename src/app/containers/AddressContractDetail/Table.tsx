@@ -440,15 +440,11 @@ export function Table({ address }) {
               let minTimestamp, maxTimestamp;
 
               if (dateQuery[0]) {
-                minTimestamp = Math.round(
-                  new Date(dateQuery[0].toISOString()).getTime() / 1000,
-                );
+                minTimestamp = Math.floor(+dateQuery[0] / 1000);
               }
 
               if (dateQuery[1]) {
-                maxTimestamp = Math.round(
-                  new Date(dateQuery[1].toISOString()).getTime() / 1000,
-                );
+                maxTimestamp = Math.floor(+dateQuery[1] / 1000);
               }
 
               if (
@@ -461,6 +457,7 @@ export function Table({ address }) {
                 maxTimestamp === queries.maxTimestamp
               )
                 return;
+
               history.push(
                 queryString.stringifyUrl({
                   url: location.pathname,
