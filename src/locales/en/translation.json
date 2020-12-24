@@ -87,13 +87,18 @@
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
-    "btn": "Go to homepage"
+    "btn": "Go TO HOMEPAGE"
   },
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
-    "btn": "Go to homepage"
+    "btn": "Go TO HOMEPAGE"
+  },
+  "notFoundContract": {
+    "title": "The contract can not be found",
+    "label": "Sorry! The contract does not exist.",
+    "btn": "Go TO HOMEPAGE"
   },
   "token": {
     "totalSupplay": "Total Supply",

@@ -24,6 +24,7 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
+import { NotFoundContractPage } from './containers/NotFoundContractPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
@@ -66,6 +67,11 @@ export function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/packing/:txHash" component={PackingPage} />
+              <Route
+                exact
+                path="/notfound/:contractAddress"
+                component={NotFoundContractPage}
+              />
               <Route exact path="/contract" component={Contract} />
               <Route
                 exact
