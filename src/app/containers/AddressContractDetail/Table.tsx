@@ -444,6 +444,9 @@ export function Table({ address }) {
     }
   };
 
+  // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
+  const maxT = maxTimestamp && String(Number(maxTimestamp) - 1);
+
   return (
     <TableWrap>
       {filterVisible && (
@@ -465,7 +468,7 @@ export function Table({ address }) {
           <PickerWithQuery
             key="date-picker-query"
             minTimestamp={minTimestamp}
-            maxTimestamp={maxTimestamp}
+            maxTimestamp={maxT}
             onChange={dateQuery => {
               if (!dateQuery)
                 return history.push(
@@ -486,7 +489,7 @@ export function Table({ address }) {
               }
 
               if (dateQuery[1]) {
-                maxTimestamp = Math.floor(+dateQuery[1] / 1000);
+                maxTimestamp = Math.round(+dateQuery[1] / 1000);
               }
 
               if (
