@@ -3,7 +3,7 @@
  * Contract Detail
  *
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -44,7 +44,7 @@ interface RequestBody {
   [key: string]: any;
 }
 const MAXSIZEFORICON = 30; //kb
-const imgErrorNode = <img src={imgError} />;
+const imgErrorNode = <img src={imgError} alt="error" />;
 const fieldsContract = [
   'address',
   'type',
@@ -102,39 +102,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     setSite(e.target.value);
   };
 
-  const updateCanSubmit = useCallback(() => {
-    let isSubmitable = false;
-    if (accountAddress) {
-      if (
-        !isAddressError &&
-        !isAdminError &&
-        !isErc20Error &&
-        !isNameError &&
-        !isSiteError &&
-        !isSourceCodeError &&
-        !isAbiError
-      ) {
-        isSubmitable = true;
-        setTxData(getTxData());
-      } else {
-        setTxData('');
-      }
-    } else {
-      setTxData('');
-      isSubmitable = true;
-    }
-    setBtnShouldClick(isSubmitable);
-  }, [
-    accountAddress,
-    isAddressError,
-    isAdminError,
-    isErc20Error,
-    isNameError,
-    isSiteError,
-    isSourceCodeError,
-    isAbiError,
-    getTxData,
-  ]);
   useEffect(() => {
     setContractImgSrc(contractDetail.icon || '');
     setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
@@ -155,6 +122,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
     contractDetail.abi,
@@ -167,21 +135,51 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     contractDetail.token,
     t,
     type,
-    checkAdminThenToken,
   ]);
-  useEffect(() => {
-    updateCanSubmit();
-  }, [
-    type,
-    addressVal,
-    contractName,
-    site,
-    sourceCode,
-    abi,
-    updateCanSubmit,
-    contractImgSrc,
-    tokenImgSrc,
-  ]);
+  useEffect(
+    () => {
+      let isSubmitable = false;
+      if (accountAddress) {
+        if (
+          !isAddressError &&
+          !isAdminError &&
+          !isErc20Error &&
+          !isNameError &&
+          !isSiteError &&
+          !isSourceCodeError &&
+          !isAbiError
+        ) {
+          isSubmitable = true;
+          setTxData(getTxData());
+        } else {
+          setTxData('');
+        }
+      } else {
+        setTxData('');
+        isSubmitable = true;
+      }
+      setBtnShouldClick(isSubmitable);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      type,
+      addressVal,
+      contractName,
+      site,
+      sourceCode,
+      abi,
+      contractImgSrc,
+      tokenImgSrc,
+      accountAddress,
+      isAddressError,
+      isAdminError,
+      isErc20Error,
+      isNameError,
+      isSiteError,
+      isSourceCodeError,
+      isAbiError,
+    ],
+  );
 
   const addressOnBlur = () => {
     checkAdminThenToken(tokenImgSrc);
@@ -198,7 +196,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   useEffect(() => {
     switch (type) {
       case 'create':
-        console.log('===');
         if (addressVal) {
           checkAdminThenToken(tokenImgSrc);
         }
@@ -207,27 +204,31 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         checkAdminThenToken(tokenImgSrc);
         break;
     }
-  }, [addressVal, checkAdminThenToken, tokenImgSrc, type]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressVal]);
 
   const nameOnBlur = () => {
     checkContractName();
   };
   useEffect(() => {
     checkContractName();
-  }, [checkContractName, contractName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractName]);
 
   const siteOnBlur = () => {
     checkSite();
   };
   useEffect(() => {
     checkSite();
-  }, [checkSite, site]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [site]);
   useEffect(() => {
     if (sourceCode) {
       setIsSourceCodeError(false);
     } else {
       setIsSourceCodeError(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceCode]);
   useEffect(() => {
     if (abi) {
@@ -235,6 +236,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     } else {
       setIsAbiError(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [abi]);
   useEffect(() => {
     if (accountAddress) {
@@ -252,7 +254,8 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     } else {
       setHoverTips('contract.beforeContractSubmitTip');
     }
-  }, [accountAddress, addressVal, checkAdminThenToken, tokenImgSrc, type]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountAddress]);
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
@@ -262,7 +265,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const removeTokenIcon = () => {
     setTokenImgSrc('');
     setIsErc20Error(false);
-    if (warningMessage == 'contract.errorTokenICon') {
+    if (warningMessage === 'contract.errorTokenICon') {
       setWarningMessage('');
     }
   };
@@ -329,11 +332,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       setIsAddressError(false);
       setErrorMsgForAddress('');
       if (accountAddress) {
-        reqContract({ address: addressVal, fileds: fieldsContract }).then(
+        reqContract({ address: addressVal, fields: fieldsContract }).then(
           dataContractInfo => {
             if (
-              dataContractInfo.from == accountAddress ||
-              dataContractInfo.admin == accountAddress
+              dataContractInfo.from === accountAddress ||
+              dataContractInfo.admin === accountAddress
             ) {
               setIsAdminError(false);
               if (tokenIcon) {
@@ -358,6 +361,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         );
       }
     } else {
+      debugger;
       setIsAddressError(true);
       setErrorMsgForAddress('contract.invalidContractAddress');
     }
@@ -555,6 +559,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         </div>
       </TopContainer>
       <TabContainer>
+        <div className="jsonContainer">test</div>
         <Tabs initialValue="1">
           <Tabs.Item label={tabsLabelSourceCode} value="1">
             <SkelontonContainer shown={loading}>
@@ -919,7 +924,12 @@ const StyledTabelWrapper = styled.div`
 `;
 const TabContainer = styled.div`
   margin-top: 2.3571rem;
-
+  position: relative;
+  .jsonContainer {
+    position: absolute;
+    right: 0;
+    top: 14px;
+  }
   ${media.s} {
     margin-top: 2rem;
   }
