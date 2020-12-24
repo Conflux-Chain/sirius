@@ -142,5 +142,4 @@ const fetch = (url, opts = {}) => {
     });
 };
 
-window.fetch = fetch;
 export default fetch;
