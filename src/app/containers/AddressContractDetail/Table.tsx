@@ -230,9 +230,13 @@ export function Table({ address }) {
       queries?.tab !== 'transfers' &&
       !isContract,
   );
-  const { minTimestamp, maxTimestamp, tab } = queryString.parse(
-    location.search || '',
-  );
+  // set default tab to transaction
+  const {
+    minTimestamp,
+    maxTimestamp,
+    tab = 'transaction',
+    accountAddress,
+  } = queryString.parse(location.search || '');
   let { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
@@ -425,6 +429,7 @@ export function Table({ address }) {
     };
     const exportRecordsPath =
       typeof tab === 'string' && exportRecordsPathMap[tab];
+
     if (exportRecordsPath) {
       // @todo why need transferType of /v1/report/transfer?
       const url = queryString.stringifyUrl({
@@ -432,6 +437,7 @@ export function Table({ address }) {
         query: {
           minTimestamp,
           maxTimestamp,
+          accountAddress,
         },
       });
       window.open(url);
