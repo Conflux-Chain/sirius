@@ -109,6 +109,11 @@
     "addressTip": "如果您在搜索 Conflux 地址，请搜索以 0x0 (内置合约），0x1（用户账户），或者 0x8（智能合约）开头的地址。",
     "btn": "前往首页"
   },
+  "notFoundContract": {
+    "title": "无法查询到该合约",
+    "label": "抱歉！该合约不存在。",
+    "btn": "前往首页"
+  },
   "token": {
     "totalSupplay": "总供应量",
     "contract": "合约",

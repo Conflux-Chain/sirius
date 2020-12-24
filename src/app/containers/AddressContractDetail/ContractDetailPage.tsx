@@ -4,9 +4,9 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
@@ -30,7 +30,7 @@ import {
   Top,
   Head,
 } from './layouts';
-import { isContractAddress } from 'utils';
+import { isContractAddress, isInnerContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
@@ -41,8 +41,21 @@ export const ContractDetailPage = memo(() => {
   const notAvaiableText = t(translations.general.security.notAvailable);
   const { address } = useParams<RouteParams>();
   const bp = useBreakpoint();
+  const history = useHistory();
 
-  const { data: contractInfo } = useContract(address, ['website']);
+  const { data: contractInfo } = useContract(address, [
+    'website',
+    'transactionHash',
+  ]);
+  // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+  //   history.replace(`/notfound/${address}`);
+  //   return null;
+  // }
+  useEffect(() => {
+    if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+      history.replace(`/notfound/${address}`);
+    }
+  }, [address, history, contractInfo.transactionHash]);
 
   return (
     <>

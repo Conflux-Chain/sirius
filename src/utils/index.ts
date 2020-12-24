@@ -11,6 +11,12 @@ import fetch from './request';
 
 dayjs.extend(relativeTime);
 
+export const innerContract = [
+  '0x0888000000000000000000000000000000000000',
+  '0x0888000000000000000000000000000000000001',
+  '0x0888000000000000000000000000000000000002',
+];
+
 export const delay = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -466,7 +472,7 @@ export function isContractAddress(str: string) {
 }
 
 export function isInnerContractAddress(str: string) {
-  return /^0x0[0-9a-fA-F]{39}$/.test(str);
+  return innerContract.indexOf(str) > -1;
 }
 
 export const isHash = (str: string) => {

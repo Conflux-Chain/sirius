@@ -63,6 +63,7 @@ export const Search = () => {
   return (
     <Container>
       <SearchComp
+        val=""
         outerClassname="outerContainer"
         inputClassname="header-search-bar"
         iconColor="#0054FE"

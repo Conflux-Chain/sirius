@@ -25,6 +25,16 @@ interface Query {
   transactionHash?: string;
 }
 
+const getContractName = (value, row, type) => {
+  if (type === 'from' && row.fromContractInfo && row.fromContractInfo.name)
+    return formatString(row.fromContractInfo.name, 'tag');
+  else if (type === 'to' && row.toContractInfo && row.toContractInfo.name)
+    return formatString(row.toContractInfo.name, 'tag');
+  else if (type === 'to' && row.contractInfo && row.contractInfo.name)
+    return formatString(row.contractInfo.name, 'tag');
+  else return formatString(value, 'address');
+};
+
 const renderFilterableAddress = (
   value,
   row,
@@ -32,7 +42,6 @@ const renderFilterableAddress = (
   pOpt?: {
     type?: 'to' | 'from';
     isToken?: boolean;
-    nameTag?: string;
   },
 ) => {
   const opt = {
@@ -45,25 +54,17 @@ const renderFilterableAddress = (
 
   const renderTo = () => {
     if (filter === value) {
-      if (opt.nameTag) {
-        return (
-          <Text span hoverValue={value}>
-            {formatString(opt.nameTag, 'tag')}
-          </Text>
-        );
-      } else {
-        return (
-          <Text span hoverValue={value}>
-            {formatString(value, 'address')}
-          </Text>
-        );
-      }
+      return (
+        <Text span hoverValue={value}>
+          {getContractName(value, row, opt.type)}
+        </Text>
+      );
     } else if (value) {
       if (opt.isToken) {
         return (
           <LinkWithFilter href={value}>
             <Text span hoverValue={value}>
-              {formatString(value, 'address')}
+              {getContractName(value, row, opt.type)}
             </Text>
           </LinkWithFilter>
         );
@@ -71,7 +72,7 @@ const renderFilterableAddress = (
         return (
           <Link href={`/address/${value}`}>
             <Text span hoverValue={value}>
-              {formatString(value, 'address')}
+              {getContractName(value, row, opt.type)}
             </Text>
           </Link>
         );
