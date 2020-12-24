@@ -79,6 +79,7 @@ export const Transaction = () => {
     data,
     contractCreated,
     txExecErrorMsg,
+    confirmedEpochCount,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
@@ -470,6 +471,11 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
+              <StyledEpochConfirmationsWrapper>
+                {t(translations.transaction.epochConfirmations, {
+                  count: confirmedEpochCount,
+                })}
+              </StyledEpochConfirmationsWrapper>
             </SkeletonContainer>
           </Description>
           <Description
@@ -709,4 +715,9 @@ const StyledTransactionsWrapper = styled.div`
   ${media.s} {
     padding-bottom: 0;
   }
+`;
+
+const StyledEpochConfirmationsWrapper = styled.span`
+  margin-left: 1rem;
+  vertical-align: middle;
 `;
