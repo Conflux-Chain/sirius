@@ -63,6 +63,7 @@ export const Header = memo(() => {
           ],
           href: '/sponsor',
         },
+        { title: t(translations.header.contracts), href: '/contracts' },
       ],
     },
     // charts

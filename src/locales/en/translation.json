@@ -59,13 +59,19 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "table": {
-      "number": "Number",
+      "number": "#",
       "token": "Token",
       "transfer": "Transfers",
       "totalSupply": "Total Supply",
       "holders": "Holders",
       "contract": "Contract"
     }
+  },
+  "contracts": {
+    "title": "Internal Contracts",
+    "description": "Internal Contracts",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "internal contracts"
   },
   "header": {
     "home": "Home",
@@ -74,6 +80,7 @@
     "contract": "Contract",
     "contractCreation": "Contract Creation",
     "contractSponsor": "Contract Sponsor",
+    "contracts": "Internal Contracts",
     "charts": "Charts",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -187,6 +194,12 @@
         "from": "From",
         "to": "To",
         "quantity": "Quantity"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "Contract Name Tag",
+        "address": "Contract Address",
+        "transactionCount": "Txn"
       }
     },
     "pagination": {

@@ -67,6 +67,12 @@
       "contract": "合约"
     }
   },
+  "contracts": {
+    "title": "内置合约",
+    "description": "内置合约",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "个内置合约"
+  },
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
@@ -74,6 +80,7 @@
     "contract": "合约",
     "contractCreation": "创建合约",
     "contractSponsor": "赞助合约",
+    "contracts": "内置合约",
     "charts": "图表",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -187,6 +194,12 @@
         "from": "发送方",
         "to": "接收方",
         "quantity": "数量"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "合约名称标签",
+        "address": "合约地址",
+        "transactionCount": "交易数"
       }
     },
     "pagination": {
