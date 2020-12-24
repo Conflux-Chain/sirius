@@ -25,7 +25,18 @@
       "title": "Contract Edit"
     },
     "sourceCodeShort": "Source Code",
-    "abiShort": "ABI"
+    "abiShort": "ABI",
+    "maxSize": "Max size of 30KB",
+    "addressPlaceholder": "Please enter an address starting with 0x8",
+    "namePlaceholder": "Support up to 35 characters",
+    "sitePlaceholder": "http(s)://",
+    "invalidContractAddress": "Invalid Conflux Contract Address",
+    "invalidNameTag": "The character length has reached the maximum limit",
+    "invalidUrl": "Incorrect URL",
+    "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
+    "invalidIconSize": "Invalid icon size, please try again.",
+    "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract."
   },
   "contractDetail": {
     "title": "Contract Detail",

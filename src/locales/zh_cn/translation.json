@@ -25,7 +25,18 @@
       "title": "合约编辑"
     },
     "sourceCodeShort": "源码",
-    "abiShort": "ABI"
+    "abiShort": "ABI",
+    "maxSize": "大小不能超过 30KB",
+    "addressPlaceholder": "请输入以 0x8 开头的地址",
+    "namePlaceholder": "支持输入最长 35 个字符",
+    "sitePlaceholder": "http(s)://",
+    "invalidContractAddress": "合约地址无效",
+    "invalidNameTag": "字符长度已达到最大限制",
+    "invalidUrl": "URL 格式错误",
+    "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
+    "invalidIconSize": "图片过大，请重试",
+    "errorTokenICon": "非 ERC20 合约，代币图标不可上传",
+    "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。"
   },
   "contractDetail": {
     "title": "合约详情",

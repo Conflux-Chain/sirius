@@ -16,6 +16,7 @@ interface DappButtonProps {
   btnText?: string;
   data?: string;
   contractAddress: string;
+  successCallback?: (hash: string) => void;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof DappButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
@@ -25,50 +26,17 @@ const DappButton = ({
   btnDisabled,
   contractAddress,
   data,
+  successCallback,
 }: Props) => {
   const { t } = useTranslation();
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
-  const [modalContent, setModalContent] = useState();
+  const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
   let text = t(translations.general.connnectWalletSubmit);
   if (portalInstalled && address) {
     text = t(translations.general.submit);
   }
-  const loadingModalContent = (
-    <>
-      <Loading></Loading>
-      <div className="loadingText">{t(translations.general.loading)}</div>
-      <div className="confirmText">
-        {t(translations.general.waitForConfirm)}
-      </div>
-    </>
-  );
-  const successModalContent = (
-    <>
-      <img src={imgSuccessBig} alt="success" className="statusImg" />
-      <div className="submitted">{t(translations.sponsor.submitted)}.</div>
-      <div className="txContainer">
-        <span className="label">{t(translations.sponsor.txHash)}:</span>
-        <a
-          href={`/transaction/${txHash}`}
-          target="_blank"
-          className="content"
-          rel="noopener noreferrer"
-        >
-          {getEllipsStr(txHash, 8, 0)}
-        </a>
-      </div>
-    </>
-  );
-
-  const failureModalContent = (
-    <>
-      <img src={imgRejected} alt="rejected" className="statusImg" />
-      <div className="submitted">{t(translations.general.txRejected)}</div>
-    </>
-  );
-
   const onClickHandler = () => {
     if (!portalInstalled) {
       useConfluxPortal.openHomePage();
@@ -81,18 +49,19 @@ const DappButton = ({
             data,
           };
           //loading
-          setModalContent(loadingModalContent as any);
+          setModalType('loading');
           setModalShown(true);
           confluxJS
             .sendTransaction(txParams)
             .then(txHash => {
               //success alert
+              successCallback && successCallback(txHash);
+              setModalType('success');
               setTxHash(txHash);
-              setModalContent(successModalContent as any);
             })
             .catch(error => {
               //rejected alert
-              setModalContent(failureModalContent as any);
+              setModalType('fail');
             });
         }
       } else {
@@ -130,7 +99,9 @@ const DappButton = ({
   return (
     <>
       {hoverText ? (
-        <Tooltip text={hoverText}>{btnComp}</Tooltip>
+        <Tooltip text={hoverText} placement="top-start">
+          {btnComp}
+        </Tooltip>
       ) : (
         <>{btnComp}</>
       )}
@@ -141,7 +112,44 @@ const DappButton = ({
         wrapClassName="dappButtonModalContainer"
       >
         <Modal.Content className="contentContainer">
-          {modalContent}
+          {modalType === 'loading' && (
+            <>
+              <Loading></Loading>
+              <div className="loadingText">
+                {t(translations.general.loading)}
+              </div>
+              <div className="confirmText">
+                {t(translations.general.waitForConfirm)}
+              </div>
+            </>
+          )}
+          {modalType === 'success' && (
+            <>
+              <img src={imgSuccessBig} alt="success" className="statusImg" />
+              <div className="submitted">
+                {t(translations.sponsor.submitted)}.
+              </div>
+              <div className="txContainer">
+                <span className="label">{t(translations.sponsor.txHash)}:</span>
+                <a
+                  href={`/transaction/${txHash}`}
+                  target="_blank"
+                  className="content"
+                  rel="noopener noreferrer"
+                >
+                  {getEllipsStr(txHash, 8, 0)}
+                </a>
+              </div>
+            </>
+          )}
+          {modalType === 'fail' && (
+            <>
+              <img src={imgRejected} alt="rejected" className="statusImg" />
+              <div className="submitted">
+                {t(translations.general.txRejected)}
+              </div>
+            </>
+          )}
         </Modal.Content>
       </Modal>
     </>
