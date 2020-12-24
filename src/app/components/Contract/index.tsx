@@ -15,6 +15,7 @@ import {
   isContractAddress,
   validURL,
   byteToKb,
+  isObject,
 } from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -27,7 +28,6 @@ import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
-import imgError from 'images/error_message.png';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { DappButton } from '../DappButton/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
@@ -44,7 +44,6 @@ interface RequestBody {
   [key: string]: any;
 }
 const MAXSIZEFORICON = 30; //kb
-const imgErrorNode = <img src={imgError} alt="error" />;
 const fieldsContract = [
   'address',
   'type',
@@ -86,6 +85,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const [txData, setTxData] = useState('');
   const fileContractInputRef = React.createRef<any>();
   const fileTokenInputRef = React.createRef<any>();
+  const fileJsonInputRef = React.createRef<any>();
   const inputStyle = { margin: '0 0.2857rem' };
   const displayNone = {
     display: 'none',
@@ -286,7 +286,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     let file = e.target.files[0];
     if (file) {
       if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage(getMessageBody('contract.invalidIconSize'));
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
       } else {
         reader.onloadend = () => {
           setContractImgSrc(reader.result as string);
@@ -302,7 +302,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     let file = e.target.files[0];
     if (file) {
       if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage(getMessageBody('contract.invalidIconSize'));
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
       } else {
         reader.onloadend = () => {
           setTokenImgSrc(reader.result as string);
@@ -310,6 +310,41 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         };
         reader.readAsDataURL(file);
       }
+    }
+    e.target.value = '';
+  };
+  const handleJsonChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    if (file) {
+      reader.onloadend = () => {
+        try {
+          let jsonContent = JSON.parse(reader.result as string);
+          if (Array.isArray(jsonContent)) {
+            setAbi(JSON.stringify(jsonContent));
+          } else {
+            if (isObject(jsonContent)) {
+              if (jsonContent.abi && Array.isArray(jsonContent.abi)) {
+                setAbi(JSON.stringify(jsonContent.abi));
+              } else {
+                setMessage({
+                  text: t('contract.invalidJsonAbi'),
+                  color: 'error',
+                });
+              }
+            } else {
+              setMessage({
+                text: t('contract.invalidJsonAbi'),
+                color: 'error',
+              });
+            }
+          }
+        } catch (error) {
+          setMessage({ text: t('contract.invalidJsonFile'), color: 'error' });
+        }
+      };
+      reader.readAsText(file);
     }
     e.target.value = '';
   };
@@ -366,13 +401,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       setErrorMsgForAddress('contract.invalidContractAddress');
     }
   }
-  function getMessageBody(i18nKey) {
-    return {
-      text: t(i18nKey),
-      icon: imgErrorNode,
-      className: 'message-custom',
-    };
-  }
   function checkSite() {
     if (site && !validURL(site)) {
       setIsSiteError(true);
@@ -396,7 +424,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       {t(translations.contract.abi)}
     </LabelWithIcon>
   ) as any;
-
+  const importClick = () => {
+    fileJsonInputRef.current.click();
+  };
   return (
     <Wrapper>
       <Header>{title}</Header>
@@ -559,7 +589,19 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         </div>
       </TopContainer>
       <TabContainer>
-        <div className="jsonContainer">test</div>
+        <div className="jsonContainer">
+          <input
+            type="file"
+            name="File"
+            style={displayNone}
+            accept=".json"
+            ref={fileJsonInputRef}
+            onChange={handleJsonChange}
+          />
+          <span className="text" onClick={importClick}>
+            {t(translations.contract.importJsonFile)}
+          </span>
+        </div>
         <Tabs initialValue="1">
           <Tabs.Item label={tabsLabelSourceCode} value="1">
             <SkelontonContainer shown={loading}>
@@ -673,15 +715,15 @@ const Wrapper = styled.div`
     margin: 0 auto;
   }
   .warningContainer {
-    margin-top: 8px;
+    margin-top: 0.5714rem;
     display: flex;
     align-items: center;
     .warningImg {
-      width: 14px;
+      width: 1rem;
     }
     .text {
-      margin-left: 8px;
-      font-size: 14px;
+      margin-left: 0.5714rem;
+      font-size: 1rem;
       color: #ffa500;
     }
   }
@@ -745,7 +787,7 @@ const TopContainer = styled.div`
   background: #f5f6fa;
   flex-direction: row;
   .lineContainer {
-    padding: 25px 0 0 0;
+    padding: 1.7857rem 0 0 0;
     border-bottom: 0.0714rem solid #e8e9ea;
     .firstLine {
       display: flex;
@@ -760,9 +802,9 @@ const TopContainer = styled.div`
     }
     .errorSpan {
       display: inline-block;
-      font-size: 12px;
+      font-size: 0.8571rem;
       color: #e64e4e;
-      line-height: 22px;
+      line-height: 1.5714rem;
     }
     &:last-child {
       border: none;
@@ -928,7 +970,18 @@ const TabContainer = styled.div`
   .jsonContainer {
     position: absolute;
     right: 0;
-    top: 14px;
+    top: 1rem;
+    ${media.s} {
+      display: none;
+    }
+    .text {
+      display: inline-block;
+      color: #1e3de4;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.2857rem;
+      border-bottom: 2px solid #1e3de4;
+    }
   }
   ${media.s} {
     margin-top: 2rem;

@@ -510,3 +510,6 @@ export function validURL(str: string) {
 export function byteToKb(bytes) {
   return bytes / 1024;
 }
+export function isObject(o) {
+  return o !== null && typeof o === 'object' && Array.isArray(o) === false;
+}
