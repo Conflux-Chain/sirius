@@ -352,7 +352,15 @@
     "contractCreation": "合约创建",
     "for": "For",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化",
-    "epochConfirmations": "{{count}} 个纪元已确认"
+    "epochConfirmations": "{{count}} 个纪元已确认",
+    "statusError": {
+      "1": "合约错误：",
+      "2": "存储费不足。",
+      "3": "账户余额不足。",
+      "4": "燃气费不足。",
+      "5": "合约部署失败。",
+      "6": "未知合约错误。"
+    }
   },
   "block": {
     "title": "区块",

@@ -352,7 +352,15 @@
     "contractCreation": "Contract Creation",
     "for": "For",
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
-    "epochConfirmations": "{{count}} epoch Confirmations"
+    "epochConfirmations": "{{count}} epoch Confirmations",
+    "statusError": {
+      "1": "Contract error: ",
+      "2": "Insufficient storage fees.",
+      "3": "Insufficient address balance. ",
+      "4": "Insufficient gas fee.",
+      "5": "Contract deployment failed.",
+      "6": "Unknown contract error."
+    }
   },
   "block": {
     "title": "Block",

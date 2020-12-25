@@ -78,8 +78,8 @@ export const Transaction = () => {
     status,
     data,
     contractCreated,
-    txExecErrorMsg,
     confirmedEpochCount,
+    txExecErrorInfo,
   } = transactionDetail;
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
@@ -375,6 +375,21 @@ export const Transaction = () => {
       </div>
     );
   };
+
+  // txn status error detail info
+  let statusErrorMessage = '';
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
+
   return (
     <StyledTransactionsWrapper>
       <Helmet>
@@ -456,7 +471,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && <Status type={status}>{txExecErrorMsg}</Status>}
+              {!loading && <Status type={status}>{statusErrorMessage}</Status>}
             </SkeletonContainer>
           </Description>
           <Description
