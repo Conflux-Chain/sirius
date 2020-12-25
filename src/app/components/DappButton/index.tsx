@@ -16,7 +16,11 @@ interface DappButtonProps {
   btnText?: string;
   data?: string;
   contractAddress: string;
+  connectText?: string;
+  submitText?: string;
   successCallback?: (hash: string) => void;
+  failCallback?: (message: string) => void;
+  closeModalCallback?: () => void;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof DappButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
@@ -26,16 +30,22 @@ const DappButton = ({
   btnDisabled,
   contractAddress,
   data,
+  connectText,
+  submitText,
   successCallback,
+  failCallback,
+  closeModalCallback,
 }: Props) => {
   const { t } = useTranslation();
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
-  let text = t(translations.general.connnectWalletSubmit);
+  let text = connectText
+    ? connectText
+    : t(translations.general.connnectWalletSubmit);
   if (portalInstalled && address) {
-    text = t(translations.general.submit);
+    text = submitText ? submitText : t(translations.general.submit);
   }
   const onClickHandler = () => {
     if (!portalInstalled) {
@@ -61,6 +71,7 @@ const DappButton = ({
             })
             .catch(error => {
               //rejected alert
+              failCallback && failCallback(error.message);
               setModalType('fail');
             });
         }
@@ -71,6 +82,7 @@ const DappButton = ({
   };
   const closeHandler = () => {
     setModalShown(false);
+    closeModalCallback && closeModalCallback();
   };
 
   const btnComp = (
@@ -187,6 +199,8 @@ DappButton.defaultProps = {
   btnClassName: '',
   btnDisabled: false,
   btnText: '',
+  connectText: '',
+  submitText: '',
 };
 
 export default DappButton;
