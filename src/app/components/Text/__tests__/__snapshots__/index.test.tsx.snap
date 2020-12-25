@@ -40,7 +40,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 
 @media (max-width:600px) {
   .c0 .tooltip-content.sirius-tooltip {
-    max-width: 19.4286rem;
+    max-width: 24rem;
   }
 }
 
@@ -107,7 +107,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 
 @media (max-width:600px) {
   .c0 .tooltip-content.sirius-tooltip {
-    max-width: 19.4286rem;
+    max-width: 24rem;
   }
 }
 

@@ -184,20 +184,22 @@ exports[`<Header /> should match the snapshot 1`] = `
   min-height: 2.14rem;
 }
 
-.c8 .navbar-link-menu {
+.c8 .navbar-link {
   position: relative;
   cursor: pointer;
+  font-weight: 500;
 }
 
-.c8 .navbar-link-menu > a.link.navbar-link {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.c8 .navbar-link:hover {
+  background-color: rgba(100%,87%,11%,70%);
+}
+
+.c8 .navbar-link.matched {
+  background-color: #fede1b;
+}
+
+.c8 .navbar-link.matched:hover {
+  background-color: #fede1b;
 }
 
 .c8 .navbar-link-menu > a.link.navbar-link svg {
@@ -224,22 +226,20 @@ exports[`<Header /> should match the snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-weight: 500;
   color: #65709a;
   padding: 0.43rem 1.5rem;
 }
 
-.c8 a.link.navbar-link:hover {
-  color: #65709a;
+.c8 a.link.navbar-link.level-1 {
+  width: auto;
 }
 
-.c8 a.link.navbar-link.matched {
-  color: #65709a;
-  background-color: #fede1b;
+.c8 a.link.navbar-link.level-1.matched {
+  background-color: #65709a;
 }
 
-.c8 a.link.navbar-link.matched:hover {
-  color: #65709a;
+.c8 a.link.navbar-link.level-1:hover:not(.matched) {
+  background-color: #f1f4f6;
 }
 
 .c5 .confi-logo {
@@ -256,10 +256,6 @@ exports[`<Header /> should match the snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c0 .navbar-menu .navbar-link.level-0:hover {
-  background-color: rgba(100%,87%,11%,70%);
 }
 
 .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
@@ -454,6 +450,10 @@ exports[`<Header /> should match the snapshot 1`] = `
 }
 
 @media (max-width:1024px) {
+  .c8 .navbar-link:hover {
+    background-color: transparent;
+  }
+
   .c8 a.link.navbar-link {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
@@ -1008,20 +1008,22 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   min-height: 2.14rem;
 }
 
-.c8 .navbar-link-menu {
+.c8 .navbar-link {
   position: relative;
   cursor: pointer;
+  font-weight: 500;
 }
 
-.c8 .navbar-link-menu > a.link.navbar-link {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.c8 .navbar-link:hover {
+  background-color: rgba(100%,87%,11%,70%);
+}
+
+.c8 .navbar-link.matched {
+  background-color: #fede1b;
+}
+
+.c8 .navbar-link.matched:hover {
+  background-color: #fede1b;
 }
 
 .c8 .navbar-link-menu > a.link.navbar-link svg {
@@ -1048,22 +1050,20 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-weight: 500;
   color: #65709a;
   padding: 0.43rem 1.5rem;
 }
 
-.c8 a.link.navbar-link:hover {
-  color: #65709a;
+.c8 a.link.navbar-link.level-1 {
+  width: auto;
 }
 
-.c8 a.link.navbar-link.matched {
-  color: #65709a;
-  background-color: #fede1b;
+.c8 a.link.navbar-link.level-1.matched {
+  background-color: #65709a;
 }
 
-.c8 a.link.navbar-link.matched:hover {
-  color: #65709a;
+.c8 a.link.navbar-link.level-1:hover:not(.matched) {
+  background-color: #f1f4f6;
 }
 
 .c5 .confi-logo {
@@ -1080,10 +1080,6 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c0 .navbar-menu .navbar-link.level-0:hover {
-  background-color: rgba(100%,87%,11%,70%);
 }
 
 .c0 .navbar-menu .navbar-end .navbar-item .navbar-link-menu .navbar-link.level-0 {
@@ -1278,6 +1274,10 @@ exports[`<Header /> should match the snapshot when link is matched 1`] = `
 }
 
 @media (max-width:1024px) {
+  .c8 .navbar-link:hover {
+    background-color: transparent;
+  }
+
   .c8 a.link.navbar-link {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;

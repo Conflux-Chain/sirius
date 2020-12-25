@@ -65,7 +65,9 @@
     "labelCountBefore": "共计",
     "labelCountAfter": "个 {{type}} ",
     "blocks": "区块",
-    "transactions": "交易"
+    "transactions": "交易",
+    "latestBlocks": "最新区块",
+    "latestTransactions": "最新交易"
   },
   "tokens": {
     "title": "代币",
@@ -81,6 +83,12 @@
       "contract": "合约"
     }
   },
+  "contracts": {
+    "title": "内置合约",
+    "description": "内置合约",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "个内置合约"
+  },
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
@@ -88,6 +96,7 @@
     "contract": "合约",
     "contractCreation": "创建合约",
     "contractSponsor": "赞助合约",
+    "contracts": "内置合约",
     "charts": "图表",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -156,7 +165,7 @@
     "viewAll": "查看全部",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
     "address": {
-      "editContract": "点击编辑合同",
+      "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
       "address": "地址"
     },
@@ -206,6 +215,12 @@
         "from": "发送方",
         "to": "接收方",
         "quantity": "数量"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "合约名称标签",
+        "address": "合约地址",
+        "transactionCount": "交易数"
       }
     },
     "pagination": {
@@ -281,6 +296,7 @@
         "20001": "响应数据解析错误。",
         "20002": "请求超时。",
         "20003": "请求中止。",
+        "20004": "网络连接错误。",
         "400": "错误请求。",
         "401": "未授权。",
         "403": "服务器拒绝请求。",
@@ -295,7 +311,8 @@
     },
     "connnectWalletSubmit": "连接钱包以提交",
     "waitForConfirm": "等待确认",
-    "txRejected": "交易已被拒绝"
+    "txRejected": "交易已被拒绝",
+    "exportRecords": "导出当前记录"
   },
   "sponsor": {
     "title": "赞助合约",
@@ -358,7 +375,16 @@
     "created": "已创建",
     "contractCreation": "合约创建",
     "for": "For",
-    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化"
+    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化",
+    "epochConfirmations": "{{count}} 个纪元已确认",
+    "statusError": {
+      "1": "合约错误：",
+      "2": "存储费不足。",
+      "3": "账户余额不足。",
+      "4": "燃气费不足。",
+      "5": "合约部署失败。",
+      "6": "未知合约错误。"
+    }
   },
   "block": {
     "title": "区块",

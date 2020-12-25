@@ -79,7 +79,8 @@ export const Transaction = () => {
     status,
     data,
     contractCreated,
-    txExecErrorMsg,
+    confirmedEpochCount,
+    txExecErrorInfo,
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
@@ -396,6 +397,21 @@ export const Transaction = () => {
       </div>
     );
   };
+
+  // txn status error detail info
+  let statusErrorMessage = '';
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
+
   return (
     <StyledTransactionsWrapper>
       <Helmet>
@@ -477,7 +493,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && <Status type={status}>{txExecErrorMsg}</Status>}
+              {!loading && <Status type={status}>{statusErrorMessage}</Status>}
             </SkeletonContainer>
           </Description>
           <Description
@@ -492,6 +508,11 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
+              <StyledEpochConfirmationsWrapper>
+                {t(translations.transaction.epochConfirmations, {
+                  count: confirmedEpochCount,
+                })}
+              </StyledEpochConfirmationsWrapper>
             </SkeletonContainer>
           </Description>
           <Description
@@ -758,4 +779,9 @@ const StyledTransactionsWrapper = styled.div`
   ${media.s} {
     padding-bottom: 0;
   }
+`;
+
+const StyledEpochConfirmationsWrapper = styled.span`
+  margin-left: 1rem;
+  vertical-align: middle;
 `;

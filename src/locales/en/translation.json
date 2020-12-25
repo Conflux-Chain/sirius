@@ -65,7 +65,9 @@
     "labelCountBefore": "Total of",
     "labelCountAfter": "{{type}}",
     "blocks": "Blocks",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "latestBlocks": "Latest Blocks",
+    "latestTransactions": "Latest Transactions"
   },
   "tokens": {
     "title": "Tokens",
@@ -73,13 +75,19 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "table": {
-      "number": "Number",
+      "number": "#",
       "token": "Token",
       "transfer": "Transfers",
       "totalSupply": "Total Supply",
       "holders": "Holders",
       "contract": "Contract"
     }
+  },
+  "contracts": {
+    "title": "Internal Contracts",
+    "description": "Internal Contracts",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "internal contracts"
   },
   "header": {
     "home": "Home",
@@ -88,6 +96,7 @@
     "contract": "Contract",
     "contractCreation": "Contract Creation",
     "contractSponsor": "Contract Sponsor",
+    "contracts": "Internal Contracts",
     "charts": "Charts",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -206,6 +215,12 @@
         "from": "From",
         "to": "To",
         "quantity": "Quantity"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "Contract Name Tag",
+        "address": "Contract Address",
+        "transactionCount": "Txn"
       }
     },
     "pagination": {
@@ -281,6 +296,7 @@
         "20001": "Response data parsing error.",
         "20002": "Request timeout.",
         "20003": "Request abort.",
+        "20004": "Network error.",
         "400": "Bad request.",
         "401": "Unauthorized.",
         "403": "Forbidden.",
@@ -295,7 +311,8 @@
     },
     "connnectWalletSubmit": "Connect wallet to submit",
     "waitForConfirm": "Waiting For Confirmation",
-    "txRejected": "Transaction Rejected"
+    "txRejected": "Transaction Rejected",
+    "exportRecords": "Export Current Records"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -358,7 +375,16 @@
     "created": "Created",
     "contractCreation": "Contract Creation",
     "for": "For",
-    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation"
+    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
+    "epochConfirmations": "{{count}} epoch Confirmations",
+    "statusError": {
+      "1": "Contract error: ",
+      "2": "Insufficient storage fees.",
+      "3": "Insufficient address balance. ",
+      "4": "Insufficient gas fee.",
+      "5": "Contract deployment failed.",
+      "6": "Unknown contract error."
+    }
   },
   "block": {
     "title": "Block",

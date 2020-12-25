@@ -27,7 +27,7 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString } from 'utils';
 import { useContract } from 'utils/api';
-import { media } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@zeit-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
@@ -215,6 +215,7 @@ const TxDirectionFilterDropdown = styled.div`
 `;
 
 export function Table({ address }) {
+  const bp = useBreakpoint();
   const { t } = useTranslation();
   const loadingText = t(translations.general.loading);
   const location = useLocation();
@@ -229,10 +230,13 @@ export function Table({ address }) {
       queries?.tab !== 'transfers' &&
       !isContract,
   );
-  const { minTimestamp, maxTimestamp } = queryString.parse(
-    location.search || '',
-  );
-
+  // set default tab to transaction
+  const {
+    minTimestamp,
+    maxTimestamp,
+    tab = 'transaction',
+    accountAddress,
+  } = queryString.parse(location.search || '');
   let { data: contractInfo } = useContract(isContract && address, [
     'sourceCode',
     'abi',
@@ -402,14 +406,55 @@ export function Table({ address }) {
         },
   ];
 
+  const showExportRecordsButton =
+    bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
+  const handleExportRecords = () => {
+    const exportRecordsPathMap = {
+      transfers: 'transfer',
+      transaction: 'transaction',
+    };
+    const exportRecordsPath =
+      typeof tab === 'string' && exportRecordsPathMap[tab];
+
+    if (exportRecordsPath) {
+      // @todo why need transferType of /v1/report/transfer?
+      const url = queryString.stringifyUrl({
+        url: `/v1/report/${exportRecordsPath}`,
+        query: {
+          minTimestamp,
+          maxTimestamp,
+          accountAddress,
+        },
+      });
+      window.open(url);
+    }
+  };
+
+  // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
+  const maxT = maxTimestamp && String(Number(maxTimestamp) - 1);
+
   return (
     <TableWrap>
       {filterVisible && (
         <FilterWrap>
+          <ExportRecordsButtonWrapper
+            className={clsx({
+              show: showExportRecordsButton,
+            })}
+          >
+            <Button
+              size="small"
+              variant="solid"
+              color="primary"
+              onClick={handleExportRecords}
+            >
+              {t(translations.general.exportRecords)}
+            </Button>
+          </ExportRecordsButtonWrapper>
           <PickerWithQuery
             key="date-picker-query"
             minTimestamp={minTimestamp}
-            maxTimestamp={maxTimestamp}
+            maxTimestamp={maxT}
             onChange={dateQuery => {
               if (!dateQuery)
                 return history.push(
@@ -426,15 +471,11 @@ export function Table({ address }) {
               let minTimestamp, maxTimestamp;
 
               if (dateQuery[0]) {
-                minTimestamp = Math.round(
-                  new Date(dateQuery[0].toISOString()).getTime() / 1000,
-                );
+                minTimestamp = Math.floor(+dateQuery[0] / 1000);
               }
 
               if (dateQuery[1]) {
-                maxTimestamp = Math.round(
-                  new Date(dateQuery[1].toISOString()).getTime() / 1000,
-                );
+                maxTimestamp = Math.round(+dateQuery[1] / 1000);
               }
 
               if (
@@ -447,6 +488,7 @@ export function Table({ address }) {
                 maxTimestamp === queries.maxTimestamp
               )
                 return;
+
               history.push(
                 queryString.stringifyUrl({
                   url: location.pathname,
@@ -512,5 +554,13 @@ const FilterWrap = styled.div`
     left: 0;
     top: 7rem;
     z-index: 10;
+  }
+`;
+
+const ExportRecordsButtonWrapper = styled.span`
+  display: none;
+  margin-right: 1rem;
+  &.show {
+    display: inherit;
   }
 `;

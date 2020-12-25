@@ -38,7 +38,6 @@ interface RouteParams {
 
 export const ContractDetailPage = memo(() => {
   const { t } = useTranslation();
-  const notAvaiableText = t(translations.general.security.notAvailable);
   const { address } = useParams<RouteParams>();
   const bp = useBreakpoint();
   const history = useHistory();
@@ -56,6 +55,10 @@ export const ContractDetailPage = memo(() => {
       history.replace(`/notfound/${address}`);
     }
   }, [address, history, contractInfo.transactionHash]);
+
+  const websiteUrl = contractInfo?.website || '';
+  const hasWebsite =
+    !!websiteUrl && websiteUrl !== t(translations.general.loading);
 
   return (
     <>
@@ -79,8 +82,15 @@ export const ContractDetailPage = memo(() => {
             <Qrcode address={address} />
             <Edit address={address} />
             <Apply address={address} />
-            {contractInfo?.website !== notAvaiableText && (
-              <Jump url={address} />
+            {hasWebsite && (
+              <Jump
+                onClick={() => {
+                  const url = websiteUrl.startsWith('http')
+                    ? websiteUrl
+                    : `http://${websiteUrl}`;
+                  window.open(url);
+                }}
+              />
             )}
           </HeadAddressLine>
         </Head>

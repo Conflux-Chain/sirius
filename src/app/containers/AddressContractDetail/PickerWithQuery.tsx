@@ -38,6 +38,18 @@ const MobilePickerWrap = styled(PickerWrap)`
   }
 `;
 
+const transformDate = dates => {
+  if (dates) {
+    let start = dates[0]
+      .format()
+      .replace(/^(.*T)(.*)(\+.*)$/, '$100:00:00.000$3');
+    let end = dates[1]
+      .format()
+      .replace(/^(.*T)(.*)(\+.*)$/, '$123:59:59.999$3');
+    return [dayjs(start), dayjs(end)];
+  }
+};
+
 const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
@@ -84,12 +96,13 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
       date < startDate.subtract(1, 'day').endOf('day'));
   const disabledDateD2 = date =>
     date &&
-    (date < innerMinTimestamp.endOf('day') || date > endDate.endOf('day'));
+    (date < innerMinTimestamp.subtract(1, 'day').endOf('day') ||
+      date > endDate.endOf('day'));
   const handleStartChange = value => {
-    onChange([value, innerMaxTimestamp]);
+    onChange(transformDate([value, innerMaxTimestamp]));
   };
   const handleEndChange = value => {
-    onChange([innerMinTimestamp, value]);
+    onChange(transformDate([innerMinTimestamp, value]));
   };
 
   return (
@@ -159,7 +172,7 @@ const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
         variant="solid"
         // @ts-ignore
         placeholder={datePlaceholder}
-        onChange={onChange}
+        onChange={dates => onChange(transformDate(dates))}
       />
     </PickerWrap>
   );
