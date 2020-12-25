@@ -356,6 +356,8 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     bodyParams.icon = contractImgSrc;
     if (tokenImgSrc) {
       bodyParams.tokenIcon = tokenImgSrc;
+    } else {
+      bodyParams.tokenIcon = '';
     }
     bodyParams.sourceCode = sourceCode;
     bodyParams.abi = abi;
