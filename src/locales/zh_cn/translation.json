@@ -39,7 +39,9 @@
     "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
     "importJsonFile": "导入 Json 文件",
     "invalidJsonFile": "无效 Json 文件，请重试",
-    "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试"
+    "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
+    "abiNotUploaded": "没有上传 ABI",
+    "abiError": "ABI 错误"
   },
   "contractDetail": {
     "title": "合约详情",

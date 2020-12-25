@@ -18,6 +18,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
+import imgWarning from 'images/warning.png';
 import {
   reqTransactionDetail,
   reqContract,
@@ -80,6 +81,8 @@ export const Transaction = () => {
     contractCreated,
     txExecErrorMsg,
   } = transactionDetail;
+  const [warningMessage, setWarningMessage] = useState('');
+  const [isAbiError, setIsAbiError] = useState(false);
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
     let riskLevel;
@@ -161,7 +164,10 @@ export const Transaction = () => {
                     address: contractResponse['address'],
                     transacionData: txDetailDta.data,
                   });
-                } catch {}
+                  if (!decodedData) setIsAbiError(true);
+                } catch {
+                  setIsAbiError(true);
+                }
                 setDecodedData(decodedData);
                 setDataTypeList(['original', 'utf8', 'decodeInputData']);
                 const resultTransferList = transferListReponse;
@@ -207,6 +213,22 @@ export const Transaction = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
+  useEffect(() => {
+    if (dataType === 'decodeInputData') {
+      if (contractInfo['abi']) {
+        if (isAbiError) {
+          setWarningMessage('contract.abiError');
+        } else {
+          setWarningMessage('');
+        }
+      } else {
+        setWarningMessage('contract.abiNotUploaded');
+      }
+    } else {
+      setWarningMessage('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataType, contractInfo, isAbiError]);
   const generatedDiv = () => {
     if (to) {
       if (isContract) {
@@ -652,6 +674,14 @@ export const Transaction = () => {
                   );
                 })}
               </Select>
+              <div
+                className={`warningContainer ${
+                  warningMessage ? 'shown' : 'hidden'
+                }`}
+              >
+                <img src={imgWarning} alt="warning" className="warningImg" />
+                <span className="text">{t(warningMessage)}</span>
+              </div>
             </SkeletonContainer>
           </Description>
         </Card>
@@ -700,6 +730,25 @@ const StyledCardWrapper = styled.div`
   }
   .btnSelectContainer {
     margin-top: 0.8571rem;
+  }
+  .warningContainer {
+    margin-top: 0.5714rem;
+    display: flex;
+    align-items: center;
+    .warningImg {
+      width: 1rem;
+    }
+    .text {
+      margin-left: 0.5714rem;
+      font-size: 1rem;
+      color: #ffa500;
+    }
+  }
+  .shown {
+    visibility: visible;
+  }
+  .hidden {
+    visibility: hidden;
   }
 `;
 

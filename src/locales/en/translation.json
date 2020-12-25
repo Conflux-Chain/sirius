@@ -39,7 +39,9 @@
     "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
     "importJsonFile": "Import Json file(s)",
     "invalidJsonFile": "Invaild Json file, please try again.",
-    "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again."
+    "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
+    "abiNotUploaded": "ABI not uploaded",
+    "abiError": "ABI error"
   },
   "contractDetail": {
     "title": "Contract Detail",
