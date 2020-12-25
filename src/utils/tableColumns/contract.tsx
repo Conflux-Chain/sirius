@@ -35,7 +35,7 @@ export const name = {
     <StyledIconWrapper>
       <img src={row?.icon || defaultTokenIcon} alt="contract icon" />
       <Link href={`/address/${row.address}`}>
-        <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
+        <Text span hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}
         </Text>
       </Link>
