@@ -16,6 +16,7 @@ interface IconButtonProps {
   blank?: boolean;
   tooltipContentClassName?: string;
   viewBox?: string;
+  onClick?: () => void;
 }
 
 export const IconButton = ({
@@ -27,6 +28,7 @@ export const IconButton = ({
   url,
   blank,
   viewBox,
+  onClick = () => {},
 }: React.PropsWithChildren<IconButtonProps>) => {
   const svg = (
     <svg
@@ -34,6 +36,7 @@ export const IconButton = ({
       viewBox={viewBox ? viewBox : '0 0 1024 1024'}
       width={size || 8}
       height={size || 8}
+      onClick={onClick}
     >
       {children}
     </svg>
@@ -65,4 +68,6 @@ export const IconButton = ({
   );
 };
 
-const IconButtonWrap = styled.div``;
+const IconButtonWrap = styled.div`
+  cursor: pointer;
+`;

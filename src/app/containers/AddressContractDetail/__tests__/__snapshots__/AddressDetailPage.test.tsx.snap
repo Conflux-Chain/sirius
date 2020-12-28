@@ -220,7 +220,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 
 @media (max-width:600px) {
   .c5 .tooltip-content.sirius-tooltip {
-    max-width: 19.4286rem;
+    max-width: 24rem;
   }
 }
 

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { PIXEL_RATIO } from './draw';
 
 const RECT_HEIGHT = 40;
-const RECT_WIDTH = 90;
+const RECT_WIDTH = 100;
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -16,7 +16,14 @@ const DURATIONS = [
   ['all', 'ALL'],
 ];
 export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
-  const { plot, isError, setDuration, duration } = usePlot('day');
+  const {
+    plot,
+    isError,
+    setDuration,
+    duration,
+    axisFormat,
+    popupFormat,
+  } = usePlot('day');
   const { t } = useTranslation();
   const small = width < 500;
   const padding = small ? 16 : 48;
@@ -27,27 +34,26 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
       <Container style={{ width }} small={small}>
         <Title>{t(`charts.${indicator}.title`)}</Title>
         <Description>{t(`charts.${indicator}.description`)}</Description>
-        {true && (
-          <Draw
-            plot={plot}
-            width={(width - padding) * 0.83}
-            indicator={indicator}
-            small={small}
-          >
-            <Buttons>
-              {DURATIONS.map(([d, key]) => (
-                <Button
-                  key={key}
-                  small={small}
-                  active={d === duration}
-                  onClick={() => setDuration(d)}
-                >
-                  {key}
-                </Button>
-              ))}
-            </Buttons>
-          </Draw>
-        )}
+        <Draw
+          plot={plot}
+          width={(width - padding) * 0.83}
+          indicator={indicator}
+          small={small}
+          format={[popupFormat, axisFormat]}
+        >
+          <Buttons>
+            {DURATIONS.map(([d, key]) => (
+              <Button
+                key={key}
+                small={small}
+                active={d === duration}
+                onClick={() => setDuration(d)}
+              >
+                {key}
+              </Button>
+            ))}
+          </Buttons>
+        </Draw>
       </Container>
     );
   }
@@ -60,6 +66,7 @@ function Draw({
   height = width * 0.55,
   small,
   children,
+  format: [popupFormat, axisFormat],
 }) {
   const scale = width / 359;
   const containerRef = useRef(null);
@@ -89,6 +96,8 @@ function Draw({
       X_AXIS_HEIGHT,
       width,
       height,
+      popupFormat,
+      axisFormat,
       ctxBg,
       ctxLine,
       plot,
@@ -126,6 +135,8 @@ function Draw({
     X_AXIS_HEIGHT,
     Y_AXIS_WIDTH,
     POPUP_PADDING,
+    popupFormat,
+    axisFormat,
   ]);
 
   return (

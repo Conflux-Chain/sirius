@@ -79,6 +79,44 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
+  .dappButtonModalContainer{
+    .contentContainer.content{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:2.1429rem;
+    }
+    .loadingText{
+      color:#2F3B3F;
+      font-size:16px;
+      font-weight: 500;
+      margin-top:11px;
+    }
+    .confirmText{
+      margin-top:12px;
+      color:#ADB2BF;
+      font-size:14px;
+    }
+    .statusImg{
+        width:4rem;
+      }
+    .submitted{
+        margin-top:0.9286rem;
+        font-size:1rem;
+        color: #282D30;
+    }
+    .txContainer{
+        margin-top:0.8571rem;
+    }
+    .label{
+        color: #A4A8B6;
+        line-height: 1.2857rem;
+        font-size: 1rem;
+    }
+    .content{
+        color: #1e3de4;
+    }
+  }
 
   ${media.s} {
     html, body {

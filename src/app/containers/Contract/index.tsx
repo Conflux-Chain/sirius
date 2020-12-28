@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { Contract as ContractBody } from '../../components/Contract/Loadable';
 import { useCMContractQuery } from '../../../utils/api';
-import { isAddress } from '../../../utils';
+import { isContractAddress } from '../../../utils';
 
 export function Contract(props) {
   const { t } = useTranslation();
@@ -25,15 +25,23 @@ export function Contract(props) {
     'sourceCode',
     'typeCode',
   ];
-  const params = { address: contractAddress, fields };
-  const { data } = useCMContractQuery(params, isAddress(contractAddress));
+  const params = useMemo(() => ({ address: contractAddress, fields }), [
+    contractAddress,
+    fields,
+  ]);
+  const { data } = useCMContractQuery(
+    params,
+    isContractAddress(contractAddress),
+  );
   useEffect(() => {
-    if (isAddress(contractAddress)) {
+    if (isContractAddress(contractAddress)) {
       setLoading(true);
-      if (data) {
+      if (data && data.name) {
         setLoading(false);
         setContractDetail(data);
         setType('edit');
+      } else {
+        setLoading(false);
       }
     } else {
       setLoading(false);

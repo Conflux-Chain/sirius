@@ -43,7 +43,7 @@ export function HomePage() {
   const tabs = [
     {
       value: 'blocks',
-      label: t(translations.blocksAndTransactions.blocks),
+      label: t(translations.blocksAndTransactions.latestBlocks),
       url: '/block',
       pagination: false,
       table: {
@@ -53,7 +53,7 @@ export function HomePage() {
     },
     {
       value: 'transaction',
-      label: t(translations.blocksAndTransactions.transactions),
+      label: t(translations.blocksAndTransactions.latestTransactions),
       url: '/transaction',
       pagination: false,
       table: {

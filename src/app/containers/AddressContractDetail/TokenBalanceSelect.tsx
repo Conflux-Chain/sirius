@@ -8,6 +8,7 @@ import { useToggle, useClickAway } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { defaultTokenIcon } from '../../../constants';
+import { Link } from 'react-router-dom';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -15,6 +16,7 @@ export function TokenBalanceSelect({ address = '' } = {}) {
   const { data: tokensData } = useAccountTokenList(address, ['icon']);
   const tokens = tokensData?.list || [];
   const loading = tokensData?.loading;
+
   const tokenItems = tokens.map((t, idx) => (
     <SelectItem key={idx} isLastOne={idx === tokens.length - 1} {...t} />
   ));
@@ -55,14 +57,16 @@ function Select({ children = [] } = {}) {
   );
 }
 
-function SelectItem({ icon, balance, name, symbol, isLastOne }) {
+function SelectItem({ icon, balance, name, symbol, isLastOne, address }) {
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon
         src={icon || defaultTokenIcon}
         alt={`${name} icon`}
       />
-      <SelectItemTextTitle>{`${name} (${symbol})`}</SelectItemTextTitle>
+      <SelectItemTextTitle>
+        <Link to={`/token/${address}`}>{`${name} (${symbol})`}</Link>
+      </SelectItemTextTitle>
     </SelectItemTitle>
   );
   const content = (
