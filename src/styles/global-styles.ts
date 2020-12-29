@@ -178,5 +178,10 @@ export const GlobalStyle = createGlobalStyle`
       table-layout: inherit;
     }
   }
+  #cfx-ui-message {
+    div.icon {
+      display: flex;
+    }
+  }
 }
 `;
