@@ -16,6 +16,7 @@ import {
   validURL,
   byteToKb,
   isObject,
+  isInnerContractAddress,
 } from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -116,7 +117,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         setAddressDisabled(false);
         break;
       case 'edit':
-        setAddressVal(contractDetail.address || '');
+        setAddressVal(contractDetail.address);
         setTitle(t(translations.contract.edit.title));
         setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
@@ -185,25 +186,21 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     checkAdminThenToken(tokenImgSrc);
   };
   function checkContractName() {
-    if (contractName.length > 35) {
-      setIsNameError(true);
-      setErrorMsgForName('contract.invalidNameTag');
+    if (contractName) {
+      if (contractName.length > 35) {
+        setIsNameError(true);
+        setErrorMsgForName('contract.invalidNameTag');
+      } else {
+        setIsNameError(false);
+        setErrorMsgForName('');
+      }
     } else {
-      setIsNameError(false);
+      setIsNameError(true);
       setErrorMsgForName('');
     }
   }
   useEffect(() => {
-    switch (type) {
-      case 'create':
-        if (addressVal) {
-          checkAdminThenToken(tokenImgSrc);
-        }
-        break;
-      case 'edit':
-        checkAdminThenToken(tokenImgSrc);
-        break;
-    }
+    checkAdminThenToken(tokenImgSrc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressVal]);
 
@@ -241,16 +238,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   useEffect(() => {
     if (accountAddress) {
       setHoverTips('');
-      switch (type) {
-        case 'create':
-          if (addressVal) {
-            checkAdminThenToken(tokenImgSrc);
-          }
-          break;
-        case 'edit':
-          checkAdminThenToken(tokenImgSrc);
-          break;
-      }
+      checkAdminThenToken(tokenImgSrc);
     } else {
       setHoverTips('contract.beforeContractSubmitTip');
     }
@@ -365,42 +353,46 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     return data[0];
   }
   function checkAdminThenToken(tokenIcon) {
-    if (isContractAddress(addressVal)) {
-      setIsAddressError(false);
-      setErrorMsgForAddress('');
-      if (accountAddress) {
-        reqContract({ address: addressVal, fields: fieldsContract }).then(
-          dataContractInfo => {
-            if (
-              dataContractInfo.from === accountAddress ||
-              dataContractInfo.admin === accountAddress
-            ) {
-              setIsAdminError(false);
-              if (tokenIcon) {
-                reqToken({ address: addressVal }).then(tokenInfo => {
-                  if (tokenInfo.name && tokenInfo.symbol) {
-                    setIsErc20Error(false);
-                    setWarningMessage('');
-                  } else {
-                    setIsErc20Error(true);
-                    setWarningMessage('contract.errorTokenICon');
-                  }
-                });
+    if (addressVal) {
+      if (isContractAddress(addressVal) || isInnerContractAddress(addressVal)) {
+        setIsAddressError(false);
+        setErrorMsgForAddress('');
+        if (accountAddress) {
+          reqContract({ address: addressVal, fields: fieldsContract }).then(
+            dataContractInfo => {
+              if (
+                dataContractInfo.from === accountAddress ||
+                dataContractInfo.admin === accountAddress
+              ) {
+                setIsAdminError(false);
+                if (tokenIcon) {
+                  reqToken({ address: addressVal }).then(tokenInfo => {
+                    if (tokenInfo.name && tokenInfo.symbol) {
+                      setIsErc20Error(false);
+                      setWarningMessage('');
+                    } else {
+                      setIsErc20Error(true);
+                      setWarningMessage('contract.errorTokenICon');
+                    }
+                  });
+                } else {
+                  setIsErc20Error(false);
+                  setWarningMessage('');
+                }
               } else {
-                setIsErc20Error(false);
-                setWarningMessage('');
+                setIsAdminError(true);
+                setWarningMessage('contract.errorNotAdmin');
               }
-            } else {
-              setIsAdminError(true);
-              setWarningMessage('contract.errorNotAdmin');
-            }
-          },
-        );
+            },
+          );
+        }
+      } else {
+        setIsAddressError(true);
+        setErrorMsgForAddress('contract.invalidContractAddress');
       }
     } else {
-      debugger;
       setIsAddressError(true);
-      setErrorMsgForAddress('contract.invalidContractAddress');
+      setErrorMsgForAddress('');
     }
   }
   function checkSite() {
