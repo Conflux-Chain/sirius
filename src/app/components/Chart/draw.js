@@ -134,10 +134,13 @@ export default function createDraw({
         ctxBg.textAlign = 'center';
         ctxBg.textBaseline = 'bottom';
         ctxBg.translate(x, height - 12);
-        ctxBg.rotate((-50 * Math.PI) / 180);
+        // ctxBg.rotate((-50 * Math.PI) / 180);
         const d = dayjs.unix(t);
-        ctxBg.fillText(d.format(axisFormat), 0, -5);
-        // ctxBg.fillText(d.format('HH:mm'), 0, 5);
+        const [row1, row2] = axisFormat.split('\n');
+        ctxBg.fillText(d.format(row1), 0, -5);
+        if (row2) {
+          ctxBg.fillText(d.format(row2), 0, 10);
+        }
         ctxBg.restore();
       }
 
