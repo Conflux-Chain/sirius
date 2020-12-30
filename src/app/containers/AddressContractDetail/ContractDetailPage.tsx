@@ -4,9 +4,9 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
@@ -30,7 +30,7 @@ import {
   Top,
   Head,
 } from './layouts';
-import { isContractAddress } from 'utils';
+import { isContractAddress, isInnerContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
@@ -38,11 +38,27 @@ interface RouteParams {
 
 export const ContractDetailPage = memo(() => {
   const { t } = useTranslation();
-  const notAvaiableText = t(translations.general.security.notAvailable);
   const { address } = useParams<RouteParams>();
   const bp = useBreakpoint();
+  const history = useHistory();
 
-  const { data: contractInfo } = useContract(address, ['website']);
+  const { data: contractInfo } = useContract(address, [
+    'website',
+    'transactionHash',
+  ]);
+  // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+  //   history.replace(`/notfound/${address}`);
+  //   return null;
+  // }
+  useEffect(() => {
+    if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+      history.replace(`/notfound/${address}`);
+    }
+  }, [address, history, contractInfo.transactionHash]);
+
+  const websiteUrl = contractInfo?.website || '';
+  const hasWebsite =
+    !!websiteUrl && websiteUrl !== t(translations.general.loading);
 
   return (
     <>
@@ -66,8 +82,15 @@ export const ContractDetailPage = memo(() => {
             <Qrcode address={address} />
             <Edit address={address} />
             <Apply address={address} />
-            {contractInfo?.website !== notAvaiableText && (
-              <Jump url={address} />
+            {hasWebsite && (
+              <Jump
+                onClick={() => {
+                  const url = websiteUrl.startsWith('http')
+                    ? websiteUrl
+                    : `http://${websiteUrl}`;
+                  window.open(url);
+                }}
+              />
             )}
           </HeadAddressLine>
         </Head>

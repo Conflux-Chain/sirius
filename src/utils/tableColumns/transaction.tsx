@@ -51,6 +51,16 @@ export const hash = {
   },
 };
 
+const getContractName = (value, row, type) => {
+  if (type === 'from' && row.fromContractInfo && row.fromContractInfo.name)
+    return formatString(row.fromContractInfo.name, 'tag');
+  else if (type === 'to' && row.toContractInfo && row.toContractInfo.name)
+    return formatString(row.toContractInfo.name, 'tag');
+  else if (type === 'to' && row.contractInfo && row.contractInfo.name)
+    return formatString(row.contractInfo.name, 'tag');
+  else return formatString(value, 'address');
+};
+
 export const from = {
   title: (
     <Translation>
@@ -60,10 +70,10 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   width: 1,
-  render: value => (
+  render: (value, row) => (
     <Link href={`/address/${value}`}>
       <Text span hoverValue={value}>
-        {formatString(value, 'address')}
+        {getContractName(value, row, 'from')}
       </Text>
     </Link>
   ),
@@ -100,7 +110,7 @@ export const to = {
       return (
         <Link href={`/address/${value}`}>
           <Text span hoverValue={value}>
-            {formatString(value, 'address')}
+            {getContractName(value, row, 'to')}
           </Text>
         </Link>
       );

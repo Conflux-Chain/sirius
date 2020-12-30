@@ -19,9 +19,16 @@ const faucetAddress = isTestNetEnv()
 const faucetLastAddress = isTestNetEnv()
   ? testnetFaucetLastAddress
   : mainnetFaucetLastAddress;
+const testnetContractManagerAddress =
+  '0x81bbe80b1282387e19d7e1a57476869081c7d965';
+const mainnetContractManagerAddress =
+  '0x81bbe80b1282387e19d7e1a57476869081c7d965';
+const contractManagerAddress = isTestNetEnv()
+  ? testnetContractManagerAddress
+  : mainnetContractManagerAddress;
 const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
   return contract.abi.decodeData(transacionData);
 };
-export { cfx, faucetAddress, faucet, cfxFormat };
+export { cfx, faucetAddress, faucet, cfxFormat, contractManagerAddress };

@@ -25,7 +25,23 @@
       "title": "Contract Edit"
     },
     "sourceCodeShort": "Source Code",
-    "abiShort": "ABI"
+    "abiShort": "ABI",
+    "maxSize": "Max size of 30KB",
+    "addressPlaceholder": "Please enter an address starting with 0x8 or 0x0",
+    "namePlaceholder": "Support up to 35 characters",
+    "sitePlaceholder": "http(s)://",
+    "invalidContractAddress": "Invalid contract address, or incorrect format",
+    "invalidNameTag": "The character length has reached the maximum limit",
+    "invalidUrl": "Incorrect URL",
+    "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
+    "invalidIconSize": "Invalid icon size, please try again.",
+    "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
+    "importJsonFile": "Import Json file(s)",
+    "invalidJsonFile": "Invaild Json file, please try again.",
+    "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
+    "abiNotUploaded": "ABI not uploaded",
+    "abiError": "ABI error"
   },
   "contractDetail": {
     "title": "Contract Detail",
@@ -49,7 +65,9 @@
     "labelCountBefore": "Total of",
     "labelCountAfter": "{{type}}",
     "blocks": "Blocks",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "latestBlocks": "Latest Blocks",
+    "latestTransactions": "Latest Transactions"
   },
   "tokens": {
     "title": "Tokens",
@@ -57,13 +75,19 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "table": {
-      "number": "Number",
+      "number": "#",
       "token": "Token",
       "transfer": "Transfers",
       "totalSupply": "Total Supply",
       "holders": "Holders",
       "contract": "Contract"
     }
+  },
+  "contracts": {
+    "title": "Internal Contracts",
+    "description": "Internal Contracts",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "internal contracts"
   },
   "header": {
     "home": "Home",
@@ -72,6 +96,7 @@
     "contract": "Contract",
     "contractCreation": "Contract Creation",
     "contractSponsor": "Contract Sponsor",
+    "contracts": "Internal Contracts",
     "charts": "Charts",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -87,13 +112,18 @@
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
-    "btn": "Go to homepage"
+    "btn": "Go TO HOMEPAGE"
   },
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
-    "btn": "Go to homepage"
+    "btn": "Go TO HOMEPAGE"
+  },
+  "notFoundContract": {
+    "title": "The contract can not be found",
+    "label": "Sorry! The contract does not exist.",
+    "btn": "Go TO HOMEPAGE"
   },
   "token": {
     "totalSupplay": "Total Supply",
@@ -185,6 +215,12 @@
         "from": "From",
         "to": "To",
         "quantity": "Quantity"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "Contract Name Tag",
+        "address": "Contract Address",
+        "transactionCount": "Txn"
       }
     },
     "pagination": {
@@ -260,6 +296,7 @@
         "20001": "Response data parsing error.",
         "20002": "Request timeout.",
         "20003": "Request abort.",
+        "20004": "Network error.",
         "400": "Bad request.",
         "401": "Unauthorized.",
         "403": "Forbidden.",
@@ -271,7 +308,11 @@
         "503": "Service Unavailable.",
         "504": "Gateway Timeout."
       }
-    }
+    },
+    "connnectWalletSubmit": "Connect wallet to submit",
+    "waitForConfirm": "Waiting For Confirmation",
+    "txRejected": "Transaction Rejected",
+    "exportRecords": "Export Current Records"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -334,7 +375,16 @@
     "created": "Created",
     "contractCreation": "Contract Creation",
     "for": "For",
-    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation"
+    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
+    "epochConfirmations": "{{count}} epoch Confirmations",
+    "statusError": {
+      "1": "Contract error: ",
+      "2": "Insufficient storage fees.",
+      "3": "Insufficient address balance. ",
+      "4": "Insufficient gas fee.",
+      "5": "Contract deployment failed.",
+      "6": "Unknown contract error."
+    }
   },
   "block": {
     "title": "Block",

@@ -7,8 +7,7 @@ import { media, useBreakpoint } from 'styles/media';
 import { ChevronDown } from '@zeit-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
 
-export type Node = string | ReactNode | JSX.Element;
-export type HeaderLinkTitle = Node | Array<Node>;
+export type HeaderLinkTitle = ReactNode | Array<ReactNode>;
 
 export interface HeaderLink {
   title: HeaderLinkTitle;
@@ -196,13 +195,22 @@ export const HeaderLink: React.FC<{
 
 const WrappLink = styled.span`
   min-height: 2.14rem;
-  .navbar-link-menu {
+  .navbar-link {
     position: relative;
     cursor: pointer;
+    font-weight: 500;
+    &:hover {
+      background-color: rgba(100%, 87%, 11%, 70%);
+    }
+    &.matched {
+      background-color: #fede1b;
+      &:hover {
+        background-color: #fede1b;
+      }
+    }
+  }
+  .navbar-link-menu {
     > a.link.navbar-link {
-      display: flex;
-      align-items: center;
-
       svg {
         transition: all 0.2s ease-out;
       }
@@ -222,24 +230,24 @@ const WrappLink = styled.span`
   a.link.navbar-link {
     display: flex;
     align-items: center;
-    font-weight: 500;
     color: #65709a;
     padding: 0.43rem 1.5rem;
 
-    :hover {
-      color: #65709a;
-    }
-
-    &.matched {
-      color: #65709a;
-      background-color: #fede1b;
-      :hover {
-        color: #65709a;
+    &.level-1 {
+      width: auto;
+      &.matched {
+        background-color: #65709a;
+      }
+      :hover:not(.matched) {
+        background-color: #f1f4f6;
       }
     }
   }
 
   ${media.m} {
+    .navbar-link:hover {
+      background-color: transparent;
+    }
     a.link.navbar-link {
       flex-direction: row;
       color: #aab9eb;

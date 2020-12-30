@@ -3,26 +3,37 @@
  * Contract Detail
  *
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { media, useBreakpoint } from '../../../styles/media';
-import { Input, Button } from '@cfxjs/react-ui';
+import { media } from '../../../styles/media';
+import { Input } from '@cfxjs/react-ui';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
-import { tranferToLowerCase } from '../../../utils';
+import {
+  tranferToLowerCase,
+  isContractAddress,
+  validURL,
+  byteToKb,
+  isObject,
+  isInnerContractAddress,
+} from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { Tabs } from './../Tabs';
-import { useCMContractCreate } from '../../../utils/api';
+import { reqContract, reqToken } from '../../../utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
-import { useHistory } from 'react-router-dom';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
-
+import imgWarning from 'images/warning.png';
+import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { DappButton } from '../DappButton/Loadable';
+import { useMessages } from '@cfxjs/react-ui';
+import { packContractAndToken } from '../../../utils/contractManagerTool';
+import { contractManagerAddress } from '../../../utils/cfx';
 interface Props {
   contractDetail: any;
   type: string;
@@ -33,9 +44,23 @@ interface Props {
 interface RequestBody {
   [key: string]: any;
 }
+const MAXSIZEFORICON = 30; //kb
+const fieldsContract = [
+  'address',
+  'type',
+  'name',
+  'website',
+  'token',
+  'abi',
+  'bytecode',
+  'icon',
+  'sourceCode',
+  'typeCode',
+];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const { address: accountAddress } = useConfluxPortal();
+  const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
   const [contractName, setContractName] = useState('');
@@ -44,51 +69,25 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const [tokenImgSrc, setTokenImgSrc] = useState('');
   const [sourceCode, setSourceCode] = useState('');
   const [abi, setAbi] = useState('');
-  const fileContractInputRef = React.createRef<any>();
-  const fileTokenInputRef = React.createRef<any>();
-  const [password, setPassword] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
   const [addressDisabled, setAddressDisabled] = useState(true);
-  const breakpoint = useBreakpoint();
-  const [btnLoading, setBtnLoading] = useState(false);
-  let submitBtnStyle;
-  if (breakpoint === 's') {
-    submitBtnStyle = { height: '2.6667rem', lineHeight: '2.6667rem' };
-  } else {
-    submitBtnStyle = { height: '2.2857rem', lineHeight: '2.2857rem' };
-  }
-  const inputStyle = { margin: '0 0.8571rem' };
-  const [shouldFetchCreate, setShouldFetchCreate] = useState(false);
-  const [shouldFetchUpdate, setShouldFetchUpdate] = useState(false);
-  const [requestParams, setReuqestParams] = useState({});
-  let { data: dataResCreated } = useCMContractCreate(
-    requestParams,
-    shouldFetchCreate,
-  );
-  let { data: dataResUpdated } = useCMContractCreate(
-    requestParams,
-    shouldFetchUpdate,
-  );
-  if (dataResCreated) {
-    setShouldFetchCreate(false);
-    dataResCreated = undefined;
-    setBtnLoading(false);
-    // setToast({
-    //   text:t(translations.general.submitSucceed),
-    //   type:'success'
-    // })
-    history.push(`/address/${tranferToLowerCase(addressVal)}`);
-  }
-  if (dataResUpdated) {
-    setShouldFetchUpdate(false);
-    setBtnLoading(false);
-    dataResUpdated = undefined;
-    // setToast({
-    //   text:t(translations.general.submitSucceed),
-    //   type:'success'
-    // })
-    history.push(`/address/${tranferToLowerCase(addressVal)}`);
-  }
+  const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
+  const [errorMsgForName, setErrorMsgForName] = useState('');
+  const [errorMsgForSite, setErrorMsgForSite] = useState('');
+  const [warningMessage, setWarningMessage] = useState('');
+  const [hoverTips, setHoverTips] = useState('');
+  const [isAddressError, setIsAddressError] = useState(true);
+  const [isAdminError, setIsAdminError] = useState(true);
+  const [isErc20Error, setIsErc20Error] = useState(true);
+  const [isNameError, setIsNameError] = useState(true);
+  const [isSiteError, setIsSiteError] = useState(false);
+  const [isSourceCodeError, setIsSourceCodeError] = useState(true);
+  const [isAbiError, setIsAbiError] = useState(true);
+  const [txData, setTxData] = useState('');
+  const fileContractInputRef = React.createRef<any>();
+  const fileTokenInputRef = React.createRef<any>();
+  const fileJsonInputRef = React.createRef<any>();
+  const inputStyle = { margin: '0 0.2857rem' };
   const displayNone = {
     display: 'none',
   };
@@ -104,20 +103,13 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     setSite(e.target.value);
   };
 
-  const updateCanSubmit = useCallback(() => {
-    let isSubmitable = false;
-    if (addressVal && contractName && sourceCode && abi && password) {
-      isSubmitable = true;
-    }
-    setBtnShouldClick(!isSubmitable);
-  }, [abi, addressVal, contractName, password, sourceCode]);
   useEffect(() => {
-    setContractImgSrc(contractDetail.icon);
+    setContractImgSrc(contractDetail.icon || '');
     setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
-    setContractName(contractDetail.name);
-    setSourceCode(contractDetail.sourceCode);
-    setAbi(contractDetail.abi);
-    setSite(contractDetail.website);
+    setContractName(contractDetail.name || '');
+    setSourceCode(contractDetail.sourceCode || '');
+    setAbi(contractDetail.abi || '');
+    setSite(contractDetail.website || '');
     switch (type) {
       case 'create':
         setAddressVal(address || '');
@@ -128,8 +120,10 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         setAddressVal(contractDetail.address);
         setTitle(t(translations.contract.edit.title));
         setAddressDisabled(true);
+        checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
     contractDetail.abi,
@@ -137,24 +131,119 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     contractDetail.icon,
     contractDetail.name,
     contractDetail.sourceCode,
-    contractDetail.token,
     contractDetail.tokenIcon,
     contractDetail.website,
+    contractDetail.token,
     t,
     type,
   ]);
+  useEffect(
+    () => {
+      let isSubmitable = false;
+      if (accountAddress) {
+        if (
+          !isAddressError &&
+          !isAdminError &&
+          !isErc20Error &&
+          !isNameError &&
+          !isSiteError &&
+          !isSourceCodeError &&
+          !isAbiError
+        ) {
+          isSubmitable = true;
+          setTxData(getTxData());
+        } else {
+          setTxData('');
+        }
+      } else {
+        setTxData('');
+        isSubmitable = true;
+      }
+      setBtnShouldClick(isSubmitable);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      type,
+      addressVal,
+      contractName,
+      site,
+      sourceCode,
+      abi,
+      contractImgSrc,
+      tokenImgSrc,
+      accountAddress,
+      isAddressError,
+      isAdminError,
+      isErc20Error,
+      isNameError,
+      isSiteError,
+      isSourceCodeError,
+      isAbiError,
+    ],
+  );
+
+  const addressOnBlur = () => {
+    checkAdminThenToken(tokenImgSrc);
+  };
+  function checkContractName() {
+    if (contractName) {
+      if (contractName.length > 35) {
+        setIsNameError(true);
+        setErrorMsgForName('contract.invalidNameTag');
+      } else {
+        setIsNameError(false);
+        setErrorMsgForName('');
+      }
+    } else {
+      setIsNameError(true);
+      setErrorMsgForName('');
+    }
+  }
   useEffect(() => {
-    updateCanSubmit();
-  }, [
-    type,
-    addressVal,
-    contractName,
-    site,
-    sourceCode,
-    abi,
-    password,
-    updateCanSubmit,
-  ]);
+    checkAdminThenToken(tokenImgSrc);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressVal]);
+
+  const nameOnBlur = () => {
+    checkContractName();
+  };
+  useEffect(() => {
+    checkContractName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractName]);
+
+  const siteOnBlur = () => {
+    checkSite();
+  };
+  useEffect(() => {
+    checkSite();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [site]);
+  useEffect(() => {
+    if (sourceCode) {
+      setIsSourceCodeError(false);
+    } else {
+      setIsSourceCodeError(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceCode]);
+  useEffect(() => {
+    if (abi) {
+      setIsAbiError(false);
+    } else {
+      setIsAbiError(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [abi]);
+  useEffect(() => {
+    if (accountAddress) {
+      setHoverTips('');
+      checkAdminThenToken(tokenImgSrc);
+    } else {
+      setHoverTips('contract.beforeContractSubmitTip');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountAddress]);
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
@@ -163,13 +252,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   };
   const removeTokenIcon = () => {
     setTokenImgSrc('');
-  };
-  const uploadTokenIcon = () => {
-    fileTokenInputRef.current.click();
+    setIsErc20Error(false);
+    if (warningMessage === 'contract.errorTokenICon') {
+      setWarningMessage('');
+    }
   };
 
-  const passwordChangeHandle = e => {
-    setPassword(e.target.value);
+  const uploadTokenIcon = () => {
+    fileTokenInputRef.current.click();
   };
 
   const handleSourceChange = code => {
@@ -183,10 +273,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
-      reader.onloadend = () => {
-        setContractImgSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      if (byteToKb(file.size) > MAXSIZEFORICON) {
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+      } else {
+        reader.onloadend = () => {
+          setContractImgSrc(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
     }
     e.target.value = '';
   };
@@ -195,39 +289,121 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
-      reader.onloadend = () => {
-        setTokenImgSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      if (byteToKb(file.size) > MAXSIZEFORICON) {
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+      } else {
+        reader.onloadend = () => {
+          setTokenImgSrc(reader.result as string);
+          checkAdminThenToken(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
     e.target.value = '';
   };
-  const submitClick = () => {
+  const handleJsonChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    if (file) {
+      reader.onloadend = () => {
+        try {
+          let jsonContent = JSON.parse(reader.result as string);
+          if (Array.isArray(jsonContent)) {
+            setAbi(JSON.stringify(jsonContent));
+          } else {
+            if (isObject(jsonContent)) {
+              if (jsonContent.abi && Array.isArray(jsonContent.abi)) {
+                setAbi(JSON.stringify(jsonContent.abi));
+              } else {
+                setMessage({
+                  text: t('contract.invalidJsonAbi'),
+                  color: 'error',
+                });
+              }
+            } else {
+              setMessage({
+                text: t('contract.invalidJsonAbi'),
+                color: 'error',
+              });
+            }
+          }
+        } catch (error) {
+          setMessage({ text: t('contract.invalidJsonFile'), color: 'error' });
+        }
+      };
+      reader.readAsText(file);
+    }
+    e.target.value = '';
+  };
+  function getTxData() {
     const bodyParams: RequestBody = {};
     bodyParams.address = tranferToLowerCase(addressVal);
     bodyParams.name = contractName;
     bodyParams.website = site;
     bodyParams.icon = contractImgSrc;
-    bodyParams.typeCode = 1;
     if (tokenImgSrc) {
-      bodyParams.token = {};
-      bodyParams.token.icon = tokenImgSrc;
+      bodyParams.tokenIcon = tokenImgSrc;
+    } else {
+      bodyParams.tokenIcon = '';
     }
     bodyParams.sourceCode = sourceCode;
     bodyParams.abi = abi;
-    bodyParams.password = password;
-    setReuqestParams(bodyParams);
-    switch (type) {
-      case 'create':
-        setBtnLoading(true);
-        setShouldFetchCreate(true);
-        break;
-      case 'edit':
-        setBtnLoading(true);
-        setShouldFetchUpdate(true);
-        break;
+    const data = packContractAndToken(bodyParams);
+    return data[0];
+  }
+  function checkAdminThenToken(tokenIcon) {
+    if (addressVal) {
+      if (isContractAddress(addressVal) || isInnerContractAddress(addressVal)) {
+        setIsAddressError(false);
+        setErrorMsgForAddress('');
+        if (accountAddress) {
+          reqContract({ address: addressVal, fields: fieldsContract }).then(
+            dataContractInfo => {
+              if (
+                dataContractInfo.from === accountAddress ||
+                dataContractInfo.admin === accountAddress
+              ) {
+                setIsAdminError(false);
+                if (tokenIcon) {
+                  reqToken({ address: addressVal }).then(tokenInfo => {
+                    if (tokenInfo.name && tokenInfo.symbol) {
+                      setIsErc20Error(false);
+                      setWarningMessage('');
+                    } else {
+                      setIsErc20Error(true);
+                      setWarningMessage('contract.errorTokenICon');
+                    }
+                  });
+                } else {
+                  setIsErc20Error(false);
+                  setWarningMessage('');
+                }
+              } else {
+                setIsAdminError(true);
+                setWarningMessage('contract.errorNotAdmin');
+              }
+            },
+          );
+        }
+      } else {
+        setIsAddressError(true);
+        setErrorMsgForAddress('contract.invalidContractAddress');
+      }
+    } else {
+      setIsAddressError(true);
+      setErrorMsgForAddress('');
     }
-  };
+  }
+  function checkSite() {
+    if (site && !validURL(site)) {
+      setIsSiteError(true);
+      setErrorMsgForSite('contract.invalidUrl');
+    } else {
+      setIsSiteError(false);
+      setErrorMsgForSite('');
+    }
+  }
   //TODO: modity the types of div to RreactNode
   let tabsLabelSourceCode = (
     <LabelWithIcon className="tabs">
@@ -242,51 +418,77 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       {t(translations.contract.abi)}
     </LabelWithIcon>
   ) as any;
-
+  const importClick = () => {
+    fileJsonInputRef.current.click();
+  };
   return (
     <Wrapper>
       <Header>{title}</Header>
       <TopContainer>
         <div className="bodyContainer first">
           <div className="lineContainer">
-            <LabelWithIcon>
-              <span className="labelIcon">*</span>
-              {t(translations.contract.address)}
-            </LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                style={inputStyle}
-                defaultValue={addressVal}
-                onChange={addressInputChanger}
-                readOnly={addressDisabled}
-              />
-            </SkelontonContainer>
+            <div className="firstLine">
+              <LabelWithIcon>
+                <span className="labelIcon">*</span>
+                {t(translations.contract.address)}
+              </LabelWithIcon>
+              <SkelontonContainer shown={loading}>
+                <Input
+                  className="inputComp"
+                  style={inputStyle}
+                  defaultValue={addressVal}
+                  onChange={addressInputChanger}
+                  readOnly={addressDisabled}
+                  placeholder={t(translations.contract.addressPlaceholder)}
+                  onBlur={addressOnBlur}
+                />
+              </SkelontonContainer>
+            </div>
+            <div>
+              <span className="blankSpan"></span>
+              <span className="errorSpan">{t(errorMsgForAddress)}</span>
+            </div>
           </div>
           <div className="lineContainer">
-            <LabelWithIcon>
-              <span className="labelIcon">*</span>
-              {t(translations.contract.nameTag)}
-            </LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                defaultValue={contractName}
-                style={inputStyle}
-                onChange={nameInputChanger}
-              />
-            </SkelontonContainer>
+            <div className="firstLine">
+              <LabelWithIcon>
+                <span className="labelIcon">*</span>
+                {t(translations.contract.nameTag)}
+              </LabelWithIcon>
+              <SkelontonContainer shown={loading}>
+                <Input
+                  className="inputComp"
+                  defaultValue={contractName}
+                  style={inputStyle}
+                  onChange={nameInputChanger}
+                  placeholder={t(translations.contract.namePlaceholder)}
+                  onBlur={nameOnBlur}
+                />
+              </SkelontonContainer>
+            </div>
+            <div>
+              <span className="blankSpan"></span>
+              <span className="errorSpan">{t(errorMsgForName)}</span>
+            </div>
           </div>
           <div className="lineContainer">
-            <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
-            <SkelontonContainer shown={loading}>
-              <Input
-                className="inputComp"
-                defaultValue={site}
-                style={inputStyle}
-                onChange={siteInputChanger}
-              />
-            </SkelontonContainer>
+            <div className="firstLine">
+              <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
+              <SkelontonContainer shown={loading}>
+                <Input
+                  className="inputComp"
+                  defaultValue={site}
+                  style={inputStyle}
+                  onChange={siteInputChanger}
+                  placeholder={t(translations.contract.sitePlaceholder)}
+                  onBlur={siteOnBlur}
+                />
+              </SkelontonContainer>
+            </div>
+            <div>
+              <span className="blankSpan"></span>
+              <span className="errorSpan">{t(errorMsgForSite)}</span>
+            </div>
           </div>
         </div>
         <div className="bodyContainer second">
@@ -310,6 +512,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   <span className="labelText">
                     {t(translations.contract.contractIcon)}
                   </span>
+                </div>
+                <div className="iconTips">
+                  {t(translations.contract.maxSize)}
                 </div>
                 <div className="secondItem" onClick={removeContractIcon}>
                   <img
@@ -352,6 +557,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                     {t(translations.contract.tokenIcon)}
                   </span>
                 </div>
+                <div className="iconTips">
+                  {t(translations.contract.maxSize)}
+                </div>
                 <div className="secondItem" onClick={removeTokenIcon}>
                   <img src={imgRemove} className="labelIcon" alt="remove"></img>
                   <span className="labelText">
@@ -375,6 +583,19 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         </div>
       </TopContainer>
       <TabContainer>
+        <div className="jsonContainer">
+          <input
+            type="file"
+            name="File"
+            style={displayNone}
+            accept=".json"
+            ref={fileJsonInputRef}
+            onChange={handleJsonChange}
+          />
+          <span className="text" onClick={importClick}>
+            {t(translations.contract.importJsonFile)}
+          </span>
+        </div>
         <Tabs initialValue="1">
           <Tabs.Item label={tabsLabelSourceCode} value="1">
             <SkelontonContainer shown={loading}>
@@ -428,33 +649,20 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
           </Tabs.Item>
         </Tabs>
       </TabContainer>
-      <SubmitContainer>
-        <div className="submitLeftContainer">
-          <LabelWithIcon className="init">
-            <span className="labelIcon">*</span>
-            {t(translations.contract.enterPassword)}
-          </LabelWithIcon>
-          <Input
-            className="submitInput"
-            style={inputStyle}
-            value={password}
-            onChange={passwordChangeHandle}
-          ></Input>
+      <div className="submitContainer">
+        <DappButton
+          contractAddress={contractManagerAddress}
+          data={txData}
+          btnDisabled={!btnShouldClick}
+          hoverText={`${hoverTips ? t(hoverTips) : ''}`}
+        ></DappButton>
+        <div
+          className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}
+        >
+          <img src={imgWarning} alt="warning" className="warningImg" />
+          <span className="text">{t(warningMessage)}</span>
         </div>
-        <div className="submitRightContainer">
-          <Button
-            variant="solid"
-            color="primary"
-            className="submitBtn"
-            style={submitBtnStyle}
-            onClick={submitClick}
-            disabled={btnShouldClick}
-            loading={btnLoading}
-          >
-            {t(translations.general.submit)}
-          </Button>
-        </div>
-      </SubmitContainer>
+      </div>
     </Wrapper>
   );
 };
@@ -499,6 +707,28 @@ const Wrapper = styled.div`
     width: 100%;
     max-width: 73.1429rem;
     margin: 0 auto;
+  }
+  .warningContainer {
+    margin-top: 0.5714rem;
+    display: flex;
+    align-items: center;
+    .warningImg {
+      width: 1rem;
+    }
+    .text {
+      margin-left: 0.5714rem;
+      font-size: 1rem;
+      color: #ffa500;
+    }
+  }
+  .shown {
+    visibility: visible;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .submitContainer {
+    margin-top: 1.7143rem;
   }
   ${media.s} {
     max-width: initial;
@@ -551,12 +781,24 @@ const TopContainer = styled.div`
   background: #f5f6fa;
   flex-direction: row;
   .lineContainer {
-    display: flex;
-    align-items: center;
-    padding: 0.8571rem 0.3571rem 0.8571rem 0;
+    padding: 1.7857rem 0 0 0;
     border-bottom: 0.0714rem solid #e8e9ea;
+    .firstLine {
+      display: flex;
+      align-items: center;
+    }
     .with-label {
       flex: 1;
+    }
+    .blankSpan {
+      display: inline-block;
+      width: 9.4286rem;
+    }
+    .errorSpan {
+      display: inline-block;
+      font-size: 0.8571rem;
+      color: #e64e4e;
+      line-height: 1.5714rem;
     }
     &:last-child {
       border: none;
@@ -628,7 +870,6 @@ const TopContainer = styled.div`
           align-items: center;
         }
         .secondItem {
-          margin-top: 0.5714rem;
         }
       }
       .iconContainer {
@@ -643,6 +884,12 @@ const TopContainer = styled.div`
           width: 3.6667rem;
           height: 3.6667rem;
         }
+      }
+      .iconTips {
+        color: #97a3b4;
+        line-height: 1.5714rem;
+        font-size: 0.8571rem;
+        margin-left: 1.4286rem;
       }
     }
     .labelIcon {
@@ -713,45 +960,24 @@ const StyledTabelWrapper = styled.div`
 `;
 const TabContainer = styled.div`
   margin-top: 2.3571rem;
-
+  position: relative;
+  .jsonContainer {
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    ${media.s} {
+      display: none;
+    }
+    .text {
+      display: inline-block;
+      color: #1e3de4;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.2857rem;
+      border-bottom: 2px solid #1e3de4;
+    }
+  }
   ${media.s} {
     margin-top: 2rem;
-  }
-`;
-const SubmitContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.7143rem;
-  ${media.s} {
-    align-items: flex-end;
-  }
-  .submitLeftContainer {
-    ${media.s} {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-  .submitRightContainer {
-    display: flex;
-    align-items: flex-end;
-  }
-  .submitInput {
-    margin-left: 0.3571rem;
-    ${media.s} {
-      margin-top: 0.3333rem;
-      width: 100%;
-      margin-left: initial;
-    }
-  }
-  .submitBtn {
-    height: 2.2857rem;
-  }
-  .btn.submitBtn {
-    min-width: initial;
-    width: 10rem;
-    ${media.s} {
-      width: 7.0833rem;
-    }
   }
 `;

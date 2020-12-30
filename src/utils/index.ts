@@ -11,6 +11,12 @@ import fetch from './request';
 
 dayjs.extend(relativeTime);
 
+export const innerContract = [
+  '0x0888000000000000000000000000000000000000',
+  '0x0888000000000000000000000000000000000001',
+  '0x0888000000000000000000000000000000000002',
+];
+
 export const delay = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -466,7 +472,7 @@ export function isContractAddress(str: string) {
 }
 
 export function isInnerContractAddress(str: string) {
-  return /^0x0[0-9a-fA-F]{39}$/.test(str);
+  return innerContract.indexOf(str) > -1;
 }
 
 export const isHash = (str: string) => {
@@ -494,4 +500,22 @@ export const isTxHash = async (str: string) => {
 export function isEpochNumber(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
+}
+export function validURL(str: string) {
+  var pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(str);
+}
+export function byteToKb(bytes) {
+  return bytes / 1024;
+}
+export function isObject(o) {
+  return o !== null && typeof o === 'object' && Array.isArray(o) === false;
 }

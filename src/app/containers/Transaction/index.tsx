@@ -18,6 +18,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
+import imgWarning from 'images/warning.png';
 import {
   reqTransactionDetail,
   reqContract,
@@ -78,8 +79,11 @@ export const Transaction = () => {
     status,
     data,
     contractCreated,
-    txExecErrorMsg,
+    confirmedEpochCount,
+    txExecErrorInfo,
   } = transactionDetail;
+  const [warningMessage, setWarningMessage] = useState('');
+  const [isAbiError, setIsAbiError] = useState(false);
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
     let riskLevel;
@@ -161,7 +165,10 @@ export const Transaction = () => {
                     address: contractResponse['address'],
                     transacionData: txDetailDta.data,
                   });
-                } catch {}
+                  if (!decodedData) setIsAbiError(true);
+                } catch {
+                  setIsAbiError(true);
+                }
                 setDecodedData(decodedData);
                 setDataTypeList(['original', 'utf8', 'decodeInputData']);
                 const resultTransferList = transferListReponse;
@@ -207,6 +214,22 @@ export const Transaction = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
+  useEffect(() => {
+    if (dataType === 'decodeInputData') {
+      if (contractInfo['abi']) {
+        if (isAbiError) {
+          setWarningMessage('contract.abiError');
+        } else {
+          setWarningMessage('');
+        }
+      } else {
+        setWarningMessage('contract.abiNotUploaded');
+      }
+    } else {
+      setWarningMessage('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataType, contractInfo, isAbiError]);
   const generatedDiv = () => {
     if (to) {
       if (isContract) {
@@ -374,6 +397,21 @@ export const Transaction = () => {
       </div>
     );
   };
+
+  // txn status error detail info
+  let statusErrorMessage = '';
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
+
   return (
     <StyledTransactionsWrapper>
       <Helmet>
@@ -455,7 +493,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && <Status type={status}>{txExecErrorMsg}</Status>}
+              {!loading && <Status type={status}>{statusErrorMessage}</Status>}
             </SkeletonContainer>
           </Description>
           <Description
@@ -470,6 +508,11 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <Security type={risk}></Security>
+              <StyledEpochConfirmationsWrapper>
+                {t(translations.transaction.epochConfirmations, {
+                  count: confirmedEpochCount,
+                })}
+              </StyledEpochConfirmationsWrapper>
             </SkeletonContainer>
           </Description>
           <Description
@@ -652,6 +695,14 @@ export const Transaction = () => {
                   );
                 })}
               </Select>
+              <div
+                className={`warningContainer ${
+                  warningMessage ? 'shown' : 'hidden'
+                }`}
+              >
+                <img src={imgWarning} alt="warning" className="warningImg" />
+                <span className="text">{t(warningMessage)}</span>
+              </div>
             </SkeletonContainer>
           </Description>
         </Card>
@@ -701,6 +752,25 @@ const StyledCardWrapper = styled.div`
   .btnSelectContainer {
     margin-top: 0.8571rem;
   }
+  .warningContainer {
+    margin-top: 0.5714rem;
+    display: flex;
+    align-items: center;
+    .warningImg {
+      width: 1rem;
+    }
+    .text {
+      margin-left: 0.5714rem;
+      font-size: 1rem;
+      color: #ffa500;
+    }
+  }
+  .shown {
+    visibility: visible;
+  }
+  .hidden {
+    visibility: hidden;
+  }
 `;
 
 const StyledTransactionsWrapper = styled.div`
@@ -709,4 +779,9 @@ const StyledTransactionsWrapper = styled.div`
   ${media.s} {
     padding-bottom: 0;
   }
+`;
+
+const StyledEpochConfirmationsWrapper = styled.span`
+  margin-left: 1rem;
+  vertical-align: middle;
 `;

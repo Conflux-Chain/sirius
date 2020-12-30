@@ -24,8 +24,10 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
+import { NotFoundContractPage } from './containers/NotFoundContractPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
+import { Contracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
@@ -34,6 +36,7 @@ import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 import { GlobalNotify } from './containers/GlobalNotify';
+import { Search } from './containers/Search';
 
 WebFontLoader.load({
   custom: {
@@ -48,8 +51,12 @@ export function App() {
   return (
     <SWRConfig
       value={{
+        // disable auto polling, reconnect or retry
         revalidateOnFocus: false,
+        revalidateOnReconnect: false,
         refreshInterval: 0,
+        shouldRetryOnError: false,
+        errorRetryCount: 0,
       }}
     >
       <BrowserRouter>
@@ -66,12 +73,18 @@ export function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/packing/:txHash" component={PackingPage} />
+              <Route
+                exact
+                path="/notfound/:contractAddress"
+                component={NotFoundContractPage}
+              />
               <Route exact path="/contract" component={Contract} />
               <Route
                 exact
                 path="/contract/:contractAddress"
                 component={Contract}
               />
+              <Route exact path="/contracts" component={Contracts} />
               <Route
                 exact
                 path="/token/:tokenAddress"
@@ -97,6 +110,7 @@ export function App() {
                 path="/address/:address"
                 component={AddressContractDetailPage}
               />
+              <Route path="/search/:text" component={Search} />
               <Route component={NotFoundPage} />
             </Switch>
           </Main>

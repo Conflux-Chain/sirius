@@ -44,6 +44,14 @@ export const reqTokenList = (param?: object, extra?: object) => {
   });
 };
 
+export const reqToken = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/token/${param && param['address']}`,
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqConfirmationRiskByHash = async (blockHash: string) => {
   try {
     const callProvider = () => {

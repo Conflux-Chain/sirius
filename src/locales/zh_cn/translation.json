@@ -25,7 +25,23 @@
       "title": "合约编辑"
     },
     "sourceCodeShort": "源码",
-    "abiShort": "ABI"
+    "abiShort": "ABI",
+    "maxSize": "大小不能超过 30KB",
+    "addressPlaceholder": "请输入以 0x8 或 0x0 开头的地址",
+    "namePlaceholder": "支持输入最长 35 个字符",
+    "sitePlaceholder": "http(s)://",
+    "invalidContractAddress": "合约地址无效，或格式错误",
+    "invalidNameTag": "字符长度已达到最大限制",
+    "invalidUrl": "URL 格式错误",
+    "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
+    "invalidIconSize": "图片过大，请重试",
+    "errorTokenICon": "非 ERC20 合约，代币图标不可上传",
+    "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
+    "importJsonFile": "导入 Json 文件",
+    "invalidJsonFile": "无效 Json 文件，请重试",
+    "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
+    "abiNotUploaded": "没有上传 ABI",
+    "abiError": "ABI 错误"
   },
   "contractDetail": {
     "title": "合约详情",
@@ -49,7 +65,9 @@
     "labelCountBefore": "共计",
     "labelCountAfter": "个 {{type}} ",
     "blocks": "区块",
-    "transactions": "交易"
+    "transactions": "交易",
+    "latestBlocks": "最新区块",
+    "latestTransactions": "最新交易"
   },
   "tokens": {
     "title": "代币",
@@ -65,6 +83,12 @@
       "contract": "合约"
     }
   },
+  "contracts": {
+    "title": "内置合约",
+    "description": "内置合约",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "个内置合约"
+  },
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
@@ -72,6 +96,7 @@
     "contract": "合约",
     "contractCreation": "创建合约",
     "contractSponsor": "赞助合约",
+    "contracts": "内置合约",
     "charts": "图表",
     "testnet": "Testnet",
     "oceanus": "Tethys",
@@ -93,6 +118,11 @@
     "title": "无法查询到相关结果",
     "label": "抱歉！您搜索的字符串无效。",
     "addressTip": "如果您在搜索 Conflux 地址，请搜索以 0x0 (内置合约），0x1（用户账户），或者 0x8（智能合约）开头的地址。",
+    "btn": "前往首页"
+  },
+  "notFoundContract": {
+    "title": "无法查询到该合约",
+    "label": "抱歉！该合约不存在。",
     "btn": "前往首页"
   },
   "token": {
@@ -135,7 +165,7 @@
     "viewAll": "查看全部",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
     "address": {
-      "editContract": "点击编辑合同",
+      "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
       "address": "地址"
     },
@@ -185,6 +215,12 @@
         "from": "发送方",
         "to": "接收方",
         "quantity": "数量"
+      },
+      "contracts": {
+        "number": "#",
+        "name": "合约名称标签",
+        "address": "合约地址",
+        "transactionCount": "交易数"
       }
     },
     "pagination": {
@@ -260,6 +296,7 @@
         "20001": "响应数据解析错误。",
         "20002": "请求超时。",
         "20003": "请求中止。",
+        "20004": "网络连接错误。",
         "400": "错误请求。",
         "401": "未授权。",
         "403": "服务器拒绝请求。",
@@ -271,7 +308,11 @@
         "503": "服务不可用。",
         "504": "网关超时。"
       }
-    }
+    },
+    "connnectWalletSubmit": "连接钱包以提交",
+    "waitForConfirm": "等待确认",
+    "txRejected": "交易已被拒绝",
+    "exportRecords": "导出当前记录"
   },
   "sponsor": {
     "title": "赞助合约",
@@ -334,7 +375,16 @@
     "created": "已创建",
     "contractCreation": "合约创建",
     "for": "For",
-    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化"
+    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化",
+    "epochConfirmations": "{{count}} 个纪元已确认",
+    "statusError": {
+      "1": "合约错误：",
+      "2": "存储费不足。",
+      "3": "账户余额不足。",
+      "4": "燃气费不足。",
+      "5": "合约部署失败。",
+      "6": "未知合约错误。"
+    }
   },
   "block": {
     "title": "区块",

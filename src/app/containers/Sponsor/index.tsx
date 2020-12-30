@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { Button, Modal } from '@cfxjs/react-ui';
 import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
+import { DappButton } from '../../components/DappButton/Loadable';
 import {
   isAddress,
   getEllipsStr,
@@ -20,8 +20,6 @@ import {
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import imgSuccess from 'images/success.png';
-import imgSuccessBig from 'images/success_big.png';
 interface RouteParams {
   contractAddress: string;
 }
@@ -48,16 +46,20 @@ export function Sponsor() {
   const [storageBound, setStorageBound] = useState(defaultStr);
   const [loading, setLoading] = useState(false);
   const [canApply, setCanApply] = useState(false);
-  const [applyText, setApplyText] = useState('');
+  const [isFlag, setIsFlag] = useState(false);
   const [inputAddressVal, setInputAddressVal] = useState('');
-  const [shownDialog, setShownDialog] = useState(false);
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
-  const [txHash, setTxHash] = useState('');
-  const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
+  const [txData, setTxData] = useState('');
+  const { address: portalAddress } = useConfluxPortal();
   const getSponsorInfo = async address => {
     setLoading(true);
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
-    await fetchIsAppliable(address);
+    const { flag } = await fetchIsAppliable(address);
+    setIsFlag(flag);
+    if (flag) {
+      const { data } = await faucet.apply(address);
+      setTxData(data);
+    }
     const faucetParams = await faucet.getFaucetParams(address);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
@@ -143,11 +145,7 @@ export function Sponsor() {
           setErrorMsgForApply('');
           break;
       }
-      if (!portalInstalled) {
-        setCanApply(true);
-      } else {
-        setCanApply(false);
-      }
+      setCanApply(false);
     } else {
       setCanApply(true);
       setErrorMsgForApply('');
@@ -155,67 +153,87 @@ export function Sponsor() {
     return { flag, message };
   };
 
-  const applyToTx = async (addressStr: string) => {
-    const { flag } = await fetchIsAppliable(addressStr);
-    if (flag) {
-      const { data } = await faucet.apply(addressStr);
-      const txParams = {
-        from: address,
-        to: faucetAddress,
-        data,
-      };
-      return confluxJS.sendTransaction(txParams);
-    }
-  };
-  const applyClick = async () => {
-    if (!portalInstalled) {
-      useConfluxPortal.openHomePage();
-    } else {
-      if (address) {
-        //Portal has already installed and the portal has already got the account
-        if (isAddress(inputAddressVal)) {
-          applyToTx(inputAddressVal)
-            .then(txHash => {
-              setTxHash(txHash);
-              setShownDialog(true);
-              setCanApply(false);
-              setErrorMsgForApply('');
-            })
-            .catch(error => {
-              setCanApply(false);
-              setErrorMsgForApply(error.message);
-            });
-        }
-      } else {
-        login();
-      }
-    }
-  };
-  const closeDialog = () => {
-    setShownDialog(false);
-    if (isAddress(inputAddressVal)) {
-      getSponsorInfo(inputAddressVal);
-    }
-  };
+  // const applyToTx = async (addressStr: string) => {
+  //   const { flag } = await fetchIsAppliable(addressStr);
+  //   if (flag) {
+  //     const { data } = await faucet.apply(addressStr);
+  //     const txParams = {
+  //       from: address,
+  //       to: faucetAddress,
+  //       data,
+  //     };
+  //     return confluxJS.sendTransaction(txParams);
+  //   }
+  // };
+  // const applyClick = async () => {
+  //   if (!portalInstalled) {
+  //     useConfluxPortal.openHomePage();
+  //   } else {
+  //     if (address) {
+  //       //Portal has already installed and the portal has already got the account
+  //       if (isAddress(inputAddressVal)) {
+  //         applyToTx(inputAddressVal)
+  //           .then(txHash => {
+  //             setTxHash(txHash);
+  //             setShownDialog(true);
+  //             setCanApply(false);
+  //             setErrorMsgForApply('');
+  //           })
+  //           .catch(error => {
+  //             setCanApply(false);
+  //             setErrorMsgForApply(error.message);
+  //           });
+  //       }
+  //     } else {
+  //       login();
+  //     }
+  //   }
+  // };
+  // const closeDialog = () => {
+  //   setShownDialog(false);
+  //   if (isAddress(inputAddressVal)) {
+  //     getSponsorInfo(inputAddressVal);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (portalInstalled) {
-      setApplyText('general.apply');
-    } else {
-      setCanApply(true);
-      setApplyText('sponsor.connectToApply');
-    }
-    // eslint-disable-next-line
-  }, [portalInstalled]);
+  // useEffect(() => {
+  //   if (portalInstalled) {
+  //     setApplyText('general.apply');
+  //   } else {
+  //     setCanApply(true);
+  //     setApplyText('sponsor.connectToApply');
+  //   }
+  //   // eslint-disable-next-line
+  // }, [portalInstalled]);
 
   useEffect(() => {
     setInputAddressVal(contractAddress);
     if (isAddress(contractAddress)) {
       getSponsorInfo(contractAddress);
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractAddress]);
-
+  useEffect(() => {
+    if (!portalAddress) {
+      setCanApply(true);
+      if (errorMsgForApply) {
+        setErrorMsgForApply('');
+      }
+    } else {
+      if (!isFlag) {
+        setCanApply(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [portalAddress]);
+  const failCallback = message => {
+    setCanApply(false);
+  };
+  const closeModalCallback = () => {
+    if (isAddress(inputAddressVal)) {
+      getSponsorInfo(inputAddressVal);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -388,7 +406,7 @@ export function Sponsor() {
             </div>
           </div>
         </BlockContainer>
-        <ApplyContainer>
+        {/* <ApplyContainer>
           <Button
             variant="solid"
             color="primary"
@@ -406,7 +424,19 @@ export function Sponsor() {
           <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
             {getEllipsStr(address, 6, 4)}
           </span>
+        </ApplyContainer> */}
+        <ApplyContainer>
+          <DappButton
+            contractAddress={faucetAddress}
+            data={txData}
+            btnDisabled={!canApply}
+            connectText={t('sponsor.connectToApply')}
+            submitText={t('general.apply')}
+            failCallback={failCallback}
+            closeModalCallback={closeModalCallback}
+          ></DappButton>
         </ApplyContainer>
+
         <ErrorMsgContainer className={`${errorMsgForApply ? '' : 'hidden'}`}>
           <img src={imgWarning} alt="warning" className="icon" />
           <span className="text">
@@ -440,7 +470,7 @@ export function Sponsor() {
             </div>
           </div>
         </NoticeContainer>
-        <Modal
+        {/* <Modal
           closable
           open={shownDialog}
           onClose={closeDialog}
@@ -465,7 +495,7 @@ export function Sponsor() {
               </div>
             </div>
           </Modal.Content>
-        </Modal>
+        </Modal> */}
       </Wrapper>
     </>
   );
@@ -662,17 +692,6 @@ const BlockContainer = styled.div`
 `;
 const ApplyContainer = styled.div`
   margin-top: 1.7143rem;
-  display: flex;
-  align-items: center;
-  .successImg {
-    margin-left: 0.5714rem;
-    width: 1.1429rem;
-  }
-  .accountAddress {
-    margin-left: 0.3571rem;
-    color: #97a3b4;
-    font-size: 1.1429rem;
-  }
 `;
 const ErrorMsgContainer = styled.div`
   margin-top: 0.5714rem;

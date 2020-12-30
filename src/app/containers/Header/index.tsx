@@ -31,6 +31,7 @@ export const Header = memo(() => {
     location?.pathname?.startsWith('/sponsor') ||
     location?.pathname?.startsWith('/contract');
   const bp = useBreakpoint();
+
   const startLinks: HeaderLinks = [
     {
       // home
@@ -62,6 +63,7 @@ export const Header = memo(() => {
           ],
           href: '/sponsor',
         },
+        { title: t(translations.header.contracts), href: '/contracts' },
       ],
     },
     // charts
@@ -166,9 +168,6 @@ const LogoWrapper = styled.div`
 `;
 const Wrapper = styled.header`
   .navbar-menu {
-    .navbar-link.level-0 :hover {
-      background-color: rgba(100%, 87%, 11%, 70%);
-    }
     .navbar-end {
       .navbar-item {
         .navbar-link-menu {
