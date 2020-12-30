@@ -136,7 +136,6 @@ export default function createDraw({
         ctxBg.translate(x, height - 12);
         // ctxBg.rotate((-50 * Math.PI) / 180);
         const d = dayjs.unix(t);
-        console.log(axisFormat);
         const [row1, row2] = axisFormat.split('\n');
         ctxBg.fillText(d.format(row1), 0, -5);
         if (row2) {
