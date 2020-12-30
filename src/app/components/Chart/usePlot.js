@@ -13,7 +13,7 @@ const durations = {
   ],
   day: [
     `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['MMM DD HH:00', 'MM.DD HH:00'],
+    ['MMM DD\nHH:00', 'MM.DD\nHH:00'],
     ['MMM DD, YYYY HH:00', 'YYYY.MM.DD HH:00'],
   ],
   month: [
