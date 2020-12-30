@@ -13,17 +13,17 @@ const durations = {
   ],
   day: [
     `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['HH:00'],
+    ['MMM DD HH:00', 'MM.DD HH:00'],
     ['MMM DD, YYYY HH:00', 'YYYY.MM.DD HH:00'],
   ],
   month: [
     `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['MMM DD', 'YYYY.MM'],
+    ['MMM DD', 'MM.DD'],
     ['MMM DD, YYYY', 'YYYY.MM.DD'],
   ],
   all: [
     `limit=${NUM_X_GRID}`,
-    ['MMM DD', 'YYYY.MM'],
+    ['MMM DD', 'MM.DD'],
     ['MMM DD, YYYY', 'YYYY.MM.DD'],
   ],
 };
