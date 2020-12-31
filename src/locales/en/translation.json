@@ -382,8 +382,9 @@
       "2": "Insufficient storage fees.",
       "3": "Insufficient address balance. ",
       "4": "Insufficient gas fee.",
-      "5": "Contract deployment failed.",
-      "6": "Unknown contract error."
+      "5": "Unknown contract error.",
+      "6": "Contract deployment failed.",
+      "7": "Unknown error."
     }
   },
   "block": {
