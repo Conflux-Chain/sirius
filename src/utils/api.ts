@@ -333,13 +333,7 @@ export const useAccountTokenList = (
           return {
             loading: false,
             total,
-            list: list.map(t => {
-              const { balance, decimals } = t;
-              return {
-                ...t,
-                balance: formatBalance(balance, decimals),
-              };
-            }),
+            list,
           };
         })
         .catch(error => {

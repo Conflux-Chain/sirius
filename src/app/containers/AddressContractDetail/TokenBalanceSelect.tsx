@@ -9,6 +9,8 @@ import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { defaultTokenIcon } from '../../../constants';
 import { Link } from 'react-router-dom';
+import { Text } from '../../components/Text';
+import { formatBalance } from 'utils/index';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -57,7 +59,15 @@ function Select({ children = [] } = {}) {
   );
 }
 
-function SelectItem({ icon, balance, name, symbol, isLastOne, address }) {
+function SelectItem({
+  icon,
+  balance,
+  name,
+  symbol,
+  isLastOne,
+  address,
+  decimals,
+}) {
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon
@@ -72,7 +82,11 @@ function SelectItem({ icon, balance, name, symbol, isLastOne, address }) {
   const content = (
     <SelectItemContent key="content">
       <SelectItemContentBalance key="balance">
-        {balance + ' ' + symbol}
+        <Text
+          hoverValue={formatBalance(balance, decimals, true) + ' ' + symbol}
+        >
+          {formatBalance(balance, decimals) + ' ' + symbol}
+        </Text>
       </SelectItemContentBalance>
     </SelectItemContent>
   );
