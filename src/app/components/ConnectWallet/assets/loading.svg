@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Loading</title>
+    <g id="Connect-wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-Connect-Wallet-global-portal-popout" transform="translate(-543.000000, -471.000000)" fill="#333333">
+            <g id="Connect-wallet-popout" transform="translate(496.000000, 373.000000)">
+                <g id="Loading" transform="translate(47.000000, 98.000000)">
+                    <path d="M9,3 C5.68629,3 3,5.68629 3,9 C3,12.3137 5.68629,15 9,15 L9,17 C4.58172,17 1,13.4183 1,9 C1,4.58172 4.58172,1 9,1 C13.4183,1 17,4.58172 17,9 L15,9 C15,5.68629 12.3137,3 9,3 Z" id="路径"></path>
+                    <path d="M16,13.5 C16,14.3284 15.3284,15 14.5,15 C13.6716,15 13,14.3284 13,13.5 C13,12.6716 13.6716,12 14.5,12 C15.3284,12 16,12.6716 16,13.5 Z" id="路径" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
