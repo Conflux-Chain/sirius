@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
+import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
@@ -49,78 +50,83 @@ export function App() {
   const { t } = useTranslation();
 
   return (
-    <SWRConfig
-      value={{
-        // disable auto polling, reconnect or retry
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        refreshInterval: 0,
-        shouldRetryOnError: false,
-        errorRetryCount: 0,
-      }}
-    >
-      <BrowserRouter>
-        <CfxProvider>
-          <CssBaseline />
-          <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
-            <meta
-              name="description"
-              content={t(translations.metadata.description)}
-            />
-          </Helmet>
-          <Header />
-          <Main>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/packing/:txHash" component={PackingPage} />
-              <Route
-                exact
-                path="/notfound/:contractAddress"
-                component={NotFoundAddressPage}
+    <TxnHistoryProvider>
+      <SWRConfig
+        value={{
+          // disable auto polling, reconnect or retry
+          revalidateOnFocus: false,
+          revalidateOnReconnect: false,
+          refreshInterval: 0,
+          shouldRetryOnError: false,
+          errorRetryCount: 0,
+        }}
+      >
+        <BrowserRouter>
+          <CfxProvider>
+            <CssBaseline />
+            <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
+              <meta
+                name="description"
+                content={t(translations.metadata.description)}
               />
-              <Route exact path="/contract" component={Contract} />
-              <Route
-                exact
-                path="/contract/:contractAddress"
-                component={Contract}
-              />
-              <Route exact path="/contracts" component={Contracts} />
-              <Route
-                exact
-                path="/token/:tokenAddress"
-                component={TokenDetail}
-              />
-              <Route
-                exact
-                path="/blocks-and-transactions"
-                component={BlocksAndTransactions}
-              />
-              <Route exact path="/tokens" component={Tokens} />
-              <Route exact path="/tokens/:tokenType" component={Tokens} />
-              <Route exact path="/sponsor" component={Sponsor} />
-              <Route
-                exact
-                path="/sponsor/:contractAddress"
-                component={Sponsor}
-              />
-              <Route path="/charts" component={Chart} />
-              <Route exact path="/transaction/:hash" component={Transaction} />
-              <Route exact path="/block/:hash" component={Block} />
-              <Route exact path="/epoch/:number" component={Epoch} />
-              <Route
-                path="/address/:address"
-                component={AddressContractDetailPage}
-              />
-              <Route path="/search/:text" component={Search} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </Main>
-          <Footer />
-          <GlobalNotify />
-          <GlobalStyle />
-        </CfxProvider>
-      </BrowserRouter>
-    </SWRConfig>
+            </Helmet>
+            <Header />
+            <Main>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/packing/:txHash" component={PackingPage} />
+                <Route
+                  exact
+                  path="/notfound/:contractAddress"
+                  component={NotFoundAddressPage}
+                />
+                <Route exact path="/contract" component={Contract} />
+                <Route
+                  exact
+                  path="/contract/:contractAddress"
+                  component={Contract}
+                />
+                <Route exact path="/contracts" component={Contracts} />
+                <Route
+                  exact
+                  path="/token/:tokenAddress"
+                  component={TokenDetail}
+                />
+                <Route
+                  exact
+                  path="/blocks-and-transactions"
+                  component={BlocksAndTransactions}
+                />
+                <Route exact path="/tokens" component={Tokens} />
+                <Route exact path="/sponsor" component={Sponsor} />
+                <Route
+                  exact
+                  path="/sponsor/:contractAddress"
+                  component={Sponsor}
+                />
+                <Route path="/charts" component={Chart} />
+                <Route
+                  exact
+                  path="/transaction/:hash"
+                  component={Transaction}
+                />
+                <Route exact path="/block/:hash" component={Block} />
+                <Route exact path="/epoch/:number" component={Epoch} />
+                <Route
+                  path="/address/:address"
+                  component={AddressContractDetailPage}
+                />
+                <Route path="/search/:text" component={Search} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Main>
+            <Footer />
+            <GlobalNotify />
+            <GlobalStyle />
+          </CfxProvider>
+        </BrowserRouter>
+      </SWRConfig>
+    </TxnHistoryProvider>
   );
 }
 

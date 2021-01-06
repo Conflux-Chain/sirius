@@ -1,130 +1,127 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should render and match the snapshot 1`] = `
-<Context.Provider
-  value={
-    Object {
-      "errorRetryCount": 0,
-      "refreshInterval": 0,
-      "revalidateOnFocus": false,
-      "revalidateOnReconnect": false,
-      "shouldRetryOnError": false,
+<TxnHistoryProvider>
+  <Context.Provider
+    value={
+      Object {
+        "errorRetryCount": 0,
+        "refreshInterval": 0,
+        "revalidateOnFocus": false,
+        "revalidateOnReconnect": false,
+        "shouldRetryOnError": false,
+      }
     }
-  }
->
-  <BrowserRouter>
-    <CfxProvider>
-      <UNDEFINED />
-      <Helmet
-        defaultTitle="ConfluxScan"
-        defer={true}
-        encodeSpecialCharacters={true}
-        titleTemplate="%s - ConfluxScan"
-      >
-        <meta
-          content="BlockChain Explorer for Conflux Network"
-          name="description"
-        />
-      </Helmet>
-      <UNDEFINED />
-      <ForwardRef(app__Main)>
-        <Switch>
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/"
+  >
+    <BrowserRouter>
+      <CfxProvider>
+        <UNDEFINED />
+        <Helmet
+          defaultTitle="ConfluxScan"
+          defer={true}
+          encodeSpecialCharacters={true}
+          titleTemplate="%s - ConfluxScan"
+        >
+          <meta
+            content="BlockChain Explorer for Conflux Network"
+            name="description"
           />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/packing/:txHash"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/notfound/:contractAddress"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/contract"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/contract/:contractAddress"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/contracts"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/token/:tokenAddress"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/blocks-and-transactions"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/tokens"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/tokens/:tokenType"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/sponsor"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/sponsor/:contractAddress"
-          />
-          <Route
-            component={[Function]}
-            path="/charts"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/transaction/:hash"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/block/:hash"
-          />
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/epoch/:number"
-          />
-          <Route
-            component={[Function]}
-            path="/address/:address"
-          />
-          <Route
-            component={[Function]}
-            path="/search/:text"
-          />
-          <Route
-            component={[Function]}
-          />
-        </Switch>
-      </ForwardRef(app__Main)>
-      <Unknown />
-      <GlobalNotify />
-      <UNDEFINED />
-    </CfxProvider>
-  </BrowserRouter>
-</Context.Provider>
+        </Helmet>
+        <UNDEFINED />
+        <ForwardRef(app__Main)>
+          <Switch>
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/packing/:txHash"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/notfound/:contractAddress"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/contract"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/contract/:contractAddress"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/contracts"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/token/:tokenAddress"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/blocks-and-transactions"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/tokens"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/sponsor"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/sponsor/:contractAddress"
+            />
+            <Route
+              component={[Function]}
+              path="/charts"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/transaction/:hash"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/block/:hash"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/epoch/:number"
+            />
+            <Route
+              component={[Function]}
+              path="/address/:address"
+            />
+            <Route
+              component={[Function]}
+              path="/search/:text"
+            />
+            <Route
+              component={[Function]}
+            />
+          </Switch>
+        </ForwardRef(app__Main)>
+        <Unknown />
+        <GlobalNotify />
+        <UNDEFINED />
+      </CfxProvider>
+    </BrowserRouter>
+  </Context.Provider>
+</TxnHistoryProvider>
 `;

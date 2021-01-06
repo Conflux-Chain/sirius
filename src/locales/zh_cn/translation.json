@@ -565,5 +565,39 @@
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
+  },
+  "connectWallet": {
+    "button": {
+      "text": "连接钱包",
+      "nPending": "{{count}} 个交易处理中"
+    },
+    "modal": {
+      "title": "请连接您的钱包",
+      "installConfluxPortal": "安装 ConfluxPortal",
+      "confluxPortal": "ConfluxPortal",
+      "initializing": "正在初始化...",
+      "errorConnecting": "连接错误...",
+      "tryAgain": "重试",
+      "newToConflux": "Conflux 的新用户?",
+      "learnMore": "进一步了解钱包。",
+      "account": "账户",
+      "connectedWithConfluxPortal": "已连接 ConfluxPortal",
+      "copyAddress": "复制地址",
+      "viewOnConfluxScan": "在 ConfluxScan 上查看",
+      "networkNotice": "网络说明",
+      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
+      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。"
+    },
+    "history": {
+      "emptyRecordsTip": "您的交易记录会显示在这里...",
+      "recentlyRecordsTip": "最近的交易",
+      "clearAll": "清空全部",
+      "recentlyTenRecordsTip": "仅展示近 10 条交易记录。",
+      "contractCreation": "合约创建",
+      "contractEdit": "合约编辑",
+      "sponsorApplication": "赞助申请",
+      "writeContract": "写入合约",
+      "viewYourTranscation": "查看您的交易"
+    }
   }
 }

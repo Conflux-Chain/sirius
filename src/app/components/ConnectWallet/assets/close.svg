@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状结合备份 2@2x</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
+    </defs>
+    <g id="Connect-wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4-Connect-Wallet-global-portal-popout" transform="translate(-908.000000, -385.000000)">
+            <g id="Connect-wallet-popout" transform="translate(496.000000, 373.000000)">
+                <g id="形状结合备份-2" transform="translate(412.000000, 12.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="蒙版" fill="#D8D8D8" opacity="0" xlink:href="#path-1"></use>
+                    <path d="M12,0.923076923 C12.764702,0.923076923 13.3846154,1.54299035 13.3846154,2.30769231 L13.3840769,10.6150769 L21.6923077,10.6153846 C22.4570097,10.6153846 23.0769231,11.235298 23.0769231,12 C23.0769231,12.764702 22.4570097,13.3846154 21.6923077,13.3846154 L13.3840769,13.3840769 L13.3846154,21.6923077 C13.3846154,22.4570097 12.764702,23.0769231 12,23.0769231 C11.235298,23.0769231 10.6153846,22.4570097 10.6153846,21.6923077 L10.6150769,13.3840769 L2.30769231,13.3846154 C1.54299035,13.3846154 0.923076923,12.764702 0.923076923,12 C0.923076923,11.235298 1.54299035,10.6153846 2.30769231,10.6153846 L10.6150769,10.6150769 L10.6153846,2.30769231 C10.6153846,1.54299035 11.235298,0.923076923 12,0.923076923 Z" id="形状结合" fill="#D8D8D8" mask="url(#mask-2)" transform="translate(12.000000, 12.000000) rotate(-315.000000) translate(-12.000000, -12.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
