@@ -41,7 +41,9 @@
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
-    "abiError": "ABI error"
+    "abiError": "ABI error",
+    "readContract": "Read Contract",
+    "writeContract": "Write Contract"
   },
   "contractDetail": {
     "title": "Contract Detail",

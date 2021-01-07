@@ -38,31 +38,61 @@ const AceEditorStyle = {
   width: '100%',
 };
 
-function ContractSourceCodeAbi({ sourceCode, abi }) {
+function ContractSourceCodeAbi({ contractInfo }) {
   const { t } = useTranslation();
-
-  const [isSourceCode, setIsSourceCode] = useState(true);
-
+  const { sourceCode, abi } = contractInfo;
+  const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
+  const clickHandler = (btnType: React.SetStateAction<string>) => {
+    setSelectedBtnType(btnType);
+  };
   return (
     <>
       <ContractBody>
         <ButtonWrapper>
           <Button
             className={clsx(
-              isSourceCode && 'enabled',
-              'source-btn',
+              selectedBtnType === 'sourceCode' && 'enabled',
               'btnWeight',
             )}
-            onClick={() => setIsSourceCode(true)}
+            onClick={() => clickHandler('sourceCode')}
           >
             {t(translations.contract.sourceCodeShort)}
           </Button>
           <Button
-            className={clsx(!isSourceCode && 'enabled', 'abi-btn', 'btnWeight')}
-            onClick={() => setIsSourceCode(false)}
+            className={clsx(
+              selectedBtnType === 'abi' && 'enabled',
+              'btn-item',
+              'btnWeight',
+            )}
+            onClick={() => clickHandler('abi')}
           >
             {t(translations.contract.abiShort)}
           </Button>
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'read' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('read')}
+            >
+              {t(translations.contract.readContract)}
+            </Button>
+          )}
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'write' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('write')}
+            >
+              {t(translations.contract.writeContract)}
+            </Button>
+          )}
+
           <div className="line"></div>
         </ButtonWrapper>
         <Card>
@@ -77,7 +107,7 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
             }}
             showGutter={false}
             showPrintMargin={false}
-            value={isSourceCode ? sourceCode : abi}
+            value={selectedBtnType === 'sourceCode' ? sourceCode : abi}
           />
         </Card>
       </ContractBody>
@@ -128,8 +158,11 @@ const ButtonWrapper = styled.div`
     background-color: rgba(0, 84, 254, 0.8);
   }
 
-  .abi-btn.btn {
+  .btn-item.btn {
     margin-left: 0.2857rem;
+  }
+  .hidden {
+    display: none;
   }
 `;
 
@@ -378,12 +411,7 @@ export function Table({ address }) {
       ? {
           value: 'contract-viewer',
           label: t(translations.token.contract),
-          content: (
-            <ContractSourceCodeAbi
-              sourceCode={contractInfo?.sourceCode}
-              abi={contractInfo?.abi}
-            />
-          ),
+          content: <ContractSourceCodeAbi contractInfo={contractInfo} />,
         }
       : {
           value: 'mined-blocks',

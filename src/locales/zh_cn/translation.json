@@ -41,7 +41,9 @@
     "invalidJsonFile": "无效 Json 文件，请重试",
     "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
     "abiNotUploaded": "没有上传 ABI",
-    "abiError": "ABI 错误"
+    "abiError": "ABI 错误",
+    "readContract": "阅读合约",
+    "writeContract": "编写合约"
   },
   "contractDetail": {
     "title": "合约详情",
