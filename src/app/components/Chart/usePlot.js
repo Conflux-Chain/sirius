@@ -1,34 +1,34 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import { appendApiPrefix } from 'utils/api';
-import { NUM_X_GRID } from './draw';
 import fetch from 'utils/request';
 import { useTranslation } from 'react-i18next';
-// 2592000
-const durations = {
-  hour: [
-    `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['HH:mm'],
-    ['MMM DD, YYYY HH:mm', 'YYYY.MM.DD HH:mm'],
-  ],
-  day: [
-    `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['MMM DD\nHH:00', 'MM.DD\nHH:00'],
-    ['MMM DD, YYYY HH:00', 'YYYY.MM.DD HH:00'],
-  ],
-  month: [
-    `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
-    ['MMM DD', 'MM.DD'],
-    ['MMM DD, YYYY', 'YYYY.MM.DD'],
-  ],
-  all: [
-    `limit=${NUM_X_GRID}`,
-    ['MMM DD', 'MM.DD'],
-    ['MMM DD, YYYY', 'YYYY.MM.DD'],
-  ],
-};
 
-export default function usePlot(defaultDuration = 'day') {
+export default function usePlot(defaultDuration = 'day', NUM_X_GRID = 7) {
+  // 2592000
+  const durations = {
+    hour: [
+      `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      ['HH:mm'],
+      ['MMM DD, YYYY HH:mm', 'YYYY.MM.DD HH:mm'],
+    ],
+    day: [
+      `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      ['MMM DD\nHH:00', 'MM.DD\nHH:00'],
+      ['MMM DD, YYYY HH:00', 'YYYY.MM.DD HH:00'],
+    ],
+    month: [
+      `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      ['MMM DD', 'MM.DD'],
+      ['MMM DD, YYYY', 'YYYY.MM.DD'],
+    ],
+    all: [
+      `limit=${NUM_X_GRID}`,
+      ['MMM DD', 'MM.DD'],
+      ['MMM DD, YYYY', 'YYYY.MM.DD'],
+    ],
+  };
+
   const [duration, setDuration] = useState(defaultDuration);
   const { i18n } = useTranslation();
   const isEn = i18n.language.indexOf('en') > -1;
