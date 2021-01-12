@@ -11,6 +11,7 @@ type SearchProps = {
   onEnterPress?: (
     e: React.KeyboardEvent<HTMLDivElement>,
     value?: string,
+    setValue?: (value: string | undefined) => void,
   ) => void;
   onChange?: (value: string) => void;
   val?: string;
@@ -61,7 +62,9 @@ export const Search = ({
         placeholder={placeholderText}
         className={`${inputClassname}`}
         onKeyPress={e => {
-          if (e.key === 'Enter') onEnterPress && onEnterPress(e, value);
+          if (e.key === 'Enter') {
+            onEnterPress && onEnterPress(e, value, setValue);
+          }
         }}
         onChange={onChangeHandler}
       />

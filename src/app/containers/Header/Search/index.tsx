@@ -16,7 +16,9 @@ export const Search = () => {
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const [, setSearch] = useSearch();
-  const onEnterPress = (e, value) => setSearch(value);
+  const onEnterPress = (e, value, setValue) => {
+    setSearch(value, setValue);
+  };
 
   return (
     <Container>

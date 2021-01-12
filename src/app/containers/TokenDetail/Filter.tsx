@@ -15,6 +15,7 @@ import {
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../../components/Search/Loadable';
+import { zeroAddress } from '../../../utils/constants';
 interface FilterProps {
   filter: string;
   tokenAddress: string;
@@ -55,9 +56,19 @@ export const Filter = ({
   }, [lFilter]);
 
   const onEnterPress = () => {
+    // TODO clear search box need to reset search result
     if (value === '') {
       return;
     }
+    // deal with zero address
+    if (value === '0x0') {
+      setValue(zeroAddress);
+      if (zeroAddress !== lFilter) {
+        onFilter(zeroAddress);
+      }
+      return;
+    }
+
     if (!isAddress(value) && !isHash(value)) {
       setMessage({
         text: t(translations.token.transferList.searchError),

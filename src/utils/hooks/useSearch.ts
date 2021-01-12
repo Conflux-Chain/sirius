@@ -8,17 +8,31 @@ import {
   isEpochNumber,
   tranferToLowerCase,
 } from 'utils';
+import { zeroAddress } from '../constants';
 
+// Search bar hook
 export const useSearch = (value?: string) => {
   const history = useHistory();
   let innerValue = value;
 
-  const setSearch = async (searchValue?: string) => {
+  const setSearch = async (
+    searchValue?: string,
+    setValue?: (value: string | undefined) => void,
+  ) => {
     innerValue = searchValue || value;
 
     if (typeof innerValue !== 'string' || innerValue.trim() === '') return;
 
+    // TODO checksum
     innerValue = tranferToLowerCase(innerValue.trim());
+
+    // zero address support
+    if (innerValue === '0x0') {
+      history.push(`/address/${zeroAddress}`);
+      // update searchbar value from 0x0 to zeroAddress
+      setValue && setValue(zeroAddress);
+      return;
+    }
 
     if (
       isContractAddress(innerValue) ||
