@@ -63,26 +63,27 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
 
   const columnsWidth = [3, 4, 4, 4, 3];
   const columns = [
-    {
-      ...tokenColunms.txnHash,
-      render: value => {
-        if (value === filter) {
-          return (
-            <Text onClick={() => onFilter(value)} span hoverValue={value}>
-              {formatString(value, 'hash')}
-            </Text>
-          );
-        } else {
-          return (
-            <Link>
-              <Text onClick={() => onFilter(value)} span hoverValue={value}>
-                {formatString(value, 'hash')}
-              </Text>
-            </Link>
-          );
-        }
-      },
-    },
+    // {
+    //   ...tokenColunms.txnHash,
+    //   render: value => {
+    //     if (value === filter) {
+    //       return (
+    //         <Text onClick={() => onFilter(value)} span hoverValue={value}>
+    //           {formatString(value, 'hash')}
+    //         </Text>
+    //       );
+    //     } else {
+    //       return (
+    //         <Link>
+    //           <Text onClick={() => onFilter(value)} span hoverValue={value}>
+    //             {formatString(value, 'hash')}
+    //           </Text>
+    //         </Link>
+    //       );
+    //     }
+    //   },
+    // },
+    tokenColunms.txnHash,
     tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,
