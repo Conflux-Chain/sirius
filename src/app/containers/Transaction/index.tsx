@@ -133,15 +133,17 @@ export const Transaction = () => {
           if (txnhash !== routeHash) {
             return;
           }
-          if (body.blockHash) {
-            getConfirmRisk(body.blockHash);
-          }
           if (isTxnDetailsInfoSet) {
             // only update timestamp & confirmedEpochCount
             setPartLoading(false);
             return;
           }
           setIsTxnDetailsInfoSet(true);
+
+          if (body.blockHash) {
+            getConfirmRisk(body.blockHash);
+          }
+
           let toAddress = txDetailDta.to;
           if (
             getAddressType(toAddress) === addressTypeContract ||
