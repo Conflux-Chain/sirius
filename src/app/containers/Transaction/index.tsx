@@ -695,14 +695,12 @@ export const Transaction = () => {
                   );
                 })}
               </Select>
-              <div
-                className={`warningContainer ${
-                  warningMessage ? 'shown' : 'hidden'
-                }`}
-              >
-                <img src={imgWarning} alt="warning" className="warningImg" />
-                <span className="text">{t(warningMessage)}</span>
-              </div>
+              {warningMessage ? (
+                <div className="warningContainer shown">
+                  <img src={imgWarning} alt="warning" className="warningImg" />
+                  <span className="text">{t(warningMessage)}</span>
+                </div>
+              ) : null}
             </SkeletonContainer>
           </Description>
         </Card>
