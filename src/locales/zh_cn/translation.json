@@ -375,7 +375,7 @@
     "created": "已创建",
     "contractCreation": "合约创建",
     "for": "For",
-    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合同创建，则为合同初始化",
+    "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
     "epochConfirmations": "{{count}} 个纪元已确认",
     "statusError": {
       "1": "合约错误：",
