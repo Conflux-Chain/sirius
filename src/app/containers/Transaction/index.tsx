@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { media } from '../../../styles/media';
-import { Card } from '@cfxjs/react-ui';
+import { Card, Spinner } from '@cfxjs/react-ui';
 import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
 import { useParams } from 'react-router-dom';
@@ -43,6 +43,8 @@ import {
 } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+
+// Transaction Detail Page
 export const Transaction = () => {
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
@@ -52,8 +54,10 @@ export const Transaction = () => {
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
+  const [isTxnDetailsInfoSet, setIsTxnDetailsInfoSet] = useState(false);
   const history = useHistory();
   const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
@@ -84,6 +88,8 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
+
+  // get riskLevel
   const getConfirmRisk = async blockHash => {
     intervalToClear.current = true;
     let riskLevel;
@@ -93,15 +99,22 @@ export const Transaction = () => {
       if (riskLevel === '') {
         await delay(1000);
       } else if (riskLevel === 'lv0') {
+        // auto refresh riskLevel until risLevel is high
         intervalToClear.current = false;
       } else {
         await delay(10 * 1000);
       }
     }
   };
+
+  // get txn detail info
   const fetchTxDetail = useCallback(
     txnhash => {
-      setLoading(true);
+      if (!isTxnDetailsInfoSet) {
+        setLoading(true);
+      } else {
+        setPartLoading(true);
+      }
       reqTransactionDetail({
         hash: txnhash,
       }).then(body => {
@@ -109,6 +122,7 @@ export const Transaction = () => {
           switch (body.code) {
             case 30404:
               setLoading(false);
+              setPartLoading(false);
               history.replace(`/packing/${txnhash}`);
               break;
           }
@@ -122,6 +136,12 @@ export const Transaction = () => {
           if (body.blockHash) {
             getConfirmRisk(body.blockHash);
           }
+          if (isTxnDetailsInfoSet) {
+            // only update timestamp & confirmedEpochCount
+            setPartLoading(false);
+            return;
+          }
+          setIsTxnDetailsInfoSet(true);
           let toAddress = txDetailDta.to;
           if (
             getAddressType(toAddress) === addressTypeContract ||
@@ -199,7 +219,7 @@ export const Transaction = () => {
         }
       });
     },
-    [history, routeHash],
+    [history, routeHash, isTxnDetailsInfoSet],
   );
 
   const handleDataTypeChange = type => {
@@ -207,6 +227,14 @@ export const Transaction = () => {
   };
   useEffect(() => {
     fetchTxDetail(routeHash);
+
+    // auto update tx detail info
+    const autoUpdateDetailIntervalId = setInterval(() => {
+      fetchTxDetail(routeHash);
+    }, 10 * 1000);
+    return () => {
+      clearInterval(autoUpdateDetailIntervalId);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchTxDetail, routeHash]);
   useEffect(() => {
@@ -510,8 +538,14 @@ export const Transaction = () => {
               <Security type={risk}></Security>
               <StyledEpochConfirmationsWrapper>
                 {t(translations.transaction.epochConfirmations, {
-                  count: confirmedEpochCount,
+                  count: confirmedEpochCount || '-',
                 })}
+                {partLoading ? (
+                  <Spinner
+                    size="small"
+                    style={{ display: 'inline-block', marginLeft: 5 }}
+                  />
+                ) : null}
               </StyledEpochConfirmationsWrapper>
             </SkeletonContainer>
           </Description>
