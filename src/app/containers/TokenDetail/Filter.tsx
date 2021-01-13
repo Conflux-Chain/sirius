@@ -96,11 +96,11 @@ export const Filter = ({
         onClear={onClear}
         val={value}
       ></SearchComp>
-      {tokenBalance !== '0' && (
+      {tokenBalance !== '0' && symbol && (
         <BalanceWrap>
           {`${t(
             translations.token.transferList.balance,
-          )}${tokenBalance}${symbol}`}{' '}
+          )}${tokenBalance} ${symbol}`}{' '}
         </BalanceWrap>
       )}
     </FilterWrap>
