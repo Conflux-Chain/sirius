@@ -14,6 +14,7 @@ type SearchProps = {
     setValue?: (value: string | undefined) => void,
   ) => void;
   onChange?: (value: string) => void;
+  onClear?: () => void;
   val?: string;
 };
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof SearchProps>;
@@ -26,6 +27,7 @@ export const Search = ({
   onEnterPress,
   iconColor,
   onChange,
+  onClear,
   val,
   ...props
 }: Props) => {
@@ -35,6 +37,7 @@ export const Search = ({
   const onIconRightClickHander = () => {
     if (type === 'delete') {
       setValue('');
+      onClear && onClear();
     }
   };
   const onChangeHandler = e => {
