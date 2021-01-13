@@ -56,7 +56,6 @@ export const Filter = ({
   }, [lFilter]);
 
   const onEnterPress = () => {
-    // TODO clear search box need to reset search result
     if (value === '') {
       return;
     }
@@ -80,6 +79,11 @@ export const Filter = ({
     }
   };
 
+  // clear search box need to reset search result
+  const onClear = () => {
+    onFilter('');
+  };
+
   return (
     <FilterWrap>
       <SearchComp
@@ -89,6 +93,7 @@ export const Filter = ({
         placeholderText={t(translations.token.transferList.searchPlaceHolder)}
         onEnterPress={onEnterPress}
         onChange={val => setValue(tranferToLowerCase(val))}
+        onClear={onClear}
         val={value}
       ></SearchComp>
       {tokenBalance !== '0' && (
