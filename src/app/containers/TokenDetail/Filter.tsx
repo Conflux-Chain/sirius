@@ -15,6 +15,7 @@ import {
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../../components/Search/Loadable';
+import { zeroAddress } from '../../../utils/constants';
 interface FilterProps {
   filter: string;
   tokenAddress: string;
@@ -58,6 +59,15 @@ export const Filter = ({
     if (value === '') {
       return;
     }
+    // deal with zero address
+    if (value === '0x0') {
+      setValue(zeroAddress);
+      if (zeroAddress !== lFilter) {
+        onFilter(zeroAddress);
+      }
+      return;
+    }
+
     if (!isAddress(value) && !isHash(value)) {
       setMessage({
         text: t(translations.token.transferList.searchError),
@@ -69,6 +79,11 @@ export const Filter = ({
     }
   };
 
+  // clear search box need to reset search result
+  const onClear = () => {
+    onFilter('');
+  };
+
   return (
     <FilterWrap>
       <SearchComp
@@ -78,13 +93,14 @@ export const Filter = ({
         placeholderText={t(translations.token.transferList.searchPlaceHolder)}
         onEnterPress={onEnterPress}
         onChange={val => setValue(tranferToLowerCase(val))}
+        onClear={onClear}
         val={value}
       ></SearchComp>
-      {tokenBalance !== '0' && (
+      {tokenBalance !== '0' && symbol && (
         <BalanceWrap>
           {`${t(
             translations.token.transferList.balance,
-          )}${tokenBalance}${symbol}`}{' '}
+          )}${tokenBalance} ${symbol}`}{' '}
         </BalanceWrap>
       )}
     </FilterWrap>

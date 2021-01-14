@@ -10,17 +10,21 @@ import { Tooltip } from '../Tooltip';
 
 export const SmallChart = ({
   width,
-  height = width * 0.52,
+  height = width * 0.53,
   indicator = 'blockTime',
 } = {}) => {
+  const small = width < 200;
+
   const { plot } = usePlot('hour');
   const { t } = useTranslation();
   const [firstlast, setFirstLast] = useState(null);
+
+  height = small ? width * 0.6 : height;
+
   if (!plot) {
     return <Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
-  const small = width < 200;
   const isDown = diff ? diff.startsWith('-') : null;
 
   return (
@@ -37,6 +41,7 @@ export const SmallChart = ({
       </Value>
 
       <Draw
+        small={small}
         setFirstLast={setFirstLast}
         indicator={indicator}
         plot={plot}
@@ -127,10 +132,8 @@ const Value = styled.div`
   font-weight: bold;
   position: relative;
   z-index: 1;
-  position: relative;
   font-size: ${props => (props.small ? '18px' : '24px')};
-  top: ${props => (props.small ? '0px' : '-5px')};
-  margin-top: ${props => (props.small ? '10%' : '0')};
+  top: -5px;
 `;
 
 const Change = styled.div`
@@ -144,8 +147,8 @@ const Change = styled.div`
 
 const CanvasContainer = styled.div`
   position: absolute;
-  right: ${props => (props.small ? '8px' : '20px')};
-  bottom: ${props => (props.small ? '8px' : '26px')};
+  right: ${props => (props.small ? '16px' : '20px')};
+  bottom: ${props => (props.small ? '10px' : '16px')};
   canvas {
     position: absolute;
     left: 0;

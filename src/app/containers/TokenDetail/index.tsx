@@ -36,7 +36,7 @@ export function TokenDetail() {
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
       <TokenDetailWrap>
-        {data.name ? (
+        {data.address ? (
           <HeaderWrap>
             {!data.isCustodianToken ? (
               <img
@@ -59,8 +59,12 @@ export function TokenDetail() {
                 <img alt="icon" src={data.icon || defaultTokenIcon} />
               </Tooltip>
             )}
-            <div className="basic-name">{data.name}</div>
-            <div className="basic-symbol">{`(${data.symbol})`}</div>
+            <div className="basic-name">
+              {data.name || t(translations.general.notAvailable)}
+            </div>
+            <div className="basic-symbol">{`(${
+              data.symbol || t(translations.general.notAvailable)
+            })`}</div>
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
@@ -69,7 +73,7 @@ export function TokenDetail() {
         )}
         <Basic {...data} tokenAddress={tokenAddress} />
         <Transfers
-          decimals={data.decimals}
+          decimals={data.decimals || 0}
           tokenAddress={tokenAddress}
           symbol={data.symbol}
         />

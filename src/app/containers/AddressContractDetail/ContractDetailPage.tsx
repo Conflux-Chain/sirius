@@ -30,7 +30,7 @@ import {
   Top,
   Head,
 } from './layouts';
-import { isContractAddress, isInnerContractAddress } from 'utils';
+import { isContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
@@ -46,15 +46,15 @@ export const ContractDetailPage = memo(() => {
     'website',
     'transactionHash',
   ]);
-  // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-  //   history.replace(`/notfound/${address}`);
-  //   return null;
-  // }
+
   useEffect(() => {
-    if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+    // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
+    // contractInfo.transactionHash === undefined
+    // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
+    if (!isContractAddress(address)) {
       history.replace(`/notfound/${address}`);
     }
-  }, [address, history, contractInfo.transactionHash]);
+  }, [address, history]);
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
@@ -100,6 +100,7 @@ export const ContractDetailPage = memo(() => {
           <StorageStakingCard address={address} />
           <NonceCard address={address} />
         </Top>
+        {/* internal contract hide meta data panel */}
         {isContractAddress(address) && (
           <Middle key="middle">
             <ContractMetadata address={address} />

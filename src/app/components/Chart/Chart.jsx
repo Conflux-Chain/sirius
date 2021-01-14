@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 
 import usePlot from './usePlot';
 import createDraw from './draw';
+import { Loading } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { PIXEL_RATIO } from './draw';
@@ -15,15 +16,23 @@ const DURATIONS = [
   ['month', '1M'],
   ['all', 'ALL'],
 ];
+
 export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
+  const clientWidth = document.body.clientWidth;
+  // get the max x grids which most suitable chart width
+  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1024) / 50);
+  if (NUM_X_GRID < 7) NUM_X_GRID = 7;
+
   const {
     plot,
     isError,
+    isLoading,
     setDuration,
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day');
+  } = usePlot('day', NUM_X_GRID);
+
   const { t } = useTranslation();
   const small = width < 500;
   const padding = small ? 16 : 48;
@@ -34,26 +43,31 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
       <Container style={{ width }} small={small}>
         <Title>{t(`charts.${indicator}.title`)}</Title>
         <Description>{t(`charts.${indicator}.description`)}</Description>
+        {isLoading ? (
+          <LoadingContainer>
+            <Loading />
+          </LoadingContainer>
+        ) : null}
         <Draw
           plot={plot}
-          width={(width - padding) * 0.83}
+          width={width - padding - (small ? 50 : 70)}
           indicator={indicator}
           small={small}
           format={[popupFormat, axisFormat]}
-        >
-          <Buttons>
-            {DURATIONS.map(([d, key]) => (
-              <Button
-                key={key}
-                small={small}
-                active={d === duration}
-                onClick={() => setDuration(d)}
-              >
-                {key}
-              </Button>
-            ))}
-          </Buttons>
-        </Draw>
+          numXGrid={NUM_X_GRID}
+        />
+        <Buttons small={small}>
+          {DURATIONS.map(([d, key]) => (
+            <Button
+              key={key}
+              small={small}
+              active={d === duration}
+              onClick={() => setDuration(d)}
+            >
+              {key}
+            </Button>
+          ))}
+        </Buttons>
       </Container>
     );
   }
@@ -63,21 +77,22 @@ function Draw({
   plot,
   indicator,
   width = 359,
-  height = width * 0.55,
+  height = width * 0.35,
   small,
   children,
   format: [popupFormat, axisFormat],
+  numXGrid,
 }) {
-  const scale = width / 359;
+  // const scale = width / 359;
   const containerRef = useRef(null);
   const backgroundCanvasRef = useRef(null);
   const lineCanvasRef = useRef(null);
 
-  let TRI_HEIGHT = 5 * scale;
-  let POPUP_PADDING = 12 * scale;
+  let TRI_HEIGHT = 10;
+  let POPUP_PADDING = 20;
 
-  let X_AXIS_HEIGHT = 38 * scale;
-  let Y_AXIS_WIDTH = 50 * scale;
+  let X_AXIS_HEIGHT = small ? 40 : 50;
+  let Y_AXIS_WIDTH = small ? 40 : 70;
 
   useEffect(() => {
     let cursorX;
@@ -102,6 +117,7 @@ function Draw({
       ctxLine,
       plot,
       indicator,
+      NUM_X_GRID: numXGrid,
     });
     if (draw) {
       draw();
@@ -137,6 +153,7 @@ function Draw({
     POPUP_PADDING,
     popupFormat,
     axisFormat,
+    numXGrid,
   ]);
 
   return (
@@ -165,6 +182,15 @@ const Container = styled.div`
   padding: ${props => (props.small ? '8px' : '24px')};
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   border-radius: 5px;
+  min-height: ${props => (props.small ? '200px' : '250px')};
+`;
+
+const LoadingContainer = styled.div`
+  position: absolute;
+  top: calc(50% - 30px);
+  width: 40px;
+  height: 40px;
+  left: calc(50% - 20px);
 `;
 
 const Title = styled.div`
@@ -186,8 +212,8 @@ const Buttons = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  right: -4rem;
-  top: 1rem;
+  right: 1.5rem;
+  top: ${props => (props.small ? '1.5rem' : '5rem')};
   box-sizing: content-box;
 `;
 

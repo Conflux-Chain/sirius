@@ -2,6 +2,7 @@ import {
   addressTypeContract,
   addressTypeCommon,
   addressTypeInternalContract,
+  zeroAddress,
 } from './constants';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
@@ -22,6 +23,9 @@ export const delay = (ms: number) => {
 };
 
 export const getAddressType = address => {
+  if (address && address === zeroAddress) {
+    return addressTypeCommon;
+  }
   if (address && address.startsWith('0x0')) {
     return addressTypeInternalContract;
   }
@@ -464,7 +468,7 @@ export const isAddress = (str: string) => {
 };
 
 export function isAccountAddress(str: string) {
-  return /^0x1[0-9a-fA-F]{39}$/.test(str);
+  return /^0x(1[0-9a-fA-F]{39}|0{40})$/.test(str);
 }
 
 export function isContractAddress(str: string) {
@@ -484,7 +488,8 @@ export const isBlockHash = async (str: string) => {
   let isBlock = true;
   try {
     const block = await fetch(`/v1/block/${str}`);
-    if (block.code !== undefined) isBlock = false;
+    // server side will return {} when no block found
+    if (!block.hash || block.code !== undefined) isBlock = false;
   } catch (err) {
     isBlock = false;
   }
@@ -497,10 +502,13 @@ export const isTxHash = async (str: string) => {
   return !isBlockHash(str);
 };
 
+// Is input match epoch number format
+// 0x??? need to convert to decimal int
 export function isEpochNumber(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
 }
+
 export function validURL(str: string) {
   var pattern = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
