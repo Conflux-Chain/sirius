@@ -5,12 +5,10 @@ import { media } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { Text } from 'app/components/Text';
-import { Link } from 'app/components/Link/Loadable';
-import { formatString, isAddress, isHash } from 'utils';
+import { isAddress, isHash } from 'utils';
 import {
-  TabsTablePanel,
   TabLabel,
+  TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { Filter } from './Filter';
 import { tokenColunms } from '../../../utils/tableColumns';
