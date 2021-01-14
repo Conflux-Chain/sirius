@@ -50,7 +50,8 @@
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
-    "clickToApply": "Click to apply contract sponsorships"
+    "clickToApply": "Click to apply contract sponsorships",
+    "notDeployed": "This contract has not been deployed"
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",

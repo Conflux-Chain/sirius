@@ -50,7 +50,8 @@
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
-    "clickToApply": "点击申请合约赞助"
+    "clickToApply": "点击申请合约赞助",
+    "notDeployed": "此合约尚未部署"
   },
   "addressDetail": {
     "minedBlocks": "挖出区块",
