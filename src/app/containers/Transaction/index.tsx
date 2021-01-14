@@ -375,8 +375,9 @@ export const Transaction = () => {
         transferItem['address'],
       );
       if (tokenItem) {
-        tokenName = tokenItem['name'];
-        tokenSymbol = tokenItem['symbol'];
+        tokenName = tokenItem['name'] || t(translations.general.notAvailable);
+        tokenSymbol =
+          tokenItem['symbol'] || t(translations.general.notAvailable);
         tokenDecimals = tokenItem['decimals'];
         imgSrc = tokenItem['icon'];
       }
