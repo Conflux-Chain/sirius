@@ -118,6 +118,10 @@ export const Transaction = () => {
       reqTransactionDetail({
         hash: txnhash,
       }).then(body => {
+        if (body && !body?.hash) {
+          history.push('/404');
+        }
+
         if (body.code) {
           switch (body.code) {
             case 30404:
