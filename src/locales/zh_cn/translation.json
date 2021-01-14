@@ -42,8 +42,26 @@
     "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
     "abiNotUploaded": "没有上传 ABI",
     "abiError": "ABI 错误",
-    "readContract": "阅读合约",
-    "writeContract": "编写合约"
+    "readContract": "读取合约",
+    "writeContract": "写入合约",
+    "readContractInformation": "读取合约信息",
+    "writeContractInformation": "写入合约信息",
+    "expandAll": "全部展开",
+    "reset": "重置",
+    "payableAmountCfx": "payableAmount (cfx) ",
+    "error": {
+      "address": "请输入一个以 0x0、0x1 或 0x8 开头的 Conflux 地址",
+      "bool": "请输入 true/false 或 0/1",
+      "int": "请输入一个范围 {{min}} ~ {{max}} 的整数",
+      "uint": "请输入一个范围在 {{min}} ~ {{max}} 非负整数",
+      "bytes": "请输入以 0x 开头的十六进制字节数组",
+      "bytesM": "请输入以 0x 开头的 长度为{{length}} 的十六进制字节数组",
+      "cfx": "请输入小数位数不超过18位的非负数字"
+    },
+    "query": "读取",
+    "write": "写入",
+    "connectPortalFirst": "请先连接 ConfluxPortal！",
+    "viewTx": "查看交易"
   },
   "contractDetail": {
     "title": "合约详情",
