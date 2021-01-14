@@ -488,7 +488,8 @@ export const isBlockHash = async (str: string) => {
   let isBlock = true;
   try {
     const block = await fetch(`/v1/block/${str}`);
-    if (block.code !== undefined) isBlock = false;
+    // server side will return {} when no block found
+    if (!block.hash || block.code !== undefined) isBlock = false;
   } catch (err) {
     isBlock = false;
   }

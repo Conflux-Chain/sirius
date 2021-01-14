@@ -50,7 +50,6 @@ export const useSearch = (value?: string) => {
 
     try {
       const isBlock = await isBlockHash(innerValue);
-
       if (isBlock) {
         history.push(`/block/${innerValue}`);
         return;

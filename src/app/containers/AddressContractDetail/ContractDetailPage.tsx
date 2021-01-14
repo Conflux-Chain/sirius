@@ -30,7 +30,7 @@ import {
   Top,
   Head,
 } from './layouts';
-import { isContractAddress, isInnerContractAddress } from 'utils';
+import { isContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
