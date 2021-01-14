@@ -196,7 +196,7 @@
         "gasLimit": "燃料限制"
       },
       "transaction": {
-        "hash": "哈希",
+        "hash": "交易哈希",
         "from": "发送方",
         "to": "接收方",
         "value": "价值",

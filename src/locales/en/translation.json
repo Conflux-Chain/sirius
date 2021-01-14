@@ -196,7 +196,7 @@
         "gasLimit": "Gas Limit"
       },
       "transaction": {
-        "hash": "Hash",
+        "hash": "Txn Hash",
         "from": "From",
         "to": "To",
         "value": "Value",
