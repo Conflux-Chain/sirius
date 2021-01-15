@@ -303,7 +303,7 @@ export const quantity = {
   render: (value, row, index, opt?) => {
     const decimals = opt
       ? opt.decimals
-      : row.token?.decimals || row.token?.decimal || 18;
+      : row.token?.decimals || row.token?.decimal || 0;
     return value ? (
       <Text span hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
