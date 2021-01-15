@@ -85,26 +85,31 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     });
     switch (type) {
       case 'read':
-        setQueryLoading(true);
-        contract[data['name']](...objValues)
-          .then(res => {
-            setOutputError('');
-            setQueryLoading(false);
-            if (Array.isArray(res) && (res as any).length > 0) {
-              setOutputValue(res);
-            } else {
-              const arr: any = [];
-              arr.push(res);
-              setOutputValue(arr);
-            }
-
-            setOutputShown(true);
-          })
-          .catch(error => {
-            setQueryLoading(false);
-            setOutputShown(false);
-            setOutputError(error.message);
-          });
+        try {
+          setQueryLoading(true);
+          contract[data['name']](...objValues)
+            .then(res => {
+              setOutputError('');
+              setQueryLoading(false);
+              if (Array.isArray(res) && (res as any).length > 0) {
+                setOutputValue(res);
+              } else {
+                const arr: any = [];
+                arr.push(res);
+                setOutputValue(arr);
+              }
+              setOutputShown(true);
+            })
+            .catch(error => {
+              setQueryLoading(false);
+              setOutputShown(false);
+              setOutputError(error.message);
+            });
+        } catch (error) {
+          setQueryLoading(false);
+          setOutputShown(false);
+          setOutputError(error.message);
+        }
         break;
       case 'write':
         if (!portalInstalled) {
@@ -124,24 +129,29 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             } else {
               objParams = objValues;
             }
-            const { data: txData } = contract[data['name']](...objParams);
-            txParams['data'] = txData;
-            //loading
-            setModalType('loading');
-            setModalShown(true);
-            confluxJS
-              .sendTransaction(txParams)
-              .then(txHash => {
-                //success alert
-                setModalType('success');
-                setTxHash(txHash);
-                setOutputError('');
-              })
-              .catch(error => {
-                //rejected alert
-                setModalType('fail');
-                setOutputError(error.message);
-              });
+            setOutputError('');
+            try {
+              const { data: txData } = contract[data['name']](...objParams);
+              txParams['data'] = txData;
+              //loading
+              setModalType('loading');
+              setModalShown(true);
+              confluxJS
+                .sendTransaction(txParams)
+                .then(txHash => {
+                  //success alert
+                  setModalType('success');
+                  setTxHash(txHash);
+                  setOutputError('');
+                })
+                .catch(error => {
+                  //rejected alert
+                  setModalType('fail');
+                  setOutputError(error.message || '');
+                });
+            } catch (error) {
+              setOutputError(error.message || '');
+            }
           } else {
             login();
           }
