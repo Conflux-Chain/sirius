@@ -33,15 +33,78 @@ import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
 import PickerWithQuery from './PickerWithQuery';
 import { ActionButton } from './ActionButton';
-
+import { cfx } from 'utils/cfx';
+import { ContractAbi } from '../../components/ContractAbi/Loadable';
 const AceEditorStyle = {
   width: '100%',
 };
 
-function ContractSourceCodeAbi({ sourceCode, abi }) {
+function ContractSourceCodeAbi({ contractInfo }) {
   const { t } = useTranslation();
-
-  const [isSourceCode, setIsSourceCode] = useState(true);
+  const { sourceCode, abi, address } = contractInfo;
+  let abiJson = [];
+  try {
+    abiJson = JSON.parse(abi);
+  } catch (error) {}
+  const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
+  const clickHandler = (btnType: React.SetStateAction<string>) => {
+    setSelectedBtnType(btnType);
+  };
+  const contract = cfx.Contract({ abi: abiJson, address });
+  const [dataForRead, dataForWrite] = getReadWriteData(abiJson);
+  function getReadWriteData(abiJson) {
+    let dataForRead: object[] = [];
+    let dataForWrite: object[] = [];
+    let proArr: object[] = [];
+    if (Array.isArray(abiJson)) {
+      for (let abiItem of abiJson) {
+        if (abiItem.name !== '' && abiItem.type === 'function') {
+          const stateMutability = abiItem.stateMutability;
+          switch (stateMutability) {
+            case 'pure':
+            case 'view':
+              if (abiItem.inputs && abiItem.inputs.length === 0) {
+                proArr.push(contract[abiItem.name]());
+              }
+              dataForRead.push(abiItem);
+              break;
+            case 'nonpayable':
+              dataForWrite.push(abiItem);
+              break;
+            case 'payable':
+              const payableObjs = [
+                {
+                  internalType: 'cfx',
+                  name: abiItem['name'],
+                  type: 'cfx',
+                },
+              ];
+              abiItem['inputs'] = payableObjs.concat(abiItem['inputs']);
+              dataForWrite.push(abiItem);
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      Promise.all(proArr).then(list => {
+        let i = 0;
+        dataForRead.forEach(function (dValue, dIndex) {
+          if (dValue['inputs'].length === 0) {
+            if (Array.isArray(list[i]) && (list[i] as any).length > 0) {
+              dValue['value'] = list[i];
+            } else {
+              const arr: any = [];
+              arr.push(list[i]);
+              dValue['value'] = arr;
+            }
+            ++i;
+          }
+        });
+      });
+    }
+    return [dataForRead, dataForWrite];
+  }
 
   return (
     <>
@@ -49,36 +112,82 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
         <ButtonWrapper>
           <Button
             className={clsx(
-              isSourceCode && 'enabled',
-              'source-btn',
+              selectedBtnType === 'sourceCode' && 'enabled',
               'btnWeight',
             )}
-            onClick={() => setIsSourceCode(true)}
+            onClick={() => clickHandler('sourceCode')}
           >
             {t(translations.contract.sourceCodeShort)}
           </Button>
           <Button
-            className={clsx(!isSourceCode && 'enabled', 'abi-btn', 'btnWeight')}
-            onClick={() => setIsSourceCode(false)}
+            className={clsx(
+              selectedBtnType === 'abi' && 'enabled',
+              'btn-item',
+              'btnWeight',
+            )}
+            onClick={() => clickHandler('abi')}
           >
             {t(translations.contract.abiShort)}
           </Button>
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'read' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('read')}
+            >
+              {t(translations.contract.readContract)}
+            </Button>
+          )}
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'write' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('write')}
+            >
+              {t(translations.contract.writeContract)}
+            </Button>
+          )}
+
           <div className="line"></div>
         </ButtonWrapper>
         <Card>
-          <AceEditor
-            readOnly
-            style={AceEditorStyle}
-            mode="solidity"
-            theme="github"
-            name="UNIQUE_ID_OF_DIV"
-            setOptions={{
-              showLineNumbers: true,
-            }}
-            showGutter={false}
-            showPrintMargin={false}
-            value={isSourceCode ? sourceCode : abi}
-          />
+          {(selectedBtnType === 'sourceCode' || selectedBtnType === 'abi') && (
+            <AceEditor
+              readOnly
+              style={AceEditorStyle}
+              mode="solidity"
+              theme="github"
+              name="UNIQUE_ID_OF_DIV"
+              setOptions={{
+                showLineNumbers: true,
+              }}
+              showGutter={false}
+              showPrintMargin={false}
+              value={selectedBtnType === 'sourceCode' ? sourceCode : abi}
+            />
+          )}
+          {selectedBtnType === 'read' && (
+            <ContractAbi
+              type="read"
+              data={dataForRead}
+              contractAddress={address}
+              contract={contract}
+            ></ContractAbi>
+          )}
+          {selectedBtnType === 'write' && (
+            <ContractAbi
+              type="write"
+              data={dataForWrite}
+              contractAddress={address}
+              contract={contract}
+            ></ContractAbi>
+          )}
         </Card>
       </ContractBody>
     </>
@@ -92,7 +201,7 @@ const ButtonWrapper = styled.div`
   float: left;
   box-sizing: border-box;
   padding: 0 1.2857rem;
-  margin: 0.5714rem 0;
+  margin: 0.5714rem 0 0 0;
   .line {
     height: 0.0714rem;
     background-color: #e8e9ea;
@@ -128,8 +237,11 @@ const ButtonWrapper = styled.div`
     background-color: rgba(0, 84, 254, 0.8);
   }
 
-  .abi-btn.btn {
+  .btn-item.btn {
     margin-left: 0.2857rem;
+  }
+  .hidden {
+    display: none;
   }
 `;
 
@@ -378,12 +490,7 @@ export function Table({ address }) {
       ? {
           value: 'contract-viewer',
           label: t(translations.token.contract),
-          content: (
-            <ContractSourceCodeAbi
-              sourceCode={contractInfo?.sourceCode}
-              abi={contractInfo?.abi}
-            />
-          ),
+          content: <ContractSourceCodeAbi contractInfo={contractInfo} />,
         }
       : {
           value: 'mined-blocks',

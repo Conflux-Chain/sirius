@@ -41,7 +41,27 @@
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
-    "abiError": "ABI error"
+    "abiError": "ABI error",
+    "readContract": "Read Contract",
+    "writeContract": "Write Contract",
+    "readContractInformation": "Read Contract Information",
+    "writeContractInformation": "Write Contract Information",
+    "expandAll": "Expand All",
+    "reset": "Reset",
+    "payableAmountCfx": "payableAmount (cfx) ",
+    "error": {
+      "address": "Please enter a Conflux address starting with 0x0,0x1 or 0x8",
+      "bool": "Please enter true/false or 0/1",
+      "int": "Please enter an integer in the range {{min}} ~ {{max}}",
+      "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
+      "bytes": "Please enter an hexadecimal byte array starting with 0x",
+      "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
+      "cfx": "Please enter a non-negative number with no more than 18 decimal places"
+    },
+    "query": "Query",
+    "write": "Write",
+    "connectPortalFirst": "Please connect to ConfluxPortal first!",
+    "viewTx": "View your transaction"
   },
   "contractDetail": {
     "title": "Contract Detail",

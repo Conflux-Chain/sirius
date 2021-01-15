@@ -45,7 +45,7 @@ module.exports = app => {
   app.use(
     '/v1',
     createProxyMiddleware({
-      target: 'https://testnet.confluxscan.io',
+      target: 'https://testnet-scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),

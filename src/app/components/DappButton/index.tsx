@@ -9,6 +9,7 @@ import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
+import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -21,8 +22,10 @@ interface DappButtonProps {
   successCallback?: (hash: string) => void;
   failCallback?: (message: string) => void;
   closeModalCallback?: () => void;
+  shownAddress?: boolean;
+  htmlType?: React.ButtonHTMLAttributes<any>['type'];
 }
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof DappButtonProps>;
+type NativeAttrs = Omit<React.ButtonHTMLAttributes<any>, keyof ButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
 const DappButton = ({
   hoverText,
@@ -35,8 +38,11 @@ const DappButton = ({
   successCallback,
   failCallback,
   closeModalCallback,
+  shownAddress,
+  ...props
 }: Props) => {
   const { t } = useTranslation();
+  console.log(data);
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -88,6 +94,7 @@ const DappButton = ({
   const btnComp = (
     <BtnContainer>
       <Button
+        {...props}
         variant="solid"
         color="primary"
         className={`${btnClassName} btnInnerClass ${
@@ -98,14 +105,18 @@ const DappButton = ({
       >
         {text}
       </Button>
-      <img
-        src={imgSuccess}
-        alt="success"
-        className={`successImg ${address ? 'shown' : 'hidden'}`}
-      />
-      <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-        {getEllipsStr(address, 6, 4)}
-      </span>
+      {shownAddress && (
+        <>
+          <img
+            src={imgSuccess}
+            alt="success"
+            className={`successImg ${address ? 'shown' : 'hidden'}`}
+          />
+          <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
+            {getEllipsStr(address, 6, 4)}
+          </span>
+        </>
+      )}
     </BtnContainer>
   );
   return (
@@ -201,6 +212,7 @@ DappButton.defaultProps = {
   btnText: '',
   connectText: '',
   submitText: '',
+  shownAddress: true,
 };
 
 export default DappButton;

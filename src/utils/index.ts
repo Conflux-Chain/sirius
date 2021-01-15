@@ -9,7 +9,6 @@ import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
-
 dayjs.extend(relativeTime);
 
 export const innerContract = [
@@ -526,4 +525,93 @@ export function byteToKb(bytes) {
 }
 export function isObject(o) {
   return o !== null && typeof o === 'object' && Array.isArray(o) === false;
+}
+export function isBetween(x: number, min: number, max: number) {
+  return x >= min && x <= max;
+}
+export function checkInt(value, type) {
+  const num = Number(type.substr(3));
+  const min = new BigNumber(-Math.pow(2, num - 1));
+  const max = new BigNumber(Math.pow(2, num - 1)).minus(1);
+  let isType = false;
+  if (!isNaN(value)) {
+    const valNum = new BigNumber(value);
+    if (
+      valNum.isInteger() &&
+      valNum.isGreaterThanOrEqualTo(min) &&
+      valNum.isLessThanOrEqualTo(max)
+    ) {
+      isType = true;
+    } else {
+      isType = false;
+    }
+  } else {
+    isType = false;
+  }
+  return [isType, min.toString(), max.toString()];
+}
+export function checkUint(value, type) {
+  const num = Number(type.substr(4));
+  const min = new BigNumber(0);
+  const max = new BigNumber(Math.pow(2, num)).minus(1);
+  let isType = false;
+  if (!isNaN(value)) {
+    const valNum = new BigNumber(value);
+    if (
+      valNum.isInteger() &&
+      valNum.isGreaterThanOrEqualTo(min) &&
+      valNum.isLessThanOrEqualTo(max)
+    ) {
+      isType = true;
+    } else {
+      isType = false;
+    }
+  } else {
+    isType = false;
+  }
+  return [isType, min.toFixed(), max.toFixed()];
+}
+export function isHex(num) {
+  return Boolean(num.match(/^0x[0-9a-f]+$/i));
+}
+export function checkBytes(value, type) {
+  if (type === 'byte') {
+    type = 'bytes1';
+  }
+  const num = Number(type.substr(5));
+  let isBytes = false;
+  if (isHex(value)) {
+    if (num > 0) {
+      if (value.length <= 2 * num + 2) {
+        isBytes = true;
+      } else {
+        isBytes = false;
+      }
+    } else {
+      isBytes = true;
+    }
+  } else {
+    isBytes = false;
+  }
+  return [isBytes, num];
+}
+
+export function checkCfxType(value) {
+  if (isNaN(value)) {
+    return false;
+  }
+  const valNum = new BigNumber(value);
+  if (valNum.isNegative()) {
+    return false;
+  }
+  let index = value.indexOf('.');
+  if (index !== -1) {
+    if (value.substr(index + 1).length > 18) {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return true;
+  }
 }
