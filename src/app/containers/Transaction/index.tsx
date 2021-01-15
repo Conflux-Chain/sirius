@@ -119,7 +119,9 @@ export const Transaction = () => {
         hash: txnhash,
       }).then(body => {
         if (body && !body?.hash) {
-          history.push('/404');
+          history.push(`/notfound/${routeHash}`, {
+            type: 'transaction',
+          });
         }
 
         if (body.code) {
@@ -127,7 +129,9 @@ export const Transaction = () => {
             case 30404:
               setLoading(false);
               setPartLoading(false);
-              history.replace(`/packing/${txnhash}`);
+              history.push(`/notfound/${routeHash}`, {
+                type: 'transaction',
+              });
               break;
           }
         } else {
