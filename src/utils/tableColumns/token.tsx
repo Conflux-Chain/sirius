@@ -10,11 +10,11 @@ import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
 import { defaultTokenIcon } from '../../constants';
 import {
-  formatString,
+  formatBalance,
   formatNumber,
+  formatString,
   isAddress,
   isHash,
-  formatBalance,
 } from '../../utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
@@ -176,16 +176,32 @@ export const token = {
     <Translation>{t => t(translations.general.table.token.token)}</Translation>
   ),
   key: 'blockIndex',
-  render: row => (
-    <StyledIconWrapper>
-      <img src={row?.icon || defaultTokenIcon} alt="token icon" />
-      <Link href={`/token/${row.address}`}>
-        <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
-          {formatString(`${row?.name} (${row?.symbol})`, 28)}
-        </Text>
-      </Link>
-    </StyledIconWrapper>
-  ),
+  render: row => {
+    return (
+      <StyledIconWrapper>
+        <img src={row?.icon || defaultTokenIcon} alt="token icon" />
+        <Link href={`/token/${row.address}`}>
+          <Translation>
+            {t => (
+              <Text
+                span
+                hoverValue={`${
+                  row?.name || t(translations.general.notAvailable)
+                } (${row?.symbol || t(translations.general.notAvailable)})`}
+              >
+                {formatString(
+                  `${row?.name || t(translations.general.notAvailable)} (${
+                    row?.symbol || t(translations.general.notAvailable)
+                  })`,
+                  28,
+                )}
+              </Text>
+            )}
+          </Translation>
+        </Link>
+      </StyledIconWrapper>
+    );
+  },
 };
 
 export const transfer = {
