@@ -3,9 +3,6 @@ import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { formatNumber } from 'utils';
 
-export const NUM_X_GRID = 7;
-const NUM_Y_GRID = 5;
-
 const COLORS = {
   '1': {
     line: '#FA5D8E',
@@ -36,6 +33,8 @@ export default function createDraw({
   indicator,
   isSolid,
   small,
+  NUM_X_GRID = 7,
+  NUM_Y_GRID = 5,
 }) {
   if (!plot || plot.length === 0) {
     return {

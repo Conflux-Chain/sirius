@@ -9,24 +9,12 @@ import { translations } from '../../../locales/i18n';
 export function Charts() {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
-  let chartWidth;
-  if (clientWidth >= 872) {
-    chartWidth = (clientWidth - 72) / 2 > 500 ? 500 : (clientWidth - 72) / 2;
-  } else {
-    chartWidth = clientWidth - 48;
-  }
+  let chartWidth = clientWidth - 72;
+
+  // TODO will be adjusted according to page breakpoints in the future
+  if (chartWidth > 1024) chartWidth = 1024;
   if (chartWidth < 343) chartWidth = 343;
 
-  let headerPadding = 0;
-  if (clientWidth < 1072 && clientWidth >= 1024) {
-    headerPadding = 24 - (clientWidth - 1024) / 2;
-  } else if (clientWidth < 1024 && clientWidth > 600) {
-    headerPadding = 24;
-  } else if (clientWidth <= 600 && clientWidth >= 391) {
-    headerPadding = 10.285;
-  } else {
-    headerPadding = 0;
-  }
   return (
     <>
       <Helmet>
@@ -34,7 +22,7 @@ export function Charts() {
         <meta name="description" content={t(translations.charts.description)} />
       </Helmet>
       <PageWrap>
-        <HeaderWrap padding={headerPadding}>
+        <HeaderWrap>
           <div className="subtitle">{t(translations.charts.subtitle)}</div>
           <div className="title">{t(translations.charts.title)}</div>
         </HeaderWrap>
@@ -66,9 +54,7 @@ const ChartsWrap = styled.div`
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
-    > div:nth-of-type(odd) {
-      margin-right: 24px;
-    }
+
     > div {
       margin-bottom: 24px !important;
     }

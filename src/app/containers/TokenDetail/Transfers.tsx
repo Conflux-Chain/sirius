@@ -5,12 +5,10 @@ import { media } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { Text } from 'app/components/Text';
-import { Link } from 'app/components/Link/Loadable';
-import { formatString, isAddress, isHash } from 'utils';
+import { isAddress, isHash } from 'utils';
 import {
-  TabsTablePanel,
   TabLabel,
+  TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { Filter } from './Filter';
 import { tokenColunms } from '../../../utils/tableColumns';
@@ -63,26 +61,27 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
 
   const columnsWidth = [3, 4, 4, 4, 3];
   const columns = [
-    {
-      ...tokenColunms.txnHash,
-      render: value => {
-        if (value === filter) {
-          return (
-            <Text onClick={() => onFilter(value)} span hoverValue={value}>
-              {formatString(value, 'hash')}
-            </Text>
-          );
-        } else {
-          return (
-            <Link>
-              <Text onClick={() => onFilter(value)} span hoverValue={value}>
-                {formatString(value, 'hash')}
-              </Text>
-            </Link>
-          );
-        }
-      },
-    },
+    // {
+    //   ...tokenColunms.txnHash,
+    //   render: value => {
+    //     if (value === filter) {
+    //       return (
+    //         <Text onClick={() => onFilter(value)} span hoverValue={value}>
+    //           {formatString(value, 'hash')}
+    //         </Text>
+    //       );
+    //     } else {
+    //       return (
+    //         <Link>
+    //           <Text onClick={() => onFilter(value)} span hoverValue={value}>
+    //             {formatString(value, 'hash')}
+    //           </Text>
+    //         </Link>
+    //       );
+    //     }
+    //   },
+    // },
+    tokenColunms.txnHash,
     tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,

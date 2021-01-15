@@ -12,6 +12,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatBalance, formatString, toThousands } from '../../../utils';
 
 export interface BasicProps {
+  address?: string;
   totalSupply?: string;
   symbol?: string;
   name?: string;
@@ -22,6 +23,7 @@ export interface BasicProps {
 }
 
 export const Basic = ({
+  address, // address === undefined when token api is pending
   totalSupply,
   symbol,
   decimals,
@@ -52,6 +54,8 @@ export const Basic = ({
           >
             {`${formatBalance(totalSupply, decimals)} ${symbol}`}
           </Text>
+        ) : address ? (
+          t(translations.general.notAvailable)
         ) : undefined,
     },
     {
@@ -88,7 +92,11 @@ export const Basic = ({
           {t(translations.token.decimals)}
         </Tooltip>
       ),
-      children: decimals,
+      children: address
+        ? decimals !== undefined
+          ? decimals
+          : t(translations.general.notAvailable)
+        : undefined,
     },
     {
       title: (

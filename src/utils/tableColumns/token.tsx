@@ -42,25 +42,27 @@ const renderFilterableAddress = (
   pOpt?: {
     type?: 'to' | 'from';
     isToken?: boolean;
+    needFilter?: boolean;
   },
 ) => {
   const opt = {
     type: 'to',
     isToken: true,
+    needFilter: false,
     ...pOpt,
   };
   const { accountAddress } = queryString.parse(window.location.search);
   const filter = (accountAddress as string) || '';
 
   const renderTo = () => {
-    if (filter === value) {
+    if (filter === value && opt.needFilter) {
       return (
         <Text span hoverValue={value}>
           {getContractName(value, row, opt.type)}
         </Text>
       );
     } else if (value) {
-      if (opt.isToken) {
+      if (opt.needFilter) {
         return (
           <LinkWithFilter href={value}>
             <Text span hoverValue={value}>
@@ -79,7 +81,7 @@ const renderFilterableAddress = (
       }
     } else {
       if (row.contractCreated) {
-        if (row.contractCreated === filter) {
+        if (row.contractCreated === filter && opt.needFilter) {
           return (
             <Text span hoverValue={row.contractCreated}>
               <Translation>

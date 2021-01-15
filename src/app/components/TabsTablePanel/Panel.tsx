@@ -22,13 +22,19 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
   const { total, realTotal, switchToTab, currentTabValue } = useTabTableData(
     tabs,
   );
+
   const handleTabsChange = function (value: string) {
     switchToTab(value);
     onTabsChange && onTabsChange(value);
   };
   const ui = tabs
     .filter((item, i) => {
-      if (item.hideTotalZero && typeof total[i] === 'number') {
+      if (
+        item.hideTotalZero &&
+        typeof total[i] === 'number' &&
+        item.value !== currentTabValue
+      ) {
+        // hideTotalZero must satisfy two conditions: total === 0 && tab not activity
         return total[i];
       }
       return true;

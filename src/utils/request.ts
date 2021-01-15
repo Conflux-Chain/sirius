@@ -28,7 +28,10 @@ const notify = ({ code, message }: NotifyType) => {
 
 // 检查 http status
 const checkStatus = response => {
-  if (response.status >= 200 && response.status < 300) {
+  if (
+    (response.status >= 200 && response.status < 300) ||
+    response.status === 600
+  ) {
     return response;
   } else {
     notify({
