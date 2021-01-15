@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<NotFoundContractPage /> should match the snapshot 1`] = `
+exports[`<NotFoundAddressPage /> should match the snapshot 1`] = `
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -115,7 +115,7 @@ exports[`<NotFoundContractPage /> should match the snapshot 1`] = `
   <img
     alt="404"
     class="c1"
-    src="notFoundContract.svg"
+    src="notFoundAddress.svg"
   />
   <div
     class="c2"
@@ -123,12 +123,12 @@ exports[`<NotFoundContractPage /> should match the snapshot 1`] = `
     <span
       class="c3"
     >
-      The contract can not be found
+      The address can not be found
     </span>
     <span
       class="c4"
     >
-      Sorry! The contract does not exist.
+      Sorry! The address does not exist.
     </span>
     <a
       class="c5"

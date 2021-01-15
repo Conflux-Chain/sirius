@@ -29,9 +29,11 @@ export function DescriptionPanel({ hash: blockHash }) {
 
   useEffect(() => {
     if (data && !data.hash) {
-      history.push('/404');
+      history.push(`/notfound/${blockHash}`, {
+        type: 'block',
+      });
     }
-  }, [data, history]);
+  }, [blockHash, data, history]);
 
   const intervalToClear = useRef(false);
   if (!data) loading = true;
