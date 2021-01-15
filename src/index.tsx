@@ -21,6 +21,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
 import './locales/i18n';
+import { isTestNetEnv } from './utils/hooks/useTestnet';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -52,6 +53,37 @@ if (module.hot) {
 }
 
 render(App);
+
+const currentVersion = '2.0.5';
+
+const brand = `
+┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ V${currentVersion}
+│  │ ││││├┤ │  │ │┌┴┬┘  └─┐│  ├─┤│││
+└─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
+ `;
+
+if (isTestNetEnv())
+  console.log &&
+    console.log(
+      `%c 
+${brand}
+╔╦╗╔═╗╔═╗╔╦╗  ┌┐┌┌─┐┌┬┐
+ ║ ║╣ ╚═╗ ║   │││├┤  │ 
+ ╩ ╚═╝╚═╝ ╩   ┘└┘└─┘ ┴
+`,
+      'color:#e4310c;',
+    );
+else
+  console.log &&
+    console.log(
+      `%c 
+${brand}
+╔╦╗╔═╗╔╦╗╦ ╦╦ ╦╔═╗
+ ║ ║╣  ║ ╠═╣╚╦╝╚═╗
+ ╩ ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
+`,
+      'color:#1e3de4;',
+    );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
