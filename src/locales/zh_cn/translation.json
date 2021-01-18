@@ -61,7 +61,8 @@
     "query": "读取",
     "write": "写入",
     "connectPortalFirst": "请先连接 ConfluxPortal！",
-    "viewTx": "查看交易"
+    "viewTx": "查看交易",
+    "collapseAll": "全部折叠"
   },
   "contractDetail": {
     "title": "合约详情",

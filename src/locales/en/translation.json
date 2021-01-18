@@ -61,7 +61,8 @@
     "query": "Query",
     "write": "Write",
     "connectPortalFirst": "Please connect to ConfluxPortal first!",
-    "viewTx": "View your transaction"
+    "viewTx": "View your transaction",
+    "collapseAll": "Collapse All"
   },
   "contractDetail": {
     "title": "Contract Detail",
