@@ -156,6 +156,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         break;
     }
   };
+  const onFinishFailed = () => {
+    setOutputError('');
+    setOutputShown(false);
+  };
   const closeHandler = () => {
     setModalShown(false);
   };
@@ -243,6 +247,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         onFinish={onFinish}
         validateTrigger={['onBlur']}
         className="formContainer"
+        onFinishFailed={onFinishFailed}
       >
         <FuncBody>
           {inputsLength > 0
