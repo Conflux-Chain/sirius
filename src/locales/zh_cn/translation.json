@@ -316,7 +316,16 @@
     "error": {
       "title": "系统错误",
       "description": {
-        "10001": "列表参数到达最大值。",
+        "10001": "参数错误",
+        "10403": "PermissionsError",
+        "10501": "AssertError",
+        "10503": "ApiBusyError",
+        "40414": "AnnounceTooLongError",
+        "40400": "SendAnnounceError",
+        "40404": "AnnouncementNotExistError",
+        "50404": "ContractNotFoundError",
+        "50600": "CompilerError",
+        "50601": "ContractDecompileError",
         "20000": "未知错误。",
         "20001": "响应数据解析错误。",
         "20002": "请求超时。",
