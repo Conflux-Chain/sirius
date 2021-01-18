@@ -9,19 +9,36 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
-import notFoundContract from 'images/home/notFoundContract.svg';
+import notFoundAddress from 'images/home/notFoundAddress.svg';
+import { useLocation } from 'react-router-dom';
 
-export function NotFoundContractPage() {
+interface LocationState {
+  state: { type: string };
+}
+
+export function NotFoundAddressPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const { state }: LocationState = useLocation();
+  const type = state?.type
+    ? t(translations.notFoundAddress[state?.type])
+    : t(translations.notFoundAddress.defaultType);
 
   return (
     <PageWrapper>
-      <LeftImage alt="404" src={notFoundContract} />
+      <LeftImage alt="404" src={notFoundAddress} />
       <RightWrap>
-        <ErrorTitle>{t(translations.notFoundContract.title)}</ErrorTitle>
-        <ErrorLabel>{t(translations.notFoundContract.label)}</ErrorLabel>
-        <GoTo href="/">{t(translations.notFoundContract.btn)}</GoTo>
+        <ErrorTitle>
+          {t(translations.notFoundAddress.title, {
+            type,
+          })}
+        </ErrorTitle>
+        <ErrorLabel>
+          {t(translations.notFoundAddress.label, {
+            type,
+          })}
+        </ErrorLabel>
+        <GoTo href="/">{t(translations.notFoundAddress.btn)}</GoTo>
       </RightWrap>
     </PageWrapper>
   );

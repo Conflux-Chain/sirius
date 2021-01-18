@@ -423,10 +423,19 @@ export function Table({ address }) {
                 <Link key="link" href={`/token/${row?.token?.address}`}>
                   <Text
                     span
-                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                    hoverValue={`${
+                      row?.token?.name || t(translations.general.notAvailable)
+                    } (${
+                      row?.token?.symbol || t(translations.general.notAvailable)
+                    })`}
                   >
                     {formatString(
-                      `${row?.token?.name} (${row?.token?.symbol})`,
+                      `${
+                        row?.token?.name || t(translations.general.notAvailable)
+                      } (${
+                        row?.token?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`,
                       'tag',
                     )}
                   </Text>

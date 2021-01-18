@@ -24,7 +24,7 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
-import { NotFoundContractPage } from './containers/NotFoundContractPage/Loadable';
+import { NotFoundAddressPage } from './containers/NotFoundAddressPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Contracts } from './containers/Contracts/Loadable';
@@ -76,7 +76,7 @@ export function App() {
               <Route
                 exact
                 path="/notfound/:contractAddress"
-                component={NotFoundContractPage}
+                component={NotFoundAddressPage}
               />
               <Route exact path="/contract" component={Contract} />
               <Route

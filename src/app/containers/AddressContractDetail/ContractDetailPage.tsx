@@ -52,7 +52,9 @@ export const ContractDetailPage = memo(() => {
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
     if (!isContractAddress(address)) {
-      history.replace(`/notfound/${address}`);
+      history.replace(`/notfound/${address}`, {
+        type: 'contract',
+      });
     }
   }, [address, history]);
 
