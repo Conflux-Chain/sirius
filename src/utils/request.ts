@@ -72,17 +72,20 @@ const parseJSON = response => {
 // 检查返回值中是否包含错误
 const checkResponse = data => {
   const code = Number(data?.code);
-  // 只过滤黑名单中的，其他的错误透传到业务代码中处理
-  if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
-    notify({
-      code: code,
-      message: data.message,
-    });
-    const error: Partial<ErrorEvent> & {
-      response?: ResponseType;
-    } = new Error(data.message);
-    error.response = data;
-    throw error;
+  if (code) {
+    // 只过滤黑名单中的，其他的错误透传到业务代码中处理
+    if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
+      notify({
+        code: code,
+        message: data.message,
+      });
+    } else {
+      const error: Partial<ErrorEvent> & {
+        response?: ResponseType;
+      } = new Error(data.message);
+      error.response = data;
+      throw error;
+    }
   }
   return data;
 };
