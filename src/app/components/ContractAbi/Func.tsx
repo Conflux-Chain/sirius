@@ -68,7 +68,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, address]);
-  const onFinish = values => {
+  const onFinish = async values => {
     const newValues = lodash.clone(values);
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
@@ -87,25 +87,18 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       case 'read':
         try {
           setQueryLoading(true);
-          contract[data['name']](...objValues)
-            .then(res => {
-              setOutputError('');
-              setQueryLoading(false);
-              if (data['outputs'].length === 1) {
-                let arr: any[] = [];
-                arr.push(res);
-                setOutputValue(arr);
-              } else {
-                setOutputValue(Object.values(res));
-              }
-              // setOutputValue(res)
-              setOutputShown(true);
-            })
-            .catch(error => {
-              setQueryLoading(false);
-              setOutputShown(false);
-              setOutputError(error.message);
-            });
+          const res = await contract[data['name']](...objValues);
+          setOutputError('');
+          setQueryLoading(false);
+          if (data['outputs'].length === 1) {
+            let arr: any[] = [];
+            arr.push(res);
+            setOutputValue(arr);
+          } else {
+            setOutputValue(Object.values(res));
+          }
+          // setOutputValue(res)
+          setOutputShown(true);
         } catch (error) {
           setQueryLoading(false);
           setOutputShown(false);
