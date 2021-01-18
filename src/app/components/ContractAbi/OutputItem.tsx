@@ -26,7 +26,11 @@ const OutputItem = ({ output, value }: Props) => {
       break;
 
     default:
-      valueComp = <span className="value">{String(value)}</span>;
+      valueComp = (
+        <span className="value">{`${
+          value !== false ? value.toString() : 'false'
+        }`}</span>
+      );
       break;
   }
   return (

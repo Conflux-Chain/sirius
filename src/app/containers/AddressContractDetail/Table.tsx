@@ -101,7 +101,7 @@ function ContractSourceCodeAbi({ contractInfo }) {
       let i = 0;
       dataForRead.forEach(function (dValue, dIndex) {
         if (dValue['inputs'].length === 0) {
-          if (Array.isArray(list[i]) && (list[i] as any).length > 0) {
+          if (dValue['outputs'].length > 1) {
             dValue['value'] = list[i];
           } else {
             const arr: any = [];

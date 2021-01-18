@@ -91,13 +91,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             .then(res => {
               setOutputError('');
               setQueryLoading(false);
-              if (Array.isArray(res) && (res as any).length > 0) {
-                setOutputValue(res);
-              } else {
-                const arr: any = [];
+              if (data['outputs'].length === 1) {
+                let arr: any[] = [];
                 arr.push(res);
                 setOutputValue(arr);
+              } else {
+                setOutputValue(Object.values(res));
               }
+              // setOutputValue(res)
               setOutputShown(true);
             })
             .catch(error => {
