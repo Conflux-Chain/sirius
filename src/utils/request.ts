@@ -16,7 +16,18 @@ const windowFetch = window.fetch;
 const TIMEOUT_TIMESTAMP = 60000;
 
 // 只有在此列表内的后端错误需要 Notification 提示，其他的会在业务代码里处理
-const BACKEND_ERROR_CODE_BLACKLIST = [10001];
+const BACKEND_ERROR_CODE_BLACKLIST = [
+  10001,
+  10403,
+  10501,
+  10503,
+  40414,
+  40400,
+  40404,
+  50404,
+  50600,
+  50601,
+];
 
 // 异常消息发布
 const notify = ({ code, message }: NotifyType) => {
@@ -47,18 +58,18 @@ const checkStatus = response => {
 };
 
 // 格式化 response data
-const parseJSON = response => {
+const parseJSON = async function (response) {
   const contentType = response.headers.get('content-type');
   try {
     if (contentType.includes('application/json')) {
-      return response.json();
+      return { data: await response.json(), response };
     } else if (contentType.includes('text/html')) {
-      return response.text();
+      return { data: await response.text(), response };
     } else {
       // contentType 还有其他类型，目前项目中用不到
       // 不能简单的报错，比如 image/x-icon 是 favicon 请求
       // 此处直接返回 response，由业务代码处理其他类型的数据
-      return response;
+      return { data: response, response };
     }
   } catch (error) {
     notify({
@@ -70,24 +81,24 @@ const parseJSON = response => {
 };
 
 // 检查返回值中是否包含错误
-const checkResponse = data => {
-  const code = Number(data?.code);
-  if (code) {
+const checkResponse = ({ data, response }) => {
+  if (response.status === 200) {
+    return data;
+  } else if (response.status === 600) {
+    const code = Number(data?.code);
     // 只过滤黑名单中的，其他的错误透传到业务代码中处理
     if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
       notify({
         code: code,
         message: data.message,
       });
-    } else {
-      const error: Partial<ErrorEvent> & {
-        response?: ResponseType;
-      } = new Error(data.message);
-      error.response = data;
-      throw error;
     }
+    const error: Partial<ErrorEvent> & {
+      response?: ResponseType;
+    } = new Error(data.message);
+    error.response = data;
+    throw error;
   }
-  return data;
 };
 
 // 添加请求超时功能

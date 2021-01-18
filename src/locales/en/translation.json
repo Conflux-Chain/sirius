@@ -316,7 +316,16 @@
     "error": {
       "title": "System Error",
       "description": {
-        "10001": "The list parameter reached the maximum value.",
+        "10001": "ParameterError",
+        "10403": "PermissionsError",
+        "10501": "AssertError",
+        "10503": "ApiBusyError",
+        "40414": "AnnounceTooLongError",
+        "40400": "SendAnnounceError",
+        "40404": "AnnouncementNotExistError",
+        "50404": "ContractNotFoundError",
+        "50600": "CompilerError",
+        "50601": "ContractDecompileError",
         "20000": "Unknow error.",
         "20001": "Response data parsing error.",
         "20002": "Request timeout.",
