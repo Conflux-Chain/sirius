@@ -97,16 +97,23 @@ function ContractSourceCodeAbi({ contractInfo }) {
           }
         }
       }
-      const list = await Promise.all(proArr);
+      const list = await Promise.allSettled(proArr);
       let i = 0;
       dataForRead.forEach(function (dValue, dIndex) {
         if (dValue['inputs'].length === 0) {
-          if (dValue['outputs'].length > 1) {
-            dValue['value'] = list[i];
+          const listItem = list[i];
+          const status = listItem['status'];
+          if (status === 'fulfilled') {
+            const val = listItem['value'];
+            if (dValue['outputs'].length > 1) {
+              dValue['value'] = val;
+            } else {
+              const arr: any = [];
+              arr.push(val);
+              dValue['value'] = arr;
+            }
           } else {
-            const arr: any = [];
-            arr.push(list[i]);
-            dValue['value'] = arr;
+            dValue['error'] = listItem['reason']['message'];
           }
           ++i;
         }

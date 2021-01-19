@@ -67,6 +67,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       setOutputShown(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (data['error']) {
+      setOutputShown(false);
+      setOutputError(data['error']);
+    }
   }, [data]);
   useEffect(() => {
     if (type === 'write') {
