@@ -23,9 +23,9 @@ export function TokenDetail() {
     address: tokenAddress,
     fields: ['icon', 'transferCount'],
   };
-  let { data, error } = useTokenQuery(params, !!tokenAddress);
+  let { data } = useTokenQuery(params, !!tokenAddress);
 
-  if (!data && !error) {
+  if (!data) {
     data = {};
   }
 

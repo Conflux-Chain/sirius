@@ -56,12 +56,15 @@
       "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
-      "cfx": "Please enter a non-negative number with no more than 18 decimal places"
+      "cfx": "Please enter a non-negative number with no more than 18 decimal places",
+      "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
+      "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
     },
     "query": "Query",
     "write": "Write",
     "connectPortalFirst": "Please connect to ConfluxPortal first!",
-    "viewTx": "View your transaction"
+    "viewTx": "View your transaction",
+    "collapseAll": "Collapse All"
   },
   "contractDetail": {
     "title": "Contract Detail",
@@ -319,7 +322,16 @@
     "error": {
       "title": "System Error",
       "description": {
-        "10001": "The list parameter reached the maximum value.",
+        "10001": "ParameterError",
+        "10403": "PermissionsError",
+        "10501": "AssertError",
+        "10503": "ApiBusyError",
+        "40414": "AnnounceTooLongError",
+        "40400": "SendAnnounceError",
+        "40404": "AnnouncementNotExistError",
+        "50404": "ContractNotFoundError",
+        "50600": "CompilerError",
+        "50601": "ContractDecompileError",
         "20000": "Unknow error.",
         "20001": "Response data parsing error.",
         "20002": "Request timeout.",

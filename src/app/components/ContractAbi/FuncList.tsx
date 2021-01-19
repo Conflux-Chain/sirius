@@ -17,13 +17,17 @@ export declare type Props = FuncListProps & NativeAttrs;
 const { Panel } = Collapse;
 const FuncList = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
-  const [activeKey, setActiveKey] = useState();
+  const [activeKey, setActiveKey] = useState([]);
   const allKeys: string[] = [];
   data?.forEach(function (value, index) {
     allKeys.push(index + '-' + value['name']);
   });
-  const expandAll = () => {
-    setActiveKey(allKeys as any);
+  const clickHandler = () => {
+    if (activeKey.length === 0) {
+      setActiveKey(allKeys as any);
+    } else {
+      setActiveKey([] as any);
+    }
   };
   const reset = () => {
     setActiveKey([] as any);
@@ -42,8 +46,10 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
               : t(translations.contract.writeContractInformation)
           }`}</div>
           <div>
-            <span className="btn" onClick={expandAll}>
-              {t(translations.contract.expandAll)}{' '}
+            <span className="btn" onClick={clickHandler}>
+              {activeKey.length === 0
+                ? t(translations.contract.expandAll)
+                : t(translations.contract.collapseAll)}{' '}
             </span>
             <span className="btn" onClick={reset}>
               {t(translations.contract.reset)}{' '}

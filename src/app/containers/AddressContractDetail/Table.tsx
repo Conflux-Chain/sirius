@@ -42,6 +42,8 @@ const AceEditorStyle = {
 function ContractSourceCodeAbi({ contractInfo }) {
   const { t } = useTranslation();
   const { sourceCode, abi, address } = contractInfo;
+  const [dataForRead, setDataForRead] = useState([]);
+  const [dataForWrite, setDataForWrite] = useState([]);
   let abiJson = [];
   try {
     abiJson = JSON.parse(abi);
@@ -51,8 +53,16 @@ function ContractSourceCodeAbi({ contractInfo }) {
     setSelectedBtnType(btnType);
   };
   const contract = cfx.Contract({ abi: abiJson, address });
-  const [dataForRead, dataForWrite] = getReadWriteData(abiJson);
-  function getReadWriteData(abiJson) {
+  useEffect(() => {
+    getReadWriteData(abiJson).then(res => {
+      const [dataForR, dataForW] = res;
+      setDataForRead(dataForR as any);
+      setDataForWrite(dataForW as any);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractInfo]);
+
+  async function getReadWriteData(abiJson) {
     let dataForRead: object[] = [];
     let dataForWrite: object[] = [];
     let proArr: object[] = [];
@@ -87,20 +97,19 @@ function ContractSourceCodeAbi({ contractInfo }) {
           }
         }
       }
-      Promise.all(proArr).then(list => {
-        let i = 0;
-        dataForRead.forEach(function (dValue, dIndex) {
-          if (dValue['inputs'].length === 0) {
-            if (Array.isArray(list[i]) && (list[i] as any).length > 0) {
-              dValue['value'] = list[i];
-            } else {
-              const arr: any = [];
-              arr.push(list[i]);
-              dValue['value'] = arr;
-            }
-            ++i;
+      const list = await Promise.all(proArr);
+      let i = 0;
+      dataForRead.forEach(function (dValue, dIndex) {
+        if (dValue['inputs'].length === 0) {
+          if (dValue['outputs'].length > 1) {
+            dValue['value'] = list[i];
+          } else {
+            const arr: any = [];
+            arr.push(list[i]);
+            dValue['value'] = arr;
           }
-        });
+          ++i;
+        }
       });
     }
     return [dataForRead, dataForWrite];
