@@ -98,12 +98,17 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "table": {
       "number": "#",
       "token": "代币",
       "transfer": "转移",
       "totalSupply": "总供应量",
       "holders": "持有人",
+      "price": "价格",
+      "change": "涨跌幅（%）",
+      "volume": "24小时交易量",
+      "marketCap": "市值",
       "contract": "合约"
     }
   },
@@ -157,11 +162,16 @@
     "transaction": "交易"
   },
   "token": {
+    "token": "代币",
     "totalSupplay": "总供应量",
     "contract": "合约",
     "holders": "持有人",
     "decimals": "小数精度",
     "transfers": "转移",
+    "price": "价格",
+    "change": "涨跌幅（%）",
+    "volume": "24小时交易量",
+    "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "address": "个地址",
     "transferList": {
@@ -529,6 +539,10 @@
       "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。"
     },
     "token": {
+      "price": "代币价格。",
+      "volume": "过去24小时内该加密货币所有交易的总美元价值。",
+      "marketCap": "加密货币总供应量的价值：市值 = 价格 x 总供应量。",
+      "fullyDilutedMarketCap": "最大供应量流通时的市值：全面摊薄市值 = 价格 x 最大供应量。",
       "totalSupply": "该代币的总发行量。",
       "holders": "持有该代币的所有地址数量。",
       "transfers": "该合约地址发生的代币交易总数",
