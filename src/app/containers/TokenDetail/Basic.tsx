@@ -14,6 +14,8 @@ import { formatBalance, formatString, toThousands } from '../../../utils';
 export interface BasicProps {
   address?: string;
   totalSupply?: string;
+  price?: string;
+  marketCap?: string;
   symbol?: string;
   name?: string;
   tokenAddress?: string;
@@ -25,6 +27,8 @@ export interface BasicProps {
 export const Basic = ({
   address, // address === undefined when token api is pending
   totalSupply,
+  price,
+  marketCap,
   symbol,
   decimals,
   tokenAddress,
@@ -34,6 +38,76 @@ export const Basic = ({
   const { t } = useTranslation();
 
   const list = [
+    // price
+    {
+      title: (
+        <Tooltip text={t(translations.toolTip.token.price)} placement="top">
+          {t(translations.token.price)}
+        </Tooltip>
+      ),
+      children:
+        price !== undefined ? (
+          <Text
+            hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}
+          >
+            {`${formatBalance(price, decimals)} ${symbol}`}
+          </Text>
+        ) : address ? (
+          t(translations.general.notAvailable)
+        ) : undefined,
+    },
+    // contract address
+    {
+      title: (
+        <Tooltip text={t(translations.toolTip.token.contract)} placement="top">
+          {t(translations.token.contract)}
+        </Tooltip>
+      ),
+      children:
+        tokenAddress !== undefined ? (
+          <Text span hoverValue={tokenAddress}>
+            {
+              <Link href={`/address/${tokenAddress}`}>
+                {formatString(tokenAddress || '', 'address')}
+              </Link>
+            }
+          </Text>
+        ) : undefined,
+    },
+    // market cap
+    {
+      title: (
+        <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
+          {t(translations.token.marketCap, {
+            interpolation: { escapeValue: false },
+          })}
+        </Tooltip>
+      ),
+      children:
+        marketCap !== undefined ? (
+          <Text
+            hoverValue={`${formatBalance(marketCap, decimals, true)} ${symbol}`}
+          >
+            {`${formatBalance(marketCap, decimals)} ${symbol}`}
+          </Text>
+        ) : address ? (
+          t(translations.general.notAvailable)
+        ) : undefined,
+    },
+    // decimal
+    {
+      title: (
+        <Tooltip text={t(translations.toolTip.token.decimals)} placement="top">
+          {t(translations.token.decimals)}
+        </Tooltip>
+      ),
+      children: address
+        ? decimals !== undefined
+          ? decimals
+          : t(translations.general.notAvailable)
+        : undefined,
+    },
+    // total supply
     {
       title: (
         <Tooltip
@@ -58,23 +132,9 @@ export const Basic = ({
           t(translations.general.notAvailable)
         ) : undefined,
     },
-    {
-      title: (
-        <Tooltip text={t(translations.toolTip.token.contract)} placement="top">
-          {t(translations.token.contract)}
-        </Tooltip>
-      ),
-      children:
-        tokenAddress !== undefined ? (
-          <Text span hoverValue={tokenAddress}>
-            {
-              <Link href={`/address/${tokenAddress}`}>
-                {formatString(tokenAddress || '', 'address')}
-              </Link>
-            }
-          </Text>
-        ) : undefined,
-    },
+    // tbd
+    null,
+    // holders
     {
       title: (
         <Tooltip text={t(translations.toolTip.token.holders)} placement="top">
@@ -86,18 +146,9 @@ export const Basic = ({
           ? `${toThousands(holderCount)} ${t(translations.token.address)}`
           : undefined,
     },
-    {
-      title: (
-        <Tooltip text={t(translations.toolTip.token.decimals)} placement="top">
-          {t(translations.token.decimals)}
-        </Tooltip>
-      ),
-      children: address
-        ? decimals !== undefined
-          ? decimals
-          : t(translations.general.notAvailable)
-        : undefined,
-    },
+    // tbd
+    null,
+    // transfers
     {
       title: (
         <Tooltip text={t(translations.toolTip.token.transfers)} placement="top">

@@ -98,12 +98,17 @@
     "description": "Tokens",
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "table": {
       "number": "#",
       "token": "Token",
       "transfer": "Transfers",
       "totalSupply": "Total Supply",
       "holders": "Holders",
+      "price": "Price",
+      "change": "Change (%)",
+      "volume": "Volume (24H)",
+      "marketCap": "Market Cap",
       "contract": "Contract"
     }
   },
@@ -157,11 +162,16 @@
     "transaction": "transaction"
   },
   "token": {
+    "token": "Token",
     "totalSupplay": "Total Supply",
     "contract": "Contract",
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
+    "price": "Price",
+    "change": "Change (%)",
+    "volume": "Volume (24H)",
+    "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "address": "addresses",
     "transferList": {
@@ -529,6 +539,10 @@
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."
     },
     "token": {
+      "price": "Token price.",
+      "volume": "The total dollar value of all cryptocurrency transactions over the past 24 hours.",
+      "marketCap": "The market value of a cryptocurrency's total supply. <br> Market Cap = Current Price x Total Supply.",
+      "fullyDilutedMarketCap": "The market cap if the max supply was in circulation. Fully-diluted market cap = price x max supply.",
       "totalSupply": "Total supply of the token.",
       "holders": "The amout of addresses which hold the token.",
       "transfers": "The amout of token transactions which belongs to the address.",
