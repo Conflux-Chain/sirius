@@ -292,7 +292,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                 </>
               ))
             : null}
-          {inputsLength > 0 && (
+          {((type === 'read' && inputsLength > 0) ||
+            (type === 'write' && inputsLength >= 0)) && (
             <>
               <BtnGroup>
                 {hoverText ? (
