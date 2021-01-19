@@ -56,12 +56,15 @@
       "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
-      "cfx": "Please enter a non-negative number with no more than 18 decimal places"
+      "cfx": "Please enter a non-negative number with no more than 18 decimal places",
+      "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
+      "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
     },
     "query": "Query",
     "write": "Write",
     "connectPortalFirst": "Please connect to ConfluxPortal first!",
-    "viewTx": "View your transaction"
+    "viewTx": "View your transaction",
+    "collapseAll": "Collapse All"
   },
   "contractDetail": {
     "title": "Contract Detail",
