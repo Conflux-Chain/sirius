@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { useMessages } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
@@ -18,6 +19,7 @@ import Loading from '../../components/Loading';
 import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
+import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
 import {
   isAddress,
   checkInt,
@@ -37,7 +39,14 @@ export declare type Props = FuncProps & NativeAttrs;
 
 const Func = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
-  const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
+  const [, setMessage] = useMessages();
+  const {
+    portalInstalled,
+    address,
+    login,
+    confluxJS,
+    chainId,
+  } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -68,7 +77,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, address]);
-  const onFinish = values => {
+  const onFinish = async values => {
     const newValues = lodash.clone(values);
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
@@ -87,24 +96,18 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       case 'read':
         try {
           setQueryLoading(true);
-          contract[data['name']](...objValues)
-            .then(res => {
-              setOutputError('');
-              setQueryLoading(false);
-              if (Array.isArray(res) && (res as any).length > 0) {
-                setOutputValue(res);
-              } else {
-                const arr: any = [];
-                arr.push(res);
-                setOutputValue(arr);
-              }
-              setOutputShown(true);
-            })
-            .catch(error => {
-              setQueryLoading(false);
-              setOutputShown(false);
-              setOutputError(error.message);
-            });
+          const res = await contract[data['name']](...objValues);
+          setOutputError('');
+          setQueryLoading(false);
+          if (data['outputs'].length === 1) {
+            let arr: any[] = [];
+            arr.push(res);
+            setOutputValue(arr);
+          } else {
+            setOutputValue(Object.values(res));
+          }
+          // setOutputValue(res)
+          setOutputShown(true);
         } catch (error) {
           setQueryLoading(false);
           setOutputShown(false);
@@ -116,6 +119,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           useConfluxPortal.openHomePage();
         } else {
           if (address) {
+            if (isTestNetEnv() && Number(chainId) !== 1) {
+              setMessage({ text: t('contract.error.testnet'), color: 'error' });
+              return;
+            }
+            if (!isTestNetEnv() && Number(chainId) !== 1029) {
+              setMessage({ text: t('contract.error.mainnet'), color: 'error' });
+              return;
+            }
             let objParams: any[] = [];
             let txParams = {
               from: address,
@@ -161,6 +172,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       default:
         break;
     }
+  };
+  const onFinishFailed = () => {
+    setOutputError('');
+    setOutputShown(false);
   };
   const closeHandler = () => {
     setModalShown(false);
@@ -249,6 +264,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         onFinish={onFinish}
         validateTrigger={['onBlur']}
         className="formContainer"
+        onFinishFailed={onFinishFailed}
       >
         <FuncBody>
           {inputsLength > 0
