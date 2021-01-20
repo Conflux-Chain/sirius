@@ -15,23 +15,28 @@ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof OutputParamsProps>;
 export declare type Props = OutputParamsProps & NativeAttrs;
 
 const OutputItem = ({ output, value }: Props) => {
-  let valueComp;
-  switch (output['type']) {
-    case 'address':
+  let valueComp = <></>;
+  const type = output['type'];
+  try {
+    if (type === 'address') {
       valueComp = (
         <Link href={`/address/${value}`} className="value">
           {value}
         </Link>
       );
-      break;
-
-    default:
+    } else if (type.startsWith('byte')) {
+      valueComp = (
+        <span className="value">{`${'0x' + value.toString('hex')}`}</span>
+      );
+    } else {
       valueComp = (
         <span className="value">{`${
           value !== false ? value.toString() : 'false'
         }`}</span>
       );
-      break;
+    }
+  } catch (error) {
+    console.error(error.message);
   }
   return (
     <>

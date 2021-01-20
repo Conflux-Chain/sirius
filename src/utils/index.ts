@@ -9,6 +9,7 @@ import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
+import { Buffer } from 'buffer';
 dayjs.extend(relativeTime);
 
 export const innerContract = [
@@ -574,15 +575,21 @@ export function checkUint(value, type) {
 export function isHex(num) {
   return Boolean(num.match(/^0x[0-9a-f]+$/i));
 }
+export function isEvenLength(str) {
+  const length = str.length;
+  return length > 0 && length % 2 === 0;
+}
 export function checkBytes(value, type) {
   if (type === 'byte') {
     type = 'bytes1';
   }
   const num = Number(type.substr(5));
   let isBytes = false;
-  if (isHex(value)) {
+  if (isHex(value) && isEvenLength(value)) {
     if (num > 0) {
-      if (value.length <= 2 * num + 2) {
+      const str = value.substr(2);
+      const buffer = Buffer.from(str, 'hex');
+      if (buffer.length === num) {
         isBytes = true;
       } else {
         isBytes = false;
