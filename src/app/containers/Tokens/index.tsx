@@ -16,6 +16,8 @@ export function Tokens() {
   const columns: ColumnsType = [
     tokenColunms.number,
     tokenColunms.token,
+    tokenColunms.price,
+    tokenColunms.marketCap,
     tokenColunms.transfer,
     tokenColunms.totalSupply,
     tokenColunms.holders,

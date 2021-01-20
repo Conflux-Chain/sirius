@@ -247,6 +247,10 @@
       "token": {
         "number": "#",
         "token": "代币",
+        "price": "价格",
+        "change": "涨跌幅（%）",
+        "volume": "24小时交易量",
+        "marketCap": "市值",
         "transfer": "转移",
         "totalSupply": "总供应量",
         "holders": "持有人",
