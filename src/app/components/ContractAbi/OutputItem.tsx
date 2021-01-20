@@ -16,22 +16,23 @@ export declare type Props = OutputParamsProps & NativeAttrs;
 
 const OutputItem = ({ output, value }: Props) => {
   let valueComp;
-  switch (output['type']) {
-    case 'address':
-      valueComp = (
-        <Link href={`/address/${value}`} className="value">
-          {value}
-        </Link>
-      );
-      break;
-
-    default:
-      valueComp = (
-        <span className="value">{`${
-          value !== false ? value.toString() : 'false'
-        }`}</span>
-      );
-      break;
+  const type = output['type'];
+  if (type === 'address') {
+    valueComp = (
+      <Link href={`/address/${value}`} className="value">
+        {value}
+      </Link>
+    );
+  } else if (type.startsWith('byte')) {
+    valueComp = (
+      <span className="value">{`${'0x' + value.toString('hex')}`}</span>
+    );
+  } else {
+    valueComp = (
+      <span className="value">{`${
+        value !== false ? value.toString() : 'false'
+      }`}</span>
+    );
   }
   return (
     <>

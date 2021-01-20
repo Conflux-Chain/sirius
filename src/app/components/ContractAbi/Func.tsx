@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Form } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
@@ -66,6 +67,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       setOutputShown(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (data['error']) {
+      setOutputShown(false);
+      setOutputError(data['error']);
+    }
   }, [data]);
   useEffect(() => {
     if (type === 'write') {
@@ -78,17 +83,19 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, address]);
   const onFinish = async values => {
-    const newValues = lodash.clone(values);
+    const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
     items.forEach(function (value, index) {
+      let val = value['val'];
       if (value['type'] === 'bool') {
-        let val = value['val'];
         if (val === 'true' || val === '1') {
           value['val'] = true;
         } else if (val === 'false' || val === '0') {
           value['val'] = false;
         }
+      } else if (value['type'].startsWith('byte')) {
+        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       }
       objValues.push(value['val']);
     });
@@ -182,7 +189,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   };
   function getValidator(type: string) {
     const check = (_: any, value) => {
-      const val = value['val'];
+      const val = value && value['val'];
       if (type === 'address') {
         if (isAddress(val)) {
           return Promise.resolve();
@@ -275,7 +282,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                     type={inputItem.type}
                   ></ParamTitle>
                   <Form.Item
-                    name={inputItem.name + index}
+                    name={inputItem.name}
                     rules={[{ validator: getValidator(inputItem.type) }]}
                     key={inputItem.name + index}
                   >
@@ -292,7 +299,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                 </>
               ))
             : null}
-          {inputsLength > 0 && (
+          {((type === 'read' && inputsLength > 0) ||
+            (type === 'write' && inputsLength >= 0)) && (
             <>
               <BtnGroup>
                 {hoverText ? (
