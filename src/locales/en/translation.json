@@ -247,6 +247,10 @@
       "token": {
         "number": "#",
         "token": "Token",
+        "price": "Price",
+        "change": "Change (%)",
+        "volume": "Volume (24H)",
+        "marketCap": "Market Cap",
         "transfer": "Transfer",
         "totalSupply": "Total Supply",
         "holders": "Holders",
