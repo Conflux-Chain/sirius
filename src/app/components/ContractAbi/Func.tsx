@@ -151,23 +151,20 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             try {
               const { data: txData } = contract[data['name']](...objParams);
               txParams['data'] = txData;
-              //loading
-              setModalType('loading');
-              setModalShown(true);
-              confluxJS
-                .sendTransaction(txParams)
-                .then(txHash => {
-                  //success alert
-                  setModalType('success');
-                  setTxHash(txHash);
-                  setOutputError('');
-                })
-                .catch(error => {
-                  //rejected alert
-                  setModalType('fail');
-                  setOutputError(error.message || '');
-                });
             } catch (error) {
+              setOutputError(error.message || '');
+              return;
+            }
+            //loading
+            setModalType('loading');
+            setModalShown(true);
+            try {
+              const txHash = await confluxJS.sendTransaction(txParams);
+              setModalType('success');
+              setTxHash(txHash);
+              setOutputError('');
+            } catch (error) {
+              setModalType('fail');
               setOutputError(error.message || '');
             }
           } else {
