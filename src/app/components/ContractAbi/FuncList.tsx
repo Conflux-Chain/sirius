@@ -29,9 +29,6 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
       setActiveKey([] as any);
     }
   };
-  const reset = () => {
-    setActiveKey([] as any);
-  };
   const changeHandler = key => {
     setActiveKey(key);
   };
@@ -50,9 +47,6 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
               {activeKey.length === 0
                 ? t(translations.contract.expandAll)
                 : t(translations.contract.collapseAll)}{' '}
-            </span>
-            <span className="btn" onClick={reset}>
-              {t(translations.contract.reset)}{' '}
             </span>
           </div>
         </HeaderComp>
@@ -122,7 +116,7 @@ const Container = styled.div`
     line-height: 22px;
     cursor: pointer;
     font-weight: 400;
-    margin-left: 12px;
+    margin-right: 12px;
   }
 `;
 export default FuncList;
