@@ -77,7 +77,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       if (address) {
         setHoverText('');
       } else {
-        setHoverText(t(translations.contract.connectPortalFirst));
+        setHoverText('contract.connectPortalFirst');
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -304,7 +304,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             <>
               <BtnGroup>
                 {hoverText ? (
-                  <Tooltip text={hoverText} placement="top-start">
+                  <Tooltip text={t(hoverText)} placement="top-start">
                     {btnComp}
                   </Tooltip>
                 ) : (
