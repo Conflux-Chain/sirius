@@ -84,7 +84,7 @@ const WarnningTooltipWrapper = styled.div`
 
 export function ContractMetadata({ address }) {
   const { t } = useTranslation();
-  const notAvaiableText = t(translations.general.security.notAvailable);
+  const notAvailableText = t(translations.general.security.notAvailable);
 
   const { data: contractInfo } = useContract(address, [
     'name',
@@ -94,6 +94,7 @@ export function ContractMetadata({ address }) {
     'admin',
     'from',
     'transactionHash',
+    'code',
   ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
   const loading = contractInfo.name === t(translations.general.loading);
@@ -120,7 +121,7 @@ export function ContractMetadata({ address }) {
                     alt={`${contractInfo.name} logo`}
                   />
                 )}
-                <Content>{contractInfo.name || notAvaiableText}</Content>
+                <Content>{contractInfo.name || notAvailableText}</Content>
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -145,7 +146,7 @@ export function ContractMetadata({ address }) {
                       </Text>
                     </Link>
                   ) : (
-                    notAvaiableText
+                    notAvailableText
                   )}
                 </Content>
                 <WarnningButton key="warning" />
@@ -171,13 +172,13 @@ export function ContractMetadata({ address }) {
                     alt={`${contractInfo.name} logo`}
                   />
                 )}
-                <Content className={clsx(!tokenInfo.name && 'not-avaiable')}>
+                <Content className={clsx(!tokenInfo.name && 'not-available')}>
                   {tokenInfo.name ? (
-                    <Link
-                      to={`/token/${address}`}
-                    >{`${tokenInfo.name} (${tokenInfo.symbol})`}</Link>
+                    <Link to={`/token/${address}`}>{`${
+                      tokenInfo.name || notAvailableText
+                    } (${tokenInfo.symbol || notAvailableText})`}</Link>
                   ) : (
-                    notAvaiableText
+                    notAvailableText
                   )}
                 </Content>
               </CenterLine>
@@ -199,7 +200,7 @@ export function ContractMetadata({ address }) {
                 <Content
                   className={clsx(
                     !contractInfo.sponsor.sponsorForCollateral &&
-                      'not-avaiable',
+                      'not-available',
                   )}
                 >
                   {contractInfo.sponsor &&
@@ -221,7 +222,7 @@ export function ContractMetadata({ address }) {
                       </Link>,
                     ]
                   ) : (
-                    <CenterLine>{notAvaiableText}</CenterLine>
+                    <CenterLine>{notAvailableText}</CenterLine>
                   )}
                 </Content>
               </CenterLine>
@@ -240,35 +241,48 @@ export function ContractMetadata({ address }) {
           children: (
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
-                <Content
-                  className={clsx(
-                    !contractInfo.from && 'not-avaiable',
-                    !contractInfo.transactionHash && 'not-avaiable',
-                  )}
-                >
-                  {contractInfo.from ? (
-                    <Link to={`/address/${contractInfo.from}`}>
-                      <Text span hoverValue={contractInfo.from}>
-                        {formatString(contractInfo.from, 'address')}
-                      </Text>
-                    </Link>
-                  ) : (
-                    notAvaiableText
-                  )}
-                  {` ${t(translations.contractDetail.at)} ${t(
-                    translations.contractDetail.txOnlyEn,
-                  )} `}
-                  {contractInfo.from ? (
-                    <Link to={`/transaction/${contractInfo.transactionHash}`}>
-                      <Text span hoverValue={contractInfo.transactionHash}>
-                        {formatString(contractInfo.transactionHash, 'address')}
-                      </Text>
-                    </Link>
-                  ) : (
-                    notAvaiableText
-                  )}
-                  {` ${t(translations.contractDetail.txOnlyZh)} `}
-                </Content>
+                {!contractInfo.code ? (
+                  <Content className="not-available">
+                    <Text type="error">
+                      {t(translations.contractDetail.notDeployed)}
+                    </Text>
+                  </Content>
+                ) : (
+                  <Content
+                    className={clsx(
+                      !contractInfo.from && 'not-available',
+                      !contractInfo.transactionHash && 'not-available',
+                    )}
+                  >
+                    {contractInfo.from ? (
+                      <Link to={`/address/${contractInfo.from}`}>
+                        <Text span hoverValue={contractInfo.from}>
+                          {formatString(contractInfo.from, 'address')}
+                        </Text>
+                      </Link>
+                    ) : (
+                      notAvailableText
+                    )}
+                    {contractInfo.transactionHash ? (
+                      <>
+                        {` ${t(translations.contractDetail.at)} ${t(
+                          translations.contractDetail.txOnlyEn,
+                        )} `}
+                        <Link
+                          to={`/transaction/${contractInfo.transactionHash}`}
+                        >
+                          <Text span hoverValue={contractInfo.transactionHash}>
+                            {formatString(
+                              contractInfo.transactionHash,
+                              'address',
+                            )}
+                          </Text>
+                        </Link>
+                        {` ${t(translations.contractDetail.txOnlyZh)} `}
+                      </>
+                    ) : null}
+                  </Content>
+                )}
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -305,7 +319,7 @@ export function ContractMetadata({ address }) {
                       </Link>,
                     ]
                   ) : (
-                    <CenterLine>{notAvaiableText}</CenterLine>
+                    <CenterLine>{notAvailableText}</CenterLine>
                   )}
                 </Content>
               </CenterLine>
@@ -332,7 +346,7 @@ const CenterLine = styled.div`
 `;
 
 const Content = styled.span`
-  &.not-avaiable.link {
+  &.not-available.link {
     color: #97a3b4;
   }
 `;

@@ -45,7 +45,10 @@ module.exports = app => {
   app.use(
     '/v1',
     createProxyMiddleware({
-      target: 'https://testnet.confluxscan.io',
+      target:
+        process.env.REACT_APP_TestNet === 'true'
+          ? 'https://testnet-scantest.confluxnetwork.org'
+          : 'https://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
@@ -53,14 +56,20 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target: 'http://scanpage-test.confluxrpc.org:12537',
+      target:
+        process.env.REACT_APP_TestNet === 'true'
+          ? 'http://scanpage-test.confluxrpc.org:12537'
+          : 'http://scanpage-main.confluxrpc.org:12537',
     }),
   );
 
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
-      target: 'https://confluxscan.io',
+      target:
+        process.env.REACT_APP_TestNet === 'true'
+          ? 'http://testnet-scantest.confluxnetwork.org'
+          : 'http://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),

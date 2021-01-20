@@ -41,7 +41,30 @@
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
-    "abiError": "ABI error"
+    "abiError": "ABI error",
+    "readContract": "Read Contract",
+    "writeContract": "Write Contract",
+    "readContractInformation": "Read Contract Information",
+    "writeContractInformation": "Write Contract Information",
+    "expandAll": "Expand All",
+    "reset": "Reset",
+    "payableAmountCfx": "payableAmount (cfx) ",
+    "error": {
+      "address": "Please enter a Conflux address starting with 0x0,0x1 or 0x8",
+      "bool": "Please enter true/false or 0/1",
+      "int": "Please enter an integer in the range {{min}} ~ {{max}}",
+      "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
+      "bytes": "Please enter an hexadecimal byte array starting with 0x",
+      "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
+      "cfx": "Please enter a non-negative number with no more than 18 decimal places",
+      "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
+      "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
+    },
+    "query": "Query",
+    "write": "Write",
+    "connectPortalFirst": "Please connect to ConfluxPortal first!",
+    "viewTx": "View your transaction",
+    "collapseAll": "Collapse All"
   },
   "contractDetail": {
     "title": "Contract Detail",
@@ -50,7 +73,8 @@
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
-    "clickToApply": "Click to apply contract sponsorships"
+    "clickToApply": "Click to apply contract sponsorships",
+    "notDeployed": "This contract has not been deployed"
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",
@@ -120,10 +144,14 @@
     "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
     "btn": "Go TO HOMEPAGE"
   },
-  "notFoundContract": {
-    "title": "The contract can not be found",
-    "label": "Sorry! The contract does not exist.",
-    "btn": "Go TO HOMEPAGE"
+  "notFoundAddress": {
+    "title": "The {{type}} can not be found",
+    "label": "Sorry! The {{type}} does not exist.",
+    "btn": "Go TO HOMEPAGE",
+    "defaultType": "address",
+    "contract": "contract",
+    "block": "block",
+    "transaction": "transaction"
   },
   "token": {
     "totalSupplay": "Total Supply",
@@ -195,7 +223,7 @@
         "gasLimit": "Gas Limit"
       },
       "transaction": {
-        "hash": "Hash",
+        "hash": "Txn Hash",
         "from": "From",
         "to": "To",
         "value": "Value",
@@ -291,7 +319,16 @@
     "error": {
       "title": "System Error",
       "description": {
-        "10001": "The list parameter reached the maximum value.",
+        "10001": "ParameterError",
+        "10403": "PermissionsError",
+        "10501": "AssertError",
+        "10503": "ApiBusyError",
+        "40414": "AnnounceTooLongError",
+        "40400": "SendAnnounceError",
+        "40404": "AnnouncementNotExistError",
+        "50404": "ContractNotFoundError",
+        "50600": "CompilerError",
+        "50601": "ContractDecompileError",
         "20000": "Unknow error.",
         "20001": "Response data parsing error.",
         "20002": "Request timeout.",

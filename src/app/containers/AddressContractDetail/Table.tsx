@@ -33,15 +33,94 @@ import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
 import PickerWithQuery from './PickerWithQuery';
 import { ActionButton } from './ActionButton';
-
+import { cfx } from 'utils/cfx';
+import { ContractAbi } from '../../components/ContractAbi/Loadable';
 const AceEditorStyle = {
   width: '100%',
 };
 
-function ContractSourceCodeAbi({ sourceCode, abi }) {
+function ContractSourceCodeAbi({ contractInfo }) {
   const { t } = useTranslation();
+  const { sourceCode, abi, address } = contractInfo;
+  const [dataForRead, setDataForRead] = useState([]);
+  const [dataForWrite, setDataForWrite] = useState([]);
+  let abiJson = [];
+  try {
+    abiJson = JSON.parse(abi);
+  } catch (error) {}
+  const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
+  const clickHandler = (btnType: React.SetStateAction<string>) => {
+    setSelectedBtnType(btnType);
+  };
+  const contract = cfx.Contract({ abi: abiJson, address });
+  useEffect(() => {
+    getReadWriteData(abiJson).then(res => {
+      const [dataForR, dataForW] = res;
+      setDataForRead(dataForR as any);
+      setDataForWrite(dataForW as any);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractInfo]);
 
-  const [isSourceCode, setIsSourceCode] = useState(true);
+  async function getReadWriteData(abiJson) {
+    let dataForRead: object[] = [];
+    let dataForWrite: object[] = [];
+    let proArr: object[] = [];
+    if (Array.isArray(abiJson)) {
+      for (let abiItem of abiJson) {
+        if (abiItem.name !== '' && abiItem.type === 'function') {
+          const stateMutability = abiItem.stateMutability;
+          switch (stateMutability) {
+            case 'pure':
+            case 'view':
+              if (abiItem.inputs && abiItem.inputs.length === 0) {
+                proArr.push(contract[abiItem.name]());
+              }
+              dataForRead.push(abiItem);
+              break;
+            case 'nonpayable':
+              dataForWrite.push(abiItem);
+              break;
+            case 'payable':
+              const payableObjs = [
+                {
+                  internalType: 'cfx',
+                  name: abiItem['name'],
+                  type: 'cfx',
+                },
+              ];
+              abiItem['inputs'] = payableObjs.concat(abiItem['inputs']);
+              dataForWrite.push(abiItem);
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      const list = await Promise.allSettled(proArr);
+      let i = 0;
+      dataForRead.forEach(function (dValue, dIndex) {
+        if (dValue['inputs'].length === 0) {
+          const listItem = list[i];
+          const status = listItem['status'];
+          if (status === 'fulfilled') {
+            const val = listItem['value'];
+            if (dValue['outputs'].length > 1) {
+              dValue['value'] = val;
+            } else {
+              const arr: any = [];
+              arr.push(val);
+              dValue['value'] = arr;
+            }
+          } else {
+            dValue['error'] = listItem['reason']['message'];
+          }
+          ++i;
+        }
+      });
+    }
+    return [dataForRead, dataForWrite];
+  }
 
   return (
     <>
@@ -49,36 +128,82 @@ function ContractSourceCodeAbi({ sourceCode, abi }) {
         <ButtonWrapper>
           <Button
             className={clsx(
-              isSourceCode && 'enabled',
-              'source-btn',
+              selectedBtnType === 'sourceCode' && 'enabled',
               'btnWeight',
             )}
-            onClick={() => setIsSourceCode(true)}
+            onClick={() => clickHandler('sourceCode')}
           >
             {t(translations.contract.sourceCodeShort)}
           </Button>
           <Button
-            className={clsx(!isSourceCode && 'enabled', 'abi-btn', 'btnWeight')}
-            onClick={() => setIsSourceCode(false)}
+            className={clsx(
+              selectedBtnType === 'abi' && 'enabled',
+              'btn-item',
+              'btnWeight',
+            )}
+            onClick={() => clickHandler('abi')}
           >
             {t(translations.contract.abiShort)}
           </Button>
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'read' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('read')}
+            >
+              {t(translations.contract.readContract)}
+            </Button>
+          )}
+          {abi && (
+            <Button
+              className={clsx(
+                selectedBtnType === 'write' && 'enabled',
+                'btn-item',
+                'btnWeight',
+              )}
+              onClick={() => clickHandler('write')}
+            >
+              {t(translations.contract.writeContract)}
+            </Button>
+          )}
+
           <div className="line"></div>
         </ButtonWrapper>
         <Card>
-          <AceEditor
-            readOnly
-            style={AceEditorStyle}
-            mode="solidity"
-            theme="github"
-            name="UNIQUE_ID_OF_DIV"
-            setOptions={{
-              showLineNumbers: true,
-            }}
-            showGutter={false}
-            showPrintMargin={false}
-            value={isSourceCode ? sourceCode : abi}
-          />
+          {(selectedBtnType === 'sourceCode' || selectedBtnType === 'abi') && (
+            <AceEditor
+              readOnly
+              style={AceEditorStyle}
+              mode="solidity"
+              theme="github"
+              name="UNIQUE_ID_OF_DIV"
+              setOptions={{
+                showLineNumbers: true,
+              }}
+              showGutter={false}
+              showPrintMargin={false}
+              value={selectedBtnType === 'sourceCode' ? sourceCode : abi}
+            />
+          )}
+          {selectedBtnType === 'read' && (
+            <ContractAbi
+              type="read"
+              data={dataForRead}
+              contractAddress={address}
+              contract={contract}
+            ></ContractAbi>
+          )}
+          {selectedBtnType === 'write' && (
+            <ContractAbi
+              type="write"
+              data={dataForWrite}
+              contractAddress={address}
+              contract={contract}
+            ></ContractAbi>
+          )}
         </Card>
       </ContractBody>
     </>
@@ -92,7 +217,7 @@ const ButtonWrapper = styled.div`
   float: left;
   box-sizing: border-box;
   padding: 0 1.2857rem;
-  margin: 0.5714rem 0;
+  margin: 0.5714rem 0 0 0;
   .line {
     height: 0.0714rem;
     background-color: #e8e9ea;
@@ -128,8 +253,11 @@ const ButtonWrapper = styled.div`
     background-color: rgba(0, 84, 254, 0.8);
   }
 
-  .abi-btn.btn {
+  .btn-item.btn {
     margin-left: 0.2857rem;
+  }
+  .hidden {
+    display: none;
   }
 `;
 
@@ -311,10 +439,19 @@ export function Table({ address }) {
                 <Link key="link" href={`/token/${row?.token?.address}`}>
                   <Text
                     span
-                    hoverValue={`${row?.token?.name} (${row?.token?.symbol})`}
+                    hoverValue={`${
+                      row?.token?.name || t(translations.general.notAvailable)
+                    } (${
+                      row?.token?.symbol || t(translations.general.notAvailable)
+                    })`}
                   >
                     {formatString(
-                      `${row?.token?.name} (${row?.token?.symbol})`,
+                      `${
+                        row?.token?.name || t(translations.general.notAvailable)
+                      } (${
+                        row?.token?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`,
                       'tag',
                     )}
                   </Text>
@@ -378,12 +515,7 @@ export function Table({ address }) {
       ? {
           value: 'contract-viewer',
           label: t(translations.token.contract),
-          content: (
-            <ContractSourceCodeAbi
-              sourceCode={contractInfo?.sourceCode}
-              abi={contractInfo?.abi}
-            />
-          ),
+          content: <ContractSourceCodeAbi contractInfo={contractInfo} />,
         }
       : {
           value: 'mined-blocks',

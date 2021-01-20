@@ -11,6 +11,7 @@ import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Security } from '../../components/Security/Loadable';
 import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
+import { useHistory } from 'react-router-dom';
 import {
   delay,
   getPercent,
@@ -19,11 +20,21 @@ import {
   toThousands,
 } from '../../../utils';
 export function DescriptionPanel({ hash: blockHash }) {
+  const history = useHistory();
   const { t } = useTranslation();
   const [risk, setRisk] = useState('');
   let loading = false;
   const hashQuery = useMemo(() => ({ hash: blockHash }), [blockHash]);
   const { data } = useBlockQuery(hashQuery);
+
+  useEffect(() => {
+    if (data && !data.hash) {
+      history.push(`/notfound/${blockHash}`, {
+        type: 'block',
+      });
+    }
+  }, [blockHash, data, history]);
+
   const intervalToClear = useRef(false);
   if (!data) loading = true;
 

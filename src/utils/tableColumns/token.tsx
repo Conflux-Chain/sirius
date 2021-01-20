@@ -10,11 +10,11 @@ import { media } from '../../styles/media';
 import { CountDown } from '../../app/components/CountDown/Loadable';
 import { defaultTokenIcon } from '../../constants';
 import {
-  formatString,
+  formatBalance,
   formatNumber,
+  formatString,
   isAddress,
   isHash,
-  formatBalance,
 } from '../../utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
@@ -42,25 +42,27 @@ const renderFilterableAddress = (
   pOpt?: {
     type?: 'to' | 'from';
     isToken?: boolean;
+    needFilter?: boolean;
   },
 ) => {
   const opt = {
     type: 'to',
     isToken: true,
+    needFilter: false,
     ...pOpt,
   };
   const { accountAddress } = queryString.parse(window.location.search);
   const filter = (accountAddress as string) || '';
 
   const renderTo = () => {
-    if (filter === value) {
+    if (filter === value && opt.needFilter) {
       return (
         <Text span hoverValue={value}>
           {getContractName(value, row, opt.type)}
         </Text>
       );
     } else if (value) {
-      if (opt.isToken) {
+      if (opt.needFilter) {
         return (
           <LinkWithFilter href={value}>
             <Text span hoverValue={value}>
@@ -79,7 +81,7 @@ const renderFilterableAddress = (
       }
     } else {
       if (row.contractCreated) {
-        if (row.contractCreated === filter) {
+        if (row.contractCreated === filter && opt.needFilter) {
           return (
             <Text span hoverValue={row.contractCreated}>
               <Translation>
@@ -174,16 +176,32 @@ export const token = {
     <Translation>{t => t(translations.general.table.token.token)}</Translation>
   ),
   key: 'blockIndex',
-  render: row => (
-    <StyledIconWrapper>
-      <img src={row?.icon || defaultTokenIcon} alt="token icon" />
-      <Link href={`/token/${row.address}`}>
-        <Text span hoverValue={`${row?.name} (${row?.symbol})`}>
-          {formatString(`${row?.name} (${row?.symbol})`, 28)}
-        </Text>
-      </Link>
-    </StyledIconWrapper>
-  ),
+  render: row => {
+    return (
+      <StyledIconWrapper>
+        <img src={row?.icon || defaultTokenIcon} alt="token icon" />
+        <Link href={`/token/${row.address}`}>
+          <Translation>
+            {t => (
+              <Text
+                span
+                hoverValue={`${
+                  row?.name || t(translations.general.notAvailable)
+                } (${row?.symbol || t(translations.general.notAvailable)})`}
+              >
+                {formatString(
+                  `${row?.name || t(translations.general.notAvailable)} (${
+                    row?.symbol || t(translations.general.notAvailable)
+                  })`,
+                  28,
+                )}
+              </Text>
+            )}
+          </Translation>
+        </Link>
+      </StyledIconWrapper>
+    );
+  },
 };
 
 export const transfer = {
@@ -285,7 +303,7 @@ export const quantity = {
   render: (value, row, index, opt?) => {
     const decimals = opt
       ? opt.decimals
-      : row.token?.decimals || row.token?.decimal || 18;
+      : row.token?.decimals || row.token?.decimal || 0;
     return value ? (
       <Text span hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
