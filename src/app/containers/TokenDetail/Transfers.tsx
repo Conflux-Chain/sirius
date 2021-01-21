@@ -12,18 +12,25 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { Filter } from './Filter';
 import { tokenColunms } from '../../../utils/tableColumns';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 interface TransferProps {
   tokenAddress: string;
   symbol: string;
   decimals: number;
+  tokenType: string;
 }
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
 }
 
-export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
+export function Transfers({
+  tokenAddress,
+  symbol,
+  decimals,
+  tokenType,
+}: TransferProps) {
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
@@ -59,8 +66,8 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
     history.push(urlWithQuery);
   };
 
-  const columnsWidth = [3, 4, 4, 4, 3];
-  const columns = [
+  let columnsWidth = [3, 4, 4, 4, 3];
+  let columns = [
     // {
     //   ...tokenColunms.txnHash,
     //   render: value => {
@@ -82,7 +89,6 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
     //   },
     // },
     tokenColunms.txnHash,
-    tokenColunms.age,
     tokenColunms.from,
     tokenColunms.to,
     {
@@ -92,7 +98,30 @@ export function Transfers({ tokenAddress, symbol, decimals }: TransferProps) {
           decimals,
         }),
     },
+    tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
+
+  if (tokenType === cfxTokenTypes.erc721) {
+    columnsWidth = [3, 4, 4, 4, 3];
+    columns = [
+      tokenColunms.txnHash,
+      tokenColunms.from,
+      tokenColunms.to,
+      tokenColunms.tokenId,
+      tokenColunms.age,
+    ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
+  }
+  if (tokenType === cfxTokenTypes.erc1155) {
+    columnsWidth = [3, 4, 4, 4, 4, 3];
+    columns = [
+      tokenColunms.txnHash,
+      tokenColunms.from,
+      tokenColunms.to,
+      tokenColunms.quantity,
+      tokenColunms.tokenId,
+      tokenColunms.age,
+    ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
+  }
 
   const tabs = [
     {

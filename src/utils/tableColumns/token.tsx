@@ -364,6 +364,18 @@ export const from = {
     }),
 };
 
+export const tokenId = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.tokenId)}
+    </Translation>
+  ),
+  dataIndex: 'tokenId',
+  key: 'tokenId',
+  render: value => value || '-',
+};
+
 export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;

@@ -259,6 +259,7 @@
         "age": "Age",
         "from": "From",
         "to": "To",
+        "tokenId": "TokenID",
         "quantity": "Quantity"
       },
       "contracts": {

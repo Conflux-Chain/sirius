@@ -259,6 +259,7 @@
         "age": "块龄",
         "from": "发送方",
         "to": "接收方",
+        "tokenId": "代币 ID",
         "quantity": "数量"
       },
       "contracts": {

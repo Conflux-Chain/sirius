@@ -11,8 +11,8 @@ import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTableData } from './../../components/TabsTablePanel/useTableData';
 import { tokenColunms } from '../../../utils/tableColumns';
 import styled from 'styled-components/macro';
-import { media } from '../../../styles/media';
 import { Tooltip } from '../../components/Tooltip/Loadable';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 interface RouteParams {
   tokenType: string;
@@ -21,8 +21,6 @@ interface RouteParams {
 export function Tokens() {
   const { t } = useTranslation();
   const { tokenType } = useParams<RouteParams>();
-
-  console.log(tokenType);
 
   let columnsWidth = [1, 6, 3, 3, 3, 3, 2, 3];
   let columns: ColumnsType = [
@@ -36,11 +34,14 @@ export function Tokens() {
     tokenColunms.contract,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/token?type=erc20&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+  let url = `/token?tokenType=${cfxTokenTypes.erc20}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
 
   let title = t(translations.header.tokens20);
 
-  if (tokenType === 'erc721' || tokenType === 'erc1155') {
+  if (
+    tokenType === cfxTokenTypes.erc721 ||
+    tokenType === cfxTokenTypes.erc1155
+  ) {
     columnsWidth = [1, 8, 4, 4, 5];
     columns = [
       tokenColunms.number,
@@ -50,11 +51,11 @@ export function Tokens() {
       tokenColunms.contract,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    if (tokenType === 'erc721') {
-      url = `/token?type=erc721&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+    if (tokenType === cfxTokenTypes.erc721) {
+      url = `/token?tokenType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
       title = t(translations.header.tokens721);
     } else {
-      url = `/token?type=erc1155&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+      url = `/token?tokenType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
       title = t(translations.header.tokens1155);
     }
   }
