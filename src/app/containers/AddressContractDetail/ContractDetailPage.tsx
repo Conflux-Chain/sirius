@@ -6,31 +6,30 @@
 
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
-import { Copy, Qrcode, Edit, Jump, Apply } from './HeadLineButtons';
+import { Apply, Copy, Edit, Jump, Qrcode } from './HeadLineButtons';
 import {
   BalanceCard,
-  TokensCard,
-  StorageStakingCard,
   NonceCard,
+  StorageStakingCard,
+  TokensCard,
 } from './AddressInfoCards';
-import { ContractMetadata } from './Loadable';
-import { Table } from './Loadable';
+import { ContractMetadata, Table } from './Loadable';
 import { Text } from 'app/components/Text';
 import { useContract } from 'utils/api';
 import {
-  Main,
-  Title,
-  Middle,
   Bottom,
-  HeadAddressLine,
-  Top,
   Head,
+  HeadAddressLine,
+  Main,
+  Middle,
+  Title,
+  Top,
 } from './layouts';
-import { isContractAddress } from 'utils';
+import { isContractAddress, isInnerContractAddress } from 'utils';
 
 interface RouteParams {
   address: string;
@@ -51,7 +50,7 @@ export const ContractDetailPage = memo(() => {
     // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (!isContractAddress(address)) {
+    if (!isContractAddress(address) && !isInnerContractAddress(address)) {
       history.replace(`/notfound/${address}`, {
         type: 'contract',
       });
