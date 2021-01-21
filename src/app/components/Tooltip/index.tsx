@@ -42,4 +42,11 @@ const TooltipWrapper = styled.span`
       max-width: 24rem;
     }
   }
+
+  a {
+    color: #00acff;
+    :hover {
+      color: #3dc0ff;
+    }
+  }
 `;
