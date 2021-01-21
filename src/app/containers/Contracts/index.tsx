@@ -8,6 +8,7 @@ import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTableData } from './../../components/TabsTablePanel/useTableData';
 import { contractColunms } from '../../../utils/tableColumns';
+import styled from 'styled-components/macro';
 
 export function Contracts() {
   const { t } = useTranslation();
@@ -32,12 +33,14 @@ export function Contracts() {
           content={t(translations.contracts.description)}
         />
       </Helmet>
+      <StyledTokensPageHeaderWrapper>
+        <PageHeader>{t(translations.contracts.title)}</PageHeader>
+      </StyledTokensPageHeaderWrapper>
       <TipLabel
         total={total}
         left={t(translations.contracts.tipCountBefore)}
         right={t(translations.contracts.tipCountAfter)}
       />
-      <PageHeader>{t(translations.contracts.title)}</PageHeader>
       <TablePanel
         table={{
           columns: columns,
@@ -48,3 +51,10 @@ export function Contracts() {
     </>
   );
 }
+
+const StyledTokensPageHeaderWrapper = styled.div`
+  margin-top: 32px;
+  > div {
+    margin-bottom: 12px;
+  }
+`;
