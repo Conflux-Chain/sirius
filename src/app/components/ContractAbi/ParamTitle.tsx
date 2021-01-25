@@ -18,7 +18,11 @@ const ParamTitle = ({ name, type }: Props) => {
     <>
       <TitleContainer>
         {nameText}
-        {type !== 'cfx' && <span className="type">({type})</span>}
+        {type !== 'cfx' && (
+          <span>
+            &nbsp;(<i>{type}</i>)
+          </span>
+        )}
       </TitleContainer>
     </>
   );
@@ -29,8 +33,5 @@ const TitleContainer = styled.span`
   color: #002257;
   line-height: 22px;
   margin-top: 8px;
-  .type {
-    font-style: italic;
-  }
 `;
 export default ParamTitle;
