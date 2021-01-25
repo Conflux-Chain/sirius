@@ -50,10 +50,10 @@
     "reset": "Reset",
     "payableAmountCfx": "payableAmount (cfx) ",
     "error": {
-      "address": "Please enter a Conflux address starting with 0x0,0x1 or 0x8",
+      "address": "Please enter a conflux address",
       "bool": "Please enter true/false or 0/1",
-      "int": "Please enter an integer in the range {{min}} ~ {{max}}",
-      "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
+      "int": "Please enter an integer in the range -(2^{{num}}-1) ~ 2^{{num}}-1",
+      "uint": "Please enter a non-negative integer in the range of 0 ~ 2^{{num}}-1",
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
       "cfx": "Please enter a non-negative number with no more than 18 decimal places",

@@ -50,10 +50,10 @@
     "reset": "重置",
     "payableAmountCfx": "payableAmount (cfx) ",
     "error": {
-      "address": "请输入一个以 0x0、0x1 或 0x8 开头的 Conflux 地址",
+      "address": "请输入一个合法的 Conflux 地址",
       "bool": "请输入 true/false 或 0/1",
-      "int": "请输入一个范围 {{min}} ~ {{max}} 的整数",
-      "uint": "请输入一个范围在 {{min}} ~ {{max}} 非负整数",
+      "int": "请输入一个范围 -(2^{{num}}-1) ~ 2^{{num}}-1 的整数",
+      "uint": "请输入一个范围在 0 ~ 2^{{num}}-1 非负整数",
       "bytes": "请输入以 0x 开头的十六进制字节数组",
       "bytesM": "请输入以 0x 开头的 长度为{{length}} 的十六进制字节数组",
       "cfx": "请输入小数位数不超过18位的非负数字",
