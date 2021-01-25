@@ -98,6 +98,7 @@ export function App() {
                   component={BlocksAndTransactions}
                 />
                 <Route exact path="/tokens" component={Tokens} />
+                <Route exact path="/tokens/:tokenType" component={Tokens} />
                 <Route exact path="/sponsor" component={Sponsor} />
                 <Route
                   exact
