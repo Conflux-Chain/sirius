@@ -50,7 +50,14 @@ export function App() {
   const { t } = useTranslation();
 
   return (
-    <TxnHistoryProvider>
+    <TxnHistoryProvider
+      value={{
+        config: {
+          // txn history record i18n handler
+          convert: info => t(translations.txnAction[info]),
+        },
+      }}
+    >
       <SWRConfig
         value={{
           // disable auto polling, reconnect or retry

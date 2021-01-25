@@ -34,7 +34,10 @@ export const History = ({
   const { getRecords, clearRecords } = useTxnHistory();
   const [records, setRecords] = useState<Array<Record>>([]);
 
-  const { pendingRecords } = useContext(TxnHistoryContext);
+  const {
+    pendingRecords,
+    config: { convert },
+  } = useContext(TxnHistoryContext);
 
   const getTxnRecords = function () {
     const records = getRecords();
@@ -78,9 +81,9 @@ export const History = ({
       </div>
       <div className="history-bottom">
         {records.map(r => (
-          <div className="history-item" key={r.timestamp}>
+          <div className="history-item" key={r.hash}>
             <ScanLink href={`/transaction/${r.hash}`}>
-              {r.info || r.timestamp}
+              {(convert && convert(r.info, r)) || r.info || r.hash}
             </ScanLink>
 
             {r.status === null ? (
@@ -123,6 +126,7 @@ const HistoryWrapper = styled.span`
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    margin-bottom: 1.1429rem;
     cursor: pointer;
 
     .history-title {

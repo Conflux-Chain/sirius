@@ -14,16 +14,21 @@ const txnHistoryStore = {
   },
 };
 
-export interface UseTxnHistory {
-  maxDurationSecond: number;
-  maxCount: number;
-}
-
 export interface Record {
   hash: string;
   timestamp: number;
   status: number | null;
   info: string;
+}
+
+export interface UseTxnHistoryConfig {
+  localstorageKey?: string;
+  maxCount?: number;
+  maxDurationSecond?: number;
+  limit?: number;
+  skip?: number;
+  status?: Pick<Record, 'status'> | undefined;
+  convert?: (info: string, record: Record) => string; // covert info, such as return i18n
 }
 
 export interface GetRecords {
@@ -34,36 +39,42 @@ export interface GetRecords {
 
 export type GetRecordsKey = Array<string>;
 
-const RECORDS_KEY = 'SCAN_TXN_RECORDS';
-const MAX_DURATION_SECOND = 86400;
-const MAX_COUNT = 100;
-const LIMIT = 10;
-const SKIP = 0;
+const DEFAULT_CONTEXT_CONFIG = {
+  localstorageKey: 'SCAN_TXN_RECORDS',
+  maxCount: 100,
+  maxDurationSecond: 86400,
+  limit: 10,
+  skip: 0,
+  status: undefined,
+  convert: info => info,
+};
 
 const getNowTimestamp = () => {
   return Math.ceil(+new Date() / 1000);
 };
 
-// const getRandomString = () => {
-//   return Math.random().toString(32).substr(2);
-// };
-
+// txn history context
 export const TxnHistoryContext = createContext<{
+  config: UseTxnHistoryConfig;
   pendingRecords: Array<Record>;
   updatePendingRecords?: (records: Array<Record>) => void;
 }>({
+  config: {},
   pendingRecords: [],
   updatePendingRecords: () => {},
 });
 
-export const TxnHistoryProvider = function ({ children }) {
+// txn history context providor wrapper, with default config and state handler
+export const TxnHistoryProvider = function ({ children, value }) {
   const [pendingRecords, setPendingRecords] = React.useState<Array<Record>>([]);
   return React.createElement(
     TxnHistoryContext.Provider,
     {
       value: {
+        config: DEFAULT_CONTEXT_CONFIG,
         pendingRecords: pendingRecords,
         updatePendingRecords: setPendingRecords,
+        ...value,
       },
     },
     children,
@@ -87,13 +98,9 @@ Notes:
 
  */
 
-export const useTxnHistory = (opts?: UseTxnHistory) => {
+export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
   const config = {
-    maxCount: MAX_COUNT,
-    maxDurationSecond: MAX_DURATION_SECOND,
-    limit: LIMIT,
-    skip: SKIP,
-    status: undefined,
+    ...DEFAULT_CONTEXT_CONFIG,
     ...opts,
   };
 
@@ -113,7 +120,9 @@ export const useTxnHistory = (opts?: UseTxnHistory) => {
       ...opts,
     };
     // @ts-ignore
-    let records: Array<Record> = txnHistoryStore.getItem(RECORDS_KEY);
+    let records: Array<Record> = txnHistoryStore.getItem(
+      config.localstorageKey,
+    );
     if (records) {
       // filter records not outdate
       // if maxDurationSecond = 0, return all
@@ -155,7 +164,7 @@ export const useTxnHistory = (opts?: UseTxnHistory) => {
         timestamp: timestamp || getNowTimestamp(),
         info: info || '',
       });
-      txnHistoryStore.setItem(RECORDS_KEY, newRecords);
+      txnHistoryStore.setItem(config.localstorageKey, newRecords);
       initPendingRecords();
     }
   };
@@ -172,7 +181,7 @@ export const useTxnHistory = (opts?: UseTxnHistory) => {
         limit: config.maxCount,
       });
       let newRecords = records.filter(r => !keysMap[r.hash]);
-      txnHistoryStore.setItem(RECORDS_KEY, newRecords);
+      txnHistoryStore.setItem(config.localstorageKey, newRecords);
       initPendingRecords();
     }
   };
@@ -194,7 +203,7 @@ export const useTxnHistory = (opts?: UseTxnHistory) => {
       }
       return r;
     });
-    txnHistoryStore.setItem(RECORDS_KEY, newRecords);
+    txnHistoryStore.setItem(config.localstorageKey, newRecords);
     initPendingRecords();
   };
 
@@ -219,8 +228,6 @@ export const useTxnHistory = (opts?: UseTxnHistory) => {
   }, [status]);
 
   return {
-    // pendingRecords,
-    pendingRecordsStatus: status,
     addRecord,
     getRecords,
     removeRecords,

@@ -599,5 +599,12 @@
       "writeContract": "Write contract",
       "viewYourTranscation": "View your transcation"
     }
+  },
+  "txnAction": {
+    "10001": "Contract creation",
+    "10002": "Contract edit",
+    "10003": "Write contract",
+    "10004": "read contract",
+    "10005": "Sponsor application"
   }
 }
