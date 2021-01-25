@@ -54,22 +54,22 @@ export const Header = memo(() => {
           ],
           href: '/tokens/erc20',
         },
-        // {
-        //   // erc 721
-        //   title: [
-        //     t(translations.header.tokens721),
-        //     <Check size={18} key="check" />,
-        //   ],
-        //   href: '/tokens/erc721',
-        // },
-        // {
-        //   // erc 1155
-        //   title: [
-        //     t(translations.header.tokens1155),
-        //     <Check size={18} key="check" />,
-        //   ],
-        //   href: '/tokens/erc1155',
-        // },
+        {
+          // erc 721
+          title: [
+            t(translations.header.tokens721),
+            <Check size={18} key="check" />,
+          ],
+          href: '/tokens/erc721',
+        },
+        {
+          // erc 1155
+          title: [
+            t(translations.header.tokens1155),
+            <Check size={18} key="check" />,
+          ],
+          href: '/tokens/erc1155',
+        },
       ],
     },
     // contract

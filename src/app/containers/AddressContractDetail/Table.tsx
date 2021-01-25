@@ -388,48 +388,22 @@ export function Table({ address }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 5, 4, 3, 4, 4, 5];
+  const columnsTransactionsWidth = [4, 5, 5, 3, 2, 3, 4];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
-    {
-      ...tokenColunms.from,
-      render: (value, row, index) => {
-        return tokenColunms.from.render(value, row, index, {
-          isToken: false,
-        });
-      },
-    },
-    {
-      ...tokenColunms.to,
-      render: (value, row, index) => {
-        return tokenColunms.to.render(value, row, index, {
-          isToken: false,
-        });
-      },
-    },
+    tokenColunms.from,
+    tokenColunms.to,
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
+  const columnsTokensWidth = [3, 4, 4, 3, 4, 4];
   const columnsTokenTrasfers: ColumnsType = [
     tokenColunms.txnHash,
-    {
-      ...tokenColunms.from,
-      render: (value, row, index) =>
-        tokenColunms.from.render(value, row, index, {
-          isToken: false,
-        }),
-    },
-    {
-      ...tokenColunms.to,
-      render: (value, row, index) =>
-        tokenColunms.to.render(value, row, index, {
-          isToken: false,
-        }),
-    },
+    tokenColunms.from,
+    tokenColunms.to,
     tokenColunms.quantity,
     {
       ...tokenColunms.token,

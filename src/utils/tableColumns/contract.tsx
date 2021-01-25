@@ -6,6 +6,7 @@ import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { defaultTokenIcon } from '../../constants';
 import { formatString, formatNumber } from '..';
+import { AddressContainer } from '../../app/components/AddressContainer';
 
 interface Query {
   accountAddress?: string;
@@ -51,13 +52,7 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => (
-    <Link href={`/address/${value}`}>
-      <Text span hoverValue={value}>
-        {formatString(value, 'address')}
-      </Text>
-    </Link>
-  ),
+  render: value => <AddressContainer value={value} />,
 };
 
 export const transactionCount = {

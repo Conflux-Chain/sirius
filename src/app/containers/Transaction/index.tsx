@@ -15,7 +15,6 @@ import { Link } from '../../components/Link';
 import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
 import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { Text } from '../../components/Text/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
 import imgWarning from 'images/warning.png';
@@ -32,7 +31,6 @@ import {
   formatTimeStamp,
   formatBalance,
   fromDripToCfx,
-  formatString,
   getPercent,
   toThousands,
 } from '../../../utils';
@@ -43,6 +41,7 @@ import {
 } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { AddressContainer } from '../../components/AddressContainer';
 
 // Transaction Detail Page
 export const Transaction = () => {
@@ -403,19 +402,11 @@ export const Transaction = () => {
       );
       transferListContainer.push(
         <div className="lineContainer" key={`transfer${i + 1}`}>
-          <span>{`${i + 1} .`}</span>
+          <span>{`${i + 1}. `}</span>
           <span className="from">{t(translations.transaction.from)}</span>
-          <Link href={`/address/${transferItem['from']}`}>
-            <Text span hoverValue={transferItem['from']}>
-              {formatString(transferItem['from'], 'address')}
-            </Text>
-          </Link>
+          <AddressContainer value={transferItem['from']} />
           <span className="to">{t(translations.transaction.to)}</span>
-          <Link href={`/address/${transferItem['to']}`}>
-            <Text span maxWidth="91px" hoverValue={transferItem['to']}>
-              {formatString(transferItem['to'], 'address')}
-            </Text>
-          </Link>
+          <AddressContainer value={transferItem['to']} />
           <span className="for">{t(translations.transaction.for)}</span>
           <span className="value">
             {typeof tokenDecimals !== 'undefined'

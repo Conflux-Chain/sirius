@@ -19,6 +19,7 @@ import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { AddressContainer } from '../../components/AddressContainer';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = () => {
@@ -140,11 +141,7 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content>
                   {contractInfo.admin ? (
-                    <Link to={`/address/${contractInfo.admin}`}>
-                      <Text span hoverValue={contractInfo.admin}>
-                        {formatString(contractInfo.admin, 'address')}
-                      </Text>
-                    </Link>
+                    <AddressContainer value={contractInfo.admin} />
                   ) : (
                     notAvailableText
                   )}
@@ -255,11 +252,7 @@ export function ContractMetadata({ address }) {
                     )}
                   >
                     {contractInfo.from ? (
-                      <Link to={`/address/${contractInfo.from}`}>
-                        <Text span hoverValue={contractInfo.from}>
-                          {formatString(contractInfo.from, 'address')}
-                        </Text>
-                      </Link>
+                      <AddressContainer value={contractInfo.from} />
                     ) : (
                       notAvailableText
                     )}

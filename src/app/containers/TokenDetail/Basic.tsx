@@ -11,6 +11,7 @@ import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatBalance, formatString, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
+import { AddressContainer } from '../../components/AddressContainer';
 
 export interface BasicProps {
   address?: string;
@@ -84,14 +85,10 @@ export const Basic = ({
     ),
     children:
       tokenAddress !== undefined ? (
-        <Text span hoverValue={tokenAddress}>
-          {
-            <Link href={`/address/${tokenAddress}`}>
-              {formatString(tokenAddress || '', 'address')}
-            </Link>
-          }
-        </Text>
-      ) : undefined,
+        <AddressContainer value={tokenAddress} />
+      ) : (
+        t(translations.general.security.notAvailable)
+      ),
   };
 
   const fieldDecimal = {
