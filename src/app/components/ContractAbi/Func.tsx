@@ -193,6 +193,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const check = (_: any, value) => {
       const val = value && value['val'];
 
+      // tuple
+      // TODO tuple or tuple[] support
+      if (type.startsWith('tuple')) {
+        return Promise.reject(
+          t(translations.contract.error.notSupport, { type }),
+        );
+      }
+
       // array
       // TODO multi-dimentional array support
       if (type.endsWith('[]')) {
@@ -202,14 +210,6 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         } catch {
           return Promise.reject(t(translations.contract.error.array, { type }));
         }
-      }
-
-      // tuple
-      // TODO tuple support
-      if (type.startsWith('tuple')) {
-        return Promise.reject(
-          t(translations.contract.error.notSupport, { type }),
-        );
       }
 
       if (type === 'address') {

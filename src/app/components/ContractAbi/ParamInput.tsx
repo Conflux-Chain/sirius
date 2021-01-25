@@ -36,18 +36,18 @@ const ParamInput = ({ value, onChange, type }: Props) => {
   function getPlaceholder(type: string) {
     let text = '';
 
-    // array
-    // TODO multi-dimentional array support
-    if (type.endsWith('[]')) {
-      text = t(translations.contract.error.array, { type });
+    // tuple
+    // TODO tuple or tuple[] support
+    if (type.startsWith('tuple')) {
+      text = t(translations.contract.error.tuple);
 
       return text;
     }
 
-    // tuple
-    // TODO tuple support
-    if (type.startsWith('tuple')) {
-      text = t(translations.contract.error.tuple);
+    // array
+    // TODO multi-dimentional array support
+    if (type.endsWith('[]')) {
+      text = t(translations.contract.error.array, { type });
 
       return text;
     }
