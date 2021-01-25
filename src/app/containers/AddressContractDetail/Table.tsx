@@ -25,7 +25,7 @@ import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { isContractAddress, formatString } from 'utils';
+import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
 import { useContract } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@zeit-ui/react-icons';
@@ -172,7 +172,7 @@ function ContractSourceCodeAbi({ contractInfo }) {
 
           <div className="line"></div>
         </ButtonWrapper>
-        <Card>
+        <ContractCard>
           {(selectedBtnType === 'sourceCode' || selectedBtnType === 'abi') && (
             <AceEditor
               readOnly
@@ -204,11 +204,14 @@ function ContractSourceCodeAbi({ contractInfo }) {
               contract={contract}
             ></ContractAbi>
           )}
-        </Card>
+        </ContractCard>
       </ContractBody>
     </>
   );
 }
+const ContractCard = styled(Card)`
+  padding-bottom: 1.2857rem !important;
+`;
 const ContractBody = styled.div`
   padding-bottom: 3.5714rem;
 `;
@@ -352,7 +355,10 @@ export function Table({ address }) {
   const [filterVisible, setFilterVisible] = useState(
     queries?.tab !== 'contract',
   );
-  const isContract = useMemo(() => isContractAddress(address), [address]);
+  const isContract = useMemo(
+    () => isContractAddress(address) || isInnerContractAddress(address),
+    [address],
+  );
   const [txFilterVisible, setTxFilterVisible] = useState(
     queries?.tab !== 'mined-blocks' &&
       queries?.tab !== 'transfers' &&
