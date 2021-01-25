@@ -57,6 +57,9 @@
       "bytes": "请输入以 0x 开头的十六进制字节数组",
       "bytesM": "请输入以 0x 开头的 长度为{{length}} 的十六进制字节数组",
       "cfx": "请输入小数位数不超过18位的非负数字",
+      "array": "请输入有效的 {{type}} 数组，用中括号包裹",
+      "tuple": "请输入有效的元组",
+      "notSupport": "{{type}} 即将支持，敬请期待",
       "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
       "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"
     },
