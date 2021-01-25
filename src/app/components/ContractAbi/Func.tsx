@@ -203,19 +203,17 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       } else if (type === 'string') {
         return Promise.resolve();
       } else if (type.startsWith('int')) {
-        const [isInt, min, max] = checkInt(val, type);
+        const [isInt, num] = checkInt(val, type);
         if (isInt) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.int, { min, max }));
+        return Promise.reject(t(translations.contract.error.int, { num }));
       } else if (type.startsWith('uint')) {
-        const [isUint, min, max] = checkUint(val, type);
+        const [isUint, num] = checkUint(val, type);
         if (isUint) {
           return Promise.resolve();
         }
-        return Promise.reject(
-          t(translations.contract.error.uint, { min, max }),
-        );
+        return Promise.reject(t(translations.contract.error.uint, { num }));
       } else if (type.startsWith('byte')) {
         const [isBytes, num] = checkBytes(val, type);
         if (isBytes) {
