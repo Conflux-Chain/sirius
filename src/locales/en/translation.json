@@ -57,6 +57,9 @@
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
       "cfx": "Please enter a non-negative number with no more than 18 decimal places",
+      "array": "Please enter a valid {{type}} array with square brackets",
+      "tuple": "Please enter a valid tuple",
+      "notSupport": "{{type}} support will be coming soon",
       "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
       "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
     },

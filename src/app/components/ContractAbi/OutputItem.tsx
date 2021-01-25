@@ -24,6 +24,25 @@ const OutputItem = ({ output, value }: Props) => {
           {value}
         </Link>
       );
+    } else if (type.startsWith('byte') && type.endsWith('[]')) {
+      // TODO deal bytes[] length too long
+      valueComp = (
+        <span className="value">
+          {Array.isArray(value) ? (
+            <>
+              [<br />
+              {value.map(v => (
+                <>
+                  &nbsp;&nbsp;{v},<br />
+                </>
+              ))}
+              ]
+            </>
+          ) : (
+            value
+          )}
+        </span>
+      );
     } else if (type.startsWith('byte')) {
       valueComp = (
         <span className="value">{`${'0x' + value.toString('hex')}`}</span>
