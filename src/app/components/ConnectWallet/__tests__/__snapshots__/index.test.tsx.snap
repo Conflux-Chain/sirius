@@ -50,6 +50,8 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   class="c0 connect-wallet-button"
 >
   
-  <span />
+  <span>
+    Connect Wallet
+  </span>
 </div>
 `;
