@@ -623,3 +623,10 @@ export function checkCfxType(value) {
     return true;
   }
 }
+
+export const sleep = timeout =>
+  new Promise(resolve => setTimeout(resolve, timeout));
+
+export const getRandomString = () => {
+  return Math.random().toString(32).substr(2);
+};

@@ -568,5 +568,39 @@
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
+  },
+  "connectWallet": {
+    "button": {
+      "text": "Connect Wallet",
+      "nPending": "{{count}} Pending"
+    },
+    "modal": {
+      "title": "Connect to a wallet",
+      "installConfluxPortal": "Install ConfluxPortal",
+      "confluxPortal": "ConfluxPortal",
+      "initializing": "Initializing...",
+      "errorConnecting": "Error connecting...",
+      "tryAgain": "Try again",
+      "newToConflux": "New to Conflux?",
+      "learnMore": "Learn more about wallets.",
+      "account": "Account",
+      "connectedWithConfluxPortal": "Connected with ConfluxPortal",
+      "copyAddress": "Copy address",
+      "viewOnConfluxScan": "View on ConfluxScan",
+      "networkNotice": "Network Notice",
+      "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
+      "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal."
+    },
+    "history": {
+      "emptyRecordsTip": "Your transcations will appear here...",
+      "recentlyRecordsTip": "Recent Transcations",
+      "clearAll": "Clear all",
+      "recentlyTenRecordsTip": "Only the latest 10 transactions will be shown.",
+      "contractCreation": "Contract creation",
+      "contractEdit": "Contract edit",
+      "sponsorApplication": "Sponsor application",
+      "writeContract": "Write contract",
+      "viewYourTranscation": "View your transcation"
+    }
   }
 }

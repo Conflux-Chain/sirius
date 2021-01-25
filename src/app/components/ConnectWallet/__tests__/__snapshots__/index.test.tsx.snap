@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ConnectWallet  /> should match snapshot 1`] = `
+.c0 {
+  height: 2.2857rem;
+  background: #f5f6fa;
+  border-radius: 1.1429rem;
+  padding: 0 0.8571rem;
+  margin-right: 1.1429rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #65709a;
+  cursor: pointer;
+}
+
+.c0.pending {
+  background: #ffc438;
+  color: #ffffff;
+}
+
+.c0:not(.pending):hover {
+  background: #65709a;
+  color: #ffffff;
+}
+
+.c0 .button-status-online {
+  width: 0.5714rem;
+  height: 0.5714rem;
+  background: #7cd77b;
+  border-radius: 0.2857rem;
+  margin-right: 0.5714rem;
+}
+
+.c0 .button-status-pending {
+  width: 0.8571rem;
+  height: 0.8571rem;
+  margin-right: 0.4286rem;
+}
+
+<div
+  class="c0 connect-wallet-button"
+>
+  
+  <span />
+</div>
+`;
