@@ -86,6 +86,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
+
+    // Special convert for various types before call sdk
     items.forEach(function (value, index) {
       let val = value['val'];
       if (value['type'] === 'bool') {
@@ -96,6 +98,9 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       } else if (value['type'].startsWith('byte')) {
         value['val'] = Buffer.from(value['val'].substr(2), 'hex');
+      } else if (value['type'].endsWith('[]')) {
+        // array: convert to array
+        value['val'] = Array.from(JSON.parse(value['val']));
       }
       objValues.push(value['val']);
     });
@@ -187,6 +192,26 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   function getValidator(type: string) {
     const check = (_: any, value) => {
       const val = value && value['val'];
+
+      // array
+      // TODO multi-dimentional array support
+      if (type.endsWith('[]')) {
+        try {
+          JSON.parse(val);
+          return Promise.resolve();
+        } catch {
+          return Promise.reject(t(translations.contract.error.array, { type }));
+        }
+      }
+
+      // tuple
+      // TODO tuple support
+      if (type.startsWith('tuple')) {
+        return Promise.reject(
+          t(translations.contract.error.notSupport, { type }),
+        );
+      }
+
       if (type === 'address') {
         if (isAddress(val)) {
           return Promise.resolve();

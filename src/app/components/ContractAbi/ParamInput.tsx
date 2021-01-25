@@ -35,6 +35,24 @@ const ParamInput = ({ value, onChange, type }: Props) => {
   };
   function getPlaceholder(type: string) {
     let text = '';
+
+    // array
+    // TODO multi-dimentional array support
+    if (type.endsWith('[]')) {
+      text = t(translations.contract.error.array, { type });
+
+      return text;
+    }
+
+    // tuple
+    // TODO tuple support
+    if (type.startsWith('tuple')) {
+      text = t(translations.contract.error.tuple);
+
+      return text;
+    }
+
+    // basic type
     if (type === 'address') {
       text = t(translations.contract.error.address);
     } else if (type === 'bool') {
