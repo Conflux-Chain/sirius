@@ -494,7 +494,7 @@
   },
   "addressConverter": {
     "title": "地址格式转换",
-    "subtitle": "将 Conflux 旧 Checksum 规则地址转换为新 Checksum 规则地址格式。",
+    "subtitle": "通过使用最新的 Checksum 规则，Conflux 的旧地址会被转换为全新的地址。",
     "button": "转换",
     "inputPlaceholder": "输入地址",
     "incorrectFormat": "地址格式不正确",

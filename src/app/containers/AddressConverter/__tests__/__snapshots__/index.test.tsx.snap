@@ -50,30 +50,6 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
   padding-top: 2.2857rem;
 }
 
-.c0 .input-container.convert-address-input {
-  height: 32px;
-}
-
-.c0 .input-container.convert-address-input input {
-  width: 399px;
-  height: 32px;
-  background: rgba(30,61,228,0.04);
-  border-radius: 4px;
-  margin: 0;
-  padding: 0 16px;
-}
-
-.c0 .btn.convert-address-button {
-  height: 32px;
-  line-height: 32px;
-  margin: 0 0 0 16px;
-  border: none;
-}
-
-.c0 .btn.convert-address-button > div {
-  top: 0;
-}
-
 .c2 {
   color: #74798c;
   font-size: 1rem;
@@ -88,7 +64,32 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
   display: flex;
 }
 
+.c3 .input-container.convert-address-input {
+  height: 32px;
+}
+
+.c3 .input-container.convert-address-input input {
+  width: 399px;
+  height: 32px;
+  background: rgba(30,61,228,0.04);
+  border-radius: 4px;
+  margin: 0;
+  padding: 0 16px;
+}
+
+.c3 .btn.convert-address-button {
+  height: 32px;
+  line-height: 32px;
+  margin: 0 0 0 16px;
+  border: none;
+}
+
+.c3 .btn.convert-address-button > div {
+  top: 0;
+}
+
 .c3 .convert-address-error {
+  width: 399px;
   margin: 8px 0;
   font-size: 12px;
   color: #e64e4e;
@@ -144,8 +145,14 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c0 .input-container.convert-address-input input {
-    width: 200px;
+  .c3 .input-container.convert-address-input input {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 .convert-address-error {
+    width: 100%;
   }
 }
 
@@ -160,14 +167,12 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
   <p
     class="c2"
   >
-    The Conflux old address will be converted to the new checksummed address.
+    The old Conflux address will be converted to a new address by using the advanced checksum method.
   </p>
   <div
     class="c3"
   >
-    <div
-      class="convert-address-input-group"
-    >
+    <div>
       <div
         class="jsx-2997504664 with-label"
       >
@@ -182,6 +187,7 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
               class="jsx-2997504664 "
               placeholder="Input address"
               type="text"
+              value=""
             />
           </div>
         </div>
@@ -311,10 +317,10 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
       class="convert-address-tip"
     >
       <div>
-        1. The Checksum rule capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.
+        1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.
       </div>
       <div>
-        2. Conflux adopts a new checksum verification rule different from the EIP55 standard.
+        2. Conflux adopts a new checksum method different from the EIP55 standard.
       </div>
     </div>
   </div>
