@@ -8,7 +8,7 @@ const cfxUrl = window.location.origin + '/rpc';
 
 const cfx = new Conflux({
   url: cfxUrl,
-  chainId: isTestNetEnv ? 1 : 1029,
+  networkId: isTestNetEnv ? 1 : 1029,
   // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
   // use hex address to compatible with history function
   // TODO cip-37
