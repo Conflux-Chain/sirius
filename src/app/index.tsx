@@ -38,6 +38,7 @@ import { Epoch } from './containers/Epoch/Loadable';
 import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
+import { AddressConverter } from './containers/AddressConverter';
 
 WebFontLoader.load({
   custom: {
@@ -113,6 +114,7 @@ export function App() {
                   component={Sponsor}
                 />
                 <Route path="/charts" component={Chart} />
+                <Route path="/address-converter" component={AddressConverter} />
                 <Route
                   exact
                   path="/transaction/:hash"
