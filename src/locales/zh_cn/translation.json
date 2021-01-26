@@ -27,7 +27,7 @@
     "sourceCodeShort": "源码",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
-    "addressPlaceholder": "请输入以 0x8 或 0x0 开头的地址",
+    "addressPlaceholder": "请输入有效的地址",
     "namePlaceholder": "支持输入最长 35 个字符",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "合约地址无效，或格式错误",
@@ -152,7 +152,7 @@
   "notFound": {
     "title": "无法查询到相关结果",
     "label": "抱歉！您搜索的字符串无效。",
-    "addressTip": "如果您在搜索 Conflux 地址，请搜索以 0x0 (内置合约），0x1（用户账户），或者 0x8（智能合约）开头的地址。",
+    "addressTip": "如果您在搜索 Conflux 地址，请搜索有效的地址格式，比如十六进制地址或 base32 带校验和的地址。",
     "btn": "前往首页"
   },
   "notFoundAddress": {

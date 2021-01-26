@@ -6,10 +6,9 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
-import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatBalance, formatString, toThousands } from '../../../utils';
+import { formatBalance, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { AddressContainer } from '../../components/AddressContainer';
 

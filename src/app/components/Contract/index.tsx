@@ -33,7 +33,7 @@ import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { DappButton } from '../DappButton/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { contractManagerAddress } from '../../../utils/cfx';
+import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
 interface Props {
   contractDetail: any;
   type: string;
@@ -338,7 +338,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   };
   function getTxData() {
     const bodyParams: RequestBody = {};
-    bodyParams.address = tranferToLowerCase(addressVal);
+    bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
     bodyParams.name = contractName;
     bodyParams.website = site;
     bodyParams.icon = contractImgSrc;

@@ -4,11 +4,9 @@ import { formatString, isContractAddress } from '../../../utils';
 import { Link } from '../Link/Loadable';
 import { Translation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-
-const getContractName = (value, alias) => {
-  if (alias) return formatString(alias, 'tag');
-  return formatString(value, 'address');
-};
+import styled from 'styled-components/macro';
+import { formatAddress } from '../../../utils/cfx';
+import { FileText } from '@zeit-ui/react-icons';
 
 interface Props {
   value: string;
@@ -23,20 +21,24 @@ export const AddressContainer = ({ value, alias, contractCreated }: Props) => {
     // contract creation txn to prop is null
     if (contractCreated)
       return (
-        <Link href={`/address/${contractCreated}`}>
-          <Text span hoverValue={contractCreated}>
-            ✔{' '}
+        <Text span hoverValue={formatAddress(contractCreated)}>
+          <Link href={`/address/${formatAddress(contractCreated)}`}>
+            <IconWrapper>
+              <FileText size={12} color="#9b9eac" />
+            </IconWrapper>
             <Translation>
               {t => t(translations.transaction.contractCreation)}
             </Translation>
-          </Text>
-        </Link>
+          </Link>
+        </Text>
       );
 
     // contract creation fail, no link
     return (
       <Text span>
-        ✔{' '}
+        <IconWrapper>
+          <FileText size={12} color="#9b9eac" />
+        </IconWrapper>
         <Translation>
           {t => t(translations.transaction.contractCreation)}
         </Translation>
@@ -44,20 +46,38 @@ export const AddressContainer = ({ value, alias, contractCreated }: Props) => {
     );
   }
 
+  const cfxAddress = formatAddress(value);
+
   if (isContract)
     return (
-      <Link href={`/address/${value}`}>
-        <Text span hoverValue={value}>
-          ✔ {getContractName(value, alias)}
-        </Text>
-      </Link>
+      <Text span hoverValue={cfxAddress}>
+        <IconWrapper>
+          <FileText size={12} color="#9b9eac" />
+        </IconWrapper>
+        <LinkWrapper href={`/address/${cfxAddress}`}>
+          {alias ? formatString(alias, 'tag') : cfxAddress}
+        </LinkWrapper>
+      </Text>
     );
 
   return (
-    <Link href={`/address/${value}`}>
-      <Text span hoverValue={value}>
-        ✔ {formatString(value, 'address')}
-      </Text>
-    </Link>
+    <Text span hoverValue={cfxAddress}>
+      <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
+    </Text>
   );
 };
+
+const LinkWrapper = styled(Link)`
+  display: inline-block !important;
+  max-width: 130px !important;
+  outline: none;
+`;
+
+const IconWrapper = styled.span`
+  margin-right: 2px;
+
+  svg {
+    vertical-align: bottom;
+    margin-bottom: 6px;
+  }
+`;

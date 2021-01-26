@@ -22,7 +22,7 @@ export function Tokens() {
   const { t } = useTranslation();
   const { tokenType } = useParams<RouteParams>();
 
-  let columnsWidth = [1, 6, 3, 3, 3, 3, 2, 3];
+  let columnsWidth = [1, 5, 3, 3, 3, 3, 2, 4];
   let columns: ColumnsType = [
     tokenColunms.number,
     tokenColunms.token,

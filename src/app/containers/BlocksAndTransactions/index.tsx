@@ -16,7 +16,7 @@ export function BlocksAndTransactions() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
-  const columnsBlocksWidth = [4, 2, 2, 3, 4, 4, 4, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -29,7 +29,7 @@ export function BlocksAndTransactions() {
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
-  const columnsTransactionsWidth = [4, 4, 4, 4, 4, 4, 5];
+  const columnsTransactionsWidth = [4, 5, 5, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,

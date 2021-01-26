@@ -27,7 +27,7 @@
     "sourceCodeShort": "Source Code",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
-    "addressPlaceholder": "Please enter an address starting with 0x8 or 0x0",
+    "addressPlaceholder": "Please enter an conflux address",
     "namePlaceholder": "Support up to 35 characters",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
@@ -152,7 +152,7 @@
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
-    "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
+    "addressTip": "If you are searching Conflux address, please conform to conflux address format.",
     "btn": "Go TO HOMEPAGE"
   },
   "notFoundAddress": {
