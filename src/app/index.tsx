@@ -114,7 +114,11 @@ export function App() {
                   component={Sponsor}
                 />
                 <Route path="/charts" component={Chart} />
-                <Route path="/address-converter" component={AddressConverter} />
+                <Route
+                  exact
+                  path={['/address-converter', '/address-converter/:address']}
+                  component={AddressConverter}
+                />
                 <Route
                   exact
                   path="/transaction/:hash"

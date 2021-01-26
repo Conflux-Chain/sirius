@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
@@ -14,11 +14,11 @@ import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import clsx from 'clsx';
 import { CopyButton } from '../../components/CopyButton';
+import { useParams } from 'react-router-dom';
+import { hasNetworkPrefix } from 'js-conflux-sdk/src/util/address';
+import { List } from './List';
 
-// @ts-ignore
-window.format = format;
 interface FormattedAddressesType {
   hexAddress: string;
   hexChecksumAddress: string;
@@ -28,64 +28,26 @@ interface FormattedAddressesType {
   bytes32TestnetAddressWithType: string;
 }
 
-const List = ({
-  children,
-  title,
-  noBorder,
-}: {
-  children: React.ReactNode;
-  title: string;
-  noBorder?: boolean;
-}) => {
-  return (
-    <StyledListWrapper
-      className={clsx({
-        'no-border': noBorder,
-      })}
-    >
-      <div className="list-title">{title}</div>
-      <div className="list-content">{children}</div>
-    </StyledListWrapper>
-  );
+const DEFAULT_FORMATTED_ADDRESSES = {
+  hexAddress: '',
+  hexChecksumAddress: '',
+  bytes32MainnetAddress: '',
+  bytes32MainnetAddressWithType: '',
+  bytes32TestnetAddress: '',
+  bytes32TestnetAddressWithType: '',
 };
 
-const StyledListWrapper = styled.div`
-  border-bottom: 1px solid #f1f1f1;
-  padding: 16px 0 12px;
-
-  &.no-border {
-    border-bottom: none;
-  }
-
-  .list-title {
-    font-size: 10px;
-    font-weight: 500;
-    color: #97a3b4;
-    line-height: 14px;
-  }
-
-  .list-content {
-    font-size: 12px;
-    color: #002e74;
-    line-height: 24px;
-  }
-`;
-
 export function AddressConverter() {
+  const { address: routerAddress = '' } = useParams<{
+    address?: string;
+  }>();
   const { t } = useTranslation();
   const ERROR_MESSAGE = t(translations.addressConverter.incorrectFormat);
-  const [address, setAddress] = useState<string>('');
+  const [address, setAddress] = useState<string>(routerAddress);
   const [error, setError] = useState<string>('');
   const [formattedAddresses, setFormattedAddresses] = useState<
     FormattedAddressesType
-  >({
-    hexAddress: '',
-    hexChecksumAddress: '',
-    bytes32MainnetAddress: '',
-    bytes32MainnetAddressWithType: '',
-    bytes32TestnetAddress: '',
-    bytes32TestnetAddressWithType: '',
-  });
+  >(DEFAULT_FORMATTED_ADDRESSES);
 
   const handleConvert = () => {
     let hexAddress,
@@ -96,24 +58,23 @@ export function AddressConverter() {
       bytes32TestnetAddressWithType;
 
     try {
-      if (/^[cfx|CFX]/.test(address)) {
+      if (address === '') {
+        setError('');
+        setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
+      } else if (hasNetworkPrefix(address)) {
         hexAddress = format.hexAddress(address);
         hexChecksumAddress = format.checksumAddress(hexAddress);
         bytes32MainnetAddress = format.address(hexAddress, 1029);
         bytes32MainnetAddressWithType = format.address(hexAddress, 1029, true);
         bytes32TestnetAddress = format.address(hexAddress, 1);
         bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
-      } else if (address.startsWith('0x')) {
+      } else {
         hexAddress = address.toLowerCase();
         hexChecksumAddress = format.checksumAddress(hexAddress);
         bytes32MainnetAddress = format.address(hexAddress, 1029);
         bytes32MainnetAddressWithType = format.address(hexAddress, 1029, true);
         bytes32TestnetAddress = format.address(hexAddress, 1);
         bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
-      } else if (address === '') {
-        setError('');
-      } else {
-        setError(ERROR_MESSAGE);
       }
 
       setFormattedAddresses({
@@ -125,8 +86,8 @@ export function AddressConverter() {
         bytes32TestnetAddressWithType,
       });
     } catch (e) {
-      console.log('error: ', e.message);
-      setError(ERROR_MESSAGE);
+      setError(ERROR_MESSAGE + ': ' + e.message);
+      setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
     }
   };
 
@@ -134,6 +95,13 @@ export function AddressConverter() {
     setAddress(e.target.value.trim());
     setError('');
   };
+
+  useEffect(() => {
+    if (address) {
+      handleConvert();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StyledPageWrapper>
@@ -149,8 +117,9 @@ export function AddressConverter() {
         {t(translations.addressConverter.subtitle)}
       </StyledSubtitleWrapper>
       <StyledInputWrapper>
-        <div className="convert-address-input-group">
+        <div>
           <Input
+            value={address}
             placeholder={t(translations.addressConverter.inputPlaceholder)}
             size="small"
             variant="solid"
@@ -254,6 +223,17 @@ const StyledPageWrapper = styled.div`
   ${media.s} {
     padding: 1.1429rem;
   }
+`;
+
+const StyledSubtitleWrapper = styled.p`
+  color: #74798c;
+  font-size: 1rem;
+  line-height: 1.2857rem;
+  margin: 1.1429rem 0 1.7143rem;
+`;
+
+const StyledInputWrapper = styled.div`
+  display: flex;
 
   .input-container.convert-address-input {
     height: 32px;
@@ -267,7 +247,7 @@ const StyledPageWrapper = styled.div`
       padding: 0 16px;
 
       ${media.s} {
-        width: 200px;
+        width: 100%;
       }
     }
   }
@@ -282,24 +262,18 @@ const StyledPageWrapper = styled.div`
       top: 0;
     }
   }
-`;
-
-const StyledSubtitleWrapper = styled.p`
-  color: #74798c;
-  font-size: 1rem;
-  line-height: 1.2857rem;
-  margin: 1.1429rem 0 1.7143rem;
-`;
-
-const StyledInputWrapper = styled.div`
-  display: flex;
 
   .convert-address-error {
+    width: 399px;
     margin: 8px 0;
     font-size: 12px;
     color: #e64e4e;
     line-height: 16px;
     padding-left: 5px;
+
+    ${media.s} {
+      width: 100%;
+    }
   }
 `;
 const StyledResultWrapper = styled.div`
