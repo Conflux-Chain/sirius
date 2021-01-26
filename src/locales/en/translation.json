@@ -136,14 +136,17 @@
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
-    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address"
+    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
+    "addressConverter": "address converter"
   },
   "footer": {
     "product": "Product",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "ConfluxPortal",
     "confluxbounty": "ConfluxBounty",
-    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
+    "tool": "Tool",
+    "addressFormatConversion": "Address Format Conversion"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",

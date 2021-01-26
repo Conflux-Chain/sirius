@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddressConverter /> should match the snapshot 1`] = `
+.c1 {
+  font-size: 1.7143rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  line-height: 2.2857rem;
+  margin-bottom: 1.1429rem;
+}
+
+.c3 .card.sirius-card {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+  padding: 0 1.2857rem;
+}
+
+.c3 .card.sirius-card:hover {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+.c3 .card.sirius-card .content {
+  padding: 0;
+}
+
+.c0 {
+  max-width: 73.1429rem;
+  margin: 0 auto;
+  padding-top: 2.2857rem;
+}
+
+.c2 {
+  color: #74798c;
+  font-size: 1rem;
+  line-height: 1.2857rem;
+  margin: 1.1429rem 0 1.7143rem;
+}
+
+@media (max-width:600px) {
+  .c1 {
+    font-size: 1.2857rem;
+    font-weight: 500;
+    color: #050505;
+    line-height: 1.8571rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 1.1429rem;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    Contract Sponsor
+  </div>
+  <p
+    class="c2"
+  >
+    AddressConverter
+  </p>
+  <div
+    class=""
+  />
+  <div
+    class=""
+  >
+    <div
+      class="c3"
+    >
+      <div
+        class="jsx-2527601167 card sirius-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          result here
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class=""
+  >
+    remark here
+  </div>
+</div>
+`;
