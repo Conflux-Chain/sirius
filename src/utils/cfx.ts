@@ -22,8 +22,8 @@ const cfx = new Conflux({
 });
 
 // TODO global show hex address switch
-const getGlobalShowHexAddress = () => {
-  return localStorage.getItem('conflux-scan-show-hex-address') === 'true';
+export const getGlobalShowHexAddress = () => {
+  return true; //localStorage.getItem('conflux-scan-show-hex-address') === 'true';
 };
 
 /**
@@ -36,7 +36,7 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   const addressOptions = Object.assign(
     {
       networkId,
-      hex: false,
+      hex: getGlobalShowHexAddress(),
       withType: false,
     },
     option,

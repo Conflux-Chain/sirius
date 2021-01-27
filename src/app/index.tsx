@@ -39,7 +39,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
-import { formatAddress } from '../utils/cfx';
+import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 
 WebFontLoader.load({
   custom: {
@@ -95,6 +95,7 @@ export function App() {
                   path="/contract/:contractAddress"
                   render={(routeProps: any) => {
                     if (
+                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.contractAddress &&
                       routeProps.match.params.contractAddress.startsWith('0x')
                     )
@@ -114,6 +115,7 @@ export function App() {
                   path="/token/:tokenAddress"
                   render={(routeProps: any) => {
                     if (
+                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.tokenAddress &&
                       routeProps.match.params.tokenAddress.startsWith('0x')
                     )
@@ -133,13 +135,22 @@ export function App() {
                   component={BlocksAndTransactions}
                 />
                 <Route exact path="/tokens" component={Tokens} />
-                <Route exact path="/tokens/:tokenType" component={Tokens} />
+                <Route
+                  exact
+                  path="/tokens/:tokenType"
+                  render={(routeProps: any) => {
+                    if (routeProps.match.params.tokenType)
+                      routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
+                    return <Tokens {...routeProps} />;
+                  }}
+                />
                 <Route exact path="/sponsor" component={Sponsor} />
                 <Route
                   exact
                   path="/sponsor/:contractAddress"
                   render={(routeProps: any) => {
                     if (
+                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.contractAddress &&
                       routeProps.match.params.contractAddress.startsWith('0x')
                     )
@@ -170,6 +181,7 @@ export function App() {
                   path="/address/:address"
                   render={(routeProps: any) => {
                     if (
+                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.address &&
                       routeProps.match.params.address.startsWith('0x')
                     )
