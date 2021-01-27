@@ -105,6 +105,16 @@ exports[`<App /> should render and match the snapshot 1`] = `
             <Route
               component={[Function]}
               exact={true}
+              path={
+                Array [
+                  "/address-converter",
+                  "/address-converter/:address",
+                ]
+              }
+            />
+            <Route
+              component={[Function]}
+              exact={true}
               path="/transaction/:hash"
             />
             <Route

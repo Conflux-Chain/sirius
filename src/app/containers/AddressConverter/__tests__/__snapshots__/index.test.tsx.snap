@@ -1,0 +1,328 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddressConverter /> should match the snapshot 1`] = `
+.c1 {
+  font-size: 1.7143rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  line-height: 2.2857rem;
+  margin-bottom: 1.1429rem;
+}
+
+.c5 .card.sirius-card {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+  padding: 0 1.2857rem;
+}
+
+.c5 .card.sirius-card:hover {
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
+}
+
+.c5 .card.sirius-card .content {
+  padding: 0;
+}
+
+.c6 {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 16px 0 12px;
+}
+
+.c6.no-border {
+  border-bottom: none;
+}
+
+.c6 .list-title {
+  font-size: 10px;
+  font-weight: 500;
+  color: #97a3b4;
+  line-height: 14px;
+}
+
+.c6 .list-content {
+  font-size: 12px;
+  color: #002e74;
+  line-height: 24px;
+}
+
+.c0 {
+  max-width: 73.1429rem;
+  margin: 0 auto;
+  padding-top: 2.2857rem;
+}
+
+.c2 {
+  color: #74798c;
+  font-size: 1rem;
+  line-height: 1.2857rem;
+  margin: 1.1429rem 0 1.7143rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 .input-container.convert-address-input {
+  height: 32px;
+}
+
+.c3 .input-container.convert-address-input input {
+  width: 399px;
+  height: 32px;
+  background: rgba(30,61,228,0.04);
+  border-radius: 4px;
+  margin: 0;
+  padding: 0 16px;
+}
+
+.c3 .btn.convert-address-button {
+  height: 32px;
+  line-height: 32px;
+  margin: 0 0 0 16px;
+  border: none;
+}
+
+.c3 .btn.convert-address-button > div {
+  top: 0;
+}
+
+.c3 .convert-address-error {
+  width: 399px;
+  margin: 8px 0;
+  font-size: 12px;
+  color: #e64e4e;
+  line-height: 16px;
+  padding-left: 5px;
+}
+
+.c4 {
+  margin-top: 24px;
+}
+
+.c4 .convert-address-description {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c4 .convert-address-description .left {
+  width: 500px;
+}
+
+.c7 {
+  margin: 2.2857rem 0;
+}
+
+.c7 .convert-address-title {
+  font-size: 1.1429rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.c7 .convert-address-tip {
+  margin-top: 0.8571rem;
+  font-weight: normal;
+  color: #7e8598;
+  line-height: 1.5714rem;
+  font-size: 1rem;
+}
+
+@media (max-width:600px) {
+  .c1 {
+    font-size: 1.2857rem;
+    font-weight: 500;
+    color: #050505;
+    line-height: 1.8571rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 1.1429rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 .input-container.convert-address-input input {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 .convert-address-error {
+    width: 100%;
+  }
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    Address Format
+  </div>
+  <p
+    class="c2"
+  >
+    The old Conflux address will be converted to a new address by using the advanced checksum method.
+  </p>
+  <div
+    class="c3"
+  >
+    <div>
+      <div
+        class="jsx-2997504664 with-label"
+      >
+        <div
+          class="jsx-2997504664 input-container convert-address-input"
+        >
+          <div
+            class="jsx-2997504664 input-wrapper solid    "
+          >
+            <input
+              autocomplete="off"
+              class="jsx-2997504664 "
+              placeholder="Input address"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="convert-address-error"
+      />
+    </div>
+    <button
+      class="jsx-313252839 btn  convert-address-button"
+      type="button"
+    >
+      <div
+        class="text "
+      >
+        Convert
+      </div>
+    </button>
+  </div>
+  <div
+    class="c4"
+  >
+    <div
+      class="c5"
+    >
+      <div
+        class="jsx-2527601167 card sirius-card solid"
+      >
+        <div
+          class="jsx-178616938 content "
+        >
+          <div
+            class="c6"
+          >
+            <div
+              class="list-title"
+            >
+              Address in lowercase
+            </div>
+            <div
+              class="list-content"
+            >
+              <div>
+                
+                 
+                
+              </div>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            <div
+              class="list-title"
+            >
+              Old checksummed address
+            </div>
+            <div
+              class="list-content"
+            >
+              <div>
+                
+                 
+                
+              </div>
+            </div>
+          </div>
+          <div
+            class="c6"
+          >
+            <div
+              class="list-title"
+            >
+              Conflux Tethys new address (both address types are valid)
+            </div>
+            <div
+              class="list-content"
+            >
+              <div>
+                
+                 
+                
+              </div>
+              <div>
+                
+                 
+                
+              </div>
+            </div>
+          </div>
+          <div
+            class="c6 no-border"
+          >
+            <div
+              class="list-title"
+            >
+              Conflux Testnet new address (both address types are valid)
+            </div>
+            <div
+              class="list-content"
+            >
+              <div>
+                
+                 
+                
+              </div>
+              <div>
+                
+                 
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="c7"
+  >
+    <h3
+      class="convert-address-title"
+    >
+      Remark:
+    </h3>
+    <div
+      class="convert-address-tip"
+    >
+      <div>
+        1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.
+      </div>
+      <div>
+        2. Conflux adopts a new checksum method different from the EIP55 standard.
+      </div>
+    </div>
+  </div>
+</div>
+`;
