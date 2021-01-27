@@ -25,7 +25,9 @@ export const delay = (ms: number) => {
 
 export const getAddressType = address => {
   try {
-    const type = cfxAddress.decodeCfxAddress(formatAddress(address)).type;
+    const type = cfxAddress.decodeCfxAddress(
+      formatAddress(address, { hex: false }),
+    ).type;
     switch (type) {
       case 'user':
         return addressTypeCommon;
