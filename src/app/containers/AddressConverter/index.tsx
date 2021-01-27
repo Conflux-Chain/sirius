@@ -12,7 +12,7 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
-import { Input, Button } from '@cfxjs/react-ui';
+import { Input, Button, Link } from '@cfxjs/react-ui';
 import {
   format,
   address as utilAddress,
@@ -161,7 +161,7 @@ export function AddressConverter() {
                 variant="solid"
                 className="convert-address-input input-network-id"
                 value={networkId}
-                placeholder="network id"
+                placeholder={t(translations.addressConverter.networkId)}
                 onChange={handleNetworkIdChange}
                 onKeyPress={e => {
                   if (e.key === 'Enter') {
@@ -265,6 +265,16 @@ export function AddressConverter() {
         <div className="convert-address-tip">
           <div>{t(translations.addressConverter.tip1)}</div>
           <div>{t(translations.addressConverter.tip2)}</div>
+          <div>
+            {t(translations.addressConverter.tip3)}
+            <Link
+              target="_blank"
+              href={t(translations.addressConverter.tip3Link)}
+            >
+              {t(translations.addressConverter.tip3Link)}
+            </Link>
+            {t(translations.addressConverter.tip3end)}
+          </div>
         </div>
       </StyledRemarkWrapper>
     </StyledPageWrapper>
@@ -314,7 +324,7 @@ const StyledInputWrapper = styled.div`
 
     &.input-network-id {
       input {
-        width: 7.8571rem;
+        width: 11.7143rem;
       }
     }
   }
