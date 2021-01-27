@@ -25,22 +25,23 @@ export const List = ({
 
 const StyledListWrapper = styled.div`
   border-bottom: 1px solid #f1f1f1;
-  padding: 16px 0 12px;
+  padding: 1.1429rem 0 0.8571rem;
 
-  &.no-border {
+  &.no-border,
+  &:last-child {
     border-bottom: none;
   }
 
   .list-title {
-    font-size: 10px;
+    font-size: 0.8571rem;
     font-weight: 500;
     color: #97a3b4;
-    line-height: 14px;
+    line-height: 1rem;
   }
 
   .list-content {
-    font-size: 12px;
+    font-size: 1rem;
     color: #002e74;
-    line-height: 24px;
+    line-height: 1.7143rem;
   }
 `;

@@ -502,6 +502,7 @@
     "checksum": "旧规则地址",
     "newMainnetAddress": "Conflux Tethys 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
+    "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
     "remark": "说明：",
     "tip1": "1. Checksum 规则将地址中的部分字母大写，与剩余的小写字母来形成校验和，让地址拥有自校验的能力。",
     "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 checksum 校验规则。"
