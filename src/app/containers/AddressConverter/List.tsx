@@ -43,5 +43,6 @@ const StyledListWrapper = styled.div`
     font-size: 1rem;
     color: #002e74;
     line-height: 1.7143rem;
+    padding-top: 0.2857rem;
   }
 `;
