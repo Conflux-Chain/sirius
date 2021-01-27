@@ -103,22 +103,22 @@ export const marketCap = {
       {t => t(translations.general.table.token.marketCap)}
     </Translation>
   ),
-  dataIndex: 'marketCap',
-  key: 'marketCap',
+  dataIndex: 'totalPrice',
+  key: 'totalPrice',
   render: value => <span>{formatNumber(value || 0)}</span>,
 };
 
-export const transfer = {
+export const transfer = transferType => ({
   width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.token.transfer)}
     </Translation>
   ),
-  dataIndex: 'transferCount',
-  key: 'transferCount',
-  render: value => <span>{formatNumber(value)}</span>,
-};
+  dataIndex: `transferStatistic`,
+  key: `transferStatistic`,
+  render: value => <span>{formatNumber(value[transferType])}</span>,
+});
 
 export const totalSupply = {
   width: 1,

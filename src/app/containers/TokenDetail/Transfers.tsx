@@ -18,7 +18,7 @@ interface TransferProps {
   tokenAddress: string;
   symbol: string;
   decimals: number;
-  tokenType: string;
+  transferType: string;
 }
 interface Query {
   accountAddress?: string;
@@ -29,7 +29,7 @@ export function Transfers({
   tokenAddress,
   symbol,
   decimals,
-  tokenType,
+  transferType,
 }: TransferProps) {
   const { t } = useTranslation();
   const location = useLocation();
@@ -101,7 +101,7 @@ export function Transfers({
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  if (tokenType === cfxTokenTypes.erc721) {
+  if (transferType === cfxTokenTypes.erc721) {
     columnsWidth = [3, 4, 4, 4, 3];
     columns = [
       tokenColunms.txnHash,
@@ -111,8 +111,8 @@ export function Transfers({
       tokenColunms.age,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
-  if (tokenType === cfxTokenTypes.erc1155) {
-    columnsWidth = [3, 4, 4, 4, 4, 3];
+  if (transferType === cfxTokenTypes.erc1155) {
+    columnsWidth = [3, 5, 5, 3, 4, 4];
     columns = [
       tokenColunms.txnHash,
       tokenColunms.from,
@@ -134,7 +134,9 @@ export function Transfers({
           </>
         );
       },
-      url: `/transfer?address=${tokenAddress}`,
+      // address filter contract transfers events
+      // accountAddress filter from or to transfers, regard accountAddress as ordinary address
+      url: `/transfer?address=${tokenAddress}&transferType=${transferType}`,
       table: {
         columns: columns,
         rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,

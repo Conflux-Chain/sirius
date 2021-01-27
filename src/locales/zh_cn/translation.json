@@ -225,6 +225,9 @@
     "transaction": "交易",
     "transactions": "交易",
     "tokenTxns": "代币交易",
+    "tokenTxnsErc20": "Erc20 代币交易",
+    "tokenTxnsErc721": "Erc721 代币交易",
+    "tokenTxnsErc1155": "Erc1155 代币交易",
     "table": {
       "noData": "暂无相关记录",
       "whoops": "哎呀！",

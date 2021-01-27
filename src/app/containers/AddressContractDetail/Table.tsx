@@ -35,6 +35,7 @@ import PickerWithQuery from './PickerWithQuery';
 import { ActionButton } from './ActionButton';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
+import { cfxTokenTypes } from '../../../utils/constants';
 const AceEditorStyle = {
   width: '100%',
 };
@@ -362,6 +363,9 @@ export function Table({ address }) {
   const [txFilterVisible, setTxFilterVisible] = useState(
     queries?.tab !== 'mined-blocks' &&
       queries?.tab !== 'transfers' &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc20}` &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc721}` &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc1155}` &&
       !isContract,
   );
   // set default tab to transaction
@@ -444,7 +448,7 @@ export function Table({ address }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
 
-  const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
+  const columnsBlocksWidth = [4, 2, 3, 2, 4, 3, 3, 4];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -456,7 +460,7 @@ export function Table({ address }) {
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
-  const tabs = [
+  const tabs: any = [
     {
       value: 'transaction',
       label: (total: number, realTotal: number) => {
@@ -473,24 +477,68 @@ export function Table({ address }) {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
+      hasFilter: true,
     },
-    {
-      value: 'transfers',
-      label: (total: number, realTotal: number) => {
-        return (
-          <>
-            {t(translations.general.tokenTxns)}
-            <TabLabel total={total} realTotal={realTotal} />
-          </>
-        );
-      },
-      pagination: true,
-      url: `/transfer?accountAddress=${address}`,
-      table: {
-        columns: columnsTokenTrasfers,
-        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
-      },
+  ];
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc20}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc20)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
     },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`,
+    table: {
+      columns: columnsTokenTrasfers,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc721}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc721)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
+    },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`,
+    table: {
+      columns: columnsTokenTrasfers,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc1155}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc1155)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
+    },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
+    table: {
+      columns: columnsTokenTrasfers,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push(
     isContract
       ? {
           value: 'contract-viewer',
@@ -515,8 +563,9 @@ export function Table({ address }) {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
           },
+          hasFilter: true,
         },
-  ];
+  );
 
   const showExportRecordsButton =
     bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
@@ -653,11 +702,12 @@ const TableWrap = styled.div`
 
 const FilterWrap = styled.div`
   position: absolute;
-  right: 0;
-  top: 0.7143rem;
+  right: 10px;
+  top: 75px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 200;
 
   ${media.s} {
     flex-direction: column;

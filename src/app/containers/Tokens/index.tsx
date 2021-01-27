@@ -28,13 +28,13 @@ export function Tokens() {
     tokenColunms.token,
     tokenColunms.price,
     tokenColunms.marketCap,
-    tokenColunms.transfer,
+    tokenColunms.transfer(tokenType || cfxTokenTypes.erc20),
     tokenColunms.totalSupply,
     tokenColunms.holders,
     tokenColunms.contract,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/token?tokenType=${cfxTokenTypes.erc20}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+  let url = `/token?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=transferStatistic.${cfxTokenTypes.erc20}&fields=transferCount,icon`;
 
   let title = t(translations.header.tokens20);
 
@@ -46,16 +46,16 @@ export function Tokens() {
     columns = [
       tokenColunms.number,
       tokenColunms.token,
-      tokenColunms.transfer,
+      tokenColunms.transfer(tokenType),
       tokenColunms.holders,
       tokenColunms.contract,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     if (tokenType === cfxTokenTypes.erc721) {
-      url = `/token?tokenType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+      url = `/token?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferStatistic.${cfxTokenTypes.erc721}&fields=transferCount,icon`;
       title = t(translations.header.tokens721);
     } else {
-      url = `/token?tokenType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon`;
+      url = `/token?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferStatistic.${cfxTokenTypes.erc1155}&fields=transferCount,icon`;
       title = t(translations.header.tokens1155);
     }
   }

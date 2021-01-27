@@ -14,7 +14,7 @@ import { AddressContainer } from '../../components/AddressContainer';
 
 export interface BasicProps {
   address?: string;
-  tokenType?: string;
+  transferType?: string;
   totalSupply?: string;
   price?: string;
   marketCap?: string;
@@ -28,7 +28,7 @@ export interface BasicProps {
 
 export const Basic = ({
   address, // address === undefined when token api is pending
-  tokenType,
+  transferType,
   totalSupply,
   price,
   marketCap,
@@ -143,22 +143,21 @@ export const Basic = ({
       transferCount !== undefined ? toThousands(transferCount) : undefined,
   };
 
-  let list = [
-    fieldPrice,
-    fieldContractAddress,
-    fieldMarketCap,
-    fieldDecimal,
-    fieldTotalSupply,
-    null,
-    fieldHolders,
-    null,
-    fieldTransfers,
-  ];
+  let list: any;
 
-  if (
-    tokenType === cfxTokenTypes.erc721 ||
-    tokenType === cfxTokenTypes.erc1155
-  ) {
+  if (transferType === cfxTokenTypes.erc20) {
+    list = [
+      fieldPrice,
+      fieldContractAddress,
+      fieldMarketCap,
+      fieldDecimal,
+      fieldTotalSupply,
+      null,
+      fieldHolders,
+      null,
+      fieldTransfers,
+    ];
+  } else {
     list = [
       fieldTotalSupply,
       fieldContractAddress,
@@ -167,11 +166,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   }
-  return (
-    <BasicWrap>
-      <List list={list} />
-    </BasicWrap>
-  );
+  return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };
 
 const BasicWrap = styled.div`

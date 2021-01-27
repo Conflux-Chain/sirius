@@ -11,6 +11,7 @@ import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
 import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 interface RouteParams {
   tokenAddress: string;
@@ -21,7 +22,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferCount', 'tokenType'],
+    fields: ['icon', 'transferStatistic'],
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 
@@ -29,8 +30,36 @@ export function TokenDetail() {
     data = {};
   }
 
-  // data.tokenType = 'erc721';
-  // data.tokenType = 'erc1155';
+  data.transferStatistic = data.transferStatistic || {};
+
+  // set tokenType to the transferType which has max transfer count
+  // TODO maybe change
+
+  const transferCountArray = [
+    data.transferStatistic.ERC20 || 0,
+    data.transferStatistic.ERC721 || 0,
+    data.transferStatistic.ERC1155 || 0,
+  ];
+
+  data.transferCount = Math.max(...transferCountArray);
+
+  let transferType = '';
+
+  if (data.transferStatistic.ERC20 !== undefined) {
+    switch (transferCountArray.indexOf(data.transferCount)) {
+      case 0:
+        transferType = cfxTokenTypes.erc20;
+        break;
+      case 1:
+        transferType = cfxTokenTypes.erc721;
+        break;
+      case 2:
+        transferType = cfxTokenTypes.erc1155;
+        break;
+      default:
+        break;
+    }
+  }
 
   return (
     <>
@@ -74,13 +103,19 @@ export function TokenDetail() {
             <Skeleton className="sirius-tokendetail-skeleton"></Skeleton>
           </SkeletonWrap>
         )}
-        <Basic {...data} tokenAddress={tokenAddress} />
-        <Transfers
-          decimals={data.decimals || 0}
+        <Basic
+          {...data}
           tokenAddress={tokenAddress}
-          symbol={data.symbol}
-          tokenType={data.tokenType}
+          transferType={transferType}
         />
+        {transferType ? (
+          <Transfers
+            decimals={data.decimals || 0}
+            tokenAddress={tokenAddress}
+            symbol={data.symbol}
+            transferType={transferType}
+          />
+        ) : null}
       </TokenDetailWrap>
     </>
   );
