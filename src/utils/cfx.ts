@@ -1,6 +1,7 @@
 import {
   Conflux,
   format as cfxFormat,
+  address as cfxAddress,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { Faucet } from 'conflux-sponsorfaucet';
 import { isTestNetEnv } from './hooks/useTestnet';
@@ -104,6 +105,7 @@ export {
   faucetAddress,
   faucet,
   cfxFormat,
+  cfxAddress,
   contractManagerAddress,
   networkId,
   mainNetworkId,
