@@ -148,15 +148,12 @@ export const Basic = ({
   };
 
   let list = [
-    fieldPrice,
-    fieldContractAddress,
-    fieldMarketCap,
-    fieldDecimal,
     fieldTotalSupply,
-    null,
+    fieldContractAddress,
     fieldHolders,
-    null,
+    fieldDecimal,
     fieldTransfers,
+    null,
   ];
 
   if (
