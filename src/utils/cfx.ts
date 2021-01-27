@@ -23,19 +23,31 @@ const cfx = new Conflux({
 /**
  * format cfx address
  * @param address origin address
- * @param netId networkId
- * @param hex is convert to hex40 address
+ * @param option address format options
  */
-const formatAddress = (
-  address: string,
-  netId: number = networkId,
-  hex: boolean = false,
-) => {
+const formatAddress = (address: string | undefined, option: any = {}) => {
+  if (!address || address.length < 40) return '';
+  const addressOptions = Object.assign(
+    {
+      networkId,
+      hex: false,
+      withType: false,
+    },
+    option,
+  );
   try {
-    if (!hex) return cfxFormat.address(address, netId);
-    else return cfxFormat.hexAddress(cfxFormat.address(address, netId));
+    if (!addressOptions.hex)
+      return cfxFormat.address(
+        address,
+        addressOptions.networkId,
+        addressOptions.withType,
+      );
+    else
+      return cfxFormat.hexAddress(
+        cfxFormat.address(address, addressOptions.networkId),
+      );
   } catch (e) {
-    console.error(e);
+    console.info('formatAddress:', address, e.message);
     return '';
   }
 };
@@ -44,19 +56,19 @@ const formatAddress = (
 
 const mainnetFaucetAddress = formatAddress(
   '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
-  mainNetworkId,
+  { networkId: mainNetworkId },
 );
 const mainnetFaucetLastAddress = formatAddress(
   '0x8d5adbcaf5714924830591586f05302bf87f74bd',
-  mainNetworkId,
+  { networkId: mainNetworkId },
 );
 const testnetFaucetAddress = formatAddress(
   '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
-  testnetNetworkId,
+  { networkId: testnetNetworkId },
 );
 const testnetFaucetLastAddress = formatAddress(
   '0x8097e818c2c2c1524c41f0fcbda143520046d117',
-  testnetNetworkId,
+  { networkId: testnetNetworkId },
 );
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
@@ -69,11 +81,11 @@ const faucetLastAddress = isTestNetEnv()
 
 const testnetContractManagerAddress = formatAddress(
   '0x81bbe80b1282387e19d7e1a57476869081c7d965',
-  testnetNetworkId,
+  { networkId: testnetNetworkId },
 );
 const mainnetContractManagerAddress = formatAddress(
   '0x81bbe80b1282387e19d7e1a57476869081c7d965',
-  mainNetworkId,
+  { networkId: testnetNetworkId },
 );
 const contractManagerAddress = isTestNetEnv()
   ? testnetContractManagerAddress
