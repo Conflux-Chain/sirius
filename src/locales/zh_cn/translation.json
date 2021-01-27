@@ -50,13 +50,16 @@
     "reset": "重置",
     "payableAmountCfx": "payableAmount (cfx) ",
     "error": {
-      "address": "请输入一个以 0x0、0x1 或 0x8 开头的 Conflux 地址",
+      "address": "请输入一个合法的 Conflux 地址",
       "bool": "请输入 true/false 或 0/1",
-      "int": "请输入一个范围 {{min}} ~ {{max}} 的整数",
-      "uint": "请输入一个范围在 {{min}} ~ {{max}} 非负整数",
+      "int": "请输入一个范围 -(2^{{num}}-1) ~ 2^{{num}}-1 的整数",
+      "uint": "请输入一个范围在 0 ~ 2^{{num}}-1 非负整数",
       "bytes": "请输入以 0x 开头的十六进制字节数组",
       "bytesM": "请输入以 0x 开头的 长度为{{length}} 的十六进制字节数组",
       "cfx": "请输入小数位数不超过18位的非负数字",
+      "array": "请输入有效的 {{type}} 数组，用中括号包裹",
+      "tuple": "请输入有效的元组",
+      "notSupport": "{{type}} 即将支持，敬请期待",
       "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
       "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"
     },
@@ -98,12 +101,17 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "table": {
       "number": "#",
       "token": "代币",
       "transfer": "转移",
       "totalSupply": "总供应量",
       "holders": "持有人",
+      "price": "价格",
+      "change": "涨跌幅（%）",
+      "volume": "24小时交易量",
+      "marketCap": "市值",
       "contract": "合约"
     }
   },
@@ -117,6 +125,9 @@
     "home": "首页",
     "bnt": "区块&交易",
     "tokens": "代币",
+    "tokens20": "ERC-20 代币",
+    "tokens721": "ERC-721 代币",
+    "tokens1155": "ERC-1155 代币",
     "contract": "合约",
     "contractCreation": "创建合约",
     "contractSponsor": "赞助合约",
@@ -125,14 +136,17 @@
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
-    "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址"
+    "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址",
+    "addressConverter": "地址转换"
   },
   "footer": {
     "product": "产品",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "ConfluxPortal",
     "confluxbounty": "ConfluxBounty",
-    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
+    "tool": "工具",
+    "addressFormatConversion": "地址格式转换"
   },
   "packing": {
     "title": "您的交易正在打包，请稍后...",
@@ -154,11 +168,16 @@
     "transaction": "交易"
   },
   "token": {
+    "token": "代币",
     "totalSupplay": "总供应量",
     "contract": "合约",
     "holders": "持有人",
     "decimals": "小数精度",
     "transfers": "转移",
+    "price": "价格",
+    "change": "涨跌幅（%）",
+    "volume": "24小时交易量",
+    "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "address": "个地址",
     "transferList": {
@@ -234,6 +253,10 @@
       "token": {
         "number": "#",
         "token": "代币",
+        "price": "价格",
+        "change": "涨跌幅（%）",
+        "volume": "24小时交易量",
+        "marketCap": "市值",
         "transfer": "转移",
         "totalSupply": "总供应量",
         "holders": "持有人",
@@ -242,6 +265,7 @@
         "age": "块龄",
         "from": "发送方",
         "to": "接收方",
+        "tokenId": "代币 ID",
         "quantity": "数量"
       },
       "contracts": {
@@ -468,6 +492,20 @@
       "age": "块龄"
     }
   },
+  "addressConverter": {
+    "title": "地址格式转换",
+    "subtitle": "通过使用最新的 Checksum 规则，Conflux 的旧地址会被转换为全新的地址。",
+    "button": "转换",
+    "inputPlaceholder": "输入地址",
+    "incorrectFormat": "地址格式不正确",
+    "lowercase": "全小写地址",
+    "checksum": "旧规则地址",
+    "newMainnetAddress": "Conflux Tethys 新地址 (二者皆可)",
+    "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
+    "remark": "说明：",
+    "tip1": "1. Checksum 规则将地址中的部分字母大写，与剩余的小写字母来形成校验和，让地址拥有自校验的能力。",
+    "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 checksum 校验规则。"
+  },
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
@@ -526,6 +564,10 @@
       "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。"
     },
     "token": {
+      "price": "代币价格。",
+      "volume": "过去24小时内该加密货币所有交易的总美元价值。",
+      "marketCap": "加密货币总供应量的价值：市值 = 价格 x 总供应量。",
+      "fullyDilutedMarketCap": "最大供应量流通时的市值：全面摊薄市值 = 价格 x 最大供应量。",
       "totalSupply": "该代币的总发行量。",
       "holders": "持有该代币的所有地址数量。",
       "transfers": "该合约地址发生的代币交易总数",
@@ -543,5 +585,46 @@
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
+  },
+  "connectWallet": {
+    "button": {
+      "text": "连接钱包",
+      "nPending": "{{count}} 个交易处理中"
+    },
+    "modal": {
+      "title": "请连接您的钱包",
+      "installConfluxPortal": "安装 ConfluxPortal",
+      "confluxPortal": "ConfluxPortal",
+      "initializing": "正在初始化...",
+      "errorConnecting": "连接错误...",
+      "tryAgain": "重试",
+      "newToConflux": "Conflux 的新用户?",
+      "learnMore": "进一步了解钱包。",
+      "account": "账户",
+      "connectedWithConfluxPortal": "已连接 ConfluxPortal",
+      "copyAddress": "复制地址",
+      "viewOnConfluxScan": "在 ConfluxScan 上查看",
+      "networkNotice": "网络说明",
+      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
+      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。"
+    },
+    "history": {
+      "emptyRecordsTip": "您的交易记录会显示在这里...",
+      "recentlyRecordsTip": "最近的交易",
+      "clearAll": "清空全部",
+      "recentlyTenRecordsTip": "仅展示近 10 条交易记录。",
+      "contractCreation": "合约创建",
+      "contractEdit": "合约编辑",
+      "sponsorApplication": "赞助申请",
+      "writeContract": "写入合约",
+      "viewYourTranscation": "查看您的交易"
+    }
+  },
+  "txnAction": {
+    "10001": "合约创建",
+    "10002": "合约编辑",
+    "10003": "写合约",
+    "10004": "读合约",
+    "10005": "Sponsor 应用"
   }
 }

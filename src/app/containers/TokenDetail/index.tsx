@@ -21,13 +21,16 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferCount'],
+    fields: ['icon', 'transferCount', 'tokenType'],
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 
   if (!data) {
     data = {};
   }
+
+  // data.tokenType = 'erc721';
+  // data.tokenType = 'erc1155';
 
   return (
     <>
@@ -76,6 +79,7 @@ export function TokenDetail() {
           decimals={data.decimals || 0}
           tokenAddress={tokenAddress}
           symbol={data.symbol}
+          tokenType={data.tokenType}
         />
       </TokenDetailWrap>
     </>

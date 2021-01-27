@@ -35,16 +35,34 @@ const ParamInput = ({ value, onChange, type }: Props) => {
   };
   function getPlaceholder(type: string) {
     let text = '';
+
+    // tuple
+    // TODO tuple or tuple[] support
+    if (type.startsWith('tuple')) {
+      text = t(translations.contract.error.tuple);
+
+      return text;
+    }
+
+    // array
+    // TODO multi-dimentional array support
+    if (type.endsWith('[]')) {
+      text = t(translations.contract.error.array, { type });
+
+      return text;
+    }
+
+    // basic type
     if (type === 'address') {
       text = t(translations.contract.error.address);
     } else if (type === 'bool') {
       text = t(translations.contract.error.bool);
     } else if (type.startsWith('int')) {
-      const [, min, max] = checkInt('', type);
-      text = t(translations.contract.error.int, { min, max });
+      const [, num] = checkInt('', type);
+      text = t(translations.contract.error.int, { num });
     } else if (type.startsWith('uint')) {
-      const [, min, max] = checkUint('', type);
-      text = t(translations.contract.error.uint, { min, max });
+      const [, num] = checkUint('', type);
+      text = t(translations.contract.error.uint, { num });
     } else if (type.startsWith('byte')) {
       const [, num] = checkBytes('', type);
       if (num === 0) {

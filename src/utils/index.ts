@@ -463,6 +463,7 @@ export const selectText = (element: HTMLElement) => {
   }
 };
 
+// TODO cip-37
 export const isAddress = (str: string) => {
   return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
@@ -549,7 +550,7 @@ export function checkInt(value, type) {
   } else {
     isType = false;
   }
-  return [isType, min.toString(), max.toString()];
+  return [isType, num, min.toString(), max.toString()];
 }
 export function checkUint(value, type) {
   const num = Number(type.substr(4));
@@ -570,7 +571,7 @@ export function checkUint(value, type) {
   } else {
     isType = false;
   }
-  return [isType, min.toFixed(), max.toFixed()];
+  return [isType, num, min.toFixed(), max.toFixed()];
 }
 export function isHex(num) {
   return Boolean(num.match(/^0x[0-9a-f]+$/i));
@@ -622,3 +623,10 @@ export function checkCfxType(value) {
     return true;
   }
 }
+
+export const sleep = timeout =>
+  new Promise(resolve => setTimeout(resolve, timeout));
+
+export const getRandomString = () => {
+  return Math.random().toString(32).substr(2);
+};
