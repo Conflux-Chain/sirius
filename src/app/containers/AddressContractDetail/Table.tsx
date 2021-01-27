@@ -571,9 +571,11 @@ export function Table({ address }) {
     bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
   const handleExportRecords = () => {
     const exportRecordsPathMap = {
-      transfers: 'transfer',
       transaction: 'transaction',
     };
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc20}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc721}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc1155}`] = 'transfer';
     const exportRecordsPath =
       typeof tab === 'string' && exportRecordsPathMap[tab];
 
@@ -585,6 +587,8 @@ export function Table({ address }) {
           minTimestamp,
           maxTimestamp,
           accountAddress,
+          transferType:
+            tab === 'transaction' ? null : tab!['replace']('transfers-', ''),
         },
       });
       window.open(url);

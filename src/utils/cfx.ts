@@ -23,7 +23,7 @@ const cfx = new Conflux({
 
 // TODO global show hex address switch
 export const getGlobalShowHexAddress = () => {
-  return true; //localStorage.getItem('conflux-scan-show-hex-address') === 'true';
+  return localStorage.getItem('conflux-scan-show-hex-address') === 'true';
 };
 
 /**

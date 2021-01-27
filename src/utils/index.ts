@@ -474,12 +474,7 @@ export const selectText = (element: HTMLElement) => {
 };
 
 export const isAddress = (str: string) => {
-  try {
-    formatAddress(str);
-    return true;
-  } catch {
-    return false;
-  }
+  return formatAddress(str) !== '';
   // return cfxAddress.isValidCfxAddress(str); // only support new address
   // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };

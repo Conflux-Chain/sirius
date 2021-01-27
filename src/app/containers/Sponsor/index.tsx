@@ -20,6 +20,7 @@ import {
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
+import { AddressContainer } from '../../components/AddressContainer';
 interface RouteParams {
   contractAddress: string;
 }
@@ -268,12 +269,11 @@ export function Sponsor() {
                 {t(translations.sponsor.storageSponsor)}
               </span>
               <SkelontonContainer shown={loading}>
-                <Link
-                  href={`/address/${storageSponsorAddress}`}
-                  className="address"
-                >
-                  {getEllipsStr(storageSponsorAddress, 6, 4)}
-                </Link>
+                {storageSponsorAddress ? (
+                  <AddressContainer value={storageSponsorAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
@@ -333,9 +333,11 @@ export function Sponsor() {
                 {t(translations.sponsor.gasFeeSponsor)}
               </span>
               <SkelontonContainer shown={loading}>
-                <Link href={`/address/${gasFeeAddress}`} className="address">
-                  {getEllipsStr(gasFeeAddress, 6, 4)}
-                </Link>
+                {gasFeeAddress ? (
+                  <AddressContainer value={gasFeeAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">

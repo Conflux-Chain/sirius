@@ -1,6 +1,10 @@
 import React from 'react';
 import { Text } from '../Text/Loadable';
-import { formatString, isContractAddress } from '../../../utils';
+import {
+  formatString,
+  isContractAddress,
+  isInnerContractAddress,
+} from '../../../utils';
 import { Link } from '../Link/Loadable';
 import { Translation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -22,6 +26,7 @@ export const AddressContainer = ({
   maxWidth,
 }: Props) => {
   let isContract = isContractAddress(value);
+  let isInternalContract = isInnerContractAddress(value);
 
   const LinkWrapper = styled(Link)`
     display: inline-block !important;
@@ -69,11 +74,14 @@ export const AddressContainer = ({
 
   const cfxAddress = formatAddress(value);
 
-  if (isContract)
+  if (isContract || isInternalContract)
     return (
       <Text span hoverValue={cfxAddress}>
         <IconWrapper>
-          <FileText size={12} color="#9b9eac" />
+          <FileText
+            size={12}
+            color={isInternalContract ? '#13b5c4' : '#9b9eac'}
+          />
         </IconWrapper>
         <LinkWrapper href={`/address/${cfxAddress}`}>
           {alias ? formatString(alias, 'tag') : cfxAddress}
