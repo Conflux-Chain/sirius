@@ -288,9 +288,7 @@ export const useCMContractQuery: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch
-      ? [`/contract/${params[0].address}?${params[0].address}:''`, ...params]
-      : null,
+    shouldFetch ? [`/contract/${params[0].address}`, ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );

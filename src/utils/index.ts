@@ -34,7 +34,7 @@ export const getAddressType = address => {
       case 'builtin':
         return addressTypeInternalContract;
       default:
-        return addressTypeCommon;
+        return null;
     }
   } catch (e) {
     console.warn('getAddressType:', address, e.message);

@@ -55,22 +55,11 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
 
 // faucet address
 
-const mainnetFaucetAddress = formatAddress(
-  '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
-  { networkId: mainNetworkId },
-);
-const mainnetFaucetLastAddress = formatAddress(
-  '0x8d5adbcaf5714924830591586f05302bf87f74bd',
-  { networkId: mainNetworkId },
-);
-const testnetFaucetAddress = formatAddress(
-  '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
-  { networkId: testnetNetworkId },
-);
-const testnetFaucetLastAddress = formatAddress(
-  '0x8097e818c2c2c1524c41f0fcbda143520046d117',
-  { networkId: testnetNetworkId },
-);
+const mainnetFaucetAddress = '0x829985ed802802e0e4bfbff25f79ccf5236016e9'; // cip-37 use hex;
+const mainnetFaucetLastAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd'; // cip-37 use hex;
+const testnetFaucetAddress = '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8'; // cip-37 use hex;
+const testnetFaucetLastAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117'; // cip-37 use hex;
+
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
   : mainnetFaucetAddress;
@@ -92,11 +81,7 @@ const contractManagerAddress = isTestNetEnv()
   ? testnetContractManagerAddress
   : mainnetContractManagerAddress;
 
-const faucet = new Faucet(
-  cfxUrl,
-  formatAddress(faucetAddress, { hex: true }), // cip-37 use hex
-  faucetLastAddress,
-);
+const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });

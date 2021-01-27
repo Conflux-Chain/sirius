@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
+import { cfx, faucet, faucetAddress, formatAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
@@ -51,8 +51,10 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { address: portalAddress } = useConfluxPortal();
-  const getSponsorInfo = async address => {
+  const getSponsorInfo = async _address => {
     setLoading(true);
+    // cip-37 hex
+    const address = formatAddress(_address, { hex: true });
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
@@ -108,13 +110,16 @@ export function Sponsor() {
   };
 
   const searchClick = async () => {
+    // cip-37
     if (isAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
     } else {
       resetParams();
     }
   };
-  const fetchIsAppliable = async (address: string) => {
+  const fetchIsAppliable = async (_address: string) => {
+    // cip-37 hex
+    const address = formatAddress(_address, { hex: true });
     const { flag, message } = await faucet.checkAppliable(address);
     if (!flag) {
       //can not apply sponsor this contract
