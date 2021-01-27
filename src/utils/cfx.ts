@@ -48,7 +48,7 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
         cfxFormat.address(address, addressOptions.networkId),
       );
   } catch (e) {
-    console.info('formatAddress:', address, e.message);
+    console.warn('formatAddress:', address, e.message);
     return '';
   }
 };
@@ -92,7 +92,11 @@ const contractManagerAddress = isTestNetEnv()
   ? testnetContractManagerAddress
   : mainnetContractManagerAddress;
 
-const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
+const faucet = new Faucet(
+  cfxUrl,
+  formatAddress(faucetAddress, { hex: true }), // cip-37 use hex
+  faucetLastAddress,
+);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });

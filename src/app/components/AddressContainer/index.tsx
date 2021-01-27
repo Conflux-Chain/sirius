@@ -12,10 +12,31 @@ interface Props {
   value: string;
   alias?: string;
   contractCreated?: string;
+  maxWidth?: number;
 }
 
-export const AddressContainer = ({ value, alias, contractCreated }: Props) => {
+export const AddressContainer = ({
+  value,
+  alias,
+  contractCreated,
+  maxWidth,
+}: Props) => {
   let isContract = isContractAddress(value);
+
+  const LinkWrapper = styled(Link)`
+    display: inline-block !important;
+    max-width: ${maxWidth || 130}px !important;
+    outline: none;
+  `;
+
+  const IconWrapper = styled.span`
+    margin-right: 2px;
+
+    svg {
+      vertical-align: bottom;
+      margin-bottom: 6px;
+    }
+  `;
 
   if (!value) {
     // contract creation txn to prop is null
@@ -61,23 +82,8 @@ export const AddressContainer = ({ value, alias, contractCreated }: Props) => {
     );
 
   return (
-    <Text span hoverValue={cfxAddress}>
+    <Text span hoverValue={<>{cfxAddress}</>}>
       <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
     </Text>
   );
 };
-
-const LinkWrapper = styled(Link)`
-  display: inline-block !important;
-  max-width: 130px !important;
-  outline: none;
-`;
-
-const IconWrapper = styled.span`
-  margin-right: 2px;
-
-  svg {
-    vertical-align: bottom;
-    margin-bottom: 6px;
-  }
-`;

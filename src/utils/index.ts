@@ -9,9 +9,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
-import { formatAddress } from './cfx';
-// TODO new js sdk will export addressUtil
-import { decodeCfxAddress } from 'js-conflux-sdk/src/util/address';
+import { cfxAddress, formatAddress } from './cfx';
 
 dayjs.extend(relativeTime);
 
@@ -27,7 +25,7 @@ export const delay = (ms: number) => {
 
 export const getAddressType = address => {
   try {
-    const type = decodeCfxAddress(formatAddress(address)).type;
+    const type = cfxAddress.decodeCfxAddress(formatAddress(address)).type;
     switch (type) {
       case 'user':
         return addressTypeCommon;
@@ -39,8 +37,8 @@ export const getAddressType = address => {
         return addressTypeCommon;
     }
   } catch (e) {
-    console.error(e);
-    return addressTypeCommon;
+    console.warn('getAddressType:', address, e.message);
+    return null;
   }
 };
 
@@ -480,6 +478,7 @@ export const isAddress = (str: string) => {
   } catch {
     return false;
   }
+  // return cfxAddress.isValidCfxAddress(str); // only support new address
   // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
 
