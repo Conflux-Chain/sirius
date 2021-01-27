@@ -24,24 +24,26 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 
 .c6 {
   border-bottom: 1px solid #f1f1f1;
-  padding: 16px 0 12px;
+  padding: 1.1429rem 0 0.8571rem;
 }
 
-.c6.no-border {
+.c6.no-border,
+.c6:last-child {
   border-bottom: none;
 }
 
 .c6 .list-title {
-  font-size: 10px;
+  font-size: 0.8571rem;
   font-weight: 500;
   color: #97a3b4;
-  line-height: 14px;
+  line-height: 1rem;
 }
 
 .c6 .list-content {
-  font-size: 12px;
+  font-size: 1rem;
   color: #002e74;
-  line-height: 24px;
+  line-height: 1.7143rem;
+  padding-top: 0.2857rem;
 }
 
 .c0 {
@@ -65,22 +67,34 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 }
 
 .c3 .input-container.convert-address-input {
-  height: 32px;
+  height: 2.2857rem;
 }
 
 .c3 .input-container.convert-address-input input {
-  width: 399px;
-  height: 32px;
+  height: 2.2857rem;
   background: rgba(30,61,228,0.04);
-  border-radius: 4px;
+  border-radius: 0.2857rem;
   margin: 0;
-  padding: 0 16px;
+  padding: 0 1.1429rem;
+}
+
+.c3 .input-container.convert-address-input.input-address input {
+  width: 28.5714rem;
+}
+
+.c3 .input-container.convert-address-input.input-network-id input {
+  width: 7.8571rem;
+}
+
+.c3 .input-spacer {
+  width: 1.1429rem;
+  display: inline-block;
 }
 
 .c3 .btn.convert-address-button {
-  height: 32px;
-  line-height: 32px;
-  margin: 0 0 0 16px;
+  height: 2.2857rem;
+  line-height: 2.2857rem;
+  margin: 0 0 0 1.1429rem;
   border: none;
 }
 
@@ -89,16 +103,16 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 }
 
 .c3 .convert-address-error {
-  width: 399px;
-  margin: 8px 0;
-  font-size: 12px;
+  width: 28.5714rem;
+  margin: 0.5714rem 0;
+  font-size: 0.8571rem;
   color: #e64e4e;
-  line-height: 16px;
-  padding-left: 5px;
+  line-height: 1.1429rem;
+  padding-left: 0.3571rem;
 }
 
 .c4 {
-  margin-top: 24px;
+  margin-top: 1.7143rem;
 }
 
 .c4 .convert-address-description {
@@ -108,7 +122,7 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 }
 
 .c4 .convert-address-description .left {
-  width: 500px;
+  width: 35.7143rem;
 }
 
 .c7 {
@@ -145,8 +159,16 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c3 .input-container.convert-address-input input {
+  .c3 .input-container.convert-address-input.input-address input {
     width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c3 .input-spacer {
+    display: block;
+    width: 0;
+    margin-top: 0.5714rem;
   }
 }
 
@@ -162,7 +184,7 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
   <div
     class="c1"
   >
-    Address Format
+    Address Format Conversion
   </div>
   <p
     class="c2"
@@ -177,7 +199,7 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
         class="jsx-2997504664 with-label"
       >
         <div
-          class="jsx-2997504664 input-container convert-address-input"
+          class="jsx-2997504664 input-container convert-address-input input-address"
         >
           <div
             class="jsx-2997504664 input-wrapper solid    "
@@ -279,7 +301,7 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
             </div>
           </div>
           <div
-            class="c6 no-border"
+            class="c6"
           >
             <div
               class="list-title"
