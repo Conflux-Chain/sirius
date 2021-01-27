@@ -497,6 +497,7 @@
     "subtitle": "The old Conflux address will be converted to a new address by using the advanced checksum method.",
     "button": "Convert",
     "inputPlaceholder": "Input address",
+    "networkId": "network id (optional)",
     "incorrectFormat": "Invalid address format",
     "lowercase": "Address in lowercase",
     "checksum": "Old checksummed address",
@@ -505,7 +506,10 @@
     "newCustomnetAddress": "Conflux custom network id new address (both address types are valid)",
     "remark": "Remark:",
     "tip1": "1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.",
-    "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard."
+    "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
+    "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
+    "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
+    "tip3end": "."
   },
   "notice": {
     "mainnet": [
