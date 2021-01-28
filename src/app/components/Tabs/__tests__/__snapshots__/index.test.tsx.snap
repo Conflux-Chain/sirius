@@ -30,7 +30,7 @@ exports[`<Tabs  /> should match snapshot 1`] = `
 }
 
 .c0 .tabs.sirius-tabs header + .content {
-  margin-top: 1.2857rem;
+  margin-top: 1.1rem;
   padding-top: 0;
 }
 

@@ -11,7 +11,7 @@ exports[`<Text  /> should match snapshot 1`] = `
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
-  max-width: 32.1429rem;
+  max-width: 38rem;
 }
 
 .c0 a {
@@ -49,6 +49,8 @@ exports[`<Text  /> should match snapshot 1`] = `
 @media (max-width:600px) {
   .c0 .tooltip-content.sirius-tooltip {
     max-width: 24rem;
+    white-space: normal;
+    word-break: break-all;
   }
 }
 
@@ -88,7 +90,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
-  max-width: 32.1429rem;
+  max-width: 38rem;
 }
 
 .c0 a {
@@ -124,6 +126,8 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 @media (max-width:600px) {
   .c0 .tooltip-content.sirius-tooltip {
     max-width: 24rem;
+    white-space: normal;
+    word-break: break-all;
   }
 }
 
