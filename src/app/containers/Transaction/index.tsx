@@ -57,7 +57,7 @@ export const Transaction = () => {
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
   const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
-  const [isTxnDetailsInfoSet, setIsTxnDetailsInfoSet] = useState(false);
+  const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
   const history = useHistory();
   const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
@@ -110,7 +110,7 @@ export const Transaction = () => {
   // get txn detail info
   const fetchTxDetail = useCallback(
     txnhash => {
-      if (!isTxnDetailsInfoSet) {
+      if (!detailsInfoSetHash || detailsInfoSetHash !== txnhash) {
         setLoading(true);
       } else {
         setPartLoading(true);
@@ -141,12 +141,12 @@ export const Transaction = () => {
           if (txnhash !== routeHash) {
             return;
           }
-          if (isTxnDetailsInfoSet) {
+          if (detailsInfoSetHash === txnhash) {
             // only update timestamp & confirmedEpochCount
             setPartLoading(false);
             return;
           }
-          setIsTxnDetailsInfoSet(true);
+          setDetailsInfoSetHash(txnhash);
 
           if (body.blockHash) {
             getConfirmRisk(body.blockHash);
@@ -229,7 +229,7 @@ export const Transaction = () => {
         }
       });
     },
-    [history, routeHash, isTxnDetailsInfoSet],
+    [history, routeHash, detailsInfoSetHash],
   );
 
   const handleDataTypeChange = type => {
@@ -268,6 +268,7 @@ export const Transaction = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataType, contractInfo, isAbiError]);
+
   const generatedDiv = () => {
     if (to) {
       if (isContract) {
@@ -427,6 +428,7 @@ export const Transaction = () => {
           {`${tokenName} (${tokenSymbol})`}
         </Link>
       );
+      // TODO index
       switch (transferItem['transferType']) {
         case cfxTokenTypes.erc721: {
           transferListContainer.push(
@@ -670,7 +672,7 @@ export const Transaction = () => {
             </SkeletonContainer>
           </Description>
           {generatedDiv()}
-          {transferList.length > 0 && (
+          {transferList && transferList.length > 0 && (
             <Description
               title={
                 <Tooltip
@@ -864,7 +866,7 @@ const StyledCardWrapper = styled.div`
   }
   .logo {
     width: 1.1429rem;
-    margin: 0 0.5714rem;
+    margin: 0 0.5714rem 3px;
   }
   .linkMargin {
     margin-left: 0.5714rem;
