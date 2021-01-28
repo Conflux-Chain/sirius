@@ -6,7 +6,7 @@ import { gzip } from 'pako';
 
 const zipContract = format(
   {
-    address: format.address,
+    address: format.address, // cip-37
     name: format.bytes.$or(undefined),
     website: format.bytes.$or(undefined),
     abi: format.bytes
@@ -22,7 +22,7 @@ const zipContract = format(
 
 const zipToken = format(
   {
-    address: format.address,
+    address: format.address, // cip-37
     icon: format.bytes.$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
@@ -30,7 +30,7 @@ const zipToken = format(
 
 const zipContractAndToken = format(
   {
-    address: format.address,
+    address: format.address, // cip-37
     name: format.bytes.$or(undefined),
     website: format.bytes.$or(undefined),
     abi: format.bytes

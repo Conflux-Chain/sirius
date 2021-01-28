@@ -42,6 +42,12 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
     option,
   );
   try {
+    if (!addressOptions.withType) {
+      return cfxFormat.address(
+        cfxFormat.hexAddress(address),
+        addressOptions.networkId,
+      );
+    }
     if (!addressOptions.hex)
       return cfxFormat.address(
         address,

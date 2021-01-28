@@ -219,6 +219,7 @@
     "loading": "loading...",
     "contract": "contract",
     "internalContract": "internal contract",
+    "zeroAddress": "null address",
     "balance": "balance",
     "token": "token",
     "storageStaking": "Storage Collateral",

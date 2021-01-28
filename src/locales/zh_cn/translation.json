@@ -219,6 +219,7 @@
     "loading": "加载中...",
     "contract": "合约",
     "internalContract": "内置合约",
+    "zeroAddress": "空地址",
     "balance": "余额",
     "token": "代币",
     "storageStaking": "抵押存储",

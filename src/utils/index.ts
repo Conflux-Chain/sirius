@@ -2,6 +2,7 @@ import {
   addressTypeCommon,
   addressTypeContract,
   addressTypeInternalContract,
+  zeroAddress,
 } from './constants';
 import BigNumber from 'bignumber.js';
 import numeral from 'numeral';
@@ -479,8 +480,14 @@ export const isAddress = (str: string) => {
   // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
 
+export function isNullAddress(str: string) {
+  console.log(formatAddress(str));
+  console.log(zeroAddress);
+  return formatAddress(str) === zeroAddress;
+}
+
 export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon;
+  return getAddressType(str) === addressTypeCommon || isNullAddress(str);
 }
 
 export function isContractAddress(str: string) {

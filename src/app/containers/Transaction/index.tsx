@@ -38,6 +38,7 @@ import { decodeContract } from '../../../utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
+  cfxTokenTypes,
 } from '../../../utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
@@ -295,7 +296,7 @@ export const Transaction = () => {
                   </Link>{' '}
                 </>
               )}
-              <Link href={`/address/${to}`}>{to}</Link>{' '}
+              <AddressContainer value={to} isFull={true} />{' '}
               <CopyButton copyText={to} />
             </SkeletonContainer>
           </Description>
@@ -361,6 +362,8 @@ export const Transaction = () => {
     }
     return {};
   };
+
+  // support erc20/721/1155
   const getTransferListDiv = () => {
     if (!isContract) {
       return null;
@@ -368,7 +371,9 @@ export const Transaction = () => {
     if (transferList.length <= 0) {
       return null;
     }
-    let transferListContainer: Array<any> = [];
+    let transferListContainerErc20: Array<any> = [];
+    let transferListContainerErc721: Array<any> = [];
+    let transferListContainerErc1155: Array<any> = [];
     let transferListContainerStyle = {};
     for (let i = 0; i < transferList.length; i++) {
       const transferItem = transferList[i];
@@ -400,30 +405,83 @@ export const Transaction = () => {
           {`${tokenName} (${tokenSymbol})`}
         </Link>
       );
-      transferListContainer.push(
-        <div className="lineContainer" key={`transfer${i + 1}`}>
-          <span>{`${i + 1}. `}</span>
-          <span className="from">{t(translations.transaction.from)}</span>
-          <AddressContainer value={transferItem['from']} />
-          <span className="to">{t(translations.transaction.to)}</span>
-          <AddressContainer value={transferItem['to']} />
-          <span className="for">{t(translations.transaction.for)}</span>
-          <span className="value">
-            {typeof tokenDecimals !== 'undefined'
-              ? `${formatBalance(transferItem['value'], tokenDecimals, true)}`
-              : transferItem['value']}
-          </span>
-          <span>{imgIcon}</span>
-          <span>{nameContainer}</span>
-        </div>,
-      );
+      switch (transferItem['transferType']) {
+        case cfxTokenTypes.erc721: {
+          transferListContainerErc721.push(
+            <div className="lineContainer" key={`transfer${i + 1}`}>
+              <span>{`${i + 1}. `}</span>
+              <span className="from">{t(translations.transaction.from)}</span>
+              <AddressContainer value={transferItem['from']} />
+              <span className="to">{t(translations.transaction.to)}</span>
+              <AddressContainer value={transferItem['to']} />
+              <span className="for">{t(translations.transaction.for)}</span>
+              <span className="type">{cfxTokenTypes.erc721}</span>
+              <span className="tokenId">[{transferItem['tokenId']}]</span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+            </div>,
+          );
+          break;
+        }
+        case cfxTokenTypes.erc1155: {
+          transferListContainerErc1155.push(
+            <div className="lineContainer" key={`transfer${i + 1}`}>
+              <span>{`${i + 1}. `}</span>
+              <span className="from">{t(translations.transaction.from)}</span>
+              <AddressContainer value={transferItem['from']} />
+              <span className="to">{t(translations.transaction.to)}</span>
+              <AddressContainer value={transferItem['to']} />
+              <span className="for">{t(translations.transaction.for)}</span>
+              <span className="type">{cfxTokenTypes.erc1155}</span>
+              <span className="value">
+                {typeof tokenDecimals !== 'undefined'
+                  ? `${formatBalance(
+                      transferItem['value'],
+                      tokenDecimals,
+                      true,
+                    )}`
+                  : transferItem['value']}
+              </span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+            </div>,
+          );
+          break;
+        }
+        default: {
+          transferListContainerErc20.push(
+            <div className="lineContainer" key={`transfer${i + 1}`}>
+              <span>{`${i + 1}. `}</span>
+              <span className="from">{t(translations.transaction.from)}</span>
+              <AddressContainer value={transferItem['from']} />
+              <span className="to">{t(translations.transaction.to)}</span>
+              <AddressContainer value={transferItem['to']} />
+              <span className="for">{t(translations.transaction.for)}</span>
+              <span className="value">
+                {typeof tokenDecimals !== 'undefined'
+                  ? `${formatBalance(
+                      transferItem['value'],
+                      tokenDecimals,
+                      true,
+                    )}`
+                  : transferItem['value']}
+              </span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+            </div>,
+          );
+          break;
+        }
+      }
     }
     if (transferList.length > 5) {
       transferListContainerStyle = { height: '120px', overflow: 'auto' };
     }
     return (
       <div style={transferListContainerStyle} className="transferListContainer">
-        {transferListContainer}
+        {transferListContainerErc20}
+        {transferListContainerErc721}
+        {transferListContainerErc1155}
       </div>
     );
   };
@@ -559,7 +617,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link href={`/address/${from}`}>{from}</Link>{' '}
+              <AddressContainer value={from} isFull={true} />{' '}
               <CopyButton copyText={from} />
             </SkeletonContainer>
           </Description>
@@ -777,6 +835,12 @@ const StyledCardWrapper = styled.div`
       margin: 0 0.1429rem;
     }
     .value {
+      margin: 0 0.1429rem;
+    }
+    .type {
+      margin: 0 0.1429rem;
+    }
+    .tokenId {
       margin: 0 0.1429rem;
     }
   }

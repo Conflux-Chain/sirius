@@ -17,6 +17,7 @@ interface Props {
   alias?: string;
   contractCreated?: string;
   maxWidth?: number;
+  isFull?: boolean;
 }
 
 export const AddressContainer = ({
@@ -24,6 +25,7 @@ export const AddressContainer = ({
   alias,
   contractCreated,
   maxWidth,
+  isFull = false,
 }: Props) => {
   let isContract = isContractAddress(value);
   let isInternalContract = isInnerContractAddress(value);
@@ -73,6 +75,10 @@ export const AddressContainer = ({
   }
 
   const cfxAddress = formatAddress(value);
+
+  if (value && isFull) {
+    return <Link href={`/address/${cfxAddress}`}>{cfxAddress}</Link>;
+  }
 
   if (isContract || isInternalContract)
     return (
