@@ -21,6 +21,10 @@ const cfx = new Conflux({
   // useHexAddressInParameter: true,
 });
 
+cfx.getClientVersion().then(v => {
+  console.log('conflux-network-version:', v);
+});
+
 // TODO global show hex address switch
 export const getGlobalShowHexAddress = () => {
   return localStorage.getItem('conflux-scan-show-hex-address') === 'true';

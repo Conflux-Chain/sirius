@@ -53,7 +53,10 @@ function ContractSourceCodeAbi({ contractInfo }) {
   const clickHandler = (btnType: React.SetStateAction<string>) => {
     setSelectedBtnType(btnType);
   };
-  const contract = cfx.Contract({ abi: abiJson, address });
+  const contract = cfx.Contract({
+    abi: abiJson,
+    address,
+  });
   useEffect(() => {
     getReadWriteData(abiJson).then(res => {
       const [dataForR, dataForW] = res;

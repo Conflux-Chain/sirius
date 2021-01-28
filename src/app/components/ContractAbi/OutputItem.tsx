@@ -47,6 +47,20 @@ const OutputItem = ({ output, value }: Props) => {
       valueComp = (
         <span className="value">{`${'0x' + value.toString('hex')}`}</span>
       );
+    } else if (type === 'address[]') {
+      const array = Array.from(value);
+      valueComp = (
+        <span className="value">
+          [
+          {array.map((v: any, i) => (
+            <>
+              <AddressContainer value={v} isFull={true} />
+              {i === array.length - 1 ? null : ', '}
+            </>
+          ))}
+          ]
+        </span>
+      );
     } else {
       valueComp = (
         <span className="value">{`${
