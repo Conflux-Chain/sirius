@@ -403,50 +403,72 @@ export function Table({ address }) {
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 5, 5, 3, 5, 4];
-  const columnsTokenTrasfers: ColumnsType = [
+  const tokenColumnsToken = {
+    ...tokenColunms.token,
+    render: row => (
+      <StyledIconWrapper>
+        {row?.token
+          ? [
+              <img
+                key="img"
+                src={row?.token?.icon || defaultTokenIcon}
+                alt="token icon"
+              />,
+              <Link key="link" href={`/token/${row?.token?.address}`}>
+                <Text
+                  span
+                  hoverValue={`${
+                    row?.token?.name || t(translations.general.notAvailable)
+                  } (${
+                    row?.token?.symbol || t(translations.general.notAvailable)
+                  })`}
+                >
+                  {formatString(
+                    `${
+                      row?.token?.name || t(translations.general.notAvailable)
+                    } (${
+                      row?.token?.symbol || t(translations.general.notAvailable)
+                    })`,
+                    'tag',
+                  )}
+                </Text>
+              </Link>,
+            ]
+          : loadingText}
+      </StyledIconWrapper>
+    ),
+  };
+
+  const columnsTokensWidthErc20 = [3, 5, 5, 3, 5, 4];
+  const columnsTokenTrasfersErc20: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-    {
-      ...tokenColunms.token,
-      render: row => (
-        <StyledIconWrapper>
-          {row?.token
-            ? [
-                <img
-                  key="img"
-                  src={row?.token?.icon || defaultTokenIcon}
-                  alt="token icon"
-                />,
-                <Link key="link" href={`/token/${row?.token?.address}`}>
-                  <Text
-                    span
-                    hoverValue={`${
-                      row?.token?.name || t(translations.general.notAvailable)
-                    } (${
-                      row?.token?.symbol || t(translations.general.notAvailable)
-                    })`}
-                  >
-                    {formatString(
-                      `${
-                        row?.token?.name || t(translations.general.notAvailable)
-                      } (${
-                        row?.token?.symbol ||
-                        t(translations.general.notAvailable)
-                      })`,
-                      'tag',
-                    )}
-                  </Text>
-                </Link>,
-              ]
-            : loadingText}
-        </StyledIconWrapper>
-      ),
-    },
+    tokenColumnsToken,
     tokenColunms.age,
-  ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc20[i] }));
+
+  const columnsTokensWidthErc721 = [3, 5, 5, 3, 5, 4];
+  const columnsTokenTrasfersErc721: ColumnsType = [
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    tokenColunms.tokenId,
+    tokenColumnsToken,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
+
+  const columnsTokensWidthErc1155 = [3, 5, 4, 2, 3, 4, 4];
+  const columnsTokenTrasfersErc1155: ColumnsType = [
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    tokenColunms.quantity,
+    tokenColunms.tokenId,
+    tokenColumnsToken,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
   const columnsBlocksWidth = [4, 2, 3, 2, 4, 3, 3, 4];
   const columnsMinedBlocks: ColumnsType = [
@@ -494,7 +516,7 @@ export function Table({ address }) {
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`,
     table: {
-      columns: columnsTokenTrasfers,
+      columns: columnsTokenTrasfersErc20,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
     hasFilter: true,
@@ -513,7 +535,7 @@ export function Table({ address }) {
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`,
     table: {
-      columns: columnsTokenTrasfers,
+      columns: columnsTokenTrasfersErc721,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
     hasFilter: true,
@@ -532,7 +554,7 @@ export function Table({ address }) {
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
     table: {
-      columns: columnsTokenTrasfers,
+      columns: columnsTokenTrasfersErc1155,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
     hasFilter: true,

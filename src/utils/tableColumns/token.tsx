@@ -247,7 +247,11 @@ export const tokenId = {
   ),
   dataIndex: 'tokenId',
   key: 'tokenId',
-  render: value => value || '-',
+  render: value => (
+    <Text span hoverValue={value}>
+      <SpanWrap>{value || '-'}</SpanWrap>
+    </Text>
+  ),
 };
 
 export const StyledIconWrapper = styled.div`
@@ -271,4 +275,11 @@ const ImgWrap = styled.img`
   ${media.s} {
     right: -1.1429rem;
   }
+`;
+
+const SpanWrap = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
 `;
