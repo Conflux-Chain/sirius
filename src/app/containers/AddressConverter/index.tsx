@@ -12,11 +12,13 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
-import { Input, Button } from '@cfxjs/react-ui';
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { Input, Button, Link } from '@cfxjs/react-ui';
+import {
+  format,
+  address as utilAddress,
+} from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { CopyButton } from '../../components/CopyButton';
 import { useParams } from 'react-router-dom';
-import { hasNetworkPrefix } from 'js-conflux-sdk/src/util/address';
 import { List } from './List';
 
 interface FormattedAddressesType {
@@ -26,6 +28,8 @@ interface FormattedAddressesType {
   bytes32MainnetAddressWithType: string;
   bytes32TestnetAddress: string;
   bytes32TestnetAddressWithType: string;
+  bytes32NetAddress: string;
+  bytes32NetAddressWithType: string;
 }
 
 const DEFAULT_FORMATTED_ADDRESSES = {
@@ -35,6 +39,8 @@ const DEFAULT_FORMATTED_ADDRESSES = {
   bytes32MainnetAddressWithType: '',
   bytes32TestnetAddress: '',
   bytes32TestnetAddressWithType: '',
+  bytes32NetAddress: '',
+  bytes32NetAddressWithType: '',
 };
 
 export function AddressConverter() {
@@ -44,6 +50,7 @@ export function AddressConverter() {
   const { t } = useTranslation();
   const ERROR_MESSAGE = t(translations.addressConverter.incorrectFormat);
   const [address, setAddress] = useState<string>(routerAddress);
+  const [networkId, setNetworkId] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [formattedAddresses, setFormattedAddresses] = useState<
     FormattedAddressesType
@@ -55,13 +62,15 @@ export function AddressConverter() {
       bytes32MainnetAddress,
       bytes32MainnetAddressWithType,
       bytes32TestnetAddress,
-      bytes32TestnetAddressWithType;
+      bytes32TestnetAddressWithType,
+      bytes32NetAddress,
+      bytes32NetAddressWithType;
 
     try {
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
-      } else if (hasNetworkPrefix(address)) {
+      } else if (utilAddress.hasNetworkPrefix(address)) {
         hexAddress = format.hexAddress(address);
         hexChecksumAddress = format.checksumAddress(hexAddress);
         bytes32MainnetAddress = format.address(hexAddress, 1029);
@@ -75,6 +84,11 @@ export function AddressConverter() {
         bytes32MainnetAddressWithType = format.address(hexAddress, 1029, true);
         bytes32TestnetAddress = format.address(hexAddress, 1);
         bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
+        if (networkId !== '') {
+          const num = Number(networkId);
+          bytes32NetAddress = format.address(hexAddress, num);
+          bytes32NetAddressWithType = format.address(hexAddress, num, true);
+        }
       }
 
       setFormattedAddresses({
@@ -84,6 +98,8 @@ export function AddressConverter() {
         bytes32MainnetAddressWithType,
         bytes32TestnetAddress,
         bytes32TestnetAddressWithType,
+        bytes32NetAddress,
+        bytes32NetAddressWithType,
       });
     } catch (e) {
       setError(ERROR_MESSAGE + ': ' + e.message);
@@ -91,8 +107,18 @@ export function AddressConverter() {
     }
   };
 
-  const handleInputChange = e => {
+  const handleAddressChange = e => {
     setAddress(e.target.value.trim());
+    setError('');
+  };
+
+  const handleNetworkIdChange = e => {
+    let num = e.target.value.trim();
+    if (num !== '' && Number(num) < 1) {
+      return;
+    } else {
+      setNetworkId(num);
+    }
     setError('');
   };
 
@@ -123,14 +149,34 @@ export function AddressConverter() {
             placeholder={t(translations.addressConverter.inputPlaceholder)}
             size="small"
             variant="solid"
-            className="convert-address-input"
-            onChange={handleInputChange}
+            className="convert-address-input input-address"
+            onChange={handleAddressChange}
             onKeyPress={e => {
               if (e.key === 'Enter') {
                 handleConvert();
               }
             }}
           ></Input>
+          {address.startsWith('0x') && (
+            <>
+              <span className="input-spacer"></span>
+              <Input
+                type="number"
+                min="1"
+                size="small"
+                variant="solid"
+                className="convert-address-input input-network-id"
+                value={networkId}
+                placeholder={t(translations.addressConverter.networkId)}
+                onChange={handleNetworkIdChange}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    handleConvert();
+                  }
+                }}
+              ></Input>
+            </>
+          )}
           <div className="convert-address-error">{error}</div>
         </div>
         <Button
@@ -179,10 +225,7 @@ export function AddressConverter() {
               )}
             </div>
           </List>
-          <List
-            noBorder
-            title={t(translations.addressConverter.newTestnetAddress)}
-          >
+          <List title={t(translations.addressConverter.newTestnetAddress)}>
             <div>
               {formattedAddresses.bytes32TestnetAddress}{' '}
               {formattedAddresses.bytes32TestnetAddress && (
@@ -200,6 +243,25 @@ export function AddressConverter() {
               )}
             </div>
           </List>
+
+          {formattedAddresses.bytes32NetAddress ? (
+            <List title={t(translations.addressConverter.newCustomnetAddress)}>
+              <div>
+                {formattedAddresses.bytes32NetAddress}{' '}
+                {formattedAddresses.bytes32NetAddress && (
+                  <CopyButton copyText={formattedAddresses.bytes32NetAddress} />
+                )}
+              </div>
+              <div>
+                {formattedAddresses.bytes32NetAddressWithType}{' '}
+                {formattedAddresses.bytes32NetAddressWithType && (
+                  <CopyButton
+                    copyText={formattedAddresses.bytes32NetAddressWithType}
+                  />
+                )}
+              </div>
+            </List>
+          ) : null}
         </Card>
       </StyledResultWrapper>
       <StyledRemarkWrapper>
@@ -209,6 +271,15 @@ export function AddressConverter() {
         <div className="convert-address-tip">
           <div>{t(translations.addressConverter.tip1)}</div>
           <div>{t(translations.addressConverter.tip2)}</div>
+          <div>
+            {t(translations.addressConverter.tip3)}
+            <Link
+              target="_blank"
+              href={t(translations.addressConverter.tip3Link)}
+            >
+              {t(translations.addressConverter.tip3end)}
+            </Link>
+          </div>
         </div>
       </StyledRemarkWrapper>
     </StyledPageWrapper>
@@ -236,26 +307,49 @@ const StyledInputWrapper = styled.div`
   display: flex;
 
   .input-container.convert-address-input {
-    height: 32px;
+    height: 2.2857rem;
 
     input {
-      width: 399px;
-      height: 32px;
+      height: 2.2857rem;
       background: rgba(30, 61, 228, 0.04);
-      border-radius: 4px;
+      border-radius: 0.2857rem;
       margin: 0;
-      padding: 0 16px;
+      padding: 0 1.1429rem;
+    }
 
-      ${media.s} {
-        width: 100%;
+    &.input-address {
+      input {
+        width: 28.5714rem;
+
+        ${media.s} {
+          width: 100%;
+        }
+      }
+    }
+
+    &.input-network-id {
+      input {
+        width: 11.7143rem;
       }
     }
   }
 
+  /* solve react-ui input margin issue */
+  .input-spacer {
+    width: 1.1429rem;
+    display: inline-block;
+
+    ${media.s} {
+      display: block;
+      width: 0;
+      margin-top: 0.5714rem;
+    }
+  }
+
   .btn.convert-address-button {
-    height: 32px;
-    line-height: 32px;
-    margin: 0 0 0 16px;
+    height: 2.2857rem;
+    line-height: 2.2857rem;
+    margin: 0 0 0 1.1429rem;
     border: none;
 
     & > div {
@@ -264,12 +358,12 @@ const StyledInputWrapper = styled.div`
   }
 
   .convert-address-error {
-    width: 399px;
-    margin: 8px 0;
-    font-size: 12px;
+    width: 28.5714rem;
+    margin: 0.5714rem 0;
+    font-size: 0.8571rem;
     color: #e64e4e;
-    line-height: 16px;
-    padding-left: 5px;
+    line-height: 1.1429rem;
+    padding-left: 0.3571rem;
 
     ${media.s} {
       width: 100%;
@@ -277,13 +371,13 @@ const StyledInputWrapper = styled.div`
   }
 `;
 const StyledResultWrapper = styled.div`
-  margin-top: 24px;
+  margin-top: 1.7143rem;
 
   .convert-address-description {
     flex-direction: row;
 
     .left {
-      width: 500px;
+      width: 35.7143rem;
     }
   }
 `;

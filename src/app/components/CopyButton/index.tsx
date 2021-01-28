@@ -54,6 +54,7 @@ export const CopyButton = ({
         onClick={handleClick}
         style={{
           cursor: 'pointer',
+          display: 'flex',
         }}
       >
         <svg
