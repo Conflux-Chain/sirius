@@ -509,7 +509,7 @@
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "."
+    "tip3end": "CIP-37"
   },
   "notice": {
     "mainnet": [

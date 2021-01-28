@@ -40,41 +40,41 @@ export const Basic = ({
 }: BasicProps) => {
   const { t } = useTranslation();
 
-  const fieldPrice = {
-    title: (
-      <Tooltip text={t(translations.toolTip.token.price)} placement="top">
-        {t(translations.token.price)}
-      </Tooltip>
-    ),
-    children:
-      price !== undefined ? (
-        <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
-          {`${formatBalance(price, decimals)} ${symbol}`}
-        </Text>
-      ) : address ? (
-        t(translations.general.notAvailable)
-      ) : undefined,
-  };
+  // const fieldPrice = {
+  //   title: (
+  //     <Tooltip text={t(translations.toolTip.token.price)} placement="top">
+  //       {t(translations.token.price)}
+  //     </Tooltip>
+  //   ),
+  //   children:
+  //     price !== undefined ? (
+  //       <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
+  //         {`${formatBalance(price, decimals)} ${symbol}`}
+  //       </Text>
+  //     ) : address ? (
+  //       t(translations.general.notAvailable)
+  //     ) : undefined,
+  // };
 
-  const fieldMarketCap = {
-    title: (
-      <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
-        {t(translations.token.marketCap, {
-          interpolation: { escapeValue: false },
-        })}
-      </Tooltip>
-    ),
-    children:
-      marketCap !== undefined ? (
-        <Text
-          hoverValue={`${formatBalance(marketCap, decimals, true)} ${symbol}`}
-        >
-          {`${formatBalance(marketCap, decimals)} ${symbol}`}
-        </Text>
-      ) : address ? (
-        t(translations.general.notAvailable)
-      ) : undefined,
-  };
+  // const fieldMarketCap = {
+  //   title: (
+  //     <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
+  //       {t(translations.token.marketCap, {
+  //         interpolation: { escapeValue: false },
+  //       })}
+  //     </Tooltip>
+  //   ),
+  //   children:
+  //     marketCap !== undefined ? (
+  //       <Text
+  //         hoverValue={`${formatBalance(marketCap, decimals, true)} ${symbol}`}
+  //       >
+  //         {`${formatBalance(marketCap, decimals)} ${symbol}`}
+  //       </Text>
+  //     ) : address ? (
+  //       t(translations.general.notAvailable)
+  //     ) : undefined,
+  // };
 
   const fieldContractAddress = {
     title: (
@@ -148,15 +148,12 @@ export const Basic = ({
   };
 
   let list = [
-    fieldPrice,
-    fieldContractAddress,
-    fieldMarketCap,
-    fieldDecimal,
     fieldTotalSupply,
-    null,
+    fieldContractAddress,
     fieldHolders,
-    null,
+    fieldDecimal,
     fieldTransfers,
+    null,
   ];
 
   if (
