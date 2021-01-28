@@ -93,7 +93,9 @@ export const price = {
   ),
   dataIndex: 'price',
   key: 'price',
-  render: value => <span>{formatNumber(value || 0)}</span>,
+  render: value => (
+    <span>{value != null ? `$ ${formatNumber(value || 0)}` : '-'}</span>
+  ),
 };
 
 export const marketCap = {
@@ -105,7 +107,11 @@ export const marketCap = {
   ),
   dataIndex: 'totalPrice',
   key: 'totalPrice',
-  render: value => <span>{formatNumber(value || 0)}</span>,
+  render: value => (
+    <span>
+      {value != null && value > 0 ? `$ ${formatNumber(value || 0)}` : '-'}
+    </span>
+  ),
 };
 
 export const transfer = transferType => ({

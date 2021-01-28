@@ -22,7 +22,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferStatistic'],
+    fields: ['icon', 'transferStatistic', 'price', 'totalPrice', 'quoteUrl'],
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 

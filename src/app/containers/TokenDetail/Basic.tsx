@@ -8,7 +8,7 @@ import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatBalance, toThousands } from '../../../utils';
+import { formatBalance, formatNumber, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { AddressContainer } from '../../components/AddressContainer';
 
@@ -16,8 +16,9 @@ export interface BasicProps {
   address?: string;
   transferType?: string;
   totalSupply?: string;
-  price?: string;
-  marketCap?: string;
+  price?: number;
+  totalPrice?: number;
+  quoteUrl?: string;
   symbol?: string;
   name?: string;
   tokenAddress?: string;
@@ -31,7 +32,7 @@ export const Basic = ({
   transferType,
   totalSupply,
   price,
-  marketCap,
+  totalPrice,
   symbol,
   decimals,
   tokenAddress,
@@ -49,7 +50,7 @@ export const Basic = ({
     children:
       price !== undefined ? (
         <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
-          {`${formatBalance(price, decimals)} ${symbol}`}
+          {price != null ? `$ ${formatNumber(price || 0)}` : '-'}
         </Text>
       ) : address ? (
         t(translations.general.notAvailable)
@@ -65,11 +66,13 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      marketCap !== undefined ? (
+      totalPrice !== undefined ? (
         <Text
-          hoverValue={`${formatBalance(marketCap, decimals, true)} ${symbol}`}
+          hoverValue={`${formatBalance(totalPrice, decimals, true)} ${symbol}`}
         >
-          {`${formatBalance(marketCap, decimals)} ${symbol}`}
+          {totalPrice != null && totalPrice > 0
+            ? `$ ${formatNumber(totalPrice || 0)}`
+            : '-'}
         </Text>
       ) : address ? (
         t(translations.general.notAvailable)

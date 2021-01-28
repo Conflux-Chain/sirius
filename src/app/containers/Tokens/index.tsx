@@ -34,7 +34,7 @@ export function Tokens() {
     tokenColunms.contract,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/token?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=transferStatistic.${cfxTokenTypes.erc20}&fields=transferCount,icon`;
+  let url = `/token?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=transferStatistic.${cfxTokenTypes.erc20}&fields=transferCount,icon,price,totalPrice,quoteUrl`;
 
   let title = t(translations.header.tokens20);
 
