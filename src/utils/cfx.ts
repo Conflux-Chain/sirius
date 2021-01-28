@@ -5,7 +5,7 @@ import {
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { Faucet } from 'conflux-sponsorfaucet';
 import { isTestNetEnv } from './hooks/useTestnet';
-const cfxUrl = window.location.origin + '/rpc';
+const cfxUrl = window.location.origin + '/rpcv2'; // cip-37
 
 const mainNetworkId = 1029;
 const testnetNetworkId = 1;

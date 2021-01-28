@@ -655,7 +655,7 @@ export const fetchRecentDagBlock = async (opts = {}) => {
 
 const fetchClientVersion = async () => {
   const version = await simplePostFetcher(
-    '/rpc',
+    '/rpcv2', // cip-37
     {
       jsonrpc: '2.0',
       id: '0',

@@ -7,16 +7,10 @@ import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
 import { cfx, faucet, faucetAddress, formatAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
-import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
 import { DappButton } from '../../components/DappButton/Loadable';
-import {
-  isAddress,
-  getEllipsStr,
-  fromDripToGdrip,
-  fromDripToCfx,
-} from '../../../utils';
+import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
