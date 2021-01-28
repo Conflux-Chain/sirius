@@ -19,6 +19,7 @@ import {
   formatTimeStamp,
   toThousands,
 } from '../../../utils';
+import { AddressContainer } from '../../components/AddressContainer';
 export function DescriptionPanel({ hash: blockHash }) {
   const history = useHistory();
   const { t } = useTranslation();
@@ -143,7 +144,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           <SkeletonContainer shown={loading}>
             {
               <>
-                <Link href={`/address/${miner}`}>{miner}</Link>{' '}
+                <AddressContainer value={miner} isFull={true} />{' '}
                 <CopyButton copyText={miner} />
               </>
             }

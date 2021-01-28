@@ -6,7 +6,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import imgArray from 'images/two_array.png';
-import { Link } from './../Link';
+import { AddressContainer } from '../AddressContainer';
 interface OutputParamsProps {
   output: object;
   value?: any;
@@ -20,9 +20,9 @@ const OutputItem = ({ output, value }: Props) => {
   try {
     if (type === 'address') {
       valueComp = (
-        <Link href={`/address/${value}`} className="value">
-          {value}
-        </Link>
+        <span className="value">
+          <AddressContainer value={value} isFull={true} />
+        </span>
       );
     } else if (type.startsWith('byte') && type.endsWith('[]')) {
       // TODO deal bytes[] length too long

@@ -203,20 +203,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForCollateral ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForCollateral}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForCollateral}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForCollateral,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForCollateral}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>
@@ -296,20 +285,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForGas ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForGas}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForGas}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForGas,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForGas}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>
