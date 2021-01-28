@@ -351,9 +351,8 @@ exports[`<AddressConverter /> should match the snapshot 1`] = `
           href="https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md"
           target="_blank"
         >
-          https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md
+          CIP-37
         </a>
-        .
       </div>
     </div>
   </div>

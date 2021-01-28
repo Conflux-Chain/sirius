@@ -113,7 +113,12 @@ export function AddressConverter() {
   };
 
   const handleNetworkIdChange = e => {
-    setNetworkId(e.target.value.trim());
+    let num = e.target.value.trim();
+    if (num !== '' && Number(num) < 1) {
+      return;
+    } else {
+      setNetworkId(num);
+    }
     setError('');
   };
 
@@ -157,6 +162,7 @@ export function AddressConverter() {
               <span className="input-spacer"></span>
               <Input
                 type="number"
+                min="1"
                 size="small"
                 variant="solid"
                 className="convert-address-input input-network-id"
@@ -271,9 +277,8 @@ export function AddressConverter() {
               target="_blank"
               href={t(translations.addressConverter.tip3Link)}
             >
-              {t(translations.addressConverter.tip3Link)}
+              {t(translations.addressConverter.tip3end)}
             </Link>
-            {t(translations.addressConverter.tip3end)}
           </div>
         </div>
       </StyledRemarkWrapper>
