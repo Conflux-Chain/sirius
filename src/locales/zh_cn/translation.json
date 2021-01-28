@@ -506,10 +506,10 @@
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
     "remark": "说明：",
     "tip1": "1. Checksum 规则将地址中的部分字母大写，与剩余的小写字母来形成校验和，让地址拥有自校验的能力。",
-    "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 checksum 校验规则。",
-    "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 conflux 网络。关于有效网络 ID 的信息请查看 ",
+    "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 Checksum 校验规则。",
+    "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "CIP-37"
+    "tip3end": "CIP-37。"
   },
   "notice": {
     "mainnet": [
