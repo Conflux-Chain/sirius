@@ -180,7 +180,7 @@ export const Transaction = () => {
                 transactionHash: txnhash,
                 fields: 'token',
                 limit: 100,
-                revert: false,
+                reverse: true,
               }),
             );
             Promise.all(proArr)

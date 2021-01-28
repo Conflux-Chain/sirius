@@ -50,13 +50,16 @@
     "reset": "Reset",
     "payableAmountCfx": "payableAmount (cfx) ",
     "error": {
-      "address": "Please enter a Conflux address starting with 0x0,0x1 or 0x8",
+      "address": "Please enter a conflux address",
       "bool": "Please enter true/false or 0/1",
-      "int": "Please enter an integer in the range {{min}} ~ {{max}}",
-      "uint": "Please enter a non-negative integer in the range of {{min}} ~ {{max}}",
+      "int": "Please enter an integer in the range -(2^{{num}}-1) ~ 2^{{num}}-1",
+      "uint": "Please enter a non-negative integer in the range of 0 ~ 2^{{num}}-1",
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
       "cfx": "Please enter a non-negative number with no more than 18 decimal places",
+      "array": "Please enter a valid {{type}} array with square brackets",
+      "tuple": "Please enter a valid tuple",
+      "notSupport": "{{type}} support will be coming soon",
       "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
       "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
     },
@@ -98,12 +101,17 @@
     "description": "Tokens",
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "table": {
       "number": "#",
       "token": "Token",
       "transfer": "Transfers",
       "totalSupply": "Total Supply",
       "holders": "Holders",
+      "price": "Price",
+      "change": "Change (%)",
+      "volume": "Volume (24H)",
+      "marketCap": "Market Cap",
       "contract": "Contract"
     }
   },
@@ -117,6 +125,9 @@
     "home": "Home",
     "bnt": "Blocks & Transactions",
     "tokens": "Tokens",
+    "tokens20": "ERC-20 Tokens",
+    "tokens721": "ERC-721 Tokens",
+    "tokens1155": "ERC-1155 Tokens",
     "contract": "Contract",
     "contractCreation": "Contract Creation",
     "contractSponsor": "Contract Sponsor",
@@ -125,14 +136,17 @@
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
-    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address"
+    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
+    "addressConverter": "address converter"
   },
   "footer": {
     "product": "Product",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "ConfluxPortal",
     "confluxbounty": "ConfluxBounty",
-    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved."
+    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
+    "tool": "Tool",
+    "addressFormatConversion": "Address Format"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
@@ -154,11 +168,16 @@
     "transaction": "transaction"
   },
   "token": {
+    "token": "Token",
     "totalSupplay": "Total Supply",
     "contract": "Contract",
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
+    "price": "Price",
+    "change": "Change (%)",
+    "volume": "Volume (24H)",
+    "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "address": "addresses",
     "transferList": {
@@ -234,6 +253,10 @@
       "token": {
         "number": "#",
         "token": "Token",
+        "price": "Price",
+        "change": "Change (%)",
+        "volume": "Volume (24H)",
+        "marketCap": "Market Cap",
         "transfer": "Transfer",
         "totalSupply": "Total Supply",
         "holders": "Holders",
@@ -242,6 +265,7 @@
         "age": "Age",
         "from": "From",
         "to": "To",
+        "tokenId": "TokenID",
         "quantity": "Quantity"
       },
       "contracts": {
@@ -468,6 +492,25 @@
       "age": "Age"
     }
   },
+  "addressConverter": {
+    "title": "Address Format Conversion",
+    "subtitle": "The old Conflux address will be converted to a new address by using the advanced checksum method.",
+    "button": "Convert",
+    "inputPlaceholder": "Input address",
+    "networkId": "network id (optional)",
+    "incorrectFormat": "Invalid address format",
+    "lowercase": "Address in lowercase",
+    "checksum": "Old checksummed address",
+    "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
+    "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
+    "newCustomnetAddress": "Conflux custom network id new address (both address types are valid)",
+    "remark": "Remark:",
+    "tip1": "1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.",
+    "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
+    "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
+    "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
+    "tip3end": "CIP-37"
+  },
   "notice": {
     "mainnet": [
       "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",
@@ -526,6 +569,10 @@
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."
     },
     "token": {
+      "price": "Token price.",
+      "volume": "The total dollar value of all cryptocurrency transactions over the past 24 hours.",
+      "marketCap": "The market value of a cryptocurrency's total supply. <br> Market Cap = Current Price x Total Supply.",
+      "fullyDilutedMarketCap": "The market cap if the max supply was in circulation. Fully-diluted market cap = price x max supply.",
       "totalSupply": "Total supply of the token.",
       "holders": "The amout of addresses which hold the token.",
       "transfers": "The amout of token transactions which belongs to the address.",
@@ -543,5 +590,46 @@
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
+  },
+  "connectWallet": {
+    "button": {
+      "text": "Connect Wallet",
+      "nPending": "{{count}} Pending"
+    },
+    "modal": {
+      "title": "Connect to a wallet",
+      "installConfluxPortal": "Install ConfluxPortal",
+      "confluxPortal": "ConfluxPortal",
+      "initializing": "Initializing...",
+      "errorConnecting": "Error connecting...",
+      "tryAgain": "Try again",
+      "newToConflux": "New to Conflux?",
+      "learnMore": "Learn more about wallets.",
+      "account": "Account",
+      "connectedWithConfluxPortal": "Connected with ConfluxPortal",
+      "copyAddress": "Copy address",
+      "viewOnConfluxScan": "View on ConfluxScan",
+      "networkNotice": "Network Notice",
+      "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
+      "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal."
+    },
+    "history": {
+      "emptyRecordsTip": "Your transcations will appear here...",
+      "recentlyRecordsTip": "Recent Transcations",
+      "clearAll": "Clear all",
+      "recentlyTenRecordsTip": "Only the latest 10 transactions will be shown.",
+      "contractCreation": "Contract creation",
+      "contractEdit": "Contract edit",
+      "sponsorApplication": "Sponsor application",
+      "writeContract": "Write contract",
+      "viewYourTranscation": "View your transcation"
+    }
+  },
+  "txnAction": {
+    "10001": "Contract creation",
+    "10002": "Contract edit",
+    "10003": "Write contract",
+    "10004": "read contract",
+    "10005": "Sponsor application"
   }
 }

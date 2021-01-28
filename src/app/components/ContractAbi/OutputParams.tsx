@@ -15,9 +15,9 @@ const OutputParams = ({ outputs }: Props) => {
   let str = '';
   if (outputs) {
     outputs.forEach(function (value, index) {
-      str += value['name'] + '(' + value['type'] + ')';
+      str += `${value['name']} <i>(${value['type']})</i>`;
       if (index !== outputs.length - 1) {
-        str += ',';
+        str += ', ';
       }
     });
   }
@@ -25,7 +25,7 @@ const OutputParams = ({ outputs }: Props) => {
     <>
       <Container>
         <span className="label">Return:</span>
-        <span className="content">{str}</span>
+        <span className="content" dangerouslySetInnerHTML={{ __html: str }} />
       </Container>
     </>
   );

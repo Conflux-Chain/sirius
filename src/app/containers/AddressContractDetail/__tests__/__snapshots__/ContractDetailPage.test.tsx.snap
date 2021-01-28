@@ -14,6 +14,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   max-width: 32.1429rem;
 }
 
+.c5 a {
+  color: #00acff;
+}
+
+.c5 a:hover {
+  color: #3dc0ff;
+}
+
 .c6 {
   cursor: pointer;
 }
@@ -345,7 +353,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
               class="jsx-726172838 tooltip "
             >
               <div
-                style="cursor: pointer;"
+                style="cursor: pointer; display: flex;"
               >
                 <svg
                   class="icon address-line-icon"

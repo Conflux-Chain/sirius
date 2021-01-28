@@ -11,7 +11,7 @@ import { Card } from '../Card';
 import { Description, DescriptionProps } from '../Description';
 
 interface ListProps {
-  list: Array<DescriptionProps>;
+  list: Array<DescriptionProps | null>;
 }
 
 export const List = ({ list }: ListProps) => {
@@ -45,10 +45,10 @@ export const List = ({ list }: ListProps) => {
             key={`desc_${index}`}
             small
             className="list-desp"
-            title={item.title}
-            noBorder={noBorder(index)}
+            title={item != null ? item.title : ''}
+            noBorder={item != null ? noBorder(index) : true}
           >
-            {item.children || <Skeleton />}
+            {item != null ? item.children || <Skeleton /> : null}
           </Description>
         ))}
       </Card>

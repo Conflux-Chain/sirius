@@ -8,7 +8,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { Link } from '../../components/Link/Loadable';
-import { useBreakpoint, media } from 'styles/media';
+import { media } from 'styles/media';
 import { Footer as FooterComp } from '../../components/Footer/Loadable';
 import { TextLogo } from '../../components/TextLogo/Loadable';
 import { translations } from 'locales/i18n';
@@ -18,8 +18,6 @@ import imgIconMedium from 'images/icon-medium.svg';
 
 export function Footer() {
   const { t } = useTranslation();
-  const bp = useBreakpoint();
-  const isS = bp === 's';
 
   const left = [<TextLogo key="logo" />];
 
@@ -36,6 +34,11 @@ export function Footer() {
   const bountyLink = (
     <Link className="footer-link" href="https://bounty.conflux-chain.org">
       {t(translations.footer.confluxbounty)}
+    </Link>
+  );
+  const addressConverterLink = (
+    <Link className="footer-link" href="/address-converter">
+      {t(translations.footer.addressFormatConversion)}
     </Link>
   );
 
@@ -61,29 +64,30 @@ export function Footer() {
 
   const rightTop = [
     <FooterWrapper key="right-top">
-      <FooterContentTitle key="title">
-        {t(translations.footer.product)}
-      </FooterContentTitle>
-      {!isS && (
-        <FooterContent key="content">
+      <FooterContentWrapper>
+        <FooterContentTitle>
+          {t(translations.footer.product)}
+        </FooterContentTitle>
+        <FooterContent>
           <FooterContentRow>
             <FooterContentLink key="1">{websiteLink}</FooterContentLink>
             <FooterContentLink key="2">{portalLink}</FooterContentLink>
             <FooterContentLink key="3">{bountyLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
-      )}
-      {isS && (
-        <FooterContent key="content">
-          <FooterContentRow key="1">
-            <FooterContentLink key="1">{websiteLink}</FooterContentLink>
-            <FooterContentLink key="2">{portalLink}</FooterContentLink>
-            <FooterContentLink key="3">{bountyLink}</FooterContentLink>
+      </FooterContentWrapper>
+      <FooterContentWrapper>
+        <FooterContentTitle>{t(translations.footer.tool)}</FooterContentTitle>
+        <FooterContent>
+          <FooterContentRow>
+            <FooterContentLink key="1">
+              {addressConverterLink}
+            </FooterContentLink>
           </FooterContentRow>
         </FooterContent>
-      )}
-      <FooterContentRow>{icons}</FooterContentRow>
+      </FooterContentWrapper>
     </FooterWrapper>,
+    <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
     <CopyRight key="copyright">{t(translations.footer.copryRight)}</CopyRight>,
@@ -97,8 +101,22 @@ export function Footer() {
 // wrapper
 const FooterWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+
+  ${media.s} {
+    flex-direction: column;
+  }
+`;
+const FooterContentWrapper = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  ${media.s} {
+    &:last-child {
+      margin-top: 1.1429rem;
+    }
+  }
 `;
 
 // left

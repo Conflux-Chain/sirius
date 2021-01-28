@@ -204,6 +204,28 @@ export const token = {
   },
 };
 
+export const price = {
+  width: 1,
+  title: (
+    <Translation>{t => t(translations.general.table.token.price)}</Translation>
+  ),
+  dataIndex: 'price',
+  key: 'price',
+  render: value => <span>{formatNumber(value || 0)}</span>,
+};
+
+export const marketCap = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.marketCap)}
+    </Translation>
+  ),
+  dataIndex: 'marketCap',
+  key: 'marketCap',
+  render: value => <span>{formatNumber(value || 0)}</span>,
+};
+
 export const transfer = {
   width: 1,
   title: (
@@ -340,6 +362,18 @@ export const from = {
       type: 'from',
       ...opt,
     }),
+};
+
+export const tokenId = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.tokenId)}
+    </Translation>
+  ),
+  dataIndex: 'tokenId',
+  key: 'tokenId',
+  render: value => value || '-',
 };
 
 export const StyledIconWrapper = styled.div`

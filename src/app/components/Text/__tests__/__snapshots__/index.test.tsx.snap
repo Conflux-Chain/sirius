@@ -14,6 +14,14 @@ exports[`<Text  /> should match snapshot 1`] = `
   max-width: 32.1429rem;
 }
 
+.c0 a {
+  color: #00acff;
+}
+
+.c0 a:hover {
+  color: #3dc0ff;
+}
+
 .c1 .text.sirius-text {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -81,6 +89,14 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   color: #cdcdcd;
   line-height: 1.1429rem;
   max-width: 32.1429rem;
+}
+
+.c0 a {
+  color: #00acff;
+}
+
+.c0 a:hover {
+  color: #3dc0ff;
 }
 
 .c1 .text.sirius-text {

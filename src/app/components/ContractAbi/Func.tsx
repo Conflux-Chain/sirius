@@ -77,7 +77,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       if (address) {
         setHoverText('');
       } else {
-        setHoverText(t(translations.contract.connectPortalFirst));
+        setHoverText('contract.connectPortalFirst');
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,6 +86,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
+
+    // Special convert for various types before call sdk
     items.forEach(function (value, index) {
       let val = value['val'];
       if (value['type'] === 'bool') {
@@ -96,6 +98,9 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       } else if (value['type'].startsWith('byte')) {
         value['val'] = Buffer.from(value['val'].substr(2), 'hex');
+      } else if (value['type'].endsWith('[]')) {
+        // array: convert to array
+        value['val'] = Array.from(JSON.parse(value['val']));
       }
       objValues.push(value['val']);
     });
@@ -151,23 +156,20 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             try {
               const { data: txData } = contract[data['name']](...objParams);
               txParams['data'] = txData;
-              //loading
-              setModalType('loading');
-              setModalShown(true);
-              confluxJS
-                .sendTransaction(txParams)
-                .then(txHash => {
-                  //success alert
-                  setModalType('success');
-                  setTxHash(txHash);
-                  setOutputError('');
-                })
-                .catch(error => {
-                  //rejected alert
-                  setModalType('fail');
-                  setOutputError(error.message || '');
-                });
             } catch (error) {
+              setOutputError(error.message || '');
+              return;
+            }
+            //loading
+            setModalType('loading');
+            setModalShown(true);
+            try {
+              const txHash = await confluxJS.sendTransaction(txParams);
+              setModalType('success');
+              setTxHash(txHash);
+              setOutputError('');
+            } catch (error) {
+              setModalType('fail');
               setOutputError(error.message || '');
             }
           } else {
@@ -190,6 +192,26 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   function getValidator(type: string) {
     const check = (_: any, value) => {
       const val = value && value['val'];
+
+      // tuple
+      // TODO tuple or tuple[] support
+      if (type.startsWith('tuple')) {
+        return Promise.reject(
+          t(translations.contract.error.notSupport, { type }),
+        );
+      }
+
+      // array
+      // TODO multi-dimentional array support
+      if (type.endsWith('[]')) {
+        try {
+          JSON.parse(val);
+          return Promise.resolve();
+        } catch {
+          return Promise.reject(t(translations.contract.error.array, { type }));
+        }
+      }
+
       if (type === 'address') {
         if (isAddress(val)) {
           return Promise.resolve();
@@ -206,19 +228,17 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       } else if (type === 'string') {
         return Promise.resolve();
       } else if (type.startsWith('int')) {
-        const [isInt, min, max] = checkInt(val, type);
+        const [isInt, num] = checkInt(val, type);
         if (isInt) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.int, { min, max }));
+        return Promise.reject(t(translations.contract.error.int, { num }));
       } else if (type.startsWith('uint')) {
-        const [isUint, min, max] = checkUint(val, type);
+        const [isUint, num] = checkUint(val, type);
         if (isUint) {
           return Promise.resolve();
         }
-        return Promise.reject(
-          t(translations.contract.error.uint, { min, max }),
-        );
+        return Promise.reject(t(translations.contract.error.uint, { num }));
       } else if (type.startsWith('byte')) {
         const [isBytes, num] = checkBytes(val, type);
         if (isBytes) {
@@ -304,7 +324,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             <>
               <BtnGroup>
                 {hoverText ? (
-                  <Tooltip text={hoverText} placement="top-start">
+                  <Tooltip text={t(hoverText)} placement="top-start">
                     {btnComp}
                   </Tooltip>
                 ) : (
