@@ -371,12 +371,34 @@ export const Transaction = () => {
     if (transferList.length <= 0) {
       return null;
     }
-    let transferListContainerErc20: Array<any> = [];
-    let transferListContainerErc721: Array<any> = [];
-    let transferListContainerErc1155: Array<any> = [];
+    let transferListContainer: Array<any> = [];
     let transferListContainerStyle = {};
-    for (let i = 0; i < transferList.length; i++) {
-      const transferItem = transferList[i];
+
+    // combine erc1155 batch transfer with batchIndex field
+    let batchCombinedTransferList: any = [];
+
+    transferList.forEach((transfer: any) => {
+      if (transfer.transferType === cfxTokenTypes.erc1155) {
+        const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
+          trans => trans.transactionHash === transfer.transactionHash,
+        );
+        if (batchCombinedTransferListIndex < 0) {
+          batchCombinedTransferList.push({
+            batch: [transfer],
+            ...transfer,
+          });
+        } else {
+          batchCombinedTransferList[batchCombinedTransferListIndex].batch.push(
+            transfer,
+          );
+        }
+      } else {
+        batchCombinedTransferList.push(transfer);
+      }
+    });
+
+    for (let i = 0; i < batchCombinedTransferList.length; i++) {
+      const transferItem: any = batchCombinedTransferList[i];
       let imgSrc = '';
       let tokenName = '';
       let tokenSymbol = '';
@@ -407,51 +429,76 @@ export const Transaction = () => {
       );
       switch (transferItem['transferType']) {
         case cfxTokenTypes.erc721: {
-          transferListContainerErc721.push(
-            <div className="lineContainer" key={`transfer${i + 1}`}>
-              <span>{`${i + 1}. `}</span>
+          transferListContainer.push(
+            <div
+              className="lineContainer"
+              key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
+            >
+              <span>{i + 1}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
               <AddressContainer value={transferItem['to']} />
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">{cfxTokenTypes.erc721}</span>
-              <span className="tokenId">[{transferItem['tokenId']}]</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
+              <span className="type">
+                {transferItem['tokenId'].length > 10 ? (
+                  <>
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </>
+                ) : (
+                  <>&nbsp;</>
+                )}
+                {t(translations.transaction.tokenId)}:
+                <span className="tokenId">{transferItem['tokenId']}</span>
+              </span>
             </div>,
           );
           break;
         }
         case cfxTokenTypes.erc1155: {
-          transferListContainerErc1155.push(
-            <div className="lineContainer" key={`transfer${i + 1}`}>
-              <span>{`${i + 1}. `}</span>
+          transferListContainer.push(
+            <div
+              className="lineContainer"
+              key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
+            >
+              <span>{i + 1}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
               <AddressContainer value={transferItem['to']} />
-              <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">{cfxTokenTypes.erc1155}</span>
-              <span className="value">
-                {typeof tokenDecimals !== 'undefined'
-                  ? `${formatBalance(
-                      transferItem['value'],
-                      tokenDecimals,
-                      true,
-                    )}`
-                  : transferItem['value']}
-              </span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
+              {transferItem['batch'].map(item => (
+                <>
+                  <br />
+                  <span className="batch">
+                    - {t(translations.transaction.for)}{' '}
+                    <span className="value">
+                      {typeof tokenDecimals !== 'undefined'
+                        ? `${formatBalance(item['value'], tokenDecimals, true)}`
+                        : item['value']}
+                    </span>
+                    &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
+                    <span className="tokenId">{item['tokenId']}</span>
+                  </span>
+                </>
+              ))}
             </div>,
           );
           break;
         }
-        default: {
-          transferListContainerErc20.push(
-            <div className="lineContainer" key={`transfer${i + 1}`}>
-              <span>{`${i + 1}. `}</span>
+        case cfxTokenTypes.erc20: {
+          transferListContainer.push(
+            <div
+              className="lineContainer"
+              key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
+            >
+              <span>{i + 1}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -472,6 +519,9 @@ export const Transaction = () => {
           );
           break;
         }
+        // not deal with erc721
+        default:
+          break;
       }
     }
     if (transferList.length > 5) {
@@ -479,9 +529,7 @@ export const Transaction = () => {
     }
     return (
       <div style={transferListContainerStyle} className="transferListContainer">
-        {transferListContainerErc20}
-        {transferListContainerErc721}
-        {transferListContainerErc1155}
+        {transferListContainer}
       </div>
     );
   };
@@ -836,12 +884,17 @@ const StyledCardWrapper = styled.div`
     }
     .value {
       margin: 0 0.1429rem;
+      color: #002257;
     }
     .type {
       margin: 0 0.1429rem;
     }
     .tokenId {
       margin: 0 0.1429rem;
+      color: #002257;
+    }
+    .batch {
+      margin: 0 0.1429rem 0 16px;
     }
   }
   .label {
