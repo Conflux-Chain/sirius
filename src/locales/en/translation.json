@@ -146,7 +146,7 @@
     "confluxbounty": "ConfluxBounty",
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "Tool",
-    "addressFormatConversion": "Address Format"
+    "addressFormatConversion": "Address Format Conversion"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
@@ -509,7 +509,7 @@
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "CIP-37"
+    "tip3end": "CIP-37."
   },
   "notice": {
     "mainnet": [
