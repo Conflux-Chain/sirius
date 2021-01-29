@@ -2,7 +2,7 @@ import {
   Conflux,
   format as cfxFormat,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { Faucet } from 'conflux-sponsorfaucet';
+import Faucet from './sponsorFaucet/faucet';
 import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrl = window.location.origin + '/rpc';
 
