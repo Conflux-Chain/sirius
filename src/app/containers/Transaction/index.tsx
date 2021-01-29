@@ -402,6 +402,8 @@ export const Transaction = () => {
       }
     });
 
+    let index = 1;
+
     for (let i = 0; i < batchCombinedTransferList.length; i++) {
       const transferItem: any = batchCombinedTransferList[i];
       let imgSrc = '';
@@ -432,7 +434,7 @@ export const Transaction = () => {
           {`${tokenName} (${tokenSymbol})`}
         </Link>
       );
-      // TODO index
+      // do not deal with erc721
       switch (transferItem['transferType']) {
         case cfxTokenTypes.erc721: {
           transferListContainer.push(
@@ -440,7 +442,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -471,7 +473,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -504,7 +506,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
