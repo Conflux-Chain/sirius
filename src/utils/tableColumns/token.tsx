@@ -13,6 +13,7 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
+import { cfxTokenTypes } from '../constants';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -114,17 +115,41 @@ export const marketCap = {
   ),
 };
 
-export const transfer = transferType => ({
+export const transferErc20 = {
   width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.token.transfer)}
     </Translation>
   ),
-  dataIndex: `transferStatistic`,
-  key: `transferStatistic`,
-  render: value => <span>{formatNumber(value[transferType])}</span>,
-});
+  dataIndex: `erc20TransferCount`,
+  key: `erc20TransferCount`,
+  render: value => <span>{formatNumber(value)}</span>,
+};
+
+export const transferErc721 = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.transfer)}
+    </Translation>
+  ),
+  dataIndex: `erc721TransferCount`,
+  key: `erc721TransferCount`,
+  render: value => <span>{formatNumber(value)}</span>,
+};
+
+export const transferErc1155 = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.transfer)}
+    </Translation>
+  ),
+  dataIndex: `erc1155TransferCount`,
+  key: `erc1155TransferCount`,
+  render: value => <span>{formatNumber(value)}</span>,
+};
 
 export const totalSupply = {
   width: 1,

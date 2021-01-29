@@ -22,7 +22,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferStatistic', 'price', 'totalPrice', 'quoteUrl'],
+    fields: ['icon', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 
@@ -30,36 +30,36 @@ export function TokenDetail() {
     data = {};
   }
 
-  data.transferStatistic = data.transferStatistic || {};
+  // data.transferStatistic = data.transferStatistic || {};
 
   // set tokenType to the transferType which has max transfer count
-  // TODO maybe change
+  // maybe change
 
-  const transferCountArray = [
-    data.transferStatistic.ERC20 || 0,
-    data.transferStatistic.ERC721 || 0,
-    data.transferStatistic.ERC1155 || 0,
-  ];
-
-  data.transferCount = Math.max(...transferCountArray);
-
-  let transferType = '';
-
-  if (data.transferStatistic.ERC20 !== undefined) {
-    switch (transferCountArray.indexOf(data.transferCount)) {
-      case 0:
-        transferType = cfxTokenTypes.erc20;
-        break;
-      case 1:
-        transferType = cfxTokenTypes.erc721;
-        break;
-      case 2:
-        transferType = cfxTokenTypes.erc1155;
-        break;
-      default:
-        break;
-    }
-  }
+  // const transferCountArray = [
+  //   data.transferStatistic.ERC20 || 0,
+  //   data.transferStatistic.ERC721 || 0,
+  //   data.transferStatistic.ERC1155 || 0,
+  // ];
+  //
+  // data.transferCount = Math.max(...transferCountArray);
+  //
+  // let transferType = '';
+  //
+  // if (data.transferStatistic.ERC20 !== undefined) {
+  //   switch (transferCountArray.indexOf(data.transferCount)) {
+  //     case 0:
+  //       transferType = cfxTokenTypes.erc20;
+  //       break;
+  //     case 1:
+  //       transferType = cfxTokenTypes.erc721;
+  //       break;
+  //     case 2:
+  //       transferType = cfxTokenTypes.erc1155;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   return (
     <>
@@ -106,14 +106,14 @@ export function TokenDetail() {
         <Basic
           {...data}
           tokenAddress={tokenAddress}
-          transferType={transferType}
+          transferType={data.transferType}
         />
-        {transferType ? (
+        {data.transferType ? (
           <Transfers
             decimals={data.decimals || 0}
             tokenAddress={tokenAddress}
             symbol={data.symbol}
-            transferType={transferType}
+            transferType={data.transferType}
           />
         ) : null}
       </TokenDetailWrap>
