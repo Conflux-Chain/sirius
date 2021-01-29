@@ -75,7 +75,8 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
     );
   } catch (e) {
     console.warn('formatAddress:', address, e.message);
-    return '';
+    // TODO fix transfer to is not valid conflux address
+    return address.startsWith('0x') && address.length === 42 ? address : '';
   }
 };
 
