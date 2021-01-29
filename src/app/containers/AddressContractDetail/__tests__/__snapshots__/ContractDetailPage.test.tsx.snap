@@ -341,6 +341,26 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     <span
       class="c3"
     >
+      <svg
+        fill="none"
+        height="12"
+        shape-rendering="geometricPrecision"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        style="color: rgb(155, 158, 172);"
+        viewBox="0 0 24 24"
+        width="12"
+      >
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+        />
+        <path
+          d="M14 2v6h6M16 13H8M16 17H8M10 9H8"
+        />
+      </svg>
+       
       <span />
       <div
         class="c4"

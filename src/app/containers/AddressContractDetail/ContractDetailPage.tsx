@@ -31,7 +31,6 @@ import {
 } from './layouts';
 import { isContractAddress, isInnerContractAddress } from 'utils';
 import { FileText } from '@zeit-ui/react-icons';
-import styled from 'styled-components/macro';
 
 interface RouteParams {
   address: string;
