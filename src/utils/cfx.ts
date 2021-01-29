@@ -47,6 +47,12 @@ export const getGlobalShowHexAddress = () => {
  */
 const formatAddress = (address: string | undefined, option: any = {}) => {
   if (!address || address.length < 40) return '';
+  // do not support private net
+  if (address.toLowerCase().startsWith('net')) return '';
+  // conflux net must same with address prefix
+  if (address.toLowerCase().startsWith('cfx:') && isTestNetEnv()) return '';
+  if (address.toLowerCase().startsWith('cfxtest:') && !isTestNetEnv())
+    return '';
   const addressOptions = Object.assign(
     {
       networkId,
