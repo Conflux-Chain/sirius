@@ -3,7 +3,7 @@ import {
   format as cfxFormat,
   address as cfxAddress,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { Faucet } from 'conflux-sponsorfaucet';
+import Faucet from './sponsorFaucet/faucet';
 import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
 const cfxUrl = window.location.origin + '/rpc'; // cip-37
