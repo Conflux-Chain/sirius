@@ -481,8 +481,6 @@ export const isAddress = (str: string) => {
 };
 
 export function isNullAddress(str: string) {
-  console.log(formatAddress(str));
-  console.log(zeroAddress);
   return formatAddress(str) === zeroAddress;
 }
 
