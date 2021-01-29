@@ -43,8 +43,19 @@ export const ContractDetailPage = memo(() => {
   const history = useHistory();
 
   const { data: contractInfo } = useContract(address, [
+    'name',
+    'icon',
+    'sponsor',
+    'admin',
+    'from',
+    'code',
     'website',
     'transactionHash',
+    'erc20TransferCount',
+    'erc721TransferCount',
+    'erc1155TransferCount',
+    'sourceCode',
+    'abi',
   ]);
 
   useEffect(() => {
@@ -110,19 +121,19 @@ export const ContractDetailPage = memo(() => {
           </HeadAddressLine>
         </Head>
         <Top key="top">
-          <BalanceCard address={address} />
+          <BalanceCard accountInfo={contractInfo} />
           <TokensCard address={address} />
-          <StorageStakingCard address={address} />
-          <NonceCard address={address} />
+          <StorageStakingCard accountInfo={contractInfo} />
+          <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
         {isContractAddress(address) && (
           <Middle key="middle">
-            <ContractMetadata address={address} />
+            <ContractMetadata address={address} contractInfo={contractInfo} />
           </Middle>
         )}
         <Bottom key="bottom">
-          <Table key="table" address={address} />
+          <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>
       </Main>
     </>

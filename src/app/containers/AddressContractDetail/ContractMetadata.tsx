@@ -11,7 +11,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useContract, useToken } from 'utils/api';
+import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
@@ -83,20 +83,20 @@ const WarnningTooltipWrapper = styled.div`
   }
 `;
 
-export function ContractMetadata({ address }) {
+export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
   const notAvailableText = t(translations.general.security.notAvailable);
 
-  const { data: contractInfo } = useContract(address, [
-    'name',
-    'icon',
-    'sponsor',
-    'website',
-    'admin',
-    'from',
-    'transactionHash',
-    'code',
-  ]);
+  // const { data: contractInfo } = useContract(address, [
+  //   'name',
+  //   'icon',
+  //   'sponsor',
+  //   'website',
+  //   'admin',
+  //   'from',
+  //   'transactionHash',
+  //   'code',
+  // ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };

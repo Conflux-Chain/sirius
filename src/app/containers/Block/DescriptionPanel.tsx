@@ -20,6 +20,7 @@ import {
   toThousands,
 } from '../../../utils';
 import { AddressContainer } from '../../components/AddressContainer';
+import { formatAddress } from '../../../utils/cfx';
 export function DescriptionPanel({ hash: blockHash }) {
   const history = useHistory();
   const { t } = useTranslation();
@@ -145,7 +146,7 @@ export function DescriptionPanel({ hash: blockHash }) {
             {
               <>
                 <AddressContainer value={miner} isFull={true} />{' '}
-                <CopyButton copyText={miner} />
+                <CopyButton copyText={formatAddress(miner)} />
               </>
             }
           </SkeletonContainer>

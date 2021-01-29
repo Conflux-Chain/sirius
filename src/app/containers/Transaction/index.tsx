@@ -34,7 +34,7 @@ import {
   getPercent,
   toThousands,
 } from '../../../utils';
-import { decodeContract } from '../../../utils/cfx';
+import { decodeContract, formatAddress } from '../../../utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
@@ -298,7 +298,7 @@ export const Transaction = () => {
                 </>
               )}
               <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={to} />
+              <CopyButton copyText={formatAddress(to)} />
             </SkeletonContainer>
           </Description>
         );
@@ -313,7 +313,7 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={to} />
+              <CopyButton copyText={formatAddress(to)} />
             </SkeletonContainer>
           </Description>
         );
@@ -380,8 +380,12 @@ export const Transaction = () => {
 
     transferList.forEach((transfer: any) => {
       if (transfer.transferType === cfxTokenTypes.erc1155) {
+        // find batch transfers
         const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
-          trans => trans.transactionHash === transfer.transactionHash,
+          trans =>
+            trans.transactionHash === transfer.transactionHash &&
+            trans.from === transfer.from &&
+            trans.to === transfer.to,
         );
         if (batchCombinedTransferListIndex < 0) {
           batchCombinedTransferList.push({
@@ -668,7 +672,7 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <AddressContainer value={from} isFull={true} />{' '}
-              <CopyButton copyText={from} />
+              <CopyButton copyText={formatAddress(from)} />
             </SkeletonContainer>
           </Description>
           {generatedDiv()}

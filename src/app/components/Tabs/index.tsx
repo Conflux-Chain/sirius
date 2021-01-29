@@ -42,6 +42,9 @@ const StyledTabsWrapper = styled.div`
         border-top-left-radius: 0.5714rem;
         border-top-right-radius: 0.5714rem;
       }
+      &.disabled {
+        display: none;
+      }
     }
     header {
       overflow: visible;
