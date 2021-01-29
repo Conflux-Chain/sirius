@@ -132,7 +132,9 @@ export const Basic = ({
     ),
     children:
       holderCount !== undefined
-        ? `${toThousands(holderCount)} ${t(translations.token.address)}`
+        ? transferType !== cfxTokenTypes.erc1155
+          ? `${toThousands(holderCount)} ${t(translations.token.address)}`
+          : '--'
         : undefined,
   };
 
