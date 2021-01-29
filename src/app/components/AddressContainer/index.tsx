@@ -6,11 +6,11 @@ import {
   isInnerContractAddress,
 } from '../../../utils';
 import { Link } from '../Link/Loadable';
-import { Translation } from 'react-i18next';
+import { Translation, useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { formatAddress } from '../../../utils/cfx';
-import { FileText } from '@zeit-ui/react-icons';
+import { FileText, Info } from '@zeit-ui/react-icons';
 
 interface Props {
   value: string;
@@ -27,8 +27,7 @@ export const AddressContainer = ({
   maxWidth,
   isFull = false,
 }: Props) => {
-  let isContract = isContractAddress(value);
-  let isInternalContract = isInnerContractAddress(value);
+  const { t } = useTranslation();
 
   const LinkWrapper = styled(Link)`
     display: inline-block !important;
@@ -49,54 +48,96 @@ export const AddressContainer = ({
     // contract creation txn to prop is null
     if (contractCreated)
       return (
-        <Text span hoverValue={formatAddress(contractCreated)}>
-          <Link href={`/address/${formatAddress(contractCreated)}`}>
-            <IconWrapper>
-              <FileText size={12} color="#9b9eac" />
-            </IconWrapper>
-            <Translation>
-              {t => t(translations.transaction.contractCreation)}
-            </Translation>
-          </Link>
-        </Text>
+        <>
+          <IconWrapper>
+            <Text
+              span
+              hoverValue={t(translations.transaction.contractCreation)}
+            >
+              <FileText size={12} color="#0fd44c" />
+            </Text>
+          </IconWrapper>
+          <Text span hoverValue={formatAddress(contractCreated)}>
+            <Link href={`/address/${formatAddress(contractCreated)}`}>
+              <Translation>
+                {t => t(translations.transaction.contractCreation)}
+              </Translation>
+            </Link>
+          </Text>
+        </>
       );
 
     // contract creation fail, no link
     return (
-      <Text span>
+      <>
         <IconWrapper>
-          <FileText size={12} color="#9b9eac" />
+          <Text span hoverValue={t(translations.transaction.contractCreation)}>
+            <FileText size={12} color="#0fd44c" />
+          </Text>
         </IconWrapper>
-        <Translation>
-          {t => t(translations.transaction.contractCreation)}
-        </Translation>
-      </Text>
+        <Text span>
+          <Translation>
+            {t => t(translations.transaction.contractCreation)}
+          </Translation>
+        </Text>
+      </>
     );
   }
-
   const cfxAddress = formatAddress(value);
+
+  if (cfxAddress.startsWith('invalid-')) {
+    const sourceValue = cfxAddress.replace('invalid-', '');
+    const tip = t(translations.general.invalidAddress);
+    return (
+      <>
+        <IconWrapper>
+          <Text span hoverValue={tip}>
+            <Info size={12} color="#e00909" />
+          </Text>
+        </IconWrapper>
+        <Text span hoverValue={`${tip}: ${sourceValue}`}>
+          <LinkWrapper style={{ color: '#e00909' }}>
+            {alias ? formatString(alias, 'tag') : sourceValue}
+          </LinkWrapper>
+        </Text>
+      </>
+    );
+  }
 
   if (value && isFull) {
     return <Link href={`/address/${cfxAddress}`}>{cfxAddress}</Link>;
   }
 
-  if (isContract || isInternalContract)
-    return (
-      <Text span hoverValue={cfxAddress}>
-        <IconWrapper>
-          <FileText
-            size={12}
-            color={isInternalContract ? '#13b5c4' : '#9b9eac'}
-          />
-        </IconWrapper>
-        <LinkWrapper href={`/address/${cfxAddress}`}>
-          {alias ? formatString(alias, 'tag') : cfxAddress}
-        </LinkWrapper>
-      </Text>
+  const isContract = isContractAddress(value);
+  const isInternalContract = isInnerContractAddress(value);
+
+  if (isContract || isInternalContract) {
+    const typeText = t(
+      isInternalContract
+        ? translations.general.internalContract
+        : translations.general.contract,
     );
+    return (
+      <>
+        <IconWrapper>
+          <Text span hoverValue={typeText}>
+            <FileText
+              size={12}
+              color={isInternalContract ? '#13b5c4' : '#9b9eac'}
+            />
+          </Text>
+        </IconWrapper>
+        <Text span hoverValue={cfxAddress}>
+          <LinkWrapper href={`/address/${cfxAddress}`}>
+            {alias ? formatString(alias, 'tag') : cfxAddress}
+          </LinkWrapper>
+        </Text>
+      </>
+    );
+  }
 
   return (
-    <Text span hoverValue={<>{cfxAddress}</>}>
+    <Text span hoverValue={cfxAddress}>
       <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
     </Text>
   );
