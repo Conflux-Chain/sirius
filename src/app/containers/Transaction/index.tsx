@@ -534,9 +534,27 @@ export const Transaction = () => {
       transferListContainerStyle = { height: '120px', overflow: 'auto' };
     }
     return (
-      <div style={transferListContainerStyle} className="transferListContainer">
-        {transferListContainer}
-      </div>
+      <Description
+        title={
+          <Tooltip
+            text={t(translations.toolTip.tx.tokenTransferred)}
+            placement="top"
+          >
+            {`${t(translations.transaction.tokenTransferred)} (${
+              transferListContainer.length
+            })`}
+          </Tooltip>
+        }
+      >
+        <SkeletonContainer shown={loading}>
+          <div
+            style={transferListContainerStyle}
+            className="transferListContainer"
+          >
+            {transferListContainer}
+          </div>
+        </SkeletonContainer>
+      </Description>
     );
   };
 
@@ -676,24 +694,7 @@ export const Transaction = () => {
             </SkeletonContainer>
           </Description>
           {generatedDiv()}
-          {transferList && transferList.length > 0 && (
-            <Description
-              title={
-                <Tooltip
-                  text={t(translations.toolTip.tx.tokenTransferred)}
-                  placement="top"
-                >
-                  {`${t(translations.transaction.tokenTransferred)} (${
-                    transferList.length
-                  })`}
-                </Tooltip>
-              }
-            >
-              <SkeletonContainer shown={loading}>
-                {getTransferListDiv()}
-              </SkeletonContainer>
-            </Description>
-          )}
+          {getTransferListDiv()}
           <Description
             title={
               <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
