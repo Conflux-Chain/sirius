@@ -26,7 +26,6 @@ import {
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
-import { useContract } from 'utils/api';
 import { media, useBreakpoint } from 'styles/media';
 import { Check } from '@zeit-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
@@ -349,7 +348,7 @@ const TxDirectionFilterDropdown = styled.div`
   }
 `;
 
-export function Table({ address }) {
+export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
   const { t } = useTranslation();
   const loadingText = t(translations.general.loading);
@@ -357,7 +356,7 @@ export function Table({ address }) {
   const history = useHistory();
   const queries = queryString.parse(location.search);
   const [filterVisible, setFilterVisible] = useState(
-    queries?.tab !== 'contract',
+    queries?.tab !== 'contract-viewer',
   );
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
@@ -378,10 +377,18 @@ export function Table({ address }) {
     tab = 'transaction',
     accountAddress,
   } = queryString.parse(location.search || '');
-  let { data: contractInfo } = useContract(isContract && address, [
-    'sourceCode',
-    'abi',
-  ]);
+  // let { data: contractInfo } = useContract(isContract && address, [
+  //   'erc20TransferCount',
+  //   'erc721TransferCount',
+  //   'erc1155TransferCount',
+  //   'sourceCode',
+  //   'abi',
+  // ]);
+  // let { data: accountInfo } = useAccount(!isContract && address, [
+  //   'erc20TransferCount',
+  //   'erc721TransferCount',
+  //   'erc1155TransferCount',
+  // ]);
   useEffect(() => {
     history.replace(
       queryString.stringifyUrl({
@@ -507,6 +514,7 @@ export function Table({ address }) {
   ];
 
   tabs.push({
+    hidden: !addressInfo.erc20TransferCount,
     value: `transfers-${cfxTokenTypes.erc20}`,
     label: (total: number, realTotal: number) => {
       return (
@@ -526,6 +534,7 @@ export function Table({ address }) {
   });
 
   tabs.push({
+    hidden: !addressInfo.erc721TransferCount,
     value: `transfers-${cfxTokenTypes.erc721}`,
     label: (total: number, realTotal: number) => {
       return (
@@ -545,6 +554,7 @@ export function Table({ address }) {
   });
 
   tabs.push({
+    hidden: !addressInfo.erc1155TransferCount,
     value: `transfers-${cfxTokenTypes.erc1155}`,
     label: (total: number, realTotal: number) => {
       return (
@@ -558,7 +568,9 @@ export function Table({ address }) {
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
     table: {
       columns: columnsTokenTrasfersErc1155,
-      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+      // fix same key
+      rowKey: row =>
+        `${row.transactionHash}${row.transactionLogIndex}${row.batchIndex}`,
     },
     hasFilter: true,
   });
@@ -568,7 +580,7 @@ export function Table({ address }) {
       ? {
           value: 'contract-viewer',
           label: t(translations.token.contract),
-          content: <ContractSourceCodeAbi contractInfo={contractInfo} />,
+          content: <ContractSourceCodeAbi contractInfo={addressInfo} />,
         }
       : {
           value: 'mined-blocks',
@@ -622,6 +634,8 @@ export function Table({ address }) {
 
   // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
   const maxT = maxTimestamp && String(Number(maxTimestamp) - 1);
+
+  // TODO change tab request multi api
 
   return (
     <TableWrap>

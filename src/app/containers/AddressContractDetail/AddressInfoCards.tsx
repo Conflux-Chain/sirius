@@ -4,7 +4,6 @@ import { useBreakpoint } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
-import { useAccount } from 'utils/api';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from 'app/components/Text/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
@@ -18,9 +17,9 @@ import imgNonce from 'images/contract-address/nonce.svg';
 // todo, need to refactor the request, and rewrite skeleton style
 const skeletonStyle = { width: '7rem', height: '2.4rem' };
 
-export function BalanceCard({ address }) {
+export function BalanceCard({ accountInfo }) {
   const { t } = useTranslation();
-  const { data: accountInfo } = useAccount(address);
+  // const { data: accountInfo } = useAccount(address);
   const loading = accountInfo.balance === t(translations.general.loading);
 
   return (
@@ -70,10 +69,10 @@ export function TokensCard({ address }) {
   );
 }
 
-export function StorageStakingCard({ address }) {
+export function StorageStakingCard({ accountInfo }) {
   const { t } = useTranslation();
   const bp = useBreakpoint();
-  const { data: accountInfo } = useAccount(address);
+  // const { data: accountInfo } = useAccount(address);
   const loading = accountInfo.balance === t(translations.general.loading);
 
   return (
@@ -109,9 +108,9 @@ export function StorageStakingCard({ address }) {
   );
 }
 
-export function NonceCard({ address }) {
+export function NonceCard({ accountInfo }) {
   const { t } = useTranslation();
-  const { data: accountInfo } = useAccount(address);
+  // const { data: accountInfo } = useAccount(address);
   const loading = accountInfo.balance === t(translations.general.loading);
 
   return (

@@ -61,42 +61,38 @@ export function Sponsor() {
       hexAddress,
     );
     const { flag } = await fetchIsAppliable(hexAddress);
-    try {
-      setIsFlag(flag);
-      if (flag) {
-        const { data } = await faucet.apply(hexAddress);
-        setTxData(data);
-      }
-      const faucetParams = await faucet.getFaucetParams(hexAddress);
-      const amountAccumulated = await faucet.getAmountAccumulated(hexAddress);
-      if (sponsorInfo && faucetParams && amountAccumulated) {
-        setLoading(false);
-        setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
-        setGasFeeAddress(sponsorInfo.sponsorForGas);
-        setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
-        setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
-        setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
-        setUpperBound(faucetParams.upper_bound);
-        setGasBound(faucetParams.gas_bound);
-        setStorageBound(faucetParams.collateral_bound);
-        setAvialStorageFee(
-          new BigNumber(Number(faucetParams.collateral_total_limit))
-            .minus(
-              new BigNumber(
-                Number(amountAccumulated.collateral_amount_accumulated),
-              ),
-            )
-            .toFixed(),
-        );
-        setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
-        setAvialGasFee(
-          new BigNumber(Number(faucetParams.gas_total_limit))
-            .minus(Number(amountAccumulated.gas_amount_accumulated))
-            .toFixed(),
-        );
-      }
-    } catch (e) {
-      console.error('getSponsorInfo', e);
+    setIsFlag(flag);
+    if (flag) {
+      const { data } = await faucet.apply(hexAddress);
+      setTxData(data);
+    }
+    const faucetParams = await faucet.getFaucetParams(hexAddress);
+    const amountAccumulated = await faucet.getAmountAccumulated(hexAddress);
+    if (sponsorInfo && faucetParams && amountAccumulated) {
+      setLoading(false);
+      setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
+      setGasFeeAddress(sponsorInfo.sponsorForGas);
+      setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
+      setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
+      setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
+      setUpperBound(faucetParams.upper_bound);
+      setGasBound(faucetParams.gas_bound);
+      setStorageBound(faucetParams.collateral_bound);
+      setAvialStorageFee(
+        new BigNumber(Number(faucetParams.collateral_total_limit))
+          .minus(
+            new BigNumber(
+              Number(amountAccumulated.collateral_amount_accumulated),
+            ),
+          )
+          .toFixed(),
+      );
+      setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
+      setAvialGasFee(
+        new BigNumber(Number(faucetParams.gas_total_limit))
+          .minus(Number(amountAccumulated.gas_amount_accumulated))
+          .toFixed(),
+      );
     }
   };
   const resetParams = () => {
@@ -129,46 +125,41 @@ export function Sponsor() {
     // TODO cip-37 update
     const hexAddress = formatAddress(_address, { hex: true });
     const { flag, message } = await faucet.checkAppliable(hexAddress);
-    try {
-      if (!flag) {
-        //can not apply sponsor this contract
-        switch (message) {
-          case 'ERROR_GAS_SPONSORED_FUND_UNUSED':
-          case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
-          case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
-          case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
-            setErrorMsgForApply(errReachToMax);
-            break;
-          case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
-          case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
-            setErrorMsgForApply(errInsufficientFee);
-            break;
-          case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-            setErrorMsgForApply(errReplaceThird);
-            break;
-          case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
-            setErrorMsgForApply(errContractNotFound);
-            break;
-          case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-            setErrorMsgForApply(errCannotReplaced);
-            break;
-          case 'ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET':
-            setErrorMsgForApply(errUpgraded);
-            break;
-          default:
-            setErrorMsgForApply('');
-            break;
-        }
-        setCanApply(false);
-      } else {
-        setCanApply(true);
-        setErrorMsgForApply('');
+    if (!flag) {
+      //can not apply sponsor this contract
+      switch (message) {
+        case 'ERROR_GAS_SPONSORED_FUND_UNUSED':
+        case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
+        case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
+        case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
+          setErrorMsgForApply(errReachToMax);
+          break;
+        case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
+        case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
+          setErrorMsgForApply(errInsufficientFee);
+          break;
+        case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
+          setErrorMsgForApply(errReplaceThird);
+          break;
+        case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
+          setErrorMsgForApply(errContractNotFound);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
+          setErrorMsgForApply(errCannotReplaced);
+          break;
+        case 'ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET':
+          setErrorMsgForApply(errUpgraded);
+          break;
+        default:
+          setErrorMsgForApply('');
+          break;
       }
-      return { flag, message };
-    } catch (e) {
-      console.error('fetchIsAppliable', e);
-      return { flag, message };
+      setCanApply(false);
+    } else {
+      setCanApply(true);
+      setErrorMsgForApply('');
     }
+    return { flag, message };
   };
 
   // const applyToTx = async (addressStr: string) => {

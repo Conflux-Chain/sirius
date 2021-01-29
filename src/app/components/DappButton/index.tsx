@@ -15,7 +15,7 @@ interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
   btnDisabled?: boolean;
-  btnText?: string;
+  // btnText?: string;
   data?: string;
   contractAddress: string;
   connectText?: string;
@@ -210,7 +210,7 @@ DappButton.defaultProps = {
   hoverText: '',
   btnClassName: '',
   btnDisabled: false,
-  btnText: '',
+  // btnText: '',
   connectText: '',
   submitText: '',
   shownAddress: true,

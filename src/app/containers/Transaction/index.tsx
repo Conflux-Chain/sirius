@@ -34,7 +34,7 @@ import {
   getPercent,
   toThousands,
 } from '../../../utils';
-import { decodeContract } from '../../../utils/cfx';
+import { decodeContract, formatAddress } from '../../../utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
@@ -298,7 +298,7 @@ export const Transaction = () => {
                 </>
               )}
               <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={to} />
+              <CopyButton copyText={formatAddress(to)} />
             </SkeletonContainer>
           </Description>
         );
@@ -313,7 +313,7 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={to} />
+              <CopyButton copyText={formatAddress(to)} />
             </SkeletonContainer>
           </Description>
         );
@@ -380,8 +380,12 @@ export const Transaction = () => {
 
     transferList.forEach((transfer: any) => {
       if (transfer.transferType === cfxTokenTypes.erc1155) {
+        // find batch transfers
         const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
-          trans => trans.transactionHash === transfer.transactionHash,
+          trans =>
+            trans.transactionHash === transfer.transactionHash &&
+            trans.from === transfer.from &&
+            trans.to === transfer.to,
         );
         if (batchCombinedTransferListIndex < 0) {
           batchCombinedTransferList.push({
@@ -397,6 +401,8 @@ export const Transaction = () => {
         batchCombinedTransferList.push(transfer);
       }
     });
+
+    let index = 1;
 
     for (let i = 0; i < batchCombinedTransferList.length; i++) {
       const transferItem: any = batchCombinedTransferList[i];
@@ -428,7 +434,7 @@ export const Transaction = () => {
           {`${tokenName} (${tokenSymbol})`}
         </Link>
       );
-      // TODO index
+      // do not deal with erc721
       switch (transferItem['transferType']) {
         case cfxTokenTypes.erc721: {
           transferListContainer.push(
@@ -436,7 +442,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -467,7 +473,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -500,7 +506,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
             >
-              <span>{i + 1}. </span>
+              <span>{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -530,9 +536,27 @@ export const Transaction = () => {
       transferListContainerStyle = { height: '120px', overflow: 'auto' };
     }
     return (
-      <div style={transferListContainerStyle} className="transferListContainer">
-        {transferListContainer}
-      </div>
+      <Description
+        title={
+          <Tooltip
+            text={t(translations.toolTip.tx.tokenTransferred)}
+            placement="top"
+          >
+            {`${t(translations.transaction.tokenTransferred)} (${
+              transferListContainer.length
+            })`}
+          </Tooltip>
+        }
+      >
+        <SkeletonContainer shown={loading}>
+          <div
+            style={transferListContainerStyle}
+            className="transferListContainer"
+          >
+            {transferListContainer}
+          </div>
+        </SkeletonContainer>
+      </Description>
     );
   };
 
@@ -668,28 +692,11 @@ export const Transaction = () => {
           >
             <SkeletonContainer shown={loading}>
               <AddressContainer value={from} isFull={true} />{' '}
-              <CopyButton copyText={from} />
+              <CopyButton copyText={formatAddress(from)} />
             </SkeletonContainer>
           </Description>
           {generatedDiv()}
-          {transferList && transferList.length > 0 && (
-            <Description
-              title={
-                <Tooltip
-                  text={t(translations.toolTip.tx.tokenTransferred)}
-                  placement="top"
-                >
-                  {`${t(translations.transaction.tokenTransferred)} (${
-                    transferList.length
-                  })`}
-                </Tooltip>
-              }
-            >
-              <SkeletonContainer shown={loading}>
-                {getTransferListDiv()}
-              </SkeletonContainer>
-            </Description>
-          )}
+          {getTransferListDiv()}
           <Description
             title={
               <Tooltip text={t(translations.toolTip.tx.value)} placement="top">

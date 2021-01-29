@@ -8,10 +8,11 @@ import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
 const cfxUrl = window.location.origin + '/rpc'; // cip-37
 
+const isConfluxTestNet = isTestNetEnv();
 const mainNetworkId = 1029;
 const testnetNetworkId = 1;
 // do not support other private network
-const networkId = isTestNetEnv() ? testnetNetworkId : mainNetworkId;
+const networkId = isConfluxTestNet ? testnetNetworkId : mainNetworkId;
 
 const cfx = new Conflux({
   url: cfxUrlV2,
@@ -47,6 +48,12 @@ export const getGlobalShowHexAddress = () => {
  */
 const formatAddress = (address: string | undefined, option: any = {}) => {
   if (!address || address.length < 40) return '';
+  // do not support private net
+  if (address.toLowerCase().startsWith('net')) return '';
+  // conflux net must same with address prefix
+  if (address.toLowerCase().startsWith('cfx:') && isConfluxTestNet) return '';
+  if (address.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
+    return '';
   const addressOptions = Object.assign(
     {
       networkId,
@@ -101,10 +108,10 @@ const testnetFaucetLastAddress = formatAddress(
   { hex: true },
 ); // cip-37 use hex;
 
-const faucetAddress = isTestNetEnv()
+const faucetAddress = isConfluxTestNet
   ? testnetFaucetAddress
   : mainnetFaucetAddress;
-const faucetLastAddress = isTestNetEnv()
+const faucetLastAddress = isConfluxTestNet
   ? testnetFaucetLastAddress
   : mainnetFaucetLastAddress;
 
@@ -118,7 +125,7 @@ const mainnetContractManagerAddress = formatAddress(
   '0x81bbe80b1282387e19d7e1a57476869081c7d965',
   { networkId: testnetNetworkId },
 );
-const contractManagerAddress = isTestNetEnv()
+const contractManagerAddress = isConfluxTestNet
   ? testnetContractManagerAddress
   : mainnetContractManagerAddress;
 
