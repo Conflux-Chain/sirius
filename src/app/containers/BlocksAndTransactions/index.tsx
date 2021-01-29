@@ -16,7 +16,7 @@ export function BlocksAndTransactions() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
-  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
+  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 3, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,

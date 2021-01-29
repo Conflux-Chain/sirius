@@ -47,6 +47,7 @@ export const getGlobalShowHexAddress = () => {
  */
 const formatAddress = (address: string | undefined, option: any = {}) => {
   if (!address || address.length < 40) return '';
+  console.log('formatAddress:', address);
   const addressOptions = Object.assign(
     {
       networkId,
@@ -74,9 +75,11 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
       addressOptions.withType,
     );
   } catch (e) {
-    console.warn('formatAddress:', address, e.message);
-    // TODO fix transfer to is not valid conflux address
-    return address.startsWith('0x') && address.length === 42 ? address : '';
+    console.error('formatAddress:', address, e.message);
+    // transfer to is not valid conflux address, need show error tip
+    return address.startsWith('0x') && address.length === 42
+      ? 'invalid-' + address
+      : '';
   }
 };
 
