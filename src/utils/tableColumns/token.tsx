@@ -13,7 +13,6 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
-import { cfxTokenTypes } from '../constants';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);

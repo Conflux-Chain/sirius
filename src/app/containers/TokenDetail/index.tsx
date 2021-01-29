@@ -11,7 +11,6 @@ import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
 import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { cfxTokenTypes } from '../../../utils/constants';
 
 interface RouteParams {
   tokenAddress: string;

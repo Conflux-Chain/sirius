@@ -25,7 +25,7 @@ cfx.getClientVersion().then(v => {
   console.log('conflux-network-version:', v);
 });
 
-// TODO global show hex address switch
+// global show hex address switch
 export const getGlobalShowHexAddress = () => {
   return localStorage.getItem('conflux-scan-show-hex-address') === 'true';
 };
@@ -47,6 +47,7 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   );
   try {
     if (!addressOptions.withType) {
+      // TODO simplifyCfxAddress
       return cfxFormat.address(
         cfxFormat.hexAddress(address),
         addressOptions.networkId,
