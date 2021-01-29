@@ -10,6 +10,7 @@ import imgRejected from 'images/rejected.png';
 import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
+import { formatAddress } from '../../../utils/cfx';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -41,7 +42,6 @@ const DappButton = ({
   shownAddress,
   ...props
 }: Props) => {
-  // TODO cip=37
   const { t } = useTranslation();
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
@@ -59,9 +59,10 @@ const DappButton = ({
     } else {
       if (address) {
         if (!btnDisabled) {
+          // TODO cip-37
           const txParams = {
-            from: address,
-            to: contractAddress,
+            from: formatAddress(address, { hex: true }),
+            to: formatAddress(contractAddress, { hex: true }),
             data,
           };
           //loading
