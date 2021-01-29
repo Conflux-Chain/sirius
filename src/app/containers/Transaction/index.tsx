@@ -312,7 +312,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Link href={`/address/${to}`}>{to}</Link>{' '}
+              <AddressContainer value={to} isFull={true} />{' '}
               <CopyButton copyText={to} />
             </SkeletonContainer>
           </Description>

@@ -28,7 +28,7 @@ export function Tokens() {
     tokenColunms.token,
     tokenColunms.price,
     tokenColunms.marketCap,
-    tokenColunms.transferErc20,
+    tokenColunms.transfer,
     tokenColunms.totalSupply,
     tokenColunms.holders,
     tokenColunms.contract,
@@ -43,7 +43,7 @@ export function Tokens() {
     columns = [
       tokenColunms.number,
       tokenColunms.token,
-      tokenColunms.transferErc721,
+      tokenColunms.transfer,
       tokenColunms.holders,
       tokenColunms.contract,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
@@ -57,7 +57,7 @@ export function Tokens() {
     columns = [
       tokenColunms.number,
       tokenColunms.token,
-      tokenColunms.transferErc1155,
+      tokenColunms.transfer,
       tokenColunms.holders,
       tokenColunms.contract,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));

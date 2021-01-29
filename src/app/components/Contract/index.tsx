@@ -364,9 +364,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
               if (
                 dataContractInfo.from === accountAddress ||
                 dataContractInfo.admin === accountAddress ||
-                dataContractInfo.from ===
+                formatAddress(dataContractInfo.from, { hex: true }) ===
                   formatAddress(accountAddress, { hex: true }) ||
-                dataContractInfo.admin ===
+                formatAddress(dataContractInfo.admin, { hex: true }) ===
                   formatAddress(accountAddress, { hex: true })
               ) {
                 setIsAdminError(false);

@@ -113,40 +113,15 @@ export const marketCap = {
     </span>
   ),
 };
-
-export const transferErc20 = {
+export const transfer = {
   width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.token.transfer)}
     </Translation>
   ),
-  dataIndex: `erc20TransferCount`,
-  key: `erc20TransferCount`,
-  render: value => <span>{formatNumber(value)}</span>,
-};
-
-export const transferErc721 = {
-  width: 1,
-  title: (
-    <Translation>
-      {t => t(translations.general.table.token.transfer)}
-    </Translation>
-  ),
-  dataIndex: `erc721TransferCount`,
-  key: `erc721TransferCount`,
-  render: value => <span>{formatNumber(value)}</span>,
-};
-
-export const transferErc1155 = {
-  width: 1,
-  title: (
-    <Translation>
-      {t => t(translations.general.table.token.transfer)}
-    </Translation>
-  ),
-  dataIndex: `erc1155TransferCount`,
-  key: `erc1155TransferCount`,
+  dataIndex: `transferCount`,
+  key: `transferCount`,
   render: value => <span>{formatNumber(value)}</span>,
 };
 

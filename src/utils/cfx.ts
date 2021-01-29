@@ -5,7 +5,8 @@ import {
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { Faucet } from 'conflux-sponsorfaucet';
 import { isTestNetEnv } from './hooks/useTestnet';
-const cfxUrl = window.location.origin + '/rpcv2'; // cip-37
+const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
+const cfxUrl = window.location.origin + '/rpc'; // cip-37
 
 const mainNetworkId = 1029;
 const testnetNetworkId = 1;
@@ -13,12 +14,21 @@ const testnetNetworkId = 1;
 const networkId = isTestNetEnv() ? testnetNetworkId : mainNetworkId;
 
 const cfx = new Conflux({
-  url: cfxUrl,
+  url: cfxUrlV2,
   networkId,
   // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
   // use hex address to compatible with history function
   // cip-37
   // useHexAddressInParameter: true,
+});
+
+const cfxOld = new Conflux({
+  url: cfxUrl,
+  networkId,
+  // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
+  // use hex address to compatible with history function
+  // cip-37
+  useHexAddressInParameter: true,
 });
 
 cfx.getClientVersion().then(v => {
@@ -46,6 +56,11 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
     option,
   );
   try {
+    if (addressOptions.hex) {
+      return cfxFormat.hexAddress(
+        cfxFormat.address(address, addressOptions.networkId),
+      );
+    }
     if (!addressOptions.withType) {
       // TODO simplifyCfxAddress
       return cfxFormat.address(
@@ -53,28 +68,36 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
         addressOptions.networkId,
       );
     }
-    if (!addressOptions.hex)
-      return cfxFormat.address(
-        address,
-        addressOptions.networkId,
-        addressOptions.withType,
-      );
-    else
-      return cfxFormat.hexAddress(
-        cfxFormat.address(address, addressOptions.networkId),
-      );
+    return cfxFormat.address(
+      address,
+      addressOptions.networkId,
+      addressOptions.withType,
+    );
   } catch (e) {
     console.warn('formatAddress:', address, e.message);
-    return '';
+    // TODO fix transfer to is not valid conflux address
+    return address.startsWith('0x') && address.length === 42 ? address : '';
   }
 };
 
 // faucet address
 
-const mainnetFaucetAddress = '0x829985ed802802e0e4bfbff25f79ccf5236016e9'; // cip-37 use hex;
-const mainnetFaucetLastAddress = '0x8d5adbcaf5714924830591586f05302bf87f74bd'; // cip-37 use hex;
-const testnetFaucetAddress = '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8'; // cip-37 use hex;
-const testnetFaucetLastAddress = '0x8097e818c2c2c1524c41f0fcbda143520046d117'; // cip-37 use hex;
+const mainnetFaucetAddress = formatAddress(
+  '0x829985ed802802e0e4bfbff25f79ccf5236016e9',
+  { hex: true },
+); // cip-37 use hex;
+const mainnetFaucetLastAddress = formatAddress(
+  '0x8d5adbcaf5714924830591586f05302bf87f74bd',
+  { hex: true },
+); // cip-37 use hex;
+const testnetFaucetAddress = formatAddress(
+  '0x8fc71dbd0e0b3be34fbee62796b65e09c8fd19b8',
+  { hex: true },
+); // cip-37 use hex;
+const testnetFaucetLastAddress = formatAddress(
+  '0x8097e818c2c2c1524c41f0fcbda143520046d117',
+  { hex: true },
+); // cip-37 use hex;
 
 const faucetAddress = isTestNetEnv()
   ? testnetFaucetAddress
@@ -106,6 +129,7 @@ export const decodeContract = ({ abi, address, transacionData }) => {
 
 export {
   cfx,
+  cfxOld,
   formatAddress,
   faucetAddress,
   faucet,
