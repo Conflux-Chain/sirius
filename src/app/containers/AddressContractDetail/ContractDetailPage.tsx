@@ -30,6 +30,8 @@ import {
   Top,
 } from './layouts';
 import { isContractAddress, isInnerContractAddress } from 'utils';
+import { FileText } from '@zeit-ui/react-icons';
+import styled from 'styled-components/macro';
 
 interface RouteParams {
   address: string;
@@ -81,7 +83,16 @@ export const ContractDetailPage = memo(() => {
             {bp === 's' ? (
               <Text maxWidth="14.75rem">{address}</Text>
             ) : (
-              <span>{address}</span>
+              <>
+                <FileText
+                  size={12}
+                  color={
+                    isInnerContractAddress(address) ? '#13b5c4' : '#9b9eac'
+                  }
+                />
+                &nbsp;
+                <span>{address}</span>
+              </>
             )}
             <Copy address={address} />
             <Qrcode address={address} />
