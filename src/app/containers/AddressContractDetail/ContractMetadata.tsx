@@ -19,6 +19,7 @@ import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { AddressContainer } from '../../components/AddressContainer';
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = () => {
@@ -140,11 +141,7 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content>
                   {contractInfo.admin ? (
-                    <Link to={`/address/${contractInfo.admin}`}>
-                      <Text span hoverValue={contractInfo.admin}>
-                        {formatString(contractInfo.admin, 'address')}
-                      </Text>
-                    </Link>
+                    <AddressContainer value={contractInfo.admin} />
                   ) : (
                     notAvailableText
                   )}
@@ -206,20 +203,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForCollateral ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForCollateral}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForCollateral}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForCollateral,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForCollateral}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>
@@ -255,11 +241,7 @@ export function ContractMetadata({ address }) {
                     )}
                   >
                     {contractInfo.from ? (
-                      <Link to={`/address/${contractInfo.from}`}>
-                        <Text span hoverValue={contractInfo.from}>
-                          {formatString(contractInfo.from, 'address')}
-                        </Text>
-                      </Link>
+                      <AddressContainer value={contractInfo.from} />
                     ) : (
                       notAvailableText
                     )}
@@ -303,20 +285,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForGas ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForGas}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForGas}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForGas,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForGas}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>

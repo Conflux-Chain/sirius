@@ -59,9 +59,9 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/contract"
             />
             <Route
-              component={[Function]}
               exact={true}
               path="/contract/:contractAddress"
+              render={[Function]}
             />
             <Route
               component={[Function]}
@@ -69,9 +69,9 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/contracts"
             />
             <Route
-              component={[Function]}
               exact={true}
               path="/token/:tokenAddress"
+              render={[Function]}
             />
             <Route
               component={[Function]}
@@ -84,9 +84,9 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/tokens"
             />
             <Route
-              component={[Function]}
               exact={true}
               path="/tokens/:tokenType"
+              render={[Function]}
             />
             <Route
               component={[Function]}
@@ -94,9 +94,9 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/sponsor"
             />
             <Route
-              component={[Function]}
               exact={true}
               path="/sponsor/:contractAddress"
+              render={[Function]}
             />
             <Route
               component={[Function]}
@@ -128,8 +128,8 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/epoch/:number"
             />
             <Route
-              component={[Function]}
               path="/address/:address"
+              render={[Function]}
             />
             <Route
               component={[Function]}

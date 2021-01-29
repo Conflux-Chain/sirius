@@ -13,6 +13,7 @@ import {
   toThousands,
 } from '../../utils/';
 import imgPivot from 'images/pivot.svg';
+import { AddressContainer } from '../../app/components/AddressContainer';
 
 export const epoch = {
   title: (
@@ -99,13 +100,7 @@ export const miner = {
   dataIndex: 'miner',
   key: 'miner',
   width: 1,
-  render: value => (
-    <Link href={`/address/${value}`}>
-      <Text span hoverValue={value}>
-        {formatString(value, 'address')}
-      </Text>
-    </Link>
-  ),
+  render: value => <AddressContainer value={value} />,
 };
 
 export const avgGasPrice = {

@@ -6,6 +6,8 @@ import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { defaultTokenIcon } from '../../constants';
 import { formatString, formatNumber } from '..';
+import { AddressContainer } from '../../app/components/AddressContainer';
+import { formatAddress } from '../cfx';
 
 interface Query {
   accountAddress?: string;
@@ -34,7 +36,7 @@ export const name = {
   render: row => (
     <StyledIconWrapper>
       <img src={row?.icon || defaultTokenIcon} alt="contract icon" />
-      <Link href={`/address/${row.address}`}>
+      <Link href={`/address/${formatAddress(row.address)}`}>
         <Text span hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}
         </Text>
@@ -51,13 +53,7 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => (
-    <Link href={`/address/${value}`}>
-      <Text span hoverValue={value}>
-        {formatString(value, 'address')}
-      </Text>
-    </Link>
-  ),
+  render: value => <AddressContainer value={value} />,
 };
 
 export const transactionCount = {

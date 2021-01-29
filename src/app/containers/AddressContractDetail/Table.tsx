@@ -35,6 +35,7 @@ import PickerWithQuery from './PickerWithQuery';
 import { ActionButton } from './ActionButton';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
+import { cfxTokenTypes } from '../../../utils/constants';
 const AceEditorStyle = {
   width: '100%',
 };
@@ -52,7 +53,10 @@ function ContractSourceCodeAbi({ contractInfo }) {
   const clickHandler = (btnType: React.SetStateAction<string>) => {
     setSelectedBtnType(btnType);
   };
-  const contract = cfx.Contract({ abi: abiJson, address });
+  const contract = cfx.Contract({
+    abi: abiJson,
+    address,
+  });
   useEffect(() => {
     getReadWriteData(abiJson).then(res => {
       const [dataForR, dataForW] = res;
@@ -362,6 +366,9 @@ export function Table({ address }) {
   const [txFilterVisible, setTxFilterVisible] = useState(
     queries?.tab !== 'mined-blocks' &&
       queries?.tab !== 'transfers' &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc20}` &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc721}` &&
+      queries?.tab !== `transfers-${cfxTokenTypes.erc1155}` &&
       !isContract,
   );
   // set default tab to transaction
@@ -388,89 +395,85 @@ export function Table({ address }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 5, 4, 3, 4, 4, 5];
+  const columnsTransactionsWidth = [4, 5, 5, 3, 2, 3, 4];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
-    {
-      ...tokenColunms.from,
-      render: (value, row, index) => {
-        return tokenColunms.from.render(value, row, index, {
-          isToken: false,
-        });
-      },
-    },
-    {
-      ...tokenColunms.to,
-      render: (value, row, index) => {
-        return tokenColunms.to.render(value, row, index, {
-          isToken: false,
-        });
-      },
-    },
+    tokenColunms.from,
+    tokenColunms.to,
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsTokensWidth = [3, 3, 3, 3, 4, 4];
-  const columnsTokenTrasfers: ColumnsType = [
-    tokenColunms.txnHash,
-    {
-      ...tokenColunms.from,
-      render: (value, row, index) =>
-        tokenColunms.from.render(value, row, index, {
-          isToken: false,
-        }),
-    },
-    {
-      ...tokenColunms.to,
-      render: (value, row, index) =>
-        tokenColunms.to.render(value, row, index, {
-          isToken: false,
-        }),
-    },
-    tokenColunms.quantity,
-    {
-      ...tokenColunms.token,
-      render: row => (
-        <StyledIconWrapper>
-          {row?.token
-            ? [
-                <img
-                  key="img"
-                  src={row?.token?.icon || defaultTokenIcon}
-                  alt="token icon"
-                />,
-                <Link key="link" href={`/token/${row?.token?.address}`}>
-                  <Text
-                    span
-                    hoverValue={`${
+  const tokenColumnsToken = {
+    ...tokenColunms.token,
+    render: row => (
+      <StyledIconWrapper>
+        {row?.token
+          ? [
+              <img
+                key="img"
+                src={row?.token?.icon || defaultTokenIcon}
+                alt="token icon"
+              />,
+              <Link key="link" href={`/token/${row?.token?.address}`}>
+                <Text
+                  span
+                  hoverValue={`${
+                    row?.token?.name || t(translations.general.notAvailable)
+                  } (${
+                    row?.token?.symbol || t(translations.general.notAvailable)
+                  })`}
+                >
+                  {formatString(
+                    `${
                       row?.token?.name || t(translations.general.notAvailable)
                     } (${
                       row?.token?.symbol || t(translations.general.notAvailable)
-                    })`}
-                  >
-                    {formatString(
-                      `${
-                        row?.token?.name || t(translations.general.notAvailable)
-                      } (${
-                        row?.token?.symbol ||
-                        t(translations.general.notAvailable)
-                      })`,
-                      'tag',
-                    )}
-                  </Text>
-                </Link>,
-              ]
-            : loadingText}
-        </StyledIconWrapper>
-      ),
-    },
-    tokenColunms.age,
-  ].map((item, i) => ({ ...item, width: columnsTokensWidth[i] }));
+                    })`,
+                    'tag',
+                  )}
+                </Text>
+              </Link>,
+            ]
+          : loadingText}
+      </StyledIconWrapper>
+    ),
+  };
 
-  const columnsBlocksWidth = [4, 2, 3, 2, 3, 3, 3, 4];
+  const columnsTokensWidthErc20 = [3, 5, 5, 3, 5, 4];
+  const columnsTokenTrasfersErc20: ColumnsType = [
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    tokenColunms.quantity,
+    tokenColumnsToken,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc20[i] }));
+
+  const columnsTokensWidthErc721 = [3, 5, 5, 3, 5, 4];
+  const columnsTokenTrasfersErc721: ColumnsType = [
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    tokenColunms.tokenId,
+    tokenColumnsToken,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
+
+  const columnsTokensWidthErc1155 = [3, 5, 4, 2, 3, 4, 4];
+  const columnsTokenTrasfersErc1155: ColumnsType = [
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    tokenColunms.quantity,
+    tokenColunms.tokenId,
+    tokenColumnsToken,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
+
+  const columnsBlocksWidth = [4, 2, 3, 2, 4, 3, 3, 4];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -482,7 +485,7 @@ export function Table({ address }) {
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
-  const tabs = [
+  const tabs: any = [
     {
       value: 'transaction',
       label: (total: number, realTotal: number) => {
@@ -499,24 +502,68 @@ export function Table({ address }) {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
+      hasFilter: true,
     },
-    {
-      value: 'transfers',
-      label: (total: number, realTotal: number) => {
-        return (
-          <>
-            {t(translations.general.tokenTxns)}
-            <TabLabel total={total} realTotal={realTotal} />
-          </>
-        );
-      },
-      pagination: true,
-      url: `/transfer?accountAddress=${address}`,
-      table: {
-        columns: columnsTokenTrasfers,
-        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
-      },
+  ];
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc20}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc20)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
     },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`,
+    table: {
+      columns: columnsTokenTrasfersErc20,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc721}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc721)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
+    },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`,
+    table: {
+      columns: columnsTokenTrasfersErc721,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.erc1155}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.tokenTxnsErc1155)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
+    },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
+    table: {
+      columns: columnsTokenTrasfersErc1155,
+      rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+    },
+    hasFilter: true,
+  });
+
+  tabs.push(
     isContract
       ? {
           value: 'contract-viewer',
@@ -541,16 +588,19 @@ export function Table({ address }) {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
           },
+          hasFilter: true,
         },
-  ];
+  );
 
   const showExportRecordsButton =
     bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
   const handleExportRecords = () => {
     const exportRecordsPathMap = {
-      transfers: 'transfer',
       transaction: 'transaction',
     };
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc20}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc721}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc1155}`] = 'transfer';
     const exportRecordsPath =
       typeof tab === 'string' && exportRecordsPathMap[tab];
 
@@ -562,6 +612,8 @@ export function Table({ address }) {
           minTimestamp,
           maxTimestamp,
           accountAddress,
+          transferType:
+            tab === 'transaction' ? null : tab!['replace']('transfers-', ''),
         },
       });
       window.open(url);
@@ -679,11 +731,12 @@ const TableWrap = styled.div`
 
 const FilterWrap = styled.div`
   position: absolute;
-  right: 0;
-  top: 0.7143rem;
+  right: 10px;
+  top: 75px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 200;
 
   ${media.s} {
     flex-direction: column;

@@ -41,8 +41,8 @@ const DappButton = ({
   shownAddress,
   ...props
 }: Props) => {
+  // TODO cip=37
   const { t } = useTranslation();
-  console.log(data);
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');

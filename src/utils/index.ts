@@ -1,6 +1,6 @@
 import {
-  addressTypeContract,
   addressTypeCommon,
+  addressTypeContract,
   addressTypeInternalContract,
   zeroAddress,
 } from './constants';
@@ -10,12 +10,14 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
+import { cfxAddress, formatAddress } from './cfx';
+
 dayjs.extend(relativeTime);
 
 export const innerContract = [
-  '0x0888000000000000000000000000000000000000',
-  '0x0888000000000000000000000000000000000001',
-  '0x0888000000000000000000000000000000000002',
+  formatAddress('0x0888000000000000000000000000000000000000'),
+  formatAddress('0x0888000000000000000000000000000000000001'),
+  formatAddress('0x0888000000000000000000000000000000000002'),
 ];
 
 export const delay = (ms: number) => {
@@ -23,15 +25,24 @@ export const delay = (ms: number) => {
 };
 
 export const getAddressType = address => {
-  if (address && address === zeroAddress) {
-    return addressTypeCommon;
+  try {
+    const type = cfxAddress.decodeCfxAddress(
+      formatAddress(address, { hex: false }),
+    ).type;
+    switch (type) {
+      case 'user':
+        return addressTypeCommon;
+      case 'contract':
+        return addressTypeContract;
+      case 'builtin':
+        return addressTypeInternalContract;
+      default:
+        return null;
+    }
+  } catch (e) {
+    console.warn('getAddressType:', address, e.message);
+    return null;
   }
-  if (address && address.startsWith('0x0')) {
-    return addressTypeInternalContract;
-  }
-  return address && address.startsWith('0x8')
-    ? addressTypeContract
-    : addressTypeCommon;
 };
 
 /**
@@ -463,21 +474,28 @@ export const selectText = (element: HTMLElement) => {
   }
 };
 
-// TODO cip-37
 export const isAddress = (str: string) => {
-  return /^0x[0-9a-fA-F]{40}$/.test(str);
+  return formatAddress(str) !== '';
+  // return cfxAddress.isValidCfxAddress(str); // only support new address
+  // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
 
+export function isNullAddress(str: string) {
+  console.log(formatAddress(str));
+  console.log(zeroAddress);
+  return formatAddress(str) === zeroAddress;
+}
+
 export function isAccountAddress(str: string) {
-  return /^0x(1[0-9a-fA-F]{39}|0{40})$/.test(str);
+  return getAddressType(str) === addressTypeCommon || isNullAddress(str);
 }
 
 export function isContractAddress(str: string) {
-  return /^0x8[0-9a-fA-F]{39}$/.test(str);
+  return getAddressType(str) === addressTypeContract;
 }
 
 export function isInnerContractAddress(str: string) {
-  return innerContract.indexOf(str) > -1;
+  return getAddressType(str) === addressTypeInternalContract;
 }
 
 export const isHash = (str: string) => {

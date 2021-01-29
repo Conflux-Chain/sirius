@@ -6,18 +6,19 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from '../../components/List/Loadable';
-import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatBalance, formatString, toThousands } from '../../../utils';
+import { formatBalance, formatNumber, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
+import { AddressContainer } from '../../components/AddressContainer';
 
 export interface BasicProps {
   address?: string;
-  tokenType?: string;
+  transferType?: string;
   totalSupply?: string;
-  price?: string;
-  marketCap?: string;
+  price?: number;
+  totalPrice?: number;
+  quoteUrl?: string;
   symbol?: string;
   name?: string;
   tokenAddress?: string;
@@ -28,10 +29,10 @@ export interface BasicProps {
 
 export const Basic = ({
   address, // address === undefined when token api is pending
-  tokenType,
+  transferType,
   totalSupply,
   price,
-  marketCap,
+  totalPrice,
   symbol,
   decimals,
   tokenAddress,
@@ -40,41 +41,43 @@ export const Basic = ({
 }: BasicProps) => {
   const { t } = useTranslation();
 
-  // const fieldPrice = {
-  //   title: (
-  //     <Tooltip text={t(translations.toolTip.token.price)} placement="top">
-  //       {t(translations.token.price)}
-  //     </Tooltip>
-  //   ),
-  //   children:
-  //     price !== undefined ? (
-  //       <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
-  //         {`${formatBalance(price, decimals)} ${symbol}`}
-  //       </Text>
-  //     ) : address ? (
-  //       t(translations.general.notAvailable)
-  //     ) : undefined,
-  // };
+  const fieldPrice = {
+    title: (
+      <Tooltip text={t(translations.toolTip.token.price)} placement="top">
+        {t(translations.token.price)}
+      </Tooltip>
+    ),
+    children:
+      price !== undefined ? (
+        <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
+          {price != null ? `$ ${formatNumber(price || 0)}` : '-'}
+        </Text>
+      ) : address ? (
+        t(translations.general.notAvailable)
+      ) : undefined,
+  };
 
-  // const fieldMarketCap = {
-  //   title: (
-  //     <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
-  //       {t(translations.token.marketCap, {
-  //         interpolation: { escapeValue: false },
-  //       })}
-  //     </Tooltip>
-  //   ),
-  //   children:
-  //     marketCap !== undefined ? (
-  //       <Text
-  //         hoverValue={`${formatBalance(marketCap, decimals, true)} ${symbol}`}
-  //       >
-  //         {`${formatBalance(marketCap, decimals)} ${symbol}`}
-  //       </Text>
-  //     ) : address ? (
-  //       t(translations.general.notAvailable)
-  //     ) : undefined,
-  // };
+  const fieldMarketCap = {
+    title: (
+      <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
+        {t(translations.token.marketCap, {
+          interpolation: { escapeValue: false },
+        })}
+      </Tooltip>
+    ),
+    children:
+      totalPrice !== undefined ? (
+        <Text
+          hoverValue={`${formatBalance(totalPrice, decimals, true)} ${symbol}`}
+        >
+          {totalPrice != null && totalPrice > 0
+            ? `$ ${formatNumber(totalPrice || 0)}`
+            : '-'}
+        </Text>
+      ) : address ? (
+        t(translations.general.notAvailable)
+      ) : undefined,
+  };
 
   const fieldContractAddress = {
     title: (
@@ -84,14 +87,10 @@ export const Basic = ({
     ),
     children:
       tokenAddress !== undefined ? (
-        <Text span hoverValue={tokenAddress}>
-          {
-            <Link href={`/address/${tokenAddress}`}>
-              {formatString(tokenAddress || '', 'address')}
-            </Link>
-          }
-        </Text>
-      ) : undefined,
+        <AddressContainer value={tokenAddress} />
+      ) : (
+        t(translations.general.security.notAvailable)
+      ),
   };
 
   const fieldDecimal = {
@@ -147,19 +146,21 @@ export const Basic = ({
       transferCount !== undefined ? toThousands(transferCount) : undefined,
   };
 
-  let list = [
-    fieldTotalSupply,
-    fieldContractAddress,
-    fieldHolders,
-    fieldDecimal,
-    fieldTransfers,
-    null,
-  ];
+  let list: any;
 
-  if (
-    tokenType === cfxTokenTypes.erc721 ||
-    tokenType === cfxTokenTypes.erc1155
-  ) {
+  if (transferType === cfxTokenTypes.erc20) {
+    list = [
+      fieldPrice,
+      fieldContractAddress,
+      fieldMarketCap,
+      fieldDecimal,
+      fieldTotalSupply,
+      null,
+      fieldHolders,
+      null,
+      fieldTransfers,
+    ];
+  } else {
     list = [
       fieldTotalSupply,
       fieldContractAddress,
@@ -168,11 +169,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   }
-  return (
-    <BasicWrap>
-      <List list={list} />
-    </BasicWrap>
-  );
+  return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };
 
 const BasicWrap = styled.div`

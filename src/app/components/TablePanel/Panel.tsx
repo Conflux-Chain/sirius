@@ -17,6 +17,7 @@ export type TablePanelType = {
   url: string;
   pagination?: PaginationProps | boolean;
   table: TableProps<unknown>;
+  hasFilter?: boolean;
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -75,7 +76,12 @@ const defaultTableConfig: TableProps<unknown> = {
   variant: 'solid',
 };
 
-export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
+export const TablePanel = ({
+  url,
+  pagination,
+  table,
+  hasFilter = false,
+}: TablePanelType) => {
   const {
     pageNumber,
     pageSize,
@@ -140,7 +146,7 @@ export const TablePanel = ({ url, pagination, table }: TablePanelType) => {
 
   return (
     <>
-      <StyledTableWrapper>
+      <StyledTableWrapper hasFilter={hasFilter}>
         <Card>
           <Table
             className={clsx('sirius-table', table.className)}
@@ -185,13 +191,15 @@ TablePanel.defaultProps = {
   table: defaultTableConfig,
 };
 
-const StyledTableWrapper = styled.div`
+const StyledTableWrapper: any = styled.div`
   .card {
     position: relative;
     background-color: red;
   }
   .table.sirius-table {
     line-height: 1.7143rem;
+    ${(props: any) =>
+      props.hasFilter ? 'margin-top: 54px;border-top: 1px solid #e8e9ea;' : ''}
     .table-content {
       padding: 0 0 1rem;
     }

@@ -9,6 +9,7 @@ import {
   tranferToLowerCase,
 } from 'utils';
 import { zeroAddress } from '../constants';
+import { formatAddress } from '../cfx';
 
 // Search bar hook
 export const useSearch = (value?: string) => {
@@ -23,7 +24,7 @@ export const useSearch = (value?: string) => {
 
     if (typeof innerValue !== 'string' || innerValue.trim() === '') return;
 
-    // TODO checksum
+    // cip-37
     innerValue = tranferToLowerCase(innerValue.trim());
 
     // zero address support
@@ -39,7 +40,7 @@ export const useSearch = (value?: string) => {
       isAccountAddress(innerValue) ||
       isInnerContractAddress(innerValue)
     ) {
-      history.push(`/address/${innerValue}`);
+      history.push(`/address/${formatAddress(innerValue)}`); // cip-37 convert to new format
       return;
     }
 

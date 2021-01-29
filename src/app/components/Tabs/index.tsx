@@ -47,7 +47,7 @@ const StyledTabsWrapper = styled.div`
       overflow: visible;
     }
     header + .content {
-      margin-top: 1.2857rem;
+      margin-top: 1.1rem;
       padding-top: 0;
     }
   }

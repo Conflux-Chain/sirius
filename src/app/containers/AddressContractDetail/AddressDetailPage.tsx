@@ -20,6 +20,7 @@ import {
 import { Text } from 'app/components/Text';
 import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
 import { Table } from './Loadable';
+import { isNullAddress } from '../../../utils';
 
 interface RouteParams {
   address: string;
@@ -41,7 +42,11 @@ export const AddressDetailPage = memo(() => {
       </Helmet>
       <Main>
         <Head>
-          <Title>{t(translations.general.address.address)}</Title>
+          <Title>
+            {isNullAddress(address)
+              ? t(translations.general.zeroAddress)
+              : t(translations.general.address.address)}
+          </Title>
           <HeadAddressLine>
             {bp === 's' ? (
               <Text maxWidth="14.75rem">{address}</Text>

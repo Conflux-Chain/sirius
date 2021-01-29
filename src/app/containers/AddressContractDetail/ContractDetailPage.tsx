@@ -72,7 +72,11 @@ export const ContractDetailPage = memo(() => {
       </Helmet>
       <Main key="main">
         <Head key="head">
-          <Title>{t(translations.general.contract)}</Title>
+          <Title>
+            {isInnerContractAddress(address)
+              ? t(translations.general.internalContract)
+              : t(translations.general.contract)}
+          </Title>
           <HeadAddressLine>
             {bp === 's' ? (
               <Text maxWidth="14.75rem">{address}</Text>

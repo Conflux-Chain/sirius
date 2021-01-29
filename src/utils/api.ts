@@ -23,6 +23,8 @@ export const simpleGetFetcher = async (...args: any[]) => {
   if (query) {
     url = qs.stringifyUrl({ url, query });
   }
+  // TODO cip-37 convert
+  console.info('simpleGetFetcher', url, query);
   return await fetch(appendApiPrefix(url), {
     method: 'get',
   });
@@ -32,6 +34,8 @@ const simplePostFetcher = async (...args: any[]) => {
   let [url, params, shouldAppendPrefix] = args;
   shouldAppendPrefix =
     shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
+  // TODO cip-37 convert
+  console.info('simplePostFetcher', url, params);
   return await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
     method: 'post',
     headers: {
@@ -284,9 +288,7 @@ export const useCMContractQuery: useApi = (
   if (!Array.isArray(params)) params = [params];
   params = useRef(params).current;
   return useSWR(
-    shouldFetch
-      ? [`/contract/${params[0].address}?${params[0].address}:''`, ...params]
-      : null,
+    shouldFetch ? [`/contract/${params[0].address}`, ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
@@ -325,7 +327,13 @@ export const useAccountTokenList = (
 ) => {
   return useSWR(
     accountAddress
-      ? qs.stringifyUrl({ url: '/token', query: { accountAddress, fields } })
+      ? qs.stringifyUrl({
+          url: '/token',
+          query: {
+            accountAddress,
+            fields,
+          },
+        })
       : null,
     url =>
       fetch(appendApiPrefix(url))
@@ -551,7 +559,7 @@ export const useToken = (
 };
 
 // this is the new api
-export const useTransactions = (query = {}, opts = {}) => {
+export const useTransactions = (query: any = {}, opts = {}) => {
   return useSWR(
     qs.stringifyUrl({
       url: '/transaction',
@@ -647,7 +655,7 @@ export const fetchRecentDagBlock = async (opts = {}) => {
 
 const fetchClientVersion = async () => {
   const version = await simplePostFetcher(
-    '/rpc',
+    '/rpcv2', // cip-37
     {
       jsonrpc: '2.0',
       id: '0',

@@ -5,21 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
+import { cfx, faucet, faucetAddress, formatAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
-import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
 import { DappButton } from '../../components/DappButton/Loadable';
-import {
-  isAddress,
-  getEllipsStr,
-  fromDripToGdrip,
-  fromDripToCfx,
-} from '../../../utils';
+import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
+import { AddressContainer } from '../../components/AddressContainer';
 interface RouteParams {
   contractAddress: string;
 }
@@ -51,8 +46,10 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { address: portalAddress } = useConfluxPortal();
-  const getSponsorInfo = async address => {
+  const getSponsorInfo = async _address => {
     setLoading(true);
+    // cip-37 hex
+    const address = formatAddress(_address, { hex: true });
     const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
@@ -108,13 +105,16 @@ export function Sponsor() {
   };
 
   const searchClick = async () => {
+    // cip-37
     if (isAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
     } else {
       resetParams();
     }
   };
-  const fetchIsAppliable = async (address: string) => {
+  const fetchIsAppliable = async (_address: string) => {
+    // cip-37 hex
+    const address = formatAddress(_address, { hex: true });
     const { flag, message } = await faucet.checkAppliable(address);
     if (!flag) {
       //can not apply sponsor this contract
@@ -263,12 +263,11 @@ export function Sponsor() {
                 {t(translations.sponsor.storageSponsor)}
               </span>
               <SkelontonContainer shown={loading}>
-                <Link
-                  href={`/address/${storageSponsorAddress}`}
-                  className="address"
-                >
-                  {getEllipsStr(storageSponsorAddress, 6, 4)}
-                </Link>
+                {storageSponsorAddress ? (
+                  <AddressContainer value={storageSponsorAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
@@ -328,9 +327,11 @@ export function Sponsor() {
                 {t(translations.sponsor.gasFeeSponsor)}
               </span>
               <SkelontonContainer shown={loading}>
-                <Link href={`/address/${gasFeeAddress}`} className="address">
-                  {getEllipsStr(gasFeeAddress, 6, 4)}
-                </Link>
+                {gasFeeAddress ? (
+                  <AddressContainer value={gasFeeAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
