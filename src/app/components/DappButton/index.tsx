@@ -11,6 +11,7 @@ import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from '../../../utils/cfx';
+import { AddressContainer } from '../AddressContainer';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -115,7 +116,8 @@ const DappButton = ({
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
           <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-            {getEllipsStr(address, 6, 4)}
+            {/*{getEllipsStr(address, 6, 4)}*/}
+            <AddressContainer value={address} />
           </span>
         </>
       )}
