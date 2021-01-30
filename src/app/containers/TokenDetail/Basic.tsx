@@ -11,6 +11,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatBalance, formatNumber, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { AddressContainer } from '../../components/AddressContainer';
+import { LinkA } from '../../../utils/tableColumns/token';
 
 export interface BasicProps {
   address?: string;
@@ -33,6 +34,7 @@ export const Basic = ({
   totalSupply,
   price,
   totalPrice,
+  quoteUrl,
   symbol,
   decimals,
   tokenAddress,
@@ -48,9 +50,17 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      price !== undefined ? (
+      price != null ? (
         <Text hoverValue={`$ ${price}`}>
-          {price != null ? `$ ${formatNumber(price || 0)}` : '-'}
+          {quoteUrl ? (
+            <Text span hoverValue={`$ ${price}`}>
+              <LinkA href={quoteUrl} target="_blank">
+                $ {formatNumber(price || 0)}
+              </LinkA>
+            </Text>
+          ) : (
+            `$ ${formatNumber(price || 0)}`
+          )}
         </Text>
       ) : address ? (
         t(translations.general.notAvailable)

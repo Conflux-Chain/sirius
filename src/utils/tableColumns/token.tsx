@@ -304,7 +304,7 @@ const SpanWrap = styled.span`
   overflow: hidden;
 `;
 
-const LinkA = styled.a`
+export const LinkA = styled.a`
   color: #1e3de4 !important;
   &:hover {
     color: #0f23bd !important;
