@@ -292,7 +292,7 @@ export const Transaction = () => {
                     }
                     alt="icon"
                   />{' '}
-                  <Link href={`/address/${to}`}>
+                  <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo && contractInfo['name']}
                   </Link>{' '}
                 </>

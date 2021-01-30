@@ -13,6 +13,7 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
+import { formatAddress } from '../cfx';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -62,7 +63,7 @@ export const token = {
     return (
       <StyledIconWrapper>
         <img src={row?.icon || defaultTokenIcon} alt="token icon" />
-        <Link href={`/token/${row.address}`}>
+        <Link href={`/token/${formatAddress(row.address)}`}>
           <Translation>
             {t => (
               <Text

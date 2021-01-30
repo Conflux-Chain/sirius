@@ -120,9 +120,12 @@ export const Modal = ({
           <span className="modal-portal-connected-tip">
             <span className="modal-portal-connected-copy">
               {t(translations.connectWallet.modal.copyAddress)}{' '}
-              <CopyButton copyText={accounts[0]} size={10}></CopyButton>
+              <CopyButton
+                copyText={formatAddress(accounts[0])}
+                size={10}
+              ></CopyButton>
             </span>
-            <ScanLink href={`/address/${accounts[0]}`}>
+            <ScanLink href={`/address/${formatAddress(accounts[0])}`}>
               {t(translations.connectWallet.modal.viewOnConfluxScan)}
             </ScanLink>
           </span>
