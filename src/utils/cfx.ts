@@ -19,7 +19,6 @@ const cfx = new Conflux({
   networkId,
   // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
   // use hex address to compatible with history function
-  // cip-37
   // useHexAddressInParameter: true,
 });
 
