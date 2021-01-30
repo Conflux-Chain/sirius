@@ -104,7 +104,7 @@ export { TipLabel };
 const StyledCount = styled.span`
   color: #004fff;
   margin-left: 5px;
-  font-size: 5px;
+  font-size: 12px;
 `;
 const StyledTextWrapper = styled.span`
   .total {
