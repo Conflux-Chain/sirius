@@ -49,7 +49,7 @@ export const Basic = ({
     ),
     children:
       price !== undefined ? (
-        <Text hoverValue={`${formatBalance(price, decimals, true)} ${symbol}`}>
+        <Text hoverValue={`$ ${price}`}>
           {price != null ? `$ ${formatNumber(price || 0)}` : '-'}
         </Text>
       ) : address ? (
@@ -67,9 +67,7 @@ export const Basic = ({
     ),
     children:
       totalPrice !== undefined ? (
-        <Text
-          hoverValue={`${formatBalance(totalPrice, decimals, true)} ${symbol}`}
-        >
+        <Text hoverValue={`$ ${totalPrice}`}>
           {totalPrice != null && totalPrice > 0
             ? `$ ${formatNumber(totalPrice || 0)}`
             : '-'}

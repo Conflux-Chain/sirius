@@ -98,7 +98,7 @@ export const price = {
     <span>
       {value != null ? (
         row.quoteUrl ? (
-          <Text span hoverValue={row.quoteUrl}>
+          <Text span hoverValue={`$ ${value}`}>
             <LinkA href={row.quoteUrl} target="_blank">
               $ {formatNumber(value || 0)}
             </LinkA>
@@ -124,7 +124,13 @@ export const marketCap = {
   key: 'totalPrice',
   render: value => (
     <span>
-      {value != null && value > 0 ? `$ ${formatNumber(value || 0)}` : '-'}
+      {value != null && value > 0 ? (
+        <Text span hoverValue={`$ ${value}`}>
+          $ {formatNumber(value || 0)}
+        </Text>
+      ) : (
+        '-'
+      )}
     </span>
   ),
 };
