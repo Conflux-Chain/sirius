@@ -50,6 +50,7 @@ const formatAddress = (address: string | undefined, option: any = {}) => {
   // do not support private net
   if (address.toLowerCase().startsWith('net')) return '';
   // conflux net must same with address prefix
+  // TODO should write contract params follow this rule?
   if (address.toLowerCase().startsWith('cfx:') && isConfluxTestNet) return '';
   if (address.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
     return '';
