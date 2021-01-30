@@ -94,8 +94,22 @@ export const price = {
   ),
   dataIndex: 'price',
   key: 'price',
-  render: value => (
-    <span>{value != null ? `$ ${formatNumber(value || 0)}` : '-'}</span>
+  render: (value, row) => (
+    <span>
+      {value != null ? (
+        row.quoteUrl ? (
+          <Text span hoverValue={row.quoteUrl}>
+            <LinkA href={row.quoteUrl} target="_blank">
+              $ {formatNumber(value || 0)}
+            </LinkA>
+          </Text>
+        ) : (
+          `$ ${formatNumber(value || 0)}`
+        )
+      ) : (
+        '-'
+      )}
+    </span>
   ),
 };
 
@@ -282,4 +296,11 @@ const SpanWrap = styled.span`
   text-overflow: ellipsis;
   max-width: 100px;
   overflow: hidden;
+`;
+
+const LinkA = styled.a`
+  color: #1e3de4 !important;
+  &:hover {
+    color: #0f23bd !important;
+  }
 `;

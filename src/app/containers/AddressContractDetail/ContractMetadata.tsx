@@ -250,7 +250,7 @@ export function ContractMetadata({ address, contractInfo }) {
                         {` ${t(translations.contractDetail.at)} ${t(
                           translations.contractDetail.txOnlyEn,
                         )} `}
-                        <Link
+                        <LinkWrap
                           to={`/transaction/${contractInfo.transactionHash}`}
                         >
                           <Text span hoverValue={contractInfo.transactionHash}>
@@ -259,7 +259,7 @@ export function ContractMetadata({ address, contractInfo }) {
                               'address',
                             )}
                           </Text>
-                        </Link>
+                        </LinkWrap>
                         {` ${t(translations.contractDetail.txOnlyZh)} `}
                       </>
                     ) : null}
@@ -325,4 +325,11 @@ const Icon = styled.img`
   width: 1.14rem;
   height: 1.14rem;
   margin-right: 0.57rem;
+`;
+
+const LinkWrap = styled(Link)`
+  color: #1e3de4 !important;
+  &:hover {
+    color: #0f23bd !important;
+  }
 `;
