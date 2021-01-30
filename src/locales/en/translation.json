@@ -578,7 +578,7 @@
     "token": {
       "price": "Token price.",
       "volume": "The total dollar value of all cryptocurrency transactions over the past 24 hours.",
-      "marketCap": "The market value of a cryptocurrency's total supply. <br> Market Cap = Current Price x Total Supply.",
+      "marketCap": "The market value of a cryptocurrency's total supply. Market Cap = Current Price x Total Supply.",
       "fullyDilutedMarketCap": "The market cap if the max supply was in circulation. Fully-diluted market cap = price x max supply.",
       "totalSupply": "Total supply of the token.",
       "holders": "The amout of addresses which hold the token.",
