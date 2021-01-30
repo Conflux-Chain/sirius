@@ -50,7 +50,7 @@ export function Sponsor() {
   const [inputAddressVal, setInputAddressVal] = useState('');
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
-  const { address: portalAddress } = useConfluxPortal();
+  const { address: portalAddress } = useConfluxPortal(); // TODO cip-37 portal
   const getSponsorInfo = async _address => {
     setLoading(true);
     // TODO cip-37 update

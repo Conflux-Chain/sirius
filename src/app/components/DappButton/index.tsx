@@ -43,6 +43,7 @@ const DappButton = ({
   ...props
 }: Props) => {
   const { t } = useTranslation();
+  // TODO cip-37 portal multi version
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -59,7 +60,7 @@ const DappButton = ({
     } else {
       if (address) {
         if (!btnDisabled) {
-          // TODO cip-37
+          // TODO cip-37 portal
           const txParams = {
             from: formatAddress(address, { hex: true }),
             to: formatAddress(contractAddress, { hex: true }),

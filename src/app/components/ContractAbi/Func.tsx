@@ -47,7 +47,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     login,
     confluxJS,
     chainId,
-  } = useConfluxPortal();
+  } = useConfluxPortal(); // TODO cip-37 portal
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
