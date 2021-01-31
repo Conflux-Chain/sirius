@@ -101,7 +101,7 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
-    "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
+    "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "table": {
       "number": "#",
       "token": "代币",

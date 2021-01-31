@@ -29,6 +29,7 @@ import {
   checkBytes,
   checkCfxType,
 } from '../../../utils';
+import { formatAddress } from '../../../utils/cfx';
 interface FuncProps {
   type?: string;
   data: object;
@@ -47,7 +48,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     login,
     confluxJS,
     chainId,
-  } = useConfluxPortal();
+  } = useConfluxPortal(); // TODO cip-37 portal
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -140,9 +141,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
               return;
             }
             let objParams: any[] = [];
+            // cip-37
             let txParams = {
-              from: address,
-              to: contractAddress,
+              from: formatAddress(address, { hex: true }),
+              to: formatAddress(contractAddress, { hex: true }),
             };
             if (data['stateMutability'] === 'payable') {
               objParams = objValues.slice(1);

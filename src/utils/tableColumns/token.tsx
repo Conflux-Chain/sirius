@@ -13,6 +13,7 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
+import { formatAddress } from '../cfx';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -41,16 +42,16 @@ const renderAddress = (value, row, type?: 'to' | 'from') => {
   );
 };
 
-export const number = {
+export const number = (page, pageSize) => ({
   width: 1,
   title: (
     <Translation>{t => t(translations.general.table.token.number)}</Translation>
   ),
   key: 'epochNumber',
   render: (value, row, index) => {
-    return index + 1;
+    return (page - 1) * pageSize + index + 1;
   },
-};
+});
 
 export const token = {
   width: 1,
@@ -62,7 +63,7 @@ export const token = {
     return (
       <StyledIconWrapper>
         <img src={row?.icon || defaultTokenIcon} alt="token icon" />
-        <Link href={`/token/${row.address}`}>
+        <Link href={`/token/${formatAddress(row.address)}`}>
           <Translation>
             {t => (
               <Text
@@ -93,8 +94,22 @@ export const price = {
   ),
   dataIndex: 'price',
   key: 'price',
-  render: value => (
-    <span>{value != null ? `$ ${formatNumber(value || 0)}` : '-'}</span>
+  render: (value, row) => (
+    <span>
+      {value != null ? (
+        row.quoteUrl ? (
+          <Text span hoverValue={`$ ${value}`}>
+            <LinkA href={row.quoteUrl} target="_blank">
+              $ {formatNumber(value || 0)}
+            </LinkA>
+          </Text>
+        ) : (
+          `$ ${formatNumber(value || 0)}`
+        )
+      ) : (
+        '-'
+      )}
+    </span>
   ),
 };
 
@@ -109,7 +124,13 @@ export const marketCap = {
   key: 'totalPrice',
   render: value => (
     <span>
-      {value != null && value > 0 ? `$ ${formatNumber(value || 0)}` : '-'}
+      {value != null && value > 0 ? (
+        <Text span hoverValue={`$ ${value}`}>
+          $ {formatNumber(value || 0)}
+        </Text>
+      ) : (
+        '-'
+      )}
     </span>
   ),
 };
@@ -281,4 +302,11 @@ const SpanWrap = styled.span`
   text-overflow: ellipsis;
   max-width: 100px;
   overflow: hidden;
+`;
+
+export const LinkA = styled.a`
+  color: #1e3de4 !important;
+  &:hover {
+    color: #0f23bd !important;
+  }
 `;

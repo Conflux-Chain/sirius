@@ -10,7 +10,9 @@ import { Translation, useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { formatAddress } from '../../../utils/cfx';
-import { FileText, Info } from '@zeit-ui/react-icons';
+import { AlertTriangle } from '@zeit-ui/react-icons';
+import ContractIcon from '../../../images/contract-icon.png';
+import InternalContractIcon from '../../../images/internal-contract-icon.png';
 
 interface Props {
   value: string;
@@ -19,6 +21,22 @@ interface Props {
   maxWidth?: number;
   isFull?: boolean;
 }
+
+const IconWrapper = styled.span`
+  margin-right: 2px;
+
+  svg {
+    vertical-align: bottom;
+    margin-bottom: 4px;
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+    margin-bottom: 4px;
+  }
+`;
 
 export const AddressContainer = ({
   value,
@@ -35,15 +53,6 @@ export const AddressContainer = ({
     outline: none;
   `;
 
-  const IconWrapper = styled.span`
-    margin-right: 2px;
-
-    svg {
-      vertical-align: bottom;
-      margin-bottom: 6px;
-    }
-  `;
-
   if (!value) {
     // contract creation txn to prop is null
     if (contractCreated)
@@ -54,7 +63,10 @@ export const AddressContainer = ({
               span
               hoverValue={t(translations.transaction.contractCreation)}
             >
-              <FileText size={12} color="#0fd44c" />
+              <img
+                src={ContractIcon}
+                alt={t(translations.transaction.contractCreation)}
+              />
             </Text>
           </IconWrapper>
           <Text span hoverValue={formatAddress(contractCreated)}>
@@ -72,7 +84,10 @@ export const AddressContainer = ({
       <>
         <IconWrapper>
           <Text span hoverValue={t(translations.transaction.contractCreation)}>
-            <FileText size={12} color="#0fd44c" />
+            <img
+              src={ContractIcon}
+              alt={t(translations.transaction.contractCreation)}
+            />
           </Text>
         </IconWrapper>
         <Text span>
@@ -92,7 +107,7 @@ export const AddressContainer = ({
       <>
         <IconWrapper>
           <Text span hoverValue={tip}>
-            <Info size={12} color="#e00909" />
+            <AlertTriangle size={16} color="#e00909" />
           </Text>
         </IconWrapper>
         <Text span hoverValue={`${tip}: ${sourceValue}`}>
@@ -121,10 +136,11 @@ export const AddressContainer = ({
       <>
         <IconWrapper>
           <Text span hoverValue={typeText}>
-            <FileText
-              size={12}
-              color={isInternalContract ? '#13b5c4' : '#9b9eac'}
-            />
+            {isInternalContract ? (
+              <img src={InternalContractIcon} alt={typeText} />
+            ) : (
+              <img src={ContractIcon} alt={typeText} />
+            )}
           </Text>
         </IconWrapper>
         <Text span hoverValue={cfxAddress}>

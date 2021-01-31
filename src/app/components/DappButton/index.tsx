@@ -11,6 +11,7 @@ import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from '../../../utils/cfx';
+import { AddressContainer } from '../AddressContainer';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -43,6 +44,7 @@ const DappButton = ({
   ...props
 }: Props) => {
   const { t } = useTranslation();
+  // TODO cip-37 portal multi version
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -59,7 +61,7 @@ const DappButton = ({
     } else {
       if (address) {
         if (!btnDisabled) {
-          // TODO cip-37
+          // TODO cip-37 portal
           const txParams = {
             from: formatAddress(address, { hex: true }),
             to: formatAddress(contractAddress, { hex: true }),
@@ -114,7 +116,8 @@ const DappButton = ({
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
           <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-            {getEllipsStr(address, 6, 4)}
+            {/*{getEllipsStr(address, 6, 4)}*/}
+            <AddressContainer value={address} />
           </span>
         </>
       )}

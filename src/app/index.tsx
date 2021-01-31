@@ -95,9 +95,14 @@ export function App() {
                   path="/contract/:contractAddress"
                   render={(routeProps: any) => {
                     if (
-                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.contractAddress &&
-                      routeProps.match.params.contractAddress.startsWith('0x')
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.contractAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.contractAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
                     )
                       return (
                         <Redirect
@@ -115,9 +120,14 @@ export function App() {
                   path="/token/:tokenAddress"
                   render={(routeProps: any) => {
                     if (
-                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.tokenAddress &&
-                      routeProps.match.params.tokenAddress.startsWith('0x')
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.tokenAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.tokenAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
                     )
                       return (
                         <Redirect
@@ -150,9 +160,14 @@ export function App() {
                   path="/sponsor/:contractAddress"
                   render={(routeProps: any) => {
                     if (
-                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.contractAddress &&
-                      routeProps.match.params.contractAddress.startsWith('0x')
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.contractAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.contractAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
                     )
                       return (
                         <Redirect
@@ -181,9 +196,12 @@ export function App() {
                   path="/address/:address"
                   render={(routeProps: any) => {
                     if (
-                      !getGlobalShowHexAddress() &&
                       routeProps.match.params.address &&
-                      routeProps.match.params.address.startsWith('0x')
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.address.startsWith('0x')) ||
+                        routeProps.match.params.address
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
                     )
                       return (
                         <Redirect

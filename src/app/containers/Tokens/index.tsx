@@ -13,6 +13,7 @@ import { tokenColunms } from '../../../utils/tableColumns';
 import styled from 'styled-components/macro';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
+import queryString from 'query-string';
 
 interface RouteParams {
   tokenType: string;
@@ -21,10 +22,11 @@ interface RouteParams {
 export function Tokens() {
   const { t } = useTranslation();
   const { tokenType } = useParams<RouteParams>();
+  const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 5, 3, 3, 3, 3, 2, 4];
+  let columnsWidth = [1, 7, 3, 3, 3, 3, 2, 5];
   let columns: ColumnsType = [
-    tokenColunms.number,
+    tokenColunms.number(page, pageSize),
     tokenColunms.token,
     tokenColunms.price,
     tokenColunms.marketCap,
@@ -41,7 +43,7 @@ export function Tokens() {
   if (tokenType === cfxTokenTypes.erc721) {
     columnsWidth = [1, 8, 4, 4, 5];
     columns = [
-      tokenColunms.number,
+      tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
       tokenColunms.holders,
@@ -55,7 +57,7 @@ export function Tokens() {
   if (tokenType === cfxTokenTypes.erc1155) {
     columnsWidth = [1, 8, 4, 4, 5];
     columns = [
-      tokenColunms.number,
+      tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
       tokenColunms.holders,

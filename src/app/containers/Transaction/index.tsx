@@ -292,7 +292,7 @@ export const Transaction = () => {
                     }
                     alt="icon"
                   />{' '}
-                  <Link href={`/address/${to}`}>
+                  <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo && contractInfo['name']}
                   </Link>{' '}
                 </>
@@ -331,10 +331,13 @@ export const Transaction = () => {
             <span className="label">
               {t(translations.transaction.contract)}
             </span>
-            <Link href={`/address/${transactionDetail['contractCreated']}`}>
-              {transactionDetail['contractCreated']}
-            </Link>{' '}
-            <CopyButton copyText={transactionDetail['contractCreated']} />
+            <AddressContainer
+              value={transactionDetail['contractCreated']}
+              isFull={true}
+            />{' '}
+            <CopyButton
+              copyText={formatAddress(transactionDetail['contractCreated'])}
+            />
             &nbsp; {t(translations.transaction.created)}
           </SkeletonContainer>
         </Description>

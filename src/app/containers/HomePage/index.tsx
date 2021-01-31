@@ -154,6 +154,6 @@ const ViewAllLinkWrapper = styled.div`
     top: 0.6429rem;
   }
   .viewall-link.link {
-    color: #008dff;
+    color: #1e3de4;
   }
 `;

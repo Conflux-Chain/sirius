@@ -59,7 +59,7 @@ const fieldsContract = [
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
-  const { address: accountAddress } = useConfluxPortal();
+  const { address: accountAddress } = useConfluxPortal(); // TODO cip-37 portal
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -117,7 +117,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         setAddressDisabled(false);
         break;
       case 'edit':
-        setAddressVal(contractDetail.address);
+        setAddressVal(formatAddress(contractDetail.address));
         setTitle(t(translations.contract.edit.title));
         setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);

@@ -160,6 +160,7 @@ export const usePortal = () => {
   if (globalThis?.conflux?.autoRefreshOnNetworkChange)
     globalThis.conflux.autoRefreshOnNetworkChange = false;
 
+  // TODO cip-37 portal
   const {
     balances: [balance, [fc, ceth]],
     // eslint-disable-next-line react-hooks/rules-of-hooks
