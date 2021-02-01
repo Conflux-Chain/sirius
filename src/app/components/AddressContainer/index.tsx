@@ -13,6 +13,7 @@ import { formatAddress } from '../../../utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from '../../../images/contract-icon.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
+import { media } from '../../../styles/media';
 
 interface Props {
   value: string;
@@ -49,7 +50,7 @@ export const AddressContainer = ({
 
   const LinkWrapper = styled(Link)`
     display: inline-block !important;
-    max-width: ${maxWidth || 130}px !important;
+    max-width: ${maxWidth || media.s ? 100 : 130}px !important;
     outline: none;
   `;
 
