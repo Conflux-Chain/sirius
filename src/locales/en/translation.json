@@ -208,6 +208,7 @@
     }
   },
   "general": {
+    "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",

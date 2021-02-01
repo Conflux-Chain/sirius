@@ -40,7 +40,6 @@ export const getAddressType = address => {
         return null;
     }
   } catch (e) {
-    console.warn('getAddressType:', address, e.message);
     return null;
   }
 };

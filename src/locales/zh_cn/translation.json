@@ -208,6 +208,7 @@
     }
   },
   "general": {
+    "showLess": "收起",
     "viewMore": "查看更多",
     "viewAll": "查看全部",
     "viewAllBlocksAndTxs": "查看所有区块&交易",
