@@ -97,15 +97,15 @@ export const price = {
   render: (value, row) => (
     <span>
       {value != null ? (
-        row.quoteUrl ? (
-          <Text span hoverValue={`$ ${value}`}>
+        <Text span hoverValue={`$${value}`}>
+          {row.quoteUrl ? (
             <LinkA href={row.quoteUrl} target="_blank">
-              $ {formatNumber(value || 0)}
+              ${formatNumber(value || 0)}
             </LinkA>
-          </Text>
-        ) : (
-          `$ ${formatNumber(value || 0)}`
-        )
+          ) : (
+            `$${formatNumber(value || 0)}`
+          )}
+        </Text>
       ) : (
         '-'
       )}
@@ -125,8 +125,8 @@ export const marketCap = {
   render: value => (
     <span>
       {value != null && value > 0 ? (
-        <Text span hoverValue={`$ ${value}`}>
-          $ {formatNumber(value || 0)}
+        <Text span hoverValue={`$${value}`}>
+          ${formatNumber(value || 0)}
         </Text>
       ) : (
         '-'
