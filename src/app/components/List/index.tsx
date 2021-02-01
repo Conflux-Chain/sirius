@@ -44,7 +44,7 @@ export const List = ({ list }: ListProps) => {
           <Description
             key={`desc_${index}`}
             small
-            className="list-desp"
+            className={`list-desp ${item == null ? 'list-empty' : ''}`}
             title={item != null ? item.title : ''}
             noBorder={item != null ? noBorder(index) : true}
           >
@@ -68,6 +68,10 @@ const CardWrap = styled.div`
 
       ${media.s} {
         width: 100%;
+
+        &.list-empty {
+          display: none;
+        }
       }
     }
   }

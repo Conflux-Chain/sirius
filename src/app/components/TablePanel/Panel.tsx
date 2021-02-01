@@ -199,7 +199,7 @@ const StyledTableWrapper: any = styled.div`
   .table.sirius-table {
     line-height: 1.7143rem;
     ${(props: any) =>
-      props.hasFilter ? 'margin-top: 54px;border-top: 1px solid #e8e9ea;' : ''}
+      props.hasFilter ? 'margin-top: 54px; border-top: 1px solid #e8e9ea;' : ''}
     .table-content {
       padding: 0 0 1rem;
     }
@@ -218,6 +218,10 @@ const StyledTableWrapper: any = styled.div`
       ${media.s} {
         padding: 1.1429rem;
       }
+    }
+    ${media.s} {
+      margin-top: 0;
+      border-top: 0;
     }
   }
 `;

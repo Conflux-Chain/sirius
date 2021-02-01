@@ -242,6 +242,11 @@ const ButtonWrapper = styled.div`
     border: none;
     top: 0px;
     background-color: #f5f8ff;
+
+    ${media.s} {
+      margin: 5px 0;
+    }
+
     &:hover {
       color: #ffffff;
       background-color: rgba(0, 84, 254, 0.8);
