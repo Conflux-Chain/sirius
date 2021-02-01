@@ -444,7 +444,7 @@
     "for": "For",
     "tokenId": "TokenID",
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
-    "epochConfirmations": "{{count}} epoch Confirmations",
+    "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
       "1": "Contract error: ",
       "2": "Insufficient storage fees.",
