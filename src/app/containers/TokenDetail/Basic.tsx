@@ -168,7 +168,7 @@ export const Basic = ({
       null,
       fieldTransfers,
     ];
-  } else {
+  } else if (transferType === cfxTokenTypes.erc721) {
     list = [
       fieldTotalSupply,
       fieldContractAddress,
@@ -176,6 +176,8 @@ export const Basic = ({
       null,
       fieldTransfers,
     ];
+  } else {
+    list = [fieldTotalSupply, fieldContractAddress, fieldTransfers];
   }
   return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };
