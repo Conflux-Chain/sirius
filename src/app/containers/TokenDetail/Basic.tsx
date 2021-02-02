@@ -54,10 +54,10 @@ export const Basic = ({
         <Text hoverValue={`$${price}`}>
           {quoteUrl ? (
             <LinkA href={quoteUrl} target="_blank">
-              ${formatNumber(price || 0)}
+              ${formatNumber(price || 0, { withUnit: false })}
             </LinkA>
           ) : (
-            `$${formatNumber(price || 0)}`
+            `$${formatNumber(price || 0, { withUnit: false })}`
           )}
         </Text>
       ) : address ? (
@@ -75,9 +75,9 @@ export const Basic = ({
     ),
     children:
       totalPrice !== undefined ? (
-        <Text hoverValue={`$${totalPrice}`}>
+        <Text hoverValue={totalPrice != null ? `$${totalPrice}` : '-'}>
           {totalPrice != null && totalPrice > 0
-            ? `$${formatNumber(totalPrice || 0)}`
+            ? `$${formatNumber(totalPrice || 0, { unit: 'K' })}`
             : '-'}
         </Text>
       ) : address ? (
