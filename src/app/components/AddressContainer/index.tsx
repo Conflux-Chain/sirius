@@ -50,8 +50,12 @@ export const AddressContainer = ({
 
   const LinkWrapper = styled(Link)`
     display: inline-block !important;
-    max-width: ${maxWidth || media.s ? 100 : 130}px !important;
+    max-width: ${maxWidth || 130}px !important;
     outline: none;
+
+    ${media.s} {
+      max-width: ${maxWidth || 100}px !important;
+    }
   `;
 
   if (!value) {
