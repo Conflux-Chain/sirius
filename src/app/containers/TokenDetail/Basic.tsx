@@ -51,15 +51,13 @@ export const Basic = ({
     ),
     children:
       price != null ? (
-        <Text hoverValue={`$ ${price}`}>
+        <Text hoverValue={`$${price}`}>
           {quoteUrl ? (
-            <Text span hoverValue={`$ ${price}`}>
-              <LinkA href={quoteUrl} target="_blank">
-                $ {formatNumber(price || 0)}
-              </LinkA>
-            </Text>
+            <LinkA href={quoteUrl} target="_blank">
+              ${formatNumber(price || 0)}
+            </LinkA>
           ) : (
-            `$ ${formatNumber(price || 0)}`
+            `$${formatNumber(price || 0)}`
           )}
         </Text>
       ) : address ? (
@@ -77,9 +75,9 @@ export const Basic = ({
     ),
     children:
       totalPrice !== undefined ? (
-        <Text hoverValue={`$ ${totalPrice}`}>
+        <Text hoverValue={`$${totalPrice}`}>
           {totalPrice != null && totalPrice > 0
-            ? `$ ${formatNumber(totalPrice || 0)}`
+            ? `$${formatNumber(totalPrice || 0)}`
             : '-'}
         </Text>
       ) : address ? (
@@ -170,7 +168,7 @@ export const Basic = ({
       null,
       fieldTransfers,
     ];
-  } else {
+  } else if (transferType === cfxTokenTypes.erc721) {
     list = [
       fieldTotalSupply,
       fieldContractAddress,
@@ -178,6 +176,8 @@ export const Basic = ({
       null,
       fieldTransfers,
     ];
+  } else {
+    list = [fieldTotalSupply, fieldContractAddress, fieldTransfers];
   }
   return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };
