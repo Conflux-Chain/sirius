@@ -28,6 +28,7 @@ import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { NotFoundAddressPage } from './containers/NotFoundAddressPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
+import { Accounts } from './containers/Accounts/Loadable';
 import { Contracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
@@ -142,9 +143,17 @@ export function App() {
                 />
                 <Route
                   exact
-                  path="/blocks-and-transactions"
+                  path="/blockchain"
+                  render={() => (
+                    <Redirect to="/blockchain/blocks-and-transactions" />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/blockchain/blocks-and-transactions"
                   component={BlocksAndTransactions}
                 />
+                <Route exact path="/blockchain/accounts" component={Accounts} />
                 <Route exact path="/tokens" component={Tokens} />
                 <Route
                   exact

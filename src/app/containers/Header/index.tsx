@@ -42,8 +42,26 @@ export const Header = memo(() => {
       title: t(translations.header.home),
       href: '/',
     },
-    // blocks and transactions
-    { title: t(translations.header.bnt), href: '/blocks-and-transactions' },
+    // blockchain
+    {
+      title: t(translations.header.blockchain),
+      matched: location?.pathname?.startsWith('/blockchain'),
+      children: [
+        {
+          // block & txn
+          title: [t(translations.header.bnt), <Check size={18} key="check" />],
+          href: '/blockchain/blocks-and-transactions',
+        },
+        {
+          // accounts
+          title: [
+            t(translations.header.accounts),
+            <Check size={18} key="check" />,
+          ],
+          href: '/blockchain/accounts',
+        },
+      ],
+    },
     // tokens
     {
       title: t(translations.header.tokens),
