@@ -36,7 +36,15 @@ const renderAddress = (value, row, type?: 'to' | 'from') => {
         contractCreated={row.contractCreated}
       />
       {type === 'from' && (
-        <ImgWrap src={!filter ? imgArrow : filter === value ? imgOut : imgIn} />
+        <ImgWrap
+          src={
+            !filter
+              ? imgArrow
+              : formatAddress(filter) === formatAddress(value)
+              ? imgOut
+              : imgIn
+          }
+        />
       )}
     </FromWrap>
   );

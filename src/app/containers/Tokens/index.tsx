@@ -60,7 +60,6 @@ export function Tokens() {
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
-      tokenColunms.holders,
       tokenColunms.contract,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
