@@ -32,6 +32,7 @@ import { Contracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
+import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
@@ -180,6 +181,7 @@ export function App() {
                   }}
                 />
                 <Route path="/charts" component={Chart} />
+                <Route path="/statistics" component={Statistics} />
                 <Route
                   exact
                   path={['/address-converter', '/address-converter/:address']}

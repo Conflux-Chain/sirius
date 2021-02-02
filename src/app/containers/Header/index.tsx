@@ -31,6 +31,9 @@ export const Header = memo(() => {
   const contractMatched =
     location?.pathname?.startsWith('/sponsor') ||
     location?.pathname?.startsWith('/contract');
+  const statisticsMatched =
+    location?.pathname?.startsWith('/charts') ||
+    location?.pathname?.startsWith('/statistics');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -97,7 +100,26 @@ export const Header = memo(() => {
       ],
     },
     // charts
-    { title: t(translations.header.charts), href: '/charts' },
+    {
+      title: t(translations.header.chartsAndStatistics),
+      matched: statisticsMatched,
+      children: [
+        {
+          title: [
+            t(translations.header.charts),
+            <Check size={18} key="check" />,
+          ],
+          href: '/charts',
+        },
+        {
+          title: [
+            t(translations.header.statistics),
+            <Check size={18} key="check" />,
+          ],
+          href: '/statistics',
+        },
+      ],
+    },
   ];
 
   const endLinks: HeaderLinks = [
