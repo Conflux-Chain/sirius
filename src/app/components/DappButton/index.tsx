@@ -10,11 +10,13 @@ import imgRejected from 'images/rejected.png';
 import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
+import { formatAddress } from '../../../utils/cfx';
+import { AddressContainer } from '../AddressContainer';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
   btnDisabled?: boolean;
-  btnText?: string;
+  // btnText?: string;
   data?: string;
   contractAddress: string;
   connectText?: string;
@@ -42,7 +44,7 @@ const DappButton = ({
   ...props
 }: Props) => {
   const { t } = useTranslation();
-  console.log(data);
+  // TODO cip-37 portal multi version
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -59,9 +61,10 @@ const DappButton = ({
     } else {
       if (address) {
         if (!btnDisabled) {
+          // TODO cip-37 portal
           const txParams = {
-            from: address,
-            to: contractAddress,
+            from: formatAddress(address, { hex: true }),
+            to: formatAddress(contractAddress, { hex: true }),
             data,
           };
           //loading
@@ -113,7 +116,8 @@ const DappButton = ({
             className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
           <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-            {getEllipsStr(address, 6, 4)}
+            {/*{getEllipsStr(address, 6, 4)}*/}
+            <AddressContainer value={address} />
           </span>
         </>
       )}
@@ -209,7 +213,7 @@ DappButton.defaultProps = {
   hoverText: '',
   btnClassName: '',
   btnDisabled: false,
-  btnText: '',
+  // btnText: '',
   connectText: '',
   submitText: '',
   shownAddress: true,

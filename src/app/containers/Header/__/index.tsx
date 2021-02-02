@@ -41,12 +41,12 @@ describe('<Header />', () => {
       { timeout: 2000, interval: 200 },
     );
   });
-  it('should support click on second level menu', async () => {
-    const ui = renderComponent();
-    userEvent.click(ui.getByText('Contract'));
-    expect(
-      ui.container.querySelector('.link.navbar-link-menu.navbar-link.expanded'),
-    ).toBeDefined();
-    userEvent.click(ui.getByText('Contract Creation'));
-  });
+  // it('should support click on second level menu', async () => {
+  //   const ui = renderComponent();
+  //   userEvent.click(ui.getByText('Contract'));
+  //   expect(
+  //     ui.container.querySelector('.link.navbar-link-menu.navbar-link.expanded'),
+  //   ).toBeDefined();
+  //   userEvent.click(ui.getByText('Contract Creation'));
+  // });
 });

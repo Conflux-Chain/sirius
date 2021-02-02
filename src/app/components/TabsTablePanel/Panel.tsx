@@ -10,6 +10,7 @@ export type TabsTablePanelType = {
   tabs: Array<
     {
       hideTotalZero?: boolean;
+      hidden?: boolean;
       value: string;
       label: ((total: number, realTotal: number) => React.ReactNode) | string;
       content?: React.ReactNode;
@@ -40,6 +41,7 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
       return true;
     })
     .map((item, i) => {
+      // TODO tabs item do not support class, so use `disabled` prop to hide tab
       return (
         <Tabs.Item
           label={
@@ -49,6 +51,7 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
           }
           value={item.value}
           key={i}
+          disabled={item.hidden === true}
         >
           {item.table ? <TablePanel {...item} /> : item.content}
         </Tabs.Item>

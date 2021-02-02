@@ -11,7 +11,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useContract, useToken } from 'utils/api';
+import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
@@ -19,9 +19,13 @@ import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { AddressContainer } from '../../components/AddressContainer';
+import { zeroAddress } from '../../../utils/constants';
+import { formatAddress } from '../../../utils/cfx';
+
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
-const WarnningButton = () => {
+const WarnningButton = ({ address }) => {
   const { t, i18n } = useTranslation();
 
   return (
@@ -30,6 +34,9 @@ const WarnningButton = () => {
         className="metadata-tooltip-btn"
         size={16}
         tooltipContentClassName="warnning-tooltip"
+        viewBox={
+          formatAddress(address) !== zeroAddress ? '0 0 1024 1024' : '0 0 16 16'
+        }
         tooltipText={
           <WarnningTooltipWrapper>
             <p className="warnning-text">
@@ -50,11 +57,41 @@ const WarnningButton = () => {
           </WarnningTooltipWrapper>
         }
       >
-        <path
-          d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
-          fill="#FFB84B"
-          p-id={950}
-        />
+        {formatAddress(address) !== zeroAddress ? (
+          <path
+            d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
+            fill="#FFB84B"
+            p-id={950}
+          />
+        ) : (
+          <g
+            id="Internal-Contract"
+            stroke="none"
+            strokeWidth="1"
+            fill="none"
+            fillRule="evenodd"
+          >
+            <g
+              id="Icon-Up：16px-18px"
+              transform="translate(-992.000000, -319.000000)"
+            >
+              <g id="Success@2x" transform="translate(992.000000, 319.000000)">
+                <path
+                  d="M8,16 C12.4182667,16 16,12.4182667 16,8 C16,3.58172 12.4182667,0 8,0 C3.58172,0 0,3.58172 0,8 C0,12.4182667 3.58172,16 8,16 Z"
+                  id="safety"
+                  fill="#7CD77B"
+                ></path>
+                <polyline
+                  id="safety"
+                  stroke="#FFFFFF"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  points="4.66666667 7.88073333 7.21846667 10.4848667 11.1060667 5.33333333"
+                ></polyline>
+              </g>
+            </g>
+          </g>
+        )}
       </IconButton>
     </WarnningButtonWrapper>
   );
@@ -82,20 +119,20 @@ const WarnningTooltipWrapper = styled.div`
   }
 `;
 
-export function ContractMetadata({ address }) {
+export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
   const notAvailableText = t(translations.general.security.notAvailable);
 
-  const { data: contractInfo } = useContract(address, [
-    'name',
-    'icon',
-    'sponsor',
-    'website',
-    'admin',
-    'from',
-    'transactionHash',
-    'code',
-  ]);
+  // const { data: contractInfo } = useContract(address, [
+  //   'name',
+  //   'icon',
+  //   'sponsor',
+  //   'website',
+  //   'admin',
+  //   'from',
+  //   'transactionHash',
+  //   'code',
+  // ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
@@ -140,16 +177,12 @@ export function ContractMetadata({ address }) {
               <CenterLine>
                 <Content>
                   {contractInfo.admin ? (
-                    <Link to={`/address/${contractInfo.admin}`}>
-                      <Text span hoverValue={contractInfo.admin}>
-                        {formatString(contractInfo.admin, 'address')}
-                      </Text>
-                    </Link>
+                    <AddressContainer value={contractInfo.admin} />
                   ) : (
                     notAvailableText
                   )}
                 </Content>
-                <WarnningButton key="warning" />
+                <WarnningButton key="warning" address={contractInfo.admin} />
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -174,9 +207,14 @@ export function ContractMetadata({ address }) {
                 )}
                 <Content className={clsx(!tokenInfo.name && 'not-available')}>
                   {tokenInfo.name ? (
-                    <Link to={`/token/${address}`}>{`${
-                      tokenInfo.name || notAvailableText
-                    } (${tokenInfo.symbol || notAvailableText})`}</Link>
+                    <Link to={`/token/${address}`}>
+                      {formatString(
+                        `${tokenInfo.name || notAvailableText} (${
+                          tokenInfo.symbol || notAvailableText
+                        })`,
+                        'tokenTracker',
+                      )}
+                    </Link>
                   ) : (
                     notAvailableText
                   )}
@@ -206,20 +244,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForCollateral ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForCollateral}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForCollateral}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForCollateral,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForCollateral}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>
@@ -255,11 +282,7 @@ export function ContractMetadata({ address }) {
                     )}
                   >
                     {contractInfo.from ? (
-                      <Link to={`/address/${contractInfo.from}`}>
-                        <Text span hoverValue={contractInfo.from}>
-                          {formatString(contractInfo.from, 'address')}
-                        </Text>
-                      </Link>
+                      <AddressContainer value={contractInfo.from} />
                     ) : (
                       notAvailableText
                     )}
@@ -268,7 +291,7 @@ export function ContractMetadata({ address }) {
                         {` ${t(translations.contractDetail.at)} ${t(
                           translations.contractDetail.txOnlyEn,
                         )} `}
-                        <Link
+                        <LinkWrap
                           to={`/transaction/${contractInfo.transactionHash}`}
                         >
                           <Text span hoverValue={contractInfo.transactionHash}>
@@ -277,7 +300,7 @@ export function ContractMetadata({ address }) {
                               'address',
                             )}
                           </Text>
-                        </Link>
+                        </LinkWrap>
                         {` ${t(translations.contractDetail.txOnlyZh)} `}
                       </>
                     ) : null}
@@ -303,20 +326,9 @@ export function ContractMetadata({ address }) {
                   {contractInfo.sponsor &&
                   contractInfo.sponsor.sponsorForGas ? (
                     [
-                      <Link
-                        key="content"
-                        to={`/address/${contractInfo.sponsor.sponsorForGas}`}
-                      >
-                        <Text
-                          span
-                          hoverValue={contractInfo.sponsor.sponsorForGas}
-                        >
-                          {formatString(
-                            contractInfo.sponsor.sponsorForGas,
-                            'address',
-                          )}
-                        </Text>
-                      </Link>,
+                      <AddressContainer
+                        value={contractInfo.sponsor.sponsorForGas}
+                      />,
                     ]
                   ) : (
                     <CenterLine>{notAvailableText}</CenterLine>
@@ -354,4 +366,11 @@ const Icon = styled.img`
   width: 1.14rem;
   height: 1.14rem;
   margin-right: 0.57rem;
+`;
+
+const LinkWrap = styled(Link)`
+  color: #1e3de4 !important;
+  &:hover {
+    color: #0f23bd !important;
+  }
 `;

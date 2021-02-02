@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ContractDetailPage /> should match the snapshot 1`] = `
-.c5 .tooltip-content.sirius-tooltip {
+.c6 .tooltip-content.sirius-tooltip {
   font-variant-numeric: initial;
   text-transform: initial;
   border-radius: 0;
@@ -11,22 +11,22 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
-  max-width: 32.1429rem;
+  max-width: 38rem;
 }
 
-.c5 a {
+.c6 a {
   color: #00acff;
 }
 
-.c5 a:hover {
+.c6 a:hover {
   color: #3dc0ff;
 }
 
-.c6 {
+.c7 {
   cursor: pointer;
 }
 
-.c4 {
+.c5 {
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
@@ -46,40 +46,40 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   line-height: 12px;
 }
 
-.c4 .address-line-icon path {
+.c5 .address-line-icon path {
   fill: #737682;
 }
 
-.c4:hover {
+.c5:hover {
   background-color: #63688a;
 }
 
-.c4:hover .address-line-icon path {
+.c5:hover .address-line-icon path {
   fill: #fff;
 }
 
-.c9 .card.sirius-card {
+.c10 .card.sirius-card {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
   padding: 0 1.2857rem;
 }
 
-.c9 .card.sirius-card:hover {
+.c10 .card.sirius-card:hover {
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20,27,50,0.12);
 }
 
-.c9 .card.sirius-card .content {
+.c10 .card.sirius-card .content {
   padding: 0;
 }
 
-.c8 {
+.c9 {
   min-width: 17rem;
 }
 
-.c8 .detail-page-card.card div.content {
+.c9 .detail-page-card.card div.content {
   padding: 16px 0;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -93,7 +93,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   justify-content: space-between;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -103,22 +103,22 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   flex-direction: column;
 }
 
-.c12 {
+.c13 {
   color: #74798c;
   text-transform: capitalize;
 }
 
-.c13 {
+.c14 {
   font-weight: 700;
   color: #282d30;
   font-size: 1.71rem;
 }
 
-.c14 {
+.c15 {
   position: relative;
 }
 
-.c15 {
+.c16 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #1e3de4;
@@ -126,7 +126,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c17 {
+.c18 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #16DBCC;
@@ -134,7 +134,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c18 {
+.c19 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FFBB37;
@@ -142,7 +142,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c19 {
+.c20 {
   min-width: 4.29rem;
   min-height: 4.29rem;
   background-color: #FF82AC;
@@ -150,7 +150,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   opacity: 0.06;
 }
 
-.c16 {
+.c17 {
   position: absolute;
   top: 1.64rem;
   margin-top: -5px;
@@ -205,7 +205,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   margin-right: 0.58rem;
 }
 
-.c7 {
+.c8 {
   position: relative;
   width: 100%;
   display: -webkit-box;
@@ -225,52 +225,57 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c20 {
+.c21 {
   position: relative;
   width: 100%;
 }
 
+.c4 {
+  margin-right: 2px;
+}
+
+.c4 img {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 4px;
+}
+
 @media (max-width:600px) {
-  .c5 .tooltip-content.sirius-tooltip {
+  .c6 .tooltip-content.sirius-tooltip {
     max-width: 24rem;
+    white-space: normal;
+    word-break: break-all;
   }
 }
 
 @media (max-width:600px) {
-  .c8 {
+  .c9 {
     min-width: 13.67rem;
   }
 
-  .c8 .detail-page-card.card {
+  .c9 .detail-page-card.card {
     padding: 0;
   }
 
-  .c8 .detail-page-card.card div.content {
+  .c9 .detail-page-card.card div.content {
     padding: 0;
   }
 }
 
 @media (max-width:600px) {
-  .c10 {
+  .c11 {
     padding: 0.83rem 0.98rem;
   }
 }
 
 @media (max-width:600px) {
-  .c13 {
+  .c14 {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width:600px) {
-  .c15 {
-    min-width: 3.67rem;
-    min-height: 3.67rem;
-  }
-}
-
-@media (max-width:600px) {
-  .c17 {
+  .c16 {
     min-width: 3.67rem;
     min-height: 3.67rem;
   }
@@ -291,7 +296,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c16 {
+  .c20 {
+    min-width: 3.67rem;
+    min-height: 3.67rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
     top: 1.34rem;
     left: 1.14rem;
   }
@@ -316,11 +328,11 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c7 {
+  .c8 {
     margin-bottom: 1rem;
   }
 
-  .c7 > div {
+  .c8 > div {
     margin-bottom: 1rem;
   }
 }
@@ -339,12 +351,21 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     <span
       class="c3"
     >
-      <span />
-      <div
+      <span
         class="c4"
       >
+        <img
+          alt="contract"
+          src="contract-icon.png"
+        />
+         
+        <span />
+      </span>
+      <div
+        class="c5"
+      >
         <span
-          class="c5"
+          class="c6"
         >
           <div
             class="jsx-726172838 tooltip-wrapper"
@@ -381,10 +402,10 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
         </span>
       </div>
       <div
-        class="c4"
+        class="c5"
       >
         <span
-          class="c5"
+          class="c6"
         >
           <div
             class="jsx-726172838 tooltip-wrapper"
@@ -417,13 +438,13 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
         </span>
       </div>
       <div
-        class="c4"
+        class="c5"
       >
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c5"
+            class="c6"
           >
             <div
               class="jsx-726172838 tooltip-wrapper"
@@ -454,13 +475,13 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
         </div>
       </div>
       <div
-        class="c4"
+        class="c5"
       >
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c5"
+            class="c6"
           >
             <div
               class="jsx-726172838 tooltip-wrapper"
@@ -494,13 +515,13 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     </span>
   </section>
   <section
-    class="c7"
+    class="c8"
   >
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         <div
           class="jsx-2527601167 card sirius-card detail-page-card solid"
@@ -509,16 +530,16 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
             class="jsx-178616938 content "
           >
             <div
-              class="c10"
+              class="c11"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <div
-                  class="c12"
+                  class="c13"
                 />
                 <div
-                  class="c13"
+                  class="c14"
                 />
               </div>
               <div
@@ -528,14 +549,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                   class=""
                 >
                   <div
-                    class="c14"
+                    class="c15"
                   >
                     <div
-                      class="c15"
+                      class="c16"
                       color="#1e3de4"
                     />
                     <div
-                      class="c16"
+                      class="c17"
                     >
                       <img
                         alt="balance"
@@ -552,10 +573,10 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         <div
           class="jsx-2527601167 card sirius-card detail-page-card solid"
@@ -564,16 +585,16 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
             class="jsx-178616938 content "
           >
             <div
-              class="c10"
+              class="c11"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <div
-                  class="c12"
+                  class="c13"
                 />
                 <div
-                  class="c13"
+                  class="c14"
                 />
               </div>
               <div
@@ -583,14 +604,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                   class=""
                 >
                   <div
-                    class="c14"
+                    class="c15"
                   >
                     <div
-                      class="c17"
+                      class="c18"
                       color="#16DBCC"
                     />
                     <div
-                      class="c16"
+                      class="c17"
                     >
                       <img
                         alt="token"
@@ -607,10 +628,10 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         <div
           class="jsx-2527601167 card sirius-card detail-page-card solid"
@@ -619,16 +640,16 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
             class="jsx-178616938 content "
           >
             <div
-              class="c10"
+              class="c11"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <div
-                  class="c12"
+                  class="c13"
                 />
                 <div
-                  class="c13"
+                  class="c14"
                 />
               </div>
               <div
@@ -638,14 +659,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                   class=""
                 >
                   <div
-                    class="c14"
+                    class="c15"
                   >
                     <div
-                      class="c18"
+                      class="c19"
                       color="#FFBB37"
                     />
                     <div
-                      class="c16"
+                      class="c17"
                     >
                       <img
                         alt="Storage Collateral"
@@ -662,10 +683,10 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         <div
           class="jsx-2527601167 card sirius-card detail-page-card solid"
@@ -674,16 +695,16 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
             class="jsx-178616938 content "
           >
             <div
-              class="c10"
+              class="c11"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <div
-                  class="c12"
+                  class="c13"
                 />
                 <div
-                  class="c13"
+                  class="c14"
                 />
               </div>
               <div
@@ -693,14 +714,14 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
                   class=""
                 >
                   <div
-                    class="c14"
+                    class="c15"
                   >
                     <div
-                      class="c19"
+                      class="c20"
                       color="#FF82AC"
                     />
                     <div
-                      class="c16"
+                      class="c17"
                     >
                       <img
                         alt="nonce"
@@ -718,7 +739,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     </div>
   </section>
   <section
-    class="c20"
+    class="c21"
   />
 </div>
 `;

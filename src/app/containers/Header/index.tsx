@@ -44,34 +44,33 @@ export const Header = memo(() => {
     // tokens
     {
       title: t(translations.header.tokens),
-      href: '/tokens',
-      // matched: location?.pathname?.startsWith('/tokens'),
-      // children: [
-      //   {
-      //     // erc 20
-      //     title: [
-      //       t(translations.header.tokens20),
-      //       <Check size={18} key="check" />,
-      //     ],
-      //     href: '/tokens/erc20',
-      //   },
-      //   // {
-      //   //   // erc 721
-      //   //   title: [
-      //   //     t(translations.header.tokens721),
-      //   //     <Check size={18} key="check" />,
-      //   //   ],
-      //   //   href: '/tokens/erc721',
-      //   // },
-      //   // {
-      //   //   // erc 1155
-      //   //   title: [
-      //   //     t(translations.header.tokens1155),
-      //   //     <Check size={18} key="check" />,
-      //   //   ],
-      //   //   href: '/tokens/erc1155',
-      //   // },
-      // ],
+      matched: location?.pathname?.startsWith('/tokens'),
+      children: [
+        {
+          // erc 20
+          title: [
+            t(translations.header.tokens20),
+            <Check size={18} key="check" />,
+          ],
+          href: '/tokens/erc20',
+        },
+        {
+          // erc 721
+          title: [
+            t(translations.header.tokens721),
+            <Check size={18} key="check" />,
+          ],
+          href: '/tokens/erc721',
+        },
+        {
+          // erc 1155
+          title: [
+            t(translations.header.tokens1155),
+            <Check size={18} key="check" />,
+          ],
+          href: '/tokens/erc1155',
+        },
+      ],
     },
     // contract
     {

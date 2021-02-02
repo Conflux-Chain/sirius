@@ -88,7 +88,7 @@ const TipLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   const [number, setCount] = useState(total);
   useEffect(() => {
     // cache total number
-    if (total) setCount(total);
+    if (total != null) setCount(total);
   }, [total]);
   return (
     <StyledTipLabelWrapper>
@@ -103,7 +103,8 @@ export { TipLabel };
 
 const StyledCount = styled.span`
   color: #004fff;
-  margin-left: 0.2857rem;
+  margin-left: 5px;
+  font-size: 12px;
 `;
 const StyledTextWrapper = styled.span`
   .total {

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
@@ -39,6 +39,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
+import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 
 WebFontLoader.load({
   custom: {
@@ -92,13 +93,51 @@ export function App() {
                 <Route
                   exact
                   path="/contract/:contractAddress"
-                  component={Contract}
+                  render={(routeProps: any) => {
+                    if (
+                      routeProps.match.params.contractAddress &&
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.contractAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.contractAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
+                    )
+                      return (
+                        <Redirect
+                          to={`/contract/${formatAddress(
+                            routeProps.match.params.contractAddress,
+                          )}`}
+                        />
+                      );
+                    return <Contract {...routeProps} />;
+                  }}
                 />
                 <Route exact path="/contracts" component={Contracts} />
                 <Route
                   exact
                   path="/token/:tokenAddress"
-                  component={TokenDetail}
+                  render={(routeProps: any) => {
+                    if (
+                      routeProps.match.params.tokenAddress &&
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.tokenAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.tokenAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
+                    )
+                      return (
+                        <Redirect
+                          to={`/token/${formatAddress(
+                            routeProps.match.params.tokenAddress,
+                          )}`}
+                        />
+                      );
+                    return <TokenDetail {...routeProps} />;
+                  }}
                 />
                 <Route
                   exact
@@ -106,12 +145,39 @@ export function App() {
                   component={BlocksAndTransactions}
                 />
                 <Route exact path="/tokens" component={Tokens} />
-                <Route exact path="/tokens/:tokenType" component={Tokens} />
+                <Route
+                  exact
+                  path="/tokens/:tokenType"
+                  render={(routeProps: any) => {
+                    if (routeProps.match.params.tokenType)
+                      routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
+                    return <Tokens {...routeProps} />;
+                  }}
+                />
                 <Route exact path="/sponsor" component={Sponsor} />
                 <Route
                   exact
                   path="/sponsor/:contractAddress"
-                  component={Sponsor}
+                  render={(routeProps: any) => {
+                    if (
+                      routeProps.match.params.contractAddress &&
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.contractAddress.startsWith(
+                          '0x',
+                        )) ||
+                        routeProps.match.params.contractAddress
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
+                    )
+                      return (
+                        <Redirect
+                          to={`/sponsor/${formatAddress(
+                            routeProps.match.params.contractAddress,
+                          )}`}
+                        />
+                      );
+                    return <Sponsor {...routeProps} />;
+                  }}
                 />
                 <Route path="/charts" component={Chart} />
                 <Route
@@ -128,7 +194,24 @@ export function App() {
                 <Route exact path="/epoch/:number" component={Epoch} />
                 <Route
                   path="/address/:address"
-                  component={AddressContractDetailPage}
+                  render={(routeProps: any) => {
+                    if (
+                      routeProps.match.params.address &&
+                      ((!getGlobalShowHexAddress() &&
+                        routeProps.match.params.address.startsWith('0x')) ||
+                        routeProps.match.params.address
+                          .toLowerCase()
+                          .indexOf('type.') > -1)
+                    )
+                      return (
+                        <Redirect
+                          to={`/address/${formatAddress(
+                            routeProps.match.params.address,
+                          )}`}
+                        />
+                      );
+                    return <AddressContractDetailPage {...routeProps} />;
+                  }}
                 />
                 <Route path="/search/:text" component={Search} />
                 <Route component={NotFoundPage} />

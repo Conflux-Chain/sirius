@@ -20,6 +20,8 @@ import {
 import { Text } from 'app/components/Text';
 import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
 import { Table } from './Loadable';
+import { isNullAddress } from '../../../utils';
+import { useAccount } from '../../../utils/api';
 
 interface RouteParams {
   address: string;
@@ -29,6 +31,11 @@ export const AddressDetailPage = memo(() => {
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const bp = useBreakpoint();
+  const { data: accountInfo } = useAccount(address, [
+    'erc20TransferCount',
+    'erc721TransferCount',
+    'erc1155TransferCount',
+  ]);
 
   return (
     <>
@@ -41,7 +48,11 @@ export const AddressDetailPage = memo(() => {
       </Helmet>
       <Main>
         <Head>
-          <Title>{t(translations.general.address.address)}</Title>
+          <Title>
+            {isNullAddress(address)
+              ? t(translations.general.zeroAddress)
+              : t(translations.general.address.address)}
+          </Title>
           <HeadAddressLine>
             {bp === 's' ? (
               <Text maxWidth="14.75rem">{address}</Text>
@@ -53,13 +64,13 @@ export const AddressDetailPage = memo(() => {
           </HeadAddressLine>
         </Head>
         <Top>
-          <BalanceCard address={address} />
+          <BalanceCard accountInfo={accountInfo} />
           <TokensCard address={address} />
-          <StorageStakingCard address={address} />
-          <NonceCard address={address} />
+          <StorageStakingCard accountInfo={accountInfo} />
+          <NonceCard accountInfo={accountInfo} />
         </Top>
         <Bottom>
-          <Table address={address} />
+          <Table address={address} addressInfo={accountInfo} />
         </Bottom>
       </Main>
     </>

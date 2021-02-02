@@ -5,7 +5,7 @@ import React from 'react';
   if (window.confluxJS) return;
   import('js-conflux-sdk').then(module => {
     window.confluxJS = new module.Conflux({
-      url: `${window?.location?.protocol}//${window?.location?.host}/rpc`,
+      url: `${window?.location?.protocol}//${window?.location?.host}/rpcv2`, // cip-37
     });
   });
 })();

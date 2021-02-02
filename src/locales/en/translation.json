@@ -27,7 +27,7 @@
     "sourceCodeShort": "Source Code",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
-    "addressPlaceholder": "Please enter an address starting with 0x8 or 0x0",
+    "addressPlaceholder": "Please enter an conflux address",
     "namePlaceholder": "Support up to 35 characters",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
@@ -72,7 +72,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. A non-zero admin address implies that the contract is in debug mode.",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
@@ -142,8 +142,8 @@
   "footer": {
     "product": "Product",
     "confluxnetwork": "Conflux Network",
-    "confluxportal": "ConfluxPortal",
-    "confluxbounty": "ConfluxBounty",
+    "confluxportal": "Conflux Portal",
+    "confluxbounty": "Conflux Bounty",
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "Tool",
     "addressFormatConversion": "Address Format Conversion"
@@ -155,7 +155,7 @@
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
-    "addressTip": "If you are searching Conflux address, it should start with 0x0 (built-in contract), 0x1 (user account), or 0x8 (smart contract).",
+    "addressTip": "If you are searching Conflux address, please conform to conflux address format.",
     "btn": "Go TO HOMEPAGE"
   },
   "notFoundAddress": {
@@ -218,6 +218,9 @@
     },
     "loading": "loading...",
     "contract": "contract",
+    "internalContract": "internal contract",
+    "zeroAddress": "null address",
+    "invalidAddress": "Invalid Conflux Address",
     "balance": "balance",
     "token": "token",
     "storageStaking": "Storage Collateral",
@@ -225,6 +228,9 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
+    "tokenTxnsErc20": "Erc20 Token Txns",
+    "tokenTxnsErc721": "Erc721 Token Txns",
+    "tokenTxnsErc1155": "Erc1155 Token Txns",
     "table": {
       "noData": "There are no matching entries.",
       "whoops": "Whoops!",
@@ -436,8 +442,9 @@
     "created": "Created",
     "contractCreation": "Contract Creation",
     "for": "For",
+    "tokenId": "TokenID",
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
-    "epochConfirmations": "{{count}} epoch Confirmations",
+    "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
       "1": "Contract error: ",
       "2": "Insufficient storage fees.",
@@ -514,14 +521,16 @@
   "notice": {
     "mainnet": [
       "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",
-      "2. Conflux Tethys Network Upgrade - Tanzanite: Conflux Tethys Network will be upgraded to v1.1.0. Please make sure to upgrade the node before 15:30 (GMT+8) on Dec. 11, 2020. Developers using the official Tethys RPC will not be affected"
+      "2.According to CIP-37, Conflux will use a new address format: base32Check address (starting with a networkid, e.g., cfx:). Read more about the impact of the CIP-37 upgrade on Conflux users here: ",
+      "3. The new address format is only a conversion of the old format. Users can still log into their Conflux wallet via private keys or secret phrases. User assets will not be affected."
     ],
     "testnet": [
       "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet.",
-      "2. Conflux Testnet will be upgraded to Conflux v1.1.0-testnet to test the possible network upgrade in advance. If the proposal is abandoned, the changes will be reverted in the next release. The upgrade will be completed at the block height of 4,990,000 at about 16:00 (GMT+8) on Dec 8th, 2020"
+      "2. According to CIP-37, Conflux will use a new address format: base32Check address (starting with a networkid, e.g., cfx:). Read more about the impact of the CIP-37 upgrade on Conflux users here: ",
+      "3. The new address format is only a conversion of the old format. Users can still log into their Conflux wallet via private keys or secret phrases. User assets will not be affected."
     ],
-    "link": "https://forum.conflux.fun/t/topic/4342",
-    "testnetLink": "https://forum.conflux.fun/t/topic/4319"
+    "link": "https://forum.conflux.fun/t/topic/4820",
+    "testnetLink": "https://forum.conflux.fun/t/topic/4820"
   },
   "toolTip": {
     "block": {
@@ -571,7 +580,7 @@
     "token": {
       "price": "Token price.",
       "volume": "The total dollar value of all cryptocurrency transactions over the past 24 hours.",
-      "marketCap": "The market value of a cryptocurrency's total supply. <br> Market Cap = Current Price x Total Supply.",
+      "marketCap": "The market value of a cryptocurrency's total supply. Market Cap = Current Price x Total Supply.",
       "fullyDilutedMarketCap": "The market cap if the max supply was in circulation. Fully-diluted market cap = price x max supply.",
       "totalSupply": "Total supply of the token.",
       "holders": "The amout of addresses which hold the token.",
@@ -586,7 +595,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. A non-zero admin address implies that the contract is in debug mode.",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }

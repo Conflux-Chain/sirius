@@ -13,7 +13,7 @@ import styled from 'styled-components/macro';
 export function Contracts() {
   const { t } = useTranslation();
 
-  const columnsWidth = [2, 6, 3, 4, 3, 3];
+  const columnsWidth = [3, 10, 8, 5];
   const columns: ColumnsType = [
     contractColunms.number,
     contractColunms.name,

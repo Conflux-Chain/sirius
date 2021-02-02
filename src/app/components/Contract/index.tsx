@@ -33,7 +33,7 @@ import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { DappButton } from '../DappButton/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { contractManagerAddress } from '../../../utils/cfx';
+import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
 interface Props {
   contractDetail: any;
   type: string;
@@ -59,7 +59,7 @@ const fieldsContract = [
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
-  const { address: accountAddress } = useConfluxPortal();
+  const { address: accountAddress } = useConfluxPortal(); // TODO cip-37 portal
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -117,7 +117,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         setAddressDisabled(false);
         break;
       case 'edit':
-        setAddressVal(contractDetail.address);
+        setAddressVal(formatAddress(contractDetail.address));
         setTitle(t(translations.contract.edit.title));
         setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
@@ -338,7 +338,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   };
   function getTxData() {
     const bodyParams: RequestBody = {};
-    bodyParams.address = tranferToLowerCase(addressVal);
+    bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
     bodyParams.name = contractName;
     bodyParams.website = site;
     bodyParams.icon = contractImgSrc;
@@ -358,11 +358,16 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         setIsAddressError(false);
         setErrorMsgForAddress('');
         if (accountAddress) {
-          reqContract({ address: addressVal, fields: fieldsContract }).then(
-            dataContractInfo => {
+          reqContract({ address: addressVal, fields: fieldsContract })
+            .then(dataContractInfo => {
+              // cip-37 both
               if (
                 dataContractInfo.from === accountAddress ||
-                dataContractInfo.admin === accountAddress
+                dataContractInfo.admin === accountAddress ||
+                formatAddress(dataContractInfo.from, { hex: true }) ===
+                  formatAddress(accountAddress, { hex: true }) ||
+                formatAddress(dataContractInfo.admin, { hex: true }) ===
+                  formatAddress(accountAddress, { hex: true })
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {
@@ -383,8 +388,8 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                 setIsAdminError(true);
                 setWarningMessage('contract.errorNotAdmin');
               }
-            },
-          );
+            })
+            .catch(e => console.error(e));
         }
       } else {
         setIsAddressError(true);

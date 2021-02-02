@@ -11,6 +11,7 @@ import { defaultTokenIcon } from '../../../constants';
 import { Link } from 'react-router-dom';
 import { Text } from '../../components/Text';
 import { formatBalance } from 'utils/index';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -67,6 +68,7 @@ function SelectItem({
   isLastOne,
   address,
   decimals,
+  transferType,
 }) {
   const title = (
     <SelectItemTitle key="title">
@@ -79,14 +81,25 @@ function SelectItem({
       </SelectItemTextTitle>
     </SelectItemTitle>
   );
+  let decimal = decimals;
+  if (transferType === cfxTokenTypes.erc721) {
+    decimal = 0;
+  }
+  if (transferType === cfxTokenTypes.erc1155) {
+    decimal = -1;
+  }
   const content = (
     <SelectItemContent key="content">
       <SelectItemContentBalance key="balance">
-        <Text
-          hoverValue={formatBalance(balance, decimals, true) + ' ' + symbol}
-        >
-          {formatBalance(balance, decimals) + ' ' + symbol}
-        </Text>
+        {transferType !== cfxTokenTypes.erc1155 ? (
+          <Text
+            hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}
+          >
+            {formatBalance(balance, decimal) + ' ' + symbol}
+          </Text>
+        ) : (
+          '-'
+        )}
       </SelectItemContentBalance>
     </SelectItemContent>
   );

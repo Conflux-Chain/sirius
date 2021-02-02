@@ -25,13 +25,24 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   border-top-right-radius: 0.5714rem;
 }
 
+.c0 .tabs.sirius-tabs .tab.disabled {
+  display: none;
+}
+
 .c0 .tabs.sirius-tabs header {
   overflow: visible;
 }
 
 .c0 .tabs.sirius-tabs header + .content {
-  margin-top: 1.2857rem;
+  margin-top: 1.1rem;
   padding-top: 0;
+}
+
+@media (max-width:600px) {
+  .c0 .tabs.sirius-tabs header {
+    max-width: 100vw;
+    overflow-x: auto;
+  }
 }
 
 <div

@@ -3,6 +3,7 @@ import { Tabs as UITabs } from '@cfxjs/react-ui';
 import { TabsProps } from '@cfxjs/react-ui/dist/tabs/tabs';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
+import { media } from '../../../styles/media';
 
 const Tabs = ({ children, className, ...others }: TabsProps) => {
   return (
@@ -42,12 +43,20 @@ const StyledTabsWrapper = styled.div`
         border-top-left-radius: 0.5714rem;
         border-top-right-radius: 0.5714rem;
       }
+      &.disabled {
+        display: none;
+      }
     }
     header {
       overflow: visible;
+
+      ${media.s} {
+        max-width: 100vw;
+        overflow-x: auto;
+      }
     }
     header + .content {
-      margin-top: 1.2857rem;
+      margin-top: 1.1rem;
       padding-top: 0;
     }
   }

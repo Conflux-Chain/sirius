@@ -5,21 +5,21 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import { cfx, faucet, faucetAddress } from '../../../utils/cfx';
+import {
+  cfxOld,
+  faucet,
+  faucetAddress,
+  formatAddress,
+} from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
-import { Link } from '../../components/Link/Loadable';
 import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
 import { DappButton } from '../../components/DappButton/Loadable';
-import {
-  isAddress,
-  getEllipsStr,
-  fromDripToGdrip,
-  fromDripToCfx,
-} from '../../../utils';
+import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
+import { AddressContainer } from '../../components/AddressContainer';
 interface RouteParams {
   contractAddress: string;
 }
@@ -50,18 +50,24 @@ export function Sponsor() {
   const [inputAddressVal, setInputAddressVal] = useState('');
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
-  const { address: portalAddress } = useConfluxPortal();
-  const getSponsorInfo = async address => {
+  const { address: portalAddress } = useConfluxPortal(); // TODO cip-37 portal
+  const getSponsorInfo = async _address => {
     setLoading(true);
-    const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
-    const { flag } = await fetchIsAppliable(address);
+    // TODO cip-37 update
+    const hexAddress = formatAddress(_address, { hex: true });
+    // const address = formatAddress(_address, { hex: false });
+    const sponsorInfo = await cfxOld.provider.call(
+      'cfx_getSponsorInfo',
+      hexAddress,
+    );
+    const { flag } = await fetchIsAppliable(hexAddress);
     setIsFlag(flag);
     if (flag) {
-      const { data } = await faucet.apply(address);
+      const { data } = await faucet.apply(hexAddress);
       setTxData(data);
     }
-    const faucetParams = await faucet.getFaucetParams(address);
-    const amountAccumulated = await faucet.getAmountAccumulated(address);
+    const faucetParams = await faucet.getFaucetParams(hexAddress);
+    const amountAccumulated = await faucet.getAmountAccumulated(hexAddress);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
       setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
@@ -108,14 +114,17 @@ export function Sponsor() {
   };
 
   const searchClick = async () => {
+    // cip-37
     if (isAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
     } else {
       resetParams();
     }
   };
-  const fetchIsAppliable = async (address: string) => {
-    const { flag, message } = await faucet.checkAppliable(address);
+  const fetchIsAppliable = async (_address: string) => {
+    // TODO cip-37 update
+    const hexAddress = formatAddress(_address, { hex: true });
+    const { flag, message } = await faucet.checkAppliable(hexAddress);
     if (!flag) {
       //can not apply sponsor this contract
       switch (message) {
@@ -260,15 +269,14 @@ export function Sponsor() {
           <div className="innerContainer">
             <div className="sponsorAddress">
               <span className="label">
-                {t(translations.sponsor.storageSponsor)}
+                {t(translations.sponsor.storageSponsor)}&nbsp;&nbsp;
               </span>
               <SkelontonContainer shown={loading}>
-                <Link
-                  href={`/address/${storageSponsorAddress}`}
-                  className="address"
-                >
-                  {getEllipsStr(storageSponsorAddress, 6, 4)}
-                </Link>
+                {storageSponsorAddress ? (
+                  <AddressContainer value={storageSponsorAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
@@ -325,12 +333,14 @@ export function Sponsor() {
           <div className="innerContainer">
             <div className="sponsorAddress">
               <span className="label">
-                {t(translations.sponsor.gasFeeSponsor)}
+                {t(translations.sponsor.gasFeeSponsor)}&nbsp;&nbsp;
               </span>
               <SkelontonContainer shown={loading}>
-                <Link href={`/address/${gasFeeAddress}`} className="address">
-                  {getEllipsStr(gasFeeAddress, 6, 4)}
-                </Link>
+                {gasFeeAddress ? (
+                  <AddressContainer value={gasFeeAddress} />
+                ) : (
+                  ''
+                )}
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
