@@ -115,6 +115,19 @@
       "contract": "合约"
     }
   },
+  "accounts": {
+    "title": "账户",
+    "description": "账户",
+    "tipCountBefore": "仅显示 CFX 余额排名前",
+    "tipCountAfter": "的账户，按照 CFX 余额降序排序。",
+    "table": {
+      "number": "#",
+      "address": "地址",
+      "balance": "余额",
+      "percentage": "百分比",
+      "count": "交易数"
+    }
+  },
   "contracts": {
     "title": "内置合约",
     "description": "内置合约",
@@ -124,6 +137,8 @@
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
+    "blockchain": "区块链",
+    "accounts": "账户",
     "tokens": "代币",
     "tokens20": "ERC-20 代币",
     "tokens721": "ERC-721 代币",
