@@ -166,6 +166,8 @@ export const formatNumber = (num, opt?) => {
     keepDecimal: true, // 是否保留小数位（注意如果整数部分带有小数位，则不保留实际小数位，原因是会显示两个小数点，会误解）
     keepZero: false, // 是否保留小数位的 0（注意此配置优先级高于 precision，会清除 precision 添加的 0）
     delimiter: ',', // 自定义分隔符
+    withUnit: true, // 是否显示单位
+    unit: '', // 指定单位
     ...opt,
   };
   // 0. 定义返回值
@@ -194,22 +196,40 @@ export const formatNumber = (num, opt?) => {
   // 4. intStrEnd 转千分符形式
   const intStrEndAfterToThousands = toThousands(intStrEnd, option.delimiter);
   // 5. intStrEnd 添加单位，此处不对数字有效性做验证，即可能值为 100.000，100.000k 或 000.000Y
-  const intStrEndWithUnit = intStrEndAfterToThousands
-    .split(option.delimiter)
-    .reduce((prev, curr, index, arr) => {
-      const len = arr.length;
-      // 无单位整数，为了后面方便处理统一格式
-      if (len === 1) {
-        return `${curr}.000`;
-      }
-      if (index === 0) {
-        return curr;
-      } else if (index === 1) {
-        return `${prev}.${curr}${UNITS[len - index]}`;
-      } else {
-        return prev;
-      }
-    }, '');
+  let intStrEndWithUnit = '';
+
+  if (option.withUnit === false) {
+    intStrEndWithUnit = intStrEndAfterToThousands;
+  } else {
+    let unitIndex = 1;
+    if (option.unit !== '' && UNITS.includes(option.unit)) {
+      unitIndex =
+        intStrEndAfterToThousands.split(option.delimiter).length -
+        UNITS.findIndex(u => u === option.unit);
+    }
+    if (unitIndex > 0) {
+      intStrEndWithUnit = intStrEndAfterToThousands
+        .split(option.delimiter)
+        .reduce((prev, curr, index, arr) => {
+          const len = arr.length;
+          // 无单位整数，为了后面方便处理统一格式
+          if (len === 1) {
+            return `${curr}.000`;
+          }
+          if (index === 0) {
+            return curr;
+          } else if (index === unitIndex) {
+            return `${prev}.${curr}${UNITS[len - index]}`;
+          } else if (index < unitIndex) {
+            return `${prev},${curr}`;
+          } else {
+            return prev;
+          }
+        }, '');
+    } else {
+      intStrEndWithUnit = intStrEndAfterToThousands;
+    }
+  }
   // 6. 格式化整数
   if (intStrFront) {
     // 如果数字长度超过 27 位，则前面的数字用千分符分割
@@ -238,7 +258,7 @@ export const formatNumber = (num, opt?) => {
     unit = '';
     // 8.2 整数位为 0 或无单位整数，拼接小数位
     if (option.keepDecimal) {
-      result = new BigNumber(int)
+      result = new BigNumber(int.toString().replace(/,/g, ''))
         .plus(new BigNumber(decimal))
         .toFixed(option.precision, 1);
     } else {
