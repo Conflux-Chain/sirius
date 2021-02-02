@@ -72,7 +72,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是空地址（cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2），则表示该合约处于调试阶段。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -593,7 +593,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是空地址（cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2），则表示该合约处于调试阶段。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
