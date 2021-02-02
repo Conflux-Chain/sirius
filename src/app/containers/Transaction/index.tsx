@@ -645,7 +645,7 @@ export const Transaction = () => {
               </Tooltip>
             }
           >
-            <SkeletonContainer shown={loading}>
+            <SkeletonContainer shown={loading || syncTimestamp === undefined}>
               <CountDown from={syncTimestamp} />
               {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
             </SkeletonContainer>
