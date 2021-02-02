@@ -57,6 +57,7 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
 
   let tokenAddress;
 
+  // deal with token info
   if (isTransferReq && data && data.list) {
     tokenAddress = data.list.reduce((acc, trans) => {
       if (trans.address && !acc.includes(trans.address))
@@ -78,9 +79,8 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
   if (tokenData && tokenData.list) {
     const newTransferList = data.list.map(trans => {
       if (tokenAddress.includes(trans.address)) {
-        const tokenIdx = tokenAddress.indexOf(trans.address);
-        if (tokenData.list[tokenIdx])
-          return { ...trans, token: tokenData.list[tokenIdx] };
+        const tokenInfo = tokenData.list.find(t => t.address === trans.address);
+        if (tokenInfo) return { ...trans, token: { ...tokenInfo } };
       }
 
       return trans;
