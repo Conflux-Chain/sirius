@@ -72,7 +72,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -521,14 +521,16 @@
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
-      "2. Conflux Tethys 网络 Tanzanite 升级公告：Conflux Tethys 网络将升级为 v1.1.0 ，请在 2020 年 12 月 11 日 15：30 (GMT+8) 之前升级您的节点。使用官方维护的 Tethys RPC 的开发者不会受到影响"
+      "2. 根据 CIP-37，Conflux 将使用新版格式的地址为 base32 地址（以网络标识开头，如\"cfx:\"），更新对 Conflux 用户的影响：",
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. Conflux 测试网络将升级为 Conflux v1.1.0-testnet，本次升级目的为可能的升级将要提前在测试网上进行测试。如果该提案没有通过，此变更将在下一个版本中恢复。本次升级将在 4,990,000 区块高度完成，约 2020 年 12 月 8 日 16：00 (GMT+8)"
+      "2. 根据 CIP-37，Conflux 将使用新版格式的地址为 base32 地址（以网络标识开头，如cfx:），更新对 Conflux 用户的影响：",
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
-    "link": "https://forum.conflux.fun/t/topic/4340",
-    "testnetLink": "https://forum.conflux.fun/t/topic/4318"
+    "link": "https://forum.conflux.fun/t/topic/4798",
+    "testnetLink": "https://forum.conflux.fun/t/topic/4798"
   },
   "toolTip": {
     "block": {
@@ -593,7 +595,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是全零，则表示该合约处于调试阶段。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }

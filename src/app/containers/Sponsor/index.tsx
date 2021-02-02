@@ -269,7 +269,7 @@ export function Sponsor() {
           <div className="innerContainer">
             <div className="sponsorAddress">
               <span className="label">
-                {t(translations.sponsor.storageSponsor)}
+                {t(translations.sponsor.storageSponsor)}&nbsp;&nbsp;
               </span>
               <SkelontonContainer shown={loading}>
                 {storageSponsorAddress ? (
@@ -333,7 +333,7 @@ export function Sponsor() {
           <div className="innerContainer">
             <div className="sponsorAddress">
               <span className="label">
-                {t(translations.sponsor.gasFeeSponsor)}
+                {t(translations.sponsor.gasFeeSponsor)}&nbsp;&nbsp;
               </span>
               <SkelontonContainer shown={loading}>
                 {gasFeeAddress ? (
