@@ -256,7 +256,7 @@
         "epoch": "Epoch",
         "position": "Position",
         "txns": "Txn",
-        "hash": "Hash",
+        "hash": "Block Hash",
         "miner": "Miner",
         "avgGasPrice": "Avg.Gas Price",
         "gasUsedPercent": "Gas Used/Limit",
