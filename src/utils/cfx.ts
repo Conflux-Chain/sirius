@@ -123,7 +123,7 @@ const testnetContractManagerAddress = formatAddress(
 );
 const mainnetContractManagerAddress = formatAddress(
   '0x81bbe80b1282387e19d7e1a57476869081c7d965',
-  { networkId: testnetNetworkId },
+  { networkId: mainNetworkId },
 );
 const contractManagerAddress = isConfluxTestNet
   ? testnetContractManagerAddress
