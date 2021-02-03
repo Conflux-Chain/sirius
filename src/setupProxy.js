@@ -42,6 +42,18 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // };
 
 module.exports = app => {
+  // temp use for top N
+  app.use(
+    '/v1/stat',
+    createProxyMiddleware({
+      target: 'http://47.242.229.73',
+      pathRewrite: {
+        '/v1/stat': '/stat/top-cfx-holder?type=TOP_CFX_HOLD',
+      },
+      changeOrigin: true,
+      secure: false,
+    }),
+  );
   app.use(
     '/v1',
     createProxyMiddleware({

@@ -1,72 +1,33 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { translations } from '../../../locales/i18n';
 import { TablePanel } from '../../components/TablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTableData } from './../../components/TabsTablePanel/useTableData';
-import { tokenColunms } from '../../../utils/tableColumns';
+import { accountColunms } from '../../../utils/tableColumns';
 import styled from 'styled-components/macro';
-import { cfxTokenTypes } from '../../../utils/constants';
-import queryString from 'query-string';
-
-interface RouteParams {
-  tokenType: string;
-}
 
 export function Accounts() {
   const { t } = useTranslation();
-  const { tokenType } = useParams<RouteParams>();
-  const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
   let columnsWidth = [1, 7, 3, 3, 3, 3, 2, 5];
   let columns: ColumnsType = [
-    tokenColunms.number(page, pageSize),
-    tokenColunms.token,
-    tokenColunms.price,
-    tokenColunms.marketCap,
-    tokenColunms.transfer,
-    tokenColunms.totalSupply,
-    tokenColunms.holders,
-    tokenColunms.contract,
+    accountColunms.rank,
+    accountColunms.address,
+    accountColunms.balance,
+    accountColunms.percentage,
+    accountColunms.count,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
-
-  let url = `/token?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
 
   let title = t(translations.header.accounts);
 
-  if (tokenType === cfxTokenTypes.erc721) {
-    columnsWidth = [1, 8, 4, 4, 5];
-    columns = [
-      tokenColunms.number(page, pageSize),
-      tokenColunms.token,
-      tokenColunms.transfer,
-      tokenColunms.holders,
-      tokenColunms.contract,
-    ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
+  const url = '/stat/top-cfx-holder?type=TOP_CFX_HOLD';
+  const { data, total } = useTableData(url);
 
-    url = `/token?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
-    title = t(translations.header.tokens721);
-  }
-
-  if (tokenType === cfxTokenTypes.erc1155) {
-    columnsWidth = [1, 8, 4, 4, 5];
-    columns = [
-      tokenColunms.number(page, pageSize),
-      tokenColunms.token,
-      tokenColunms.transfer,
-      tokenColunms.holders,
-      tokenColunms.contract,
-    ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
-
-    url = `/token?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
-    title = t(translations.header.tokens1155);
-  }
-
-  const { total } = useTableData(url);
+  console.log(111, data);
 
   return (
     <>
@@ -77,11 +38,7 @@ export function Accounts() {
       <StyledTokensPageHeaderWrapper>
         <PageHeader>{title}</PageHeader>
       </StyledTokensPageHeaderWrapper>
-      <TipLabel
-        total={total}
-        left={t(translations.accounts.tipCountBefore)}
-        right={t(translations.accounts.tipCountAfter)}
-      />
+      <TipLabel total={null} left={t(translations.accounts.tip)} />
       <TablePanel
         table={{
           columns: columns,

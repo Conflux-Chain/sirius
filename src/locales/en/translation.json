@@ -128,10 +128,9 @@
   "accounts": {
     "title": "Accounts",
     "description": "Accounts",
-    "tipCountBefore": "Showing the top",
-    "tipCountAfter": "accounts by CFX balance only, sorted by decreasing CFX balance.",
+    "tip": "Showing the top 100 accounts by CFX balance only, sorted by decreasing CFX balance.",
     "table": {
-      "number": "#",
+      "number": "Rank",
       "address": "Address",
       "balance": "Balance",
       "percentage": "Percentage",
