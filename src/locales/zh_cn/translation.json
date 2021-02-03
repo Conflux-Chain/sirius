@@ -266,7 +266,7 @@
         "epoch": "纪元",
         "position": "位置",
         "txns": "交易数",
-        "hash": "哈希",
+        "hash": "区块哈希",
         "miner": "矿工",
         "avgGasPrice": "平均燃料价格",
         "gasUsedPercent": "燃料用量/限制",

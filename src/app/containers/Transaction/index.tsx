@@ -90,7 +90,7 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(true);
+  const [folded, setFolded] = useState(false);
 
   // get riskLevel
   const getConfirmRisk = async blockHash => {
