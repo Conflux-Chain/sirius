@@ -4,15 +4,14 @@ import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
+import { Modal } from '@cfxjs/react-ui';
+import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
-import { fromDripToCfx } from 'utils';
+import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { cfx } from '../../../utils/cfx';
 import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
-import { Modal } from '@cfxjs/react-ui';
-import BigNumber from 'bignumber.js';
 import ViewMore from '../../../images/contract-address/viewmore.png';
-import { CountDown } from '../../components/CountDown/Loadable';
 import { governanceAddress, stakingAddress } from '../../../utils/constants';
 import {
   abi as governanceAbi,
@@ -56,8 +55,9 @@ export function AddressMetadata({ address, accountInfo }) {
   const [earned, setEarned] = useState(0);
   const [voteList, setVoteList] = useState<any>([]);
   const [currentVotingRights, setCurrentVotingRights] = useState(0);
+  const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
   const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
-  const [modalShown, setModalShown] = useState<boolean>(true);
+  const [modalShown, setModalShown] = useState<boolean>(false);
 
   // const [] = useState();
 
@@ -74,7 +74,8 @@ export function AddressMetadata({ address, accountInfo }) {
         .then(res => {
           const depositList = res[0];
           const rate = res[1];
-          const currentBlockN = res[3] || 0;
+          const currentBlockN: any = res[3] || 0;
+          setCurrentBlockNumber(currentBlockN.toString());
           const currentStakingEarned = getCurrentStakingEarned(
             depositList,
             rate,
@@ -82,17 +83,21 @@ export function AddressMetadata({ address, accountInfo }) {
           );
           setEarned(currentStakingEarned);
           setVoteList(res[2]);
-          setCurrentVotingRights(123);
-          //get current voting power
-          stakingContract
-            .getVotePower(address, currentBlockN)
-            .then(res => {
-              const votePower = res;
-              setCurrentVotingRights(votePower);
-            })
-            .catch(e => {
-              console.error(e);
-            });
+          // @ts-ignore
+          if (res[2] && res[2].length > 0) {
+            //get current voting power
+            stakingContract
+              .getVotePower(address, currentBlockN)
+              .then(res => {
+                const votePower = res;
+                setCurrentVotingRights(votePower);
+              })
+              .catch(e => {
+                console.error(e);
+              });
+          } else {
+            setCurrentVotingRights(0);
+          }
         })
         .catch(e => {
           console.error(e);
@@ -313,25 +318,33 @@ export function AddressMetadata({ address, accountInfo }) {
                       )}
                     </th>
                     <th>
-                      {t(translations.addressDetail.lockedDetailUnlockDate)}
+                      {t(translations.addressDetail.lockedDetailUnlockTime)}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {voteList && voteList.length > 0 ? (
-                    voteList.map(v => (
-                      <tr>
-                        <td>
-                          <Text hoverValue={fromDripToCfx(v.amount || 0, true)}>
-                            {fromDripToCfx(v.amount || 0)}
-                          </Text>
-                        </td>
-                        <td>{v.unlockBlockNumber}</td>
-                        <td>
-                          <CountDown from={1712341905693} />
-                        </td>
-                      </tr>
-                    ))
+                    voteList.map(v => {
+                      const { days } = getTimeByBlockInterval(
+                        v.unlockBlockNumber,
+                        currentBlockNumber,
+                      );
+                      return (
+                        <tr>
+                          <td>
+                            <Text
+                              hoverValue={fromDripToCfx(v.amount || 0, true)}
+                            >
+                              {fromDripToCfx(v.amount || 0)}
+                            </Text>
+                          </td>
+                          <td>{v.unlockBlockNumber}</td>
+                          <td>
+                            {t(translations.addressDetail.unlockTime, { days })}
+                          </td>
+                        </tr>
+                      );
+                    })
                   ) : (
                     <tr>
                       <td>-</td>

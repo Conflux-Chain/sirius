@@ -86,12 +86,13 @@
     "staked": "质押 CFX",
     "stakingEarned": "质押 CFX 收益",
     "locked": "锁定 CFX",
+    "unlockTime": "大约 {{days}} 天后解锁",
     "currentVotingRights": "当前投票权",
     "apy": "（年化收益率 4%）",
     "lockedDetailTitle": "锁定历史",
     "lockedDetailLocked": "已锁定 CFX",
     "lockedDetailUnlockBlockNumber": "解锁区块",
-    "lockedDetailUnlockDate": "预计解锁日期",
+    "lockedDetailUnlockTime": "预计解锁时间",
     "viewLockedDetails": "点击查看锁定历史"
   },
   "blocksAndTransactions": {

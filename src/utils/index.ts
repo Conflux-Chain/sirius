@@ -668,3 +668,23 @@ export const sleep = timeout =>
 export const getRandomString = () => {
   return Math.random().toString(32).substr(2);
 };
+
+// get two block interval time
+export const getTimeByBlockInterval = (minuend = 0, subtrahend = 0) => {
+  const seconds = new BigNumber(minuend)
+    .minus(subtrahend)
+    .dividedBy(2)
+    .toNumber();
+  const dayBase = 86400;
+  const hourBase = 3600;
+  const days = Math.floor(seconds / dayBase);
+  const deltaSecond = seconds - days * 86400;
+  const hours = Math.floor(deltaSecond / hourBase);
+  return { days, hours };
+};
+
+export const addDays = (date, days) => {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
