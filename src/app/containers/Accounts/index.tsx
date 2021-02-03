@@ -6,14 +6,13 @@ import { TablePanel } from '../../components/TablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { PageHeader } from '../../components/PageHeader/Loadable';
-import { useTableData } from './../../components/TabsTablePanel/useTableData';
 import { accountColunms } from '../../../utils/tableColumns';
 import styled from 'styled-components/macro';
 
 export function Accounts() {
   const { t } = useTranslation();
 
-  let columnsWidth = [1, 7, 3, 3, 3, 3, 2, 5];
+  let columnsWidth = [1, 7, 3, 3, 3];
   let columns: ColumnsType = [
     accountColunms.rank,
     accountColunms.address,
@@ -22,12 +21,8 @@ export function Accounts() {
     accountColunms.count,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let title = t(translations.header.accounts);
-
-  const url = '/stat/top-cfx-holder?type=TOP_CFX_HOLD';
-  const { data, total } = useTableData(url);
-
-  console.log(111, data);
+  const title = t(translations.header.accounts);
+  const url = '/stat/top-cfx-holder?type=TOP_CFX_HOLD&limit=100';
 
   return (
     <>
@@ -35,24 +30,22 @@ export function Accounts() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <StyledTokensPageHeaderWrapper>
+      <StyledPageWrapper>
         <PageHeader>{title}</PageHeader>
-      </StyledTokensPageHeaderWrapper>
-      <TipLabel total={null} left={t(translations.accounts.tip)} />
-      <TablePanel
-        table={{
-          columns: columns,
-          rowKey: 'address',
-        }}
-        url={url}
-      />
+        <TipLabel total={null} left={t(translations.accounts.tip)} />
+        <TablePanel
+          table={{
+            columns: columns,
+            rowKey: 'base32address',
+          }}
+          pagination={false}
+          url={url}
+        />
+      </StyledPageWrapper>
     </>
   );
 }
 
-const StyledTokensPageHeaderWrapper = styled.div`
-  margin-top: 32px;
-  > div {
-    margin-bottom: 12px;
-  }
+const StyledPageWrapper = styled.div`
+  padding: 2.2857rem 0;
 `;

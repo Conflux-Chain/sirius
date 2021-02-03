@@ -44,12 +44,13 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 module.exports = app => {
   // temp use for top N
   app.use(
-    '/v1/stat',
+    '/stat',
     createProxyMiddleware({
-      target: 'http://47.242.229.73',
-      pathRewrite: {
-        '/v1/stat': '/stat/top-cfx-holder?type=TOP_CFX_HOLD',
-      },
+      target:
+        process.env.REACT_APP_TestNet === 'true'
+          ? 'https://testnet-scantest.confluxnetwork.org'
+          : 'https://scantest.confluxnetwork.org',
+      // target: 'http://47.242.229.73', // only for dev
       changeOrigin: true,
       secure: false,
     }),
