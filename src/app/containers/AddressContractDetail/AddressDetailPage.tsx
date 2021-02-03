@@ -18,8 +18,16 @@ import {
   NonceCard,
 } from './AddressInfoCards';
 import { Text } from 'app/components/Text';
-import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
-import { Table } from './Loadable';
+import {
+  Main,
+  Title,
+  Bottom,
+  HeadAddressLine,
+  Top,
+  Head,
+  Middle,
+} from './layouts';
+import { AddressMetadata, Table } from './Loadable';
 import { isNullAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 
@@ -35,6 +43,7 @@ export const AddressDetailPage = memo(() => {
     'erc20TransferCount',
     'erc721TransferCount',
     'erc1155TransferCount',
+    'stakingBalance',
   ]);
 
   return (
@@ -69,6 +78,9 @@ export const AddressDetailPage = memo(() => {
           <StorageStakingCard accountInfo={accountInfo} />
           <NonceCard accountInfo={accountInfo} />
         </Top>
+        <Middle key="middle">
+          <AddressMetadata address={address} accountInfo={accountInfo} />
+        </Middle>
         <Bottom>
           <Table address={address} addressInfo={accountInfo} />
         </Bottom>

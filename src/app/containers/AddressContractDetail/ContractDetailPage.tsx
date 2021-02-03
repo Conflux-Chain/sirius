@@ -56,6 +56,7 @@ export const ContractDetailPage = memo(() => {
     'erc20TransferCount',
     'erc721TransferCount',
     'erc1155TransferCount',
+    'stakingBalance',
     'sourceCode',
     'abi',
   ]);
@@ -88,7 +89,9 @@ export const ContractDetailPage = memo(() => {
         <Head key="head">
           <Title>
             {isInnerContractAddress(address)
-              ? t(translations.general.internalContract)
+              ? `${t(translations.general.internalContract)}: ${
+                  contractInfo.name
+                }`
               : t(translations.general.contract)}
           </Title>
           <HeadAddressLine>

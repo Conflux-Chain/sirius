@@ -82,7 +82,17 @@
   "addressDetail": {
     "minedBlocks": "挖出区块",
     "title": "地址详情",
-    "content": "地址详情"
+    "content": "地址详情",
+    "staked": "质押 CFX",
+    "stakingEarned": "质押 CFX 收益",
+    "locked": "锁定 CFX",
+    "currentVotingRights": "当前投票权",
+    "apy": "（年化收益率 4%）",
+    "lockedDetailTitle": "锁定历史",
+    "lockedDetailLocked": "已锁定 CFX",
+    "lockedDetailUnlockBlockNumber": "解锁区块",
+    "lockedDetailUnlockDate": "预计解锁日期",
+    "viewLockedDetails": "点击查看锁定历史"
   },
   "blocksAndTransactions": {
     "title": "出块和交易",
@@ -593,7 +603,13 @@
       "balance": "该地址的资产余额。",
       "token": "该地址持有的代币。",
       "storageCollateral": "该地址支付的存储押金总量，其单位为CFX。",
-      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。"
+      "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
+      "stakedBegin": "质押的 CFX 总额，访问 ",
+      "stakedEnd": " 以质押 CFX 获取利息。",
+      "stakingEarned": "质押 CFX 产生的利息收益 (年化收益 4%)，未包含已提取的利息。质押的利息将在每次提取时，自动发送至钱包地址。",
+      "lockedBegin": "锁定的 CFX 总额，访问",
+      "lockedEnd": "以锁定 CFX 获取投票权。",
+      "currentVotingRights": "投票权将按以下公式授予：季度数×代币数×0.25。"
     },
     "token": {
       "price": "代币价格。",

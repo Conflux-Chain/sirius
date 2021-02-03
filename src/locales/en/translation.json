@@ -82,7 +82,17 @@
   "addressDetail": {
     "minedBlocks": "Mined Blocks",
     "title": "Address Detail",
-    "content": "Details of Address"
+    "content": "Details of Address",
+    "staked": "Staked CFX",
+    "stakingEarned": "Staking CFX Earned",
+    "locked": "Locked CFX",
+    "lockedDetailTitle": "Lock History",
+    "lockedDetailLocked": "Locked CFX",
+    "lockedDetailUnlockBlockNumber": "Unlock Blocknumber",
+    "lockedDetailUnlockDate": "Estimated Unlock Date",
+    "currentVotingRights": "Currently Voting Rights",
+    "apy": "(APY 4%)",
+    "viewLockedDetails": "Click to view lock history"
   },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
@@ -593,7 +603,13 @@
       "balance": "The amout of assets which belong to the address.",
       "token": "The amout of tokens which belong to the address.",
       "storageCollateral": "The amount of storage collaterals paid by the current address, the unit is the CFX. ",
-      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."
+      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
+      "stakedBegin": "Total CFX staked. Access ",
+      "stakedEnd": " to stake CFX for interest.",
+      "stakingEarned": "Staking CFX Earned (APY 4%), does not include interest already drawn. Staked interest will be automatically withdrawn to your wallet address every time you unstake.",
+      "lockedBegin": "Total CFX locked. Access ",
+      "lockedEnd": " to lock CFX for voting rights.",
+      "currentVotingRights": "The voting rights will be awarded according to: number of quarters × number of tokens × 0.25."
     },
     "token": {
       "price": "Token price.",

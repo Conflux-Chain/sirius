@@ -391,6 +391,8 @@ export const useAccount = (
           return {
             address: accountAddress,
             balance: notAvaiableText,
+            stakingBalance: notAvaiableText,
+            accumulatedInterestReturn: notAvaiableText,
             collateralForStorage: notAvaiableText,
             transactionCount: notAvaiableText,
           };
@@ -399,6 +401,8 @@ export const useAccount = (
       initialData: {
         address: accountAddress,
         balance: loadingText,
+        stakingBalance: loadingText,
+        accumulatedInterestReturn: loadingText,
         collateralForStorage: loadingText,
         transactionCount: loadingText,
       },

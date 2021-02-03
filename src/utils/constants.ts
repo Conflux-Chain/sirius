@@ -1,4 +1,5 @@
 import { formatAddress } from './cfx';
+import { isTestNetEnv } from './hooks/useTestnet';
 
 export const addressTypeContract = 'contract';
 export const addressTypeCommon = 'common';
@@ -21,3 +22,10 @@ export const cfxTokenTypes = {
   erc721: 'ERC721',
   erc1155: 'ERC1155',
 };
+export const governanceAddressTestnet =
+  '0x8f3f525d17159351e4b34fe766ef139470da0b02';
+export const governanceAddressMainnet =
+  '0x8f165e7d7dfb02e24300f2c1c476822ba895638e';
+export const governanceAddress = isTestNetEnv()
+  ? governanceAddressTestnet
+  : governanceAddressMainnet;
