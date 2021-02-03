@@ -129,10 +129,9 @@
   "accounts": {
     "title": "账户",
     "description": "账户",
-    "tipCountBefore": "仅显示 CFX 余额排名前",
-    "tipCountAfter": "的账户，按照 CFX 余额降序排序。",
+    "tip": "仅显示 CFX 余额排名前 100 的账户，按照 CFX 余额降序排序。",
     "table": {
-      "number": "#",
+      "number": "排名",
       "address": "地址",
       "balance": "余额",
       "percentage": "百分比",

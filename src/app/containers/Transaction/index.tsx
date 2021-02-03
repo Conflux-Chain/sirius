@@ -580,12 +580,7 @@ export const Transaction = () => {
     }
   }
 
-  const handleFolded = () => {
-    setFolded(folded => {
-      console.log('folded: ', folded);
-      return !folded;
-    });
-  };
+  const handleFolded = () => setFolded(folded => !folded);
 
   return (
     <StyledTransactionsWrapper>

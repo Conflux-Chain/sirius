@@ -6,7 +6,13 @@ import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
 
-export const appendApiPrefix = (url: string) => `/v1${url}`;
+export const appendApiPrefix = (url: string) => {
+  // for cfx top N
+  if (url.startsWith('/stat/')) {
+    return url;
+  }
+  return `/v1${url}`;
+};
 
 export interface Params {
   [name: string]: string | string[];

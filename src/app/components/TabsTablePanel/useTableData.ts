@@ -54,6 +54,7 @@ export const useTableData = (
   const { data, error, mutate } = useSWRWithGetFecher(
     shouldFetch ? [urlWithQuery] : null,
   );
+
   const setPageNumberAndAlterHistory = (pageNumber: number) => {
     const pathNameWithQuery = queryString.stringifyUrl({
       url: location.pathname,
@@ -83,7 +84,11 @@ export const useTableData = (
   return {
     pageNumber: parsedPageNumber,
     pageSize: parsedPageSize,
-    total: Math.min(data?.total, data?.listLimit) || data?.total || 0, // used for pagination
+    total:
+      Math.min(data?.total, data?.listLimit, data?.count) ||
+      data?.total ||
+      data?.count ||
+      0, // used for pagination
     realTotal: data?.total || 0, // real total in response data
     data,
     error,

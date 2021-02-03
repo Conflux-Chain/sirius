@@ -8,7 +8,7 @@ import { toThousands } from '../../../utils';
 interface LabelProps {
   left?: string;
   right?: string;
-  total?: number;
+  total?: number | null;
   realTotal?: number;
 }
 
@@ -93,7 +93,7 @@ const TipLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   return (
     <StyledTipLabelWrapper>
       {left}
-      <StyledSpan>{toThousands(number)}</StyledSpan>
+      {total !== null && <StyledSpan>{toThousands(number)}</StyledSpan>}
       {right}
     </StyledTipLabelWrapper>
   );
