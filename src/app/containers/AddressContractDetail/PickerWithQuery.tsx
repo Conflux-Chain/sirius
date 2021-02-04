@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import { DatePicker } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
 import imgAlarm from 'images/contract-address/alarm.svg';
-import { ActionButton } from './ActionButton';
+import { ActionButton } from '../../components/Dropdown';
 
 // datepicker input common style
 const PickerWrap = styled.div`
@@ -107,11 +107,9 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
 
   return (
     <MobilePickerWrap className="date-picker-mobile-wrap" ref={dropdownRef}>
-      <ActionButton
-        onClick={() => setVisible(!visible)}
-        ref={filterButtonRef}
-        src={imgAlarm}
-      ></ActionButton>
+      <ActionButton onClick={() => setVisible(!visible)} ref={filterButtonRef}>
+        <img src={imgAlarm} alt="alarm icon"></img>
+      </ActionButton>
       {visible && (
         <>
           <DatePicker

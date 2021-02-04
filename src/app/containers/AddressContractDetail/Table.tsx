@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Button, useClickAway } from '@cfxjs/react-ui';
+import { Button } from '@cfxjs/react-ui';
 import { Card } from 'app/components/Card/Loadable';
 import { useLocation, useHistory } from 'react-router';
 import {
@@ -27,11 +27,10 @@ import {
 } from '../../components/TabsTablePanel/Loadable';
 import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
-import { Check } from '@zeit-ui/react-icons';
 import { defaultTokenIcon } from '../../../constants';
 import imgDot from 'images/contract-address/dot-dot-dot.svg';
 import PickerWithQuery from './PickerWithQuery';
-import { ActionButton } from './ActionButton';
+import { Dropdown } from '../../components/Dropdown';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
@@ -269,87 +268,6 @@ const ButtonWrapper = styled.div`
   }
   .hidden {
     display: none;
-  }
-`;
-
-const TX_DIRECTION = ['all', 'outgoing', 'incoming'];
-
-const TxDirectionFilter = ({ onChange }) => {
-  const location = useLocation();
-  const { txType } = queryString.parse(location.search || '');
-  const defaultDirection = TX_DIRECTION.indexOf(txType as string);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState<boolean>(false);
-  const [selected, setSelected] = useState<number>(
-    defaultDirection === -1 ? 0 : defaultDirection,
-  );
-  useClickAway(dropdownRef, () => visible && setVisible(false));
-  const { t } = useTranslation();
-
-  const select = selected => {
-    setSelected(selected);
-    onChange && onChange(TX_DIRECTION[selected]);
-    setVisible(false);
-  };
-
-  const opts = [
-    translations.general.viewAll,
-    translations.transaction.viewOutgoingTxns,
-    translations.transaction.viewIncomingTxns,
-  ].map((text, idx) => (
-    <div
-      key={idx}
-      onClick={() => select(idx)}
-      className={clsx('opt', selected === idx && 'selected')}
-    >
-      <span>{t(text)}</span>
-      <Check />
-    </div>
-  ));
-
-  return (
-    <div>
-      <ActionButton onClick={() => setVisible(!visible)} src={imgDot} />
-      {visible && (
-        <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
-          {opts}
-        </TxDirectionFilterDropdown>
-      )}
-    </div>
-  );
-};
-
-const TxDirectionFilterDropdown = styled.div`
-  position: absolute;
-  right: 0;
-  box-shadow: 0rem 0.43rem 1.14rem 0rem rgba(20, 27, 50, 0.08);
-  border-radius: 0.14rem;
-  background-color: white;
-  width: max-content;
-  margin-top: 0.7143rem;
-  z-index: 10;
-  div.opt {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    line-height: 1.57rem;
-    padding: 0.29rem 1.14rem;
-    color: #65709a;
-    svg {
-      visibility: hidden;
-      margin-left: 0.5rem;
-    }
-    &.selected {
-      background-color: #65709a;
-      color: white;
-      svg {
-        visibility: visible;
-      }
-    }
-  }
-  ${media.s} {
-    right: unset;
-    left: 0;
   }
 `;
 
@@ -711,8 +629,23 @@ export function Table({ address, addressInfo }) {
             }}
           />
           {txFilterVisible && (
-            <TxDirectionFilter
+            <Dropdown
               key="tx-filter"
+              label={<img src={imgDot} alt="address-contract-alarm" />}
+              options={[
+                {
+                  key: 'all',
+                  name: t(translations.general.viewAll),
+                },
+                {
+                  key: 'outgoing',
+                  name: t(translations.transaction.viewOutgoingTxns),
+                },
+                {
+                  key: 'incoming',
+                  name: t(translations.transaction.viewIncomingTxns),
+                },
+              ]}
               onChange={txType => {
                 if (queries?.txType !== txType)
                   history.push(
