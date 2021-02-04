@@ -158,7 +158,6 @@ export const StatsCard = ({
                         }
                         return item;
                       });
-                      console.log(listWithTokenInfo);
                       setData(listWithTokenInfo);
                     } else {
                       setData(sourceList);

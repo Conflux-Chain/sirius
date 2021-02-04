@@ -88,7 +88,6 @@ export function Statistics() {
     );
   };
 
-  console.log(statsType);
   return (
     <>
       <Helmet>
