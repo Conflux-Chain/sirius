@@ -3,16 +3,9 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import SkelontonContainer from '../SkeletonContainer';
-import {
-  reqTokenList,
-  reqTopStatistics,
-  sendRequest,
-} from '../../../utils/httpRequest';
+import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import { formatNumber, fromDripToCfx } from '../../../utils';
 import { AddressContainer } from '../AddressContainer';
-import useSWR from 'swr';
-import qs from 'query-string';
-import { simpleGetFetcher } from '../../../utils/api';
 import { formatAddress } from '../../../utils/cfx';
 import { token } from '../../../utils/tableColumns/token';
 
