@@ -1,5 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
+import { Link } from '../../app/components/Link/Loadable';
 import { translations } from '../../locales/i18n';
 import { toThousands, formatNumber } from '../../utils/';
 
@@ -19,7 +20,9 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   width: 1,
-  render: (value, row: any) => row.name || value,
+  render: (value, row: any) => (
+    <Link href={`/address/${value}`}>{row.name || value}</Link>
+  ),
 };
 
 export const balance = {
