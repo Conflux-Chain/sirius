@@ -38,6 +38,7 @@ export const useTableData = (
     parsedPageSize = String(pageSize);
   } catch (e) {}
 
+  const urlQuery = queryString.parseUrl(url).query;
   const urlWithQuery = queryString.stringifyUrl({
     url,
     query: {
@@ -48,12 +49,14 @@ export const useTableData = (
       // tables
       limit: inactive ? undefined : (parsedPageSize as string),
       skip: inactive ? undefined : (skip as string),
+      ...urlQuery,
     },
   });
 
   const { data, error, mutate } = useSWRWithGetFecher(
     shouldFetch ? [urlWithQuery] : null,
   );
+
   const setPageNumberAndAlterHistory = (pageNumber: number) => {
     const pathNameWithQuery = queryString.stringifyUrl({
       url: location.pathname,
@@ -83,7 +86,11 @@ export const useTableData = (
   return {
     pageNumber: parsedPageNumber,
     pageSize: parsedPageSize,
-    total: Math.min(data?.total, data?.listLimit) || data?.total || 0, // used for pagination
+    total:
+      Math.min(data?.total, data?.listLimit, data?.count) ||
+      data?.total ||
+      data?.count ||
+      0, // used for pagination
     realTotal: data?.total || 0, // real total in response data
     data,
     error,

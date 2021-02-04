@@ -108,10 +108,10 @@ export const price = {
         <Text span hoverValue={`$${value}`}>
           {row.quoteUrl ? (
             <LinkA href={row.quoteUrl} target="_blank">
-              ${formatNumber(value || 0)}
+              ${formatNumber(value || 0, { withUnit: false })}
             </LinkA>
           ) : (
-            `$${formatNumber(value || 0)}`
+            `$${formatNumber(value || 0, { withUnit: false })}`
           )}
         </Text>
       ) : (
@@ -134,7 +134,7 @@ export const marketCap = {
     <span>
       {value != null && value > 0 ? (
         <Text span hoverValue={`$${value}`}>
-          ${formatNumber(value || 0)}
+          ${formatNumber(value || 0, { unit: 'K' })}
         </Text>
       ) : (
         '-'

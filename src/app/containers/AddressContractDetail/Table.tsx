@@ -733,7 +733,11 @@ export function Table({ address, addressInfo }) {
         key="table"
         tabs={tabs}
         onTabsChange={value => {
-          if (value === 'transfers' || value === 'mined-blocks' || isContract)
+          if (
+            value.startsWith('transfers') ||
+            value === 'mined-blocks' ||
+            isContract
+          )
             setTxFilterVisible(false);
           else setTxFilterVisible(true);
           if (value === 'contract-viewer') return setFilterVisible(false);

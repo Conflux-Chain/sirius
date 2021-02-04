@@ -28,10 +28,12 @@ import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { NotFoundAddressPage } from './containers/NotFoundAddressPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
+import { Accounts } from './containers/Accounts/Loadable';
 import { Contracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
+import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
@@ -141,9 +143,17 @@ export function App() {
                 />
                 <Route
                   exact
-                  path="/blocks-and-transactions"
+                  path="/blockchain"
+                  render={() => (
+                    <Redirect to="/blockchain/blocks-and-transactions" />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/blockchain/blocks-and-transactions"
                   component={BlocksAndTransactions}
                 />
+                <Route exact path="/blockchain/accounts" component={Accounts} />
                 <Route exact path="/tokens" component={Tokens} />
                 <Route
                   exact
@@ -180,6 +190,7 @@ export function App() {
                   }}
                 />
                 <Route path="/charts" component={Chart} />
+                <Route path="/statistics" component={Statistics} />
                 <Route
                   exact
                   path={['/address-converter', '/address-converter/:address']}

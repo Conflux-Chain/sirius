@@ -18,6 +18,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
 import imgWarning from 'images/warning.png';
+import imgChevronDown from 'images/chevronDown.png';
 import {
   reqTransactionDetail,
   reqContract,
@@ -43,6 +44,7 @@ import {
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
+import clsx from 'clsx';
 
 // Transaction Detail Page
 export const Transaction = () => {
@@ -88,6 +90,7 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
+  const [folded, setFolded] = useState(false);
 
   // get riskLevel
   const getConfirmRisk = async blockHash => {
@@ -577,6 +580,8 @@ export const Transaction = () => {
     }
   }
 
+  const handleFolded = () => setFolded(folded => !folded);
+
   return (
     <StyledTransactionsWrapper>
       <Helmet>
@@ -633,6 +638,21 @@ export const Transaction = () => {
               <Link href={`/epoch/${epochHeight}`}>
                 {toThousands(epochHeight)}
               </Link>
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.blockHash)}
+                placement="top"
+              >
+                {t(translations.transaction.blockHash)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+              <CopyButton copyText={blockHash} />
             </SkeletonContainer>
           </Description>
           <Description
@@ -713,48 +733,6 @@ export const Transaction = () => {
           </Description>
           <Description
             title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.storageLimit)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasUsedLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.gasUsed)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasPrice)}
-                placement="top"
-              >
-                {t(translations.transaction.gasPrice)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${toThousands(gasPrice)} drip`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
               <Tooltip text={t(translations.toolTip.tx.gasFee)} placement="top">
                 {t(translations.transaction.gasFee)}
               </Tooltip>
@@ -764,99 +742,150 @@ export const Transaction = () => {
               {`${toThousands(gasFee)} drip`}
             </SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip text={t(translations.toolTip.tx.nonce)} placement="top">
-                {t(translations.transaction.nonce)}
-              </Tooltip>
-            }
+          <div
+            className={clsx('detailResetWrapper', {
+              folded: folded,
+            })}
           >
-            <SkeletonContainer shown={loading}>
-              {toThousands(nonce)}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.blockHash)}
-                placement="top"
-              >
-                {t(translations.transaction.blockHash)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
-              <CopyButton copyText={blockHash} />
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.position)}
-                placement="top"
-              >
-                {t(translations.transaction.position)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {!loading && transactionIndex}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.chainID)}
-                placement="top"
-              >
-                {t(translations.transaction.chainID)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.transaction.inputTips)}
-                placement="top"
-              >
-                {t(translations.transaction.inputData)}
-              </Tooltip>
-            }
-            noBorder
-            className="inputLine"
-          >
-            <SkeletonContainer shown={loading}>
-              <InputData
-                byteCode={data}
-                inputType={dataType}
-                decodedDataStr={JSON.stringify(decodedData)}
-              ></InputData>
-              <Select
-                value={dataType}
-                onChange={handleDataTypeChange}
-                disableMatchWidth
-                size="small"
-                className="btnSelectContainer"
-              >
-                {dataTypeList.map(dataTypeItem => {
-                  return (
-                    <Select.Option key={dataTypeItem} value={dataTypeItem}>
-                      {`${t(translations.transaction.select[dataTypeItem])}`}
-                    </Select.Option>
-                  );
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageLimit)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageLimit)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {toThousands(storageLimit)}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.gasUsedLimit)}
+                  placement="top"
+                >
+                  {t(translations.transaction.gasUsed)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.gasPrice)}
+                  placement="top"
+                >
+                  {t(translations.transaction.gasPrice)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {`${toThousands(gasPrice)} drip`}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.nonce)}
+                  placement="top"
+                >
+                  {t(translations.transaction.nonce)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {toThousands(nonce)}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.position)}
+                  placement="top"
+                >
+                  {t(translations.transaction.position)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {!loading && transactionIndex}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.chainID)}
+                  placement="top"
+                >
+                  {t(translations.transaction.chainID)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.transaction.inputTips)}
+                  placement="top"
+                >
+                  {t(translations.transaction.inputData)}
+                </Tooltip>
+              }
+              className="inputLine"
+            >
+              <SkeletonContainer shown={loading}>
+                <InputData
+                  byteCode={data}
+                  inputType={dataType}
+                  decodedDataStr={JSON.stringify(decodedData)}
+                ></InputData>
+                <Select
+                  value={dataType}
+                  onChange={handleDataTypeChange}
+                  disableMatchWidth
+                  size="small"
+                  className="btnSelectContainer"
+                >
+                  {dataTypeList.map(dataTypeItem => {
+                    return (
+                      <Select.Option key={dataTypeItem} value={dataTypeItem}>
+                        {`${t(translations.transaction.select[dataTypeItem])}`}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+                {warningMessage ? (
+                  <div className="warningContainer shown">
+                    <img
+                      src={imgWarning}
+                      alt="warning"
+                      className="warningImg"
+                    />
+                    <span className="text">{t(warningMessage)}</span>
+                  </div>
+                ) : null}
+              </SkeletonContainer>
+            </Description>
+          </div>
+          <StyledFoldButtonWrapper>
+            <Description noBorder title="">
+              <div
+                className={clsx('detailResetFoldButton', {
+                  folded: folded,
                 })}
-              </Select>
-              {warningMessage ? (
-                <div className="warningContainer shown">
-                  <img src={imgWarning} alt="warning" className="warningImg" />
-                  <span className="text">{t(warningMessage)}</span>
-                </div>
-              ) : null}
-            </SkeletonContainer>
-          </Description>
+                onClick={handleFolded}
+              >
+                {t(translations.general[folded ? 'viewMore' : 'showLess'])}
+              </div>
+            </Description>
+          </StyledFoldButtonWrapper>
         </Card>
       </StyledCardWrapper>
     </StyledTransactionsWrapper>
@@ -934,6 +963,15 @@ const StyledCardWrapper = styled.div`
   .hidden {
     visibility: hidden;
   }
+
+  .detailResetWrapper {
+    height: inherit;
+    overflow: hidden;
+
+    &.folded {
+      height: 0;
+    }
+  }
 `;
 
 const StyledTransactionsWrapper = styled.div`
@@ -947,4 +985,37 @@ const StyledTransactionsWrapper = styled.div`
 const StyledEpochConfirmationsWrapper = styled.span`
   margin-left: 1rem;
   vertical-align: middle;
+`;
+
+const StyledFoldButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  .detailResetFoldButton {
+    font-size: 14px;
+    color: #002257;
+    line-height: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-items: center;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      background-image: url(${imgChevronDown});
+      transform: rotate(180deg);
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-left: 5px;
+    }
+
+    &.folded::after {
+      transform: rotate(0);
+    }
+  }
 `;

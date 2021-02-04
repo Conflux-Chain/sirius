@@ -82,7 +82,18 @@
   "addressDetail": {
     "minedBlocks": "Mined Blocks",
     "title": "Address Detail",
-    "content": "Details of Address"
+    "content": "Details of Address",
+    "staked": "Staked CFX",
+    "stakingEarned": "Staking CFX Earned",
+    "locked": "Locked CFX",
+    "unlockTime": "Unlock after about {{days}} days",
+    "lockedDetailTitle": "Lock History",
+    "lockedDetailLocked": "Locked CFX",
+    "lockedDetailUnlockBlockNumber": "Unlock Blocknumber",
+    "lockedDetailUnlockTime": "Estimated Unlock Time",
+    "currentVotingRights": "Current Voting Rights",
+    "apy": "(APY 4%)",
+    "viewLockedDetails": "Click to view lock history"
   },
   "blocksAndTransactions": {
     "title": "Blocks and Transactions",
@@ -115,6 +126,18 @@
       "contract": "Contract"
     }
   },
+  "accounts": {
+    "title": "Accounts",
+    "description": "Accounts",
+    "tip": "Showing the top 100 accounts by CFX balance only, sorted by decreasing CFX balance.",
+    "table": {
+      "number": "Rank",
+      "address": "Address",
+      "balance": "Balance",
+      "percentage": "Percentage",
+      "count": "Txn Count"
+    }
+  },
   "contracts": {
     "title": "Internal Contracts",
     "description": "Internal Contracts",
@@ -124,6 +147,8 @@
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transactions",
+    "blockchain": "Blockchain",
+    "accounts": "Accounts",
     "tokens": "Tokens",
     "tokens20": "ERC-20 Tokens",
     "tokens721": "ERC-721 Tokens",
@@ -132,7 +157,9 @@
     "contractCreation": "Contract Creation",
     "contractSponsor": "Contract Sponsor",
     "contracts": "Internal Contracts",
+    "chartsAndStatistics": "Charts & Stats",
     "charts": "Charts",
+    "statistics": "Top Statistics",
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
@@ -208,6 +235,7 @@
     }
   },
   "general": {
+    "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
     "viewAllBlocksAndTxs": "View All Blocks & Transactions",
@@ -238,7 +266,7 @@
         "epoch": "Epoch",
         "position": "Position",
         "txns": "Txn",
-        "hash": "Hash",
+        "hash": "Block Hash",
         "miner": "Miner",
         "avgGasPrice": "Avg.Gas Price",
         "gasUsedPercent": "Gas Used/Limit",
@@ -575,7 +603,13 @@
       "balance": "The amout of assets which belong to the address.",
       "token": "The amout of tokens which belong to the address.",
       "storageCollateral": "The amount of storage collaterals paid by the current address, the unit is the CFX. ",
-      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."
+      "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
+      "stakedBegin": "Total CFX staked. Access ",
+      "stakedEnd": " to stake CFX for interest.",
+      "stakingEarned": "Staking CFX Earned (APY 4%) does not contain withdrawn interest. Staked interest will be automatically sent to your wallet address each time it is withdrawn.",
+      "lockedBegin": "Total CFX locked. Access ",
+      "lockedEnd": " to lock CFX for voting rights.",
+      "currentVotingRights": "The voting rights will be awarded according to: number of quarters × number of tokens × 0.25."
     },
     "token": {
       "price": "Token price.",

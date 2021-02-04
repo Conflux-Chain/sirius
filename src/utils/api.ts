@@ -6,7 +6,13 @@ import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
 
-export const appendApiPrefix = (url: string) => `/v1${url}`;
+export const appendApiPrefix = (url: string) => {
+  // for cfx top N
+  if (url.startsWith('/stat/')) {
+    return url;
+  }
+  return `/v1${url}`;
+};
 
 export interface Params {
   [name: string]: string | string[];
@@ -24,7 +30,7 @@ export const simpleGetFetcher = async (...args: any[]) => {
     url = qs.stringifyUrl({ url, query });
   }
   // TODO cip-37 convert
-  console.info('simpleGetFetcher', url, query);
+  // console.info('simpleGetFetcher', url, query);
   return await fetch(appendApiPrefix(url), {
     method: 'get',
   });
@@ -35,7 +41,7 @@ const simplePostFetcher = async (...args: any[]) => {
   shouldAppendPrefix =
     shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
   // TODO cip-37 convert
-  console.info('simplePostFetcher', url, params);
+  // console.info('simplePostFetcher', url, params);
   return await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
     method: 'post',
     headers: {
@@ -391,6 +397,8 @@ export const useAccount = (
           return {
             address: accountAddress,
             balance: notAvaiableText,
+            stakingBalance: notAvaiableText,
+            accumulatedInterestReturn: notAvaiableText,
             collateralForStorage: notAvaiableText,
             transactionCount: notAvaiableText,
           };
@@ -399,6 +407,8 @@ export const useAccount = (
       initialData: {
         address: accountAddress,
         balance: loadingText,
+        stakingBalance: loadingText,
+        accumulatedInterestReturn: loadingText,
         collateralForStorage: loadingText,
         transactionCount: loadingText,
       },
