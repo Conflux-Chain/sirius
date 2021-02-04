@@ -255,6 +255,7 @@ const CardWrapper = styled.div`
 
   .table-wrapper {
     width: 100%;
+    min-height: 450px;
     padding-bottom: 16px;
     overflow-x: auto;
   }
