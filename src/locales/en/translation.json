@@ -687,11 +687,16 @@
     "topTokensByReceivers": "Top Tokens by Receivers",
     "topTokensByTxnCount": "Top Tokens by Txn Count",
     "topTokensByTxnAccountsCount": "Top Tokens by Txn Accounts Count",
+    "span": {
+      "24h": "24 Hours",
+      "3d": "3 Days",
+      "7d": "7 Days"
+    },
     "column": {
       "rank": "Rank",
       "address": "Address",
-      "txn": "Txn",
-      "txnValue": "Txn Value",
+      "txn": "Txn Count",
+      "txnValue": "Value",
       "txnAccounts": "Txn Accounts",
       "percentage": "Percentage",
       "token": "Token",

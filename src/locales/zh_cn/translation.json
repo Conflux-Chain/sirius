@@ -687,6 +687,11 @@
     "topTokensByReceivers": "最佳代币--接收账户数",
     "topTokensByTxnCount": "最佳代币--交易数",
     "topTokensByTxnAccountsCount": "最佳代币--交易账户数",
+    "span": {
+      "24h": "24小时",
+      "3d": "3天",
+      "7d": "7天"
+    },
     "column": {
       "rank": "排名",
       "address": "地址",
