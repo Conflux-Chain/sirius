@@ -129,7 +129,12 @@
   "accounts": {
     "title": "Accounts",
     "description": "Accounts",
-    "tip": "Showing the top 100 accounts by CFX balance only, sorted by decreasing CFX balance.",
+    "tip": "Only the top 100 accounts for CFX total balances are displayed, sorted by default in descending order of CFX total balances.",
+    "totalBalance": "Total Balance",
+    "stakingBalance": "Staking Balance",
+    "balance": "Balance",
+    "sortButtonBefore": "Sort By ",
+    "sortButtonAfter": "",
     "table": {
       "number": "Rank",
       "address": "Address",

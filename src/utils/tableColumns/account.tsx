@@ -1,5 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
+import { Link } from '../../app/components/Link/Loadable';
 import { translations } from '../../locales/i18n';
 import { toThousands, formatNumber } from '../../utils/';
 
@@ -19,17 +20,20 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   width: 1,
-  render: (value, row: any) => row.name || value,
+  render: (value, row: any) => (
+    <Link href={`/address/${value}`}>{row.name || value}</Link>
+  ),
 };
 
 export const balance = {
   title: (
     <Translation>{t => t(translations.accounts.table.balance)}</Translation>
   ),
+  width: 1,
   dataIndex: 'valueN',
   key: 'valueN',
-  width: 1,
-  render: value => (value === null ? '--' : `${toThousands(value)} CFX`),
+  render: value =>
+    value === null ? '--' : `${toThousands(Number(value))} CFX`,
 };
 
 export const percentage = {
@@ -44,8 +48,8 @@ export const percentage = {
 
 export const count = {
   title: <Translation>{t => t(translations.accounts.table.count)}</Translation>,
-  dataIndex: 'value2', // txn count key name is value2
-  key: 'value2',
+  dataIndex: 'valueN', // txn count key name is valueN
+  key: 'valueN',
   width: 1,
   render: value => toThousands(Number(value)) || '--',
 };
