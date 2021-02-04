@@ -674,5 +674,29 @@
     "10003": "Write contract",
     "10004": "read contract",
     "10005": "Sponsor application"
+  },
+  "statistics": {
+    "statistics": "Top Statistics",
+    "transactions": "Transactions",
+    "tokens": "Tokens",
+    "topTxnCountSent": "Top Txn Count Sent",
+    "topTxnCountReceived": "Top Txn Count Received",
+    "topCFXSend": "Top CFX Sent",
+    "topCFXReceived": "Top CFX Received",
+    "topTokensBySenders": "Top Tokens by Senders",
+    "topTokensByReceivers": "Top Tokens by Receivers",
+    "topTokensByTxnCount": "Top Tokens by Txn Count",
+    "topTokensByTxnAccountsCount": "Top Tokens by Txn Accounts Count",
+    "column": {
+      "rank": "Rank",
+      "address": "Address",
+      "txn": "Txn",
+      "txnValue": "Txn Value",
+      "txnAccounts": "Txn Accounts",
+      "percentage": "Percentage",
+      "token": "Token",
+      "senders": "Senders",
+      "receivers": "Receivers"
+    }
   }
 }

@@ -134,7 +134,7 @@ export const Header = memo(() => {
             t(translations.header.statistics),
             <Check size={18} key="check" />,
           ],
-          href: '/statistics',
+          href: '/statistics/transactions',
         },
       ],
     },

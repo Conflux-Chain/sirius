@@ -12,6 +12,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
+// import 'antd/dist/antd.compact.css'; // TODO antd compatibility
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -54,7 +55,7 @@ if (module.hot) {
 
 render(App);
 
-const currentVersion = '2.1.0';
+const currentVersion = '2.1.1';
 
 const brand = `
 ┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ V${currentVersion}

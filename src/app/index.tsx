@@ -190,7 +190,16 @@ export function App() {
                   }}
                 />
                 <Route path="/charts" component={Chart} />
-                <Route path="/statistics" component={Statistics} />
+                <Route
+                  exact
+                  path="/statistics"
+                  render={() => <Redirect to="/statistics/transactions" />}
+                />
+                <Route
+                  exact
+                  path="/statistics/:statsType"
+                  component={Statistics}
+                />
                 <Route
                   exact
                   path={['/address-converter', '/address-converter/:address']}

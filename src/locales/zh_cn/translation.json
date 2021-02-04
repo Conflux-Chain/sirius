@@ -674,5 +674,29 @@
     "10003": "写合约",
     "10004": "读合约",
     "10005": "Sponsor 应用"
+  },
+  "statistics": {
+    "statistics": "最佳统计",
+    "transactions": "交易",
+    "tokens": "代币",
+    "topTxnCountSent": "最佳地址--发送交易数",
+    "topTxnCountReceived": "最佳地址--接收交易数",
+    "topCFXSend": "最佳地址--CFX 发送量",
+    "topCFXReceived": "最佳地址--CFX 接收量",
+    "topTokensBySenders": "最佳代币--发送账户数",
+    "topTokensByReceivers": "最佳代币--接收账户数",
+    "topTokensByTxnCount": "最佳代币--交易数",
+    "topTokensByTxnAccountsCount": "最佳代币--交易账户数",
+    "column": {
+      "rank": "排名",
+      "address": "地址",
+      "txn": "交易数",
+      "txnValue": "交易值",
+      "txnAccounts": "交易账户数",
+      "percentage": "百分比",
+      "token": "代币",
+      "senders": "发送账户数",
+      "receivers": "接收账户数"
+    }
   }
 }
