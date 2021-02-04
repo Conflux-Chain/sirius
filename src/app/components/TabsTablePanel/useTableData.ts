@@ -38,6 +38,7 @@ export const useTableData = (
     parsedPageSize = String(pageSize);
   } catch (e) {}
 
+  const urlQuery = queryString.parseUrl(url).query;
   const urlWithQuery = queryString.stringifyUrl({
     url,
     query: {
@@ -48,6 +49,7 @@ export const useTableData = (
       // tables
       limit: inactive ? undefined : (parsedPageSize as string),
       skip: inactive ? undefined : (skip as string),
+      ...urlQuery,
     },
   });
 

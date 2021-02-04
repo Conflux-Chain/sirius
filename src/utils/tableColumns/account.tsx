@@ -29,7 +29,7 @@ export const balance = {
   dataIndex: 'valueN',
   key: 'valueN',
   width: 1,
-  render: value => `${value === null ? 0 : toThousands(value)} CFX`,
+  render: value => (value === null ? '--' : `${toThousands(value)} CFX`),
 };
 
 export const percentage = {
@@ -47,5 +47,5 @@ export const count = {
   dataIndex: 'value2', // txn count key name is value2
   key: 'value2',
   width: 1,
-  render: value => toThousands(Number(value)) || 0,
+  render: value => toThousands(Number(value)) || '--',
 };
