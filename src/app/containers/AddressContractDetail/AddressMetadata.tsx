@@ -26,7 +26,7 @@ import {
 function getCurrentStakingEarned(list, rate, stakedCfx) {
   if (list.length === 0) return 0;
   let earned = 0;
-  list.map(item => {
+  list.forEach(item => {
     earned =
       earned +
       (Number(item.amount) * Number(rate)) /
