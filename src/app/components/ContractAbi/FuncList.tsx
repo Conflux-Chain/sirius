@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
+import '../../../styles/antd.custom.css';
 import { Collapse } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import styled from 'styled-components/macro';

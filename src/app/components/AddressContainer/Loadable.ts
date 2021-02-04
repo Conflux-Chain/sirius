@@ -1,6 +1,6 @@
 import { lazyLoad } from 'utils/loadable';
 
-export const Card = lazyLoad(
+export const AddressContainer = lazyLoad(
   () => import('./index'),
   module => module.AddressContainer,
 );

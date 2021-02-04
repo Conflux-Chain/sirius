@@ -113,8 +113,14 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/charts"
             />
             <Route
-              component={[Function]}
+              exact={true}
               path="/statistics"
+              render={[Function]}
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/statistics/:statsType"
             />
             <Route
               component={[Function]}

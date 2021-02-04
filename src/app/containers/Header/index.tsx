@@ -135,6 +135,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           href: '/statistics',
+          isMatchedFn: () => !!location?.pathname?.startsWith('/statistics'),
         },
       ],
     },

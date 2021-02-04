@@ -129,7 +129,12 @@
   "accounts": {
     "title": "Accounts",
     "description": "Accounts",
-    "tip": "Showing the top 100 accounts by CFX balance only, sorted by decreasing CFX balance.",
+    "tip": "Only the top 100 accounts for CFX total balances are displayed, sorted by default in descending order of CFX total balances.",
+    "totalBalance": "Total Balance",
+    "stakingBalance": "Staking Balance",
+    "balance": "Balance",
+    "sortButtonBefore": "Sort By ",
+    "sortButtonAfter": "",
     "table": {
       "number": "Rank",
       "address": "Address",
@@ -674,5 +679,34 @@
     "10003": "Write contract",
     "10004": "read contract",
     "10005": "Sponsor application"
+  },
+  "statistics": {
+    "statistics": "Top Statistics",
+    "transactions": "Transactions",
+    "tokens": "Tokens",
+    "topTxnCountSent": "Top Txn Count Sent",
+    "topTxnCountReceived": "Top Txn Count Received",
+    "topCFXSend": "Top CFX Sent",
+    "topCFXReceived": "Top CFX Received",
+    "topTokensBySenders": "Top Tokens by Senders",
+    "topTokensByReceivers": "Top Tokens by Receivers",
+    "topTokensByTxnCount": "Top Tokens by Txn Count",
+    "topTokensByTxnAccountsCount": "Top Tokens by Txn Accounts Count",
+    "span": {
+      "24h": "24 Hours",
+      "3d": "3 Days",
+      "7d": "7 Days"
+    },
+    "column": {
+      "rank": "Rank",
+      "address": "Address",
+      "txn": "Txn Count",
+      "txnValue": "Value",
+      "txnAccounts": "Txn Accounts",
+      "percentage": "Percentage",
+      "token": "Token",
+      "senders": "Senders",
+      "receivers": "Receivers"
+    }
   }
 }
