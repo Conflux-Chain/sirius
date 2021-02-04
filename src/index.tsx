@@ -12,7 +12,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
-// import 'antd/dist/antd.compact.css'; // TODO antd compatibility
 import 'sanitize.css/sanitize.css';
 
 // Import root app
