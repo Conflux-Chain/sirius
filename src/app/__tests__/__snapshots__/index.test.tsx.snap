@@ -75,7 +75,12 @@ exports[`<App /> should render and match the snapshot 1`] = `
             />
             <Route
               exact={true}
-              path="/blockchain"
+              path={
+                Array [
+                  "/blocks-and-transactions",
+                  "/blockchain",
+                ]
+              }
               render={[Function]}
             />
             <Route
