@@ -143,7 +143,7 @@ export function App() {
                 />
                 <Route
                   exact
-                  path="/blockchain"
+                  path={['/blocks-and-transactions', '/blockchain']}
                   render={() => (
                     <Redirect to="/blockchain/blocks-and-transactions" />
                   )}

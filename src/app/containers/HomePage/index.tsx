@@ -99,7 +99,10 @@ export function HomePage() {
         <Bottom>
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
-            <Link className="viewall-link" href="/blocks-and-transactions">
+            <Link
+              className="viewall-link"
+              href="/blockchain/blocks-and-transactions"
+            >
               {bp === 's'
                 ? t(translations.general.viewAll)
                 : t(translations.general.viewAllBlocksAndTxs)}
