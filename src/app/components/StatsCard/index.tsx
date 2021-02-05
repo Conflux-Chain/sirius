@@ -8,6 +8,7 @@ import { formatNumber, fromDripToCfx } from '../../../utils';
 import { AddressContainer } from '../AddressContainer';
 import { formatAddress } from '../../../utils/cfx';
 import { token } from '../../../utils/tableColumns/token';
+import { Text } from '../Text/Loadable';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -192,9 +193,18 @@ export const StatsCard = ({
             <thead>
               <tr>
                 <th>{t(translations.statistics.column.rank)}</th>
-                {columns.map(c => (
-                  <th key={c}>{c}</th>
-                ))}
+                {category === 'transaction' ? (
+                  <>
+                    <th>{columns[0]}</th>
+                    <th className="text-right">{columns[1]}</th>
+                    <th className="text-right">{columns[2]}</th>
+                  </>
+                ) : category === 'token' ? (
+                  <>
+                    <th>{columns[0]}</th>
+                    <th className="text-right">{columns[1]}</th>
+                  </>
+                ) : null}
               </tr>
             </thead>
             <tbody>
@@ -205,12 +215,35 @@ export const StatsCard = ({
                       <td>
                         <AddressContainer value={d.base32 || d.hex} />
                       </td>
-                      <td>
-                        {action === 'cfxSend' || action === 'cfxReceived'
-                          ? fromDripToCfx(d.value)
-                          : d.value}
+                      <td className="text-right">
+                        {action === 'cfxSend' || action === 'cfxReceived' ? (
+                          <Text
+                            hoverValue={`${fromDripToCfx(d.value, true)} CFX`}
+                          >
+                            {fromDripToCfx(d.value, false, {
+                              withUnit: false,
+                              keepDecimal: false,
+                            })}
+                          </Text>
+                        ) : (
+                          <Text
+                            hoverValue={formatNumber(d.value, {
+                              withUnit: false,
+                            })}
+                          >
+                            {formatNumber(d.value, { withUnit: false })}
+                          </Text>
+                        )}
                       </td>
-                      <td>{formatNumber(d.percent)}%</td>
+                      <td className="text-right">
+                        <Text
+                          hoverValue={`${formatNumber(d.percent, {
+                            keepZero: true,
+                          })} %`}
+                        >
+                          {formatNumber(d.percent, { keepZero: true })}%
+                        </Text>
+                      </td>
                     </tr>
                   ))
                 : category === 'token'
@@ -224,7 +257,15 @@ export const StatsCard = ({
                           <AddressContainer value={d.base32address || d.hex} />
                         )}
                       </td>
-                      <td>{d.valueN || '0'}</td>
+                      <td className="text-right">
+                        <Text
+                          hoverValue={formatNumber(d.valueN || '0', {
+                            withUnit: false,
+                          })}
+                        >
+                          {formatNumber(d.valueN || '0', { withUnit: false })}
+                        </Text>
+                      </td>
                     </tr>
                   ))
                 : null}
@@ -271,12 +312,20 @@ const CardWrapper = styled.div`
       color: #9b9eac;
       line-height: 24px;
       padding: 8px;
+      //font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+      p.sirius-text {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
     }
     td {
       color: #23304f;
     }
     tbody tr:nth-child(odd) {
       background: rgba(250, 251, 252, 0.62);
+    }
+    .text-right {
+      text-align: right;
     }
   }
 `;

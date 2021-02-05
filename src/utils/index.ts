@@ -356,6 +356,7 @@ export const convertToValueorFee = bigNumber => {
 export const fromDripToCfx = (
   num: number | string,
   isShowFull: boolean = false,
+  opt = {},
 ) => {
   const bn = new BigNumber(num);
   let result: string = '0';
@@ -367,7 +368,7 @@ export const fromDripToCfx = (
       result =
         divideBn.toNumber() < 0.001
           ? '< 0.001'
-          : formatNumber(divideBn.toNumber());
+          : formatNumber(divideBn.toNumber(), opt);
     }
   }
   return result;
@@ -381,6 +382,7 @@ export const fromDripToCfx = (
 export const fromDripToGdrip = (
   num: number | string,
   isShowFull: boolean = false,
+  opt = {},
 ) => {
   const bn = new BigNumber(num);
   let result: string = '0';
@@ -392,7 +394,7 @@ export const fromDripToGdrip = (
       result =
         divideBn.toNumber() < 0.001
           ? '< 0.001'
-          : formatNumber(divideBn.toNumber());
+          : formatNumber(divideBn.toNumber(), opt);
     }
   }
   return `${result}`;
