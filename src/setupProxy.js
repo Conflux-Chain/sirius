@@ -42,6 +42,20 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // };
 
 module.exports = app => {
+  // temp use for top N
+  app.use(
+    '/stat',
+    createProxyMiddleware({
+      target:
+        process.env.REACT_APP_TestNet === 'true'
+          ? 'https://testnet-scantest.confluxnetwork.org'
+          : 'https://scantest.confluxnetwork.org',
+      // target: 'http://47.242.229.73', // only for dev
+      // target: 'https://testnet.confluxscan.io', // only for dev
+      changeOrigin: true,
+      secure: false,
+    }),
+  );
   app.use(
     '/v1',
     createProxyMiddleware({

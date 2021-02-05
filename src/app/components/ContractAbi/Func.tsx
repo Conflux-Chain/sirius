@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import 'antd/dist/antd.css';
+import '../../../styles/antd.custom.css';
 import { Form } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';

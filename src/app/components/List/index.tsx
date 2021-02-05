@@ -12,9 +12,10 @@ import { Description, DescriptionProps } from '../Description';
 
 interface ListProps {
   list: Array<DescriptionProps | null>;
+  className?: string;
 }
 
-export const List = ({ list }: ListProps) => {
+export const List = ({ list, className }: ListProps) => {
   const bp = useBreakpoint();
   const isS = bp === 's';
 
@@ -39,7 +40,7 @@ export const List = ({ list }: ListProps) => {
 
   return (
     <CardWrap>
-      <Card className="sirius-list-card">
+      <Card className={`sirius-list-card ${className || ''}`}>
         {list.map((item, index) => (
           <Description
             key={`desc_${index}`}
@@ -72,6 +73,14 @@ const CardWrap = styled.div`
         &.list-empty {
           display: none;
         }
+      }
+    }
+  }
+
+  .card.sirius-list-card.staking {
+    .list-desp {
+      .left {
+        width: 12rem;
       }
     }
   }

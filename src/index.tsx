@@ -54,7 +54,7 @@ if (module.hot) {
 
 render(App);
 
-const currentVersion = '2.1.0';
+const currentVersion = '2.1.1';
 
 const brand = `
 ┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ V${currentVersion}

@@ -17,7 +17,7 @@ import {
   StorageStakingCard,
   TokensCard,
 } from './AddressInfoCards';
-import { ContractMetadata, Table } from './Loadable';
+import { AddressMetadata, ContractMetadata, Table } from './Loadable';
 import { Text } from 'app/components/Text';
 import { useContract } from 'utils/api';
 import {
@@ -56,6 +56,7 @@ export const ContractDetailPage = memo(() => {
     'erc20TransferCount',
     'erc721TransferCount',
     'erc1155TransferCount',
+    'stakingBalance',
     'sourceCode',
     'abi',
   ]);
@@ -88,7 +89,9 @@ export const ContractDetailPage = memo(() => {
         <Head key="head">
           <Title>
             {isInnerContractAddress(address)
-              ? t(translations.general.internalContract)
+              ? `${t(translations.general.internalContract)}: ${
+                  contractInfo.name
+                }`
               : t(translations.general.contract)}
           </Title>
           <HeadAddressLine>
@@ -136,6 +139,12 @@ export const ContractDetailPage = memo(() => {
         {/* internal contract hide meta data panel */}
         {isContractAddress(address) && (
           <Middle key="middle">
+            {contractInfo.stakingBalance != null &&
+            contractInfo.stakingBalance !== '0' ? (
+              <StakingWrapper>
+                <AddressMetadata address={address} accountInfo={contractInfo} />
+              </StakingWrapper>
+            ) : null}
             <ContractMetadata address={address} contractInfo={contractInfo} />
           </Middle>
         )}
@@ -146,6 +155,10 @@ export const ContractDetailPage = memo(() => {
     </>
   );
 });
+
+const StakingWrapper = styled.div`
+  margin-bottom: 24px;
+`;
 
 const IconWrapper = styled.span`
   margin-right: 2px;
