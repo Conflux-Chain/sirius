@@ -129,7 +129,8 @@
   "accounts": {
     "title": "账户",
     "description": "账户",
-    "tip": "仅显示 CFX 总余额排名前 100 的账户，默认按照 CFX 总余额降序排序。",
+    "tipLeft": "仅显示 CFX {{type}}排名前",
+    "tipRight": "的账户，默认按照 CFX {{type}}降序排序。",
     "totalBalance": "总余额",
     "stakingBalance": "质押余额",
     "balance": "余额",

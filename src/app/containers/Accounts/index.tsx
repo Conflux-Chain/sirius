@@ -6,15 +6,20 @@ import { TablePanel } from '../../components/TablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TipLabel } from '../../components/TabsTablePanel/Loadable';
 import { PageHeader } from '../../components/PageHeader/Loadable';
-import { accountColunms } from '../../../utils/tableColumns';
+import {
+  accountColunms,
+  utils as tableColumnsUtils,
+} from '../../../utils/tableColumns';
 import styled from 'styled-components/macro';
 import { Select } from '../../components/Select';
-import { toThousands } from 'utils/';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
+const { ContentWrapper } = tableColumnsUtils;
 
 export function Accounts() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language.startsWith('en');
+
   const options = [
     {
       key: 'rank_address_by_total_cfx',
@@ -52,17 +57,15 @@ export function Accounts() {
     }
   }, [queryNumber, number]);
 
-  let columnsWidth = [1, 7, 3, 3, 3];
+  let columnsWidth = [1, 9, 4, 3, 3];
   let columns: ColumnsType = [
     accountColunms.rank,
     accountColunms.address,
     {
       ...accountColunms.balance,
-      title: options[number].name,
+      title: <ContentWrapper right>{options[number].name}</ContentWrapper>,
       dataIndex: options[number].rowKey,
       key: options[number].rowKey,
-      render: value =>
-        value === null ? '--' : `${toThousands(Number(value))} CFX`,
     },
     accountColunms.percentage,
     accountColunms.count,
@@ -72,7 +75,6 @@ export function Accounts() {
   const url = `/stat/top-cfx-holder?type=${options[number].key}&limit=100`;
 
   const handleTypeChange = number => {
-    // setNumber(number);
     history.push(
       queryString.stringifyUrl({
         url: location.pathname,
@@ -91,9 +93,17 @@ export function Accounts() {
       </Helmet>
       <StyledPageWrapper>
         <PageHeader>{title}</PageHeader>
-        <TipLabel total={null} left={t(translations.accounts.tip)} />
+        <TipLabel
+          total={100}
+          left={t(translations.accounts.tipLeft, {
+            type: options[number].name,
+          })}
+          right={t(translations.accounts.tipRight, {
+            type: options[number].name,
+          })}
+        />
         <StyledTableWrapper>
-          <StyledSelectWrapper>
+          <StyledSelectWrapper isEn={isEn}>
             <span className="selectLabel">
               {t(translations.accounts.sortButtonBefore)}
             </span>
@@ -103,6 +113,7 @@ export function Accounts() {
               disableMatchWidth
               size="small"
               className="btnSelectContainer"
+              variant="text"
             >
               {options.map((o, index) => {
                 return (
@@ -139,27 +150,48 @@ const StyledTableWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
 
-const StyledSelectWrapper = styled.div`
-  align-self: flex-end;
+const StyledSelectWrapper = styled.div<{
+  isEn: boolean;
+}>`
   display: flex;
   align-items: center;
-  padding: 20px 20px 0 20px;
+  justify-content: flex-end;
+  padding: 0.8571rem 1.4286rem;
+  position: relative;
+
+  &:after {
+    content: '';
+    border-bottom: 0.0714rem solid #e8e9ea;
+    position: absolute;
+    bottom: 0;
+    left: 1.4286rem;
+    right: 1.4286rem;
+  }
 
   .selectLabel {
-    color: #333;
-
     &:first-child {
-      margin-right: 4px;
+      margin-right: 0.4286rem;
     }
 
     &:last-child {
-      margin-left: 4px;
+      margin-left: ${props => (props.isEn ? '0' : '0.4286rem')};
     }
   }
 
-  .btnSelectContainer {
-    /* margin: 0 4px; */
+  .select.btnSelectContainer .option.selected,
+  .selectLabel {
+    color: #8890a4;
+    font-size: 0.8571rem;
+    font-weight: normal;
+  }
+
+  .select.btnSelectContainer {
+    background: rgba(30, 61, 228, 0.04);
+    &:hover {
+      background: rgba(30, 61, 228, 0.08);
+    }
   }
 `;

@@ -3,6 +3,7 @@ import { Translation } from 'react-i18next';
 import { Link } from '../../app/components/Link/Loadable';
 import { translations } from '../../locales/i18n';
 import { toThousands, formatNumber } from '../../utils/';
+import { ContentWrapper } from './utils';
 
 export const rank = {
   title: (
@@ -10,7 +11,6 @@ export const rank = {
   ),
   dataIndex: 'rank',
   key: 'rank',
-  width: 1,
 };
 
 export const address = {
@@ -19,7 +19,6 @@ export const address = {
   ),
   dataIndex: 'base32address',
   key: 'base32address',
-  width: 1,
   render: (value, row: any) => (
     <Link href={`/address/${value}`}>{row.name || value}</Link>
   ),
@@ -27,29 +26,50 @@ export const address = {
 
 export const balance = {
   title: (
-    <Translation>{t => t(translations.accounts.table.balance)}</Translation>
+    <ContentWrapper right>
+      <Translation>{t => t(translations.accounts.table.balance)}</Translation>
+    </ContentWrapper>
   ),
-  width: 1,
   dataIndex: 'valueN',
   key: 'valueN',
-  render: value =>
-    value === null ? '--' : `${toThousands(Number(value))} CFX`,
+  render: value => (
+    <ContentWrapper right>
+      {value === null
+        ? '--'
+        : `${toThousands(
+            formatNumber(value, { keepDecimal: false, withUnit: false }),
+          )} CFX`}
+    </ContentWrapper>
+  ),
 };
 
 export const percentage = {
   title: (
-    <Translation>{t => t(translations.accounts.table.percentage)}</Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.accounts.table.percentage)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: 'percent',
   key: 'percent',
-  width: 1,
-  render: value => formatNumber(value, { precision: 9, withUnit: false }) + '%',
+  render: value => (
+    <ContentWrapper right>
+      {formatNumber(value, { precision: 3, withUnit: false, keepZero: true }) +
+        '%'}
+    </ContentWrapper>
+  ),
 };
 
 export const count = {
-  title: <Translation>{t => t(translations.accounts.table.count)}</Translation>,
+  title: (
+    <ContentWrapper right>
+      <Translation>{t => t(translations.accounts.table.count)}</Translation>
+    </ContentWrapper>
+  ),
   dataIndex: 'valueN', // txn count key name is valueN
   key: 'valueN',
-  width: 1,
-  render: value => toThousands(Number(value)) || '--',
+  render: value => (
+    <ContentWrapper right>{toThousands(Number(value)) || '--'}</ContentWrapper>
+  ),
 };

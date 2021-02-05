@@ -21,6 +21,7 @@ import {
   abi as stakingAbi,
   bytecode as stakingBytecode,
 } from '../../../utils/contract/staking.json';
+import { Tooltip } from '../../components/Tooltip/Loadable';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -118,8 +119,9 @@ export function AddressMetadata({ address, accountInfo }) {
         list={[
           {
             title: (
-              <Text
-                hoverValue={
+              <Tooltip
+                hoverable
+                text={
                   <>
                     {t(translations.toolTip.address.stakedBegin)}
                     {isTestNetEnv() ? (
@@ -144,7 +146,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 }
               >
                 {t(translations.addressDetail.staked)}
-              </Text>
+              </Tooltip>
             ),
             children: (
               <SkeletonContainer shown={loading} style={skeletonStyle}>
@@ -165,8 +167,9 @@ export function AddressMetadata({ address, accountInfo }) {
           },
           {
             title: (
-              <Text
-                hoverValue={
+              <Tooltip
+                hoverable
+                text={
                   <>
                     {t(translations.toolTip.address.lockedBegin)}
                     {isTestNetEnv() ? (
@@ -191,7 +194,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 }
               >
                 {t(translations.addressDetail.locked)}
-              </Text>
+              </Tooltip>
             ),
             children: (
               <SkeletonContainer
