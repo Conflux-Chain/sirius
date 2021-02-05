@@ -98,39 +98,6 @@ export function Statistics() {
         <PageHeader>{title}</PageHeader>
       </StyledPageHeaderWrapper>
       <TabsWrapper initialValue={statsType} onChange={tabsChange}>
-        <Tabs.Item label={t(translations.statistics.tokens)} value="tokens">
-          <CardWrapper>
-            {spanButtons(span)}
-            <Row gutter={[24, 24]}>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensBySenders}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByReceivers}
-                />
-              </Col>
-            </Row>
-            <Row gutter={[24, 24]}>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByTxnCount}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByTxnAccountsCount}
-                />
-              </Col>
-            </Row>
-          </CardWrapper>
-        </Tabs.Item>
         <Tabs.Item
           label={t(translations.statistics.transactions)}
           value="transactions"
@@ -159,6 +126,39 @@ export function Statistics() {
                 <StatsCard
                   span={span as string}
                   type={StatsType.topTxnCountReceived}
+                />
+              </Col>
+            </Row>
+          </CardWrapper>
+        </Tabs.Item>
+        <Tabs.Item label={t(translations.statistics.tokens)} value="tokens">
+          <CardWrapper>
+            {spanButtons(span)}
+            <Row gutter={[24, 24]}>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topTokensBySenders}
+                />
+              </Col>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topTokensByReceivers}
+                />
+              </Col>
+            </Row>
+            <Row gutter={[24, 24]}>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topTokensByTxnCount}
+                />
+              </Col>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topTokensByTxnAccountsCount}
                 />
               </Col>
             </Row>
