@@ -40,13 +40,18 @@ export function Transfers({
     pageSize: parsedPageSize,
     accountAddress: filterAddr,
     transactionHash: filterHash,
+    tokenId: filterTokenId,
     ...others
   } = queryString.parse(location.search);
   if (!parsedPageSize) {
     parsedPageSize = '10';
   }
 
-  const filter = (filterAddr as string) || (filterHash as string) || '';
+  const filter =
+    (filterAddr as string) ||
+    (filterHash as string) ||
+    (filterTokenId as string) ||
+    '';
 
   const onFilter = (filter: string) => {
     let object: Query = {};

@@ -71,7 +71,11 @@ export const Filter = ({
       return;
     }
 
-    if (!isAddress(value) && !isHash(value) && !_.isInteger(+value)) {
+    if (
+      !isAddress(value) &&
+      !isHash(value) &&
+      !(transferType !== cfxTokenTypes.erc20 && _.isInteger(+value))
+    ) {
       setMessage({
         text: t(translations.token.transferList.searchError),
       });
