@@ -215,6 +215,7 @@
     "address": "addresses",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
+      "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }

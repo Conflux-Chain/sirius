@@ -151,7 +151,7 @@ export const transfer = {
   ),
   dataIndex: `transferCount`,
   key: `transferCount`,
-  render: value => <span>{formatNumber(value)}</span>,
+  render: value => <span>{formatNumber(value, { withUnit: false })}</span>,
 };
 
 export const totalSupply = {

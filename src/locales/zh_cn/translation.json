@@ -215,6 +215,7 @@
     "address": "个地址",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
+      "searchPlaceHolderWithTokenId": "交易哈希值 / 持有人地址 / 代币 ID",
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
     }

@@ -23,6 +23,7 @@ interface TransferProps {
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
+  tokenId?: string;
 }
 
 export function Transfers({
@@ -53,6 +54,8 @@ export function Transfers({
       object.accountAddress = filter;
     } else if (isHash(filter)) {
       object.transactionHash = filter;
+    } else if (transferType !== cfxTokenTypes.erc20) {
+      object.tokenId = filter;
     }
     const urlWithQuery = queryString.stringifyUrl({
       url: location.pathname,
@@ -151,6 +154,7 @@ export function Transfers({
         decimals={decimals}
         symbol={symbol}
         tokenAddress={tokenAddress}
+        transferType={transferType}
         onFilter={onFilter}
         filter={filter}
       />
