@@ -262,9 +262,9 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
-    "tokenTxnsErc20": "Erc20 Token Txns",
-    "tokenTxnsErc721": "Erc721 Token Txns",
-    "tokenTxnsErc1155": "Erc1155 Token Txns",
+    "tokenTxnsErc20": "ERC20 Txns",
+    "tokenTxnsErc721": "ERC721 Txns",
+    "tokenTxnsErc1155": "ERC1155 Txns",
     "table": {
       "noData": "There are no matching entries.",
       "whoops": "Whoops!",
