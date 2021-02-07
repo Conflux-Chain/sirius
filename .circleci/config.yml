@@ -57,7 +57,10 @@ jobs:
             - node_modules
           key: v2-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn run build
+      - run:
+          name: Build Project
+          command: yarn run build
+          no_output_timeout: 30m
       # - persist_to_workspace:
       #     root: .
       #     paths:
