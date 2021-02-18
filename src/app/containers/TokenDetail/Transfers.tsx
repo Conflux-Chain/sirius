@@ -131,6 +131,14 @@ export function Transfers({
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 
+  // holders
+  let holdersColumnsWidth = [8, 6, 4];
+  let holdersColumns = [
+    tokenColunms.address,
+    tokenColunms.balance(decimals),
+    tokenColunms.percentage,
+  ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
+
   const tabs = [
     {
       value: 'transfers',
@@ -151,6 +159,23 @@ export function Transfers({
       },
     },
   ];
+
+  if (
+    transferType === cfxTokenTypes.erc20 ||
+    transferType === cfxTokenTypes.erc721
+  ) {
+    tabs.push({
+      value: 'holders',
+      label: t(translations.token.holders),
+      url: `/token/${tokenAddress}/holder?reverse=true&orderBy=balance`,
+      table: {
+        // @ts-ignore
+        className: 'monospaced',
+        columns: holdersColumns,
+        rowKey: row => `${row.transactionHash}${row.accountAddress}`,
+      },
+    });
+  }
 
   return (
     <TransfersWrap>

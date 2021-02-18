@@ -207,6 +207,7 @@
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
+    "holders": "Holders",
     "price": "Price",
     "change": "Change (%)",
     "volume": "Volume (24H)",
@@ -306,8 +307,10 @@
         "age": "Age",
         "from": "From",
         "to": "To",
+        "accountAddress": "Address",
         "tokenId": "TokenID",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "percentage": "Percentage"
       },
       "contracts": {
         "number": "#",

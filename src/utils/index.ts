@@ -440,7 +440,12 @@ export const formatTimeStamp = (
   return result;
 };
 
-export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
+export const formatBalance = (
+  balance,
+  decimals = 18,
+  isShowFull = false,
+  opt = {},
+) => {
   try {
     if (isShowFull) {
       return toThousands(
@@ -449,6 +454,7 @@ export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
     }
     return formatNumber(
       new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toString(),
+      opt,
     );
   } catch {}
 };

@@ -27,7 +27,6 @@ const ParamInput = ({ value, onChange, type }: Props) => {
   };
   const changeHandler = e => {
     let newVal = e.target.value;
-    console.log(newVal);
     triggerChange({
       val: newVal,
       type: type,

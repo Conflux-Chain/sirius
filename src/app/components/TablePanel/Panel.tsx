@@ -203,6 +203,9 @@ const StyledTableWrapper: any = styled.div`
     .table-content {
       padding: 0 0 1rem;
     }
+    &.monospaced {
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    }
     th.table-cell {
       white-space: nowrap;
       padding: 1.1429rem calc((0.5714rem / 2) * 3);
