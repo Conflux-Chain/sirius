@@ -61,7 +61,7 @@ const Wrapper = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 3.29rem 2.29rem 3.29rem 3.36rem;
+  padding: 2.2857rem;
 
   .footer-bottom-divider.divider {
     background-color: #d1d5ea;

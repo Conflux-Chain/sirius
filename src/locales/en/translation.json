@@ -179,7 +179,8 @@
     "confluxbounty": "Conflux Bounty",
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "Tool",
-    "addressFormatConversion": "Address Format Conversion"
+    "addressFormatConversion": "Address Format Conversion",
+    "preference": "Preference"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",

@@ -252,7 +252,7 @@ const Main = styled.div`
   max-width: 1024px;
   margin: 0 auto;
   padding-top: 70px;
-  min-height: calc(100vh - 298px);
+  min-height: calc(100vh - 327px);
   ${media.s} {
     padding: 100px 16px 16px;
     min-height: calc(100vh - 254px);
