@@ -11,6 +11,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
   font-size: 12px;
   color: #cdcdcd;
   line-height: 1.1429rem;
+  min-width: 40px;
   max-width: 38rem;
 }
 
