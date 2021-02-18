@@ -264,6 +264,7 @@
     "transaction": "交易",
     "transactions": "交易",
     "tokenTxns": "代币交易",
+    "cfxTransfer": "CFX 交易",
     "tokenTxnsErc20": "ERC20 交易",
     "tokenTxnsErc721": "ERC721 交易",
     "tokenTxnsErc1155": "ERC1155 交易",

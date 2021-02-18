@@ -264,6 +264,7 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
+    "cfxTransfer": "CFX Transfers",
     "tokenTxnsErc20": "ERC20 Txns",
     "tokenTxnsErc721": "ERC721 Txns",
     "tokenTxnsErc1155": "ERC1155 Txns",
