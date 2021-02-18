@@ -99,7 +99,7 @@ export function TokenDetail() {
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
-            <Skeleton className="sirius-tokendetail-skeleton"></Skeleton>
+            <Skeleton className="sirius-tokendetail-skeleton" />
           </SkeletonWrap>
         )}
         <Basic

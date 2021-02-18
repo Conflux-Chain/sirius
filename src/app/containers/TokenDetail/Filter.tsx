@@ -106,7 +106,7 @@ export const Filter = ({
         onChange={val => setValue(tranferToLowerCase(val))}
         onClear={onClear}
         val={value}
-      ></SearchComp>
+      />
       {transferType === cfxTokenTypes.erc20 &&
         tokenBalance !== '0' &&
         symbol && (
