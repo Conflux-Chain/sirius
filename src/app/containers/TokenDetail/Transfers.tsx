@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { media } from '../../../styles/media';
@@ -35,17 +35,25 @@ export function Transfers({
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
+  const [showFilter, setShowFilter] = useState(false);
 
   let {
     pageSize: parsedPageSize,
     accountAddress: filterAddr,
     transactionHash: filterHash,
     tokenId: filterTokenId,
+    tab: currentTab,
     ...others
   } = queryString.parse(location.search);
   if (!parsedPageSize) {
     parsedPageSize = '10';
   }
+
+  useEffect(() => {
+    if (currentTab !== 'holders') {
+      setShowFilter(true);
+    }
+  }, [currentTab]);
 
   const filter =
     (filterAddr as string) ||
@@ -177,17 +185,23 @@ export function Transfers({
     });
   }
 
+  const onTabsChange = tab => {
+    setShowFilter(tab !== 'holders');
+  };
+
   return (
     <TransfersWrap>
-      <TabsTablePanel tabs={tabs} />
-      <Filter
-        decimals={decimals}
-        symbol={symbol}
-        tokenAddress={tokenAddress}
-        transferType={transferType}
-        onFilter={onFilter}
-        filter={filter}
-      />
+      <TabsTablePanel tabs={tabs} onTabsChange={onTabsChange} />
+      {showFilter ? (
+        <Filter
+          decimals={decimals}
+          symbol={symbol}
+          tokenAddress={tokenAddress}
+          transferType={transferType}
+          onFilter={onFilter}
+          filter={filter}
+        />
+      ) : null}
     </TransfersWrap>
   );
 }
