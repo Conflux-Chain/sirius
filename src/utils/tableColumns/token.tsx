@@ -359,6 +359,17 @@ export const tokenId = {
   ),
 };
 
+export const traceType = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceType)}
+    </Translation>
+  ),
+  dataIndex: 'type',
+  key: 'type',
+};
+
 export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;

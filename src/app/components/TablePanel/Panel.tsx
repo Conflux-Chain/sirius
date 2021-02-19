@@ -18,6 +18,7 @@ export type TablePanelType = {
   pagination?: PaginationProps | boolean;
   table: TableProps<unknown>;
   hasFilter?: boolean;
+  tableHeader?: React.ReactNode;
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -81,6 +82,7 @@ export const TablePanel = ({
   pagination,
   table,
   hasFilter = false,
+  tableHeader = null,
 }: TablePanelType) => {
   const {
     pageNumber,
@@ -148,6 +150,9 @@ export const TablePanel = ({
     <>
       <StyledTableWrapper hasFilter={hasFilter}>
         <Card>
+          {tableHeader && (
+            <StyledTableHeaderWrapper>{tableHeader}</StyledTableHeaderWrapper>
+          )}
           <Table
             className={clsx('sirius-table', table.className)}
             tableLayout="fixed"
@@ -190,6 +195,11 @@ TablePanel.defaultProps = {
   pagination: defaultPaginationConfig,
   table: defaultTableConfig,
 };
+
+const StyledTableHeaderWrapper = styled.div`
+  padding: 0.7143rem 0;
+  border-bottom: 1px solid #e8e9ea;
+`;
 
 const StyledTableWrapper: any = styled.div`
   .card {
