@@ -87,8 +87,10 @@ const CardWrapper = styled.div`
   width: 100%;
 
   .info {
+    ${media.s} {
+      border-bottom: 1px solid #e8e9ea;
+    }
     > div {
-      padding: 0 10px;
       width: 100%;
       display: flex;
       align-items: center;
@@ -145,6 +147,9 @@ const CardWrapper = styled.div`
     }
 
     &:last-of-type {
+      ${media.s} {
+        border-bottom: none;
+      }
       > div {
         border-right: none;
       }

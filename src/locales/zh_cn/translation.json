@@ -242,7 +242,7 @@
     },
     "cfxPrice": {
       "title": "CFX 价格",
-      "description": "数据提供方：<a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>"
+      "description": "数据提供方：<a href='https://moondex.io/trade/cfxusdt' target='_blank'>MoonDEX</a>"
     },
     "cfxMarketCap": {
       "title": "市值",
