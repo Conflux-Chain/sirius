@@ -15,6 +15,7 @@ import { translations } from 'locales/i18n';
 import imgIconTwitter from 'images/icon-twitter.svg';
 import imgIconGithub from 'images/icon-github.svg';
 import imgIconMedium from 'images/icon-medium.svg';
+import { Language } from './Language';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -86,17 +87,18 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
-      {/* <FooterContentWrapper className="preference">
+      <FooterContentWrapper className="preference">
         <FooterContentTitle>
           {t(translations.footer.preference)}
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink key="1">
+              <Language />
             </FooterContentLink>
           </FooterContentRow>
         </FooterContent>
-      </FooterContentWrapper> */}
+      </FooterContentWrapper>
     </FooterWrapper>,
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];

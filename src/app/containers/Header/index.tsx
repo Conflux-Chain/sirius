@@ -168,7 +168,10 @@ export const Header = memo(() => {
         },
       ],
     },
-    {
+  ];
+
+  if (bp === 'm' || bp === 's') {
+    endLinks.push({
       // switch language
       title: (
         <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
@@ -189,8 +192,8 @@ export const Header = memo(() => {
           isMatchedFn: () => iszh,
         },
       ],
-    },
-  ];
+    });
+  }
 
   const startLinksJSX = genParseLinkFn(startLinks);
   const endLinksJSX = genParseLinkFn(endLinks);
