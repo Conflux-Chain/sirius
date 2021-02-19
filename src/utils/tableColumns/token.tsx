@@ -56,6 +56,7 @@ export const number = (page, pageSize) => ({
   title: (
     <Translation>{t => t(translations.general.table.token.number)}</Translation>
   ),
+  dataIndex: 'epochNumber',
   key: 'epochNumber',
   render: (value, row, index) => {
     return (page - 1) * pageSize + index + 1;
@@ -267,16 +268,18 @@ export const from = {
   render: (value, row) => renderAddress(value, row, 'from'),
 };
 
-export const address = {
+export const account = {
   width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.token.accountAddress)}
     </Translation>
   ),
-  dataIndex: 'accountAddress',
-  key: 'accountAddress',
-  render: value => <AddressContainer value={value} isFull={true} />,
+  dataIndex: 'account',
+  key: 'account',
+  render: value => (
+    <AddressContainer value={value.address} alias={value.name} isFull={true} />
+  ),
 };
 
 export const balance = decimal => ({

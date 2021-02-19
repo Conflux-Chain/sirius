@@ -39,6 +39,16 @@ const IconWrapper = styled.span`
   }
 `;
 
+const FullAddressWrapper = styled.div`
+  position: relative;
+
+  .icon {
+    position: absolute;
+    left: -18px;
+    top: -2px;
+  }
+`;
+
 export const AddressContainer = ({
   value,
   alias,
@@ -56,6 +66,12 @@ export const AddressContainer = ({
     ${media.s} {
       max-width: ${maxWidth || 100}px !important;
     }
+  `;
+
+  const FullLinkWrapper = styled(Link)`
+    display: inline-block !important;
+    max-width: 430px !important;
+    outline: none;
   `;
 
   if (!value) {
@@ -124,12 +140,51 @@ export const AddressContainer = ({
     );
   }
 
-  if (value && isFull) {
-    return <Link href={`/address/${cfxAddress}`}>{cfxAddress}</Link>;
-  }
-
   const isContract = isContractAddress(value);
   const isInternalContract = isInnerContractAddress(value);
+
+  if (value && isFull) {
+    const typeText = t(
+      isInternalContract
+        ? translations.general.internalContract
+        : translations.general.contract,
+    );
+
+    const prefix = () =>
+      isContract ? (
+        <IconWrapper className="icon">
+          <Text span hoverValue={typeText}>
+            {isInternalContract ? (
+              <img src={InternalContractIcon} alt={typeText} />
+            ) : (
+              <img src={ContractIcon} alt={typeText} />
+            )}
+          </Text>
+        </IconWrapper>
+      ) : null;
+
+    if (alias)
+      return (
+        <FullAddressWrapper>
+          {prefix()}
+          <Text span hoverValue={cfxAddress}>
+            <FullLinkWrapper href={`/address/${cfxAddress}`}>
+              {alias}
+            </FullLinkWrapper>
+          </Text>
+        </FullAddressWrapper>
+      );
+    return (
+      <FullAddressWrapper>
+        {prefix()}
+        <Text span hoverValue={cfxAddress}>
+          <FullLinkWrapper href={`/address/${cfxAddress}`}>
+            {cfxAddress}
+          </FullLinkWrapper>
+        </Text>
+      </FullAddressWrapper>
+    );
+  }
 
   if (isContract || isInternalContract) {
     const typeText = t(

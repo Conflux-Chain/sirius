@@ -38,16 +38,14 @@ export function Transfers({
   const [showFilter, setShowFilter] = useState(false);
 
   let {
-    pageSize: parsedPageSize,
+    page = 1,
+    pageSize = 10,
     accountAddress: filterAddr,
     transactionHash: filterHash,
     tokenId: filterTokenId,
     tab: currentTab,
     ...others
   } = queryString.parse(location.search);
-  if (!parsedPageSize) {
-    parsedPageSize = '10';
-  }
 
   useEffect(() => {
     if (currentTab !== 'holders') {
@@ -75,7 +73,7 @@ export function Transfers({
       query: {
         ...others,
         page: '1',
-        pageSize: parsedPageSize as string,
+        pageSize: pageSize as string,
         ...object,
       },
     });
@@ -140,9 +138,10 @@ export function Transfers({
   }
 
   // holders
-  let holdersColumnsWidth = [8, 6, 4];
+  let holdersColumnsWidth = [2, 10, 6, 4];
   let holdersColumns = [
-    tokenColunms.address,
+    tokenColunms.number(page, pageSize),
+    tokenColunms.account,
     tokenColunms.balance(decimals),
     tokenColunms.percentage,
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
@@ -180,7 +179,7 @@ export function Transfers({
         // @ts-ignore
         className: 'monospaced',
         columns: holdersColumns,
-        rowKey: row => `${row.transactionHash}${row.accountAddress}`,
+        rowKey: row => `${row.address}${row.account.address}`,
       },
     });
   }
