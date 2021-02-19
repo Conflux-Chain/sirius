@@ -45,6 +45,7 @@ import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import clsx from 'clsx';
+import { TableCard } from './TableCard';
 
 // Transaction Detail Page
 export const Transaction = () => {
@@ -90,7 +91,7 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(false);
+  const [folded, setFolded] = useState(true);
 
   // get riskLevel
   const getConfirmRisk = async blockHash => {
@@ -272,6 +273,19 @@ export const Transaction = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataType, contractInfo, isAbiError]);
 
+  const fromContent = (isFull = false) => (
+    <span>
+      <AddressContainer value={from} isFull={isFull} />{' '}
+      <CopyButton copyText={formatAddress(from)} />
+    </span>
+  );
+  const toContent = (isFull = false) => (
+    <span>
+      <AddressContainer value={to} isFull={isFull} />{' '}
+      <CopyButton copyText={formatAddress(to)} />
+    </span>
+  );
+
   const generatedDiv = () => {
     if (to) {
       if (isContract) {
@@ -300,8 +314,7 @@ export const Transaction = () => {
                   </Link>{' '}
                 </>
               )}
-              <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={formatAddress(to)} />
+              {toContent(true)}
             </SkeletonContainer>
           </Description>
         );
@@ -315,8 +328,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <AddressContainer value={to} isFull={true} />{' '}
-              <CopyButton copyText={formatAddress(to)} />
+              {toContent(true)}
             </SkeletonContainer>
           </Description>
         );
@@ -714,8 +726,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <AddressContainer value={from} isFull={true} />{' '}
-              <CopyButton copyText={formatAddress(from)} />
+              {fromContent(true)}
             </SkeletonContainer>
           </Description>
           {generatedDiv()}
@@ -887,6 +898,7 @@ export const Transaction = () => {
             </Description>
           </StyledFoldButtonWrapper>
         </Card>
+        <TableCard from={fromContent()} to={toContent()}></TableCard>
       </StyledCardWrapper>
     </StyledTransactionsWrapper>
   );
@@ -902,6 +914,9 @@ const StyledCardWrapper = styled.div`
     .content {
       padding: 0 1.2857rem;
     }
+  }
+  .card.sirius-Transactions-table-card {
+    margin-top: 1.4286rem;
   }
   .logo {
     width: 1.1429rem;

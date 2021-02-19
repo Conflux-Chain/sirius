@@ -207,7 +207,6 @@
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
-    "holders": "Holders",
     "price": "Price",
     "change": "Change (%)",
     "volume": "Volume (24H)",
@@ -311,7 +310,8 @@
         "accountAddress": "Address",
         "tokenId": "TokenID",
         "quantity": "Quantity",
-        "percentage": "Percentage"
+        "percentage": "Percentage",
+        "traceType": "Trace Type"
       },
       "contracts": {
         "number": "#",
@@ -492,6 +492,13 @@
       "5": "Unknown contract error.",
       "6": "Contract deployment failed.",
       "7": "Unknown error."
+    },
+    "internalTxns": "Internal Txns",
+    "internalTxnsTip": {
+      "from": "The contract call from",
+      "to": "to",
+      "produced": "produced",
+      "txns": "internal transactions."
     }
   },
   "block": {
