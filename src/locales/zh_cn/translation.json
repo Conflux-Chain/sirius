@@ -240,6 +240,18 @@
     "hashRate": {
       "title": "哈希算力",
       "description": "矿工每秒计算哈希值的次数"
+    },
+    "cfxPrice": {
+      "title": "CFX 价格",
+      "description": "数据提供方：<a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>"
+    },
+    "cfxMarketCap": {
+      "title": "市值",
+      "description": "市值 = 当前价格  x 流通量"
+    },
+    "cfxCirculatingSupply": {
+      "title": "流通量",
+      "description": "流通量 = 已发行 CFX - 已销毁 CFX"
     }
   },
   "general": {

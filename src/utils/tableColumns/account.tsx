@@ -1,6 +1,5 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { Link } from '../../app/components/Link/Loadable';
 import { translations } from '../../locales/i18n';
 import { toThousands, formatNumber } from '../../utils/';
 import { ContentWrapper } from './utils';

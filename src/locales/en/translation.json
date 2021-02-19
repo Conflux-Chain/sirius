@@ -240,6 +240,18 @@
     "hashRate": {
       "title": "Hash Rate",
       "description": "The number of times a miner calculates hashes per second"
+    },
+    "cfxPrice": {
+      "title": "CFX Price",
+      "description": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>"
+    },
+    "cfxMarketCap": {
+      "title": "Market Cap",
+      "description": "Market Cap = Current Price x Circulating Supply"
+    },
+    "cfxCirculatingSupply": {
+      "title": "Circulating Supply",
+      "description": "Circulating Supply = Created CFX − Burned CFX"
     }
   },
   "general": {
