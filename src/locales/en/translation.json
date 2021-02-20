@@ -569,7 +569,7 @@
     "checksum": "Old checksummed address",
     "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
     "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
-    "newCustomnetAddress": "Conflux custom network id new address (both address types are valid)",
+    "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
     "remark": "Remark:",
     "tip1": "1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.",
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
