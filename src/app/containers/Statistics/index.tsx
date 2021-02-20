@@ -67,6 +67,7 @@ export function Statistics() {
       <SpanButtonsWrapper>
         {timespan.map(v => (
           <span
+            key={v}
             className={`btn ${span === v ? 'active' : ''}`}
             onClick={() => spanChange(v)}
           >
