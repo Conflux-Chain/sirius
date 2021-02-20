@@ -22,13 +22,14 @@ interface RouteParams {
 
 export function Statistics() {
   const { t, i18n } = useTranslation();
-  const iszh = i18n.language.includes('zh');
+  const isZh = i18n.language.includes('zh');
   const { statsType } = useParams<RouteParams>();
   const history = useHistory();
+  const timespan = ['24h', '3d', '7d'];
 
   let { span = '7d' } = queryString.parse(window.location.search);
 
-  if (!['24h', '3d', '7d'].includes(span + '')) span = '7d';
+  if (!timespan.includes(span + '')) span = '7d';
 
   const title = t(translations.statistics.statistics);
 
@@ -43,21 +44,18 @@ export function Statistics() {
     }
   };
   const renderDateRange = span => {
+    const dateFormat = isZh ? 'M月D日' : 'DD MMM';
     let begin = '';
-    let end = '';
-    const dateFormat = iszh ? 'M月D日' : 'DD MMM';
+    let end = dayjs().format(dateFormat);
     switch (span) {
       case '24h':
         begin = dayjs().add(-1, 'day').format(dateFormat);
-        end = dayjs().format(dateFormat);
         break;
       case '3d':
         begin = dayjs().add(-3, 'day').format(dateFormat);
-        end = dayjs().format(dateFormat);
         break;
       case '7d':
         begin = dayjs().add(-7, 'day').format(dateFormat);
-        end = dayjs().format(dateFormat);
         break;
       default:
         break;
@@ -67,24 +65,14 @@ export function Statistics() {
   const spanButtons = span => {
     return (
       <SpanButtonsWrapper>
-        <span
-          className={`btn ${span === '24h' ? 'active' : ''}`}
-          onClick={() => spanChange('24h')}
-        >
-          {t(translations.statistics.span['24h'])}
-        </span>
-        <span
-          className={`btn ${span === '3d' ? 'active' : ''}`}
-          onClick={() => spanChange('3d')}
-        >
-          {t(translations.statistics.span['3d'])}
-        </span>
-        <span
-          className={`btn ${span === '7d' ? 'active' : ''}`}
-          onClick={() => spanChange('7d')}
-        >
-          {t(translations.statistics.span['7d'])}
-        </span>
+        {timespan.map(v => (
+          <span
+            className={`btn ${span === v ? 'active' : ''}`}
+            onClick={() => spanChange(v)}
+          >
+            {t(translations.statistics.span[v])}
+          </span>
+        ))}
         <span className="date">{renderDateRange(span)}</span>
       </SpanButtonsWrapper>
     );
