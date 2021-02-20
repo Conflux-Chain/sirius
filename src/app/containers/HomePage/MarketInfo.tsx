@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
+import { useTranslation } from 'react-i18next';
 import { Card } from '../../components/Card/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import Balance from '../../../images/contract-address/balance.svg';
 import { translations } from '../../../locales/i18n';
-import { useTranslation } from 'react-i18next';
 import { media } from '../../../styles/media';
 import { reqCfxSupply } from '../../../utils/httpRequest';
 import { formatBalance, formatNumber } from '../../../utils';
+import Balance from '../../../images/contract-address/balance.svg';
 
 function Info(icon, title, tooltip, number) {
   return (
@@ -48,7 +48,7 @@ export function MarketInfo() {
   }, []);
 
   // TODO icon
-  return marketInfo.totalCirculating ? (
+  return marketInfo.totalCirculating != null ? (
     <CardWrapper>
       <Card>
         <Grid.Container gap={3} justify="center">

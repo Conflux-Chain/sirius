@@ -21,7 +21,8 @@ interface RouteParams {
 }
 
 export function Statistics() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const iszh = i18n.language.includes('zh');
   const { statsType } = useParams<RouteParams>();
   const history = useHistory();
 
@@ -44,18 +45,19 @@ export function Statistics() {
   const renderDateRange = span => {
     let begin = '';
     let end = '';
+    const dateFormat = iszh ? 'M月D日' : 'DD MMM';
     switch (span) {
       case '24h':
-        begin = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-        end = dayjs().format('YYYY-MM-DD');
+        begin = dayjs().add(-1, 'day').format(dateFormat);
+        end = dayjs().format(dateFormat);
         break;
       case '3d':
-        begin = dayjs().add(-3, 'day').format('YYYY-MM-DD');
-        end = dayjs().format('YYYY-MM-DD');
+        begin = dayjs().add(-3, 'day').format(dateFormat);
+        end = dayjs().format(dateFormat);
         break;
       case '7d':
-        begin = dayjs().add(-7, 'day').format('YYYY-MM-DD');
-        end = dayjs().format('YYYY-MM-DD');
+        begin = dayjs().add(-7, 'day').format(dateFormat);
+        end = dayjs().format(dateFormat);
         break;
       default:
         break;
