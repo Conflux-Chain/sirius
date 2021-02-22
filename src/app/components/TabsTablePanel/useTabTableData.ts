@@ -70,6 +70,8 @@ export const useTabTableData = tabs => {
             tab: value,
           };
         }
+        // TODO use window.history.pushState instead of history.push
+        //      to avoid the unnecessary requests after tab change
         history.push(
           queryString.stringifyUrl({
             url: location.pathname,
