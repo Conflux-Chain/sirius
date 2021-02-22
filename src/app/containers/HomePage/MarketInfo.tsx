@@ -8,7 +8,9 @@ import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { reqCfxSupply } from '../../../utils/httpRequest';
 import { formatBalance, formatNumber } from '../../../utils';
-import Balance from '../../../images/contract-address/balance.svg';
+import priceIcon from '../../../images/home/price.svg';
+import marketCapIcon from '../../../images/home/marketCap.svg';
+import circulatingMarketCap from '../../../images/home/circulatingMarketCap.svg';
 
 function Info(icon, title, tooltip, number) {
   return (
@@ -53,13 +55,13 @@ export function MarketInfo() {
       <Card>
         <Grid.Container gap={3} justify="center">
           {Info(
-            Balance,
+            priceIcon,
             t(translations.charts.cfxPrice.title),
             t(translations.charts.cfxPrice.description),
             `$${marketInfo.price || 0}`,
           )}
           {Info(
-            Balance,
+            marketCapIcon,
             t(translations.charts.cfxMarketCap.title),
             t(translations.charts.cfxMarketCap.description),
             `$${formatNumber(marketInfo.totalPrice, {
@@ -68,7 +70,7 @@ export function MarketInfo() {
             })}`,
           )}
           {Info(
-            Balance,
+            circulatingMarketCap,
             t(translations.charts.cfxCirculatingSupply.title),
             t(translations.charts.cfxCirculatingSupply.description),
             `${formatBalance(marketInfo.totalCirculating, 18, false, {
@@ -110,8 +112,8 @@ const CardWrapper = styled.div`
         background-color: rgba(138, 130, 255, 0.06);
 
         img {
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
         }
       }
 
