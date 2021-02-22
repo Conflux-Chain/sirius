@@ -11,6 +11,8 @@ import {
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';
+import { toThousands } from '../../../utils';
+import styled from 'styled-components/macro';
 
 export function BlocksAndTransactions() {
   const { t } = useTranslation();
@@ -62,6 +64,23 @@ export function BlocksAndTransactions() {
   ];
 
   const { currentTabTotal, currentTabValue } = useTabTableData(tabs);
+
+  if (tabs.find(v => v.value === currentTabValue)) {
+    tabs.find(v => v.value === currentTabValue)!['tableHeader'] = (
+      <StyledTipLabelWrapper>
+        {t(translations.blocksAndTransactions.tipCountBefore)}
+        {currentTabTotal !== null && (
+          <StyledSpan>{toThousands(currentTabTotal)}</StyledSpan>
+        )}
+        {t(translations.blocksAndTransactions.tipCountAfter, {
+          type: t(
+            translations.blocksAndTransactions[currentTabValue],
+          ).toLowerCase(),
+        })}
+      </StyledTipLabelWrapper>
+    );
+  }
+
   return (
     <>
       <Helmet>
@@ -72,17 +91,25 @@ export function BlocksAndTransactions() {
         />
       </Helmet>
       {bp !== 's' && <Dag />}
-      <TipLabel
-        total={currentTabTotal}
-        left={t(translations.blocksAndTransactions.tipCountBefore)}
-        right={t(translations.blocksAndTransactions.tipCountAfter, {
-          type: t(
-            translations.blocksAndTransactions[currentTabValue],
-          ).toLowerCase(),
-        })}
-        key={currentTabValue}
-      />
-      <TabsTablePanel tabs={tabs} />
+      <TabsTablePanelWrapper>
+        <TabsTablePanel tabs={tabs} />
+      </TabsTablePanelWrapper>
     </>
   );
 }
+
+const TabsTablePanelWrapper = styled.div`
+  margin-top: 1.2rem;
+`;
+
+const StyledTipLabelWrapper = styled.div`
+  font-size: 1rem;
+  font-weight: 400;
+  color: #74798c;
+  margin: 0.5rem 0;
+`;
+
+const StyledSpan = styled.span`
+  color: #1e3de4;
+  padding: 0 0.4286rem;
+`;
