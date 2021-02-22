@@ -202,11 +202,6 @@ export function App() {
                 />
                 <Route
                   exact
-                  path={['/address-converter', '/address-converter/:address']}
-                  component={AddressConverter}
-                />
-                <Route
-                  exact
                   path="/transaction/:hash"
                   component={Transaction}
                 />
@@ -234,6 +229,13 @@ export function App() {
                   }}
                 />
                 <Route path="/search/:text" component={Search} />
+                {/* Tools */}
+                <Route
+                  exact
+                  path={['/address-converter', '/address-converter/:address']}
+                  component={AddressConverter}
+                />
+                <Route exact path="/push-tx" component={AddressConverter} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>

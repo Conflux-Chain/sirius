@@ -164,13 +164,15 @@
     "contractSponsor": "赞助合约",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
+    "more": "更多",
     "charts": "图表",
     "statistics": "最佳统计数据",
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
     "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址",
-    "addressConverter": "地址转换"
+    "addressConverter": "地址格式转换",
+    "broadcastTx": "广播交易"
   },
   "footer": {
     "product": "产品",

@@ -81,6 +81,11 @@ const Brand = styled.div`
   align-items: stretch;
   flex-shrink: 0;
   margin-right: 4rem;
+
+  @media (max-width: 1300px) {
+    margin-right: 2rem;
+  }
+
   .navbar-burger {
     color: #4c4d52;
     display: none;

@@ -164,13 +164,15 @@
     "contractSponsor": "Contract Sponsor",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
+    "more": "More",
     "charts": "Charts",
     "statistics": "Top Statistics",
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
     "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
-    "addressConverter": "address converter"
+    "addressConverter": "Address Format Conversion",
+    "broadcastTx": "Broadcast Transaction"
   },
   "footer": {
     "product": "Product",

@@ -34,6 +34,9 @@ export const Header = memo(() => {
   const statisticsMatched =
     location?.pathname?.startsWith('/charts') ||
     location?.pathname?.startsWith('/statistics');
+  const moreMatched =
+    location?.pathname?.startsWith('/address-converter') ||
+    location?.pathname?.startsWith('/push-tx');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -136,6 +139,27 @@ export const Header = memo(() => {
           ],
           href: '/statistics',
           isMatchedFn: () => !!location?.pathname?.startsWith('/statistics'),
+        },
+      ],
+    },
+    // more
+    {
+      title: t(translations.header.more),
+      matched: moreMatched,
+      children: [
+        {
+          title: [
+            t(translations.header.addressConverter),
+            <Check size={18} key="check" />,
+          ],
+          href: '/address-converter',
+        },
+        {
+          title: [
+            t(translations.header.broadcastTx),
+            <Check size={18} key="check" />,
+          ],
+          href: '/push-tx',
         },
       ],
     },
