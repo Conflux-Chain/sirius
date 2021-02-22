@@ -141,6 +141,12 @@ exports[`<Nav  /> should match snapshot 1`] = `
   }
 }
 
+@media (max-width:1300px) {
+  .c2 {
+    margin-right: 2rem;
+  }
+}
+
 @media (max-width:1024px) {
   .c2 {
     margin-right: 0;
@@ -454,6 +460,12 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
 @media (max-width:1024px) {
   .c3 {
     min-height: 2.14rem;
+  }
+}
+
+@media (max-width:1300px) {
+  .c2 {
+    margin-right: 2rem;
   }
 }
 
