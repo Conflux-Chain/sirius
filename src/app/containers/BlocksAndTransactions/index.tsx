@@ -1,13 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
-import {
-  TabsTablePanel,
-  TipLabel,
-} from '../../components/TabsTablePanel/Loadable';
+import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';
@@ -100,6 +97,9 @@ export function BlocksAndTransactions() {
 
 const TabsTablePanelWrapper = styled.div`
   margin-top: 1.2rem;
+  ${media.s} {
+    margin-top: 2.2rem;
+  }
 `;
 
 const StyledTipLabelWrapper = styled.div`
