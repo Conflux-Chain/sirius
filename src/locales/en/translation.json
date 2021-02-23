@@ -580,6 +580,14 @@
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37."
   },
+  "broadcastTx": {
+    "title": "Broadcast Transaction",
+    "subtitle": "Below you can enter a signed raw transaction in hex format (0x...) and broadcast it to the Conflux network.",
+    "broadcastBtn": "Broadcast",
+    "success": "Broadcast Succeed",
+    "error": "Error: ",
+    "unknownError": "Unable to broadcast transaction"
+  },
   "notice": {
     "mainnet": [
       "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",

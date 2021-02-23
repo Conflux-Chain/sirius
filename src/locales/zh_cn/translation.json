@@ -580,6 +580,14 @@
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37。"
   },
+  "broadcastTx": {
+    "title": "广播交易",
+    "subtitle": "您可以在下方输入六进制格式的已签名原始交易（0x...）并将其在 Conflux 网络上广播。",
+    "broadcastBtn": "广播",
+    "success": "广播成功",
+    "error": "错误：",
+    "unknownError": "无法广播交易"
+  },
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
