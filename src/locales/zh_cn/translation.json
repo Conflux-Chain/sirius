@@ -708,14 +708,18 @@
       "sponsorApplication": "赞助申请",
       "writeContract": "写入合约",
       "viewYourTranscation": "查看您的交易"
+    },
+    "notify": {
+      "link": "在 ConfluxScan 上查看",
+      "action": {
+        "100": "交易结果",
+        "101": "合约创建",
+        "102": "合约编辑",
+        "103": "写合约",
+        "104": "读合约",
+        "105": "Sponsor 应用"
+      }
     }
-  },
-  "txnAction": {
-    "10001": "合约创建",
-    "10002": "合约编辑",
-    "10003": "写合约",
-    "10004": "读合约",
-    "10005": "Sponsor 应用"
   },
   "statistics": {
     "statistics": "最佳统计",

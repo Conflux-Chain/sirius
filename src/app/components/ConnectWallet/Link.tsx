@@ -21,8 +21,14 @@ export const Link = ({
         className="link-anchor"
         rel="noopener noreferrer"
       >
-        <span className="link-text">{children}</span>
-        <img src={iconArrow} alt="link arrow icon"></img>
+        <span className="link-text">
+          {children}{' '}
+          <img
+            src={iconArrow}
+            alt="link arrow icon"
+            className="link-arrow"
+          ></img>
+        </span>
       </a>
     </LinkWrapper>
   );
@@ -36,5 +42,9 @@ const LinkWrapper = styled.span`
   .link-text {
     display: inline-block;
     margin-right: 0.2857rem;
+  }
+
+  .link-arrow {
+    margin-top: -0.1429rem;
   }
 `;

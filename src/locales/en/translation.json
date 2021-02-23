@@ -708,14 +708,18 @@
       "sponsorApplication": "Sponsor application",
       "writeContract": "Write contract",
       "viewYourTranscation": "View your transcation"
+    },
+    "notify": {
+      "link": "View on ConfluxScan",
+      "action": {
+        "100": "Transaction Status",
+        "101": "Contract Write",
+        "102": "Contract Edit",
+        "103": "Write contract",
+        "104": "read contract",
+        "105": "Sponsor application"
+      }
     }
-  },
-  "txnAction": {
-    "10001": "Contract creation",
-    "10002": "Contract edit",
-    "10003": "Write contract",
-    "10004": "read contract",
-    "10005": "Sponsor application"
   },
   "statistics": {
     "statistics": "Top Statistics",

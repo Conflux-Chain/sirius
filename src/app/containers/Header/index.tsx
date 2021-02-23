@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { TextLogo } from '../../components/TextLogo';
 import { Search } from './Search';
-// import { ConnectWallet } from '../../components/ConnectWallet';
+import { ConnectWallet } from '../../components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
@@ -250,7 +250,7 @@ export const Header = memo(() => {
     bp !== 'm' && bp !== 's' && (
       <>
         <Search />
-        {/* <ConnectWallet /> */}
+        <ConnectWallet />
       </>
     ),
     endLinksJSX,
