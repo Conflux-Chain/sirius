@@ -40,6 +40,7 @@ const IconWrapper = styled.span`
 `;
 
 const FullAddressWrapper = styled.div`
+  display: inline-block;
   position: relative;
 
   .icon {
