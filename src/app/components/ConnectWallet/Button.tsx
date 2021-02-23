@@ -83,8 +83,8 @@ const ButtonWrapper = styled.div`
 
   &:not(.pending):hover {
     /* background: rgba(100%, 87%, 11%, 70%); */
-    background: #65709a;
-    color: #ffffff;
+    /* color: #ffffff; */
+    background: rgba(100%, 87%, 11%, 70%);
   }
 
   .button-status-online {

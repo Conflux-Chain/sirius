@@ -11,7 +11,9 @@ import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from '../../../utils/cfx';
+import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -26,6 +28,7 @@ interface DappButtonProps {
   closeModalCallback?: () => void;
   shownAddress?: boolean;
   htmlType?: React.ButtonHTMLAttributes<any>['type'];
+  txnAction?: number | string;
 }
 type NativeAttrs = Omit<React.ButtonHTMLAttributes<any>, keyof ButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
@@ -41,8 +44,10 @@ const DappButton = ({
   failCallback,
   closeModalCallback,
   shownAddress,
+  txnAction = TxnAction.default,
   ...props
 }: Props) => {
+  const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // TODO cip-37 portal multi version
   const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
@@ -70,9 +75,21 @@ const DappButton = ({
           //loading
           setModalType('loading');
           setModalShown(true);
+
           confluxJS
             .sendTransaction(txParams)
             .then(txHash => {
+              addRecord({
+                hash: txHash,
+                info: JSON.stringify({
+                  code: txnAction,
+                  description: t(
+                    translations.connectWallet.notify.action[txnAction],
+                  ),
+                  hash: txHash,
+                }),
+              });
+
               //success alert
               successCallback && successCallback(txHash);
               setModalType('success');

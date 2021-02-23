@@ -30,3 +30,13 @@ export const governanceAddressMainnet =
 export const governanceAddress = isTestNetEnv()
   ? governanceAddressTestnet
   : governanceAddressMainnet;
+
+// same as connectWallet.notify.action in i18n file
+export enum TxnAction {
+  default = 100,
+  contractWrite = 101,
+  contractEdit = 102,
+  writeContract = 103,
+  readContract = 104,
+  sponsorApplication = 105,
+}

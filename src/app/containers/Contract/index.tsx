@@ -37,13 +37,9 @@ export function Contract(props) {
     if (isContractAddress(contractAddress)) {
       setLoading(true);
       if (data && data.name) {
-        setLoading(false);
         setContractDetail(data);
         setType('edit');
-      } else {
-        setLoading(false);
       }
-    } else {
       setLoading(false);
     }
   }, [data, contractAddress]);

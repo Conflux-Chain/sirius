@@ -1,5 +1,9 @@
 import React, { useEffect, createContext, useContext } from 'react';
 import { useGetTxnStatus } from './useGetTxnStatus';
+import { usePortal } from './usePortal';
+import pubsub from '../pubsub';
+
+const noop = () => {};
 
 const txnHistoryStore = {
   setItem: (key, data) => {
@@ -61,7 +65,7 @@ export const TxnHistoryContext = createContext<{
 }>({
   config: {},
   pendingRecords: [],
-  updatePendingRecords: () => {},
+  updatePendingRecords: noop,
 });
 
 // txn history context providor wrapper, with default config and state handler
@@ -99,6 +103,8 @@ Notes:
  */
 
 export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
+  const { installed } = usePortal();
+
   const config = {
     ...DEFAULT_CONTEXT_CONFIG,
     ...opts,
@@ -153,17 +159,22 @@ export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
     timestamp,
     info,
   }: Pick<Record, 'hash'> & Partial<Omit<Record, 'hash'>>) {
+    if (!hash) {
+      return;
+    }
     // @ts-ignore
     let records: Array<Record> = getRecords({
       limit: config.maxCount,
     });
     if (!records.some(r => r.hash === hash)) {
-      const newRecords = records.concat({
-        hash: hash,
-        status: status === undefined ? null : status,
-        timestamp: timestamp || getNowTimestamp(),
-        info: info || '',
-      });
+      const newRecords = [
+        {
+          hash: hash,
+          status: status === undefined ? null : status,
+          timestamp: timestamp || getNowTimestamp(),
+          info: info || '',
+        },
+      ].concat(records);
       txnHistoryStore.setItem(config.localstorageKey, newRecords);
       initPendingRecords();
     }
@@ -199,6 +210,15 @@ export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
     });
     const newRecords = records.map(r => {
       if (status[r.hash] !== undefined) {
+        if (status[r.hash] !== null && r.status !== status[r.hash]) {
+          pubsub.publish('notify', {
+            type: 'wallet',
+            option: {
+              info: r.info,
+              status: status[r.hash],
+            },
+          });
+        }
         r.status = status[r.hash];
       }
       return r;
@@ -227,10 +247,19 @@ export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  return {
-    addRecord,
-    getRecords,
-    removeRecords,
-    clearRecords,
-  };
+  if (!installed) {
+    return {
+      addRecord: noop,
+      getRecords: () => [],
+      removeRecords: noop,
+      clearRecords: noop,
+    };
+  } else {
+    return {
+      addRecord,
+      getRecords,
+      removeRecords,
+      clearRecords,
+    };
+  }
 };

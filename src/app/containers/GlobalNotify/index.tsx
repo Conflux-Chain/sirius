@@ -6,7 +6,21 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import pubsubLib from 'utils/pubsub';
 import { useNotifications } from '@cfxjs/react-ui';
+import { Notification } from '@cfxjs/react-ui/dist/use-notifications/use-notifications';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
+import CheckInCircleFill from '@zeit-ui/react-icons/checkInCircleFill';
+import InfoFill from '@zeit-ui/react-icons/infoFill';
+import styled from 'styled-components/macro';
+
+enum Status {
+  success,
+  error,
+}
+interface Props extends Partial<Notification> {
+  type: string; // one of [request, wallet]
+  repeat?: boolean; // if trigger again of same code for multiple times
+  option?: any; // custom option
+}
 
 export function GlobalNotify() {
   const { t } = useTranslation();
@@ -16,20 +30,59 @@ export function GlobalNotify() {
   useEffect(() => {
     const unsubscribe = pubsubLib.subscribe(
       'notify',
-      ({ code, message }: { code: number; message?: string }) => {
+      ({ type, repeat = false, option = {} }: Props) => {
         // only notify once of same code error
-        if (!codes.current[code]) {
-          const title = t(translations.general.error.title);
-          const description =
-            t(translations.general.error.description[code]) ||
-            message ||
-            t(translations.general.error.description[20000]);
+        if (!repeat && codes.current[option.code]) {
+          return;
+        } else {
+          let icon = <InfoFill color="#ccc" />;
+          let title: React.ReactNode = '';
+          let content: React.ReactNode = '';
+          let delay: number = 0;
+          let code = Math.random().toString(32).substr(2);
+
+          if (type === 'request') {
+            icon = <XCircleFill color="#e15c56" />;
+            title = t(translations.general.error.title);
+            content =
+              t(translations.general.error.description[option.code]) ||
+              option.message ||
+              t(translations.general.error.description[20000]);
+            code = option.code;
+          } else if (type === 'wallet') {
+            let info: any = {};
+            try {
+              info = JSON.parse(option.info);
+            } catch (e) {}
+            if (option.status === Status.error) {
+              icon = <XCircleFill color="#e15c56" />;
+            } else if (option.status === Status.success) {
+              icon = <CheckInCircleFill color="#7cd77b" />;
+            }
+            title = t(
+              translations.connectWallet.notify.action[info.code || '100'],
+            );
+            content = (
+              <LinkWrapper>
+                <a
+                  href={`/transaction/${info.hash}`}
+                  target="_blank"
+                  className="link-anchor"
+                  rel="noopener noreferrer"
+                >
+                  {t(translations.connectWallet.notify.link)}
+                </a>
+              </LinkWrapper>
+            );
+            delay = 3000;
+            code = option.hash;
+          }
 
           setNotifications({
-            icon: <XCircleFill color="#e15c56" />,
-            title,
-            content: description,
-            delay: 0,
+            icon: icon,
+            title: title,
+            content: content,
+            delay: delay,
             onClose: () => {
               codes.current[code] = false;
             },
@@ -47,3 +100,9 @@ export function GlobalNotify() {
 
   return null;
 }
+
+const LinkWrapper = styled.span`
+  .link-anchor {
+    color: #0e47ef;
+  }
+`;

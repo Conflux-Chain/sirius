@@ -60,7 +60,12 @@ export function App() {
       value={{
         config: {
           // txn history record i18n handler
-          convert: info => t(translations.txnAction[info]),
+          convert: info => {
+            try {
+              let data = JSON.parse(info);
+              return t(translations.connectWallet.notify.action[data.code]);
+            } catch (e) {}
+          },
         },
       }}
     >
