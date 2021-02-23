@@ -42,6 +42,8 @@ import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
 import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
+import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
+import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -235,7 +237,12 @@ export function App() {
                   path={['/address-converter', '/address-converter/:address']}
                   component={AddressConverter}
                 />
-                <Route exact path="/push-tx" component={AddressConverter} />
+                <Route exact path="/push-tx" component={BroadcastTx} />
+                <Route
+                  exact
+                  path="/block-countdown"
+                  component={BlocknumberCalc}
+                />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>

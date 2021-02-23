@@ -36,7 +36,8 @@ export const Header = memo(() => {
     location?.pathname?.startsWith('/statistics');
   const moreMatched =
     location?.pathname?.startsWith('/address-converter') ||
-    location?.pathname?.startsWith('/push-tx');
+    location?.pathname?.startsWith('/push-tx') ||
+    location?.pathname?.startsWith('/block-countdown');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -160,6 +161,13 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           href: '/push-tx',
+        },
+        {
+          title: [
+            t(translations.header.blocknumberCalc),
+            <Check size={18} key="check" />,
+          ],
+          href: '/block-countdown',
         },
       ],
     },

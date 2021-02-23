@@ -172,7 +172,8 @@
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
     "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
     "addressConverter": "Address Format Conversion",
-    "broadcastTx": "Broadcast Transaction"
+    "broadcastTx": "Broadcast Transaction",
+    "blocknumberCalc": "Blocknumber Calculator"
   },
   "footer": {
     "product": "Product",
