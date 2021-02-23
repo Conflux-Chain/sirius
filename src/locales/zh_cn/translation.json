@@ -183,6 +183,8 @@
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "工具",
     "addressFormatConversion": "地址格式转换",
+    "broadcastTx": "广播交易",
+    "blocknumberCalc": "区块计算器",
     "preference": "偏好设置"
   },
   "packing": {

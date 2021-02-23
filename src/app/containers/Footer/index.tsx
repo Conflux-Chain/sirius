@@ -42,6 +42,16 @@ export function Footer() {
       {t(translations.footer.addressFormatConversion)}
     </Link>
   );
+  const broadcastTxLink = (
+    <Link className="footer-link" href="/push-tx">
+      {t(translations.footer.broadcastTx)}
+    </Link>
+  );
+  const blocknumberCalcLink = (
+    <Link className="footer-link" href="/block-countdown">
+      {t(translations.footer.blocknumberCalc)}
+    </Link>
+  );
 
   const icons = (
     <FooterContentIconWrapper>
@@ -71,9 +81,9 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1">{websiteLink}</FooterContentLink>
-            <FooterContentLink key="2">{portalLink}</FooterContentLink>
-            <FooterContentLink key="3">{bountyLink}</FooterContentLink>
+            <FooterContentLink key="1-1">{websiteLink}</FooterContentLink>
+            <FooterContentLink key="1-2">{portalLink}</FooterContentLink>
+            <FooterContentLink key="1-3">{bountyLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -81,8 +91,12 @@ export function Footer() {
         <FooterContentTitle>{t(translations.footer.tool)}</FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1">
+            <FooterContentLink key="2-1">
               {addressConverterLink}
+            </FooterContentLink>
+            <FooterContentLink key="2-2">{broadcastTxLink}</FooterContentLink>
+            <FooterContentLink key="2-3">
+              {blocknumberCalcLink}
             </FooterContentLink>
           </FooterContentRow>
         </FooterContent>
@@ -93,7 +107,7 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1">
+            <FooterContentLink key="3-1">
               <Language />
             </FooterContentLink>
           </FooterContentRow>

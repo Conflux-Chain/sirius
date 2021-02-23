@@ -183,6 +183,8 @@
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "Tool",
     "addressFormatConversion": "Address Format Conversion",
+    "broadcastTx": "Broadcast Transaction",
+    "blocknumberCalc": "Blocknumber Calculator",
     "preference": "Preference"
   },
   "packing": {
