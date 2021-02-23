@@ -59,22 +59,6 @@ export const AddressContainer = ({
 }: Props) => {
   const { t } = useTranslation();
 
-  const LinkWrapper = styled(Link)`
-    display: inline-block !important;
-    max-width: ${maxWidth || 130}px !important;
-    outline: none;
-
-    ${media.s} {
-      max-width: ${maxWidth || 100}px !important;
-    }
-  `;
-
-  const FullLinkWrapper = styled(Link)`
-    display: inline-block !important;
-    max-width: 430px !important;
-    outline: none;
-  `;
-
   if (!value) {
     // contract creation txn to prop is null
     if (contractCreated)
@@ -133,7 +117,7 @@ export const AddressContainer = ({
           </Text>
         </IconWrapper>
         <Text span hoverValue={`${tip}: ${sourceValue}`}>
-          <LinkWrapper style={{ color: '#e00909' }}>
+          <LinkWrapper style={{ color: '#e00909' }} maxwidth={maxWidth}>
             {alias ? formatString(alias, 'tag') : sourceValue}
           </LinkWrapper>
         </Text>
@@ -205,7 +189,7 @@ export const AddressContainer = ({
           </Text>
         </IconWrapper>
         <Text span hoverValue={cfxAddress}>
-          <LinkWrapper href={`/address/${cfxAddress}`}>
+          <LinkWrapper href={`/address/${cfxAddress}`} maxwidth={maxWidth}>
             {alias ? formatString(alias, 'tag') : cfxAddress}
           </LinkWrapper>
         </Text>
@@ -215,7 +199,27 @@ export const AddressContainer = ({
 
   return (
     <Text span hoverValue={cfxAddress}>
-      <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
+      <LinkWrapper href={`/address/${cfxAddress}`} maxwidth={maxWidth}>
+        {cfxAddress}
+      </LinkWrapper>
     </Text>
   );
 };
+
+const LinkWrapper = styled(Link)<{
+  maxwidth?: number;
+}>`
+  display: inline-block !important;
+  max-width: ${props => `${props.maxwidth || 130}px !important`};
+  outline: none;
+
+  ${media.s} {
+    max-width: ${props => `${props.maxwidth || 100}px !important`};
+  }
+`;
+
+const FullLinkWrapper = styled(Link)`
+  display: inline-block !important;
+  max-width: 430px !important;
+  outline: none;
+`;
