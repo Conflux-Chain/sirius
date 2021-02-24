@@ -17,7 +17,7 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const { installed, connected } = usePortal();
 
-  const handleClick = e => {
+  const handleClick = () => {
     if (profile || !installed || connected === 0) {
       setShowModal(true);
     }

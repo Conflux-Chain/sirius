@@ -20,9 +20,12 @@ import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from '../../components/AddressContainer';
+import { TxnAction } from '../../../utils/constants';
+
 interface RouteParams {
   contractAddress: string;
 }
+
 const defaultStr = '--';
 const errReachToMax = 'errReachToMax';
 const errInsufficientFee = 'errInsufficientFee';
@@ -444,6 +447,7 @@ export function Sponsor() {
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
+            txnAction={TxnAction.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
 
