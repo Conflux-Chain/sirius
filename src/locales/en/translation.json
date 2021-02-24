@@ -36,7 +36,7 @@
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
-    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
     "importJsonFile": "Import Json file(s)",
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
@@ -433,7 +433,7 @@
         "504": "Gateway Timeout."
       }
     },
-    "connnectWalletSubmit": "Connect wallet to submit",
+    "connnectWalletSubmit": "Submit",
     "waitForConfirm": "Waiting For Confirmation",
     "txRejected": "Transaction Rejected",
     "exportRecords": "Export Current Records"
@@ -448,7 +448,7 @@
     "providedGas": "Gas Fees Provided By Conflux Foundation",
     "availStorage": "Remaining Storage Fees By Conflux Foundation",
     "availGas": "Remaining Gas Fees By Conflux Foundation",
-    "connectToApply": "Connect wallet to apply",
+    "connectToApply": "Apply",
     "notice": "Remark",
     "noticeFirst": "Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
     "noticeSecond": "To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",

@@ -34,7 +34,7 @@ export function BlocknumberCalc() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleCalc = useCallback(() => {
+  const handleCalc = () => {
     if (blocknumber && parseInt(blocknumber) > +currentBlocknumber) {
       setLoading(true);
       governanceContract
@@ -58,7 +58,7 @@ export function BlocknumberCalc() {
       setError(t(translations.blocknumberCalc.higherError));
       setSeconds(null);
     }
-  });
+  };
 
   const handleBlocknumberChange = e => {
     setBlocknumber(e.target.value.trim());
@@ -77,7 +77,8 @@ export function BlocknumberCalc() {
       .finally(() => {
         setLoading(false);
       });
-  }, [blocknumber, handleCalc]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blocknumber]);
 
   return (
     <StyledPageWrapper>
