@@ -30,6 +30,8 @@ import {
   checkCfxType,
 } from '../../../utils';
 import { formatAddress } from '../../../utils/cfx';
+import { usePortal } from 'utils/hooks/usePortal';
+
 interface FuncProps {
   type?: string;
   data: object;
@@ -42,13 +44,8 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [, setMessage] = useMessages();
-  const {
-    portalInstalled,
-    address,
-    login,
-    confluxJS,
-    chainId,
-  } = useConfluxPortal(); // TODO cip-37 portal
+  const { portalInstalled, address, confluxJS, chainId } = useConfluxPortal(); // TODO cip-37 portal
+  const { login } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');

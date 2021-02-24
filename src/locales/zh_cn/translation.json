@@ -65,7 +65,7 @@
     },
     "query": "读取",
     "write": "写入",
-    "connectPortalFirst": "请先连接 ConfluxPortal！",
+    "connectPortalFirst": "请先连接 ConfluxPortal 钱包！",
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
   },
@@ -433,7 +433,7 @@
         "504": "网关超时。"
       }
     },
-    "connnectWalletSubmit": "连接钱包以提交",
+    "connnectWalletSubmit": "提交",
     "waitForConfirm": "等待确认",
     "txRejected": "交易已被拒绝",
     "exportRecords": "导出当前记录"
@@ -448,7 +448,7 @@
     "providedGas": "基金会已累计提供燃气费",
     "availStorage": "基金会剩余可提供存储费",
     "availGas": "基金会剩余可提供燃气费",
-    "connectToApply": "连接钱包以申请",
+    "connectToApply": "申请",
     "notice": "说明",
     "noticeFirst": "基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
     "noticeSecond": "申请前需要链接 ConfluxPortal，连接完成后点击申请即可获得赞助。",

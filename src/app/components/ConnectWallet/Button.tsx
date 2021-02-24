@@ -17,7 +17,7 @@ import iconLoadingWhite from './assets/loading-white.svg';
 
 interface Button {
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button = ({ className, onClick }: Button) => {
