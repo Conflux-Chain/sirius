@@ -234,7 +234,7 @@ const WrappLink = styled.span`
     color: #65709a;
     padding: 0.43rem 1.5rem;
 
-    @media (max-width: 1300px) {
+    ${media.l} {
       padding: 0.43rem 1.15rem;
     }
 

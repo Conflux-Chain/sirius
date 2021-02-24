@@ -82,7 +82,7 @@ const Brand = styled.div`
   flex-shrink: 0;
   margin-right: 4rem;
 
-  @media (max-width: 1300px) {
+  ${media.l} {
     margin-right: 2rem;
   }
 
@@ -186,6 +186,10 @@ const Container = styled.div`
   margin: 0 auto;
   position: relative;
   padding: 0 2.86rem;
+
+  @media (max-width: 1360px) {
+    padding: 0 1.8rem;
+  }
 
   // mobile
   ${media.m} {
