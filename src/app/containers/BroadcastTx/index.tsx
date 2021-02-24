@@ -119,6 +119,7 @@ const StyledPageWrapper = styled.div`
   padding-top: 2.2857rem;
 
   ${media.s} {
+    margin-top: 16px;
     padding: 1.1429rem;
   }
 `;

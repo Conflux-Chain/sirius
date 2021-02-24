@@ -590,6 +590,19 @@
     "error": "Error: ",
     "unknownError": "Unable to broadcast transaction"
   },
+  "blocknumberCalc": {
+    "title": "Blocknumber Calculator",
+    "placeholder": "Please enter target blocknumber",
+    "higherError": "Please enter a higher blocknumber ",
+    "calcBtn": "Calculate",
+    "currentBlocknumber": "Current Blocknumber",
+    "remainingBlocks": "Remaining Blocks",
+    "targetDate": "Estimated Target Date",
+    "day": "Day",
+    "hour": "Hour",
+    "min": "Min",
+    "sec": "Sec"
+  },
   "notice": {
     "mainnet": [
       "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",

@@ -245,7 +245,7 @@ export function App() {
                 <Route exact path="/push-tx" component={BroadcastTx} />
                 <Route
                   exact
-                  path="/block-countdown"
+                  path={['/block-countdown', '/block-countdown/:block']}
                   component={BlocknumberCalc}
                 />
                 <Route component={NotFoundPage} />

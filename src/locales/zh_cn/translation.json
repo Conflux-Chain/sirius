@@ -590,6 +590,19 @@
     "error": "错误：",
     "unknownError": "无法广播交易"
   },
+  "blocknumberCalc": {
+    "title": "区块计算器",
+    "placeholder": "请输入目标区块号",
+    "higherError": "请输入一个较大的区块号",
+    "calcBtn": "计算",
+    "currentBlocknumber": "当前区块号",
+    "remainingBlocks": "剩余区块",
+    "targetDate": "预估目标日期",
+    "day": "天",
+    "hour": "小时",
+    "min": "分钟",
+    "sec": "秒"
+  },
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
