@@ -34,6 +34,18 @@ export function BlocknumberCalc() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  const calcTimeSpan = current => {
+    if (parseInt(blocknumber) > +current) {
+      const timeObj = getTimeByBlockInterval(parseInt(blocknumber), +current);
+      if (timeObj.seconds > 0) {
+        setSeconds(timeObj.seconds);
+      }
+    } else {
+      setError(t(translations.blocknumberCalc.higherError));
+      setSeconds(null);
+    }
+  };
+
   const handleCalc = () => {
     if (blocknumber && parseInt(blocknumber) > +currentBlocknumber) {
       setLoading(true);
@@ -41,15 +53,7 @@ export function BlocknumberCalc() {
         .getBlockNumber()
         .then(res => {
           setCurrentBlocknumber(res);
-          if (parseInt(blocknumber) > +res) {
-            const timeObj = getTimeByBlockInterval(parseInt(blocknumber), +res);
-            if (timeObj.seconds > 0) {
-              setSeconds(timeObj.seconds);
-            }
-          } else {
-            setError(t(translations.blocknumberCalc.higherError));
-            setSeconds(null);
-          }
+          calcTimeSpan(res);
         })
         .finally(() => {
           setLoading(false);
@@ -72,13 +76,13 @@ export function BlocknumberCalc() {
       .getBlockNumber()
       .then(res => {
         setCurrentBlocknumber(res);
-        if (blocknumber) handleCalc();
+        calcTimeSpan(res);
       })
       .finally(() => {
         setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocknumber]);
+  }, []);
 
   return (
     <StyledPageWrapper>
