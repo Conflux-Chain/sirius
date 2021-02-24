@@ -17,6 +17,7 @@ import { Search as SearchComp } from '../../components/Search/Loadable';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from '../../components/AddressContainer';
@@ -54,6 +55,7 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { address: portalAddress } = useConfluxPortal(); // TODO cip-37 portal
+  const { connected } = usePortal();
   const getSponsorInfo = async _address => {
     setLoading(true);
     // TODO cip-37 update
@@ -447,6 +449,9 @@ export function Sponsor() {
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
+            hoverText={
+              connected === 0 ? t(translations.contract.connectPortalFirst) : ''
+            }
             txnAction={TxnAction.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
