@@ -141,7 +141,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
   }
 }
 
-@media (max-width:1300px) {
+@media (max-width:1440px) {
   .c2 {
     margin-right: 2rem;
   }
@@ -242,6 +242,12 @@ exports[`<Nav  /> should match snapshot 1`] = `
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+  }
+}
+
+@media (max-width:1360px) {
+  .c1 {
+    padding: 0 1.8rem;
   }
 }
 
@@ -463,7 +469,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   }
 }
 
-@media (max-width:1300px) {
+@media (max-width:1440px) {
   .c2 {
     margin-right: 2rem;
   }
@@ -568,6 +574,12 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
+  }
+}
+
+@media (max-width:1360px) {
+  .c1 {
+    padding: 0 1.8rem;
   }
 }
 
