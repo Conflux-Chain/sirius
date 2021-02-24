@@ -168,7 +168,12 @@ exports[`<App /> should render and match the snapshot 1`] = `
             <Route
               component={[Function]}
               exact={true}
-              path="/block-countdown"
+              path={
+                Array [
+                  "/block-countdown",
+                  "/block-countdown/:block",
+                ]
+              }
             />
             <Route
               component={[Function]}
