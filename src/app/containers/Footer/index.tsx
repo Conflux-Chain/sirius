@@ -140,12 +140,6 @@ const FooterContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  &.preference {
-    ${media.s} {
-      display: none;
-    }
-  }
-
   ${media.s} {
     margin-bottom: 1.1429rem;
     width: 50%;
