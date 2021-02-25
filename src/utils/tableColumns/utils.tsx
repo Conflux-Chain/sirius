@@ -8,6 +8,7 @@ export interface ContentWrapperProps {
   right?: boolean;
   center?: boolean;
   className?: string;
+  monospace?: boolean;
 }
 
 export const ContentWrapper = ({
@@ -16,6 +17,7 @@ export const ContentWrapper = ({
   right,
   center,
   className,
+  monospace,
   ...others
 }: ContentWrapperProps) => {
   return (
@@ -25,6 +27,7 @@ export const ContentWrapper = ({
         left,
         right,
         center,
+        monospace,
       })}
       {...others}
     >
@@ -34,6 +37,9 @@ export const ContentWrapper = ({
 };
 
 const StyledTdWrapper = styled.div`
+  &.monospace {
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  }
   &.right {
     text-align: right;
   }

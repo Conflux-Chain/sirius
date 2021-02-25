@@ -24,14 +24,13 @@ export function Tokens() {
   const { tokenType } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 7, 3, 3, 3, 3, 2, 5];
+  let columnsWidth = [1, 6, 3, 3, 3, 2, 4];
   let columns: ColumnsType = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
     tokenColunms.price,
     tokenColunms.marketCap,
     tokenColunms.transfer,
-    tokenColunms.totalSupply,
     tokenColunms.holders,
     tokenColunms.contract,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
