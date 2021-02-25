@@ -32,7 +32,7 @@ export const useTabTableData = tabs => {
     setPageSize,
     currentTabValue,
   } = tabs.reduce(
-    (acc, { url = '', value, table }, i) => {
+    (acc, { url = '', value, table, hidden = false }, i) => {
       const isCurrentTab = value === currentTab;
       const {
         pageNumber,
@@ -46,8 +46,10 @@ export const useTabTableData = tabs => {
         prevPage,
         gotoPage,
         setPageSize,
+        // has data table and not hidden tab should fetch data
+        //
         // eslint-disable-next-line react-hooks/rules-of-hooks
-      } = useTableData(url, !isCurrentTab, !!table);
+      } = useTableData(url, !isCurrentTab, !!table && !hidden);
       if (isCurrentTab) {
         currentTabTotal = total;
         acc.currentTabValue = value;
@@ -68,6 +70,8 @@ export const useTabTableData = tabs => {
             tab: value,
           };
         }
+        // TODO use window.history.pushState instead of history.push
+        //      to avoid the unnecessary requests after tab change
         history.push(
           queryString.stringifyUrl({
             url: location.pathname,

@@ -32,8 +32,11 @@ const BACKEND_ERROR_CODE_BLACKLIST = [
 // 异常消息发布
 const notify = ({ code, message }: NotifyType) => {
   pubsub.publish('notify', {
-    code,
-    message,
+    type: 'request',
+    option: {
+      code,
+      message,
+    },
   });
 };
 

@@ -42,6 +42,8 @@ import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
 import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
+import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
+import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 
 WebFontLoader.load({
   custom: {
@@ -58,7 +60,12 @@ export function App() {
       value={{
         config: {
           // txn history record i18n handler
-          convert: info => t(translations.txnAction[info]),
+          convert: info => {
+            try {
+              let data = JSON.parse(info);
+              return t(translations.connectWallet.notify.action[data.code]);
+            } catch (e) {}
+          },
         },
       }}
     >
@@ -202,11 +209,6 @@ export function App() {
                 />
                 <Route
                   exact
-                  path={['/address-converter', '/address-converter/:address']}
-                  component={AddressConverter}
-                />
-                <Route
-                  exact
                   path="/transaction/:hash"
                   component={Transaction}
                 />
@@ -234,6 +236,18 @@ export function App() {
                   }}
                 />
                 <Route path="/search/:text" component={Search} />
+                {/* Tools */}
+                <Route
+                  exact
+                  path={['/address-converter', '/address-converter/:address']}
+                  component={AddressConverter}
+                />
+                <Route exact path="/push-tx" component={BroadcastTx} />
+                <Route
+                  exact
+                  path={['/block-countdown', '/block-countdown/:block']}
+                  component={BlocknumberCalc}
+                />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>
@@ -252,7 +266,7 @@ const Main = styled.div`
   max-width: 1024px;
   margin: 0 auto;
   padding-top: 70px;
-  min-height: calc(100vh - 298px);
+  min-height: calc(100vh - 327px);
   ${media.s} {
     padding: 100px 16px 16px;
     min-height: calc(100vh - 254px);

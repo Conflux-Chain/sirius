@@ -3,6 +3,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useMessages } from '@cfxjs/react-ui';
@@ -15,10 +16,11 @@ import {
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../../components/Search/Loadable';
-import { zeroAddress } from '../../../utils/constants';
+import { cfxTokenTypes, zeroAddress } from '../../../utils/constants';
 interface FilterProps {
   filter: string;
   tokenAddress: string;
+  transferType: string;
   symbol: string;
   decimals: number;
   onFilter: (value: string) => void;
@@ -32,6 +34,7 @@ interface Query {
 export const Filter = ({
   filter,
   tokenAddress,
+  transferType,
   symbol,
   decimals,
   onFilter,
@@ -68,7 +71,11 @@ export const Filter = ({
       return;
     }
 
-    if (!isAddress(value) && !isHash(value)) {
+    if (
+      !isAddress(value) &&
+      !isHash(value) &&
+      !(transferType !== cfxTokenTypes.erc20 && _.isInteger(+value))
+    ) {
       setMessage({
         text: t(translations.token.transferList.searchError),
       });
@@ -90,19 +97,25 @@ export const Filter = ({
         outerClassname="outerContainer"
         inputClassname="transfer-search"
         iconColor="#74798C"
-        placeholderText={t(translations.token.transferList.searchPlaceHolder)}
+        placeholderText={
+          transferType === cfxTokenTypes.erc20
+            ? t(translations.token.transferList.searchPlaceHolder)
+            : t(translations.token.transferList.searchPlaceHolderWithTokenId)
+        }
         onEnterPress={onEnterPress}
         onChange={val => setValue(tranferToLowerCase(val))}
         onClear={onClear}
         val={value}
-      ></SearchComp>
-      {tokenBalance !== '0' && symbol && (
-        <BalanceWrap>
-          {`${t(
-            translations.token.transferList.balance,
-          )}${tokenBalance} ${symbol}`}{' '}
-        </BalanceWrap>
-      )}
+      />
+      {transferType === cfxTokenTypes.erc20 &&
+        tokenBalance !== '0' &&
+        symbol && (
+          <BalanceWrap>
+            {`${t(
+              translations.token.transferList.balance,
+            )}${tokenBalance} ${symbol}`}{' '}
+          </BalanceWrap>
+        )}
     </FilterWrap>
   );
 };
@@ -111,6 +124,7 @@ const FilterWrap = styled.div`
   position: absolute;
   top: 0.7143rem;
   right: 0;
+  width: 260px;
   display: flex;
   align-items: center;
   .outerContainer {

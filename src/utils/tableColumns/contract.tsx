@@ -62,8 +62,8 @@ export const transactionCount = {
       {t => t(translations.general.table.contracts.transactionCount)}
     </Translation>
   ),
-  dataIndex: 'txCount',
-  key: 'txCount',
+  dataIndex: 'transactionCount',
+  key: 'transactionCount',
   render: value => <span>{formatNumber(value)}</span>,
 };
 

@@ -14,6 +14,7 @@ import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
+import { ContentWrapper } from './utils';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -55,6 +56,7 @@ export const number = (page, pageSize) => ({
   title: (
     <Translation>{t => t(translations.general.table.token.number)}</Translation>
   ),
+  dataIndex: 'epochNumber',
   key: 'epochNumber',
   render: (value, row, index) => {
     return (page - 1) * pageSize + index + 1;
@@ -151,7 +153,7 @@ export const transfer = {
   ),
   dataIndex: `transferCount`,
   key: `transferCount`,
-  render: value => <span>{formatNumber(value)}</span>,
+  render: value => <span>{formatNumber(value, { withUnit: false })}</span>,
 };
 
 export const totalSupply = {
@@ -266,6 +268,81 @@ export const from = {
   render: (value, row) => renderAddress(value, row, 'from'),
 };
 
+export const account = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.accountAddress)}
+    </Translation>
+  ),
+  dataIndex: 'account',
+  key: 'account',
+  render: value => (
+    <AddressContainer value={value.address} alias={value.name} isFull={true} />
+  ),
+};
+
+export const balance = decimal => ({
+  width: 1,
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.quantity)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'balance',
+  key: 'balance',
+  render: value => {
+    const decimals = decimal || 0;
+    return (
+      <ContentWrapper right>
+        {value != null ? (
+          +(formatBalance(value, decimals) || 0) < 10 ? (
+            <Text span hoverValue={formatBalance(value, decimals, true)}>
+              {formatBalance(value, decimals, false, {
+                keepDecimal: true,
+                withUnit: false,
+              })}
+            </Text>
+          ) : (
+            <Text span hoverValue={formatBalance(value, decimals, true)}>
+              {formatBalance(value, decimals, false, {
+                keepDecimal: false,
+                withUnit: false,
+              })}
+            </Text>
+          )
+        ) : (
+          '--'
+        )}
+      </ContentWrapper>
+    );
+  },
+});
+
+export const percentage = {
+  width: 1,
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.percentage)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'proportion',
+  key: 'proportion',
+  render: (value, row) => (
+    <ContentWrapper right>
+      {formatNumber(value * 100, {
+        precision: 3,
+        withUnit: false,
+        keepZero: true,
+      }) + '%'}
+    </ContentWrapper>
+  ),
+};
+
 export const tokenId = {
   width: 1,
   title: (
@@ -280,6 +357,17 @@ export const tokenId = {
       <SpanWrap>{value || '-'}</SpanWrap>
     </Text>
   ),
+};
+
+export const traceType = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceType)}
+    </Translation>
+  ),
+  dataIndex: 'type',
+  key: 'type',
 };
 
 export const StyledIconWrapper = styled.div`

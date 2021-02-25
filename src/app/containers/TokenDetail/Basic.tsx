@@ -177,7 +177,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   } else {
-    list = [fieldTotalSupply, fieldContractAddress, fieldTransfers];
+    list = [fieldTransfers, fieldContractAddress];
   }
   return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };

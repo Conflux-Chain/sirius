@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { Chart } from '../../components/Chart/Loadable';
+import { LineChart as Chart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -13,7 +13,7 @@ export function Charts() {
 
   // TODO will be adjusted according to page breakpoints in the future
   if (chartWidth > 1024) chartWidth = 1024;
-  if (chartWidth < 343) chartWidth = 343;
+  if (chartWidth < 365) chartWidth = 365;
 
   return (
     <>
@@ -27,7 +27,7 @@ export function Charts() {
           <div className="title">{t(translations.charts.title)}</div>
         </HeaderWrap>
         <ChartsWrap>
-          <Chart width={chartWidth} />
+          <Chart width={chartWidth} indicator="blockTime" />
           <Chart width={chartWidth} indicator="tps" />
           <Chart width={chartWidth} indicator="difficulty" />
           <Chart width={chartWidth} indicator="hashRate" />

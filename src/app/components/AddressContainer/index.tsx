@@ -39,6 +39,17 @@ const IconWrapper = styled.span`
   }
 `;
 
+const FullAddressWrapper = styled.div`
+  display: inline-block;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    left: -18px;
+    top: -2px;
+  }
+`;
+
 export const AddressContainer = ({
   value,
   alias,
@@ -47,16 +58,6 @@ export const AddressContainer = ({
   isFull = false,
 }: Props) => {
   const { t } = useTranslation();
-
-  const LinkWrapper = styled(Link)`
-    display: inline-block !important;
-    max-width: ${maxWidth || 130}px !important;
-    outline: none;
-
-    ${media.s} {
-      max-width: ${maxWidth || 100}px !important;
-    }
-  `;
 
   if (!value) {
     // contract creation txn to prop is null
@@ -116,7 +117,7 @@ export const AddressContainer = ({
           </Text>
         </IconWrapper>
         <Text span hoverValue={`${tip}: ${sourceValue}`}>
-          <LinkWrapper style={{ color: '#e00909' }}>
+          <LinkWrapper style={{ color: '#e00909' }} maxwidth={maxWidth}>
             {alias ? formatString(alias, 'tag') : sourceValue}
           </LinkWrapper>
         </Text>
@@ -124,12 +125,51 @@ export const AddressContainer = ({
     );
   }
 
-  if (value && isFull) {
-    return <Link href={`/address/${cfxAddress}`}>{cfxAddress}</Link>;
-  }
-
   const isContract = isContractAddress(value);
   const isInternalContract = isInnerContractAddress(value);
+
+  if (value && isFull) {
+    const typeText = t(
+      isInternalContract
+        ? translations.general.internalContract
+        : translations.general.contract,
+    );
+
+    const prefix = () =>
+      isContract ? (
+        <IconWrapper className="icon">
+          <Text span hoverValue={typeText}>
+            {isInternalContract ? (
+              <img src={InternalContractIcon} alt={typeText} />
+            ) : (
+              <img src={ContractIcon} alt={typeText} />
+            )}
+          </Text>
+        </IconWrapper>
+      ) : null;
+
+    if (alias)
+      return (
+        <FullAddressWrapper>
+          {prefix()}
+          <Text span hoverValue={cfxAddress}>
+            <FullLinkWrapper href={`/address/${cfxAddress}`}>
+              {alias}
+            </FullLinkWrapper>
+          </Text>
+        </FullAddressWrapper>
+      );
+    return (
+      <FullAddressWrapper>
+        {prefix()}
+        <Text span hoverValue={cfxAddress}>
+          <FullLinkWrapper href={`/address/${cfxAddress}`}>
+            {cfxAddress}
+          </FullLinkWrapper>
+        </Text>
+      </FullAddressWrapper>
+    );
+  }
 
   if (isContract || isInternalContract) {
     const typeText = t(
@@ -149,7 +189,7 @@ export const AddressContainer = ({
           </Text>
         </IconWrapper>
         <Text span hoverValue={cfxAddress}>
-          <LinkWrapper href={`/address/${cfxAddress}`}>
+          <LinkWrapper href={`/address/${cfxAddress}`} maxwidth={maxWidth}>
             {alias ? formatString(alias, 'tag') : cfxAddress}
           </LinkWrapper>
         </Text>
@@ -159,7 +199,27 @@ export const AddressContainer = ({
 
   return (
     <Text span hoverValue={cfxAddress}>
-      <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
+      <LinkWrapper href={`/address/${cfxAddress}`} maxwidth={maxWidth}>
+        {cfxAddress}
+      </LinkWrapper>
     </Text>
   );
 };
+
+const LinkWrapper = styled(Link)<{
+  maxwidth?: number;
+}>`
+  display: inline-block !important;
+  max-width: ${props => `${props.maxwidth || 130}px !important`};
+  outline: none;
+
+  ${media.s} {
+    max-width: ${props => `${props.maxwidth || 100}px !important`};
+  }
+`;
+
+const FullLinkWrapper = styled(Link)`
+  display: inline-block !important;
+  max-width: 430px !important;
+  outline: none;
+`;

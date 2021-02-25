@@ -15,6 +15,7 @@ import { translations } from 'locales/i18n';
 import imgIconTwitter from 'images/icon-twitter.svg';
 import imgIconGithub from 'images/icon-github.svg';
 import imgIconMedium from 'images/icon-medium.svg';
+import { Language } from './Language';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -39,6 +40,16 @@ export function Footer() {
   const addressConverterLink = (
     <Link className="footer-link" href="/address-converter">
       {t(translations.footer.addressFormatConversion)}
+    </Link>
+  );
+  const broadcastTxLink = (
+    <Link className="footer-link" href="/push-tx">
+      {t(translations.footer.broadcastTx)}
+    </Link>
+  );
+  const blocknumberCalcLink = (
+    <Link className="footer-link" href="/block-countdown">
+      {t(translations.footer.blocknumberCalc)}
     </Link>
   );
 
@@ -70,9 +81,9 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1">{websiteLink}</FooterContentLink>
-            <FooterContentLink key="2">{portalLink}</FooterContentLink>
-            <FooterContentLink key="3">{bountyLink}</FooterContentLink>
+            <FooterContentLink key="1-1">{websiteLink}</FooterContentLink>
+            <FooterContentLink key="1-2">{portalLink}</FooterContentLink>
+            <FooterContentLink key="1-3">{bountyLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -80,8 +91,24 @@ export function Footer() {
         <FooterContentTitle>{t(translations.footer.tool)}</FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1">
+            <FooterContentLink key="2-1">
               {addressConverterLink}
+            </FooterContentLink>
+            <FooterContentLink key="2-2">{broadcastTxLink}</FooterContentLink>
+            <FooterContentLink key="2-3">
+              {blocknumberCalcLink}
+            </FooterContentLink>
+          </FooterContentRow>
+        </FooterContent>
+      </FooterContentWrapper>
+      <FooterContentWrapper className="preference">
+        <FooterContentTitle>
+          {t(translations.footer.preference)}
+        </FooterContentTitle>
+        <FooterContent>
+          <FooterContentRow>
+            <FooterContentLink key="3-1">
+              <Language />
             </FooterContentLink>
           </FooterContentRow>
         </FooterContent>
@@ -104,7 +131,8 @@ const FooterWrapper = styled.div`
   flex-direction: row;
 
   ${media.s} {
-    flex-direction: column;
+    flex-flow: wrap;
+    /* flex-direction: column; */
   }
 `;
 const FooterContentWrapper = styled.div`
@@ -112,18 +140,17 @@ const FooterContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  ${media.s} {
-    &:last-child {
-      margin-top: 1.1429rem;
+  &.preference {
+    ${media.s} {
+      display: none;
     }
   }
-`;
 
-// left
-// const FooterDescription = styled.p`
-//   font-size: 0.86rem;
-//   max-width: 8.59rem;
-// `;
+  ${media.s} {
+    margin-bottom: 1.1429rem;
+    width: 50%;
+  }
+`;
 
 // right top
 const FooterContentTitle = styled.span`
@@ -143,18 +170,20 @@ const FooterContent = styled.div`
 
 const FooterContentRow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
-// const FooterContentColumn = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 const FooterContentLink = styled.span`
+  margin-bottom: 0.5rem;
+
   .link.footer-link {
     color: black;
     font-size: 0.86rem;
-    margin-right: 2rem;
+    margin-right: 5.1429rem;
+
+    ${media.s} {
+      margin-right: inherit;
+    }
   }
 
   ${media.s} {

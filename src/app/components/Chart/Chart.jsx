@@ -18,10 +18,14 @@ const DURATIONS = [
 ];
 
 export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
+  const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
+  const small = width < 500;
+  const padding = small ? 16 : 48;
   // get the max x grids which most suitable chart width
   let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1024) / 50);
   if (NUM_X_GRID < 7) NUM_X_GRID = 7;
+  if (small) NUM_X_GRID = 6;
 
   const {
     plot,
@@ -32,10 +36,6 @@ export const Chart = ({ width = 500, indicator = 'blockTime' }) => {
     axisFormat,
     popupFormat,
   } = usePlot('day', NUM_X_GRID);
-
-  const { t } = useTranslation();
-  const small = width < 500;
-  const padding = small ? 16 : 48;
   if (isError) {
     return <div>Error</div>;
   } else {
@@ -83,6 +83,7 @@ function Draw({
   format: [popupFormat, axisFormat],
   numXGrid,
 }) {
+  if (small) height = width * 0.4;
   // const scale = width / 359;
   const containerRef = useRef(null);
   const backgroundCanvasRef = useRef(null);

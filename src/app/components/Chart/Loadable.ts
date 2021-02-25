@@ -9,3 +9,8 @@ export const SmallChart = lazyLoad(
   () => import('./index'),
   module => module.SmallChart,
 );
+
+export const LineChart = lazyLoad(
+  () => import('./index'),
+  module => module.LineChart,
+);

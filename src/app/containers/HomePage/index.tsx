@@ -8,9 +8,9 @@ import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
-import { Notice } from './Notice';
-
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
+import { Notice } from './Notice';
+import { MarketInfo } from './MarketInfo';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -82,6 +82,7 @@ export function HomePage() {
       </Helmet>
       <Main>
         <Notice />
+        <MarketInfo />
         <Top>
           <SmallChartWrap>
             <SmallChart width={chartWidth} />
@@ -128,7 +129,7 @@ const Top = styled.section`
   display: flex;
   margin-right: -1.7143rem;
   margin-bottom: 2.2857rem;
-  margin-top: 1.5714rem;
+  margin-top: 14px;
   justify-content: center;
   flex-wrap: wrap;
   ${media.m} {

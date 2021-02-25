@@ -119,3 +119,10 @@ export const reqTopStatistics = (param: any, extra?: object) => {
     });
   }
 };
+
+export const reqCfxSupply = (extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/supply`,
+    ...extra,
+  });
+};

@@ -141,6 +141,9 @@ const HistoryWrapper = styled.span`
   }
 
   .history-bottom {
+    max-height: 228px;
+    overflow: auto;
+
     .history-item {
       display: flex;
       justify-content: space-between;
