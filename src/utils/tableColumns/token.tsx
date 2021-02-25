@@ -34,6 +34,7 @@ const renderAddress = (value, row, type?: 'to' | 'from') => {
       <AddressContainer
         value={value}
         alias={alias}
+        isLink={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
       />
       {type === 'from' && (
