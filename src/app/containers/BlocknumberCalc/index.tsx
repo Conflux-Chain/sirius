@@ -76,7 +76,7 @@ export function BlocknumberCalc() {
       .getBlockNumber()
       .then(res => {
         setCurrentBlocknumber(res);
-        calcTimeSpan(res);
+        if (blocknumber) calcTimeSpan(res);
       })
       .finally(() => {
         setLoading(false);

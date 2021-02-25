@@ -15,10 +15,10 @@ const countTime = (seconds: number) => {
   const days = Math.floor(seconds / dayBase);
   const hours = Math.floor((seconds - days * dayBase) / hourBase);
   const mins = Math.floor(
-    (seconds - days * dayBase - hours * minBase) / minBase,
+    (seconds - days * dayBase - hours * hourBase) / minBase,
   );
   const secs = Math.floor(
-    seconds - days * dayBase - hours * minBase - mins * minBase,
+    seconds - days * dayBase - hours * hourBase - mins * minBase,
   );
   return { days, hours, mins, secs };
 };
