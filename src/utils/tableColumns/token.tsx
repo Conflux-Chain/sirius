@@ -100,60 +100,78 @@ export const token = {
 export const price = {
   width: 1,
   title: (
-    <Translation>{t => t(translations.general.table.token.price)}</Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.price)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: 'price',
   key: 'price',
-  render: (value, row) => (
-    <span>
-      {value != null ? (
-        <Text span hoverValue={`$${value}`}>
-          {row.quoteUrl ? (
+  render: (value, row) => {
+    const count = `$${formatNumber(value || 0, {
+      withUnit: false,
+      precision: 2,
+    })}`;
+    return (
+      <ContentWrapper right monospace>
+        {value != null ? (
+          row.quoteUrl ? (
             <LinkA href={row.quoteUrl} target="_blank">
-              ${formatNumber(value || 0, { withUnit: false })}
+              {count}
             </LinkA>
           ) : (
-            `$${formatNumber(value || 0, { withUnit: false })}`
-          )}
-        </Text>
-      ) : (
-        '-'
-      )}
-    </span>
-  ),
+            count
+          )
+        ) : (
+          '-'
+        )}
+      </ContentWrapper>
+    );
+  },
 };
 
 export const marketCap = {
   width: 1,
   title: (
-    <Translation>
-      {t => t(translations.general.table.token.marketCap)}
-    </Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.marketCap)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: 'totalPrice',
   key: 'totalPrice',
   render: value => (
-    <span>
-      {value != null && value > 0 ? (
-        <Text span hoverValue={`$${value}`}>
-          ${formatNumber(value || 0, { unit: 'K' })}
-        </Text>
-      ) : (
-        '-'
-      )}
-    </span>
+    <ContentWrapper right monospace>
+      {value != null && value > 0
+        ? `$${formatNumber(value || 0, {
+            keepDecimal: false,
+            withUnit: false,
+          })}`
+        : '-'}
+    </ContentWrapper>
   ),
 };
 export const transfer = {
   width: 1,
   title: (
-    <Translation>
-      {t => t(translations.general.table.token.transfer)}
-    </Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.transfer)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: `transferCount`,
   key: `transferCount`,
-  render: value => <span>{formatNumber(value, { withUnit: false })}</span>,
+  render: value => (
+    <ContentWrapper right monospace>
+      {formatNumber(value, {
+        keepDecimal: false,
+        withUnit: false,
+      })}
+    </ContentWrapper>
+  ),
 };
 
 export const totalSupply = {
@@ -165,23 +183,28 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
-  render: (value, row) => (
-    <Text span hoverValue={formatBalance(value, row.decimals, true)}>
-      {formatBalance(value, row.decimals)}
-    </Text>
-  ),
+  render: (value, row) => formatBalance(value, row.decimals),
 };
 
 export const holders = {
   width: 1,
   title: (
-    <Translation>
-      {t => t(translations.general.table.token.holders)}
-    </Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.holders)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: 'holderCount',
   key: 'holderCount',
-  render: value => <span>{formatNumber(value)}</span>,
+  render: value => (
+    <ContentWrapper right monospace>
+      {formatNumber(value, {
+        keepDecimal: false,
+        withUnit: false,
+      })}
+    </ContentWrapper>
+  ),
 };
 
 export const contract = {
