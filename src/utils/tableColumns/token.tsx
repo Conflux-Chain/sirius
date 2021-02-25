@@ -298,7 +298,7 @@ export const balance = decimal => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(formatBalance(value, decimals) || 0) < 10 ? (
+          +(formatBalance(value, decimals) || 0) < 1 ? (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
                 keepDecimal: true,
@@ -321,7 +321,7 @@ export const balance = decimal => ({
   },
 });
 
-export const percentage = {
+export const percentage = total => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -332,16 +332,23 @@ export const percentage = {
   ),
   dataIndex: 'proportion',
   key: 'proportion',
-  render: (value, row) => (
-    <ContentWrapper right>
-      {formatNumber(value * 100, {
-        precision: 3,
-        withUnit: false,
-        keepZero: true,
-      }) + '%'}
-    </ContentWrapper>
-  ),
-};
+  render: (value, row) => {
+    const percentage = value != null ? value : total > 0 ? total : null;
+    return (
+      <ContentWrapper right>
+        {percentage === null
+          ? '-'
+          : percentage < 0.00001
+          ? '< 0.001%'
+          : formatNumber(percentage * 100, {
+              precision: 3,
+              withUnit: false,
+              keepZero: true,
+            }) + '%'}
+      </ContentWrapper>
+    );
+  },
+});
 
 export const tokenId = {
   width: 1,
