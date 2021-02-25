@@ -30,7 +30,7 @@ import {
   checkCfxType,
 } from '../../../utils';
 import { formatAddress } from '../../../utils/cfx';
-import { usePortal } from 'utils/hooks/usePortal';
+import { ConnectButton } from '../../components/ConnectWallet';
 
 interface FuncProps {
   type?: string;
@@ -44,8 +44,7 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [, setMessage] = useMessages();
-  const { portalInstalled, address, confluxJS, chainId } = useConfluxPortal(); // TODO cip-37 portal
-  const { login } = usePortal();
+  const { address, confluxJS, chainId } = useConfluxPortal(); // TODO cip-37 portal
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -125,54 +124,48 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
         break;
       case 'write':
-        if (!portalInstalled) {
-          useConfluxPortal.openHomePage();
-        } else {
-          if (address) {
-            if (isTestNetEnv() && Number(chainId) !== 1) {
-              setMessage({ text: t('contract.error.testnet'), color: 'error' });
-              return;
-            }
-            if (!isTestNetEnv() && Number(chainId) !== 1029) {
-              setMessage({ text: t('contract.error.mainnet'), color: 'error' });
-              return;
-            }
-            let objParams: any[] = [];
-            // cip-37
-            let txParams = {
-              from: formatAddress(address, { hex: true }),
-              to: formatAddress(contractAddress, { hex: true }),
-            };
-            if (data['stateMutability'] === 'payable') {
-              objParams = objValues.slice(1);
-              txParams['value'] = new BigNumber(objValues[0])
-                .multipliedBy(10 ** 18)
-                .toFixed();
-            } else {
-              objParams = objValues;
-            }
-            setOutputError('');
-            try {
-              const { data: txData } = contract[data['name']](...objParams);
-              txParams['data'] = txData;
-            } catch (error) {
-              setOutputError(error.message || '');
-              return;
-            }
-            //loading
-            setModalType('loading');
-            setModalShown(true);
-            try {
-              const txHash = await confluxJS.sendTransaction(txParams);
-              setModalType('success');
-              setTxHash(txHash);
-              setOutputError('');
-            } catch (error) {
-              setModalType('fail');
-              setOutputError(error.message || '');
-            }
+        if (address) {
+          if (isTestNetEnv() && Number(chainId) !== 1) {
+            setMessage({ text: t('contract.error.testnet'), color: 'error' });
+            return;
+          }
+          if (!isTestNetEnv() && Number(chainId) !== 1029) {
+            setMessage({ text: t('contract.error.mainnet'), color: 'error' });
+            return;
+          }
+          let objParams: any[] = [];
+          // cip-37
+          let txParams = {
+            from: formatAddress(address, { hex: true }),
+            to: formatAddress(contractAddress, { hex: true }),
+          };
+          if (data['stateMutability'] === 'payable') {
+            objParams = objValues.slice(1);
+            txParams['value'] = new BigNumber(objValues[0])
+              .multipliedBy(10 ** 18)
+              .toFixed();
           } else {
-            login();
+            objParams = objValues;
+          }
+          setOutputError('');
+          try {
+            const { data: txData } = contract[data['name']](...objParams);
+            txParams['data'] = txData;
+          } catch (error) {
+            setOutputError(error.message || '');
+            return;
+          }
+          //loading
+          setModalType('loading');
+          setModalShown(true);
+          try {
+            const txHash = await confluxJS.sendTransaction(txParams);
+            setModalType('success');
+            setTxHash(txHash);
+            setOutputError('');
+          } catch (error) {
+            setModalType('fail');
+            setOutputError(error.message || '');
           }
         }
 
@@ -272,14 +265,16 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         {t(translations.contract.query)}
       </Button>
     ) : (
-      <Button
-        htmlType="submit"
-        variant="solid"
-        color="primary"
-        className="btnComp"
-      >
-        {t(translations.contract.write)}
-      </Button>
+      <ConnectButton>
+        <Button
+          htmlType="submit"
+          variant="solid"
+          color="primary"
+          className="btnComp"
+        >
+          {t(translations.contract.write)}
+        </Button>
+      </ConnectButton>
     );
   const openTx = () => {
     window.open(`${window.location.origin}/transaction/${txHash}`);
