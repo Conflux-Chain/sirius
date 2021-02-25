@@ -18,6 +18,7 @@ interface TransferProps {
   tokenAddress: string;
   symbol: string;
   decimals: number;
+  totalSupply: number;
   transferType: string;
 }
 interface Query {
@@ -30,6 +31,7 @@ export function Transfers({
   tokenAddress,
   symbol,
   decimals,
+  totalSupply,
   transferType,
 }: TransferProps) {
   const { t } = useTranslation();
@@ -143,10 +145,10 @@ export function Transfers({
     tokenColunms.number(page, pageSize),
     tokenColunms.account,
     tokenColunms.balance(decimals),
-    tokenColunms.percentage,
+    tokenColunms.percentage(totalSupply),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
-  const tabs = [
+  const tabs: any = [
     {
       value: 'transfers',
       label: (total: number, realTotal: number) => {
@@ -174,12 +176,11 @@ export function Transfers({
     tabs.push({
       value: 'holders',
       label: t(translations.token.holders),
-      url: `/token/${tokenAddress}/holder?reverse=true&orderBy=balance`,
+      url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
       table: {
-        // @ts-ignore
         className: 'monospaced',
         columns: holdersColumns,
-        rowKey: row => `${row.address}${row.account.address}`,
+        rowKey: row => `${tokenAddress}${row.account.address}`,
       },
     });
   }

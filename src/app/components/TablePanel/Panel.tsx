@@ -18,6 +18,7 @@ export type TablePanelType = {
   pagination?: PaginationProps | boolean;
   table: TableProps<unknown>;
   hasFilter?: boolean;
+  className?: string;
   tableHeader?: React.ReactNode;
 };
 

@@ -632,6 +632,7 @@ export function checkBytes(value, type) {
   }
   const num = Number(type.substr(5));
   let isBytes = false;
+  if (!value) return [isBytes, num];
   if (isHex(value) && isEvenLength(value)) {
     if (num > 0) {
       const str = value.substr(2);

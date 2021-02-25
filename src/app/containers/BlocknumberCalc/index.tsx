@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
+import dayjs from 'dayjs';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
@@ -27,7 +28,8 @@ export function BlocknumberCalc() {
   const { block: routeBlockNumber = '' } = useParams<{
     block?: string;
   }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language.indexOf('en') > -1;
   const [blocknumber, setBlocknumber] = useState<string>(routeBlockNumber);
   const [currentBlocknumber, setCurrentBlocknumber] = useState<string>('');
   const [seconds, setSeconds] = useState<number | null>(null);
@@ -65,7 +67,11 @@ export function BlocknumberCalc() {
   };
 
   const handleBlocknumberChange = e => {
-    setBlocknumber(e.target.value.trim());
+    setBlocknumber(
+      +e.target.value.trim() > 10000000000000
+        ? 10000000000000
+        : e.target.value.trim(),
+    );
     setError('');
   };
 
@@ -76,7 +82,7 @@ export function BlocknumberCalc() {
       .getBlockNumber()
       .then(res => {
         setCurrentBlocknumber(res);
-        calcTimeSpan(res);
+        if (blocknumber) calcTimeSpan(res);
       })
       .finally(() => {
         setLoading(false);
@@ -152,7 +158,13 @@ export function BlocknumberCalc() {
           <Countdown seconds={seconds} />
           <div className="target-date">
             {t(translations.blocknumberCalc.targetDate)}:{' '}
-            <strong>{new Date(+new Date() + seconds * 1000).toString()}</strong>
+            <strong>
+              {dayjs(+new Date() + seconds * 1000).format(
+                isEn
+                  ? 'MMM DD YYYY HH:mm:ss (UTCZ)'
+                  : 'YYYY年MM月DD日 HH:mm:ss (UTCZ)',
+              )}
+            </strong>
           </div>
         </>
       ) : null}
