@@ -211,9 +211,10 @@ const ModalWrapper = styled.div`
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.25);
   display: none;
+  z-index: 1000;
 
   &.show {
-    display: inherit;
+    display: flex;
   }
 
   &.connected {
