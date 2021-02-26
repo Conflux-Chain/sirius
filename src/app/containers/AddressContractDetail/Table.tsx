@@ -447,7 +447,6 @@ export function Table({ address, addressInfo }) {
   ];
 
   tabs.push({
-    hidden: !addressInfo.cfxTransferCount,
     value: `transfers-${cfxTokenTypes.cfx}`,
     label: (total: number, realTotal: number) => {
       return (

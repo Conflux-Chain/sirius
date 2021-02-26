@@ -11,9 +11,11 @@ import { cfxTokenTypes } from '../../../utils/constants';
 export function TableCard({
   from,
   to,
+  hash,
 }: {
-  from?: React.ReactNode;
-  to?: React.ReactNode;
+  from: React.ReactNode;
+  to: React.ReactNode;
+  hash: string;
 }) {
   const { t } = useTranslation();
   const tipT = translations.transaction.internalTxnsTip;
@@ -37,7 +39,7 @@ export function TableCard({
     {
       value: 'cfxTransfer',
       label: t(translations.transaction.internalTxns),
-      url: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=0x3fd584bc8ea8a5ab82fc5b8106b821b6b4447d624d927be69039141d3778d5ec`,
+      url: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}`,
       table: {
         columns: columnsCFXTrasfer,
         rowKey: 'address',
