@@ -309,7 +309,7 @@ export const account = {
   ),
 };
 
-export const balance = decimal => ({
+export const balance = (decimal, price) => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -321,21 +321,22 @@ export const balance = decimal => ({
   dataIndex: 'balance',
   key: 'balance',
   render: value => {
-    const decimals = 0;
+    const decimals = decimal || 0;
+    // Decimal places are determined according to the price
+    const decimalPlace = price > 1 ? price.toFixed(0).length + 1 : 2;
+    const tinyBalanceThreshold = `0.${Array(decimalPlace - 1).join('0')}1`;
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(formatBalance(value, decimals) || 0) < 10 ? (
+          +(formatBalance(value, decimals) || 0) < +tinyBalanceThreshold ? (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
-              {formatBalance(value, decimals, true, {
-                keepDecimal: true,
-                withUnit: false,
-              })}
+              {`< ${tinyBalanceThreshold}`}
             </Text>
           ) : (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
-                keepDecimal: false,
+                precision: decimalPlace,
+                keepZero: true,
                 withUnit: false,
               })}
             </Text>

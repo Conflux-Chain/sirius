@@ -19,6 +19,7 @@ interface TransferProps {
   symbol: string;
   decimals: number;
   totalSupply: number;
+  price: number;
   transferType: string;
 }
 interface Query {
@@ -32,6 +33,7 @@ export function Transfers({
   symbol,
   decimals,
   totalSupply,
+  price,
   transferType,
 }: TransferProps) {
   const { t } = useTranslation();
@@ -144,7 +146,7 @@ export function Transfers({
   let holdersColumns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.account,
-    tokenColunms.balance(decimals),
+    tokenColunms.balance(decimals, price),
     tokenColunms.percentage(totalSupply, decimals),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 

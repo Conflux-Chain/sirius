@@ -110,6 +110,7 @@ export function TokenDetail() {
         {data.transferType ? (
           <Transfers
             decimals={data.decimals || 0}
+            price={data.price || 0}
             totalSupply={data.totalSupply || 0}
             tokenAddress={tokenAddress}
             symbol={data.symbol}
