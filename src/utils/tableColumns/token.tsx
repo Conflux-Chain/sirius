@@ -211,7 +211,7 @@ export const holders = {
   ),
 };
 
-export const contract = {
+export const contract = (isFull = false) => ({
   width: 1,
   title: (
     <Translation>
@@ -220,8 +220,8 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => <AddressContainer value={value} />,
-};
+  render: value => <AddressContainer value={value} isFull={isFull} />,
+});
 
 // token detail columns
 export const txnHash = {
@@ -325,9 +325,9 @@ export const balance = decimal => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(formatBalance(value, decimals) || 0) < 1 ? (
+          +(formatBalance(value, decimals) || 0) < 10 ? (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
-              {formatBalance(value, decimals, false, {
+              {formatBalance(value, decimals, true, {
                 keepDecimal: true,
                 withUnit: false,
               })}
@@ -370,20 +370,22 @@ export const percentage = (total, decimals) => ({
                 ? new BigNumber(total).dividedBy(Math.pow(10, +decimals))
                 : new BigNumber(total),
             )
-            .toFixed(5)
+            .multipliedBy(100)
+            .toFixed(8)
         : null;
-    console.log(percentage);
     return (
       <ContentWrapper right>
-        {percentage === null
-          ? '-'
-          : percentage < 0.00001
-          ? '< 0.001%'
-          : formatNumber(percentage * 100, {
-              precision: 3,
-              withUnit: false,
-              keepZero: true,
-            }) + '%'}
+        <Text span hoverValue={`${percentage}%`}>
+          {percentage === null
+            ? '-'
+            : percentage < 0.001
+            ? '< 0.001%'
+            : formatNumber(percentage, {
+                precision: 3,
+                withUnit: false,
+                keepZero: true,
+              }) + '%'}
+        </Text>
       </ContentWrapper>
     );
   },
