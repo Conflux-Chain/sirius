@@ -329,7 +329,13 @@ export const balance = (decimal, price) => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(formatBalance(value, decimals) || 0) < +tinyBalanceThreshold ? (
+          +(
+            formatBalance(value, decimals, false, {
+              precision: decimals,
+              withUnit: false,
+              keepDecimals: true,
+            }) || 0
+          ) < +tinyBalanceThreshold ? (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {`< ${tinyBalanceThreshold}`}
             </Text>
@@ -367,11 +373,7 @@ export const percentage = (total, decimals) => ({
         ? value
         : total > 0
         ? new BigNumber(row.balance)
-            .dividedBy(
-              decimals
-                ? new BigNumber(total).dividedBy(Math.pow(10, +decimals))
-                : new BigNumber(total),
-            )
+            .dividedBy(new BigNumber(total))
             .multipliedBy(100)
             .toFixed(8)
         : null;

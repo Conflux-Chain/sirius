@@ -20,6 +20,7 @@ interface TransferProps {
   decimals: number;
   totalSupply: number;
   price: number;
+  holderCount: number;
   transferType: string;
 }
 interface Query {
@@ -34,6 +35,7 @@ export function Transfers({
   decimals,
   totalSupply,
   price,
+  holderCount,
   transferType,
 }: TransferProps) {
   const { t } = useTranslation();
@@ -177,7 +179,14 @@ export function Transfers({
   ) {
     tabs.push({
       value: 'holders',
-      label: t(translations.token.holders),
+      label: () => {
+        return (
+          <>
+            {t(translations.token.holders)}
+            <TabLabel total={holderCount} realTotal={holderCount} />
+          </>
+        );
+      },
       url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
       table: {
         className: 'monospaced',
