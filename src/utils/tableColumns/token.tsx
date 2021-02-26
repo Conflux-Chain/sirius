@@ -325,7 +325,7 @@ export const balance = (decimal, price) => ({
     const decimals = decimal || 0;
     // Decimal places are determined according to the price
     const decimalPlace = price > 1 ? price.toFixed(0).length + 1 : 2;
-    const tinyBalanceThreshold = `0.${Array(decimalPlace - 1).join('0')}1`;
+    const tinyBalanceThreshold = `0.${Array(decimalPlace).join('0')}1`;
     return (
       <ContentWrapper right>
         {value != null ? (
@@ -356,7 +356,7 @@ export const balance = (decimal, price) => ({
   },
 });
 
-export const percentage = (total, decimals) => ({
+export const percentage = total => ({
   width: 1,
   title: (
     <ContentWrapper right>
