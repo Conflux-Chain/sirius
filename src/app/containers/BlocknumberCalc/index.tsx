@@ -25,12 +25,15 @@ const governanceContract = cfx.Contract({
 });
 
 export function BlocknumberCalc() {
+  const maxBlocknumber = 10000000000000;
   const { block: routeBlockNumber = '' } = useParams<{
     block?: string;
   }>();
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.indexOf('en') > -1;
-  const [blocknumber, setBlocknumber] = useState<string>(routeBlockNumber);
+  const [blocknumber, setBlocknumber] = useState<string>(
+    +routeBlockNumber > maxBlocknumber ? maxBlocknumber + '' : routeBlockNumber,
+  );
   const [currentBlocknumber, setCurrentBlocknumber] = useState<string>('');
   const [seconds, setSeconds] = useState<number | null>(null);
   const [error, setError] = useState<string>('');
@@ -68,8 +71,8 @@ export function BlocknumberCalc() {
 
   const handleBlocknumberChange = e => {
     setBlocknumber(
-      +e.target.value.trim() > 10000000000000
-        ? 10000000000000
+      +e.target.value.trim() > maxBlocknumber
+        ? maxBlocknumber
         : e.target.value.trim(),
     );
     setError('');

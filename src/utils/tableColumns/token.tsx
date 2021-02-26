@@ -15,6 +15,7 @@ import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
+import BigNumber from 'bignumber.js';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -200,10 +201,12 @@ export const holders = {
   key: 'holderCount',
   render: value => (
     <ContentWrapper right monospace>
-      {formatNumber(value, {
-        keepDecimal: false,
-        withUnit: false,
-      })}
+      {Number.isInteger(value)
+        ? formatNumber(value, {
+            keepDecimal: false,
+            withUnit: false,
+          })
+        : '-'}
     </ContentWrapper>
   ),
 };
@@ -318,7 +321,7 @@ export const balance = decimal => ({
   dataIndex: 'balance',
   key: 'balance',
   render: value => {
-    const decimals = decimal || 0;
+    const decimals = 0;
     return (
       <ContentWrapper right>
         {value != null ? (
@@ -345,7 +348,7 @@ export const balance = decimal => ({
   },
 });
 
-export const percentage = total => ({
+export const percentage = (total, decimals) => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -357,7 +360,19 @@ export const percentage = total => ({
   dataIndex: 'proportion',
   key: 'proportion',
   render: (value, row) => {
-    const percentage = value != null ? value : total > 0 ? total : null;
+    const percentage =
+      value != null
+        ? value
+        : total > 0
+        ? new BigNumber(row.balance)
+            .dividedBy(
+              decimals
+                ? new BigNumber(total).dividedBy(Math.pow(10, +decimals))
+                : new BigNumber(total),
+            )
+            .toFixed(5)
+        : null;
+    console.log(percentage);
     return (
       <ContentWrapper right>
         {percentage === null

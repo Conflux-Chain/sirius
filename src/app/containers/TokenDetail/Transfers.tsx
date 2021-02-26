@@ -145,7 +145,7 @@ export function Transfers({
     tokenColunms.number(page, pageSize),
     tokenColunms.account,
     tokenColunms.balance(decimals),
-    tokenColunms.percentage(totalSupply),
+    tokenColunms.percentage(totalSupply, decimals),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
   const tabs: any = [
