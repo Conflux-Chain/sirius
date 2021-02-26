@@ -19,7 +19,7 @@
     "storageSponsor": "Storage Sponsor",
     "gasSponsor": "Gas Fee Sponsor",
     "create": {
-      "title": "Contract Creation"
+      "title": "Contract Registration"
     },
     "edit": {
       "title": "Contract Edit"
@@ -160,7 +160,7 @@
     "tokens721": "ERC-721 Tokens",
     "tokens1155": "ERC-1155 Tokens",
     "contract": "Contract",
-    "contractCreation": "Contract Creation",
+    "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
@@ -497,10 +497,10 @@
     },
     "contract": "Contract",
     "created": "Created",
-    "contractCreation": "Contract Creation",
+    "contractCreation": "Contract Registration",
     "for": "For",
     "tokenId": "TokenID",
-    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
+    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract registration",
     "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
       "1": "Contract error: ",
@@ -718,7 +718,7 @@
       "recentlyRecordsTip": "Recent Transcations",
       "clearAll": "Clear all",
       "recentlyTenRecordsTip": "Only the latest 10 transactions will be shown.",
-      "contractCreation": "Contract creation",
+      "contractCreation": "Contract registration",
       "contractEdit": "Contract edit",
       "sponsorApplication": "Sponsor application",
       "writeContract": "Write contract",

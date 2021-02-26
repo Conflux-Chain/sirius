@@ -47,6 +47,6 @@ describe('<Header />', () => {
   //   expect(
   //     ui.container.querySelector('.link.navbar-link-menu.navbar-link.expanded'),
   //   ).toBeDefined();
-  //   userEvent.click(ui.getByText('Contract Creation'));
+  //   userEvent.click(ui.getByText('Contract Registration'));
   // });
 });

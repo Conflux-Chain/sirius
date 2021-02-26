@@ -25,7 +25,6 @@ export function BroadcastTx() {
     setError('');
     try {
       const txHash = await cfx.sendRawTransaction(value);
-      console.log(txHash);
       setTxHash(txHash);
       setModalShown(true);
     } catch (e) {

@@ -71,7 +71,7 @@ export const AddressContainer = ({
   );
 
   if (!value) {
-    // contract creation txn to prop is null
+    // Contract Registration txn to prop is null
     if (contractCreated)
       return RenderAddress({
         hoverValue: formatAddress(contractCreated),
@@ -86,7 +86,7 @@ export const AddressContainer = ({
         ),
       });
 
-    // contract creation fail, no link
+    // Contract Registration fail, no link
     return (
       <AddressWrapper>
         <IconWrapper>

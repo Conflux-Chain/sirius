@@ -32,7 +32,7 @@ export function Tokens() {
     tokenColunms.marketCap,
     tokenColunms.transfer,
     tokenColunms.holders,
-    tokenColunms.contract,
+    tokenColunms.contract(),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
@@ -46,7 +46,7 @@ export function Tokens() {
       tokenColunms.token,
       tokenColunms.transfer,
       tokenColunms.holders,
-      tokenColunms.contract,
+      tokenColunms.contract(),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
@@ -54,12 +54,12 @@ export function Tokens() {
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
-    columnsWidth = [1, 8, 4, 4, 5];
+    columnsWidth = [1, 7, 5, 10];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
-      tokenColunms.contract,
+      tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;

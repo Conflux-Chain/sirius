@@ -15,6 +15,7 @@ import imgIn from 'images/token/in.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
+import BigNumber from 'bignumber.js';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -113,6 +114,7 @@ export const price = {
     const count = `$${formatNumber(value || 0, {
       withUnit: false,
       precision: 2,
+      keepZero: true,
     })}`;
     return (
       <ContentWrapper right monospace>
@@ -200,15 +202,17 @@ export const holders = {
   key: 'holderCount',
   render: value => (
     <ContentWrapper right monospace>
-      {formatNumber(value, {
-        keepDecimal: false,
-        withUnit: false,
-      })}
+      {Number.isInteger(value)
+        ? formatNumber(value, {
+            keepDecimal: false,
+            withUnit: false,
+          })
+        : '-'}
     </ContentWrapper>
   ),
 };
 
-export const contract = {
+export const contract = (isFull = false) => ({
   width: 1,
   title: (
     <Translation>
@@ -217,8 +221,8 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => <AddressContainer value={value} />,
-};
+  render: value => <AddressContainer value={value} isFull={isFull} />,
+});
 
 // token detail columns
 export const txnHash = {
@@ -306,7 +310,7 @@ export const account = {
   ),
 };
 
-export const balance = decimal => ({
+export const balance = (decimal, price) => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -319,20 +323,21 @@ export const balance = decimal => ({
   key: 'balance',
   render: value => {
     const decimals = decimal || 0;
+    // Decimal places are determined according to the price
+    const decimalPlace = price > 1 ? price.toFixed(0).length + 1 : 2;
+    const tinyBalanceThreshold = `0.${Array(decimalPlace - 1).join('0')}1`;
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(formatBalance(value, decimals) || 0) < 1 ? (
+          +(formatBalance(value, decimals) || 0) < +tinyBalanceThreshold ? (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
-              {formatBalance(value, decimals, false, {
-                keepDecimal: true,
-                withUnit: false,
-              })}
+              {`< ${tinyBalanceThreshold}`}
             </Text>
           ) : (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
-                keepDecimal: false,
+                precision: decimalPlace,
+                keepZero: true,
                 withUnit: false,
               })}
             </Text>
@@ -345,7 +350,7 @@ export const balance = decimal => ({
   },
 });
 
-export const percentage = total => ({
+export const percentage = (total, decimals) => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -357,18 +362,32 @@ export const percentage = total => ({
   dataIndex: 'proportion',
   key: 'proportion',
   render: (value, row) => {
-    const percentage = value != null ? value : total > 0 ? total : null;
+    const percentage =
+      value != null
+        ? value
+        : total > 0
+        ? new BigNumber(row.balance)
+            .dividedBy(
+              decimals
+                ? new BigNumber(total).dividedBy(Math.pow(10, +decimals))
+                : new BigNumber(total),
+            )
+            .multipliedBy(100)
+            .toFixed(8)
+        : null;
     return (
       <ContentWrapper right>
-        {percentage === null
-          ? '-'
-          : percentage < 0.00001
-          ? '< 0.001%'
-          : formatNumber(percentage * 100, {
-              precision: 3,
-              withUnit: false,
-              keepZero: true,
-            }) + '%'}
+        <Text span hoverValue={`${percentage}%`}>
+          {percentage === null
+            ? '-'
+            : percentage < 0.001
+            ? '< 0.001%'
+            : formatNumber(percentage, {
+                precision: 3,
+                withUnit: false,
+                keepZero: true,
+              }) + '%'}
+        </Text>
       </ContentWrapper>
     );
   },

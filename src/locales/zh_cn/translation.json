@@ -19,7 +19,7 @@
     "storageSponsor": "存储费赞助",
     "gasSponsor": "燃气费赞助",
     "create": {
-      "title": "合约创建"
+      "title": "合约注册"
     },
     "edit": {
       "title": "合约编辑"
@@ -160,7 +160,7 @@
     "tokens721": "ERC-721 代币",
     "tokens1155": "ERC-1155 代币",
     "contract": "合约",
-    "contractCreation": "创建合约",
+    "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
@@ -497,7 +497,7 @@
     },
     "contract": "合约",
     "created": "已创建",
-    "contractCreation": "合约创建",
+    "contractCreation": "合约注册",
     "for": "For",
     "tokenId": "代币ID",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
@@ -718,7 +718,7 @@
       "recentlyRecordsTip": "最近的交易",
       "clearAll": "清空全部",
       "recentlyTenRecordsTip": "仅展示近 10 条交易记录。",
-      "contractCreation": "合约创建",
+      "contractCreation": "合约注册",
       "contractEdit": "合约编辑",
       "sponsorApplication": "赞助申请",
       "writeContract": "写入合约",
@@ -728,7 +728,7 @@
       "link": "在 ConfluxScan 上查看",
       "action": {
         "100": "交易结果",
-        "101": "合约创建",
+        "101": "合约注册",
         "102": "合约编辑",
         "103": "写合约",
         "104": "读合约",
