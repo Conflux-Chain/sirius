@@ -113,6 +113,7 @@ export const price = {
     const count = `$${formatNumber(value || 0, {
       withUnit: false,
       precision: 2,
+      keepZero: true,
     })}`;
     return (
       <ContentWrapper right monospace>
