@@ -898,7 +898,11 @@ export const Transaction = () => {
             </Description>
           </StyledFoldButtonWrapper>
         </Card>
-        <TableCard from={fromContent()} to={toContent()}></TableCard>
+        <TableCard
+          from={fromContent()}
+          to={toContent()}
+          hash={routeHash}
+        ></TableCard>
       </StyledCardWrapper>
     </StyledTransactionsWrapper>
   );

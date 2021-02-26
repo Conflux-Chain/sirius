@@ -72,17 +72,20 @@ export const hex2utf8 = pStr => {
   return tempstr;
 };
 
-export const toThousands = (num, delimiter = ',') => {
+export const toThousands = (num, delimiter = ',', prevDelimiter = ',') => {
   if ((typeof num !== 'number' || isNaN(num)) && typeof num !== 'string')
     return '';
   let str = num + '';
-  return str.split('.').reduce((acc, cur, index) => {
-    if (index) {
-      return `${acc}.${cur}`;
-    } else {
-      return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
-    }
-  }, '');
+  return str
+    .replace(new RegExp(prevDelimiter, 'igm'), '')
+    .split('.')
+    .reduce((acc, cur, index) => {
+      if (index) {
+        return `${acc}.${cur}`;
+      } else {
+        return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
+      }
+    }, '');
 };
 
 const riskDivided = new BigNumber(2).pow(256).minus(1);
@@ -272,6 +275,8 @@ export const formatNumber = (num, opt?) => {
       replaceAll(intWithoutUnit, option.delimiter, ''),
     ).toFormat()}${unit}`;
   }
+  // 10. 格式化千分符
+  result = toThousands(result);
   return result;
 };
 
