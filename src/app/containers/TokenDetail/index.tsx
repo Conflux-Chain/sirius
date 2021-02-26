@@ -29,6 +29,8 @@ export function TokenDetail() {
     data = {};
   }
 
+  data.holderCount = data.holderCount === '-' ? 0 : data.holderCount;
+
   // data.transferStatistic = data.transferStatistic || {};
 
   // set tokenType to the transferType which has max transfer count
@@ -112,6 +114,7 @@ export function TokenDetail() {
             decimals={data.decimals || 0}
             price={data.price || 0}
             totalSupply={data.totalSupply || 0}
+            holderCount={data.holderCount || 0}
             tokenAddress={tokenAddress}
             symbol={data.symbol}
             transferType={data.transferType}
