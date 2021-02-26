@@ -22,6 +22,7 @@ import {
   bytecode as stakingBytecode,
 } from '../../../utils/contract/staking.json';
 import { Tooltip } from '../../components/Tooltip/Loadable';
+import { Link } from '../../components/Link/Loadable';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -341,7 +342,13 @@ export function AddressMetadata({ address, accountInfo }) {
                               {fromDripToCfx(v.amount || 0)}
                             </Text>
                           </td>
-                          <td>{v.unlockBlockNumber}</td>
+                          <td>
+                            <Link
+                              href={`/block-countdown/${v.unlockBlockNumber}`}
+                            >
+                              {v.unlockBlockNumber}
+                            </Link>
+                          </td>
                           <td>
                             {t(translations.addressDetail.unlockTime, { days })}
                           </td>
