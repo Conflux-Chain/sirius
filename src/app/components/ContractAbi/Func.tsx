@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { usePortal } from 'utils/hooks/usePortal';
 import { useMessages } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
@@ -44,7 +44,7 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [, setMessage] = useMessages();
-  const { address, confluxJS, chainId } = useConfluxPortal(); // TODO cip-37 portal
+  const { chainId, accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -71,14 +71,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   }, [data]);
   useEffect(() => {
     if (type === 'write') {
-      if (address) {
+      if (accounts[0]) {
         setHoverText('');
       } else {
         setHoverText('contract.connectPortalFirst');
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, address]);
+  }, [type, accounts[0]]);
   const onFinish = async values => {
     const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
@@ -124,7 +124,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
         break;
       case 'write':
-        if (address) {
+        if (accounts[0]) {
           if (isTestNetEnv() && Number(chainId) !== 1) {
             setMessage({ text: t('contract.error.testnet'), color: 'error' });
             return;
@@ -136,7 +136,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           let objParams: any[] = [];
           // cip-37
           let txParams = {
-            from: formatAddress(address, { hex: true }),
+            from: formatAddress(accounts[0], { hex: true }),
             to: formatAddress(contractAddress, { hex: true }),
           };
           if (data['stateMutability'] === 'payable') {

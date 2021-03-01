@@ -12,6 +12,7 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
 import { formatAddress } from './util';
 import { RotateImg } from './RotateImg';
+import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -30,7 +31,7 @@ export const Button = ({ className, onClick }: Button) => {
   let hasPendingRecords = connected === 1 && !!pendingRecords.length;
 
   if (installed) {
-    if (accounts.length) {
+    if (accounts.length && utilAddress.isValidCfxAddress(accounts[0])) {
       if (hasPendingRecords) {
         buttonStatus = (
           <RotateImg

@@ -721,7 +721,9 @@
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
       "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
-      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。"
+      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
+      "cannotProcess": "无法处理",
+      "upgradeTip": "请升级 ConfluxPortal 至最新版本。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",
