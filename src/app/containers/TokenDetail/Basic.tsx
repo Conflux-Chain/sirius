@@ -121,9 +121,16 @@ export const Basic = ({
     children:
       totalSupply !== undefined ? (
         <Text
-          hoverValue={`${formatBalance(totalSupply, decimals, true)} ${symbol}`}
+          hoverValue={`${formatBalance(
+            totalSupply,
+            transferType === cfxTokenTypes.erc20 ? decimals : 0,
+            true,
+          )} ${symbol}`}
         >
-          {`${formatBalance(totalSupply, decimals)} ${symbol}`}
+          {`${formatBalance(
+            totalSupply,
+            transferType === cfxTokenTypes.erc20 ? decimals : 0,
+          )} ${symbol}`}
         </Text>
       ) : address ? (
         t(translations.general.notAvailable)

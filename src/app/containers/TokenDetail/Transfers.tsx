@@ -148,7 +148,11 @@ export function Transfers({
   let holdersColumns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.account,
-    tokenColunms.balance(decimals, price),
+    tokenColunms.balance(
+      transferType === cfxTokenTypes.erc20 ? decimals : 0,
+      price,
+      transferType,
+    ),
     tokenColunms.percentage(totalSupply),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
