@@ -16,6 +16,7 @@ import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
+import { cfxTokenTypes } from '../constants';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -310,7 +311,7 @@ export const account = {
   ),
 };
 
-export const balance = (decimal, price) => ({
+export const balance = (decimal, price, transferType) => ({
   width: 1,
   title: (
     <ContentWrapper right>
@@ -329,21 +330,29 @@ export const balance = (decimal, price) => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          +(
-            formatBalance(value, decimals, false, {
-              precision: decimals,
-              withUnit: false,
-              keepDecimals: true,
-            }) || 0
-          ) < +tinyBalanceThreshold ? (
-            <Text span hoverValue={formatBalance(value, decimals, true)}>
-              {`< ${tinyBalanceThreshold}`}
-            </Text>
+          transferType === cfxTokenTypes.erc20 ? (
+            +(
+              formatBalance(value, decimals, false, {
+                precision: decimals,
+                withUnit: false,
+                keepDecimals: true,
+              }) || 0
+            ) < +tinyBalanceThreshold ? (
+              <Text span hoverValue={formatBalance(value, decimals, true)}>
+                {`< ${tinyBalanceThreshold}`}
+              </Text>
+            ) : (
+              <Text span hoverValue={formatBalance(value, decimals, true)}>
+                {formatBalance(value, decimals, false, {
+                  precision: decimalPlace,
+                  keepZero: true,
+                  withUnit: false,
+                })}
+              </Text>
+            )
           ) : (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
-                precision: decimalPlace,
-                keepZero: true,
                 withUnit: false,
               })}
             </Text>
