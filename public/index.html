@@ -51,6 +51,10 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', location.hostname === '127.0.0.1'?'G-VCXQ7FY6EV':'G-BWQ72S5QE8');
+    gtag('config', window.location.hostname.includes('confluxscan.io') ? 'G-BWQ72S5QE8'
+      : window.location.hostname.includes('confluxnetwork.org')
+        ? 'G-17W5VXCYSL'
+        : 'G-VCXQ7FY6EV'
+    );
   </script>
 </html>
