@@ -46,10 +46,18 @@ export const GlobalStyle = createGlobalStyle`
       height: 2.1429rem;
       color: #65709a;
       background-color: #fff;
+      border: none;
+
+      &:hover {
+        border: none;
+        color: #65709a;
+        background-color: #f1f4f6;
+      }
     }
     .option.selected {
       color: #fff;
       background-color: #65709a;
+      border: none;
     }
   }
   .transactionModalContainer{

@@ -19,7 +19,7 @@
     "storageSponsor": "存储费赞助",
     "gasSponsor": "燃气费赞助",
     "create": {
-      "title": "合约创建"
+      "title": "合约注册"
     },
     "edit": {
       "title": "合约编辑"
@@ -65,7 +65,7 @@
     },
     "query": "读取",
     "write": "写入",
-    "connectPortalFirst": "请先连接 ConfluxPortal！",
+    "connectPortalFirst": "请先连接 ConfluxPortal 钱包！",
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
   },
@@ -160,17 +160,20 @@
     "tokens721": "ERC-721 代币",
     "tokens1155": "ERC-1155 代币",
     "contract": "合约",
-    "contractCreation": "创建合约",
+    "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
+    "more": "更多",
     "charts": "图表",
     "statistics": "最佳统计数据",
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
     "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址",
-    "addressConverter": "地址转换"
+    "addressConverter": "地址格式转换",
+    "broadcastTx": "广播交易",
+    "blocknumberCalc": "区块计算器"
   },
   "footer": {
     "product": "产品",
@@ -179,7 +182,10 @@
     "confluxbounty": "Conflux Bounty",
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "工具",
-    "addressFormatConversion": "地址格式转换"
+    "addressFormatConversion": "地址格式转换",
+    "broadcastTx": "广播交易",
+    "blocknumberCalc": "区块计算器",
+    "preference": "偏好设置"
   },
   "packing": {
     "title": "您的交易正在打包，请稍后...",
@@ -215,6 +221,7 @@
     "address": "个地址",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
+      "searchPlaceHolderWithTokenId": "交易哈希值 / 持有人地址 / 代币 ID",
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
     }
@@ -238,6 +245,18 @@
     "hashRate": {
       "title": "哈希算力",
       "description": "矿工每秒计算哈希值的次数"
+    },
+    "cfxPrice": {
+      "title": "CFX 价格",
+      "description": "数据提供方：<a href='https://moondex.io/trade/cfxusdt' target='_blank'>MoonDEX</a>"
+    },
+    "cfxMarketCap": {
+      "title": "市值",
+      "description": "市值 = 当前价格  x 流通量"
+    },
+    "cfxCirculatingSupply": {
+      "title": "流通量",
+      "description": "CFX 流通量"
     }
   },
   "general": {
@@ -262,9 +281,10 @@
     "transaction": "交易",
     "transactions": "交易",
     "tokenTxns": "代币交易",
-    "tokenTxnsErc20": "Erc20 代币交易",
-    "tokenTxnsErc721": "Erc721 代币交易",
-    "tokenTxnsErc1155": "Erc1155 代币交易",
+    "cfxTransfer": "CFX 交易",
+    "tokenTxnsErc20": "ERC20 交易",
+    "tokenTxnsErc721": "ERC721 交易",
+    "tokenTxnsErc1155": "ERC1155 交易",
     "table": {
       "noData": "暂无相关记录",
       "whoops": "哎呀！",
@@ -305,8 +325,11 @@
         "age": "块龄",
         "from": "发送方",
         "to": "接收方",
+        "accountAddress": "地址",
         "tokenId": "代币 ID",
-        "quantity": "数量"
+        "quantity": "数量",
+        "percentage": "百分比",
+        "traceType": "追溯类型"
       },
       "contracts": {
         "number": "#",
@@ -410,7 +433,7 @@
         "504": "网关超时。"
       }
     },
-    "connnectWalletSubmit": "连接钱包以提交",
+    "connnectWalletSubmit": "提交",
     "waitForConfirm": "等待确认",
     "txRejected": "交易已被拒绝",
     "exportRecords": "导出当前记录"
@@ -425,7 +448,7 @@
     "providedGas": "基金会已累计提供燃气费",
     "availStorage": "基金会剩余可提供存储费",
     "availGas": "基金会剩余可提供燃气费",
-    "connectToApply": "连接钱包以申请",
+    "connectToApply": "申请",
     "notice": "说明",
     "noticeFirst": "基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
     "noticeSecond": "申请前需要链接 ConfluxPortal，连接完成后点击申请即可获得赞助。",
@@ -474,7 +497,7 @@
     },
     "contract": "合约",
     "created": "已创建",
-    "contractCreation": "合约创建",
+    "contractCreation": "合约注册",
     "for": "For",
     "tokenId": "代币ID",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
@@ -487,6 +510,13 @@
       "5": "未知合约错误。",
       "6": "合约部署失败。",
       "7": "未知错误。"
+    },
+    "internalTxns": "内部交易",
+    "internalTxnsTip": {
+      "from": "该合约调用从",
+      "to": "到",
+      "produced": "共生成",
+      "txns": "个内部交易。"
     }
   },
   "block": {
@@ -551,6 +581,27 @@
     "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37。"
+  },
+  "broadcastTx": {
+    "title": "广播交易",
+    "subtitle": "您可以在下方输入六进制格式的已签名原始交易（0x...）并将其在 Conflux 网络上广播。",
+    "broadcastBtn": "广播",
+    "success": "广播成功",
+    "error": "错误：",
+    "unknownError": "无法广播交易"
+  },
+  "blocknumberCalc": {
+    "title": "区块计算器",
+    "placeholder": "请输入目标区块号",
+    "higherError": "请输入一个较大的区块号",
+    "calcBtn": "计算",
+    "currentBlocknumber": "当前区块号",
+    "remainingBlocks": "剩余区块",
+    "targetDate": "预估目标日期",
+    "day": "天",
+    "hour": "小时",
+    "min": "分钟",
+    "sec": "秒"
   },
   "notice": {
     "mainnet": [
@@ -667,19 +718,23 @@
       "recentlyRecordsTip": "最近的交易",
       "clearAll": "清空全部",
       "recentlyTenRecordsTip": "仅展示近 10 条交易记录。",
-      "contractCreation": "合约创建",
+      "contractCreation": "合约注册",
       "contractEdit": "合约编辑",
       "sponsorApplication": "赞助申请",
       "writeContract": "写入合约",
       "viewYourTranscation": "查看您的交易"
+    },
+    "notify": {
+      "link": "在 ConfluxScan 上查看",
+      "action": {
+        "100": "交易结果",
+        "101": "合约注册",
+        "102": "合约编辑",
+        "103": "写合约",
+        "104": "读合约",
+        "105": "Sponsor 应用"
+      }
     }
-  },
-  "txnAction": {
-    "10001": "合约创建",
-    "10002": "合约编辑",
-    "10003": "写合约",
-    "10004": "读合约",
-    "10005": "Sponsor 应用"
   },
   "statistics": {
     "statistics": "最佳统计",

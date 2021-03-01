@@ -24,19 +24,18 @@ export function Tokens() {
   const { tokenType } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 7, 3, 3, 3, 3, 2, 5];
+  let columnsWidth = [1, 6, 3, 3, 3, 2, 4];
   let columns: ColumnsType = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
     tokenColunms.price,
     tokenColunms.marketCap,
     tokenColunms.transfer,
-    tokenColunms.totalSupply,
     tokenColunms.holders,
-    tokenColunms.contract,
+    tokenColunms.contract(),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/token?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
+  let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
 
   let title = t(translations.header.tokens20);
 
@@ -47,23 +46,23 @@ export function Tokens() {
       tokenColunms.token,
       tokenColunms.transfer,
       tokenColunms.holders,
-      tokenColunms.contract,
+      tokenColunms.contract(),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/token?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
     title = t(translations.header.tokens721);
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
-    columnsWidth = [1, 8, 4, 4, 5];
+    columnsWidth = [1, 7, 5, 10];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
-      tokenColunms.contract,
+      tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/token?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
     title = t(translations.header.tokens1155);
   }
 

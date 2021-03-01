@@ -28,8 +28,7 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
 }
 
 .c0:not(.pending):hover {
-  background: #65709a;
-  color: #ffffff;
+  background: rgba(100%,87%,11%,70%);
 }
 
 .c0 .button-status-online {
@@ -46,12 +45,14 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   margin-right: 0.4286rem;
 }
 
-<div
-  class="c0 connect-wallet-button"
->
-  
-  <span>
-    Connect Wallet
-  </span>
-</div>
+<span>
+  <div
+    class="c0 connect-wallet-button"
+  >
+    
+    <span>
+      Connect Wallet
+    </span>
+  </div>
+</span>
 `;

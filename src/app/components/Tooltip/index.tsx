@@ -37,7 +37,8 @@ const TooltipWrapper = styled.span`
     font-size: 12px;
     color: #cdcdcd;
     line-height: 1.1429rem;
-    max-width: 38rem; // min width of hash tooltip, longer content will fold with word break
+    min-width: 40px;
+    max-width: 38rem; // max width of hash tooltip, longer content will fold with word break
     ${media.s} {
       max-width: 24rem;
       white-space: normal;

@@ -230,8 +230,13 @@ const WrappLink = styled.span`
   a.link.navbar-link {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     color: #65709a;
     padding: 0.43rem 1.5rem;
+
+    ${media.l} {
+      padding: 0.43rem 1.15rem;
+    }
 
     &.level-1 {
       width: auto;

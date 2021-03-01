@@ -257,7 +257,7 @@ export const useTokenQuery: useApi = (params, shouldFetch = true, ...rest) => {
   params = useRef(params).current;
   return useSWR(
     shouldFetch
-      ? [`/token/${params[0].address}?${params[0].address}:''`, ...params]
+      ? [`/stat/tokens/by-address?address=${params[0].address}:''`, ...params]
       : null,
     rest[1] || simpleGetFetcher,
     rest[0],

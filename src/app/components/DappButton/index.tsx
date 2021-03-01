@@ -11,7 +11,10 @@ import { getEllipsStr } from '../../../utils';
 import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from '../../../utils/cfx';
+import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+import { ConnectButton } from '../../components/ConnectWallet';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -26,6 +29,7 @@ interface DappButtonProps {
   closeModalCallback?: () => void;
   shownAddress?: boolean;
   htmlType?: React.ButtonHTMLAttributes<any>['type'];
+  txnAction?: number | string;
 }
 type NativeAttrs = Omit<React.ButtonHTMLAttributes<any>, keyof ButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
@@ -41,11 +45,13 @@ const DappButton = ({
   failCallback,
   closeModalCallback,
   shownAddress,
+  txnAction = TxnAction.default,
   ...props
 }: Props) => {
+  const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // TODO cip-37 portal multi version
-  const { portalInstalled, address, login, confluxJS } = useConfluxPortal();
+  const { portalInstalled, address, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -56,36 +62,42 @@ const DappButton = ({
     text = submitText ? submitText : t(translations.general.submit);
   }
   const onClickHandler = () => {
-    if (!portalInstalled) {
-      useConfluxPortal.openHomePage();
-    } else {
-      if (address) {
-        if (!btnDisabled) {
-          // TODO cip-37 portal
-          const txParams = {
-            from: formatAddress(address, { hex: true }),
-            to: formatAddress(contractAddress, { hex: true }),
-            data,
-          };
-          //loading
-          setModalType('loading');
-          setModalShown(true);
-          confluxJS
-            .sendTransaction(txParams)
-            .then(txHash => {
-              //success alert
-              successCallback && successCallback(txHash);
-              setModalType('success');
-              setTxHash(txHash);
-            })
-            .catch(error => {
-              //rejected alert
-              failCallback && failCallback(error.message);
-              setModalType('fail');
+    if (address) {
+      if (!btnDisabled) {
+        // TODO cip-37 portal
+        const txParams = {
+          from: formatAddress(address, { hex: true }),
+          to: formatAddress(contractAddress, { hex: true }),
+          data,
+        };
+        //loading
+        setModalType('loading');
+        setModalShown(true);
+
+        confluxJS
+          .sendTransaction(txParams)
+          .then(txHash => {
+            addRecord({
+              hash: txHash,
+              info: JSON.stringify({
+                code: txnAction,
+                description: t(
+                  translations.connectWallet.notify.action[txnAction],
+                ),
+                hash: txHash,
+              }),
             });
-        }
-      } else {
-        login();
+
+            //success alert
+            successCallback && successCallback(txHash);
+            setModalType('success');
+            setTxHash(txHash);
+          })
+          .catch(error => {
+            //rejected alert
+            failCallback && failCallback(error.message);
+            setModalType('fail');
+          });
       }
     }
   };
@@ -96,18 +108,20 @@ const DappButton = ({
 
   const btnComp = (
     <BtnContainer>
-      <Button
-        {...props}
-        variant="solid"
-        color="primary"
-        className={`${btnClassName} btnInnerClass ${
-          btnDisabled ? 'disabled' : null
-        }`}
-        disabled={btnDisabled}
-        onClick={onClickHandler}
-      >
-        {text}
-      </Button>
+      <ConnectButton>
+        <Button
+          {...props}
+          variant="solid"
+          color="primary"
+          className={`${btnClassName} btnInnerClass ${
+            btnDisabled ? 'disabled' : null
+          }`}
+          disabled={btnDisabled}
+          onClick={onClickHandler}
+        >
+          {text}
+        </Button>
+      </ConnectButton>
       {shownAddress && (
         <>
           <img

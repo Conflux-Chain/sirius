@@ -60,6 +60,7 @@
     "react-scripts": "3.4.3",
     "react-test-renderer": "16.13.0",
     "react-use": "15.3.4",
+    "recharts": "2.0.7",
     "recoil": "0.0.10",
     "sanitize.css": "11.0.0",
     "serve": "11.3.0",

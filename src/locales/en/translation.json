@@ -19,7 +19,7 @@
     "storageSponsor": "Storage Sponsor",
     "gasSponsor": "Gas Fee Sponsor",
     "create": {
-      "title": "Contract Creation"
+      "title": "Contract Registration"
     },
     "edit": {
       "title": "Contract Edit"
@@ -36,7 +36,7 @@
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
-    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
     "importJsonFile": "Import Json file(s)",
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
@@ -160,17 +160,20 @@
     "tokens721": "ERC-721 Tokens",
     "tokens1155": "ERC-1155 Tokens",
     "contract": "Contract",
-    "contractCreation": "Contract Creation",
+    "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
+    "more": "More",
     "charts": "Charts",
     "statistics": "Top Statistics",
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
     "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
-    "addressConverter": "address converter"
+    "addressConverter": "Address Format Conversion",
+    "broadcastTx": "Broadcast Transaction",
+    "blocknumberCalc": "Blocknumber Calculator"
   },
   "footer": {
     "product": "Product",
@@ -179,7 +182,10 @@
     "confluxbounty": "Conflux Bounty",
     "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
     "tool": "Tool",
-    "addressFormatConversion": "Address Format Conversion"
+    "addressFormatConversion": "Address Format Conversion",
+    "broadcastTx": "Broadcast Transaction",
+    "blocknumberCalc": "Blocknumber Calculator",
+    "preference": "Preference"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
@@ -215,6 +221,7 @@
     "address": "addresses",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
+      "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }
@@ -238,6 +245,18 @@
     "hashRate": {
       "title": "Hash Rate",
       "description": "The number of times a miner calculates hashes per second"
+    },
+    "cfxPrice": {
+      "title": "CFX Price",
+      "description": "Market Data Source: <a href='https://moondex.io/trade/cfxusdt' target='_blank'>MoonDEX</a>"
+    },
+    "cfxMarketCap": {
+      "title": "Market Cap",
+      "description": "Market Cap = Current Price x Circulating Supply"
+    },
+    "cfxCirculatingSupply": {
+      "title": "Circulating Supply",
+      "description": "CFX Circulating Supply"
     }
   },
   "general": {
@@ -262,9 +281,10 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
-    "tokenTxnsErc20": "Erc20 Token Txns",
-    "tokenTxnsErc721": "Erc721 Token Txns",
-    "tokenTxnsErc1155": "Erc1155 Token Txns",
+    "cfxTransfer": "CFX Transfers",
+    "tokenTxnsErc20": "ERC20 Txns",
+    "tokenTxnsErc721": "ERC721 Txns",
+    "tokenTxnsErc1155": "ERC1155 Txns",
     "table": {
       "noData": "There are no matching entries.",
       "whoops": "Whoops!",
@@ -305,8 +325,11 @@
         "age": "Age",
         "from": "From",
         "to": "To",
+        "accountAddress": "Address",
         "tokenId": "TokenID",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "percentage": "Percentage",
+        "traceType": "Trace Type"
       },
       "contracts": {
         "number": "#",
@@ -410,7 +433,7 @@
         "504": "Gateway Timeout."
       }
     },
-    "connnectWalletSubmit": "Connect wallet to submit",
+    "connnectWalletSubmit": "Submit",
     "waitForConfirm": "Waiting For Confirmation",
     "txRejected": "Transaction Rejected",
     "exportRecords": "Export Current Records"
@@ -425,7 +448,7 @@
     "providedGas": "Gas Fees Provided By Conflux Foundation",
     "availStorage": "Remaining Storage Fees By Conflux Foundation",
     "availGas": "Remaining Gas Fees By Conflux Foundation",
-    "connectToApply": "Connect wallet to apply",
+    "connectToApply": "Apply",
     "notice": "Remark",
     "noticeFirst": "Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
     "noticeSecond": "To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",
@@ -474,10 +497,10 @@
     },
     "contract": "Contract",
     "created": "Created",
-    "contractCreation": "Contract Creation",
+    "contractCreation": "Contract Registration",
     "for": "For",
     "tokenId": "TokenID",
-    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract creation",
+    "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract registration",
     "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
       "1": "Contract error: ",
@@ -487,6 +510,13 @@
       "5": "Unknown contract error.",
       "6": "Contract deployment failed.",
       "7": "Unknown error."
+    },
+    "internalTxns": "Internal Txns",
+    "internalTxnsTip": {
+      "from": "The contract call from",
+      "to": "to",
+      "produced": "produced",
+      "txns": "internal transactions."
     }
   },
   "block": {
@@ -544,13 +574,34 @@
     "checksum": "Old checksummed address",
     "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
     "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
-    "newCustomnetAddress": "Conflux custom network id new address (both address types are valid)",
+    "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
     "remark": "Remark:",
     "tip1": "1. The Checksum method capitalizes part of the letters in the address and forms a verification sum with the remaining lowercase letters so that the address can self-verify.",
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37."
+  },
+  "broadcastTx": {
+    "title": "Broadcast Transaction",
+    "subtitle": "Below you can enter a signed raw transaction in hex format (0x...) and broadcast it to the Conflux network.",
+    "broadcastBtn": "Broadcast",
+    "success": "Broadcast Succeed",
+    "error": "Error: ",
+    "unknownError": "Unable to broadcast transaction"
+  },
+  "blocknumberCalc": {
+    "title": "Blocknumber Calculator",
+    "placeholder": "Please enter target blocknumber",
+    "higherError": "Please enter a higher blocknumber ",
+    "calcBtn": "Calculate",
+    "currentBlocknumber": "Current Blocknumber",
+    "remainingBlocks": "Remaining Blocks",
+    "targetDate": "Estimated Target Date",
+    "day": "Day",
+    "hour": "Hour",
+    "min": "Min",
+    "sec": "Sec"
   },
   "notice": {
     "mainnet": [
@@ -667,19 +718,23 @@
       "recentlyRecordsTip": "Recent Transcations",
       "clearAll": "Clear all",
       "recentlyTenRecordsTip": "Only the latest 10 transactions will be shown.",
-      "contractCreation": "Contract creation",
+      "contractCreation": "Contract registration",
       "contractEdit": "Contract edit",
       "sponsorApplication": "Sponsor application",
       "writeContract": "Write contract",
       "viewYourTranscation": "View your transcation"
+    },
+    "notify": {
+      "link": "View on ConfluxScan",
+      "action": {
+        "100": "Transaction Status",
+        "101": "Contract Write",
+        "102": "Contract Edit",
+        "103": "Write contract",
+        "104": "read contract",
+        "105": "Sponsor application"
+      }
     }
-  },
-  "txnAction": {
-    "10001": "Contract creation",
-    "10002": "Contract edit",
-    "10003": "Write contract",
-    "10004": "read contract",
-    "10005": "Sponsor application"
   },
   "statistics": {
     "statistics": "Top Statistics",

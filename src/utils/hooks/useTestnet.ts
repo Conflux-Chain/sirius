@@ -4,7 +4,7 @@ export const useTestnet = () => {
   const location = useLocation();
   if (location && location.hostname && location.hostname.includes('testnet'))
     return true;
-  return false;
+  return process.env.REACT_APP_TestNet === 'true';
 };
 
 const isTestEnv = () => window.location.hostname.includes('scantest');

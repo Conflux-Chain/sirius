@@ -35,7 +35,7 @@ exports[`<Footer  /> should match snapshot 1`] = `
   -webkit-box-align: flex-start;
   -ms-flex-align: flex-start;
   align-items: flex-start;
-  padding: 3.29rem 2.29rem 3.29rem 3.36rem;
+  padding: 2.2857rem;
 }
 
 .c0 .footer-bottom-divider.divider {

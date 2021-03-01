@@ -1,9 +1,9 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { Link } from '../../app/components/Link/Loadable';
 import { translations } from '../../locales/i18n';
 import { toThousands, formatNumber } from '../../utils/';
 import { ContentWrapper } from './utils';
+import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
 
 export const rank = {
   title: (
@@ -20,7 +20,7 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   render: (value, row: any) => (
-    <Link href={`/address/${value}`}>{row.name || value}</Link>
+    <AddressContainer value={value} alias={row.name} isFull={true} />
   ),
 };
 

@@ -40,6 +40,7 @@ export const AddressDetailPage = memo(() => {
   const { address } = useParams<RouteParams>();
   const bp = useBreakpoint();
   const { data: accountInfo } = useAccount(address, [
+    'cfxTransferCount',
     'erc20TransferCount',
     'erc721TransferCount',
     'erc1155TransferCount',

@@ -372,6 +372,16 @@ export function Table({ address, addressInfo }) {
     ),
   };
 
+  const columnsCFXTransferWidth = [4, 3, 6, 5, 3, 5];
+  const columnsCFXTrasfer: ColumnsType = [
+    blockColunms.epoch,
+    tokenColunms.txnHash,
+    tokenColunms.from,
+    tokenColunms.to,
+    transactionColunms.value,
+    tokenColunms.age,
+  ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
+
   const columnsTokensWidthErc20 = [3, 5, 5, 3, 5, 4];
   const columnsTokenTrasfersErc20: ColumnsType = [
     tokenColunms.txnHash,
@@ -435,6 +445,25 @@ export function Table({ address, addressInfo }) {
       hasFilter: true,
     },
   ];
+
+  tabs.push({
+    value: `transfers-${cfxTokenTypes.cfx}`,
+    label: (total: number, realTotal: number) => {
+      return (
+        <>
+          {t(translations.general.cfxTransfer)}
+          <TabLabel total={total} realTotal={realTotal} />
+        </>
+      );
+    },
+    pagination: true,
+    url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`,
+    table: {
+      columns: columnsCFXTrasfer,
+      rowKey: row => `${row.transactionHash}${row.transactionTraceIndex}`,
+    },
+    hasFilter: true,
+  });
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,

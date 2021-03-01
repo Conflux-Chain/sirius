@@ -81,6 +81,11 @@ const Brand = styled.div`
   align-items: stretch;
   flex-shrink: 0;
   margin-right: 4rem;
+
+  ${media.l} {
+    margin-right: 2rem;
+  }
+
   .navbar-burger {
     color: #4c4d52;
     display: none;
@@ -181,6 +186,10 @@ const Container = styled.div`
   margin: 0 auto;
   position: relative;
   padding: 0 2.86rem;
+
+  @media (max-width: 1360px) {
+    padding: 0 1.8rem;
+  }
 
   // mobile
   ${media.m} {

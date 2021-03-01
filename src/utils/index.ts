@@ -72,17 +72,20 @@ export const hex2utf8 = pStr => {
   return tempstr;
 };
 
-export const toThousands = (num, delimiter = ',') => {
+export const toThousands = (num, delimiter = ',', prevDelimiter = ',') => {
   if ((typeof num !== 'number' || isNaN(num)) && typeof num !== 'string')
     return '';
   let str = num + '';
-  return str.split('.').reduce((acc, cur, index) => {
-    if (index) {
-      return `${acc}.${cur}`;
-    } else {
-      return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
-    }
-  }, '');
+  return str
+    .replace(new RegExp(prevDelimiter, 'igm'), '')
+    .split('.')
+    .reduce((acc, cur, index) => {
+      if (index) {
+        return `${acc}.${cur}`;
+      } else {
+        return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
+      }
+    }, '');
 };
 
 const riskDivided = new BigNumber(2).pow(256).minus(1);
@@ -272,6 +275,8 @@ export const formatNumber = (num, opt?) => {
       replaceAll(intWithoutUnit, option.delimiter, ''),
     ).toFormat()}${unit}`;
   }
+  // 10. 格式化千分符
+  result = toThousands(result);
   return result;
 };
 
@@ -440,7 +445,12 @@ export const formatTimeStamp = (
   return result;
 };
 
-export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
+export const formatBalance = (
+  balance,
+  decimals = 18,
+  isShowFull = false,
+  opt = {},
+) => {
   try {
     if (isShowFull) {
       return toThousands(
@@ -449,6 +459,7 @@ export const formatBalance = (balance, decimals = 18, isShowFull = false) => {
     }
     return formatNumber(
       new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toString(),
+      opt,
     );
   } catch {}
 };
@@ -626,6 +637,7 @@ export function checkBytes(value, type) {
   }
   const num = Number(type.substr(5));
   let isBytes = false;
+  if (!value) return [isBytes, num];
   if (isHex(value) && isEvenLength(value)) {
     if (num > 0) {
       const str = value.substr(2);
@@ -682,7 +694,7 @@ export const getTimeByBlockInterval = (minuend = 0, subtrahend = 0) => {
   const days = Math.floor(seconds / dayBase);
   const deltaSecond = seconds - days * 86400;
   const hours = Math.floor(deltaSecond / hourBase);
-  return { days, hours };
+  return { days, hours, seconds };
 };
 
 export const addDays = (date, days) => {

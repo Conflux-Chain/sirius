@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { TextLogo } from '../../components/TextLogo';
 import { Search } from './Search';
-// import { ConnectWallet } from '../../components/ConnectWallet';
+import { ConnectWallet } from '../../components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
 import { Nav } from '../../components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
@@ -34,6 +34,10 @@ export const Header = memo(() => {
   const statisticsMatched =
     location?.pathname?.startsWith('/charts') ||
     location?.pathname?.startsWith('/statistics');
+  // const moreMatched =
+  //   location?.pathname?.startsWith('/address-converter') ||
+  //   location?.pathname?.startsWith('/push-tx') ||
+  //   location?.pathname?.startsWith('/block-countdown');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -139,6 +143,34 @@ export const Header = memo(() => {
         },
       ],
     },
+    // more
+    // {
+    //   title: t(translations.header.more),
+    //   matched: moreMatched,
+    //   children: [
+    //     {
+    //       title: [
+    //         t(translations.header.addressConverter),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       href: '/address-converter',
+    //     },
+    //     {
+    //       title: [
+    //         t(translations.header.broadcastTx),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       href: '/push-tx',
+    //     },
+    //     {
+    //       title: [
+    //         t(translations.header.blocknumberCalc),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       href: '/block-countdown',
+    //     },
+    //   ],
+    // },
   ];
 
   const endLinks: HeaderLinks = [
@@ -168,7 +200,10 @@ export const Header = memo(() => {
         },
       ],
     },
-    {
+  ];
+
+  if (bp === 'm' || bp === 's') {
+    endLinks.push({
       // switch language
       title: (
         <div className="header-link-lang-title" style={{ minWidth: '2.1rem' }}>
@@ -189,8 +224,8 @@ export const Header = memo(() => {
           isMatchedFn: () => iszh,
         },
       ],
-    },
-  ];
+    });
+  }
 
   const startLinksJSX = genParseLinkFn(startLinks);
   const endLinksJSX = genParseLinkFn(endLinks);
@@ -215,7 +250,7 @@ export const Header = memo(() => {
     bp !== 'm' && bp !== 's' && (
       <>
         <Search />
-        {/* <ConnectWallet /> */}
+        <ConnectWallet />
       </>
     ),
     endLinksJSX,

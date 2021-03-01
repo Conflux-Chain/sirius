@@ -30,10 +30,12 @@ import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
 import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
+import { TxnAction } from '../../../utils/constants';
 interface Props {
   contractDetail: any;
   type: string;
@@ -60,6 +62,7 @@ const fieldsContract = [
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
   const { address: accountAddress } = useConfluxPortal(); // TODO cip-37 portal
+  const { connected } = usePortal();
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -75,7 +78,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const [errorMsgForName, setErrorMsgForName] = useState('');
   const [errorMsgForSite, setErrorMsgForSite] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
-  const [hoverTips, setHoverTips] = useState('');
   const [isAddressError, setIsAddressError] = useState(true);
   const [isAdminError, setIsAdminError] = useState(true);
   const [isErc20Error, setIsErc20Error] = useState(true);
@@ -102,6 +104,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const siteInputChanger = e => {
     setSite(e.target.value);
   };
+
+  // store txn action name for wallet plugin history
+  let txnAction = TxnAction.default;
+  if (type === 'create') {
+    txnAction = TxnAction.contractWrite;
+  } else if (type === 'edit') {
+    txnAction = TxnAction.contractEdit;
+  }
 
   useEffect(() => {
     setContractImgSrc(contractDetail.icon || '');
@@ -237,10 +247,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   }, [abi]);
   useEffect(() => {
     if (accountAddress) {
-      setHoverTips('');
       checkAdminThenToken(tokenImgSrc);
-    } else {
-      setHoverTips('contract.beforeContractSubmitTip');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountAddress]);
@@ -659,7 +666,12 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
           contractAddress={contractManagerAddress}
           data={txData}
           btnDisabled={!btnShouldClick}
-          hoverText={`${hoverTips ? t(hoverTips) : ''}`}
+          hoverText={
+            connected === 0
+              ? t(translations.contract.beforeContractSubmitTip)
+              : ''
+          }
+          txnAction={txnAction}
         ></DappButton>
         <div
           className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}

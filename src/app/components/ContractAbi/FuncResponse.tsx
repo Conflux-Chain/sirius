@@ -14,7 +14,9 @@ export declare type Props = OutputParamsProps & NativeAttrs;
 const FuncResponse = ({ name }: Props) => {
   return (
     <>
-      <Container>{`[${name} method response]`}</Container>
+      <Container>
+        [ <strong>{name}</strong> method response ]
+      </Container>
     </>
   );
 };

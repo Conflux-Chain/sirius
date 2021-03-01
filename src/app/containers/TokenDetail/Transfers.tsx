@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { media } from '../../../styles/media';
@@ -18,34 +18,52 @@ interface TransferProps {
   tokenAddress: string;
   symbol: string;
   decimals: number;
+  totalSupply: number;
+  price: number;
+  holderCount: number;
   transferType: string;
 }
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
+  tokenId?: string;
 }
 
 export function Transfers({
   tokenAddress,
   symbol,
   decimals,
+  totalSupply,
+  price,
+  holderCount,
   transferType,
 }: TransferProps) {
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
+  const [showFilter, setShowFilter] = useState(false);
 
   let {
-    pageSize: parsedPageSize,
+    page = 1,
+    pageSize = 10,
     accountAddress: filterAddr,
     transactionHash: filterHash,
+    tokenId: filterTokenId,
+    tab: currentTab,
     ...others
   } = queryString.parse(location.search);
-  if (!parsedPageSize) {
-    parsedPageSize = '10';
-  }
 
-  const filter = (filterAddr as string) || (filterHash as string) || '';
+  useEffect(() => {
+    if (currentTab !== 'holders') {
+      setShowFilter(true);
+    }
+  }, [currentTab]);
+
+  const filter =
+    (filterAddr as string) ||
+    (filterHash as string) ||
+    (filterTokenId as string) ||
+    '';
 
   const onFilter = (filter: string) => {
     let object: Query = {};
@@ -53,13 +71,15 @@ export function Transfers({
       object.accountAddress = filter;
     } else if (isHash(filter)) {
       object.transactionHash = filter;
+    } else if (transferType !== cfxTokenTypes.erc20) {
+      object.tokenId = filter;
     }
     const urlWithQuery = queryString.stringifyUrl({
       url: location.pathname,
       query: {
         ...others,
         page: '1',
-        pageSize: parsedPageSize as string,
+        pageSize: pageSize as string,
         ...object,
       },
     });
@@ -123,7 +143,16 @@ export function Transfers({
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 
-  const tabs = [
+  // holders
+  let holdersColumnsWidth = [2, 10, 6, 4];
+  let holdersColumns = [
+    tokenColunms.number(page, pageSize),
+    tokenColunms.account,
+    tokenColunms.balance(decimals, price),
+    tokenColunms.percentage(totalSupply),
+  ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
+
+  const tabs: any = [
     {
       value: 'transfers',
       label: (total: number, realTotal: number) => {
@@ -144,16 +173,46 @@ export function Transfers({
     },
   ];
 
+  if (
+    transferType === cfxTokenTypes.erc20 ||
+    transferType === cfxTokenTypes.erc721
+  ) {
+    tabs.push({
+      value: 'holders',
+      label: () => {
+        return (
+          <>
+            {t(translations.token.holders)}
+            <TabLabel total={holderCount} realTotal={holderCount} />
+          </>
+        );
+      },
+      url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
+      table: {
+        className: 'monospaced',
+        columns: holdersColumns,
+        rowKey: row => `${tokenAddress}${row.account.address}`,
+      },
+    });
+  }
+
+  const onTabsChange = tab => {
+    setShowFilter(tab !== 'holders');
+  };
+
   return (
     <TransfersWrap>
-      <TabsTablePanel tabs={tabs} />
-      <Filter
-        decimals={decimals}
-        symbol={symbol}
-        tokenAddress={tokenAddress}
-        onFilter={onFilter}
-        filter={filter}
-      />
+      <TabsTablePanel tabs={tabs} onTabsChange={onTabsChange} />
+      {showFilter ? (
+        <Filter
+          decimals={decimals}
+          symbol={symbol}
+          tokenAddress={tokenAddress}
+          transferType={transferType}
+          onFilter={onFilter}
+          filter={filter}
+        />
+      ) : null}
     </TransfersWrap>
   );
 }

@@ -53,6 +53,7 @@ export const ContractDetailPage = memo(() => {
     'code',
     'website',
     'transactionHash',
+    'cfxTransferCount',
     'erc20TransferCount',
     'erc721TransferCount',
     'erc1155TransferCount',

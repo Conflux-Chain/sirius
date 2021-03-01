@@ -6,7 +6,7 @@ import {
   isInnerContractAddress,
 } from '../../../utils';
 import { Link } from '../Link/Loadable';
-import { Translation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { formatAddress } from '../../../utils/cfx';
@@ -21,7 +21,128 @@ interface Props {
   contractCreated?: string;
   maxWidth?: number;
   isFull?: boolean;
+  isLink?: boolean;
 }
+
+// TODO code simplify
+export const AddressContainer = ({
+  value,
+  alias,
+  contractCreated,
+  maxWidth,
+  isFull = false,
+  isLink = true,
+}: Props) => {
+  const { t } = useTranslation();
+  const txtContractCreation = t(translations.transaction.contractCreation);
+  const cfxAddress = formatAddress(value);
+
+  const RenderAddress = ({
+    hoverValue = cfxAddress,
+    hrefAddress = cfxAddress,
+    content = alias
+      ? isFull
+        ? alias
+        : formatString(alias, 'tag')
+      : cfxAddress,
+    link = isLink,
+    full = isFull,
+    style = {},
+    prefix = null,
+  }: any) => (
+    <AddressWrapper>
+      {prefix}
+      <Text span hoverValue={hoverValue}>
+        {link ? (
+          <LinkWrapper
+            style={style}
+            href={`/address/${hrefAddress}`}
+            maxwidth={full ? 430 : maxWidth}
+          >
+            {content}
+          </LinkWrapper>
+        ) : (
+          <PlainWrapper style={style} maxwidth={full ? 430 : maxWidth}>
+            {content}
+          </PlainWrapper>
+        )}
+      </Text>
+    </AddressWrapper>
+  );
+
+  if (!value) {
+    // Contract Registration txn to prop is null
+    if (contractCreated)
+      return RenderAddress({
+        hoverValue: formatAddress(contractCreated),
+        hrefAddress: formatAddress(contractCreated),
+        content: txtContractCreation,
+        prefix: (
+          <IconWrapper>
+            <Text span hoverValue={txtContractCreation}>
+              <img src={ContractIcon} alt={txtContractCreation} />
+            </Text>
+          </IconWrapper>
+        ),
+      });
+
+    // Contract Registration fail, no link
+    return (
+      <AddressWrapper>
+        <IconWrapper>
+          <Text span hoverValue={txtContractCreation}>
+            <img src={ContractIcon} alt={txtContractCreation} />
+          </Text>
+        </IconWrapper>
+        <Text span>{txtContractCreation}</Text>
+      </AddressWrapper>
+    );
+  }
+
+  if (cfxAddress.startsWith('invalid-')) {
+    const sourceValue = cfxAddress.replace('invalid-', '');
+    const tip = t(translations.general.invalidAddress);
+    return RenderAddress({
+      hoverValue: `${tip}: ${sourceValue}`,
+      content: alias ? formatString(alias, 'tag') : sourceValue,
+      link: false,
+      style: { color: '#e00909' },
+      prefix: (
+        <IconWrapper>
+          <Text span hoverValue={tip}>
+            <AlertTriangle size={16} color="#e00909" />
+          </Text>
+        </IconWrapper>
+      ),
+    });
+  }
+
+  const isContract = isContractAddress(value);
+  const isInternalContract = isInnerContractAddress(value);
+
+  if (isContract || isInternalContract) {
+    const typeText = t(
+      isInternalContract
+        ? translations.general.internalContract
+        : translations.general.contract,
+    );
+    return RenderAddress({
+      prefix: (
+        <IconWrapper className={isFull ? 'icon' : ''}>
+          <Text span hoverValue={typeText}>
+            {isInternalContract ? (
+              <img src={InternalContractIcon} alt={typeText} />
+            ) : (
+              <img src={ContractIcon} alt={typeText} />
+            )}
+          </Text>
+        </IconWrapper>
+      ),
+    });
+  }
+
+  return RenderAddress({});
+};
 
 const IconWrapper = styled.span`
   margin-right: 2px;
@@ -39,127 +160,44 @@ const IconWrapper = styled.span`
   }
 `;
 
-export const AddressContainer = ({
-  value,
-  alias,
-  contractCreated,
-  maxWidth,
-  isFull = false,
-}: Props) => {
-  const { t } = useTranslation();
+const AddressWrapper = styled.div`
+  display: inline-block;
 
-  const LinkWrapper = styled(Link)`
-    display: inline-block !important;
-    max-width: ${maxWidth || 130}px !important;
-    outline: none;
+  // TODO icon position
+  //position: relative;
 
-    ${media.s} {
-      max-width: ${maxWidth || 100}px !important;
-    }
-  `;
+  //.icon {
+  //  position: absolute;
+  //  left: -18px;
+  //  top: -2px;
+  //}
+`;
 
-  if (!value) {
-    // contract creation txn to prop is null
-    if (contractCreated)
-      return (
-        <>
-          <IconWrapper>
-            <Text
-              span
-              hoverValue={t(translations.transaction.contractCreation)}
-            >
-              <img
-                src={ContractIcon}
-                alt={t(translations.transaction.contractCreation)}
-              />
-            </Text>
-          </IconWrapper>
-          <Text span hoverValue={formatAddress(contractCreated)}>
-            <Link href={`/address/${formatAddress(contractCreated)}`}>
-              <Translation>
-                {t => t(translations.transaction.contractCreation)}
-              </Translation>
-            </Link>
-          </Text>
-        </>
-      );
+const addressStyle = (props: any) => ` 
+  display: inline-block !important;
+  max-width: ${props.maxwidth || 130}px !important;
+  outline: none;
 
-    // contract creation fail, no link
-    return (
-      <>
-        <IconWrapper>
-          <Text span hoverValue={t(translations.transaction.contractCreation)}>
-            <img
-              src={ContractIcon}
-              alt={t(translations.transaction.contractCreation)}
-            />
-          </Text>
-        </IconWrapper>
-        <Text span>
-          <Translation>
-            {t => t(translations.transaction.contractCreation)}
-          </Translation>
-        </Text>
-      </>
-    );
+  ${media.s} {
+    max-width: ${props.maxwidth || 100}px !important;
   }
-  const cfxAddress = formatAddress(value);
+`;
 
-  if (cfxAddress.startsWith('invalid-')) {
-    const sourceValue = cfxAddress.replace('invalid-', '');
-    const tip = t(translations.general.invalidAddress);
-    return (
-      <>
-        <IconWrapper>
-          <Text span hoverValue={tip}>
-            <AlertTriangle size={16} color="#e00909" />
-          </Text>
-        </IconWrapper>
-        <Text span hoverValue={`${tip}: ${sourceValue}`}>
-          <LinkWrapper style={{ color: '#e00909' }}>
-            {alias ? formatString(alias, 'tag') : sourceValue}
-          </LinkWrapper>
-        </Text>
-      </>
-    );
-  }
+const LinkWrapper = styled(Link)<{
+  maxwidth?: number;
+}>`
+  ${props => addressStyle(props)}
+`;
 
-  if (value && isFull) {
-    return <Link href={`/address/${cfxAddress}`}>{cfxAddress}</Link>;
-  }
+const PlainWrapper = styled.span<{
+  maxwidth?: number;
+}>`
+  ${props => addressStyle(props)}
 
-  const isContract = isContractAddress(value);
-  const isInternalContract = isInnerContractAddress(value);
-
-  if (isContract || isInternalContract) {
-    const typeText = t(
-      isInternalContract
-        ? translations.general.internalContract
-        : translations.general.contract,
-    );
-    return (
-      <>
-        <IconWrapper>
-          <Text span hoverValue={typeText}>
-            {isInternalContract ? (
-              <img src={InternalContractIcon} alt={typeText} />
-            ) : (
-              <img src={ContractIcon} alt={typeText} />
-            )}
-          </Text>
-        </IconWrapper>
-        <Text span hoverValue={cfxAddress}>
-          <LinkWrapper href={`/address/${cfxAddress}`}>
-            {alias ? formatString(alias, 'tag') : cfxAddress}
-          </LinkWrapper>
-        </Text>
-      </>
-    );
-  }
-
-  return (
-    <Text span hoverValue={cfxAddress}>
-      <LinkWrapper href={`/address/${cfxAddress}`}>{cfxAddress}</LinkWrapper>
-    </Text>
-  );
-};
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  cursor: default;
+`;

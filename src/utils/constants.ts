@@ -21,6 +21,7 @@ export const cfxTokenTypes = {
   erc777: 'ERC777',
   erc721: 'ERC721',
   erc1155: 'ERC1155',
+  cfx: 'CFX',
 };
 export const governanceAddressTestnet =
   '0x8f3f525d17159351e4b34fe766ef139470da0b02';
@@ -29,3 +30,13 @@ export const governanceAddressMainnet =
 export const governanceAddress = isTestNetEnv()
   ? governanceAddressTestnet
   : governanceAddressMainnet;
+
+// same as connectWallet.notify.action in i18n file
+export enum TxnAction {
+  default = 100,
+  contractWrite = 101,
+  contractEdit = 102,
+  writeContract = 103,
+  readContract = 104,
+  sponsorApplication = 105,
+}

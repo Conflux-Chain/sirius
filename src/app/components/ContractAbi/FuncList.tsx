@@ -71,7 +71,7 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
                   type={type}
                   contractAddress={contractAddress}
                   contract={contract}
-                  key={`${index}-func-${item['name']}`}
+                  key={`${index}-func-${item['name'] || index}`}
                 ></Func>
               </Panel>
             ))}

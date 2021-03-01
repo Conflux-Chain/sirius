@@ -245,6 +245,7 @@ export function ContractMetadata({ address, contractInfo }) {
                   contractInfo.sponsor.sponsorForCollateral ? (
                     [
                       <AddressContainer
+                        key={contractInfo.sponsor.sponsorForCollateral}
                         value={contractInfo.sponsor.sponsorForCollateral}
                       />,
                     ]
@@ -328,6 +329,7 @@ export function ContractMetadata({ address, contractInfo }) {
                   contractInfo.sponsor.sponsorForGas ? (
                     [
                       <AddressContainer
+                        key={contractInfo.sponsor.sponsorForGas}
                         value={contractInfo.sponsor.sponsorForGas}
                       />,
                     ]
