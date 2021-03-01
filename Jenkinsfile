@@ -6,6 +6,7 @@ pipeline {
     disableResume()
     durabilityHint 'PERFORMANCE_OPTIMIZED'
     timestamps()
+    timeout(time: 30, unit: 'MINUTES')
   }
 
   agent none
@@ -23,15 +24,16 @@ pipeline {
           }
           agent {label 'bounty-backend-test-machine'}
           steps {
-            script {
-              sh (label: 'build', script: """
+            nodejs(nodeJSInstallationName: 'nodejs15') {
+              script {
+                sh (label: 'build', script: """
 yarn && yarn build
 """
-              )
+                )
+              }
             }
             script {
               sh (label: 'move to nginx www', script: """
-sudo cp -r dist/* build/
 sudo rm -rf /www/sirius/ || true
 sudo cp -r build /www/sirius
 """)
@@ -46,17 +48,18 @@ sudo cp -r build /www/sirius
               branch 'master'
             }
           }
-          agent {label 'bounty-frontend-production-machine'}
+          agent {label 'frontend node production scan'}
           steps {
-            script {
-              sh (label: 'build', script: """
+            nodejs(nodeJSInstallationName: 'nodejs15') {
+              script {
+                sh (label: 'build', script: """
 yarn && yarn build
 """
-              )
+                )
+              }
             }
             script {
               sh (label: 'move builds', script: """
-sudo cp -r dist/* build/
 sudo rm -rf /www/sirius/ || true
 sudo cp -r build /www/sirius
 """)
