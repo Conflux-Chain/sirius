@@ -48,7 +48,7 @@ sudo cp -r build /www/sirius
               branch 'master'
             }
           }
-          agent {label 'scan' && 'production' && 'frontend' && 'node'}
+          agent {label 'confluxscan.io'}
           steps {
             nodejs(nodeJSInstallationName: 'nodejs15') {
               script {
