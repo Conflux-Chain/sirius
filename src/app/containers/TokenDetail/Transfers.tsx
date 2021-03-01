@@ -168,7 +168,7 @@ export function Transfers({
       url: `/transfer?address=${tokenAddress}&transferType=${transferType}`,
       table: {
         columns: columns,
-        rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
+        rowKey: (row, index) => `${row.transactionHash}${index}`,
       },
     },
   ];
