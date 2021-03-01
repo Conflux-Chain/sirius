@@ -48,7 +48,7 @@ sudo cp -r build /www/sirius
               branch 'master'
             }
           }
-          agent {label 'frontend node production scan'}
+          agent {label 'scan' && 'production' && 'frontend' && 'node'}
           steps {
             nodejs(nodeJSInstallationName: 'nodejs15') {
               script {
