@@ -256,7 +256,7 @@
     },
     "cfxCirculatingSupply": {
       "title": "流通量",
-      "description": "流通量 = 已发行 CFX - 已销毁 CFX"
+      "description": "CFX 流通量"
     }
   },
   "general": {
