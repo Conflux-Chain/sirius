@@ -7,7 +7,7 @@ import { Tooltip } from '../../components/Tooltip/Loadable';
 import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { reqCfxSupply } from '../../../utils/httpRequest';
-import { formatBalance, formatNumber } from '../../../utils';
+import { formatBalance } from '../../../utils';
 import nullAddressIcon from '../../../images/home/nullAddress.svg';
 import circulatingMarketCap from '../../../images/home/circulatingMarketCap.svg';
 
