@@ -10,7 +10,6 @@ import styled, { keyframes } from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useTestnet } from 'utils/hooks/useTestnet';
-import { formatAddress } from './util';
 import { Link as ScanLink } from './Link';
 import { RotateImg } from './RotateImg';
 import { History } from './History';
@@ -19,6 +18,7 @@ import { CopyButton } from './../CopyButton';
 import { useNotifications } from '@cfxjs/react-ui';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { AddressContainer } from './../../components/AddressContainer';
 
 import iconLogo from './assets/logo.png';
 import iconClose from './assets/close.svg';
@@ -118,7 +118,11 @@ export const Modal = ({
               {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
             </span>
             <span className="modal-portal-name">
-              {formatAddress(accounts[0])}
+              <AddressContainer
+                value={accounts[0]}
+                isLink={false}
+                maxWidth={350}
+              />
             </span>
             <span className="modal-portal-connected-tip">
               <span className="modal-portal-connected-copy">
