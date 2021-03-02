@@ -714,15 +714,15 @@
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal."
     },
     "history": {
-      "emptyRecordsTip": "Your transcations will appear here...",
-      "recentlyRecordsTip": "Recent Transcations",
+      "emptyRecordsTip": "Your transactions will appear here...",
+      "recentlyRecordsTip": "Recent transactions",
       "clearAll": "Clear all",
       "recentlyTenRecordsTip": "Only the latest 10 transactions will be shown.",
       "contractCreation": "Contract registration",
       "contractEdit": "Contract edit",
       "sponsorApplication": "Sponsor application",
       "writeContract": "Write contract",
-      "viewYourTranscation": "View your transcation"
+      "viewYourtransaction": "View your transaction"
     },
     "notify": {
       "link": "View on ConfluxScan",

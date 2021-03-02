@@ -722,7 +722,7 @@
       "contractEdit": "合约编辑",
       "sponsorApplication": "赞助申请",
       "writeContract": "写入合约",
-      "viewYourTranscation": "查看您的交易"
+      "viewYourtransaction": "查看您的交易"
     },
     "notify": {
       "link": "在 ConfluxScan 上查看",

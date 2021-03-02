@@ -10,7 +10,7 @@ import { ColumnsType } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Notice } from './Notice';
-import { MarketInfo } from './MarketInfo';
+// import { MarketInfo } from './MarketInfo';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -82,7 +82,7 @@ export function HomePage() {
       </Helmet>
       <Main>
         <Notice />
-        <MarketInfo />
+        {/* <MarketInfo /> */}
         <Top>
           <SmallChartWrap>
             <SmallChart width={chartWidth} />
