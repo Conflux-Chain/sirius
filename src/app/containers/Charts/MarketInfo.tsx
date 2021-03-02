@@ -8,13 +8,12 @@ import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { reqCfxSupply } from '../../../utils/httpRequest';
 import { formatBalance, formatNumber } from '../../../utils';
-import priceIcon from '../../../images/home/price.svg';
-import marketCapIcon from '../../../images/home/marketCap.svg';
+import nullAddressIcon from '../../../images/home/nullAddress.svg';
 import circulatingMarketCap from '../../../images/home/circulatingMarketCap.svg';
 
 function Info(icon, title, tooltip, number) {
   return (
-    <Grid xs={24} sm={8} className="info">
+    <Grid xs={24} sm={12} className="info">
       <div>
         <div className="icon">
           <img src={icon} alt={title} />
@@ -40,7 +39,6 @@ function Info(icon, title, tooltip, number) {
   );
 }
 
-// TODO redesign
 export function MarketInfo() {
   const { t } = useTranslation();
   const [marketInfo, setMarketInfo] = useState<any>({});
@@ -55,25 +53,19 @@ export function MarketInfo() {
       <Card>
         <Grid.Container gap={3} justify="center">
           {Info(
-            priceIcon,
-            t(translations.charts.cfxPrice.title),
-            t(translations.charts.cfxPrice.description),
-            `$${marketInfo.price || 0}`,
-          )}
-          {Info(
-            marketCapIcon,
-            t(translations.charts.cfxMarketCap.title),
-            t(translations.charts.cfxMarketCap.description),
-            `$${formatNumber(marketInfo.totalPrice, {
-              withUnit: false,
-              keepDecimal: false,
-            })}`,
-          )}
-          {Info(
             circulatingMarketCap,
             t(translations.charts.cfxCirculatingSupply.title),
             t(translations.charts.cfxCirculatingSupply.description),
             `${formatBalance(marketInfo.totalCirculating, 18, false, {
+              withUnit: false,
+              keepDecimal: false,
+            })} CFX`,
+          )}
+          {Info(
+            nullAddressIcon,
+            t(translations.charts.nullAddress.title),
+            t(translations.charts.nullAddress.description),
+            `${formatBalance(marketInfo.nullAddressBalance, 18, false, {
               withUnit: false,
               keepDecimal: false,
             })} CFX`,
@@ -85,7 +77,7 @@ export function MarketInfo() {
 }
 
 const CardWrapper = styled.div`
-  margin-top: 24px;
+  margin-bottom: 24px;
   width: 100%;
 
   .info {

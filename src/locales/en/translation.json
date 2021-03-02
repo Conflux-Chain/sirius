@@ -228,7 +228,8 @@
   },
   "charts": {
     "title": "Charts",
-    "subtitle": "Blockchain Data",
+    "subtitle1": "Market Data",
+    "subtitle2": "Blockchain Data",
     "description": "Charts",
     "tps": {
       "title": "TPS",
@@ -256,7 +257,11 @@
     },
     "cfxCirculatingSupply": {
       "title": "Circulating Supply",
-      "description": "CFX Circulating Supply"
+      "description": "Circulating supply contains the CFX in the Null address."
+    },
+    "nullAddress": {
+      "title": "Null Address",
+      "description": "CFX in Null address is burned CFX."
     }
   },
   "general": {

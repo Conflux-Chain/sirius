@@ -228,7 +228,8 @@
   },
   "charts": {
     "title": "图表",
-    "subtitle": "区块链数据",
+    "subtitle1": "市场数据",
+    "subtitle2": "区块链数据",
     "description": "图表",
     "tps": {
       "title": "吞吐率",
@@ -252,11 +253,15 @@
     },
     "cfxMarketCap": {
       "title": "市值",
-      "description": "市值 = 当前价格  x 流通量"
+      "description": "市值 = 当前价格 x 流通量"
     },
     "cfxCirculatingSupply": {
       "title": "流通量",
-      "description": "CFX 流通量"
+      "description": "流通量包含零地址中的 CFX"
+    },
+    "nullAddress": {
+      "title": "零地址",
+      "description": "零地址中的 CFX 为已销毁的 CFX"
     }
   },
   "general": {
@@ -584,7 +589,7 @@
   },
   "broadcastTx": {
     "title": "广播交易",
-    "subtitle": "您可以在下方输入六进制格式的已签名原始交易（0x...）并将其在 Conflux 网络上广播。",
+    "subtitle": "您可以在下方输入十六进制格式的已签名原始交易（例如字符：0-9, a-f）并将其在 Conflux 网络上广播。",
     "broadcastBtn": "广播",
     "success": "广播成功",
     "error": "错误：",
