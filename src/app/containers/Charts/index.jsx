@@ -5,6 +5,7 @@ import { LineChart as Chart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
+import { MarketInfo } from './MarketInfo';
 
 export function Charts() {
   const { t } = useTranslation();
@@ -23,8 +24,11 @@ export function Charts() {
       </Helmet>
       <PageWrap>
         <HeaderWrap>
-          <div className="subtitle">{t(translations.charts.subtitle)}</div>
-          <div className="title">{t(translations.charts.title)}</div>
+          <div className="title">{t(translations.charts.subtitle1)}</div>
+        </HeaderWrap>
+        <MarketInfo />
+        <HeaderWrap>
+          <div className="title">{t(translations.charts.subtitle2)}</div>
         </HeaderWrap>
         <ChartsWrap>
           <Chart width={chartWidth} indicator="blockTime" />
@@ -66,7 +70,7 @@ const PageWrap = styled.div`
   flex-direction: column;
   padding: 32px 0 8px;
   ${media.s} {
-    padding: 16px 0;
+    padding: 32px 0;
   }
 `;
 
