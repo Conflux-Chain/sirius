@@ -499,8 +499,8 @@ export const Transaction = () => {
               <span className="type">{cfxTokenTypes.erc1155}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
-              {transferItem['batch'].map(item => (
-                <>
+              {transferItem['batch'].map((item, index) => (
+                <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
                   <br />
                   <span className="batch">
                     - {t(translations.transaction.for)}{' '}
@@ -512,7 +512,7 @@ export const Transaction = () => {
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                     <span className="tokenId">{item['tokenId']}</span>
                   </span>
-                </>
+                </span>
               ))}
             </div>,
           );
