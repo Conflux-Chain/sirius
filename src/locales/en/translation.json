@@ -228,7 +228,8 @@
   },
   "charts": {
     "title": "Charts",
-    "subtitle": "Blockchain Data",
+    "subtitle1": "Market Data",
+    "subtitle2": "Blockchain Data",
     "description": "Charts",
     "tps": {
       "title": "TPS",
@@ -256,7 +257,11 @@
     },
     "cfxCirculatingSupply": {
       "title": "Circulating Supply",
-      "description": "CFX Circulating Supply"
+      "description": "Circulating supply contains the CFX in the Null address."
+    },
+    "nullAddress": {
+      "title": "Null Address",
+      "description": "CFX in Null address is burned CFX."
     }
   },
   "general": {
@@ -584,7 +589,7 @@
   },
   "broadcastTx": {
     "title": "Broadcast Transaction",
-    "subtitle": "Below you can enter a signed raw transaction in hex format (0x...) and broadcast it to the Conflux network.",
+    "subtitle": "Below you can enter a signed raw transaction in hex format (i.e. characters 0-9, a-f) that starts with 0x and broadcast it over the Conflux network.",
     "broadcastBtn": "Broadcast",
     "success": "Broadcast Succeed",
     "error": "Error: ",
