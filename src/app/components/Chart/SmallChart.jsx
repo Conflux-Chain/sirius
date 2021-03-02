@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import up from './up.svg';
 import down from './down.svg';
+import flat from './flat.svg';
 import { formatNumber } from 'utils';
 import { Tooltip } from '../Tooltip';
 
@@ -25,7 +26,13 @@ export const SmallChart = ({
     return <Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
-  const isDown = diff ? diff.startsWith('-') : null;
+  const trend = diff
+    ? diff.startsWith('-')
+      ? 'down'
+      : diff === '0%'
+      ? 'flat'
+      : 'up'
+    : null;
 
   return (
     <Container style={{ width, height }}>
@@ -33,7 +40,7 @@ export const SmallChart = ({
         <Tooltip text={t(`charts.${indicator}.description`)}>
           {t(`charts.${indicator}.title`)}
         </Tooltip>
-        <Change isDown={isDown}>{diff}</Change>
+        <Change trend={trend}>{diff}</Change>
       </Title>
       <Value small={small}>
         {firstlast &&
@@ -140,7 +147,8 @@ const Change = styled.div`
   color: #282d30;
   font-size: 12px;
   &::after {
-    content: url(${({ isDown }) => (isDown ? down : up)});
+    content: url(${({ trend }) =>
+      trend === 'down' ? down : trend === 'flat' ? flat : up});
     margin-left: 3px;
   }
 `;
