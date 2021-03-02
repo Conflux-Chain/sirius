@@ -589,7 +589,7 @@
   },
   "broadcastTx": {
     "title": "广播交易",
-    "subtitle": "您可以在下方输入十六进制格式的已签名原始交易（例如字符：0-9, a-f）并将其在 Conflux 网络上广播。",
+    "subtitle": "您可以在下方输入以 0x 开头的十六进制格式的已签名原始交易（例如字符：0-9, a-f）并将其在 Conflux 网络上广播。",
     "broadcastBtn": "广播",
     "success": "广播成功",
     "error": "错误：",

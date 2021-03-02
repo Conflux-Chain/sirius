@@ -589,7 +589,7 @@
   },
   "broadcastTx": {
     "title": "Broadcast Transaction",
-    "subtitle": "Below you can enter a signed raw transaction in hex format (0x...) and broadcast it to the Conflux network.",
+    "subtitle": "Below you can enter a signed raw transaction in hex format (i.e. characters 0-9, a-f) that starts with 0x and broadcast it over the Conflux network.",
     "broadcastBtn": "Broadcast",
     "success": "Broadcast Succeed",
     "error": "Error: ",
