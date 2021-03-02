@@ -366,14 +366,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
         if (accounts[0]) {
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
-              // cip-37 both
               if (
-                dataContractInfo.from === accounts[0] ||
-                dataContractInfo.admin === accounts[0] ||
-                formatAddress(dataContractInfo.from, { hex: true }) ===
-                  formatAddress(accounts[0], { hex: true }) ||
-                formatAddress(dataContractInfo.admin, { hex: true }) ===
-                  formatAddress(accounts[0], { hex: true })
+                formatAddress(dataContractInfo.from) ===
+                  formatAddress(accounts[0]) ||
+                formatAddress(dataContractInfo.admin) ===
+                  formatAddress(accounts[0])
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {

@@ -64,10 +64,9 @@ const DappButton = ({
   const onClickHandler = () => {
     if (accounts[0]) {
       if (!btnDisabled) {
-        // TODO cip-37 portal
         const txParams = {
-          from: formatAddress(accounts[0], { hex: true }),
-          to: formatAddress(contractAddress, { hex: true }),
+          from: formatAddress(accounts[0]),
+          to: formatAddress(contractAddress),
           data,
         };
         //loading

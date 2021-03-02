@@ -6,7 +6,6 @@ import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
-import { useMessages } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
@@ -20,7 +19,8 @@ import Loading from '../../components/Loading';
 import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
-import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+
 import {
   isAddress,
   checkInt,
@@ -30,6 +30,7 @@ import {
   checkCfxType,
 } from '../../../utils';
 import { formatAddress } from '../../../utils/cfx';
+import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 
 interface FuncProps {
@@ -42,9 +43,9 @@ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
 export declare type Props = FuncProps & NativeAttrs;
 
 const Func = ({ type, data, contractAddress, contract }: Props) => {
+  const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  const [, setMessage] = useMessages();
-  const { chainId, accounts, confluxJS } = usePortal();
+  const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -125,19 +126,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         break;
       case 'write':
         if (accounts[0]) {
-          if (isTestNetEnv() && Number(chainId) !== 1) {
-            setMessage({ text: t('contract.error.testnet'), color: 'error' });
-            return;
-          }
-          if (!isTestNetEnv() && Number(chainId) !== 1029) {
-            setMessage({ text: t('contract.error.mainnet'), color: 'error' });
-            return;
-          }
           let objParams: any[] = [];
-          // cip-37
           let txParams = {
-            from: formatAddress(accounts[0], { hex: true }),
-            to: formatAddress(contractAddress, { hex: true }),
+            from: formatAddress(accounts[0]),
+            to: formatAddress(contractAddress),
           };
           if (data['stateMutability'] === 'payable') {
             objParams = objValues.slice(1);
@@ -160,6 +152,18 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           setModalShown(true);
           try {
             const txHash = await confluxJS.sendTransaction(txParams);
+            const code = TxnAction.writeContract;
+
+            // mark txn action to history
+            addRecord({
+              hash: txHash,
+              info: JSON.stringify({
+                code: code,
+                description: t(translations.connectWallet.notify.action[code]),
+                hash: txHash,
+              }),
+            });
+
             setModalType('success');
             setTxHash(txHash);
             setOutputError('');
