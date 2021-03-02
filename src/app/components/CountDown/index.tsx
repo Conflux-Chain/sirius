@@ -11,8 +11,13 @@ import { getDuration } from '../../../utils';
 interface CountDownProps {
   from: number;
   to?: number;
+  retainDurations?: 1 | 2 | 3 | 4;
 }
-export const CountDown = ({ from, to }: CountDownProps) => {
+export const CountDown = ({
+  from,
+  to,
+  retainDurations = 2,
+}: CountDownProps) => {
   const { t } = useTranslation();
   const duration = getDuration(from, to);
   const str = [
@@ -21,10 +26,12 @@ export const CountDown = ({ from, to }: CountDownProps) => {
     translations.general.countdown.minute,
     translations.general.countdown.second,
   ];
+
+  console.log(duration);
   const label = duration.reduce(
     (acc, cur, index) => {
-      // max to retain 2 duration, and min to retain 1 duration
-      if (acc[1] < 2 && (cur > 0 || index === 3)) {
+      // default max to retain 2 duration, and min to retain 1 duration
+      if (acc[1] < retainDurations && (cur > 0 || index === 3)) {
         const next = t(str[index], { count: cur });
         acc[0] = acc[0] ? `${acc[0]} ${next}` : `${next}`;
         acc[1] = Number(acc[1]) + 1;

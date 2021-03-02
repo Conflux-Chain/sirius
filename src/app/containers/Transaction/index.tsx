@@ -678,7 +678,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading || syncTimestamp === undefined}>
-              <CountDown from={syncTimestamp} />
+              <CountDown from={syncTimestamp} retainDurations={4} />
               {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
             </SkeletonContainer>
           </Description>
