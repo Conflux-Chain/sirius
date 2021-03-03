@@ -334,6 +334,7 @@
         "accountAddress": "Address",
         "tokenId": "TokenID",
         "quantity": "Quantity",
+        "erc1155QuantityTip": "The quantity of ERC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",
         "traceType": "Trace Type"
       },

@@ -12,6 +12,7 @@ import { formatBalance, formatNumber, formatString } from '../../utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
+import imgInfo from 'images/info.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
@@ -318,6 +319,18 @@ export const balance = (decimal, price, transferType) => ({
       <Translation>
         {t => t(translations.general.table.token.quantity)}
       </Translation>
+      <ThTipWrap>
+        <Text
+          span
+          hoverValue={
+            <Translation>
+              {t => t(translations.general.table.token.erc1155QuantityTip)}
+            </Translation>
+          }
+        >
+          <img src={imgInfo} alt="?" />
+        </Text>
+      </ThTipWrap>
     </ContentWrapper>
   ),
   dataIndex: 'balance',
@@ -459,6 +472,18 @@ const SpanWrap = styled.span`
   text-overflow: ellipsis;
   max-width: 100px;
   overflow: hidden;
+`;
+
+const ThTipWrap = styled.span`
+  display: inline-block;
+  white-space: normal;
+  margin-left: 5px;
+
+  img {
+    width: 14px;
+    height: 14px;
+    margin-bottom: 4px;
+  }
 `;
 
 export const LinkA = styled.a`

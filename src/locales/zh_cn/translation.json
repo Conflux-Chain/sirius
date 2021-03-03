@@ -334,6 +334,7 @@
         "accountAddress": "地址",
         "tokenId": "代币 ID",
         "quantity": "数量",
+        "erc1155QuantityTip": "一个账户的 ERC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型"
       },

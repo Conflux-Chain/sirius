@@ -145,9 +145,7 @@ export const Basic = ({
     ),
     children:
       holderCount !== undefined
-        ? transferType !== cfxTokenTypes.erc1155
-          ? `${toThousands(holderCount)} ${t(translations.token.address)}`
-          : '--'
+        ? `${toThousands(holderCount)} ${t(translations.token.address)}`
         : undefined,
   };
 
@@ -184,7 +182,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   } else {
-    list = [fieldTransfers, fieldContractAddress];
+    list = [fieldTransfers, fieldContractAddress, fieldHolders];
   }
   return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };
