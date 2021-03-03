@@ -495,7 +495,7 @@
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
-    "storageCollateralized": "Storage Collateralized Fee",
+    "storageCollateralized": "Storage Collateralize Fee",
     "storageReleased": "Storage Released",
     "chainID": "Chain ID",
     "inputData": "Input Data",
