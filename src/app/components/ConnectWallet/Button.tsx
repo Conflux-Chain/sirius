@@ -10,8 +10,8 @@ import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
-import { formatAddress } from './util';
 import { RotateImg } from './RotateImg';
+import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -30,7 +30,7 @@ export const Button = ({ className, onClick }: Button) => {
   let hasPendingRecords = connected === 1 && !!pendingRecords.length;
 
   if (installed) {
-    if (accounts.length) {
+    if (accounts.length && utilAddress.isValidCfxAddress(accounts[0])) {
       if (hasPendingRecords) {
         buttonStatus = (
           <RotateImg
@@ -43,7 +43,7 @@ export const Button = ({ className, onClick }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = formatAddress(accounts[0]);
+        buttonText = accounts[0];
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
@@ -57,7 +57,7 @@ export const Button = ({ className, onClick }: Button) => {
       onClick={onClick}
     >
       {buttonStatus}
-      <span>{buttonText}</span>
+      <span className="text">{buttonText}</span>
     </ButtonWrapper>
   );
 };
@@ -82,8 +82,6 @@ const ButtonWrapper = styled.div`
   }
 
   &:not(.pending):hover {
-    /* background: rgba(100%, 87%, 11%, 70%); */
-    /* color: #ffffff; */
     background: rgba(100%, 87%, 11%, 70%);
   }
 
@@ -99,5 +97,12 @@ const ButtonWrapper = styled.div`
     width: 0.8571rem;
     height: 0.8571rem;
     margin-right: 0.4286rem;
+  }
+
+  .text {
+    max-width: 9.2857rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `;

@@ -42,7 +42,10 @@ export function TableCard({
       url: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}`,
       table: {
         columns: columnsCFXTrasfer,
-        rowKey: 'address',
+        rowKey: (row, index) =>
+          `${row.transactionHash || ''}${
+            row.transactionTraceIndex || 0
+          }${index}`,
       },
       tableHeader: label(0),
     },

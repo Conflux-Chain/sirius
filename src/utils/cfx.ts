@@ -115,6 +115,23 @@ const faucetLastAddress = isConfluxTestNet
   ? testnetFaucetLastAddress
   : mainnetFaucetLastAddress;
 
+// token address
+const fcAddress = formatAddress(
+  isConfluxTestNet
+    ? '0x8e99e76bec5662cccd57409229392beb4d75fcbd' // cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s
+    : '0x8e2f2e68eb75bb8b18caafe9607242d4748f8d98', // cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2
+  {
+    hex: true,
+  },
+); // cip-37 use hex;
+
+const cETHAddress = formatAddress(
+  '0x86d2fb177eff4be03a342951269096265b98ac46', // cfx:acdrf821t59y12b4guyzckyuw2xf1gfpj2ba0x4sj6, cfxtest:acdrf821t59y12b4guyzckyuw2xf1gfpj2nnfd6ep0
+  {
+    hex: true,
+  },
+); // cip-37 use hex;
+
 // contract manager address
 
 const testnetContractManagerAddress = formatAddress(
@@ -148,4 +165,6 @@ export {
   networkId,
   mainNetworkId,
   testnetNetworkId,
+  fcAddress,
+  cETHAddress,
 };

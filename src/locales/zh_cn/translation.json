@@ -219,6 +219,7 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "address": "个地址",
+    "fcMining": "FC-CFX 矿池",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
       "searchPlaceHolderWithTokenId": "交易哈希值 / 持有人地址 / 代币 ID",
@@ -333,6 +334,7 @@
         "accountAddress": "地址",
         "tokenId": "代币 ID",
         "quantity": "数量",
+        "erc1155QuantityTip": "一个账户的 ERC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型"
       },
@@ -493,6 +495,8 @@
     "blockHash": "区块哈希",
     "position": "位置",
     "storageLimit": "存储限制",
+    "storageCollateralized": "存储押金",
+    "storageReleased": "存储释放",
     "chainID": "区块链编号",
     "inputData": "输入数据",
     "select": {
@@ -658,6 +662,8 @@
       "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
       "position": "交易在区块中的索引位置。",
       "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
+      "storageCollateralized": "需要支付的用来存储的费用。",
+      "storageReleased": "返还的存储押金。",
       "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",
       "inputData": "自定义数据，该交易中附加的信息。"
     },
@@ -716,7 +722,9 @@
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
       "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
-      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。"
+      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
+      "cannotProcess": "无法处理",
+      "upgradeTip": "请升级 ConfluxPortal 至最新版本。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",

@@ -45,12 +45,21 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   margin-right: 0.4286rem;
 }
 
+.c0 .text {
+  max-width: 9.2857rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 <span>
   <div
     class="c0 connect-wallet-button"
   >
     
-    <span>
+    <span
+      class="text"
+    >
       Connect Wallet
     </span>
   </div>

@@ -36,7 +36,7 @@
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
-    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or crerator of the contract.",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or creator of the contract.",
     "importJsonFile": "Import Json file(s)",
     "invalidJsonFile": "Invaild Json file, please try again.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
@@ -219,6 +219,7 @@
     "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "address": "addresses",
+    "fcMining": "FC-CFX Mining Pool",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
       "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
@@ -333,6 +334,7 @@
         "accountAddress": "Address",
         "tokenId": "TokenID",
         "quantity": "Quantity",
+        "erc1155QuantityTip": "The quantity of ERC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",
         "traceType": "Trace Type"
       },
@@ -493,6 +495,8 @@
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
+    "storageCollateralized": "Storage Collateralized Fee",
+    "storageReleased": "Storage Released",
     "chainID": "Chain ID",
     "inputData": "Input Data",
     "select": {
@@ -658,6 +662,8 @@
       "blockHash": "A block hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
       "position": "Index position of Transaction in the block.",
       "storageLimit": "Maximum amount of storage (bytes) the sender is willing to pay for storage collateral.",
+      "storageCollateralized": "The cost of storage that needs to be paid.",
+      "storageReleased": "The refund of storage collateralize fees.",
       "chainID": "The ID indicating which blockchain this transaction is meant to send to. Provides protection against replay-attack.",
       "inputData": "Additional information that is required for the transaction."
     },
@@ -716,7 +722,9 @@
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
       "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
-      "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal."
+      "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
+      "cannotProcess": "Cannot Process",
+      "upgradeTip": "Please update ConfluxPortal to the latest version."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",

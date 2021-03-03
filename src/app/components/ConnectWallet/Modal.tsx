@@ -10,7 +10,6 @@ import styled, { keyframes } from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useTestnet } from 'utils/hooks/useTestnet';
-import { formatAddress } from './util';
 import { Link as ScanLink } from './Link';
 import { RotateImg } from './RotateImg';
 import { History } from './History';
@@ -18,6 +17,8 @@ import { History } from './History';
 import { CopyButton } from './../CopyButton';
 import { useNotifications } from '@cfxjs/react-ui';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
+import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { AddressContainer } from './../../components/AddressContainer';
 
 import iconLogo from './assets/logo.png';
 import iconClose from './assets/close.svg';
@@ -39,6 +40,7 @@ export const Modal = ({
   const isTestnet = useTestnet();
   const { installed, login, connected, accounts, chainId } = usePortal();
   const [, setNotifications] = useNotifications();
+  const isValidCfxAddress = utilAddress.isValidCfxAddress(accounts[0]);
 
   useEffect(() => {
     if (show) {
@@ -108,27 +110,47 @@ export const Modal = ({
         </>
       );
     } else if (connected === 1) {
-      title = t(translations.connectWallet.modal.account);
-      portal = (
-        <>
-          <span className="modal-portal-connected-title">
-            {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
-          </span>
-          <span className="modal-portal-name">
-            {formatAddress(accounts[0])}
-          </span>
-          <span className="modal-portal-connected-tip">
-            <span className="modal-portal-connected-copy">
-              {t(translations.connectWallet.modal.copyAddress)}{' '}
-              <CopyButton copyText={accounts[0]} size={10}></CopyButton>
+      if (isValidCfxAddress) {
+        title = t(translations.connectWallet.modal.account);
+        portal = (
+          <>
+            <span className="modal-portal-connected-title">
+              {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
             </span>
-            <ScanLink href={`/address/${accounts[0]}`}>
-              {t(translations.connectWallet.modal.viewOnConfluxScan)}
-            </ScanLink>
-          </span>
-        </>
-      );
-      tip = null;
+            <span className="modal-portal-name">
+              <AddressContainer
+                value={accounts[0]}
+                isLink={false}
+                maxWidth={350}
+              />
+            </span>
+            <span className="modal-portal-connected-tip">
+              <span className="modal-portal-connected-copy">
+                {t(translations.connectWallet.modal.copyAddress)}{' '}
+                <CopyButton copyText={accounts[0]} size={10}></CopyButton>
+              </span>
+              <ScanLink href={`/address/${accounts[0]}`}>
+                {t(translations.connectWallet.modal.viewOnConfluxScan)}
+              </ScanLink>
+            </span>
+          </>
+        );
+        tip = null;
+      } else {
+        portal = (
+          <>
+            <span className="modal-portal-name">
+              {t(translations.connectWallet.modal.cannotProcess)}
+            </span>
+            {logo}
+          </>
+        );
+        tip = (
+          <div className="modal-tip error">
+            <span>{t(translations.connectWallet.modal.upgradeTip)}</span>
+          </div>
+        );
+      }
     } else if (connected === 2) {
       portal = (
         <>
@@ -161,17 +183,13 @@ export const Modal = ({
     <ModalWrapper
       className={clsx('connect-wallet-modal', className, {
         show: show,
-        connected: connected === 1,
+        connected: connected === 1 && isValidCfxAddress,
+        error: connected === 1 && !isValidCfxAddress,
       })}
     >
       <div className="modal-body">
         <div className="modal-title">{title}</div>
-        <div
-          className={clsx('modal-portal', {
-            connected: connected === 1,
-          })}
-          onClick={handleLogin}
-        >
+        <div className={clsx('modal-portal')} onClick={handleLogin}>
           {portal}
         </div>
         {tip}
@@ -182,7 +200,7 @@ export const Modal = ({
           onClick={handleClose}
         ></img>
       </div>
-      <History></History>
+      {isValidCfxAddress ? <History></History> : null}
     </ModalWrapper>
   );
 };
@@ -198,6 +216,7 @@ const rotate = keyframes`
 `;
 
 const linkColor = '#0e47ef';
+const redColor = '#e15c56';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -227,6 +246,21 @@ const ModalWrapper = styled.div`
       flex-direction: column;
       align-items: flex-start;
       cursor: inherit;
+    }
+  }
+
+  &.error {
+    .modal-portal {
+      border-color: ${redColor};
+      cursor: default;
+
+      .modal-portal-name {
+        color: ${redColor};
+      }
+    }
+
+    .modal-tip {
+      color: ${redColor};
     }
   }
 
