@@ -494,6 +494,8 @@
     "blockHash": "区块哈希",
     "position": "位置",
     "storageLimit": "存储限制",
+    "storageCollateralized": "存储押金",
+    "storageReleased": "存储释放",
     "chainID": "区块链编号",
     "inputData": "输入数据",
     "select": {
@@ -659,6 +661,8 @@
       "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
       "position": "交易在区块中的索引位置。",
       "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
+      "storageCollateralized": "需要支付的用来存储的费用。",
+      "storageReleased": "返还的存储押金。",
       "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",
       "inputData": "自定义数据，该交易中附加的信息。"
     },

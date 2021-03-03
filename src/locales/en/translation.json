@@ -494,6 +494,8 @@
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
+    "storageCollateralized": "Storage Collateralized Fee",
+    "storageReleased": "Storage Released",
     "chainID": "Chain ID",
     "inputData": "Input Data",
     "select": {
@@ -659,6 +661,8 @@
       "blockHash": "A block hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
       "position": "Index position of Transaction in the block.",
       "storageLimit": "Maximum amount of storage (bytes) the sender is willing to pay for storage collateral.",
+      "storageCollateralized": "The cost of storage that needs to be paid.",
+      "storageReleased": "The refund of storage collateralize fees.",
       "chainID": "The ID indicating which blockchain this transaction is meant to send to. Provides protection against replay-attack.",
       "inputData": "Additional information that is required for the transaction."
     },

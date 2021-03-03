@@ -17,8 +17,6 @@ import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
-import imgWarning from 'images/warning.png';
-import imgChevronDown from 'images/chevronDown.png';
 import {
   reqTransactionDetail,
   reqContract,
@@ -46,6 +44,14 @@ import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import clsx from 'clsx';
 import { TableCard } from './TableCard';
+import BigNumber from 'bignumber.js';
+
+import imgWarning from 'images/warning.png';
+import imgChevronDown from 'images/chevronDown.png';
+import imgSponsored from 'images/sponsored.png';
+
+const getStorageFee = byteSize =>
+  toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Transaction = () => {
@@ -88,6 +94,10 @@ export const Transaction = () => {
     contractCreated,
     confirmedEpochCount,
     txExecErrorInfo,
+    gasCoveredBySponsor,
+    storageCoveredBySponsor,
+    storageReleased,
+    storageCollateralized,
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
@@ -594,6 +604,14 @@ export const Transaction = () => {
 
   const handleFolded = () => setFolded(folded => !folded);
 
+  const storageReleasedTotal = storageReleased
+    ? getStorageFee(
+        storageReleased.reduce((prev, curr) => {
+          return prev + curr.collaterals ? Number(curr.collaterals) : 0;
+        }, 0),
+      )
+    : 0;
+
   return (
     <StyledTransactionsWrapper>
       <Helmet>
@@ -750,7 +768,14 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${toThousands(gasFee)} drip`}
+              {`${toThousands(gasFee)} drip`}{' '}
+              {gasCoveredBySponsor && (
+                <img
+                  src={imgSponsored}
+                  alt="sponsored"
+                  className="icon-sponsored"
+                />
+              )}
             </SkeletonContainer>
           </Description>
           <div
@@ -770,6 +795,41 @@ export const Transaction = () => {
             >
               <SkeletonContainer shown={loading}>
                 {toThousands(storageLimit)}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageCollateralized)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageCollateralized)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {getStorageFee(storageCollateralized)} CFX{' '}
+                {storageCoveredBySponsor && (
+                  <img
+                    src={imgSponsored}
+                    alt="sponsored"
+                    className="icon-sponsored"
+                  />
+                )}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageReleased)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageReleased)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {storageReleasedTotal} CFX
               </SkeletonContainer>
             </Description>
             <Description
@@ -995,6 +1055,11 @@ const StyledCardWrapper = styled.div`
 
 const StyledTransactionsWrapper = styled.div`
   padding: 2.2857rem 0;
+
+  .icon-sponsored {
+    height: 20px;
+    margin-left: 8px;
+  }
 
   ${media.s} {
     padding-bottom: 0;
