@@ -9,6 +9,7 @@ import { AddressContainer } from '../AddressContainer';
 import { formatAddress } from '../../../utils/cfx';
 import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
+import BigNumber from 'bignumber.js';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -19,12 +20,45 @@ export enum StatsType {
   topTokensByReceivers = 'topTokensByReceivers',
   topTokensByTxnCount = 'topTokensByTxnCount',
   topTokensByTxnAccountsCount = 'topTokensByTxnAccountsCount',
+  topMinersByBlocksMined = 'topMinersByBlocksMined',
+  topAccountsByGasUsed = 'topAccountsByGasUsed',
+  topAccountsByTxnCount = 'topAccountsByTxnCount',
 }
 
 interface Props {
   span: string;
   type: StatsType;
 }
+
+const cfxValue = (value, opt = {}) => (
+  <Text hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+    {fromDripToCfx(value, false, {
+      withUnit: false,
+      keepDecimal: false,
+      ...opt,
+    })}
+  </Text>
+);
+
+const intValue = (value, opt = {}) => (
+  <Text
+    hoverValue={formatNumber(value, {
+      withUnit: false,
+    })}
+  >
+    {formatNumber(value, { withUnit: false, ...opt })}
+  </Text>
+);
+
+const percentageValue = value => (
+  <Text
+    hoverValue={`${formatNumber(value, {
+      keepZero: true,
+    })} %`}
+  >
+    {formatNumber(value, { keepZero: true })}%
+  </Text>
+);
 
 export const StatsCard = ({
   span = '7d',
@@ -107,6 +141,17 @@ export const StatsCard = ({
       action = 'rank_contract_by_number_of_participants';
       category = 'token';
       break;
+    case StatsType.topMinersByBlocksMined:
+      columns = [
+        t(translations.statistics.column.address),
+        t(translations.statistics.column.totalBlocksMined),
+        t(translations.statistics.column.totalRewards),
+        t(translations.statistics.column.totalTxnFees),
+        t(translations.statistics.column.hashRate),
+      ];
+      action = 'topMiner';
+      category = 'miner';
+      break;
 
     default:
       break;
@@ -182,6 +227,7 @@ export const StatsCard = ({
         });
     }
   }, [action, category, span, type]);
+
   return (
     <CardWrapper>
       <h2>{t(translations.statistics[type])}</h2>
@@ -204,6 +250,15 @@ export const StatsCard = ({
                     <th>{columns[0]}</th>
                     <th className="text-right">{columns[1]}</th>
                   </>
+                ) : category === 'miner' ? (
+                  <>
+                    <th>{columns[0]}</th>
+                    <th className="text-right">{columns[1]}</th>
+                    <th className="text-right">{columns[2]}</th>
+                    <th className="text-right">{columns[3]}</th>
+                    <th className="text-right">{columns[4]}</th>
+                    <th className="text-right">{columns[5]}</th>
+                  </>
                 ) : null}
               </tr>
             </thead>
@@ -216,33 +271,12 @@ export const StatsCard = ({
                         <AddressContainer value={d.base32 || d.hex} />
                       </td>
                       <td className="text-right">
-                        {action === 'cfxSend' || action === 'cfxReceived' ? (
-                          <Text
-                            hoverValue={`${fromDripToCfx(d.value, true)} CFX`}
-                          >
-                            {fromDripToCfx(d.value, false, {
-                              withUnit: false,
-                              keepDecimal: false,
-                            })}
-                          </Text>
-                        ) : (
-                          <Text
-                            hoverValue={formatNumber(d.value, {
-                              withUnit: false,
-                            })}
-                          >
-                            {formatNumber(d.value, { withUnit: false })}
-                          </Text>
-                        )}
+                        {action === 'cfxSend' || action === 'cfxReceived'
+                          ? cfxValue(d.value)
+                          : intValue(d.value)}
                       </td>
                       <td className="text-right">
-                        <Text
-                          hoverValue={`${formatNumber(d.percent, {
-                            keepZero: true,
-                          })} %`}
-                        >
-                          {formatNumber(d.percent, { keepZero: true })}%
-                        </Text>
+                        {percentageValue(d.percent)}
                       </td>
                     </tr>
                   ))
@@ -257,13 +291,61 @@ export const StatsCard = ({
                           <AddressContainer value={d.base32address || d.hex} />
                         )}
                       </td>
+                      <td className="text-right">{intValue(d.valueN)}</td>
+                    </tr>
+                  ))
+                : category === 'miner'
+                ? data.map((d, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        <AddressContainer
+                          value={d.base32 || '0x' + d.miner}
+                          maxWidth={220}
+                        />
+                      </td>
+                      <td className="text-right">{intValue(d.blockCount)}</td>
+                      <td className="text-right">
+                        {cfxValue(d.totalReward)} CFX
+                      </td>
+                      <td className="text-right">
+                        {cfxValue(d.txFee, {
+                          keepDecimal: true,
+                          keepZero: true,
+                        })}{' '}
+                        CFX
+                      </td>
                       <td className="text-right">
                         <Text
-                          hoverValue={formatNumber(d.valueN || '0', {
+                          hoverValue={formatNumber(d.hashRate, {
                             withUnit: false,
                           })}
                         >
-                          {formatNumber(d.valueN || '0', { withUnit: false })}
+                          {formatNumber(d.hashRate, {
+                            withUnit: true,
+                            unit: 'G',
+                            keepZero: true,
+                          }).replace('G', '')}
+                        </Text>
+
+                        <Text
+                          hoverValue={
+                            (d.hashRate && d.difficultySum
+                              ? new BigNumber(d.hashRate)
+                                  .dividedBy(new BigNumber(d.difficultySum))
+                                  .multipliedBy(100)
+                                  .toFixed(8)
+                              : '-') + '%'
+                          }
+                        >
+                          &nbsp;(
+                          {d.hashRate && d.difficultySum
+                            ? new BigNumber(d.hashRate)
+                                .dividedBy(new BigNumber(d.difficultySum))
+                                .multipliedBy(100)
+                                .toFixed(3)
+                            : '-'}
+                          %)
                         </Text>
                       </td>
                     </tr>

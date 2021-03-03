@@ -753,6 +753,8 @@
     "statistics": "最佳统计",
     "transactions": "交易",
     "tokens": "代币",
+    "miners": "矿工",
+    "network": "网络",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
@@ -761,6 +763,9 @@
     "topTokensByReceivers": "最佳代币--接收账户数",
     "topTokensByTxnCount": "最佳代币--交易数",
     "topTokensByTxnAccountsCount": "最佳代币--交易账户数",
+    "topMinersByBlocksMined": "最佳矿工--挖出区块",
+    "topAccountsByGasUsed": "最佳账户--燃料用量",
+    "topAccountsByTxnCount": "最佳账户--交易数",
     "span": {
       "24h": "24小时",
       "3d": "3天",
@@ -775,7 +780,12 @@
       "percentage": "百分比",
       "token": "代币",
       "senders": "发送账户数",
-      "receivers": "接收账户数"
+      "receivers": "接收账户数",
+      "totalBlocksMined": "挖出总区块",
+      "totalRewards": "总奖励",
+      "totalTxnFees": "总交易费",
+      "hashRate": "哈希算力 (GH/s)",
+      "gasUsed": "燃料用量"
     }
   }
 }
