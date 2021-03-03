@@ -984,7 +984,7 @@ const StyledCardWrapper = styled.div`
   }
   .logo {
     width: 1.1429rem;
-    margin: 0 0.5714rem 3px;
+    margin: 0 0.5714rem 0.2143rem;
   }
   .linkMargin {
     margin-left: 0.5714rem;
@@ -1014,7 +1014,7 @@ const StyledCardWrapper = styled.div`
       color: #002257;
     }
     .batch {
-      margin: 0 0.1429rem 0 16px;
+      margin: 0 0.1429rem 0 1.1429rem;
     }
   }
   .label {
@@ -1057,8 +1057,8 @@ const StyledTransactionsWrapper = styled.div`
   padding: 2.2857rem 0;
 
   .icon-sponsored {
-    height: 20px;
-    margin-left: 8px;
+    height: 1.4286rem;
+    margin-left: 0.5714rem;
   }
 
   ${media.s} {
@@ -1076,10 +1076,10 @@ const StyledFoldButtonWrapper = styled.div`
   justify-content: flex-end;
 
   .detailResetFoldButton {
-    font-size: 14px;
+    font-size: 1rem;
     color: #002257;
-    line-height: 22px;
-    height: 22px;
+    line-height: 1.5714rem;
+    height: 1.5714rem;
     display: inline-flex;
     align-items: center;
     justify-items: center;
@@ -1089,13 +1089,13 @@ const StyledFoldButtonWrapper = styled.div`
       content: '';
       background-image: url(${imgChevronDown});
       transform: rotate(180deg);
-      width: 16px;
-      height: 16px;
+      width: 1.1429rem;
+      height: 1.1429rem;
       display: inline-block;
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
-      margin-left: 5px;
+      margin-left: 0.3571rem;
     }
 
     &.folded::after {
