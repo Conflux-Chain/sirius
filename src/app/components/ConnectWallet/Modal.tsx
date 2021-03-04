@@ -15,10 +15,8 @@ import { RotateImg } from './RotateImg';
 import { History } from './History';
 // @todo extract an independent component, do not use outside one
 import { CopyButton } from './../CopyButton';
-import { useNotifications } from '@cfxjs/react-ui';
-import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
-import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { AddressContainer } from './../../components/AddressContainer';
+import { useCheckHook } from './useCheckHook';
 
 import iconLogo from './assets/logo.png';
 import iconClose from './assets/close.svg';
@@ -38,9 +36,13 @@ export const Modal = ({
   const { t } = useTranslation();
   // @todo dependence of utils/useTestnet
   const isTestnet = useTestnet();
-  const { installed, login, connected, accounts, chainId } = usePortal();
-  const [, setNotifications] = useNotifications();
-  const isValidCfxAddress = utilAddress.isValidCfxAddress(accounts[0]);
+  const { installed, login, connected, accounts } = usePortal();
+  const { isNetworkValid, isValid } = useCheckHook();
+  const inValidModalTip = !isNetworkValid
+    ? isTestnet
+      ? t(translations.connectWallet.modal.switchToTestnet)
+      : t(translations.connectWallet.modal.switchToMainnet)
+    : t(translations.connectWallet.modal.upgradeTipVersion);
 
   useEffect(() => {
     if (show) {
@@ -53,28 +55,19 @@ export const Modal = ({
     };
   }, [show]);
 
+  useEffect(() => {
+    if (!isValid) {
+      onClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isValid]);
+
   const handleClose = () => {
     onClose();
   };
 
   const handleLogin = () => {
-    if (
-      (chainId === '0x405' && !isTestnet) ||
-      (chainId !== '0x405' && isTestnet)
-    ) {
-      login();
-    } else {
-      let content = t(translations.connectWallet.modal.switchToMainnet);
-      if (isTestnet) {
-        content = t(translations.connectWallet.modal.switchToTestnet);
-      }
-      setNotifications({
-        icon: <XCircleFill color="#e15c56" />,
-        title: t(translations.connectWallet.modal.networkNotice),
-        content,
-        delay: 5000,
-      });
-    }
+    login();
   };
 
   let title: string = t(translations.connectWallet.modal.title);
@@ -110,7 +103,7 @@ export const Modal = ({
         </>
       );
     } else if (connected === 1) {
-      if (isValidCfxAddress) {
+      if (isValid) {
         title = t(translations.connectWallet.modal.account);
         portal = (
           <>
@@ -147,7 +140,7 @@ export const Modal = ({
         );
         tip = (
           <div className="modal-tip error">
-            <span>{t(translations.connectWallet.modal.upgradeTip)}</span>
+            <span>{inValidModalTip}</span>
           </div>
         );
       }
@@ -183,8 +176,8 @@ export const Modal = ({
     <ModalWrapper
       className={clsx('connect-wallet-modal', className, {
         show: show,
-        connected: connected === 1 && isValidCfxAddress,
-        error: connected === 1 && !isValidCfxAddress,
+        connected: connected === 1 && isValid,
+        error: connected === 1 && !isValid,
       })}
     >
       <div className="modal-body">
@@ -200,7 +193,7 @@ export const Modal = ({
           onClick={handleClose}
         ></img>
       </div>
-      {isValidCfxAddress ? <History></History> : null}
+      {isValid ? <History></History> : null}
     </ModalWrapper>
   );
 };

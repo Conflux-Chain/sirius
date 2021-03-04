@@ -721,10 +721,11 @@
       "copyAddress": "Copy address",
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
+      "versionNotice": "Version Notice",
       "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
       "cannotProcess": "Cannot Process",
-      "upgradeTip": "Please update ConfluxPortal to the latest version."
+      "upgradeTipVersion": "Please update ConfluxPortal to the latest version."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",
