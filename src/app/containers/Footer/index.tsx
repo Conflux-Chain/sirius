@@ -16,6 +16,7 @@ import imgIconTwitter from 'images/icon-twitter.svg';
 import imgIconGithub from 'images/icon-github.svg';
 import imgIconMedium from 'images/icon-medium.svg';
 import { Language } from './Language';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -23,32 +24,74 @@ export function Footer() {
   const left = [<TextLogo key="logo" />];
 
   const websiteLink = (
-    <Link className="footer-link" href="https://confluxnetwork.org">
+    <Link
+      className="footer-link"
+      href="https://confluxnetwork.org"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.confluxNetwork,
+      }}
+    >
       {t(translations.footer.confluxnetwork)}
     </Link>
   );
   const portalLink = (
-    <Link className="footer-link" href="https://portal.conflux-chain.org">
+    <Link
+      className="footer-link"
+      href="https://portal.conflux-chain.org"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.confluxPortal,
+      }}
+    >
       {t(translations.footer.confluxportal)}
     </Link>
   );
   const bountyLink = (
-    <Link className="footer-link" href="https://bounty.conflux-chain.org">
+    <Link
+      className="footer-link"
+      href="https://bounty.conflux-chain.org"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.confluxBounty,
+      }}
+    >
       {t(translations.footer.confluxbounty)}
     </Link>
   );
   const addressConverterLink = (
-    <Link className="footer-link" href="/address-converter">
+    <Link
+      className="footer-link"
+      href="/address-converter"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.addressConverter,
+      }}
+    >
       {t(translations.footer.addressFormatConversion)}
     </Link>
   );
   const broadcastTxLink = (
-    <Link className="footer-link" href="/push-tx">
+    <Link
+      className="footer-link"
+      href="/push-tx"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.broadcastTx,
+      }}
+    >
       {t(translations.footer.broadcastTx)}
     </Link>
   );
   const blocknumberCalcLink = (
-    <Link className="footer-link" href="/block-countdown">
+    <Link
+      className="footer-link"
+      href="/block-countdown"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.blocknumberCalc,
+      }}
+    >
       {t(translations.footer.blocknumberCalc)}
     </Link>
   );
@@ -56,17 +99,35 @@ export function Footer() {
   const icons = (
     <FooterContentIconWrapper>
       <FooterContentIconLink key="1">
-        <Link href="https://twitter.com/Conflux_Network">
+        <Link
+          href="https://twitter.com/Conflux_Network"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.twitter,
+          }}
+        >
           <img alt="twitter icon" src={imgIconTwitter} />
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink key="2">
-        <Link href="https://github.com/conflux-chain">
+        <Link
+          href="https://github.com/conflux-chain"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.github,
+          }}
+        >
           <img alt="github icon" src={imgIconGithub} />
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink key="3">
-        <Link href="https://medium.com/conflux-network">
+        <Link
+          href="https://medium.com/conflux-network"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.medium,
+          }}
+        >
           <img alt="medium icon" src={imgIconMedium} />
         </Link>
       </FooterContentIconLink>

@@ -34,11 +34,12 @@ interface TrackEventParams {
 }
 // track event data
 export const trackEvent = (eventInfo: TrackEventParams) => {
+  console.log(eventInfo);
   window.gtag &&
-    window.gtag('event', eventInfo.action, {
+    window.gtag('event', `${eventInfo.category}_${eventInfo.action}`, {
       event_category: eventInfo.category,
       event_label: eventInfo.label || '',
-      value: eventInfo.value || 0,
+      value: eventInfo.value || null,
     });
 };
 
