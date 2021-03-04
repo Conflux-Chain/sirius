@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
+import { usePortal } from 'utils/hooks/usePortal';
 import styled from 'styled-components/macro';
 import { translations } from '../../../locales/i18n';
 import imgSuccess from 'images/success.png';
@@ -51,23 +51,22 @@ const DappButton = ({
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // TODO cip-37 portal multi version
-  const { portalInstalled, address, confluxJS } = useConfluxPortal();
+  const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
   let text = connectText
     ? connectText
     : t(translations.general.connnectWalletSubmit);
-  if (portalInstalled && address) {
+  if (accounts[0]) {
     text = submitText ? submitText : t(translations.general.submit);
   }
   const onClickHandler = () => {
-    if (address) {
+    if (accounts[0]) {
       if (!btnDisabled) {
-        // TODO cip-37 portal
         const txParams = {
-          from: formatAddress(address, { hex: true }),
-          to: formatAddress(contractAddress, { hex: true }),
+          from: formatAddress(accounts[0]),
+          to: formatAddress(contractAddress),
           data,
         };
         //loading
@@ -127,11 +126,12 @@ const DappButton = ({
           <img
             src={imgSuccess}
             alt="success"
-            className={`successImg ${address ? 'shown' : 'hidden'}`}
+            className={`successImg ${accounts[0] ? 'shown' : 'hidden'}`}
           />
-          <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-            {/*{getEllipsStr(address, 6, 4)}*/}
-            <AddressContainer value={address} />
+          <span
+            className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
+          >
+            <AddressContainer value={accounts[0]} />
           </span>
         </>
       )}
