@@ -54,7 +54,10 @@ export const CountDown = ({
   );
 
   return (
-    <Text span hoverValue={fullLabel[0]}>
+    <Text
+      span
+      hoverValue={`${fullLabel[0]} ${t(translations.general.countdown.ago)}`}
+    >
       {label[0]} {t(translations.general.countdown.ago)}
     </Text>
   );
