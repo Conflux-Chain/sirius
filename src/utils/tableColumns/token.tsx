@@ -319,18 +319,20 @@ export const balance = (decimal, price, transferType) => ({
       <Translation>
         {t => t(translations.general.table.token.quantity)}
       </Translation>
-      <ThTipWrap>
-        <Text
-          span
-          hoverValue={
-            <Translation>
-              {t => t(translations.general.table.token.erc1155QuantityTip)}
-            </Translation>
-          }
-        >
-          <img src={imgInfo} alt="?" />
-        </Text>
-      </ThTipWrap>
+      {transferType === cfxTokenTypes.erc1155 ? (
+        <ThTipWrap>
+          <Text
+            span
+            hoverValue={
+              <Translation>
+                {t => t(translations.general.table.token.erc1155QuantityTip)}
+              </Translation>
+            }
+          >
+            <img src={imgInfo} alt="?" />
+          </Text>
+        </ThTipWrap>
+      ) : null}
     </ContentWrapper>
   ),
   dataIndex: 'balance',
