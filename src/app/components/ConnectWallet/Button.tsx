@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
 import { RotateImg } from './RotateImg';
-import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { useCheckHook } from './useCheckHook';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -25,12 +25,14 @@ export const Button = ({ className, onClick }: Button) => {
   const { installed, connected, accounts } = usePortal();
   const { pendingRecords } = useContext(TxnHistoryContext);
 
+  const { isValid } = useCheckHook(true);
+
   let buttonText = t(translations.connectWallet.button.text);
   let buttonStatus: React.ReactNode = '';
   let hasPendingRecords = connected === 1 && !!pendingRecords.length;
 
   if (installed) {
-    if (accounts.length && utilAddress.isValidCfxAddress(accounts[0])) {
+    if (accounts.length && isValid) {
       if (hasPendingRecords) {
         buttonStatus = (
           <RotateImg

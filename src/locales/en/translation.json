@@ -180,7 +180,7 @@
     "confluxnetwork": "Conflux Network",
     "confluxportal": "Conflux Portal",
     "confluxbounty": "Conflux Bounty",
-    "copryRight": "Copyright © 2020 Conflux. All Rights Reserved.",
+    "copryRight": "© 2021 Conflux. All Rights Reserved.",
     "tool": "Tool",
     "addressFormatConversion": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
@@ -495,7 +495,7 @@
     "blockHash": "Block Hash",
     "position": "Position",
     "storageLimit": "Storage Limit",
-    "storageCollateralized": "Storage Collateralized Fee",
+    "storageCollateralized": "Storage Collateralize Fee",
     "storageReleased": "Storage Released",
     "chainID": "Chain ID",
     "inputData": "Input Data",
@@ -721,10 +721,11 @@
       "copyAddress": "Copy address",
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
+      "versionNotice": "Version Notice",
       "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
       "cannotProcess": "Cannot Process",
-      "upgradeTip": "Please update ConfluxPortal to the latest version."
+      "upgradeTipVersion": "Please update ConfluxPortal to the latest version."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",
@@ -753,6 +754,8 @@
     "statistics": "Top Statistics",
     "transactions": "Transactions",
     "tokens": "Tokens",
+    "miners": "Miners",
+    "network": "Network",
     "topTxnCountSent": "Top Txn Count Sent",
     "topTxnCountReceived": "Top Txn Count Received",
     "topCFXSend": "Top CFX Sent",
@@ -761,6 +764,9 @@
     "topTokensByReceivers": "Top Tokens by Receivers",
     "topTokensByTxnCount": "Top Tokens by Txn Count",
     "topTokensByTxnAccountsCount": "Top Tokens by Txn Accounts Count",
+    "topMinersByBlocksMined": "Top Miners by Blocks Mined",
+    "topAccountsByGasUsed": "Top Accounts by Gas Used",
+    "topAccountsByTxnCount": "Top Accounts by Txn Count",
     "span": {
       "24h": "24 Hours",
       "3d": "3 Days",
@@ -775,7 +781,12 @@
       "percentage": "Percentage",
       "token": "Token",
       "senders": "Senders",
-      "receivers": "Receivers"
+      "receivers": "Receivers",
+      "totalBlocksMined": "Total Blocks Mined",
+      "totalRewards": "Total Rewards",
+      "totalTxnFees": "Total Txn Fees",
+      "hashRate": "Est. Hash Rate (GH/s)",
+      "gasUsed": "Gas Used"
     }
   }
 }

@@ -173,15 +173,19 @@ const HeaderWrap = styled.div`
   }
   .basic-link {
     font-size: 14px;
+    line-height: 22px;
     margin-left: 10px;
+    border-bottom: 1px solid #1e3de4;
+
+    &:hover {
+      border-bottom: 1px solid #0f23bd;
+    }
 
     a {
       color: #1e3de4 !important;
-      text-decoration: underline;
 
       &:hover {
         color: #0f23bd !important;
-        text-decoration: underline;
       }
     }
   }
