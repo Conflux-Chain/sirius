@@ -66,6 +66,7 @@ export const StatsCard = ({
 }: Partial<Props>) => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>([]);
+  const [totalDifficulty, setTotalDifficulty] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [loadingTokenInfo, setLoadingTokenInfo] = useState(true);
 
@@ -213,6 +214,10 @@ export const StatsCard = ({
             } else {
               setData(res.list);
               setLoadingTokenInfo(false);
+              if (category === 'miner' && res.allDifficulty) {
+                // calc proportion of hashRate
+                setTotalDifficulty(res.allDifficulty + '');
+              }
             }
           } else {
             console.error(res);
@@ -330,18 +335,18 @@ export const StatsCard = ({
 
                         <Text
                           hoverValue={
-                            (d.hashRate && d.difficultySum
-                              ? new BigNumber(d.hashRate)
-                                  .dividedBy(new BigNumber(d.difficultySum))
+                            (d.difficultySum && totalDifficulty
+                              ? new BigNumber(d.difficultySum)
+                                  .dividedBy(new BigNumber(totalDifficulty))
                                   .multipliedBy(100)
                                   .toFixed(8)
                               : '-') + '%'
                           }
                         >
                           &nbsp;(
-                          {d.hashRate && d.difficultySum
-                            ? new BigNumber(d.hashRate)
-                                .dividedBy(new BigNumber(d.difficultySum))
+                          {d.difficultySum && totalDifficulty
+                            ? new BigNumber(d.difficultySum)
+                                .dividedBy(new BigNumber(totalDifficulty))
                                 .multipliedBy(100)
                                 .toFixed(3)
                             : '-'}
