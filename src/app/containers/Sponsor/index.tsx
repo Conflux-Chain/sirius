@@ -53,7 +53,7 @@ export function Sponsor() {
   const [inputAddressVal, setInputAddressVal] = useState('');
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
-  const { connected, accounts } = usePortal();
+  const { accounts } = usePortal();
   const getSponsorInfo = async _address => {
     setLoading(true);
     // TODO cip-37 update
@@ -375,9 +375,6 @@ export function Sponsor() {
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
-            hoverText={
-              connected === 0 ? t(translations.contract.connectPortalFirst) : ''
-            }
             txnAction={TxnAction.sponsorApplication}
           ></DappButton>
         </ApplyContainer>

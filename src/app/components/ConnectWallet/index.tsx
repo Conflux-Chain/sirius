@@ -8,6 +8,9 @@ import { Modal } from './Modal';
 import { Button } from './Button';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useCheckHook } from './useCheckHook';
+import { Text } from '../Text';
+import { useTranslation } from 'react-i18next';
+import { translations } from '../../../locales/i18n';
 
 interface Props {
   children?: React.ReactChild;
@@ -15,6 +18,7 @@ interface Props {
 }
 
 export const ConnectButton = ({ children, profile = false }: Props) => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const { installed, connected } = usePortal();
   const {
@@ -46,9 +50,22 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
     setShowModal(false);
   };
 
+  let child = <span onClickCapture={handleClick}>{children}</span>;
+
+  if (!profile && (!installed || connected === 0 || !isValid)) {
+    child = (
+      <Text
+        onClickCapture={handleClick}
+        hoverValue={t(translations.connectWallet.tip)}
+      >
+        {children}
+      </Text>
+    );
+  }
+
   return (
     <>
-      <span onClickCapture={handleClick}>{children}</span>
+      {child}
       <Modal show={showModal} onClose={handleClose}></Modal>
     </>
   );
@@ -61,3 +78,5 @@ export const ConnectWallet = () => {
     </ConnectButton>
   );
 };
+
+export { useCheckHook };
