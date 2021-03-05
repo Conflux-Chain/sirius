@@ -38,6 +38,7 @@ export function TableCard({
   const tabs = [
     {
       value: 'cfxTransfer',
+      action: 'transactionCfxTransfers',
       label: t(translations.transaction.internalTxns),
       url: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}`,
       table: {

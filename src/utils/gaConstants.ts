@@ -40,6 +40,35 @@ export const ScanEvent = {
       invalid: 'invalid',
     },
   },
+  // tabPanel change
+  tab: {
+    category: 'tab',
+    action: {
+      latestBlocks: 'latest_blocks',
+      latestTransactions: 'latest_transactions',
+      allBlocks: 'all_blocks',
+      allTransactions: 'all_transactions',
+      blockTransactions: 'block_transactions',
+      referenceBlocks: 'reference_blocks',
+      transactionCfxTransfers: 'transaction_cfx_transfers',
+      cfxTransfers: 'cfx_transfers',
+      accountTransactions: 'account_transactions',
+      transfersErc20: 'transfers_erc20',
+      transfersErc721: 'transfers_erc721',
+      transfersErc1155: 'transfers_erc1155',
+      contractViewer: 'contract_viewer',
+      minedBlocks: 'mined_blocks',
+      tokenTransfers: 'token_transfers',
+      tokenHolders: 'token_holders',
+      statsTransactions: 'stats_transactions',
+      statsTokens: 'stats_tokens',
+      statsMiners: 'stats_miners',
+      contractSourceCode: 'contract_source_code',
+      contractAbi: 'contract_abi',
+      contractRead: 'contract_read',
+      contractWrite: 'contract_write',
+    },
+  },
   // stats function
   // interval_change event label === interval value
   stats: {

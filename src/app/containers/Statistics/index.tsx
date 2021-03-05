@@ -36,11 +36,18 @@ export function Statistics() {
   const title = t(translations.statistics.statistics);
 
   const tabsChange = val => {
-    if (val !== statsType) {
+    if (val && val !== statsType) {
       // ga
       trackEvent({
         category: ScanEvent.stats.category,
         action: ScanEvent.stats.action[val],
+      });
+      trackEvent({
+        category: ScanEvent.tab.category,
+        action:
+          ScanEvent.tab.action[
+            `stats${val.charAt(0).toUpperCase() + val.slice(1)}`
+          ],
       });
       history.push(`/statistics/${val}`);
     }
