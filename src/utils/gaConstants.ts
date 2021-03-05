@@ -28,6 +28,21 @@ export const ScanEvent = {
     category: 'search',
     action: {},
   },
+  stats: {
+    category: 'stats',
+    action: {
+      blockTimeIntervalChange: 'blockTime_interval_change',
+      tpsIntervalChange: 'tps_interval_change',
+      difficultyIntervalChange: 'difficulty_interval_change',
+      hashRateIntervalChange: 'hashRate_interval_change',
+      transactions: 'transactions',
+      transactionsIntervalChange: 'transactions_interval_change',
+      tokens: 'tokens',
+      tokensIntervalChange: 'tokens_interval_change',
+      miners: 'miners',
+      minersIntervalChange: 'miners_interval_change',
+    },
+  },
   preference: {
     category: 'preference',
     action: {

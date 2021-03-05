@@ -13,6 +13,8 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import usePlot from './usePlot';
 import { formatNumber } from '../../../utils';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -193,7 +195,15 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               key={key}
               small={small}
               active={d === duration}
-              onClick={() => setDuration(d)}
+              onClick={() => {
+                // ga
+                trackEvent({
+                  category: ScanEvent.stats.category,
+                  action: ScanEvent.stats.action[`${indicator}IntervalChange`],
+                  label: d,
+                });
+                setDuration(d);
+              }}
             >
               {key}
             </Button>

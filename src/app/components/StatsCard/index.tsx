@@ -322,9 +322,11 @@ export const StatsCard = ({
                       </td>
                       <td className="text-right">
                         <Text
-                          hoverValue={formatNumber(d.hashRate, {
-                            withUnit: false,
-                          })}
+                          hoverValue={
+                            formatNumber(d.hashRate, {
+                              withUnit: false,
+                            }) + ' H/s'
+                          }
                         >
                           {formatNumber(d.hashRate, {
                             withUnit: true,
