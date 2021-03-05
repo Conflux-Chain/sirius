@@ -70,8 +70,8 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               };
             }
             if (index === plot.length - 1) {
-              acc.min.difficulty = acc.min.difficulty * 0.3;
-              acc.min.hashRate = acc.min.hashRate * 0.3;
+              acc.min.difficulty = acc.min.difficulty * 0.7;
+              acc.min.hashRate = acc.min.hashRate * 0.7;
               acc.max.difficulty = acc.max.difficulty * 1.1;
               acc.max.hashRate = acc.max.hashRate * 1.1;
             }
