@@ -170,6 +170,7 @@ export function Transfers({
   const tabs: any = [
     {
       value: 'transfers',
+      action: 'tokenTransfers',
       label: (total: number, realTotal: number) => {
         return (
           <>
@@ -194,6 +195,7 @@ export function Transfers({
   ) {
     tabs.push({
       value: 'holders',
+      action: 'tokenHolders',
       label: () => {
         return (
           <>
@@ -214,6 +216,7 @@ export function Transfers({
   if (transferType === cfxTokenTypes.erc1155) {
     tabs.push({
       value: 'holders',
+      action: 'tokenHolders',
       label: () => {
         return (
           <>
