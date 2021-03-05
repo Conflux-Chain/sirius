@@ -60,7 +60,7 @@ const fieldsContract = [
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
-  const { connected, accounts } = usePortal();
+  const { accounts } = usePortal();
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -662,11 +662,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
           contractAddress={contractManagerAddress}
           data={txData}
           btnDisabled={!btnShouldClick}
-          hoverText={
-            connected === 0
-              ? t(translations.contract.beforeContractSubmitTip)
-              : ''
-          }
           txnAction={txnAction}
         ></DappButton>
         <div

@@ -4,7 +4,7 @@ import { Form } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
-import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
+import { Button, Modal } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
@@ -53,7 +53,6 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   const [outputValue, setOutputValue] = useState({});
   const [outputError, setOutputError] = useState('');
   const [queryLoading, setQueryLoading] = useState(false);
-  const [hoverText, setHoverText] = useState('');
   const inputs = (data && data['inputs']) || [];
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
@@ -70,16 +69,6 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       setOutputError(data['error']);
     }
   }, [data]);
-  useEffect(() => {
-    if (type === 'write') {
-      if (accounts[0]) {
-        setHoverText('');
-      } else {
-        setHoverText('contract.connectPortalFirst');
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, accounts[0]]);
   const onFinish = async values => {
     const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
@@ -321,13 +310,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             (type === 'write' && inputsLength >= 0)) && (
             <>
               <BtnGroup>
-                {hoverText ? (
-                  <Tooltip text={t(hoverText)} placement="top-start">
-                    {btnComp}
-                  </Tooltip>
-                ) : (
-                  <>{btnComp}</>
-                )}
+                {btnComp}
                 {txHash && (
                   <Button
                     variant="solid"

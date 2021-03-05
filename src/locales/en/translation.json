@@ -65,7 +65,6 @@
     },
     "query": "Query",
     "write": "Write",
-    "connectPortalFirst": "Please connect to ConfluxPortal first!",
     "viewTx": "View your transaction",
     "collapseAll": "Collapse All"
   },
@@ -748,7 +747,8 @@
         "104": "read contract",
         "105": "Sponsor application"
       }
-    }
+    },
+    "tip": "Please connect to ConfluxPortal first!"
   },
   "statistics": {
     "statistics": "Top Statistics",

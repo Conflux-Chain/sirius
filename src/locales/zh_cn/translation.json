@@ -65,7 +65,6 @@
     },
     "query": "读取",
     "write": "写入",
-    "connectPortalFirst": "请先连接 ConfluxPortal 钱包！",
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
   },
@@ -748,7 +747,8 @@
         "104": "读合约",
         "105": "Sponsor 应用"
       }
-    }
+    },
+    "tip": "请先连接 ConfluxPortal 钱包！"
   },
   "statistics": {
     "statistics": "最佳统计",
