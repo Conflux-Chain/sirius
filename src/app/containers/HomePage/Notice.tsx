@@ -76,15 +76,50 @@ const StyledNoticeItemWrapper = styled.div`
   }
 `;
 
+const getScrollBarWidth = () => {
+  console.log('getScrollBarWidth');
+  const inner = document.createElement('p');
+  inner.style.width = '100%';
+  inner.style.height = '200px';
+
+  const outer = document.createElement('div');
+  outer.style.position = 'absolute';
+  outer.style.top = '0px';
+  outer.style.left = '0px';
+  outer.style.visibility = 'hidden';
+  outer.style.width = '200px';
+  outer.style.height = '150px';
+  outer.style.overflow = 'hidden';
+  outer.style.zIndex = '-9999';
+  outer.appendChild(inner);
+
+  document.body.appendChild(outer);
+  const w1 = inner.offsetWidth;
+  outer.style.overflow = 'scroll';
+  let w2 = inner.offsetWidth;
+  if (w1 === w2) w2 = outer.clientWidth;
+
+  document.body.removeChild(outer);
+
+  return w1 - w2;
+};
+
 const Main = styled.div`
   color: #212121;
   background: #eaeffb;
   overflow: auto;
   z-index: 2;
   width: 100vw;
-  max-width: ${document.body.clientWidth
-    ? document.body.clientWidth + 'px'
-    : 'calc(100vw - 18px)'}; // fix home page horizontal scroll
+  // Scroll bar width
+  // OSX (Chrome, Safari, Firefox) - 15px
+  // Windows XP (IE7, Chrome, Firefox) - 17px
+  // Windows 7 (IE10, IE11, Chrome, Firefox) - 17px
+  // Windows 8.1 (IE11, Chrome, Firefox) - 17px
+  // Windows 10 (IE11, Chrome, Firefox) - 17px
+  // Windows 10 (Edge 12/13) - 12px
+  max-width: calc(
+    100vw - ${getScrollBarWidth()}px
+  ); // minus scroll bar width to fix home page horizontal scroll
 
   &.placeholder {
     position: relative;
@@ -101,5 +136,6 @@ const Main = styled.div`
     margin-top: 2rem;
     font-size: 0.9rem;
     overflow: auto;
+    max-width: 100vw;
   }
 `;
