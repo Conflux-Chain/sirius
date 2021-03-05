@@ -77,7 +77,6 @@ const StyledNoticeItemWrapper = styled.div`
 `;
 
 const getScrollBarWidth = () => {
-  console.log('getScrollBarWidth');
   const inner = document.createElement('p');
   inner.style.width = '100%';
   inner.style.height = '200px';

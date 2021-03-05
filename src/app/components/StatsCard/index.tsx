@@ -328,11 +328,15 @@ export const StatsCard = ({
                             }) + ' H/s'
                           }
                         >
-                          {formatNumber(d.hashRate, {
-                            withUnit: true,
-                            unit: 'G',
-                            keepZero: true,
-                          }).replace('G', '')}
+                          {formatNumber(
+                            new BigNumber(d.hashRate)
+                              .dividedBy(new BigNumber(10).pow(9))
+                              .toFixed(3),
+                            {
+                              withUnit: false,
+                              keepZero: true,
+                            },
+                          )}
                         </Text>
 
                         <Text
