@@ -24,9 +24,19 @@ export const ScanEvent = {
       medium: 'medium',
     },
   },
+  // global search
   search: {
     category: 'search',
-    action: {},
+    action: {
+      account: 'account',
+      contract: 'contract',
+      innerContract: 'inner_contract',
+      epoch: 'epoch',
+      block: 'block',
+      transaction: 'transaction',
+      nullAddress: 'null_address',
+      invalid: 'invalid',
+    },
   },
   stats: {
     category: 'stats',
