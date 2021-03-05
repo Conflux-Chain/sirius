@@ -6,12 +6,15 @@ import { useRouteMatch, Link as RouterLink } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
 import { ChevronDown } from '@zeit-ui/react-icons';
 import { useToggle, useClickAway } from 'react-use';
+import { ScanEvent } from '../../../utils/gaConstants';
+import { trackEvent } from '../../../utils/ga';
 
 export type HeaderLinkTitle = ReactNode | Array<ReactNode>;
 
 export interface HeaderLink {
   title: HeaderLinkTitle;
   href?: string;
+  name?: string;
   onClick?: MouseEventHandler;
   children?: HeaderLink[];
   isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
@@ -25,6 +28,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
     const {
       title,
       href,
+      name,
       onClick,
       children,
       isMatchedFn,
@@ -53,6 +57,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
         isMenu={isMenu}
         key={idx}
         href={href}
+        name={name}
         className={`navbar-link level-${level}`}
         onClick={onClick}
         matched={matched}
@@ -107,9 +112,10 @@ export const HeaderLink: React.FC<{
   isMenu?: boolean;
   className: string;
   href?: string;
+  name?: string;
   matched?: boolean;
   onClick?: MouseEventHandler;
-}> = ({ className, href, matched, children, onClick, isMenu }) => {
+}> = ({ className, href, name, matched, children, onClick, isMenu }) => {
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
   useClickAway(ref, () => {
@@ -124,6 +130,15 @@ export const HeaderLink: React.FC<{
       <WrappLink>
         <RouterLink
           className={clsx('link', className, matched && 'matched')}
+          onClick={() => {
+            if (name) {
+              // ga
+              trackEvent({
+                category: ScanEvent.menu.category,
+                action: name,
+              });
+            }
+          }}
           to={href}
         >
           {children}

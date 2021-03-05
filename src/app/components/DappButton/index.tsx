@@ -14,7 +14,8 @@ import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-import { ConnectButton } from '../../components/ConnectWallet';
+import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
+
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -27,7 +28,6 @@ interface DappButtonProps {
   successCallback?: (hash: string) => void;
   failCallback?: (message: string) => void;
   closeModalCallback?: () => void;
-  shownAddress?: boolean;
   htmlType?: React.ButtonHTMLAttributes<any>['type'];
   txnAction?: number | string;
 }
@@ -44,7 +44,6 @@ const DappButton = ({
   successCallback,
   failCallback,
   closeModalCallback,
-  shownAddress,
   txnAction = TxnAction.default,
   ...props
 }: Props) => {
@@ -55,49 +54,51 @@ const DappButton = ({
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
+  const { isValid } = useCheckHook();
+
   let text = connectText
     ? connectText
     : t(translations.general.connnectWalletSubmit);
+
   if (accounts[0]) {
     text = submitText ? submitText : t(translations.general.submit);
   }
+
   const onClickHandler = () => {
-    if (accounts[0]) {
-      if (!btnDisabled) {
-        const txParams = {
-          from: formatAddress(accounts[0]),
-          to: formatAddress(contractAddress),
-          data,
-        };
-        //loading
-        setModalType('loading');
-        setModalShown(true);
+    if (!btnDisabled) {
+      const txParams = {
+        from: formatAddress(accounts[0]),
+        to: formatAddress(contractAddress),
+        data,
+      };
+      //loading
+      setModalType('loading');
+      setModalShown(true);
 
-        confluxJS
-          .sendTransaction(txParams)
-          .then(txHash => {
-            addRecord({
+      confluxJS
+        .sendTransaction(txParams)
+        .then(txHash => {
+          addRecord({
+            hash: txHash,
+            info: JSON.stringify({
+              code: txnAction,
+              description: t(
+                translations.connectWallet.notify.action[txnAction],
+              ),
               hash: txHash,
-              info: JSON.stringify({
-                code: txnAction,
-                description: t(
-                  translations.connectWallet.notify.action[txnAction],
-                ),
-                hash: txHash,
-              }),
-            });
-
-            //success alert
-            successCallback && successCallback(txHash);
-            setModalType('success');
-            setTxHash(txHash);
-          })
-          .catch(error => {
-            //rejected alert
-            failCallback && failCallback(error.message);
-            setModalType('fail');
+            }),
           });
-      }
+
+          //success alert
+          successCallback && successCallback(txHash);
+          setModalType('success');
+          setTxHash(txHash);
+        })
+        .catch(error => {
+          //rejected alert
+          failCallback && failCallback(error.message);
+          setModalType('fail');
+        });
     }
   };
   const closeHandler = () => {
@@ -112,16 +113,17 @@ const DappButton = ({
           {...props}
           variant="solid"
           color="primary"
+          // invalid connect wallet button will ignore disabled status, guide user to connect wallet or fixed connect error
           className={`${btnClassName} btnInnerClass ${
-            btnDisabled ? 'disabled' : null
+            isValid && btnDisabled ? 'disabled' : null
           }`}
-          disabled={btnDisabled}
+          disabled={isValid && btnDisabled}
           onClick={onClickHandler}
         >
           {text}
         </Button>
       </ConnectButton>
-      {shownAddress && (
+      {isValid && (
         <>
           <img
             src={imgSuccess}
@@ -230,7 +232,6 @@ DappButton.defaultProps = {
   // btnText: '',
   connectText: '',
   submitText: '',
-  shownAddress: true,
 };
 
 export default DappButton;

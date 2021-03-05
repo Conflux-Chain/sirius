@@ -15,6 +15,8 @@ import { StatsType } from '../../components/StatsCard';
 // TODO antd slimming
 import '../../../styles/antd.custom.css';
 import { media } from '../../../styles/media';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface RouteParams {
   statsType: string;
@@ -35,11 +37,21 @@ export function Statistics() {
 
   const tabsChange = val => {
     if (val !== statsType) {
+      // ga
+      trackEvent({
+        category: ScanEvent.stats.category,
+        action: ScanEvent.stats.action[val],
+      });
       history.push(`/statistics/${val}`);
     }
   };
   const spanChange = val => {
     if (val !== span) {
+      trackEvent({
+        category: ScanEvent.stats.category,
+        action: ScanEvent.stats.action[`${statsType}IntervalChange`],
+        label: val,
+      });
       history.push(`/statistics/${statsType}?span=${val}`);
     }
   };

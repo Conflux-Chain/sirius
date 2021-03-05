@@ -82,6 +82,9 @@ const Main = styled.div`
   overflow: auto;
   z-index: 2;
   width: 100vw;
+  max-width: ${document.body.clientWidth
+    ? document.body.clientWidth + 'px'
+    : 'calc(100vw - 18px)'}; // fix home page horizontal scroll
 
   &.placeholder {
     position: relative;
@@ -95,7 +98,7 @@ const Main = styled.div`
   }
 
   ${media.s} {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     font-size: 0.9rem;
     overflow: auto;
   }

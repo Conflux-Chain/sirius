@@ -3,6 +3,8 @@ import { Select } from '../../components/Select';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import Globe from '@zeit-ui/react-icons/globe';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 export function Language() {
   const { i18n } = useTranslation();
@@ -10,8 +12,18 @@ export function Language() {
 
   const handleLanguageChange = l => {
     if (l === 'en') {
+      trackEvent({
+        category: ScanEvent.preference.category,
+        action: ScanEvent.preference.action.changeLang,
+        label: 'en',
+      });
       i18n.changeLanguage('en');
     } else {
+      trackEvent({
+        category: ScanEvent.preference.category,
+        action: ScanEvent.preference.action.changeLang,
+        label: 'zh-CN',
+      });
       i18n.changeLanguage('zh-CN');
     }
   };
