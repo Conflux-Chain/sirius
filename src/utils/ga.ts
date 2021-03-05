@@ -35,13 +35,27 @@ interface TrackEventParams {
 // track event data
 export const trackEvent = (eventInfo: TrackEventParams) => {
   try {
-    console.log(eventInfo);
+    const eventObject: any = {
+      event_category: eventInfo.category,
+    };
+    if (typeof eventInfo.label !== 'undefined') {
+      eventObject.event_label = eventInfo.label;
+    }
+    if (typeof eventInfo.value !== 'undefined') {
+      eventObject.value = eventInfo.value;
+    }
+    if (
+      window.location.hostname.includes('127.0.0.1') ||
+      window.location.hostname.includes('localhost')
+    ) {
+      console.info(`trackEvent`, eventInfo);
+    }
     window.gtag &&
-      window.gtag('event', `${eventInfo.category}_${eventInfo.action}`, {
-        event_category: eventInfo.category,
-        event_label: eventInfo.label || '',
-        value: eventInfo.value || null,
-      });
+      window.gtag(
+        'event',
+        `${eventInfo.category}_${eventInfo.action}`,
+        eventObject,
+      );
   } catch (e) {
     console.error(e);
   }

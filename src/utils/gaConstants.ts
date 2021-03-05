@@ -1,4 +1,5 @@
 export const ScanEvent = {
+  // menu click
   menu: {
     category: 'menu',
     action: {
@@ -25,6 +26,7 @@ export const ScanEvent = {
     },
   },
   // global search
+  // event label === search keyword
   search: {
     category: 'search',
     action: {
@@ -38,6 +40,8 @@ export const ScanEvent = {
       invalid: 'invalid',
     },
   },
+  // stats function
+  // interval_change event label === interval value
   stats: {
     category: 'stats',
     action: {
@@ -53,11 +57,12 @@ export const ScanEvent = {
       minersIntervalChange: 'miners_interval_change',
     },
   },
+  // preference function
   preference: {
     category: 'preference',
     action: {
-      changeLang: 'change_lang',
-      changeNet: 'change_net',
+      changeLang: 'change_lang', // event label === lang
+      changeNet: 'change_net', // event label === net
     },
   },
 };
