@@ -741,7 +741,7 @@
       "link": "View on ConfluxScan",
       "action": {
         "100": "Transaction Status",
-        "101": "Contract Write",
+        "101": "Contract Registration",
         "102": "Contract Edit",
         "103": "Write contract",
         "104": "read contract",
