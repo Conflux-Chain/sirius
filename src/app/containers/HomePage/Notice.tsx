@@ -136,6 +136,5 @@ const Main = styled.div`
     margin-top: 2rem;
     font-size: 0.9rem;
     overflow: auto;
-    max-width: 100vw;
   }
 `;
