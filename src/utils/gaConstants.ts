@@ -57,6 +57,22 @@ export const ScanEvent = {
       minersIntervalChange: 'miners_interval_change',
     },
   },
+  // confi wallet
+  // TODO add more track
+  wallet: {
+    category: 'wallet',
+    action: {
+      connect: 'connect',
+      disconnect: 'disconnect',
+      versionNotMatch: 'version_not_match',
+      readContract: 'read_contract',
+      writeContract: 'write_contract',
+      regContract: 'reg_contract',
+      updateContract: 'update_contract',
+      applySponsor: 'apply_sponsor',
+      error: 'error',
+    },
+  },
   // preference function
   preference: {
     category: 'preference',
