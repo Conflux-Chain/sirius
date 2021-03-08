@@ -312,7 +312,8 @@ const StyledInputWrapper = styled.div`
 
     input {
       height: 2.2857rem;
-      background: rgba(30, 61, 228, 0.04);
+      background: rgba(0, 84, 254, 0.04);
+      border: 1px solid #ebeced;
       border-radius: 0.2857rem;
       margin: 0;
       padding: 0 1.1429rem;
