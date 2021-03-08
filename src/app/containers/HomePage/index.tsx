@@ -43,6 +43,7 @@ export function HomePage() {
   const tabs = [
     {
       value: 'blocks',
+      action: 'latestBlocks',
       label: t(translations.blocksAndTransactions.latestBlocks),
       url: '/block',
       pagination: false,
@@ -53,6 +54,7 @@ export function HomePage() {
     },
     {
       value: 'transaction',
+      action: 'latestTransactions',
       label: t(translations.blocksAndTransactions.latestTransactions),
       url: '/transaction',
       pagination: false,

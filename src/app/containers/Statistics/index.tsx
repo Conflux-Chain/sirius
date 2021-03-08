@@ -15,6 +15,8 @@ import { StatsType } from '../../components/StatsCard';
 // TODO antd slimming
 import '../../../styles/antd.custom.css';
 import { media } from '../../../styles/media';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface RouteParams {
   statsType: string;
@@ -34,12 +36,29 @@ export function Statistics() {
   const title = t(translations.statistics.statistics);
 
   const tabsChange = val => {
-    if (val !== statsType) {
+    if (val && val !== statsType) {
+      // ga
+      trackEvent({
+        category: ScanEvent.stats.category,
+        action: ScanEvent.stats.action[val],
+      });
+      trackEvent({
+        category: ScanEvent.tab.category,
+        action:
+          ScanEvent.tab.action[
+            `stats${val.charAt(0).toUpperCase() + val.slice(1)}`
+          ],
+      });
       history.push(`/statistics/${val}`);
     }
   };
   const spanChange = val => {
     if (val !== span) {
+      trackEvent({
+        category: ScanEvent.stats.category,
+        action: ScanEvent.stats.action[`${statsType}IntervalChange`],
+        label: val,
+      });
       history.push(`/statistics/${statsType}?span=${val}`);
     }
   };
@@ -150,6 +169,19 @@ export function Statistics() {
                 <StatsCard
                   span={span as string}
                   type={StatsType.topTokensByTxnAccountsCount}
+                />
+              </Col>
+            </Row>
+          </CardWrapper>
+        </Tabs.Item>
+        <Tabs.Item label={t(translations.statistics.miners)} value="miners">
+          <CardWrapper>
+            {spanButtons(span)}
+            <Row gutter={[24, 24]}>
+              <Col span={24}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topMinersByBlocksMined}
                 />
               </Col>
             </Row>

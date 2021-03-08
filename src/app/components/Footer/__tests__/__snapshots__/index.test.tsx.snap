@@ -24,6 +24,7 @@ exports[`<Footer  /> should match snapshot 1`] = `
   box-sizing: border-box;
   background-color: #e0e3f2;
   width: 100vw;
+  max-width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

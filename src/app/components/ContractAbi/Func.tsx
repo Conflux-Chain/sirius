@@ -4,9 +4,8 @@ import { Form } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
-import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
-import { useMessages } from '@cfxjs/react-ui';
+import { Button, Modal } from '@cfxjs/react-ui';
+import { usePortal } from 'utils/hooks/usePortal';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
@@ -20,7 +19,8 @@ import Loading from '../../components/Loading';
 import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
-import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+
 import {
   isAddress,
   checkInt,
@@ -30,6 +30,7 @@ import {
   checkCfxType,
 } from '../../../utils';
 import { formatAddress } from '../../../utils/cfx';
+import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 
 interface FuncProps {
@@ -42,9 +43,9 @@ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
 export declare type Props = FuncProps & NativeAttrs;
 
 const Func = ({ type, data, contractAddress, contract }: Props) => {
+  const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  const [, setMessage] = useMessages();
-  const { address, confluxJS, chainId } = useConfluxPortal(); // TODO cip-37 portal
+  const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -52,7 +53,6 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
   const [outputValue, setOutputValue] = useState({});
   const [outputError, setOutputError] = useState('');
   const [queryLoading, setQueryLoading] = useState(false);
-  const [hoverText, setHoverText] = useState('');
   const inputs = (data && data['inputs']) || [];
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
@@ -69,16 +69,6 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       setOutputError(data['error']);
     }
   }, [data]);
-  useEffect(() => {
-    if (type === 'write') {
-      if (address) {
-        setHoverText('');
-      } else {
-        setHoverText('contract.connectPortalFirst');
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, address]);
   const onFinish = async values => {
     const newValues = JSON.parse(JSON.stringify(values));
     const items: object[] = Object.values(newValues);
@@ -124,20 +114,11 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
         break;
       case 'write':
-        if (address) {
-          if (isTestNetEnv() && Number(chainId) !== 1) {
-            setMessage({ text: t('contract.error.testnet'), color: 'error' });
-            return;
-          }
-          if (!isTestNetEnv() && Number(chainId) !== 1029) {
-            setMessage({ text: t('contract.error.mainnet'), color: 'error' });
-            return;
-          }
+        if (accounts[0]) {
           let objParams: any[] = [];
-          // cip-37
           let txParams = {
-            from: formatAddress(address, { hex: true }),
-            to: formatAddress(contractAddress, { hex: true }),
+            from: formatAddress(accounts[0]),
+            to: formatAddress(contractAddress),
           };
           if (data['stateMutability'] === 'payable') {
             objParams = objValues.slice(1);
@@ -160,6 +141,18 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           setModalShown(true);
           try {
             const txHash = await confluxJS.sendTransaction(txParams);
+            const code = TxnAction.writeContract;
+
+            // mark txn action to history
+            addRecord({
+              hash: txHash,
+              info: JSON.stringify({
+                code: code,
+                description: t(translations.connectWallet.notify.action[code]),
+                hash: txHash,
+              }),
+            });
+
             setModalType('success');
             setTxHash(txHash);
             setOutputError('');
@@ -317,13 +310,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
             (type === 'write' && inputsLength >= 0)) && (
             <>
               <BtnGroup>
-                {hoverText ? (
-                  <Tooltip text={t(hoverText)} placement="top-start">
-                    {btnComp}
-                  </Tooltip>
-                ) : (
-                  <>{btnComp}</>
-                )}
+                {btnComp}
                 {txHash && (
                   <Button
                     variant="solid"
