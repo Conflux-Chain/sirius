@@ -576,6 +576,8 @@ export function Table({ address, addressInfo }) {
           minTimestamp,
           maxTimestamp,
           accountAddress,
+          limit: '5000',
+          reverse: 'false',
           transferType:
             tab === 'transaction' ? null : tab!['replace']('transfers-', ''),
         },
