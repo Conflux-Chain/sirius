@@ -611,16 +611,16 @@
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
-      "2. 根据 CIP-37，Conflux 将使用新版格式的地址为 base32 地址（以网络标识开头，如\"cfx:\"），更新对 Conflux 用户的影响：",
+      "2. ConfluxPortal 将与2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次Portal升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. 根据 CIP-37，Conflux 将使用新版格式的地址为 base32 地址（以网络标识开头，如cfx:），更新对 Conflux 用户的影响：",
+      "2. ConfluxPortal 将与2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次Portal升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
-    "link": "https://forum.conflux.fun/t/topic/4798",
-    "testnetLink": "https://forum.conflux.fun/t/topic/4798"
+    "link": "https://forum.conflux.fun/t/topic/5386",
+    "testnetLink": "https://forum.conflux.fun/t/topic/5386"
   },
   "toolTip": {
     "block": {
