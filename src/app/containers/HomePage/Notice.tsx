@@ -41,11 +41,11 @@ export function Notice() {
       notices.push(
         <NoticeItem key={n}>
           {t(transationsNotice[n])}
-          {/* {`${isEn ? ' (' : '（'}`} */}
+          {`${isEn ? ' (' : '（'}`}
           <Link href={t(transationsNoticeLink)}>
             {isEn ? 'Click to view details' : '详情链接'}
           </Link>
-          {/* {`${isEn ? ').' : '）。'}`} */}
+          {`${isEn ? ').' : '）。'}`}
         </NoticeItem>,
       );
     } else {
