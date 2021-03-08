@@ -58,6 +58,7 @@ const Wrapper = styled.footer`
   box-sizing: border-box;
   background-color: #e0e3f2;
   width: 100vw;
+  max-width: 100%; // fix horizontal scroll
   display: flex;
   flex-direction: row;
   align-items: flex-start;

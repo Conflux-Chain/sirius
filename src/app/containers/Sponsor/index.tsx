@@ -16,7 +16,6 @@ import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
@@ -54,8 +53,7 @@ export function Sponsor() {
   const [inputAddressVal, setInputAddressVal] = useState('');
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
-  const { address: portalAddress } = useConfluxPortal(); // TODO cip-37 portal
-  const { connected } = usePortal();
+  const { accounts } = usePortal();
   const getSponsorInfo = async _address => {
     setLoading(true);
     // TODO cip-37 update
@@ -167,59 +165,6 @@ export function Sponsor() {
     return { flag, message };
   };
 
-  // const applyToTx = async (addressStr: string) => {
-  //   const { flag } = await fetchIsAppliable(addressStr);
-  //   if (flag) {
-  //     const { data } = await faucet.apply(addressStr);
-  //     const txParams = {
-  //       from: address,
-  //       to: faucetAddress,
-  //       data,
-  //     };
-  //     return confluxJS.sendTransaction(txParams);
-  //   }
-  // };
-  // const applyClick = async () => {
-  //   if (!portalInstalled) {
-  //     useConfluxPortal.openHomePage();
-  //   } else {
-  //     if (address) {
-  //       //Portal has already installed and the portal has already got the account
-  //       if (isAddress(inputAddressVal)) {
-  //         applyToTx(inputAddressVal)
-  //           .then(txHash => {
-  //             setTxHash(txHash);
-  //             setShownDialog(true);
-  //             setCanApply(false);
-  //             setErrorMsgForApply('');
-  //           })
-  //           .catch(error => {
-  //             setCanApply(false);
-  //             setErrorMsgForApply(error.message);
-  //           });
-  //       }
-  //     } else {
-  //       login();
-  //     }
-  //   }
-  // };
-  // const closeDialog = () => {
-  //   setShownDialog(false);
-  //   if (isAddress(inputAddressVal)) {
-  //     getSponsorInfo(inputAddressVal);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (portalInstalled) {
-  //     setApplyText('general.apply');
-  //   } else {
-  //     setCanApply(true);
-  //     setApplyText('sponsor.connectToApply');
-  //   }
-  //   // eslint-disable-next-line
-  // }, [portalInstalled]);
-
   useEffect(() => {
     setInputAddressVal(contractAddress);
     if (isAddress(contractAddress)) {
@@ -228,7 +173,7 @@ export function Sponsor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractAddress]);
   useEffect(() => {
-    if (!portalAddress) {
+    if (!accounts[0]) {
       setCanApply(true);
       if (errorMsgForApply) {
         setErrorMsgForApply('');
@@ -239,7 +184,7 @@ export function Sponsor() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portalAddress]);
+  }, [accounts[0]]);
   const failCallback = message => {
     setCanApply(false);
   };
@@ -421,25 +366,6 @@ export function Sponsor() {
             </div>
           </div>
         </BlockContainer>
-        {/* <ApplyContainer>
-          <Button
-            variant="solid"
-            color="primary"
-            className="applyBtn"
-            disabled={!canApply}
-            onClick={applyClick}
-          >
-            {t(applyText)}
-          </Button>
-          <img
-            src={imgSuccess}
-            alt="success"
-            className={`successImg ${address ? 'shown' : 'hidden'}`}
-          />
-          <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
-            {getEllipsStr(address, 6, 4)}
-          </span>
-        </ApplyContainer> */}
         <ApplyContainer>
           <DappButton
             contractAddress={faucetAddress}
@@ -449,9 +375,6 @@ export function Sponsor() {
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
-            hoverText={
-              connected === 0 ? t(translations.contract.connectPortalFirst) : ''
-            }
             txnAction={TxnAction.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
@@ -489,32 +412,6 @@ export function Sponsor() {
             </div>
           </div>
         </NoticeContainer>
-        {/* <Modal
-          closable
-          open={shownDialog}
-          onClose={closeDialog}
-          wrapClassName="transactionModalContainer"
-        >
-          <Modal.Content>
-            <div className="contentContainer">
-              <img src={imgSuccessBig} alt="success" className="successImg" />
-              <div className="submitted">
-                {t(translations.sponsor.submitted)}.
-              </div>
-              <div className="txContainer">
-                <span className="label">{t(translations.sponsor.txHash)}:</span>
-                <a
-                  href={`/transaction/${txHash}`}
-                  target="_blank"
-                  className="content"
-                  rel="noopener noreferrer"
-                >
-                  {getEllipsStr(txHash, 8, 0)}
-                </a>
-              </div>
-            </div>
-          </Modal.Content>
-        </Modal> */}
       </Wrapper>
     </>
   );
