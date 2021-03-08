@@ -7,24 +7,18 @@ import React from 'react';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { LinkProps } from '@cfxjs/react-ui/dist/link/link';
 import { useHistory } from 'react-router-dom';
-import { trackEvent } from '../../../utils/ga';
 
 export const Link = ({
   href,
-  ga = null,
   children,
   ...others
-}: Partial<React.PropsWithChildren<LinkProps>> & { ga?: any }) => {
+}: Partial<React.PropsWithChildren<LinkProps>>) => {
   const history = useHistory();
   return (
     <UILink
       href={href}
       onClick={e => {
         e.preventDefault();
-        if (ga) {
-          trackEvent(ga);
-        }
-
         if (!href) return;
         if (/^http/.test(href)) {
           window.open(href);

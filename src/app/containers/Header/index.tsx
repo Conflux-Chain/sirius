@@ -19,8 +19,6 @@ import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-use';
 import imgConfiPlanet from 'images/confi-planet.png';
-import { ScanEvent } from '../../../utils/gaConstants';
-import { trackEvent } from '../../../utils/ga';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -46,7 +44,6 @@ export const Header = memo(() => {
     {
       // home
       title: t(translations.header.home),
-      name: ScanEvent.menu.action.home,
       href: '/',
     },
     // blockchain
@@ -57,7 +54,6 @@ export const Header = memo(() => {
         {
           // block & txn
           title: [t(translations.header.bnt), <Check size={18} key="check" />],
-          name: ScanEvent.menu.action.bnt,
           href: '/blockchain/blocks-and-transactions',
         },
         {
@@ -66,7 +62,6 @@ export const Header = memo(() => {
             t(translations.header.accounts),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.accounts,
           href: '/blockchain/accounts',
         },
       ],
@@ -82,7 +77,6 @@ export const Header = memo(() => {
             t(translations.header.tokens20),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.tokens20,
           href: '/tokens/erc20',
         },
         {
@@ -91,7 +85,6 @@ export const Header = memo(() => {
             t(translations.header.tokens721),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.tokens721,
           href: '/tokens/erc721',
         },
         {
@@ -100,7 +93,6 @@ export const Header = memo(() => {
             t(translations.header.tokens1155),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.tokens1155,
           href: '/tokens/erc1155',
         },
       ],
@@ -116,7 +108,6 @@ export const Header = memo(() => {
             t(translations.header.contractCreation),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.contractReg,
           href: '/contract',
         },
         {
@@ -125,14 +116,9 @@ export const Header = memo(() => {
             t(translations.header.contractSponsor),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.sponsor,
           href: '/sponsor',
         },
-        {
-          title: t(translations.header.contracts),
-          name: ScanEvent.menu.action.contractsList,
-          href: '/contracts',
-        },
+        { title: t(translations.header.contracts), href: '/contracts' },
       ],
     },
     // charts
@@ -145,7 +131,6 @@ export const Header = memo(() => {
             t(translations.header.charts),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.charts,
           href: '/charts',
         },
         {
@@ -153,7 +138,6 @@ export const Header = memo(() => {
             t(translations.header.statistics),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.statistics,
           href: '/statistics',
           isMatchedFn: () => !!location?.pathname?.startsWith('/statistics'),
         },
@@ -197,19 +181,12 @@ export const Header = memo(() => {
         : t(translations.header.oceanus),
       children: [
         {
-          // Tethys
+          // oceanus
           title: [
             t(translations.header.oceanus),
             !isTestnet && <Check size={18} key="check" />,
           ],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeNet,
-              label: 'Tethys',
-            });
-            return isTestnet && toMainnet();
-          },
+          onClick: () => isTestnet && toMainnet(),
           isMatchedFn: () => !isTestnet,
         },
         {
@@ -218,14 +195,7 @@ export const Header = memo(() => {
             t(translations.header.testnet),
             isTestnet && <Check size={18} key="check" />,
           ],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeNet,
-              label: 'Testnet',
-            });
-            return !isTestnet && toTestnet();
-          },
+          onClick: () => !isTestnet && toTestnet(),
           isMatchedFn: () => isTestnet,
         },
       ],
@@ -244,27 +214,13 @@ export const Header = memo(() => {
         {
           // en
           title: [en, !iszh && <Check size={18} key="check" />],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeLang,
-              label: 'en',
-            });
-            return iszh && i18n.changeLanguage('en');
-          },
+          onClick: () => iszh && i18n.changeLanguage('en'),
           isMatchedFn: () => !iszh,
         },
         {
           // zh
           title: [zh, iszh && <Check size={18} key="check" />],
-          onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeLang,
-              label: 'zh-CN',
-            });
-            return !iszh && i18n.changeLanguage('zh-CN');
-          },
+          onClick: () => !iszh && i18n.changeLanguage('zh-CN'),
           isMatchedFn: () => iszh,
         },
       ],

@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
-import Big from 'bignumber.js';
+import { useConfluxPortal, Big } from '@cfxjs/react-hooks';
 import { useEffectOnce } from 'react-use';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
-import { fcAddress, cETHAddress } from './../cfx';
+
+interface TxnLoopOptsType {
+  callback?: (data?) => void;
+  timeout?: number;
+  method?: string;
+}
 
 // alias for window
 const globalThis = window as any;
@@ -161,8 +165,10 @@ export const usePortal = () => {
     balances: [balance, [fc, ceth]],
     // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useConfluxPortal([
-    fcAddress, // fc contract address, can be find on confluxscan.io
-    cETHAddress, // ceth contract address, can be find on confluxscan.io
+    // fc contract address, can be find on confluxscan.io
+    '0x8e2f2e68eb75bb8b18caafe9607242d4748f8d98',
+    // ceth contract address, can be find on confluxscan.io
+    '0x86d2fb177eff4be03a342951269096265b98ac46',
   ]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -178,9 +184,9 @@ export const usePortal = () => {
     // @todo check balances value
     balances: {
       // numeric string, NaN mean no such asset
-      cfx: new Big(balance).dividedBy(1e18).toString(),
-      fc: new Big(fc).dividedBy(1e18).toString(),
-      ceth: new Big(ceth).dividedBy(1e18).toString(),
+      cfx: (Big(balance) / 1e18).toString(),
+      fc: (Big(fc) / 1e18).toString(),
+      ceth: (Big(ceth) / 1e18).toString(),
     },
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,

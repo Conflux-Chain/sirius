@@ -42,7 +42,6 @@ export function BlocksAndTransactions() {
   const tabs = [
     {
       value: 'blocks',
-      action: 'allBlocks',
       label: t(translations.blocksAndTransactions.blocks),
       url: '/block',
       table: {
@@ -52,7 +51,6 @@ export function BlocksAndTransactions() {
     },
     {
       value: 'transactions',
-      action: 'allTransactions',
       label: t(translations.blocksAndTransactions.transactions),
       url: '/transaction',
       table: {

@@ -38,15 +38,11 @@ export function TableCard({
   const tabs = [
     {
       value: 'cfxTransfer',
-      action: 'transactionCfxTransfers',
       label: t(translations.transaction.internalTxns),
       url: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}`,
       table: {
         columns: columnsCFXTrasfer,
-        rowKey: (row, index) =>
-          `${row.transactionHash || ''}${
-            row.transactionTraceIndex || 0
-          }${index}`,
+        rowKey: 'address',
       },
       tableHeader: label(0),
     },

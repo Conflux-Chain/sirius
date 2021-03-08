@@ -10,8 +10,8 @@ import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
+import { formatAddress } from './util';
 import { RotateImg } from './RotateImg';
-import { useCheckHook } from './useCheckHook';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -25,14 +25,12 @@ export const Button = ({ className, onClick }: Button) => {
   const { installed, connected, accounts } = usePortal();
   const { pendingRecords } = useContext(TxnHistoryContext);
 
-  const { isValid } = useCheckHook(true);
-
   let buttonText = t(translations.connectWallet.button.text);
   let buttonStatus: React.ReactNode = '';
   let hasPendingRecords = connected === 1 && !!pendingRecords.length;
 
   if (installed) {
-    if (accounts.length && isValid) {
+    if (accounts.length) {
       if (hasPendingRecords) {
         buttonStatus = (
           <RotateImg
@@ -45,7 +43,7 @@ export const Button = ({ className, onClick }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = accounts[0];
+        buttonText = formatAddress(accounts[0]);
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
@@ -59,7 +57,7 @@ export const Button = ({ className, onClick }: Button) => {
       onClick={onClick}
     >
       {buttonStatus}
-      <span className="text">{buttonText}</span>
+      <span>{buttonText}</span>
     </ButtonWrapper>
   );
 };
@@ -84,6 +82,8 @@ const ButtonWrapper = styled.div`
   }
 
   &:not(.pending):hover {
+    /* background: rgba(100%, 87%, 11%, 70%); */
+    /* color: #ffffff; */
     background: rgba(100%, 87%, 11%, 70%);
   }
 
@@ -99,12 +99,5 @@ const ButtonWrapper = styled.div`
     width: 0.8571rem;
     height: 0.8571rem;
     margin-right: 0.4286rem;
-  }
-
-  .text {
-    max-width: 9.2857rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
   }
 `;

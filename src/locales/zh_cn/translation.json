@@ -65,6 +65,7 @@
     },
     "query": "读取",
     "write": "写入",
+    "connectPortalFirst": "请先连接 ConfluxPortal 钱包！",
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
   },
@@ -218,7 +219,6 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "address": "个地址",
-    "fcMining": "FC-CFX 矿池",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
       "searchPlaceHolderWithTokenId": "交易哈希值 / 持有人地址 / 代币 ID",
@@ -333,7 +333,6 @@
         "accountAddress": "地址",
         "tokenId": "代币 ID",
         "quantity": "数量",
-        "erc1155QuantityTip": "一个账户的 ERC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型"
       },
@@ -494,8 +493,6 @@
     "blockHash": "区块哈希",
     "position": "位置",
     "storageLimit": "存储限制",
-    "storageCollateralized": "存储押金",
-    "storageReleased": "存储释放",
     "chainID": "区块链编号",
     "inputData": "输入数据",
     "select": {
@@ -661,8 +658,6 @@
       "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
       "position": "交易在区块中的索引位置。",
       "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
-      "storageCollateralized": "需要支付的用来存储的费用。",
-      "storageReleased": "返还的存储押金。",
       "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",
       "inputData": "自定义数据，该交易中附加的信息。"
     },
@@ -720,11 +715,8 @@
       "copyAddress": "复制地址",
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
-      "versionNotice": "版本说明",
       "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
-      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
-      "cannotProcess": "无法处理",
-      "upgradeTipVersion": "请升级 ConfluxPortal 至最新版本。"
+      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",
@@ -747,15 +739,12 @@
         "104": "读合约",
         "105": "Sponsor 应用"
       }
-    },
-    "tip": "请先连接 ConfluxPortal 钱包！"
+    }
   },
   "statistics": {
     "statistics": "最佳统计",
     "transactions": "交易",
     "tokens": "代币",
-    "miners": "矿工",
-    "network": "网络",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
@@ -764,9 +753,6 @@
     "topTokensByReceivers": "最佳代币--接收账户数",
     "topTokensByTxnCount": "最佳代币--交易数",
     "topTokensByTxnAccountsCount": "最佳代币--交易账户数",
-    "topMinersByBlocksMined": "最佳矿工--挖出区块",
-    "topAccountsByGasUsed": "最佳账户--燃料用量",
-    "topAccountsByTxnCount": "最佳账户--交易数",
     "span": {
       "24h": "24小时",
       "3d": "3天",
@@ -781,12 +767,7 @@
       "percentage": "百分比",
       "token": "代币",
       "senders": "发送账户数",
-      "receivers": "接收账户数",
-      "totalBlocksMined": "挖出总区块",
-      "totalRewards": "总奖励",
-      "totalTxnFees": "总交易费",
-      "hashRate": "哈希算力 (GH/s)",
-      "gasUsed": "燃料用量"
+      "receivers": "接收账户数"
     }
   }
 }

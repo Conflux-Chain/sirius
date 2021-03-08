@@ -11,7 +11,6 @@ import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
 import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatAddress } from '../../../utils/cfx';
 
 interface RouteParams {
   tokenAddress: string;
@@ -63,10 +62,6 @@ export function TokenDetail() {
   //   }
   // }
 
-  const isFC =
-    formatAddress(tokenAddress) ===
-    'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2';
-
   return (
     <>
       <Helmet>
@@ -103,13 +98,6 @@ export function TokenDetail() {
             <div className="basic-symbol">{`(${
               data.symbol || t(translations.general.notAvailable)
             })`}</div>
-            {isFC ? (
-              <div className="basic-link">
-                <Link href="https://fccfx.confluxscan.io/" target="_blank">
-                  {t(translations.token.fcMining)}
-                </Link>
-              </div>
-            ) : null}
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
@@ -170,23 +158,5 @@ const HeaderWrap = styled.div`
   .basic-symbol {
     color: #74798c;
     font-size: 1rem;
-  }
-  .basic-link {
-    font-size: 14px;
-    line-height: 22px;
-    margin-left: 10px;
-    border-bottom: 1px solid #1e3de4;
-
-    &:hover {
-      border-bottom: 1px solid #0f23bd;
-    }
-
-    a {
-      color: #1e3de4 !important;
-
-      &:hover {
-        color: #0f23bd !important;
-      }
-    }
   }
 `;

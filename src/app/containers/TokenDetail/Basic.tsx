@@ -121,16 +121,9 @@ export const Basic = ({
     children:
       totalSupply !== undefined ? (
         <Text
-          hoverValue={`${formatBalance(
-            totalSupply,
-            transferType === cfxTokenTypes.erc20 ? decimals : 0,
-            true,
-          )} ${symbol}`}
+          hoverValue={`${formatBalance(totalSupply, decimals, true)} ${symbol}`}
         >
-          {`${formatBalance(
-            totalSupply,
-            transferType === cfxTokenTypes.erc20 ? decimals : 0,
-          )} ${symbol}`}
+          {`${formatBalance(totalSupply, decimals)} ${symbol}`}
         </Text>
       ) : address ? (
         t(translations.general.notAvailable)
@@ -145,7 +138,9 @@ export const Basic = ({
     ),
     children:
       holderCount !== undefined
-        ? `${toThousands(holderCount)} ${t(translations.token.address)}`
+        ? transferType !== cfxTokenTypes.erc1155
+          ? `${toThousands(holderCount)} ${t(translations.token.address)}`
+          : '--'
         : undefined,
   };
 
@@ -182,7 +177,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   } else {
-    list = [fieldTransfers, fieldContractAddress, fieldHolders];
+    list = [fieldTransfers, fieldContractAddress];
   }
   return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
 };

@@ -90,16 +90,6 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       },
       ...extra,
     });
-  } else if (['topMiner'].includes(param.action)) {
-    return sendRequest({
-      url: `${statPrefix}/miner/top-by-type`,
-      query: {
-        span: param.span.slice(0, -1),
-        type: param.span.slice(-1),
-        rows: 10,
-      },
-      ...extra,
-    });
   } else {
     // rank_contract_by_number_of_participants_1d;
     // rank_contract_by_number_of_participants_3d;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { usePortal } from 'utils/hooks/usePortal';
+import { useConfluxPortal } from '@cfxjs/react-hooks';
 import styled from 'styled-components/macro';
 import { translations } from '../../../locales/i18n';
 import imgSuccess from 'images/success.png';
@@ -14,8 +14,7 @@ import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
-
+import { ConnectButton } from '../../components/ConnectWallet';
 interface DappButtonProps {
   hoverText?: string;
   btnClassName?: string;
@@ -28,6 +27,7 @@ interface DappButtonProps {
   successCallback?: (hash: string) => void;
   failCallback?: (message: string) => void;
   closeModalCallback?: () => void;
+  shownAddress?: boolean;
   htmlType?: React.ButtonHTMLAttributes<any>['type'];
   txnAction?: number | string;
 }
@@ -44,61 +44,61 @@ const DappButton = ({
   successCallback,
   failCallback,
   closeModalCallback,
+  shownAddress,
   txnAction = TxnAction.default,
   ...props
 }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // TODO cip-37 portal multi version
-  const { accounts, confluxJS } = usePortal();
+  const { portalInstalled, address, confluxJS } = useConfluxPortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
-  const { isValid } = useCheckHook();
-
   let text = connectText
     ? connectText
     : t(translations.general.connnectWalletSubmit);
-
-  if (accounts[0]) {
+  if (portalInstalled && address) {
     text = submitText ? submitText : t(translations.general.submit);
   }
-
   const onClickHandler = () => {
-    if (!btnDisabled) {
-      const txParams = {
-        from: formatAddress(accounts[0]),
-        to: formatAddress(contractAddress),
-        data,
-      };
-      //loading
-      setModalType('loading');
-      setModalShown(true);
+    if (address) {
+      if (!btnDisabled) {
+        // TODO cip-37 portal
+        const txParams = {
+          from: formatAddress(address, { hex: true }),
+          to: formatAddress(contractAddress, { hex: true }),
+          data,
+        };
+        //loading
+        setModalType('loading');
+        setModalShown(true);
 
-      confluxJS
-        .sendTransaction(txParams)
-        .then(txHash => {
-          addRecord({
-            hash: txHash,
-            info: JSON.stringify({
-              code: txnAction,
-              description: t(
-                translations.connectWallet.notify.action[txnAction],
-              ),
+        confluxJS
+          .sendTransaction(txParams)
+          .then(txHash => {
+            addRecord({
               hash: txHash,
-            }),
-          });
+              info: JSON.stringify({
+                code: txnAction,
+                description: t(
+                  translations.connectWallet.notify.action[txnAction],
+                ),
+                hash: txHash,
+              }),
+            });
 
-          //success alert
-          successCallback && successCallback(txHash);
-          setModalType('success');
-          setTxHash(txHash);
-        })
-        .catch(error => {
-          //rejected alert
-          failCallback && failCallback(error.message);
-          setModalType('fail');
-        });
+            //success alert
+            successCallback && successCallback(txHash);
+            setModalType('success');
+            setTxHash(txHash);
+          })
+          .catch(error => {
+            //rejected alert
+            failCallback && failCallback(error.message);
+            setModalType('fail');
+          });
+      }
     }
   };
   const closeHandler = () => {
@@ -113,27 +113,25 @@ const DappButton = ({
           {...props}
           variant="solid"
           color="primary"
-          // invalid connect wallet button will ignore disabled status, guide user to connect wallet or fixed connect error
           className={`${btnClassName} btnInnerClass ${
-            isValid && btnDisabled ? 'disabled' : null
+            btnDisabled ? 'disabled' : null
           }`}
-          disabled={isValid && btnDisabled}
+          disabled={btnDisabled}
           onClick={onClickHandler}
         >
           {text}
         </Button>
       </ConnectButton>
-      {isValid && (
+      {shownAddress && (
         <>
           <img
             src={imgSuccess}
             alt="success"
-            className={`successImg ${accounts[0] ? 'shown' : 'hidden'}`}
+            className={`successImg ${address ? 'shown' : 'hidden'}`}
           />
-          <span
-            className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
-          >
-            <AddressContainer value={accounts[0]} />
+          <span className={`accountAddress ${address ? 'shown' : 'hidden'}`}>
+            {/*{getEllipsStr(address, 6, 4)}*/}
+            <AddressContainer value={address} />
           </span>
         </>
       )}
@@ -232,6 +230,7 @@ DappButton.defaultProps = {
   // btnText: '',
   connectText: '',
   submitText: '',
+  shownAddress: true,
 };
 
 export default DappButton;

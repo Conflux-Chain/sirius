@@ -95,8 +95,6 @@ export const Status = ({
               title={content}
               content={explanation}
               placement="auto-start"
-              hoverable={true}
-              hoverableTimeout={1000}
               trigger={breakpoint === 's' ? 'click' : 'hover'}
               contentClassName={clsx(
                 'siriuse-status-popover',

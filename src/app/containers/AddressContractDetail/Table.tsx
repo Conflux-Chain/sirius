@@ -34,8 +34,6 @@ import { Dropdown } from '../../components/Dropdown';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
 const AceEditorStyle = {
   width: '100%',
 };
@@ -52,17 +50,6 @@ function ContractSourceCodeAbi({ contractInfo }) {
   const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
   const clickHandler = (btnType: React.SetStateAction<string>) => {
     setSelectedBtnType(btnType);
-    if (btnType) {
-      trackEvent({
-        category: ScanEvent.tab.category,
-        action:
-          ScanEvent.tab.action[
-            `contract${
-              (btnType + '').charAt(0).toUpperCase() + (btnType + '').slice(1)
-            }`
-          ],
-      });
-    }
   };
   const contract = cfx.Contract({
     abi: abiJson,
@@ -441,7 +428,6 @@ export function Table({ address, addressInfo }) {
   const tabs: any = [
     {
       value: 'transaction',
-      action: 'accountTransactions',
       label: (total: number, realTotal: number) => {
         return (
           <>
@@ -462,7 +448,6 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     value: `transfers-${cfxTokenTypes.cfx}`,
-    action: 'cfxTransfers',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -483,7 +468,6 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
     value: `transfers-${cfxTokenTypes.erc20}`,
-    action: 'transfersErc20',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -504,7 +488,6 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
     value: `transfers-${cfxTokenTypes.erc721}`,
-    action: 'transfersErc721',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -525,7 +508,6 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
     value: `transfers-${cfxTokenTypes.erc1155}`,
-    action: 'transfersErc1155',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -549,13 +531,11 @@ export function Table({ address, addressInfo }) {
     isContract
       ? {
           value: 'contract-viewer',
-          action: 'contractViewer',
           label: t(translations.token.contract),
           content: <ContractSourceCodeAbi contractInfo={addressInfo} />,
         }
       : {
           value: 'mined-blocks',
-          action: 'minedBlocks',
           hideTotalZero: true,
           pagination: true,
           label: (total: number, realTotal: number) => {

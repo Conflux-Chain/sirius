@@ -29,6 +29,7 @@ import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
+import { useConfluxPortal } from '@cfxjs/react-hooks';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
@@ -60,7 +61,8 @@ const fieldsContract = [
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t } = useTranslation();
-  const { accounts } = usePortal();
+  const { address: accountAddress } = useConfluxPortal(); // TODO cip-37 portal
+  const { connected } = usePortal();
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
@@ -148,7 +150,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   useEffect(
     () => {
       let isSubmitable = false;
-      if (accounts[0]) {
+      if (accountAddress) {
         if (
           !isAddressError &&
           !isAdminError &&
@@ -179,8 +181,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       abi,
       contractImgSrc,
       tokenImgSrc,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      accounts[0],
+      accountAddress,
       isAddressError,
       isAdminError,
       isErc20Error,
@@ -245,11 +246,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [abi]);
   useEffect(() => {
-    if (accounts[0]) {
+    if (accountAddress) {
       checkAdminThenToken(tokenImgSrc);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts[0]]);
+  }, [accountAddress]);
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
@@ -363,14 +364,17 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       if (isContractAddress(addressVal) || isInnerContractAddress(addressVal)) {
         setIsAddressError(false);
         setErrorMsgForAddress('');
-        if (accounts[0]) {
+        if (accountAddress) {
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
+              // cip-37 both
               if (
-                formatAddress(dataContractInfo.from) ===
-                  formatAddress(accounts[0]) ||
-                formatAddress(dataContractInfo.admin) ===
-                  formatAddress(accounts[0])
+                dataContractInfo.from === accountAddress ||
+                dataContractInfo.admin === accountAddress ||
+                formatAddress(dataContractInfo.from, { hex: true }) ===
+                  formatAddress(accountAddress, { hex: true }) ||
+                formatAddress(dataContractInfo.admin, { hex: true }) ===
+                  formatAddress(accountAddress, { hex: true })
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {
@@ -662,6 +666,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
           contractAddress={contractManagerAddress}
           data={txData}
           btnDisabled={!btnShouldClick}
+          hoverText={
+            connected === 0
+              ? t(translations.contract.beforeContractSubmitTip)
+              : ''
+          }
           txnAction={txnAction}
         ></DappButton>
         <div

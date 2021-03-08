@@ -328,13 +328,13 @@ export function AddressMetadata({ address, accountInfo }) {
                 </thead>
                 <tbody>
                   {voteList && voteList.length > 0 ? (
-                    voteList.map((v, i) => {
+                    voteList.map(v => {
                       const { days } = getTimeByBlockInterval(
                         v.unlockBlockNumber,
                         currentBlockNumber,
                       );
                       return (
-                        <tr key={i}>
+                        <tr>
                           <td>
                             <Text
                               hoverValue={fromDripToCfx(v.amount || 0, true)}

@@ -148,29 +148,13 @@ export function Transfers({
   let holdersColumns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.account,
-    tokenColunms.balance(
-      transferType === cfxTokenTypes.erc20 ? decimals : 0,
-      price,
-      transferType,
-    ),
+    tokenColunms.balance(decimals, price),
     tokenColunms.percentage(totalSupply),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
-
-  let holders1155ColumnsWidth = [2, 10, 10];
-  let holders1155Columns = [
-    tokenColunms.number(page, pageSize),
-    tokenColunms.account,
-    tokenColunms.balance(
-      transferType === cfxTokenTypes.erc20 ? decimals : 0,
-      price,
-      transferType,
-    ),
-  ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
 
   const tabs: any = [
     {
       value: 'transfers',
-      action: 'tokenTransfers',
       label: (total: number, realTotal: number) => {
         return (
           <>
@@ -195,7 +179,6 @@ export function Transfers({
   ) {
     tabs.push({
       value: 'holders',
-      action: 'tokenHolders',
       label: () => {
         return (
           <>
@@ -208,27 +191,6 @@ export function Transfers({
       table: {
         className: 'monospaced',
         columns: holdersColumns,
-        rowKey: row => `${tokenAddress}${row.account.address}`,
-      },
-    });
-  }
-
-  if (transferType === cfxTokenTypes.erc1155) {
-    tabs.push({
-      value: 'holders',
-      action: 'tokenHolders',
-      label: () => {
-        return (
-          <>
-            {t(translations.token.holders)}
-            <TabLabel total={holderCount} realTotal={holderCount} />
-          </>
-        );
-      },
-      url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
-      table: {
-        className: 'monospaced',
-        columns: holders1155Columns,
         rowKey: row => `${tokenAddress}${row.account.address}`,
       },
     });

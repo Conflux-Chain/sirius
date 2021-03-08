@@ -3,8 +3,6 @@ import { Tabs } from '../Tabs';
 import { TablePanel } from '../TablePanel';
 import { useTabTableData } from './useTabTableData';
 import { TablePanelType } from './../TablePanel';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
@@ -14,7 +12,6 @@ export type TabsTablePanelType = {
       hideTotalZero?: boolean;
       hidden?: boolean;
       value: string;
-      action?: string;
       label: ((total: number, realTotal: number) => React.ReactNode) | string;
       content?: React.ReactNode;
     } & Partial<TablePanelType>
@@ -30,14 +27,6 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
   const handleTabsChange = function (value: string) {
     switchToTab(value);
     onTabsChange && onTabsChange(value);
-    // ga
-    const action = tabs?.find(t => t.value === value)?.action;
-    if (action && ScanEvent.tab.action[action]) {
-      trackEvent({
-        category: ScanEvent.tab.category,
-        action: ScanEvent.tab.action[action],
-      });
-    }
   };
   const ui = tabs
     .filter((item, i) => {

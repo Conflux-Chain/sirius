@@ -17,6 +17,8 @@ import { Status } from '../../components/Status/Loadable';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { InputData } from '../../components/InputData/Loadable';
 import { CountDown } from '../../components/CountDown/Loadable';
+import imgWarning from 'images/warning.png';
+import imgChevronDown from 'images/chevronDown.png';
 import {
   reqTransactionDetail,
   reqContract,
@@ -44,14 +46,6 @@ import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import clsx from 'clsx';
 import { TableCard } from './TableCard';
-import BigNumber from 'bignumber.js';
-
-import imgWarning from 'images/warning.png';
-import imgChevronDown from 'images/chevronDown.png';
-import imgSponsored from 'images/sponsored.png';
-
-const getStorageFee = byteSize =>
-  toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Transaction = () => {
@@ -94,10 +88,6 @@ export const Transaction = () => {
     contractCreated,
     confirmedEpochCount,
     txExecErrorInfo,
-    gasCoveredBySponsor,
-    storageCoveredBySponsor,
-    storageReleased,
-    storageCollateralized,
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
@@ -509,8 +499,8 @@ export const Transaction = () => {
               <span className="type">{cfxTokenTypes.erc1155}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
-              {transferItem['batch'].map((item, index) => (
-                <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
+              {transferItem['batch'].map(item => (
+                <>
                   <br />
                   <span className="batch">
                     - {t(translations.transaction.for)}{' '}
@@ -522,7 +512,7 @@ export const Transaction = () => {
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                     <span className="tokenId">{item['tokenId']}</span>
                   </span>
-                </span>
+                </>
               ))}
             </div>,
           );
@@ -603,14 +593,6 @@ export const Transaction = () => {
   }
 
   const handleFolded = () => setFolded(folded => !folded);
-
-  const storageReleasedTotal = storageReleased
-    ? getStorageFee(
-        storageReleased.reduce((prev, curr) => {
-          return prev + curr.collaterals ? Number(curr.collaterals) : 0;
-        }, 0),
-      )
-    : 0;
 
   return (
     <StyledTransactionsWrapper>
@@ -696,7 +678,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading || syncTimestamp === undefined}>
-              <CountDown from={syncTimestamp} retainDurations={4} />
+              <CountDown from={syncTimestamp} />
               {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
             </SkeletonContainer>
           </Description>
@@ -768,14 +750,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${toThousands(gasFee)} drip`}{' '}
-              {gasCoveredBySponsor && (
-                <img
-                  src={imgSponsored}
-                  alt="sponsored"
-                  className="icon-sponsored"
-                />
-              )}
+              {`${toThousands(gasFee)} drip`}
             </SkeletonContainer>
           </Description>
           <div
@@ -795,41 +770,6 @@ export const Transaction = () => {
             >
               <SkeletonContainer shown={loading}>
                 {toThousands(storageLimit)}
-              </SkeletonContainer>
-            </Description>
-            <Description
-              title={
-                <Tooltip
-                  text={t(translations.toolTip.tx.storageCollateralized)}
-                  placement="top"
-                >
-                  {t(translations.transaction.storageCollateralized)}
-                </Tooltip>
-              }
-            >
-              <SkeletonContainer shown={loading}>
-                {getStorageFee(storageCollateralized)} CFX{' '}
-                {storageCoveredBySponsor && (
-                  <img
-                    src={imgSponsored}
-                    alt="sponsored"
-                    className="icon-sponsored"
-                  />
-                )}
-              </SkeletonContainer>
-            </Description>
-            <Description
-              title={
-                <Tooltip
-                  text={t(translations.toolTip.tx.storageReleased)}
-                  placement="top"
-                >
-                  {t(translations.transaction.storageReleased)}
-                </Tooltip>
-              }
-            >
-              <SkeletonContainer shown={loading}>
-                {storageReleasedTotal} CFX
               </SkeletonContainer>
             </Description>
             <Description
@@ -984,7 +924,7 @@ const StyledCardWrapper = styled.div`
   }
   .logo {
     width: 1.1429rem;
-    margin: 0 0.5714rem 0.2143rem;
+    margin: 0 0.5714rem 3px;
   }
   .linkMargin {
     margin-left: 0.5714rem;
@@ -1014,7 +954,7 @@ const StyledCardWrapper = styled.div`
       color: #002257;
     }
     .batch {
-      margin: 0 0.1429rem 0 1.1429rem;
+      margin: 0 0.1429rem 0 16px;
     }
   }
   .label {
@@ -1056,11 +996,6 @@ const StyledCardWrapper = styled.div`
 const StyledTransactionsWrapper = styled.div`
   padding: 2.2857rem 0;
 
-  .icon-sponsored {
-    height: 1.4286rem;
-    margin-left: 0.5714rem;
-  }
-
   ${media.s} {
     padding-bottom: 0;
   }
@@ -1076,10 +1011,10 @@ const StyledFoldButtonWrapper = styled.div`
   justify-content: flex-end;
 
   .detailResetFoldButton {
-    font-size: 1rem;
+    font-size: 14px;
     color: #002257;
-    line-height: 1.5714rem;
-    height: 1.5714rem;
+    line-height: 22px;
+    height: 22px;
     display: inline-flex;
     align-items: center;
     justify-items: center;
@@ -1089,13 +1024,13 @@ const StyledFoldButtonWrapper = styled.div`
       content: '';
       background-image: url(${imgChevronDown});
       transform: rotate(180deg);
-      width: 1.1429rem;
-      height: 1.1429rem;
+      width: 16px;
+      height: 16px;
       display: inline-block;
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
-      margin-left: 0.3571rem;
+      margin-left: 5px;
     }
 
     &.folded::after {

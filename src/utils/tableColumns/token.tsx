@@ -12,12 +12,10 @@ import { formatBalance, formatNumber, formatString } from '../../utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
-import imgInfo from 'images/info.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
-import { cfxTokenTypes } from '../constants';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -312,27 +310,13 @@ export const account = {
   ),
 };
 
-export const balance = (decimal, price, transferType) => ({
+export const balance = (decimal, price) => ({
   width: 1,
   title: (
     <ContentWrapper right>
       <Translation>
         {t => t(translations.general.table.token.quantity)}
       </Translation>
-      {transferType === cfxTokenTypes.erc1155 ? (
-        <ThTipWrap>
-          <Text
-            span
-            hoverValue={
-              <Translation>
-                {t => t(translations.general.table.token.erc1155QuantityTip)}
-              </Translation>
-            }
-          >
-            <img src={imgInfo} alt="?" />
-          </Text>
-        </ThTipWrap>
-      ) : null}
     </ContentWrapper>
   ),
   dataIndex: 'balance',
@@ -345,29 +329,21 @@ export const balance = (decimal, price, transferType) => ({
     return (
       <ContentWrapper right>
         {value != null ? (
-          transferType === cfxTokenTypes.erc20 ? (
-            +(
-              formatBalance(value, decimals, false, {
-                precision: decimals,
-                withUnit: false,
-                keepDecimals: true,
-              }) || 0
-            ) < +tinyBalanceThreshold ? (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
-                {`< ${tinyBalanceThreshold}`}
-              </Text>
-            ) : (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
-                {formatBalance(value, decimals, false, {
-                  precision: decimalPlace,
-                  keepZero: true,
-                  withUnit: false,
-                })}
-              </Text>
-            )
+          +(
+            formatBalance(value, decimals, false, {
+              precision: decimals,
+              withUnit: false,
+              keepDecimals: true,
+            }) || 0
+          ) < +tinyBalanceThreshold ? (
+            <Text span hoverValue={formatBalance(value, decimals, true)}>
+              {`< ${tinyBalanceThreshold}`}
+            </Text>
           ) : (
             <Text span hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
+                precision: decimalPlace,
+                keepZero: true,
                 withUnit: false,
               })}
             </Text>
@@ -474,18 +450,6 @@ const SpanWrap = styled.span`
   text-overflow: ellipsis;
   max-width: 100px;
   overflow: hidden;
-`;
-
-const ThTipWrap = styled.span`
-  display: inline-block;
-  white-space: normal;
-  margin-left: 5px;
-
-  img {
-    width: 14px;
-    height: 14px;
-    margin-bottom: 4px;
-  }
 `;
 
 export const LinkA = styled.a`

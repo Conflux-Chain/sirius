@@ -13,8 +13,6 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import usePlot from './usePlot';
 import { formatNumber } from '../../../utils';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -70,8 +68,8 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               };
             }
             if (index === plot.length - 1) {
-              acc.min.difficulty = acc.min.difficulty * 0.7;
-              acc.min.hashRate = acc.min.hashRate * 0.7;
+              acc.min.difficulty = acc.min.difficulty * 0.3;
+              acc.min.hashRate = acc.min.hashRate * 0.3;
               acc.max.difficulty = acc.max.difficulty * 1.1;
               acc.max.hashRate = acc.max.hashRate * 1.1;
             }
@@ -195,15 +193,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               key={key}
               small={small}
               active={d === duration}
-              onClick={() => {
-                // ga
-                trackEvent({
-                  category: ScanEvent.stats.category,
-                  action: ScanEvent.stats.action[`${indicator}IntervalChange`],
-                  label: d,
-                });
-                setDuration(d);
-              }}
+              onClick={() => setDuration(d)}
             >
               {key}
             </Button>
