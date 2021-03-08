@@ -62,7 +62,7 @@ export const Dropdown = ({
         {label || options[selected]?.name}
       </ActionButton>
       {visible && (
-        <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
+        <TxDirectionFilterDropdown ref={dropdownRef}>
           {opts}
         </TxDirectionFilterDropdown>
       )}

@@ -19,7 +19,7 @@ export type TablePanelType = {
   table: TableProps<unknown>;
   hasFilter?: boolean;
   className?: string;
-  tableHeader?: React.ReactNode;
+  tableHeader?: React.ReactNode | Array<React.ReactNode>;
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -152,7 +152,9 @@ export const TablePanel = ({
       <StyledTableWrapper hasFilter={hasFilter}>
         <Card>
           {tableHeader && (
-            <StyledTableHeaderWrapper>{tableHeader}</StyledTableHeaderWrapper>
+            <StyledTableHeaderWrapper key={url}>
+              {tableHeader}
+            </StyledTableHeaderWrapper>
           )}
           <Table
             className={clsx('sirius-table', table.className)}
