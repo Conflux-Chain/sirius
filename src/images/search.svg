@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>search 2</title>
+    <g id="Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search-bars" transform="translate(-400.000000, -423.000000)">
+            <g id="Token-Search备份" transform="translate(33.000000, 414.000000)">
+                <g id="search-3" transform="translate(367.000000, 9.000000)">
+                    <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M7,13 C10.3137085,13 13,10.3137085 13,7 C13,3.6862915 10.3137085,1 7,1 C3.6862915,1 1,3.6862915 1,7 C1,10.3137085 3.6862915,13 7,13 Z M15,15 L12,12" id="形状结合" stroke="#74798C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { DatePicker as UIDatePicker } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
-import { ActionButton } from '../../components/Dropdown';
+import { ActionButton } from '../../components/ActionButton';
 import qs from 'query-string';
 import { useLocation, useHistory } from 'react-router';
 
@@ -15,6 +15,7 @@ import imgAlarm from 'images/contract-address/alarm.svg';
 const PickerWrap = styled.div`
   margin-right: 0.57rem;
   cursor: pointer;
+
   .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
     background-color: rgba(0, 84, 254, 0.04);
     height: 2.2857rem;
@@ -35,9 +36,15 @@ const PickerWrap = styled.div`
 // mobile picker start
 const MobilePickerWrap = styled(PickerWrap)`
   display: flex;
-  margin-bottom: 0.7143rem;
   .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
     margin-right: 0.7143rem;
+    &:first-child {
+      margin-bottom: 10px;
+    }
+  }
+  .datepicker-item-container {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -67,9 +74,11 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             isOutOfDatepicker = false;
           }
         });
-        if (e.target.className.indexOf('cfx-picker') > -1) {
-          isOutOfDatepicker = false;
-        }
+        try {
+          if (e.target.className.indexOf('cfx-picker') > -1) {
+            isOutOfDatepicker = false;
+          }
+        } catch (e) {}
         if (isOutOfDatepicker) {
           setVisible(false);
         }
@@ -114,7 +123,7 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
         <img src={imgAlarm} alt="alarm icon"></img>
       </ActionButton>
       {visible && (
-        <>
+        <div className="datepicker-item-container">
           <UIDatePicker
             className="address-table-picker"
             dropdownClassName="address-table-picker-calender"
@@ -137,7 +146,7 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             disabledDate={disabledDateD2}
             allowClear={false}
           />
-        </>
+        </div>
       )}
     </MobilePickerWrap>
   );
