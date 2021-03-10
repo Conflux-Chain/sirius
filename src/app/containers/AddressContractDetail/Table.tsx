@@ -28,9 +28,8 @@ import {
 import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
-import imgDot from 'images/contract-address/dot-dot-dot.svg';
-import PickerWithQuery from './PickerWithQuery';
-import { Dropdown } from '../../components/Dropdown';
+import { TableSearchDatepicker } from '../../components/TablePanel/Datepicker';
+import { TableSearchDropdown } from '../../components/TablePanel/Dropdown';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
@@ -606,9 +605,6 @@ export function Table({ address, addressInfo }) {
     }
   };
 
-  // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
-  const maxT = maxTimestamp && String(Number(maxTimestamp) - 1);
-
   // TODO change tab request multi api
 
   return (
@@ -619,6 +615,7 @@ export function Table({ address, addressInfo }) {
             className={clsx({
               show: showExportRecordsButton,
             })}
+            key={`${tab}-tableSearchExportButton`}
           >
             <Button
               size="small"
@@ -629,60 +626,11 @@ export function Table({ address, addressInfo }) {
               {t(translations.general.exportRecords)}
             </Button>
           </ExportRecordsButtonWrapper>
-          <PickerWithQuery
-            key="date-picker-query"
-            minTimestamp={minTimestamp}
-            maxTimestamp={maxT}
-            onChange={dateQuery => {
-              if (!dateQuery)
-                return history.push(
-                  queryString.stringifyUrl({
-                    url: location.pathname,
-                    query: {
-                      ...queries,
-                      minTimestamp: undefined,
-                      maxTimestamp: undefined,
-                    },
-                  }),
-                );
-
-              let minTimestamp, maxTimestamp;
-
-              if (dateQuery[0]) {
-                minTimestamp = Math.floor(+dateQuery[0] / 1000);
-              }
-
-              if (dateQuery[1]) {
-                maxTimestamp = Math.round(+dateQuery[1] / 1000);
-              }
-
-              if (
-                minTimestamp !== undefined &&
-                minTimestamp === queries.minTimestamp
-              )
-                return;
-              if (
-                maxTimestamp !== undefined &&
-                maxTimestamp === queries.maxTimestamp
-              )
-                return;
-
-              history.push(
-                queryString.stringifyUrl({
-                  url: location.pathname,
-                  query: {
-                    ...queries,
-                    minTimestamp,
-                    maxTimestamp,
-                  },
-                }),
-              );
-            }}
-          />
+          <TableSearchDatepicker key={`${tab}-tableSearchDatepicker`} />
           {txFilterVisible && (
-            <Dropdown
-              key="tx-filter"
-              label={<img src={imgDot} alt="address-contract-alarm" />}
+            <TableSearchDropdown
+              key={`${tab}-tableSearchDropdown`}
+              type={'txType'}
               options={[
                 {
                   key: 'all',
@@ -697,18 +645,6 @@ export function Table({ address, addressInfo }) {
                   name: t(translations.transaction.viewIncomingTxns),
                 },
               ]}
-              onChange={txType => {
-                if (queries?.txType !== txType)
-                  history.push(
-                    queryString.stringifyUrl({
-                      url: location.pathname,
-                      query: {
-                        ...queries,
-                        txType,
-                      },
-                    }),
-                  );
-              }}
             />
           )}
         </FilterWrap>

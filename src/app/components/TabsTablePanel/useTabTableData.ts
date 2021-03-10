@@ -5,12 +5,7 @@ import { useTableData } from './useTableData';
 export const useTabTableData = tabs => {
   const location = useLocation();
   const history = useHistory();
-  let {
-    tab: currentTab,
-    page: pageCurrent,
-    pageSize: pageSizeCurrent,
-    ...others
-  } = queryString.parse(location.search);
+  let { tab: currentTab } = queryString.parse(location.search);
   if (!currentTab) {
     currentTab = tabs[0].value;
   }
@@ -59,14 +54,12 @@ export const useTabTableData = tabs => {
         let query = {};
         if (table) {
           query = {
-            ...others,
             page: '1',
             pageSize: '10',
             tab: value,
           };
         } else {
           query = {
-            ...others,
             tab: value,
           };
         }

@@ -1,22 +1,23 @@
 /**
  * TokenDetail
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useMessages } from '@cfxjs/react-ui';
-import {
-  isAddress,
-  isHash,
-  tranferToLowerCase,
-  formatBalance,
-} from '../../../utils';
+import { isAddress, isHash, tranferToLowerCase, formatBalance } from 'utils';
 import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
-import { Search as SearchComp } from '../../components/Search/Loadable';
-import { cfxTokenTypes, zeroAddress } from '../../../utils/constants';
+import { Search as SearchComp } from '../Search/Loadable';
+import { cfxTokenTypes, zeroAddress } from 'utils/constants';
+import { ActionButton } from '../../components/ActionButton';
+import { useClickAway } from '@cfxjs/react-ui';
+import { media, useBreakpoint } from '../../../styles/media';
+
+import imgSearch from 'images/search.svg';
+
 interface FilterProps {
   filter: string;
   tokenAddress: string;
@@ -24,6 +25,7 @@ interface FilterProps {
   symbol: string;
   decimals: number;
   onFilter: (value: string) => void;
+  placeholder: string;
 }
 
 interface Query {
@@ -31,32 +33,41 @@ interface Query {
   transactionHash?: string;
 }
 
-export const Filter = ({
+// @todo extract to common search component with mobile compatible
+export const TableSearchInput = ({
   filter,
   tokenAddress,
   transferType,
   symbol,
   decimals,
   onFilter,
+  placeholder,
 }: FilterProps) => {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
+  const [, setMessage] = useMessages();
   const lFilter = tranferToLowerCase(filter);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [messages, setMessage] = useMessages();
   const [value, setValue] = useState(lFilter);
-  const tokenAddrs = [tokenAddress];
+  const [visible, setVisible] = useState<boolean>(false);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLDivElement>(null);
+
+  useClickAway(inputRef, () => visible && setVisible(false));
+
+  useEffect(() => {
+    setValue(lFilter);
+  }, [lFilter]);
+
   let addr: null | string = null;
   if (isAddress(lFilter)) {
     addr = lFilter;
   }
 
+  const tokenAddrs = [tokenAddress];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [balance, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
+  const [, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
   const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
-
-  useEffect(() => {
-    setValue(lFilter);
-  }, [lFilter]);
 
   const onEnterPress = () => {
     if (value === '') {
@@ -93,46 +104,57 @@ export const Filter = ({
 
   return (
     <FilterWrap>
-      <SearchComp
-        outerClassname="outerContainer"
-        inputClassname="transfer-search"
-        iconColor="#74798C"
-        placeholderText={
-          transferType === cfxTokenTypes.erc20
-            ? t(translations.token.transferList.searchPlaceHolder)
-            : t(translations.token.transferList.searchPlaceHolderWithTokenId)
-        }
-        onEnterPress={onEnterPress}
-        onChange={val => setValue(tranferToLowerCase(val))}
-        onClear={onClear}
-        val={value}
-      />
-      {transferType === cfxTokenTypes.erc20 &&
-        tokenBalance !== '0' &&
-        symbol && (
-          <BalanceWrap>
-            {`${t(
-              translations.token.transferList.balance,
-            )}${tokenBalance} ${symbol}`}{' '}
-          </BalanceWrap>
-        )}
+      {bp === 's' && (
+        <ActionButton
+          onClick={() => setVisible(!visible)}
+          ref={filterButtonRef}
+        >
+          <img
+            src={imgSearch}
+            alt="alarm icon"
+            className="mobile-icon-search"
+          ></img>
+        </ActionButton>
+      )}
+      {(bp !== 's' || visible) && (
+        <div ref={inputRef}>
+          <SearchComp
+            outerClassname="outerContainer"
+            inputClassname="transfer-search"
+            iconColor="#74798C"
+            placeholderText={placeholder}
+            onEnterPress={onEnterPress}
+            onChange={val => setValue(tranferToLowerCase(val))}
+            onClear={onClear}
+            val={value}
+          />
+          {transferType === cfxTokenTypes.erc20 &&
+            tokenBalance !== '0' &&
+            symbol && (
+              <BalanceWrap>
+                {`${t(
+                  translations.token.transferList.balance,
+                )}${tokenBalance} ${symbol}`}{' '}
+              </BalanceWrap>
+            )}
+        </div>
+      )}
     </FilterWrap>
   );
 };
 
 const FilterWrap = styled.div`
-  position: absolute;
-  top: 0.7143rem;
-  right: 0;
-  width: 260px;
   display: flex;
-  align-items: center;
+  margin-right: 0.7143rem;
+
   .outerContainer {
     flex-grow: 1;
-    width: 14.8571rem;
+    width: 18rem;
+
     .transfer-search.input-container {
       height: 2.28rem;
       .input-wrapper {
+        border: none;
         border-radius: 1.14rem;
         background: rgba(0, 84, 254, 0.04);
         input {
@@ -143,19 +165,26 @@ const FilterWrap = styled.div`
           }
         }
         &.hover {
-          border: none;
+          background-color: rgba(0, 84, 254, 0.1);
           input {
             color: #74798c;
           }
         }
         &.focus {
-          border: none;
           input {
             color: #74798c;
           }
         }
       }
     }
+
+    ${media.s} {
+      width: 14rem;
+    }
+  }
+
+  .mobile-icon-search {
+    width: 14px;
   }
 `;
 

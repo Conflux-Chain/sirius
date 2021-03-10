@@ -15,7 +15,7 @@ export const useTableData = (
     pageSize: searchPageSize,
     tab,
     ...others
-  } = queryString.parse(location.search);
+  } = queryString.parse(inactive ? '' : location.search);
 
   let parsedPageNumber = '1';
   let parsedPageSize = '10';

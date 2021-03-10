@@ -6,9 +6,7 @@ import { useClickAway } from '@cfxjs/react-ui';
 import clsx from 'clsx';
 import { Check } from '@zeit-ui/react-icons';
 import { media } from 'styles/media';
-import { ActionButton } from './ActionButton';
-
-export { ActionButton };
+import { ActionButton } from '../ActionButton';
 
 // move and update TxDirectionFilter to Dropdown, it should be use Select or Button-dropdown of react-ui
 export const Dropdown = ({
@@ -62,7 +60,7 @@ export const Dropdown = ({
         {label || options[selected]?.name}
       </ActionButton>
       {visible && (
-        <TxDirectionFilterDropdown key="tx-filter-dropdown" ref={dropdownRef}>
+        <TxDirectionFilterDropdown ref={dropdownRef}>
           {opts}
         </TxDirectionFilterDropdown>
       )}

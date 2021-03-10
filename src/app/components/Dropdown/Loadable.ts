@@ -10,8 +10,3 @@ export const Dropdown = lazyLoad(
   () => import('./index'),
   module => module.Dropdown,
 );
-
-export const ActionButton = lazyLoad(
-  () => import('./ActionButton'),
-  module => module.ActionButton,
-);
