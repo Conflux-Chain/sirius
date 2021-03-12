@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { media } from '../../../styles/media';
@@ -10,7 +10,10 @@ import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { Filter } from './Filter';
+import {
+  TableSearchInput,
+  TableSearchDatepicker,
+} from '../../components/TablePanel';
 import { tokenColunms } from '../../../utils/tableColumns';
 import { cfxTokenTypes } from '../../../utils/constants';
 
@@ -41,7 +44,6 @@ export function Transfers({
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
-  const [showFilter, setShowFilter] = useState(false);
 
   let {
     page = 1,
@@ -52,12 +54,6 @@ export function Transfers({
     tab: currentTab,
     ...others
   } = queryString.parse(location.search);
-
-  useEffect(() => {
-    if (currentTab !== 'holders') {
-      setShowFilter(true);
-    }
-  }, [currentTab]);
 
   const filter =
     (filterAddr as string) ||
@@ -71,7 +67,7 @@ export function Transfers({
       object.accountAddress = filter;
     } else if (isHash(filter)) {
       object.transactionHash = filter;
-    } else if (transferType !== cfxTokenTypes.erc20) {
+    } else if (transferType !== cfxTokenTypes.erc20 && filter.trim()) {
       object.tokenId = filter;
     }
     const urlWithQuery = queryString.stringifyUrl({
@@ -186,6 +182,27 @@ export function Transfers({
         columns: columns,
         rowKey: (row, index) => `${row.transactionHash}${index}`,
       },
+      tableHeader: (
+        <StyledSearchAreaWrapper>
+          <TableSearchInput
+            decimals={decimals}
+            symbol={symbol}
+            tokenAddress={tokenAddress}
+            transferType={transferType}
+            onFilter={onFilter}
+            filter={filter}
+            placeholder={
+              transferType === cfxTokenTypes.erc20
+                ? t(translations.token.transferList.searchPlaceHolder)
+                : t(
+                    translations.token.transferList
+                      .searchPlaceHolderWithTokenId,
+                  )
+            }
+          />
+          <TableSearchDatepicker />
+        </StyledSearchAreaWrapper>
+      ),
     },
   ];
 
@@ -234,30 +251,14 @@ export function Transfers({
     });
   }
 
-  const onTabsChange = tab => {
-    setShowFilter(tab !== 'holders');
-  };
-
-  return (
-    <TransfersWrap>
-      <TabsTablePanel tabs={tabs} onTabsChange={onTabsChange} />
-      {showFilter ? (
-        <Filter
-          decimals={decimals}
-          symbol={symbol}
-          tokenAddress={tokenAddress}
-          transferType={transferType}
-          onFilter={onFilter}
-          filter={filter}
-        />
-      ) : null}
-    </TransfersWrap>
-  );
+  return <TabsTablePanel tabs={tabs} />;
 }
 
-const TransfersWrap = styled.div`
-  position: relative;
+const StyledSearchAreaWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
   ${media.s} {
-    padding-top: 4rem;
+    justify-content: flex-start;
   }
 `;

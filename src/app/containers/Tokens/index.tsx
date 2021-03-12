@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { AlertCircle } from '@zeit-ui/react-icons';
 import { translations } from '../../../locales/i18n';
 import { TablePanel } from '../../components/TablePanel/Loadable';
 import { ColumnsType } from '../../components/TabsTablePanel';
@@ -14,6 +13,8 @@ import styled from 'styled-components/macro';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
 import queryString from 'query-string';
+
+import imgInfo from 'images/info.svg';
 
 interface RouteParams {
   tokenType: string;
@@ -90,7 +91,7 @@ export function Tokens() {
               placement="top"
             >
               <IconWrapper>
-                <AlertCircle size={16} />
+                <img src={imgInfo} alt="?" />
               </IconWrapper>
             </Tooltip>
           ) : null}
@@ -120,5 +121,7 @@ const StyledTokensPageHeaderWrapper = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  padding: 0 4px;
+  padding-left: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
 `;

@@ -3,15 +3,19 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { DatePicker } from '@cfxjs/react-ui';
+import { DatePicker as UIDatePicker } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
+import { ActionButton } from '../../components/ActionButton';
+import qs from 'query-string';
+import { useLocation, useHistory } from 'react-router';
+
 import imgAlarm from 'images/contract-address/alarm.svg';
-import { ActionButton } from '../../components/Dropdown';
 
 // datepicker input common style
 const PickerWrap = styled.div`
   margin-right: 0.57rem;
   cursor: pointer;
+
   .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
     background-color: rgba(0, 84, 254, 0.04);
     height: 2.2857rem;
@@ -32,9 +36,15 @@ const PickerWrap = styled.div`
 // mobile picker start
 const MobilePickerWrap = styled(PickerWrap)`
   display: flex;
-  margin-bottom: 0.7143rem;
   .address-table-picker.cfx-picker.cfx-picker-variant-solid.cfx-picker-color-primary {
     margin-right: 0.7143rem;
+    &:first-child {
+      margin-bottom: 10px;
+    }
+  }
+  .datepicker-item-container {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -64,9 +74,11 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             isOutOfDatepicker = false;
           }
         });
-        if (e.target.className.indexOf('cfx-picker') > -1) {
-          isOutOfDatepicker = false;
-        }
+        try {
+          if (e.target.className.indexOf('cfx-picker') > -1) {
+            isOutOfDatepicker = false;
+          }
+        } catch (e) {}
         if (isOutOfDatepicker) {
           setVisible(false);
         }
@@ -111,8 +123,8 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
         <img src={imgAlarm} alt="alarm icon"></img>
       </ActionButton>
       {visible && (
-        <>
-          <DatePicker
+        <div className="datepicker-item-container">
+          <UIDatePicker
             className="address-table-picker"
             dropdownClassName="address-table-picker-calender"
             variant="solid"
@@ -123,7 +135,7 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             disabledDate={disabledDateD1}
             allowClear={false}
           />
-          <DatePicker
+          <UIDatePicker
             className="address-table-picker"
             dropdownClassName="address-table-picker-calender"
             variant="solid"
@@ -134,7 +146,7 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             disabledDate={disabledDateD2}
             allowClear={false}
           />
-        </>
+        </div>
       )}
     </MobilePickerWrap>
   );
@@ -162,7 +174,7 @@ const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
   ];
   return (
     <PickerWrap>
-      <DatePicker.RangePicker
+      <UIDatePicker.RangePicker
         className="address-table-picker"
         // @ts-ignore
         defaultValue={defaultDateRange}
@@ -177,7 +189,73 @@ const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
 };
 // PC picker end
 
-export default function (props) {
+export const TableSearchDatepicker = ({
+  minTimestamp: outerMinT,
+  maxTimestamp: outerMaxT,
+  onChange,
+  ...others
+}: {
+  minTimestamp?;
+  maxTimestamp?;
+  onChange?;
+}) => {
   const bp = useBreakpoint();
-  return bp === 's' ? <MobilePicker {...props} /> : <Picker {...props} />;
-}
+  const history = useHistory();
+  const location = useLocation();
+  const queries = qs.parse(location.search || '');
+  let minT = outerMinT || queries.minTimestamp;
+  // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
+  let maxT = (outerMaxT && String(Number(queries.maxTimestamp) - 1)) || '';
+
+  let handleChange =
+    onChange ||
+    function (dateQuery) {
+      if (!dateQuery) {
+        history.push(
+          qs.stringifyUrl({
+            url: location.pathname,
+            query: {
+              ...queries,
+              minTimestamp: undefined,
+              maxTimestamp: undefined,
+            },
+          }),
+        );
+      } else {
+        let minTimestamp, maxTimestamp;
+
+        if (dateQuery[0]) {
+          minTimestamp = Math.floor(+dateQuery[0] / 1000);
+        }
+
+        if (dateQuery[1]) {
+          maxTimestamp = Math.round(+dateQuery[1] / 1000);
+        }
+
+        if (minTimestamp !== undefined && minTimestamp === queries.minTimestamp)
+          return;
+        if (maxTimestamp !== undefined && maxTimestamp === queries.maxTimestamp)
+          return;
+
+        history.push(
+          qs.stringifyUrl({
+            url: location.pathname,
+            query: {
+              ...queries,
+              minTimestamp,
+              maxTimestamp,
+            },
+          }),
+        );
+      }
+    };
+
+  const props = {
+    minTimestamp: minT,
+    maxTimestamp: maxT,
+    onChange: handleChange,
+    ...others,
+  };
+
+  return React.createElement(bp === 's' ? MobilePicker : Picker, props);
+};

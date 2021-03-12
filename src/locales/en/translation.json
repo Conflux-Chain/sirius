@@ -476,6 +476,7 @@
   "transaction": {
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
+    "viewFailedTxns": "View Failed Txns",
     "title": "Transaction",
     "description": "Transaction",
     "hash": "Transaction Hash",
@@ -505,7 +506,7 @@
     },
     "contract": "Contract",
     "created": "Created",
-    "contractCreation": "Contract Registration",
+    "contractCreation": "Contract Creation",
     "for": "For",
     "tokenId": "TokenID",
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract registration",

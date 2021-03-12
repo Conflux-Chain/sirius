@@ -482,9 +482,9 @@ const ThTipWrap = styled.span`
   margin-left: 5px;
 
   img {
-    width: 14px;
-    height: 14px;
-    margin-bottom: 4px;
+    width: 1.1429rem;
+    height: 1.1429rem;
+    margin-bottom: 0.2857rem;
   }
 `;
 
