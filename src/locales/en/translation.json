@@ -476,6 +476,7 @@
   "transaction": {
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
+    "viewFailedTxns": "View Failed Txns",
     "title": "Transaction",
     "description": "Transaction",
     "hash": "Transaction Hash",

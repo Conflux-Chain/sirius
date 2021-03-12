@@ -28,13 +28,16 @@ import {
 import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
-import { TableSearchDatepicker } from '../../components/TablePanel/Datepicker';
-import { TableSearchDropdown } from '../../components/TablePanel/Dropdown';
+import {
+  TableSearchDatepicker,
+  TableSearchDropdown,
+} from '../../components/TablePanel';
 import { cfx } from 'utils/cfx';
 import { ContractAbi } from '../../components/ContractAbi/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+
 const AceEditorStyle = {
   width: '100%',
 };
@@ -630,19 +633,26 @@ export function Table({ address, addressInfo }) {
           {txFilterVisible && (
             <TableSearchDropdown
               key={`${tab}-tableSearchDropdown`}
-              type={'txType'}
               options={[
                 {
-                  key: 'all',
+                  key: 'txType',
+                  value: 'all',
                   name: t(translations.general.viewAll),
                 },
                 {
-                  key: 'outgoing',
+                  key: 'txType',
+                  value: 'outgoing',
                   name: t(translations.transaction.viewOutgoingTxns),
                 },
                 {
-                  key: 'incoming',
+                  key: 'txType',
+                  value: 'incoming',
                   name: t(translations.transaction.viewIncomingTxns),
+                },
+                {
+                  key: 'status',
+                  value: '1',
+                  name: t(translations.transaction.viewFailedTxns),
                 },
               ]}
             />
