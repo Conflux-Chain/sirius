@@ -7,8 +7,8 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useMessages } from '@cfxjs/react-ui';
-import { isAddress, isHash, tranferToLowerCase, formatBalance } from 'utils';
-import { useBalance } from '@cfxjs/react-hooks';
+import { isAddress, isHash, tranferToLowerCase } from 'utils';
+// import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
 import { cfxTokenTypes, zeroAddress } from 'utils/constants';
@@ -20,7 +20,7 @@ import imgSearch from 'images/search.svg';
 
 interface FilterProps {
   filter: string;
-  tokenAddress: string;
+  tokenAddress?: string;
   transferType: string;
   symbol: string;
   decimals: number;
@@ -36,10 +36,10 @@ interface Query {
 // @todo extract to common search component with mobile compatible
 export const TableSearchInput = ({
   filter,
-  tokenAddress,
+  // tokenAddress,
   transferType,
-  symbol,
-  decimals,
+  // symbol,
+  // decimals,
   onFilter,
   placeholder,
 }: FilterProps) => {
@@ -59,15 +59,15 @@ export const TableSearchInput = ({
     setValue(lFilter);
   }, [lFilter]);
 
-  let addr: null | string = null;
-  if (isAddress(lFilter)) {
-    addr = lFilter;
-  }
+  // let addr: null | string = null;
+  // if (isAddress(lFilter)) {
+  //   addr = lFilter;
+  // }
 
-  const tokenAddrs = [tokenAddress];
+  // const tokenAddrs = [tokenAddress];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
-  const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
+  // const [, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
+  // const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
 
   const onEnterPress = () => {
     if (value === '') {
@@ -128,7 +128,8 @@ export const TableSearchInput = ({
             onClear={onClear}
             val={value}
           />
-          {transferType === cfxTokenTypes.erc20 &&
+          {/* add date range filter, may cause user confuse */}
+          {/* {transferType === cfxTokenTypes.erc20 &&
             tokenBalance !== '0' &&
             symbol && (
               <BalanceWrap>
@@ -136,7 +137,7 @@ export const TableSearchInput = ({
                   translations.token.transferList.balance,
                 )}${tokenBalance} ${symbol}`}{' '}
               </BalanceWrap>
-            )}
+            )} */}
         </div>
       )}
     </FilterWrap>
@@ -188,14 +189,14 @@ const FilterWrap = styled.div`
   }
 `;
 
-const BalanceWrap = styled.div`
-  background-color: #4b5fe3;
-  border-radius: 1.1429rem;
-  height: 1.7143rem;
-  color: #fff;
-  padding: 0.2857rem 1.7143rem;
-  margin-left: 1.2857rem;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-`;
+// const BalanceWrap = styled.div`
+//   background-color: #4b5fe3;
+//   border-radius: 1.1429rem;
+//   height: 1.7143rem;
+//   color: #fff;
+//   padding: 0.2857rem 1.7143rem;
+//   margin-left: 1.2857rem;
+//   white-space: nowrap;
+//   display: flex;
+//   align-items: center;
+// `;

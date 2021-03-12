@@ -156,16 +156,18 @@ export const TablePanel = ({
               {tableHeader}
             </StyledTableHeaderWrapper>
           )}
-          <Table
-            className={clsx('sirius-table', table.className)}
-            tableLayout="fixed"
-            columns={tableColumns}
-            data={tableData}
-            rowKey={tableRowKey}
-            scroll={{ x: 800 }}
-          />
-          {/* may rewrite a new Table component with empty placeholder is better */}
-          <Placeholder show={empty} />
+          <div className="table-body">
+            <Table
+              className={clsx('sirius-table', table.className)}
+              tableLayout="fixed"
+              columns={tableColumns}
+              data={tableData}
+              rowKey={tableRowKey}
+              scroll={{ x: 800 }}
+            />
+            {/* may rewrite a new Table component with empty placeholder is better */}
+            <Placeholder show={empty} />
+          </div>
         </Card>
       </StyledTableWrapper>
       {pagination !== false && (
@@ -208,6 +210,9 @@ const StyledTableWrapper: any = styled.div`
   .card {
     position: relative;
     background-color: red;
+  }
+  .table-body {
+    position: relative;
   }
   .table.sirius-table {
     line-height: 1.7143rem;
