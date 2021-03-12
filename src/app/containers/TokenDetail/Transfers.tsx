@@ -67,7 +67,7 @@ export function Transfers({
       object.accountAddress = filter;
     } else if (isHash(filter)) {
       object.transactionHash = filter;
-    } else if (transferType !== cfxTokenTypes.erc20) {
+    } else if (transferType !== cfxTokenTypes.erc20 && filter.trim()) {
       object.tokenId = filter;
     }
     const urlWithQuery = queryString.stringifyUrl({
