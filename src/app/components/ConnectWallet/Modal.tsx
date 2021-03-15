@@ -180,20 +180,22 @@ export const Modal = ({
         error: connected === 1 && !isValid,
       })}
     >
-      <div className="modal-body">
-        <div className="modal-title">{title}</div>
-        <div className={clsx('modal-portal')} onClick={handleLogin}>
-          {portal}
+      <div className="modal-and-history-container">
+        <div className="modal-body">
+          <div className="modal-title">{title}</div>
+          <div className={clsx('modal-portal')} onClick={handleLogin}>
+            {portal}
+          </div>
+          {tip}
+          <img
+            className="modal-close"
+            src={iconClose}
+            alt="close-button"
+            onClick={handleClose}
+          ></img>
         </div>
-        {tip}
-        <img
-          className="modal-close"
-          src={iconClose}
-          alt="close-button"
-          onClick={handleClose}
-        ></img>
+        {isValid ? <History></History> : null}
       </div>
-      {isValid ? <History></History> : null}
     </ModalWrapper>
   );
 };
@@ -230,11 +232,6 @@ const ModalWrapper = styled.div`
   }
 
   &.connected {
-    .modal-body {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
     .modal-portal {
       flex-direction: column;
       align-items: flex-start;
@@ -257,21 +254,19 @@ const ModalWrapper = styled.div`
     }
   }
 
-  .modal-body {
-    position: relative;
-    /* position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0; */
-    /* margin: auto; */
-    /* height: 202px; */
-    width: 32rem;
-    background: #ffffff;
-    box-shadow: 0.5714rem 2.1429rem 5.7143rem 0rem rgba(112, 126, 158, 0.24);
-    padding: 1.7143rem 2.2857rem;
+  .modal-and-history-container {
     box-sizing: border-box;
     border-radius: 0.5714rem;
+    box-shadow: 0.5714rem 2.1429rem 5.7143rem 0rem rgba(112, 126, 158, 0.24);
+    overflow: hidden;
+  }
+
+  .modal-body {
+    position: relative;
+    width: 32rem;
+    background: #ffffff;
+    padding: 1.7143rem 2.2857rem 2.2857rem;
+    box-sizing: border-box;
   }
 
   .modal-title {
@@ -282,7 +277,6 @@ const ModalWrapper = styled.div`
 
   .modal-portal {
     width: 27.4286rem;
-    /* height: 4.1429rem; */
     border-radius: 0.2857rem;
     border: 1px solid #cccccc;
     margin-top: 1.1429rem;
