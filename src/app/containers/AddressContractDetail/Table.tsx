@@ -447,7 +447,7 @@ export function Table({ address, addressInfo }) {
       label: (total: number, realTotal: number) => {
         return (
           <>
-            {t(translations.blocksAndTransactions.transactions)}
+            {t(translations.transactions.title)}
             <TabLabel total={total} realTotal={realTotal} />
           </>
         );

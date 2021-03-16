@@ -55,10 +55,19 @@ export const Header = memo(() => {
       matched: location?.pathname?.startsWith('/blockchain'),
       children: [
         {
-          // block & txn
-          title: [t(translations.header.bnt), <Check size={18} key="check" />],
+          // block
+          title: [
+            t(translations.header.block),
+            <Check size={18} key="check" />,
+          ],
           name: ScanEvent.menu.action.bnt,
-          href: '/blockchain/blocks-and-transactions',
+          href: '/blockchain/blocks',
+        },
+        {
+          // txn
+          title: [t(translations.header.txn), <Check size={18} key="check" />],
+          name: ScanEvent.menu.action.bnt,
+          href: '/blockchain/transactions',
         },
         {
           // accounts
