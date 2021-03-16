@@ -470,7 +470,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -501,7 +501,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -534,7 +534,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -570,16 +570,20 @@ export const Transaction = () => {
             text={t(translations.toolTip.tx.tokenTransferred)}
             placement="top"
           >
-            {`${t(translations.transaction.tokenTransferred)} (${
-              transferListContainer.length
-            })`}
+            {`${t(translations.transaction.tokenTransferred)} ${
+              transferListContainer.length > 1
+                ? `(${transferListContainer.length})`
+                : ''
+            }`}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
           <div
             style={transferListContainerStyle}
-            className="transferListContainer"
+            className={`transferListContainer ${
+              transferListContainer.length === 1 ? 'onlyOne' : ''
+            }`}
           >
             {transferListContainer}
           </div>
@@ -990,6 +994,11 @@ const StyledCardWrapper = styled.div`
     margin-left: 0.5714rem;
   }
   .transferListContainer {
+    &.onlyOne {
+      .lineContainer .index {
+        display: none;
+      }
+    }
     .lineContainer {
       line-height: 1.7143rem;
     }
