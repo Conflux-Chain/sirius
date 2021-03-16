@@ -94,17 +94,25 @@
     "apy": "(APY 4%)",
     "viewLockedDetails": "Click to view lock history"
   },
-  "blocksAndTransactions": {
-    "title": "Blocks and Transactions",
-    "description": "Blocks and Transactions",
-    "tipCountBefore": "Total of",
-    "tipCountAfter": "{{type}}",
-    "labelCountBefore": "Total of",
-    "labelCountAfter": "{{type}}",
-    "blocks": "Blocks",
-    "transactions": "Transactions",
-    "latestBlocks": "Latest Blocks",
+  "blocks": {
+    "title": "Blocks",
+    "description": "Blocks",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "blocks",
+    "latestBlocks": "Latest Blocks"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "transactions",
     "latestTransactions": "Latest Transactions"
+  },
+  "cfxTransfers": {
+    "title": "CFX Transfers",
+    "description": "CFX Transfers",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "CFX transfers"
   },
   "tokens": {
     "title": "Tokens",
@@ -152,6 +160,9 @@
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transactions",
+    "block": "Blocks",
+    "txn": "Transactions",
+    "cfxTransfers": "CFX Transfers",
     "blockchain": "Blockchain",
     "accounts": "Accounts",
     "tokens": "Tokens",
@@ -268,7 +279,6 @@
     "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
-    "viewAllBlocksAndTxs": "View All Blocks & Transactions",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",

@@ -94,17 +94,25 @@
     "lockedDetailUnlockTime": "预计解锁时间",
     "viewLockedDetails": "点击查看锁定历史"
   },
-  "blocksAndTransactions": {
-    "title": "出块和交易",
-    "description": "出块和交易",
+  "blocks": {
+    "title": "区块",
+    "description": "区块",
     "tipCountBefore": "共计",
-    "tipCountAfter": "个{{type}}",
-    "labelCountBefore": "共计",
-    "labelCountAfter": "个 {{type}} ",
-    "blocks": "区块",
-    "transactions": "交易",
-    "latestBlocks": "最新区块",
+    "tipCountAfter": "个区块",
+    "latestBlocks": "最新区块"
+  },
+  "transactions": {
+    "title": "交易",
+    "description": "交易",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个交易",
     "latestTransactions": "最新交易"
+  },
+  "cfxTransfers": {
+    "title": "CFX 转移",
+    "description": "CFX 转移",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个 CFX 转移"
   },
   "tokens": {
     "title": "代币",
@@ -152,6 +160,9 @@
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
+    "block": "区块",
+    "txn": "交易",
+    "cfxTransfers": "CFX 转移",
     "blockchain": "区块链",
     "accounts": "账户",
     "tokens": "代币",
@@ -268,7 +279,6 @@
     "showLess": "收起",
     "viewMore": "查看更多",
     "viewAll": "查看全部",
-    "viewAllBlocksAndTxs": "查看所有区块&交易",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",

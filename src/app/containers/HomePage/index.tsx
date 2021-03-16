@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { Link } from '../../components/Link/Loadable';
-import { useBreakpoint, media } from 'styles/media';
+import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType, useTabTableData } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Notice } from './Notice';
@@ -14,7 +14,6 @@ import { Notice } from './Notice';
 
 export function HomePage() {
   const { t } = useTranslation();
-  const bp = useBreakpoint();
 
   const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
@@ -44,7 +43,7 @@ export function HomePage() {
     {
       value: 'blocks',
       action: 'latestBlocks',
-      label: t(translations.blocksAndTransactions.latestBlocks),
+      label: t(translations.blocks.latestBlocks),
       url: '/block',
       pagination: false,
       table: {
@@ -53,9 +52,9 @@ export function HomePage() {
       },
     },
     {
-      value: 'transaction',
+      value: 'transactions',
       action: 'latestTransactions',
-      label: t(translations.blocksAndTransactions.latestTransactions),
+      label: t(translations.transactions.latestTransactions),
       url: '/transaction',
       pagination: false,
       table: {
@@ -72,6 +71,8 @@ export function HomePage() {
   } else {
     chartWidth = 238;
   }
+
+  const { currentTabValue } = useTabTableData(tabs);
 
   return (
     <>
@@ -104,11 +105,9 @@ export function HomePage() {
           <ViewAllLinkWrapper>
             <Link
               className="viewall-link"
-              href="/blockchain/blocks-and-transactions"
+              href={`/blockchain/${currentTabValue}`}
             >
-              {bp === 's'
-                ? t(translations.general.viewAll)
-                : t(translations.general.viewAllBlocksAndTxs)}
+              {t(translations.general.viewAll)}
             </Link>
           </ViewAllLinkWrapper>
         </Bottom>
