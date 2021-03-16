@@ -12,6 +12,9 @@ import { formatBalance, formatNumber, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import { LinkA } from '../../../utils/tableColumns/token';
+import ERC20bg from '../../../images/token/erc20bg.png';
+import ERC721bg from '../../../images/token/erc721bg.png';
+import ERC1155bg from '../../../images/token/erc1155bg.png';
 
 export interface BasicProps {
   address?: string;
@@ -184,9 +187,70 @@ export const Basic = ({
   } else {
     list = [fieldTransfers, fieldContractAddress, fieldHolders];
   }
-  return <BasicWrap>{list.length ? <List list={list} /> : null}</BasicWrap>;
+
+  const tokenTypeTag = transferType => {
+    switch (transferType) {
+      case cfxTokenTypes.erc1155:
+        return (
+          <TokenTypeTag className={transferType}>
+            <span>{t(translations.header.tokens1155)}</span>
+          </TokenTypeTag>
+        );
+      case cfxTokenTypes.erc721:
+        return (
+          <TokenTypeTag className={transferType}>
+            <span>{t(translations.header.tokens721)}</span>
+          </TokenTypeTag>
+        );
+      case cfxTokenTypes.erc20:
+        return (
+          <TokenTypeTag className={transferType}>
+            <span>{t(translations.header.tokens20)}</span>
+          </TokenTypeTag>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <BasicWrap>
+      {list.length ? <List list={list} /> : null}
+      {tokenTypeTag(transferType)}
+    </BasicWrap>
+  );
 };
 
 const BasicWrap = styled.div`
+  position: relative;
   margin-bottom: 2.2857rem;
+`;
+
+const TokenTypeTag = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 118px;
+  height: 30px;
+  z-index: 1;
+  font-size: 10px;
+  text-align: right;
+  padding-right: 8px;
+  line-height: 30px;
+  color: #fff;
+
+  &.ERC20 {
+    background: url(${ERC20bg}) no-repeat right top;
+    background-size: 118px 30px;
+  }
+
+  &.ERC721 {
+    background: url(${ERC721bg}) no-repeat right top;
+    background-size: 118px 30px;
+  }
+
+  &.ERC1155 {
+    background: url(${ERC1155bg}) no-repeat right top;
+    background-size: 118px 30px;
+  }
 `;
