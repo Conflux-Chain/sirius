@@ -154,9 +154,10 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
           !isAdminError &&
           !isErc20Error &&
           !isNameError &&
-          !isSiteError &&
-          !isSourceCodeError &&
-          !isAbiError
+          !isSiteError
+          // &&
+          // !isSourceCodeError &&
+          // !isAbiError
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -415,14 +416,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   //TODO: modity the types of div to RreactNode
   let tabsLabelSourceCode = (
     <LabelWithIcon className="tabs">
-      <span className="labelIcon">*</span>
+      {/*<span className="labelIcon">*</span>*/}
       {t(translations.contract.sourceCode)}
     </LabelWithIcon>
   ) as any;
   //TODO: modity the types of div to RreactNode
   let tabsLabelAbi = (
     <LabelWithIcon className="tabs">
-      <span className="labelIcon">*</span>
+      {/*<span className="labelIcon">*</span>*/}
       {t(translations.contract.abi)}
     </LabelWithIcon>
   ) as any;
