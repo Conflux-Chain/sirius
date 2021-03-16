@@ -108,6 +108,12 @@
     "tipCountAfter": "个交易",
     "latestTransactions": "最新交易"
   },
+  "cfxTransfers": {
+    "title": "CFX 转移",
+    "description": "CFX 转移",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个 CFX 转移"
+  },
   "tokens": {
     "title": "代币",
     "description": "代币",
@@ -156,6 +162,7 @@
     "bnt": "区块&交易",
     "block": "区块",
     "txn": "交易",
+    "cfxTransfers": "CFX 转移",
     "blockchain": "区块链",
     "accounts": "账户",
     "tokens": "代币",

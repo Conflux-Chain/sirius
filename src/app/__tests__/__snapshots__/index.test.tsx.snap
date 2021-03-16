@@ -97,6 +97,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
             <Route
               component={[Function]}
               exact={true}
+              path="/blockchain/cfx-transfers"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
               path="/blockchain/accounts"
             />
             <Route

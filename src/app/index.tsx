@@ -25,6 +25,7 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
+import { CFXTransfers } from './containers/CFXTransfers/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { NotFoundAddressPage } from './containers/NotFoundAddressPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
@@ -164,6 +165,11 @@ export function App() {
                   exact
                   path="/blockchain/transactions"
                   component={Transactions}
+                />
+                <Route
+                  exact
+                  path="/blockchain/cfx-transfers"
+                  component={CFXTransfers}
                 />
                 <Route exact path="/blockchain/accounts" component={Accounts} />
                 <Route exact path="/tokens" component={Tokens} />

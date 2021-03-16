@@ -108,6 +108,12 @@
     "tipCountAfter": "transactions found",
     "latestTransactions": "Latest Transactions"
   },
+  "cfxTransfers": {
+    "title": "CFX Transfers",
+    "description": "CFX Transfers",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "CFX transfers found"
+  },
   "tokens": {
     "title": "Tokens",
     "description": "Tokens",
@@ -156,6 +162,7 @@
     "bnt": "Blocks & Transactions",
     "block": "Blocks",
     "txn": "Transactions",
+    "cfxTransfers": "CFX Transfers",
     "blockchain": "Blockchain",
     "accounts": "Accounts",
     "tokens": "Tokens",

@@ -70,6 +70,15 @@ export const Header = memo(() => {
           href: '/blockchain/transactions',
         },
         {
+          // cfx transfers
+          title: [
+            t(translations.header.cfxTransfers),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.bnt,
+          href: '/blockchain/cfx-transfers',
+        },
+        {
           // accounts
           title: [
             t(translations.header.accounts),
