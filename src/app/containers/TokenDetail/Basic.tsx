@@ -15,6 +15,8 @@ import { LinkA } from '../../../utils/tableColumns/token';
 import ERC20bg from '../../../images/token/erc20bg.png';
 import ERC721bg from '../../../images/token/erc721bg.png';
 import ERC1155bg from '../../../images/token/erc1155bg.png';
+import { CopyButton } from '../../components/CopyButton/Loadable';
+import { formatAddress } from '../../../utils/cfx';
 
 export interface BasicProps {
   address?: string;
@@ -96,7 +98,10 @@ export const Basic = ({
     ),
     children:
       tokenAddress !== undefined ? (
-        <AddressContainer value={tokenAddress} />
+        <>
+          <AddressContainer value={tokenAddress} />{' '}
+          <CopyButton copyText={formatAddress(tokenAddress)} />
+        </>
       ) : (
         t(translations.general.security.notAvailable)
       ),
