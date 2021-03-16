@@ -10,6 +10,7 @@ import { ColumnsType, useTabTableData } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Notice } from './Notice';
+import { ScanEvent } from '../../../utils/gaConstants';
 // import { MarketInfo } from './MarketInfo';
 
 export function HomePage() {
@@ -105,13 +106,27 @@ export function HomePage() {
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
             {currentTabValue === 'blocks' ? (
-              <Link className="viewall-link" href={`/blockchain/blocks`}>
+              <Link
+                className="viewall-link"
+                href={`/blockchain/blocks`}
+                ga={{
+                  category: ScanEvent.menu.category,
+                  action: ScanEvent.menu.action.blocks,
+                }}
+              >
                 {bp === 's'
                   ? t(translations.general.viewAll)
                   : t(translations.general.viewAllBlocks)}
               </Link>
             ) : (
-              <Link className="viewall-link" href={`/blockchain/transactions`}>
+              <Link
+                className="viewall-link"
+                href={`/blockchain/transactions`}
+                ga={{
+                  category: ScanEvent.menu.category,
+                  action: ScanEvent.menu.action.transactions,
+                }}
+              >
                 {bp === 's'
                   ? t(translations.general.viewAll)
                   : t(translations.general.viewAllTxns)}
