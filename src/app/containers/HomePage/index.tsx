@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { Link } from '../../components/Link/Loadable';
-import { media } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
@@ -14,6 +14,7 @@ import { Notice } from './Notice';
 
 export function HomePage() {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
 
   const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
@@ -103,12 +104,19 @@ export function HomePage() {
         <Bottom>
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
-            <Link
-              className="viewall-link"
-              href={`/blockchain/${currentTabValue}`}
-            >
-              {t(translations.general.viewAll)}
-            </Link>
+            {currentTabValue === 'blocks' ? (
+              <Link className="viewall-link" href={`/blockchain/blocks`}>
+                {bp === 's'
+                  ? t(translations.general.viewAll)
+                  : t(translations.general.viewAllBlocks)}
+              </Link>
+            ) : (
+              <Link className="viewall-link" href={`/blockchain/transactions`}>
+                {bp === 's'
+                  ? t(translations.general.viewAll)
+                  : t(translations.general.viewAllTxns)}
+              </Link>
+            )}
           </ViewAllLinkWrapper>
         </Bottom>
       </Main>

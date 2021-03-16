@@ -279,6 +279,8 @@
     "showLess": "收起",
     "viewMore": "查看更多",
     "viewAll": "查看全部",
+    "viewAllBlocks": "查看全部区块",
+    "viewAllTxns": "查看全部交易",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",

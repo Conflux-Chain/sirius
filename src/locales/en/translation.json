@@ -279,6 +279,8 @@
     "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
+    "viewAllBlocks": "View All Blocks",
+    "viewAllTxns": "View All Transactions",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
