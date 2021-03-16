@@ -98,21 +98,21 @@
     "title": "Blocks",
     "description": "Blocks",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "blocks found",
+    "tipCountAfter": "blocks",
     "latestBlocks": "Latest Blocks"
   },
   "transactions": {
     "title": "Transactions",
     "description": "Transactions",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "transactions found",
+    "tipCountAfter": "transactions",
     "latestTransactions": "Latest Transactions"
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
     "description": "CFX Transfers",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "CFX transfers found"
+    "tipCountAfter": "CFX transfers"
   },
   "tokens": {
     "title": "Tokens",
