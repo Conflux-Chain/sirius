@@ -101,10 +101,16 @@ const Container = styled.div`
         color: #002257;
         font-size: 14px;
         line-height: 22px;
-        padding-left: 0;
+        padding-left: 12px;
+        background-color: #f9fafb;
       }
       .ant-collapse-content-box {
         padding: 0;
+      }
+    }
+    .panelContainer:nth-child(2n) {
+      .ant-collapse-header {
+        background-color: #fff;
       }
     }
   }
