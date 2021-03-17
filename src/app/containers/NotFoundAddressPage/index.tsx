@@ -10,7 +10,8 @@ import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import notFoundAddress from 'images/home/notFoundAddress.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { useSearch } from '../../../utils/hooks/useSearch';
 
 interface LocationState {
   state: { type: string };
@@ -19,6 +20,19 @@ interface LocationState {
 export function NotFoundAddressPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
+  const { contractAddress: keywords = '' } = useParams();
+  const [, setSearch] = useSearch();
+
+  window.onbeforeunload = () => {
+    // research after page refresh
+    sessionStorage.setItem('confluxscan_notfound_refreshed', 'true');
+  };
+
+  if (sessionStorage.getItem('confluxscan_notfound_refreshed') && keywords) {
+    sessionStorage.removeItem('confluxscan_notfound_refreshed');
+    setSearch(keywords);
+  }
+
   const { state }: LocationState = useLocation();
   const type = state?.type
     ? t(translations.notFoundAddress[state?.type])
