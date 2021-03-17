@@ -186,6 +186,8 @@
     "blocknumberCalc": "Blocknumber Calculator"
   },
   "footer": {
+    "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
+    "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "Conflux Portal",

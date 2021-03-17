@@ -186,6 +186,8 @@
     "blocknumberCalc": "区块计算器"
   },
   "footer": {
+    "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
+    "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "Conflux Portal",

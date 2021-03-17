@@ -194,6 +194,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
         <Unknown />
         <GlobalNotify />
         <UNDEFINED />
+        <CookieTip />
       </CfxProvider>
     </BrowserRouter>
   </Context.Provider>

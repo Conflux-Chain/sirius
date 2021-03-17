@@ -46,6 +46,7 @@ import { AddressConverter } from './containers/AddressConverter';
 import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
+import { CookieTip } from './components/CookieTip';
 
 WebFontLoader.load({
   custom: {
@@ -265,6 +266,7 @@ export function App() {
             <Footer />
             <GlobalNotify />
             <GlobalStyle />
+            <CookieTip />
           </CfxProvider>
         </BrowserRouter>
       </SWRConfig>
