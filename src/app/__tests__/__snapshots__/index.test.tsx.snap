@@ -120,6 +120,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
               path="/sponsor"
             />
             <Route
+              component={[Function]}
+              exact={true}
+              path="/contract-deployment"
+            />
+            <Route
               exact={true}
               path="/sponsor/:contractAddress"
               render={[Function]}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { media } from 'styles/media';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
@@ -47,27 +46,18 @@ export function CFXTransfers() {
           content={t(translations.cfxTransfers.description)}
         />
       </Helmet>
-      <TabsTablePanelWrapper>
-        <PageHeader>{t(translations.cfxTransfers.title)}</PageHeader>
-        <TablePanel
-          url={url}
-          table={{
-            columns: columnsCFXTrasfer,
-            rowKey: () => Math.random().toString(32).substr(2),
-          }}
-          tableHeader={tip}
-        ></TablePanel>
-      </TabsTablePanelWrapper>
+      <PageHeader>{t(translations.cfxTransfers.title)}</PageHeader>
+      <TablePanel
+        url={url}
+        table={{
+          columns: columnsCFXTrasfer,
+          rowKey: () => Math.random().toString(32).substr(2),
+        }}
+        tableHeader={tip}
+      ></TablePanel>
     </>
   );
 }
-
-const TabsTablePanelWrapper = styled.div`
-  margin-top: 1.2rem;
-  ${media.s} {
-    margin-top: 2.2rem;
-  }
-`;
 
 const StyledTipLabelWrapper = styled.div`
   font-size: 1rem;

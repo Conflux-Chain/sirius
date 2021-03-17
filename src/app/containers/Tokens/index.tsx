@@ -75,33 +75,35 @@ export function Tokens() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <StyledTokensPageHeaderWrapper>
-        <PageHeader>
-          {title}
-          {!tokenType || tokenType === cfxTokenTypes.erc20 ? (
-            <Tooltip
-              hoverable
-              text={
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: t(translations.tokens.dataSource),
-                  }}
-                />
-              }
-              placement="top"
-            >
-              <IconWrapper>
-                <img src={imgInfo} alt="?" />
-              </IconWrapper>
-            </Tooltip>
-          ) : null}
-        </PageHeader>
-      </StyledTokensPageHeaderWrapper>
-      <TipLabel
-        total={total}
-        left={t(translations.tokens.tipCountBefore)}
-        right={t(translations.tokens.tipCountAfter)}
-      />
+      <PageHeader
+        subtitle={
+          <TipLabel
+            total={total}
+            left={t(translations.tokens.tipCountBefore)}
+            right={t(translations.tokens.tipCountAfter)}
+          />
+        }
+      >
+        {title}
+        {!tokenType || tokenType === cfxTokenTypes.erc20 ? (
+          <Tooltip
+            hoverable
+            text={
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: t(translations.tokens.dataSource),
+                }}
+              />
+            }
+            placement="top"
+          >
+            <IconWrapper>
+              <img src={imgInfo} alt="?" />
+            </IconWrapper>
+          </Tooltip>
+        ) : null}
+      </PageHeader>
+
       <TablePanel
         table={{
           columns: columns,
@@ -112,13 +114,6 @@ export function Tokens() {
     </>
   );
 }
-
-const StyledTokensPageHeaderWrapper = styled.div`
-  margin-top: 32px;
-  > div {
-    margin-bottom: 12px;
-  }
-`;
 
 const IconWrapper = styled.div`
   padding-left: 0.2857rem;

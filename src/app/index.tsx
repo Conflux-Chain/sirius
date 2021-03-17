@@ -23,6 +23,7 @@ import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
+import { ContractDeployment } from './containers/ContractDeployment/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { CFXTransfers } from './containers/CFXTransfers/Loadable';
@@ -184,6 +185,11 @@ export function App() {
                   }}
                 />
                 <Route exact path="/sponsor" component={Sponsor} />
+                <Route
+                  exact
+                  path="/contract-deployment"
+                  component={ContractDeployment}
+                />
                 <Route
                   exact
                   path="/sponsor/:contractAddress"
