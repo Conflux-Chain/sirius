@@ -130,7 +130,7 @@ export function AddressConverter() {
   }, []);
 
   return (
-    <StyledPageWrapper>
+    <>
       <Helmet>
         <title>{t(translations.header.addressConverter)}</title>
         <meta
@@ -282,20 +282,9 @@ export function AddressConverter() {
           </div>
         </div>
       </StyledRemarkWrapper>
-    </StyledPageWrapper>
+    </>
   );
 }
-
-const StyledPageWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding-top: 2.2857rem;
-
-  ${media.s} {
-    margin-top: 16px;
-    padding: 1.1429rem;
-  }
-`;
 
 const StyledSubtitleWrapper = styled.p`
   color: #74798c;
@@ -384,7 +373,7 @@ const StyledResultWrapper = styled.div`
   }
 `;
 const StyledRemarkWrapper = styled.div`
-  margin: 2.2857rem 0;
+  margin: 2.2857rem 0 0;
 
   .convert-address-title {
     font-size: 1.1429rem;

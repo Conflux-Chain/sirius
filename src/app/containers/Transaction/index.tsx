@@ -5,7 +5,6 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
-import { media } from '../../../styles/media';
 import { Card, Spinner } from '@cfxjs/react-ui';
 import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
@@ -617,7 +616,7 @@ export const Transaction = () => {
     : 0;
 
   return (
-    <StyledTransactionsWrapper>
+    <>
       <Helmet>
         <title>{t(translations.transaction.title)}</title>
         <meta
@@ -968,7 +967,7 @@ export const Transaction = () => {
           hash={routeHash}
         ></TableCard>
       </StyledCardWrapper>
-    </StyledTransactionsWrapper>
+    </>
   );
 };
 
@@ -1060,18 +1059,10 @@ const StyledCardWrapper = styled.div`
       height: 0;
     }
   }
-`;
-
-const StyledTransactionsWrapper = styled.div`
-  padding: 2.2857rem 0;
 
   .icon-sponsored {
     height: 1.4286rem;
     margin-left: 0.5714rem;
-  }
-
-  ${media.s} {
-    padding-bottom: 0;
   }
 `;
 

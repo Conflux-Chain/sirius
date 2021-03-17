@@ -68,6 +68,13 @@
     "viewTx": "View your transaction",
     "collapseAll": "Collapse All"
   },
+  "contractDeployment": {
+    "title": "Contract Deployment",
+    "description": "Contract Deployment",
+    "tip": "Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
+    "upload": "Upload Contract File",
+    "submit": "Submit"
+  },
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
@@ -172,6 +179,7 @@
     "contract": "Contract",
     "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
+    "contractDeployment": "Contract Deployment",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
     "more": "More",

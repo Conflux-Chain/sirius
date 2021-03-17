@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { media, useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'styles/media';
 import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
@@ -46,27 +46,18 @@ export function Blocks() {
         <meta name="description" content={t(translations.blocks.description)} />
       </Helmet>
       {bp !== 's' && <Dag />}
-      <TabsTablePanelWrapper>
-        <PageHeader>{t(translations.blocks.title)}</PageHeader>
-        <TablePanel
-          url={url}
-          table={{
-            columns: columnsBlocks,
-            rowKey: 'hash',
-          }}
-          tableHeader={tip}
-        ></TablePanel>
-      </TabsTablePanelWrapper>
+      <PageHeader>{t(translations.blocks.title)}</PageHeader>
+      <TablePanel
+        url={url}
+        table={{
+          columns: columnsBlocks,
+          rowKey: 'hash',
+        }}
+        tableHeader={tip}
+      ></TablePanel>
     </>
   );
 }
-
-const TabsTablePanelWrapper = styled.div`
-  margin-top: 1.2rem;
-  ${media.s} {
-    margin-top: 2.2rem;
-  }
-`;
 
 const StyledTipLabelWrapper = styled.div`
   font-size: 1rem;

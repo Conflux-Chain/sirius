@@ -91,60 +91,54 @@ export function Accounts() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <StyledPageWrapper>
-        <PageHeader>{title}</PageHeader>
-        <TipLabel
-          total={100}
-          left={t(translations.accounts.tipLeft, {
-            type: options[number].name,
-          })}
-          right={t(translations.accounts.tipRight, {
-            type: options[number].name,
-          })}
-        />
-        <StyledTableWrapper>
-          <StyledSelectWrapper isEn={isEn}>
-            <span className="selectLabel">
-              {t(translations.accounts.sortButtonBefore)}
-            </span>
-            <Select
-              value={number}
-              onChange={handleTypeChange}
-              disableMatchWidth
-              size="small"
-              className="btnSelectContainer"
-              variant="text"
-            >
-              {options.map((o, index) => {
-                return (
-                  <Select.Option key={o.key} value={String(index)}>
-                    {o.name}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-            <span className="selectLabel">
-              {t(translations.accounts.sortButtonAfter)}
-            </span>
-          </StyledSelectWrapper>
+      <PageHeader>{title}</PageHeader>
+      <TipLabel
+        total={100}
+        left={t(translations.accounts.tipLeft, {
+          type: options[number].name,
+        })}
+        right={t(translations.accounts.tipRight, {
+          type: options[number].name,
+        })}
+      />
+      <StyledTableWrapper>
+        <StyledSelectWrapper isEn={isEn}>
+          <span className="selectLabel">
+            {t(translations.accounts.sortButtonBefore)}
+          </span>
+          <Select
+            value={number}
+            onChange={handleTypeChange}
+            disableMatchWidth
+            size="small"
+            className="btnSelectContainer"
+            variant="text"
+          >
+            {options.map((o, index) => {
+              return (
+                <Select.Option key={o.key} value={String(index)}>
+                  {o.name}
+                </Select.Option>
+              );
+            })}
+          </Select>
+          <span className="selectLabel">
+            {t(translations.accounts.sortButtonAfter)}
+          </span>
+        </StyledSelectWrapper>
 
-          <TablePanel
-            table={{
-              columns: columns,
-              rowKey: 'base32address',
-            }}
-            pagination={false}
-            url={url}
-          />
-        </StyledTableWrapper>
-      </StyledPageWrapper>
+        <TablePanel
+          table={{
+            columns: columns,
+            rowKey: 'base32address',
+          }}
+          pagination={false}
+          url={url}
+        />
+      </StyledTableWrapper>
     </>
   );
 }
-
-const StyledPageWrapper = styled.div`
-  padding: 2.2857rem 0;
-`;
 
 const StyledTableWrapper = styled.div`
   display: flex;

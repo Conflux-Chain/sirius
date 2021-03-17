@@ -68,6 +68,13 @@
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
   },
+  "contractDeployment": {
+    "title": "合约部署",
+    "description": "合约部署",
+    "tip": "合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
+    "upload": "上传合约文件",
+    "submit": "提交"
+  },
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
@@ -172,6 +179,7 @@
     "contract": "合约",
     "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
+    "contractDeployment": "合约部署",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
     "more": "更多",

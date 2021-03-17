@@ -138,6 +138,15 @@ export const Header = memo(() => {
           href: '/contract',
         },
         {
+          // deploy
+          title: [
+            t(translations.header.contractDeployment),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.contractDeployment,
+          href: '/contract-deployment',
+        },
+        {
           // sponsor
           title: [
             t(translations.header.contractSponsor),
