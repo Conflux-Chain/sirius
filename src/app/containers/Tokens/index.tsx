@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -40,6 +40,9 @@ export function Tokens() {
 
   let title = t(translations.header.tokens20);
 
+  let sortOrder = 'desc';
+  let sortKey = 'totalPrice';
+
   if (tokenType === cfxTokenTypes.erc721) {
     columnsWidth = [1, 8, 4, 4, 5];
     columns = [
@@ -52,6 +55,7 @@ export function Tokens() {
 
     url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
     title = t(translations.header.tokens721);
+    sortKey = 'erc721TransferCount';
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
@@ -65,9 +69,34 @@ export function Tokens() {
 
     url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
     title = t(translations.header.tokens1155);
+    sortKey = 'erc1155TransferCount';
   }
 
   const { total } = useTableData(url);
+  const [queryUrl, setQueryUrl] = useState(url);
+
+  const sorter = (column, table, oldUrl) => {
+    let sortOrder = table.sortOrder === 'asc' ? 'desc' : 'asc';
+    let sortKey = column.dataIndex;
+    // deal with especial key
+    if (sortKey === 'transferCount') {
+      if (tokenType === cfxTokenTypes.erc721) {
+        sortKey = 'erc721TransferCount';
+      } else if (tokenType === cfxTokenTypes.erc1155) {
+        sortKey = 'erc1155TransferCount';
+      }
+    }
+    table.sortOrder = sortOrder;
+    table.sortKey = sortKey;
+    const newUrl = oldUrl
+      .replace(
+        /reverse=[^&]*/g,
+        sortOrder === 'asc' ? 'reverse=true' : 'reverse=false',
+      )
+      .replace(/orderBy=[^&]*/g, 'orderBy=' + sortKey);
+    console.log(newUrl);
+    setQueryUrl(newUrl);
+  };
 
   return (
     <>
@@ -106,8 +135,11 @@ export function Tokens() {
         table={{
           columns: columns,
           rowKey: 'address',
+          sorter,
+          sortOrder,
+          sortKey,
         }}
-        url={url}
+        url={queryUrl}
       />
     </>
   );

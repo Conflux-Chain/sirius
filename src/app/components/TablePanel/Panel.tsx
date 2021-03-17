@@ -13,10 +13,16 @@ import clsx from 'clsx';
 import { Placeholder } from './Placeholder';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
+export type TableType = TableProps<unknown> & {
+  sortOrder?: string; // sort order: asc / desc
+  sortKey?: string; // default sort key
+  // sort function, update url TODO more flexibility
+  sorter?: (column?: any, table?: any, url?: string) => any;
+};
 export type TablePanelType = {
   url: string;
   pagination?: PaginationProps | boolean;
-  table: TableProps<unknown>;
+  table: TableType;
   hasFilter?: boolean;
   className?: string;
   tableHeader?: React.ReactNode | Array<React.ReactNode>;
@@ -71,7 +77,7 @@ const defaultPaginationMobileConfig: PaginationProps = {
   limit: 3,
 };
 // table default config
-const defaultTableConfig: TableProps<unknown> = {
+const defaultTableConfig: TableType = {
   data: [],
   rowKey: 'key',
   columns: [],
@@ -98,7 +104,7 @@ export const TablePanel = ({
   useEffect(() => {
     total && total !== cacheTotal && setCacheTotal(total);
     /* eslint-disable-next-line */
-  }, [total]);
+  }, [total, url]);
 
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
@@ -115,7 +121,24 @@ export const TablePanel = ({
     ...paginationObject,
   };
   let tableData = table.data;
-  let tableColumns = table.columns;
+  let tableColumns = table?.columns?.map(c => {
+    if (c['sortable'] && table.sorter)
+      return {
+        ...c,
+        title: (
+          <div
+            className={`sortable`}
+            onClick={() => {
+              table.sorter!(c, table, url);
+              // TODO update className
+            }}
+          >
+            {c.title}
+          </div>
+        ),
+      };
+    return c;
+  });
   let tableRowKey = table.rowKey;
 
   // loading table
@@ -124,7 +147,7 @@ export const TablePanel = ({
       mockTableColumns,
       mockTableData,
       mockTableRowKey,
-    } = mockTableConfig(table.columns, 'skeleton');
+    } = mockTableConfig(tableColumns, 'skeleton');
 
     tableData = mockTableData;
     tableColumns = mockTableColumns;
@@ -140,7 +163,7 @@ export const TablePanel = ({
       mockTableColumns,
       mockTableData,
       mockTableRowKey,
-    } = mockTableConfig(table.columns, 'empty');
+    } = mockTableConfig(tableColumns, 'empty');
 
     tableData = mockTableData;
     tableColumns = mockTableColumns;
