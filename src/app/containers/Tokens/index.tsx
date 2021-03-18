@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -40,8 +40,8 @@ export function Tokens() {
 
   let title = t(translations.header.tokens20);
 
-  let sortOrder = 'desc';
-  let sortKey = 'totalPrice';
+  let defaultSortOrder = 'desc';
+  let defaultSortKey = 'totalPrice';
 
   if (tokenType === cfxTokenTypes.erc721) {
     columnsWidth = [1, 8, 4, 4, 5];
@@ -53,9 +53,9 @@ export function Tokens() {
       tokenColunms.contract(),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
     title = t(translations.header.tokens721);
-    sortKey = 'erc721TransferCount';
+    defaultSortKey = 'transferCount';
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
@@ -67,35 +67,51 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
     title = t(translations.header.tokens1155);
-    sortKey = 'erc1155TransferCount';
+    defaultSortKey = 'transferCount';
   }
 
-  const { total } = useTableData(url);
+  const [tableTokenType, setTableTokenType] = useState(tokenType);
   const [queryUrl, setQueryUrl] = useState(url);
+  const [tableSortOrder, setTableSortOrder] = useState(defaultSortOrder);
+  const [tableSortKey, setTableSortKey] = useState(defaultSortKey);
+  const { total } = useTableData(url);
 
-  const sorter = (column, table, oldUrl) => {
-    let sortOrder = table.sortOrder === 'asc' ? 'desc' : 'asc';
-    let sortKey = column.dataIndex;
-    // deal with especial key
-    if (sortKey === 'transferCount') {
-      if (tokenType === cfxTokenTypes.erc721) {
-        sortKey = 'erc721TransferCount';
-      } else if (tokenType === cfxTokenTypes.erc1155) {
-        sortKey = 'erc1155TransferCount';
-      }
+  useEffect(() => {
+    setQueryUrl(url);
+    // reset default sort after token type change
+    if (tableTokenType !== tokenType) {
+      setTableTokenType(tokenType);
+      setTableSortOrder(defaultSortOrder);
+      setTableSortKey(defaultSortKey);
     }
-    table.sortOrder = sortOrder;
-    table.sortKey = sortKey;
+  }, [url, tableTokenType, tokenType, defaultSortOrder, defaultSortKey]);
+
+  // deal with column sort
+  const sorter = (column, table, oldUrl) => {
+    let newSortOrder = tableSortOrder === 'asc' ? 'desc' : 'asc';
+    let urlSortKey = column.dataIndex;
+    // deal with especial key
+    // if (urlSortKey === 'transferCount') {
+    //   if (tokenType === cfxTokenTypes.erc721) {
+    //     urlSortKey = 'erc721TransferCount';
+    //   } else if (tokenType === cfxTokenTypes.erc1155) {
+    //     urlSortKey = 'erc1155TransferCount';
+    //   }
+    // }
+
+    // generate new url by replace sort params
     const newUrl = oldUrl
       .replace(
         /reverse=[^&]*/g,
-        sortOrder === 'asc' ? 'reverse=true' : 'reverse=false',
+        newSortOrder === 'desc' ? 'reverse=true' : 'reverse=false',
       )
-      .replace(/orderBy=[^&]*/g, 'orderBy=' + sortKey);
-    console.log(newUrl);
-    setQueryUrl(newUrl);
+      .replace(/orderBy=[^&]*/g, 'orderBy=' + urlSortKey);
+
+    setTableSortKey(column.dataIndex);
+    setTableSortOrder(newSortOrder);
+    if (newUrl !== oldUrl) setQueryUrl(newUrl);
   };
 
   return (
@@ -138,8 +154,8 @@ export function Tokens() {
           columns: columns,
           rowKey: 'address',
           sorter,
-          sortOrder,
-          sortKey,
+          sortOrder: tableSortOrder,
+          sortKey: tableSortKey,
         }}
         url={queryUrl}
       />
