@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 
 //sponsor faucet contract abi
 import faucetContract from './SponsorFaucet.js';
-import { cfxOld } from '../cfx';
+import { cfx } from '../cfx';
 
 //suggested factor to make sure gas is enough
 const gas_estimation_ratio_withdraw = 1.8;
@@ -32,7 +32,7 @@ class Faucet {
    * @param lastAddress The last faucet contract address
    */
   constructor(url, address, lastAddress) {
-    this.cfx = cfxOld;
+    this.cfx = cfx;
     this.provider = this.cfx.provider;
     this.address = address;
     this.lastAddress = lastAddress;

@@ -413,14 +413,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       setErrorMsgForSite('');
     }
   }
-  //TODO: modity the types of div to RreactNode
+  // TODO: modify the types of div to ReactNode
   let tabsLabelSourceCode = (
     <LabelWithIcon className="tabs">
       {/*<span className="labelIcon">*</span>*/}
       {t(translations.contract.sourceCode)}
     </LabelWithIcon>
   ) as any;
-  //TODO: modity the types of div to RreactNode
+  // TODO: modify the types of div to ReactNode
   let tabsLabelAbi = (
     <LabelWithIcon className="tabs">
       {/*<span className="labelIcon">*</span>*/}

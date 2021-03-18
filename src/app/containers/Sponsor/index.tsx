@@ -5,12 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from '../../../styles/media';
-import {
-  cfxOld,
-  faucet,
-  faucetAddress,
-  formatAddress,
-} from '../../../utils/cfx';
+import { cfx, faucet, faucetAddress, formatAddress } from '../../../utils/cfx';
 import SkelontonContainer from '../../components/SkeletonContainer';
 import { Text } from '../../components/Text/Loadable';
 import { Search as SearchComp } from '../../components/Search/Loadable';
@@ -56,21 +51,17 @@ export function Sponsor() {
   const { accounts } = usePortal();
   const getSponsorInfo = async _address => {
     setLoading(true);
-    // TODO cip-37 update
-    const hexAddress = formatAddress(_address, { hex: true });
-    // const address = formatAddress(_address, { hex: false });
-    const sponsorInfo = await cfxOld.provider.call(
-      'cfx_getSponsorInfo',
-      hexAddress,
-    );
-    const { flag } = await fetchIsAppliable(hexAddress);
+    // cip-37 compatible
+    const address = formatAddress(_address, { hex: false });
+    const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
+    const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
     if (flag) {
-      const { data } = await faucet.apply(hexAddress);
+      const { data } = await faucet.apply(address);
       setTxData(data);
     }
-    const faucetParams = await faucet.getFaucetParams(hexAddress);
-    const amountAccumulated = await faucet.getAmountAccumulated(hexAddress);
+    const faucetParams = await faucet.getFaucetParams(address);
+    const amountAccumulated = await faucet.getAmountAccumulated(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
       setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
@@ -125,9 +116,9 @@ export function Sponsor() {
     }
   };
   const fetchIsAppliable = async (_address: string) => {
-    // TODO cip-37 update
-    const hexAddress = formatAddress(_address, { hex: true });
-    const { flag, message } = await faucet.checkAppliable(hexAddress);
+    // cip-37 compatible
+    const address = formatAddress(_address);
+    const { flag, message } = await faucet.checkAppliable(address);
     if (!flag) {
       //can not apply sponsor this contract
       switch (message) {

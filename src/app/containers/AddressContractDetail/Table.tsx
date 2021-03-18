@@ -610,7 +610,7 @@ export function Table({ address, addressInfo }) {
     }
   };
 
-  // TODO change tab request multi api
+  // TODO change tab cause multi api request
 
   return (
     <TableWrap>

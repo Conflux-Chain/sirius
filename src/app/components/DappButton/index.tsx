@@ -49,7 +49,7 @@ const DappButton = ({
 }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  // TODO cip-37 portal multi version
+  // cip-37 compatible
   const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');

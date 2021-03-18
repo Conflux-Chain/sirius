@@ -140,7 +140,6 @@ export const TablePanel = ({
             }`}
             onClick={() => {
               table.sorter!(c, table, url);
-              // TODO update className
             }}
           >
             {c.title}
