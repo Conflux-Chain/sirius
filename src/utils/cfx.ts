@@ -6,7 +6,6 @@ import {
 import Faucet from './sponsorFaucet/faucet';
 import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
-const cfxUrl = window.location.origin + '/rpc'; // cip-37
 
 const isConfluxTestNet = isTestNetEnv();
 const mainNetworkId = 1029;
@@ -20,15 +19,6 @@ const cfx = new Conflux({
   // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
   // use hex address to compatible with history function
   // useHexAddressInParameter: true,
-});
-
-const cfxOld = new Conflux({
-  url: cfxUrl,
-  networkId,
-  // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
-  // use hex address to compatible with history function
-  // cip-37
-  useHexAddressInParameter: true,
 });
 
 cfx.getClientVersion().then(v => {
@@ -146,7 +136,7 @@ const contractManagerAddress = isConfluxTestNet
   ? testnetContractManagerAddress
   : mainnetContractManagerAddress;
 
-const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
+const faucet = new Faucet(cfxUrlV2, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
@@ -155,7 +145,6 @@ export const decodeContract = ({ abi, address, transacionData }) => {
 
 export {
   cfx,
-  cfxOld,
   formatAddress,
   faucetAddress,
   faucet,
