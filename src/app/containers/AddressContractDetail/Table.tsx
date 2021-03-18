@@ -66,6 +66,8 @@ function ContractSourceCodeAbi({ contractInfo }) {
       });
     }
   };
+
+  // init contract object by abi and address
   const contract = cfx.Contract({
     abi: abiJson,
     address,

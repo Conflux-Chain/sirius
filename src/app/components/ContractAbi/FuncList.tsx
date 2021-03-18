@@ -63,7 +63,7 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
             data.map((item, index) => (
               <Panel
                 header={`${index + 1}. ${item['name']}`}
-                key={`${index}-${item['name']}`}
+                key={`${type}-${index}-${item['name']}`}
                 className="panelContainer"
               >
                 <Func
@@ -71,8 +71,8 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
                   type={type}
                   contractAddress={contractAddress}
                   contract={contract}
-                  key={`${index}-func-${item['name'] || index}`}
-                ></Func>
+                  key={`${type}-${index}-func-${item['name'] || index}`}
+                />
               </Panel>
             ))}
         </Collapse>
