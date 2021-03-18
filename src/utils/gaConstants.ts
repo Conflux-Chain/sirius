@@ -114,4 +114,11 @@ export const ScanEvent = {
       changeNet: 'change_net', // event label === net
     },
   },
+  // all function
+  function: {
+    category: 'function',
+    action: {
+      tokenTableSort: 'token_table_sort', // event label === tokenType_sortKey_sortOrder
+    },
+  },
 };

@@ -15,6 +15,8 @@ import { cfxTokenTypes } from '../../../utils/constants';
 import queryString from 'query-string';
 
 import imgInfo from 'images/info.svg';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface RouteParams {
   tokenType: string;
@@ -111,7 +113,14 @@ export function Tokens() {
 
     setTableSortKey(column.dataIndex);
     setTableSortOrder(newSortOrder);
-    if (newUrl !== oldUrl) setQueryUrl(newUrl);
+    if (newUrl !== oldUrl) {
+      setQueryUrl(newUrl);
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.tokenTableSort,
+        label: `${tokenType}_${column.dataIndex}_${newSortOrder}`,
+      });
+    }
   };
 
   return (
