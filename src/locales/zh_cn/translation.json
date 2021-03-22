@@ -37,9 +37,7 @@
     "invalidIconSize": "图片过大，请重试",
     "errorTokenICon": "非 ERC20 合约，代币图标不可上传",
     "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
-    "importJsonFile": "导入 Json 文件",
-    "invalidJsonFile": "无效 Json 文件，请重试",
-    "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
+    "invalidJsonAbi": "无法解析 JSON 文件中的有效 ABI，请重试",
     "abiNotUploaded": "没有上传 ABI",
     "abiError": "ABI 错误",
     "readContract": "读取合约",
@@ -288,6 +286,9 @@
     }
   },
   "general": {
+    "invalidBytecode": "无效的 bytecode",
+    "invalidJsonFile": "无效 JSON 文件",
+    "importJsonFile": "导入 JSON 文件",
     "showLess": "收起",
     "viewMore": "查看更多",
     "viewAll": "查看全部",
@@ -770,7 +771,8 @@
         "102": "合约编辑",
         "103": "写合约",
         "104": "读合约",
-        "105": "Sponsor 应用"
+        "105": "Sponsor 应用",
+        "106": "合约部署"
       }
     },
     "tip": "请先连接 ConfluxPortal 钱包！"

@@ -37,9 +37,7 @@
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
     "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or creator of the contract.",
-    "importJsonFile": "Import Json file(s)",
-    "invalidJsonFile": "Invaild Json file, please try again.",
-    "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
+    "invalidJsonAbi": "Unable to parse the valid ABI in the JSON file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
     "abiError": "ABI error",
     "readContract": "Read Contract",
@@ -288,6 +286,9 @@
     }
   },
   "general": {
+    "invalidBytecode": "Invaild bytecode",
+    "invalidJsonFile": "Invaild JSON file",
+    "importJsonFile": "Import JSON file",
     "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
@@ -770,7 +771,8 @@
         "102": "Contract Edit",
         "103": "Write contract",
         "104": "read contract",
-        "105": "Sponsor application"
+        "105": "Sponsor application",
+        "106": "Contract Deployment"
       }
     },
     "tip": "Please connect to ConfluxPortal first!"

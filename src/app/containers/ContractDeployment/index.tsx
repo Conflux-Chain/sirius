@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
+import 'styles/antd.custom.css';
+import styled from 'styled-components/macro';
+import { DappButton } from '../../components/DappButton/Loadable';
+import { TxnAction } from 'utils/constants';
+import { ContractInfo } from './ContractInfo';
 
 export function ContractDeployment() {
   const { t } = useTranslation();
+  const [contractInfo, setContractInfo] = useState({ bytecode: '' });
+
+  const txData = contractInfo.bytecode;
+
+  const handleContractInfoChange = info => {
+    setContractInfo(info);
+  };
+
+  // const handleSuccess = txnHash => {};
+
   return (
     <>
       <Helmet>
@@ -18,7 +33,20 @@ export function ContractDeployment() {
       <PageHeader subtitle={t(translations.contractDeployment.tip)}>
         {t(translations.contractDeployment.title)}
       </PageHeader>
-      <div style={{ border: '1px solid red' }}>xxxx</div>
+      <ContractInfo onChange={handleContractInfoChange}></ContractInfo>
+      <StyledButtonWrapper>
+        <DappButton
+          contractAddress=""
+          data={txData}
+          btnDisabled={!contractInfo.bytecode}
+          txnAction={TxnAction.contractDeplpy}
+          // successCallback={handleSuccess}
+        ></DappButton>
+      </StyledButtonWrapper>
     </>
   );
 }
+
+const StyledButtonWrapper = styled.div`
+  padding: 24px 0;
+`;

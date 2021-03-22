@@ -68,7 +68,8 @@ const DappButton = ({
     if (!btnDisabled) {
       const txParams = {
         from: formatAddress(accounts[0]),
-        to: formatAddress(contractAddress),
+        // txn may create contract, need params 'to' to be undefined
+        to: contractAddress ? formatAddress(contractAddress) : undefined,
         data,
       };
       //loading

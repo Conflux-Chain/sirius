@@ -336,7 +336,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             }
           }
         } catch (error) {
-          setMessage({ text: t('contract.invalidJsonFile'), color: 'error' });
+          setMessage({ text: t('general.invalidJsonFile'), color: 'error' });
         }
       };
       reader.readAsText(file);
@@ -602,7 +602,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             onChange={handleJsonChange}
           />
           <span className="text" onClick={importClick}>
-            {t(translations.contract.importJsonFile)}
+            {t(translations.general.importJsonFile)}
           </span>
         </div>
         <Tabs initialValue="1">
