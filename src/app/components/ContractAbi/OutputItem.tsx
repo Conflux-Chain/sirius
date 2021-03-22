@@ -54,9 +54,6 @@ const OutputItem = ({ output, value }: Props) => {
       );
     } else if (type.startsWith('tuple')) {
       try {
-        console.log(output);
-        console.log(value);
-        console.log(valueCoder(output));
         valueComp = (
           <span className="value">
             {value && value.toObject()

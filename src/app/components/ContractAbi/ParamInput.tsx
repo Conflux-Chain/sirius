@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
-import { Text } from '../Text/Loadable';
 
 interface ParamInputProps {
   value?: object;
@@ -95,34 +94,21 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
   const getTupleFormat = input => {
     try {
       let coder = valueCoder(input);
-      console.log(coder);
       let returnName = coder?.names.join(',') || '-';
       let returnType = coder?.type || '-';
 
       return (
-        <Text
-          span
-          hoverValue={
-            <span
-              className="inputComp-tip"
-              dangerouslySetInnerHTML={{
-                __html: t(translations.contract.tupleTips),
-              }}
-            />
-          }
-        >
-          <span
-            className="inputComp-format"
-            dangerouslySetInnerHTML={{
-              __html: t(translations.contract.tupleFormat, {
-                type: input['internalType'] || 'tuple',
-                params: `(${returnName})`,
-                paramsObject: JSON.stringify(CodersToObject(coder)[coder.name]),
-                paramsArray: returnType.replace(/\(/g, '[').replace(/\)/g, ']'),
-              }),
-            }}
-          />
-        </Text>
+        <span
+          className="inputComp-format"
+          dangerouslySetInnerHTML={{
+            __html: t(translations.contract.tupleFormat, {
+              type: input['internalType'] || 'tuple',
+              params: `(${returnName})`,
+              paramsObject: JSON.stringify(CodersToObject(coder)[coder.name]),
+              paramsArray: returnType.replace(/\(/g, '[').replace(/\)/g, ']'),
+            }),
+          }}
+        />
       );
     } catch (e) {
       console.error(e);
