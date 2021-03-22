@@ -85,6 +85,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       } else if (value['type'].startsWith('byte')) {
         value['val'] = Buffer.from(value['val'].substr(2), 'hex');
+      } else if (value['type'].startsWith('tuple')) {
+        value['val'] = JSON.parse(value['val']);
       } else if (value['type'].endsWith('[]')) {
         // array: convert to array
         value['val'] = Array.from(JSON.parse(value['val']));
@@ -188,9 +190,15 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       // tuple
       // TODO tuple or tuple[] support
       if (type.startsWith('tuple')) {
-        return Promise.reject(
-          t(translations.contract.error.notSupport, { type }),
-        );
+        // return Promise.reject(
+        //   t(translations.contract.error.notSupport, { type }),
+        // );
+        try {
+          JSON.parse(val);
+          return Promise.resolve();
+        } catch {
+          return Promise.reject(t(translations.contract.error.tuple, { type }));
+        }
       }
 
       // array
@@ -303,6 +311,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                       key={inputItem.name + index}
                     /> */}
                     <ParamInput
+                      input={inputItem}
                       type={inputItem.type}
                       key={inputItem.name + index}
                     />
