@@ -129,15 +129,6 @@ export const Header = memo(() => {
       matched: contractMatched,
       children: [
         {
-          // create contract
-          title: [
-            t(translations.header.contractCreation),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.contractReg,
-          href: '/contract',
-        },
-        {
           // deploy
           title: [
             t(translations.header.contractDeployment),
@@ -145,6 +136,15 @@ export const Header = memo(() => {
           ],
           name: ScanEvent.menu.action.contractDeployment,
           href: '/contract-deployment',
+        },
+        {
+          // create contract
+          title: [
+            t(translations.header.contractCreation),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.contractReg,
+          href: '/contract',
         },
         {
           // sponsor

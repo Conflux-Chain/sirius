@@ -73,7 +73,12 @@
     "description": "合约部署",
     "tip": "合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
     "upload": "上传合约文件",
-    "submit": "提交"
+    "submit": "提交",
+    "notice": {
+      "first": "1. 合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
+      "second": "2. 仅支持 ConfluxStudio，cfxtruffle ，remix 编译后的 .json 文件导入；同时支持手动拷贝 bytecode （必填）和 ABI （选填）。",
+      "third": "3. 您可以点击页面右上角的账户，在您的账户交易历史中以查看合约部署详情。"
+    }
   },
   "contractDetail": {
     "title": "合约详情",
@@ -286,7 +291,9 @@
     }
   },
   "general": {
+    "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
+    "invalidABI": "无效的 ABI",
     "invalidJsonFile": "无效 JSON 文件",
     "importJsonFile": "导入 JSON 文件",
     "showLess": "收起",
@@ -481,9 +488,9 @@
     "availGas": "基金会剩余可提供燃气费",
     "connectToApply": "申请",
     "notice": "说明",
-    "noticeFirst": "基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
-    "noticeSecond": "申请前需要链接 ConfluxPortal，连接完成后点击申请即可获得赞助。",
-    "noticeFourthOne": "若您的浏览器中尚未安装 ConfluxPortal，请进入",
+    "noticeFirst": "1. 基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
+    "noticeSecond": "2. 申请前需要链接 ConfluxPortal，连接完成后点击申请即可获得赞助。",
+    "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
     "noticeFourthTwo": "下载。",
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",

@@ -73,7 +73,12 @@
     "description": "Contract Deployment",
     "tip": "Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
     "upload": "Upload Contract File",
-    "submit": "Submit"
+    "submit": "Submit",
+    "notice": {
+      "first": "1. Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
+      "second": "2. Only ConfluxStudio, cfxtruffle, remix-compiled .json file imports are supported, and manual copy bytecode (required) and ABI (optional) are supported.",
+      "third": "3. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
+    }
   },
   "contractDetail": {
     "title": "Contract Detail",
@@ -286,7 +291,9 @@
     }
   },
   "general": {
+    "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
+    "invalidABI": "Invaild ABI",
     "invalidJsonFile": "Invaild JSON file",
     "importJsonFile": "Import JSON file",
     "showLess": "Show Less",
@@ -480,10 +487,9 @@
     "availStorage": "Remaining Storage Fees By Conflux Foundation",
     "availGas": "Remaining Gas Fees By Conflux Foundation",
     "connectToApply": "Apply",
-    "notice": "Remark",
-    "noticeFirst": "Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
-    "noticeSecond": "To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",
-    "noticeFourthOne": "If you don't have ConfluxPortal as a browser extension installed yet, please visit",
+    "noticeFirst": "1. Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
+    "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",
+    "noticeFourthOne": "3. If you don't have ConfluxPortal as a browser extension installed yet, please visit",
     "noticeFourthTwo": "for instructions.",
     "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
     "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",

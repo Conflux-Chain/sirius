@@ -410,6 +410,8 @@ export const Transaction = () => {
         // find batch transfers
         const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
           trans =>
+            trans.transferType === transfer.transferType &&
+            trans.address === transfer.address &&
             trans.transactionHash === transfer.transactionHash &&
             trans.from === transfer.from &&
             trans.to === transfer.to,

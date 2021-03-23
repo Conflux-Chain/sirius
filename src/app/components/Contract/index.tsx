@@ -35,6 +35,8 @@ import { useMessages } from '@cfxjs/react-ui';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
+import { PageHeader } from '../../components/PageHeader/Loadable';
+
 interface Props {
   contractDetail: any;
   type: string;
@@ -432,7 +434,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   };
   return (
     <Wrapper>
-      <Header>{title}</Header>
+      <PageHeader>{title}</PageHeader>
       <TopContainer>
         <div className="bodyContainer first">
           <div className="lineContainer">
@@ -677,7 +679,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
 };
 const Wrapper = styled.div`
   background: #f5f6fa;
-  padding-bottom: 8.3571rem;
+
   .inputComp {
     background-color: #fafbfc;
     .input-wrapper {
@@ -747,18 +749,7 @@ const Wrapper = styled.div`
     }
   }
 `;
-const Header = styled.div`
-  color: #1a1a1a;
-  font-weight: bold;
-  padding-top: 2.2857rem;
-  margin-bottom: 1.7143rem;
-  font-size: 1.7143rem;
-  ${media.s} {
-    padding-top: 1rem;
-    margin-bottom: 1.6667rem;
-    font-size: 1.5rem;
-  }
-`;
+
 const LabelWithIcon = styled.div`
   display: inline-block;
   position: relative;
