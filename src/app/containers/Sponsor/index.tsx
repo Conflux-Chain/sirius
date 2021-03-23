@@ -16,6 +16,8 @@ import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from '../../components/AddressContainer';
 import { TxnAction } from '../../../utils/constants';
+import { Remark } from '../../components/Remark';
+import { PageHeader } from '../../components/PageHeader/Loadable';
 
 interface RouteParams {
   contractAddress: string;
@@ -194,7 +196,7 @@ export function Sponsor() {
         />
       </Helmet>
       <Wrapper>
-        <Header>{t(translations.sponsor.title)}</Header>
+        <PageHeader>{t(translations.sponsor.title)}</PageHeader>
         <SearchContainer>
           <SearchComp
             outerClassname="outerContainer"
@@ -385,13 +387,13 @@ export function Sponsor() {
               : errorMsgForApply}
           </span>
         </ErrorMsgContainer>
-        <NoticeContainer>
-          <div className="title">{t(translations.sponsor.notice)}:</div>
-          <div className="content">
-            <div>1. {t(translations.sponsor.noticeFirst)}</div>
-            <div>2. {t(translations.sponsor.noticeSecond)}</div>
-            <div>
-              3. {t(translations.sponsor.noticeFourthOne)} &nbsp;
+        <Remark
+          items={[
+            t(translations.sponsor.noticeFirst),
+            t(translations.sponsor.noticeSecond),
+            <span>
+              {t(translations.sponsor.noticeFourthOne)}
+              &nbsp;
               <a
                 href="https://portal.conflux-chain.org/"
                 target="_blank"
@@ -400,15 +402,16 @@ export function Sponsor() {
                 https://portal.conflux-chain.org/
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
-            </div>
-          </div>
-        </NoticeContainer>
+            </span>,
+          ]}
+        ></Remark>
       </Wrapper>
     </>
   );
 }
 const Wrapper = styled.div`
-  padding-bottom: 3.5714rem;
+  padding-bottom: 1.7143rem;
+
   .modalContainer {
     display: flex;
     justify-content: center;
@@ -430,18 +433,7 @@ const Wrapper = styled.div`
     display: none;
   }
 `;
-const Header = styled.div`
-  color: #1a1a1a;
-  font-weight: bold;
-  padding-top: 2.2857rem;
-  margin-bottom: 1.7143rem;
-  font-size: 1.7143rem;
-  ${media.s} {
-    padding-top: 1rem;
-    margin-bottom: 1.6667rem;
-    font-size: 1.5rem;
-  }
-`;
+
 const SearchContainer = styled.div`
   display: inline-block;
   width: 28.5714rem;
@@ -598,7 +590,7 @@ const BlockContainer = styled.div`
   }
 `;
 const ApplyContainer = styled.div`
-  margin-top: 1.7143rem;
+  margin: 1.7143rem 0;
 `;
 const ErrorMsgContainer = styled.div`
   margin-top: 0.5714rem;
@@ -613,20 +605,5 @@ const ErrorMsgContainer = styled.div`
     font-size: 1rem;
     font-weight: normal;
     color: #fa953c;
-  }
-`;
-const NoticeContainer = styled.div`
-  margin-top: 3.2857rem;
-  .title {
-    font-size: 1.1429rem;
-    font-weight: bold;
-    color: #1a1a1a;
-  }
-  .content {
-    margin-top: 0.8571rem;
-    font-weight: normal;
-    color: #7e8598;
-    line-height: 1.5714rem;
-    font-size: 1rem;
   }
 `;

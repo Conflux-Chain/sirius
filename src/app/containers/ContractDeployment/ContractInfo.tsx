@@ -16,15 +16,23 @@ const AceEditorStyle = {
   opacity: 0.62,
 };
 
-const checkAbi = abi => {
-  return abi && typeof abi === 'object';
+export const checkAbi = abi => {
+  let valid = true;
+  try {
+    abi && JSON.parse(abi);
+  } catch (e) {
+    valid = false;
+  }
+  return valid;
 };
 const checkBytecode = bytecode => {
-  return (
-    bytecode &&
-    typeof bytecode === 'string' &&
-    (bytecode.startsWith('0x6080') || bytecode.startsWith('6080'))
-  );
+  const reg = /^(0[x])?[0-9a-fA-F]+$/;
+  return reg.test(bytecode);
+};
+
+// add 0x for common
+const addOx = bytecode => {
+  return bytecode && bytecode.startsWith('0x') ? bytecode : `0x${bytecode}`;
 };
 
 // @TODO may intergration with contract registration later
@@ -35,7 +43,7 @@ export const ContractInfo = ({ onChange }) => {
   const [, setMessage] = useMessages();
   const { t } = useTranslation();
 
-  const invalidJsonFile = t(translations.general.invalidJsonFile);
+  const textOfInvalidJsonFile = t(translations.general.invalidJsonFile);
 
   const handleBytecodeChange = code => {
     if (code) {
@@ -44,23 +52,27 @@ export const ContractInfo = ({ onChange }) => {
       try {
         // handle copied bytecode from Remix
         const json = JSON.parse(code.trim());
-
-        if (checkBytecode(json.object)) {
-          bytecode = json.object;
-        } else {
-          setMessage({
-            text: invalidJsonFile,
-            color: 'error',
-          });
-        }
+        bytecode = json.object;
       } catch (e) {
         // other bytecode string, may from ConfluxStudio or CFXTruffle
         bytecode = code.trim();
       }
-      setBytecode(`0x${bytecode}`);
+      if (!checkBytecode(bytecode)) {
+        setMessage({
+          text: t(translations.general.invalidBytecode),
+          color: 'error',
+        });
+      }
+      setBytecode(addOx(bytecode));
     }
   };
   const handleABIChange = code => {
+    if (!checkAbi(code)) {
+      setMessage({
+        text: t(translations.general.invalidABI),
+        color: 'error',
+      });
+    }
     setABI(code);
   };
 
@@ -70,20 +82,18 @@ export const ContractInfo = ({ onChange }) => {
 
   const handleFileChange = data => {
     try {
-      const abi = data.abi;
+      const abi = JSON.stringify(data.abi, null, '\t');
       let bytecode = data.bytecode || data.data?.bytecode?.object;
-      bytecode =
-        bytecode && bytecode.startsWith('0x') ? bytecode : `0x${bytecode}`;
 
       if (checkAbi(abi) && checkBytecode(bytecode)) {
-        setABI(JSON.stringify(abi, null, '\t'));
-        setBytecode(bytecode);
+        setABI(abi);
+        setBytecode(addOx(bytecode));
       } else {
-        throw new Error(invalidJsonFile);
+        throw new Error(textOfInvalidJsonFile);
       }
     } catch (e) {
       setMessage({
-        text: invalidJsonFile,
+        text: textOfInvalidJsonFile,
         color: 'error',
       });
     }
@@ -91,16 +101,22 @@ export const ContractInfo = ({ onChange }) => {
 
   const handleFileError = () => {
     setMessage({
-      text: invalidJsonFile,
+      text: textOfInvalidJsonFile,
       color: 'error',
     });
   };
 
   useEffect(() => {
-    onChange({
-      abi: ABI,
-      bytecode,
-    });
+    let info: {
+      bytecode: string;
+      abi: string;
+    } = { bytecode: '', abi: '' };
+    if (checkBytecode(bytecode) && checkAbi(ABI)) {
+      info.bytecode = bytecode;
+      info.abi = ABI;
+    }
+
+    onChange(info);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ABI, bytecode]);
 
@@ -118,12 +134,13 @@ export const ContractInfo = ({ onChange }) => {
         <Card className="contract-info-card">
           <StyledLabelWrapper required>bytecode</StyledLabelWrapper>
           <AceEditor
-            mode="json"
+            mode="text"
             style={AceEditorStyle}
             theme="github"
             name="UNIQUE_ID_OF_DIV"
             setOptions={{
               wrap: true,
+              indentedSoftWrap: false,
             }}
             fontSize="1rem"
             showGutter={false}
@@ -156,15 +173,15 @@ const StyledContentWrapper = styled.div`
   position: relative;
 
   .card.contract-info-card {
-    padding-bottom: 18px;
+    padding-bottom: 1.2857rem;
   }
 
   .link {
     color: #1e3de4;
     font-weight: 500;
-    line-height: 18px;
+    line-height: 1.2857rem;
     text-align: right;
-    padding-bottom: 12px;
+    padding-bottom: 0.8571rem;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -173,12 +190,12 @@ const StyledContentWrapper = styled.div`
 const StyledLabelWrapper = styled.div<{
   required?: boolean;
 }>`
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 500;
   color: #0b132e;
-  line-height: 18px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e8e9ea;
+  line-height: 1.2857rem;
+  padding: 0.8571rem 0;
+  border-bottom: 0.0714rem solid #e8e9ea;
 
   &::before {
     content: '*';
