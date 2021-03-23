@@ -8,6 +8,7 @@ import styled from 'styled-components/macro';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { TxnAction } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
+import { Remark } from '../../components/Remark';
 
 export function ContractDeployment() {
   const { t } = useTranslation();
@@ -19,8 +20,6 @@ export function ContractDeployment() {
     setContractInfo(info);
   };
 
-  // const handleSuccess = txnHash => {};
-
   return (
     <>
       <Helmet>
@@ -30,23 +29,39 @@ export function ContractDeployment() {
           content={t(translations.contractDeployment.description)}
         />
       </Helmet>
-      <PageHeader subtitle={t(translations.contractDeployment.tip)}>
-        {t(translations.contractDeployment.title)}
-      </PageHeader>
-      <ContractInfo onChange={handleContractInfoChange}></ContractInfo>
+      <PageHeader>{t(translations.contractDeployment.title)}</PageHeader>
+      <StyledContractInfoWrapper>
+        <ContractInfo onChange={handleContractInfoChange}></ContractInfo>
+      </StyledContractInfoWrapper>
       <StyledButtonWrapper>
         <DappButton
           contractAddress=""
           data={txData}
           btnDisabled={!contractInfo.bytecode}
           txnAction={TxnAction.contractDeplpy}
-          // successCallback={handleSuccess}
         ></DappButton>
       </StyledButtonWrapper>
+      <StyledRemarkWrapper>
+        <Remark
+          items={[
+            t(translations.contractDeployment.notice.first),
+            t(translations.contractDeployment.notice.second),
+            t(translations.contractDeployment.notice.third),
+          ]}
+        ></Remark>
+      </StyledRemarkWrapper>
     </>
   );
 }
 
 const StyledButtonWrapper = styled.div`
-  padding: 24px 0;
+  margin: 1.7143rem 0;
+`;
+
+const StyledRemarkWrapper = styled.div`
+  margin-bottom: 1.7143rem;
+`;
+
+const StyledContractInfoWrapper = styled.div`
+  margin-top: -28px;
 `;
