@@ -37,9 +37,7 @@
     "invalidIconSize": "图片过大，请重试",
     "errorTokenICon": "非 ERC20 合约，代币图标不可上传",
     "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
-    "importJsonFile": "导入 Json 文件",
-    "invalidJsonFile": "无效 Json 文件，请重试",
-    "invalidJsonAbi": "无法解析 Json 文件中的有效 ABI，请重试",
+    "invalidJsonAbi": "无法解析 JSON 文件中的有效 ABI，请重试",
     "abiNotUploaded": "没有上传 ABI",
     "abiError": "ABI 错误",
     "readContract": "读取合约",
@@ -58,15 +56,24 @@
       "bytesM": "请输入以 0x 开头的 长度为{{length}} 的十六进制字节数组",
       "cfx": "请输入小数位数不超过18位的非负数字",
       "array": "请输入有效的 {{type}} 数组，用中括号包裹",
-      "tuple": "请输入有效的元组",
+      "tuple": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）",
       "notSupport": "{{type}} 即将支持，敬请期待",
       "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
       "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"
     },
+    "tupleFormat": "元组类型：<code>{{type}}</code><br />参数名称：<code>{{params}}</code><br />元组参数数组：<code>{{paramsArray}}</code><br />元组参数对象：<code>{{paramsObject}}</code>",
+    "tupleTips": "提示：可以参考 <code>元组参数数组</code> 或 <code>元组参数对象</code> 进行元组参数输入。<br />元组输入格式应为合法并符合参数顺序和格式的 <code>JSON 数组或对象</code>，例如：元组声明为 <code>{ uint num; string str; }</code>，则元组输入格式应为：<code>[1, \"text\"]</code> 或 <code>{ \"num\": 1, \"str\": \"text\" }</code>。<br />对于嵌套的元组，输入格式应为合法并符合参数顺序和格式的 <code>嵌套的 JSON 数组或对象</code>，例如：元组声明为 <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>，则元组 B 输入格式应为：<code>[1, [\"Tom\", 28]]</code> 或 <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>。",
     "query": "读取",
     "write": "写入",
     "viewTx": "查看交易",
     "collapseAll": "全部折叠"
+  },
+  "contractDeployment": {
+    "title": "合约部署",
+    "description": "合约部署",
+    "tip": "合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
+    "upload": "上传合约文件",
+    "submit": "提交"
   },
   "contractDetail": {
     "title": "合约详情",
@@ -94,17 +101,25 @@
     "lockedDetailUnlockTime": "预计解锁时间",
     "viewLockedDetails": "点击查看锁定历史"
   },
-  "blocksAndTransactions": {
-    "title": "出块和交易",
-    "description": "出块和交易",
+  "blocks": {
+    "title": "区块",
+    "description": "区块",
     "tipCountBefore": "共计",
-    "tipCountAfter": "个{{type}}",
-    "labelCountBefore": "共计",
-    "labelCountAfter": "个 {{type}} ",
-    "blocks": "区块",
-    "transactions": "交易",
-    "latestBlocks": "最新区块",
+    "tipCountAfter": "个区块",
+    "latestBlocks": "最新区块"
+  },
+  "transactions": {
+    "title": "交易",
+    "description": "交易",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个交易",
     "latestTransactions": "最新交易"
+  },
+  "cfxTransfers": {
+    "title": "CFX 转移",
+    "description": "CFX 转移",
+    "tipCountBefore": "共计",
+    "tipCountAfter": "个 CFX 转移"
   },
   "tokens": {
     "title": "代币",
@@ -152,6 +167,9 @@
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
+    "block": "区块",
+    "txn": "交易",
+    "cfxTransfers": "CFX 转移",
     "blockchain": "区块链",
     "accounts": "账户",
     "tokens": "代币",
@@ -161,6 +179,7 @@
     "contract": "合约",
     "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
+    "contractDeployment": "合约部署",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
     "more": "更多",
@@ -175,6 +194,8 @@
     "blocknumberCalc": "区块计算器"
   },
   "footer": {
+    "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
+    "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "Conflux Portal",
@@ -265,10 +286,14 @@
     }
   },
   "general": {
+    "invalidBytecode": "无效的 bytecode",
+    "invalidJsonFile": "无效 JSON 文件",
+    "importJsonFile": "导入 JSON 文件",
     "showLess": "收起",
     "viewMore": "查看更多",
     "viewAll": "查看全部",
-    "viewAllBlocksAndTxs": "查看所有区块&交易",
+    "viewAllBlocks": "查看全部区块",
+    "viewAllTxns": "查看全部交易",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
@@ -615,12 +640,12 @@
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
-      "2. ConfluxPortal 将与2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次Portal升级为全面适配 CIP-37",
+      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. ConfluxPortal 将与2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次Portal升级为全面适配 CIP-37",
+      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "link": "https://forum.conflux.fun/t/topic/5386",
@@ -746,7 +771,8 @@
         "102": "合约编辑",
         "103": "写合约",
         "104": "读合约",
-        "105": "Sponsor 应用"
+        "105": "Sponsor 应用",
+        "106": "合约部署"
       }
     },
     "tip": "请先连接 ConfluxPortal 钱包！"

@@ -23,7 +23,10 @@ import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
-import { BlocksAndTransactions } from './containers/BlocksAndTransactions/Loadable';
+import { ContractDeployment } from './containers/ContractDeployment/Loadable';
+import { Blocks } from './containers/Blocks/Loadable';
+import { Transactions } from './containers/Transactions/Loadable';
+import { CFXTransfers } from './containers/CFXTransfers/Loadable';
 import { NotFoundPage } from './containers/NotFoundPage/Loadable';
 import { NotFoundAddressPage } from './containers/NotFoundAddressPage/Loadable';
 import { PackingPage } from './containers/PackingPage/Loadable';
@@ -44,6 +47,7 @@ import { AddressConverter } from './containers/AddressConverter';
 import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
+import { CookieTip } from './components/CookieTip';
 
 WebFontLoader.load({
   custom: {
@@ -148,17 +152,26 @@ export function App() {
                     return <TokenDetail {...routeProps} />;
                   }}
                 />
+                {/* compatible for previous user bookmark */}
                 <Route
                   exact
-                  path={['/blocks-and-transactions', '/blockchain']}
-                  render={() => (
-                    <Redirect to="/blockchain/blocks-and-transactions" />
-                  )}
+                  path={[
+                    '/blocks-and-transactions',
+                    '/blockchain',
+                    '/blockchain/blocks-and-transactions',
+                  ]}
+                  render={() => <Redirect to="/blockchain/blocks" />}
+                />
+                <Route exact path="/blockchain/blocks" component={Blocks} />
+                <Route
+                  exact
+                  path="/blockchain/transactions"
+                  component={Transactions}
                 />
                 <Route
                   exact
-                  path="/blockchain/blocks-and-transactions"
-                  component={BlocksAndTransactions}
+                  path="/blockchain/cfx-transfers"
+                  component={CFXTransfers}
                 />
                 <Route exact path="/blockchain/accounts" component={Accounts} />
                 <Route exact path="/tokens" component={Tokens} />
@@ -172,6 +185,11 @@ export function App() {
                   }}
                 />
                 <Route exact path="/sponsor" component={Sponsor} />
+                <Route
+                  exact
+                  path="/contract-deployment"
+                  component={ContractDeployment}
+                />
                 <Route
                   exact
                   path="/sponsor/:contractAddress"
@@ -254,6 +272,7 @@ export function App() {
             <Footer />
             <GlobalNotify />
             <GlobalStyle />
+            <CookieTip />
           </CfxProvider>
         </BrowserRouter>
       </SWRConfig>

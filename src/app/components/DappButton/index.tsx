@@ -49,7 +49,7 @@ const DappButton = ({
 }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  // TODO cip-37 portal multi version
+  // cip-37 compatible
   const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -68,7 +68,8 @@ const DappButton = ({
     if (!btnDisabled) {
       const txParams = {
         from: formatAddress(accounts[0]),
-        to: formatAddress(contractAddress),
+        // txn may create contract, need params 'to' to be undefined
+        to: contractAddress ? formatAddress(contractAddress) : undefined,
         data,
       };
       //loading

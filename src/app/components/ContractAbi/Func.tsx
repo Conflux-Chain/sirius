@@ -20,7 +20,6 @@ import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-
 import {
   isAddress,
   checkInt,
@@ -32,6 +31,7 @@ import {
 import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
+import { formatType } from 'js-conflux-sdk/src/contract/abi';
 
 interface FuncProps {
   type?: string;
@@ -85,17 +85,26 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       } else if (value['type'].startsWith('byte')) {
         value['val'] = Buffer.from(value['val'].substr(2), 'hex');
+      } else if (value['type'].startsWith('tuple')) {
+        value['val'] = JSON.parse(value['val']);
       } else if (value['type'].endsWith('[]')) {
         // array: convert to array
         value['val'] = Array.from(JSON.parse(value['val']));
       }
       objValues.push(value['val']);
     });
+
+    // use full name to evoke contract function for override function compatible
+    const fullNameWithType = formatType({
+      name: data['name'],
+      inputs: data['inputs'],
+    });
+
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[data['name']](...objValues);
+          const res = await contract[fullNameWithType](...objValues);
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
@@ -130,7 +139,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           }
           setOutputError('');
           try {
-            const { data: txData } = contract[data['name']](...objParams);
+            const { data: txData } = contract[fullNameWithType](...objParams);
             txParams['data'] = txData;
           } catch (error) {
             setOutputError(error.message || '');
@@ -181,9 +190,15 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
       // tuple
       // TODO tuple or tuple[] support
       if (type.startsWith('tuple')) {
-        return Promise.reject(
-          t(translations.contract.error.notSupport, { type }),
-        );
+        // return Promise.reject(
+        //   t(translations.contract.error.notSupport, { type }),
+        // );
+        try {
+          JSON.parse(val);
+          return Promise.resolve();
+        } catch {
+          return Promise.reject(t(translations.contract.error.tuple, { type }));
+        }
       }
 
       // array
@@ -284,10 +299,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           {inputsLength > 0
             ? inputs.map((inputItem, index) => (
                 <>
-                  <ParamTitle
-                    name={inputItem.name}
-                    type={inputItem.type}
-                  ></ParamTitle>
+                  <ParamTitle name={inputItem.name} type={inputItem.type} />
                   <Form.Item
                     name={inputItem.name}
                     rules={[{ validator: getValidator(inputItem.type) }]}
@@ -299,9 +311,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                       key={inputItem.name + index}
                     /> */}
                     <ParamInput
+                      input={inputItem}
                       type={inputItem.type}
                       key={inputItem.name + index}
-                    ></ParamInput>
+                    />
                   </Form.Item>
                 </>
               ))
@@ -322,11 +335,9 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                   </Button>
                 )}
               </BtnGroup>
-              {type === 'read' && (
-                <OutputParams outputs={outputs}></OutputParams>
-              )}
+              {type === 'read' && <OutputParams outputs={outputs} />}
               {type === 'read' && outputShown && (
-                <FuncResponse name={data['name']}></FuncResponse>
+                <FuncResponse name={data['name']} />
               )}
             </>
           )}
@@ -338,10 +349,10 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                   output={item}
                   value={outputValue[index]}
                   key={index}
-                ></OutputItem>
+                />
               </>
             ))}
-          {<Error message={outputError}></Error>}
+          {<Error message={outputError} />}
         </FuncBody>
       </Form>
       <Modal
@@ -353,7 +364,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         <Modal.Content className="contentContainer">
           {modalType === 'loading' && (
             <>
-              <Loading></Loading>
+              <Loading />
               <div className="loadingText">
                 {t(translations.general.loading)}
               </div>

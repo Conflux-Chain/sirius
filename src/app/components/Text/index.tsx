@@ -111,7 +111,7 @@ const StyledTextWrapper = styled.span<any>`
       cursor: pointer;
     }
     a:hover {
-      color: 0626ae;
+      color: #0626ae;
     }
   }
 `;

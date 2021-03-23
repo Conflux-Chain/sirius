@@ -29,8 +29,6 @@ export const simpleGetFetcher = async (...args: any[]) => {
   if (query) {
     url = qs.stringifyUrl({ url, query });
   }
-  // TODO cip-37 convert
-  // console.info('simpleGetFetcher', url, query);
   return await fetch(appendApiPrefix(url), {
     method: 'get',
   });
@@ -40,8 +38,7 @@ const simplePostFetcher = async (...args: any[]) => {
   let [url, params, shouldAppendPrefix] = args;
   shouldAppendPrefix =
     shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
-  // TODO cip-37 convert
-  // console.info('simplePostFetcher', url, params);
+
   return await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
     method: 'post',
     headers: {

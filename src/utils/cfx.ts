@@ -6,7 +6,6 @@ import {
 import Faucet from './sponsorFaucet/faucet';
 import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
-const cfxUrl = window.location.origin + '/rpc'; // cip-37
 
 const isConfluxTestNet = isTestNetEnv();
 const mainNetworkId = 1029;
@@ -20,15 +19,6 @@ const cfx = new Conflux({
   // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
   // use hex address to compatible with history function
   // useHexAddressInParameter: true,
-});
-
-const cfxOld = new Conflux({
-  url: cfxUrl,
-  networkId,
-  // https://github.com/Conflux-Chain/js-conflux-sdk/blob/new-checksum/CHANGE_LOG.md#v150
-  // use hex address to compatible with history function
-  // cip-37
-  useHexAddressInParameter: true,
 });
 
 cfx.getClientVersion().then(v => {
@@ -120,17 +110,11 @@ const fcAddress = formatAddress(
   isConfluxTestNet
     ? '0x8e99e76bec5662cccd57409229392beb4d75fcbd' // cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s
     : '0x8e2f2e68eb75bb8b18caafe9607242d4748f8d98', // cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2
-  {
-    hex: true,
-  },
-); // cip-37 use hex;
+);
 
 const cETHAddress = formatAddress(
   '0x86d2fb177eff4be03a342951269096265b98ac46', // cfx:acdrf821t59y12b4guyzckyuw2xf1gfpj2ba0x4sj6, cfxtest:acdrf821t59y12b4guyzckyuw2xf1gfpj2nnfd6ep0
-  {
-    hex: true,
-  },
-); // cip-37 use hex;
+);
 
 // contract manager address
 
@@ -146,7 +130,7 @@ const contractManagerAddress = isConfluxTestNet
   ? testnetContractManagerAddress
   : mainnetContractManagerAddress;
 
-const faucet = new Faucet(cfxUrl, faucetAddress, faucetLastAddress);
+const faucet = new Faucet(cfxUrlV2, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
   const contract = cfx.Contract({ abi, address });
@@ -155,7 +139,6 @@ export const decodeContract = ({ abi, address, transacionData }) => {
 
 export {
   cfx,
-  cfxOld,
   formatAddress,
   faucetAddress,
   faucet,

@@ -39,4 +39,5 @@ export enum TxnAction {
   writeContract = 103,
   readContract = 104,
   sponsorApplication = 105,
+  contractDeplpy = 106,
 }

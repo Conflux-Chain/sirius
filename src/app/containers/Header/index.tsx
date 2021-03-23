@@ -55,10 +55,28 @@ export const Header = memo(() => {
       matched: location?.pathname?.startsWith('/blockchain'),
       children: [
         {
-          // block & txn
-          title: [t(translations.header.bnt), <Check size={18} key="check" />],
-          name: ScanEvent.menu.action.bnt,
-          href: '/blockchain/blocks-and-transactions',
+          // block
+          title: [
+            t(translations.header.block),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.blocks,
+          href: '/blockchain/blocks',
+        },
+        {
+          // txn
+          title: [t(translations.header.txn), <Check size={18} key="check" />],
+          name: ScanEvent.menu.action.transactions,
+          href: '/blockchain/transactions',
+        },
+        {
+          // cfx transfers
+          title: [
+            t(translations.header.cfxTransfers),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.cfxTransfers,
+          href: '/blockchain/cfx-transfers',
         },
         {
           // accounts
@@ -118,6 +136,15 @@ export const Header = memo(() => {
           ],
           name: ScanEvent.menu.action.contractReg,
           href: '/contract',
+        },
+        {
+          // deploy
+          title: [
+            t(translations.header.contractDeployment),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.contractDeployment,
+          href: '/contract-deployment',
         },
         {
           // sponsor

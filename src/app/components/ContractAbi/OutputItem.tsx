@@ -7,16 +7,21 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import imgArray from 'images/two_array.png';
 import { AddressContainer } from '../AddressContainer';
+import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
+
 interface OutputParamsProps {
   output: object;
   value?: any;
 }
+
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof OutputParamsProps>;
 export declare type Props = OutputParamsProps & NativeAttrs;
 
 const OutputItem = ({ output, value }: Props) => {
   let valueComp = <></>;
   const type = output['type'];
+  let returnName = output['name'];
+  let returnType = output['type'];
   try {
     if (type === 'address') {
       valueComp = (
@@ -47,6 +52,26 @@ const OutputItem = ({ output, value }: Props) => {
       valueComp = (
         <span className="value">{`${'0x' + value.toString('hex')}`}</span>
       );
+    } else if (type.startsWith('tuple')) {
+      try {
+        valueComp = (
+          <span className="value">
+            {value && value.toObject()
+              ? JSON.stringify(value.toObject())
+              : value}
+          </span>
+        );
+        let coder = valueCoder(output);
+        returnName = `${output['internalType'] || 'tuple'}(${coder?.names.join(
+          ',',
+        )})`;
+        returnType = coder?.type;
+      } catch (e) {
+        console.error(e);
+        returnName = output['name'];
+        returnType = output['type'];
+        valueComp = <span className="value">{value}</span>;
+      }
     } else if (type === 'address[]') {
       const array = Array.from(value);
       valueComp = (
@@ -73,12 +98,25 @@ const OutputItem = ({ output, value }: Props) => {
   }
   return (
     <>
-      <Container>
-        <img src={imgArray} alt="response params" className="icon" />
-        <span className="name text">{output['name']}</span>
-        <span className="type text">{`(${output['type']})`}</span>
-        {valueComp}
-      </Container>
+      {type.startsWith('tuple') ? (
+        <Container>
+          <img src={imgArray} alt="response params" className="icon" />
+          <div>
+            <span className="name text">
+              {returnName} <span className="type">{returnType}</span>
+            </span>
+            <br />
+            {valueComp}
+          </div>
+        </Container>
+      ) : (
+        <Container>
+          <img src={imgArray} alt="response params" className="icon" />
+          <span className="name text">{returnName}</span>
+          <span className="type text">{`(${returnType})`}</span>
+          {valueComp}
+        </Container>
+      )}
     </>
   );
 };
@@ -91,6 +129,7 @@ const Container = styled.div`
     display: inline-block;
     width: 10px;
     margin-top: 2px;
+    margin-right: 3px;
   }
   .text {
     color: #97a3b4;

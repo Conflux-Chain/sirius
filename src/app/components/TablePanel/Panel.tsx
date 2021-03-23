@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Table, Pagination } from '@cfxjs/react-ui';
-import { Card } from '../Card';
-import styled from 'styled-components/macro';
-import { media, useBreakpoint } from '../../../styles/media';
+import { Table, Pagination, Skeleton } from '@cfxjs/react-ui';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
-import { useTableData } from '../TabsTablePanel/useTableData';
-import { Skeleton } from '@cfxjs/react-ui';
 import clsx from 'clsx';
+import styled from 'styled-components/macro';
+import { Card } from '../Card';
+import { media, useBreakpoint } from '../../../styles/media';
+import { useTableData } from '../TabsTablePanel';
 import { Placeholder } from './Placeholder';
+import descIcon from '../../../images/table-desc.svg';
+import descHoverIcon from '../../../images/table-desc-hover.svg';
+import ascIcon from '../../../images/table-asc.svg';
+import ascHoverIcon from '../../../images/table-asc-hover.svg';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
+export type TableType = TableProps<unknown> & {
+  sortOrder?: string; // sort order: asc / desc
+  // default sort key
+  // should equal dataIndex, not equal url param
+  // url param should handle in sorter function
+  sortKey?: string;
+  // sort function, update url TODO more flexibility
+  sorter?: (column?: any, table?: any, url?: string) => any;
+};
 export type TablePanelType = {
   url: string;
   pagination?: PaginationProps | boolean;
-  table: TableProps<unknown>;
+  table: TableType;
   hasFilter?: boolean;
   className?: string;
   tableHeader?: React.ReactNode | Array<React.ReactNode>;
@@ -71,7 +83,7 @@ const defaultPaginationMobileConfig: PaginationProps = {
   limit: 3,
 };
 // table default config
-const defaultTableConfig: TableProps<unknown> = {
+const defaultTableConfig: TableType = {
   data: [],
   rowKey: 'key',
   columns: [],
@@ -98,7 +110,7 @@ export const TablePanel = ({
   useEffect(() => {
     total && total !== cacheTotal && setCacheTotal(total);
     /* eslint-disable-next-line */
-  }, [total]);
+  }, [total, url]);
 
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
@@ -115,7 +127,27 @@ export const TablePanel = ({
     ...paginationObject,
   };
   let tableData = table.data;
-  let tableColumns = table.columns;
+  let tableColumns = table?.columns?.map(c => {
+    if (c['sortable'] && table.sorter)
+      return {
+        ...c,
+        title: (
+          <div
+            className={`sortable ${
+              table.sortKey === c['dataIndex']
+                ? `${table.sortKey} ${table.sortOrder}`
+                : ''
+            }`}
+            onClick={() => {
+              table.sorter!(c, table, url);
+            }}
+          >
+            {c.title}
+          </div>
+        ),
+      };
+    return c;
+  });
   let tableRowKey = table.rowKey;
 
   // loading table
@@ -124,7 +156,7 @@ export const TablePanel = ({
       mockTableColumns,
       mockTableData,
       mockTableRowKey,
-    } = mockTableConfig(table.columns, 'skeleton');
+    } = mockTableConfig(tableColumns, 'skeleton');
 
     tableData = mockTableData;
     tableColumns = mockTableColumns;
@@ -140,7 +172,7 @@ export const TablePanel = ({
       mockTableColumns,
       mockTableData,
       mockTableRowKey,
-    } = mockTableConfig(table.columns, 'empty');
+    } = mockTableConfig(tableColumns, 'empty');
 
     tableData = mockTableData;
     tableColumns = mockTableColumns;
@@ -228,6 +260,38 @@ const StyledTableWrapper: any = styled.div`
       white-space: nowrap;
       padding: 1.1429rem calc((0.5714rem / 2) * 3);
       color: #9b9eac;
+
+      .sortable {
+        cursor: pointer;
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 12px 12px;
+
+        &:hover {
+          color: #65709a;
+        }
+
+        &.desc,
+        &.asc {
+          padding-right: 15px;
+        }
+
+        &.desc {
+          background-image: url(${descIcon});
+
+          &:hover {
+            background-image: url(${descHoverIcon});
+          }
+        }
+
+        &.asc {
+          background-image: url(${ascIcon});
+
+          &:hover {
+            background-image: url(${ascHoverIcon});
+          }
+        }
+      }
     }
     td.table-cell {
       font-size: 1rem;

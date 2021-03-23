@@ -37,9 +37,7 @@
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-ERC20 contract, the token icon cannot be uploaded",
     "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or creator of the contract.",
-    "importJsonFile": "Import Json file(s)",
-    "invalidJsonFile": "Invaild Json file, please try again.",
-    "invalidJsonAbi": "Unable to parse the valid ABI in the Json file, please try again.",
+    "invalidJsonAbi": "Unable to parse the valid ABI in the JSON file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
     "abiError": "ABI error",
     "readContract": "Read Contract",
@@ -58,15 +56,24 @@
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
       "cfx": "Please enter a non-negative number with no more than 18 decimal places",
       "array": "Please enter a valid {{type}} array with square brackets",
-      "tuple": "Please enter a valid tuple",
+      "tuple": "Please enter a valid tuple（符合参数顺序和格式的 json 数组或对象）",
       "notSupport": "{{type}} support will be coming soon",
       "testnet": "Please switch network to Conflux Test Network in Conflux Portal",
       "mainnet": "Please switch network to Conflux Tethys in Conflux Portal"
     },
+    "tupleFormat": "元组类型：<code>{{type}}</code><br />参数名称：<code>{{params}}</code><br />元组参数数组：<code>{{paramsArray}}</code><br />元组参数对象：<code>{{paramsObject}}</code>",
+    "tupleTips": "提示：可以参考 <code>元组参数数组</code> 或 <code>元组参数对象</code> 进行元组参数输入。<br />元组输入格式应为合法并符合参数顺序和格式的 <code>JSON 数组或对象</code>，例如：元组声明为 <code>{ uint num; string str; }</code>，则元组输入格式应为：<code>[1, \"text\"]</code> 或 <code>{ \"num\": 1, \"str\": \"text\" }</code>。<br />对于嵌套的元组，输入格式应为合法并符合参数顺序和格式的 <code>嵌套的 JSON 数组或对象</code>，例如：元组声明为 <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>，则元组 B 输入格式应为：<code>[1, [\"Tom\", 28]]</code> 或 <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>。",
     "query": "Query",
     "write": "Write",
     "viewTx": "View your transaction",
     "collapseAll": "Collapse All"
+  },
+  "contractDeployment": {
+    "title": "Contract Deployment",
+    "description": "Contract Deployment",
+    "tip": "Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
+    "upload": "Upload Contract File",
+    "submit": "Submit"
   },
   "contractDetail": {
     "title": "Contract Detail",
@@ -94,17 +101,25 @@
     "apy": "(APY 4%)",
     "viewLockedDetails": "Click to view lock history"
   },
-  "blocksAndTransactions": {
-    "title": "Blocks and Transactions",
-    "description": "Blocks and Transactions",
-    "tipCountBefore": "Total of",
-    "tipCountAfter": "{{type}}",
-    "labelCountBefore": "Total of",
-    "labelCountAfter": "{{type}}",
-    "blocks": "Blocks",
-    "transactions": "Transactions",
-    "latestBlocks": "Latest Blocks",
+  "blocks": {
+    "title": "Blocks",
+    "description": "Blocks",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "blocks",
+    "latestBlocks": "Latest Blocks"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Transactions",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "transactions",
     "latestTransactions": "Latest Transactions"
+  },
+  "cfxTransfers": {
+    "title": "CFX Transfers",
+    "description": "CFX Transfers",
+    "tipCountBefore": "A total of",
+    "tipCountAfter": "CFX transfers"
   },
   "tokens": {
     "title": "Tokens",
@@ -152,6 +167,9 @@
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transactions",
+    "block": "Blocks",
+    "txn": "Transactions",
+    "cfxTransfers": "CFX Transfers",
     "blockchain": "Blockchain",
     "accounts": "Accounts",
     "tokens": "Tokens",
@@ -161,6 +179,7 @@
     "contract": "Contract",
     "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
+    "contractDeployment": "Contract Deployment",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
     "more": "More",
@@ -175,6 +194,8 @@
     "blocknumberCalc": "Blocknumber Calculator"
   },
   "footer": {
+    "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
+    "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
     "confluxportal": "Conflux Portal",
@@ -265,10 +286,14 @@
     }
   },
   "general": {
+    "invalidBytecode": "Invaild bytecode",
+    "invalidJsonFile": "Invaild JSON file",
+    "importJsonFile": "Import JSON file",
     "showLess": "Show Less",
     "viewMore": "View More",
     "viewAll": "View All",
-    "viewAllBlocksAndTxs": "View All Blocks & Transactions",
+    "viewAllBlocks": "View All Blocks",
+    "viewAllTxns": "View All Transactions",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
@@ -746,7 +771,8 @@
         "102": "Contract Edit",
         "103": "Write contract",
         "104": "read contract",
-        "105": "Sponsor application"
+        "105": "Sponsor application",
+        "106": "Contract Deployment"
       }
     },
     "tip": "Please connect to ConfluxPortal first!"

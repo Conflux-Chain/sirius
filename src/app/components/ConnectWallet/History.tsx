@@ -67,7 +67,7 @@ export const History = ({
     }
   }
 
-  return (
+  return records.length ? (
     <HistoryWrapper
       className={clsx('connect-wallect-history', className, {
         show,
@@ -103,7 +103,7 @@ export const History = ({
         ))}
       </div>
     </HistoryWrapper>
-  );
+  ) : null;
 };
 
 const HistoryWrapper = styled.span`
@@ -111,7 +111,6 @@ const HistoryWrapper = styled.span`
   max-height: 21.4286rem;
   overflow: auto;
   background: #f1f3f6;
-  border-radius: 0rem 0rem 0.5714rem 0.5714rem;
   padding: 1.1429rem 2.2857rem;
   box-sizing: border-box;
   display: none;

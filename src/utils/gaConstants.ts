@@ -5,12 +5,16 @@ export const ScanEvent = {
     action: {
       home: 'home',
       bnt: 'bnt',
+      blocks: 'blocks',
+      transactions: 'transactions',
+      cfxTransfers: 'cfx_transfers',
       accounts: 'accounts',
       tokens20: 'tokens_erc20',
       tokens721: 'tokens_erc721',
       tokens1155: 'tokens_erc1155',
       contractReg: 'contract_reg',
       sponsor: 'sponsor',
+      contractDeployment: 'contract_deployment',
       contractsList: 'contracts_list',
       charts: 'charts',
       statistics: 'statistics',
@@ -108,6 +112,13 @@ export const ScanEvent = {
     action: {
       changeLang: 'change_lang', // event label === lang
       changeNet: 'change_net', // event label === net
+    },
+  },
+  // all function
+  function: {
+    category: 'function',
+    action: {
+      tokenTableSort: 'token_table_sort', // event label === tokenType_sortKey_sortOrder
     },
   },
 };

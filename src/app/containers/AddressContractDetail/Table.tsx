@@ -66,6 +66,8 @@ function ContractSourceCodeAbi({ contractInfo }) {
       });
     }
   };
+
+  // init contract object by abi and address
   const contract = cfx.Contract({
     abi: abiJson,
     address,
@@ -447,7 +449,7 @@ export function Table({ address, addressInfo }) {
       label: (total: number, realTotal: number) => {
         return (
           <>
-            {t(translations.blocksAndTransactions.transactions)}
+            {t(translations.transactions.title)}
             <TabLabel total={total} realTotal={realTotal} />
           </>
         );
@@ -608,7 +610,7 @@ export function Table({ address, addressInfo }) {
     }
   };
 
-  // TODO change tab request multi api
+  // TODO change tab cause multi api request
 
   return (
     <TableWrap>
