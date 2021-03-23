@@ -8,6 +8,7 @@ import styled from 'styled-components/macro';
 import imgArray from 'images/two_array.png';
 import { AddressContainer } from '../AddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
+import { media } from '../../../styles/media';
 
 interface OutputParamsProps {
   output: object;
@@ -29,8 +30,23 @@ const OutputItem = ({ output, value }: Props) => {
           <AddressContainer value={value} isFull={true} />
         </span>
       );
-    } else if (type.startsWith('byte') && type.endsWith('[]')) {
-      // TODO deal bytes[] length too long
+    } else if (type.startsWith('address') && type.endsWith(']')) {
+      const array = Array.from(value);
+      valueComp = (
+        <span className="value">
+          [
+          {array.map((v: any, i) => (
+            <>
+              <AddressContainer value={v} isFull={true} />
+              {i === array.length - 1 ? null : ', '}
+            </>
+          ))}
+          ]
+        </span>
+      );
+    } else if (type.startsWith('byte') && type.endsWith(']')) {
+      // deal with bytes[] length too long
+      // TODO
       valueComp = (
         <span className="value">
           {Array.isArray(value) ? (
@@ -53,8 +69,9 @@ const OutputItem = ({ output, value }: Props) => {
         <span className="value">{`${'0x' + value.toString('hex')}`}</span>
       );
     } else if (type.startsWith('tuple')) {
+      // tuple & tuple[]
       try {
-        // TODO maybe have bug
+        // TODO maybe have some bugs
         const convertValueToObject = (value: any) => {
           if (value && value.toObject) {
             // convert nested tuple object
@@ -86,20 +103,9 @@ const OutputItem = ({ output, value }: Props) => {
         returnType = output['type'];
         valueComp = <span className="value">{value}</span>;
       }
-    } else if (type === 'address[]') {
-      const array = Array.from(value);
-      valueComp = (
-        <span className="value">
-          [
-          {array.map((v: any, i) => (
-            <>
-              <AddressContainer value={v} isFull={true} />
-              {i === array.length - 1 ? null : ', '}
-            </>
-          ))}
-          ]
-        </span>
-      );
+    } else if (type.endsWith(']')) {
+      // array
+      valueComp = <span className="value">{JSON.stringify(value)}</span>;
     } else {
       valueComp = (
         <span className="value">{`${
@@ -111,27 +117,13 @@ const OutputItem = ({ output, value }: Props) => {
     console.error(error.message);
   }
   return (
-    <>
-      {type.startsWith('tuple') ? (
-        <Container>
-          <img src={imgArray} alt="response params" className="icon" />
-          <div>
-            <span className="name text">
-              {returnName} <span className="type">{returnType}</span>
-            </span>
-            <br />
-            {valueComp}
-          </div>
-        </Container>
-      ) : (
-        <Container>
-          <img src={imgArray} alt="response params" className="icon" />
-          <span className="name text">{returnName}</span>
-          <span className="type text">{`(${returnType})`}</span>
-          {valueComp}
-        </Container>
-      )}
-    </>
+    <Container>
+      <span className="name text">
+        <img src={imgArray} alt="response params" className="icon" />
+        {returnName} <span className="type">{returnType}</span>
+      </span>
+      {valueComp}
+    </Container>
   );
 };
 const Container = styled.div`
@@ -139,10 +131,10 @@ const Container = styled.div`
   align-items: center;
   padding-left: 7px;
   margin: 8px 0;
+  flex-wrap: wrap;
   .icon {
     display: inline-block;
     width: 10px;
-    margin-top: 2px;
     margin-right: 3px;
   }
   .text {
@@ -155,7 +147,13 @@ const Container = styled.div`
     font-style: italic;
   }
   .value {
-    margin-left: 4px;
+    margin-left: 15px;
+    max-width: 95%;
+
+    ${media.s} {
+      width: 100%;
+      max-width: 100%;
+    }
   }
 `;
 export default OutputItem;
