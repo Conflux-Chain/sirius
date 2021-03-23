@@ -83,13 +83,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         } else if (val === 'false' || val === '0') {
           value['val'] = false;
         }
-      } else if (value['type'].startsWith('byte')) {
-        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       } else if (value['type'].startsWith('tuple')) {
         value['val'] = JSON.parse(value['val']);
-      } else if (value['type'].endsWith('[]')) {
+      } else if (value['type'].endsWith(']')) {
         // array: convert to array
         value['val'] = Array.from(JSON.parse(value['val']));
+        // TODO byte array support
+      } else if (value['type'].startsWith('byte')) {
+        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       }
       objValues.push(value['val']);
     });
@@ -187,12 +188,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const check = (_: any, value) => {
       const val = value && value['val'];
 
-      // tuple
-      // TODO tuple or tuple[] support
+      // tuple or tuple[] support
       if (type.startsWith('tuple')) {
-        // return Promise.reject(
-        //   t(translations.contract.error.notSupport, { type }),
-        // );
         try {
           JSON.parse(val);
           return Promise.resolve();
@@ -201,9 +198,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       }
 
-      // array
-      // TODO multi-dimentional array support
-      if (type.endsWith('[]')) {
+      // array & multi-dimensional array support
+      if (type.endsWith(']')) {
         try {
           JSON.parse(val);
           return Promise.resolve();

@@ -40,13 +40,17 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
 
     // tuple
     if (type.startsWith('tuple')) {
-      text = t(translations.contract.error.tuple);
+      // tuple[]
+      if (type.endsWith(']')) {
+        text = t(translations.contract.error.tupleArray);
+      } else {
+        text = t(translations.contract.error.tuple);
+      }
       return text;
     }
 
-    // array
-    // TODO multi-dimentional array support
-    if (type.endsWith('[]')) {
+    // array & multi-dimensional array support
+    if (type.endsWith(']')) {
       text = t(translations.contract.error.array, { type });
       return text;
     }
@@ -94,7 +98,15 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
   const getTupleFormat = input => {
     try {
       let coder = valueCoder(input);
-      let returnName = coder?.names.join(',') || '-';
+      let arrayCount = 0;
+
+      // support tuple array
+      while (coder && !coder['NamedTuple'] && arrayCount < 3) {
+        coder = coder['coder'];
+        arrayCount++;
+      }
+
+      let returnName = coder?.names?.join(',') || coder?.name || '-';
       let returnType = coder?.type || '-';
 
       return (
@@ -104,8 +116,12 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
             __html: t(translations.contract.tupleFormat, {
               type: input['internalType'] || 'tuple',
               params: `(${returnName})`,
-              paramsObject: JSON.stringify(CodersToObject(coder)[coder.name]),
-              paramsArray: returnType.replace(/\(/g, '[').replace(/\)/g, ']'),
+              paramsObject:
+                JSON.stringify(CodersToObject(coder)[coder.name]) +
+                '[]'.repeat(arrayCount),
+              paramsArray:
+                returnType.replace(/\(/g, '[').replace(/\)/g, ']') +
+                '[]'.repeat(arrayCount),
             }),
           }}
         />

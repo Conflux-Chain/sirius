@@ -54,17 +54,31 @@ const OutputItem = ({ output, value }: Props) => {
       );
     } else if (type.startsWith('tuple')) {
       try {
+        // TODO maybe have bug
+        const convertValueToObject = (value: any) => {
+          if (value && value.toObject) {
+            // convert nested tuple object
+            let v = value.toObject();
+            Object.keys(v).forEach(o => {
+              v[o] = convertValueToObject(v[o]);
+            });
+            return v;
+          } else if (Array.isArray(value) && value.length > 0) {
+            // tuple array
+            return value.map(v => convertValueToObject(v));
+          }
+          return value;
+        };
+
         valueComp = (
           <span className="value">
-            {value && value.toObject()
-              ? JSON.stringify(value.toObject())
-              : value}
+            {JSON.stringify(convertValueToObject(value))}
           </span>
         );
         let coder = valueCoder(output);
-        returnName = `${output['internalType'] || 'tuple'}(${coder?.names.join(
-          ',',
-        )})`;
+        returnName = `${output['internalType'] || 'tuple'}(${
+          coder?.names?.join(',') || coder?.name || ''
+        })`;
         returnType = coder?.type;
       } catch (e) {
         console.error(e);

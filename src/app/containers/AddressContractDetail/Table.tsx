@@ -21,6 +21,7 @@ import { StyledIconWrapper } from 'utils/tableColumns/token';
 import { Link } from 'app/components/Link';
 import { Text } from 'app/components/Text';
 import { ColumnsType } from '../../components/TabsTablePanel';
+import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import {
   TabLabel,
   TabsTablePanel,
@@ -93,7 +94,11 @@ function ContractSourceCodeAbi({ contractInfo }) {
             case 'pure':
             case 'view':
               if (abiItem.inputs && abiItem.inputs.length === 0) {
-                proArr.push(contract[abiItem.name]());
+                const fullNameWithType = formatType({
+                  name: abiItem['name'],
+                  inputs: abiItem['inputs'],
+                });
+                proArr.push(contract[fullNameWithType]());
               }
               dataForRead.push(abiItem);
               break;
