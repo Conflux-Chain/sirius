@@ -6,7 +6,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-chrome';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Button } from '@cfxjs/react-ui';
@@ -197,19 +197,34 @@ function ContractSourceCodeAbi({ contractInfo }) {
           <div className="line"></div>
         </ButtonWrapper>
         <ContractCard>
-          {(selectedBtnType === 'sourceCode' || selectedBtnType === 'abi') && (
+          {selectedBtnType === 'sourceCode' && (
             <AceEditor
               readOnly
               style={AceEditorStyle}
               mode="solidity"
-              theme="github"
+              theme="chrome"
               name="UNIQUE_ID_OF_DIV"
               setOptions={{
                 showLineNumbers: true,
               }}
               showGutter={false}
               showPrintMargin={false}
-              value={selectedBtnType === 'sourceCode' ? sourceCode : abi}
+              value={sourceCode}
+            />
+          )}
+          {selectedBtnType === 'abi' && (
+            <AceEditor
+              readOnly
+              style={AceEditorStyle}
+              mode="json"
+              theme="chrome"
+              name="UNIQUE_ID_OF_DIV"
+              setOptions={{
+                showLineNumbers: true,
+              }}
+              showGutter={false}
+              showPrintMargin={false}
+              value={abi}
             />
           )}
           {selectedBtnType === 'read' && (

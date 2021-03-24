@@ -38,11 +38,12 @@ interface FuncProps {
   data: object;
   contractAddress: string;
   contract: object;
+  id?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
 export declare type Props = FuncProps & NativeAttrs;
 
-const Func = ({ type, data, contractAddress, contract }: Props) => {
+const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { accounts, confluxJS } = usePortal();
@@ -294,25 +295,24 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         <FuncBody>
           {inputsLength > 0
             ? inputs.map((inputItem, index) => (
-                <>
-                  <ParamTitle name={inputItem.name} type={inputItem.type} />
+                <React.Fragment key={id + 'item' + inputItem.name + index}>
+                  <ParamTitle
+                    name={inputItem.name}
+                    type={inputItem.type}
+                    key={id + 'title' + inputItem.name + index}
+                  />
                   <Form.Item
                     name={inputItem.name}
                     rules={[{ validator: getValidator(inputItem.type) }]}
-                    key={inputItem.name + index}
+                    key={id + 'form' + inputItem.name + index}
                   >
-                    {/* <Input
-                      placeholder={getPlaceholder(inputItem.type)}
-                      className="inputComp"
-                      key={inputItem.name + index}
-                    /> */}
                     <ParamInput
                       input={inputItem}
                       type={inputItem.type}
-                      key={inputItem.name + index}
+                      key={id + 'input' + inputItem.name + index}
                     />
                   </Form.Item>
-                </>
+                </React.Fragment>
               ))
             : null}
           {((type === 'read' && inputsLength > 0) ||
@@ -344,7 +344,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                 <OutputItem
                   output={item}
                   value={outputValue[index]}
-                  key={index}
+                  key={id + index}
                 />
               </>
             ))}
