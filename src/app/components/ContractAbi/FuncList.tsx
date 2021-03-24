@@ -20,7 +20,7 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
   const [activeKey, setActiveKey] = useState([]);
   const allKeys: string[] = [];
   data?.forEach(function (value, index) {
-    allKeys.push(index + '-' + value['name']);
+    allKeys.push(`${type}-${index}-${value['name']}`);
   });
   const clickHandler = () => {
     if (activeKey.length === 0) {
@@ -72,6 +72,7 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
                   contractAddress={contractAddress}
                   contract={contract}
                   key={`${type}-${index}-func-${item['name'] || index}`}
+                  id={`${type}-${index}-func-${item['name'] || index}`}
                 />
               </Panel>
             ))}

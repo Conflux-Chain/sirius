@@ -25,14 +25,19 @@ export const checkAbi = abi => {
   }
   return valid;
 };
+
+// @TODO checkBytecode and addOx should be recheck later, user experience and code is confused
 const checkBytecode = bytecode => {
-  const reg = /^(0[x])?[0-9a-fA-F]+$/;
-  return reg.test(bytecode);
+  const reg = /^(0x)?[0-9a-fA-F]+$/;
+  return reg.test(bytecode) && bytecode !== '0';
 };
 
 // add 0x for common
 const addOx = bytecode => {
-  return bytecode && bytecode.startsWith('0x') ? bytecode : `0x${bytecode}`;
+  if (!(bytecode.startsWith('0') || bytecode.startsWith('0x'))) {
+    return `0x${bytecode}`;
+  }
+  return bytecode;
 };
 
 // @TODO may intergration with contract registration later
@@ -50,9 +55,13 @@ export const ContractInfo = ({ onChange }) => {
       let bytecode = '';
 
       try {
-        // handle copied bytecode from Remix
-        const json = JSON.parse(code.trim());
-        bytecode = json.object;
+        if (code.startsWith('[') || code.startsWith('{')) {
+          // handle copied bytecode from Remix
+          const json = JSON.parse(code.trim());
+          bytecode = json.object;
+        } else {
+          bytecode = code.trim();
+        }
       } catch (e) {
         // other bytecode string, may from ConfluxStudio or CFXTruffle
         bytecode = code.trim();

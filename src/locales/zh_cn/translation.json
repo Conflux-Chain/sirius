@@ -57,6 +57,7 @@
       "cfx": "请输入小数位数不超过18位的非负数字",
       "array": "请输入有效的 {{type}} 数组，用中括号包裹",
       "tuple": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）",
+      "tupleArray": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）数组",
       "notSupport": "{{type}} 即将支持，敬请期待",
       "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
       "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"

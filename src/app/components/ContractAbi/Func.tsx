@@ -38,11 +38,12 @@ interface FuncProps {
   data: object;
   contractAddress: string;
   contract: object;
+  id?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
 export declare type Props = FuncProps & NativeAttrs;
 
-const Func = ({ type, data, contractAddress, contract }: Props) => {
+const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { accounts, confluxJS } = usePortal();
@@ -83,13 +84,14 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         } else if (val === 'false' || val === '0') {
           value['val'] = false;
         }
-      } else if (value['type'].startsWith('byte')) {
-        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       } else if (value['type'].startsWith('tuple')) {
         value['val'] = JSON.parse(value['val']);
-      } else if (value['type'].endsWith('[]')) {
+      } else if (value['type'].endsWith(']')) {
         // array: convert to array
         value['val'] = Array.from(JSON.parse(value['val']));
+        // TODO byte array support
+      } else if (value['type'].startsWith('byte')) {
+        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       }
       objValues.push(value['val']);
     });
@@ -187,12 +189,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const check = (_: any, value) => {
       const val = value && value['val'];
 
-      // tuple
-      // TODO tuple or tuple[] support
+      // tuple or tuple[] support
       if (type.startsWith('tuple')) {
-        // return Promise.reject(
-        //   t(translations.contract.error.notSupport, { type }),
-        // );
         try {
           JSON.parse(val);
           return Promise.resolve();
@@ -201,9 +199,8 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         }
       }
 
-      // array
-      // TODO multi-dimentional array support
-      if (type.endsWith('[]')) {
+      // array & multi-dimensional array support
+      if (type.endsWith(']')) {
         try {
           JSON.parse(val);
           return Promise.resolve();
@@ -298,25 +295,24 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         <FuncBody>
           {inputsLength > 0
             ? inputs.map((inputItem, index) => (
-                <>
-                  <ParamTitle name={inputItem.name} type={inputItem.type} />
+                <React.Fragment key={id + 'item' + inputItem.name + index}>
+                  <ParamTitle
+                    name={inputItem.name}
+                    type={inputItem.type}
+                    key={id + 'title' + inputItem.name + index}
+                  />
                   <Form.Item
                     name={inputItem.name}
                     rules={[{ validator: getValidator(inputItem.type) }]}
-                    key={inputItem.name + index}
+                    key={id + 'form' + inputItem.name + index}
                   >
-                    {/* <Input
-                      placeholder={getPlaceholder(inputItem.type)}
-                      className="inputComp"
-                      key={inputItem.name + index}
-                    /> */}
                     <ParamInput
                       input={inputItem}
                       type={inputItem.type}
-                      key={inputItem.name + index}
+                      key={id + 'input' + inputItem.name + index}
                     />
                   </Form.Item>
-                </>
+                </React.Fragment>
               ))
             : null}
           {((type === 'read' && inputsLength > 0) ||
@@ -348,7 +344,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                 <OutputItem
                   output={item}
                   value={outputValue[index]}
-                  key={index}
+                  key={id + index}
                 />
               </>
             ))}

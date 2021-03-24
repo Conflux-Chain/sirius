@@ -48,11 +48,13 @@ const CookieTipWrapper = styled.div`
   }
 
   a {
-    color: #ffffff;
-    text-decoration: underline;
+    color: #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 2px;
 
     &:hover {
-      text-decoration: underline;
+      color: #fff;
+      border-bottom: 1px solid #fff;
     }
   }
 
