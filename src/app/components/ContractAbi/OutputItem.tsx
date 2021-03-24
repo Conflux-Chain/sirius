@@ -46,22 +46,21 @@ const OutputItem = ({ output, value }: Props) => {
       );
     } else if (type.startsWith('byte') && type.endsWith(']')) {
       // deal with bytes[] length too long
-      // TODO
+      // Iteration Traversing nested byte array
+      const convertBytesArrayToHex = value => {
+        if (Array.isArray(value)) {
+          for (let i = 0; i < value.length; i++) {
+            value[i] = convertBytesArrayToHex(value[i]);
+          }
+        } else if (value.indexOf('0x') < 0) {
+          return '0x' + value.toString('hex');
+        }
+        return value;
+      };
+
       valueComp = (
         <span className="value">
-          {Array.isArray(value) ? (
-            <>
-              [<br />
-              {value.map(v => (
-                <>
-                  &nbsp;&nbsp;{v},<br />
-                </>
-              ))}
-              ]
-            </>
-          ) : (
-            value
-          )}
+          {JSON.stringify(convertBytesArrayToHex(value))}
         </span>
       );
     } else if (type.startsWith('byte')) {
