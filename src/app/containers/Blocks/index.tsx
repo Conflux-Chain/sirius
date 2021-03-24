@@ -17,7 +17,7 @@ export function Blocks() {
   const bp = useBreakpoint();
   const url = '/block';
 
-  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 3, 5];
+  const columnsBlocksWidth = [5, 3, 2, 4, 6, 4, 5, 4, 6];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -54,7 +54,7 @@ export function Blocks() {
           rowKey: 'hash',
         }}
         tableHeader={tip}
-      ></TablePanel>
+      />
     </>
   );
 }
