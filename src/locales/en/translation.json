@@ -257,6 +257,8 @@
     "title": "Charts",
     "subtitle1": "Market Data",
     "subtitle2": "Blockchain Data",
+    "subtitle3": "Transaction",
+    "subtitle4": "Account",
     "description": "Charts",
     "tps": {
       "title": "TPS",
@@ -289,6 +291,14 @@
     "nullAddress": {
       "title": "Null Address",
       "description": "CFX in Null address is burned CFX."
+    },
+    "dailyTransaction": {
+      "title": "Daily Transactions",
+      "description": "The total number of transactions per day for the Conflux network."
+    },
+    "cfxHoldingAccounts": {
+      "title": "CFX Holding Accounts",
+      "description": "The total number of CFX accounts held on the Conflux network."
     }
   },
   "general": {
