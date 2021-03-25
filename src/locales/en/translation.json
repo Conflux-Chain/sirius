@@ -78,7 +78,8 @@
     "notice": {
       "first": "1. Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
       "second": "2. Only ConfluxStudio, cfxtruffle, remix-compiled .json file imports are supported, and manual copy bytecode (required) and ABI (optional) are supported.",
-      "third": "3. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
+      "third": "3. Enter constructor arguments are not currently supported.",
+      "fourth": "4. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
     }
   },
   "contractDetail": {

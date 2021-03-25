@@ -47,6 +47,7 @@ export function ContractDeployment() {
             t(translations.contractDeployment.notice.first),
             t(translations.contractDeployment.notice.second),
             t(translations.contractDeployment.notice.third),
+            t(translations.contractDeployment.notice.fourth),
           ]}
         ></Remark>
       </StyledRemarkWrapper>
