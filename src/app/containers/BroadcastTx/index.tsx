@@ -10,6 +10,8 @@ import { Card } from '../../components/Card/Loadable';
 import { cfx } from '../../../utils/cfx';
 import imgSuccessBig from '../../../images/success_big.png';
 import { getEllipsStr } from '../../../utils';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 export function BroadcastTx() {
   const { t } = useTranslation();
@@ -26,9 +28,19 @@ export function BroadcastTx() {
       const txHash = await cfx.sendRawTransaction(value);
       setTxHash(txHash);
       setModalShown(true);
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.broadcastTx,
+        label: 'success',
+      });
     } catch (e) {
       console.error(e);
       setError(e.message || 'unknown');
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.broadcastTx,
+        label: 'failure',
+      });
     } finally {
       setLoading(false);
     }

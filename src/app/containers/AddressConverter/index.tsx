@@ -21,6 +21,8 @@ import { CopyButton } from '../../components/CopyButton';
 import { useParams } from 'react-router-dom';
 import { List } from './List';
 import { Remark } from '../../components/Remark';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -90,6 +92,14 @@ export function AddressConverter() {
           bytes32NetAddress = format.address(hexAddress, num);
           bytes32NetAddressWithType = format.address(hexAddress, num, true);
         }
+      }
+
+      if (hexChecksumAddress) {
+        trackEvent({
+          category: ScanEvent.function.category,
+          action: ScanEvent.function.action.addressConvert,
+          label: hexChecksumAddress,
+        });
       }
 
       setFormattedAddresses({

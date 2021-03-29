@@ -98,12 +98,17 @@ export const ScanEvent = {
       connect: 'connect',
       disconnect: 'disconnect',
       versionNotMatch: 'version_not_match',
-      readContract: 'read_contract',
-      writeContract: 'write_contract',
-      regContract: 'reg_contract',
-      updateContract: 'update_contract',
-      applySponsor: 'apply_sponsor',
       error: 'error',
+      txnAction: {
+        100: 'default', // event label ''
+        101: 'contract_reg', // event label ''
+        102: 'contract_update', // event label ''
+        103: 'write_contract', // event label ''
+        104: 'read_contract', // event label ''
+        105: 'apply_sponsor', // event label ''
+        106: 'contract_deploy', // event label ''
+      },
+      txnActionUnknown: 'unknown',
     },
   },
   // preference function
@@ -119,6 +124,9 @@ export const ScanEvent = {
     category: 'function',
     action: {
       tokenTableSort: 'token_table_sort', // event label === tokenType_sortKey_sortOrder
+      addressConvert: 'address_convert', // event label === address
+      broadcastTx: 'broadcast_tx', // event label === success/failure
+      blockCountdownCalc: 'block_countdown_calc', // event label === target blocknumber
     },
   },
 };
