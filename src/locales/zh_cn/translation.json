@@ -78,7 +78,8 @@
     "notice": {
       "first": "1. 合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
       "second": "2. 仅支持 ConfluxStudio，cfxtruffle ，remix 编译后的 .json 文件导入；同时支持手动拷贝 bytecode （必填）和 ABI （选填）。",
-      "third": "3. 您可以点击页面右上角的账户，在您的账户交易历史中以查看合约部署详情。"
+      "third": "3. 暂不支持输入构造函数参数。",
+      "fourth": "4. 您可以点击页面右上角的账户，在您的账户交易历史中查看合约部署详情。"
     }
   },
   "contractDetail": {
