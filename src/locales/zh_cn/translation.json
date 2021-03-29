@@ -257,6 +257,8 @@
     "title": "图表",
     "subtitle1": "市场数据",
     "subtitle2": "区块链数据",
+    "subtitle3": "交易",
+    "subtitle4": "账户",
     "description": "图表",
     "tps": {
       "title": "吞吐率",
@@ -289,6 +291,14 @@
     "nullAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"
+    },
+    "dailyTransaction": {
+      "title": "日交易量",
+      "description": "Conflux 网络每日的交易总量"
+    },
+    "cfxHoldingAccounts": {
+      "title": "CFX 持有账户数",
+      "description": "Conflux 网络上持有 CFX 的账户的总数 "
     }
   },
   "general": {

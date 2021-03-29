@@ -4,7 +4,12 @@ import { appendApiPrefix } from 'utils/api';
 import fetch from 'utils/request';
 import { useTranslation } from 'react-i18next';
 
-export default function usePlot(defaultDuration = 'day', NUM_X_GRID = 7) {
+// get charts data
+export default function usePlot(
+  defaultDuration = 'day',
+  NUM_X_GRID = 7,
+  indicator = 'blockTime',
+) {
   // 2592000
   const durations = {
     hour: [
@@ -32,15 +37,47 @@ export default function usePlot(defaultDuration = 'day', NUM_X_GRID = 7) {
   const [duration, setDuration] = useState(defaultDuration);
   const { i18n } = useTranslation();
   const isEn = i18n.language.indexOf('en') > -1;
-  const { data, error } = useSWR(`/dashboard/plot?duration=${duration}`, url =>
-    fetch(appendApiPrefix(`/plot?${durations[duration][0]}`)),
-  );
-  const axisFormat = durations[duration][1];
-  const popupFormat = durations[duration][2];
+
+  let swrKey = `/dashboard/plot?duration=${duration}`;
+  let fetcher = () => fetch(appendApiPrefix(`/plot?${durations[duration][0]}`));
+  let axisFormat = durations[duration][1];
+  let popupFormat = durations[duration][2];
+
+  switch (indicator) {
+    // without durations
+    case 'dailyTransaction':
+      swrKey = `/txn/daily/list`;
+      fetcher = () =>
+        fetch(appendApiPrefix(`/stat/txn/daily/list?limit=${31}`)); // TODO adjust limit
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      break;
+    // without durations
+    case 'cfxHoldingAccounts':
+      swrKey = `/cfx_holder/daily/list`;
+      fetcher = () =>
+        fetch(appendApiPrefix(`/stat/cfx_holder/daily/list?limit=${31}`));
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      break;
+    default:
+      break;
+  }
+
+  const { data, error } = useSWR(swrKey, fetcher);
   let listData;
   if (data) {
-    const { list } = data;
-    listData = list;
+    switch (indicator) {
+      case 'dailyTransaction':
+        listData = data?.data?.rows || [];
+        break;
+      case 'cfxHoldingAccounts':
+        listData = data?.data?.rows || [];
+        break;
+      default:
+        listData = data?.list || [];
+        break;
+    }
   }
   return {
     plot: listData,

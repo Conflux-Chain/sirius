@@ -190,7 +190,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   } else {
-    list = [fieldTransfers, fieldContractAddress, fieldHolders];
+    list = [fieldTransfers, fieldContractAddress];
   }
 
   const tokenTypeTag = transferType => {

@@ -33,7 +33,13 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   if (NUM_X_GRID < 7) NUM_X_GRID = 7;
   if (small) NUM_X_GRID = 6;
 
-  const chartWidth = width - padding - (small ? 50 : 70);
+  const hasDurationFilter = ![
+    'dailyTransaction',
+    'cfxHoldingAccounts',
+  ].includes(indicator);
+
+  const chartWidth =
+    width - padding - (hasDurationFilter ? (small ? 50 : 70) : 0);
   const chartHeight = small ? chartWidth * 0.45 : chartWidth * 0.35;
 
   const {
@@ -44,7 +50,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID);
+  } = usePlot('day', NUM_X_GRID, indicator);
 
   // y axis data range
   const domain =
@@ -58,6 +64,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 tps: 0,
                 difficulty: Math.min(+acc.min.difficulty, +cur.difficulty),
                 hashRate: Math.min(+acc.min.hashRate, +cur.hashRate),
+                dailyTransaction: 0,
               };
             }
             if (acc.max == null) acc.max = cur;
@@ -67,6 +74,11 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 tps: 'auto',
                 difficulty: Math.max(+acc.max.difficulty, +cur.difficulty),
                 hashRate: Math.max(+acc.max.hashRate, +cur.hashRate),
+                dailyTransaction: 'auto',
+                // dailyTransaction: Math.min(
+                //   +acc.max.dailyTransaction,
+                //   +cur.txCount,
+                // ),
               };
             }
             if (index === plot.length - 1) {
@@ -85,22 +97,46 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             tps: 0,
             difficulty: 0,
             hashRate: 0,
+            dailyTransaction: 0,
+            cfxHoldingAccounts: 0,
           },
           max: {
             blockTime: 'auto',
             tps: 'auto',
             difficulty: 'auto',
             hashRate: 'auto',
+            dailyTransaction: 'auto',
+            cfxHoldingAccounts: 'auto',
           },
         };
 
-  const strokeColor =
-    plot && plot[plot.length - 1][indicator] - plot[0][indicator] > 0
-      ? '#1E54FF'
-      : '#FA5D8E';
+  const strokeColor = () => {
+    switch (indicator) {
+      case 'dailyTransaction':
+        // because of reverse
+        return plot &&
+          plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+      case 'cfxHoldingAccounts':
+        // because of reverse
+        return plot &&
+          plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+      default:
+        return plot &&
+          plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+    }
+  };
 
+  // x axis date format
   const xAxisFormat = ({ x, y, payload }) => {
-    const d = dayjs.unix(payload.value);
+    const d = hasDurationFilter
+      ? dayjs.unix(payload.value)
+      : dayjs(payload.value);
     const [row1, row2] = axisFormat.split('\n');
     return (
       <g transform={`translate(${x},${y})`}>
@@ -124,6 +160,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     );
   };
 
+  // y axis number format
   const yAxisFormat = value => {
     return formatNumber(value);
   };
@@ -132,7 +169,11 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     if (active && payload && payload.length) {
       return (
         <TooltipWrapper>
-          <p className="label">{dayjs.unix(label).format(popupFormat)}</p>
+          <p className="label">
+            {hasDurationFilter
+              ? dayjs.unix(label).format(popupFormat)
+              : dayjs(label).format(popupFormat)}
+          </p>
           <p className="desc">
             {formatNumber(payload[0].value)}
             {indicator === 'blockTime' ? 's' : ''}
@@ -142,6 +183,21 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     }
 
     return null;
+  };
+
+  const xAxisKey = () => {
+    return hasDurationFilter ? 'timestamp' : 'statDay';
+  };
+
+  const lineKey = () => {
+    switch (indicator) {
+      case 'dailyTransaction':
+        return 'txCount';
+      case 'cfxHoldingAccounts':
+        return 'holderCount';
+      default:
+        return indicator;
+    }
   };
 
   if (isError) {
@@ -169,9 +225,10 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
           <CartesianGrid stroke="#eee" />
           {plot ? (
             <XAxis
-              dataKey="timestamp"
+              dataKey={xAxisKey()}
               tick={xAxisFormat}
-              interval={0}
+              interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
+              reversed={!hasDurationFilter}
               stroke="#333333"
             />
           ) : null}
@@ -179,36 +236,48 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             stroke="#333333"
             tickFormatter={yAxisFormat}
             domain={[domain.min[indicator], domain.max[indicator]]}
-            width={['difficulty', 'hashRate'].includes(indicator) ? 60 : 30}
+            width={
+              [
+                'difficulty',
+                'hashRate',
+                'dailyTransaction',
+                'cfxHoldingAccounts',
+              ].includes(indicator)
+                ? 60
+                : 30
+            }
           />
           <Line
             type="linear"
-            dataKey={indicator}
-            stroke={strokeColor}
+            dataKey={lineKey()}
+            stroke={strokeColor()}
             strokeWidth={2}
           />
           <Tooltip content={<CustomTooltip />} />
         </Chart>
-        <Buttons small={small}>
-          {DURATIONS.map(([d, key]) => (
-            <Button
-              key={key}
-              small={small}
-              active={d === duration}
-              onClick={() => {
-                // ga
-                trackEvent({
-                  category: ScanEvent.stats.category,
-                  action: ScanEvent.stats.action[`${indicator}IntervalChange`],
-                  label: d,
-                });
-                setDuration(d);
-              }}
-            >
-              {key}
-            </Button>
-          ))}
-        </Buttons>
+        {hasDurationFilter ? (
+          <Buttons small={small}>
+            {DURATIONS.map(([d, key]) => (
+              <Button
+                key={key}
+                small={small}
+                active={d === duration}
+                onClick={() => {
+                  // ga
+                  trackEvent({
+                    category: ScanEvent.stats.category,
+                    action:
+                      ScanEvent.stats.action[`${indicator}IntervalChange`],
+                    label: d,
+                  });
+                  setDuration(d);
+                }}
+              >
+                {key}
+              </Button>
+            ))}
+          </Buttons>
+        ) : null}
       </Container>
     );
   }
