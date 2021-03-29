@@ -115,17 +115,20 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
       case 'dailyTransaction':
         // because of reverse
         return plot &&
+          plot.length > 0 &&
           plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       case 'cfxHoldingAccounts':
         // because of reverse
         return plot &&
+          plot.length > 0 &&
           plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       default:
         return plot &&
+          plot.length > 0 &&
           plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
           ? '#1E54FF'
           : '#FA5D8E';
