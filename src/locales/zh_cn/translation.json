@@ -245,7 +245,7 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "address": "个地址",
-    "fcMining": "FC-CFX 矿池",
+    "fcMining": "FC-CFX 不可逆兑换",
     "transferList": {
       "searchPlaceHolder": "交易哈希值 / 持有人地址",
       "searchPlaceHolderWithTokenId": "交易哈希值 / 持有人地址 / 代币 ID",
