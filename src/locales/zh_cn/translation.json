@@ -212,7 +212,9 @@
     "addressFormatConversion": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
-    "preference": "偏好设置"
+    "preference": "偏好设置",
+    "contactUs": "联系我们",
+    "feedback": "反馈"
   },
   "packing": {
     "title": "您的交易正在打包，请稍后...",
