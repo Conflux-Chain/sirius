@@ -212,7 +212,9 @@
     "addressFormatConversion": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
-    "preference": "Preference"
+    "preference": "Preference",
+    "contactUs": "Contact Us",
+    "feedback": "Feedback"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",

@@ -27,6 +27,7 @@ export const ScanEvent = {
       twitter: 'twitter',
       github: 'github',
       medium: 'medium',
+      feedback: 'feedback',
     },
   },
   // global search
