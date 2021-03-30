@@ -78,7 +78,8 @@
     "notice": {
       "first": "1. Contract deployment means publishing a contract code to the Conflux network by sending a transaction. Before you deploy the contract, please ensure the CFX balance in your account is sufficient.",
       "second": "2. Only ConfluxStudio, cfxtruffle, remix-compiled .json file imports are supported, and manual copy bytecode (required) and ABI (optional) are supported.",
-      "third": "3. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
+      "third": "3. Enter constructor arguments are not currently supported.",
+      "fourth": "4. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
     }
   },
   "contractDetail": {
@@ -211,7 +212,9 @@
     "addressFormatConversion": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
-    "preference": "Preference"
+    "preference": "Preference",
+    "contactUs": "Contact Us",
+    "feedback": "Feedback"
   },
   "packing": {
     "title": "Your transaction is packing，please wait...",
@@ -245,7 +248,7 @@
     "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "address": "addresses",
-    "fcMining": "FC-CFX Mining Pool",
+    "fcMining": "FC-CFX Non-reversible Exchange",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
       "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",

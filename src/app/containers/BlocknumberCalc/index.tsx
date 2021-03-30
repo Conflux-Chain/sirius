@@ -17,6 +17,8 @@ import {
 import { governanceAddress } from '../../../utils/constants';
 import { getTimeByBlockInterval } from '../../../utils';
 import { Countdown } from './Countdown';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 const governanceContract = cfx.Contract({
   abi: governanceAbi,
@@ -61,6 +63,11 @@ export function BlocknumberCalc() {
           calcTimeSpan(res);
         })
         .finally(() => {
+          trackEvent({
+            category: ScanEvent.function.category,
+            action: ScanEvent.function.action.blockCountdownCalc,
+            label: blocknumber,
+          });
           setLoading(false);
         });
     } else {

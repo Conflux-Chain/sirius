@@ -238,11 +238,17 @@ const TokenTypeTag = styled.div`
   width: 118px;
   height: 30px;
   z-index: 1;
-  font-size: 10px;
-  text-align: right;
-  padding-right: 8px;
+  padding-right: 5px;
   line-height: 30px;
+  text-align: right;
   color: #fff;
+
+  span {
+    display: inline-block;
+    width: 95px;
+    font-size: 12px;
+    text-align: center;
+  }
 
   &.ERC20 {
     background: url(${ERC20bg}) no-repeat right top;

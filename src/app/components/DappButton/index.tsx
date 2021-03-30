@@ -15,6 +15,8 @@ import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface DappButtonProps {
   hoverText?: string;
@@ -99,6 +101,14 @@ const DappButton = ({
           //rejected alert
           failCallback && failCallback(error.message);
           setModalType('fail');
+        })
+        .finally(() => {
+          trackEvent({
+            category: ScanEvent.wallet.category,
+            action:
+              ScanEvent.wallet.action.txnAction[txnAction] ||
+              ScanEvent.wallet.action.txnActionUnknown,
+          });
         });
     }
   };
