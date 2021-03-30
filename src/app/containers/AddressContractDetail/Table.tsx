@@ -609,6 +609,7 @@ export function Table({ address, addressInfo }) {
     exportRecordsPathMap[`transfers-${cfxTokenTypes.erc20}`] = 'transfer';
     exportRecordsPathMap[`transfers-${cfxTokenTypes.erc721}`] = 'transfer';
     exportRecordsPathMap[`transfers-${cfxTokenTypes.erc1155}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.cfx}`] = 'transfer';
     const exportRecordsPath =
       typeof tab === 'string' && exportRecordsPathMap[tab];
 
