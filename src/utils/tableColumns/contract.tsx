@@ -64,7 +64,7 @@ export const transactionCount = {
   ),
   dataIndex: 'transactionCount',
   key: 'transactionCount',
-  render: value => <span>{formatNumber(value)}</span>,
+  render: value => <span>{formatNumber(value, { withUnit: false })}</span>,
 };
 
 export const StyledIconWrapper = styled.div`

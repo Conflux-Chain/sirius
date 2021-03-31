@@ -112,6 +112,7 @@ export const price = {
   ),
   dataIndex: 'price',
   key: 'price',
+  sortable: true,
   render: (value, row) => {
     const count = `$${formatNumber(value || 0, {
       withUnit: false,
@@ -147,6 +148,7 @@ export const marketCap = {
   ),
   dataIndex: 'totalPrice',
   key: 'totalPrice',
+  sortable: true,
   render: value => (
     <ContentWrapper right monospace>
       {value != null && value > 0
@@ -169,6 +171,7 @@ export const transfer = {
   ),
   dataIndex: `transferCount`,
   key: `transferCount`,
+  sortable: true,
   render: value => (
     <ContentWrapper right monospace>
       {formatNumber(value, {
@@ -188,6 +191,7 @@ export const totalSupply = {
   ),
   dataIndex: 'totalSupply',
   key: 'totalSupply',
+  sortable: true,
   render: (value, row) => formatBalance(value, row.decimals),
 };
 
@@ -202,6 +206,7 @@ export const holders = {
   ),
   dataIndex: 'holderCount',
   key: 'holderCount',
+  sortable: true,
   render: value => (
     <ContentWrapper right monospace>
       {Number.isInteger(value)

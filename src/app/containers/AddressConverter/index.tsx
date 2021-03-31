@@ -20,6 +20,9 @@ import {
 import { CopyButton } from '../../components/CopyButton';
 import { useParams } from 'react-router-dom';
 import { List } from './List';
+import { Remark } from '../../components/Remark';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -91,6 +94,14 @@ export function AddressConverter() {
         }
       }
 
+      if (hexChecksumAddress) {
+        trackEvent({
+          category: ScanEvent.function.category,
+          action: ScanEvent.function.action.addressConvert,
+          label: hexChecksumAddress,
+        });
+      }
+
       setFormattedAddresses({
         hexAddress,
         hexChecksumAddress,
@@ -130,7 +141,7 @@ export function AddressConverter() {
   }, []);
 
   return (
-    <StyledPageWrapper>
+    <>
       <Helmet>
         <title>{t(translations.header.addressConverter)}</title>
         <meta
@@ -265,37 +276,25 @@ export function AddressConverter() {
         </Card>
       </StyledResultWrapper>
       <StyledRemarkWrapper>
-        <h3 className="convert-address-title">
-          {t(translations.addressConverter.remark)}
-        </h3>
-        <div className="convert-address-tip">
-          <div>{t(translations.addressConverter.tip1)}</div>
-          <div>{t(translations.addressConverter.tip2)}</div>
-          <div>
-            {t(translations.addressConverter.tip3)}
-            <Link
-              target="_blank"
-              href={t(translations.addressConverter.tip3Link)}
-            >
-              {t(translations.addressConverter.tip3end)}
-            </Link>
-          </div>
-        </div>
+        <Remark
+          items={[
+            t(translations.addressConverter.tip1),
+            t(translations.addressConverter.tip2),
+            <span>
+              {t(translations.addressConverter.tip3)}
+              <Link
+                target="_blank"
+                href={t(translations.addressConverter.tip3Link)}
+              >
+                {t(translations.addressConverter.tip3end)}
+              </Link>
+            </span>,
+          ]}
+        ></Remark>
       </StyledRemarkWrapper>
-    </StyledPageWrapper>
+    </>
   );
 }
-
-const StyledPageWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding-top: 2.2857rem;
-
-  ${media.s} {
-    margin-top: 16px;
-    padding: 1.1429rem;
-  }
-`;
 
 const StyledSubtitleWrapper = styled.p`
   color: #74798c;
@@ -384,19 +383,5 @@ const StyledResultWrapper = styled.div`
   }
 `;
 const StyledRemarkWrapper = styled.div`
-  margin: 2.2857rem 0;
-
-  .convert-address-title {
-    font-size: 1.1429rem;
-    font-weight: bold;
-    color: #1a1a1a;
-  }
-
-  .convert-address-tip {
-    margin-top: 0.8571rem;
-    font-weight: normal;
-    color: #7e8598;
-    line-height: 1.5714rem;
-    font-size: 1rem;
-  }
+  margin: 1.7143rem 0 0;
 `;

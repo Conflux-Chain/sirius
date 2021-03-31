@@ -79,6 +79,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
                 Array [
                   "/blocks-and-transactions",
                   "/blockchain",
+                  "/blockchain/blocks-and-transactions",
                 ]
               }
               render={[Function]}
@@ -86,7 +87,17 @@ exports[`<App /> should render and match the snapshot 1`] = `
             <Route
               component={[Function]}
               exact={true}
-              path="/blockchain/blocks-and-transactions"
+              path="/blockchain/blocks"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/blockchain/transactions"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/blockchain/cfx-transfers"
             />
             <Route
               component={[Function]}
@@ -107,6 +118,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
               component={[Function]}
               exact={true}
               path="/sponsor"
+            />
+            <Route
+              component={[Function]}
+              exact={true}
+              path="/contract-deployment"
             />
             <Route
               exact={true}
@@ -183,6 +199,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
         <Unknown />
         <GlobalNotify />
         <UNDEFINED />
+        <CookieTip />
       </CfxProvider>
     </BrowserRouter>
   </Context.Provider>

@@ -20,7 +20,6 @@ import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
-
 import {
   isAddress,
   checkInt,
@@ -32,17 +31,19 @@ import {
 import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
+import { formatType } from 'js-conflux-sdk/src/contract/abi';
 
 interface FuncProps {
   type?: string;
   data: object;
   contractAddress: string;
   contract: object;
+  id?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
 export declare type Props = FuncProps & NativeAttrs;
 
-const Func = ({ type, data, contractAddress, contract }: Props) => {
+const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { accounts, confluxJS } = usePortal();
@@ -83,19 +84,29 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         } else if (val === 'false' || val === '0') {
           value['val'] = false;
         }
-      } else if (value['type'].startsWith('byte')) {
-        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
-      } else if (value['type'].endsWith('[]')) {
+      } else if (value['type'].startsWith('tuple')) {
+        value['val'] = JSON.parse(value['val']);
+      } else if (value['type'].endsWith(']')) {
         // array: convert to array
         value['val'] = Array.from(JSON.parse(value['val']));
+        // TODO byte array support
+      } else if (value['type'].startsWith('byte')) {
+        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
       }
       objValues.push(value['val']);
     });
+
+    // use full name to evoke contract function for override function compatible
+    const fullNameWithType = formatType({
+      name: data['name'],
+      inputs: data['inputs'],
+    });
+
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[data['name']](...objValues);
+          const res = await contract[fullNameWithType](...objValues);
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
@@ -130,7 +141,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
           }
           setOutputError('');
           try {
-            const { data: txData } = contract[data['name']](...objParams);
+            const { data: txData } = contract[fullNameWithType](...objParams);
             txParams['data'] = txData;
           } catch (error) {
             setOutputError(error.message || '');
@@ -178,17 +189,18 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
     const check = (_: any, value) => {
       const val = value && value['val'];
 
-      // tuple
-      // TODO tuple or tuple[] support
+      // tuple or tuple[] support
       if (type.startsWith('tuple')) {
-        return Promise.reject(
-          t(translations.contract.error.notSupport, { type }),
-        );
+        try {
+          JSON.parse(val);
+          return Promise.resolve();
+        } catch {
+          return Promise.reject(t(translations.contract.error.tuple, { type }));
+        }
       }
 
-      // array
-      // TODO multi-dimentional array support
-      if (type.endsWith('[]')) {
+      // array & multi-dimensional array support
+      if (type.endsWith(']')) {
         try {
           JSON.parse(val);
           return Promise.resolve();
@@ -283,27 +295,24 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         <FuncBody>
           {inputsLength > 0
             ? inputs.map((inputItem, index) => (
-                <>
+                <React.Fragment key={id + 'item' + inputItem.name + index}>
                   <ParamTitle
                     name={inputItem.name}
                     type={inputItem.type}
-                  ></ParamTitle>
+                    key={id + 'title' + inputItem.name + index}
+                  />
                   <Form.Item
                     name={inputItem.name}
                     rules={[{ validator: getValidator(inputItem.type) }]}
-                    key={inputItem.name + index}
+                    key={id + 'form' + inputItem.name + index}
                   >
-                    {/* <Input
-                      placeholder={getPlaceholder(inputItem.type)}
-                      className="inputComp"
-                      key={inputItem.name + index}
-                    /> */}
                     <ParamInput
+                      input={inputItem}
                       type={inputItem.type}
-                      key={inputItem.name + index}
-                    ></ParamInput>
+                      key={id + 'input' + inputItem.name + index}
+                    />
                   </Form.Item>
-                </>
+                </React.Fragment>
               ))
             : null}
           {((type === 'read' && inputsLength > 0) ||
@@ -322,11 +331,9 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                   </Button>
                 )}
               </BtnGroup>
-              {type === 'read' && (
-                <OutputParams outputs={outputs}></OutputParams>
-              )}
+              {type === 'read' && <OutputParams outputs={outputs} />}
               {type === 'read' && outputShown && (
-                <FuncResponse name={data['name']}></FuncResponse>
+                <FuncResponse name={data['name']} />
               )}
             </>
           )}
@@ -337,11 +344,11 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
                 <OutputItem
                   output={item}
                   value={outputValue[index]}
-                  key={index}
-                ></OutputItem>
+                  key={id + index}
+                />
               </>
             ))}
-          {<Error message={outputError}></Error>}
+          {<Error message={outputError} />}
         </FuncBody>
       </Form>
       <Modal
@@ -353,7 +360,7 @@ const Func = ({ type, data, contractAddress, contract }: Props) => {
         <Modal.Content className="contentContainer">
           {modalType === 'loading' && (
             <>
-              <Loading></Loading>
+              <Loading />
               <div className="loadingText">
                 {t(translations.general.loading)}
               </div>

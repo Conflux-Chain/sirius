@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { Link } from '../../components/Link/Loadable';
-import { useBreakpoint, media } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType, useTabTableData } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Notice } from './Notice';
+import { ScanEvent } from '../../../utils/gaConstants';
 // import { MarketInfo } from './MarketInfo';
 
 export function HomePage() {
@@ -44,7 +45,7 @@ export function HomePage() {
     {
       value: 'blocks',
       action: 'latestBlocks',
-      label: t(translations.blocksAndTransactions.latestBlocks),
+      label: t(translations.blocks.latestBlocks),
       url: '/block',
       pagination: false,
       table: {
@@ -53,9 +54,9 @@ export function HomePage() {
       },
     },
     {
-      value: 'transaction',
+      value: 'transactions',
       action: 'latestTransactions',
-      label: t(translations.blocksAndTransactions.latestTransactions),
+      label: t(translations.transactions.latestTransactions),
       url: '/transaction',
       pagination: false,
       table: {
@@ -72,6 +73,8 @@ export function HomePage() {
   } else {
     chartWidth = 238;
   }
+
+  const { currentTabValue } = useTabTableData(tabs);
 
   return (
     <>
@@ -102,14 +105,33 @@ export function HomePage() {
         <Bottom>
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
-            <Link
-              className="viewall-link"
-              href="/blockchain/blocks-and-transactions"
-            >
-              {bp === 's'
-                ? t(translations.general.viewAll)
-                : t(translations.general.viewAllBlocksAndTxs)}
-            </Link>
+            {currentTabValue === 'blocks' ? (
+              <Link
+                className="viewall-link"
+                href={`/blockchain/blocks`}
+                ga={{
+                  category: ScanEvent.menu.category,
+                  action: ScanEvent.menu.action.blocks,
+                }}
+              >
+                {bp === 's'
+                  ? t(translations.general.viewAll)
+                  : t(translations.general.viewAllBlocks)}
+              </Link>
+            ) : (
+              <Link
+                className="viewall-link"
+                href={`/blockchain/transactions`}
+                ga={{
+                  category: ScanEvent.menu.category,
+                  action: ScanEvent.menu.action.transactions,
+                }}
+              >
+                {bp === 's'
+                  ? t(translations.general.viewAll)
+                  : t(translations.general.viewAllTxns)}
+              </Link>
+            )}
           </ViewAllLinkWrapper>
         </Bottom>
       </Main>

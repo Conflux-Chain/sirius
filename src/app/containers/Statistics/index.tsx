@@ -104,9 +104,7 @@ export function Statistics() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <StyledPageHeaderWrapper>
-        <PageHeader>{title}</PageHeader>
-      </StyledPageHeaderWrapper>
+      <PageHeader>{title}</PageHeader>
       <TabsWrapper initialValue={statsType} onChange={tabsChange}>
         <Tabs.Item
           label={t(translations.statistics.transactions)}
@@ -191,13 +189,6 @@ export function Statistics() {
     </>
   );
 }
-
-const StyledPageHeaderWrapper = styled.div`
-  margin-top: 32px;
-  > div {
-    margin-bottom: 12px;
-  }
-`;
 
 const TabsWrapper = styled(Tabs)`
   margin-bottom: 32px;

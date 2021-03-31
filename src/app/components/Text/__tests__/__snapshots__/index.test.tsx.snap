@@ -44,7 +44,7 @@ exports[`<Text  /> should match snapshot 1`] = `
 }
 
 .c1 .text.sirius-text a:hover {
-  color: 0626ae;
+  color: #0626ae;
 }
 
 @media (max-width:600px) {
@@ -122,7 +122,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
 }
 
 .c1 .text.sirius-text a:hover {
-  color: 0626ae;
+  color: #0626ae;
 }
 
 @media (max-width:600px) {

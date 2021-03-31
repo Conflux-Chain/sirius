@@ -25,6 +25,7 @@ interface Props {
 }
 
 // TODO code simplify
+// TODO new address display format
 export const AddressContainer = ({
   value,
   alias,

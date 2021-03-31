@@ -15,6 +15,8 @@ import { TxnAction } from '../../../utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface DappButtonProps {
   hoverText?: string;
@@ -49,7 +51,7 @@ const DappButton = ({
 }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  // TODO cip-37 portal multi version
+  // cip-37 compatible
   const { accounts, confluxJS } = usePortal();
   const [modalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -68,7 +70,8 @@ const DappButton = ({
     if (!btnDisabled) {
       const txParams = {
         from: formatAddress(accounts[0]),
-        to: formatAddress(contractAddress),
+        // txn may create contract, need params 'to' to be undefined
+        to: contractAddress ? formatAddress(contractAddress) : undefined,
         data,
       };
       //loading
@@ -98,6 +101,14 @@ const DappButton = ({
           //rejected alert
           failCallback && failCallback(error.message);
           setModalType('fail');
+        })
+        .finally(() => {
+          trackEvent({
+            category: ScanEvent.wallet.category,
+            action:
+              ScanEvent.wallet.action.txnAction[txnAction] ||
+              ScanEvent.wallet.action.txnActionUnknown,
+          });
         });
     }
   };

@@ -11,4 +11,5 @@ src/components/Text/* @chain-txz
 src/containers/Footer/* @yqrashawn
 src/containers/Header/* @yqrashawn
 src/containers/HomePage/* @yqrashawn
-src/containers/BlocksAndTransactions/* @chain-txz
+src/containers/Blocks/* @chain-txz
+src/containers/Transactions/* @chain-txz

@@ -1,12 +1,12 @@
 /**
- * Asynchronously loads the component for BlocksAndTransactions
+ * Asynchronously loads the component for Blocks
  */
 
 import { lazyLoad } from 'utils/loadable';
 
-export const BlocksAndTransactions = lazyLoad(
+export const Blocks = lazyLoad(
   () => import('./index'),
-  module => module.BlocksAndTransactions,
+  module => module.Blocks,
 );
 
 export const Dag = lazyLoad(

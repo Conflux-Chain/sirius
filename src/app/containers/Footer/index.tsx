@@ -23,6 +23,18 @@ export function Footer() {
 
   const left = [<TextLogo key="logo" />];
 
+  const feedbackLink = (
+    <Link
+      className="footer-link"
+      href="https://github.com/Conflux-Chain/sirius/issues"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.feedback,
+      }}
+    >
+      {t(translations.footer.feedback)}
+    </Link>
+  );
   const websiteLink = (
     <Link
       className="footer-link"
@@ -162,6 +174,16 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
+      <FooterContentWrapper className="contact-us">
+        <FooterContentTitle>
+          {t(translations.footer.contactUs)}
+        </FooterContentTitle>
+        <FooterContent>
+          <FooterContentRow>
+            <FooterContentLink key="1-1">{feedbackLink}</FooterContentLink>
+          </FooterContentRow>
+        </FooterContent>
+      </FooterContentWrapper>
       <FooterContentWrapper className="preference">
         <FooterContentTitle>
           {t(translations.footer.preference)}
@@ -212,9 +234,12 @@ const FooterContentTitle = styled.span`
   margin-bottom: 1.07rem;
   font-weight: 600;
   color: #000558;
+  margin-right: 8.5714rem;
+  width: 5.7143rem;
 
   ${media.s} {
     margin-bottom: 0.86rem;
+    margin-right: inherit;
   }
 `;
 const FooterContent = styled.div`

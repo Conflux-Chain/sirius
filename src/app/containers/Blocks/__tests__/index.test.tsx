@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-const renderComponent = () => render(<div>Todo. BlocksAndTransactions</div>);
+const renderComponent = () => render(<div>Todo. Blocks</div>);
 
-describe('<BlocksAndTransactions />', () => {
+describe('<Blocks />', () => {
   it('should match the snapshot', () => {
     const component = renderComponent();
     expect(component.container.firstChild).toMatchSnapshot();

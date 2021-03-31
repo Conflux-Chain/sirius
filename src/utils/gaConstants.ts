@@ -5,12 +5,16 @@ export const ScanEvent = {
     action: {
       home: 'home',
       bnt: 'bnt',
+      blocks: 'blocks',
+      transactions: 'transactions',
+      cfxTransfers: 'cfx_transfers',
       accounts: 'accounts',
       tokens20: 'tokens_erc20',
       tokens721: 'tokens_erc721',
       tokens1155: 'tokens_erc1155',
       contractReg: 'contract_reg',
       sponsor: 'sponsor',
+      contractDeployment: 'contract_deployment',
       contractsList: 'contracts_list',
       charts: 'charts',
       statistics: 'statistics',
@@ -23,6 +27,7 @@ export const ScanEvent = {
       twitter: 'twitter',
       github: 'github',
       medium: 'medium',
+      feedback: 'feedback',
     },
   },
   // global search
@@ -94,12 +99,17 @@ export const ScanEvent = {
       connect: 'connect',
       disconnect: 'disconnect',
       versionNotMatch: 'version_not_match',
-      readContract: 'read_contract',
-      writeContract: 'write_contract',
-      regContract: 'reg_contract',
-      updateContract: 'update_contract',
-      applySponsor: 'apply_sponsor',
       error: 'error',
+      txnAction: {
+        100: 'default', // event label ''
+        101: 'contract_reg', // event label ''
+        102: 'contract_update', // event label ''
+        103: 'write_contract', // event label ''
+        104: 'read_contract', // event label ''
+        105: 'apply_sponsor', // event label ''
+        106: 'contract_deploy', // event label ''
+      },
+      txnActionUnknown: 'unknown',
     },
   },
   // preference function
@@ -108,6 +118,16 @@ export const ScanEvent = {
     action: {
       changeLang: 'change_lang', // event label === lang
       changeNet: 'change_net', // event label === net
+    },
+  },
+  // all function
+  function: {
+    category: 'function',
+    action: {
+      tokenTableSort: 'token_table_sort', // event label === tokenType_sortKey_sortOrder
+      addressConvert: 'address_convert', // event label === address
+      broadcastTx: 'broadcast_tx', // event label === success/failure
+      blockCountdownCalc: 'block_countdown_calc', // event label === target blocknumber
     },
   },
 };

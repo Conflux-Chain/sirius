@@ -17,6 +17,8 @@ import {
 import { governanceAddress } from '../../../utils/constants';
 import { getTimeByBlockInterval } from '../../../utils';
 import { Countdown } from './Countdown';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 const governanceContract = cfx.Contract({
   abi: governanceAbi,
@@ -61,6 +63,11 @@ export function BlocknumberCalc() {
           calcTimeSpan(res);
         })
         .finally(() => {
+          trackEvent({
+            category: ScanEvent.function.category,
+            action: ScanEvent.function.action.blockCountdownCalc,
+            label: blocknumber,
+          });
           setLoading(false);
         });
     } else {
@@ -94,7 +101,7 @@ export function BlocknumberCalc() {
   }, []);
 
   return (
-    <StyledPageWrapper>
+    <>
       <Helmet>
         <title>{t(translations.header.blocknumberCalc)}</title>
         <meta
@@ -159,7 +166,7 @@ export function BlocknumberCalc() {
       {seconds != null ? (
         <>
           <Countdown seconds={seconds} />
-          <div className="target-date">
+          <StyledTargetDateWrapper>
             {t(translations.blocknumberCalc.targetDate)}:{' '}
             <strong>
               {dayjs(+new Date() + seconds * 1000).format(
@@ -168,29 +175,18 @@ export function BlocknumberCalc() {
                   : 'YYYY年MM月DD日 HH:mm:ss (UTCZ)',
               )}
             </strong>
-          </div>
+          </StyledTargetDateWrapper>
         </>
       ) : null}
-    </StyledPageWrapper>
+    </>
   );
 }
 
-const StyledPageWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding-top: 2.2857rem;
-
-  .target-date {
-    margin-top: 16px;
-    font-size: 14px;
-    font-weight: normal;
-    color: #74798c;
-  }
-
-  ${media.s} {
-    margin-top: 16px;
-    padding: 1.1429rem;
-  }
+const StyledTargetDateWrapper = styled.div`
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #74798c;
 `;
 
 const CardWrapper = styled.div`

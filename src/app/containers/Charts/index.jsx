@@ -36,6 +36,18 @@ export function Charts() {
           <Chart width={chartWidth} indicator="difficulty" />
           <Chart width={chartWidth} indicator="hashRate" />
         </ChartsWrap>
+        <HeaderWrap>
+          <div className="title">{t(translations.charts.subtitle3)}</div>
+        </HeaderWrap>
+        <ChartsWrap>
+          <Chart width={chartWidth} indicator="dailyTransaction" />
+        </ChartsWrap>
+        {/*<HeaderWrap>*/}
+        {/*  <div className="title">{t(translations.charts.subtitle4)}</div>*/}
+        {/*</HeaderWrap>*/}
+        {/*<ChartsWrap>*/}
+        {/*  <Chart width={chartWidth} indicator="cfxHoldingAccounts" />*/}
+        {/*</ChartsWrap>*/}
       </PageWrap>
     </>
   );

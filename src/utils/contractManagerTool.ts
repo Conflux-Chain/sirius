@@ -4,6 +4,8 @@ import {
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js'; // >= v1.1.6
 import { gzip } from 'pako';
 
+// TODO zip use hex address, should change to base32 address
+
 const zipContract = format(
   {
     address: format.hexAddress, // cip-37

@@ -5,12 +5,13 @@ import { Button, Modal, Textarea } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { translations } from '../../../locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
-import { media } from '../../../styles/media';
 import imgWarning from '../../../images/warning.png';
 import { Card } from '../../components/Card/Loadable';
 import { cfx } from '../../../utils/cfx';
 import imgSuccessBig from '../../../images/success_big.png';
 import { getEllipsStr } from '../../../utils';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 export function BroadcastTx() {
   const { t } = useTranslation();
@@ -27,16 +28,26 @@ export function BroadcastTx() {
       const txHash = await cfx.sendRawTransaction(value);
       setTxHash(txHash);
       setModalShown(true);
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.broadcastTx,
+        label: 'success',
+      });
     } catch (e) {
       console.error(e);
       setError(e.message || 'unknown');
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.broadcastTx,
+        label: 'failure',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <StyledPageWrapper>
+    <>
       <Helmet>
         <title>{t(translations.header.broadcastTx)}</title>
         <meta
@@ -44,10 +55,9 @@ export function BroadcastTx() {
           content={t(translations.metadata.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.broadcastTx.title)}</PageHeader>
-      <StyledSubtitleWrapper>
-        {t(translations.broadcastTx.subtitle)}
-      </StyledSubtitleWrapper>
+      <PageHeader subtitle={t(translations.broadcastTx.subtitle)}>
+        {t(translations.broadcastTx.title)}
+      </PageHeader>
       <StyledInputWrapper>
         <Card className="input-card">
           {/*
@@ -108,27 +118,9 @@ export function BroadcastTx() {
           </Modal.Content>
         </Modal>
       </StyledInputWrapper>
-    </StyledPageWrapper>
+    </>
   );
 }
-
-const StyledPageWrapper = styled.div`
-  max-width: 73.1429rem;
-  margin: 0 auto;
-  padding-top: 2.2857rem;
-
-  ${media.s} {
-    margin-top: 16px;
-    padding: 1.1429rem;
-  }
-`;
-
-const StyledSubtitleWrapper = styled.p`
-  color: #74798c;
-  font-size: 1rem;
-  line-height: 1.2857rem;
-  margin: 1.1429rem 0 1.7143rem;
-`;
 
 const StyledInputWrapper = styled.div`
   display: block;

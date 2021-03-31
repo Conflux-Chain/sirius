@@ -5,7 +5,6 @@ import { translations } from '../../../locales/i18n';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
-import { media } from '../../../styles/media';
 import { Card, Spinner } from '@cfxjs/react-ui';
 import { Select } from '../../components/Select';
 import { Description } from '../../components/Description/Loadable';
@@ -411,6 +410,8 @@ export const Transaction = () => {
         // find batch transfers
         const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
           trans =>
+            trans.transferType === transfer.transferType &&
+            trans.address === transfer.address &&
             trans.transactionHash === transfer.transactionHash &&
             trans.from === transfer.from &&
             trans.to === transfer.to,
@@ -470,7 +471,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -501,7 +502,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -534,7 +535,7 @@ export const Transaction = () => {
               className="lineContainer"
               key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
             >
-              <span>{index++}. </span>
+              <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
@@ -570,16 +571,20 @@ export const Transaction = () => {
             text={t(translations.toolTip.tx.tokenTransferred)}
             placement="top"
           >
-            {`${t(translations.transaction.tokenTransferred)} (${
-              transferListContainer.length
-            })`}
+            {`${t(translations.transaction.tokenTransferred)} ${
+              transferListContainer.length > 1
+                ? `(${transferListContainer.length})`
+                : ''
+            }`}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
           <div
             style={transferListContainerStyle}
-            className="transferListContainer"
+            className={`transferListContainer ${
+              transferListContainer.length === 1 ? 'onlyOne' : ''
+            }`}
           >
             {transferListContainer}
           </div>
@@ -613,7 +618,7 @@ export const Transaction = () => {
     : 0;
 
   return (
-    <StyledTransactionsWrapper>
+    <>
       <Helmet>
         <title>{t(translations.transaction.title)}</title>
         <meta
@@ -964,7 +969,7 @@ export const Transaction = () => {
           hash={routeHash}
         ></TableCard>
       </StyledCardWrapper>
-    </StyledTransactionsWrapper>
+    </>
   );
 };
 
@@ -990,6 +995,11 @@ const StyledCardWrapper = styled.div`
     margin-left: 0.5714rem;
   }
   .transferListContainer {
+    &.onlyOne {
+      .lineContainer .index {
+        display: none;
+      }
+    }
     .lineContainer {
       line-height: 1.7143rem;
     }
@@ -1051,18 +1061,10 @@ const StyledCardWrapper = styled.div`
       height: 0;
     }
   }
-`;
-
-const StyledTransactionsWrapper = styled.div`
-  padding: 2.2857rem 0;
 
   .icon-sponsored {
     height: 1.4286rem;
     margin-left: 0.5714rem;
-  }
-
-  ${media.s} {
-    padding-bottom: 0;
   }
 `;
 

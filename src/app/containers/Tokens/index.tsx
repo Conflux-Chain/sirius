@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -15,6 +15,8 @@ import { cfxTokenTypes } from '../../../utils/constants';
 import queryString from 'query-string';
 
 import imgInfo from 'images/info.svg';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 interface RouteParams {
   tokenType: string;
@@ -40,6 +42,9 @@ export function Tokens() {
 
   let title = t(translations.header.tokens20);
 
+  let defaultSortOrder = 'desc';
+  let defaultSortKey = 'totalPrice';
+
   if (tokenType === cfxTokenTypes.erc721) {
     columnsWidth = [1, 8, 4, 4, 5];
     columns = [
@@ -50,8 +55,9 @@ export function Tokens() {
       tokenColunms.contract(),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=erc721TransferCount&fields=transferCount,icon,transactionCount,erc721TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
     title = t(translations.header.tokens721);
+    defaultSortKey = 'transferCount';
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
@@ -63,11 +69,59 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=erc1155TransferCount&fields=transferCount,icon,transactionCount,erc1155TransferCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
     title = t(translations.header.tokens1155);
+    defaultSortKey = 'transferCount';
   }
 
+  const [tableTokenType, setTableTokenType] = useState(tokenType);
+  const [queryUrl, setQueryUrl] = useState(url);
+  const [tableSortOrder, setTableSortOrder] = useState(defaultSortOrder);
+  const [tableSortKey, setTableSortKey] = useState(defaultSortKey);
   const { total } = useTableData(url);
+
+  useEffect(() => {
+    setQueryUrl(url);
+    // reset default sort after token type change
+    if (tableTokenType !== tokenType) {
+      setTableTokenType(tokenType);
+      setTableSortOrder(defaultSortOrder);
+      setTableSortKey(defaultSortKey);
+    }
+  }, [url, tableTokenType, tokenType, defaultSortOrder, defaultSortKey]);
+
+  // deal with column sort
+  const sorter = (column, table, oldUrl) => {
+    let newSortOrder = tableSortOrder === 'asc' ? 'desc' : 'asc';
+    let urlSortKey = column.dataIndex;
+    // deal with especial key
+    // if (urlSortKey === 'transferCount') {
+    //   if (tokenType === cfxTokenTypes.erc721) {
+    //     urlSortKey = 'erc721TransferCount';
+    //   } else if (tokenType === cfxTokenTypes.erc1155) {
+    //     urlSortKey = 'erc1155TransferCount';
+    //   }
+    // }
+
+    // generate new url by replace sort params
+    const newUrl = oldUrl
+      .replace(
+        /reverse=[^&]*/g,
+        newSortOrder === 'desc' ? 'reverse=true' : 'reverse=false',
+      )
+      .replace(/orderBy=[^&]*/g, 'orderBy=' + urlSortKey);
+
+    setTableSortKey(column.dataIndex);
+    setTableSortOrder(newSortOrder);
+    if (newUrl !== oldUrl) {
+      setQueryUrl(newUrl);
+      trackEvent({
+        category: ScanEvent.function.category,
+        action: ScanEvent.function.action.tokenTableSort,
+        label: `${tokenType}_${column.dataIndex}_${newSortOrder}`,
+      });
+    }
+  };
 
   return (
     <>
@@ -75,50 +129,48 @@ export function Tokens() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <StyledTokensPageHeaderWrapper>
-        <PageHeader>
-          {title}
-          {!tokenType || tokenType === cfxTokenTypes.erc20 ? (
-            <Tooltip
-              hoverable
-              text={
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: t(translations.tokens.dataSource),
-                  }}
-                />
-              }
-              placement="top"
-            >
-              <IconWrapper>
-                <img src={imgInfo} alt="?" />
-              </IconWrapper>
-            </Tooltip>
-          ) : null}
-        </PageHeader>
-      </StyledTokensPageHeaderWrapper>
-      <TipLabel
-        total={total}
-        left={t(translations.tokens.tipCountBefore)}
-        right={t(translations.tokens.tipCountAfter)}
-      />
+      <PageHeader
+        subtitle={
+          <TipLabel
+            total={total}
+            left={t(translations.tokens.tipCountBefore)}
+            right={t(translations.tokens.tipCountAfter)}
+          />
+        }
+      >
+        {title}
+        {!tokenType || tokenType === cfxTokenTypes.erc20 ? (
+          <Tooltip
+            hoverable
+            text={
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: t(translations.tokens.dataSource),
+                }}
+              />
+            }
+            placement="top"
+          >
+            <IconWrapper>
+              <img src={imgInfo} alt="?" />
+            </IconWrapper>
+          </Tooltip>
+        ) : null}
+      </PageHeader>
+
       <TablePanel
         table={{
           columns: columns,
           rowKey: 'address',
+          sorter,
+          sortOrder: tableSortOrder,
+          sortKey: tableSortKey,
         }}
-        url={url}
+        url={queryUrl}
       />
     </>
   );
 }
-
-const StyledTokensPageHeaderWrapper = styled.div`
-  margin-top: 32px;
-  > div {
-    margin-bottom: 12px;
-  }
-`;
 
 const IconWrapper = styled.div`
   padding-left: 0.2857rem;
