@@ -1,10 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Select } from '../../../components/Select';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { isTestNetEnv } from 'utils/hooks/useTestnet';
 import { CHAIN_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
 
 const isTestNet = isTestNetEnv();
 const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
@@ -42,13 +44,9 @@ const SelectedLine = ({
     select && select.onChange && select.onChange(value);
   };
   const options =
-    useMemo(() => {
-      if (!isPossibleAddress(data.hexValue)) {
-        return select?.options.filter(o => o.key !== 'address');
-      }
-      return select?.options;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.hexValue]) || [];
+    (isPossibleAddress(data.hexValue)
+      ? select?.options
+      : select?.options.filter(o => o.key !== 'address')) || [];
 
   return (
     <StyledSelectItemWrapper>
@@ -135,6 +133,7 @@ export const Data = ({
   }>;
   hexData: string;
 }) => {
+  const { t } = useTranslation();
   if (!data.length) {
     return null;
   } else {
@@ -168,8 +167,12 @@ export const Data = ({
             size="small"
             disableMatchWidth={true}
           >
-            <Select.Option value="hex">Hex</Select.Option>
-            <Select.Option value="decode">Dec</Select.Option>
+            <Select.Option value="hex">
+              {t(translations.transaction.logs.hex)}
+            </Select.Option>
+            <Select.Option value="decode">
+              {t(translations.transaction.logs.decode)}
+            </Select.Option>
           </Select>
           {content}
         </>
@@ -182,22 +185,22 @@ export const Data = ({
           {
             key: 'hex',
             value: 'hex',
-            content: 'Hex',
+            content: t(translations.transaction.logs.hex),
           },
           {
             key: 'number',
             value: 'number',
-            content: 'Number',
+            content: t(translations.transaction.logs.number),
           },
           {
             key: 'text',
             value: 'text',
-            content: 'Text',
+            content: t(translations.transaction.logs.text),
           },
           {
             key: 'address',
             value: 'address',
-            content: 'Address',
+            content: t(translations.transaction.logs.address),
           },
         ],
       };
@@ -214,13 +217,13 @@ export const Data = ({
 };
 
 const StyledDataWrapper = styled.div`
-  padding: 20px 100px 20px 20px;
+  padding: 16px 100px 16px 16px;
   background-color: #fafbfc;
   position: relative;
 
   .select.select-with-abi {
     position: absolute;
-    right: 20px;
+    right: 16px;
     height: 30px;
     padding: 0 10px;
   }

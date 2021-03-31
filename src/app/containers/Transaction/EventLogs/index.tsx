@@ -9,18 +9,13 @@ import { isTestNetEnv } from 'utils/hooks/useTestnet';
 import { CHAIN_ID } from 'utils/constants';
 import _ from 'lodash';
 import SkeletonContainer from '../../../components/SkeletonContainer';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
 
 import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
-
-// // @ts-ignore
-// window._ = _;
-// // @ts-ignore
-// window.sdkAddress = sdkAddress;
-// // @ts-ignore
-// window.format = format;
 
 const isTestNet = isTestNetEnv();
 const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
@@ -105,6 +100,7 @@ const disassembleEvent = (log, decodedLog) => {
 };
 
 const EventLog = ({ log }) => {
+  const { t } = useTranslation();
   const [eventInfo, setEventInfo] = useState<any>(() => {
     const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
       hexValue: w,
@@ -191,19 +187,39 @@ const EventLog = ({ log }) => {
   return (
     <StyledEventLogWrapper>
       <SkeletonContainer shown={loading}>
-        <Description className="description" title="Address" small noBorder>
+        <Description
+          className="description"
+          title={t(translations.transaction.logs.address)}
+          small
+          noBorder
+        >
           <Address address={address}></Address>
         </Description>
         {fnName ? (
-          <Description className="description" title="Name" small noBorder>
+          <Description
+            className="description"
+            title={t(translations.transaction.logs.name)}
+            small
+            noBorder
+          >
             <Event fnName={fnName} args={args} />
           </Description>
         ) : null}
-        <Description className="description" title="Topics" small noBorder>
+        <Description
+          className="description"
+          title={t(translations.transaction.logs.topics)}
+          small
+          noBorder
+        >
           <Topics data={topics} signature={signature} />
         </Description>
         {!!data.length && (
-          <Description className="description" title="Data" small noBorder>
+          <Description
+            className="description"
+            title={t(translations.transaction.logs.data)}
+            small
+            noBorder
+          >
             <Data data={data} hexData={log.data} />
           </Description>
         )}
@@ -213,7 +229,13 @@ const EventLog = ({ log }) => {
 };
 
 export const EventLogs = ({ hash }: Props) => {
-  const [eventlogs, setEventlogs] = useState([]);
+  const [eventlogs, setEventlogs] = useState([
+    {
+      topics: [],
+      data: '',
+      address: '',
+    },
+  ]);
 
   useEffect(() => {
     reqTransactionEventlogs({
@@ -227,7 +249,7 @@ export const EventLogs = ({ hash }: Props) => {
     <StyledEventLogsWrapper>
       <Card>
         {eventlogs.map((log, index) => (
-          <EventLog log={log} key={index} />
+          <EventLog log={log} key={`${log.address}-${index}`} />
         ))}
       </Card>
     </StyledEventLogsWrapper>
@@ -235,13 +257,13 @@ export const EventLogs = ({ hash }: Props) => {
 };
 
 const StyledEventLogsWrapper = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 2.2857rem;
 `;
 
 const StyledEventLogWrapper = styled.div`
-  min-height: 80px;
+  min-height: 5.7143rem;
+  padding: 0.7143rem 0;
   border-bottom: 1px solid #e8e9ea;
-  padding: 10px 0;
 
   &:last-child {
     border-bottom: none;
@@ -249,10 +271,12 @@ const StyledEventLogWrapper = styled.div`
 
   .data-container {
     background: #fafbfc;
-    padding: 12px;
+    padding: 0.8571rem;
   }
 
   .description.description {
+    min-height: auto;
+
     &:last-child {
       .left,
       .right {
@@ -270,8 +294,3 @@ const StyledEventLogWrapper = styled.div`
     }
   }
 `;
-
-/**
-@todo
-1. i18n - @txz
- */

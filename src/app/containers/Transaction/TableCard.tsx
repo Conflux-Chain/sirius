@@ -52,8 +52,8 @@ export function TableCard({
       tableHeader: label(0),
     },
     {
-      value: 'eventlogs',
-      label: 'event logs',
+      value: 'logs',
+      label: t(translations.transaction.logs.title),
       content: <EventLogs hash={hash}></EventLogs>,
     },
   ];

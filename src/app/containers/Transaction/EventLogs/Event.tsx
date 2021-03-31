@@ -30,13 +30,13 @@ export const Event = ({ fnName, args }) => {
 
 const StyledEventWrapper = styled.div`
   .parenthesis {
-    margin: 5px;
+    margin: 0.3571rem;
   }
 
   .topic-index,
   .type,
   .comma {
-    margin-right: 5px;
+    margin-right: 0.3571rem;
   }
 
   .arg-name {

@@ -1,8 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Select } from '../../../components/Select';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
 
 export const Topics = ({ data, signature }) => {
+  const { t } = useTranslation();
   const [selectMap, setSelectMap] = useState(() => {
     return data.reduce((prev, curr) => {
       prev[curr.argName] = curr.cfxAddress ? 'address' : 'decode';
@@ -15,25 +18,23 @@ export const Topics = ({ data, signature }) => {
       [argName]: value,
     });
   };
-  const options = useMemo(() => {
-    return [
-      {
-        key: 'hex',
-        value: 'hex',
-        content: 'Hex',
-      },
-      {
-        key: 'decode',
-        value: 'decode',
-        content: 'Decode',
-      },
-      {
-        key: 'address',
-        value: 'address',
-        content: 'Address',
-      },
-    ];
-  }, []);
+  const options = [
+    {
+      key: 'hex',
+      value: 'hex',
+      content: t(translations.transaction.logs.hex),
+    },
+    {
+      key: 'decode',
+      value: 'decode',
+      content: t(translations.transaction.logs.decode),
+    },
+    {
+      key: 'address',
+      value: 'address',
+      content: t(translations.transaction.logs.address),
+    },
+  ];
 
   return (
     <StyledTopicsWrapper>
@@ -119,17 +120,17 @@ export const Topics = ({ data, signature }) => {
 
 const StyledTopicsWrapper = styled.div`
   .topic-item {
-    margin-bottom: 5px;
+    margin-bottom: 0.3571rem;
     display: flex;
     align-items: center;
 
     .index {
       flex-shrink: 0;
-      width: 24px;
-      height: 24px;
+      width: 1.7143rem;
+      height: 1.7143rem;
       background: #fafbfc;
-      border-radius: 2px;
-      margin-right: 12px;
+      border-radius: 0.1429rem;
+      margin-right: 0.8571rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -137,8 +138,8 @@ const StyledTopicsWrapper = styled.div`
 
     .select.select {
       padding-left: 0;
-      height: 22px;
-      padding: 0 10px;
+      height: 1.5714rem;
+      padding: 0 0.7143rem;
 
       .value {
         padding-left: 0;
@@ -146,7 +147,7 @@ const StyledTopicsWrapper = styled.div`
     }
 
     .value {
-      padding-left: 12px;
+      padding-left: 0.8571rem;
     }
   }
 `;
