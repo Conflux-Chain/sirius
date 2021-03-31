@@ -56,6 +56,15 @@ module.exports = app => {
       secure: false,
     }),
   );
+  // test api with backend dev service
+  // app.use(
+  //   '/v1',
+  //   createProxyMiddleware({
+  //     target: 'http://scan-dev-service.conflux-chain.org:8895/',
+  //     changeOrigin: true,
+  //     secure: false,
+  //   }),
+  // );
   app.use(
     '/v1',
     createProxyMiddleware({
