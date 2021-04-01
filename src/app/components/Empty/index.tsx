@@ -1,6 +1,6 @@
 /**
  *
- * Placeholder
+ * Empty
  *
  */
 import React from 'react';
@@ -12,26 +12,29 @@ import imgTableWhoops from 'images/table-whoops.png';
 
 interface Props {
   show: boolean;
+  type?: 'fixed' | 'fluid';
   className?: string;
   children?: React.ReactNode;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
-export type PlaceholderProps = React.PropsWithChildren<Props & NativeAttrs>;
+export type EmptyProps = React.PropsWithChildren<Props & NativeAttrs>;
 
-export const Placeholder = ({
+export const Empty = ({
   show,
+  type = 'fluid',
   className,
   children,
   ...others
-}: PlaceholderProps) => {
+}: EmptyProps) => {
   const { t } = useTranslation();
   const noData = t(translations.general.table.noData);
   const whoops = t(translations.general.table.whoops);
   return (
     <Wrapper
-      className={clsx('placeholder', className, {
+      className={clsx('empty', className, {
         show,
       })}
+      type={type}
       {...others}
     >
       <img className="img" src={imgTableWhoops} alt="no data"></img>
@@ -42,8 +45,10 @@ export const Placeholder = ({
   );
 };
 
-const Wrapper = styled.div`
-  position: absolute;
+const Wrapper = styled.div<{
+  type?: string;
+}>`
+  position: ${props => (props.type === 'fluid' ? 'relative' : 'absolute')};
   top: 0;
   bottom: 0;
   left: 0;
@@ -52,6 +57,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   display: none;
+  min-height: 16.4286rem;
 
   &.show {
     display: flex;

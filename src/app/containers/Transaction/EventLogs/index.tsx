@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
-import { Card } from '../../../components/Card';
+import { Card } from '../../../components/Card/Loadable';
+import { Empty } from '../../../components/Empty/Loadable';
 import { cfx } from 'utils/cfx';
 import { Description } from '../../../components/Description/Loadable';
 import styled from 'styled-components/macro';
@@ -187,7 +188,12 @@ const EventLog = ({ log }) => {
 
   return (
     <StyledEventLogWrapper>
-      <SkeletonContainer shown={loading}>
+      <SkeletonContainer
+        shown={loading}
+        style={{
+          minHeight: '16.4286rem',
+        }}
+      >
         <Description
           className="description"
           title={t(translations.transaction.logs.address)}
@@ -249,6 +255,7 @@ export const EventLogs = ({ hash }: Props) => {
   return (
     <StyledEventLogsWrapper>
       <Card>
+        <Empty show={!eventlogs.length} />
         {eventlogs.map((log, index) => (
           <EventLog log={log} key={`${log.address}-${index}`} />
         ))}
@@ -258,7 +265,9 @@ export const EventLogs = ({ hash }: Props) => {
 };
 
 const StyledEventLogsWrapper = styled.div`
+  position: relative;
   margin-bottom: 2.2857rem;
+  min-height: 16.4286rem;
 `;
 
 const StyledEventLogWrapper = styled.div`
