@@ -35,13 +35,16 @@ export const Topics = ({ data, signature }) => {
       content: t(translations.transaction.logs.address),
     },
   ];
+  const baseIndex = signature ? 1 : 0;
 
   return (
     <StyledTopicsWrapper>
-      <div className="topic-item">
-        <span className="index">0</span>
-        <span className="value">{signature}</span>
-      </div>
+      {signature ? (
+        <div className="topic-item">
+          <span className="index">0</span>
+          <span className="value">{signature}</span>
+        </div>
+      ) : null}
       {data.map((d, index) => {
         let value = '';
         let select: React.ReactNode = null;
@@ -82,33 +85,11 @@ export const Topics = ({ data, signature }) => {
               ))}
             </Select>
           );
-
-          // select = {
-          //   value: 'decode',
-          //   options: availableOptions,
-          //   onChange: value => {
-          //     handleChange(value, d.argName);
-          //   },
-          // };
-
-          // select = (
-          //   <SelectedLine
-          //     key={index}
-          //     index={index}
-          //     select={{
-          //       value: 'decode',
-          //       options: availableOptions,
-          //     }}
-          //     data={d}
-          //   ></SelectedLine>
-          // );
-
-          // return select;
         }
 
         return (
           <div key={index} className="topic-item">
-            <span className="index">{index + 1}</span>
+            <span className="index">{index + baseIndex}</span>
             {select}
             <span className="value">{value}</span>
           </div>

@@ -110,7 +110,7 @@ const EventLog = ({ log }) => {
       address: log.address,
       fnName: null,
       args: [],
-      topics: log.topics.slice(1),
+      topics: log.topics,
       /**
        * if contract not register, it has no abi, need to decode data manully
        * decode params value by split every 64 character
@@ -122,7 +122,7 @@ const EventLog = ({ log }) => {
        * 5. hex: original data
        */
       data: splitData,
-      signature: log.topics[0],
+      signature: null,
     };
   });
   const [loading, setLoading] = useState(false);
@@ -172,7 +172,7 @@ const EventLog = ({ log }) => {
               args,
               topics,
               data,
-              signature: log.topics[0],
+              signature: decodedLog.signature,
             });
           }
         } catch (e) {}
