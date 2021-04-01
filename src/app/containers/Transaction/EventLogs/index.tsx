@@ -79,6 +79,7 @@ const disassembleEvent = (log, decodedLog) => {
           r.indexed = indexCount;
           r.value = decodedLog.object[item[2]];
           r.hexValue = log.topics[indexCount];
+
           try {
             r.value = format.hexAddress(r.value);
             r.cfxAddress = getAddress(r.value);
