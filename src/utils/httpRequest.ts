@@ -14,6 +14,13 @@ export const sendRequest = config => {
   });
 };
 
+export const reqTransactionEventlogs = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/eventLog/${param && param['hash']}`,
+    ...extra,
+  });
+};
+
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
