@@ -9,11 +9,11 @@ import styled from 'styled-components/macro';
 import { Card } from '../Card';
 import { media, useBreakpoint } from '../../../styles/media';
 import { useTableData } from '../TabsTablePanel';
-import { Placeholder } from './Placeholder';
 import descIcon from '../../../images/table-desc.svg';
 import descHoverIcon from '../../../images/table-desc-hover.svg';
 import ascIcon from '../../../images/table-asc.svg';
 import ascHoverIcon from '../../../images/table-asc-hover.svg';
+import { Empty } from '../Empty';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 export type TableType = TableProps<unknown> & {
@@ -198,7 +198,7 @@ export const TablePanel = ({
               scroll={{ x: 800 }}
             />
             {/* may rewrite a new Table component with empty placeholder is better */}
-            <Placeholder show={empty} />
+            <Empty show={empty} type="fixed" />
           </div>
         </Card>
       </StyledTableWrapper>

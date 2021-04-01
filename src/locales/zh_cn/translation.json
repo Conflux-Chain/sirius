@@ -572,6 +572,17 @@
       "to": "到",
       "produced": "共生成",
       "txns": "个内部交易。"
+    },
+    "logs": {
+      "title": "事件日志",
+      "address": "地址",
+      "name": "名称",
+      "topics": "题目",
+      "data": "数据",
+      "decode": "解码",
+      "hex": "十六进制",
+      "text": "文字",
+      "number": "数字"
     }
   },
   "block": {
