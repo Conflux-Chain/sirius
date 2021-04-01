@@ -99,7 +99,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     // use full name to evoke contract function for override function compatible
     const fullNameWithType = formatType({
       name: data['name'],
-      inputs: data['inputs'],
+      inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
     });
 
     switch (type) {
