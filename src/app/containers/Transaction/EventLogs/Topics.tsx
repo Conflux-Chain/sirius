@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { Select } from '../../../components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import { Link } from '../../../components/Link';
 
 export const Topics = ({ data, signature }) => {
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ export const Topics = ({ data, signature }) => {
         </div>
       ) : null}
       {data.map((d, index) => {
-        let value = '';
+        let value: React.ReactNode = '';
         let select: React.ReactNode = null;
 
         if (typeof d === 'string') {
@@ -62,12 +63,14 @@ export const Topics = ({ data, signature }) => {
             decode: d.value,
             address: d.cfxAddress,
           };
-          // const selectedValue = selectMap[d.argName];
           const availableOptions = options.filter(
             o => valueMap[o.value] !== null,
           );
 
           value = valueMap[name];
+          if (name === 'address') {
+            value = <Link href={`/address/${value}`}>{value}</Link>;
+          }
           select = (
             <Select
               className="select"
