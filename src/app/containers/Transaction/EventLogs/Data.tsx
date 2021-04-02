@@ -82,7 +82,7 @@ const decodeData = (value, type) => {
         result = <Link href={`/contract/${address}`}>{address}</Link>;
         break;
       case 'number':
-        result = format.bigUInt(v).toString();
+        result = format.bigInt(v).toString();
         break;
       case 'text':
         result = format.hexBuffer(v).toString();
