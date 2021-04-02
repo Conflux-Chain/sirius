@@ -477,7 +477,7 @@ export const Transaction = () => {
               <span className="to">{t(translations.transaction.to)}</span>
               <AddressContainer value={transferItem['to']} />
               <span className="for">{t(translations.transaction.for)}</span>
-              <span className="type">{cfxTokenTypes.erc721}</span>
+              <span className="type">CRC721</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
               <span className="type">
@@ -507,7 +507,7 @@ export const Transaction = () => {
               <AddressContainer value={transferItem['from']} />
               <span className="to">{t(translations.transaction.to)}</span>
               <AddressContainer value={transferItem['to']} />
-              <span className="type">{cfxTokenTypes.erc1155}</span>
+              <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
               {transferItem['batch'].map((item, index) => (
