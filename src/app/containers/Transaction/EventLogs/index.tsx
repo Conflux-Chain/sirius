@@ -46,6 +46,18 @@ interface Props {
 
 const getAddress = data => format.address(data, chainId);
 
+const decodeData = (value, type: string) => {
+  if (type === 'address' || type.startsWith('bytes')) {
+    return value;
+  }
+
+  if (type.startsWith('uint') || type.startsWith('int')) {
+    return value.toString();
+  }
+
+  return value;
+};
+
 const disassembleEvent = (log, decodedLog) => {
   try {
     var r = /(.*)(\((.+)\))/;
@@ -63,22 +75,25 @@ const disassembleEvent = (log, decodedLog) => {
 
       args = args.split(',').map(i => {
         let item = i.trim().split(' ');
+        const type = item[0];
+
         let r = {
           argName: '',
-          type: item[0],
+          type: type,
           indexed: 0, // 0 is mean not indexed
           value: null,
           hexValue: null,
           cfxAddress: null,
         };
+
         if (item.length === 2) {
           r.argName = item[1];
-          r.value = decodedLog.object[item[1]];
+          r.value = decodeData(decodedLog.object[item[1]], type);
         } else if (item.length === 3) {
           r.argName = item[2];
-          r.type = item[0];
+          r.type = type;
           r.indexed = indexCount;
-          r.value = decodedLog.object[item[2]];
+          r.value = decodeData(decodedLog.object[item[2]], type);
           r.hexValue = log.topics[indexCount];
 
           try {
