@@ -19,6 +19,7 @@ import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 
+import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
@@ -267,6 +268,7 @@ export function App() {
                   path={['/block-countdown', '/block-countdown/:block']}
                   component={BlocknumberCalc}
                 />
+                <Route exact path="/swap" component={Swap} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>

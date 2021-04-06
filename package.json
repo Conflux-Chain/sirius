@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@cfxjs/react-hooks": "0.1.10",
+    "@cfxjs/react-hooks": "2.0.0",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
     "@testing-library/jest-dom": "5.1.1",
     "@testing-library/react": "10.0.1",
