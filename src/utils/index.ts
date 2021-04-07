@@ -742,34 +742,3 @@ export const addDays = (date, days) => {
  */
 export const isSafeNumberOrNumericStringInput = data =>
   /^\d+\.?\d*$|^\.\d*$/.test(data);
-
-/**
- * test case:
-  convertToSafeNumericString('xxx')
-  convertToSafeNumericString('.')
-  convertToSafeNumericString('0.')
-  convertToSafeNumericString('.0')
-  convertToSafeNumericString('0.0')
-  convertToSafeNumericString('000.000')
-  convertToSafeNumericString('000.100')
-  convertToSafeNumericString('01.0000')
-  convertToSafeNumericString('001.0100')
-  convertToSafeNumericString('001.100')
- */
-export const convertToSafeNumericString = data => {
-  if (!isSafeNumberOrNumericStringInput(data)) {
-    return data;
-  } else {
-    data = data.replace(/^0+|0+$/g, '');
-    if (data.charAt(data.length - 1) === '.') {
-      data = data.slice(0, data.length - 1);
-    }
-    if (data.charAt(0) === '.') {
-      data = `0${data}`;
-    }
-    if (data === '' || data === '0.0') {
-      data = '0';
-    }
-    return data;
-  }
-};
