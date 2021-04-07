@@ -571,6 +571,17 @@
       "to": "to",
       "produced": "produced",
       "txns": "internal transactions."
+    },
+    "logs": {
+      "title": "logs",
+      "address": "Address",
+      "name": "Name",
+      "topics": "Topics",
+      "data": "Data",
+      "decode": "Decode",
+      "hex": "Hex",
+      "text": "Text",
+      "number": "Number"
     }
   },
   "block": {

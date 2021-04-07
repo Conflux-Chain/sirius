@@ -41,3 +41,8 @@ export enum TxnAction {
   sponsorApplication = 105,
   contractDeplpy = 106,
 }
+
+export enum CHAIN_ID {
+  mainnet = 1029,
+  testnet = 1,
+}

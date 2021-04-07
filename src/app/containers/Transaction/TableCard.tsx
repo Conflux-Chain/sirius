@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
-import { tokenColunms, transactionColunms } from '../../../utils/tableColumns';
+import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
-import { cfxTokenTypes } from '../../../utils/constants';
+import { cfxTokenTypes } from 'utils/constants';
+import { EventLogs } from './EventLogs/Loadable';
 
 export function TableCard({
   from,
@@ -49,6 +50,11 @@ export function TableCard({
           }${index}`,
       },
       tableHeader: label(0),
+    },
+    {
+      value: 'logs',
+      label: t(translations.transaction.logs.title),
+      content: <EventLogs hash={hash}></EventLogs>,
     },
   ];
 
