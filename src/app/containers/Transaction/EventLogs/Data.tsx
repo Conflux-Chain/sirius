@@ -87,6 +87,8 @@ const decodeData = (value, type) => {
       case 'text':
         result = format.hexBuffer(v).toString();
         break;
+      case 'bool':
+        break;
       default:
     }
   } catch (e) {

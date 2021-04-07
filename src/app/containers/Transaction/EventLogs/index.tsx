@@ -18,6 +18,14 @@ import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
 
+import BigNumber from 'bignumber.js';
+import { Buffer } from 'buffer';
+
+// @ts-ignore
+window.BigNumber = BigNumber;
+// @ts-ignore
+window.Buffer = Buffer;
+
 const isTestNet = isTestNetEnv();
 const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
 
@@ -46,22 +54,27 @@ interface Props {
 
 const getAddress = data => format.address(data, chainId);
 
-const decodeData = (value, type: string) => {
-  if (type === 'address' || type.startsWith('bytes')) {
-    return value;
+const formatData = (data, type) => {
+  try {
+    if (data.sign !== undefined) {
+      return data.toString();
+    }
+    if (Object.prototype.toString.call(data) === '[object Array]') {
+      return JSON.stringify(data);
+    } else {
+      return data.toString();
+    }
+  } catch (e) {
+    return data.toString();
   }
-
-  if (type.startsWith('uint') || type.startsWith('int')) {
-    return value.toString();
-  }
-
-  return value;
 };
 
 const disassembleEvent = (log, decodedLog) => {
   try {
-    var r = /(.*)(\((.+)\))/;
+    // var r = /(.*)(\((.+)\))/;
+    var r = /(.*?)(?=\()(\((.+)\))$/;
     const result = r.exec(decodedLog.fullName);
+    // console.log(222, decodedLog.fullName, result);
     if (result !== null) {
       const fnName = result[1];
       let args:
@@ -73,7 +86,7 @@ const disassembleEvent = (log, decodedLog) => {
           }> = result[3];
       let indexCount = 1;
 
-      args = args.split(',').map(i => {
+      args = args.split(', ').map(i => {
         let item = i.trim().split(' ');
         const type = item[0];
 
@@ -86,14 +99,28 @@ const disassembleEvent = (log, decodedLog) => {
           cfxAddress: null,
         };
 
+        if (
+          decodedLog.type ===
+          'TestDataTuple(uint256,(uint256,address,uint8),int256)'
+        ) {
+          // console.count();
+          // console.log('>>>>>>> ', decodedLog, item);
+          console.log(
+            item[1],
+            typeof decodedLog.object[item[1]],
+            decodedLog.object[item[1]],
+          );
+        }
         if (item.length === 2) {
           r.argName = item[1];
-          r.value = decodeData(decodedLog.object[item[1]], type);
+          // r.value = decodedLog.object[item[1]].toString();
+          r.value = formatData(decodedLog.object[item[1]], r.type);
         } else if (item.length === 3) {
           r.argName = item[2];
           r.type = type;
           r.indexed = indexCount;
-          r.value = decodeData(decodedLog.object[item[2]], type);
+          // r.value = decodedLog.object[item[2]].toString();
+          r.value = formatData(decodedLog.object[item[2]], r.type);
           r.hexValue = log.topics[indexCount];
 
           try {
@@ -103,6 +130,7 @@ const disassembleEvent = (log, decodedLog) => {
 
           indexCount += 1;
         }
+        // console.log(888, r);
         return r;
       });
 
@@ -166,6 +194,9 @@ const EventLog = ({ log }) => {
               address: log.address,
             });
             const decodedLog = contract.abi.decodeLog(log);
+
+            // console.count('decodedLog');
+            // console.log(decodedLog);
 
             const { fnName, args } = disassembleEvent(log, decodedLog);
             const { topics, data } = args.reduce(
