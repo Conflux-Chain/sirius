@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-// import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 import { Conflux } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
 import { ADDRESS_WCFX, NETWORK_ID } from 'utils/constants';
-import { isSafeNumberOrNumericStringInput } from 'utils';
+import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { Card } from '../../components/Card/Loadable';
 import styled from 'styled-components/macro';
-import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
+import { ConnectButton } from '../../components/ConnectWallet';
 import { Select } from '../../components/Select';
 import { Input, Button } from '@cfxjs/react-ui';
 import { Tooltip } from '../../components/Tooltip';
@@ -72,12 +72,16 @@ const SwapItem = ({
     }
   };
 
+  const b = formatNumber(new BigNumber(balance).div(1e18).toString(), {
+    precision: 6,
+  });
+
   return (
     <StyledSwapItemWrapper>
       <div className="top">
         <span className="left">{title}</span>
         <span className="right">
-          {balanceTitle}: {balance}
+          {balanceTitle}: {b}
         </span>
       </div>
       <div className="bottom">
