@@ -23,6 +23,7 @@ import { List } from './List';
 import { Remark } from '../../components/Remark';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import imgWarning from 'images/warning.png';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -73,6 +74,8 @@ export function AddressConverter() {
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
+      } else if (address.startsWith('0x') && address.charAt(2) !== '1') {
+        throw new Error(t(translations.addressConverter.notStartWith0x1));
       } else if (utilAddress.hasNetworkPrefix(address)) {
         hexAddress = format.hexAddress(address);
         hexChecksumAddress = format.checksumAddress(hexAddress);
@@ -152,6 +155,19 @@ export function AddressConverter() {
       <PageHeader>{t(translations.addressConverter.title)}</PageHeader>
       <StyledSubtitleWrapper>
         {t(translations.addressConverter.subtitle)}
+        <StyledColoredWrapper>
+          <img src={imgWarning} alt="warning-icon" className="img"></img>
+          <span>
+            {t(translations.addressConverter.notice)}
+            <Link
+              target="_blank"
+              href={t(translations.addressConverter.noticeLink)}
+            >
+              {t(translations.addressConverter.noticeLinkText)}
+            </Link>
+            {t(translations.addressConverter.noticeend)}
+          </span>
+        </StyledColoredWrapper>
       </StyledSubtitleWrapper>
       <StyledInputWrapper>
         <div>
@@ -296,7 +312,7 @@ export function AddressConverter() {
   );
 }
 
-const StyledSubtitleWrapper = styled.p`
+const StyledSubtitleWrapper = styled.div`
   color: #74798c;
   font-size: 1rem;
   line-height: 1.2857rem;
@@ -383,5 +399,19 @@ const StyledResultWrapper = styled.div`
   }
 `;
 const StyledRemarkWrapper = styled.div`
-  margin: 1.7143rem 0 0;
+  margin: 1.7143rem 0 2rem;
+`;
+
+const StyledColoredWrapper = styled.div`
+  color: #fa953c;
+  line-height: 18px;
+  margin-top: 5px;
+
+  .img {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+  }
+  display: flex;
+  align-items: center;
 `;

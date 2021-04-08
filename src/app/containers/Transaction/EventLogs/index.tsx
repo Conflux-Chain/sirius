@@ -46,21 +46,36 @@ interface Props {
 
 const getAddress = data => format.address(data, chainId);
 
-const decodeData = (value, type: string) => {
-  if (type === 'address' || type.startsWith('bytes')) {
-    return value;
+/**
+ *
+ * @param data
+ * @param type
+ * @returns
+ * @todo
+ * 1. convert hex data
+ * 2. handle JSON.stringify issue
+ */
+const formatData = (data, type) => {
+  try {
+    // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
+    if (data.sign !== undefined) {
+      return data.toString();
+    }
+    // bytes[], uint[], int[], tuple
+    // @todo use JSON.stringify to decode data, will cause inner value to be wrapped with quotation mark, like "string" type
+    if (Object.prototype.toString.call(data) === '[object Array]') {
+      return JSON.stringify(data);
+    }
+    // others: bytes, address, uint, int,
+    return data.toString();
+  } catch (e) {
+    return data.toString();
   }
-
-  if (type.startsWith('uint') || type.startsWith('int')) {
-    return value.toString();
-  }
-
-  return value;
 };
 
 const disassembleEvent = (log, decodedLog) => {
   try {
-    var r = /(.*)(\((.+)\))/;
+    var r = /(.*?)(?=\()(\((.+)\))$/;
     const result = r.exec(decodedLog.fullName);
     if (result !== null) {
       const fnName = result[1];
@@ -73,7 +88,7 @@ const disassembleEvent = (log, decodedLog) => {
           }> = result[3];
       let indexCount = 1;
 
-      args = args.split(',').map(i => {
+      args = args.split(', ').map(i => {
         let item = i.trim().split(' ');
         const type = item[0];
 
@@ -88,12 +103,12 @@ const disassembleEvent = (log, decodedLog) => {
 
         if (item.length === 2) {
           r.argName = item[1];
-          r.value = decodeData(decodedLog.object[item[1]], type);
+          r.value = formatData(decodedLog.object[item[1]], r.type);
         } else if (item.length === 3) {
           r.argName = item[2];
           r.type = type;
           r.indexed = indexCount;
-          r.value = decodeData(decodedLog.object[item[2]], type);
+          r.value = formatData(decodedLog.object[item[2]], r.type);
           r.hexValue = log.topics[indexCount];
 
           try {
