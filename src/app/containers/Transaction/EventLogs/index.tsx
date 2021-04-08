@@ -18,14 +18,6 @@ import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
 
-import BigNumber from 'bignumber.js';
-import { Buffer } from 'buffer';
-
-// @ts-ignore
-window.BigNumber = BigNumber;
-// @ts-ignore
-window.Buffer = Buffer;
-
 const isTestNet = isTestNetEnv();
 const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
 
@@ -59,7 +51,9 @@ const getAddress = data => format.address(data, chainId);
  * @param data
  * @param type
  * @returns
- * @todo convert hex data
+ * @todo
+ * 1. convert hex data
+ * 2. handle JSON.stringify issue
  */
 const formatData = (data, type) => {
   try {

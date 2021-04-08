@@ -68,6 +68,11 @@ export const Topics = ({ data, signature }) => {
           );
 
           value = valueMap[name];
+
+          if (name === 'address') {
+            value = <Link href={`/address/${value}`}>{value}</Link>;
+          }
+
           select = (
             <Select
               className="select"
