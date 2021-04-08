@@ -68,18 +68,17 @@ export const Topics = ({ data, signature }) => {
           );
 
           value = valueMap[name];
-          if (name === 'address') {
-            value = <Link href={`/address/${value}`}>{value}</Link>;
-          }
           select = (
             <Select
               className="select"
               disableMatchWidth={true}
               size="small"
-              value={name}
+              value={valueMap.hex === valueMap.decode ? 'hex' : name}
               onChange={value => {
                 handleChange(value, d.argName);
               }}
+              width="7rem"
+              disabled={valueMap.hex === valueMap.decode}
             >
               {availableOptions.map(o => (
                 <Select.Option key={o.key} value={o.value}>
@@ -124,14 +123,11 @@ const StyledTopicsWrapper = styled.div`
       padding-left: 0;
       height: 1.5714rem;
       padding: 0 0.7143rem;
+      margin-right: 0.8571rem;
 
       .value {
         padding-left: 0;
       }
-    }
-
-    .value {
-      padding-left: 0.8571rem;
     }
   }
 `;

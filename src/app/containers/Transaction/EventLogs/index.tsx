@@ -54,16 +54,26 @@ interface Props {
 
 const getAddress = data => format.address(data, chainId);
 
+/**
+ *
+ * @param data
+ * @param type
+ * @returns
+ * @todo convert hex data
+ */
 const formatData = (data, type) => {
   try {
+    // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
     if (data.sign !== undefined) {
       return data.toString();
     }
+    // bytes[], uint[], int[], tuple
+    // @todo use JSON.stringify to decode data, will cause inner value to be wrapped with quotation mark, like "string" type
     if (Object.prototype.toString.call(data) === '[object Array]') {
       return JSON.stringify(data);
-    } else {
-      return data.toString();
     }
+    // others: bytes, address, uint, int,
+    return data.toString();
   } catch (e) {
     return data.toString();
   }
@@ -71,10 +81,8 @@ const formatData = (data, type) => {
 
 const disassembleEvent = (log, decodedLog) => {
   try {
-    // var r = /(.*)(\((.+)\))/;
     var r = /(.*?)(?=\()(\((.+)\))$/;
     const result = r.exec(decodedLog.fullName);
-    // console.log(222, decodedLog.fullName, result);
     if (result !== null) {
       const fnName = result[1];
       let args:
@@ -99,27 +107,13 @@ const disassembleEvent = (log, decodedLog) => {
           cfxAddress: null,
         };
 
-        if (
-          decodedLog.type ===
-          'TestDataTuple(uint256,(uint256,address,uint8),int256)'
-        ) {
-          // console.count();
-          // console.log('>>>>>>> ', decodedLog, item);
-          console.log(
-            item[1],
-            typeof decodedLog.object[item[1]],
-            decodedLog.object[item[1]],
-          );
-        }
         if (item.length === 2) {
           r.argName = item[1];
-          // r.value = decodedLog.object[item[1]].toString();
           r.value = formatData(decodedLog.object[item[1]], r.type);
         } else if (item.length === 3) {
           r.argName = item[2];
           r.type = type;
           r.indexed = indexCount;
-          // r.value = decodedLog.object[item[2]].toString();
           r.value = formatData(decodedLog.object[item[2]], r.type);
           r.hexValue = log.topics[indexCount];
 
@@ -130,7 +124,6 @@ const disassembleEvent = (log, decodedLog) => {
 
           indexCount += 1;
         }
-        // console.log(888, r);
         return r;
       });
 
@@ -194,9 +187,6 @@ const EventLog = ({ log }) => {
               address: log.address,
             });
             const decodedLog = contract.abi.decodeLog(log);
-
-            // console.count('decodedLog');
-            // console.log(decodedLog);
 
             const { fnName, args } = disassembleEvent(log, decodedLog);
             const { topics, data } = args.reduce(
