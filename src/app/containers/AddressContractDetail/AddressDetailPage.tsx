@@ -28,7 +28,7 @@ import {
   Middle,
 } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
-import { isNullAddress } from '../../../utils';
+import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 
 interface RouteParams {
@@ -59,7 +59,7 @@ export const AddressDetailPage = memo(() => {
       <Main>
         <Head>
           <Title>
-            {isNullAddress(address)
+            {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
           </Title>

@@ -88,7 +88,7 @@ export const AddressContainer = ({
       });
 
     // Contract Registration fail, no link
-    // TODO deal with null address value
+    // TODO deal with zero address value
     return (
       <AddressWrapper>
         <IconWrapper>

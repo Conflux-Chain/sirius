@@ -85,7 +85,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -291,7 +291,7 @@
       "title": "流通量",
       "description": "流通量包含零地址中的 CFX"
     },
-    "nullAddress": {
+    "zeroAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"
     },
@@ -323,7 +323,7 @@
     "loading": "加载中...",
     "contract": "合约",
     "internalContract": "内置合约",
-    "zeroAddress": "空地址",
+    "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
     "balance": "余额",
     "token": "代币",
@@ -754,7 +754,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
