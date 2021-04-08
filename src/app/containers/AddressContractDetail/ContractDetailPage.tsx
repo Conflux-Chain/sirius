@@ -75,7 +75,10 @@ export const ContractDetailPage = memo(() => {
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
-    !!websiteUrl && websiteUrl !== t(translations.general.loading);
+    !!websiteUrl &&
+    websiteUrl !== 'https://' &&
+    websiteUrl !== 'http://' &&
+    websiteUrl !== t(translations.general.loading);
 
   return (
     <>
