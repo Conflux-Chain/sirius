@@ -36,7 +36,7 @@ export const useSearch = (value?: string) => {
       setValue && setValue(zeroAddress);
       trackEvent({
         category: ScanEvent.search.category,
-        action: ScanEvent.search.action.nullAddress,
+        action: ScanEvent.search.action.zeroAddress,
         label: innerValue,
       });
       return;

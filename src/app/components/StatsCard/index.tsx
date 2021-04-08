@@ -10,6 +10,7 @@ import { formatAddress } from '../../../utils/cfx';
 import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
+import { useAccounts } from '../../../utils/hooks/usePortal';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -69,6 +70,9 @@ export const StatsCard = ({
   const [totalDifficulty, setTotalDifficulty] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [loadingTokenInfo, setLoadingTokenInfo] = useState(true);
+
+  // get portal selected address
+  const [accounts] = useAccounts();
 
   let columns = [];
   let action = '';
@@ -273,7 +277,15 @@ export const StatsCard = ({
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>
-                        <AddressContainer value={d.base32 || d.hex} />
+                        <AddressContainer
+                          value={d.base32 || d.hex}
+                          isMe={
+                            accounts && accounts.length > 0
+                              ? formatAddress(accounts[0]) ===
+                                formatAddress(d.base32 || d.hex)
+                              : false
+                          }
+                        />
                       </td>
                       <td className="text-right">
                         {action === 'cfxSend' || action === 'cfxReceived'
@@ -293,7 +305,15 @@ export const StatsCard = ({
                         {d.token ? (
                           token.render(d.token)
                         ) : (
-                          <AddressContainer value={d.base32address || d.hex} />
+                          <AddressContainer
+                            value={d.base32address || d.hex}
+                            isMe={
+                              accounts && accounts.length > 0
+                                ? formatAddress(accounts[0]) ===
+                                  formatAddress(d.base32address || d.hex)
+                                : false
+                            }
+                          />
                         )}
                       </td>
                       <td className="text-right">{intValue(d.valueN)}</td>
@@ -307,6 +327,12 @@ export const StatsCard = ({
                         <AddressContainer
                           value={d.base32 || '0x' + d.miner}
                           maxWidth={220}
+                          isMe={
+                            accounts && accounts.length > 0
+                              ? formatAddress(accounts[0]) ===
+                                formatAddress(d.base32 || '0x' + d.miner)
+                              : false
+                          }
                         />
                       </td>
                       <td className="text-right">{intValue(d.blockCount)}</td>

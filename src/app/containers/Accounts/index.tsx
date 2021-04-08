@@ -14,11 +14,16 @@ import styled from 'styled-components/macro';
 import { Select } from '../../components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
+import { useAccounts } from '../../../utils/hooks/usePortal';
+import { AddressContainer } from '../../components/AddressContainer/Loadable';
+import { formatAddress } from '../../../utils/cfx';
 const { ContentWrapper } = tableColumnsUtils;
 
 export function Accounts() {
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.startsWith('en');
+  // get portal selected address
+  const [accounts] = useAccounts();
 
   const options = [
     {
@@ -60,7 +65,21 @@ export function Accounts() {
   let columnsWidth = [1, 9, 4, 3, 3];
   let columns: ColumnsType = [
     accountColunms.rank,
-    accountColunms.address,
+    {
+      ...accountColunms.address,
+      render: (value, row: any) => (
+        <AddressContainer
+          value={value}
+          alias={row.name}
+          isFull={true}
+          isMe={
+            accounts && accounts.length > 0
+              ? formatAddress(accounts[0]) === formatAddress(value)
+              : false
+          }
+        />
+      ),
+    },
     {
       ...accountColunms.balance,
       title: <ContentWrapper right>{options[number].name}</ContentWrapper>,

@@ -85,7 +85,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
@@ -289,11 +289,11 @@
     },
     "cfxCirculatingSupply": {
       "title": "Circulating Supply",
-      "description": "Circulating supply contains the CFX in the Null address."
+      "description": "Circulating supply contains the CFX in the Zero Address."
     },
-    "nullAddress": {
-      "title": "Null Address",
-      "description": "CFX in Null address is burned CFX."
+    "zeroAddress": {
+      "title": "Zero Address",
+      "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
       "title": "Daily Transactions",
@@ -323,7 +323,7 @@
     "loading": "loading...",
     "contract": "contract",
     "internalContract": "internal contract",
-    "zeroAddress": "null address",
+    "zeroAddress": "zero address",
     "invalidAddress": "Invalid Conflux Address",
     "balance": "balance",
     "token": "token",
@@ -758,7 +758,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }

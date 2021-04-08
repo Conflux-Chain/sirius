@@ -12,16 +12,18 @@ import styled from 'styled-components/macro';
 import { formatAddress } from '../../../utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from '../../../images/contract-icon.png';
+import isMeIcon from '../../../images/me.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import { media } from '../../../styles/media';
 
 interface Props {
-  value: string;
-  alias?: string;
-  contractCreated?: string;
-  maxWidth?: number;
-  isFull?: boolean;
-  isLink?: boolean;
+  value: string; // address value
+  alias?: string; // address alias, such as contract name, miner name, default null
+  contractCreated?: string; // contract creation address
+  maxWidth?: number; // address max width for view, default 130/100 for default, 400 for full
+  isFull?: boolean; // show full address, default false
+  isLink?: boolean; // add link to address, default true
+  isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
 }
 
 // TODO code simplify
@@ -33,6 +35,7 @@ export const AddressContainer = ({
   maxWidth,
   isFull = false,
   isLink = true,
+  isMe = false,
 }: Props) => {
   const { t } = useTranslation();
   const txtContractCreation = t(translations.transaction.contractCreation);
@@ -50,6 +53,7 @@ export const AddressContainer = ({
     full = isFull,
     style = {},
     prefix = null,
+    suffix = null,
   }: any) => (
     <AddressWrapper>
       {prefix}
@@ -68,6 +72,7 @@ export const AddressContainer = ({
           </PlainWrapper>
         )}
       </Text>
+      {suffix}
     </AddressWrapper>
   );
 
@@ -88,7 +93,7 @@ export const AddressContainer = ({
       });
 
     // Contract Registration fail, no link
-    // TODO deal with null address value
+    // TODO deal with zero address value
     return (
       <AddressWrapper>
         <IconWrapper>
@@ -138,6 +143,21 @@ export const AddressContainer = ({
               <img src={ContractIcon} alt={typeText} />
             )}
           </Text>
+        </IconWrapper>
+      ),
+    });
+  }
+
+  if (isMe) {
+    console.log('isMe', true);
+    return RenderAddress({
+      suffix: (
+        <IconWrapper>
+          <img
+            src={isMeIcon}
+            alt="is me"
+            style={{ width: 38.5, marginLeft: 3, marginBottom: isFull ? 6 : 4 }}
+          />
         </IconWrapper>
       ),
     });

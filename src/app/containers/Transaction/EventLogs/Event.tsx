@@ -5,7 +5,7 @@ export const Event = ({ fnName, args }) => {
   return (
     <StyledEventWrapper>
       <span className="fn-name">{fnName}</span>
-      <span className="parenthesis">(</span>
+      <span className="parenthesis parenthesis-left">(</span>
       {args.map((a, index) => {
         let topic_index = a.indexed ? (
           <span className="topic-index">{`index_topic_${a.indexed} `}</span>
@@ -23,14 +23,22 @@ export const Event = ({ fnName, args }) => {
           </span>
         );
       })}
-      <span className="parenthesis">)</span>
+      <span className="parenthesis parenthesis-right">)</span>
     </StyledEventWrapper>
   );
 };
 
 const StyledEventWrapper = styled.div`
   .parenthesis {
-    margin: 0.3571rem;
+    margin: 0.1rem;
+
+    &.parenthesis-left {
+      margin-left: 0.3571rem;
+    }
+
+    &.parenthesis-right {
+      margin-right: 0.3571rem;
+    }
   }
 
   .topic-index,

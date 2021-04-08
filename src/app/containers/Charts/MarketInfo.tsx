@@ -8,7 +8,7 @@ import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
 import { reqCfxSupply } from '../../../utils/httpRequest';
 import { formatBalance } from '../../../utils';
-import nullAddressIcon from '../../../images/home/nullAddress.svg';
+import zeroAddressIcon from '../../../images/home/zeroAddress.svg';
 import circulatingMarketCap from '../../../images/home/circulatingMarketCap.svg';
 
 function Info(icon, title, tooltip, number) {
@@ -62,9 +62,9 @@ export function MarketInfo() {
             })} CFX`,
           )}
           {Info(
-            nullAddressIcon,
-            t(translations.charts.nullAddress.title),
-            t(translations.charts.nullAddress.description),
+            zeroAddressIcon,
+            t(translations.charts.zeroAddress.title),
+            t(translations.charts.zeroAddress.description),
             `${formatBalance(marketInfo.nullAddressBalance, 18, false, {
               withUnit: false,
               keepDecimal: false,

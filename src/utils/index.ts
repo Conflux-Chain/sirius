@@ -515,12 +515,12 @@ export const isAddress = (str: string) => {
   // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
 
-export function isNullAddress(str: string) {
+export function isZeroAddress(str: string) {
   return formatAddress(str) === zeroAddress;
 }
 
 export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon || isNullAddress(str);
+  return getAddressType(str) === addressTypeCommon || isZeroAddress(str);
 }
 
 export function isContractAddress(str: string) {
