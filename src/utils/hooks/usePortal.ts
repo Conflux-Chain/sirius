@@ -45,7 +45,7 @@ const useChainId = (outerChainId?) => {
 };
 
 // account address hook
-const useAccounts = (outerAccounts?) => {
+export const useAccounts = (outerAccounts?) => {
   if (!installed) {
     return [[], () => {}];
   }
