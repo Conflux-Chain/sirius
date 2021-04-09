@@ -107,6 +107,15 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       },
       ...extra,
     });
+  } else if (['top-gas-used'].includes(param.action)) {
+    return sendRequest({
+      url: `${statPrefix}/top-gas-used`,
+      query: {
+        span: param.span,
+        rows: 10,
+      },
+      ...extra,
+    });
   } else {
     // rank_contract_by_number_of_participants_1d;
     // rank_contract_by_number_of_participants_3d;

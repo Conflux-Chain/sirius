@@ -185,6 +185,20 @@ export function Statistics() {
             </Row>
           </CardWrapper>
         </Tabs.Item>
+        <Tabs.Item label={t(translations.statistics.network)} value="network">
+          <CardWrapper>
+            {spanButtons(span)}
+            <Row gutter={[24, 24]}>
+              <Col span={24}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.topAccountsByGasUsed}
+                  withChart={true}
+                />
+              </Col>
+            </Row>
+          </CardWrapper>
+        </Tabs.Item>
       </TabsWrapper>
     </>
   );

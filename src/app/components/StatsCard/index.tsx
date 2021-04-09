@@ -11,6 +11,7 @@ import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
 import { useAccounts } from '../../../utils/hooks/usePortal';
+import { Pie, PieChart, Tooltip, ResponsiveContainer } from 'recharts';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -29,6 +30,7 @@ export enum StatsType {
 interface Props {
   span: string;
   type: StatsType;
+  withChart?: boolean;
 }
 
 const cfxValue = (value, opt = {}) => (
@@ -64,10 +66,12 @@ const percentageValue = value => (
 export const StatsCard = ({
   span = '7d',
   type = StatsType.topTxnCountSent,
+  withChart = false,
 }: Partial<Props>) => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>([]);
   const [totalDifficulty, setTotalDifficulty] = useState<string>('');
+  const [totalGas, setTotalGas] = useState<number>(Infinity);
   const [loading, setLoading] = useState(true);
   const [loadingTokenInfo, setLoadingTokenInfo] = useState(true);
 
@@ -157,6 +161,14 @@ export const StatsCard = ({
       action = 'topMiner';
       category = 'miner';
       break;
+    case StatsType.topAccountsByGasUsed:
+      columns = [
+        t(translations.statistics.column.address),
+        t(translations.statistics.column.gasUsed),
+      ];
+      action = 'top-gas-used';
+      category = 'network';
+      break;
 
     default:
       break;
@@ -222,6 +234,10 @@ export const StatsCard = ({
                 // calc proportion of hashRate
                 setTotalDifficulty(res.allDifficulty + '');
               }
+              if (category === 'network' && res.totalGas) {
+                // calc proportion of gas used
+                setTotalGas(+(res.totalGas || Infinity));
+              }
             }
           } else {
             console.error(res);
@@ -237,158 +253,292 @@ export const StatsCard = ({
     }
   }, [action, category, span, type]);
 
+  const tableHeader = category => {
+    switch (category) {
+      case 'transaction':
+        return (
+          <>
+            <th>{columns[0]}</th>
+            <th className="text-right">{columns[1]}</th>
+            <th className="text-right">{columns[2]}</th>
+          </>
+        );
+      case 'token':
+        return (
+          <>
+            <th>{columns[0]}</th>
+            <th className="text-right">{columns[1]}</th>
+          </>
+        );
+      case 'miner':
+        return (
+          <>
+            <th>{columns[0]}</th>
+            <th className="text-right">{columns[1]}</th>
+            <th className="text-right">{columns[2]}</th>
+            <th className="text-right">{columns[3]}</th>
+            <th className="text-right">{columns[4]}</th>
+            <th className="text-right">{columns[5]}</th>
+          </>
+        );
+      case 'network':
+        return (
+          <>
+            <th>{columns[0]}</th>
+            <th className="text-right">{columns[1]}</th>
+            <th className="text-right">{columns[2]}</th>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const tableBody = (category, data: any = []) => {
+    switch (category) {
+      case 'transaction':
+        return data.map((d, i) => (
+          <tr key={i}>
+            <td>{i + 1}</td>
+            <td>
+              <AddressContainer
+                value={d.base32 || d.hex}
+                isMe={
+                  accounts && accounts.length > 0
+                    ? formatAddress(accounts[0]) ===
+                      formatAddress(d.base32 || d.hex)
+                    : false
+                }
+              />
+            </td>
+            <td className="text-right">
+              {action === 'cfxSend' || action === 'cfxReceived'
+                ? cfxValue(d.value)
+                : intValue(d.value)}
+            </td>
+            <td className="text-right">{percentageValue(d.percent)}</td>
+          </tr>
+        ));
+      case 'token':
+        return data.map((d, i) => (
+          <tr key={i}>
+            <td>{i + 1}</td>
+            <td>
+              {d.token ? (
+                token.render(d.token)
+              ) : (
+                <AddressContainer
+                  value={d.base32address || d.hex}
+                  isMe={
+                    accounts && accounts.length > 0
+                      ? formatAddress(accounts[0]) ===
+                        formatAddress(d.base32address || d.hex)
+                      : false
+                  }
+                />
+              )}
+            </td>
+            <td className="text-right">{intValue(d.valueN)}</td>
+          </tr>
+        ));
+      case 'miner':
+        return data.map((d, i) => (
+          <tr key={i}>
+            <td>{i + 1}</td>
+            <td>
+              <AddressContainer
+                value={d.base32 || '0x' + d.miner}
+                maxWidth={220}
+                isMe={
+                  accounts && accounts.length > 0
+                    ? formatAddress(accounts[0]) ===
+                      formatAddress(d.base32 || '0x' + d.miner)
+                    : false
+                }
+              />
+            </td>
+            <td className="text-right">{intValue(d.blockCount)}</td>
+            <td className="text-right">{cfxValue(d.totalReward)} CFX</td>
+            <td className="text-right">
+              {cfxValue(d.txFee, {
+                keepDecimal: true,
+                keepZero: true,
+              })}{' '}
+              CFX
+            </td>
+            <td className="text-right">
+              <Text
+                hoverValue={
+                  formatNumber(d.hashRate, {
+                    withUnit: false,
+                  }) + ' H/s'
+                }
+              >
+                {formatNumber(
+                  new BigNumber(d.hashRate)
+                    .dividedBy(new BigNumber(10).pow(9))
+                    .toFixed(3),
+                  {
+                    withUnit: false,
+                    keepZero: true,
+                  },
+                )}
+              </Text>
+
+              <Text
+                hoverValue={
+                  (d.difficultySum && totalDifficulty
+                    ? new BigNumber(d.difficultySum)
+                        .dividedBy(new BigNumber(totalDifficulty))
+                        .multipliedBy(100)
+                        .toFixed(8)
+                    : '-') + '%'
+                }
+              >
+                &nbsp;(
+                {d.difficultySum && totalDifficulty
+                  ? new BigNumber(d.difficultySum)
+                      .dividedBy(new BigNumber(totalDifficulty))
+                      .multipliedBy(100)
+                      .toFixed(3)
+                  : '-'}
+                %)
+              </Text>
+            </td>
+          </tr>
+        ));
+      case 'network':
+        return data.map((d, i) => (
+          <tr key={i}>
+            <td>{i + 1}</td>
+            <td>
+              <AddressContainer
+                value={d.base32 || d.hex}
+                isMe={
+                  accounts && accounts.length > 0
+                    ? formatAddress(accounts[0]) ===
+                      formatAddress(d.base32 || d.hex)
+                    : false
+                }
+              />
+            </td>
+            <td className="text-right">
+              <Text
+                hoverValue={formatNumber(d.gas, {
+                  withUnit: false,
+                })}
+              >
+                {formatNumber(d.gas, {
+                  withUnit: false,
+                  keepDecimal: false,
+                })}
+              </Text>
+
+              <Text
+                hoverValue={
+                  (d.gas && totalGas
+                    ? new BigNumber(d.gas)
+                        .dividedBy(new BigNumber(totalGas))
+                        .multipliedBy(100)
+                        .toFixed(8)
+                    : '-') + '%'
+                }
+              >
+                &nbsp;(
+                {d.gas && totalGas
+                  ? new BigNumber(d.gas)
+                      .dividedBy(new BigNumber(totalGas))
+                      .multipliedBy(100)
+                      .toFixed(3)
+                  : '-'}
+                %)
+              </Text>
+            </td>
+          </tr>
+        ));
+      default:
+        return null;
+    }
+  };
+
+  const chartContent = (category, data: any = []) => {
+    switch (category) {
+      case 'network': {
+        const chartData = data
+          .sort((a, b) => b.gas - a.gas >= 0)
+          .map((d, i) => ({
+            name: '#' + (i + 1),
+            address: formatAddress(d.base32 || d.hex),
+            value: +d.gas,
+          }));
+        const CustomTooltip = (prop: any) => {
+          if (prop && prop.active && prop.payload && prop.payload.length) {
+            console.log(prop.payload[0]);
+            return (
+              <div className="tooltip gasused-tooltip">
+                <div>
+                  <span>Account: &nbsp;&nbsp;</span>
+                  <span>
+                    {prop.payload[0].payload && prop.payload[0].payload.address}
+                  </span>
+                </div>
+                <div>
+                  <span>Gas used:</span>
+                  <span>
+                    {formatNumber(prop.payload[0].value, {
+                      withUnit: false,
+                      keepDecimal: false,
+                    })}
+                  </span>
+                </div>
+              </div>
+            );
+          }
+          return null;
+        };
+        return (
+          <ResponsiveContainer width="95%" height={500}>
+            <PieChart>
+              <Pie
+                dataKey="value"
+                isAnimationActive={false}
+                data={chartData}
+                outerRadius={110}
+                innerRadius={60}
+                paddingAngle={1}
+                startAngle={90}
+                endAngle={-270}
+                fill="rgba(30,61,228,0.8)"
+                label={({ name, value }) => `${name}`}
+              />
+              <Tooltip content={CustomTooltip} />
+            </PieChart>
+          </ResponsiveContainer>
+        );
+      }
+      default:
+        return null;
+    }
+  };
+
   return (
     <CardWrapper>
       <h2>{t(translations.statistics[type])}</h2>
       <SkelontonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
-        <div className="table-wrapper">
+        <div className={`table-wrapper ${withChart ? 'hasChart' : ''}`}>
+          {withChart ? (
+            <div className="chart-wrapper">{chartContent(category, data)}</div>
+          ) : null}
           <table>
             <thead>
               <tr>
                 <th>{t(translations.statistics.column.rank)}</th>
-                {category === 'transaction' ? (
-                  <>
-                    <th>{columns[0]}</th>
-                    <th className="text-right">{columns[1]}</th>
-                    <th className="text-right">{columns[2]}</th>
-                  </>
-                ) : category === 'token' ? (
-                  <>
-                    <th>{columns[0]}</th>
-                    <th className="text-right">{columns[1]}</th>
-                  </>
-                ) : category === 'miner' ? (
-                  <>
-                    <th>{columns[0]}</th>
-                    <th className="text-right">{columns[1]}</th>
-                    <th className="text-right">{columns[2]}</th>
-                    <th className="text-right">{columns[3]}</th>
-                    <th className="text-right">{columns[4]}</th>
-                    <th className="text-right">{columns[5]}</th>
-                  </>
-                ) : null}
+                {tableHeader(category)}
               </tr>
             </thead>
-            <tbody>
-              {category === 'transaction'
-                ? data.map((d, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>
-                        <AddressContainer
-                          value={d.base32 || d.hex}
-                          isMe={
-                            accounts && accounts.length > 0
-                              ? formatAddress(accounts[0]) ===
-                                formatAddress(d.base32 || d.hex)
-                              : false
-                          }
-                        />
-                      </td>
-                      <td className="text-right">
-                        {action === 'cfxSend' || action === 'cfxReceived'
-                          ? cfxValue(d.value)
-                          : intValue(d.value)}
-                      </td>
-                      <td className="text-right">
-                        {percentageValue(d.percent)}
-                      </td>
-                    </tr>
-                  ))
-                : category === 'token'
-                ? data.map((d, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>
-                        {d.token ? (
-                          token.render(d.token)
-                        ) : (
-                          <AddressContainer
-                            value={d.base32address || d.hex}
-                            isMe={
-                              accounts && accounts.length > 0
-                                ? formatAddress(accounts[0]) ===
-                                  formatAddress(d.base32address || d.hex)
-                                : false
-                            }
-                          />
-                        )}
-                      </td>
-                      <td className="text-right">{intValue(d.valueN)}</td>
-                    </tr>
-                  ))
-                : category === 'miner'
-                ? data.map((d, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>
-                        <AddressContainer
-                          value={d.base32 || '0x' + d.miner}
-                          maxWidth={220}
-                          isMe={
-                            accounts && accounts.length > 0
-                              ? formatAddress(accounts[0]) ===
-                                formatAddress(d.base32 || '0x' + d.miner)
-                              : false
-                          }
-                        />
-                      </td>
-                      <td className="text-right">{intValue(d.blockCount)}</td>
-                      <td className="text-right">
-                        {cfxValue(d.totalReward)} CFX
-                      </td>
-                      <td className="text-right">
-                        {cfxValue(d.txFee, {
-                          keepDecimal: true,
-                          keepZero: true,
-                        })}{' '}
-                        CFX
-                      </td>
-                      <td className="text-right">
-                        <Text
-                          hoverValue={
-                            formatNumber(d.hashRate, {
-                              withUnit: false,
-                            }) + ' H/s'
-                          }
-                        >
-                          {formatNumber(
-                            new BigNumber(d.hashRate)
-                              .dividedBy(new BigNumber(10).pow(9))
-                              .toFixed(3),
-                            {
-                              withUnit: false,
-                              keepZero: true,
-                            },
-                          )}
-                        </Text>
-
-                        <Text
-                          hoverValue={
-                            (d.difficultySum && totalDifficulty
-                              ? new BigNumber(d.difficultySum)
-                                  .dividedBy(new BigNumber(totalDifficulty))
-                                  .multipliedBy(100)
-                                  .toFixed(8)
-                              : '-') + '%'
-                          }
-                        >
-                          &nbsp;(
-                          {d.difficultySum && totalDifficulty
-                            ? new BigNumber(d.difficultySum)
-                                .dividedBy(new BigNumber(totalDifficulty))
-                                .multipliedBy(100)
-                                .toFixed(3)
-                            : '-'}
-                          %)
-                        </Text>
-                      </td>
-                    </tr>
-                  ))
-                : null}
-            </tbody>
+            <tbody>{tableBody(category, data)}</tbody>
           </table>
         </div>
       </SkelontonContainer>
@@ -418,6 +568,40 @@ const CardWrapper = styled.div`
     min-height: 450px;
     padding-bottom: 16px;
     overflow-x: auto;
+
+    &.hasChart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    min-height: 450px;
+    padding-bottom: 16px;
+    overflow-x: auto;
+
+    .tooltip {
+      padding: 5px 10px;
+      background-color: #fff;
+      border: 1px solid #999;
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        line-height: 2;
+        &:first-child {
+          border-bottom: 1px solid #ccc;
+        }
+        & > span {
+          &:first-child {
+            font-weight: 700;
+          }
+        }
+      }
+    }
   }
 
   table {
