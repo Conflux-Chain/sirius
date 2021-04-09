@@ -197,7 +197,7 @@ const WarningInfoWrapper = styled.div`
   align-items: center;
   border-radius: 12px;
   background-color: #c65252;
-  padding: 3px 16px;
+  padding: 5px 16px;
   margin-bottom: 5px;
   margin-top: 5px;
   color: #fff;

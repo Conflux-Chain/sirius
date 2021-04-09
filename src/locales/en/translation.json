@@ -202,6 +202,7 @@
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
+    "addressWarning": "To prevent loss of assets, please review <a href='#' target='_blank'>a description of the rules relating to the address involved in the transfer of assets</a> carefully. ",
     "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
