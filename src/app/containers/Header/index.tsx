@@ -97,7 +97,7 @@ export const Header = memo(() => {
         {
           // erc 20
           title: [
-            t(translations.header.tokens20).replace('Token', 'Tokens'),
+            t(translations.header.tokens20),
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens20,
@@ -106,7 +106,7 @@ export const Header = memo(() => {
         {
           // erc 721
           title: [
-            t(translations.header.tokens721).replace('Token', 'Tokens'),
+            t(translations.header.tokens721),
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens721,
@@ -115,7 +115,7 @@ export const Header = memo(() => {
         {
           // erc 1155
           title: [
-            t(translations.header.tokens1155).replace('Token', 'Tokens'),
+            t(translations.header.tokens1155),
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens1155,
