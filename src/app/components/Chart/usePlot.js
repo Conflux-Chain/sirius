@@ -52,6 +52,13 @@ export default function usePlot(
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
+    case 'dailyTransactionTokens':
+      swrKey = `/txn/dailyToken/list`;
+      fetcher = () =>
+        fetch(appendApiPrefix(`/stat/tokens/daily-token-txn?limit=${31}`)); // TODO adjust limit
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      break;
     // without durations
     case 'cfxHoldingAccounts':
       swrKey = `/cfx_holder/daily/list`;
@@ -70,6 +77,9 @@ export default function usePlot(
     switch (indicator) {
       case 'dailyTransaction':
         listData = data?.data?.rows || [];
+        break;
+      case 'dailyTransactionTokens':
+        listData = data?.list || [];
         break;
       case 'cfxHoldingAccounts':
         listData = data?.data?.rows || [];

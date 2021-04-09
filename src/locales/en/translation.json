@@ -202,7 +202,7 @@
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
-    "addressWarning": "To prevent loss of assets, please review <a href='#' target='_blank'>a description of the rules relating to the address involved in the transfer of assets</a> carefully. ",
+    "addressWarning": "To prevent loss of assets, please review <a href='#' target='_blank'>THE DESCRIPTION OF THE RULES RELATING TO THE ADDRESS INVOLVED IN THE TRANSFER OF ASSETS</a> carefully. ",
     "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
@@ -297,8 +297,12 @@
       "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
-      "title": "Daily Transactions",
+      "title": "Daily Transactions -- CFX",
       "description": "The total number of transactions per day for the Conflux network."
+    },
+    "dailyTransactionTokens": {
+      "title": "Daily Transactions -- Tokens",
+      "description": "The total daily transfer of all tokens on the Conflux network."
     },
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
