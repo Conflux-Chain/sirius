@@ -45,12 +45,6 @@ const SwapItem = ({
 }: SwapItemProps) => {
   let title = 'From';
   let balanceTitle: React.ReactNode = 'Balance';
-  let max: React.ReactNode = <span className="max">MAX</span>;
-
-  if (type === 'to') {
-    title = 'To';
-    max = null;
-  }
 
   if (selected === 'cfx' && type === 'from') {
     balanceTitle = (
@@ -72,9 +66,24 @@ const SwapItem = ({
     }
   };
 
-  const b = formatNumber(new BigNumber(balance).div(1e18).toString(), {
+  const b = formatNumber(balance, {
     precision: 6,
   });
+
+  const handleMax = () => {
+    onInputChange(balance);
+  };
+
+  let max: React.ReactNode = (
+    <span className="max" onClick={handleMax}>
+      MAX
+    </span>
+  );
+
+  if (type === 'to') {
+    title = 'To';
+    max = null;
+  }
 
   return (
     <StyledSwapItemWrapper>
@@ -220,14 +229,11 @@ export function Swap() {
     // console.log(999, txnHash2);
   }, [installed, accounts, connected]);
 
-  const handleFromInputChange = value => {
+  const handleInputChange = value => {
     setFromToken({
       ...fromToken,
       value,
     });
-  };
-
-  const handleToInputChange = value => {
     setToToken({
       ...toToken,
       value,
@@ -248,6 +254,38 @@ export function Swap() {
     setFromToken(toTokenCopy);
   };
 
+  const toBalance = new BigNumber(balances[toToken.type]).div(1e18).toString();
+  const fromBalanceBN = new BigNumber(balances[fromToken.type]).div(1e18);
+  const fromValueBN = new BigNumber(fromToken.value);
+  let fromBalance = '';
+
+  if (fromToken.type === 'cfx') {
+    fromBalance = fromBalanceBN.minus(0.1).toString();
+  } else {
+    fromBalance = fromBalanceBN.toString();
+  }
+
+  const getButton = () => {
+    let buttonText = 'Connect wallet';
+    let disabled = false;
+
+    // @ts-ignore
+    window.fromValueBN = fromValueBN;
+    if (fromValueBN.isNaN()) {
+      buttonText = 'Enter an amount';
+      disabled = true;
+    } else if (fromValueBN.gt(fromBalanceBN)) {
+      buttonText = 'Insufficient WCFX balance';
+      disabled = true;
+    }
+
+    return (
+      <Button variant="solid" color="primary" size="small" disabled={disabled}>
+        {buttonText}
+      </Button>
+    );
+  };
+
   return (
     <StyledSwapWrapper>
       <Card className="card">
@@ -255,11 +293,11 @@ export function Swap() {
           <div className="title">Swap</div>
           <div className="content">
             <SwapItem
-              balance={balances[fromToken.type]}
+              balance={fromBalance}
               value={fromToken.value}
               type="from"
               selected={fromToken.type}
-              onInputChange={handleFromInputChange}
+              onInputChange={handleInputChange}
               onSelectChange={handleFromSelectChange}
             ></SwapItem>
             <div className="switch">
@@ -270,22 +308,18 @@ export function Swap() {
               ></img>
             </div>
             <SwapItem
-              balance={balances[toToken.type]}
+              balance={toBalance}
               value={toToken.value}
               type="to"
               selected={toToken.type}
-              onInputChange={handleToInputChange}
+              onInputChange={handleInputChange}
               onSelectChange={handleToSelectChange}
             ></SwapItem>
           </div>
         </div>
       </Card>
       <div className="button-container">
-        <ConnectButton>
-          <Button variant="solid" color="primary" size="small">
-            Connect wallet
-          </Button>
-        </ConnectButton>
+        <ConnectButton>{getButton()}</ConnectButton>
       </div>
     </StyledSwapWrapper>
   );
@@ -331,7 +365,7 @@ const StyledSwapWrapper = styled.div`
 
   .button-container {
     height: 80px;
-    background: #eeeeee;
+    background: #efefef;
     display: flex;
     justify-content: center;
     align-items: center;
