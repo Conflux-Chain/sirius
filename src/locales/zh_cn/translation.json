@@ -202,6 +202,7 @@
   },
   "footer": {
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
+    "addressWarning": "为防止资产丢失，请仔细查看 <a href='#' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
     "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
@@ -296,8 +297,12 @@
       "description": "零地址中的 CFX 为已销毁的 CFX"
     },
     "dailyTransaction": {
-      "title": "日交易量",
+      "title": "日交易量 -- CFX",
       "description": "Conflux 网络每日的交易总量"
+    },
+    "dailyTransactionTokens": {
+      "title": "日交易量 -- 代币",
+      "description": "Conflux 网络上全部代币的每日转移总量"
     },
     "cfxHoldingAccounts": {
       "title": "CFX 持有账户数",
@@ -323,8 +328,10 @@
     "loading": "加载中...",
     "contract": "合约",
     "internalContract": "内置合约",
+    "specialAddress": "无效地址",
     "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
     "storageStaking": "抵押存储",

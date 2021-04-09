@@ -29,8 +29,13 @@ import {
   Title,
   Top,
 } from './layouts';
-import { isContractAddress, isInnerContractAddress } from 'utils';
+import {
+  isContractAddress,
+  isInnerContractAddress,
+  isSpecialAddress,
+} from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
+import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
 
@@ -66,7 +71,11 @@ export const ContractDetailPage = memo(() => {
     // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (!isContractAddress(address) && !isInnerContractAddress(address)) {
+    if (
+      !isContractAddress(address) &&
+      !isInnerContractAddress(address) &&
+      !isSpecialAddress(address)
+    ) {
       history.replace(`/notfound/${address}`, {
         type: 'contract',
       });
@@ -75,7 +84,10 @@ export const ContractDetailPage = memo(() => {
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
-    !!websiteUrl && websiteUrl !== t(translations.general.loading);
+    !!websiteUrl &&
+    websiteUrl !== 'https://' &&
+    websiteUrl !== 'http://' &&
+    websiteUrl !== t(translations.general.loading);
 
   return (
     <>
@@ -93,6 +105,8 @@ export const ContractDetailPage = memo(() => {
               ? `${t(translations.general.internalContract)}: ${
                   contractInfo.name
                 }`
+              : isSpecialAddress(address)
+              ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
           </Title>
           <HeadAddressLine>
@@ -105,7 +119,7 @@ export const ContractDetailPage = memo(() => {
                     src={InternalContractIcon}
                     alt={t(translations.general.internalContract)}
                   />
-                ) : (
+                ) : isSpecialAddress(address) ? null : (
                   <img
                     src={ContractIcon}
                     alt={t(translations.general.contract)}
@@ -129,6 +143,12 @@ export const ContractDetailPage = memo(() => {
                 }}
               />
             )}
+            {isSpecialAddress(address) ? (
+              <WarningInfoWrapper>
+                <img src={warningInfo} alt="warning" />
+                <span>{t(translations.general.invalidAddressWarning)}</span>
+              </WarningInfoWrapper>
+            ) : null}
           </HeadAddressLine>
         </Head>
         <Top key="top">
@@ -168,5 +188,21 @@ const IconWrapper = styled.span`
     width: 16px;
     height: 16px;
     margin-bottom: 4px;
+  }
+`;
+
+const WarningInfoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #c65252;
+  padding: 5px 16px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  color: #fff;
+
+  span {
+    margin-left: 5px;
   }
 `;

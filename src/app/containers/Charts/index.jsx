@@ -41,6 +41,7 @@ export function Charts() {
         </HeaderWrap>
         <ChartsWrap>
           <Chart width={chartWidth} indicator="dailyTransaction" />
+          <Chart width={chartWidth} indicator="dailyTransactionTokens" />
         </ChartsWrap>
         {/*<HeaderWrap>*/}
         {/*  <div className="title">{t(translations.charts.subtitle4)}</div>*/}

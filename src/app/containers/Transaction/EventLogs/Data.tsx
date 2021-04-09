@@ -219,7 +219,7 @@ export const Data = ({
 };
 
 const StyledDataWrapper = styled.div`
-  padding: 16px 100px 16px 16px;
+  padding: 16px 124px 16px 16px;
   background-color: #fafbfc;
   position: relative;
 

@@ -7,6 +7,7 @@ import {
   isHash,
   isEpochNumber,
   tranferToLowerCase,
+  isSpecialAddress,
 } from 'utils';
 import { zeroAddress } from '../constants';
 import { formatAddress } from '../cfx';
@@ -45,7 +46,8 @@ export const useSearch = (value?: string) => {
     if (
       isAccountAddress(innerValue) ||
       isContractAddress(innerValue) ||
-      isInnerContractAddress(innerValue)
+      isInnerContractAddress(innerValue) ||
+      isSpecialAddress(innerValue)
     ) {
       history.push(`/address/${formatAddress(innerValue)}`); // cip-37 convert to new format
       trackEvent({

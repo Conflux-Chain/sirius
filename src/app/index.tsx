@@ -48,6 +48,7 @@ import { formatAddress, getGlobalShowHexAddress } from '../utils/cfx';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
+import { GlobalTip } from './components/GlobalTip';
 
 WebFontLoader.load({
   custom: {
@@ -273,6 +274,7 @@ export function App() {
             <GlobalNotify />
             <GlobalStyle />
             <CookieTip />
+            <GlobalTip tipKey="addressWarning" />
           </CfxProvider>
         </BrowserRouter>
       </SWRConfig>
