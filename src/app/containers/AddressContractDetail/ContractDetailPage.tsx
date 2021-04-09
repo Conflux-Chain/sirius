@@ -37,6 +37,7 @@ import {
 import ContractIcon from '../../../images/contract-icon.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
+import { Note } from '@cfxjs/react-ui';
 
 interface RouteParams {
   address: string;
@@ -105,8 +106,15 @@ export const ContractDetailPage = memo(() => {
                   contractInfo.name
                 }`
               : isSpecialAddress(address)
-              ? t(translations.general.invalidAddress)
+              ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
+            {isSpecialAddress(address) ? (
+              <div style={{ marginTop: 10, textTransform: 'none' }}>
+                <Note type="error" label={false} filled>
+                  {t(translations.general.invalidAddressWarning)}
+                </Note>
+              </div>
+            ) : null}
           </Title>
           <HeadAddressLine>
             {bp === 's' ? (
