@@ -123,12 +123,6 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   const strokeColor = () => {
     switch (indicator) {
       case 'dailyTransaction':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
       case 'dailyTransactionTokens':
         // because of reverse
         return plot &&
@@ -207,9 +201,9 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
 
   const xAxisKey = () => {
     switch (indicator) {
-      case 'dailyTransaction':
       case 'cfxHoldingAccounts':
         return 'statDay';
+      case 'dailyTransaction':
       case 'dailyTransactionTokens':
         return 'day';
       default:
@@ -220,7 +214,6 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   const lineKey = () => {
     switch (indicator) {
       case 'dailyTransaction':
-        return 'txCount';
       case 'dailyTransactionTokens':
         return 'txnCount';
       case 'cfxHoldingAccounts':
