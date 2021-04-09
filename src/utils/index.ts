@@ -2,6 +2,9 @@ import {
   addressTypeCommon,
   addressTypeContract,
   addressTypeInternalContract,
+  adminControlAddress,
+  sponsorWhitelistControlAddress,
+  stakingAddress,
   zeroAddress,
 } from './constants';
 import BigNumber from 'bignumber.js';
@@ -528,7 +531,26 @@ export function isContractAddress(str: string) {
 }
 
 export function isInnerContractAddress(str: string) {
-  return getAddressType(str) === addressTypeInternalContract;
+  return (
+    getAddressType(str) === addressTypeInternalContract &&
+    [
+      adminControlAddress,
+      sponsorWhitelistControlAddress,
+      stakingAddress,
+    ].includes(formatAddress(str, { hex: false }))
+  );
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(str: string) {
+  return (
+    getAddressType(str) === addressTypeInternalContract &&
+    ![
+      adminControlAddress,
+      sponsorWhitelistControlAddress,
+      stakingAddress,
+    ].includes(formatAddress(str, { hex: false }))
+  );
 }
 
 export const isHash = (str: string) => {

@@ -29,7 +29,11 @@ import {
   Title,
   Top,
 } from './layouts';
-import { isContractAddress, isInnerContractAddress } from 'utils';
+import {
+  isContractAddress,
+  isInnerContractAddress,
+  isSpecialAddress,
+} from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
@@ -66,7 +70,11 @@ export const ContractDetailPage = memo(() => {
     // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (!isContractAddress(address) && !isInnerContractAddress(address)) {
+    if (
+      !isContractAddress(address) &&
+      !isInnerContractAddress(address) &&
+      !isSpecialAddress(address)
+    ) {
       history.replace(`/notfound/${address}`, {
         type: 'contract',
       });
@@ -96,6 +104,8 @@ export const ContractDetailPage = memo(() => {
               ? `${t(translations.general.internalContract)}: ${
                   contractInfo.name
                 }`
+              : isSpecialAddress(address)
+              ? t(translations.general.invalidAddress)
               : t(translations.general.contract)}
           </Title>
           <HeadAddressLine>
@@ -108,7 +118,7 @@ export const ContractDetailPage = memo(() => {
                     src={InternalContractIcon}
                     alt={t(translations.general.internalContract)}
                   />
-                ) : (
+                ) : isSpecialAddress(address) ? null : (
                   <img
                     src={ContractIcon}
                     alt={t(translations.general.contract)}
