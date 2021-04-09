@@ -35,9 +35,9 @@ import {
   isSpecialAddress,
 } from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
+import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
-import { Note } from '@cfxjs/react-ui';
 
 interface RouteParams {
   address: string;
@@ -108,13 +108,6 @@ export const ContractDetailPage = memo(() => {
               : isSpecialAddress(address)
               ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
-            {isSpecialAddress(address) ? (
-              <div style={{ marginTop: 10, textTransform: 'none' }}>
-                <Note type="error" label={false} filled>
-                  {t(translations.general.invalidAddressWarning)}
-                </Note>
-              </div>
-            ) : null}
           </Title>
           <HeadAddressLine>
             {bp === 's' ? (
@@ -150,6 +143,12 @@ export const ContractDetailPage = memo(() => {
                 }}
               />
             )}
+            {isSpecialAddress(address) ? (
+              <WarningInfoWrapper>
+                <img src={warningInfo} alt="warning" />
+                <span>{t(translations.general.invalidAddressWarning)}</span>
+              </WarningInfoWrapper>
+            ) : null}
           </HeadAddressLine>
         </Head>
         <Top key="top">
@@ -189,5 +188,21 @@ const IconWrapper = styled.span`
     width: 16px;
     height: 16px;
     margin-bottom: 4px;
+  }
+`;
+
+const WarningInfoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #c65252;
+  padding: 3px 16px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  color: #fff;
+
+  span {
+    margin-left: 5px;
   }
 `;

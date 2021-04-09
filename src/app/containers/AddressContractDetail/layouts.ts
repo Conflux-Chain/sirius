@@ -39,6 +39,7 @@ export const HeadAddressLine = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
   > span,
   > div {
     margin-right: 0.58rem;
