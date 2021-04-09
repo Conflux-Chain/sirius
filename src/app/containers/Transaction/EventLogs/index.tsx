@@ -75,8 +75,9 @@ const formatData = (data, type) => {
 
 const disassembleEvent = (log, decodedLog) => {
   try {
-    var r = /(.*?)(?=\()(\((.+)\))$/;
+    var r = /(.*?)(?=\()(\((.*)\))$/;
     const result = r.exec(decodedLog.fullName);
+
     if (result !== null) {
       const fnName = result[1];
       let args:
@@ -88,38 +89,41 @@ const disassembleEvent = (log, decodedLog) => {
           }> = result[3];
       let indexCount = 1;
 
-      args = args.split(', ').map(i => {
-        let item = i.trim().split(' ');
-        const type = item[0];
+      args = args
+        .split(', ')
+        .filter(a => a !== '')
+        .map(i => {
+          let item = i.trim().split(' ');
+          const type = item[0];
 
-        let r = {
-          argName: '',
-          type: type,
-          indexed: 0, // 0 is mean not indexed
-          value: null,
-          hexValue: null,
-          cfxAddress: null,
-        };
+          let r = {
+            argName: '',
+            type: type,
+            indexed: 0, // 0 is mean not indexed
+            value: null,
+            hexValue: null,
+            cfxAddress: null,
+          };
 
-        if (item.length === 2) {
-          r.argName = item[1];
-          r.value = formatData(decodedLog.object[item[1]], r.type);
-        } else if (item.length === 3) {
-          r.argName = item[2];
-          r.type = type;
-          r.indexed = indexCount;
-          r.value = formatData(decodedLog.object[item[2]], r.type);
-          r.hexValue = log.topics[indexCount];
+          if (item.length === 2) {
+            r.argName = item[1];
+            r.value = formatData(decodedLog.object[item[1]], r.type);
+          } else if (item.length === 3) {
+            r.argName = item[2];
+            r.type = type;
+            r.indexed = indexCount;
+            r.value = formatData(decodedLog.object[item[2]], r.type);
+            r.hexValue = log.topics[indexCount];
 
-          try {
-            r.value = format.hexAddress(r.value);
-            r.cfxAddress = getAddress(r.value);
-          } catch (e) {}
+            try {
+              r.value = format.hexAddress(r.value);
+              r.cfxAddress = getAddress(r.value);
+            } catch (e) {}
 
-          indexCount += 1;
-        }
-        return r;
-      });
+            indexCount += 1;
+          }
+          return r;
+        });
 
       return {
         fnName,
