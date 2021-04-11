@@ -12,18 +12,21 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
+import { Remark } from '../../components/Remark';
+import { CopyButton } from '../../components/CopyButton';
 import { Input, Button, Link } from '@cfxjs/react-ui';
 import {
   format,
   address as utilAddress,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { CopyButton } from '../../components/CopyButton';
+
 import { useParams } from 'react-router-dom';
 import { List } from './List';
-import { Remark } from '../../components/Remark';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
+import { cfx } from 'utils/cfx';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -60,6 +63,30 @@ export function AddressConverter() {
     FormattedAddressesType
   >(DEFAULT_FORMATTED_ADDRESSES);
 
+  const checkAddress = address => {
+    return new Promise((resolve, reject) => {
+      if (address.startsWith('0x0')) {
+        if (!(isInnerContractAddress(address) || isZeroAddress(address))) {
+          reject(new Error(translations.addressConverter.errorMessage['0x0']));
+        }
+        resolve('');
+      } else if (address.startsWith('0x8')) {
+        cfx
+          .getCode(address)
+          .then(code => {
+            resolve('');
+          })
+          .catch(() => {
+            reject(
+              new Error(translations.addressConverter.errorMessage['0x8']),
+            );
+          });
+      } else {
+        resolve('');
+      }
+    });
+  };
+
   const handleConvert = () => {
     let hexAddress,
       hexChecksumAddress,
@@ -74,8 +101,6 @@ export function AddressConverter() {
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
-      } else if (address.startsWith('0x') && address.charAt(2) !== '1') {
-        throw new Error(t(translations.addressConverter.notStartWith0x1));
       } else if (utilAddress.hasNetworkPrefix(address)) {
         hexAddress = format.hexAddress(address);
         hexChecksumAddress = format.checksumAddress(hexAddress);
@@ -97,26 +122,33 @@ export function AddressConverter() {
         }
       }
 
-      if (hexChecksumAddress) {
-        trackEvent({
-          category: ScanEvent.function.category,
-          action: ScanEvent.function.action.addressConvert,
-          label: hexChecksumAddress,
-        });
-      }
+      checkAddress(hexAddress)
+        .then(() => {
+          if (hexChecksumAddress) {
+            trackEvent({
+              category: ScanEvent.function.category,
+              action: ScanEvent.function.action.addressConvert,
+              label: hexChecksumAddress,
+            });
+          }
 
-      setFormattedAddresses({
-        hexAddress,
-        hexChecksumAddress,
-        bytes32MainnetAddress,
-        bytes32MainnetAddressWithType,
-        bytes32TestnetAddress,
-        bytes32TestnetAddressWithType,
-        bytes32NetAddress,
-        bytes32NetAddressWithType,
-      });
+          setFormattedAddresses({
+            hexAddress,
+            hexChecksumAddress,
+            bytes32MainnetAddress,
+            bytes32MainnetAddressWithType,
+            bytes32TestnetAddress,
+            bytes32TestnetAddressWithType,
+            bytes32NetAddress,
+            bytes32NetAddressWithType,
+          });
+        })
+        .catch(e => {
+          setError(e.message);
+          setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
+        });
     } catch (e) {
-      setError(ERROR_MESSAGE + ': ' + e.message);
+      setError(e.message);
       setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
     }
   };
@@ -142,6 +174,12 @@ export function AddressConverter() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const errorMessage = error
+    ? `${ERROR_MESSAGE}: ${
+        error.startsWith('addressConverter') ? t(error) : error
+      }`
+    : '';
 
   return (
     <>
@@ -204,7 +242,7 @@ export function AddressConverter() {
               ></Input>
             </>
           )}
-          <div className="convert-address-error">{error}</div>
+          <div className="convert-address-error">{errorMessage}</div>
         </div>
         <Button
           variant="solid"
