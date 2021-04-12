@@ -871,7 +871,7 @@
     "to": "买入",
     "balance": "余额",
     "availableBalance": "可用余额",
-    "availableBalanceTip": "Available Balance Tip",
+    "availableBalanceTip": "CFX 转换为 WCFX 时需保留至少 0.1 CFX 作为存储费或燃气费",
     "connectWallet": "连接钱包",
     "enterAmount": "请输入数值",
     "insufficientBalance": "{{type}} 余额不足",

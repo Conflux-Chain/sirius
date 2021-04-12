@@ -870,7 +870,7 @@
     "to": "To",
     "balance": "Balance",
     "availableBalance": "Available Balance",
-    "availableBalanceTip": "Available Balance Tip",
+    "availableBalanceTip": "CFX conversion to WCFX requires a minimum of 0.1 CFX as a storage or gas fee.",
     "connectWallet": "Connect Wallet",
     "enterAmount": "Enter an amount",
     "insufficientBalance": "Insufficient {{type}} balance",
