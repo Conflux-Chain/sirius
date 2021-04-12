@@ -647,7 +647,6 @@
     "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
     "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
     "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
-    "notStartWith0x1": "The address does not start with 0x1 and cannot be converted. You can globally search for addresses that start with 0x8 or 0x0 and get their new addresses on the contract page.",
     "notice": "Attention, CFX cannot be transferred directly to the BSC address with any wallet, and cross-chain transfers are required via ",
     "noticeLinkText": "Shuttleflow",
     "noticeend": ".",
@@ -657,7 +656,11 @@
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "CIP-37."
+    "tip3end": "CIP-37.",
+    "errorMessage": {
+      "0x0": "The address is a non-built-in contract or a non-zero address",
+      "0x8": "The contract does not exist, please be careful"
+    }
   },
   "broadcastTx": {
     "title": "Broadcast Transaction",
@@ -815,7 +818,9 @@
         "103": "Write contract",
         "104": "read contract",
         "105": "Sponsor application",
-        "106": "Contract Deployment"
+        "106": "Contract Deployment",
+        "107": "Swap {{wcfxValue}} WCFX for {{cfxValue}} CFX",
+        "108": "Swap {{cfxValue}} CFX for {{wcfxValue}} WCFX "
       }
     },
     "tip": "Please connect to ConfluxPortal first!"
@@ -858,5 +863,22 @@
       "hashRate": "Est. Hash Rate (GH/s)",
       "gasUsed": "Gas Used"
     }
+  },
+  "swap": {
+    "swap": "Swap",
+    "from": "From",
+    "to": "To",
+    "balance": "Balance",
+    "availableBalance": "Available Balance",
+    "availableBalanceTip": "CFX conversion to WCFX requires a minimum of 0.1 CFX as a storage or gas fee.",
+    "connectWallet": "Connect Wallet",
+    "enterAmount": "Enter an amount",
+    "insufficientBalance": "Insufficient {{type}} balance",
+    "max": "MAX",
+    "selectAToken": "Select a Token",
+    "cfx": "CFX",
+    "wcfx": "WCFX",
+    "swapNCFXToWCFX": "Swap N CFX for WCFX",
+    "swapNWCFXToCFX": "Swap N WCFX for N CFX"
   }
 }

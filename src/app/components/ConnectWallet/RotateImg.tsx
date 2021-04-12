@@ -37,6 +37,7 @@ const rotate = keyframes`
 
 const RotateImgWrapper = styled.span`
   display: inline-flex;
+  flex-shrink: 0;
   .rotate-img {
     display: block;
     animation: ${rotate} 1.5s ease-in-out infinite;
