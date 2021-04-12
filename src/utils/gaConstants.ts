@@ -109,6 +109,8 @@ export const ScanEvent = {
         104: 'read_contract', // event label ''
         105: 'apply_sponsor', // event label ''
         106: 'contract_deploy', // event label ''
+        107: 'swap_wcfx_to_cfx', // event label ''
+        108: 'swap_cfx_to_wcfx', // event label ''
       },
       txnActionUnknown: 'unknown',
     },

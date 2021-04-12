@@ -5,23 +5,33 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
 import { ADDRESS_WCFX, NETWORK_ID } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
-import { Card } from '../../components/Card/Loadable';
+import { Card } from 'app/components/Card/Loadable';
 import styled from 'styled-components/macro';
-import { ConnectButton } from '../../components/ConnectWallet';
-import { Select } from '../../components/Select';
+import { ConnectButton } from 'app/components/ConnectWallet';
+import { Select } from 'app/components/Select';
 import { Input, Button } from '@cfxjs/react-ui';
-import { Tooltip } from '../../components/Tooltip';
+import { Tooltip } from 'app/components/Tooltip';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
+import { useTxnHistory } from 'utils/hooks/useTxnHistory';
+import { TxnAction } from 'utils/constants';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
 
-const cfx = new Conflux({
+// token decimal
+const MAX_DECIMALS = 18;
+const MAX_FORMAT_DECIMALS = 6;
+
+const cfxProvider = new Conflux({
   networkId: NETWORK_ID,
 });
 // @ts-ignore
-cfx.provider = window.conflux;
+cfxProvider.provider = window.conflux;
 
-const contract = cfx.Contract({
+const contract = cfxProvider.Contract({
   address: ADDRESS_WCFX,
   abi,
 });
@@ -43,31 +53,43 @@ const SwapItem = ({
   onInputChange,
   onSelectChange,
 }: SwapItemProps) => {
-  let title = 'From';
-  let balanceTitle: React.ReactNode = 'Balance';
+  const { t } = useTranslation();
+
+  let title = t(translations.swap.from);
+  let balanceTitle: React.ReactNode = t(translations.swap.balance);
 
   if (selected === 'cfx' && type === 'from') {
     balanceTitle = (
       <>
-        <Tooltip hoverable text={'xxxxxx'} placement="top">
+        <Tooltip
+          hoverable
+          text={t(translations.swap.availableBalanceTip)}
+          placement="top"
+        >
           <span className="icon-container">
             <img src={imgInfo} alt="?" className="icon-info" />
           </span>
         </Tooltip>
-        <span className="text">Available Balance</span>
+        <span className="text">{t(translations.swap.availableBalance)}</span>
       </>
     );
   }
 
   const handleInputChange = e => {
     let value = e.target.value;
-    if (value === '' || isSafeNumberOrNumericStringInput(e.target.value)) {
-      onInputChange(e.target.value);
+    if (value === '' || isSafeNumberOrNumericStringInput(value)) {
+      const decimal = value.split('.')[1];
+
+      if (decimal && decimal.length > MAX_DECIMALS) {
+        return;
+      } else {
+        onInputChange(value);
+      }
     }
   };
 
   const b = formatNumber(balance, {
-    precision: 6,
+    precision: MAX_FORMAT_DECIMALS,
   });
 
   const handleMax = () => {
@@ -76,12 +98,12 @@ const SwapItem = ({
 
   let max: React.ReactNode = (
     <span className="max" onClick={handleMax}>
-      MAX
+      {t(translations.swap.max)}
     </span>
   );
 
   if (type === 'to') {
-    title = 'To';
+    title = t(translations.swap.to);
     max = null;
   }
 
@@ -118,7 +140,6 @@ const SwapItem = ({
 
 const StyledSwapItemWrapper = styled.div`
   width: 384px;
-  height: 86px;
   border-radius: 4px;
   border: 1px solid #cccccc;
   padding: 16px;
@@ -166,19 +187,21 @@ const StyledSwapItemWrapper = styled.div`
         justify-content: center;
         color: #65709a;
         cursor: pointer;
+        font-size: 14px;
+        margin-right: 16px;
       }
     }
   }
 `;
 
 export function Swap() {
+  const { t } = useTranslation();
+  const { addRecord } = useTxnHistory();
+  const [cfx, setCfx] = useState('0');
   const [wcfx, setWcfx] = useState('0');
-  const {
-    installed,
-    accounts,
-    connected,
-    balances: { cfx },
-  } = usePortal();
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const { installed, accounts, connected } = usePortal();
+
   const [fromToken, setFromToken] = useState({
     type: 'wcfx',
     value: '',
@@ -194,39 +217,21 @@ export function Swap() {
 
   useEffect(() => {
     if (installed && accounts.length) {
-      contract.balanceOf(accounts[0]).then(data => {
-        setWcfx(data.toString());
-      });
+      // @todo, the interval maybe not good, need to change
+      const interval = setInterval(() => {
+        contract.balanceOf(accounts[0]).then(data => {
+          setWcfx(data.toString());
+        });
+
+        cfxProvider.getBalance(accounts[0]).then(balance => {
+          setCfx(balance.toString());
+        });
+      }, 2000);
+
+      return () => {
+        clearInterval(interval);
+      };
     }
-
-    // @ts-ignore
-    // contract.abi
-    //   .transfer(account, 10000000000000000000)
-    //   .then(d => console.log(d))
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-
-    // // deposit 存款
-    // const txnHash2 = contract
-    //   .deposit()
-    //   .sendTransaction({
-    //     from: account,
-    //     value: 3 * 1e18,
-    //   })
-    //   .then(console.log)
-    //   .catch(console.log);
-    // console.log(999, txnHash2);
-
-    // // withdraw 取款
-    // const txnHash2 = contract
-    //   .withdraw(10 * 1e18)
-    //   .sendTransaction({
-    //     from: account,
-    //   })
-    //   .then(console.log)
-    //   .catch(console.log);
-    // console.log(999, txnHash2);
   }, [installed, accounts, connected]);
 
   const handleInputChange = value => {
@@ -240,23 +245,115 @@ export function Swap() {
     });
   };
 
-  const handleFromSelectChange = value => {
+  const handleFromSelectChange = () => {
     handleSwitch();
   };
 
-  const handleToSelectChange = value => {
+  const handleToSelectChange = () => {
     handleSwitch();
   };
 
   const handleSwitch = () => {
-    const toTokenCopy = toToken;
+    const toTokenCopy = {
+      ...toToken,
+    };
     setToToken(fromToken);
     setFromToken(toTokenCopy);
   };
 
+  const handleSwap = () => {
+    const value = new BigNumber(fromToken.value).multipliedBy(1e18).toString();
+    const recordFromValue = formatNumber(fromToken.value, {
+      precision: MAX_FORMAT_DECIMALS,
+    });
+    const recordToValue = formatNumber(toToken.value, {
+      precision: MAX_FORMAT_DECIMALS,
+    });
+    setSubmitLoading(true);
+    if (fromToken.type === 'cfx') {
+      const code = TxnAction.swapCFXToWCFX;
+      // deposit 存款
+      contract
+        .deposit()
+        .sendTransaction({
+          from: accounts[0],
+          value,
+        })
+        .then(hash => {
+          addRecord({
+            hash: hash,
+            info: JSON.stringify({
+              code: code,
+              description: '',
+              hash: hash,
+              cfxValue: recordFromValue,
+              wcfxValue: recordToValue,
+            }),
+          });
+        })
+        .catch(console.log)
+        .finally(() => {
+          setSubmitLoading(false);
+          setFromToken({
+            ...fromToken,
+            value: '',
+          });
+          setToToken({
+            ...toToken,
+            value: '',
+          });
+
+          trackEvent({
+            category: ScanEvent.wallet.category,
+            action:
+              ScanEvent.wallet.action.txnAction[code] ||
+              ScanEvent.wallet.action.txnActionUnknown,
+          });
+        });
+    } else if (fromToken.type === 'wcfx') {
+      const code = TxnAction.swapWCFXToCFX;
+      // withdraw 取款
+      contract
+        .withdraw(value)
+        .sendTransaction({
+          from: accounts[0],
+        })
+        .then(hash => {
+          addRecord({
+            hash: hash,
+            info: JSON.stringify({
+              code: code,
+              description: '',
+              hash: hash,
+              cfxValue: recordFromValue,
+              wcfxValue: recordToValue,
+            }),
+          });
+        })
+        .catch(console.log)
+        .finally(() => {
+          setSubmitLoading(false);
+          setFromToken({
+            ...fromToken,
+            value: '',
+          });
+          setToToken({
+            ...toToken,
+            value: '',
+          });
+
+          trackEvent({
+            category: ScanEvent.wallet.category,
+            action:
+              ScanEvent.wallet.action.txnAction[code] ||
+              ScanEvent.wallet.action.txnActionUnknown,
+          });
+        });
+    }
+  };
+
   const toBalance = new BigNumber(balances[toToken.type]).div(1e18).toString();
   const fromBalanceBN = new BigNumber(balances[fromToken.type]).div(1e18);
-  const fromValueBN = new BigNumber(fromToken.value);
   let fromBalance = '';
 
   if (fromToken.type === 'cfx') {
@@ -266,21 +363,30 @@ export function Swap() {
   }
 
   const getButton = () => {
-    let buttonText = 'Connect wallet';
+    const fromValueBN = new BigNumber(fromToken.value);
+
+    let buttonText = t(translations.swap.swap);
     let disabled = false;
 
-    // @ts-ignore
-    window.fromValueBN = fromValueBN;
-    if (fromValueBN.isNaN()) {
-      buttonText = 'Enter an amount';
+    if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
+      buttonText = t(translations.swap.enterAmount);
       disabled = true;
     } else if (fromValueBN.gt(fromBalanceBN)) {
-      buttonText = 'Insufficient WCFX balance';
+      buttonText = t(translations.swap.insufficientBalance, {
+        type: fromToken.type.toUpperCase(),
+      });
       disabled = true;
     }
 
     return (
-      <Button variant="solid" color="primary" size="small" disabled={disabled}>
+      <Button
+        variant="solid"
+        color="primary"
+        size="small"
+        disabled={disabled || submitLoading}
+        onClick={handleSwap}
+        loading={submitLoading}
+      >
         {buttonText}
       </Button>
     );
@@ -290,7 +396,7 @@ export function Swap() {
     <StyledSwapWrapper>
       <Card className="card">
         <div className="body">
-          <div className="title">Swap</div>
+          <div className="title">{t(translations.swap.swap)}</div>
           <div className="content">
             <SwapItem
               balance={fromBalance}
@@ -334,7 +440,7 @@ const StyledSwapWrapper = styled.div`
 
   .card.card {
     width: 448px;
-    height: 330px;
+    /* height: 330px; */
     margin-top: 100px;
   }
 
@@ -365,7 +471,7 @@ const StyledSwapWrapper = styled.div`
 
   .button-container {
     height: 80px;
-    background: #efefef;
+    background: #f1f3f6;
     display: flex;
     justify-content: center;
     align-items: center;

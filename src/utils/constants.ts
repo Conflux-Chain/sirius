@@ -42,6 +42,8 @@ export enum TxnAction {
   readContract = 104,
   sponsorApplication = 105,
   contractDeplpy = 106,
+  swapWCFXToCFX = 107,
+  swapCFXToWCFX = 108,
 }
 
 export enum NETWORK_IDS {
