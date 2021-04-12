@@ -69,7 +69,17 @@ export function App() {
           convert: info => {
             try {
               let data = JSON.parse(info);
-              return t(translations.connectWallet.notify.action[data.code]);
+              if (data.code === '107') {
+                return t(translations.connectWallet.notify.action[data.code], {
+                  cfxValue: data.cfxValue,
+                  wcfxValue: data.wcfxValue,
+                });
+              } else {
+                return t(translations.connectWallet.notify.action[data.code], {
+                  cfxValue: data.cfxValue,
+                  wcfxValue: data.wcfxValue,
+                });
+              }
             } catch (e) {}
           },
         },
