@@ -17,6 +17,7 @@ import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { TxnAction } from 'utils/constants';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
+import { media } from 'styles/media';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -139,27 +140,27 @@ const SwapItem = ({
 };
 
 const StyledSwapItemWrapper = styled.div`
-  width: 384px;
-  border-radius: 4px;
+  width: 27.4286rem;
+  border-radius: 0.2857rem;
   border: 1px solid #cccccc;
-  padding: 16px;
+  padding: 1.1429rem;
 
   .top {
     display: flex;
     justify-content: space-between;
     color: #7e8598;
-    line-height: 18px;
+    line-height: 1.2857rem;
 
     .icon-container {
       cursor: pointer;
 
       .icon-info {
-        margin-top: -4px;
+        margin-top: -0.2857rem;
       }
     }
 
     .text {
-      margin-left: 5px;
+      margin-left: 0.3571rem;
     }
 
     .right {
@@ -172,23 +173,23 @@ const StyledSwapItemWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 16px;
+    margin-top: 1.1429rem;
 
     .right {
       display: flex;
       align-items: center;
 
       .max {
-        width: 51px;
-        height: 20px;
+        width: 3.6429rem;
+        height: 1.4286rem;
         background: #fede1b;
-        border-radius: 2px;
+        border-radius: 0.1429rem;
         display: inline-flex;
         justify-content: center;
         color: #65709a;
         cursor: pointer;
-        font-size: 14px;
-        margin-right: 16px;
+        font-size: 1rem;
+        margin-right: 1.1429rem;
       }
     }
   }
@@ -435,42 +436,49 @@ const StyledSwapWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 448px;
+  width: 32rem;
   margin: auto;
 
+  ${media.m} {
+    width: inherit;
+  }
+
   .card.card {
-    width: 448px;
-    /* height: 330px; */
-    margin-top: 100px;
+    width: 32rem;
+    margin-top: 7.1429rem;
+
+    ${media.m} {
+      width: inherit;
+    }
   }
 
   .body {
-    padding: 20px 0 40px;
+    padding: 1.4286rem 0 2.8571rem;
 
     .title {
-      font-size: 18px;
+      font-size: 1.2857rem;
       font-weight: 500;
       color: #3a3a3a;
-      line-height: 26px;
+      line-height: 1.8571rem;
     }
   }
 
   .content {
-    margin-top: 16px;
+    margin-top: 1.1429rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     .switch {
-      width: 24px;
-      height: 24px;
+      width: 1.7143rem;
+      height: 1.7143rem;
       cursor: pointer;
-      margin: 8px;
+      margin: 0.5714rem;
     }
   }
 
   .button-container {
-    height: 80px;
+    height: 5.7143rem;
     background: #f1f3f6;
     display: flex;
     justify-content: center;
