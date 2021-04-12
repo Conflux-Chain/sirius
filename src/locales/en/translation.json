@@ -329,7 +329,7 @@
     "contract": "contract",
     "internalContract": "internal contract",
     "specialAddress": "invalid address",
-    "zeroAddress": "zero address",
+    "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",

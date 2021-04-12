@@ -11,7 +11,8 @@ import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
 import { useAccounts } from '../../../utils/hooks/usePortal';
-import { Pie, PieChart, Tooltip, ResponsiveContainer } from 'recharts';
+import ReactECharts from 'echarts-for-react';
+import { media } from '../../../styles/media';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -471,49 +472,68 @@ export const StatsCard = ({
             address: formatAddress(d.base32 || d.hex),
             value: +d.gas,
           }));
-        const CustomTooltip = (prop: any) => {
-          if (prop && prop.active && prop.payload && prop.payload.length) {
-            console.log(prop.payload[0]);
-            return (
-              <div className="tooltip gasused-tooltip">
+        const CustomTooltip = ({ data }: any) => {
+          if (data) {
+            return `<div class="tooltip gasused-tooltip">
                 <div>
                   <span>Account: &nbsp;&nbsp;</span>
-                  <span>
-                    {prop.payload[0].payload && prop.payload[0].payload.address}
-                  </span>
+                  <span>${data.address.replace(
+                    /(.*:.{6}).*(.{6})/,
+                    '$1...$2',
+                  )}</span>
                 </div>
                 <div>
                   <span>Gas used:</span>
                   <span>
-                    {formatNumber(prop.payload[0].value, {
+                    ${formatNumber(data.value, {
                       withUnit: false,
                       keepDecimal: false,
                     })}
                   </span>
                 </div>
-              </div>
-            );
+              </div>`;
           }
-          return null;
+          return '';
         };
         return (
-          <ResponsiveContainer width="95%" height={500}>
-            <PieChart>
-              <Pie
-                dataKey="value"
-                isAnimationActive={false}
-                data={chartData}
-                outerRadius={110}
-                innerRadius={60}
-                paddingAngle={1}
-                startAngle={90}
-                endAngle={-270}
-                fill="rgba(30,61,228,0.8)"
-                label={({ name, value }) => `${name}`}
-              />
-              <Tooltip content={CustomTooltip} />
-            </PieChart>
-          </ResponsiveContainer>
+          <ReactECharts
+            style={{ height: 450, width: '95%', minWidth: 350 }}
+            option={{
+              legend: {
+                show: false,
+              },
+              toolbox: {
+                show: false,
+              },
+              tooltip: {
+                show: true,
+                // position: ['50%', '50%'],
+                formatter: CustomTooltip,
+              },
+              series: [
+                {
+                  color: [
+                    '#5470c6',
+                    '#91cc75',
+                    '#fac858',
+                    '#ee6666',
+                    '#73c0de',
+                    '#3ba272',
+                    '#fc8452',
+                    '#9a60b4',
+                    '#ea7ccc',
+                  ],
+                  type: 'pie',
+                  radius: [50, 100],
+                  itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                  },
+                  data: chartData,
+                },
+              ],
+            }}
+          />
         );
       }
       default:
@@ -573,19 +593,25 @@ const CardWrapper = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+
+      ${media.m} {
+        flex-direction: column;
+      }
     }
   }
 
   .chart-wrapper {
     width: 100%;
+    min-width: 350px;
     min-height: 450px;
     padding-bottom: 16px;
     overflow-x: auto;
 
+    ${media.m} {
+      order: 2;
+    }
+
     .tooltip {
-      padding: 5px 10px;
-      background-color: #fff;
-      border: 1px solid #999;
       div {
         display: flex;
         justify-content: space-between;

@@ -181,7 +181,7 @@ export function ContractMetadata({ address, contractInfo }) {
                       value={contractInfo.admin}
                       alias={
                         formatAddress(contractInfo.admin) === zeroAddress
-                          ? 'Zero Address'
+                          ? t(translations.general.zeroAddress)
                           : undefined
                       }
                     />

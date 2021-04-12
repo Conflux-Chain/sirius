@@ -69,6 +69,7 @@ export const ScanEvent = {
       statsTransactions: 'stats_transactions',
       statsTokens: 'stats_tokens',
       statsMiners: 'stats_miners',
+      statsNetwork: 'stats_network',
       contractSourceCode: 'contract_source_code',
       contractAbi: 'contract_abi',
       contractRead: 'contract_read',
@@ -90,6 +91,8 @@ export const ScanEvent = {
       tokensIntervalChange: 'tokens_interval_change',
       miners: 'miners',
       minersIntervalChange: 'miners_interval_change',
+      network: 'network',
+      networkIntervalChange: 'network_interval_change',
     },
   },
   // confi wallet
