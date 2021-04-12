@@ -19,6 +19,7 @@ import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 
+import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
@@ -68,7 +69,17 @@ export function App() {
           convert: info => {
             try {
               let data = JSON.parse(info);
-              return t(translations.connectWallet.notify.action[data.code]);
+              if (data.code === '107') {
+                return t(translations.connectWallet.notify.action[data.code], {
+                  cfxValue: data.cfxValue,
+                  wcfxValue: data.wcfxValue,
+                });
+              } else {
+                return t(translations.connectWallet.notify.action[data.code], {
+                  cfxValue: data.cfxValue,
+                  wcfxValue: data.wcfxValue,
+                });
+              }
             } catch (e) {}
           },
         },
@@ -267,6 +278,7 @@ export function App() {
                   path={['/block-countdown', '/block-countdown/:block']}
                   component={BlocknumberCalc}
                 />
+                <Route exact path="/swap" component={Swap} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>

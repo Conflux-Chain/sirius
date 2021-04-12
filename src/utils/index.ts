@@ -724,3 +724,21 @@ export const addDays = (date, days) => {
   result.setDate(result.getDate() + days);
   return result;
 };
+
+/**
+ *
+ * @param {number|string} data
+ * @returns {boolean}
+ * @example
+ * 0    -> true
+ * .    -> true
+ * 0.   -> true
+ * .0   -> true
+ * 0.0  -> true
+ * 0..0 -> false
+ * x    -> false
+ * e    -> false
+ * @todo support config, such as negative and exponential notation
+ */
+export const isSafeNumberOrNumericStringInput = data =>
+  /^\d+\.?\d*$|^\.\d*$/.test(data);

@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { Select } from '../../../components/Select';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { isTestNetEnv } from 'utils/hooks/useTestnet';
-import { CHAIN_ID } from 'utils/constants';
+import { NETWORK_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-
-const isTestNet = isTestNetEnv();
-const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
 
 const isPossibleAddress = data => {
   try {
@@ -77,7 +73,7 @@ const decodeData = (value, type) => {
   try {
     switch (type) {
       case 'address':
-        const address = format.address(`0x${value.substr(24)}`, chainId);
+        const address = format.address(`0x${value.substr(24)}`, NETWORK_ID);
         result = <Link href={`/contract/${address}`}>{address}</Link>;
         break;
       case 'number':

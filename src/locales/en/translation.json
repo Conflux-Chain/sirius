@@ -329,7 +329,7 @@
     "contract": "contract",
     "internalContract": "internal contract",
     "specialAddress": "invalid address",
-    "zeroAddress": "zero address",
+    "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
@@ -818,7 +818,9 @@
         "103": "Write contract",
         "104": "read contract",
         "105": "Sponsor application",
-        "106": "Contract Deployment"
+        "106": "Contract Deployment",
+        "107": "Swap {{wcfxValue}} WCFX for {{cfxValue}} CFX",
+        "108": "Swap {{cfxValue}} CFX for {{wcfxValue}} WCFX "
       }
     },
     "tip": "Please connect to ConfluxPortal first!"
@@ -861,5 +863,22 @@
       "hashRate": "Est. Hash Rate (GH/s)",
       "gasUsed": "Gas Used"
     }
+  },
+  "swap": {
+    "swap": "Swap",
+    "from": "From",
+    "to": "To",
+    "balance": "Balance",
+    "availableBalance": "Available Balance",
+    "availableBalanceTip": "CFX conversion to WCFX requires a minimum of 0.1 CFX as a storage or gas fee.",
+    "connectWallet": "Connect Wallet",
+    "enterAmount": "Enter an amount",
+    "insufficientBalance": "Insufficient {{type}} balance",
+    "max": "MAX",
+    "selectAToken": "Select a Token",
+    "cfx": "CFX",
+    "wcfx": "WCFX",
+    "swapNCFXToWCFX": "Swap N CFX for WCFX",
+    "swapNWCFXToCFX": "Swap N WCFX for N CFX"
   }
 }

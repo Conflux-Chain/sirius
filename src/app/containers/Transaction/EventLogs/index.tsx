@@ -6,8 +6,7 @@ import { cfx } from 'utils/cfx';
 import { Description } from '../../../components/Description/Loadable';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { isTestNetEnv } from 'utils/hooks/useTestnet';
-import { CHAIN_ID } from 'utils/constants';
+import { NETWORK_ID } from 'utils/constants';
 import _ from 'lodash';
 import SkeletonContainer from '../../../components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +16,6 @@ import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
-
-const isTestNet = isTestNetEnv();
-const chainId = isTestNet ? CHAIN_ID.testnet : CHAIN_ID.mainnet;
 
 interface Props {
   hash: string;
@@ -44,7 +40,7 @@ interface Props {
  * }
  */
 
-const getAddress = data => format.address(data, chainId);
+const getAddress = data => format.address(data, NETWORK_ID);
 
 /**
  *
