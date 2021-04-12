@@ -10,7 +10,8 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useCheckHook } from './useCheckHook';
 import { Text } from '../Text';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
+import { useLocation } from 'react-router';
 
 interface Props {
   children?: React.ReactChild;
@@ -72,9 +73,12 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
 };
 
 export const ConnectWallet = () => {
+  const location = useLocation();
+  const showBalance = location.pathname.startsWith('/swap');
+
   return (
     <ConnectButton profile={true}>
-      <Button />
+      <Button showBalance={showBalance} />
     </ConnectButton>
   );
 };
