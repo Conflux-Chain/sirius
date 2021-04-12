@@ -15,6 +15,7 @@ import ContractIcon from '../../../images/contract-icon.png';
 import isMeIcon from '../../../images/me.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import { media } from '../../../styles/media';
+import { zeroAddress } from '../../../utils/constants';
 
 interface Props {
   value: string; // address value
@@ -24,6 +25,7 @@ interface Props {
   isFull?: boolean; // show full address, default false
   isLink?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
+  zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
 }
 
 // TODO code simplify
@@ -36,10 +38,16 @@ export const AddressContainer = ({
   isFull = false,
   isLink = true,
   isMe = false,
+  zeroAddressAutoShowAlias = true,
 }: Props) => {
   const { t } = useTranslation();
   const txtContractCreation = t(translations.transaction.contractCreation);
   const cfxAddress = formatAddress(value);
+
+  // zero address auto set alias
+  if (!alias && zeroAddressAutoShowAlias && cfxAddress === zeroAddress) {
+    alias = t(translations.general.zeroAddress);
+  }
 
   const RenderAddress = ({
     hoverValue = cfxAddress,
