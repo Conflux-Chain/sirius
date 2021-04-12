@@ -11,7 +11,6 @@ import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
 import { useAccounts } from '../../../utils/hooks/usePortal';
-import { Pie, PieChart, Tooltip, ResponsiveContainer } from 'recharts';
 import ReactECharts from 'echarts-for-react';
 import { media } from '../../../styles/media';
 
