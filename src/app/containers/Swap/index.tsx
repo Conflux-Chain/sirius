@@ -18,6 +18,7 @@ import { TxnAction } from 'utils/constants';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { media } from 'styles/media';
+import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -202,6 +203,11 @@ export function Swap() {
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
   const { installed, accounts, connected } = usePortal();
+  const [showModal, setShowModal] = useState({
+    show: false,
+    hash: '',
+    status: 'loading',
+  });
 
   const [fromToken, setFromToken] = useState({
     type: 'wcfx',
@@ -271,6 +277,11 @@ export function Swap() {
       precision: MAX_FORMAT_DECIMALS,
     });
     setSubmitLoading(true);
+    setShowModal({
+      ...showModal,
+      show: true,
+      status: 'loading',
+    });
     if (fromToken.type === 'cfx') {
       const code = TxnAction.swapCFXToWCFX;
       // deposit
@@ -281,18 +292,30 @@ export function Swap() {
           value,
         })
         .then(hash => {
+          setShowModal({
+            ...showModal,
+            status: 'success',
+            show: true,
+            hash,
+          });
           addRecord({
-            hash: hash,
+            hash,
             info: JSON.stringify({
               code: code,
               description: '',
-              hash: hash,
+              hash,
               cfxValue: recordFromValue,
               wcfxValue: recordToValue,
             }),
           });
         })
-        .catch(console.log)
+        .catch(e => {
+          setShowModal({
+            ...showModal,
+            status: 'error',
+            show: true,
+          });
+        })
         .finally(() => {
           setSubmitLoading(false);
           setFromToken({
@@ -320,6 +343,12 @@ export function Swap() {
           from: accounts[0],
         })
         .then(hash => {
+          setShowModal({
+            ...showModal,
+            status: 'success',
+            show: true,
+            hash,
+          });
           addRecord({
             hash: hash,
             info: JSON.stringify({
@@ -331,7 +360,13 @@ export function Swap() {
             }),
           });
         })
-        .catch(console.log)
+        .catch(e => {
+          setShowModal({
+            ...showModal,
+            status: 'error',
+            show: true,
+          });
+        })
         .finally(() => {
           setSubmitLoading(false);
           setFromToken({
@@ -395,6 +430,13 @@ export function Swap() {
     );
   };
 
+  const handleClose = () => {
+    setShowModal({
+      ...showModal,
+      show: false,
+    });
+  };
+
   return (
     <StyledSwapWrapper>
       <Card className="card">
@@ -430,6 +472,12 @@ export function Swap() {
       <div className="button-container">
         <ConnectButton>{getButton()}</ConnectButton>
       </div>
+      <TxnStatusModal
+        show={showModal.show}
+        status={showModal.status}
+        onClose={handleClose}
+        hash={showModal.hash}
+      />
     </StyledSwapWrapper>
   );
 }
