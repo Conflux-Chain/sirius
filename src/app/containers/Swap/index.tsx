@@ -273,7 +273,7 @@ export function Swap() {
     setSubmitLoading(true);
     if (fromToken.type === 'cfx') {
       const code = TxnAction.swapCFXToWCFX;
-      // deposit 存款
+      // deposit
       contract
         .deposit()
         .sendTransaction({
@@ -313,7 +313,7 @@ export function Swap() {
         });
     } else if (fromToken.type === 'wcfx') {
       const code = TxnAction.swapWCFXToCFX;
-      // withdraw 取款
+      // withdraw
       contract
         .withdraw(value)
         .sendTransaction({
@@ -369,7 +369,9 @@ export function Swap() {
     let buttonText = t(translations.swap.swap);
     let disabled = false;
 
-    if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
+    if (!accounts.length) {
+      buttonText = t(translations.swap.connectWallet);
+    } else if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
       buttonText = t(translations.swap.enterAmount);
       disabled = true;
     } else if (fromValueBN.gt(fromBalanceBN)) {
