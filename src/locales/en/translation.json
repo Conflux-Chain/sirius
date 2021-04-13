@@ -297,8 +297,12 @@
       "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
-      "title": "Daily Transactions -- CFX",
+      "title": "Daily Transactions",
       "description": "The total number of transactions per day for the Conflux network."
+    },
+    "dailyTransactionCFX": {
+      "title": "Daily Transactions -- CFX",
+      "description": "The daily volume of CFX on the Conflux network."
     },
     "dailyTransactionTokens": {
       "title": "Daily Transactions -- Tokens",
