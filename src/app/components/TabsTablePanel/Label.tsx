@@ -10,6 +10,7 @@ interface LabelProps {
   right?: string;
   total?: number | null;
   realTotal?: number;
+  showTooltip?: boolean;
 }
 
 const defaultProps = {
@@ -17,6 +18,7 @@ const defaultProps = {
   right: '',
   total: 0,
   realTotal: 0,
+  showTooltip: true,
 };
 
 const Text = ({ left, right, total = 0, realTotal = 0 }: LabelProps) => {
@@ -41,25 +43,30 @@ const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
   total,
   realTotal,
   children,
+  showTooltip,
 }) => {
   return (
     <>
       {children}
       {total ? (
-        <Tooltip
-          text={
-            <StyledTextWrapper>
-              <Text
-                left={left}
-                right={right}
-                total={total}
-                realTotal={realTotal}
-              ></Text>
-            </StyledTextWrapper>
-          }
-        >
+        showTooltip ? (
+          <Tooltip
+            text={
+              <StyledTextWrapper>
+                <Text
+                  left={left}
+                  right={right}
+                  total={total}
+                  realTotal={realTotal}
+                ></Text>
+              </StyledTextWrapper>
+            }
+          >
+            <StyledCount>({total > 9999 ? '9999+' : total})</StyledCount>
+          </Tooltip>
+        ) : (
           <StyledCount>({total > 9999 ? '9999+' : total})</StyledCount>
-        </Tooltip>
+        )
       ) : (
         ''
       )}

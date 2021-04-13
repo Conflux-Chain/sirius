@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
 import { Card } from '../../../components/Card/Loadable';
 import { Empty } from '../../../components/Empty/Loadable';
@@ -22,6 +22,7 @@ interface Props {
   address?: string;
   abi?: Array<any>;
   bytecode?: string;
+  onChange?: (total: number) => void;
 }
 
 /**
@@ -272,7 +273,7 @@ const EventLog = ({ log }) => {
   );
 };
 
-export const EventLogs = ({ hash }: Props) => {
+export const EventLogs = ({ hash, onChange }: Props) => {
   const [eventlogs, setEventlogs] = useState([
     {
       topics: [],
@@ -280,12 +281,14 @@ export const EventLogs = ({ hash }: Props) => {
       address: '',
     },
   ]);
+  const ref = useRef(onChange);
 
   useEffect(() => {
     reqTransactionEventlogs({
       hash,
     }).then(body => {
       setEventlogs(body.list);
+      ref.current && ref.current(body.total);
     });
   }, [hash]);
 
