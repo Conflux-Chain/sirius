@@ -450,15 +450,16 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 3, 2, 4, 3, 3, 4];
+  const columnsBlocksWidth = [5, 3, 2, 4, 6, 4, 5, 4, 6];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
-    blockColunms.hash,
     blockColunms.txns,
+    blockColunms.hash,
     blockColunms.miner,
-    blockColunms.difficulty,
+    blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
+    blockColunms.reward,
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
