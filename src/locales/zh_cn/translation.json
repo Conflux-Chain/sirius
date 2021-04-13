@@ -85,7 +85,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -202,6 +202,7 @@
   },
   "footer": {
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
+    "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
     "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
@@ -291,13 +292,17 @@
       "title": "流通量",
       "description": "流通量包含零地址中的 CFX"
     },
-    "nullAddress": {
+    "zeroAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"
     },
     "dailyTransaction": {
-      "title": "日交易量",
+      "title": "日交易量 -- CFX",
       "description": "Conflux 网络每日的交易总量"
+    },
+    "dailyTransactionTokens": {
+      "title": "日交易量 -- 代币",
+      "description": "Conflux 网络上全部代币的每日转移总量"
     },
     "cfxHoldingAccounts": {
       "title": "CFX 持有账户数",
@@ -323,8 +328,10 @@
     "loading": "加载中...",
     "contract": "合约",
     "internalContract": "内置合约",
-    "zeroAddress": "空地址",
+    "specialAddress": "无效地址",
+    "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
     "storageStaking": "抵押存储",
@@ -572,6 +579,17 @@
       "to": "到",
       "produced": "共生成",
       "txns": "个内部交易。"
+    },
+    "logs": {
+      "title": "事件日志",
+      "address": "地址",
+      "name": "名称",
+      "topics": "题目",
+      "data": "数据",
+      "decode": "解码",
+      "hex": "十六进制",
+      "text": "文字",
+      "number": "数字"
     }
   },
   "block": {
@@ -630,7 +648,6 @@
     "newMainnetAddress": "Conflux Tethys 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
-    "notStartWith0x1": "该地址为非 0x1 开头的地址，无法进行转换。您可以全局搜索以 0x8 或 0x0 开头的地址，在合约页获取其对应的新地址。",
     "notice": "注意，不能用任何钱包将 CFX 直接转至 BSC 的地址，需要通过 ",
     "noticeLinkText": "Shuttleflow",
     "noticeend": " 完成跨链转账。",
@@ -640,7 +657,11 @@
     "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 Checksum 校验规则。",
     "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "CIP-37。"
+    "tip3end": "CIP-37。",
+    "errorMessage": {
+      "0x0": "该地址为非内置合约或非零地址",
+      "0x8": "该合约不存在，请谨慎操作"
+    }
   },
   "broadcastTx": {
     "title": "广播交易",
@@ -748,7 +769,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是空地址，则表示该合约处于调试阶段（Tethys 空地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 空地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
@@ -798,7 +819,9 @@
         "103": "写合约",
         "104": "读合约",
         "105": "Sponsor 应用",
-        "106": "合约部署"
+        "106": "合约部署",
+        "107": "将 {{wcfxValue}} WCFX 兑换为 {{cfxValue}} CFX",
+        "108": "将 {{cfxValue}} CFX 兑换为 {{wcfxValue}} WCFX"
       }
     },
     "tip": "请先连接 ConfluxPortal 钱包！"
@@ -841,5 +864,22 @@
       "hashRate": "哈希算力 (GH/s)",
       "gasUsed": "燃料用量"
     }
+  },
+  "swap": {
+    "swap": "兑换",
+    "from": "卖出",
+    "to": "买入",
+    "balance": "余额",
+    "availableBalance": "可用余额",
+    "availableBalanceTip": "CFX 转换为 WCFX 时需保留至少 0.1 CFX 作为存储费或燃气费",
+    "connectWallet": "连接钱包",
+    "enterAmount": "请输入数值",
+    "insufficientBalance": "{{type}} 余额不足",
+    "max": "最大",
+    "selectAToken": "选择代币",
+    "cfx": "CFX",
+    "wcfx": "WCFX",
+    "swapNCFXToNWCFX": "将 {{cfxValue}} CFX 兑换为 {{wcfxValue}} WCFX",
+    "swapNWCFXToNCFX": "将 {{wcfxValue}} WCFX 兑换为 {{cfxValue}} CFX"
   }
 }

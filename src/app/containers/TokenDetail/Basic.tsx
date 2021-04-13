@@ -198,19 +198,25 @@ export const Basic = ({
       case cfxTokenTypes.erc1155:
         return (
           <TokenTypeTag className={transferType}>
-            <span>{t(translations.header.tokens1155)}</span>
+            <span>
+              {t(translations.header.tokens1155).replace('Tokens', 'Token')}
+            </span>
           </TokenTypeTag>
         );
       case cfxTokenTypes.erc721:
         return (
           <TokenTypeTag className={transferType}>
-            <span>{t(translations.header.tokens721)}</span>
+            <span>
+              {t(translations.header.tokens721).replace('Tokens', 'Token')}
+            </span>
           </TokenTypeTag>
         );
       case cfxTokenTypes.erc20:
         return (
           <TokenTypeTag className={transferType}>
-            <span>{t(translations.header.tokens20)}</span>
+            <span>
+              {t(translations.header.tokens20).replace('Tokens', 'Token')}
+            </span>
           </TokenTypeTag>
         );
       default:

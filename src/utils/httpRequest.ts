@@ -14,6 +14,14 @@ export const sendRequest = config => {
   });
 };
 
+export const reqTransactionEventlogs = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/eventLog`,
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
@@ -96,6 +104,15 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       query: {
         span: param.span.slice(0, -1),
         type: param.span.slice(-1),
+        rows: 10,
+      },
+      ...extra,
+    });
+  } else if (['top-gas-used'].includes(param.action)) {
+    return sendRequest({
+      url: `${statPrefix}/top-gas-used`,
+      query: {
+        span: param.span,
         rows: 10,
       },
       ...extra,

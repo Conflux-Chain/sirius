@@ -85,7 +85,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
@@ -202,6 +202,7 @@
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
+    "addressWarning": "To prevent loss of assets, please review <a href='https://forum.conflux.fun/t/announcement-conflux-address-formats-and-their-implications-of-asset-transfers/6727' target='_blank'>THE DESCRIPTION OF THE RULES RELATING TO THE ADDRESS INVOLVED IN THE TRANSFER OF ASSETS</a> carefully. ",
     "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
@@ -289,15 +290,19 @@
     },
     "cfxCirculatingSupply": {
       "title": "Circulating Supply",
-      "description": "Circulating supply contains the CFX in the Null address."
+      "description": "Circulating supply contains the CFX in the Zero Address."
     },
-    "nullAddress": {
-      "title": "Null Address",
-      "description": "CFX in Null address is burned CFX."
+    "zeroAddress": {
+      "title": "Zero Address",
+      "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
-      "title": "Daily Transactions",
+      "title": "Daily Transactions -- CFX",
       "description": "The total number of transactions per day for the Conflux network."
+    },
+    "dailyTransactionTokens": {
+      "title": "Daily Transactions -- Tokens",
+      "description": "The total daily transfer of all tokens on the Conflux network."
     },
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
@@ -323,8 +328,10 @@
     "loading": "loading...",
     "contract": "contract",
     "internalContract": "internal contract",
-    "zeroAddress": "null address",
+    "specialAddress": "invalid address",
+    "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
+    "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
     "token": "token",
     "storageStaking": "Storage Collateral",
@@ -571,6 +578,17 @@
       "to": "to",
       "produced": "produced",
       "txns": "internal transactions."
+    },
+    "logs": {
+      "title": "logs",
+      "address": "Address",
+      "name": "Name",
+      "topics": "Topics",
+      "data": "Data",
+      "decode": "Decode",
+      "hex": "Hex",
+      "text": "Text",
+      "number": "Number"
     }
   },
   "block": {
@@ -629,7 +647,6 @@
     "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
     "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
     "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
-    "notStartWith0x1": "The address does not start with 0x1 and cannot be converted. You can globally search for addresses that start with 0x8 or 0x0 and get their new addresses on the contract page.",
     "notice": "Attention, CFX cannot be transferred directly to the BSC address with any wallet, and cross-chain transfers are required via ",
     "noticeLinkText": "Shuttleflow",
     "noticeend": ".",
@@ -639,7 +656,11 @@
     "tip2": "2. Conflux adopts a new checksum method different from the EIP55 standard.",
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
-    "tip3end": "CIP-37."
+    "tip3end": "CIP-37.",
+    "errorMessage": {
+      "0x0": "The address is a non-built-in contract or a non-zero address",
+      "0x8": "The contract does not exist, please be careful"
+    }
   },
   "broadcastTx": {
     "title": "Broadcast Transaction",
@@ -747,7 +768,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys null address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet null address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
@@ -797,7 +818,9 @@
         "103": "Write contract",
         "104": "read contract",
         "105": "Sponsor application",
-        "106": "Contract Deployment"
+        "106": "Contract Deployment",
+        "107": "Swap {{wcfxValue}} WCFX for {{cfxValue}} CFX",
+        "108": "Swap {{cfxValue}} CFX for {{wcfxValue}} WCFX "
       }
     },
     "tip": "Please connect to ConfluxPortal first!"
@@ -840,5 +863,22 @@
       "hashRate": "Est. Hash Rate (GH/s)",
       "gasUsed": "Gas Used"
     }
+  },
+  "swap": {
+    "swap": "Swap",
+    "from": "From",
+    "to": "To",
+    "balance": "Balance",
+    "availableBalance": "Available Balance",
+    "availableBalanceTip": "CFX conversion to WCFX requires a minimum of 0.1 CFX as a storage or gas fee.",
+    "connectWallet": "Connect Wallet",
+    "enterAmount": "Enter an amount",
+    "insufficientBalance": "Insufficient {{type}} balance",
+    "max": "MAX",
+    "selectAToken": "Select a Token",
+    "cfx": "CFX",
+    "wcfx": "WCFX",
+    "swapNCFXToWCFX": "Swap N CFX for WCFX",
+    "swapNWCFXToCFX": "Swap N WCFX for N CFX"
   }
 }

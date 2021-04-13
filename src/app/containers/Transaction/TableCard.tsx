@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { useTabTableData } from '../../components/TabsTablePanel/useTabTableData';
-import { tokenColunms, transactionColunms } from '../../../utils/tableColumns';
+import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
-import { cfxTokenTypes } from '../../../utils/constants';
+import { cfxTokenTypes } from 'utils/constants';
+import { EventLogs } from './EventLogs/Loadable';
+import { TabLabel } from 'app/components/TabsTablePanel/Label';
 
 export function TableCard({
   from,
@@ -17,6 +19,7 @@ export function TableCard({
   to: React.ReactNode;
   hash: string;
 }) {
+  const [eventlogsTotalCount, setEventlogsTotalCount] = useState(0);
   const { t } = useTranslation();
   const tipT = translations.transaction.internalTxnsTip;
 
@@ -35,6 +38,10 @@ export function TableCard({
     </StyledTipWrapper>
   );
 
+  const handleEventlogsChange = (total: number) => {
+    setEventlogsTotalCount(total);
+  };
+
   const tabs = [
     {
       value: 'cfxTransfer',
@@ -49,6 +56,19 @@ export function TableCard({
           }${index}`,
       },
       tableHeader: label(0),
+    },
+    {
+      value: 'logs',
+      label: () => {
+        return (
+          <TabLabel total={eventlogsTotalCount} showTooltip={false}>
+            {t(translations.transaction.logs.title)}
+          </TabLabel>
+        );
+      },
+      content: (
+        <EventLogs hash={hash} onChange={handleEventlogsChange}></EventLogs>
+      ),
     },
   ];
 

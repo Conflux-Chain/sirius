@@ -22,7 +22,7 @@ import {
   reqTransferList,
   reqConfirmationRiskByHash,
   reqTokenList,
-} from '../../../utils/httpRequest';
+} from 'utils/httpRequest';
 import {
   delay,
   getAddressType,
@@ -31,13 +31,13 @@ import {
   fromDripToCfx,
   getPercent,
   toThousands,
-} from '../../../utils';
-import { decodeContract, formatAddress } from '../../../utils/cfx';
+} from 'utils';
+import { decodeContract, formatAddress } from 'utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
   cfxTokenTypes,
-} from '../../../utils/constants';
+} from 'utils/constants';
 import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';

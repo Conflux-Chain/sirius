@@ -41,7 +41,8 @@ export const ScanEvent = {
       epoch: 'epoch',
       block: 'block',
       transaction: 'transaction',
-      nullAddress: 'null_address',
+      // nullAddress: 'null_address',
+      zeroAddress: 'zero_address',
       invalid: 'invalid',
     },
   },
@@ -68,6 +69,7 @@ export const ScanEvent = {
       statsTransactions: 'stats_transactions',
       statsTokens: 'stats_tokens',
       statsMiners: 'stats_miners',
+      statsNetwork: 'stats_network',
       contractSourceCode: 'contract_source_code',
       contractAbi: 'contract_abi',
       contractRead: 'contract_read',
@@ -89,6 +91,8 @@ export const ScanEvent = {
       tokensIntervalChange: 'tokens_interval_change',
       miners: 'miners',
       minersIntervalChange: 'miners_interval_change',
+      network: 'network',
+      networkIntervalChange: 'network_interval_change',
     },
   },
   // confi wallet
@@ -108,6 +112,8 @@ export const ScanEvent = {
         104: 'read_contract', // event label ''
         105: 'apply_sponsor', // event label ''
         106: 'contract_deploy', // event label ''
+        107: 'swap_wcfx_to_cfx', // event label ''
+        108: 'swap_cfx_to_wcfx', // event label ''
       },
       txnActionUnknown: 'unknown',
     },

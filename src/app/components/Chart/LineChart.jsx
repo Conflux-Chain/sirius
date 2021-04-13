@@ -35,6 +35,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
 
   const hasDurationFilter = ![
     'dailyTransaction',
+    'dailyTransactionTokens',
     'cfxHoldingAccounts',
   ].includes(indicator);
 
@@ -65,6 +66,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 difficulty: Math.min(+acc.min.difficulty, +cur.difficulty),
                 hashRate: Math.min(+acc.min.hashRate, +cur.hashRate),
                 dailyTransaction: 0,
+                dailyTransactionTokens: 0,
               };
             }
             if (acc.max == null) acc.max = cur;
@@ -72,9 +74,13 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               acc.max = {
                 blockTime: 'auto',
                 tps: 'auto',
-                difficulty: Math.max(+acc.max.difficulty, +cur.difficulty),
-                hashRate: Math.max(+acc.max.hashRate, +cur.hashRate),
+                difficulty: Math.max(+acc.max.difficulty || 0, +cur.difficulty),
+                hashRate: Math.max(+acc.max.hashRate || 0, +cur.hashRate),
                 dailyTransaction: 'auto',
+                dailyTransactionTokens: Math.max(
+                  +acc.max.dailyTransactionTokens || 0,
+                  +cur['txnCount'],
+                ),
                 // dailyTransaction: Math.min(
                 //   +acc.max.dailyTransaction,
                 //   +cur.txCount,
@@ -86,6 +92,8 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
               acc.min.hashRate = acc.min.hashRate * 0.7;
               acc.max.difficulty = acc.max.difficulty * 1.1;
               acc.max.hashRate = acc.max.hashRate * 1.1;
+              acc.max.dailyTransactionTokens =
+                acc.max.dailyTransactionTokens * 1.1;
             }
             return acc;
           },
@@ -98,6 +106,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             difficulty: 0,
             hashRate: 0,
             dailyTransaction: 0,
+            dailyTransactionTokens: 0,
             cfxHoldingAccounts: 0,
           },
           max: {
@@ -106,6 +115,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             difficulty: 'auto',
             hashRate: 'auto',
             dailyTransaction: 'auto',
+            dailyTransactionTokens: 'auto',
             cfxHoldingAccounts: 'auto',
           },
         };
@@ -113,10 +123,11 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   const strokeColor = () => {
     switch (indicator) {
       case 'dailyTransaction':
+      case 'dailyTransactionTokens':
         // because of reverse
         return plot &&
           plot.length > 0 &&
-          plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
+          plot[plot.length - 1]['txnCount'] - plot[0]['txnCount'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       case 'cfxHoldingAccounts':
@@ -189,13 +200,22 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   };
 
   const xAxisKey = () => {
-    return hasDurationFilter ? 'timestamp' : 'statDay';
+    switch (indicator) {
+      case 'cfxHoldingAccounts':
+        return 'statDay';
+      case 'dailyTransaction':
+      case 'dailyTransactionTokens':
+        return 'day';
+      default:
+        return 'timestamp';
+    }
   };
 
   const lineKey = () => {
     switch (indicator) {
       case 'dailyTransaction':
-        return 'txCount';
+      case 'dailyTransactionTokens':
+        return 'txnCount';
       case 'cfxHoldingAccounts':
         return 'holderCount';
       default:
@@ -244,6 +264,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 'difficulty',
                 'hashRate',
                 'dailyTransaction',
+                'dailyTransactionTokens',
                 'cfxHoldingAccounts',
               ].includes(indicator)
                 ? 60

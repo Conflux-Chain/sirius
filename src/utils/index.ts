@@ -2,6 +2,9 @@ import {
   addressTypeCommon,
   addressTypeContract,
   addressTypeInternalContract,
+  adminControlAddress,
+  sponsorWhitelistControlAddress,
+  stakingAddress,
   zeroAddress,
 } from './constants';
 import BigNumber from 'bignumber.js';
@@ -515,12 +518,12 @@ export const isAddress = (str: string) => {
   // return /^0x[0-9a-fA-F]{40}$/.test(str);
 };
 
-export function isNullAddress(str: string) {
+export function isZeroAddress(str: string) {
   return formatAddress(str) === zeroAddress;
 }
 
 export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon || isNullAddress(str);
+  return getAddressType(str) === addressTypeCommon || isZeroAddress(str);
 }
 
 export function isContractAddress(str: string) {
@@ -528,7 +531,26 @@ export function isContractAddress(str: string) {
 }
 
 export function isInnerContractAddress(str: string) {
-  return getAddressType(str) === addressTypeInternalContract;
+  return (
+    getAddressType(str) === addressTypeInternalContract &&
+    [
+      adminControlAddress,
+      sponsorWhitelistControlAddress,
+      stakingAddress,
+    ].includes(formatAddress(str, { hex: false }))
+  );
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(str: string) {
+  return (
+    getAddressType(str) === addressTypeInternalContract &&
+    ![
+      adminControlAddress,
+      sponsorWhitelistControlAddress,
+      stakingAddress,
+    ].includes(formatAddress(str, { hex: false }))
+  );
 }
 
 export const isHash = (str: string) => {
@@ -702,3 +724,21 @@ export const addDays = (date, days) => {
   result.setDate(result.getDate() + days);
   return result;
 };
+
+/**
+ *
+ * @param {number|string} data
+ * @returns {boolean}
+ * @example
+ * 0    -> true
+ * .    -> true
+ * 0.   -> true
+ * .0   -> true
+ * 0.0  -> true
+ * 0..0 -> false
+ * x    -> false
+ * e    -> false
+ * @todo support config, such as negative and exponential notation
+ */
+export const isSafeNumberOrNumericStringInput = data =>
+  /^\d+\.?\d*$|^\.\d*$/.test(data);

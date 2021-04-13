@@ -177,7 +177,14 @@ export function ContractMetadata({ address, contractInfo }) {
               <CenterLine>
                 <Content>
                   {contractInfo.admin ? (
-                    <AddressContainer value={contractInfo.admin} />
+                    <AddressContainer
+                      value={contractInfo.admin}
+                      alias={
+                        formatAddress(contractInfo.admin) === zeroAddress
+                          ? t(translations.general.zeroAddress)
+                          : undefined
+                      }
+                    />
                   ) : (
                     notAvailableText
                   )}

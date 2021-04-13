@@ -3,9 +3,8 @@
 exports[`<ConnectWallet  /> should match snapshot 1`] = `
 .c0 {
   height: 2.2857rem;
-  background: #f5f6fa;
+  background: #c9d5f1;
   border-radius: 1.1429rem;
-  padding: 0 0.8571rem;
   margin-right: 1.1429rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -23,12 +22,21 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
 }
 
 .c0.pending {
-  background: #ffc438;
+  background: #fede1b;
+  color: #ffffff;
+}
+
+.c0.pending .connect-wallet-button-left {
+  background: #fede1b;
   color: #ffffff;
 }
 
 .c0:not(.pending):hover {
-  background: rgba(100%,87%,11%,70%);
+  background: #ffe872;
+}
+
+.c0:not(.pending):hover .connect-wallet-button-left {
+  background: #ffe872;
 }
 
 .c0 .button-status-online {
@@ -52,15 +60,39 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   white-space: nowrap;
 }
 
+.c0 .balance {
+  padding: 0 0.8571rem 0 8px;
+}
+
+.c0 .connect-wallet-button-left {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  background: #f5f6fa;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
 <span>
   <div
     class="c0 connect-wallet-button"
   >
-    
     <span
-      class="text"
+      class="connect-wallet-button-left"
     >
-      Connect Wallet
+      
+      <span
+        class="text"
+      >
+        Connect Wallet
+      </span>
     </span>
   </div>
 </span>

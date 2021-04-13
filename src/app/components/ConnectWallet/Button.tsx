@@ -5,27 +5,39 @@
  */
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
+import { formatNumber } from 'utils';
 import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
+import BigNumber from 'bignumber.js';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
 interface Button {
   className?: string;
   onClick?: () => void;
+  showBalance?: boolean;
 }
 
-export const Button = ({ className, onClick }: Button) => {
+export const Button = ({ className, onClick, showBalance }: Button) => {
   const { t } = useTranslation();
-  const { installed, connected, accounts } = usePortal();
+  const {
+    installed,
+    connected,
+    accounts,
+    balances: { cfx },
+  } = usePortal();
   const { pendingRecords } = useContext(TxnHistoryContext);
-
   const { isValid } = useCheckHook(true);
+  let cfxBalance = cfx
+    ? formatNumber(new BigNumber(cfx).div(1e18).toString(), {
+        precision: 6,
+      })
+    : '0';
 
   let buttonText = t(translations.connectWallet.button.text);
   let buttonStatus: React.ReactNode = '';
@@ -58,17 +70,25 @@ export const Button = ({ className, onClick }: Button) => {
       })}
       onClick={onClick}
     >
-      {buttonStatus}
-      <span className="text">{buttonText}</span>
+      <span className="connect-wallet-button-left">
+        {buttonStatus}
+        <span className="text">{buttonText}</span>
+      </span>
+      {accounts.length && showBalance && !hasPendingRecords ? (
+        <span className="balance">{cfxBalance} CFX</span>
+      ) : null}
     </ButtonWrapper>
   );
 };
 
+Button.defaultProps = {
+  showBalance: true,
+};
+
 const ButtonWrapper = styled.div`
   height: 2.2857rem;
-  background: #f5f6fa;
+  background: #c9d5f1;
   border-radius: 1.1429rem;
-  padding: 0 0.8571rem;
   margin-right: 1.1429rem;
   display: flex;
   align-items: center;
@@ -79,12 +99,21 @@ const ButtonWrapper = styled.div`
   cursor: pointer;
 
   &.pending {
-    background: #ffc438;
+    background: #fede1b;
     color: #ffffff;
+
+    .connect-wallet-button-left {
+      background: #fede1b;
+      color: #ffffff;
+    }
   }
 
   &:not(.pending):hover {
-    background: rgba(100%, 87%, 11%, 70%);
+    background: #ffe872;
+
+    .connect-wallet-button-left {
+      background: #ffe872;
+    }
   }
 
   .button-status-online {
@@ -106,5 +135,19 @@ const ButtonWrapper = styled.div`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .balance {
+    padding: 0 0.8571rem 0 8px;
+  }
+
+  .connect-wallet-button-left {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 12px;
+    background: #f5f6fa;
+    border-radius: 50px;
+    cursor: pointer;
   }
 `;
