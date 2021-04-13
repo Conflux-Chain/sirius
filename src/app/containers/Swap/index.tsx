@@ -393,7 +393,9 @@ export function Swap() {
   let fromBalance = '';
 
   if (fromToken.type === 'cfx') {
-    fromBalance = fromBalanceBN.minus(0.1).toString();
+    fromBalance = fromBalanceBN.gte(0.1)
+      ? fromBalanceBN.minus(0.1).toString()
+      : fromBalanceBN.toString();
   } else {
     fromBalance = fromBalanceBN.toString();
   }
