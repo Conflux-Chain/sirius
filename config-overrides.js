@@ -27,6 +27,16 @@ module.exports = function (config, mode) {
             },
           },
         },
+        minimizer: config.optimization.minimizer.map(minimizerConfig => {
+          if (
+            !minimizerConfig ||
+            !minimizerConfig.options ||
+            !minimizerConfig.options.parallel
+          )
+            return minimizerConfig;
+          minimizerConfig.options.parallel = 1;
+          return minimizerConfig;
+        }),
       },
       resolve: {
         ...config.resolve,
