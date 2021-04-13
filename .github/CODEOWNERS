@@ -13,3 +13,4 @@ src/containers/Header/* @yqrashawn
 src/containers/HomePage/* @yqrashawn
 src/containers/Blocks/* @chain-txz
 src/containers/Transactions/* @chain-txz
+src/containers/Swap/* @chain-txz
