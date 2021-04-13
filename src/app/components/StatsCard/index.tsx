@@ -476,14 +476,18 @@ export const StatsCard = ({
           if (data) {
             return `<div class="tooltip gasused-tooltip">
                 <div>
-                  <span>Account: &nbsp;&nbsp;</span>
+                  <span>${t(
+                    translations.statistics.column.address,
+                  )}: &nbsp;&nbsp;</span>
                   <span>${data.address.replace(
                     /(.*:.{6}).*(.{6})/,
                     '$1...$2',
                   )}</span>
                 </div>
                 <div>
-                  <span>Gas used:</span>
+                  <span>${t(
+                    translations.statistics.column.gasUsed,
+                  )}: &nbsp;&nbsp;</span>
                   <span>
                     ${formatNumber(data.value, {
                       withUnit: false,
@@ -509,6 +513,7 @@ export const StatsCard = ({
                 show: true,
                 // position: ['50%', '50%'],
                 formatter: CustomTooltip,
+                confine: true,
               },
               series: [
                 {
