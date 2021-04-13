@@ -16,7 +16,8 @@ export const sendRequest = config => {
 
 export const reqTransactionEventlogs = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/eventLog/${param && param['hash']}`,
+    url: `${apiPrefix}/eventLog`,
+    query: param,
     ...extra,
   });
 };

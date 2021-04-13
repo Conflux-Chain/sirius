@@ -285,7 +285,7 @@ export const EventLogs = ({ hash, onChange }: Props) => {
 
   useEffect(() => {
     reqTransactionEventlogs({
-      hash,
+      transactionHash: hash,
     }).then(body => {
       setEventlogs(body.list);
       ref.current && ref.current(body.total);
