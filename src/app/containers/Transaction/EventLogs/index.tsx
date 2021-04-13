@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
 import { Card } from '../../../components/Card/Loadable';
 import { Empty } from '../../../components/Empty/Loadable';
@@ -22,6 +22,7 @@ interface Props {
   address?: string;
   abi?: Array<any>;
   bytecode?: string;
+  onChange?: (total: number) => void;
 }
 
 /**
@@ -224,48 +225,55 @@ const EventLog = ({ log }) => {
           minHeight: '16.4286rem',
         }}
       >
-        <Description
-          className="description"
-          title={t(translations.transaction.logs.address)}
-          small
-          noBorder
-        >
-          <Address address={address}></Address>
-        </Description>
-        {fnName ? (
-          <Description
-            className="description"
-            title={t(translations.transaction.logs.name)}
-            small
-            noBorder
-          >
-            <Event fnName={fnName} args={args} />
-          </Description>
-        ) : null}
-        <Description
-          className="description"
-          title={t(translations.transaction.logs.topics)}
-          small
-          noBorder
-        >
-          <Topics data={topics} signature={signature} />
-        </Description>
-        {!!data.length && (
-          <Description
-            className="description"
-            title={t(translations.transaction.logs.data)}
-            small
-            noBorder
-          >
-            <Data data={data} hexData={log.data} />
-          </Description>
-        )}
+        <div className="eventlog-content">
+          {log?.transactionLogIndex !== undefined ? (
+            <div className="eventlog-index">{log.transactionLogIndex + 1}</div>
+          ) : null}
+          <div className="eventlog-item">
+            <Description
+              className="description"
+              title={t(translations.transaction.logs.address)}
+              small
+              noBorder
+            >
+              <Address address={address}></Address>
+            </Description>
+            {fnName ? (
+              <Description
+                className="description"
+                title={t(translations.transaction.logs.name)}
+                small
+                noBorder
+              >
+                <Event fnName={fnName} args={args} />
+              </Description>
+            ) : null}
+            <Description
+              className="description"
+              title={t(translations.transaction.logs.topics)}
+              small
+              noBorder
+            >
+              <Topics data={topics} signature={signature} />
+            </Description>
+            {!!data.length && (
+              <Description
+                className="description"
+                title={t(translations.transaction.logs.data)}
+                small
+                noBorder
+              >
+                <Data data={data} hexData={log.data} />
+              </Description>
+            )}
+          </div>
+        </div>
       </SkeletonContainer>
     </StyledEventLogWrapper>
   );
 };
 
-export const EventLogs = ({ hash }: Props) => {
+export const EventLogs = ({ hash, onChange }: Props) => {
   const [eventlogs, setEventlogs] = useState([
     {
       topics: [],
@@ -273,12 +281,14 @@ export const EventLogs = ({ hash }: Props) => {
       address: '',
     },
   ]);
+  const ref = useRef(onChange);
 
   useEffect(() => {
     reqTransactionEventlogs({
       hash,
     }).then(body => {
       setEventlogs(body.list);
+      ref.current && ref.current(body.total);
     });
   }, [hash]);
 
@@ -298,6 +308,24 @@ const StyledEventLogsWrapper = styled.div`
   position: relative;
   margin-bottom: 2.2857rem;
   min-height: 16.4286rem;
+
+  .eventlog-content {
+    display: flex;
+
+    .eventlog-index {
+      width: 2.2857rem;
+      height: 2.2857rem;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.8571rem 1.0714rem 0 0;
+    }
+    .eventlog-item {
+      flex-grow: 1;
+    }
+  }
 `;
 
 const StyledEventLogWrapper = styled.div`

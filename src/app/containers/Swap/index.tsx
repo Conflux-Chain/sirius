@@ -393,7 +393,9 @@ export function Swap() {
   let fromBalance = '';
 
   if (fromToken.type === 'cfx') {
-    fromBalance = fromBalanceBN.minus(0.1).toString();
+    fromBalance = fromBalanceBN.gte(0.1)
+      ? fromBalanceBN.minus(0.1).toString()
+      : fromBalanceBN.toString();
   } else {
     fromBalance = fromBalanceBN.toString();
   }
@@ -409,7 +411,7 @@ export function Swap() {
     } else if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
       buttonText = t(translations.swap.enterAmount);
       disabled = true;
-    } else if (fromValueBN.gt(fromBalanceBN)) {
+    } else if (fromValueBN.gt(fromBalance)) {
       buttonText = t(translations.swap.insufficientBalance, {
         type: fromToken.type.toUpperCase(),
       });
@@ -424,6 +426,9 @@ export function Swap() {
         disabled={disabled || submitLoading}
         onClick={handleSwap}
         loading={submitLoading}
+        style={{
+          textTransform: 'none',
+        }}
       >
         {buttonText}
       </Button>
