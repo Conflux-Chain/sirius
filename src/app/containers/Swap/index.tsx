@@ -426,6 +426,9 @@ export function Swap() {
         disabled={disabled || submitLoading}
         onClick={handleSwap}
         loading={submitLoading}
+        style={{
+          textTransform: 'none',
+        }}
       >
         {buttonText}
       </Button>
