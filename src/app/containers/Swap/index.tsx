@@ -411,7 +411,7 @@ export function Swap() {
     } else if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
       buttonText = t(translations.swap.enterAmount);
       disabled = true;
-    } else if (fromValueBN.gt(fromBalanceBN)) {
+    } else if (fromValueBN.gt(fromBalance)) {
       buttonText = t(translations.swap.insufficientBalance, {
         type: fromToken.type.toUpperCase(),
       });
