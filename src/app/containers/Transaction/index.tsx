@@ -47,14 +47,15 @@ import BigNumber from 'bignumber.js';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import imgSponsored from 'images/sponsored.png';
+import imgSponsoredEn from 'images/sponsored.png';
+import imgSponsoredZh from 'images/sponsored-zh.png';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Transaction = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [risk, setRisk] = useState('');
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
@@ -101,6 +102,9 @@ export const Transaction = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
+  const imgSponsored = i18n.language.startsWith('en')
+    ? imgSponsoredEn
+    : imgSponsoredZh;
 
   // get riskLevel
   const getConfirmRisk = async blockHash => {

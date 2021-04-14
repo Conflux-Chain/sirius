@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { Button, Modal, Textarea } from '@cfxjs/react-ui';
+import { Button, Textarea } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
-import { translations } from '../../../locales/i18n';
-import { PageHeader } from '../../components/PageHeader';
-import imgWarning from '../../../images/warning.png';
-import { Card } from '../../components/Card/Loadable';
-import { cfx } from '../../../utils/cfx';
-import imgSuccessBig from '../../../images/success_big.png';
-import { getEllipsStr } from '../../../utils';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
+import { translations } from 'locales/i18n';
+import { PageHeader } from 'app/components/PageHeader';
+import imgWarning from 'images/warning.png';
+import { Card } from 'app/components/Card/Loadable';
+import { cfx } from 'utils/cfx';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 
 export function BroadcastTx() {
   const { t } = useTranslation();
@@ -89,34 +88,12 @@ export function BroadcastTx() {
           </div>
         ) : null}
 
-        <Modal
-          closable
-          open={modalShown}
+        <TxnStatusModal
+          show={modalShown}
+          status={'success'}
           onClose={() => setModalShown(false)}
-          wrapClassName="dappButtonModalContainer"
-        >
-          <Modal.Content className="contentContainer">
-            <>
-              <img src={imgSuccessBig} alt="success" className="statusImg" />
-              <div className="submitted">
-                {t(translations.broadcastTx.success)}.
-              </div>
-              <div className="txContainer">
-                <span className="label">
-                  {t(translations.sponsor.txHash)}:{' '}
-                </span>
-                <a
-                  href={`/transaction/${txHash}`}
-                  target="_blank"
-                  className="content"
-                  rel="noopener noreferrer"
-                >
-                  {getEllipsStr(txHash, 8, 0)}
-                </a>
-              </div>
-            </>
-          </Modal.Content>
-        </Modal>
+          hash={txHash}
+        />
       </StyledInputWrapper>
     </>
   );

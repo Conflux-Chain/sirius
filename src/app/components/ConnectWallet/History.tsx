@@ -67,43 +67,59 @@ export const History = ({
     }
   }
 
-  return records.length ? (
+  const getContent = () => {
+    if (records.length) {
+      return (
+        <>
+          <div className="history-top">
+            <span className="history-title">{title}</span>
+            <span className="history-button" onClick={handleClear}>
+              {t(translations.connectWallet.history.clearAll)}
+            </span>
+          </div>
+          <div className="history-bottom">
+            {records.map(r => (
+              <div className="history-item" key={r.hash}>
+                <ScanLink href={`/transaction/${r.hash}`}>
+                  {(convert && convert(r.info, r)) || r.info || r.hash}
+                </ScanLink>
+
+                {r.status === null ? (
+                  <RotateImg
+                    className="history-item-status"
+                    src={statusIconMap[String(r.status)]}
+                    alt="icon"
+                  ></RotateImg>
+                ) : (
+                  <img
+                    className="history-item-status"
+                    src={statusIconMap[String(r.status)]}
+                    alt="icon"
+                  ></img>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <div className="history-empty">
+          {t(translations.connectWallet.history.emptyRecordsTip)}
+        </div>
+      );
+    }
+  };
+
+  return (
     <HistoryWrapper
       className={clsx('connect-wallect-history', className, {
         show,
       })}
     >
-      <div className="history-top">
-        <span className="history-title">{title}</span>
-        <span className="history-button" onClick={handleClear}>
-          {t(translations.connectWallet.history.clearAll)}
-        </span>
-      </div>
-      <div className="history-bottom">
-        {records.map(r => (
-          <div className="history-item" key={r.hash}>
-            <ScanLink href={`/transaction/${r.hash}`}>
-              {(convert && convert(r.info, r)) || r.info || r.hash}
-            </ScanLink>
-
-            {r.status === null ? (
-              <RotateImg
-                className="history-item-status"
-                src={statusIconMap[String(r.status)]}
-                alt="icon"
-              ></RotateImg>
-            ) : (
-              <img
-                className="history-item-status"
-                src={statusIconMap[String(r.status)]}
-                alt="icon"
-              ></img>
-            )}
-          </div>
-        ))}
-      </div>
+      {getContent()}
     </HistoryWrapper>
-  ) : null;
+  );
 };
 
 const HistoryWrapper = styled.span`
@@ -129,18 +145,18 @@ const HistoryWrapper = styled.span`
     cursor: pointer;
 
     .history-title {
-      font-size: 16px;
+      font-size: 1.1429rem;
       color: #333333;
     }
 
     .history-button {
-      font-size: 14px;
+      font-size: 1rem;
       color: #74798c;
     }
   }
 
   .history-bottom {
-    max-height: 228px;
+    max-height: 16.2857rem;
     overflow: auto;
 
     .history-item {
@@ -153,5 +169,10 @@ const HistoryWrapper = styled.span`
       width: 0.8571rem;
       height: 0.8571rem;
     }
+  }
+
+  .history-empty {
+    color: #74798c;
+    display: flex;
   }
 `;

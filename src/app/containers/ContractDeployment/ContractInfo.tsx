@@ -17,13 +17,14 @@ const AceEditorStyle = {
 };
 
 export const checkAbi = abi => {
-  let valid = true;
-  try {
-    abi && JSON.parse(abi);
-  } catch (e) {
-    valid = false;
-  }
-  return valid;
+  return true;
+  // let valid = true;
+  // try {
+  //   abi && JSON.parse(abi);
+  // } catch (e) {
+  //   valid = false;
+  // }
+  // return valid;
 };
 
 // @TODO checkBytecode and addOx should be recheck later, user experience and code is confused
@@ -73,17 +74,19 @@ export const ContractInfo = ({ onChange }) => {
         });
       }
       setBytecode(addOx(bytecode));
+    } else {
+      setBytecode('');
     }
   };
-  const handleABIChange = code => {
-    if (!checkAbi(code)) {
-      setMessage({
-        text: t(translations.general.invalidABI),
-        color: 'error',
-      });
-    }
-    setABI(code);
-  };
+  // const handleABIChange = code => {
+  //   if (!checkAbi(code)) {
+  //     setMessage({
+  //       text: t(translations.general.invalidABI),
+  //       color: 'error',
+  //     });
+  //   }
+  //   setABI(code);
+  // };
 
   const handleImport = () => {
     inputRef.current.click();
@@ -91,7 +94,8 @@ export const ContractInfo = ({ onChange }) => {
 
   const handleFileChange = data => {
     try {
-      const abi = JSON.stringify(data.abi, null, '\t');
+      // const abi = JSON.stringify(data.abi, null, '\t');
+      const abi = '';
       let bytecode = data.bytecode || data.data?.bytecode?.object;
 
       if (checkAbi(abi) && checkBytecode(bytecode)) {
@@ -157,7 +161,8 @@ export const ContractInfo = ({ onChange }) => {
             onChange={handleBytecodeChange}
             value={bytecode}
           />
-          <StyledLabelWrapper>ABI</StyledLabelWrapper>
+          {/* hide temporary due to confused user */}
+          {/* <StyledLabelWrapper>ABI</StyledLabelWrapper>
           <AceEditor
             style={AceEditorStyle}
             mode="json"
@@ -171,7 +176,7 @@ export const ContractInfo = ({ onChange }) => {
             showPrintMargin={false}
             onChange={handleABIChange}
             value={ABI}
-          />
+          /> */}
         </Card>
       </StyledContentWrapper>
     </>

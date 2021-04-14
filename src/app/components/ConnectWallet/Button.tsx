@@ -57,7 +57,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = accounts[0];
+        buttonText = accounts[0].replace(/(.*:.{6}).*(.{8})/, '$1...$2');
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
@@ -93,7 +93,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-items: center;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 500;
   color: #65709a;
   cursor: pointer;
@@ -130,24 +130,17 @@ const ButtonWrapper = styled.div`
     margin-right: 0.4286rem;
   }
 
-  .text {
-    max-width: 9.2857rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
   .balance {
-    padding: 0 0.8571rem 0 8px;
+    padding: 0 0.8571rem 0 0.5714rem;
   }
 
   .connect-wallet-button-left {
     display: inline-flex;
     align-items: center;
-    height: 32px;
-    padding: 0 12px;
+    height: 2.2857rem;
+    padding: 0 0.8571rem;
     background: #f5f6fa;
-    border-radius: 50px;
+    border-radius: 3.5714rem;
     cursor: pointer;
   }
 `;
