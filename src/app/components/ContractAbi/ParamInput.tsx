@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Input } from 'antd';
+import { Input } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';

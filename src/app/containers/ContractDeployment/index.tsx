@@ -3,12 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import 'styles/antd.custom.css';
 import styled from 'styled-components/macro';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { TxnAction } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
 import { Remark } from '../../components/Remark';
+import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 export function ContractDeployment() {
   const { t } = useTranslation();

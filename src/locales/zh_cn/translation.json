@@ -692,12 +692,12 @@
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
-      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
-      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "link": "https://forum.conflux.fun/t/topic/5386",
     "testnetLink": "https://forum.conflux.fun/t/topic/5386"

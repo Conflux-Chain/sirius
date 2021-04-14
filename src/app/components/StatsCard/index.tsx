@@ -574,7 +574,7 @@ export const StatsCard = ({
 const CardWrapper = styled.div`
   padding: 18px;
   width: 100%;
-  min-height: 530px;
+  min-height: 538px;
   border-radius: 5px;
   border: 1px solid #e8e9ea;
   white-space: nowrap;

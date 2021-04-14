@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../../styles/antd.custom.css';
-import { Form } from 'antd';
+import { Form } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
@@ -32,6 +31,7 @@ import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
+import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 interface FuncProps {
   type?: string;
