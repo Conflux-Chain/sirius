@@ -8,7 +8,6 @@ import { DappButton } from '../../components/DappButton/Loadable';
 import { TxnAction } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
 import { Remark } from '../../components/Remark';
-import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 export function ContractDeployment() {
   const { t } = useTranslation();

@@ -13,6 +13,7 @@ import * as ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
 import 'sanitize.css/sanitize.css';
+import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 // Import root app
 import { App } from 'app';

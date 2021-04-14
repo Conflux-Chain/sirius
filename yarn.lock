@@ -1545,10 +1545,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jnoodle/antd@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jnoodle/antd/-/antd-1.0.0.tgz#9060e6dbfe0e7d664e48657594f9c64bc4e6e991"
-  integrity sha512-LS34P7r3zzp/7c7dIeMRYW74Ivboah5U+q6wM33GyE9cpgFKkCHUQAXFBNysmVe3Ijz5/pqIBHFsi4idi3CErg==
+"@jnoodle/antd@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@jnoodle/antd/-/antd-1.0.1.tgz#1a36dd61bcebac82efe2ea73a2126c79ca661579"
+  integrity sha512-kqZH60B08/Fag6qDreTZSiqs47hDGHyzyo5Cyj3fCZtjQ5GbwPkY91txVbtrGRT8n5vQOd4abF5UJhIN0fk/Ig==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons" "^4.6.2"

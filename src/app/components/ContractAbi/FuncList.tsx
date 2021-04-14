@@ -5,7 +5,6 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from '../../../locales/i18n';
-import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 interface FuncListProps {
   type?: string;

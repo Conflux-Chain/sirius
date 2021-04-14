@@ -16,7 +16,6 @@ import { StatsType } from '../../components/StatsCard';
 import { media } from '../../../styles/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
-import '@jnoodle/antd/dist/@jnoodle/antd.css';
 
 interface RouteParams {
   statsType: string;
