@@ -73,7 +73,12 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 .c9 {
+  box-sizing: border-box;
   min-width: 17rem;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c9 .detail-page-card.card div.content {
@@ -160,7 +165,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 
 .c0 {
   padding: 2.29rem 0 0;
-  max-width: 73.1429rem;
+  max-width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -227,6 +232,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  gap: 24px;
 }
 
 .c21 {
@@ -252,9 +258,15 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   }
 }
 
+@media (max-width:1024px) {
+  .c9 {
+    width: 45%;
+  }
+}
+
 @media (max-width:600px) {
   .c9 {
-    min-width: 13.67rem;
+    width: 100%;
   }
 
   .c9 .detail-page-card.card {
@@ -337,7 +349,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   }
 
   .c8 > div {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 }
 

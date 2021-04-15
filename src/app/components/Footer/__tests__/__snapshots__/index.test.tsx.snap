@@ -1,15 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Footer  /> should match snapshot 1`] = `
-.c2 {
+.c3 {
   -webkit-box-flex: 2;
   -webkit-flex-grow: 2;
   -ms-flex-positive: 2;
   flex-grow: 2;
-  padding-right: 11.57rem;
 }
 
-.c1 {
+.c2 {
   margin-right: 2.93rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -45,15 +44,27 @@ exports[`<Footer  /> should match snapshot 1`] = `
   margin-bottom: 0.57rem;
 }
 
-@media (max-width:600px) {
-  .c2 {
-    padding: 0;
-  }
+.c1 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0 auto;
+  max-width: 1368px;
 }
 
 @media (max-width:600px) {
   .c3 {
-    padding: 0 0.21rem;
+    padding: 0;
   }
 }
 
@@ -64,7 +75,13 @@ exports[`<Footer  /> should match snapshot 1`] = `
 }
 
 @media (max-width:600px) {
-  .c1 {
+  .c5 {
+    padding: 0 0.21rem;
+  }
+}
+
+@media (max-width:1024px) {
+  .c2 {
     display: none;
   }
 }
@@ -86,30 +103,34 @@ exports[`<Footer  /> should match snapshot 1`] = `
   <div
     class="c1"
   >
-    <span>
-      left
-    </span>
-  </div>
-  <div
-    class="c2"
-  >
     <div
-      class="c3"
+      class="c2"
     >
       <span>
-        rightTop
+        left
       </span>
     </div>
     <div
-      class="jsx-847016443 divider footer-bottom-divider"
-      role="separator"
-    />
-    <div
-      class="c4"
+      class="c3"
     >
-      <span>
-        @2020 Conflux. All Rights Reserved
-      </span>
+      <div
+        class="c4"
+      >
+        <span>
+          rightTop
+        </span>
+      </div>
+      <div
+        class="jsx-847016443 divider footer-bottom-divider"
+        role="separator"
+      />
+      <div
+        class="c5"
+      >
+        <span>
+          @2020 Conflux. All Rights Reserved
+        </span>
+      </div>
     </div>
   </div>
 </footer>
