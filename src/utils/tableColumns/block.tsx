@@ -6,7 +6,6 @@ import { Text } from '../../app/components/Text/Loadable';
 import { Link } from '../../app/components/Link/Loadable';
 import { CountDown } from '../../app/components/CountDown/Loadable';
 import {
-  formatString,
   formatNumber,
   getPercent,
   fromDripToCfx,

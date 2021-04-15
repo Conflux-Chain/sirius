@@ -98,7 +98,7 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(false);
+  const [folded, setFolded] = useState(true);
   const imgSponsored = i18n.language.startsWith('en')
     ? imgSponsoredEn
     : imgSponsoredZh;
