@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import Big from 'bignumber.js';
 import { useEffectOnce } from 'react-use';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
-import { ADDRESS_FC, ADDRESS_CETH } from './../constants';
+// import { useConfluxPortal } from '@cfxjs/react-hooks';
+// import { ADDRESS_FC, ADDRESS_CETH } from './../constants';
 
 // alias for window
 const globalThis = window as any;
@@ -157,13 +157,13 @@ export const usePortal = () => {
     globalThis.conflux.autoRefreshOnNetworkChange = false;
 
   // TODO cip-37 portal
-  const {
-    balances: [balance, [fc, ceth]],
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useConfluxPortal([
-    ADDRESS_FC, // fc contract address, can be find on confluxscan.io
-    ADDRESS_CETH, // ceth contract address, can be find on confluxscan.io
-  ]);
+  // const {
+  //   balances: [balance, [fc, ceth]],
+  //   // eslint-disable-next-line react-hooks/rules-of-hooks
+  // } = useConfluxPortal([
+  //   ADDRESS_FC, // fc contract address, can be find on confluxscan.io
+  //   ADDRESS_CETH, // ceth contract address, can be find on confluxscan.io
+  // ]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [chainId] = useChainId();
@@ -176,9 +176,12 @@ export const usePortal = () => {
     accounts,
     chainId, // hex value, 0xNaN mean changing network
     balances: {
-      cfx: balance.toString(),
-      fc: fc.toString(),
-      ceth: ceth.toString(),
+      // cfx: balance.toString(),
+      // fc: fc.toString(),
+      // ceth: ceth.toString(),
+      cfx: '0',
+      fc: '0',
+      ceth: '0',
     },
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,
