@@ -219,13 +219,14 @@ const AddressWrapper = styled.div`
 
 const addressStyle = (props: any) => ` 
   position: relative;
+  box-sizing: border-box;
   display: inline-block !important;
-  max-width: ${props.maxwidth || 180}px !important;
+  max-width: ${props.maxwidth || 190}px !important;
   ${props.afterContent ? 'padding-right: 80px !important;' : ''}
   outline: none;
 
-  ${media.s} {
-    max-width: ${props.maxwidth || 160}px !important;
+  ${media.m} {
+    max-width: ${props.maxwidth || 170}px !important;
   }
 
   &:after {

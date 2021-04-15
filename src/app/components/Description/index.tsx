@@ -57,7 +57,7 @@ const Wrapper = styled.div`
 
   &.small {
     .left {
-      width: 10.8571rem;
+      width: 10rem;
     }
   }
 

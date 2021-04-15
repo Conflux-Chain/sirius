@@ -90,7 +90,7 @@ export const token = {
                   `${row?.name || t(translations.general.notAvailable)} (${
                     row?.symbol || t(translations.general.notAvailable)
                   })`,
-                  28,
+                  32,
                 )}
               </Text>
             )}
@@ -477,7 +477,7 @@ const ImgWrap = styled.img`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 150px;
   overflow: hidden;
 `;
 

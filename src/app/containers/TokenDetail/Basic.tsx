@@ -17,6 +17,7 @@ import ERC721bg from '../../../images/token/erc721bg.png';
 import ERC1155bg from '../../../images/token/erc1155bg.png';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { formatAddress } from '../../../utils/cfx';
+import { useBreakpoint } from '../../../styles/media';
 
 export interface BasicProps {
   address?: string;
@@ -47,6 +48,7 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
 
   const fieldPrice = {
     title: (
@@ -99,7 +101,7 @@ export const Basic = ({
     children:
       tokenAddress !== undefined ? (
         <>
-          <AddressContainer value={tokenAddress} />{' '}
+          <AddressContainer value={tokenAddress} isFull={bp === 'xxl'} />{' '}
           <CopyButton copyText={formatAddress(tokenAddress)} />
         </>
       ) : (

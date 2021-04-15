@@ -195,7 +195,7 @@ export const TablePanel = ({
               columns={tableColumns}
               data={tableData}
               rowKey={tableRowKey}
-              scroll={{ x: 800 }}
+              scroll={{ x: 1000 }}
             />
             {/* may rewrite a new Table component with empty placeholder is better */}
             <Empty show={empty} type="fixed" />

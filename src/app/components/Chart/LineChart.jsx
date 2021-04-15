@@ -29,7 +29,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   const small = width < 500;
   const padding = small ? 16 : 48;
   // get the max x grids which most suitable chart width
-  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1024) / 50);
+  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1368) / 50);
   if (NUM_X_GRID < 7) NUM_X_GRID = 7;
   if (small) NUM_X_GRID = 6;
 

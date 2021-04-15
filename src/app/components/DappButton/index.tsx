@@ -141,7 +141,7 @@ const DappButton = ({
           <span
             className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
           >
-            <AddressContainer value={accounts[0]} />
+            <AddressContainer value={accounts[0]} maxWidth={205} />
           </span>
         </>
       )}
