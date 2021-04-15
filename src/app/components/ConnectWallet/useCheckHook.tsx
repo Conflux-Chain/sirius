@@ -21,7 +21,8 @@ export const useCheckHook = function <Props>(showNotification = false) {
     if (installed && chainId !== '0xNaN') {
       if (
         (chainId === '0x405' && !isTestnet) ||
-        (chainId !== '0x405' && isTestnet)
+        (chainId !== '0x405' && isTestnet) ||
+        chainId === '0x781'
       ) {
         return true;
       }

@@ -11,7 +11,8 @@ export const isConfluxTestNet = isTestNetEnv();
 const mainNetworkId = 1029;
 const testnetNetworkId = 1;
 // do not support other private network
-const networkId = isConfluxTestNet ? testnetNetworkId : mainNetworkId;
+// const networkId = isConfluxTestNet ? testnetNetworkId : mainNetworkId;
+const networkId = 1921;
 
 const cfx = new Conflux({
   url: cfxUrlV2,
@@ -38,7 +39,7 @@ export const getGlobalShowHexAddress = () => {
 const formatAddress = (address: string | undefined, option: any = {}) => {
   if (!address || address.length < 40) return '';
   // do not support private net
-  if (address.toLowerCase().startsWith('net')) return '';
+  // if (address.toLowerCase().startsWith('net')) return '';
   // conflux net must same with address prefix
   // TODO should write contract params follow this rule?
   if (address.toLowerCase().startsWith('cfx:') && isConfluxTestNet) return '';
