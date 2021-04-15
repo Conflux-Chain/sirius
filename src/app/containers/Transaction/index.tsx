@@ -20,11 +20,9 @@ import {
   reqTransactionDetail,
   reqContract,
   reqTransferList,
-  reqConfirmationRiskByHash,
   reqTokenList,
 } from 'utils/httpRequest';
 import {
-  delay,
   getAddressType,
   formatTimeStamp,
   formatBalance,
@@ -38,12 +36,12 @@ import {
   addressTypeInternalContract,
   cfxTokenTypes,
 } from 'utils/constants';
-import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import clsx from 'clsx';
 import { TableCard } from './TableCard';
 import BigNumber from 'bignumber.js';
+import { Security } from 'app/components/Security/Loadable';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
@@ -56,7 +54,6 @@ const getStorageFee = byteSize =>
 // Transaction Detail Page
 export const Transaction = () => {
   const { t, i18n } = useTranslation();
-  const [risk, setRisk] = useState('');
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
@@ -101,28 +98,10 @@ export const Transaction = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(true);
+  const [folded, setFolded] = useState(false);
   const imgSponsored = i18n.language.startsWith('en')
     ? imgSponsoredEn
     : imgSponsoredZh;
-
-  // get riskLevel
-  const getConfirmRisk = async blockHash => {
-    intervalToClear.current = true;
-    let riskLevel;
-    while (intervalToClear.current) {
-      riskLevel = await reqConfirmationRiskByHash(blockHash);
-      setRisk(riskLevel);
-      if (riskLevel === '') {
-        await delay(1000);
-      } else if (riskLevel === 'lv0') {
-        // auto refresh riskLevel until risLevel is high
-        intervalToClear.current = false;
-      } else {
-        await delay(10 * 1000);
-      }
-    }
-  };
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -164,10 +143,6 @@ export const Transaction = () => {
             return;
           }
           setDetailsInfoSetHash(txnhash);
-
-          if (body.blockHash) {
-            getConfirmRisk(body.blockHash);
-          }
 
           let toAddress = txDetailDta.to;
           if (
@@ -731,7 +706,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Security type={risk}></Security>
+              <Security blockHash={blockHash}></Security>
               <StyledEpochConfirmationsWrapper>
                 {t(translations.transaction.epochConfirmations, {
                   count: confirmedEpochCount || '-',
