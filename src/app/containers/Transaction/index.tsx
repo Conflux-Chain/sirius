@@ -62,7 +62,7 @@ export const Transaction = () => {
   const [loading, setLoading] = useState(false);
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
-  const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
+  const [dataTypeList, setDataTypeList] = useState(['original']);
   const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
   const history = useHistory();
   const intervalToClear = useRef(false);
@@ -144,10 +144,11 @@ export const Transaction = () => {
           }
           setDetailsInfoSetHash(txnhash);
 
-          let toAddress = txDetailDta.to;
+          let toCheckAddress = txDetailDta.to;
+
           if (
-            getAddressType(toAddress) === addressTypeContract ||
-            getAddressType(toAddress) === addressTypeInternalContract
+            getAddressType(toCheckAddress) === addressTypeContract ||
+            getAddressType(toCheckAddress) === addressTypeInternalContract
           ) {
             setIsContract(true);
             const fields = [
@@ -166,7 +167,9 @@ export const Transaction = () => {
               'typeCode',
             ];
             const proArr: Array<any> = [];
-            proArr.push(reqContract({ address: toAddress, fields: fields }));
+            proArr.push(
+              reqContract({ address: toCheckAddress, fields: fields }),
+            );
             proArr.push(
               reqTransferList({
                 transactionHash: txnhash,
@@ -178,21 +181,24 @@ export const Transaction = () => {
             Promise.all(proArr)
               .then(proRes => {
                 const contractResponse = proRes[0];
+                // update contract info
                 setContractInfo(contractResponse);
                 const transferListReponse = proRes[1];
                 let decodedData = {};
+
                 try {
                   decodedData = decodeContract({
                     abi: JSON.parse(contractResponse['abi']),
                     address: contractResponse['address'],
                     transacionData: txDetailDta.data,
                   });
+
+                  // no abi scenario
                   if (!decodedData) setIsAbiError(true);
                 } catch {
                   setIsAbiError(true);
                 }
                 setDecodedData(decodedData);
-                setDataTypeList(['original', 'utf8', 'decodeInputData']);
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
@@ -244,22 +250,34 @@ export const Transaction = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
+
   useEffect(() => {
-    if (dataType === 'decodeInputData') {
-      if (contractInfo['abi']) {
-        if (isAbiError) {
-          setWarningMessage('contract.abiError');
-        } else {
+    // only to address could decoded to utf8 or input fn
+
+    if (!to || contractCreated) {
+    } else {
+      if (isContract) {
+        if (contractInfo['abi'] && !isAbiError) {
+          setDataTypeList(['original', 'decodeInputData']);
+          setDataType('decodeInputData');
           setWarningMessage('');
         }
+        if (!contractInfo['abi']) {
+          setDataTypeList(['original']);
+          setDataType('original');
+          setWarningMessage('contract.abiNotUploaded');
+        } else if (to !== null && isAbiError) {
+          setDataTypeList(['original']);
+          setDataType('original');
+          setWarningMessage('contract.abiError');
+        }
       } else {
-        setWarningMessage('contract.abiNotUploaded');
+        setDataTypeList(['original', 'utf8']);
+        setDataType('utf8');
+        setWarningMessage('');
       }
-    } else {
-      setWarningMessage('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataType, contractInfo, isAbiError]);
+  }, [isContract, contractInfo, isAbiError, contractCreated, to]);
 
   const fromContent = (isFull = false) => (
     <span>
@@ -907,6 +925,7 @@ export const Transaction = () => {
                   disableMatchWidth
                   size="small"
                   className="btnSelectContainer"
+                  disabled={dataTypeList.length === 1}
                 >
                   {dataTypeList.map(dataTypeItem => {
                     return (
