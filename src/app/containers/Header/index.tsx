@@ -310,7 +310,9 @@ export const Header = memo(() => {
           alt="conflux scan logo"
           src={imgConfiPlanet}
         />
-        {bp !== 's' && bp !== 'm' && <TextLogo changeColorOnMobile />}
+        {bp !== 's' && bp !== 'm' && bp !== 'l' && (
+          <TextLogo changeColorOnMobile />
+        )}
       </RouterLink>
     </LogoWrapper>
   );

@@ -80,10 +80,14 @@ const Brand = styled.div`
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
-  margin-right: 4rem;
+  margin-right: 3rem;
+
+  ${media.xl} {
+    margin-right: 2rem;
+  }
 
   ${media.l} {
-    margin-right: 2rem;
+    margin-right: 1rem;
   }
 
   .navbar-burger {

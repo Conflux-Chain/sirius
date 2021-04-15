@@ -64,6 +64,10 @@ const StyledNoticeItemWrapper = styled.div`
     padding: 0 16px;
     max-width: 100%;
   }
+  ${media.xl} {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 
   .img {
     width: 1.5714rem;

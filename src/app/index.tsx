@@ -304,4 +304,8 @@ const Main = styled.div`
     padding: 100px 16px 16px;
     min-height: calc(100vh - 254px);
   }
+  ${media.xl} {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 `;
