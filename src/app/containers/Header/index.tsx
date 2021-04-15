@@ -219,6 +219,7 @@ export const Header = memo(() => {
   const endLinks: HeaderLinks = [
     {
       // switch network
+      name: 'switch-network',
       title: isTestnet
         ? t(translations.header.testnet)
         : t(translations.header.oceanus),

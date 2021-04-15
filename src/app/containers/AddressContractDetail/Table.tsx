@@ -362,7 +362,7 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 5, 5, 3, 2, 3, 4];
+  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     tokenColunms.from,
@@ -409,7 +409,7 @@ export function Table({ address, addressInfo }) {
     ),
   };
 
-  const columnsCFXTransferWidth = [4, 3, 6, 5, 3, 5];
+  const columnsCFXTransferWidth = [4, 4, 8, 7, 4, 5];
   const columnsCFXTrasfer: ColumnsType = [
     blockColunms.epoch,
     tokenColunms.txnHash,
@@ -450,7 +450,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [5, 3, 2, 4, 6, 4, 5, 4, 6];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,

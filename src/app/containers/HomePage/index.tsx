@@ -17,7 +17,7 @@ export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
-  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -30,7 +30,7 @@ export function HomePage() {
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
-  const columnsTransactionsWidth = [4, 5, 5, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,
@@ -140,7 +140,7 @@ export function HomePage() {
 }
 
 const Main = styled.div`
-  max-width: 73.1429rem;
+  max-width: 1368px;
   display: flex;
   flex-direction: column;
   align-items: center;

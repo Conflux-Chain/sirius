@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
   }
 
   #root {

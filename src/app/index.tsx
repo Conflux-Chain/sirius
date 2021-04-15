@@ -296,7 +296,7 @@ export function App() {
 
 const Main = styled.div`
   position: relative;
-  max-width: 1024px;
+  max-width: 1368px;
   margin: 0 auto;
   padding-top: 70px;
   min-height: calc(100vh - 327px);

@@ -930,16 +930,14 @@ export const Transaction = () => {
             </Description>
           </div>
           <StyledFoldButtonWrapper>
-            <Description noBorder title="">
-              <div
-                className={clsx('detailResetFoldButton', {
-                  folded: folded,
-                })}
-                onClick={handleFolded}
-              >
-                {t(translations.general[folded ? 'viewMore' : 'showLess'])}
-              </div>
-            </Description>
+            <div
+              className={clsx('detailResetFoldButton', {
+                folded: folded,
+              })}
+              onClick={handleFolded}
+            >
+              {t(translations.general[folded ? 'viewMore' : 'showLess'])}
+            </div>
           </StyledFoldButtonWrapper>
         </Card>
         <TableCard
@@ -1057,13 +1055,12 @@ const StyledFoldButtonWrapper = styled.div`
   justify-content: flex-end;
 
   .detailResetFoldButton {
-    font-size: 1rem;
-    color: #002257;
-    line-height: 1.5714rem;
-    height: 1.5714rem;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-items: center;
+    padding: 0.8571rem 0;
+    font-size: 1rem;
+    color: #002257;
     cursor: pointer;
 
     &::after {

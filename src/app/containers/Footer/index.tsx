@@ -213,7 +213,7 @@ const FooterWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  ${media.s} {
+  ${media.m} {
     flex-flow: wrap;
     /* flex-direction: column; */
   }
@@ -223,7 +223,7 @@ const FooterContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  ${media.s} {
+  ${media.m} {
     margin-bottom: 1.1429rem;
     width: 50%;
   }
@@ -237,7 +237,7 @@ const FooterContentTitle = styled.span`
   margin-right: 8.5714rem;
   width: 5.7143rem;
 
-  ${media.s} {
+  ${media.m} {
     margin-bottom: 0.86rem;
     margin-right: inherit;
   }
@@ -261,12 +261,12 @@ const FooterContentLink = styled.span`
     font-size: 0.86rem;
     margin-right: 5.1429rem;
 
-    ${media.s} {
+    ${media.m} {
       margin-right: inherit;
     }
   }
 
-  ${media.s} {
+  ${media.m} {
     .link.footer-link {
       font-size: 0.71rem;
     }
@@ -281,7 +281,7 @@ const FooterContentIconLink = styled.span`
     width: 1rem;
   }
 
-  ${media.s} {
+  ${media.m} {
     margin-top: 0.86rem;
   }
 `;

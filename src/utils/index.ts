@@ -274,7 +274,7 @@ export const formatString = (
       result = getEllipsStr(str, 14, 0);
       break;
     case 'hash':
-      result = getEllipsStr(str, 8, 0);
+      result = getEllipsStr(str, 10, 0);
       break;
     case 'address':
       result = getEllipsStr(str, 6, 4);

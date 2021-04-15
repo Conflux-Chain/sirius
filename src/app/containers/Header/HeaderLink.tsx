@@ -71,10 +71,10 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
   return links.map(parseLink);
 }
 
-const Menu = styled.div`
+const Menu = styled.div<{ name?: string }>`
   position: absolute;
   width: max-content;
-  right: 0;
+  ${props => (props.name === 'switch-network' ? 'right: 0;' : 'left: 0;')}
   background-color: white;
   box-shadow: 0rem 0.43rem 1.14rem 0rem rgba(20, 27, 50, 0.08);
   border-radius: 0.14rem;
@@ -201,7 +201,11 @@ export const HeaderLink: React.FC<{
               {bp !== 's' && bp !== 'm' && isMenu && <ChevronDown size={18} />}
             </UILink>
           </WrappLink>
-          {expanded && <Menu className="header-link-menu">{links}</Menu>}
+          {expanded && (
+            <Menu className="header-link-menu" name={name}>
+              {links}
+            </Menu>
+          )}
         </div>
       </WrappLink>
     );

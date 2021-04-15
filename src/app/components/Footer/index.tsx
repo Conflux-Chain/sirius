@@ -17,19 +17,21 @@ interface Props {
 export const Footer = memo(({ rightBottom, rightTop, left }: Props) => {
   return (
     <Wrapper>
-      <Left key="left">{left}</Left>
-      <Right key="right">
-        <RightTop key="right-top">{rightTop}</RightTop>
-        <Divider key="divider" className="footer-bottom-divider" />
-        <RightBottom key="right-bottom">{rightBottom}</RightBottom>
-      </Right>
+      <Container>
+        <Left key="left">{left}</Left>
+        <Right key="right">
+          <RightTop key="right-top">{rightTop}</RightTop>
+          <Divider key="divider" className="footer-bottom-divider" />
+          <RightBottom key="right-bottom">{rightBottom}</RightBottom>
+        </Right>
+      </Container>
     </Wrapper>
   );
 });
 
 const Right = styled.div`
   flex-grow: 2;
-  padding-right: 11.57rem;
+  //padding-right: 11.57rem;
 
   ${media.s} {
     padding: 0;
@@ -50,7 +52,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
 
-  ${media.s} {
+  ${media.m} {
     display: none;
   }
 `;
@@ -77,4 +79,12 @@ const Wrapper = styled.footer`
       margin-bottom: 0.29rem;
     }
   }
+`;
+const Container = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  flex-grow: 1;
+  margin: 0 auto;
+  max-width: 1368px;
 `;
