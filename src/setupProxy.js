@@ -46,10 +46,11 @@ module.exports = app => {
   app.use(
     '/stat',
     createProxyMiddleware({
-      target:
-        process.env.REACT_APP_TestNet === 'true'
-          ? 'https://testnet-scantest.confluxnetwork.org'
-          : 'https://scantest.confluxnetwork.org',
+      target: 'http://htps.conflux-chain.org.cn',
+      // target:
+      //   process.env.REACT_APP_TestNet === 'true'
+      //     ? 'https://testnet-scantest.confluxnetwork.org'
+      //     : 'https://scantest.confluxnetwork.org',
       // target: 'http://47.242.229.73', // only for dev
       // target: 'https://testnet.confluxscan.io', // only for dev
       changeOrigin: true,
@@ -68,10 +69,11 @@ module.exports = app => {
   app.use(
     '/v1',
     createProxyMiddleware({
-      target:
-        process.env.REACT_APP_TestNet === 'true'
-          ? 'https://testnet-scantest.confluxnetwork.org'
-          : 'https://scantest.confluxnetwork.org',
+      target: 'http://htps.conflux-chain.org.cn',
+      // target:
+      //   process.env.REACT_APP_TestNet === 'true'
+      //     ? 'https://testnet-scantest.confluxnetwork.org'
+      //     : 'https://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
@@ -79,30 +81,33 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target:
-        process.env.REACT_APP_TestNet === 'true'
-          ? 'https://testnet-scantest.confluxnetwork.org/rpc'
-          : 'https://scantest.confluxnetwork.org/rpc',
-      changeOrigin: true,
+      target: 'http://htps.conflux-chain.org.cn/rpc',
+      // target:
+      //   process.env.REACT_APP_TestNet === 'true'
+      //     ? 'https://testnet-scantest.confluxnetwork.org/rpc'
+      //     : 'https://scantest.confluxnetwork.org/rpc',
+      // changeOrigin: true,
     }),
   );
   app.use(
     '/rpcv2',
     createProxyMiddleware({
-      target:
-        process.env.REACT_APP_TestNet === 'true'
-          ? 'https://testnet-scantest.confluxnetwork.org/rpcv2'
-          : 'https://scantest.confluxnetwork.org/rpcv2',
+      target: 'http://htps.conflux-chain.org.cn/rpcv2',
+      // target:
+      //   process.env.REACT_APP_TestNet === 'true'
+      //     ? 'https://testnet-scantest.confluxnetwork.org/rpcv2'
+      //     : 'https://scantest.confluxnetwork.org/rpcv2',
       changeOrigin: true,
     }),
   );
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
-      target:
-        process.env.REACT_APP_TestNet === 'true'
-          ? 'http://testnet-scantest.confluxnetwork.org'
-          : 'http://scantest.confluxnetwork.org',
+      target: 'http://htps.conflux-chain.org.cn',
+      // target:
+      //   process.env.REACT_APP_TestNet === 'true'
+      //     ? 'http://testnet-scantest.confluxnetwork.org'
+      //     : 'http://scantest.confluxnetwork.org',
       changeOrigin: true,
       secure: false,
     }),
