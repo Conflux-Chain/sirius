@@ -44,7 +44,7 @@ export const hash = {
         </StyledStatusWrapper>
         <Link href={`/transaction/${value}`}>
           <Text span hoverValue={value}>
-            {formatString(value, 'hash')}
+            <SpanWrap>{value}</SpanWrap>
           </Text>
         </Link>
       </StyledTransactionHashWrapper>
@@ -171,4 +171,12 @@ const StyledStatusWrapper = styled.span`
   &.show {
     visibility: visible;
   }
+`;
+
+const SpanWrap = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
+  vertical-align: bottom;
 `;

@@ -64,8 +64,9 @@ const Wrapper = styled.div`
   .left {
     padding: 0.8571rem 0;
     line-height: calc(3.2857rem - 1.7143rem);
-    width: 260px;
-    max-width: 25%;
+    width: 25%;
+    min-width: 160px;
+    max-width: 260px;
     color: #002257;
     flex-shrink: 0;
   }

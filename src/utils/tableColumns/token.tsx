@@ -479,6 +479,7 @@ const SpanWrap = styled.span`
   text-overflow: ellipsis;
   max-width: 150px;
   overflow: hidden;
+  vertical-align: bottom;
 `;
 
 const ThTipWrap = styled.span`
