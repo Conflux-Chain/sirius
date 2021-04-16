@@ -20,11 +20,9 @@ import {
   reqTransactionDetail,
   reqContract,
   reqTransferList,
-  reqConfirmationRiskByHash,
   reqTokenList,
 } from 'utils/httpRequest';
 import {
-  delay,
   getAddressType,
   formatTimeStamp,
   formatBalance,
@@ -38,24 +36,24 @@ import {
   addressTypeInternalContract,
   cfxTokenTypes,
 } from 'utils/constants';
-import { Security } from '../../components/Security/Loadable';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import clsx from 'clsx';
 import { TableCard } from './TableCard';
 import BigNumber from 'bignumber.js';
+import { Security } from 'app/components/Security/Loadable';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import imgSponsored from 'images/sponsored.png';
+import imgSponsoredEn from 'images/sponsored.png';
+import imgSponsoredZh from 'images/sponsored-zh.png';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Transaction = () => {
-  const { t } = useTranslation();
-  const [risk, setRisk] = useState('');
+  const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
@@ -64,7 +62,7 @@ export const Transaction = () => {
   const [loading, setLoading] = useState(false);
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
-  const [dataTypeList, setDataTypeList] = useState(['original', 'utf8']);
+  const [dataTypeList, setDataTypeList] = useState(['original']);
   const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
   const history = useHistory();
   const intervalToClear = useRef(false);
@@ -101,24 +99,9 @@ export const Transaction = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
-
-  // get riskLevel
-  const getConfirmRisk = async blockHash => {
-    intervalToClear.current = true;
-    let riskLevel;
-    while (intervalToClear.current) {
-      riskLevel = await reqConfirmationRiskByHash(blockHash);
-      setRisk(riskLevel);
-      if (riskLevel === '') {
-        await delay(1000);
-      } else if (riskLevel === 'lv0') {
-        // auto refresh riskLevel until risLevel is high
-        intervalToClear.current = false;
-      } else {
-        await delay(10 * 1000);
-      }
-    }
-  };
+  const imgSponsored = i18n.language.startsWith('en')
+    ? imgSponsoredEn
+    : imgSponsoredZh;
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -161,14 +144,11 @@ export const Transaction = () => {
           }
           setDetailsInfoSetHash(txnhash);
 
-          if (body.blockHash) {
-            getConfirmRisk(body.blockHash);
-          }
+          let toCheckAddress = txDetailDta.to;
 
-          let toAddress = txDetailDta.to;
           if (
-            getAddressType(toAddress) === addressTypeContract ||
-            getAddressType(toAddress) === addressTypeInternalContract
+            getAddressType(toCheckAddress) === addressTypeContract ||
+            getAddressType(toCheckAddress) === addressTypeInternalContract
           ) {
             setIsContract(true);
             const fields = [
@@ -187,7 +167,9 @@ export const Transaction = () => {
               'typeCode',
             ];
             const proArr: Array<any> = [];
-            proArr.push(reqContract({ address: toAddress, fields: fields }));
+            proArr.push(
+              reqContract({ address: toCheckAddress, fields: fields }),
+            );
             proArr.push(
               reqTransferList({
                 transactionHash: txnhash,
@@ -199,21 +181,24 @@ export const Transaction = () => {
             Promise.all(proArr)
               .then(proRes => {
                 const contractResponse = proRes[0];
+                // update contract info
                 setContractInfo(contractResponse);
                 const transferListReponse = proRes[1];
                 let decodedData = {};
+
                 try {
                   decodedData = decodeContract({
                     abi: JSON.parse(contractResponse['abi']),
                     address: contractResponse['address'],
                     transacionData: txDetailDta.data,
                   });
+
+                  // no abi scenario
                   if (!decodedData) setIsAbiError(true);
                 } catch {
                   setIsAbiError(true);
                 }
                 setDecodedData(decodedData);
-                setDataTypeList(['original', 'utf8', 'decodeInputData']);
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
@@ -265,22 +250,34 @@ export const Transaction = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
+
   useEffect(() => {
-    if (dataType === 'decodeInputData') {
-      if (contractInfo['abi']) {
-        if (isAbiError) {
-          setWarningMessage('contract.abiError');
-        } else {
+    // only to address could decoded to utf8 or input fn
+
+    if (!to || contractCreated) {
+    } else {
+      if (isContract) {
+        if (contractInfo['abi'] && !isAbiError) {
+          setDataTypeList(['original', 'decodeInputData']);
+          setDataType('decodeInputData');
           setWarningMessage('');
         }
+        if (!contractInfo['abi']) {
+          setDataTypeList(['original']);
+          setDataType('original');
+          setWarningMessage('contract.abiNotUploaded');
+        } else if (to !== null && isAbiError) {
+          setDataTypeList(['original']);
+          setDataType('original');
+          setWarningMessage('contract.abiError');
+        }
       } else {
-        setWarningMessage('contract.abiNotUploaded');
+        setDataTypeList(['original', 'utf8']);
+        setDataType('utf8');
+        setWarningMessage('');
       }
-    } else {
-      setWarningMessage('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataType, contractInfo, isAbiError]);
+  }, [isContract, contractInfo, isAbiError, contractCreated, to]);
 
   const fromContent = (isFull = false) => (
     <span>
@@ -727,7 +724,7 @@ export const Transaction = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              <Security type={risk}></Security>
+              <Security blockHash={blockHash}></Security>
               <StyledEpochConfirmationsWrapper>
                 {t(translations.transaction.epochConfirmations, {
                   count: confirmedEpochCount || '-',
@@ -928,6 +925,7 @@ export const Transaction = () => {
                   disableMatchWidth
                   size="small"
                   className="btnSelectContainer"
+                  disabled={dataTypeList.length === 1}
                 >
                   {dataTypeList.map(dataTypeItem => {
                     return (
@@ -951,16 +949,14 @@ export const Transaction = () => {
             </Description>
           </div>
           <StyledFoldButtonWrapper>
-            <Description noBorder title="">
-              <div
-                className={clsx('detailResetFoldButton', {
-                  folded: folded,
-                })}
-                onClick={handleFolded}
-              >
-                {t(translations.general[folded ? 'viewMore' : 'showLess'])}
-              </div>
-            </Description>
+            <div
+              className={clsx('detailResetFoldButton', {
+                folded: folded,
+              })}
+              onClick={handleFolded}
+            >
+              {t(translations.general[folded ? 'viewMore' : 'showLess'])}
+            </div>
           </StyledFoldButtonWrapper>
         </Card>
         <TableCard
@@ -1078,13 +1074,12 @@ const StyledFoldButtonWrapper = styled.div`
   justify-content: flex-end;
 
   .detailResetFoldButton {
-    font-size: 1rem;
-    color: #002257;
-    line-height: 1.5714rem;
-    height: 1.5714rem;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-items: center;
+    padding: 0.8571rem 0;
+    font-size: 1rem;
+    color: #002257;
     cursor: pointer;
 
     &::after {

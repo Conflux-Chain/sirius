@@ -150,7 +150,7 @@ const FilterWrap = styled.div`
 
   .outerContainer {
     flex-grow: 1;
-    width: 18rem;
+    width: 22rem;
 
     .transfer-search.input-container {
       height: 2.28rem;

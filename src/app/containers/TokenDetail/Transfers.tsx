@@ -82,7 +82,7 @@ export function Transfers({
     history.push(urlWithQuery);
   };
 
-  let columnsWidth = [3, 4, 4, 4, 3];
+  let columnsWidth = [3, 6, 6, 4, 4];
   let columns = [
     // {
     //   ...tokenColunms.txnHash,
@@ -118,7 +118,7 @@ export function Transfers({
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   if (transferType === cfxTokenTypes.erc721) {
-    columnsWidth = [3, 4, 4, 4, 3];
+    columnsWidth = [3, 6, 6, 4, 3];
     columns = [
       tokenColunms.txnHash,
       tokenColunms.from,
@@ -128,7 +128,7 @@ export function Transfers({
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
   if (transferType === cfxTokenTypes.erc1155) {
-    columnsWidth = [3, 5, 5, 3, 4, 4];
+    columnsWidth = [3, 7, 7, 3, 4, 4];
     columns = [
       tokenColunms.txnHash,
       tokenColunms.from,

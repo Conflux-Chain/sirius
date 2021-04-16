@@ -29,7 +29,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
   const small = width < 500;
   const padding = small ? 16 : 48;
   // get the max x grids which most suitable chart width
-  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1024) / 50);
+  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1368) / 50);
   if (NUM_X_GRID < 7) NUM_X_GRID = 7;
   if (small) NUM_X_GRID = 6;
 
@@ -75,7 +75,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             else {
               acc.max = {
                 blockTime: 'auto',
-                tps: 'auto',
+                tps: Math.max(+acc.max.tps || 0, +cur.tps),
                 difficulty: Math.max(+acc.max.difficulty || 0, +cur.difficulty),
                 hashRate: Math.max(+acc.max.hashRate || 0, +cur.hashRate),
                 dailyTransaction: 'auto',
@@ -96,6 +96,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             if (index === plot.length - 1) {
               acc.min.difficulty = acc.min.difficulty * 0.7;
               acc.min.hashRate = acc.min.hashRate * 0.7;
+              acc.max.tps = acc.max.tps < 10 ? 'auto' : acc.max.tps * 1.1;
               acc.max.difficulty = acc.max.difficulty * 1.1;
               acc.max.hashRate = acc.max.hashRate * 1.1;
               acc.max.dailyTransactionCFX = acc.max.dailyTransactionCFX * 1.1;
@@ -288,7 +289,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 'cfxHoldingAccounts',
               ].includes(indicator)
                 ? 60
-                : 30
+                : 50
             }
           />
           <Line

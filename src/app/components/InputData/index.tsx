@@ -18,14 +18,16 @@ export const InputData = ({
   decodedDataStr,
   ...props
 }: Props) => {
-  const getStrByType = (byteCode, type, decodedDataStr) => {
+  const getStrByType = (byteCode = '', type, decodedDataStr) => {
     let str = '';
     switch (type) {
       case 'original':
         str = byteCode;
         break;
       case 'utf8':
-        str = hex2utf8(byteCode);
+        str = hex2utf8(
+          byteCode.startsWith('0x') ? byteCode.substr(2) : byteCode,
+        );
         break;
       case 'decodeInputData':
         str = decodedDataStr;

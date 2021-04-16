@@ -14,7 +14,7 @@ export function Transactions() {
   const { t } = useTranslation();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 5, 5, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../../../styles/antd.custom.css';
-import { Collapse } from 'antd';
+import { Collapse } from '@jnoodle/antd';
 import { DownOutlined } from '@ant-design/icons';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from '../../../locales/i18n';
+
 interface FuncListProps {
   type?: string;
   data?: object[];

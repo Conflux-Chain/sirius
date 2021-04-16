@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import '../../../styles/antd.custom.css';
-import { Form } from 'antd';
+import { Form } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
-import { Button, Modal } from '@cfxjs/react-ui';
+import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
@@ -15,16 +14,12 @@ import OutputParams from './OutputParams';
 import FuncResponse from './FuncResponse';
 import OutputItem from './OutputItem';
 import Error from './Error';
-import Loading from '../../components/Loading';
-import imgSuccessBig from 'images/success_big.png';
-import imgRejected from 'images/rejected.png';
 import { translations } from '../../../locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import {
   isAddress,
   checkInt,
   checkUint,
-  getEllipsStr,
   checkBytes,
   checkCfxType,
 } from '../../../utils';
@@ -32,6 +27,7 @@ import { formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
+import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 
 interface FuncProps {
   type?: string;
@@ -168,7 +164,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             setTxHash(txHash);
             setOutputError('');
           } catch (error) {
-            setModalType('fail');
+            setModalType('error');
             setOutputError(error.message || '');
           }
         }
@@ -351,53 +347,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           {<Error message={outputError} />}
         </FuncBody>
       </Form>
-      <Modal
-        closable
-        open={modalShown}
+
+      <TxnStatusModal
+        show={modalShown}
+        status={modalType}
         onClose={closeHandler}
-        wrapClassName="dappButtonModalContainer"
-      >
-        <Modal.Content className="contentContainer">
-          {modalType === 'loading' && (
-            <>
-              <Loading />
-              <div className="loadingText">
-                {t(translations.general.loading)}
-              </div>
-              <div className="confirmText">
-                {t(translations.general.waitForConfirm)}
-              </div>
-            </>
-          )}
-          {modalType === 'success' && (
-            <>
-              <img src={imgSuccessBig} alt="success" className="statusImg" />
-              <div className="submitted">
-                {t(translations.sponsor.submitted)}.
-              </div>
-              <div className="txContainer">
-                <span className="label">{t(translations.sponsor.txHash)}:</span>
-                <a
-                  href={`/transaction/${txHash}`}
-                  target="_blank"
-                  className="content"
-                  rel="noopener noreferrer"
-                >
-                  {getEllipsStr(txHash, 8, 0)}
-                </a>
-              </div>
-            </>
-          )}
-          {modalType === 'fail' && (
-            <>
-              <img src={imgRejected} alt="rejected" className="statusImg" />
-              <div className="submitted">
-                {t(translations.general.txRejected)}
-              </div>
-            </>
-          )}
-        </Modal.Content>
-      </Modal>
+        hash={txHash}
+      />
     </Container>
   );
 };

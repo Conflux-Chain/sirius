@@ -15,7 +15,7 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   -ms-flex-align: center;
   align-items: center;
   justify-items: center;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 500;
   color: #65709a;
   cursor: pointer;
@@ -53,15 +53,8 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   margin-right: 0.4286rem;
 }
 
-.c0 .text {
-  max-width: 9.2857rem;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .c0 .balance {
-  padding: 0 0.8571rem 0 8px;
+  padding: 0 0.8571rem 0 0.5714rem;
 }
 
 .c0 .connect-wallet-button-left {
@@ -73,10 +66,10 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 32px;
-  padding: 0 12px;
+  height: 2.2857rem;
+  padding: 0 0.8571rem;
   background: #f5f6fa;
-  border-radius: 50px;
+  border-radius: 3.5714rem;
   cursor: pointer;
 }
 

@@ -17,7 +17,7 @@ export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
 
-  const columnsBlocksWidth = [4, 2, 2, 3, 5, 3, 3, 2, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -30,7 +30,7 @@ export function HomePage() {
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
-  const columnsTransactionsWidth = [4, 5, 5, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,
@@ -68,10 +68,14 @@ export function HomePage() {
 
   const clientWidth = document.body.clientWidth;
   let chartWidth;
-  if (clientWidth < 1024) {
-    chartWidth = (clientWidth - 44) / 2;
+  if (clientWidth < 600) {
+    chartWidth = clientWidth - 20;
+  } else if (clientWidth < 1000) {
+    chartWidth = (clientWidth - 68) / 2;
+  } else if (clientWidth < 1368) {
+    chartWidth = (clientWidth - 116) / 4;
   } else {
-    chartWidth = 238;
+    chartWidth = 323;
   }
 
   const { currentTabValue } = useTabTableData(tabs);
@@ -140,7 +144,7 @@ export function HomePage() {
 }
 
 const Main = styled.div`
-  max-width: 73.1429rem;
+  max-width: 1368px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,21 +155,23 @@ const Main = styled.div`
 `;
 const Top = styled.section`
   display: flex;
-  margin-right: -1.7143rem;
+  width: 100%;
   margin-bottom: 2.2857rem;
-  margin-top: 14px;
+  margin-top: 24px;
   justify-content: center;
-  flex-wrap: wrap;
+  gap: 24px;
+
   ${media.m} {
-    margin-right: -1rem;
-    margin-bottom: 1.7143rem;
+    flex-wrap: wrap;
+  }
+
+  ${media.s} {
+    flex-direction: column;
   }
 `;
 
 const SmallChartWrap = styled.div`
-  margin-right: 24px;
   ${media.m} {
-    margin-right: 0.8571rem;
   }
 `;
 

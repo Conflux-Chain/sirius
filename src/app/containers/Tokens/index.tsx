@@ -27,7 +27,7 @@ export function Tokens() {
   const { tokenType } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 6, 3, 3, 3, 2, 4];
+  let columnsWidth = [1, 6, 3, 3, 3, 3, 5];
   let columns: ColumnsType = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
@@ -46,13 +46,13 @@ export function Tokens() {
   let defaultSortKey = 'totalPrice';
 
   if (tokenType === cfxTokenTypes.erc721) {
-    columnsWidth = [1, 8, 4, 4, 5];
+    columnsWidth = [1, 8, 4, 4, 8];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
       tokenColunms.holders,
-      tokenColunms.contract(),
+      tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
@@ -61,7 +61,7 @@ export function Tokens() {
   }
 
   if (tokenType === cfxTokenTypes.erc1155) {
-    columnsWidth = [1, 7, 5, 10];
+    columnsWidth = [1, 8, 5, 8];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,

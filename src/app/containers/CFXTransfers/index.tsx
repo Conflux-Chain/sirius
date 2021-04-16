@@ -18,7 +18,7 @@ export function CFXTransfers() {
   const { t } = useTranslation();
   const url = '/transfer?transferType=CFX';
 
-  const columnsCFXTransferWidth = [4, 3, 6, 5, 3, 5];
+  const columnsCFXTransferWidth = [4, 4, 8, 7, 4, 5];
   const columnsCFXTrasfer: ColumnsType = [
     blockColunms.epoch,
     tokenColunms.txnHash,

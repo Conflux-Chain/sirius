@@ -56,13 +56,17 @@ export function Notice() {
 }
 
 const StyledNoticeItemWrapper = styled.div`
-  max-width: 1024px;
+  max-width: 1368px;
   margin: 1rem auto;
   display: flex;
 
   ${media.s} {
     padding: 0 16px;
     max-width: 100%;
+  }
+  ${media.xl} {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .img {

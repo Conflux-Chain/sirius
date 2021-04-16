@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import WebFontLoader from 'webfontloader';
+// import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
@@ -51,12 +51,12 @@ import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
 
-WebFontLoader.load({
-  custom: {
-    families: ['Circular Std:n4,i4,n7,i7,n8,i8'],
-    urls: ['/font.css'],
-  },
-});
+// WebFontLoader.load({
+//   custom: {
+//     families: ['Circular Std:n4,i4,n7,i7,n8,i8'],
+//     urls: ['/font.css'],
+//   },
+// });
 
 export function App() {
   const { t } = useTranslation();
@@ -296,12 +296,16 @@ export function App() {
 
 const Main = styled.div`
   position: relative;
-  max-width: 1024px;
+  max-width: 1368px;
   margin: 0 auto;
   padding-top: 70px;
   min-height: calc(100vh - 327px);
   ${media.s} {
     padding: 100px 16px 16px;
     min-height: calc(100vh - 254px);
+  }
+  ${media.xl} {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 `;

@@ -10,10 +10,10 @@ import { MarketInfo } from './MarketInfo';
 export function Charts() {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
-  let chartWidth = clientWidth - 72;
+  let chartWidth = clientWidth - 36;
 
   // TODO will be adjusted according to page breakpoints in the future
-  if (chartWidth > 1024) chartWidth = 1024;
+  if (chartWidth > 1368) chartWidth = 1368;
   if (chartWidth < 365) chartWidth = 365;
 
   return (

@@ -11,16 +11,16 @@ import { Tooltip } from '../Tooltip';
 
 export const SmallChart = ({
   width,
-  height = width * 0.53,
+  height = width * 0.39,
   indicator = 'blockTime',
 } = {}) => {
-  const small = width < 200;
+  const small = width < 300;
 
   const { plot } = usePlot('hour');
   const { t } = useTranslation();
   const [firstlast, setFirstLast] = useState(null);
 
-  height = small ? width * 0.6 : height;
+  height = Math.min(height, 124);
 
   if (!plot) {
     return <Container style={{ width, height }}></Container>;
@@ -35,25 +35,28 @@ export const SmallChart = ({
     : null;
 
   return (
-    <Container style={{ width, height }}>
+    <Container style={{ width, height }} small={small}>
       <Title>
         <Tooltip text={t(`charts.${indicator}.description`)}>
           {t(`charts.${indicator}.title`)}
         </Tooltip>
-        <Change trend={trend}>{diff}</Change>
       </Title>
       <Value small={small}>
         {firstlast &&
           formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
       </Value>
+      <Change trend={trend}>{diff}</Change>
 
       <Draw
         small={small}
         setFirstLast={setFirstLast}
         indicator={indicator}
         plot={plot}
-        width={width * 0.7}
-        height={height * 0.4}
+        width={small ? width - 100 : width - 130}
+        height={Math.min(
+          small ? (width - 100) * 0.6 : (width - 130) * 0.45,
+          small ? height - 20 : height - 36,
+        )}
       />
     </Container>
   );
@@ -115,12 +118,11 @@ function Draw({
 }
 
 const Container = styled.div`
-  padding: ${props => (props.small ? '8px' : '12px')};
+  padding: ${props => (props.small ? '10px' : '18px')};
   box-sizing: border-box;
   background: #ffffff;
   box-shadow: 12px 8px 24px -12px rgba(20, 27, 50, 0.12);
   border-radius: 5px;
-  margin-top: 10px;
   position: relative;
 `;
 
@@ -149,7 +151,7 @@ const Change = styled.div`
   &::after {
     content: url(${({ trend }) =>
       trend === 'down' ? down : trend === 'flat' ? flat : up});
-    margin-left: 3px;
+    margin-left: 10px;
   }
 `;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { Card } from '../../components/Card';
 import { Tabs } from '../../components/Tabs';
-import { Col, Row } from 'antd';
+import { Col, Row } from '@jnoodle/antd';
 import { StatsCard } from '../../components/StatsCard/Loadable';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
@@ -13,7 +13,6 @@ import styled from 'styled-components/macro';
 import queryString from 'query-string';
 import { StatsType } from '../../components/StatsCard';
 // TODO antd slimming
-import '../../../styles/antd.custom.css';
 import { media } from '../../../styles/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
@@ -122,8 +121,6 @@ export function Statistics() {
                   type={StatsType.topCFXReceived}
                 />
               </Col>
-            </Row>
-            <Row gutter={[24, 24]}>
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
@@ -155,8 +152,6 @@ export function Statistics() {
                   type={StatsType.topTokensByReceivers}
                 />
               </Col>
-            </Row>
-            <Row gutter={[24, 24]}>
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
@@ -209,7 +204,7 @@ const TabsWrapper = styled(Tabs)`
 `;
 
 const CardWrapper = styled(Card)`
-  padding: 18px 18px 0 !important;
+  padding: 18px 18px 24px !important;
 `;
 
 const SpanButtonsWrapper = styled.div`

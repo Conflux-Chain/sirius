@@ -362,7 +362,7 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 5, 5, 3, 2, 3, 4];
+  const columnsTransactionsWidth = [4, 7, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     tokenColunms.from,
@@ -399,7 +399,7 @@ export function Table({ address, addressInfo }) {
                     } (${
                       row?.token?.symbol || t(translations.general.notAvailable)
                     })`,
-                    'tag',
+                    36,
                   )}
                 </Text>
               </Link>,
@@ -409,7 +409,7 @@ export function Table({ address, addressInfo }) {
     ),
   };
 
-  const columnsCFXTransferWidth = [4, 3, 6, 5, 3, 5];
+  const columnsCFXTransferWidth = [4, 4, 8, 7, 4, 5];
   const columnsCFXTrasfer: ColumnsType = [
     blockColunms.epoch,
     tokenColunms.txnHash,
@@ -419,7 +419,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
 
-  const columnsTokensWidthErc20 = [3, 5, 5, 3, 5, 4];
+  const columnsTokensWidthErc20 = [3, 6, 5, 3, 6, 4];
   const columnsTokenTrasfersErc20: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
@@ -429,7 +429,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc20[i] }));
 
-  const columnsTokensWidthErc721 = [3, 5, 5, 3, 5, 4];
+  const columnsTokensWidthErc721 = [3, 6, 5, 4, 6, 4];
   const columnsTokenTrasfersErc721: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
@@ -439,7 +439,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
 
-  const columnsTokensWidthErc1155 = [3, 5, 4, 2, 3, 4, 4];
+  const columnsTokensWidthErc1155 = [3, 6, 5, 2, 4, 5, 4];
   const columnsTokenTrasfersErc1155: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
@@ -450,15 +450,16 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age,
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 3, 2, 4, 3, 3, 4];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
-    blockColunms.hash,
     blockColunms.txns,
+    blockColunms.hash,
     blockColunms.miner,
-    blockColunms.difficulty,
+    blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
+    blockColunms.reward,
     blockColunms.age,
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 

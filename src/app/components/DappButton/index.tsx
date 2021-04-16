@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import { Button, Tooltip, Modal } from '@cfxjs/react-ui';
+import { Button, Tooltip } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { usePortal } from 'utils/hooks/usePortal';
 import styled from 'styled-components/macro';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import imgSuccess from 'images/success.png';
-import imgSuccessBig from 'images/success_big.png';
-import imgRejected from 'images/rejected.png';
-import { getEllipsStr } from '../../../utils';
-import Loading from '../../components/Loading';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
-import { formatAddress } from '../../../utils/cfx';
-import { TxnAction } from '../../../utils/constants';
+import { formatAddress } from 'utils/cfx';
+import { TxnAction } from 'utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 
 interface DappButtonProps {
   hoverText?: string;
@@ -100,7 +97,7 @@ const DappButton = ({
         .catch(error => {
           //rejected alert
           failCallback && failCallback(error.message);
-          setModalType('fail');
+          setModalType('error');
         })
         .finally(() => {
           trackEvent({
@@ -144,7 +141,7 @@ const DappButton = ({
           <span
             className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
           >
-            <AddressContainer value={accounts[0]} />
+            <AddressContainer value={accounts[0]} maxWidth={205} />
           </span>
         </>
       )}
@@ -159,53 +156,12 @@ const DappButton = ({
       ) : (
         <>{btnComp}</>
       )}
-      <Modal
-        closable
-        open={modalShown}
+      <TxnStatusModal
+        show={modalShown}
+        status={modalType}
         onClose={closeHandler}
-        wrapClassName="dappButtonModalContainer"
-      >
-        <Modal.Content className="contentContainer">
-          {modalType === 'loading' && (
-            <>
-              <Loading></Loading>
-              <div className="loadingText">
-                {t(translations.general.loading)}
-              </div>
-              <div className="confirmText">
-                {t(translations.general.waitForConfirm)}
-              </div>
-            </>
-          )}
-          {modalType === 'success' && (
-            <>
-              <img src={imgSuccessBig} alt="success" className="statusImg" />
-              <div className="submitted">
-                {t(translations.sponsor.submitted)}.
-              </div>
-              <div className="txContainer">
-                <span className="label">{t(translations.sponsor.txHash)}:</span>
-                <a
-                  href={`/transaction/${txHash}`}
-                  target="_blank"
-                  className="content"
-                  rel="noopener noreferrer"
-                >
-                  {getEllipsStr(txHash, 8, 0)}
-                </a>
-              </div>
-            </>
-          )}
-          {modalType === 'fail' && (
-            <>
-              <img src={imgRejected} alt="rejected" className="statusImg" />
-              <div className="submitted">
-                {t(translations.general.txRejected)}
-              </div>
-            </>
-          )}
-        </Modal.Content>
-      </Modal>
+        hash={txHash}
+      />
     </>
   );
 };

@@ -16,6 +16,7 @@ import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
+import { media } from '../../../../styles/media';
 
 interface Props {
   hash: string;
@@ -232,7 +233,9 @@ const EventLog = ({ log }) => {
           <div className="eventlog-item">
             <Description
               className="description"
-              title={t(translations.transaction.logs.address)}
+              title={
+                <strong>{t(translations.transaction.logs.address)}</strong>
+              }
               small
               noBorder
             >
@@ -259,7 +262,7 @@ const EventLog = ({ log }) => {
             {!!data.length && (
               <Description
                 className="description"
-                title={t(translations.transaction.logs.data)}
+                title={<i>{t(translations.transaction.logs.data)}</i>}
                 small
                 noBorder
               >
@@ -312,6 +315,10 @@ const StyledEventLogsWrapper = styled.div`
   .eventlog-content {
     display: flex;
 
+    ${media.m} {
+      flex-wrap: wrap;
+    }
+
     .eventlog-index {
       width: 2.2857rem;
       height: 2.2857rem;
@@ -320,7 +327,7 @@ const StyledEventLogsWrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0.8571rem 1.0714rem 0 0;
+      margin: 0.8571rem 2rem 0 0;
     }
     .eventlog-item {
       flex-grow: 1;
@@ -358,7 +365,15 @@ const StyledEventLogWrapper = styled.div`
     }
 
     .left {
-      width: 6rem;
+      width: 20%;
+      min-width: 6rem;
+      max-width: 7rem;
+      text-align: right;
+      padding-right: 1rem;
+
+      ${media.m} {
+        text-align: left;
+      }
     }
   }
 `;

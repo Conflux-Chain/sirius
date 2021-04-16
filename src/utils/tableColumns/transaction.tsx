@@ -7,12 +7,7 @@ import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { Status } from '../../app/components/Status/Loadable';
 import { CountDown } from '../../app/components/CountDown/Loadable';
-import {
-  formatString,
-  formatNumber,
-  fromDripToCfx,
-  toThousands,
-} from '../../utils/';
+import { formatNumber, fromDripToCfx, toThousands } from '../../utils/';
 import { AddressContainer } from '../../app/components/AddressContainer';
 
 const StyledHashWrapper = styled.span`
@@ -44,7 +39,7 @@ export const hash = {
         </StyledStatusWrapper>
         <Link href={`/transaction/${value}`}>
           <Text span hoverValue={value}>
-            {formatString(value, 'hash')}
+            <SpanWrap>{value}</SpanWrap>
           </Text>
         </Link>
       </StyledTransactionHashWrapper>
@@ -171,4 +166,12 @@ const StyledStatusWrapper = styled.span`
   &.show {
     visibility: visible;
   }
+`;
+
+const SpanWrap = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
+  vertical-align: bottom;
 `;

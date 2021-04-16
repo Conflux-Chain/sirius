@@ -21,11 +21,12 @@ interface Props {
   value: string; // address value
   alias?: string; // address alias, such as contract name, miner name, default null
   contractCreated?: string; // contract creation address
-  maxWidth?: number; // address max width for view, default 130/100 for default, 400 for full
+  maxWidth?: number; // address max width for view, default 200/170 for default, 400 for full
   isFull?: boolean; // show full address, default false
   isLink?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
   zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
+  suffixAddressSize?: number; // suffix address size, default is 8
 }
 
 // TODO code simplify
@@ -39,6 +40,7 @@ export const AddressContainer = ({
   isLink = true,
   isMe = false,
   zeroAddressAutoShowAlias = true,
+  suffixAddressSize = 8,
 }: Props) => {
   const { t } = useTranslation();
   const txtContractCreation = t(translations.transaction.contractCreation);
@@ -71,11 +73,24 @@ export const AddressContainer = ({
             style={style}
             href={`/address/${hrefAddress}`}
             maxwidth={full ? 430 : maxWidth}
+            afterContent={
+              cfxAddress && !full && !alias
+                ? cfxAddress.substr(-suffixAddressSize)
+                : ''
+            }
           >
-            {content}
+            <span>{content}</span>
           </LinkWrapper>
         ) : (
-          <PlainWrapper style={style} maxwidth={full ? 430 : maxWidth}>
+          <PlainWrapper
+            style={style}
+            maxwidth={full ? 430 : maxWidth}
+            afterContent={
+              cfxAddress && !full && !alias
+                ? cfxAddress.substr(-suffixAddressSize)
+                : ''
+            }
+          >
             {content}
           </PlainWrapper>
         )}
@@ -157,7 +172,6 @@ export const AddressContainer = ({
   }
 
   if (isMe) {
-    console.log('isMe', true);
     return RenderAddress({
       suffix: (
         <IconWrapper>
@@ -204,23 +218,42 @@ const AddressWrapper = styled.div`
 `;
 
 const addressStyle = (props: any) => ` 
-  display: inline-block !important;
-  max-width: ${props.maxwidth || 130}px !important;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex !important;
+  flex-wrap: nowrap;
+  max-width: ${props.maxwidth || 190}px !important;
   outline: none;
+  
+  > span {
+    flex: 0 1 auto;  
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
-  ${media.s} {
-    max-width: ${props.maxwidth || 100}px !important;
+  ${media.m} {
+    max-width: ${props.maxwidth || 170}px !important;
+  }
+
+  &:after {
+    content: '${props.afterContent || ''}';
+    flex: 1 0 auto; 
+    white-space: nowrap;
+    margin-left: -1px;
   }
 `;
 
 const LinkWrapper = styled(Link)<{
   maxwidth?: number;
+  afterContent?: string;
 }>`
   ${props => addressStyle(props)}
 `;
 
 const PlainWrapper = styled.span<{
   maxwidth?: number;
+  afterContent?: string;
 }>`
   ${props => addressStyle(props)}
 

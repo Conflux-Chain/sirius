@@ -6,7 +6,6 @@ import { Text } from '../../app/components/Text/Loadable';
 import { Link } from '../../app/components/Link/Loadable';
 import { CountDown } from '../../app/components/CountDown/Loadable';
 import {
-  formatString,
   formatNumber,
   getPercent,
   fromDripToCfx,
@@ -67,7 +66,7 @@ export const hash = {
   render: value => (
     <Link href={`/block/${value}`}>
       <Text span hoverValue={value}>
-        {formatString(value, 'hash')}
+        <SpanWrap>{value}</SpanWrap>
       </Text>
     </Link>
   ),
@@ -84,7 +83,7 @@ export const hashWithPivot = {
       <StyledEpochWrapper>
         <Link href={`/block/${value}`}>
           <Text span hoverValue={value}>
-            {formatString(value, 'hash')}
+            <SpanWrap>{value}</SpanWrap>
           </Text>
         </Link>
         {pivotTag}
@@ -197,4 +196,12 @@ const StyledEpochWrapper = styled.span`
     height: 1.4286rem;
     margin-left: 0.5714rem;
   }
+`;
+
+const SpanWrap = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
+  vertical-align: bottom;
 `;

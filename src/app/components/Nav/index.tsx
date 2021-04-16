@@ -80,10 +80,14 @@ const Brand = styled.div`
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
-  margin-right: 4rem;
+  margin-right: 3rem;
+
+  ${media.xl} {
+    margin-right: 2rem;
+  }
 
   ${media.l} {
-    margin-right: 2rem;
+    margin-right: 1rem;
   }
 
   .navbar-burger {
@@ -186,6 +190,7 @@ const Container = styled.div`
   margin: 0 auto;
   position: relative;
   padding: 0 2.86rem;
+  max-width: 1368px;
 
   @media (max-width: 1360px) {
     padding: 0 1.8rem;

@@ -28,6 +28,9 @@ export const ScanEvent = {
       github: 'github',
       medium: 'medium',
       feedback: 'feedback',
+      developerDocuments: 'developer_documents',
+      confluxStudio: 'conflux_studio',
+      confluxTruffle: 'conflux_truffle',
     },
   },
   // global search

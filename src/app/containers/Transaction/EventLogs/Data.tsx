@@ -139,6 +139,7 @@ export const Data = ({
 
     let content: string | Array<React.ReactNode> = hexData;
     let body: React.ReactNode = null;
+    let withAbi = false;
 
     if (data[0].argName) {
       // data after decode with contract abi
@@ -175,6 +176,7 @@ export const Data = ({
           {content}
         </>
       );
+      withAbi = true;
     } else {
       // original eventlog data
       const select: SelectedLineSelect = {
@@ -210,17 +212,22 @@ export const Data = ({
       });
     }
 
-    return <StyledDataWrapper>{body}</StyledDataWrapper>;
+    return <StyledDataWrapper withAbi={withAbi}>{body}</StyledDataWrapper>;
   }
 };
 
-const StyledDataWrapper = styled.div`
-  padding: 16px 124px 16px 16px;
+const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
+  padding: 16px ${props => (props.withAbi ? '124px' : '24px')} 16px 16px;
   background-color: #fafbfc;
   position: relative;
 
+  .with-abi {
+    padding-right: 100px;
+  }
+
   .select.select-with-abi {
     position: absolute;
+    top: 11px;
     right: 16px;
     height: 30px;
     padding: 0 10px;

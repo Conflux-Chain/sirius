@@ -436,7 +436,7 @@ const Wrapper = styled.div`
 
 const SearchContainer = styled.div`
   display: inline-block;
-  width: 28.5714rem;
+  width: 36rem;
   .outerContainer {
     flex-grow: 1;
     .sponsor-search.input-container {
@@ -466,7 +466,7 @@ const SearchContainer = styled.div`
       }
     }
   }
-  ${media.s} {
+  ${media.m} {
     display: flex;
     align-items: center;
     width: 100%;
@@ -477,13 +477,13 @@ const BlockContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   margin-top: 1.7143rem;
-  ${media.s} {
+  ${media.m} {
     flex-direction: column;
   }
   .innerContainer {
     flex: 1;
     box-sizing: border-box;
-    flex-basis: 26.2857rem;
+    flex-basis: 36rem;
     flex-grow: 0;
     flex-shrink: 0;
     box-sizing: content-box;
@@ -491,7 +491,10 @@ const BlockContainer = styled.div`
     box-shadow: 12px 8px 24px -12px rgba(20, 27, 50, 0.12);
     border-radius: 5px;
     padding: 1.7143rem 1.1429rem 1.1429rem 1.1429rem;
-    ${media.s} {
+    ${media.l} {
+      flex-basis: 32rem;
+    }
+    ${media.m} {
       flex-basis: initial;
     }
     .sponsorAddress {
@@ -582,7 +585,7 @@ const BlockContainer = styled.div`
     }
     &:last-child {
       margin-left: 1.1429rem;
-      ${media.s} {
+      ${media.m} {
         margin-left: 0px;
         margin-top: 1.3333rem;
       }
