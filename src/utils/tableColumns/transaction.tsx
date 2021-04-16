@@ -6,9 +6,9 @@ import clsx from 'clsx';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { Status } from '../../app/components/Status/Loadable';
-import { CountDown } from '../../app/components/CountDown/Loadable';
 import { formatNumber, fromDripToCfx, toThousands } from '../../utils/';
 import { AddressContainer } from '../../app/components/AddressContainer';
+import { ColumnAge } from './utils';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -140,17 +140,8 @@ export const gasFee = {
   ),
 };
 
-export const age = {
-  title: (
-    <Translation>
-      {t => t(translations.general.table.transaction.age)}
-    </Translation>
-  ),
-  dataIndex: 'syncTimestamp',
-  key: 'syncTimestamp',
-  width: 1,
-  render: value => <CountDown from={value} />,
-};
+export const age = (ageFormat, toggleAgeFormat) =>
+  ColumnAge({ ageFormat, toggleAgeFormat });
 
 const StyledTransactionHashWrapper = styled.span`
   display: flex;

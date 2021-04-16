@@ -4,7 +4,6 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Text } from '../../app/components/Text/Loadable';
 import { Link } from '../../app/components/Link/Loadable';
-import { CountDown } from '../../app/components/CountDown/Loadable';
 import {
   formatNumber,
   getPercent,
@@ -13,6 +12,7 @@ import {
 } from '../../utils/';
 import imgPivot from 'images/pivot.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
+import { ColumnAge } from './utils';
 
 export const epoch = {
   title: (
@@ -153,15 +153,8 @@ export const reward = {
     ),
 };
 
-export const age = {
-  title: (
-    <Translation>{t => t(translations.general.table.block.age)}</Translation>
-  ),
-  dataIndex: 'syncTimestamp',
-  key: 'syncTimestamp',
-  width: 1,
-  render: value => <CountDown from={value} />,
-};
+export const age = (ageFormat, toggleAgeFormat) =>
+  ColumnAge({ ageFormat, toggleAgeFormat });
 
 export const difficulty = {
   title: (

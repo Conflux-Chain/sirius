@@ -27,6 +27,7 @@ interface Props {
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
   zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
   suffixAddressSize?: number; // suffix address size, default is 8
+  prefixFloat?: boolean; // prefix icon float or take up space, default false
 }
 
 // TODO code simplify
@@ -41,6 +42,7 @@ export const AddressContainer = ({
   isMe = false,
   zeroAddressAutoShowAlias = true,
   suffixAddressSize = 8,
+  prefixFloat = false,
 }: Props) => {
   const { t } = useTranslation();
   const txtContractCreation = t(translations.transaction.contractCreation);
@@ -54,11 +56,7 @@ export const AddressContainer = ({
   const RenderAddress = ({
     hoverValue = cfxAddress,
     hrefAddress = cfxAddress,
-    content = alias
-      ? isFull
-        ? alias
-        : formatString(alias, 'tag')
-      : cfxAddress,
+    content = alias || cfxAddress,
     link = isLink,
     full = isFull,
     style = {},
@@ -73,7 +71,7 @@ export const AddressContainer = ({
             style={style}
             href={`/address/${hrefAddress}`}
             maxwidth={full ? 430 : maxWidth}
-            afterContent={
+            aftercontent={
               cfxAddress && !full && !alias
                 ? cfxAddress.substr(-suffixAddressSize)
                 : ''
@@ -85,7 +83,7 @@ export const AddressContainer = ({
           <PlainWrapper
             style={style}
             maxwidth={full ? 430 : maxWidth}
-            afterContent={
+            aftercontent={
               cfxAddress && !full && !alias
                 ? cfxAddress.substr(-suffixAddressSize)
                 : ''
@@ -107,7 +105,7 @@ export const AddressContainer = ({
         hrefAddress: formatAddress(contractCreated),
         content: txtContractCreation,
         prefix: (
-          <IconWrapper>
+          <IconWrapper className={prefixFloat ? 'float' : ''}>
             <Text span hoverValue={txtContractCreation}>
               <img src={ContractIcon} alt={txtContractCreation} />
             </Text>
@@ -138,7 +136,7 @@ export const AddressContainer = ({
       link: false,
       style: { color: '#e00909' },
       prefix: (
-        <IconWrapper>
+        <IconWrapper className={prefixFloat ? 'float' : ''}>
           <Text span hoverValue={tip}>
             <AlertTriangle size={16} color="#e00909" />
           </Text>
@@ -158,7 +156,9 @@ export const AddressContainer = ({
     );
     return RenderAddress({
       prefix: (
-        <IconWrapper className={isFull ? 'icon' : ''}>
+        <IconWrapper
+          className={`${isFull ? 'icon' : ''} ${prefixFloat ? 'float' : ''}`}
+        >
           <Text span hoverValue={typeText}>
             {isInternalContract ? (
               <img src={InternalContractIcon} alt={typeText} />
@@ -174,7 +174,7 @@ export const AddressContainer = ({
   if (isMe) {
     return RenderAddress({
       suffix: (
-        <IconWrapper>
+        <IconWrapper className={prefixFloat ? 'float' : ''}>
           <img
             src={isMeIcon}
             alt="is me"
@@ -190,6 +190,10 @@ export const AddressContainer = ({
 
 const IconWrapper = styled.span`
   margin-right: 2px;
+
+  &.float {
+    margin-left: -18px;
+  }
 
   svg {
     vertical-align: bottom;
@@ -237,7 +241,8 @@ const addressStyle = (props: any) => `
   }
 
   &:after {
-    content: '${props.afterContent || ''}';
+    ${!props.aftercontent ? 'display: none;' : ''}
+    content: '${props.aftercontent || ''}';
     flex: 1 0 auto; 
     white-space: nowrap;
     margin-left: -1px;
@@ -246,14 +251,14 @@ const addressStyle = (props: any) => `
 
 const LinkWrapper = styled(Link)<{
   maxwidth?: number;
-  afterContent?: string;
+  aftercontent?: string;
 }>`
   ${props => addressStyle(props)}
 `;
 
 const PlainWrapper = styled.span<{
   maxwidth?: number;
-  afterContent?: string;
+  aftercontent?: string;
 }>`
   ${props => addressStyle(props)}
 

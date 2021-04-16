@@ -4,13 +4,15 @@ import { translations } from '../../../locales/i18n';
 import { ColumnsType } from '../../components/TabsTablePanel';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import {
-  TabsTablePanel,
   TabLabel,
+  TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
+import { useAge } from '../../../utils/hooks/useAge';
 
 export function BottomTablePanel({ hash: blockHash }) {
   const { t } = useTranslation();
+  const [ageFormat, toggleAgeFormat] = useAge();
 
   const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
@@ -20,7 +22,7 @@ export function BottomTablePanel({ hash: blockHash }) {
     transactionColunms.value,
     transactionColunms.gasFee,
     transactionColunms.gasPrice,
-    transactionColunms.age,
+    transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
   const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 5];
@@ -32,7 +34,7 @@ export function BottomTablePanel({ hash: blockHash }) {
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercent,
-    blockColunms.age,
+    blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const tabs = [

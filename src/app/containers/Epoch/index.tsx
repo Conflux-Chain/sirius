@@ -7,6 +7,7 @@ import { TablePanel } from '../../components/TablePanel/Loadable';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { blockColunms } from '../../../utils/tableColumns';
+import { useAge } from '../../../utils/hooks/useAge';
 
 interface epochNumber {
   number: string;
@@ -15,6 +16,7 @@ interface epochNumber {
 export const Epoch = () => {
   const { number } = useParams<epochNumber>();
   const { t } = useTranslation();
+  const [ageFormat, toggleAgeFormat] = useAge();
 
   const columnsWidth = [2, 4, 2, 4, 3, 3, 4];
   const columns: ColumnsType = [
@@ -24,7 +26,7 @@ export const Epoch = () => {
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercent,
-    blockColunms.age,
+    blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (

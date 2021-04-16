@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
 import styled from 'styled-components';
@@ -11,11 +11,11 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Button } from '@cfxjs/react-ui';
 import { Card } from 'app/components/Card/Loadable';
-import { useLocation, useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import {
-  transactionColunms,
-  tokenColunms,
   blockColunms,
+  tokenColunms,
+  transactionColunms,
 } from 'utils/tableColumns';
 import { StyledIconWrapper } from 'utils/tableColumns/token';
 import { Link } from 'app/components/Link';
@@ -26,7 +26,7 @@ import {
   TabLabel,
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
-import { isContractAddress, formatString, isInnerContractAddress } from 'utils';
+import { formatString, isContractAddress, isInnerContractAddress } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
 import {
@@ -38,6 +38,7 @@ import { ContractAbi } from '../../components/ContractAbi/Loadable';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { useAge } from '../../../utils/hooks/useAge';
 
 const AceEditorStyle = {
   width: '100%',
@@ -322,6 +323,7 @@ export function Table({ address, addressInfo }) {
     () => isContractAddress(address) || isInnerContractAddress(address),
     [address],
   );
+  const [ageFormat, toggleAgeFormat] = useAge();
   const [txFilterVisible, setTxFilterVisible] = useState(
     queries?.tab !== 'mined-blocks' &&
       queries?.tab !== 'transfers' &&
@@ -370,7 +372,7 @@ export function Table({ address, addressInfo }) {
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
-    transactionColunms.age,
+    transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
   const tokenColumnsToken = {
@@ -416,7 +418,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.from,
     tokenColunms.to,
     transactionColunms.value,
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
 
   const columnsTokensWidthErc20 = [3, 6, 5, 3, 6, 4];
@@ -426,7 +428,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.to,
     tokenColunms.quantity,
     tokenColumnsToken,
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc20[i] }));
 
   const columnsTokensWidthErc721 = [3, 6, 5, 4, 6, 4];
@@ -436,7 +438,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.to,
     tokenColunms.tokenId,
     tokenColumnsToken,
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
 
   const columnsTokensWidthErc1155 = [3, 6, 5, 2, 4, 5, 4];
@@ -447,7 +449,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.quantity,
     tokenColunms.tokenId,
     tokenColumnsToken,
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
   const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
@@ -460,7 +462,7 @@ export function Table({ address, addressInfo }) {
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
     blockColunms.reward,
-    blockColunms.age,
+    blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const tabs: any = [

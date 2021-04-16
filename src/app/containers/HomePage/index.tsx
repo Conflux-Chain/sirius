@@ -11,11 +11,14 @@ import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { Notice } from './Notice';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { useAge } from '../../../utils/hooks/useAge';
+
 // import { MarketInfo } from './MarketInfo';
 
 export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
+  const [ageFormat, toggleAgeFormat] = useAge();
 
   const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 2, 5];
   const columnsBlocks: ColumnsType = [
@@ -27,7 +30,7 @@ export function HomePage() {
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
     blockColunms.reward,
-    blockColunms.age,
+    blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
@@ -38,7 +41,7 @@ export function HomePage() {
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
-    transactionColunms.age,
+    transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
   const tabs = [

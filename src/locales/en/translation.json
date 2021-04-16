@@ -356,6 +356,8 @@
     "table": {
       "noData": "There are no matching entries.",
       "whoops": "Whoops!",
+      "dateTime": "Date Time (Local)",
+      "switchAgeTip": "Click to show {{format}} format",
       "block": {
         "epoch": "Epoch",
         "position": "Position",
