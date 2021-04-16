@@ -577,7 +577,11 @@
       "6": "合约部署失败。",
       "7": "未知错误。"
     },
-    "internalTxns": "内部交易",
+    "internalTxns": {
+      "title": "内部交易",
+      "simple": "简单",
+      "advanced": "高级"
+    },
     "internalTxnsTip": {
       "from": "该合约调用从",
       "to": "到",
