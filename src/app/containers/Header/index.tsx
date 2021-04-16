@@ -8,19 +8,19 @@ import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { TextLogo } from '../../components/TextLogo';
+import { TextLogo } from 'app/components/TextLogo';
 import { Search } from './Search';
-import { ConnectWallet } from '../../components/ConnectWallet';
+import { ConnectWallet } from 'app/components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
-import { Nav } from '../../components/Nav';
+import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
-import { useLocation } from 'react-use';
+import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
-import { ScanEvent } from '../../../utils/gaConstants';
-import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { trackEvent } from 'utils/ga';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -31,15 +31,15 @@ export const Header = memo(() => {
 
   const location = useLocation();
   const contractMatched =
-    location?.pathname?.startsWith('/sponsor') ||
-    location?.pathname?.startsWith('/contract');
+    location.pathname.startsWith('/sponsor') ||
+    location.pathname.startsWith('/contract');
   const statisticsMatched =
-    location?.pathname?.startsWith('/charts') ||
-    location?.pathname?.startsWith('/statistics');
-  // const moreMatched =
-  //   location?.pathname?.startsWith('/address-converter') ||
-  //   location?.pathname?.startsWith('/push-tx') ||
-  //   location?.pathname?.startsWith('/block-countdown');
+    location.pathname.startsWith('/charts') ||
+    location.pathname.startsWith('/statistics');
+  const moreMatched =
+    location.pathname.startsWith('/address-converter') ||
+    location.pathname.startsWith('/push-tx') ||
+    location.pathname.startsWith('/block-countdown');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -187,33 +187,36 @@ export const Header = memo(() => {
       ],
     },
     // more
-    // {
-    //   title: t(translations.header.more),
-    //   matched: moreMatched,
-    //   children: [
-    //     {
-    //       title: [
-    //         t(translations.header.addressConverter),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/address-converter',
-    //     },
-    //     {
-    //       title: [
-    //         t(translations.header.broadcastTx),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/push-tx',
-    //     },
-    //     {
-    //       title: [
-    //         t(translations.header.blocknumberCalc),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/block-countdown',
-    //     },
-    //   ],
-    // },
+    {
+      title: t(translations.header.more),
+      matched: moreMatched,
+      children: [
+        {
+          title: [
+            t(translations.header.addressConverter),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.addressConverter,
+          href: '/address-converter',
+        },
+        {
+          title: [
+            t(translations.header.broadcastTx),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.broadcastTx,
+          href: '/push-tx',
+        },
+        {
+          title: [
+            t(translations.header.blocknumberCalc),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.blocknumberCalc,
+          href: '/block-countdown',
+        },
+      ],
+    },
   ];
 
   const endLinks: HeaderLinks = [
