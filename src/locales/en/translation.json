@@ -576,7 +576,11 @@
       "6": "Contract deployment failed.",
       "7": "Unknown error."
     },
-    "internalTxns": "Internal Txns",
+    "internalTxns": {
+      "title": "Internal Txns",
+      "simple": "Simple",
+      "advanced": "Advanced"
+    },
     "internalTxnsTip": {
       "from": "The contract call from",
       "to": "to",
