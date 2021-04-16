@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-
 import { media } from './media';
+import { sansSerifFont } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -12,10 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    //font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-  'Segoe UI Symbol', 'Noto Color Emoji';
+    font-family: ${sansSerifFont};
     letter-spacing: 0;
   }
 

@@ -79,7 +79,7 @@ export const AddressContainer = ({
                 : ''
             }
           >
-            {content}
+            <span>{content}</span>
           </LinkWrapper>
         ) : (
           <PlainWrapper
@@ -220,22 +220,27 @@ const AddressWrapper = styled.div`
 const addressStyle = (props: any) => ` 
   position: relative;
   box-sizing: border-box;
-  display: inline-block !important;
+  display: inline-flex !important;
+  flex-wrap: nowrap;
   max-width: ${props.maxwidth || 190}px !important;
-  ${props.afterContent ? 'padding-right: 80px !important;' : ''}
   outline: none;
+  
+  > span {
+    flex: 0 1 auto;  
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
   ${media.m} {
     max-width: ${props.maxwidth || 170}px !important;
   }
 
   &:after {
-    position: absolute;
     content: '${props.afterContent || ''}';
-    right: 0;
-    width: ${props.afterContent ? '80px' : '0'};
-    z-index: 999;
-    text-align: left;
+    flex: 1 0 auto; 
+    white-space: nowrap;
+    margin-left: -1px;
   }
 `;
 

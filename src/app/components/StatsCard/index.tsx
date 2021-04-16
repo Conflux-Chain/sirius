@@ -13,6 +13,7 @@ import BigNumber from 'bignumber.js';
 import { useAccounts } from '../../../utils/hooks/usePortal';
 import ReactECharts from 'echarts-for-react';
 import { media } from '../../../styles/media';
+import { monospaceFont } from '../../../styles/variable';
 
 export enum StatsType {
   topCFXSend = 'topCFXSend',
@@ -646,10 +647,9 @@ const CardWrapper = styled.div`
       color: #9b9eac;
       line-height: 24px;
       padding: 8px;
-      //font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 
       p.sirius-text {
-        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-family: ${monospaceFont};
       }
     }
     td {
