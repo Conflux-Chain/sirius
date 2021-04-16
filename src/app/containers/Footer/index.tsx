@@ -146,6 +146,45 @@ export function Footer() {
     </FooterContentIconWrapper>
   );
 
+  const developResourceLinks = {
+    developerDocuments: (
+      <Link
+        className="footer-link"
+        href="https://developer.conflux-chain.org/"
+        ga={{
+          category: ScanEvent.menu.category,
+          action: ScanEvent.menu.action.developerDocuments,
+        }}
+      >
+        {t(translations.footer.developResource.developerDocuments)}
+      </Link>
+    ),
+    confluxStudio: (
+      <Link
+        className="footer-link"
+        href="https://github.com/ObsidianLabs/ConfluxStudio/"
+        ga={{
+          category: ScanEvent.menu.category,
+          action: ScanEvent.menu.action.confluxStudio,
+        }}
+      >
+        {t(translations.footer.developResource.confluxStudio)}
+      </Link>
+    ),
+    confluxTruffle: (
+      <Link
+        className="footer-link"
+        href="https://github.com/Conflux-Chain/conflux-truffle/"
+        ga={{
+          category: ScanEvent.menu.category,
+          action: ScanEvent.menu.action.confluxTruffle,
+        }}
+      >
+        {t(translations.footer.developResource.confluxTruffle)}
+      </Link>
+    ),
+  };
+
   const rightTop = [
     <FooterWrapper key="right-top">
       <FooterContentWrapper>
@@ -161,7 +200,27 @@ export function Footer() {
         </FooterContent>
       </FooterContentWrapper>
       <FooterContentWrapper>
-        <FooterContentTitle>{t(translations.footer.tool)}</FooterContentTitle>
+        <FooterContentTitle className="footer-develop-resource">
+          {t(translations.footer.developResource.title)}
+        </FooterContentTitle>
+        <FooterContent>
+          <FooterContentRow>
+            <FooterContentLink key="1-1">
+              {developResourceLinks.developerDocuments}
+            </FooterContentLink>
+            <FooterContentLink key="1-2">
+              {developResourceLinks.confluxStudio}
+            </FooterContentLink>
+            <FooterContentLink key="1-3">
+              {developResourceLinks.confluxTruffle}
+            </FooterContentLink>
+          </FooterContentRow>
+        </FooterContent>
+      </FooterContentWrapper>
+      <FooterContentWrapper>
+        <FooterContentTitle className="footer-tool">
+          {t(translations.footer.tool)}
+        </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink key="2-1">
@@ -174,8 +233,8 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
-      <FooterContentWrapper className="contact-us">
-        <FooterContentTitle>
+      <FooterContentWrapper>
+        <FooterContentTitle className="contact-us">
           {t(translations.footer.contactUs)}
         </FooterContentTitle>
         <FooterContent>
@@ -184,8 +243,8 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
-      <FooterContentWrapper className="preference">
-        <FooterContentTitle>
+      <FooterContentWrapper>
+        <FooterContentTitle className="preference">
           {t(translations.footer.preference)}
         </FooterContentTitle>
         <FooterContent>
@@ -215,7 +274,6 @@ const FooterWrapper = styled.div`
 
   ${media.m} {
     flex-flow: wrap;
-    /* flex-direction: column; */
   }
 `;
 const FooterContentWrapper = styled.div`
@@ -234,8 +292,22 @@ const FooterContentTitle = styled.span`
   margin-bottom: 1.07rem;
   font-weight: 600;
   color: #000558;
-  margin-right: 8.5714rem;
+  margin-right: 6rem;
+  /* margin-right: 8.5714rem;
   width: 5.7143rem;
+
+  &.footer-develop-resource {
+    margin-right: 6rem;
+    width: auto;
+  } */
+  /* 
+  &.footer-tool {
+    margin-right: 12rem;
+  }
+
+  &.contact-us {
+    margin-right: 6rem;
+  } */
 
   ${media.m} {
     margin-bottom: 0.86rem;
