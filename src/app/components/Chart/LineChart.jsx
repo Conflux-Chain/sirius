@@ -74,11 +74,14 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
             if (acc.max == null) acc.max = cur;
             else {
               acc.max = {
-                blockTime: 'auto',
+                blockTime: Math.max(+acc.max.blockTime || 0, +cur.blockTime),
                 tps: Math.max(+acc.max.tps || 0, +cur.tps),
                 difficulty: Math.max(+acc.max.difficulty || 0, +cur.difficulty),
                 hashRate: Math.max(+acc.max.hashRate || 0, +cur.hashRate),
-                dailyTransaction: 'auto',
+                dailyTransaction: Math.max(
+                  +acc.max.dailyTransaction || 0,
+                  +cur['txCount'],
+                ),
                 dailyTransactionCFX: Math.max(
                   +acc.max.dailyTransactionCFX || 0,
                   +cur['txnCount'],
@@ -87,18 +90,17 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                   +acc.max.dailyTransactionTokens || 0,
                   +cur['txnCount'],
                 ),
-                // dailyTransaction: Math.min(
-                //   +acc.max.dailyTransaction,
-                //   +cur.txCount,
-                // ),
               };
             }
             if (index === plot.length - 1) {
               acc.min.difficulty = acc.min.difficulty * 0.7;
               acc.min.hashRate = acc.min.hashRate * 0.7;
-              acc.max.tps = acc.max.tps < 10 ? 'auto' : acc.max.tps * 1.1;
+
+              acc.max.blockTime = acc.max.blockTime * 1.1;
+              acc.max.tps = acc.max.tps * 1.1;
               acc.max.difficulty = acc.max.difficulty * 1.1;
               acc.max.hashRate = acc.max.hashRate * 1.1;
+              acc.max.dailyTransaction = acc.max.dailyTransaction * 1.1;
               acc.max.dailyTransactionCFX = acc.max.dailyTransactionCFX * 1.1;
               acc.max.dailyTransactionTokens =
                 acc.max.dailyTransactionTokens * 1.1;

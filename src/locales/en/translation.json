@@ -230,7 +230,7 @@
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
-    "addressTip": "If you are searching Conflux address, please conform to conflux address format.",
+    "addressTip": "If you're searching for Conflux addresses, please search for a valid address format (hex address or a checksummed-base32 address).",
     "btn": "Go TO HOMEPAGE"
   },
   "notFoundAddress": {
