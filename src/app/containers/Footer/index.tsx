@@ -7,16 +7,27 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Link } from '../../components/Link/Loadable';
+import { Link } from 'app/components/Link/Loadable';
 import { media } from 'styles/media';
-import { Footer as FooterComp } from '../../components/Footer/Loadable';
-import { TextLogo } from '../../components/TextLogo/Loadable';
+import { Footer as FooterComp } from 'app/components/Footer/Loadable';
+import { TextLogo } from 'app/components/TextLogo/Loadable';
 import { translations } from 'locales/i18n';
-import imgIconTwitter from 'images/icon-twitter.svg';
-import imgIconGithub from 'images/icon-github.svg';
-import imgIconMedium from 'images/icon-medium.svg';
 import { Language } from './Language';
-import { ScanEvent } from '../../../utils/gaConstants';
+import { ScanEvent } from 'utils/gaConstants';
+
+import iconTwitter from 'images/footer/twitter.svg';
+import iconTelegram from 'images/footer/telegram.svg';
+import iconDiscord from 'images/footer/discord.svg';
+import iconMedium from 'images/footer/medium.svg';
+import iconGit from 'images/footer/git.svg';
+import iconWeibo from 'images/footer/weibo.svg';
+import iconKakao from 'images/footer/kakao-talk.svg';
+import iconYoutube from 'images/footer/youtube.svg';
+import iconNaver from 'images/footer/naver.svg';
+import iconConflux from 'images/footer/conflux.svg';
+import iconReddit from 'images/footer/reddit.svg';
+import iconWechat from 'images/footer/wechat.svg';
+import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -110,7 +121,7 @@ export function Footer() {
 
   const icons = (
     <FooterContentIconWrapper>
-      <FooterContentIconLink key="1">
+      <FooterContentIconLink>
         <Link
           href="https://twitter.com/Conflux_Network"
           ga={{
@@ -118,10 +129,43 @@ export function Footer() {
             action: ScanEvent.menu.action.twitter,
           }}
         >
-          <img alt="twitter icon" src={imgIconTwitter} />
+          <img alt="twitter icon" src={iconTwitter} />
         </Link>
       </FooterContentIconLink>
-      <FooterContentIconLink key="2">
+      <FooterContentIconLink>
+        <Link
+          href="https://t.me/Conflux_English"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.tme,
+          }}
+        >
+          <img alt="t.me icon" src={iconTelegram} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://discord.com/invite/aCZkf2C"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.discord,
+          }}
+        >
+          <img alt="discord icon" src={iconDiscord} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://medium.com/@ConfluxNetwork"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.medium,
+          }}
+        >
+          <img alt="medium icon" src={iconMedium} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
         <Link
           href="https://github.com/conflux-chain"
           ga={{
@@ -129,18 +173,96 @@ export function Footer() {
             action: ScanEvent.menu.action.github,
           }}
         >
-          <img alt="github icon" src={imgIconGithub} />
+          <img alt="github icon" src={iconGit} />
         </Link>
       </FooterContentIconLink>
-      <FooterContentIconLink key="3">
+      <FooterContentIconLink>
         <Link
-          href="https://medium.com/conflux-network"
+          href="https://weibo.com/confluxchain"
           ga={{
             category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.medium,
+            action: ScanEvent.menu.action.weibo,
           }}
         >
-          <img alt="medium icon" src={imgIconMedium} />
+          <img alt="weibo icon" src={iconWeibo} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://open.kakao.com/o/gmyEjl2b"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.kakao,
+          }}
+        >
+          <img alt="kakao icon" src={iconKakao} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        {/* <Link
+          href="https://open.kakao.com/o/gmyEjl2b"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.kakao,
+          }}
+        >
+          <img alt="kakao icon" src={iconWechat} />
+        </Link> */}
+        {/* <Tooltip text={<img alt="kakao icon" src={iconWechat} />}>
+          
+        </Tooltip> */}
+        <StyledIconWechatWrapper>
+          <img
+            alt="wechat qrcode icon"
+            src={iconWechatQrcode}
+            className="footer-qrcode"
+          />
+          <img alt="wechat icon" src={iconWechat} />
+        </StyledIconWechatWrapper>
+      </FooterContentIconLink>
+      {/* @todo wechat */}
+      <FooterContentIconLink>
+        <Link
+          href="https://www.youtube.com/channel/UCFSTmjoSU8jn6DE_4V2TIzA"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.youtube,
+          }}
+        >
+          <img alt="youtube icon" src={iconYoutube} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://blog.naver.com/conflux-chain"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.naver,
+          }}
+        >
+          <img alt="naver icon" src={iconNaver} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://forum.conflux.fun/"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.forum,
+          }}
+        >
+          <img alt="forum icon" src={iconConflux} />
+        </Link>
+      </FooterContentIconLink>
+      <FooterContentIconLink>
+        <Link
+          href="https://www.reddit.com/r/Conflux_Network/"
+          ga={{
+            category: ScanEvent.menu.category,
+            action: ScanEvent.menu.action.reddit,
+          }}
+        >
+          <img alt="reddit icon" src={iconReddit} />
         </Link>
       </FooterContentIconLink>
     </FooterContentIconWrapper>
@@ -350,7 +472,7 @@ const FooterContentIconWrapper = styled.div`
 const FooterContentIconLink = styled.span`
   margin-right: 0.57rem;
   img {
-    width: 1rem;
+    width: 1.2rem;
   }
 
   ${media.m} {
@@ -363,5 +485,27 @@ const CopyRight = styled.span`
 
   ${media.s} {
     font-size: 0.71rem;
+  }
+`;
+
+const StyledIconWechatWrapper = styled.div`
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+
+  &:hover {
+    img.footer-qrcode {
+      display: inherit;
+    }
+  }
+
+  img.footer-qrcode {
+    position: absolute;
+    width: 8.1429rem;
+    height: 8.1429rem;
+    max-width: 8.1429rem;
+    top: -8.2143rem;
+    left: -3.2143rem;
+    display: none;
   }
 `;
