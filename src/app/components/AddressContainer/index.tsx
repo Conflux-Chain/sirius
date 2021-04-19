@@ -89,7 +89,7 @@ export const AddressContainer = ({
                 : ''
             }
           >
-            {content}
+            <span>{content}</span>
           </PlainWrapper>
         )}
       </Text>
