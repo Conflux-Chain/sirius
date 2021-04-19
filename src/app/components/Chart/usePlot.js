@@ -65,11 +65,17 @@ export default function usePlot(
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
-    // without durations
     case 'cfxHoldingAccounts':
       swrKey = `/cfx_holder/daily/list`;
       fetcher = () =>
         fetch(appendApiPrefix(`/stat/cfx_holder/daily/list?limit=${31}`));
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      break;
+    case 'accountGrowth':
+      swrKey = `/daily-address-creation`;
+      fetcher = () =>
+        fetch(appendApiPrefix(`/stat/daily-address-creation?limit=${31}`));
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
@@ -83,12 +89,6 @@ export default function usePlot(
     switch (indicator) {
       case 'dailyTransaction':
         listData = data?.data?.rows || [];
-        break;
-      case 'dailyTransactionCFX':
-        listData = data?.list || [];
-        break;
-      case 'dailyTransactionTokens':
-        listData = data?.list || [];
         break;
       case 'cfxHoldingAccounts':
         listData = data?.data?.rows || [];

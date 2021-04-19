@@ -316,7 +316,19 @@
     },
     "cfxHoldingAccounts": {
       "title": "CFX 持有账户数",
-      "description": "Conflux 网络上持有 CFX 的账户的总数 "
+      "description": "Conflux 网络上持有 CFX 的账户的总数"
+    },
+    "activeAccounts": {
+      "title": "活跃账户数",
+      "description": "Conflux 网络上每日活跃的账户数量"
+    },
+    "accountGrowth": {
+      "title": "用户增长",
+      "description": "Conflux 网络上每日新增的账户数量"
+    },
+    "contractGrowth": {
+      "title": "合约增长",
+      "description": "Conflux 网络上每日新增的合约数量"
     }
   },
   "general": {

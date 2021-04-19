@@ -317,6 +317,18 @@
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
       "description": "The total number of CFX accounts held on the Conflux network."
+    },
+    "activeAccounts": {
+      "title": "Active Accounts",
+      "description": "The number of active accounts per day on the Conflux network."
+    },
+    "accountGrowth": {
+      "title": "Account Growth",
+      "description": "The number of new accounts added per day on the Conflux network."
+    },
+    "contractGrowth": {
+      "title": "Contract Growth",
+      "description": "The number of new contracts added per day on the Conflux network."
     }
   },
   "general": {
