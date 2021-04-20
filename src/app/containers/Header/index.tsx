@@ -429,17 +429,26 @@ const Wrapper = styled.header`
 
 const SearchWrapper = styled.div`
   flex-grow: 1;
-  > div {
+  .header-search-container {
     max-width: unset;
   }
   ${media.m} {
-    .outerContainer {
-      left: 15rem;
+    .header-search-container {
+      position: fixed;
+      flex-grow: 0;
+      top: 11px;
+      right: 4rem;
+      left: 12rem;
+      z-index: 2000;
     }
   }
   ${media.s} {
-    .outerContainer {
-      left: 1.33rem;
+    .header-search-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 5.67rem;
+      z-index: 100;
     }
   }
 `;

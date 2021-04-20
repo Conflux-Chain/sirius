@@ -195,7 +195,7 @@
     "testnet": "Testnet",
     "oceanus": "Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
-    "searchPlaceHolderMobile": "Epoch / Block hash / Txn Hash / Address",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator"
