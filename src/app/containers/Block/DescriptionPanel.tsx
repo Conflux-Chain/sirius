@@ -14,7 +14,12 @@ import { useHistory } from 'react-router-dom';
 import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { formatAddress } from 'utils/cfx';
-export function DescriptionPanel({ hash: blockHash }) {
+import { useParams } from 'react-router-dom';
+
+export function DescriptionPanel() {
+  const { hash: blockHash } = useParams<{
+    hash: string;
+  }>();
   const history = useHistory();
   const { t } = useTranslation();
   let loading = false;
