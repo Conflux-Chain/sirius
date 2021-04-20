@@ -173,5 +173,5 @@ const StyledCountWrapper = styled.span`
 `;
 
 const StyledPageWrapper = styled.div`
-  margin-bottom: 1.7143rem;
+  margin-bottom: 2.2857rem;
 `;
