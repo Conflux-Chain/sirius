@@ -3,21 +3,22 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from 'styles/media';
 import { translations } from '../../../locales/i18n';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType, useTableData } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
-import { useTableData } from '../../components/TabsTablePanel';
 import { blockColunms } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';
 import { toThousands } from '../../../utils';
 import styled from 'styled-components/macro';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { useAge } from '../../../utils/hooks/useAge';
 
 export function Blocks() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const url = '/block';
+  const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -25,9 +26,9 @@ export function Blocks() {
     blockColunms.hash,
     blockColunms.miner,
     blockColunms.avgGasPrice,
-    blockColunms.gasUsedPercent,
+    blockColunms.gasUsedPercentWithProgress,
     blockColunms.reward,
-    blockColunms.age,
+    blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
   const { total } = useTableData(url);

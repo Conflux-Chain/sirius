@@ -44,12 +44,13 @@ export function Charts() {
           <Chart width={chartWidth} indicator="dailyTransactionCFX" />
           <Chart width={chartWidth} indicator="dailyTransactionTokens" />
         </ChartsWrap>
-        {/*<HeaderWrap>*/}
-        {/*  <div className="title">{t(translations.charts.subtitle4)}</div>*/}
-        {/*</HeaderWrap>*/}
-        {/*<ChartsWrap>*/}
-        {/*  <Chart width={chartWidth} indicator="cfxHoldingAccounts" />*/}
-        {/*</ChartsWrap>*/}
+        <HeaderWrap>
+          <div className="title">{t(translations.charts.subtitle4)}</div>
+        </HeaderWrap>
+        <ChartsWrap>
+          <Chart width={chartWidth} indicator="cfxHoldingAccounts" />
+          <Chart width={chartWidth} indicator="accountGrowth" />
+        </ChartsWrap>
       </PageWrap>
     </>
   );

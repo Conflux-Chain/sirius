@@ -6,7 +6,6 @@ import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from '../../styles/media';
-import { CountDown } from '../../app/components/CountDown/Loadable';
 import { defaultTokenIcon } from '../../constants';
 import { formatBalance, formatNumber, formatString } from '../../utils';
 import imgArrow from 'images/token/arrow.svg';
@@ -15,7 +14,7 @@ import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
-import { ContentWrapper } from './utils';
+import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { cfxTokenTypes } from '../constants';
 
@@ -250,15 +249,8 @@ export const txnHash = {
   ),
 };
 
-export const age = {
-  width: 1,
-  title: (
-    <Translation>{t => t(translations.general.table.token.age)}</Translation>
-  ),
-  dataIndex: 'syncTimestamp',
-  key: 'age',
-  render: value => <CountDown from={value} />,
-};
+export const age = (ageFormat, toggleAgeFormat) =>
+  ColumnAge({ ageFormat, toggleAgeFormat });
 
 export const quantity = {
   width: 1,

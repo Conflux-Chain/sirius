@@ -298,14 +298,21 @@ const Main = styled.div`
   position: relative;
   max-width: 1368px;
   margin: 0 auto;
-  padding-top: 70px;
+  padding-top: 106px;
   min-height: calc(100vh - 327px);
+
+  ${media.xl} {
+    padding-top: 106px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  ${media.m} {
+    padding-top: 70px;
+  }
+
   ${media.s} {
     padding: 100px 16px 16px;
     min-height: calc(100vh - 254px);
-  }
-  ${media.xl} {
-    padding-left: 10px;
-    padding-right: 10px;
   }
 `;

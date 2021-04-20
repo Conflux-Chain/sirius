@@ -230,7 +230,7 @@
   "notFound": {
     "title": "There’s nothing here!",
     "label": "Sorry! This is an invalid search string.",
-    "addressTip": "If you are searching Conflux address, please conform to conflux address format.",
+    "addressTip": "If you're searching for Conflux addresses, please search for a valid address format (hex address or a checksummed-base32 address).",
     "btn": "Go TO HOMEPAGE"
   },
   "notFoundAddress": {
@@ -317,6 +317,18 @@
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
       "description": "The total number of CFX accounts held on the Conflux network."
+    },
+    "activeAccounts": {
+      "title": "Active Accounts",
+      "description": "The number of active accounts per day on the Conflux network."
+    },
+    "accountGrowth": {
+      "title": "Account Growth",
+      "description": "The number of new accounts added per day on the Conflux network."
+    },
+    "contractGrowth": {
+      "title": "Contract Growth",
+      "description": "The number of new contracts added per day on the Conflux network."
     }
   },
   "general": {
@@ -356,6 +368,8 @@
     "table": {
       "noData": "There are no matching entries.",
       "whoops": "Whoops!",
+      "dateTime": "Date Time (Local)",
+      "switchAgeTip": "Click to show {{format}} format",
       "block": {
         "epoch": "Epoch",
         "position": "Position",
@@ -536,6 +550,7 @@
     "tx": "tx"
   },
   "transaction": {
+    "overview": "Overview",
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
     "viewFailedTxns": "View Failed Txns",
@@ -671,6 +686,10 @@
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37.",
+    "tip4": "4. To prevent loss of assets, please review ",
+    "tip4Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
+    "tip4Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
+    "tip4end": " carefully.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
       "0x8": "The contract does not exist, please be careful"

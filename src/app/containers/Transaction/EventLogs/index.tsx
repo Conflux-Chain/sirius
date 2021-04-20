@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
-import { Card } from '../../../components/Card/Loadable';
-import { Empty } from '../../../components/Empty/Loadable';
+import { Card } from 'app/components/Card/Loadable';
+import { Empty } from 'app/components/Empty/Loadable';
 import { cfx } from 'utils/cfx';
-import { Description } from '../../../components/Description/Loadable';
+import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 import _ from 'lodash';
-import SkeletonContainer from '../../../components/SkeletonContainer';
+import SkeletonContainer from 'app/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
@@ -16,14 +16,13 @@ import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
-import { media } from '../../../../styles/media';
+import { media } from 'styles/media';
 
 interface Props {
   hash: string;
   address?: string;
   abi?: Array<any>;
   bytecode?: string;
-  onChange?: (total: number) => void;
 }
 
 /**
@@ -276,29 +275,32 @@ const EventLog = ({ log }) => {
   );
 };
 
-export const EventLogs = ({ hash, onChange }: Props) => {
-  const [eventlogs, setEventlogs] = useState([
-    {
-      topics: [],
-      data: '',
-      address: '',
-    },
-  ]);
-  const ref = useRef(onChange);
+export const EventLogs = ({ hash }: Props) => {
+  // [{
+  //   topics: [],
+  //   data: '',
+  //   address: '',
+  // }]
+  const [eventlogs, setEventlogs] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     reqTransactionEventlogs({
       transactionHash: hash,
-    }).then(body => {
-      setEventlogs(body.list);
-      ref.current && ref.current(body.total);
-    });
+    })
+      .then(body => {
+        setEventlogs(body.list);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [hash]);
 
   return (
     <StyledEventLogsWrapper>
       <Card>
-        <Empty show={!eventlogs.length} />
+        {loading ? null : <Empty show={!eventlogs.length} />}
         {eventlogs.map((log, index) => (
           <EventLog log={log} key={`${log.address}-${index}`} />
         ))}

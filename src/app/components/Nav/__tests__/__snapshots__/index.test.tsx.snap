@@ -17,7 +17,6 @@ exports[`<Nav  /> should match snapshot 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  min-height: 5rem;
 }
 
 .c2 {
@@ -68,10 +67,10 @@ exports[`<Nav  /> should match snapshot 1`] = `
   -ms-flex-pack: start;
   justify-content: flex-start;
   margin-right: auto;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -88,10 +87,10 @@ exports[`<Nav  /> should match snapshot 1`] = `
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-left: auto;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -99,6 +98,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
 }
 
 .c1 {
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -111,10 +111,15 @@ exports[`<Nav  /> should match snapshot 1`] = `
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
   position: relative;
-  padding: 0 2.86rem;
+  width: 100%;
   max-width: 1368px;
+}
+
+.c1.secondary {
+  margin-top: 1.125rem;
+  margin-bottom: 1.125rem;
 }
 
 .c0 {
@@ -131,15 +136,12 @@ exports[`<Nav  /> should match snapshot 1`] = `
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100vw;
   z-index: 1000;
   min-height: 5rem;
-}
-
-@media (max-width:1024px) {
-  .c3 {
-    min-height: 2.14rem;
-  }
 }
 
 @media (max-width:1440px) {
@@ -233,6 +235,10 @@ exports[`<Nav  /> should match snapshot 1`] = `
     -ms-flex-direction: column;
     flex-direction: column;
     margin-bottom: 4.43rem;
+    -webkit-align-items: baseline;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
   }
 }
 
@@ -254,7 +260,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
 
 @media (max-width:1360px) {
   .c1 {
-    padding: 0 1.8rem;
+    padding: 0 1rem;
   }
 }
 
@@ -262,6 +268,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
   .c1 {
     display: block;
     padding: 0 1.71rem;
+    margin-top: 0;
   }
 }
 
@@ -352,7 +359,6 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  min-height: 5rem;
 }
 
 .c2 {
@@ -403,10 +409,10 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   -ms-flex-pack: start;
   justify-content: flex-start;
   margin-right: auto;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -423,10 +429,10 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-left: auto;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -434,6 +440,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
 }
 
 .c1 {
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -446,10 +453,15 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
   position: relative;
-  padding: 0 2.86rem;
+  width: 100%;
   max-width: 1368px;
+}
+
+.c1.secondary {
+  margin-top: 1.125rem;
+  margin-bottom: 1.125rem;
 }
 
 .c0 {
@@ -466,15 +478,12 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100vw;
   z-index: 1000;
   min-height: 5rem;
-}
-
-@media (max-width:1024px) {
-  .c3 {
-    min-height: 2.14rem;
-  }
 }
 
 @media (max-width:1440px) {
@@ -572,6 +581,10 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
     -ms-flex-direction: column;
     flex-direction: column;
     margin-bottom: 4.43rem;
+    -webkit-align-items: baseline;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
   }
 }
 
@@ -593,7 +606,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
 
 @media (max-width:1360px) {
   .c1 {
-    padding: 0 1.8rem;
+    padding: 0 1rem;
   }
 }
 
@@ -601,6 +614,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   .c1 {
     display: block;
     padding: 0 1.71rem;
+    margin-top: 0;
   }
 }
 

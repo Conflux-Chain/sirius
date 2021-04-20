@@ -316,7 +316,19 @@
     },
     "cfxHoldingAccounts": {
       "title": "CFX 持有账户数",
-      "description": "Conflux 网络上持有 CFX 的账户的总数 "
+      "description": "Conflux 网络上持有 CFX 的账户的总数"
+    },
+    "activeAccounts": {
+      "title": "活跃账户数",
+      "description": "Conflux 网络上每日活跃的账户数量"
+    },
+    "accountGrowth": {
+      "title": "用户增长",
+      "description": "Conflux 网络上每日新增的账户数量"
+    },
+    "contractGrowth": {
+      "title": "合约增长",
+      "description": "Conflux 网络上每日新增的合约数量"
     }
   },
   "general": {
@@ -356,6 +368,8 @@
     "table": {
       "noData": "暂无相关记录",
       "whoops": "哎呀！",
+      "dateTime": "日期时间（本地）",
+      "switchAgeTip": "点击切换为{{format}}格式显示",
       "block": {
         "epoch": "纪元",
         "position": "位置",
@@ -537,6 +551,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "overview": "概览",
     "viewOutgoingTxns": "查看发送交易",
     "viewIncomingTxns": "查看接收交易",
     "viewFailedTxns": "查看失败交易",
@@ -672,6 +687,10 @@
     "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37。",
+    "tip4": "4. 为防止资产丢失，请仔细查看",
+    "tip4Link": "https://forum.conflux.fun/t/topic/6720",
+    "tip4Middle": "有关地址格式的资产转账说明",
+    "tip4end": "。",
     "errorMessage": {
       "0x0": "该地址为非内置合约或非零地址",
       "0x8": "该合约不存在，请谨慎操作"

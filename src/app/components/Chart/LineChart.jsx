@@ -38,6 +38,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     'dailyTransactionCFX',
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
+    'accountGrowth',
   ].includes(indicator);
 
   const chartWidth =
@@ -54,81 +55,73 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     popupFormat,
   } = usePlot('day', NUM_X_GRID, indicator);
 
+  const initialDomain = {
+    min: {
+      blockTime: 0,
+      tps: 0,
+      difficulty: 0,
+      hashRate: 0,
+      dailyTransaction: 0,
+      dailyTransactionCFX: 0,
+      dailyTransactionTokens: 0,
+      cfxHoldingAccounts: 0,
+      accountGrowth: 0,
+    },
+    max: {
+      blockTime: 'auto',
+      tps: 'auto',
+      difficulty: 'auto',
+      hashRate: 'auto',
+      dailyTransaction: 'auto',
+      dailyTransactionCFX: 'auto',
+      dailyTransactionTokens: 'auto',
+      cfxHoldingAccounts: 'auto',
+      accountGrowth: 'auto',
+    },
+  };
+
   // y axis data range
   const domain =
     plot && plot.length > 0
-      ? plot.reduce(
-          (acc, cur, index) => {
-            if (acc.min == null) acc.min = cur;
-            else {
-              acc.min = {
-                blockTime: 0,
-                tps: 0,
-                difficulty: Math.min(+acc.min.difficulty, +cur.difficulty),
-                hashRate: Math.min(+acc.min.hashRate, +cur.hashRate),
-                dailyTransaction: 0,
-                dailyTransactionCFX: 0,
-                dailyTransactionTokens: 0,
-              };
-            }
-            if (acc.max == null) acc.max = cur;
-            else {
-              acc.max = {
-                blockTime: 'auto',
-                tps: Math.max(+acc.max.tps || 0, +cur.tps),
-                difficulty: Math.max(+acc.max.difficulty || 0, +cur.difficulty),
-                hashRate: Math.max(+acc.max.hashRate || 0, +cur.hashRate),
-                dailyTransaction: 'auto',
-                dailyTransactionCFX: Math.max(
-                  +acc.max.dailyTransactionCFX || 0,
-                  +cur['txnCount'],
-                ),
-                dailyTransactionTokens: Math.max(
-                  +acc.max.dailyTransactionTokens || 0,
-                  +cur['txnCount'],
-                ),
-                // dailyTransaction: Math.min(
-                //   +acc.max.dailyTransaction,
-                //   +cur.txCount,
-                // ),
-              };
-            }
-            if (index === plot.length - 1) {
-              acc.min.difficulty = acc.min.difficulty * 0.7;
-              acc.min.hashRate = acc.min.hashRate * 0.7;
-              acc.max.tps = acc.max.tps < 10 ? 'auto' : acc.max.tps * 1.1;
-              acc.max.difficulty = acc.max.difficulty * 1.1;
-              acc.max.hashRate = acc.max.hashRate * 1.1;
-              acc.max.dailyTransactionCFX = acc.max.dailyTransactionCFX * 1.1;
-              acc.max.dailyTransactionTokens =
-                acc.max.dailyTransactionTokens * 1.1;
-            }
-            return acc;
-          },
-          { min: null, max: null },
-        )
-      : {
-          min: {
-            blockTime: 0,
-            tps: 0,
-            difficulty: 0,
-            hashRate: 0,
-            dailyTransaction: 0,
-            dailyTransactionCFX: 0,
-            dailyTransactionTokens: 0,
-            cfxHoldingAccounts: 0,
-          },
-          max: {
-            blockTime: 'auto',
-            tps: 'auto',
-            difficulty: 'auto',
-            hashRate: 'auto',
-            dailyTransaction: 'auto',
-            dailyTransactionCFX: 'auto',
-            dailyTransactionTokens: 'auto',
-            cfxHoldingAccounts: 'auto',
-          },
-        };
+      ? plot.reduce((acc, cur) => {
+          let dataKey = indicator;
+          switch (indicator) {
+            case 'blockTime':
+              break;
+            case 'tps':
+              break;
+            case 'difficulty':
+            case 'hashRate':
+              acc.min[indicator] = Math.min(
+                +acc.min[indicator] || Infinity,
+                +cur[indicator] * 0.7,
+              );
+              break;
+            case 'dailyTransaction':
+              dataKey = 'txCount';
+              break;
+            case 'dailyTransactionCFX':
+            case 'dailyTransactionTokens':
+              dataKey = 'txnCount';
+              break;
+            case 'cfxHoldingAccounts':
+              dataKey = 'holderCount';
+              break;
+            case 'accountGrowth':
+              dataKey = 'cnt';
+              break;
+            default:
+              break;
+          }
+
+          acc.max[indicator] = Math.max(
+            +acc.max[indicator] || 0,
+            +cur[dataKey] * 1.1,
+          );
+
+          return acc;
+        }, initialDomain)
+      : initialDomain;
 
   const strokeColor = () => {
     switch (indicator) {
@@ -152,6 +145,13 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return plot &&
           plot.length > 0 &&
           plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+      case 'accountGrowth':
+        // because of reverse
+        return plot &&
+          plot.length > 0 &&
+          plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       default:
@@ -223,6 +223,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return 'statDay';
       case 'dailyTransactionCFX':
       case 'dailyTransactionTokens':
+      case 'accountGrowth':
         return 'day';
       default:
         return 'timestamp';
@@ -238,6 +239,8 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return 'txnCount';
       case 'cfxHoldingAccounts':
         return 'holderCount';
+      case 'accountGrowth':
+        return 'cnt';
       default:
         return indicator;
     }
@@ -287,6 +290,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
                 'dailyTransactionCFX',
                 'dailyTransactionTokens',
                 'cfxHoldingAccounts',
+                'accountGrowth',
               ].includes(indicator)
                 ? 60
                 : 50

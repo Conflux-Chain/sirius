@@ -7,12 +7,13 @@ import clsx from 'clsx';
 import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import { useToggle } from 'react-use';
 import styled from 'styled-components/macro';
-import { media } from 'styles/media';
+import { media, useBreakpoint } from 'styles/media';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
-  menuStart: ReactNode;
-  menuEnd: ReactNode;
+  mainMenu: ReactNode;
+  topMenu: ReactNode;
+  subMenu?: ReactNode;
 }
 
 const toWrappedArray = (p: ReactNode) =>
@@ -28,53 +29,65 @@ const toWrappedArray = (p: ReactNode) =>
         </Item>,
       ];
 
-export const Nav = memo(({ brand, menuStart, menuEnd, ...props }: Props) => {
-  const [visible, toggleMenu] = useToggle(false);
-  brand = toWrappedArray(brand);
-  menuStart = toWrappedArray(menuStart);
-  menuEnd = toWrappedArray(menuEnd);
+export const Nav = memo(
+  ({ brand, mainMenu, topMenu, subMenu = null, ...props }: Props) => {
+    const [visible, toggleMenu] = useToggle(false);
+    const bp = useBreakpoint();
+    brand = toWrappedArray(brand);
+    mainMenu = toWrappedArray(mainMenu);
+    topMenu = toWrappedArray(topMenu);
+    subMenu = subMenu ? toWrappedArray(subMenu) : null;
 
-  return (
-    <Outer {...props}>
-      <Container>
-        <Brand className="navbar-brand">
-          {brand}
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a
-            role="button"
-            className={clsx(['navbar-burger', visible ? 'is-active' : ''])}
-            aria-label="menu"
-            aria-expanded={'true'}
-            data-target="navbar"
-            onClick={toggleMenu}
+    return (
+      <Outer {...props}>
+        <Container>
+          <Brand className="navbar-brand">
+            {brand}
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a
+              role="button"
+              className={clsx(['navbar-burger', visible ? 'is-active' : ''])}
+              aria-label="menu"
+              aria-expanded={'true'}
+              data-target="navbar"
+              onClick={toggleMenu}
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </Brand>
+          <Menu
+            visible={visible}
+            className={clsx({ 'navbar-menu': true, 'is-active': visible })}
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </Brand>
-        <Menu
-          visible={visible}
-          className={clsx({ 'navbar-menu': true, 'is-active': visible })}
-        >
-          <MenuStart className="navbar-start">{menuStart}</MenuStart>
-          <MenuEnd className="navbar-end">{menuEnd}</MenuEnd>
-        </Menu>
-      </Container>
-    </Outer>
-  );
-});
+            {bp === 's' || bp === 'm' ? (
+              <MenuStart className="navbar-start">{mainMenu}</MenuStart>
+            ) : null}
+            <MenuEnd className="navbar-end">{topMenu}</MenuEnd>
+          </Menu>
+        </Container>
+        {bp !== 's' && bp !== 'm' ? (
+          <Container className="secondary">
+            <Menu
+              visible={visible}
+              className={clsx({ 'navbar-menu': true, 'is-active': visible })}
+            >
+              <MenuStart className="navbar-start">{mainMenu}</MenuStart>
+              <MenuEnd className="navbar-end">{subMenu}</MenuEnd>
+            </Menu>
+          </Container>
+        ) : null}
+      </Outer>
+    );
+  },
+);
 
 const Item = styled.div`
   align-items: center;
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  min-height: 5rem;
-
-  ${media.m} {
-    min-height: 2.14rem;
-  }
 `;
 const Brand = styled.div`
   display: flex;
@@ -162,19 +175,20 @@ const MenuStart = styled.div`
   flex-grow: 0;
   justify-content: flex-start;
   margin-right: auto;
-  align-items: stretch;
+  align-items: center;
   display: flex;
 
   ${media.m} {
     flex-direction: column;
     margin-bottom: 4.43rem;
+    align-items: baseline;
   }
 `;
 const MenuEnd = styled.div`
   flex-grow: 1;
   justify-content: flex-end;
   margin-left: auto;
-  align-items: flex-end;
+  align-items: center;
   display: flex;
 
   ${media.m} {
@@ -184,22 +198,29 @@ const MenuEnd = styled.div`
   }
 `;
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
   align-items: stretch;
   flex-grow: 1;
-  margin: 0 auto;
+  margin: 1.5rem auto 0;
   position: relative;
-  padding: 0 2.86rem;
+  width: 100%;
   max-width: 1368px;
 
+  &.secondary {
+    margin-top: 1.125rem;
+    margin-bottom: 1.125rem;
+  }
+
   @media (max-width: 1360px) {
-    padding: 0 1.8rem;
+    padding: 0 1rem;
   }
 
   // mobile
   ${media.m} {
     display: block;
     padding: 0 1.71rem;
+    margin-top: 0;
   }
 `;
 const Outer = styled.nav`
@@ -210,6 +231,7 @@ const Outer = styled.nav`
   right: 0;
   display: flex;
   align-items: stretch;
+  flex-direction: column;
   width: 100vw;
   z-index: 1000;
   min-height: 5rem;

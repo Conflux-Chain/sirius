@@ -110,12 +110,29 @@ export function Sponsor() {
   };
 
   const searchClick = async () => {
-    // cip-37
-    if (isAddress(inputAddressVal)) {
-      getSponsorInfo(inputAddressVal);
+    if (inputAddressVal) {
+      if (errorMsgForApply) {
+        setErrorMsgForApply('');
+      }
+      // cip-37
+      if (isAddress(inputAddressVal)) {
+        getSponsorInfo(inputAddressVal);
+      } else {
+        resetParams();
+        setErrorMsgForApply(t(translations.contract.error.address));
+      }
     } else {
       resetParams();
+      setCanApply(true);
+      setErrorMsgForApply('');
     }
+  };
+
+  const searchClear = () => {
+    resetParams();
+    setCanApply(true);
+    setErrorMsgForApply('');
+    setInputAddressVal('');
   };
   const fetchIsAppliable = async (_address: string) => {
     // cip-37 compatible
@@ -204,6 +221,7 @@ export function Sponsor() {
             iconColor="#74798C"
             placeholderText={t(translations.sponsor.searchAddress)}
             onEnterPress={searchClick}
+            onClear={searchClear}
             onChange={addressInputChanger}
             val={inputAddressVal}
           ></SearchComp>
@@ -216,7 +234,11 @@ export function Sponsor() {
               </span>
               <SkelontonContainer shown={loading}>
                 {storageSponsorAddress ? (
-                  <AddressContainer value={storageSponsorAddress} />
+                  errorMsgForApply !== errContractNotFound ? (
+                    <AddressContainer value={storageSponsorAddress} />
+                  ) : (
+                    '--'
+                  )
                 ) : (
                   ''
                 )}
@@ -263,8 +285,12 @@ export function Sponsor() {
                         ? fromDripToCfx(avialStorageFee)
                         : defaultStr}
                     </span>
-                    <span className="unit">CFX</span>{/* prettier-ignore */}
-                    <span className="secondFee">{storageBound !== defaultStr? fromDripToCfx(storageBound): defaultStr}</span>
+                    <span className="unit">CFX</span>&nbsp;&nbsp;
+                    <span className="secondFee">
+                      {storageBound !== defaultStr
+                        ? fromDripToCfx(storageBound)
+                        : defaultStr}
+                    </span>
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
@@ -280,7 +306,11 @@ export function Sponsor() {
               </span>
               <SkelontonContainer shown={loading}>
                 {gasFeeAddress ? (
-                  <AddressContainer value={gasFeeAddress} />
+                  errorMsgForApply !== errContractNotFound ? (
+                    <AddressContainer value={gasFeeAddress} />
+                  ) : (
+                    '--'
+                  )
                 ) : (
                   ''
                 )}
@@ -342,14 +372,12 @@ export function Sponsor() {
                         ? fromDripToCfx(avialGasFee)
                         : defaultStr}
                     </span>
-                    {/* prettier-ignore */}
-                    <span className="unit">CFX</span>
+                    <span className="unit">CFX</span>&nbsp;&nbsp;
                     <span className="secondFee">
                       {gasBound !== defaultStr
                         ? fromDripToCfx(gasBound)
                         : defaultStr}
                     </span>
-                    {/* prettier-ignore */}
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
@@ -597,6 +625,7 @@ const ApplyContainer = styled.div`
 `;
 const ErrorMsgContainer = styled.div`
   margin-top: 0.5714rem;
+  margin-bottom: 0.5714rem;
   line-height: 1.5714rem;
   display: flex;
   align-items: center;
