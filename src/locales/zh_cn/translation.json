@@ -551,6 +551,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "overview": "概览",
     "viewOutgoingTxns": "查看发送交易",
     "viewIncomingTxns": "查看接收交易",
     "viewFailedTxns": "查看失败交易",

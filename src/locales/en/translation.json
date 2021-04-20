@@ -550,6 +550,7 @@
     "tx": "tx"
   },
   "transaction": {
+    "overview": "Overview",
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
     "viewFailedTxns": "View Failed Txns",
