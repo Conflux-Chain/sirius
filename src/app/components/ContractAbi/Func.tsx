@@ -298,7 +298,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
                     key={id + 'title' + inputItem.name + index}
                   />
                   <Form.Item
-                    name={inputItem.name}
+                    name={`name${id}-${inputItem.name || 'input'}-${index}`}
                     rules={[{ validator: getValidator(inputItem.type) }]}
                     key={id + 'form' + inputItem.name + index}
                   >
