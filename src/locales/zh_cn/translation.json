@@ -622,6 +622,7 @@
     }
   },
   "block": {
+    "overview": "概览",
     "title": "区块",
     "description": "区块",
     "blockHeight": "区块高度",

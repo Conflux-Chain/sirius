@@ -621,6 +621,7 @@
     }
   },
   "block": {
+    "overview": "Overview",
     "title": "Block",
     "description": "Block",
     "blockHeight": "Block Height",
