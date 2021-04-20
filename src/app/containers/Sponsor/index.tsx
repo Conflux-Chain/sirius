@@ -285,8 +285,12 @@ export function Sponsor() {
                         ? fromDripToCfx(avialStorageFee)
                         : defaultStr}
                     </span>
-                    <span className="unit">CFX</span>{/* prettier-ignore */}
-                    <span className="secondFee">{storageBound !== defaultStr? fromDripToCfx(storageBound): defaultStr}</span>
+                    <span className="unit">CFX</span>&nbsp;&nbsp;
+                    <span className="secondFee">
+                      {storageBound !== defaultStr
+                        ? fromDripToCfx(storageBound)
+                        : defaultStr}
+                    </span>
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
@@ -368,14 +372,12 @@ export function Sponsor() {
                         ? fromDripToCfx(avialGasFee)
                         : defaultStr}
                     </span>
-                    {/* prettier-ignore */}
-                    <span className="unit">CFX</span>
+                    <span className="unit">CFX</span>&nbsp;&nbsp;
                     <span className="secondFee">
                       {gasBound !== defaultStr
                         ? fromDripToCfx(gasBound)
                         : defaultStr}
                     </span>
-                    {/* prettier-ignore */}
                     <span className="secondUnit">
                       CFX/{t(translations.sponsor.applicationUnit)}
                     </span>
