@@ -7,10 +7,10 @@ import { Nav } from '..';
 describe('<Nav  />', () => {
   it('should match snapshot', () => {
     const brand = <span>header brand</span>;
-    const menuStart = [<span>Blocks&Transaction</span>];
-    const menuEnd = [<span>EN</span>];
+    const mainMenu = [<span>Blocks&Transaction</span>];
+    const topMenu = [<span>EN</span>];
     const ui = render(
-      <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />,
+      <Nav brand={brand} mainMenu={mainMenu} topMenu={topMenu} />,
     );
     expect(ui.container.firstChild).toMatchSnapshot();
   });
@@ -22,10 +22,10 @@ describe('<Nav  />', () => {
       value: 500,
     });
     const brand = <span>header brand</span>;
-    const menuStart = [<span>Blocks&Transaction</span>];
-    const menuEnd = [<span>EN</span>];
+    const mainMenu = [<span>Blocks&Transaction</span>];
+    const topMenu = [<span>EN</span>];
     const ui = render(
-      <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />,
+      <Nav brand={brand} mainMenu={mainMenu} topMenu={topMenu} />,
     );
     const burgerButton = ui.container.querySelector('.navbar-burger');
     expect(burgerButton).toBeDefined();

@@ -48,6 +48,7 @@ export const Header = memo(() => {
       title: t(translations.header.home),
       name: ScanEvent.menu.action.home,
       href: '/',
+      className: 'home',
     },
     // blockchain
     {
@@ -313,30 +314,39 @@ export const Header = memo(() => {
           alt="conflux scan logo"
           src={imgConfiPlanet}
         />
-        {bp !== 's' && bp !== 'm' && bp !== 'l' && (
-          <TextLogo changeColorOnMobile />
-        )}
+        <TextLogo />
       </RouterLink>
     </LogoWrapper>
   );
-  const menuStart = [
-    (bp === 'm' || bp === 's') && <TextLogo />,
-    ...startLinksJSX,
-  ];
-  const menuEnd = [
+  const mainMenu = [...startLinksJSX];
+  const topMenu = [
     bp !== 'm' && bp !== 's' && (
       <>
-        <Search />
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
         <ConnectWallet />
       </>
     ),
     endLinksJSX,
   ];
 
+  // TODO notice
+  const subMenu = <div></div>;
+
   return (
     <Wrapper>
-      <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />
-      {(bp === 's' || bp === 'm') && <Search />}
+      <Nav
+        brand={brand}
+        mainMenu={mainMenu}
+        topMenu={topMenu}
+        subMenu={subMenu}
+      />
+      {(bp === 's' || bp === 'm') && (
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
+      )}
     </Wrapper>
   );
 });
@@ -363,7 +373,7 @@ const Wrapper = styled.header`
       .navbar-item {
         .navbar-link-menu {
           .navbar-link.level-0 {
-            padding: 0.43rem 0.57rem;
+            padding: 0 0.57rem;
             svg {
               display: none;
             }
@@ -383,12 +393,6 @@ const Wrapper = styled.header`
       padding: 1.64rem 5.14rem;
       padding-bottom: 3.86rem;
 
-      .navbar-start {
-        .navbar-item:nth-child(1) {
-          margin-bottom: 3rem;
-        }
-      }
-
       .navbar-end {
         .navbar-item {
           flex-direction: row;
@@ -399,9 +403,8 @@ const Wrapper = styled.header`
           }
           .navbar-link-menu {
             .navbar-link {
-              padding: 0.43rem 1.5rem;
               &.level-0 {
-                padding: 0.43rem 1.5rem;
+                padding: 0.43rem 1.3rem;
                 svg {
                   display: block;
                 }
@@ -414,6 +417,29 @@ const Wrapper = styled.header`
           }
         }
       }
+    }
+  }
+  ${media.s} {
+    .navbar-menu {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+`;
+
+const SearchWrapper = styled.div`
+  flex-grow: 1;
+  > div {
+    max-width: unset;
+  }
+  ${media.m} {
+    .outerContainer {
+      left: 15rem;
+    }
+  }
+  ${media.s} {
+    .outerContainer {
+      left: 1.33rem;
     }
   }
 `;
