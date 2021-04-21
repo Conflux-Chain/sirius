@@ -492,6 +492,8 @@ const StyledIconWechatWrapper = styled.div`
   position: relative;
   display: inline-flex;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     img.footer-qrcode {

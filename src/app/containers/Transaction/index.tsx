@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ColumnsType } from 'app/components/TabsTablePanel';
@@ -17,12 +17,20 @@ import { reqTransactionDetail } from 'utils/httpRequest';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 export function Transaction() {
+  const history = useHistory();
+  const location = useLocation();
+  const { t, i18n } = useTranslation();
+  const [checked, setChecked] = useState(() => {
+    const { zeroValue } = queryString.parse(location.search);
+    return zeroValue === 'true';
+  });
   const { hash } = useParams<{
     hash: string;
   }>();
-
   const [txnDetail, setTxnDetail] = useState<any>({});
 
   useEffect(() => {
@@ -48,18 +56,9 @@ export function Transaction() {
     </span>
   );
 
-  const urls = useMemo(
-    () => ({
-      simple: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}`,
-      advanced: `/transfer?transferType=${cfxTokenTypes.cfx}&reverse=true&transactionHash=${hash}&a=1`,
-    }),
-    [hash],
-  );
-
-  const { t, i18n } = useTranslation();
-  const tipT = translations.transaction.internalTxnsTip;
-  const [url, setUrl] = useState(urls.simple);
-  const [checked, setChecked] = useState(false);
+  const url = `/transfer?transferType=${
+    cfxTokenTypes.cfx
+  }&reverse=true&transactionHash=${hash}${checked ? '&zeroValue=true' : ''}`;
 
   const columnsCFXTransferWidth = [2, 3, 3, 2];
   const columnsCFXTrasfer: ColumnsType = [
@@ -71,19 +70,35 @@ export function Transaction() {
 
   const handleSwitch = value => {
     setChecked(value);
+    const { zeroValue, ...others } = queryString.parse(location.search);
+    let newUrl = '';
     if (value) {
-      setUrl(urls.advanced);
+      newUrl = queryString.stringifyUrl({
+        url: location.pathname,
+        query: {
+          ...others,
+          zeroValue: 'true',
+        },
+      });
     } else {
-      setUrl(urls.simple);
+      newUrl = queryString.stringifyUrl({
+        url: location.pathname,
+        query: {
+          ...others,
+        },
+      });
     }
+    history.push(newUrl);
   };
 
-  let label = (count = 0) => (
+  let tableHeader = (total = 0) => (
     <StyledTipWrapper>
       <div>
-        {t(tipT.from)} {fromContent()} {t(tipT.to)} {toContent()}{' '}
-        {t(tipT.produced)} <StyledCountWrapper>{count}</StyledCountWrapper>{' '}
-        {t(tipT.txns)}
+        {t(translations.transaction.internalTxnsTip.from)} {fromContent()}{' '}
+        {t(translations.transaction.internalTxnsTip.to)} {toContent()}{' '}
+        {t(translations.transaction.internalTxnsTip.produced)}{' '}
+        <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
+        {t(translations.transaction.internalTxnsTip.txns)}
       </div>
       <Switch
         checked={checked}
@@ -91,7 +106,6 @@ export function Transaction() {
         checkedChildren={t(translations.transaction.internalTxns.advanced)}
         unCheckedChildren={t(translations.transaction.internalTxns.simple)}
         style={{
-          display: 'none', // temp hide for api support
           width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
         }}
       />
@@ -107,9 +121,12 @@ export function Transaction() {
     {
       value: 'cfxTransfer',
       action: 'transactionCfxTransfers',
-      label: () => {
+      label: (total, _, item) => {
+        // it is not good, but if use useState to update will cause warning:
+        // Warning: Cannot update a component from inside the function body of a different component.
+        item.tableHeader = tableHeader(total);
         return (
-          <TabLabel total={cfxTransferCount} showTooltip={false}>
+          <TabLabel total={total || cfxTransferCount} showTooltip={false}>
             {t(translations.transaction.internalTxns.title)}
           </TabLabel>
         );
@@ -122,7 +139,7 @@ export function Transaction() {
             row.transactionTraceIndex || 0
           }${index}`,
       },
-      tableHeader: label(cfxTransferCount),
+      tableHeader: tableHeader(cfxTransferCount),
       hidden: !cfxTransferCount,
     },
     {
@@ -149,7 +166,7 @@ export function Transaction() {
         />
       </Helmet>
       <PageHeader>{t(translations.transaction.title)}</PageHeader>
-      <TabsTablePanel tabs={tabs} />
+      <TabsTablePanel tabs={tabs} key={url} />
     </StyledPageWrapper>
   );
 }

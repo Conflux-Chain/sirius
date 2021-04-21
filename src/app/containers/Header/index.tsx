@@ -349,7 +349,7 @@ export const Header = memo(() => {
           ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
           : CurrentTethysNotice[iszh ? 'zh' : 'en']}
       </div>
-      <Link href="/notice" className="more">
+      <Link href="/notices" className="more">
         {t(translations.header.learnMore)}
       </Link>
     </NoticeWrapper>
@@ -501,5 +501,11 @@ const NoticeWrapper = styled.div`
   .more {
     white-space: nowrap;
     margin-left: 24px;
+    border-bottom: 1px solid #1e3de4;
+
+    &:hover,
+    &:active {
+      border-bottom: 1px solid #0f23bd;
+    }
   }
 `;
