@@ -67,6 +67,8 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
     <ButtonWrapper
       className={clsx('connect-wallet-button', className, {
         pending: hasPendingRecords,
+        connected: accounts.length && isValid,
+        notConnected: !(accounts.length && isValid),
       })}
       onClick={onClick}
     >

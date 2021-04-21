@@ -328,7 +328,9 @@ export const Header = memo(() => {
         <SearchWrapper>
           <Search />
         </SearchWrapper>
-        <ConnectWallet />
+        <WalletWrapper>
+          <ConnectWallet />
+        </WalletWrapper>
       </>
     ),
     endLinksJSX,
@@ -470,6 +472,22 @@ const SearchWrapper = styled.div`
       right: 0;
       top: 5.67rem;
       z-index: 100;
+    }
+  }
+`;
+
+const WalletWrapper = styled.div`
+  min-width: 180px;
+
+  .connect-wallet-button.notConnected {
+    .connect-wallet-button-left {
+      color: #fff;
+      width: 100%;
+      justify-content: center;
+      background: #424a71;
+      &:hover {
+        background: #68719c;
+      }
     }
   }
 `;

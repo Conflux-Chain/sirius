@@ -75,7 +75,7 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
 
 <span>
   <div
-    class="c0 connect-wallet-button"
+    class="c0 connect-wallet-button notConnected"
   >
     <span
       class="connect-wallet-button-left"
