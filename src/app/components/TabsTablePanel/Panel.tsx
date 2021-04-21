@@ -15,7 +15,9 @@ export type TabsTablePanelType = {
       hidden?: boolean;
       value: string;
       action?: string;
-      label: ((total: number, realTotal: number) => React.ReactNode) | string;
+      label:
+        | ((total: number, realTotal: number, item: any) => React.ReactNode)
+        | string;
       content?: React.ReactNode;
     } & Partial<TablePanelType>
   >;
@@ -57,7 +59,7 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
         <Tabs.Item
           label={
             typeof item.label === 'function'
-              ? item.label(total[i], realTotal[i])
+              ? item.label(total[i], realTotal[i], item)
               : item.label
           }
           value={item.value}
