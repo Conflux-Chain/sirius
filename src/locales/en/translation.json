@@ -198,7 +198,9 @@
     "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
-    "blocknumberCalc": "Blocknumber Calculator"
+    "blocknumberCalc": "Blocknumber Calculator",
+    "notice": "Notice Center",
+    "learnMore": "Learn more"
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",

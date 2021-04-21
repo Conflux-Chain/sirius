@@ -510,7 +510,7 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
     value: `transfers-${cfxTokenTypes.erc20}`,
-    action: 'transfersErc20',
+    action: 'transfersCrc20',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -531,7 +531,7 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
     value: `transfers-${cfxTokenTypes.erc721}`,
-    action: 'transfersErc721',
+    action: 'transfersCrc721',
     label: (total: number, realTotal: number) => {
       return (
         <>
@@ -552,7 +552,7 @@ export function Table({ address, addressInfo }) {
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
     value: `transfers-${cfxTokenTypes.erc1155}`,
-    action: 'transfersErc1155',
+    action: 'transfersCrc1155',
     label: (total: number, realTotal: number) => {
       return (
         <>

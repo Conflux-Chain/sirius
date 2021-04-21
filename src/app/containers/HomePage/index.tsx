@@ -9,7 +9,6 @@ import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType, useTabTableData } from '../../components/TabsTablePanel';
 import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
-import { Notice } from './Notice';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { useAge } from '../../../utils/hooks/useAge';
 
@@ -93,7 +92,7 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
-        <Notice />
+        {/*<Notice />*/}
         {/* <MarketInfo /> */}
         <Top>
           <SmallChartWrap>

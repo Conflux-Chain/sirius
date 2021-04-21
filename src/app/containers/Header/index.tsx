@@ -21,6 +21,9 @@ import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
+import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
+import imgNotice from 'images/notice2.png';
+import { Link } from '../../components/Link/Loadable';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -331,8 +334,26 @@ export const Header = memo(() => {
     endLinksJSX,
   ];
 
-  // TODO notice
-  const subMenu = <div></div>;
+  // notice
+  const subMenu = (
+    <NoticeWrapper>
+      <img src={imgNotice} alt="" />
+      <div
+        className={`content ${
+          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+            ? 'hot'
+            : ''
+        }`}
+      >
+        {isTestnet
+          ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
+          : CurrentTethysNotice[iszh ? 'zh' : 'en']}
+      </div>
+      <Link href="/notice" className="more">
+        {t(translations.header.learnMore)}
+      </Link>
+    </NoticeWrapper>
+  );
 
   return (
     <Wrapper>
@@ -450,5 +471,35 @@ const SearchWrapper = styled.div`
       top: 5.67rem;
       z-index: 100;
     }
+  }
+`;
+
+const NoticeWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 680px;
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  .content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #6c6d75;
+
+    &.hot {
+      color: #fa5d8e;
+    }
+  }
+
+  .more {
+    white-space: nowrap;
+    margin-left: 24px;
   }
 `;

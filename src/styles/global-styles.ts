@@ -14,25 +14,29 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: ${sansSerifFont};
     letter-spacing: 0;
+
+    a {
+      color: #1e3de4;
+      
+      &:hover, &:active {
+        color: #0f23bd;
+      }
+    }
+
+    p,
+    label {
+      line-height: 1.5em;
+    }
+  
+    input, select {
+      font-size: inherit;
+    }
   }
 
   #root {
     min-height: 100%;
     min-width: 100%;
     background-color: #f5f6fa;
-  }
-
-  p,
-  label {
-    line-height: 1.5em;
-  }
-
-  a {
-    color: #1e3de4;
-  }
-
-  input, select {
-    font-size: inherit;
   }
 
   .qrcode-modal.wrapper {

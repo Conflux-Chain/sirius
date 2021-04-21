@@ -50,6 +50,7 @@ import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
+import { Notices } from './containers/Notices/Loadable';
 
 // WebFontLoader.load({
 //   custom: {
@@ -279,6 +280,11 @@ export function App() {
                   component={BlocknumberCalc}
                 />
                 <Route exact path="/swap" component={Swap} />
+                <Route
+                  exact
+                  path={['/notices', '/notice', '/notice/:id']}
+                  component={Notices}
+                />
                 <Route component={NotFoundPage} />
               </Switch>
             </Main>
