@@ -102,7 +102,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens20,
-          href: '/tokens/erc20',
+          href: '/tokens/crc20',
         },
         {
           // erc 721
@@ -111,7 +111,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens721,
-          href: '/tokens/erc721',
+          href: '/tokens/crc721',
         },
         {
           // erc 1155
@@ -120,7 +120,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens1155,
-          href: '/tokens/erc1155',
+          href: '/tokens/crc1155',
         },
       ],
     },

@@ -45,7 +45,10 @@ export function Tokens() {
   let defaultSortOrder = 'desc';
   let defaultSortKey = 'totalPrice';
 
-  if (tokenType === cfxTokenTypes.erc721) {
+  if (
+    tokenType === cfxTokenTypes.erc721 ||
+    tokenType === cfxTokenTypes.crc721
+  ) {
     columnsWidth = [1, 8, 4, 4, 8];
     columns = [
       tokenColunms.number(page, pageSize),
@@ -60,7 +63,10 @@ export function Tokens() {
     defaultSortKey = 'transferCount';
   }
 
-  if (tokenType === cfxTokenTypes.erc1155) {
+  if (
+    tokenType === cfxTokenTypes.erc1155 ||
+    tokenType === cfxTokenTypes.crc1155
+  ) {
     columnsWidth = [1, 8, 5, 8];
     columns = [
       tokenColunms.number(page, pageSize),
@@ -139,7 +145,9 @@ export function Tokens() {
         }
       >
         {title}
-        {!tokenType || tokenType === cfxTokenTypes.erc20 ? (
+        {!tokenType ||
+        tokenType === cfxTokenTypes.erc20 ||
+        tokenType === cfxTokenTypes.crc20 ? (
           <Tooltip
             hoverable
             text={
