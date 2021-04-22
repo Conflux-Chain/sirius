@@ -15,8 +15,10 @@ import { Helmet } from 'react-helmet-async';
 import { DescriptionPanel } from './DescriptionPanel';
 import styled from 'styled-components/macro';
 import { reqBlockDetail } from 'utils/httpRequest';
+import { useBreakpoint } from 'styles/media';
 
 export function Block() {
+  const bp = useBreakpoint();
   const { t } = useTranslation();
   const { hash } = useParams<{
     hash: string;
@@ -67,19 +69,26 @@ export function Block() {
     {
       value: 'blocks',
       action: 'blockTransactions',
-      label: (total: number, realTotal: number) => (
-        <TabLabel
-          total={transactionCount || total}
-          realTotal={transactionCount || realTotal}
-        >
-          <Tooltip
-            text={t(translations.toolTip.block.transactions)}
-            placement="top"
+      label: (total: number, realTotal: number) => {
+        return (
+          <TabLabel
+            total={transactionCount || total}
+            realTotal={transactionCount || realTotal}
+            showTooltip={bp !== 's'}
           >
-            {t(translations.block.tabs.transactions)}
-          </Tooltip>
-        </TabLabel>
-      ),
+            {bp === 's' ? (
+              t(translations.block.tabs.transactions)
+            ) : (
+              <Tooltip
+                text={t(translations.toolTip.block.transactions)}
+                placement="top"
+              >
+                {t(translations.block.tabs.transactions)}
+              </Tooltip>
+            )}
+          </TabLabel>
+        );
+      },
       url: `/transaction?blockHash=${hash}`,
       table: {
         columns: columnsTransactions,
@@ -90,16 +99,26 @@ export function Block() {
     {
       value: 'transaction',
       action: 'referenceBlocks',
-      label: (total: number, realTotal: number) => (
-        <TabLabel total={total} realTotal={realTotal}>
-          <Tooltip
-            text={t(translations.toolTip.block.referenceBlocks)}
-            placement="top"
+      label: (total: number, realTotal: number) => {
+        return (
+          <TabLabel
+            total={total}
+            realTotal={realTotal}
+            showTooltip={bp !== 's'}
           >
-            {t(translations.block.tabs.referenceBlocks)}
-          </Tooltip>
-        </TabLabel>
-      ),
+            {bp === 's' ? (
+              t(translations.block.tabs.referenceBlocks)
+            ) : (
+              <Tooltip
+                text={t(translations.toolTip.block.referenceBlocks)}
+                placement="top"
+              >
+                {t(translations.block.tabs.referenceBlocks)}
+              </Tooltip>
+            )}
+          </TabLabel>
+        );
+      },
       hideTotalZero: true,
       url: `/block?referredBy=${hash}`,
       table: {

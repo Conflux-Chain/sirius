@@ -3,7 +3,7 @@
  * Button
  *
  */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
@@ -14,6 +14,8 @@ import { formatNumber } from 'utils';
 import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
 import BigNumber from 'bignumber.js';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -62,6 +64,20 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
       }
     }
   }
+
+  useEffect(() => {
+    if (connected === 0) {
+      trackEvent({
+        category: ScanEvent.wallet.category,
+        action: ScanEvent.wallet.action.disconnect,
+      });
+    } else if (connected === 1) {
+      trackEvent({
+        category: ScanEvent.wallet.category,
+        action: ScanEvent.wallet.action.connect,
+      });
+    }
+  }, [connected]);
 
   return (
     <ButtonWrapper
