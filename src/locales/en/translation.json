@@ -344,6 +344,7 @@
     "viewAll": "View All",
     "viewAllBlocks": "View All Blocks",
     "viewAllTxns": "View All Transactions",
+    "back": "Back",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
@@ -488,6 +489,7 @@
       "lt10000": "Total of {{total}} records",
       "gte10000": "A total of {{realTotal}} records found (showing the last {{total}} records)"
     },
+    "errorOccurred": "Error occurred",
     "error": {
       "title": "System Error",
       "description": {

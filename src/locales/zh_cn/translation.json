@@ -344,6 +344,7 @@
     "viewAll": "查看全部",
     "viewAllBlocks": "查看全部区块",
     "viewAllTxns": "查看全部交易",
+    "back": "返回",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
@@ -488,6 +489,7 @@
       "lt10000": "共计 {{total}} 个记录",
       "gte10000": "共找到 {{realTotal}} 个交易（仅展示最新 {{total}} 条记录）"
     },
+    "errorOccurred": "发生错误",
     "error": {
       "title": "系统错误",
       "description": {
