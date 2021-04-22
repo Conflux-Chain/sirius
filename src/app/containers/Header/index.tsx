@@ -21,6 +21,9 @@ import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
+import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
+import imgNotice from 'images/notice2.png';
+import { Link } from '../../components/Link/Loadable';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -102,7 +105,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens20,
-          href: '/tokens/erc20',
+          href: '/tokens/crc20',
         },
         {
           // erc 721
@@ -111,7 +114,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens721,
-          href: '/tokens/erc721',
+          href: '/tokens/crc721',
         },
         {
           // erc 1155
@@ -120,7 +123,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens1155,
-          href: '/tokens/erc1155',
+          href: '/tokens/crc1155',
         },
       ],
     },
@@ -325,14 +328,34 @@ export const Header = memo(() => {
         <SearchWrapper>
           <Search />
         </SearchWrapper>
-        <ConnectWallet />
+        <WalletWrapper>
+          <ConnectWallet />
+        </WalletWrapper>
       </>
     ),
     endLinksJSX,
   ];
 
-  // TODO notice
-  const subMenu = <div></div>;
+  // notice
+  const subMenu = (
+    <NoticeWrapper>
+      <img src={imgNotice} alt="" />
+      <div
+        className={`content ${
+          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+            ? 'hot'
+            : ''
+        }`}
+      >
+        {isTestnet
+          ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
+          : CurrentTethysNotice[iszh ? 'zh' : 'en']}
+      </div>
+      <Link href="/notices" className="more">
+        {t(translations.header.learnMore)}
+      </Link>
+    </NoticeWrapper>
+  );
 
   return (
     <Wrapper>
@@ -429,17 +452,78 @@ const Wrapper = styled.header`
 
 const SearchWrapper = styled.div`
   flex-grow: 1;
-  > div {
+  .header-search-container {
     max-width: unset;
   }
   ${media.m} {
-    .outerContainer {
-      left: 15rem;
+    .header-search-container {
+      position: fixed;
+      flex-grow: 0;
+      top: 11px;
+      right: 4rem;
+      left: 12rem;
+      z-index: 2000;
     }
   }
   ${media.s} {
-    .outerContainer {
-      left: 1.33rem;
+    .header-search-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 5.67rem;
+      z-index: 100;
+    }
+  }
+`;
+
+const WalletWrapper = styled.div`
+  min-width: 180px;
+
+  .connect-wallet-button.notConnected {
+    .connect-wallet-button-left {
+      color: #fff;
+      width: 100%;
+      justify-content: center;
+      background: #424a71;
+      &:hover {
+        background: #68719c;
+      }
+    }
+  }
+`;
+
+const NoticeWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 680px;
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  .content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #6c6d75;
+
+    &.hot {
+      color: #fa5d8e;
+    }
+  }
+
+  .more {
+    white-space: nowrap;
+    margin-left: 24px;
+    border-bottom: 1px solid #1e3de4;
+
+    &:hover,
+    &:active {
+      border-bottom: 1px solid #0f23bd;
     }
   }
 `;

@@ -2,7 +2,6 @@
 
 exports[`<Search  /> should match snapshot 1`] = `
 .c0 {
-  max-width: 30rem;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -10,125 +9,165 @@ exports[`<Search  /> should match snapshot 1`] = `
   padding: 0px 1.5rem;
 }
 
-.c0 .outerContainer {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
+.c0 .ant-input-search .ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+  border-radius: 16px;
 }
 
-.c0 .outerContainer .header-search-bar.input-container {
-  height: 2.28rem;
-}
-
-.c0 .outerContainer .header-search-bar.input-container .input-wrapper {
-  border-radius: 1.14rem;
-  border-color: #0054fe;
-}
-
-.c0 .outerContainer .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
-  color: #222a44;
+.c0 .ant-input-affix-wrapper {
+  border-color: #b6bad2;
+  padding-left: 16px;
+  padding-right: 16px;
   font-size: 12px;
+  color: #333;
+  box-shadow: none !important;
 }
 
-.c0 .outerContainer .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
-  color: #222a44;
-  font-size: 12px;
+.c0 .ant-input-affix-wrapper:hover,
+.c0 .ant-input-affix-wrapper:focus {
+  border-color: #424a71;
+  box-shadow: none !important;
 }
 
-.c0 .outerContainer .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
-  color: #222a44;
-  font-size: 12px;
+.c0 .ant-input-affix-wrapper-focused {
+  border-color: #424a71;
 }
 
-.c0 .outerContainer .header-search-bar.input-container .input-wrapper input::placeholder {
-  color: #222a44;
-  font-size: 12px;
+.c0 .ant-input::-webkit-input-placeholder {
+  color: rgba(51,51,51,0.6);
 }
 
-@media (max-width:1024px) {
-  .c0 .outerContainer {
-    max-width: unset;
-    left: 20rem;
-    right: 5rem;
-    position: fixed;
-    top: 0.68rem;
-    z-index: 2000;
-    padding: 0;
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-    -ms-flex-positive: 0;
-    flex-grow: 0;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container {
-    height: 2.67rem;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container .input-wrapper {
-    background-color: rgba(0,84,254,0.04);
-    border: 0;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container .input-wrapper input::-webkit-input-placeholder {
-    color: #222a44;
-    text-align: end;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container .input-wrapper input::-moz-placeholder {
-    color: #222a44;
-    text-align: end;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container .input-wrapper input:-ms-input-placeholder {
-    color: #222a44;
-    text-align: end;
-  }
-
-  .c0 .outerContainer .header-search-bar.input-container .input-wrapper input::placeholder {
-    color: #222a44;
-    text-align: end;
-  }
+.c0 .ant-input::-moz-placeholder {
+  color: rgba(51,51,51,0.6);
 }
 
-@media (max-width:600px) {
-  .c0 .outerContainer {
-    position: absolute;
-    left: 1.33rem;
-    right: 1.33rem;
-    top: 5.67rem;
-    z-index: 100;
-  }
+.c0 .ant-input:-ms-input-placeholder {
+  color: rgba(51,51,51,0.6);
+}
+
+.c0 .ant-input::placeholder {
+  color: rgba(51,51,51,0.6);
+}
+
+.c0 .ant-input:hover,
+.c0 .ant-input:focus {
+  border-color: #424a71;
+}
+
+.c0 .ant-input-group-addon {
+  position: absolute;
+  right: 50px;
+  top: 0;
+  left: auto !important;
+  width: 0;
+}
+
+.c0 .ant-input-search-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: none;
+  background: #424a71;
+  border-radius: 16px !important;
+  width: 50px;
+  z-index: 5;
+}
+
+.c0 .ant-input-search-button:hover {
+  border: none;
+  outline: none;
+  background: #68719c;
+}
+
+.c0 .ant-input-search-button svg {
+  fill: #fff;
+}
+
+.c0 .ant-input-suffix {
+  margin-right: 40px;
+  border: none;
+}
+
+.c0 .ant-input-suffix .ant-input-clear-icon-hidden {
+  display: none;
+}
+
+.c0 .ant-input-suffix .anticon {
+  width: 24px;
+  height: 100%;
+  background: url(clear.png) no-repeat center center;
+  background-size: 16px 16px;
+  opacity: 0.6;
+}
+
+.c0 .ant-input-suffix .anticon:hover {
+  opacity: 1;
+}
+
+.c0 .ant-input-suffix .anticon svg {
+  display: none;
 }
 
 <div
-  class="c0"
+  class="c0 header-search-container"
 >
-  <div
-    class="outerContainer"
+  <span
+    class="ant-input-group-wrapper ant-input-search ant-input-search-with-button"
   >
-    <div
-      class="jsx-1159070929 with-label"
+    <span
+      class="ant-input-wrapper ant-input-group"
     >
-      <div
-        class="jsx-1159070929 input-container header-search-bar"
+      <span
+        class="ant-input-affix-wrapper"
       >
-        <div
-          class="jsx-1159070929 input-wrapper line    "
+        <input
+          class="ant-input"
+          placeholder="Search by Epoch / Block Hash / Txn Hash / Address"
+          type="text"
+          value=""
+        />
+        <span
+          class="ant-input-suffix"
         >
-          <input
-            autocomplete="off"
-            class="jsx-1159070929 right-icon"
-            placeholder="Epoch / Block hash / Txn Hash / Address"
-            type="text"
-            value=""
-          />
           <span
-            class="jsx-2293214799 input-icon"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+            aria-label="close-circle"
+            class="anticon anticon-close-circle ant-input-clear-icon-hidden ant-input-clear-icon"
+            role="button"
+            tabindex="-1"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="close-circle"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+              />
+            </svg>
+          </span>
+        </span>
+      </span>
+      <span
+        class="ant-input-group-addon"
+      >
+        <button
+          class="ant-btn ant-btn-primary ant-input-search-button"
+          type="button"
+        />
+      </span>
+    </span>
+  </span>
 </div>
 `;
