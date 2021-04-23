@@ -32,7 +32,7 @@ export function NotFoundPage() {
 const PageWrapper = styled.div`
   display: flex;
   position: absolute;
-  height: calc(100% - 5rem);
+  height: calc(100% - 8rem);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
