@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { LineChart as Chart } from '../../components/Chart/Loadable';
+import { LineChart as Chart, PieChart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { useParams } from 'react-router-dom';
-import { Link } from '../../components/Link/Loadable';
+import { Link } from 'react-router-dom';
 
 interface RouteParams {
   indicator: string;
@@ -17,9 +17,12 @@ export function ChartDetail() {
   const { indicator } = useParams<RouteParams>();
 
   let title = t(translations.charts.subtitle2);
+  let chartType = 'line';
   switch (indicator) {
-    case 'marketInfo':
+    case 'circulating':
+    case 'issued':
       title = t(translations.charts.subtitle1);
+      chartType = 'pie';
       break;
     case 'dailyTransaction':
     case 'dailyTransactionCFX':
@@ -51,11 +54,15 @@ export function ChartDetail() {
       <PageWrap>
         <HeaderWrap>
           <div className="title">{title}</div>
-          <Link href="/charts">{t(translations.general.back)}</Link>
+          <Link to="/charts">{t(translations.general.back)}</Link>
         </HeaderWrap>
         {indicator ? (
           <ChartsWrap>
-            <Chart width={chartWidth} indicator={indicator} />
+            {chartType === 'line' ? (
+              <Chart width={chartWidth} indicator={indicator} />
+            ) : chartType === 'pie' ? (
+              <PieChart width={chartWidth} indicator={indicator} />
+            ) : null}
           </ChartsWrap>
         ) : null}
       </PageWrap>
@@ -90,9 +97,10 @@ const ChartsWrap = styled.div`
 const PageWrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 32px 0 8px;
-  ${media.s} {
-    padding: 32px 0;
+  padding: 32px 0;
+
+  ${media.m} {
+    padding: 32px 10px;
   }
 `;
 
@@ -104,7 +112,7 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   align-items: baseline;
 
-  a.link {
+  a {
     border-bottom: 1px solid #1e3de4;
     &:hover {
       border-bottom: 1px solid #0f23bd;

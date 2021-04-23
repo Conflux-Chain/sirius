@@ -300,6 +300,19 @@
       "title": "Circulating Supply",
       "description": "Circulating supply contains the CFX in the Zero Address."
     },
+    "circulating": {
+      "title": "Circulating Supply",
+      "description": "Circulating supply contains the CFX in the Zero Address.",
+      "labelZeroAddress": "Zero Address",
+      "labelOthers": "Others"
+    },
+    "issued": {
+      "title": "Total Issued",
+      "description": "The total issued supply of CFX.",
+      "labelFourYearUnlockBalance": "Four Year Unlock",
+      "labelTwoYearUnlockBalance": "Two Year Unlock",
+      "labelTotalCirculating": "Circulating Supply"
+    },
     "zeroAddress": {
       "title": "Zero Address",
       "description": "CFX in Zero address is burned CFX."

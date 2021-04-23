@@ -300,6 +300,19 @@
       "title": "流通量",
       "description": "流通量包含零地址中的 CFX"
     },
+    "circulating": {
+      "title": "流通量",
+      "description": "流通量包含零地址中的 CFX",
+      "labelZeroAddress": "零地址",
+      "labelOthers": "其他"
+    },
+    "issued": {
+      "title": "总发行量",
+      "description": "CFX 的总发行量",
+      "labelFourYearUnlockBalance": "4年解锁",
+      "labelTwoYearUnlockBalance": "2年解锁",
+      "labelTotalCirculating": "流通量"
+    },
     "zeroAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"

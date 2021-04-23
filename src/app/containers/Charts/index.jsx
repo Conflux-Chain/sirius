@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { LineChart as Chart } from '../../components/Chart/Loadable';
+import { LineChart as Chart, PieChart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { MarketInfo } from './MarketInfo';
 import { Row, Col } from '@jnoodle/antd';
 import { Link } from 'react-router-dom';
 
@@ -27,7 +26,28 @@ export function Charts() {
         <HeaderWrap>
           <div className="title">{t(translations.charts.subtitle1)}</div>
         </HeaderWrap>
-        <MarketInfo />
+        <ChartsWrap>
+          <Row gutter={[24, 24]}>
+            <Col span={24} sm={12} lg={8}>
+              <Link to="/chart/circulating">
+                <PieChart
+                  width={chartWidth}
+                  indicator="circulating"
+                  isThumb={true}
+                />
+              </Link>
+            </Col>
+            <Col span={24} sm={12} lg={8}>
+              <Link to="/chart/issued">
+                <PieChart
+                  width={chartWidth}
+                  indicator="issued"
+                  isThumb={true}
+                />
+              </Link>
+            </Col>
+          </Row>
+        </ChartsWrap>
         <HeaderWrap>
           <div className="title">{t(translations.charts.subtitle2)}</div>
         </HeaderWrap>
@@ -131,16 +151,20 @@ const ChartsWrap = styled.div`
   .ant-row {
     margin-bottom: 24px;
 
-    a.link {
+    a {
       display: block;
       width: 100%;
+
+      canvas {
+        cursor: pointer;
+      }
 
       > div {
         transition: 0.3s all;
 
         &:hover {
           box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.24);
-          transform: scale(1.01);
+          transform: translateY(-5px);
           ${media.s} {
             transform: none;
           }
