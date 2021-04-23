@@ -132,7 +132,7 @@ const disassembleEvent = (log, decodedLog) => {
   }
 };
 
-const EventLog = ({ log }) => {
+const EventLog = ({ log, logContractInfo }) => {
   const { t } = useTranslation();
   const [eventInfo, setEventInfo] = useState<any>(() => {
     const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
@@ -156,6 +156,8 @@ const EventLog = ({ log }) => {
        */
       data: splitData,
       signature: null,
+      contractInfo: {},
+      logContractInfo,
     };
   });
   const [loading, setLoading] = useState(false);
@@ -164,6 +166,8 @@ const EventLog = ({ log }) => {
     const fields = [
       'address',
       'abi',
+      'name',
+      'icon',
       // 'bytecode',
       // 'sourceCode', // not need now
     ];
@@ -206,6 +210,12 @@ const EventLog = ({ log }) => {
               topics,
               data,
               signature: decodedLog.signature,
+              contractInfo: {
+                name: body.name,
+                icon: body.icon,
+                address: body.address,
+              },
+              logContractInfo,
             });
           }
         } catch (e) {}
@@ -213,9 +223,17 @@ const EventLog = ({ log }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [log]);
+  }, [log, logContractInfo]);
 
-  const { fnName, args, topics, data, address, signature } = eventInfo;
+  const {
+    fnName,
+    args,
+    topics,
+    data,
+    address,
+    signature,
+    contractInfo,
+  } = eventInfo;
 
   return (
     <StyledEventLogWrapper>
@@ -238,7 +256,7 @@ const EventLog = ({ log }) => {
               small
               noBorder
             >
-              <Address address={address}></Address>
+              <Address address={address} contract={contractInfo}></Address>
             </Description>
             {fnName ? (
               <Description
@@ -256,7 +274,11 @@ const EventLog = ({ log }) => {
               small
               noBorder
             >
-              <Topics data={topics} signature={signature} />
+              <Topics
+                data={topics}
+                signature={signature}
+                logContractInfo={logContractInfo}
+              />
             </Description>
             {!!data.length && (
               <Description
@@ -283,14 +305,17 @@ export const EventLogs = ({ hash }: Props) => {
   // }]
   const [eventlogs, setEventlogs] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [logContractInfo, setLogContractInfo] = useState({});
 
   useEffect(() => {
     setLoading(true);
     reqTransactionEventlogs({
       transactionHash: hash,
+      aggregate: true,
     })
       .then(body => {
         setEventlogs(body.list);
+        setLogContractInfo(body.logContractInfo);
       })
       .finally(() => {
         setLoading(false);
@@ -302,7 +327,11 @@ export const EventLogs = ({ hash }: Props) => {
       <Card>
         {loading ? null : <Empty show={!eventlogs.length} />}
         {eventlogs.map((log, index) => (
-          <EventLog log={log} key={`${log.address}-${index}`} />
+          <EventLog
+            log={log}
+            logContractInfo={logContractInfo}
+            key={`${log.address}-${index}`}
+          />
         ))}
       </Card>
     </StyledEventLogsWrapper>
