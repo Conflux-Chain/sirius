@@ -308,9 +308,9 @@
     },
     "issued": {
       "title": "总发行量",
-      "description": "CFX 的总发行量",
-      "labelFourYearUnlockBalance": "4年解锁",
-      "labelTwoYearUnlockBalance": "2年解锁",
+      "description": "市场上已被创造的 CFX 总量",
+      "labelFourYearUnlockBalance": "4 年解锁",
+      "labelTwoYearUnlockBalance": "2 年解锁",
       "labelTotalCirculating": "流通量"
     },
     "zeroAddress": {

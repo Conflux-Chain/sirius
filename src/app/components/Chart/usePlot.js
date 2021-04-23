@@ -3,12 +3,14 @@ import useSWR from 'swr';
 import { appendApiPrefix } from 'utils/api';
 import fetch from 'utils/request';
 import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 
 // get charts data
 export default function usePlot(
   defaultDuration = 'day',
   NUM_X_GRID = 7,
   indicator = 'blockTime',
+  limit = 31,
 ) {
   // 2592000
   const durations = {
@@ -48,34 +50,35 @@ export default function usePlot(
     case 'dailyTransaction':
       swrKey = `/txn/daily/list`;
       fetcher = () =>
-        fetch(appendApiPrefix(`/stat/txn/daily/list?limit=${31}`)); // TODO adjust limit
+        fetch(appendApiPrefix(`/stat/txn/daily/list?limit=${limit}`)); // TODO adjust limit
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
     case 'dailyTransactionCFX':
       swrKey = `/txn/dailyCFX/list`;
-      fetcher = () => fetch(appendApiPrefix(`/stat/daily-cfx-txn?limit=${31}`)); // TODO adjust limit
+      fetcher = () =>
+        fetch(appendApiPrefix(`/stat/daily-cfx-txn?limit=${limit}`)); // TODO adjust limit
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
     case 'dailyTransactionTokens':
       swrKey = `/txn/dailyToken/list`;
       fetcher = () =>
-        fetch(appendApiPrefix(`/stat/tokens/daily-token-txn?limit=${31}`)); // TODO adjust limit
+        fetch(appendApiPrefix(`/stat/tokens/daily-token-txn?limit=${limit}`)); // TODO adjust limit
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
     case 'cfxHoldingAccounts':
       swrKey = `/cfx_holder/daily/list`;
       fetcher = () =>
-        fetch(appendApiPrefix(`/stat/cfx_holder/daily/list?limit=${31}`));
+        fetch(appendApiPrefix(`/stat/cfx_holder/daily/list?limit=${limit}`));
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
     case 'accountGrowth':
       swrKey = `/daily-address-creation`;
       fetcher = () =>
-        fetch(appendApiPrefix(`/stat/daily-address-creation?limit=${31}`));
+        fetch(appendApiPrefix(`/stat/daily-address-creation?limit=${limit}`));
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       break;
@@ -92,6 +95,13 @@ export default function usePlot(
         break;
       case 'cfxHoldingAccounts':
         listData = data?.data?.rows || [];
+        break;
+      case 'accountGrowth':
+        // filter genesis block
+        listData =
+          data?.list?.filter(
+            d => dayjs(d['day']).diff('2018-01-01', 'day') > 0,
+          ) || [];
         break;
       default:
         listData = data?.list || [];

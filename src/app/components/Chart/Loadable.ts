@@ -19,3 +19,8 @@ export const PieChart = lazyLoad(
   () => import('./index'),
   module => module.PieChart,
 );
+
+export const DataZoomLineChart = lazyLoad(
+  () => import('./index'),
+  module => module.DataZoomLineChart,
+);

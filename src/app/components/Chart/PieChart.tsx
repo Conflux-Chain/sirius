@@ -74,7 +74,7 @@ export const PieChart = ({
                     keepDecimal: false,
                   }),
                 );
-                setColor(['#3ba272', '#fac858']);
+                setColor(['#3ba272', '#fac858', '#ee6666']);
                 break;
               case 'issued':
                 setChartData([
@@ -97,7 +97,7 @@ export const PieChart = ({
                     keepDecimal: false,
                   }),
                 );
-                setColor(['#9a60b4', '#fc8452', '#3ba272']);
+                setColor(['#7067a0', '#fc8452', '#3ba272']);
                 break;
               default:
                 break;

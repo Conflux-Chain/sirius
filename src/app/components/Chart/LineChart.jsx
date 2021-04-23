@@ -5,10 +5,10 @@ import {
   CartesianGrid,
   Line,
   LineChart as Chart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
 } from 'recharts';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -16,6 +16,7 @@ import usePlot from './usePlot';
 import { formatNumber } from '../../../utils';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { DataZoomLineChart } from './Loadable';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -50,6 +51,16 @@ export const LineChart = ({
     width - padding - (hasDurationFilter ? (small ? 50 : 70) : 0);
   const chartHeight = small ? chartWidth * 0.45 : chartWidth * 0.35;
 
+  const limit = [
+    'dailyTransaction',
+    'dailyTransactionCFX',
+    'dailyTransactionTokens',
+    'cfxHoldingAccounts',
+    'accountGrowth',
+  ].includes(indicator)
+    ? 365
+    : 31;
+
   const {
     plot,
     isError,
@@ -58,7 +69,7 @@ export const LineChart = ({
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID, indicator);
+  } = usePlot('day', NUM_X_GRID, indicator, limit);
 
   const initialDomain = {
     min: {
@@ -278,67 +289,83 @@ export const LineChart = ({
             <Loading />
           </LoadingContainer>
         ) : null}
-        <ResponsiveContainer
-          width={isThumb ? '100%' : chartWidth}
-          height={isThumb ? 180 : chartHeight}
-        >
-          <Chart
+        {[
+          'dailyTransaction',
+          'dailyTransactionCFX',
+          'dailyTransactionTokens',
+          'cfxHoldingAccounts',
+          'accountGrowth',
+        ].includes(indicator) && !isThumb ? (
+          <DataZoomLineChart
+            width={width}
+            indicator={indicator}
+            dateKey={xAxisKey()}
+            valueKey={lineKey()}
             data={plot}
-            margin={
-              isThumb
-                ? {
-                    left: 2,
-                    right: 2,
-                    top: 10,
-                    bottom: 10,
-                  }
-                : {
-                    left: 10,
-                    right: 20,
-                    bottom: 20,
-                  }
-            }
+          />
+        ) : (
+          <ResponsiveContainer
+            width={isThumb ? '100%' : chartWidth}
+            height={isThumb ? 180 : chartHeight}
           >
-            <CartesianGrid stroke="#eee" />
-            {plot ? (
-              <XAxis
-                hide={isThumb}
-                dataKey={xAxisKey()}
-                tick={xAxisFormat}
-                interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
-                reversed={!hasDurationFilter}
-                stroke="#333333"
-              />
-            ) : null}
-            <YAxis
-              hide={isThumb}
-              stroke="#333333"
-              tickFormatter={yAxisFormat}
-              domain={[domain.min[indicator], domain.max[indicator]]}
-              width={
-                [
-                  'difficulty',
-                  'hashRate',
-                  'dailyTransaction',
-                  'dailyTransactionCFX',
-                  'dailyTransactionTokens',
-                  'cfxHoldingAccounts',
-                  'accountGrowth',
-                ].includes(indicator)
-                  ? 60
-                  : 50
+            <Chart
+              data={plot}
+              margin={
+                isThumb
+                  ? {
+                      left: 2,
+                      right: 2,
+                      top: 10,
+                      bottom: 10,
+                    }
+                  : {
+                      left: 10,
+                      right: 20,
+                      bottom: 20,
+                    }
               }
-            />
-            <Line
-              type="linear"
-              dataKey={lineKey()}
-              stroke={strokeColor()}
-              strokeWidth={2}
-              dot={!isThumb}
-            />
-            {!isThumb ? <Tooltip content={<CustomTooltip />} /> : null}
-          </Chart>
-        </ResponsiveContainer>
+            >
+              <CartesianGrid stroke="#eee" />
+              {plot ? (
+                <XAxis
+                  hide={isThumb}
+                  dataKey={xAxisKey()}
+                  tick={xAxisFormat}
+                  interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
+                  reversed={!hasDurationFilter}
+                  stroke="#333333"
+                />
+              ) : null}
+              <YAxis
+                hide={isThumb}
+                stroke="#333333"
+                tickFormatter={yAxisFormat}
+                domain={[domain.min[indicator], domain.max[indicator]]}
+                width={
+                  [
+                    'difficulty',
+                    'hashRate',
+                    'dailyTransaction',
+                    'dailyTransactionCFX',
+                    'dailyTransactionTokens',
+                    'cfxHoldingAccounts',
+                    'accountGrowth',
+                  ].includes(indicator)
+                    ? 60
+                    : 50
+                }
+              />
+              <Line
+                type="linear"
+                dataKey={lineKey()}
+                stroke={strokeColor()}
+                strokeWidth={2}
+                dot={!isThumb}
+              />
+              {!isThumb ? <Tooltip content={<CustomTooltip />} /> : null}
+            </Chart>
+          </ResponsiveContainer>
+        )}
         {hasDurationFilter && !isThumb ? (
           <Buttons small={small}>
             {DURATIONS.map(([d, key]) => (

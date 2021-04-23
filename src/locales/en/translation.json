@@ -307,8 +307,8 @@
       "labelOthers": "Others"
     },
     "issued": {
-      "title": "Total Issued",
-      "description": "The total issued supply of CFX.",
+      "title": "Total Supply",
+      "description": "The amount of CFX that are created in the market.",
       "labelFourYearUnlockBalance": "Four Year Unlock",
       "labelTwoYearUnlockBalance": "Two Year Unlock",
       "labelTotalCirculating": "Circulating Supply"
