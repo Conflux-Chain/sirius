@@ -37,7 +37,7 @@ export const Header = memo(() => {
     location.pathname.startsWith('/sponsor') ||
     location.pathname.startsWith('/contract');
   const statisticsMatched =
-    location.pathname.startsWith('/charts') ||
+    location.pathname.startsWith('/chart') ||
     location.pathname.startsWith('/statistics');
   const moreMatched =
     location.pathname.startsWith('/address-converter') ||

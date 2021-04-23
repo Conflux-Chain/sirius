@@ -300,6 +300,19 @@
       "title": "Circulating Supply",
       "description": "Circulating supply contains the CFX in the Zero Address."
     },
+    "circulating": {
+      "title": "Circulating Supply",
+      "description": "Circulating supply contains the CFX in the Zero Address.",
+      "labelZeroAddress": "Zero Address",
+      "labelOthers": "Others"
+    },
+    "issued": {
+      "title": "Total Supply",
+      "description": "The amount of CFX that are created in the market.",
+      "labelFourYearUnlockBalance": "Four Year Unlock",
+      "labelTwoYearUnlockBalance": "Two Year Unlock",
+      "labelTotalCirculating": "Circulating Supply"
+    },
     "zeroAddress": {
       "title": "Zero Address",
       "description": "CFX in Zero address is burned CFX."
@@ -344,6 +357,7 @@
     "viewAll": "View All",
     "viewAllBlocks": "View All Blocks",
     "viewAllTxns": "View All Transactions",
+    "back": "Back",
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
@@ -488,6 +502,7 @@
       "lt10000": "Total of {{total}} records",
       "gte10000": "A total of {{realTotal}} records found (showing the last {{total}} records)"
     },
+    "errorOccurred": "Error occurred",
     "error": {
       "title": "System Error",
       "description": {

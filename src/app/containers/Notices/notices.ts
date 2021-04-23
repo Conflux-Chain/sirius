@@ -43,19 +43,6 @@ export const TethysNotices = [
     },
   },
   {
-    date: '2020-12-08',
-    content: {
-      en: [
-        // 'ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.',
-        'Conflux Tethys Network Upgrade Announcement: Conflux Tethys Network will be upgraded to v1.0.3. In the latest version, more RPC interfaces are provided and the system stability is enhanced. Please make sure to upgrade the node after 16:00 on Nov. 20, 2020 (<a href="https://forum.conflux.fun/t/topic/4319" target="_blank">Click to view details</a>).',
-      ],
-      zh: [
-        // '当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}.',
-        'Conflux Tethys 网络升级公告：Conflux Tethys 网络将升级为 v 1.0.3，本次升级添加了更多 RPC 接口并提升了系统稳定性。请于 2020 年 11 月 20 日 16:00 (GMT+8)之后升级您的节点（<a href="https://forum.conflux.fun/t/topic/4318" target="_blank">详情链接</a>）。',
-      ],
-    },
-  },
-  {
     date: '2020-11-20',
     content: {
       en: [
@@ -171,17 +158,6 @@ export const TestnetNotices = [
       ],
       zh: [
         'Conflux 测试网络将升级为 Conflux v1.1.0-testnet，本次升级目的为可能的升级将要提前在测试网上进行测试。如果该提案没有通过，此变更将在下一个版本中恢复。本次升级将在 4,990,000 区块高度完成，约 2020 年 12 月 8 日 16：00 (GMT+8)（<a href="https://forum.conflux.fun/t/topic/4340" target="_blank">详情链接</a>）。',
-      ],
-    },
-  },
-  {
-    date: '2020-12-08',
-    content: {
-      en: [
-        'Conflux Testnet will be upgraded to Conflux v1.1.0-testnet to test the possible network upgrade in advance. If the proposal is abandoned, the changes will be reverted in the next release. The upgrade will be completed at the block height of 4,990,000 at about 16:00 (GMT+8) on Dec 8th, 2020 (<a href="https://forum.conflux.fun/t/topic/4319" target="_blank">Click to view details</a>).',
-      ],
-      zh: [
-        'Conflux 测试网络将升级为 Conflux v1.1.0-testnet，本次升级目的为可能的升级将要提前在测试网上进行测试。如果该提案没有通过，此变更将在下一个版本中恢复。本次升级将在 4,990,000 区块高度完成，约 2020 年 12 月 8 日 16：00 (GMT+8)（<a href="https://forum.conflux.fun/t/topic/4318" target="_blank">详情链接</a>）。',
       ],
     },
   },

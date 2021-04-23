@@ -7,7 +7,7 @@ exports[`<NotFoundAddressPage /> should match the snapshot 1`] = `
   display: -ms-flexbox;
   display: flex;
   position: absolute;
-  height: calc(100% - 5rem);
+  height: calc(100% - 8rem);
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;

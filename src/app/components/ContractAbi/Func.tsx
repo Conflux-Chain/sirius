@@ -28,6 +28,8 @@ import { TxnAction } from '../../../utils/constants';
 import { ConnectButton } from '../../components/ConnectWallet';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
 
 interface FuncProps {
   type?: string;
@@ -163,6 +165,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             setModalType('success');
             setTxHash(txHash);
             setOutputError('');
+
+            trackEvent({
+              category: ScanEvent.wallet.category,
+              action:
+                ScanEvent.wallet.action.txnAction[code] ||
+                ScanEvent.wallet.action.txnActionUnknown,
+            });
           } catch (error) {
             setModalType('error');
             setOutputError(error.message || '');

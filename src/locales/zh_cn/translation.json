@@ -300,6 +300,19 @@
       "title": "流通量",
       "description": "流通量包含零地址中的 CFX"
     },
+    "circulating": {
+      "title": "流通量",
+      "description": "流通量包含零地址中的 CFX",
+      "labelZeroAddress": "零地址",
+      "labelOthers": "其他"
+    },
+    "issued": {
+      "title": "总发行量",
+      "description": "市场上已被创造的 CFX 总量",
+      "labelFourYearUnlockBalance": "4 年解锁",
+      "labelTwoYearUnlockBalance": "2 年解锁",
+      "labelTotalCirculating": "流通量"
+    },
     "zeroAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"
@@ -344,6 +357,7 @@
     "viewAll": "查看全部",
     "viewAllBlocks": "查看全部区块",
     "viewAllTxns": "查看全部交易",
+    "back": "返回",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
@@ -488,6 +502,7 @@
       "lt10000": "共计 {{total}} 个记录",
       "gte10000": "共找到 {{realTotal}} 个交易（仅展示最新 {{total}} 条记录）"
     },
+    "errorOccurred": "发生错误",
     "error": {
       "title": "系统错误",
       "description": {
