@@ -159,8 +159,8 @@ const Main = styled.div`
 const Top = styled.section`
   display: flex;
   width: 100%;
-  margin-bottom: 2.2857rem;
-  margin-top: 24px;
+  margin-bottom: 22px;
+  margin-top: 32px;
   justify-content: center;
   gap: 24px;
 
@@ -169,6 +169,7 @@ const Top = styled.section`
   }
 
   ${media.s} {
+    margin-top: 24px;
     flex-direction: column;
   }
 `;

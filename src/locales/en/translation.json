@@ -134,6 +134,7 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
+    "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
     "table": {
       "number": "#",
       "token": "Token",

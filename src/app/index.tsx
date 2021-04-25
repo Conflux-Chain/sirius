@@ -335,10 +335,12 @@ export function App() {
 }
 
 const Main = styled.div`
+  box-sizing: border-box;
   position: relative;
   max-width: 1368px;
   margin: 0 auto;
   padding-top: 106px;
+  padding-bottom: 10px;
   min-height: calc(100vh - 327px);
 
   ${media.xl} {

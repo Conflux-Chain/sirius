@@ -17,6 +17,7 @@ import { formatAddress } from '../cfx';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { cfxTokenTypes } from '../constants';
+import { Tooltip } from '../../app/components/Tooltip/Loadable';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -100,13 +101,56 @@ export const token = {
   },
 };
 
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .tooltip,
+  .tooltip-wrapper,
+  > span:first-child {
+    display: inline-flex !important;
+  }
+
+  .tooltip {
+    margin-right: 5px;
+  }
+
+  img {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+`;
+
 export const price = {
   width: 1,
   title: (
     <ContentWrapper right>
-      <Translation>
-        {t => t(translations.general.table.token.price)}
-      </Translation>
+      <IconWrapper>
+        <Tooltip
+          hoverable
+          text={
+            <Translation>
+              {t => (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: t(translations.tokens.dataSource),
+                  }}
+                />
+              )}
+            </Translation>
+          }
+          placement="top"
+        >
+          <img src={imgInfo} alt="?" />
+        </Tooltip>
+        <span>
+          <Translation>
+            {t => t(translations.general.table.token.price)}
+          </Translation>
+        </span>
+      </IconWrapper>
     </ContentWrapper>
   ),
   dataIndex: 'price',
