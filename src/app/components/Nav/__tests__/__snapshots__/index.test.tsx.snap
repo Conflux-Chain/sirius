@@ -97,6 +97,10 @@ exports[`<Nav  /> should match snapshot 1`] = `
   display: flex;
 }
 
+.c6 .notice {
+  max-width: 700px;
+}
+
 .c1 {
   box-sizing: border-box;
   display: -webkit-box;
@@ -258,6 +262,26 @@ exports[`<Nav  /> should match snapshot 1`] = `
   }
 }
 
+@media (max-width:1300px) {
+  .c6 .notice {
+    max-width: calc(100vw - 650px);
+  }
+}
+
+@media (max-width:1024px) {
+  .c1.secondary {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c1.secondary {
+    display: none;
+  }
+}
+
 @media (max-width:1360px) {
   .c1 {
     padding: 0 1rem;
@@ -338,6 +362,11 @@ exports[`<Nav  /> should match snapshot 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    class="c1 secondary"
+  >
+    <div />
   </div>
 </nav>
 `;
@@ -437,6 +466,10 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+.c6 .notice {
+  max-width: 700px;
 }
 
 .c1 {
@@ -604,6 +637,26 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   }
 }
 
+@media (max-width:1300px) {
+  .c6 .notice {
+    max-width: calc(100vw - 650px);
+  }
+}
+
+@media (max-width:1024px) {
+  .c1.secondary {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+@media (max-width:600px) {
+  .c1.secondary {
+    display: none;
+  }
+}
+
 @media (max-width:1360px) {
   .c1 {
     padding: 0 1rem;
@@ -684,6 +737,11 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    class="c1 secondary"
+  >
+    <div />
   </div>
 </nav>
 `;

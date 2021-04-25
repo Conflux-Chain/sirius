@@ -47,7 +47,7 @@ export const DataZoomLineChart = ({
           },
         },
         grid: {
-          left: '60',
+          left: '80',
           right: '10',
           bottom: width < 800 ? '100' : '70',
         },
@@ -82,6 +82,9 @@ export const DataZoomLineChart = ({
             id: 'dataZoomY',
             type: 'slider',
             filterMode: 'empty',
+            labelFormatter: function (value) {
+              return dateFormatter(value);
+            },
           },
         ],
         series: [

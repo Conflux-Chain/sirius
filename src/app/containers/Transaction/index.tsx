@@ -19,6 +19,7 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { Tooltip } from 'app/components/Tooltip';
 
 export function Transaction() {
   const history = useHistory();
@@ -100,15 +101,17 @@ export function Transaction() {
         <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
         {t(translations.transaction.internalTxnsTip.txns)}
       </div>
-      <Switch
-        checked={checked}
-        onChange={handleSwitch}
-        checkedChildren={t(translations.transaction.internalTxns.advanced)}
-        unCheckedChildren={t(translations.transaction.internalTxns.simple)}
-        style={{
-          width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
-        }}
-      />
+      <Tooltip text={t(translations.transaction.internalTxnsTip.tip)}>
+        <Switch
+          checked={checked}
+          onChange={handleSwitch}
+          checkedChildren={t(translations.transaction.internalTxns.advanced)}
+          unCheckedChildren={t(translations.transaction.internalTxns.simple)}
+          style={{
+            width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
+          }}
+        />
+      </Tooltip>
     </StyledTipWrapper>
   );
 

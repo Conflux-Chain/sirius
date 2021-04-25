@@ -11,6 +11,7 @@ import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { useAge } from '../../../utils/hooks/useAge';
+import { Notice } from './Notice';
 
 // import { MarketInfo } from './MarketInfo';
 
@@ -92,7 +93,7 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
-        {/*<Notice />*/}
+        {bp === 's' ? <Notice /> : null}
         {/* <MarketInfo /> */}
         <Top>
           <SmallChartWrap>

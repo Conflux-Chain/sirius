@@ -36,6 +36,7 @@ export const Nav = memo(
     brand = toWrappedArray(brand);
     mainMenu = toWrappedArray(mainMenu);
     topMenu = toWrappedArray(topMenu);
+    const sourceSubMenu = subMenu;
     subMenu = subMenu ? toWrappedArray(subMenu) : null;
 
     return (
@@ -67,8 +68,8 @@ export const Nav = memo(
             <MenuEnd className="navbar-end">{topMenu}</MenuEnd>
           </Menu>
         </Container>
-        {bp !== 's' && bp !== 'm' ? (
-          <Container className="secondary">
+        <Container className="secondary">
+          {bp !== 's' && bp !== 'm' ? (
             <Menu
               visible={visible}
               className={clsx({ 'navbar-menu': true, 'is-active': visible })}
@@ -76,8 +77,10 @@ export const Nav = memo(
               <MenuStart className="navbar-start">{mainMenu}</MenuStart>
               <MenuEnd className="navbar-end">{subMenu}</MenuEnd>
             </Menu>
-          </Container>
-        ) : null}
+          ) : (
+            <div>{sourceSubMenu}</div>
+          )}
+        </Container>
       </Outer>
     );
   },
@@ -196,6 +199,14 @@ const MenuEnd = styled.div`
     justify-content: flex-start;
     flex-direction: column;
   }
+
+  .notice {
+    max-width: 700px;
+
+    @media (max-width: 1300px) {
+      max-width: calc(100vw - 650px);
+    }
+  }
 `;
 const Container = styled.div`
   box-sizing: border-box;
@@ -210,6 +221,15 @@ const Container = styled.div`
   &.secondary {
     margin-top: 1.125rem;
     margin-bottom: 1.125rem;
+
+    ${media.m} {
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+    }
+    ${media.s} {
+      display: none;
+    }
   }
 
   @media (max-width: 1360px) {
