@@ -338,7 +338,7 @@ export const Header = memo(() => {
 
   // notice
   const subMenu = (
-    <NoticeWrapper>
+    <NoticeWrapper className="notice">
       <img src={imgNotice} alt="" />
       <div
         className={`content ${
@@ -497,7 +497,6 @@ const NoticeWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  max-width: 680px;
 
   img {
     width: 16px;
@@ -519,6 +518,7 @@ const NoticeWrapper = styled.div`
   .more {
     white-space: nowrap;
     margin-left: 24px;
+    margin-right: 10px;
     border-bottom: 1px solid #1e3de4;
 
     &:hover,

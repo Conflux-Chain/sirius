@@ -348,7 +348,7 @@ const Main = styled.div`
   }
 
   ${media.m} {
-    padding-top: 70px;
+    padding-top: 90px;
   }
 
   ${media.s} {
