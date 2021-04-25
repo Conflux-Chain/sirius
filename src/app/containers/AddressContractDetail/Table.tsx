@@ -364,7 +364,7 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 7, 6, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 8, 7, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     tokenColunms.from,
@@ -679,6 +679,11 @@ export function Table({ address, addressInfo }) {
                   key: 'status',
                   value: '1',
                   name: t(translations.transaction.viewFailedTxns),
+                },
+                {
+                  key: 'txType',
+                  value: 'create',
+                  name: t(translations.transaction.viewCreationTxns),
                 },
               ]}
             />

@@ -571,6 +571,7 @@
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
     "viewFailedTxns": "View Failed Txns",
+    "viewCreationTxns": "View Contract Creation Txns",
     "title": "Transaction",
     "description": "Transaction",
     "hash": "Transaction Hash",
