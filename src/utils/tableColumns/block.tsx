@@ -1,19 +1,15 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { Text } from '../../app/components/Text/Loadable';
-import { Link } from '../../app/components/Link/Loadable';
-import { CountDown } from '../../app/components/CountDown/Loadable';
-import {
-  formatString,
-  formatNumber,
-  getPercent,
-  fromDripToCfx,
-  toThousands,
-} from '../../utils/';
+import { Text } from 'app/components/Text/Loadable';
+import { Link } from 'app/components/Link/Loadable';
+import { formatNumber, getPercent, fromDripToCfx, toThousands } from 'utils/';
 import imgPivot from 'images/pivot.svg';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { AddressContainer } from 'app/components/AddressContainer';
+import { ColumnAge } from './utils';
+import { Progress } from '@jnoodle/antd';
+import BigNumber from 'bignumber.js';
 
 export const epoch = {
   title: (
@@ -67,7 +63,7 @@ export const hash = {
   render: value => (
     <Link href={`/block/${value}`}>
       <Text span hoverValue={value}>
-        {formatString(value, 'hash')}
+        <SpanWrap>{value}</SpanWrap>
       </Text>
     </Link>
   ),
@@ -84,7 +80,7 @@ export const hashWithPivot = {
       <StyledEpochWrapper>
         <Link href={`/block/${value}`}>
           <Text span hoverValue={value}>
-            {formatString(value, 'hash')}
+            <SpanWrap>{value}</SpanWrap>
           </Text>
         </Link>
         {pivotTag}
@@ -137,6 +133,46 @@ export const gasUsedPercent = {
   },
 };
 
+export const gasUsedPercentWithProgress = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.block.gasUsedPercent)}
+    </Translation>
+  ),
+  dataIndex: 'gasUsed',
+  key: 'gasUsed',
+  width: 1,
+  render: (value, row: any) => {
+    const gasUsed = new BigNumber(row.gasUsed);
+    const percent = Number(
+      gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
+    );
+
+    if (value) {
+      return (
+        <StyledGasPercentWrapper>
+          <div className="gas-detail">
+            {toThousands(gasUsed.toFixed())}{' '}
+            <span className="gas-detail-percent">
+              ({getPercent(row.gasUsed, row.gasLimit)})
+            </span>
+          </div>
+          <Progress
+            percent={percent}
+            size="small"
+            showInfo={false}
+            strokeWidth={2}
+            strokeColor="#1e3de4"
+            trailColor="#eeeeee"
+          />
+        </StyledGasPercentWrapper>
+      );
+    } else {
+      return '--';
+    }
+  },
+};
+
 export const reward = {
   title: (
     <Translation>{t => t(translations.general.table.block.reward)}</Translation>
@@ -154,15 +190,8 @@ export const reward = {
     ),
 };
 
-export const age = {
-  title: (
-    <Translation>{t => t(translations.general.table.block.age)}</Translation>
-  ),
-  dataIndex: 'syncTimestamp',
-  key: 'syncTimestamp',
-  width: 1,
-  render: value => <CountDown from={value} />,
-};
+export const age = (ageFormat, toggleAgeFormat) =>
+  ColumnAge({ ageFormat, toggleAgeFormat });
 
 export const difficulty = {
   title: (
@@ -196,5 +225,27 @@ const StyledEpochWrapper = styled.span`
     width: 3rem;
     height: 1.4286rem;
     margin-left: 0.5714rem;
+  }
+`;
+
+const SpanWrap = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
+  vertical-align: bottom;
+`;
+
+const StyledGasPercentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  .gas-detail {
+    margin-bottom: -10px;
+  }
+
+  .gas-detail-percent {
+    color: #999999;
+    font-size: 12px;
   }
 `;

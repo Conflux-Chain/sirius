@@ -2,30 +2,31 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType, useTableData } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
-import { useTableData } from '../../components/TabsTablePanel';
 import {
-  transactionColunms,
   blockColunms,
   tokenColunms,
+  transactionColunms,
 } from '../../../utils/tableColumns';
 import { toThousands } from '../../../utils';
 import styled from 'styled-components/macro';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { useAge } from '../../../utils/hooks/useAge';
 
 export function CFXTransfers() {
   const { t } = useTranslation();
   const url = '/transfer?transferType=CFX';
+  const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsCFXTransferWidth = [4, 3, 6, 5, 3, 5];
+  const columnsCFXTransferWidth = [4, 4, 8, 7, 4, 5];
   const columnsCFXTrasfer: ColumnsType = [
     blockColunms.epoch,
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
     transactionColunms.value,
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
 
   const { total } = useTableData(url);

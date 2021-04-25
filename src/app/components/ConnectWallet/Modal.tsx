@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled, { keyframes } from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';

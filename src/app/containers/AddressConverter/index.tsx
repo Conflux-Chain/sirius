@@ -343,6 +343,16 @@ export function AddressConverter() {
                 {t(translations.addressConverter.tip3end)}
               </Link>
             </span>,
+            <span>
+              {t(translations.addressConverter.tip4)}
+              <Link
+                target="_blank"
+                href={t(translations.addressConverter.tip4Link)}
+              >
+                {t(translations.addressConverter.tip4Middle)}
+              </Link>
+              {t(translations.addressConverter.tip4end)}
+            </span>,
           ]}
         ></Remark>
       </StyledRemarkWrapper>

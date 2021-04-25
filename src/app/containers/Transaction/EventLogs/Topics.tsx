@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { Select } from '../../../components/Select';
+import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from '../../../components/Link';
+import { Link } from 'app/components/Link';
+import { ContractDetail } from './ContractDetail';
 
-export const Topics = ({ data, signature }) => {
+export const Topics = ({ data, signature, logContractInfo }) => {
   const { t } = useTranslation();
   const [selectMap, setSelectMap] = useState(() => {
     return data.reduce((prev, curr) => {
@@ -70,7 +71,14 @@ export const Topics = ({ data, signature }) => {
           value = valueMap[name];
 
           if (name === 'address') {
-            value = <Link href={`/address/${value}`}>{value}</Link>;
+            const contractInfo = logContractInfo[valueMap.decode];
+
+            value = (
+              <>
+                <Link href={`/address/${value}`}>{value} </Link>
+                <ContractDetail info={contractInfo}></ContractDetail>
+              </>
+            );
           }
 
           select = (
@@ -104,6 +112,10 @@ export const Topics = ({ data, signature }) => {
       })}
     </StyledTopicsWrapper>
   );
+};
+
+Topics.defaultProps = {
+  logContractInfo: {},
 };
 
 const StyledTopicsWrapper = styled.div`

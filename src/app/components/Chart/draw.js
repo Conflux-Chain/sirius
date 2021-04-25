@@ -90,7 +90,7 @@ export default function createDraw({
     ctxBg.clearRect(0, 0, width, height);
     ctxBg.beginPath();
     ctxBg.fillStyle = 'rgba(0,0,0,0.87)';
-    ctxBg.font = '12px Circular Std';
+    ctxBg.fontSize = '12px';
 
     //draw borders
     if (!small) {
@@ -227,13 +227,13 @@ export default function createDraw({
           //text
           ctxLine.fillStyle = 'white';
           ctxLine.textAlign = 'left';
-          ctxLine.font = '10px Circular Std';
+          ctxLine.fonSize = '10px';
           ctxLine.fillText(
             dayjs.unix(t).format(popupFormat),
             rectTL + 5,
             y - POPUP_PADDING - TRI_HEIGHT - RECT_HEIGHT * 0.6,
           );
-          ctxLine.font = 'bold 12px Circular Std';
+          ctxLine.font = '12px bold';
           ctxLine.fillText(
             formatNumber(v) + (indicator === 'blockTime' ? 's' : ''),
             rectTL + 5,

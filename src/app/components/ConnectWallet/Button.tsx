@@ -3,7 +3,7 @@
  * Button
  *
  */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
@@ -14,6 +14,8 @@ import { formatNumber } from 'utils';
 import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
 import BigNumber from 'bignumber.js';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -57,16 +59,32 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = accounts[0];
+        buttonText = accounts[0].replace(/(.*:.{6}).*(.{8})/, '$1...$2');
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
   }
 
+  useEffect(() => {
+    if (connected === 0) {
+      trackEvent({
+        category: ScanEvent.wallet.category,
+        action: ScanEvent.wallet.action.disconnect,
+      });
+    } else if (connected === 1) {
+      trackEvent({
+        category: ScanEvent.wallet.category,
+        action: ScanEvent.wallet.action.connect,
+      });
+    }
+  }, [connected]);
+
   return (
     <ButtonWrapper
       className={clsx('connect-wallet-button', className, {
         pending: hasPendingRecords,
+        connected: accounts.length && isValid,
+        notConnected: !(accounts.length && isValid),
       })}
       onClick={onClick}
     >
@@ -93,7 +111,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-items: center;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 500;
   color: #65709a;
   cursor: pointer;
@@ -130,24 +148,17 @@ const ButtonWrapper = styled.div`
     margin-right: 0.4286rem;
   }
 
-  .text {
-    max-width: 9.2857rem;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
   .balance {
-    padding: 0 0.8571rem 0 8px;
+    padding: 0 0.8571rem 0 0.5714rem;
   }
 
   .connect-wallet-button-left {
     display: inline-flex;
     align-items: center;
-    height: 32px;
-    padding: 0 12px;
+    height: 2.2857rem;
+    padding: 0 0.8571rem;
     background: #f5f6fa;
-    border-radius: 50px;
+    border-radius: 3.5714rem;
     cursor: pointer;
   }
 `;

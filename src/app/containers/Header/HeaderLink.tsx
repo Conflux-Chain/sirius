@@ -15,6 +15,7 @@ export interface HeaderLink {
   title: HeaderLinkTitle;
   href?: string;
   name?: string;
+  className?: string;
   onClick?: MouseEventHandler;
   children?: HeaderLink[];
   isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
@@ -29,6 +30,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
       title,
       href,
       name,
+      className = '',
       onClick,
       children,
       isMatchedFn,
@@ -58,7 +60,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
         key={idx}
         href={href}
         name={name}
-        className={`navbar-link level-${level}`}
+        className={`navbar-link level-${level} ${className}`}
         onClick={onClick}
         matched={matched}
       >
@@ -71,16 +73,19 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
   return links.map(parseLink);
 }
 
-const Menu = styled.div`
+const Menu = styled.div<{ name?: string }>`
   position: absolute;
   width: max-content;
-  right: 0;
+  ${props => (props.name === 'switch-network' ? 'right: 0;' : 'left: 0;')}
+  top: 2.3rem;
   background-color: white;
   box-shadow: 0rem 0.43rem 1.14rem 0rem rgba(20, 27, 50, 0.08);
   border-radius: 0.14rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  z-index: 50;
+
   a.link.navbar-link {
     svg {
       visibility: hidden;
@@ -100,11 +105,12 @@ const Menu = styled.div`
   }
 
   ${media.m} {
+    top: 0;
     box-shadow: none;
 
     position: inherit;
-    background-color: transparent;
-    padding-left: 2.43rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 0;
   }
 `;
 
@@ -180,7 +186,6 @@ export const HeaderLink: React.FC<{
     return (
       <WrappLink
         ref={ref}
-        style={{ marginLeft: bp === 'm' || bp === 's' ? '-18px' : 0 }}
         onClick={e => {
           toggle();
           e.preventDefault();
@@ -201,7 +206,11 @@ export const HeaderLink: React.FC<{
               {bp !== 's' && bp !== 'm' && isMenu && <ChevronDown size={18} />}
             </UILink>
           </WrappLink>
-          {expanded && <Menu className="header-link-menu">{links}</Menu>}
+          {expanded && (
+            <Menu className="header-link-menu" name={name}>
+              {links}
+            </Menu>
+          )}
         </div>
       </WrappLink>
     );
@@ -209,18 +218,40 @@ export const HeaderLink: React.FC<{
 };
 
 const WrappLink = styled.span`
-  min-height: 2.14rem;
+  //min-height: 2.14rem;
   .navbar-link {
     position: relative;
     cursor: pointer;
     font-weight: 500;
     &:hover {
-      background-color: rgba(100%, 87%, 11%, 70%);
+      color: #1e3de4 !important;
+      //background-color: rgba(100%, 87%, 11%, 70%);
     }
     &.matched {
-      background-color: #fede1b;
+      color: #1e3de4 !important;
+      //background-color: #fede1b;
       &:hover {
+        color: #1e3de4 !important;
+        //background-color: #fede1b;
+      }
+    }
+  }
+
+  ${media.m} {
+    .navbar-link {
+      &:hover {
+        color: #65709a !important;
+      }
+      &.level-0:hover:not(.matched) {
+        background-color: #f1f4f6 !important;
+      }
+      &.matched {
+        color: #65709a !important;
         background-color: #fede1b;
+        &:hover {
+          color: #65709a !important;
+          background-color: #fede1b;
+        }
       }
     }
   }
@@ -247,16 +278,20 @@ const WrappLink = styled.span`
     align-items: center;
     justify-content: space-between;
     color: #65709a;
-    padding: 0.43rem 1.5rem;
+    padding: 0 1rem;
 
-    ${media.l} {
-      padding: 0.43rem 1.15rem;
+    &.home {
+      padding-left: 0;
+      padding-right: 2rem;
     }
 
     &.level-1 {
       width: auto;
+      padding-top: 0.43rem;
+      padding-bottom: 0.43rem;
       &.matched {
-        background-color: #65709a;
+        background-color: #fff;
+        //background-color: #65709a;
       }
       :hover:not(.matched) {
         background-color: #f1f4f6;
@@ -271,8 +306,24 @@ const WrappLink = styled.span`
     a.link.navbar-link {
       flex-direction: row;
       color: #aab9eb;
+      padding-top: 0.43rem;
+      padding-bottom: 0.43rem;
       :hover {
         color: #aab9eb;
+      }
+      &.level-0 {
+        flex-direction: row-reverse;
+      }
+      &.level-1 {
+        &.matched {
+          background-color: #fede1b;
+        }
+      }
+
+      &.home {
+        flex-direction: row;
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
     }
   }

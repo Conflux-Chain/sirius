@@ -3,7 +3,7 @@ import { media } from 'styles/media';
 
 export const Main = styled.div`
   padding: 2.29rem 0 0;
-  max-width: 73.1429rem;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -53,10 +53,11 @@ export const Top = styled.section`
   margin-bottom: 1.71rem;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 24px;
 
   ${media.s} {
     > div {
-      margin-bottom: 1rem;
+      margin-bottom: 0;
     }
     margin-bottom: 1rem;
   }

@@ -17,6 +17,7 @@ import queryString from 'query-string';
 import { useAccounts } from '../../../utils/hooks/usePortal';
 import { AddressContainer } from '../../components/AddressContainer/Loadable';
 import { formatAddress } from '../../../utils/cfx';
+import { monospaceFont } from '../../../styles/variable';
 const { ContentWrapper } = tableColumnsUtils;
 
 export function Accounts() {
@@ -162,8 +163,9 @@ export function Accounts() {
 const StyledTableWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 2.57rem;
   background-color: #fff;
-  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-family: ${monospaceFont};
 `;
 
 const StyledSelectWrapper = styled.div<{

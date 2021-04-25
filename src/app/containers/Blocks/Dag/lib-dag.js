@@ -10,8 +10,8 @@ const NON_PIVOT_R = [6, 6];
 const MAX_PIVOT_R = PIVOT_R[1];
 const MAX_NON_PIVOT_R = NON_PIVOT_R[1];
 
-const TITLE_FONT = 'bold 12px Circular Std';
-const TXT_FONT = 'normal 10px Circular Std';
+const TITLE_FONT = '12px bold';
+const TXT_FONT = '10px normal';
 
 function scaleLinear() {
   let domain, range, clamp;

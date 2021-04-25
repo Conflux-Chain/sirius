@@ -12,8 +12,9 @@ import createBreakpoint from './createBreakpoint';
 export const sizes = {
   s: 600,
   m: 1024,
-  l: 1440,
-  xl: 1920,
+  l: 1280,
+  xl: 1440,
+  xxl: 1920,
 };
 
 export const useBreakpoint = createBreakpoint({
@@ -21,6 +22,7 @@ export const useBreakpoint = createBreakpoint({
   m: sizes.m,
   l: sizes.l,
   xl: sizes.xl,
+  xxl: sizes.xxl,
 });
 
 /* Example
@@ -42,6 +44,7 @@ export const media = {
   m: customMediaQuery('m'),
   l: customMediaQuery('l'),
   xl: customMediaQuery('xl'),
+  xxl: customMediaQuery('xxl'),
 };
 
 /* Example

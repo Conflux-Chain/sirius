@@ -1,30 +1,27 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { Card } from '@cfxjs/react-ui';
-import { useBlockQuery } from '../../../utils/api';
-import { Description } from '../../components/Description/Loadable';
-import { CopyButton } from '../../components/CopyButton/Loadable';
-import { Link } from '../../components/Link/Loadable';
-import SkeletonContainer from '../../components/SkeletonContainer/Loadable';
-import { Tooltip } from '../../components/Tooltip/Loadable';
-import { Security } from '../../components/Security/Loadable';
-import { reqConfirmationRiskByHash } from '../../../utils/httpRequest';
+import { useBlockQuery } from 'utils/api';
+import { Description } from 'app/components/Description/Loadable';
+import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { Link } from 'app/components/Link/Loadable';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Security } from 'app/components/Security/Loadable';
 import { useHistory } from 'react-router-dom';
-import {
-  delay,
-  getPercent,
-  fromDripToCfx,
-  formatTimeStamp,
-  toThousands,
-} from '../../../utils';
-import { AddressContainer } from '../../components/AddressContainer';
-import { formatAddress } from '../../../utils/cfx';
-export function DescriptionPanel({ hash: blockHash }) {
+import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
+import { AddressContainer } from 'app/components/AddressContainer';
+import { formatAddress } from 'utils/cfx';
+import { useParams } from 'react-router-dom';
+
+export function DescriptionPanel() {
+  const { hash: blockHash } = useParams<{
+    hash: string;
+  }>();
   const history = useHistory();
   const { t } = useTranslation();
-  const [risk, setRisk] = useState('');
   let loading = false;
   const hashQuery = useMemo(() => ({ hash: blockHash }), [blockHash]);
   const { data } = useBlockQuery(hashQuery);
@@ -39,22 +36,6 @@ export function DescriptionPanel({ hash: blockHash }) {
 
   const intervalToClear = useRef(false);
   if (!data) loading = true;
-
-  const getConfirmRisk = async blockHash => {
-    intervalToClear.current = true;
-    let riskLevel;
-    while (intervalToClear.current) {
-      riskLevel = await reqConfirmationRiskByHash(blockHash);
-      setRisk(riskLevel);
-      if (riskLevel === '') {
-        await delay(1000);
-      } else if (riskLevel === 'lv0') {
-        intervalToClear.current = false;
-      } else {
-        await delay(10 * 1000);
-      }
-    }
-  };
 
   const {
     hash,
@@ -71,9 +52,6 @@ export function DescriptionPanel({ hash: blockHash }) {
     size,
     gasLimit,
   } = data || {};
-  if (data) {
-    getConfirmRisk(hash);
-  }
 
   useEffect(() => {
     return () => {
@@ -176,7 +154,7 @@ export function DescriptionPanel({ hash: blockHash }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Security type={risk}></Security>
+            <Security blockHash={hash}></Security>
           </SkeletonContainer>
         </Description>
         <Description

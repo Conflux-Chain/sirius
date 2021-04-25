@@ -23,6 +23,10 @@ export const cfxTokenTypes = {
   erc777: 'ERC777',
   erc721: 'ERC721',
   erc1155: 'ERC1155',
+  crc20: 'CRC20',
+  crc777: 'CRC777',
+  crc721: 'CRC721',
+  crc1155: 'CRC1155',
   cfx: 'CFX',
 };
 export const governanceAddressTestnet =

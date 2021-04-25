@@ -192,13 +192,15 @@
     "more": "更多",
     "charts": "图表",
     "statistics": "最佳统计数据",
-    "testnet": "Testnet",
-    "oceanus": "Tethys",
-    "searchPlaceHolder": "请输入纪元/区块哈希/交易哈希/地址",
-    "searchPlaceHolderMobile": "纪元 / 区块哈希 / 交易哈希 / 地址",
+    "testnet": "Conflux Testnet",
+    "oceanus": "Conflux Tethys",
+    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址",
+    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址",
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
-    "blocknumberCalc": "区块计算器"
+    "blocknumberCalc": "区块计算器",
+    "notice": "通知中心",
+    "learnMore": "了解更多"
   },
   "footer": {
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
@@ -215,7 +217,13 @@
     "blocknumberCalc": "区块计算器",
     "preference": "偏好设置",
     "contactUs": "联系我们",
-    "feedback": "反馈"
+    "feedback": "反馈",
+    "developResource": {
+      "title": "开发中心",
+      "developerDocuments": "开发者文档",
+      "confluxStudio": "Conflux Studio",
+      "confluxTruffle": "Conflux Truffle"
+    }
   },
   "packing": {
     "title": "您的交易正在打包，请稍后...",
@@ -292,6 +300,19 @@
       "title": "流通量",
       "description": "流通量包含零地址中的 CFX"
     },
+    "circulating": {
+      "title": "流通量",
+      "description": "流通量包含零地址中的 CFX",
+      "labelZeroAddress": "零地址",
+      "labelOthers": "其他"
+    },
+    "issued": {
+      "title": "总发行量",
+      "description": "市场上已被创造的 CFX 总量",
+      "labelFourYearUnlockBalance": "4 年解锁",
+      "labelTwoYearUnlockBalance": "2 年解锁",
+      "labelTotalCirculating": "流通量"
+    },
     "zeroAddress": {
       "title": "零地址",
       "description": "零地址中的 CFX 为已销毁的 CFX"
@@ -310,7 +331,19 @@
     },
     "cfxHoldingAccounts": {
       "title": "CFX 持有账户数",
-      "description": "Conflux 网络上持有 CFX 的账户的总数 "
+      "description": "Conflux 网络上持有 CFX 的账户的总数"
+    },
+    "activeAccounts": {
+      "title": "活跃账户数",
+      "description": "Conflux 网络上每日活跃的账户数量"
+    },
+    "accountGrowth": {
+      "title": "用户增长",
+      "description": "Conflux 网络上每日新增的账户数量"
+    },
+    "contractGrowth": {
+      "title": "合约增长",
+      "description": "Conflux 网络上每日新增的合约数量"
     }
   },
   "general": {
@@ -324,6 +357,7 @@
     "viewAll": "查看全部",
     "viewAllBlocks": "查看全部区块",
     "viewAllTxns": "查看全部交易",
+    "back": "返回",
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
@@ -350,6 +384,8 @@
     "table": {
       "noData": "暂无相关记录",
       "whoops": "哎呀！",
+      "dateTime": "日期时间（本地）",
+      "switchAgeTip": "点击切换为{{format}}格式显示",
       "block": {
         "epoch": "纪元",
         "position": "位置",
@@ -466,6 +502,7 @@
       "lt10000": "共计 {{total}} 个记录",
       "gte10000": "共找到 {{realTotal}} 个交易（仅展示最新 {{total}} 条记录）"
     },
+    "errorOccurred": "发生错误",
     "error": {
       "title": "系统错误",
       "description": {
@@ -531,6 +568,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "overview": "概览",
     "viewOutgoingTxns": "查看发送交易",
     "viewIncomingTxns": "查看接收交易",
     "viewFailedTxns": "查看失败交易",
@@ -577,12 +615,17 @@
       "6": "合约部署失败。",
       "7": "未知错误。"
     },
-    "internalTxns": "内部交易",
+    "internalTxns": {
+      "title": "内部交易",
+      "simple": "简单",
+      "advanced": "高级"
+    },
     "internalTxnsTip": {
       "from": "该合约调用从",
       "to": "到",
       "produced": "共生成",
-      "txns": "个内部交易。"
+      "txns": "个内部交易。",
+      "tip": "“高级”功能支持显示价值为 0 的 CFX 转移，而“简单”功能仅显示价值大于 0 的 CFX 转移。"
     },
     "logs": {
       "title": "事件日志",
@@ -597,6 +640,7 @@
     }
   },
   "block": {
+    "overview": "概览",
     "title": "区块",
     "description": "区块",
     "blockHeight": "区块高度",
@@ -662,6 +706,10 @@
     "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37。",
+    "tip4": "4. 为防止资产丢失，请仔细查看",
+    "tip4Link": "https://forum.conflux.fun/t/topic/6720",
+    "tip4Middle": "有关地址格式的资产转账说明",
+    "tip4end": "。",
     "errorMessage": {
       "0x0": "该地址为非内置合约或非零地址",
       "0x8": "该合约不存在，请谨慎操作"
@@ -692,12 +740,12 @@
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
-      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
-      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登陆 Conflux 钱包账户，不会对个人资产有任何影响。"
+      "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "link": "https://forum.conflux.fun/t/topic/5386",
     "testnetLink": "https://forum.conflux.fun/t/topic/5386"

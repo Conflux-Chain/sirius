@@ -121,6 +121,7 @@ const SelectWrapper = styled.div`
   font-size: 1rem;
 `;
 const SelectTokenBox = styled.div`
+  position: relative;
   min-width: 9rem;
   height: 2.57rem;
   border-radius: 0.29rem;
@@ -146,15 +147,26 @@ const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
 const SelectDropdown = styled.div`
   z-index: 100;
   position: absolute;
-  margin-left: -2.1429rem;
-  top: 8rem;
+  left: -1.2857rem;
+  top: 4.5rem;
+  min-width: 400px;
+
   .token-balance-select-content.card > .content {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+  .left {
+    width: 60% !important;
+  }
+  ${media.m} {
+    top: 3.5rem;
+    min-width: 350px;
+  }
   ${media.s} {
-    top: 5rem;
-    right: 5.5rem;
+    .left {
+      width: 100% !important;
+      max-width: 310px !important;
+    }
   }
 `;
 

@@ -12,11 +12,12 @@ import { formatBalance, formatNumber, toThousands } from '../../../utils';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { AddressContainer } from '../../components/AddressContainer';
 import { LinkA } from '../../../utils/tableColumns/token';
-import ERC20bg from '../../../images/token/erc20bg.png';
-import ERC721bg from '../../../images/token/erc721bg.png';
-import ERC1155bg from '../../../images/token/erc1155bg.png';
+import CRC20bg from '../../../images/token/crc20bg.png';
+import CRC721bg from '../../../images/token/crc721bg.png';
+import CRC1155bg from '../../../images/token/crc1155bg.png';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { formatAddress } from '../../../utils/cfx';
+import { useBreakpoint } from '../../../styles/media';
 
 export interface BasicProps {
   address?: string;
@@ -47,6 +48,7 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
 
   const fieldPrice = {
     title: (
@@ -99,7 +101,7 @@ export const Basic = ({
     children:
       tokenAddress !== undefined ? (
         <>
-          <AddressContainer value={tokenAddress} />{' '}
+          <AddressContainer value={tokenAddress} isFull={bp === 'xxl'} />{' '}
           <CopyButton copyText={formatAddress(tokenAddress)} />
         </>
       ) : (
@@ -257,17 +259,17 @@ const TokenTypeTag = styled.div`
   }
 
   &.ERC20 {
-    background: url(${ERC20bg}) no-repeat right top;
+    background: url(${CRC20bg}) no-repeat right top;
     background-size: 118px 30px;
   }
 
   &.ERC721 {
-    background: url(${ERC721bg}) no-repeat right top;
+    background: url(${CRC721bg}) no-repeat right top;
     background-size: 118px 30px;
   }
 
   &.ERC1155 {
-    background: url(${ERC1155bg}) no-repeat right top;
+    background: url(${CRC1155bg}) no-repeat right top;
     background-size: 118px 30px;
   }
 `;

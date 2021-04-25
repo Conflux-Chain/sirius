@@ -2,19 +2,20 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType, useTableData } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
-import { useTableData } from '../../components/TabsTablePanel';
 import { transactionColunms } from '../../../utils/tableColumns';
 import { toThousands } from '../../../utils';
 import styled from 'styled-components/macro';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { useAge } from '../../../utils/hooks/useAge';
 
 export function Transactions() {
   const { t } = useTranslation();
+  const [ageFormat, toggleAgeFormat] = useAge();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 5, 5, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.from,
@@ -22,7 +23,7 @@ export function Transactions() {
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
-    transactionColunms.age,
+    transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
   const { total } = useTableData(url);

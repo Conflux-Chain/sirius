@@ -91,30 +91,6 @@ export const toThousands = (num, delimiter = ',', prevDelimiter = ',') => {
     }, '');
 };
 
-const riskDivided = new BigNumber(2).pow(256).minus(1);
-const eps = new BigNumber(1e-6);
-
-export function transferRisk(riskStr) {
-  const riskNum = new BigNumber(riskStr, 16).dividedBy(riskDivided);
-  if (riskNum.isNaN()) {
-    return '';
-  }
-  // if risk > 1e-4*(1+eps) =>
-  if (riskNum.isGreaterThan(new BigNumber(1e-4).times(eps.plus(1)))) {
-    return 'lv3';
-  }
-  // risk > 1e-6*(1+eps)
-  if (riskNum.isGreaterThan(new BigNumber(1e-6).times(eps.plus(1)))) {
-    return 'lv2';
-  }
-  // risk > 1e-8*(1+eps)
-  if (riskNum.isGreaterThan(new BigNumber(1e-8).times(eps.plus(1)))) {
-    return 'lv1';
-  }
-
-  return 'lv0';
-}
-
 export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
   if (str) {
     const length = str.length;
@@ -298,7 +274,7 @@ export const formatString = (
       result = getEllipsStr(str, 14, 0);
       break;
     case 'hash':
-      result = getEllipsStr(str, 8, 0);
+      result = getEllipsStr(str, 10, 0);
       break;
     case 'address':
       result = getEllipsStr(str, 6, 4);

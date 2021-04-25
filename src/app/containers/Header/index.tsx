@@ -8,19 +8,22 @@ import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { TextLogo } from '../../components/TextLogo';
+import { TextLogo } from 'app/components/TextLogo';
 import { Search } from './Search';
-import { ConnectWallet } from '../../components/ConnectWallet';
+import { ConnectWallet } from 'app/components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
-import { Nav } from '../../components/Nav';
+import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
 import { useTestnet, toTestnet, toMainnet } from 'utils/hooks/useTestnet';
 import { translations } from 'locales/i18n';
-import { useLocation } from 'react-use';
+import { useLocation } from 'react-router';
 import imgConfiPlanet from 'images/confi-planet.png';
-import { ScanEvent } from '../../../utils/gaConstants';
-import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { trackEvent } from 'utils/ga';
+import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
+import imgNotice from 'images/notice2.png';
+import { Link } from '../../components/Link/Loadable';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -31,15 +34,15 @@ export const Header = memo(() => {
 
   const location = useLocation();
   const contractMatched =
-    location?.pathname?.startsWith('/sponsor') ||
-    location?.pathname?.startsWith('/contract');
+    location.pathname.startsWith('/sponsor') ||
+    location.pathname.startsWith('/contract');
   const statisticsMatched =
-    location?.pathname?.startsWith('/charts') ||
-    location?.pathname?.startsWith('/statistics');
-  // const moreMatched =
-  //   location?.pathname?.startsWith('/address-converter') ||
-  //   location?.pathname?.startsWith('/push-tx') ||
-  //   location?.pathname?.startsWith('/block-countdown');
+    location.pathname.startsWith('/chart') ||
+    location.pathname.startsWith('/statistics');
+  const moreMatched =
+    location.pathname.startsWith('/address-converter') ||
+    location.pathname.startsWith('/push-tx') ||
+    location.pathname.startsWith('/block-countdown');
   const bp = useBreakpoint();
 
   const startLinks: HeaderLinks = [
@@ -48,6 +51,7 @@ export const Header = memo(() => {
       title: t(translations.header.home),
       name: ScanEvent.menu.action.home,
       href: '/',
+      className: 'home',
     },
     // blockchain
     {
@@ -101,7 +105,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens20,
-          href: '/tokens/erc20',
+          href: '/tokens/crc20',
         },
         {
           // erc 721
@@ -110,7 +114,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens721,
-          href: '/tokens/erc721',
+          href: '/tokens/crc721',
         },
         {
           // erc 1155
@@ -119,7 +123,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens1155,
-          href: '/tokens/erc1155',
+          href: '/tokens/crc1155',
         },
       ],
     },
@@ -187,38 +191,42 @@ export const Header = memo(() => {
       ],
     },
     // more
-    // {
-    //   title: t(translations.header.more),
-    //   matched: moreMatched,
-    //   children: [
-    //     {
-    //       title: [
-    //         t(translations.header.addressConverter),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/address-converter',
-    //     },
-    //     {
-    //       title: [
-    //         t(translations.header.broadcastTx),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/push-tx',
-    //     },
-    //     {
-    //       title: [
-    //         t(translations.header.blocknumberCalc),
-    //         <Check size={18} key="check" />,
-    //       ],
-    //       href: '/block-countdown',
-    //     },
-    //   ],
-    // },
+    {
+      title: t(translations.header.more),
+      matched: moreMatched,
+      children: [
+        {
+          title: [
+            t(translations.header.addressConverter),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.addressConverter,
+          href: '/address-converter',
+        },
+        {
+          title: [
+            t(translations.header.broadcastTx),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.broadcastTx,
+          href: '/push-tx',
+        },
+        {
+          title: [
+            t(translations.header.blocknumberCalc),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.blocknumberCalc,
+          href: '/block-countdown',
+        },
+      ],
+    },
   ];
 
   const endLinks: HeaderLinks = [
     {
       // switch network
+      name: 'switch-network',
       title: isTestnet
         ? t(translations.header.testnet)
         : t(translations.header.oceanus),
@@ -309,28 +317,59 @@ export const Header = memo(() => {
           alt="conflux scan logo"
           src={imgConfiPlanet}
         />
-        {bp !== 's' && bp !== 'm' && <TextLogo changeColorOnMobile />}
+        <TextLogo />
       </RouterLink>
     </LogoWrapper>
   );
-  const menuStart = [
-    (bp === 'm' || bp === 's') && <TextLogo />,
-    ...startLinksJSX,
-  ];
-  const menuEnd = [
+  const mainMenu = [...startLinksJSX];
+  const topMenu = [
     bp !== 'm' && bp !== 's' && (
       <>
-        <Search />
-        <ConnectWallet />
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
+        <WalletWrapper>
+          <ConnectWallet />
+        </WalletWrapper>
       </>
     ),
     endLinksJSX,
   ];
 
+  // notice
+  const subMenu = (
+    <NoticeWrapper className="notice">
+      <img src={imgNotice} alt="" />
+      <div
+        className={`content ${
+          (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
+            ? 'hot'
+            : ''
+        }`}
+      >
+        {isTestnet
+          ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
+          : CurrentTethysNotice[iszh ? 'zh' : 'en']}
+      </div>
+      <Link href="/notices" className="more">
+        {t(translations.header.learnMore)}
+      </Link>
+    </NoticeWrapper>
+  );
+
   return (
     <Wrapper>
-      <Nav brand={brand} menuStart={menuStart} menuEnd={menuEnd} />
-      {(bp === 's' || bp === 'm') && <Search />}
+      <Nav
+        brand={brand}
+        mainMenu={mainMenu}
+        topMenu={topMenu}
+        subMenu={subMenu}
+      />
+      {(bp === 's' || bp === 'm') && (
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
+      )}
     </Wrapper>
   );
 });
@@ -357,7 +396,7 @@ const Wrapper = styled.header`
       .navbar-item {
         .navbar-link-menu {
           .navbar-link.level-0 {
-            padding: 0.43rem 0.57rem;
+            padding: 0 0.57rem;
             svg {
               display: none;
             }
@@ -377,12 +416,6 @@ const Wrapper = styled.header`
       padding: 1.64rem 5.14rem;
       padding-bottom: 3.86rem;
 
-      .navbar-start {
-        .navbar-item:nth-child(1) {
-          margin-bottom: 3rem;
-        }
-      }
-
       .navbar-end {
         .navbar-item {
           flex-direction: row;
@@ -393,9 +426,8 @@ const Wrapper = styled.header`
           }
           .navbar-link-menu {
             .navbar-link {
-              padding: 0.43rem 1.5rem;
               &.level-0 {
-                padding: 0.43rem 1.5rem;
+                padding: 0.43rem 1.3rem;
                 svg {
                   display: block;
                 }
@@ -408,6 +440,90 @@ const Wrapper = styled.header`
           }
         }
       }
+    }
+  }
+  ${media.s} {
+    .navbar-menu {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+`;
+
+const SearchWrapper = styled.div`
+  flex-grow: 1;
+  .header-search-container {
+    max-width: unset;
+  }
+  ${media.m} {
+    .header-search-container {
+      position: fixed;
+      flex-grow: 0;
+      top: 11px;
+      right: 4rem;
+      left: 12rem;
+      z-index: 2000;
+    }
+  }
+  ${media.s} {
+    .header-search-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 5.67rem;
+      z-index: 100;
+    }
+  }
+`;
+
+const WalletWrapper = styled.div`
+  min-width: 180px;
+
+  .connect-wallet-button.notConnected {
+    .connect-wallet-button-left {
+      color: #fff;
+      width: 100%;
+      justify-content: center;
+      background: #424a71;
+      &:hover {
+        background: #68719c;
+      }
+    }
+  }
+`;
+
+const NoticeWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
+
+  .content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #6c6d75;
+
+    &.hot {
+      color: #fa5d8e;
+    }
+  }
+
+  .more {
+    white-space: nowrap;
+    margin-left: 24px;
+    margin-right: 10px;
+    border-bottom: 1px solid #1e3de4;
+
+    &:hover,
+    &:active {
+      border-bottom: 1px solid #0f23bd;
     }
   }
 `;

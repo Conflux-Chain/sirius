@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
-import { Card } from '../../../components/Card/Loadable';
-import { Empty } from '../../../components/Empty/Loadable';
+import { Card } from 'app/components/Card/Loadable';
+import { Empty } from 'app/components/Empty/Loadable';
 import { cfx } from 'utils/cfx';
-import { Description } from '../../../components/Description/Loadable';
+import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 import _ from 'lodash';
-import SkeletonContainer from '../../../components/SkeletonContainer';
+import SkeletonContainer from 'app/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
@@ -16,13 +16,13 @@ import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from './Event';
+import { media } from 'styles/media';
 
 interface Props {
   hash: string;
   address?: string;
   abi?: Array<any>;
   bytecode?: string;
-  onChange?: (total: number) => void;
 }
 
 /**
@@ -132,7 +132,7 @@ const disassembleEvent = (log, decodedLog) => {
   }
 };
 
-const EventLog = ({ log }) => {
+const EventLog = ({ log, logContractInfo }) => {
   const { t } = useTranslation();
   const [eventInfo, setEventInfo] = useState<any>(() => {
     const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
@@ -156,6 +156,8 @@ const EventLog = ({ log }) => {
        */
       data: splitData,
       signature: null,
+      contractInfo: {},
+      logContractInfo,
     };
   });
   const [loading, setLoading] = useState(false);
@@ -164,6 +166,8 @@ const EventLog = ({ log }) => {
     const fields = [
       'address',
       'abi',
+      'name',
+      'icon',
       // 'bytecode',
       // 'sourceCode', // not need now
     ];
@@ -206,6 +210,12 @@ const EventLog = ({ log }) => {
               topics,
               data,
               signature: decodedLog.signature,
+              contractInfo: {
+                name: body.name,
+                icon: body.icon,
+                address: body.address,
+              },
+              logContractInfo,
             });
           }
         } catch (e) {}
@@ -213,9 +223,17 @@ const EventLog = ({ log }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [log]);
+  }, [log, logContractInfo]);
 
-  const { fnName, args, topics, data, address, signature } = eventInfo;
+  const {
+    fnName,
+    args,
+    topics,
+    data,
+    address,
+    signature,
+    contractInfo,
+  } = eventInfo;
 
   return (
     <StyledEventLogWrapper>
@@ -232,11 +250,13 @@ const EventLog = ({ log }) => {
           <div className="eventlog-item">
             <Description
               className="description"
-              title={t(translations.transaction.logs.address)}
+              title={
+                <strong>{t(translations.transaction.logs.address)}</strong>
+              }
               small
               noBorder
             >
-              <Address address={address}></Address>
+              <Address address={address} contract={contractInfo}></Address>
             </Description>
             {fnName ? (
               <Description
@@ -254,12 +274,16 @@ const EventLog = ({ log }) => {
               small
               noBorder
             >
-              <Topics data={topics} signature={signature} />
+              <Topics
+                data={topics}
+                signature={signature}
+                logContractInfo={logContractInfo}
+              />
             </Description>
             {!!data.length && (
               <Description
                 className="description"
-                title={t(translations.transaction.logs.data)}
+                title={<i>{t(translations.transaction.logs.data)}</i>}
                 small
                 noBorder
               >
@@ -273,31 +297,41 @@ const EventLog = ({ log }) => {
   );
 };
 
-export const EventLogs = ({ hash, onChange }: Props) => {
-  const [eventlogs, setEventlogs] = useState([
-    {
-      topics: [],
-      data: '',
-      address: '',
-    },
-  ]);
-  const ref = useRef(onChange);
+export const EventLogs = ({ hash }: Props) => {
+  // [{
+  //   topics: [],
+  //   data: '',
+  //   address: '',
+  // }]
+  const [eventlogs, setEventlogs] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+  const [logContractInfo, setLogContractInfo] = useState({});
 
   useEffect(() => {
+    setLoading(true);
     reqTransactionEventlogs({
       transactionHash: hash,
-    }).then(body => {
-      setEventlogs(body.list);
-      ref.current && ref.current(body.total);
-    });
+      aggregate: true,
+    })
+      .then(body => {
+        setEventlogs(body.list);
+        setLogContractInfo(body.logContractInfo);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [hash]);
 
   return (
     <StyledEventLogsWrapper>
       <Card>
-        <Empty show={!eventlogs.length} />
+        {loading ? null : <Empty show={!eventlogs.length} />}
         {eventlogs.map((log, index) => (
-          <EventLog log={log} key={`${log.address}-${index}`} />
+          <EventLog
+            log={log}
+            logContractInfo={logContractInfo}
+            key={`${log.address}-${index}`}
+          />
         ))}
       </Card>
     </StyledEventLogsWrapper>
@@ -312,6 +346,10 @@ const StyledEventLogsWrapper = styled.div`
   .eventlog-content {
     display: flex;
 
+    ${media.m} {
+      flex-wrap: wrap;
+    }
+
     .eventlog-index {
       width: 2.2857rem;
       height: 2.2857rem;
@@ -320,7 +358,7 @@ const StyledEventLogsWrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0.8571rem 1.0714rem 0 0;
+      margin: 0.8571rem 2rem 0 0;
     }
     .eventlog-item {
       flex-grow: 1;
@@ -358,7 +396,15 @@ const StyledEventLogWrapper = styled.div`
     }
 
     .left {
-      width: 6rem;
+      width: 20%;
+      min-width: 6rem;
+      max-width: 7rem;
+      text-align: right;
+      padding-right: 1rem;
+
+      ${media.m} {
+        text-align: left;
+      }
     }
   }
 `;

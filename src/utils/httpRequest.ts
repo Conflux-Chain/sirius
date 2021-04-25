@@ -1,7 +1,4 @@
 import qs from 'query-string';
-import { cfx, cfxFormat } from './cfx';
-import { delay } from './index';
-import { transferRisk } from './index';
 import fetch from './request';
 
 export const apiPrefix = '/v1';
@@ -18,6 +15,13 @@ export const reqTransactionEventlogs = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/eventLog`,
     query: param,
+    ...extra,
+  });
+};
+
+export const reqBlockDetail = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/block/${param && param['hash']}`,
     ...extra,
   });
 };
@@ -59,29 +63,6 @@ export const reqToken = (param?: object, extra?: object) => {
     query: param,
     ...extra,
   });
-};
-
-export const reqConfirmationRiskByHash = async (blockHash: string) => {
-  try {
-    const callProvider = () => {
-      return cfx.provider.call(
-        'cfx_getConfirmationRiskByHash',
-        cfxFormat.blockHash(blockHash),
-      );
-    };
-    let result = await callProvider();
-    if (!result) {
-      // retry when result is null or empty
-      await delay(3000);
-      result = await callProvider();
-    }
-    if (result) {
-      return transferRisk(result.toString());
-    }
-    return '';
-  } catch (e) {
-    return '';
-  }
 };
 
 export const reqTopStatistics = (param: any, extra?: object) => {

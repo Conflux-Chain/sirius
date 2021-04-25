@@ -11,11 +11,12 @@ import {
   TabsTablePanel,
 } from '../../components/TabsTablePanel/Loadable';
 import {
-  TableSearchInput,
   TableSearchDatepicker,
+  TableSearchInput,
 } from '../../components/TablePanel';
 import { tokenColunms } from '../../../utils/tableColumns';
 import { cfxTokenTypes } from '../../../utils/constants';
+import { useAge } from '../../../utils/hooks/useAge';
 
 interface TransferProps {
   tokenAddress: string;
@@ -44,6 +45,7 @@ export function Transfers({
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
+  const [ageFormat, toggleAgeFormat] = useAge();
 
   let {
     page = 1,
@@ -82,7 +84,7 @@ export function Transfers({
     history.push(urlWithQuery);
   };
 
-  let columnsWidth = [3, 4, 4, 4, 3];
+  let columnsWidth = [3, 6, 6, 4, 4];
   let columns = [
     // {
     //   ...tokenColunms.txnHash,
@@ -114,28 +116,28 @@ export function Transfers({
           decimals,
         }),
     },
-    tokenColunms.age,
+    tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   if (transferType === cfxTokenTypes.erc721) {
-    columnsWidth = [3, 4, 4, 4, 3];
+    columnsWidth = [3, 6, 6, 4, 3];
     columns = [
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
       tokenColunms.tokenId,
-      tokenColunms.age,
+      tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
   if (transferType === cfxTokenTypes.erc1155) {
-    columnsWidth = [3, 5, 5, 3, 4, 4];
+    columnsWidth = [3, 7, 7, 3, 4, 4];
     columns = [
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
       tokenColunms.quantity,
       tokenColunms.tokenId,
-      tokenColunms.age,
+      tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 

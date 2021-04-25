@@ -5,9 +5,10 @@ import {
   CartesianGrid,
   Line,
   LineChart as Chart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
 } from 'recharts';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
@@ -15,6 +16,7 @@ import usePlot from './usePlot';
 import { formatNumber } from '../../../utils';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { DataZoomLineChart } from './Loadable';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -23,13 +25,17 @@ const DURATIONS = [
   ['all', 'ALL'],
 ];
 
-export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
+export const LineChart = ({
+  width = 500,
+  indicator = 'blockTime',
+  isThumb = false,
+}) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
   const small = width < 500;
   const padding = small ? 16 : 48;
   // get the max x grids which most suitable chart width
-  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1024) / 50);
+  let NUM_X_GRID = Math.floor(Math.min(clientWidth, 1368) / 50);
   if (NUM_X_GRID < 7) NUM_X_GRID = 7;
   if (small) NUM_X_GRID = 6;
 
@@ -38,11 +44,22 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     'dailyTransactionCFX',
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
+    'accountGrowth',
   ].includes(indicator);
 
   const chartWidth =
     width - padding - (hasDurationFilter ? (small ? 50 : 70) : 0);
   const chartHeight = small ? chartWidth * 0.45 : chartWidth * 0.35;
+
+  const limit = [
+    'dailyTransaction',
+    'dailyTransactionCFX',
+    'dailyTransactionTokens',
+    'cfxHoldingAccounts',
+    'accountGrowth',
+  ].includes(indicator)
+    ? 365
+    : 31;
 
   const {
     plot,
@@ -52,83 +69,75 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID, indicator);
+  } = usePlot('day', NUM_X_GRID, indicator, limit);
+
+  const initialDomain = {
+    min: {
+      blockTime: 0,
+      tps: 0,
+      difficulty: 0,
+      hashRate: 0,
+      dailyTransaction: 0,
+      dailyTransactionCFX: 0,
+      dailyTransactionTokens: 0,
+      cfxHoldingAccounts: 0,
+      accountGrowth: 0,
+    },
+    max: {
+      blockTime: 'auto',
+      tps: 'auto',
+      difficulty: 'auto',
+      hashRate: 'auto',
+      dailyTransaction: 'auto',
+      dailyTransactionCFX: 'auto',
+      dailyTransactionTokens: 'auto',
+      cfxHoldingAccounts: 'auto',
+      accountGrowth: 'auto',
+    },
+  };
 
   // y axis data range
   const domain =
     plot && plot.length > 0
-      ? plot.reduce(
-          (acc, cur, index) => {
-            if (acc.min == null) acc.min = cur;
-            else {
-              acc.min = {
-                blockTime: 0,
-                tps: 0,
-                difficulty: Math.min(+acc.min.difficulty, +cur.difficulty),
-                hashRate: Math.min(+acc.min.hashRate, +cur.hashRate),
-                dailyTransaction: 0,
-                dailyTransactionCFX: 0,
-                dailyTransactionTokens: 0,
-              };
-            }
-            if (acc.max == null) acc.max = cur;
-            else {
-              acc.max = {
-                blockTime: 'auto',
-                tps: Math.max(+acc.max.tps || 0, +cur.tps),
-                difficulty: Math.max(+acc.max.difficulty || 0, +cur.difficulty),
-                hashRate: Math.max(+acc.max.hashRate || 0, +cur.hashRate),
-                dailyTransaction: 'auto',
-                dailyTransactionCFX: Math.max(
-                  +acc.max.dailyTransactionCFX || 0,
-                  +cur['txnCount'],
-                ),
-                dailyTransactionTokens: Math.max(
-                  +acc.max.dailyTransactionTokens || 0,
-                  +cur['txnCount'],
-                ),
-                // dailyTransaction: Math.min(
-                //   +acc.max.dailyTransaction,
-                //   +cur.txCount,
-                // ),
-              };
-            }
-            if (index === plot.length - 1) {
-              acc.min.difficulty = acc.min.difficulty * 0.7;
-              acc.min.hashRate = acc.min.hashRate * 0.7;
-              acc.max.tps = acc.max.tps < 10 ? 'auto' : acc.max.tps * 1.1;
-              acc.max.difficulty = acc.max.difficulty * 1.1;
-              acc.max.hashRate = acc.max.hashRate * 1.1;
-              acc.max.dailyTransactionCFX = acc.max.dailyTransactionCFX * 1.1;
-              acc.max.dailyTransactionTokens =
-                acc.max.dailyTransactionTokens * 1.1;
-            }
-            return acc;
-          },
-          { min: null, max: null },
-        )
-      : {
-          min: {
-            blockTime: 0,
-            tps: 0,
-            difficulty: 0,
-            hashRate: 0,
-            dailyTransaction: 0,
-            dailyTransactionCFX: 0,
-            dailyTransactionTokens: 0,
-            cfxHoldingAccounts: 0,
-          },
-          max: {
-            blockTime: 'auto',
-            tps: 'auto',
-            difficulty: 'auto',
-            hashRate: 'auto',
-            dailyTransaction: 'auto',
-            dailyTransactionCFX: 'auto',
-            dailyTransactionTokens: 'auto',
-            cfxHoldingAccounts: 'auto',
-          },
-        };
+      ? plot.reduce((acc, cur) => {
+          let dataKey = indicator;
+          switch (indicator) {
+            case 'blockTime':
+              break;
+            case 'tps':
+              break;
+            case 'difficulty':
+            case 'hashRate':
+              acc.min[indicator] = Math.min(
+                +acc.min[indicator] || Infinity,
+                +cur[indicator] * 0.7,
+              );
+              break;
+            case 'dailyTransaction':
+              dataKey = 'txCount';
+              break;
+            case 'dailyTransactionCFX':
+            case 'dailyTransactionTokens':
+              dataKey = 'txnCount';
+              break;
+            case 'cfxHoldingAccounts':
+              dataKey = 'holderCount';
+              break;
+            case 'accountGrowth':
+              dataKey = 'cnt';
+              break;
+            default:
+              break;
+          }
+
+          acc.max[indicator] = Math.max(
+            +acc.max[indicator] || 0,
+            +cur[dataKey] * 1.1,
+          );
+
+          return acc;
+        }, initialDomain)
+      : initialDomain;
 
   const strokeColor = () => {
     switch (indicator) {
@@ -152,6 +161,13 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return plot &&
           plot.length > 0 &&
           plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+      case 'accountGrowth':
+        // because of reverse
+        return plot &&
+          plot.length > 0 &&
+          plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       default:
@@ -223,6 +239,7 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return 'statDay';
       case 'dailyTransactionCFX':
       case 'dailyTransactionTokens':
+      case 'accountGrowth':
         return 'day';
       default:
         return 'timestamp';
@@ -238,69 +255,118 @@ export const LineChart = ({ width = 500, indicator = 'blockTime' }) => {
         return 'txnCount';
       case 'cfxHoldingAccounts':
         return 'holderCount';
+      case 'accountGrowth':
+        return 'cnt';
       default:
         return indicator;
     }
   };
 
   if (isError) {
-    return <div>Error</div>;
+    return (
+      <Container
+        style={{ width: isThumb ? '100%' : width }}
+        small={small}
+        isThumb={isThumb}
+      >
+        <Title>{t(`charts.${indicator}.title`)}</Title>
+        <div>{t('general.errorOccurred')}</div>
+      </Container>
+    );
   } else {
     return (
-      <Container style={{ width }} small={small}>
+      <Container
+        style={{ width: isThumb ? '100%' : width }}
+        small={small}
+        isThumb={isThumb}
+      >
         <Title>{t(`charts.${indicator}.title`)}</Title>
-        <Description>{t(`charts.${indicator}.description`)}</Description>
+        {!isThumb ? (
+          <Description>{t(`charts.${indicator}.description`)}</Description>
+        ) : null}
         {isLoading ? (
           <LoadingContainer>
             <Loading />
           </LoadingContainer>
         ) : null}
-        <Chart
-          width={chartWidth}
-          height={chartHeight}
-          data={plot}
-          margin={{
-            left: 10,
-            right: 20,
-            bottom: 20,
-          }}
-        >
-          <CartesianGrid stroke="#eee" />
-          {plot ? (
-            <XAxis
-              dataKey={xAxisKey()}
-              tick={xAxisFormat}
-              interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
-              reversed={!hasDurationFilter}
-              stroke="#333333"
-            />
-          ) : null}
-          <YAxis
-            stroke="#333333"
-            tickFormatter={yAxisFormat}
-            domain={[domain.min[indicator], domain.max[indicator]]}
-            width={
-              [
-                'difficulty',
-                'hashRate',
-                'dailyTransaction',
-                'dailyTransactionCFX',
-                'dailyTransactionTokens',
-                'cfxHoldingAccounts',
-              ].includes(indicator)
-                ? 60
-                : 50
-            }
+        {[
+          'dailyTransaction',
+          'dailyTransactionCFX',
+          'dailyTransactionTokens',
+          'cfxHoldingAccounts',
+          'accountGrowth',
+        ].includes(indicator) && !isThumb ? (
+          <DataZoomLineChart
+            width={width}
+            indicator={indicator}
+            dateKey={xAxisKey()}
+            valueKey={lineKey()}
+            data={plot}
           />
-          <Line
-            type="linear"
-            dataKey={lineKey()}
-            stroke={strokeColor()}
-            strokeWidth={2}
-          />
-          <Tooltip content={<CustomTooltip />} />
-        </Chart>
-        {hasDurationFilter ? (
+        ) : (
+          <ResponsiveContainer
+            width={isThumb ? '100%' : chartWidth}
+            height={isThumb ? 180 : chartHeight}
+          >
+            <Chart
+              data={plot}
+              margin={
+                isThumb
+                  ? {
+                      left: 2,
+                      right: 2,
+                      top: 10,
+                      bottom: 10,
+                    }
+                  : {
+                      left: 10,
+                      right: 20,
+                      bottom: 20,
+                    }
+              }
+            >
+              <CartesianGrid stroke="#eee" />
+              {plot ? (
+                <XAxis
+                  hide={isThumb}
+                  dataKey={xAxisKey()}
+                  tick={xAxisFormat}
+                  interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
+                  reversed={!hasDurationFilter}
+                  stroke="#333333"
+                />
+              ) : null}
+              <YAxis
+                hide={isThumb}
+                stroke="#333333"
+                tickFormatter={yAxisFormat}
+                domain={[domain.min[indicator], domain.max[indicator]]}
+                width={
+                  [
+                    'difficulty',
+                    'hashRate',
+                    'dailyTransaction',
+                    'dailyTransactionCFX',
+                    'dailyTransactionTokens',
+                    'cfxHoldingAccounts',
+                    'accountGrowth',
+                  ].includes(indicator)
+                    ? 60
+                    : 50
+                }
+              />
+              <Line
+                type="linear"
+                dataKey={lineKey()}
+                stroke={strokeColor()}
+                strokeWidth={2}
+                dot={!isThumb}
+              />
+              {!isThumb ? <Tooltip content={<CustomTooltip />} /> : null}
+            </Chart>
+          </ResponsiveContainer>
+        )}
+        {hasDurationFilter && !isThumb ? (
           <Buttons small={small}>
             {DURATIONS.map(([d, key]) => (
               <Button
@@ -332,12 +398,15 @@ const Container = styled.div`
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  padding: ${props => (props.small ? '8px' : '24px')};
+  padding: ${props =>
+    props.isThumb ? '8px 20px' : props.small ? '8px' : '24px'};
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   border-radius: 5px;
-  min-height: ${props => (props.small ? '200px' : '250px')};
+  min-height: ${props => (props.small || props.isThumb ? '200px' : '250px')};
+  background-color: #fff;
 
   svg {
+    cursor: pointer;
     font-size: 12px;
   }
 `;

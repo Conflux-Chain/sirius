@@ -57,14 +57,16 @@ const Wrapper = styled.div`
 
   &.small {
     .left {
-      width: 10.8571rem;
+      width: 10rem;
     }
   }
 
   .left {
     padding: 0.8571rem 0;
     line-height: calc(3.2857rem - 1.7143rem);
-    width: 16.4286rem;
+    width: 25%;
+    min-width: 160px;
+    max-width: 260px;
     color: #002257;
     flex-shrink: 0;
   }

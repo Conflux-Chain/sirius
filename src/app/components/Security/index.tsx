@@ -1,11 +1,13 @@
+import { useConfirmRisk } from 'utils/hooks/useConfirmRisk';
+
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import clsx from 'clsx';
 
 interface Props {
-  type: string;
+  blockHash: string;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -13,7 +15,8 @@ export declare type SecurityProps = React.PropsWithChildren<
   Props & NativeAttrs
 >;
 
-export function Security({ type }: SecurityProps) {
+export const Security = ({ blockHash }: Props) => {
+  const type = useConfirmRisk(blockHash);
   const { t } = useTranslation();
   const levelMap = {
     lv0: {
@@ -61,7 +64,7 @@ export function Security({ type }: SecurityProps) {
       <span className={`text`}>{text}</span>
     </StyledSecurityWrapper>
   );
-}
+};
 
 const StyledSecurityWrapper = styled.span`
   @keyframes blinker {

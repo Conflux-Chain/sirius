@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-
 import { media } from './media';
+import { sansSerifFont } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -12,26 +12,31 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: ${sansSerifFont};
+    letter-spacing: 0;
+
+    a {
+      color: #1e3de4;
+      
+      &:hover, &:active {
+        color: #0f23bd;
+      }
+    }
+
+    p,
+    label {
+      line-height: 1.5em;
+    }
+  
+    input, select {
+      font-size: inherit;
+    }
   }
 
   #root {
     min-height: 100%;
     min-width: 100%;
     background-color: #f5f6fa;
-  }
-
-  p,
-  label {
-    line-height: 1.5em;
-  }
-
-  a {
-    color: #1e3de4;
-  }
-
-  input, select {
-    font-size: inherit;
   }
 
   .qrcode-modal.wrapper {
@@ -87,45 +92,7 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
-  .dappButtonModalContainer{
-    .contentContainer.content{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding-top:2.1429rem;
-    }
-    .loadingText{
-      color:#2F3B3F;
-      font-size:16px;
-      font-weight: 500;
-      margin-top:11px;
-    }
-    .confirmText{
-      margin-top:12px;
-      color:#ADB2BF;
-      font-size:14px;
-    }
-    .statusImg{
-        width:4rem;
-      }
-    .submitted{
-        margin-top:0.9286rem;
-        font-size:1rem;
-        color: #282D30;
-    }
-    .txContainer{
-        margin-top:0.8571rem;
-    }
-    .label{
-        color: #A4A8B6;
-        line-height: 1.2857rem;
-        font-size: 1rem;
-    }
-    .content{
-        color: #1e3de4;
-    }
-  }
-
+  
   ${media.s} {
     html, body {
       font-size: 12px;
