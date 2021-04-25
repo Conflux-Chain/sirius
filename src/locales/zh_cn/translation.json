@@ -124,7 +124,7 @@
   },
   "cfxTransfers": {
     "title": "CFX 转移",
-    "description": "CFX 转移",
+    "description": "仅展示 Conflux 网络上发生 CFX 转移的交易。",
     "tipCountBefore": "共计",
     "tipCountAfter": "个 CFX 转移"
   },

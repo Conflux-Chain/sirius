@@ -124,7 +124,7 @@
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
-    "description": "CFX Transfers",
+    "description": "Show only CFX transfers on the Conflux network.",
     "tipCountBefore": "A total of",
     "tipCountAfter": "CFX transfers"
   },
