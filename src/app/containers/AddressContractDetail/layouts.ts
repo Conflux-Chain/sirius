@@ -52,11 +52,19 @@ export const Top = styled.section`
   flex-direction: row;
   margin-bottom: 1.71rem;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 24px;
+
+  > div {
+    width: calc(50% - 24px);
+  }
+  ${media.m} {
+    flex-wrap: wrap;
+  }
 
   ${media.s} {
     > div {
+      width: 100%;
       margin-bottom: 0;
     }
     margin-bottom: 1rem;

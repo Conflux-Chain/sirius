@@ -36,7 +36,7 @@ export const DetailPageCard = memo((props: Props) => {
 
 const Main = styled.div`
   box-sizing: border-box;
-  min-width: 17rem;
+  min-width: 230px;
   flex-grow: 1;
 
   .detail-page-card.card {
