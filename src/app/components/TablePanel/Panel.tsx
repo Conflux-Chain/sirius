@@ -24,7 +24,14 @@ export type TableType = TableProps<unknown> & {
   // url param should handle in sorter function
   sortKey?: string;
   // sort function, update url TODO more flexibility
-  sorter?: (column?: any, table?: any, url?: string) => any;
+  sorter?: (opt: {
+    column?: any;
+    table?: any;
+    url?: string;
+    oldSortKey?: string;
+    oldSortOrder?: string;
+    newSortKey?: string;
+  }) => any;
 };
 export type TablePanelType = {
   url: string;
@@ -129,7 +136,7 @@ export const TablePanel = ({
   };
   let tableData = table.data;
   let tableColumns = table?.columns?.map(c => {
-    if (c['sortable'] && table.sorter)
+    if (c['sortable'] && table.sorter) {
       return {
         ...c,
         title: (
@@ -140,13 +147,22 @@ export const TablePanel = ({
                 : ''
             }`}
             onClick={() => {
-              table.sorter!(c, table, url);
+              table.sorter!({
+                column: c,
+                table: table,
+                url: url,
+                oldSortKey: table.sortKey,
+                oldSortOrder: table.sortOrder,
+                newSortKey: c['dataIndex'],
+              });
             }}
           >
             {c.title}
           </div>
         ),
       };
+    }
+
     return c;
   });
   let tableRowKey = table.rowKey;
