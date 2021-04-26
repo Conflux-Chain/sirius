@@ -189,6 +189,14 @@ const HeaderWrap = styled.div`
   margin-bottom: 1.1429rem;
   padding: 0;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
+  ${media.s} {
+    margin-top: 24px;
+  }
+
   .subtitle {
     font-size: 1rem;
     color: #7e8598;

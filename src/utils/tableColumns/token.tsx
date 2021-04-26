@@ -503,10 +503,12 @@ const FromWrap = styled.div`
 
 const ImgWrap = styled.img`
   position: absolute;
+  width: 36px;
+  height: 20px;
   right: -0.8571rem;
   top: 0.1429rem;
   ${media.s} {
-    right: -1.1429rem;
+    right: -0.98rem;
   }
 `;
 

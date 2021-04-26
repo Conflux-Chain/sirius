@@ -145,7 +145,7 @@ const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
   transform: ${props => (props.expanded ? 'unset' : 'rotate(180deg)')};
 `;
 const SelectDropdown = styled.div`
-  z-index: 100;
+  z-index: 210;
   position: absolute;
   left: -1.2857rem;
   top: 4.5rem;

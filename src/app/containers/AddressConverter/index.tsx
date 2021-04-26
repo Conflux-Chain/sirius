@@ -343,7 +343,7 @@ export function AddressConverter() {
                 {t(translations.addressConverter.tip3end)}
               </Link>
             </span>,
-            <span>
+            <span className="warning">
               {t(translations.addressConverter.tip4)}
               <Link
                 target="_blank"
@@ -354,7 +354,7 @@ export function AddressConverter() {
               {t(translations.addressConverter.tip4end)}
             </span>,
           ]}
-        ></Remark>
+        />
       </StyledRemarkWrapper>
     </>
   );
@@ -448,18 +448,32 @@ const StyledResultWrapper = styled.div`
 `;
 const StyledRemarkWrapper = styled.div`
   margin: 1.7143rem 0 2rem;
+
+  .warning {
+    color: #e64e4e;
+
+    a {
+      color: #e64e4e;
+      text-decoration: underline;
+
+      &:hover,
+      &:active {
+        color: #cb2b2b;
+      }
+    }
+  }
 `;
 
 const StyledColoredWrapper = styled.div`
   color: #fa953c;
   line-height: 18px;
   margin-top: 5px;
+  display: flex;
+  align-items: center;
 
   .img {
     width: 14px;
     height: 14px;
     margin-right: 5px;
   }
-  display: flex;
-  align-items: center;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { translations } from '../../../locales/i18n';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
@@ -42,6 +42,7 @@ export function Transfers({
   holderCount,
   transferType,
 }: TransferProps) {
+  const bp = useBreakpoint();
   const { t } = useTranslation();
   const location = useLocation();
   const history = useHistory();
@@ -195,11 +196,14 @@ export function Transfers({
             filter={filter}
             placeholder={
               transferType === cfxTokenTypes.erc20
-                ? t(translations.token.transferList.searchPlaceHolder)
+                ? t(translations.token.transferList.searchPlaceHolder).replace(
+                    bp === 's' ? / \/ /gi : '/',
+                    '/',
+                  )
                 : t(
                     translations.token.transferList
                       .searchPlaceHolderWithTokenId,
-                  )
+                  ).replace(bp === 's' ? / \/ /gi : '/', '/')
             }
           />
           <TableSearchDatepicker />

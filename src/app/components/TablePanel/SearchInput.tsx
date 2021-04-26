@@ -180,7 +180,7 @@ const FilterWrap = styled.div`
     }
 
     ${media.s} {
-      width: 14rem;
+      width: 15rem;
     }
   }
 

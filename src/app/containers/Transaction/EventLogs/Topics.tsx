@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { ContractDetail } from './ContractDetail';
+import { media } from '../../../../styles/media';
 
 export const Topics = ({ data, signature, logContractInfo }) => {
   const { t } = useTranslation();
@@ -123,6 +124,17 @@ const StyledTopicsWrapper = styled.div`
     margin-bottom: 0.3571rem;
     display: flex;
     align-items: center;
+
+    ${media.s} {
+      flex-wrap: wrap;
+      align-items: baseline;
+      margin-top: 5px;
+
+      .value {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+    }
 
     .index {
       flex-shrink: 0;

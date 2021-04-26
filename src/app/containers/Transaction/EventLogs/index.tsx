@@ -346,12 +346,13 @@ const StyledEventLogsWrapper = styled.div`
   .eventlog-content {
     display: flex;
 
-    ${media.m} {
-      flex-wrap: wrap;
+    ${media.s} {
+      flex-direction: column;
     }
 
     .eventlog-index {
       width: 2.2857rem;
+      min-width: 2.2857rem;
       height: 2.2857rem;
       border-radius: 50%;
       background: #eee;

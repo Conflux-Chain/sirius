@@ -6,11 +6,15 @@ import docCookies from '../../../utils/cookie';
 
 export const GlobalTip = ({ tipKey = '' }: { tipKey: string }) => {
   const { t } = useTranslation();
-  const cookieKey = 'confluxscan_global_tip_' + tipKey;
-  const [agreed, setAgreed] = useState(!!docCookies.getItem(cookieKey));
+  const key = 'confluxscan_global_tip_' + tipKey;
+  const [agreed, setAgreed] = useState(
+    !!docCookies.getItem(key) || !!localStorage.getItem(key),
+  );
   const agreeCookie = () => {
     // @ts-ignore
-    docCookies.setItem(cookieKey, 'true', Infinity);
+    docCookies.setItem(key, 'true', Infinity);
+    // for safari https://github.com/js-cookie/js-cookie/wiki/Frequently-Asked-Questions#why-is-my-expiration-time-capped-at-7-days-or-24-hours
+    localStorage.setItem(key, 'true');
     setAgreed(true);
   };
 

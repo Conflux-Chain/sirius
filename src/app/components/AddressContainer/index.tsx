@@ -237,7 +237,7 @@ const addressStyle = (props: any) => `
   }
 
   ${media.m} {
-    max-width: ${props.maxwidth || 170}px !important;
+    max-width: ${props.maxwidth || 160}px !important;
   }
 
   &:after {

@@ -40,6 +40,34 @@ export const HeadAddressLine = styled.span`
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  text-align: left;
+
+  ${media.s} {
+    align-items: baseline;
+    flex-direction: column;
+
+    .address,
+    icons {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .address {
+      font-size: 12px;
+    }
+  }
+
+  .icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    > span,
+    > div {
+      margin-right: 0.58rem;
+    }
+  }
+
   > span,
   > div {
     margin-right: 0.58rem;
@@ -53,21 +81,35 @@ export const Top = styled.section`
   margin-bottom: 1.71rem;
   justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 24px;
 
   > div {
     width: calc(50% - 24px);
   }
+
+  > * + * {
+    margin-left: 24px;
+  }
+
   ${media.m} {
     flex-wrap: wrap;
+
+    > *:nth-child(1),
+    > *:nth-child(2) {
+      margin-bottom: 24px;
+    }
+
+    > *:nth-child(3) {
+      margin-left: 0;
+    }
   }
 
   ${media.s} {
     > div {
       width: 100%;
-      margin-bottom: 0;
+      margin-left: 0;
+      margin-bottom: 10px !important;
     }
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
   }
 `;
 export const Middle = styled.section`

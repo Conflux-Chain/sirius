@@ -20,6 +20,7 @@ export interface HeaderLink {
   children?: HeaderLink[];
   isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
   matched?: boolean;
+  afterClick?: any;
 }
 
 export type HeaderLinks = HeaderLink[];
@@ -35,6 +36,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
       children,
       isMatchedFn,
       matched: customMatched,
+      afterClick,
     } = link;
 
     let matched: boolean = customMatched || false;
@@ -63,6 +65,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
         className={`navbar-link level-${level} ${className}`}
         onClick={onClick}
         matched={matched}
+        afterClick={afterClick}
       >
         {title}
         {childrenUI}
@@ -121,7 +124,17 @@ export const HeaderLink: React.FC<{
   name?: string;
   matched?: boolean;
   onClick?: MouseEventHandler;
-}> = ({ className, href, name, matched, children, onClick, isMenu }) => {
+  afterClick?: any;
+}> = ({
+  className,
+  href,
+  name,
+  matched,
+  children,
+  onClick,
+  isMenu,
+  afterClick,
+}) => {
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
   useClickAway(ref, () => {
@@ -143,6 +156,9 @@ export const HeaderLink: React.FC<{
                 category: ScanEvent.menu.category,
                 action: name,
               });
+            }
+            if (afterClick && typeof afterClick === 'function') {
+              afterClick();
             }
           }}
           to={href}

@@ -269,6 +269,10 @@ const StyledTableWrapper: any = styled.div`
       props.hasFilter ? 'margin-top: 54px; border-top: 1px solid #e8e9ea;' : ''}
     .table-content {
       padding: 0 0 1rem;
+
+      > table {
+        width: 1100px !important;
+      }
     }
     &.monospaced {
       font-family: ${monospaceFont};
@@ -318,7 +322,7 @@ const StyledTableWrapper: any = styled.div`
       white-space: nowrap;
 
       ${media.s} {
-        padding: 1.1429rem;
+        padding: 1.1429rem 1rem;
       }
     }
     ${media.s} {

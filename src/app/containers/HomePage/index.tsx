@@ -72,7 +72,7 @@ export function HomePage() {
   const clientWidth = document.body.clientWidth;
   let chartWidth;
   if (clientWidth < 600) {
-    chartWidth = clientWidth - 20;
+    chartWidth = clientWidth - 30;
   } else if (clientWidth < 1000) {
     chartWidth = (clientWidth - 68) / 2;
   } else if (clientWidth < 1368) {
@@ -159,18 +159,35 @@ const Main = styled.div`
 const Top = styled.section`
   display: flex;
   width: 100%;
-  margin-bottom: 22px;
+  margin-bottom: 0;
   margin-top: 32px;
   justify-content: center;
-  gap: 24px;
+
+  > * {
+    margin-bottom: 24px;
+  }
+
+  > * + * {
+    margin-left: 24px;
+  }
 
   ${media.m} {
     flex-wrap: wrap;
+
+    > *:nth-child(3) {
+      margin-left: 0;
+    }
   }
 
   ${media.s} {
     margin-top: 24px;
+    margin-bottom: 12px;
     flex-direction: column;
+
+    > * {
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
   }
 `;
 
