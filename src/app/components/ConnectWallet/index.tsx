@@ -3,7 +3,7 @@
  * ConnectWallet
  *
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from './Modal';
 import { Button } from './Button';
 import { usePortal } from 'utils/hooks/usePortal';
@@ -30,8 +30,15 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
     isVersionValid,
   } = useCheckHook();
 
+  useEffect(() => {
+    if (connected === 1) {
+      setShowModal(false);
+    }
+  }, [connected]);
+
   const handleClick = e => {
     if (!isValid) {
+      // network error or version error
       e.stopPropagation();
       e.preventDefault();
       if (!isVersionValid) {
@@ -53,6 +60,7 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
 
   let child = <span onClickCapture={handleClick}>{children}</span>;
 
+  // wrap button which must connect portal
   if (!profile && (!installed || connected === 0 || !isValid)) {
     child = (
       <Text
