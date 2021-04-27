@@ -90,6 +90,7 @@
     "txOnlyEn": "txn",
     "txOnlyZh": "",
     "clickToApply": "Click to apply contract sponsorships",
+    "clickToReport": "Click to report contract",
     "notDeployed": "This contract has not been deployed"
   },
   "addressDetail": {
@@ -957,5 +958,23 @@
     "wcfx": "WCFX",
     "swapNCFXToWCFX": "Swap N CFX for WCFX",
     "swapNWCFXToCFX": "Swap N WCFX for N CFX"
+  },
+  "report": {
+    "title": "Report",
+    "subtitle": "You can label and upload addresses you do not trust",
+    "address": "Address",
+    "addressError": "Address Invalid",
+    "selectType": "Please select a report type (multiselect):",
+    "phishHack": "Phish / Hack",
+    "scam": "Scam",
+    "fishy": "Fishy",
+    "highRisk": "High Risk",
+    "spam": "Spam",
+    "others": "Others",
+    "description": "Description",
+    "tip": "At least 30 characters, no more than 200 characters",
+    "nCharacters": "N character(s)",
+    "code": "Code",
+    "submit": "Submit"
   }
 }

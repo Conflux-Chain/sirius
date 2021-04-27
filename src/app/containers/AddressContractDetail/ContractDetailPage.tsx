@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Apply, Copy, Edit, Jump, Qrcode } from './HeadLineButtons';
+import { Apply, Copy, Edit, Jump, Qrcode, Report } from './HeadLineButtons';
 import {
   BalanceCard,
   NonceCard,
@@ -127,6 +127,7 @@ export const ContractDetailPage = memo(() => {
               <Qrcode address={address} />
               <Edit address={address} />
               <Apply address={address} />
+              <Report address={address} />
               {hasWebsite && (
                 <Jump
                   onClick={() => {
