@@ -272,6 +272,7 @@
     "subtitle2": "Blockchain Data",
     "subtitle3": "Transaction",
     "subtitle4": "Account",
+    "subtitle5": "Contract",
     "description": "Charts",
     "tps": {
       "title": "TPS",
@@ -345,6 +346,10 @@
     "contractGrowth": {
       "title": "Contract Growth",
       "description": "The number of new contracts added per day on the Conflux network."
+    },
+    "contractAmount": {
+      "title": "Contract Amount",
+      "description": "The number of contracts on the Conflux network."
     }
   },
   "general": {

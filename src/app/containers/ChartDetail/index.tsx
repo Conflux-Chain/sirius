@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Button } from '@cfxjs/react-ui';
 
 interface RouteParams {
   indicator: string;
@@ -31,7 +32,11 @@ export function ChartDetail() {
       break;
     case 'cfxHoldingAccounts':
     case 'accountGrowth':
+    case 'activeAccounts':
       title = t(translations.charts.subtitle4);
+      break;
+    case 'contractAmount':
+      title = t(translations.charts.subtitle5);
       break;
     default:
       break;
@@ -54,7 +59,11 @@ export function ChartDetail() {
       <PageWrap>
         <HeaderWrap>
           <div className="title">{title}</div>
-          <Link to="/charts">{t(translations.general.back)}</Link>
+          <Link to="/charts">
+            <Button variant="solid" color="primary" size="small">
+              {t(translations.general.back)}
+            </Button>
+          </Link>
         </HeaderWrap>
         {indicator ? (
           <ChartsWrap>
@@ -112,11 +121,8 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   align-items: baseline;
 
-  a {
-    border-bottom: 1px solid #1e3de4;
-    &:hover {
-      border-bottom: 1px solid #0f23bd;
-    }
+  .btn {
+    font-size: 14px !important;
   }
 
   .subtitle {

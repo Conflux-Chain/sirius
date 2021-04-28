@@ -272,6 +272,7 @@
     "subtitle2": "区块链数据",
     "subtitle3": "交易",
     "subtitle4": "账户",
+    "subtitle5": "合约",
     "description": "图表",
     "tps": {
       "title": "吞吐率",
@@ -345,6 +346,10 @@
     "contractGrowth": {
       "title": "合约增长",
       "description": "Conflux 网络上每日新增的合约数量"
+    },
+    "contractAmount": {
+      "title": "合约数量",
+      "description": "Conflux 网络上的合约数量"
     }
   },
   "general": {
