@@ -1,17 +1,20 @@
-import React, { ReactNode, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
 import { Description } from 'app/components/Description';
 import { Card } from '../../components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
-import { useToggle, useClickAway } from 'react-use';
+import { useClickAway, useToggle } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { defaultTokenIcon } from '../../../constants';
 import { Link } from 'react-router-dom';
 import { Text } from '../../components/Text';
-import { formatBalance } from 'utils/index';
+import { formatBalance, formatNumber } from 'utils/index';
 import { cfxTokenTypes } from '../../../utils/constants';
+import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
+import { translations } from '../../../locales/i18n';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -20,26 +23,27 @@ export function TokenBalanceSelect({ address = '' } = {}) {
   const tokens = tokensData?.list || [];
   const loading = tokensData?.loading;
 
-  const tokenItems = tokens.map((t, idx) => (
-    <SelectItem key={idx} isLastOne={idx === tokens.length - 1} {...t} />
-  ));
-
   return (
     <SkeletonContainer shown={loading} style={skeletonStyle}>
-      <Select>{tokenItems}</Select>
+      <Select>{tokens}</Select>
     </SkeletonContainer>
   );
 }
 
 function Select({ children = [] } = {}) {
+  const { t } = useTranslation();
   const [expanded, toggle] = useToggle(false);
   const selectRef = useRef<HTMLDivElement>(null);
   useClickAway(selectRef, () => toggle(false));
   const tokenCount = children.length;
-  const childrenWithDivider = children.reduce((acc, child) => {
-    acc.push(child);
-    return acc;
-  }, [] as ReactNode[]);
+
+  const children20 = children
+    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc20)
+    .map((t, idx) => <SelectItem key={idx} {...t} />);
+
+  const children721 = children
+    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc721)
+    .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   return (
     <SelectWrapper ref={selectRef}>
@@ -51,7 +55,16 @@ function Select({ children = [] } = {}) {
         {expanded && (
           <SelectDropdown>
             <Card className="token-balance-select-content">
-              {childrenWithDivider}
+              <Title className="token-type">
+                {t(translations.header.tokens20).replace('Tokens', 'Token')} (
+                {children20.length})
+              </Title>
+              {children20}
+              <Title className="token-type">
+                {t(translations.header.tokens721).replace('Tokens', 'Token')} (
+                {children721.length})
+              </Title>
+              {children721}
             </Card>
           </SelectDropdown>
         )}
@@ -63,9 +76,9 @@ function Select({ children = [] } = {}) {
 function SelectItem({
   icon,
   balance,
+  price,
   name,
   symbol,
-  isLastOne,
   address,
   decimals,
   transferType,
@@ -77,7 +90,7 @@ function SelectItem({
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>
-        <Link to={`/token/${address}`}>{`${name} (${symbol})`}</Link>
+        <Link to={`/token/${address}`}>{name}</Link>
       </SelectItemTextTitle>
     </SelectItemTitle>
   );
@@ -101,6 +114,38 @@ function SelectItem({
           '-'
         )}
       </SelectItemContentBalance>
+      {transferType === cfxTokenTypes.erc20 && price ? (
+        <SelectItemContentBalance key="price">
+          <Text
+            hoverValue={`1 ${symbol} ≈ $${
+              formatNumber(price || 0, {
+                withUnit: false,
+                precision: 2,
+                keepZero: true,
+              }) || '--'
+            }`}
+          >
+            {`$${
+              formatNumber(
+                new BigNumber(price || 0)
+                  .multipliedBy(
+                    new BigNumber(
+                      new BigNumber(balance).div(
+                        new BigNumber(10).pow(decimals),
+                      ),
+                    ),
+                  )
+                  .toFixed(2),
+                {
+                  withUnit: false,
+                  precision: 2,
+                  keepZero: true,
+                },
+              ) || '--'
+            }`}
+          </Text>
+        </SelectItemContentBalance>
+      ) : null}
     </SelectItemContent>
   );
   return (
@@ -108,8 +153,7 @@ function SelectItem({
       key={symbol}
       title={title}
       style={{
-        minWidth: 'unset',
-        borderBottom: isLastOne ? 'unset' : undefined,
+        flexDirection: 'row',
       }}
     >
       {content}
@@ -132,10 +176,10 @@ const SelectTokenBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  ${media.s} {
-    min-width: 6.67rem;
-    height: 1.84rem;
-  }
+  // ${media.s} {
+  //   min-width: 6.67rem;
+  //   height: 1.84rem;
+  // }
 `;
 const SelectTokenCount = styled.div`
   font-size: 1.27rem;
@@ -150,23 +194,31 @@ const SelectDropdown = styled.div`
   left: -1.2857rem;
   top: 4.5rem;
   min-width: 400px;
+  max-height: 400px;
+  overflow-y: auto;
 
   .token-balance-select-content.card > .content {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    > .token-type:first-child {
+      border-top: none;
+    }
+    > div:last-child {
+      border-bottom: none;
+    }
   }
   .left {
     width: 60% !important;
+    line-height: 1.5;
+    padding: 0.6rem 0;
   }
-  ${media.m} {
-    top: 3.5rem;
-    min-width: 350px;
+  .right {
+    line-height: 1.5;
+    padding: 0.6rem 0;
   }
   ${media.s} {
-    .left {
-      width: 100% !important;
-      max-width: 310px !important;
-    }
+    //top: 3.5rem;
+    min-width: calc(100vw - 30px);
   }
 `;
 
@@ -174,7 +226,9 @@ const SelectItemTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   font-weight: 500;
+  height: 100%;
 `;
 const SelectItemTokenIcon = styled.img`
   margin-right: 0.86rem;
@@ -186,9 +240,20 @@ const SelectItemTextTitle = styled.span`
 `;
 const SelectItemContent = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-weight: 500;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 12px;
+  height: 100%;
 `;
 const SelectItemContentBalance = styled.span``;
-// const SelectItemContentSymbol = styled.span``;
+
+const Title = styled.div`
+  display: block;
+  font-size: 14px;
+  color: #7e8598;
+  font-weight: 500;
+  border-bottom: 1px solid #e8e9ea;
+  line-height: 3rem;
+`;
