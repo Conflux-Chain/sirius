@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Copy, Qrcode } from './HeadLineButtons';
+import { Copy, Qrcode, Report } from './HeadLineButtons';
 import {
   BalanceCard,
   TokensCard,
@@ -65,6 +65,7 @@ export const AddressDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
+              <Report address={address} />
             </div>
           </HeadAddressLine>
         </Head>
