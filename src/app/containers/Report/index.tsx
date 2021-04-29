@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
@@ -6,31 +6,39 @@ import { translations } from 'locales/i18n';
 import { Form, Input, Checkbox, Button, Row, Col } from '@jnoodle/antd';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { isContractAddress } from 'utils';
+import { isAddress, isHash } from 'utils';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-/* eslint-disable no-template-curly-in-string */
-const validateMessages = {
-  required: '${label} is required!',
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
+// @ts-ignore
+window.recaptchaOptions = {
+  useRecaptchaNet: true,
 };
 
-const checkboxStyle = { lineHeight: '32px', width: '128px' };
+const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {
   const { t } = useTranslation();
   const location = useLocation();
+  const [recaptcha, setRecaptcha] = useState(false);
+
   const search = {
-    'contract-address': '',
+    address: '',
     ...queryString.parse(location.search),
   };
-  const addressInitalValue = isContractAddress(search['contract-address'])
-    ? search['contract-address']
+  const addressInitalValue = isAddress(search['address'])
+    ? search['address']
     : '';
 
   const onFinish = (values: any) => {
-    console.log(values);
+    // @todo commit form
+  };
+
+  const onChange = value => {
+    if (value) {
+      setRecaptcha(true);
+    } else {
+      setRecaptcha(false);
+    }
   };
 
   return (
@@ -45,35 +53,64 @@ export function Report() {
       <Form
         name="nest-messages"
         onFinish={onFinish}
-        validateMessages={validateMessages}
+        validateTrigger="onBlur"
         layout="vertical"
         initialValues={{
           address: addressInitalValue,
         }}
+        scrollToFirstError={true}
       >
         <Form.Item
           name="address"
           label={t(translations.report.address)}
           rules={[
-            { required: true },
+            {
+              required: true,
+              message: t(translations.report.error.addressRequired),
+            },
             () => ({
               validator(_, value) {
-                if (isContractAddress(value)) {
+                if (isAddress(value)) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error(t(translations.report.addressError)),
+                  new Error(t(translations.report.error.addressInvalid)),
                 );
               },
             }),
           ]}
+          validateFirst
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="txn_hash"
+          label={t(translations.report.txnHash)}
+          rules={[
+            () => ({
+              validator(_, value) {
+                if (isHash(value)) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error(t(translations.report.error.txnHashInvalid)),
+                );
+              },
+            }),
+          ]}
+          validateFirst
         >
           <Input />
         </Form.Item>
         <Form.Item
           name="checkbox-group"
           label={t(translations.report.selectType)}
-          rules={[{ required: true }]}
+          rules={[
+            {
+              required: true,
+              message: t(translations.report.error.typeRequired),
+            },
+          ]}
         >
           <Checkbox.Group style={{ width: '100%' }}>
             <Row>
@@ -134,11 +171,15 @@ export function Report() {
           rules={[
             {
               required: true,
+              message: t(translations.report.error.descriptionRequired),
+            },
+            {
               min: 30,
               max: 200,
-              message: t(translations.report.tip),
+              message: t(translations.report.error.descriptionRequired),
             },
           ]}
+          validateFirst
         >
           <Input.TextArea
             showCount
@@ -146,6 +187,26 @@ export function Report() {
             autoSize={{ minRows: 6, maxRows: 6 }}
             maxLength={200}
             placeholder={t(translations.report.tip)}
+          />
+        </Form.Item>
+        <Form.Item
+          name="recaptcha"
+          rules={[
+            () => ({
+              validator() {
+                if (recaptcha) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error(t(translations.report.error.recaptchaRequired)),
+                );
+              },
+            }),
+          ]}
+        >
+          <ReCAPTCHA
+            sitekey="6Le0Mb4aAAAAANCTiIFSR3brS43_m3YEZY74cC8y"
+            onChange={onChange}
           />
         </Form.Item>
         <Form.Item>

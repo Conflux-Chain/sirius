@@ -90,7 +90,7 @@
     "txOnlyEn": "txn",
     "txOnlyZh": "",
     "clickToApply": "Click to apply contract sponsorships",
-    "clickToReport": "Click to report contract",
+    "clickToReport": "Report the address",
     "notDeployed": "This contract has not been deployed"
   },
   "addressDetail": {
@@ -229,6 +229,7 @@
     "preference": "Preference",
     "contactUs": "Contact Us",
     "feedback": "Feedback",
+    "report": "Report",
     "developResource": {
       "title": "Developer Resources",
       "developerDocuments": "Developer Documents",
@@ -963,7 +964,7 @@
     "title": "Report",
     "subtitle": "You can label and upload addresses you do not trust",
     "address": "Address",
-    "addressError": "Address Invalid",
+    "txnHash": "Txn Hash",
     "selectType": "Please select a report type (multiselect):",
     "phishHack": "Phish / Hack",
     "scam": "Scam",
@@ -975,6 +976,14 @@
     "tip": "At least 30 characters, no more than 200 characters",
     "nCharacters": "N character(s)",
     "code": "Code",
-    "submit": "Submit"
+    "submit": "Submit",
+    "error": {
+      "addressRequired": "Please enter the address",
+      "addressInvalid": "Invalid address format",
+      "typeRequired": "Please select at least one type",
+      "descriptionRequired": "Please enter a discription of at least 30 characters",
+      "recaptchaRequired": "Invalid captcha response",
+      "txnHashInvalid": "Invalid txn hash format"
+    }
   }
 }
