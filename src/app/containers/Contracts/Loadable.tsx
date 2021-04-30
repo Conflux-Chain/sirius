@@ -8,3 +8,8 @@ export const Contracts = lazyLoad(
   () => import('./index'),
   module => module.Contracts,
 );
+
+export const RegisteredContracts = lazyLoad(
+  () => import('./RegisteredContracts'),
+  module => module.RegisteredContracts,
+);

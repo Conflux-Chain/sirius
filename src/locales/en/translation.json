@@ -172,6 +172,12 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "internal contracts"
   },
+  "registeredContracts": {
+    "title": "Registered Contracts",
+    "description": "Registered Contracts",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "registered contracts"
+  },
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transactions",

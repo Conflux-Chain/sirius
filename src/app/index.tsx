@@ -41,6 +41,7 @@ import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Accounts } from './containers/Accounts/Loadable';
 import { Contracts } from './containers/Contracts/Loadable';
+import { RegisteredContracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
@@ -165,6 +166,11 @@ export function App() {
                     }}
                   />
                   <Route exact path="/contracts" component={Contracts} />
+                  <Route
+                    exact
+                    path="/registered-contracts"
+                    component={RegisteredContracts}
+                  />
                   <Route
                     exact
                     path="/token/:tokenAddress"

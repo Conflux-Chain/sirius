@@ -172,6 +172,12 @@
     "tipCountBefore": "共展示",
     "tipCountAfter": "个内置合约"
   },
+  "registeredContracts": {
+    "title": "已注册合约",
+    "description": "已注册合约",
+    "tipCountBefore": "共展示",
+    "tipCountAfter": "个已注册合约"
+  },
   "header": {
     "home": "首页",
     "bnt": "区块&交易",
