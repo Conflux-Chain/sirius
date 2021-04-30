@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
+import {
+  reqTransactionEventlogs,
+  reqContract,
+  // reqContractAndToken,
+} from 'utils/httpRequest';
 import { Card } from 'app/components/Card/Loadable';
 import { Empty } from 'app/components/Empty/Loadable';
-import { cfx } from 'utils/cfx';
+import { cfx /* formatAddress */ } from 'utils/cfx';
 import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
@@ -202,6 +206,21 @@ const EventLog = ({ log, logContractInfo }) => {
                 data: [],
               },
             );
+
+            // let addressList = topics
+            //   .map(t => t.cfxAddress)
+            //   .filter(t => t)
+            //   .concat(formatAddress(log.address));
+            // addressList = _.uniq(addressList);
+
+            // reqContractAndToken({
+            //   address: addressList,
+            // })
+            //   .then(data => {
+            //     // @todo setEventInfo with contract info
+            //     console.log('topics: ', topics, addressList, data);
+            //   })
+            //   .catch(e => {});
 
             setEventInfo({
               address: log.address,
