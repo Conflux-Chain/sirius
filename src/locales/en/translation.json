@@ -255,6 +255,7 @@
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
+    "analysis": "Analysis",
     "price": "Price",
     "change": "Change (%)",
     "volume": "Volume (24H)",
@@ -353,6 +354,14 @@
     "contractAmount": {
       "title": "Contract Amount",
       "description": "The number of contracts on the Conflux network."
+    },
+    "tokenAnalysis": {
+      "title": "Token Analysis",
+      "description": "{{token}} daily transfers statistics.",
+      "transferAmount": "Transfers Amount",
+      "transferCount": "Transfers Count",
+      "uniqueReceiver": "Unique Receivers",
+      "uniqueSender": "Unique Senders"
     }
   },
   "general": {

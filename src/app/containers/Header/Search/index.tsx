@@ -10,15 +10,12 @@ import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
 import { useSearch } from 'utils/hooks/useSearch';
-import { Input, AutoComplete, SelectProps, Tag } from '@jnoodle/antd';
+import { AutoComplete, Input, SelectProps } from '@jnoodle/antd';
 import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
 import { defaultTokenIcon } from '../../../../constants';
 import { Link } from '../../../components/Link/Loadable';
 import { formatAddress } from '../../../../utils/cfx';
-import { Text } from '../../../components/Text/Loadable';
-import { formatString } from '../../../../utils';
-import { StyledIconWrapper } from '../../../../utils/tableColumns/token';
 import { useHistory } from 'react-router-dom';
 
 const { Search: SearchInput } = Input;

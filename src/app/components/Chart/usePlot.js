@@ -11,6 +11,7 @@ export default function usePlot(
   NUM_X_GRID = 7,
   indicator = 'blockTime',
   limit = 31,
+  address = '',
 ) {
   // 2592000
   const durations = {
@@ -68,6 +69,9 @@ export default function usePlot(
     case 'contractAmount':
       swrKey = `/stat/contract/daily/list`;
       break;
+    case 'tokenAnalysis':
+      swrKey = `/stat/daily-token-stat`;
+      break;
     default:
       break;
   }
@@ -84,6 +88,12 @@ export default function usePlot(
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       fetcher = () => fetch(appendApiPrefix(`${swrKey}?limit=${limit}`));
+      break;
+    case 'tokenAnalysis':
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      fetcher = () =>
+        fetch(appendApiPrefix(`${swrKey}?limit=${limit}&base32=${address}`));
       break;
 
     default:

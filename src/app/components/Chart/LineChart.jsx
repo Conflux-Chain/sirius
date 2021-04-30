@@ -29,6 +29,10 @@ export const LineChart = ({
   width = 500,
   indicator = 'blockTime',
   isThumb = false,
+  tokenInfo = {
+    name: '',
+    address: '',
+  },
 }) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
@@ -47,6 +51,7 @@ export const LineChart = ({
     'accountGrowth',
     'activeAccounts',
     'contractAmount',
+    'tokenAnalysis',
   ].includes(indicator);
 
   const chartWidth =
@@ -61,6 +66,7 @@ export const LineChart = ({
     'accountGrowth',
     'activeAccounts',
     'contractAmount',
+    'tokenAnalysis', // without thumb
   ].includes(indicator)
     ? 365
     : 31;
@@ -73,7 +79,13 @@ export const LineChart = ({
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID, indicator, limit);
+  } = usePlot(
+    'day',
+    NUM_X_GRID,
+    indicator,
+    limit,
+    indicator === 'tokenAnalysis' ? tokenInfo.address : '',
+  );
 
   const initialDomain = {
     min: {
@@ -264,6 +276,8 @@ export const LineChart = ({
         return 'day';
       case 'contractAmount':
         return 'statDay';
+      case 'tokenAnalysis':
+        return 'day';
       default:
         return 'timestamp';
     }
@@ -283,6 +297,13 @@ export const LineChart = ({
         return 'cnt';
       case 'contractAmount':
         return 'contractCount';
+      case 'tokenAnalysis':
+        return [
+          'transferAmount',
+          'transferCount',
+          'uniqueReceiver',
+          'uniqueSender',
+        ];
       default:
         return indicator;
     }
@@ -307,8 +328,13 @@ export const LineChart = ({
         isThumb={isThumb}
       >
         <Title>{t(`charts.${indicator}.title`)}</Title>
-        {!isThumb ? (
-          <Description>{t(`charts.${indicator}.description`)}</Description>
+        {!isThumb && t(`charts.${indicator}.description`) ? (
+          <Description>
+            {t(
+              `charts.${indicator}.description`,
+              indicator === 'tokenAnalysis' ? { token: tokenInfo.name } : null,
+            )}
+          </Description>
         ) : null}
         {isLoading ? (
           <LoadingContainer>
@@ -323,6 +349,7 @@ export const LineChart = ({
           'accountGrowth',
           'activeAccounts',
           'contractAmount',
+          'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
             width={width}

@@ -17,8 +17,11 @@ import {
 import { tokenColunms } from '../../../utils/tableColumns';
 import { cfxTokenTypes } from '../../../utils/constants';
 import { useAge } from '../../../utils/hooks/useAge';
+import { Card } from '../../components/Card';
+import { LineChart as Chart } from '../../components/Chart/Loadable';
 
 interface TransferProps {
+  tokenName: string;
   tokenAddress: string;
   symbol: string;
   decimals: number;
@@ -34,6 +37,7 @@ interface Query {
 }
 
 export function Transfers({
+  tokenName,
   tokenAddress,
   symbol,
   decimals,
@@ -257,6 +261,36 @@ export function Transfers({
   //   });
   // }
 
+  const clientWidth = document.body.clientWidth;
+  let chartWidth = clientWidth - 36;
+
+  if (clientWidth > 1350) chartWidth = 1350;
+  if (chartWidth < 365) chartWidth = 365;
+
+  const analysisPanel = () => (
+    <StyledTabWrapper>
+      <Card>
+        <Chart
+          width={chartWidth}
+          indicator="tokenAnalysis"
+          tokenInfo={{
+            name: tokenName,
+            address: tokenAddress,
+          }}
+        />
+      </Card>
+    </StyledTabWrapper>
+  );
+
+  const analysisTab = {
+    value: 'analysis',
+    action: 'tokenAnalysis',
+    label: t(translations.token.analysis),
+    content: analysisPanel(),
+  };
+
+  tabs.push(analysisTab);
+
   return <TabsTablePanel tabs={tabs} />;
 }
 
@@ -266,5 +300,18 @@ const StyledSearchAreaWrapper = styled.div`
 
   ${media.s} {
     justify-content: flex-start;
+  }
+`;
+
+const StyledTabWrapper = styled.div`
+  .card {
+    padding: 5px !important;
+
+    .content {
+      overflow-x: auto;
+      & > div {
+        box-shadow: none !important;
+      }
+    }
   }
 `;
