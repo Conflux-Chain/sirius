@@ -12,6 +12,7 @@ import { useTokenQuery } from '../../../utils/api';
 import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatAddress } from '../../../utils/cfx';
+import { media } from '../../../styles/media';
 
 interface RouteParams {
   tokenAddress: string;
@@ -154,6 +155,11 @@ const HeaderWrap = styled.div`
   align-items: center;
   line-height: 2.2857rem;
   margin-bottom: 1.7143rem;
+
+  ${media.s} {
+    flex-wrap: wrap;
+  }
+
   img {
     width: 20px;
     height: 20px;

@@ -201,7 +201,10 @@
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "notice": "Notice Center",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "search": {
+      "tokens": "Tokens"
+    }
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",

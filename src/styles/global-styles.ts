@@ -45,6 +45,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  // override @jnoodle/antd styles
+  .ant-select-item-option-grouped{
+    padding-left: 12px;
+  }
 
   .sirius-select-dropdown.select-dropdown {
     .option {

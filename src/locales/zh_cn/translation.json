@@ -201,7 +201,10 @@
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
     "notice": "通知中心",
-    "learnMore": "了解更多"
+    "learnMore": "了解更多",
+    "search": {
+      "tokens": "代币"
+    }
   },
   "footer": {
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
