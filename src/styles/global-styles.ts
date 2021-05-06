@@ -48,6 +48,11 @@ export const GlobalStyle = createGlobalStyle`
   // override @jnoodle/antd styles
   .ant-select-item-option-grouped{
     padding-left: 12px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    border-radius: 3px;
   }
 
   .sirius-select-dropdown.select-dropdown {

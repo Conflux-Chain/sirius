@@ -17,56 +17,55 @@ import { defaultTokenIcon } from '../../../../constants';
 import { Link } from '../../../components/Link/Loadable';
 import { formatAddress } from '../../../../utils/cfx';
 import { useHistory } from 'react-router-dom';
+import _ from 'lodash';
+import fetch from 'utils/request';
+import {
+  isAccountAddress,
+  isEpochNumber,
+  isHash,
+  isInnerContractAddress,
+  isSpecialAddress,
+} from '../../../../utils';
+import { appendApiPrefix } from '../../../../utils/api';
 
 const { Search: SearchInput } = Input;
 
-function getRandomInt(max: number, min: number = 0) {
-  return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
-}
-const searchResult = (query: string) =>
-  new Array(getRandomInt(10))
-    .join('.')
-    .split('.')
-    .map((_, idx) => {
-      const token = {
-        address: 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2',
-        icon:
-          'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xNTAgMzAwQzIzMi44NDMgMzAwIDMwMCAyMzIuODQzIDMwMCAxNTBDMzAwIDY3LjE1NzMgMjMyLjg0MyAwIDE1MCAwQzY3LjE1NzMgMCAwIDY3LjE1NzMgMCAxNTBDMCAyMzIuODQzIDY3LjE1NzMgMzAwIDE1MCAzMDBaIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXIpIi8+CjxwYXRoIGQ9Ik0yMDUuNDk5IDIzNC4xOTlIMTMyLjc5OUMxMjYuMDk5IDIzNC4xOTkgMTIwLjY5OSAyMjguNzk5IDEyMC42OTkgMjIyLjA5OUMxMjAuNjk5IDIxNS4zOTkgMTI2LjA5OSAyMDkuOTk5IDEzMi43OTkgMjA5Ljk5OUgxOTguNDk5TDIyNy44OTkgMTU5LjA5OUwxOTQuOTk5IDEwMi4xOTlDMTkxLjY5OSA5Ni4zOTkzIDE5My41OTkgODguOTk5MyAxOTkuMzk5IDg1LjU5OTNDMjA1LjE5OSA4Mi4yOTkzIDIxMi41OTkgODQuMTk5MyAyMTUuOTk5IDg5Ljk5OTNMMjUyLjM5OSAxNTIuOTk5QzI1NC41OTkgMTU2Ljc5OSAyNTQuNTk5IDE2MS4zOTkgMjUyLjM5OSAxNjUuMDk5TDIxNS45OTkgMjI4LjA5OUMyMTMuNzk5IDIzMS44OTkgMjA5Ljc5OSAyMzQuMTk5IDIwNS40OTkgMjM0LjE5OVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNjcuMiA2NS44MDA4SDk0LjVDOTAuMiA2NS44MDA4IDg2LjIgNjguMTAwOCA4NCA3MS45MDA4TDQ3LjYgMTM0LjkwMVYxMzUuMDAxQzQ3LjQgMTM1LjQwMSA0Ny4xIDEzNS45MDEgNDYuOSAxMzYuMzAxVjEzNi40MDFDNDYuNyAxMzYuODAxIDQ2LjYgMTM3LjIwMSA0Ni41IDEzNy43MDFDNDYuNSAxMzcuODAxIDQ2LjQgMTM3LjkwMSA0Ni40IDEzOC4xMDFDNDYuMyAxMzguNTAxIDQ2LjIgMTM4LjgwMSA0Ni4yIDEzOS4yMDFDNDYuMiAxMzkuMzAxIDQ2LjIgMTM5LjQwMSA0Ni4xIDEzOS42MDFDNDYgMTQwLjEwMSA0NiAxNDAuNjAxIDQ2IDE0MS4wMDFDNDYgMTQxLjUwMSA0NiAxNDIuMDAxIDQ2LjEgMTQyLjQwMUM0Ni4xIDE0Mi41MDEgNDYuMSAxNDIuNjAxIDQ2LjIgMTQyLjgwMUM0Ni4zIDE0My4yMDEgNDYuMyAxNDMuNTAxIDQ2LjQgMTQzLjkwMUM0Ni40IDE0NC4wMDEgNDYuNSAxNDQuMTAxIDQ2LjUgMTQ0LjMwMUM0Ni42IDE0NC43MDEgNDYuOCAxNDUuMjAxIDQ2LjkgMTQ1LjYwMVYxNDUuNzAxQzQ3LjEgMTQ2LjIwMSA0Ny4zIDE0Ni42MDEgNDcuNiAxNDcuMDAxVjE0Ny4xMDFMODQgMjEwLjAwMUM4Ni4yIDIxMy45MDEgOTAuMyAyMTYuMTAxIDk0LjUgMjE2LjEwMUM5Ni42IDIxNi4xMDEgOTguNiAyMTUuNjAxIDEwMC41IDIxNC41MDFDMTA2LjMgMjExLjIwMSAxMDguMyAyMDMuNzAxIDEwNC45IDE5Ny45MDFMNzkuMSAxNTMuMDAxSDEzMC44QzEzNy41IDE1My4wMDEgMTQyLjkgMTQ3LjYwMSAxNDIuOSAxNDAuOTAxQzE0Mi45IDEzNC4yMDEgMTM3LjUgMTI4LjgwMSAxMzAuOCAxMjguODAxSDc5LjFMMTAxLjUgOTAuMDAwOEgxNjcuMkMxNzMuOSA5MC4wMDA4IDE3OS4zIDg0LjYwMDggMTc5LjMgNzcuOTAwOEMxNzkuMyA3MS4yMDA4IDE3My45IDY1LjgwMDggMTY3LjIgNjUuODAwOFoiIGZpbGw9IiMxRjFGMUYiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhciIgeDE9IjY0Ljg1MjgiIHkxPSIyOS40MjY2IiB4Mj0iMjMzLjgxNCIgeTI9IjI2OC42ODYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzE0RjBDRiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4MjhDRkYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K',
-        name: 'FansCoin',
-        website: 'https://moondex.io/trade/fcusdt',
-        symbol: 'FC',
-        totalPrice: '22660822.033596000000000000',
-        transferType: 'ERC20',
-      };
-      return {
-        value: formatAddress(token.address),
-        label: (
-          <TokenItemWrapper>
-            <img src={token?.icon || defaultTokenIcon} alt="token icon" />
-            <Link href={`/token/${formatAddress(token.address)}`}>
-              <Translation>
-                {t => (
-                  <>
-                    <div className="title">
-                      {token?.name} ({token?.symbol}){' '}
-                      <span className="tag">
-                        {token?.transferType.replace('ERC', 'CRC')}
-                      </span>
-                    </div>
-                    {token?.address ? (
-                      <div className="address">{token?.address}</div>
-                    ) : null}
-                    {token?.website ? (
-                      <div className="website">{token?.website}</div>
-                    ) : null}
-                  </>
-                )}
-              </Translation>
-            </Link>
-          </TokenItemWrapper>
-        ),
-      };
-    });
+const searchResult = (list: any[], notAvailable = '-') =>
+  list.map(l => {
+    const token = {
+      ...l,
+      icon: l.icon || defaultTokenIcon,
+      name: l.name || notAvailable,
+    };
+    return {
+      value: formatAddress(token.address),
+      label: (
+        <TokenItemWrapper>
+          <img src={token?.icon || defaultTokenIcon} alt="token icon" />
+          <Link href={`/token/${formatAddress(token.address)}`}>
+            <Translation>
+              {t => (
+                <>
+                  <div className="title">
+                    {token?.name} ({token?.symbol}){' '}
+                    <span className="tag">
+                      {token?.transferType.replace('ERC', 'CRC')}
+                    </span>
+                  </div>
+                  {token?.address ? (
+                    <div className="address">{token?.address}</div>
+                  ) : null}
+                  {token?.website ? (
+                    <div className="website">{token?.website}</div>
+                  ) : null}
+                </>
+              )}
+            </Translation>
+          </Link>
+        </TokenItemWrapper>
+      ),
+    };
+  });
 
 const TokenItemWrapper = styled.div`
   display: flex;
@@ -106,6 +105,8 @@ const TokenItemWrapper = styled.div`
   }
 `;
 
+let controller = new AbortController();
+
 export const Search = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -113,23 +114,58 @@ export const Search = () => {
   const [, setSearch] = useSearch();
   const [options, setOptions] = useState<SelectProps<object>['options']>([]);
 
+  const notAvailable = t(translations.general.notAvailable);
+
   const onEnterPress = value => {
     setSearch(value);
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      setOptions([
-        {
-          label: <LabelWrapper>{t(translations.header.tokens)}</LabelWrapper>,
-          options: searchResult(value),
-        },
-      ]);
+    if (
+      value &&
+      !(
+        value === '0x0' ||
+        isAccountAddress(value) ||
+        // isContractAddress(value) ||
+        isInnerContractAddress(value) ||
+        isSpecialAddress(value) ||
+        isEpochNumber(value) ||
+        isHash(value)
+      )
+    ) {
+      // abort pre search
+      controller.abort();
+
+      controller = new AbortController();
+
+      fetch(appendApiPrefix('/stat/tokens/name?name=' + value), {
+        signal: controller.signal,
+      })
+        .then(res => {
+          if (res && res.list && res.list.length > 0) {
+            setOptions([
+              {
+                label: (
+                  <LabelWrapper>{t(translations.header.tokens)}</LabelWrapper>
+                ),
+                options: searchResult(res.list, notAvailable),
+              },
+            ]);
+          } else {
+            setOptions([]);
+          }
+        })
+        .catch(e => {
+          if (e.name !== 'AbortError') {
+            console.error(e);
+          }
+        });
+    } else {
+      setOptions([]);
     }
   };
 
   const onSelect = (value: string) => {
-    console.log('onSelect', value);
     history.push(`/token/${value}`);
   };
 
@@ -141,7 +177,8 @@ export const Search = () => {
         }}
         options={options}
         onSelect={onSelect}
-        onSearch={handleSearch}
+        onSearch={_.debounce(handleSearch, 500)}
+        dropdownClassName="header-search-dropdown"
       >
         <SearchInput
           allowClear
