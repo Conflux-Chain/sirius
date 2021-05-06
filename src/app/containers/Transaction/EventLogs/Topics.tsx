@@ -6,8 +6,9 @@ import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { ContractDetail } from './ContractDetail';
 import { media } from '../../../../styles/media';
+import { formatAddress } from 'utils/cfx';
 
-export const Topics = ({ data, signature, logContractInfo }) => {
+export const Topics = ({ data, signature, contractAndTokenInfo }) => {
   const { t } = useTranslation();
   const [selectMap, setSelectMap] = useState(() => {
     return data.reduce((prev, curr) => {
@@ -72,7 +73,12 @@ export const Topics = ({ data, signature, logContractInfo }) => {
           value = valueMap[name];
 
           if (name === 'address') {
-            const contractInfo = logContractInfo[valueMap.decode];
+            const contractInfo =
+              contractAndTokenInfo[
+                formatAddress(valueMap.decode, {
+                  withType: true,
+                })
+              ];
 
             value = (
               <>
@@ -116,7 +122,7 @@ export const Topics = ({ data, signature, logContractInfo }) => {
 };
 
 Topics.defaultProps = {
-  logContractInfo: {},
+  contractAndTokenInfo: {},
 };
 
 const StyledTopicsWrapper = styled.div`
