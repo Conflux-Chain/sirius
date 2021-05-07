@@ -34,6 +34,18 @@ export function Footer() {
 
   const left = [<TextLogo key="logo" />];
 
+  const reportLink = (
+    <Link
+      className="footer-link"
+      href="/report"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.report,
+      }}
+    >
+      {t(translations.footer.report)}
+    </Link>
+  );
   const feedbackLink = (
     <Link
       className="footer-link"
@@ -362,6 +374,7 @@ export function Footer() {
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink key="1-1">{feedbackLink}</FooterContentLink>
+            <FooterContentLink key="1-1">{reportLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>

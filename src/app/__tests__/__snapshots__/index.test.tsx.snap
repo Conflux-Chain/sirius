@@ -210,6 +210,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
               <Route
                 component={[Function]}
                 exact={true}
+                path="/report"
+              />
+              <Route
+                component={[Function]}
+                exact={true}
                 path={
                   Array [
                     "/notices",

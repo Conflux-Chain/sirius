@@ -90,6 +90,7 @@
     "txOnlyEn": "",
     "txOnlyZh": "交易",
     "clickToApply": "点击申请合约赞助",
+    "clickToReport": "举报该地址",
     "notDeployed": "此合约尚未部署"
   },
   "addressDetail": {
@@ -228,6 +229,7 @@
     "preference": "偏好设置",
     "contactUs": "联系我们",
     "feedback": "反馈",
+    "report": "举报",
     "developResource": {
       "title": "开发中心",
       "developerDocuments": "开发者文档",
@@ -958,5 +960,35 @@
     "wcfx": "WCFX",
     "swapNCFXToNWCFX": "将 {{cfxValue}} CFX 兑换为 {{wcfxValue}} WCFX",
     "swapNWCFXToNCFX": "将 {{wcfxValue}} WCFX 兑换为 {{cfxValue}} CFX"
+  },
+  "report": {
+    "title": "举报",
+    "subtitle": "您可以标记您不信任的地址，并将其上传",
+    "address": "地址",
+    "txnHash": "交易哈希",
+    "selectType": "请选择举报类型（多选）",
+    "phishHack": "钓鱼 / 黑客",
+    "scam": "诈骗",
+    "fishy": "可疑地址",
+    "highRisk": "高风险",
+    "spam": "垃圾地址",
+    "others": "其它",
+    "description": "描述",
+    "tip": "至少 30 个字符，不超过 200 个字符",
+    "nCharacters": "N 个字符",
+    "code": "验证码",
+    "submit": "提交",
+    "error": {
+      "addressRequired": "请输入地址",
+      "addressInvalid": "地址格式错误",
+      "typeRequired": "请选择至少一种举报类型",
+      "descriptionRequired": "请输入至少 30 个字符的描述",
+      "recaptchaRequired": "请进行 reCAPTCHA 验证",
+      "txnHashInvalid": "交易哈希格式错误"
+    },
+    "status": {
+      "success": "提交成功",
+      "fail": "提交失败"
+    }
   }
 }

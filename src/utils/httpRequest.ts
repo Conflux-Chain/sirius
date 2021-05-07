@@ -11,6 +11,17 @@ export const sendRequest = config => {
   });
 };
 
+export const reqReport = (param?: object) => {
+  return sendRequest({
+    url: `${statPrefix}/recaptcha/siteverify`,
+    type: 'POST',
+    body: JSON.stringify(param),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};
+
 export const reqTransactionEventlogs = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/eventLog`,

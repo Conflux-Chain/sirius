@@ -25,6 +25,7 @@ export const ScanEvent = {
       broadcastTx: 'push_tx',
       blocknumberCalc: 'block_countdown',
       feedback: 'feedback',
+      report: 'report',
       developerDocuments: 'developer_documents',
       confluxStudio: 'conflux_studio',
       confluxTruffle: 'conflux_truffle',
