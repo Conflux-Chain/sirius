@@ -46,16 +46,16 @@ export function Footer() {
       {t(translations.footer.report)}
     </Link>
   );
-  const feedbackLink = (
+  const techIssueLink = (
     <Link
       className="footer-link"
       href="https://github.com/Conflux-Chain/sirius/issues"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.feedback,
+        action: ScanEvent.menu.action.techIssue,
       }}
     >
-      {t(translations.footer.feedback)}
+      {t(translations.footer.techIssue)}
     </Link>
   );
   const websiteLink = (
@@ -373,7 +373,7 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1-1">{feedbackLink}</FooterContentLink>
+            <FooterContentLink key="1-1">{techIssueLink}</FooterContentLink>
             <FooterContentLink key="1-1">{reportLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
