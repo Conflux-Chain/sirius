@@ -3,7 +3,23 @@
 exports[`<Search  /> should match snapshot 1`] = `
 Object {
   "asFragment": [Function],
-  "baseElement": <body>
+  "baseElement": .c0 input::-webkit-input-placeholder {
+  white-space: nowrap;
+}
+
+.c0 input::-moz-placeholder {
+  white-space: nowrap;
+}
+
+.c0 input:-ms-input-placeholder {
+  white-space: nowrap;
+}
+
+.c0 input::placeholder {
+  white-space: nowrap;
+}
+
+<body>
     <div>
       <div
         class="undefined"
@@ -12,7 +28,7 @@ Object {
           class="jsx-1159070929 with-label"
         >
           <div
-            class="jsx-1159070929 input-container undefined"
+            class="jsx-1159070929 input-container c0 undefined"
           >
             <div
               class="jsx-1159070929 input-wrapper line    "
@@ -41,7 +57,7 @@ Object {
         class="jsx-1159070929 with-label"
       >
         <div
-          class="jsx-1159070929 input-container undefined"
+          class="jsx-1159070929 input-container sc-AxjAm nYPfk undefined"
         >
           <div
             class="jsx-1159070929 input-wrapper line    "

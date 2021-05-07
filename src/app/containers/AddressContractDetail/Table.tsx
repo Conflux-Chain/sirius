@@ -20,25 +20,26 @@ import {
 import { StyledIconWrapper } from 'utils/tableColumns/token';
 import { Link } from 'app/components/Link';
 import { Text } from 'app/components/Text';
-import { ColumnsType } from '../../components/TabsTablePanel';
+import { ColumnsType } from 'app/components/TabsTablePanel';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import {
   TabLabel,
   TabsTablePanel,
-} from '../../components/TabsTablePanel/Loadable';
+} from 'app/components/TabsTablePanel/Loadable';
 import { formatString, isContractAddress, isInnerContractAddress } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
 import {
   TableSearchDatepicker,
   TableSearchDropdown,
-} from '../../components/TablePanel';
+} from 'app/components/TablePanel';
 import { cfx } from 'utils/cfx';
-import { ContractAbi } from '../../components/ContractAbi/Loadable';
-import { cfxTokenTypes } from '../../../utils/constants';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
-import { useAge } from '../../../utils/hooks/useAge';
+import { ContractAbi } from 'app/components/ContractAbi/Loadable';
+import { cfxTokenTypes } from 'utils/constants';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { useAge } from 'utils/hooks/useAge';
+import { AddressContainer } from 'app/components/AddressContainer';
 
 const AceEditorStyle = {
   width: '100%',
@@ -364,7 +365,7 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 7, 6, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 8, 7, 4, 3, 4, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     tokenColunms.from,
@@ -458,7 +459,10 @@ export function Table({ address, addressInfo }) {
     blockColunms.position,
     blockColunms.txns,
     blockColunms.hash,
-    blockColunms.miner,
+    {
+      ...blockColunms.miner,
+      render: value => <AddressContainer isLink={false} value={value} />,
+    },
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
     blockColunms.reward,
@@ -679,6 +683,11 @@ export function Table({ address, addressInfo }) {
                   key: 'status',
                   value: '1',
                   name: t(translations.transaction.viewFailedTxns),
+                },
+                {
+                  key: 'txType',
+                  value: 'create',
+                  name: t(translations.transaction.viewCreationTxns),
                 },
               ]}
             />

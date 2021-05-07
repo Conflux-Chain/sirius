@@ -124,7 +124,7 @@
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
-    "description": "CFX Transfers",
+    "description": "Show only CFX transfers on the Conflux network.",
     "tipCountBefore": "A total of",
     "tipCountAfter": "CFX transfers"
   },
@@ -134,6 +134,7 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
+    "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
     "table": {
       "number": "#",
       "token": "Token",
@@ -171,6 +172,12 @@
     "tipCountBefore": "Showing",
     "tipCountAfter": "internal contracts"
   },
+  "registeredContracts": {
+    "title": "Registered Contracts",
+    "description": "Registered Contracts",
+    "tipCountBefore": "Showing",
+    "tipCountAfter": "registered contracts"
+  },
   "header": {
     "home": "Home",
     "bnt": "Blocks & Transactions",
@@ -194,13 +201,16 @@
     "statistics": "Top Statistics",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address",
-    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address",
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token Name",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token Name",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "notice": "Notice Center",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "search": {
+      "tokens": "Tokens"
+    }
   },
   "footer": {
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
@@ -251,6 +261,7 @@
     "holders": "Holders",
     "decimals": "Decimals",
     "transfers": "Transfers",
+    "analysis": "Analysis",
     "price": "Price",
     "change": "Change (%)",
     "volume": "Volume (24H)",
@@ -271,6 +282,7 @@
     "subtitle2": "Blockchain Data",
     "subtitle3": "Transaction",
     "subtitle4": "Account",
+    "subtitle5": "Contract",
     "description": "Charts",
     "tps": {
       "title": "TPS",
@@ -344,6 +356,18 @@
     "contractGrowth": {
       "title": "Contract Growth",
       "description": "The number of new contracts added per day on the Conflux network."
+    },
+    "contractAmount": {
+      "title": "Contract Amount",
+      "description": "The number of contracts on the Conflux network."
+    },
+    "tokenAnalysis": {
+      "title": "Token Analysis",
+      "description": "{{token}} daily transfers statistics.",
+      "transferAmount": "Transfers Amount",
+      "transferCount": "Transfers Count",
+      "uniqueReceiver": "Unique Receivers",
+      "uniqueSender": "Unique Senders"
     }
   },
   "general": {
@@ -571,6 +595,7 @@
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
     "viewFailedTxns": "View Failed Txns",
+    "viewCreationTxns": "View Contract Creation Txns",
     "title": "Transaction",
     "description": "Transaction",
     "hash": "Transaction Hash",

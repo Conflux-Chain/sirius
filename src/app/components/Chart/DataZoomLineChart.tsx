@@ -3,31 +3,36 @@ import ReactECharts from 'echarts-for-react';
 import dayjs from 'dayjs';
 import { formatNumber } from '../../../utils';
 import { useTranslation } from 'react-i18next';
+import { translations } from '../../../locales/i18n';
 
 interface Props {
   dateKey?: string;
-  valueKey?: string;
+  valueKey?: string | string[];
   indicator?: string;
   width?: number;
   data?: any[];
 }
 export const DataZoomLineChart = ({
-  indicator,
+  indicator = '',
   dateKey = 'day',
   valueKey = 'value',
   width = document.body.clientWidth,
   data = [],
 }: Props) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const dateFormatter = function (value) {
     return dayjs(value).format(lang === 'zh' ? 'YYYY-MM-DD' : 'MMM DD, YYYY');
   };
 
+  if (!Array.isArray(valueKey)) {
+    valueKey = [valueKey as string];
+  }
+
   const chartData = data
     // sort for data zoom thumbnail
     .sort((a, b) => a[dateKey].localeCompare(b[dateKey]))
-    .map(d => [d[dateKey], d[valueKey]]);
+    .map(d => [d[dateKey], ...(valueKey as string[]).map(v => +d[v])]);
 
   return (
     <ReactECharts
@@ -41,15 +46,39 @@ export const DataZoomLineChart = ({
             return [pt[0], '10%'];
           },
           formatter: function (params) {
-            return `${dateFormatter(
+            const data = params
+              .map(
+                p =>
+                  `<div>
+<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${
+                    p.color
+                  };"></span>
+<span style="font-size:14px;color:#666;font-weight:400;margin-left:2px">${
+                    p.seriesName
+                  }</span>
+<span style="${
+                    p.seriesName ? 'float:right;margin-left:20px;' : ''
+                  }font-size:14px;color:#666;font-weight:700">${formatNumber(
+                    p.data[1],
+                  )}</span>
+<div style="clear:both"></div>
+</div>`,
+              )
+              .join('');
+            return `<div style="font-weight: 700;margin-bottom: 10px;">${dateFormatter(
               params[0].data[0],
-            )}<br/><strong>${formatNumber(params[0].data[1])}</strong>`;
+            )}</div>${data}`;
           },
         },
         grid: {
           left: '80',
           right: '10',
           bottom: width < 800 ? '100' : '70',
+        },
+        legend: {
+          show: valueKey.length > 1,
+          itemGap: 10,
+          right: 10,
         },
         xAxis: {
           type: 'time',
@@ -61,12 +90,12 @@ export const DataZoomLineChart = ({
         },
         yAxis: {
           type: 'value',
-          boundaryGap: [0, '10%'],
-          axisLabel: {
-            formatter: function (value) {
-              return formatNumber(value);
-            },
-          },
+          // boundaryGap: [0, '10%'],
+          // axisLabel: {
+          //   formatter: function (value) {
+          //     return formatNumber(value);
+          //   },
+          // },
         },
         dataZoom: [
           {
@@ -87,14 +116,12 @@ export const DataZoomLineChart = ({
             },
           },
         ],
-        series: [
-          {
-            type: 'line',
-            symbol: 'none',
-            areaStyle: {},
-            data: chartData,
-          },
-        ],
+        series: valueKey.map((v, i) => ({
+          name: t(translations.charts[indicator][v]) || '',
+          type: 'line',
+          symbol: 'none',
+          data: chartData.map(d => [d[0], d[i + 1]]),
+        })),
       }}
     />
   );

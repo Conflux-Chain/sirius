@@ -81,6 +81,7 @@ export const ScanEvent = {
       minedBlocks: 'mined_blocks',
       tokenTransfers: 'token_transfers',
       tokenHolders: 'token_holders',
+      tokenAnalysis: 'token_analysis',
       statsTransactions: 'stats_transactions',
       statsTokens: 'stats_tokens',
       statsMiners: 'stats_miners',

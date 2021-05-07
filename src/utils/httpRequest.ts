@@ -41,6 +41,14 @@ export const reqContract = (param?: object, extra?: object) => {
   });
 };
 
+export const reqContractAndToken = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/contract-and-token`,
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqTransferList = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transfer`,

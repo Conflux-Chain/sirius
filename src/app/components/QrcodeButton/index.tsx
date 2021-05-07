@@ -64,7 +64,7 @@ export const QrcodeButton = ({
       </Tooltip>
       <Modal
         wrapClassName="qrcode-modal"
-        width="20rem"
+        width="22rem"
         open={visible}
         onClose={handleClose}
       >

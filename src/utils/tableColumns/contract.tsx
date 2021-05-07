@@ -8,6 +8,7 @@ import { defaultTokenIcon } from '../../constants';
 import { formatString, formatNumber } from '..';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
+import { ContentWrapper } from './utils';
 
 interface Query {
   accountAddress?: string;
@@ -58,13 +59,20 @@ export const contract = {
 
 export const transactionCount = {
   title: (
-    <Translation>
-      {t => t(translations.general.table.contracts.transactionCount)}
-    </Translation>
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.contracts.transactionCount)}
+      </Translation>
+    </ContentWrapper>
   ),
   dataIndex: 'transactionCount',
   key: 'transactionCount',
-  render: value => <span>{formatNumber(value, { withUnit: false })}</span>,
+  sortable: true,
+  render: value => (
+    <ContentWrapper right>
+      <span>{formatNumber(value, { withUnit: false })}</span>
+    </ContentWrapper>
+  ),
 };
 
 export const StyledIconWrapper = styled.div`

@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useBreakpoint } from 'styles/media';
 import { Copy, Qrcode } from './HeadLineButtons';
 import {
   BalanceCard,
@@ -17,7 +16,6 @@ import {
   StorageStakingCard,
   NonceCard,
 } from './AddressInfoCards';
-import { Text } from 'app/components/Text';
 import {
   Main,
   Title,
@@ -38,7 +36,6 @@ interface RouteParams {
 export const AddressDetailPage = memo(() => {
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
-  const bp = useBreakpoint();
   const { data: accountInfo } = useAccount(address, [
     'cfxTransferCount',
     'erc20TransferCount',
@@ -64,13 +61,11 @@ export const AddressDetailPage = memo(() => {
               : t(translations.general.address.address)}
           </Title>
           <HeadAddressLine>
-            {bp === 's' ? (
-              <Text maxWidth="14.75rem">{address}</Text>
-            ) : (
-              <span>{address}</span>
-            )}
-            <Copy address={address} />
-            <Qrcode address={address} />
+            <span className="address">{address}</span>
+            <div className="icons">
+              <Copy address={address} />
+              <Qrcode address={address} />
+            </div>
           </HeadAddressLine>
         </Head>
         <Top>

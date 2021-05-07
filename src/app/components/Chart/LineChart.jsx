@@ -29,6 +29,10 @@ export const LineChart = ({
   width = 500,
   indicator = 'blockTime',
   isThumb = false,
+  tokenInfo = {
+    name: '',
+    address: '',
+  },
 }) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
@@ -45,6 +49,9 @@ export const LineChart = ({
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
     'accountGrowth',
+    'activeAccounts',
+    'contractAmount',
+    'tokenAnalysis',
   ].includes(indicator);
 
   const chartWidth =
@@ -57,6 +64,9 @@ export const LineChart = ({
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
     'accountGrowth',
+    'activeAccounts',
+    'contractAmount',
+    'tokenAnalysis', // without thumb
   ].includes(indicator)
     ? 365
     : 31;
@@ -69,7 +79,13 @@ export const LineChart = ({
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID, indicator, limit);
+  } = usePlot(
+    'day',
+    NUM_X_GRID,
+    indicator,
+    limit,
+    indicator === 'tokenAnalysis' ? tokenInfo.address : '',
+  );
 
   const initialDomain = {
     min: {
@@ -82,6 +98,8 @@ export const LineChart = ({
       dailyTransactionTokens: 0,
       cfxHoldingAccounts: 0,
       accountGrowth: 0,
+      activeAccounts: 0,
+      contractAmount: 0,
     },
     max: {
       blockTime: 'auto',
@@ -93,6 +111,8 @@ export const LineChart = ({
       dailyTransactionTokens: 'auto',
       cfxHoldingAccounts: 'auto',
       accountGrowth: 'auto',
+      activeAccounts: 'auto',
+      contractAmount: 'auto',
     },
   };
 
@@ -124,7 +144,11 @@ export const LineChart = ({
               dataKey = 'holderCount';
               break;
             case 'accountGrowth':
+            case 'activeAccounts':
               dataKey = 'cnt';
+              break;
+            case 'contractAmount':
+              dataKey = 'contractCount';
               break;
             default:
               break;
@@ -164,10 +188,18 @@ export const LineChart = ({
           ? '#1E54FF'
           : '#FA5D8E';
       case 'accountGrowth':
+      case 'activeAccounts':
         // because of reverse
         return plot &&
           plot.length > 0 &&
           plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
+          ? '#1E54FF'
+          : '#FA5D8E';
+      case 'contractAmount':
+        // because of reverse
+        return plot &&
+          plot.length > 0 &&
+          plot[plot.length - 1]['contractCount'] - plot[0]['contractCount'] <= 0
           ? '#1E54FF'
           : '#FA5D8E';
       default:
@@ -240,6 +272,11 @@ export const LineChart = ({
       case 'dailyTransactionCFX':
       case 'dailyTransactionTokens':
       case 'accountGrowth':
+      case 'activeAccounts':
+        return 'day';
+      case 'contractAmount':
+        return 'statDay';
+      case 'tokenAnalysis':
         return 'day';
       default:
         return 'timestamp';
@@ -256,7 +293,17 @@ export const LineChart = ({
       case 'cfxHoldingAccounts':
         return 'holderCount';
       case 'accountGrowth':
+      case 'activeAccounts':
         return 'cnt';
+      case 'contractAmount':
+        return 'contractCount';
+      case 'tokenAnalysis':
+        return [
+          'transferAmount',
+          'transferCount',
+          'uniqueReceiver',
+          'uniqueSender',
+        ];
       default:
         return indicator;
     }
@@ -281,8 +328,13 @@ export const LineChart = ({
         isThumb={isThumb}
       >
         <Title>{t(`charts.${indicator}.title`)}</Title>
-        {!isThumb ? (
-          <Description>{t(`charts.${indicator}.description`)}</Description>
+        {!isThumb && t(`charts.${indicator}.description`) ? (
+          <Description>
+            {t(
+              `charts.${indicator}.description`,
+              indicator === 'tokenAnalysis' ? { token: tokenInfo.name } : null,
+            )}
+          </Description>
         ) : null}
         {isLoading ? (
           <LoadingContainer>
@@ -295,6 +347,9 @@ export const LineChart = ({
           'dailyTransactionTokens',
           'cfxHoldingAccounts',
           'accountGrowth',
+          'activeAccounts',
+          'contractAmount',
+          'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
             width={width}
@@ -350,6 +405,8 @@ export const LineChart = ({
                     'dailyTransactionTokens',
                     'cfxHoldingAccounts',
                     'accountGrowth',
+                    'activeAccounts',
+                    'contractAmount',
                   ].includes(indicator)
                     ? 60
                     : 50

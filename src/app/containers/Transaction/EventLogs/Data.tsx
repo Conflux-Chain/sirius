@@ -6,6 +6,7 @@ import { NETWORK_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import { media } from '../../../../styles/media';
 
 const isPossibleAddress = data => {
   try {
@@ -97,6 +98,15 @@ const StyledSelectItemWrapper = styled.div`
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+
+  ${media.s} {
+    flex-direction: column;
+    align-items: baseline;
+    margin-bottom: 10px;
+    > .value {
+      margin-top: 5px;
+    }
+  }
 
   .index {
     flex-shrink: 0;
@@ -221,6 +231,10 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
   background-color: #fafbfc;
   position: relative;
 
+  ${media.s} {
+    padding: 16px;
+  }
+
   .with-abi {
     padding-right: 100px;
   }
@@ -231,5 +245,12 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
     right: 16px;
     height: 30px;
     padding: 0 10px;
+
+    ${media.s} {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-bottom: 10px;
+    }
   }
 `;

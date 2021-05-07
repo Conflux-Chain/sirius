@@ -302,7 +302,7 @@ export const StatsCard = ({
         return data.map((d, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
-            <td>
+            <td className="address">
               <AddressContainer
                 value={d.base32 || d.hex}
                 isMe={
@@ -325,7 +325,7 @@ export const StatsCard = ({
         return data.map((d, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
-            <td>
+            <td className="address">
               {d.token ? (
                 token.render(d.token)
               ) : (
@@ -347,7 +347,7 @@ export const StatsCard = ({
         return data.map((d, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
-            <td>
+            <td className="address">
               <AddressContainer
                 value={d.base32 || '0x' + d.miner}
                 maxWidth={220}
@@ -413,7 +413,7 @@ export const StatsCard = ({
         return data.map((d, i) => (
           <tr key={i}>
             <td>{i + 1}</td>
-            <td>
+            <td className="address">
               <AddressContainer
                 value={d.base32 || d.hex}
                 isMe={
@@ -602,6 +602,7 @@ const CardWrapper = styled.div`
 
       ${media.m} {
         flex-direction: column;
+        align-items: baseline;
       }
     }
   }
@@ -647,6 +648,10 @@ const CardWrapper = styled.div`
       color: #9b9eac;
       line-height: 24px;
       padding: 8px;
+
+      &.address {
+        min-width: 200px;
+      }
 
       p.sirius-text {
         font-family: ${monospaceFont};

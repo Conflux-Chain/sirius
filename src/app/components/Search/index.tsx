@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@cfxjs/react-ui';
 import { SearchIcon } from '../SearchIcon/Loadable';
 import { DeleteIcon } from '../DeleteIcon/Loadable';
+import styled from 'styled-components';
 type SearchProps = {
   children?: React.ReactNode;
   outerClassname?: string;
@@ -49,7 +50,7 @@ export const Search = ({
   }, [val]);
   return (
     <div className={`${outerClassname}`}>
-      <Input
+      <InputWrapper
         value={value}
         width="100%"
         color="primary"
@@ -74,3 +75,9 @@ export const Search = ({
     </div>
   );
 };
+
+const InputWrapper = styled(Input)`
+  input::placeholder {
+    white-space: nowrap;
+  }
+`;

@@ -32,9 +32,10 @@ export const balance = {
   ),
   dataIndex: 'valueN',
   key: 'valueN',
+  sortable: true,
   render: value => (
     <ContentWrapper right>
-      {value === null
+      {value === null || value === undefined
         ? '--'
         : `${toThousands(
             formatNumber(value, { keepDecimal: false, withUnit: false }),

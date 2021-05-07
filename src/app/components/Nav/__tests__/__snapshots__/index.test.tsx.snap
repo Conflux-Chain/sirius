@@ -596,15 +596,11 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
 }
 
 @media (max-width:1024px) {
-
-}
-
-@media (max-width:1024px) {
   .c4 {
     width: 100vw;
     position: absolute;
     left: 0;
-    display: block;
+    display: none;
   }
 }
 
@@ -696,7 +692,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
       <a
         aria-expanded="true"
         aria-label="menu"
-        class="navbar-burger is-active"
+        class="navbar-burger"
         data-target="navbar"
         role="button"
       >
@@ -712,7 +708,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
       </a>
     </div>
     <div
-      class="c4 navbar-menu is-active"
+      class="c4 navbar-menu"
     >
       <div
         class="c5 navbar-start"

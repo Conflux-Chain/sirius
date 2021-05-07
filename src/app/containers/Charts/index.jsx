@@ -140,6 +140,31 @@ export function Charts() {
                 />
               </Link>
             </Col>
+            <Col span={24} sm={12} lg={8}>
+              <Link to="/chart/activeAccounts">
+                <Chart
+                  width={chartWidth}
+                  indicator="activeAccounts"
+                  isThumb={true}
+                />
+              </Link>
+            </Col>
+          </Row>
+        </ChartsWrap>
+        <HeaderWrap>
+          <div className="title">{t(translations.charts.subtitle5)}</div>
+        </HeaderWrap>
+        <ChartsWrap>
+          <Row gutter={[24, 24]}>
+            <Col span={24} sm={12} lg={8}>
+              <Link to="/chart/contractAmount">
+                <Chart
+                  width={chartWidth}
+                  indicator="contractAmount"
+                  isThumb={true}
+                />
+              </Link>
+            </Col>
           </Row>
         </ChartsWrap>
       </PageWrap>
@@ -188,6 +213,14 @@ const HeaderWrap = styled.div`
   flex-direction: column;
   margin-bottom: 1.1429rem;
   padding: 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  ${media.s} {
+    margin-top: 24px;
+  }
 
   .subtitle {
     font-size: 1rem;

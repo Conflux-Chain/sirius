@@ -97,8 +97,16 @@ export function Tokens() {
   }, [url, tableTokenType, tokenType, defaultSortOrder, defaultSortKey]);
 
   // deal with column sort
-  const sorter = (column, table, oldUrl) => {
-    let newSortOrder = tableSortOrder === 'asc' ? 'desc' : 'asc';
+  const sorter = opt => {
+    const { column, url: oldUrl, oldSortKey, newSortKey } = opt;
+
+    // default order is desc
+    let newSortOrder =
+      oldSortKey === newSortKey
+        ? tableSortOrder === 'asc'
+          ? 'desc'
+          : 'asc'
+        : 'desc';
     let urlSortKey = column.dataIndex;
     // deal with especial key
     // if (urlSortKey === 'transferCount') {
@@ -145,25 +153,18 @@ export function Tokens() {
         }
       >
         {title}
-        {!tokenType ||
-        tokenType === cfxTokenTypes.erc20 ||
-        tokenType === cfxTokenTypes.crc20 ? (
-          <Tooltip
-            hoverable
-            text={
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: t(translations.tokens.dataSource),
-                }}
-              />
-            }
-            placement="top"
-          >
-            <IconWrapper>
-              <img src={imgInfo} alt="?" />
-            </IconWrapper>
-          </Tooltip>
-        ) : null}
+        <Tooltip
+          hoverable
+          text={t(translations.tokens.crcTip, {
+            crc: tokenType,
+            erc: tokenType.replace('CRC', 'ERC'),
+          })}
+          placement="top"
+        >
+          <IconWrapper>
+            <img src={imgInfo} alt="?" />
+          </IconWrapper>
+        </Tooltip>
       </PageHeader>
 
       <TablePanel

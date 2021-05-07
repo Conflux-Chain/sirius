@@ -41,6 +41,7 @@ import { PackingPage } from './containers/PackingPage/Loadable';
 import { Tokens } from './containers/Tokens/Loadable';
 import { Accounts } from './containers/Accounts/Loadable';
 import { Contracts } from './containers/Contracts/Loadable';
+import { RegisteredContracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
 import { Chart } from './containers/Charts/Loadable';
@@ -165,6 +166,11 @@ export function App() {
                     }}
                   />
                   <Route exact path="/contracts" component={Contracts} />
+                  <Route
+                    exact
+                    path="/registered-contracts"
+                    component={RegisteredContracts}
+                  />
                   <Route
                     exact
                     path="/token/:tokenAddress"
@@ -335,10 +341,12 @@ export function App() {
 }
 
 const Main = styled.div`
+  box-sizing: border-box;
   position: relative;
   max-width: 1368px;
   margin: 0 auto;
   padding-top: 106px;
+  padding-bottom: 20px;
   min-height: calc(100vh - 327px);
 
   ${media.xl} {
@@ -352,7 +360,7 @@ const Main = styled.div`
   }
 
   ${media.s} {
-    padding: 100px 16px 16px;
+    padding: 100px 16px 32px;
     min-height: calc(100vh - 254px);
   }
 `;
