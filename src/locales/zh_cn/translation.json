@@ -985,6 +985,10 @@
       "descriptionRequired": "请输入至少 30 个字符的描述",
       "recaptchaRequired": "请进行 reCAPTCHA 验证",
       "txnHashInvalid": "交易哈希格式错误"
+    },
+    "status": {
+      "success": "提交成功",
+      "fail": "提交失败"
     }
   }
 }

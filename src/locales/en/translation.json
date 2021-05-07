@@ -984,6 +984,10 @@
       "descriptionRequired": "Please enter a discription of at least 30 characters",
       "recaptchaRequired": "Invalid captcha response",
       "txnHashInvalid": "Invalid txn hash format"
+    },
+    "status": {
+      "success": "Submit Succeed",
+      "fail": "Submit Failed"
     }
   }
 }

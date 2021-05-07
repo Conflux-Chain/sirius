@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { isAddress, isHash } from 'utils';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { reqReport } from 'utils/httpRequest';
+import { useMessages } from '@cfxjs/react-ui';
 
 // @ts-ignore
 window.recaptchaOptions = {
@@ -17,6 +19,7 @@ window.recaptchaOptions = {
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {
+  const [, setMessage] = useMessages();
   const { t } = useTranslation();
   const location = useLocation();
   const [recaptcha, setRecaptcha] = useState(false);
@@ -30,7 +33,23 @@ export function Report() {
     : '';
 
   const onFinish = (values: any) => {
-    // @todo commit form
+    reqReport(values)
+      .then(resp => {
+        if (resp.code !== 0) {
+          throw new Error(t(translations.report.status.fail));
+        } else {
+          setMessage({
+            text: t(translations.report.status.success),
+            color: 'success',
+          });
+        }
+      })
+      .catch(e => {
+        setMessage({
+          text: t(translations.report.status.fail),
+          color: 'error',
+        });
+      });
   };
 
   const onChange = value => {
@@ -103,7 +122,7 @@ export function Report() {
           <Input />
         </Form.Item>
         <Form.Item
-          name="checkbox-group"
+          name="type"
           label={t(translations.report.selectType)}
           rules={[
             {
@@ -190,7 +209,7 @@ export function Report() {
           />
         </Form.Item>
         <Form.Item
-          name="recaptcha"
+          name="token"
           rules={[
             () => ({
               validator() {
@@ -205,7 +224,7 @@ export function Report() {
           ]}
         >
           <ReCAPTCHA
-            sitekey="6Le0Mb4aAAAAANCTiIFSR3brS43_m3YEZY74cC8y"
+            sitekey="6Ldmm8gaAAAAABt8eZ-CvVw7nKKYg7gD1T1J5Pl6"
             onChange={onChange}
           />
         </Form.Item>
