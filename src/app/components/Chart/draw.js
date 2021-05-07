@@ -71,7 +71,8 @@ export default function createDraw({
 
   const first = yData[0],
     last = yData[yData.length - 1];
-  const color = COLORS[first > last ? 1 : -1];
+  // const color = COLORS[first > last ? 1 : -1];
+  const color = COLORS[-1];
   const yGridRanges = getYScaleRange([height - X_AXIS_HEIGHT, 0], NUM_Y_GRID);
 
   const xScale = scaleLinear()
