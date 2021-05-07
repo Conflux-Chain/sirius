@@ -196,6 +196,12 @@ export const TablePanel = ({
     tableRowKey = mockTableRowKey;
   }
 
+  const numberPage = Number(pageNumber);
+  const numberPageSize = Number(pageSize);
+  const numberCacheTotal = cacheTotal;
+  const showPagination =
+    pagination !== false && numberCacheTotal > numberPageSize;
+
   return (
     <>
       <StyledTableWrapper hasFilter={hasFilter}>
@@ -219,7 +225,7 @@ export const TablePanel = ({
           </div>
         </Card>
       </StyledTableWrapper>
-      {pagination !== false && (
+      {showPagination && (
         <StyledPaginationWrapper>
           <Pagination
             {...mergedPaginationConfig}
@@ -234,9 +240,9 @@ export const TablePanel = ({
             onPageSizeChange={(page: number, pageSize: number) =>
               setPageSize(pageSize)
             }
-            page={Number(pageNumber)}
-            pageSize={Number(pageSize)}
-            total={cacheTotal}
+            page={numberPage}
+            pageSize={numberPageSize}
+            total={numberCacheTotal}
           />
         </StyledPaginationWrapper>
       )}
