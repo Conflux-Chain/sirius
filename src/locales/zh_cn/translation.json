@@ -352,7 +352,7 @@
       "description": "Conflux 网络上每日活跃的账户数量"
     },
     "accountGrowth": {
-      "title": "用户增长",
+      "title": "账户增长",
       "description": "Conflux 网络上每日新增的账户数量"
     },
     "contractGrowth": {
