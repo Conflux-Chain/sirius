@@ -83,6 +83,7 @@ function SelectItem({
   decimals,
   transferType,
 }) {
+  const currencyUnit = '$';
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon
@@ -114,34 +115,38 @@ function SelectItem({
           '-'
         )}
       </SelectItemContentBalance>
-      {transferType === cfxTokenTypes.erc20 && price ? (
+      {transferType === cfxTokenTypes.erc20 ? (
         <SelectItemContentBalance key="price">
           <Text
-            hoverValue={`1 ${symbol} ≈ $${
-              formatNumber(price || 0, {
-                withUnit: false,
-                precision: 2,
-                keepZero: true,
-              }) || '--'
+            hoverValue={`1 ${symbol} ≈ ${currencyUnit}${
+              price
+                ? formatNumber(price || 0, {
+                    withUnit: false,
+                    precision: 2,
+                    keepZero: true,
+                  })
+                : '--'
             }`}
           >
-            {`$${
-              formatNumber(
-                new BigNumber(price || 0)
-                  .multipliedBy(
-                    new BigNumber(
-                      new BigNumber(balance).div(
-                        new BigNumber(10).pow(decimals),
-                      ),
-                    ),
+            {`${currencyUnit}${
+              price
+                ? formatNumber(
+                    new BigNumber(price || 0)
+                      .multipliedBy(
+                        new BigNumber(
+                          new BigNumber(balance).div(
+                            new BigNumber(10).pow(decimals),
+                          ),
+                        ),
+                      )
+                      .toFixed(2),
+                    {
+                      withUnit: false,
+                      precision: 2,
+                      keepZero: true,
+                    },
                   )
-                  .toFixed(2),
-                {
-                  withUnit: false,
-                  precision: 2,
-                  keepZero: true,
-                },
-              ) || '--'
+                : '--'
             }`}
           </Text>
         </SelectItemContentBalance>
