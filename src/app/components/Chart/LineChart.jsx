@@ -300,7 +300,7 @@ export const LineChart = ({
         return 'contractCount';
       case 'tokenAnalysis':
         return [
-          'transferAmount',
+          // 'transferAmount',
           'transferCount',
           'uniqueReceiver',
           'uniqueSender',
