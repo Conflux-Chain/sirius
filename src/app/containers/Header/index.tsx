@@ -510,12 +510,12 @@ const WalletWrapper = styled.div`
 
   .connect-wallet-button.notConnected {
     .connect-wallet-button-left {
-      color: #fff;
+      //color: #fff;
       width: 100%;
       justify-content: center;
-      background: #424a71;
+      //background: #424a71;
       &:hover {
-        background: #68719c;
+        //background: #68719c;
       }
     }
   }
