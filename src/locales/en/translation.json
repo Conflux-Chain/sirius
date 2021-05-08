@@ -269,7 +269,6 @@
     "volume": "Volume (24H)",
     "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
-    "address": "addresses",
     "fcMining": "FC-CFX Non-reversible Exchange",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
