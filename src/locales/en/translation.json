@@ -982,7 +982,9 @@
       "typeRequired": "Please select at least one type",
       "descriptionRequired": "Please enter a discription of at least 30 characters",
       "recaptchaRequired": "Invalid captcha response",
-      "txnHashInvalid": "Invalid txn hash format"
+      "txnHashInvalid": "Invalid txn hash format",
+      "isNotMainnet": "Please enter Conflux Tethys address",
+      "isNotTestnet": "Please enter Conflux Testnet address"
     },
     "status": {
       "success": "Submit Succeed",

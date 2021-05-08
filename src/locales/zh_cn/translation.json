@@ -983,7 +983,9 @@
       "typeRequired": "请选择至少一种举报类型",
       "descriptionRequired": "请输入至少 30 个字符的描述",
       "recaptchaRequired": "请进行 reCAPTCHA 验证",
-      "txnHashInvalid": "交易哈希格式错误"
+      "txnHashInvalid": "交易哈希格式错误",
+      "isNotMainnet": "请输入 Conflux Tethys 地址",
+      "isNotTestnet": "请输入 Conflux Testnet 地址"
     },
     "status": {
       "success": "提交成功",
