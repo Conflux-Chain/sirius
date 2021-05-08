@@ -19,6 +19,7 @@ window.recaptchaOptions = {
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {
+  const [form] = Form.useForm();
   const [, setMessage] = useMessages();
   const { t, i18n } = useTranslation();
   const location = useLocation();
@@ -42,6 +43,7 @@ export function Report() {
             text: t(translations.report.status.success),
             color: 'success',
           });
+          form.resetFields();
         }
       })
       .catch(e => {
@@ -80,6 +82,7 @@ export function Report() {
           address: addressInitalValue,
         }}
         scrollToFirstError={true}
+        form={form}
       >
         <Form.Item
           name="address"
