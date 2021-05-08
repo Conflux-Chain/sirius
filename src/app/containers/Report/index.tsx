@@ -20,7 +20,7 @@ const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {
   const [, setMessage] = useMessages();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const [recaptcha, setRecaptcha] = useState(false);
 
@@ -59,6 +59,8 @@ export function Report() {
       setRecaptcha(false);
     }
   };
+
+  const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
 
   return (
     <>
@@ -226,6 +228,7 @@ export function Report() {
           <ReCAPTCHA
             sitekey="6Ldmm8gaAAAAABt8eZ-CvVw7nKKYg7gD1T1J5Pl6"
             onChange={onChange}
+            hl={lang}
           />
         </Form.Item>
         <Form.Item>
