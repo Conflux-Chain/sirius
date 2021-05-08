@@ -7,7 +7,7 @@ import Faucet from './sponsorFaucet/faucet';
 import { isTestNetEnv } from './hooks/useTestnet';
 const cfxUrlV2 = window.location.origin + '/rpcv2'; // cip-37
 
-const isConfluxTestNet = isTestNetEnv();
+export const isConfluxTestNet = isTestNetEnv();
 const mainNetworkId = 1029;
 const testnetNetworkId = 1;
 // do not support other private network

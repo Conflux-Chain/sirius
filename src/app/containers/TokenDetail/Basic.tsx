@@ -152,9 +152,7 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      holderCount !== undefined
-        ? `${toThousands(holderCount)} ${t(translations.token.address)}`
-        : undefined,
+      holderCount !== undefined ? `${toThousands(holderCount)}` : undefined,
   };
 
   const fieldTransfers = {

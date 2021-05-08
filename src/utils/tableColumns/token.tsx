@@ -127,30 +127,9 @@ export const price = {
   width: 1,
   title: (
     <ContentWrapper right>
-      <IconWrapper>
-        <Tooltip
-          hoverable
-          text={
-            <Translation>
-              {t => (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: t(translations.tokens.dataSource),
-                  }}
-                />
-              )}
-            </Translation>
-          }
-          placement="top"
-        >
-          <img src={imgInfo} alt="?" />
-        </Tooltip>
-        <span>
-          <Translation>
-            {t => t(translations.general.table.token.price)}
-          </Translation>
-        </span>
-      </IconWrapper>
+      <Translation>
+        {t => t(translations.general.table.token.price)}
+      </Translation>
     </ContentWrapper>
   ),
   dataIndex: 'price',
@@ -184,9 +163,30 @@ export const marketCap = {
   width: 1,
   title: (
     <ContentWrapper right>
-      <Translation>
-        {t => t(translations.general.table.token.marketCap)}
-      </Translation>
+      <IconWrapper>
+        <Tooltip
+          hoverable
+          text={
+            <Translation>
+              {t => (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: t(translations.tokens.dataSource),
+                  }}
+                />
+              )}
+            </Translation>
+          }
+          placement="top"
+        >
+          <img src={imgInfo} alt="?" />
+        </Tooltip>
+        <span>
+          <Translation>
+            {t => t(translations.general.table.token.marketCap)}
+          </Translation>
+        </span>
+      </IconWrapper>
     </ContentWrapper>
   ),
   dataIndex: 'totalPrice',

@@ -156,8 +156,8 @@ export function Tokens() {
         <Tooltip
           hoverable
           text={t(translations.tokens.crcTip, {
-            crc: tokenType,
-            erc: tokenType.replace('CRC', 'ERC'),
+            crc: tokenType.replace('CRC', 'CRC-'),
+            erc: tokenType.replace('CRC', 'ERC-'),
           })}
           placement="top"
         >

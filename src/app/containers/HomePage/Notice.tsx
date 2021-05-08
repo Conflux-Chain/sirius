@@ -56,7 +56,7 @@ export function Notice() {
   //   }
   // }
   notices.push(
-    <NoticeItem>
+    <NoticeItem key="latest">
       <div
         className={`content ${
           (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)

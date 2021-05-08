@@ -46,16 +46,16 @@ export function Footer() {
       {t(translations.footer.report)}
     </Link>
   );
-  const feedbackLink = (
+  const techIssueLink = (
     <Link
       className="footer-link"
       href="https://github.com/Conflux-Chain/sirius/issues"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.feedback,
+        action: ScanEvent.menu.action.techIssue,
       }}
     >
-      {t(translations.footer.feedback)}
+      {t(translations.footer.techIssue)}
     </Link>
   );
   const websiteLink = (
@@ -327,9 +327,9 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1-1">{websiteLink}</FooterContentLink>
-            <FooterContentLink key="1-2">{portalLink}</FooterContentLink>
-            <FooterContentLink key="1-3">{bountyLink}</FooterContentLink>
+            <FooterContentLink>{websiteLink}</FooterContentLink>
+            <FooterContentLink>{portalLink}</FooterContentLink>
+            <FooterContentLink>{bountyLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -339,13 +339,13 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1-1">
+            <FooterContentLink>
               {developResourceLinks.developerDocuments}
             </FooterContentLink>
-            <FooterContentLink key="1-2">
+            <FooterContentLink>
               {developResourceLinks.confluxStudio}
             </FooterContentLink>
-            <FooterContentLink key="1-3">
+            <FooterContentLink>
               {developResourceLinks.confluxTruffle}
             </FooterContentLink>
           </FooterContentRow>
@@ -357,13 +357,9 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="2-1">
-              {addressConverterLink}
-            </FooterContentLink>
-            <FooterContentLink key="2-2">{broadcastTxLink}</FooterContentLink>
-            <FooterContentLink key="2-3">
-              {blocknumberCalcLink}
-            </FooterContentLink>
+            <FooterContentLink>{addressConverterLink}</FooterContentLink>
+            <FooterContentLink>{broadcastTxLink}</FooterContentLink>
+            <FooterContentLink>{blocknumberCalcLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -373,8 +369,8 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="1-1">{feedbackLink}</FooterContentLink>
-            <FooterContentLink key="1-1">{reportLink}</FooterContentLink>
+            <FooterContentLink>{techIssueLink}</FooterContentLink>
+            <FooterContentLink>{reportLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -384,7 +380,7 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink key="3-1">
+            <FooterContentLink>
               <Language />
             </FooterContentLink>
           </FooterContentRow>

@@ -164,51 +164,52 @@ export const LineChart = ({
       : initialDomain;
 
   const strokeColor = () => {
-    switch (indicator) {
-      case 'dailyTransaction':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'dailyTransactionCFX':
-      case 'dailyTransactionTokens':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['txnCount'] - plot[0]['txnCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'cfxHoldingAccounts':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'accountGrowth':
-      case 'activeAccounts':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'contractAmount':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['contractCount'] - plot[0]['contractCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      default:
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-    }
+    return '#1E54FF';
+    // switch (indicator) {
+    //   case 'dailyTransaction':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'dailyTransactionCFX':
+    //   case 'dailyTransactionTokens':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['txnCount'] - plot[0]['txnCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'cfxHoldingAccounts':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'accountGrowth':
+    //   case 'activeAccounts':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'contractAmount':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['contractCount'] - plot[0]['contractCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   default:
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    // }
   };
 
   // x axis date format
@@ -299,7 +300,7 @@ export const LineChart = ({
         return 'contractCount';
       case 'tokenAnalysis':
         return [
-          'transferAmount',
+          // 'transferAmount',
           'transferCount',
           'uniqueReceiver',
           'uniqueSender',

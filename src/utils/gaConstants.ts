@@ -24,7 +24,7 @@ export const ScanEvent = {
       addressConverter: 'address_converter',
       broadcastTx: 'push_tx',
       blocknumberCalc: 'block_countdown',
-      feedback: 'feedback',
+      techIssue: 'tech_issue',
       report: 'report',
       developerDocuments: 'developer_documents',
       confluxStudio: 'conflux_studio',

@@ -202,8 +202,8 @@
     "statistics": "最佳统计数据",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币名称",
-    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币名称",
+    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币",
+    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币",
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
@@ -219,8 +219,8 @@
     "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
-    "confluxportal": "Conflux Portal",
-    "confluxbounty": "Conflux Bounty",
+    "confluxportal": "ConfluxPortal",
+    "confluxbounty": "ConfluxBounty",
     "copryRight": "© 2021 Conflux. All Rights Reserved.",
     "tool": "工具",
     "addressFormatConversion": "地址格式转换",
@@ -228,7 +228,7 @@
     "blocknumberCalc": "区块计算器",
     "preference": "偏好设置",
     "contactUs": "联系我们",
-    "feedback": "反馈",
+    "techIssue": "技术问题",
     "report": "举报",
     "developResource": {
       "title": "开发中心",
@@ -269,7 +269,6 @@
     "volume": "24小时交易量",
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
-    "address": "个地址",
     "fcMining": "FC-CFX 不可逆兑换",
     "transferList": {
       "searchPlaceHolder": "交易哈希 / 持有人地址",
@@ -352,7 +351,7 @@
       "description": "Conflux 网络上每日活跃的账户数量"
     },
     "accountGrowth": {
-      "title": "用户增长",
+      "title": "账户增长",
       "description": "Conflux 网络上每日新增的账户数量"
     },
     "contractGrowth": {
@@ -368,7 +367,7 @@
       "description": "{{token}} 每日转账统计",
       "transferAmount": "转账数额",
       "transferCount": "转账次数",
-      "uniqueReceiver": "接受账户数",
+      "uniqueReceiver": "接收账户数",
       "uniqueSender": "发送账户数"
     }
   },
@@ -984,7 +983,9 @@
       "typeRequired": "请选择至少一种举报类型",
       "descriptionRequired": "请输入至少 30 个字符的描述",
       "recaptchaRequired": "请进行 reCAPTCHA 验证",
-      "txnHashInvalid": "交易哈希格式错误"
+      "txnHashInvalid": "交易哈希格式错误",
+      "isNotMainnet": "请输入 Conflux Tethys 地址",
+      "isNotTestnet": "请输入 Conflux Testnet 地址"
     },
     "status": {
       "success": "提交成功",

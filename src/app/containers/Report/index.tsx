@@ -10,6 +10,8 @@ import { isAddress, isHash } from 'utils';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { reqReport } from 'utils/httpRequest';
 import { useMessages } from '@cfxjs/react-ui';
+import { isConfluxTestNet } from 'utils/cfx';
+import { address as sdkAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 // @ts-ignore
 window.recaptchaOptions = {
@@ -19,10 +21,12 @@ window.recaptchaOptions = {
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {
+  const [form] = Form.useForm();
   const [, setMessage] = useMessages();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const [recaptcha, setRecaptcha] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const search = {
     address: '',
@@ -33,6 +37,7 @@ export function Report() {
     : '';
 
   const onFinish = (values: any) => {
+    setLoading(true);
     reqReport(values)
       .then(resp => {
         if (resp.code !== 0) {
@@ -42,6 +47,7 @@ export function Report() {
             text: t(translations.report.status.success),
             color: 'success',
           });
+          form.resetFields();
         }
       })
       .catch(e => {
@@ -49,6 +55,9 @@ export function Report() {
           text: t(translations.report.status.fail),
           color: 'error',
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -59,6 +68,8 @@ export function Report() {
       setRecaptcha(false);
     }
   };
+
+  const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
 
   return (
     <>
@@ -78,6 +89,7 @@ export function Report() {
           address: addressInitalValue,
         }}
         scrollToFirstError={true}
+        form={form}
       >
         <Form.Item
           name="address"
@@ -89,12 +101,42 @@ export function Report() {
             },
             () => ({
               validator(_, value) {
-                if (isAddress(value)) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error(t(translations.report.error.addressInvalid)),
+                const address = value.trim().toLowerCase();
+                const textInvalidAddress = t(
+                  translations.report.error.addressInvalid,
                 );
+                const textInvalidMainnetAddress = t(
+                  translations.report.error.isNotMainnet,
+                );
+                const textInvalidTestnetAddress = t(
+                  translations.report.error.isNotTestnet,
+                );
+
+                if (address.startsWith('0x')) {
+                  if (isAddress(address)) {
+                    return Promise.resolve();
+                  } else {
+                    return Promise.reject(textInvalidAddress);
+                  }
+                } else if (isConfluxTestNet) {
+                  if (!address.startsWith('cfxtest:')) {
+                    return Promise.reject(textInvalidTestnetAddress);
+                  } else if (sdkAddress.isValidCfxAddress(address)) {
+                    return Promise.resolve();
+                  } else {
+                    return Promise.reject(textInvalidAddress);
+                  }
+                } else if (!isConfluxTestNet) {
+                  if (!address.startsWith('cfx:')) {
+                    return Promise.reject(textInvalidMainnetAddress);
+                  } else if (sdkAddress.isValidCfxAddress(address)) {
+                    return Promise.resolve();
+                  } else {
+                    return Promise.reject(textInvalidAddress);
+                  }
+                } else {
+                  return Promise.reject(textInvalidAddress);
+                }
               },
             }),
           ]}
@@ -226,10 +268,11 @@ export function Report() {
           <ReCAPTCHA
             sitekey="6Ldmm8gaAAAAABt8eZ-CvVw7nKKYg7gD1T1J5Pl6"
             onChange={onChange}
+            hl={lang}
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={loading}>
             {t(translations.report.submit)}
           </Button>
         </Form.Item>
