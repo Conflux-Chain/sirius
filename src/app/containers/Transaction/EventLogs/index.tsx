@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { reqTransactionEventlogs, reqContract } from 'utils/httpRequest';
+import {
+  reqTransactionEventlogs,
+  reqContract,
+  reqContractAndToken,
+} from 'utils/httpRequest';
 import { Card } from 'app/components/Card/Loadable';
 import { Empty } from 'app/components/Empty/Loadable';
-import { cfx } from 'utils/cfx';
+import { cfx, formatAddress } from 'utils/cfx';
 import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
@@ -132,7 +136,7 @@ const disassembleEvent = (log, decodedLog) => {
   }
 };
 
-const EventLog = ({ log, logContractInfo }) => {
+const EventLog = ({ log }) => {
   const { t } = useTranslation();
   const [eventInfo, setEventInfo] = useState<any>(() => {
     const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
@@ -156,11 +160,10 @@ const EventLog = ({ log, logContractInfo }) => {
        */
       data: splitData,
       signature: null,
-      contractInfo: {},
-      logContractInfo,
     };
   });
   const [loading, setLoading] = useState(false);
+  const [contractAndTokenInfo, setContractAndTokenInfo] = useState({});
 
   useEffect(() => {
     const fields = [
@@ -203,6 +206,20 @@ const EventLog = ({ log, logContractInfo }) => {
               },
             );
 
+            let addressList = topics
+              .map(t => t.cfxAddress)
+              .filter(t => t)
+              .concat(formatAddress(log.address));
+            addressList = _.uniq(addressList);
+
+            reqContractAndToken({
+              address: addressList,
+            })
+              .then(data => {
+                data.total && setContractAndTokenInfo(data.map);
+              })
+              .catch(e => {});
+
             setEventInfo({
               address: log.address,
               fnName,
@@ -210,12 +227,6 @@ const EventLog = ({ log, logContractInfo }) => {
               topics,
               data,
               signature: decodedLog.signature,
-              contractInfo: {
-                name: body.name,
-                icon: body.icon,
-                address: body.address,
-              },
-              logContractInfo,
             });
           }
         } catch (e) {}
@@ -223,17 +234,9 @@ const EventLog = ({ log, logContractInfo }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [log, logContractInfo]);
+  }, [log]);
 
-  const {
-    fnName,
-    args,
-    topics,
-    data,
-    address,
-    signature,
-    contractInfo,
-  } = eventInfo;
+  const { fnName, args, topics, data, address, signature } = eventInfo;
 
   return (
     <StyledEventLogWrapper>
@@ -256,7 +259,16 @@ const EventLog = ({ log, logContractInfo }) => {
               small
               noBorder
             >
-              <Address address={address} contract={contractInfo}></Address>
+              <Address
+                address={address}
+                contract={
+                  contractAndTokenInfo[
+                    formatAddress(address, {
+                      withType: true,
+                    })
+                  ]
+                }
+              ></Address>
             </Description>
             {fnName ? (
               <Description
@@ -277,7 +289,7 @@ const EventLog = ({ log, logContractInfo }) => {
               <Topics
                 data={topics}
                 signature={signature}
-                logContractInfo={logContractInfo}
+                contractAndTokenInfo={contractAndTokenInfo}
               />
             </Description>
             {!!data.length && (
@@ -305,17 +317,15 @@ export const EventLogs = ({ hash }: Props) => {
   // }]
   const [eventlogs, setEventlogs] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [logContractInfo, setLogContractInfo] = useState({});
 
   useEffect(() => {
     setLoading(true);
     reqTransactionEventlogs({
       transactionHash: hash,
-      aggregate: true,
+      aggregate: false,
     })
       .then(body => {
         setEventlogs(body.list);
-        setLogContractInfo(body.logContractInfo);
       })
       .finally(() => {
         setLoading(false);
@@ -327,11 +337,7 @@ export const EventLogs = ({ hash }: Props) => {
       <Card>
         {loading ? null : <Empty show={!eventlogs.length} />}
         {eventlogs.map((log, index) => (
-          <EventLog
-            log={log}
-            logContractInfo={logContractInfo}
-            key={`${log.address}-${index}`}
-          />
+          <EventLog log={log} key={`${log.address}-${index}`} />
         ))}
       </Card>
     </StyledEventLogsWrapper>
@@ -346,12 +352,13 @@ const StyledEventLogsWrapper = styled.div`
   .eventlog-content {
     display: flex;
 
-    ${media.m} {
-      flex-wrap: wrap;
+    ${media.s} {
+      flex-direction: column;
     }
 
     .eventlog-index {
       width: 2.2857rem;
+      min-width: 2.2857rem;
       height: 2.2857rem;
       border-radius: 50%;
       background: #eee;

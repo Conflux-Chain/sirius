@@ -9,8 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useBreakpoint } from 'styles/media';
-import { Apply, Copy, Edit, Jump, Qrcode } from './HeadLineButtons';
+import { Apply, Copy, Edit, Jump, Qrcode, Report } from './HeadLineButtons';
 import {
   BalanceCard,
   NonceCard,
@@ -18,7 +17,6 @@ import {
   TokensCard,
 } from './AddressInfoCards';
 import { AddressMetadata, ContractMetadata, Table } from './Loadable';
-import { Text } from 'app/components/Text';
 import { useContract } from 'utils/api';
 import {
   Bottom,
@@ -46,7 +44,6 @@ interface RouteParams {
 export const ContractDetailPage = memo(() => {
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
-  const bp = useBreakpoint();
   const history = useHistory();
 
   const { data: contractInfo } = useContract(address, [
@@ -110,45 +107,44 @@ export const ContractDetailPage = memo(() => {
               : t(translations.general.contract)}
           </Title>
           <HeadAddressLine>
-            {bp === 's' ? (
-              <Text maxWidth="14.75rem">{address}</Text>
-            ) : (
-              <IconWrapper>
-                {isInnerContractAddress(address) ? (
-                  <img
-                    src={InternalContractIcon}
-                    alt={t(translations.general.internalContract)}
-                  />
-                ) : isSpecialAddress(address) ? null : (
-                  <img
-                    src={ContractIcon}
-                    alt={t(translations.general.contract)}
-                  />
-                )}
-                &nbsp;
-                <span>{address}</span>
-              </IconWrapper>
-            )}
-            <Copy address={address} />
-            <Qrcode address={address} />
-            <Edit address={address} />
-            <Apply address={address} />
-            {hasWebsite && (
-              <Jump
-                onClick={() => {
-                  const url = websiteUrl.startsWith('http')
-                    ? websiteUrl
-                    : `http://${websiteUrl}`;
-                  window.open(url);
-                }}
-              />
-            )}
-            {isSpecialAddress(address) ? (
-              <WarningInfoWrapper>
-                <img src={warningInfo} alt="warning" />
-                <span>{t(translations.general.invalidAddressWarning)}</span>
-              </WarningInfoWrapper>
-            ) : null}
+            <IconWrapper className="address">
+              {isInnerContractAddress(address) ? (
+                <img
+                  src={InternalContractIcon}
+                  alt={t(translations.general.internalContract)}
+                />
+              ) : isSpecialAddress(address) ? null : (
+                <img
+                  src={ContractIcon}
+                  alt={t(translations.general.contract)}
+                />
+              )}
+              &nbsp;
+              <span>{address}</span>
+            </IconWrapper>
+            <div className="icons">
+              <Copy address={address} />
+              <Qrcode address={address} />
+              <Edit address={address} />
+              <Apply address={address} />
+              <Report address={address} />
+              {hasWebsite && (
+                <Jump
+                  onClick={() => {
+                    const url = websiteUrl.startsWith('http')
+                      ? websiteUrl
+                      : `http://${websiteUrl}`;
+                    window.open(url);
+                  }}
+                />
+              )}
+              {isSpecialAddress(address) ? (
+                <WarningInfoWrapper>
+                  <img src={warningInfo} alt="warning" />
+                  <span>{t(translations.general.invalidAddressWarning)}</span>
+                </WarningInfoWrapper>
+              ) : null}
+            </div>
           </HeadAddressLine>
         </Head>
         <Top key="top">

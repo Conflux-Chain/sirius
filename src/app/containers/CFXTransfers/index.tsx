@@ -47,7 +47,9 @@ export function CFXTransfers() {
           content={t(translations.cfxTransfers.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.cfxTransfers.title)}</PageHeader>
+      <PageHeader subtitle={t(translations.cfxTransfers.description)}>
+        {t(translations.cfxTransfers.title)}
+      </PageHeader>
       <TablePanel
         url={url}
         table={{

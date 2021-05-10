@@ -5,7 +5,6 @@
  */
 import clsx from 'clsx';
 import React, { HTMLAttributes, memo, ReactNode } from 'react';
-import { useToggle } from 'react-use';
 import styled from 'styled-components/macro';
 import { media, useBreakpoint } from 'styles/media';
 
@@ -14,6 +13,8 @@ interface Props extends HTMLAttributes<HTMLElement> {
   mainMenu: ReactNode;
   topMenu: ReactNode;
   subMenu?: ReactNode;
+  visible?: boolean;
+  toggleMenu?: any;
 }
 
 const toWrappedArray = (p: ReactNode) =>
@@ -30,8 +31,15 @@ const toWrappedArray = (p: ReactNode) =>
       ];
 
 export const Nav = memo(
-  ({ brand, mainMenu, topMenu, subMenu = null, ...props }: Props) => {
-    const [visible, toggleMenu] = useToggle(false);
+  ({
+    brand,
+    mainMenu,
+    topMenu,
+    subMenu = null,
+    visible = false,
+    toggleMenu = () => {},
+    ...props
+  }: Props) => {
     const bp = useBreakpoint();
     brand = toWrappedArray(brand);
     mainMenu = toWrappedArray(mainMenu);
@@ -53,9 +61,9 @@ export const Nav = memo(
               data-target="navbar"
               onClick={toggleMenu}
             >
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
             </a>
           </Brand>
           <Menu

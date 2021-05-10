@@ -24,6 +24,7 @@ import { trackEvent } from 'utils/ga';
 import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
 import imgNotice from 'images/notice2.png';
 import { Link } from '../../components/Link/Loadable';
+import { useToggle } from 'react-use';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -44,12 +45,18 @@ export const Header = memo(() => {
     location.pathname.startsWith('/push-tx') ||
     location.pathname.startsWith('/block-countdown');
   const bp = useBreakpoint();
+  const [visible, toggleMenu] = useToggle(false);
+
+  const menuClick = () => {
+    if (bp === 's' || bp === 'm') toggleMenu(false);
+  };
 
   const startLinks: HeaderLinks = [
     {
       // home
       title: t(translations.header.home),
       name: ScanEvent.menu.action.home,
+      afterClick: menuClick,
       href: '/',
       className: 'home',
     },
@@ -65,12 +72,14 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.blocks,
+          afterClick: menuClick,
           href: '/blockchain/blocks',
         },
         {
           // txn
           title: [t(translations.header.txn), <Check size={18} key="check" />],
           name: ScanEvent.menu.action.transactions,
+          afterClick: menuClick,
           href: '/blockchain/transactions',
         },
         {
@@ -80,6 +89,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.cfxTransfers,
+          afterClick: menuClick,
           href: '/blockchain/cfx-transfers',
         },
         {
@@ -89,6 +99,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.accounts,
+          afterClick: menuClick,
           href: '/blockchain/accounts',
         },
       ],
@@ -105,6 +116,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens20,
+          afterClick: menuClick,
           href: '/tokens/crc20',
         },
         {
@@ -114,6 +126,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens721,
+          afterClick: menuClick,
           href: '/tokens/crc721',
         },
         {
@@ -123,6 +136,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.tokens1155,
+          afterClick: menuClick,
           href: '/tokens/crc1155',
         },
       ],
@@ -139,6 +153,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.contractDeployment,
+          afterClick: menuClick,
           href: '/contract-deployment',
         },
         {
@@ -148,6 +163,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.contractReg,
+          afterClick: menuClick,
           href: '/contract',
         },
         {
@@ -157,11 +173,13 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.sponsor,
+          afterClick: menuClick,
           href: '/sponsor',
         },
         {
           title: t(translations.header.contracts),
           name: ScanEvent.menu.action.contractsList,
+          afterClick: menuClick,
           href: '/contracts',
         },
       ],
@@ -177,6 +195,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.charts,
+          afterClick: menuClick,
           href: '/charts',
         },
         {
@@ -185,6 +204,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.statistics,
+          afterClick: menuClick,
           href: '/statistics',
           isMatchedFn: () => !!location?.pathname?.startsWith('/statistics'),
         },
@@ -201,6 +221,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.addressConverter,
+          afterClick: menuClick,
           href: '/address-converter',
         },
         {
@@ -209,6 +230,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.broadcastTx,
+          afterClick: menuClick,
           href: '/push-tx',
         },
         {
@@ -217,6 +239,7 @@ export const Header = memo(() => {
             <Check size={18} key="check" />,
           ],
           name: ScanEvent.menu.action.blocknumberCalc,
+          afterClick: menuClick,
           href: '/block-countdown',
         },
       ],
@@ -243,6 +266,7 @@ export const Header = memo(() => {
               action: ScanEvent.preference.action.changeNet,
               label: 'Tethys',
             });
+            menuClick();
             return isTestnet && toMainnet();
           },
           isMatchedFn: () => !isTestnet,
@@ -259,6 +283,7 @@ export const Header = memo(() => {
               action: ScanEvent.preference.action.changeNet,
               label: 'Testnet',
             });
+            menuClick();
             return !isTestnet && toTestnet();
           },
           isMatchedFn: () => isTestnet,
@@ -285,6 +310,7 @@ export const Header = memo(() => {
               action: ScanEvent.preference.action.changeLang,
               label: 'en',
             });
+            menuClick();
             return iszh && i18n.changeLanguage('en');
           },
           isMatchedFn: () => !iszh,
@@ -298,6 +324,7 @@ export const Header = memo(() => {
               action: ScanEvent.preference.action.changeLang,
               label: 'zh-CN',
             });
+            menuClick();
             return !iszh && i18n.changeLanguage('zh-CN');
           },
           isMatchedFn: () => iszh,
@@ -360,6 +387,8 @@ export const Header = memo(() => {
   return (
     <Wrapper>
       <Nav
+        visible={visible}
+        toggleMenu={toggleMenu}
         brand={brand}
         mainMenu={mainMenu}
         topMenu={topMenu}
@@ -481,12 +510,12 @@ const WalletWrapper = styled.div`
 
   .connect-wallet-button.notConnected {
     .connect-wallet-button-left {
-      color: #fff;
+      //color: #fff;
       width: 100%;
       justify-content: center;
-      background: #424a71;
+      //background: #424a71;
       &:hover {
-        background: #68719c;
+        //background: #68719c;
       }
     }
   }
@@ -511,7 +540,7 @@ const NoticeWrapper = styled.div`
     color: #6c6d75;
 
     &.hot {
-      color: #fa5d8e;
+      color: #e64e4e;
     }
   }
 

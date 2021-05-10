@@ -17,7 +17,6 @@ import CRC721bg from '../../../images/token/crc721bg.png';
 import CRC1155bg from '../../../images/token/crc1155bg.png';
 import { CopyButton } from '../../components/CopyButton/Loadable';
 import { formatAddress } from '../../../utils/cfx';
-import { useBreakpoint } from '../../../styles/media';
 
 export interface BasicProps {
   address?: string;
@@ -48,7 +47,6 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
-  const bp = useBreakpoint();
 
   const fieldPrice = {
     title: (
@@ -101,7 +99,7 @@ export const Basic = ({
     children:
       tokenAddress !== undefined ? (
         <>
-          <AddressContainer value={tokenAddress} isFull={bp === 'xxl'} />{' '}
+          <AddressContainer value={tokenAddress} />{' '}
           <CopyButton copyText={formatAddress(tokenAddress)} />
         </>
       ) : (
@@ -154,9 +152,7 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      holderCount !== undefined
-        ? `${toThousands(holderCount)} ${t(translations.token.address)}`
-        : undefined,
+      holderCount !== undefined ? `${toThousands(holderCount)}` : undefined,
   };
 
   const fieldTransfers = {

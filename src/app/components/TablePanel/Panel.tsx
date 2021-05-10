@@ -24,7 +24,14 @@ export type TableType = TableProps<unknown> & {
   // url param should handle in sorter function
   sortKey?: string;
   // sort function, update url TODO more flexibility
-  sorter?: (column?: any, table?: any, url?: string) => any;
+  sorter?: (opt: {
+    column?: any;
+    table?: any;
+    url?: string;
+    oldSortKey?: string;
+    oldSortOrder?: string;
+    newSortKey?: string;
+  }) => any;
 };
 export type TablePanelType = {
   url: string;
@@ -129,7 +136,7 @@ export const TablePanel = ({
   };
   let tableData = table.data;
   let tableColumns = table?.columns?.map(c => {
-    if (c['sortable'] && table.sorter)
+    if (c['sortable'] && table.sorter) {
       return {
         ...c,
         title: (
@@ -140,13 +147,22 @@ export const TablePanel = ({
                 : ''
             }`}
             onClick={() => {
-              table.sorter!(c, table, url);
+              table.sorter!({
+                column: c,
+                table: table,
+                url: url,
+                oldSortKey: table.sortKey,
+                oldSortOrder: table.sortOrder,
+                newSortKey: c['dataIndex'],
+              });
             }}
           >
             {c.title}
           </div>
         ),
       };
+    }
+
     return c;
   });
   let tableRowKey = table.rowKey;
@@ -180,6 +196,12 @@ export const TablePanel = ({
     tableRowKey = mockTableRowKey;
   }
 
+  const numberPage = Number(pageNumber);
+  const numberPageSize = Number(pageSize);
+  const numberCacheTotal = cacheTotal;
+  const showPagination =
+    pagination !== false && numberCacheTotal > numberPageSize;
+
   return (
     <>
       <StyledTableWrapper hasFilter={hasFilter}>
@@ -203,7 +225,7 @@ export const TablePanel = ({
           </div>
         </Card>
       </StyledTableWrapper>
-      {pagination !== false && (
+      {showPagination && (
         <StyledPaginationWrapper>
           <Pagination
             {...mergedPaginationConfig}
@@ -218,9 +240,9 @@ export const TablePanel = ({
             onPageSizeChange={(page: number, pageSize: number) =>
               setPageSize(pageSize)
             }
-            page={Number(pageNumber)}
-            pageSize={Number(pageSize)}
-            total={cacheTotal}
+            page={numberPage}
+            pageSize={numberPageSize}
+            total={numberCacheTotal}
           />
         </StyledPaginationWrapper>
       )}
@@ -253,6 +275,10 @@ const StyledTableWrapper: any = styled.div`
       props.hasFilter ? 'margin-top: 54px; border-top: 1px solid #e8e9ea;' : ''}
     .table-content {
       padding: 0 0 1rem;
+
+      > table {
+        width: 1100px !important;
+      }
     }
     &.monospaced {
       font-family: ${monospaceFont};
@@ -302,7 +328,7 @@ const StyledTableWrapper: any = styled.div`
       white-space: nowrap;
 
       ${media.s} {
-        padding: 1.1429rem;
+        padding: 1.1429rem 1rem;
       }
     }
     ${media.s} {

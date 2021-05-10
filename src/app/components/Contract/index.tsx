@@ -720,7 +720,7 @@ const Wrapper = styled.div`
     margin: 0 auto;
   }
   .warningContainer {
-    margin-top: 0.5714rem;
+    margin: 1.4286rem 0 0rem;
     display: flex;
     align-items: center;
     .warningImg {

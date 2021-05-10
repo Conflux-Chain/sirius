@@ -17,6 +17,7 @@ import { formatNumber } from '../../../utils';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
+import _ from 'lodash';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -29,6 +30,10 @@ export const LineChart = ({
   width = 500,
   indicator = 'blockTime',
   isThumb = false,
+  tokenInfo = {
+    name: '',
+    address: '',
+  },
 }) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
@@ -45,6 +50,10 @@ export const LineChart = ({
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
     'accountGrowth',
+    'activeAccounts',
+    'contractAmount',
+    'contractGrowth',
+    'tokenAnalysis',
   ].includes(indicator);
 
   const chartWidth =
@@ -57,6 +66,10 @@ export const LineChart = ({
     'dailyTransactionTokens',
     'cfxHoldingAccounts',
     'accountGrowth',
+    'activeAccounts',
+    'contractAmount',
+    'contractGrowth',
+    'tokenAnalysis', // without thumb
   ].includes(indicator)
     ? 365
     : 31;
@@ -69,7 +82,13 @@ export const LineChart = ({
     duration,
     axisFormat,
     popupFormat,
-  } = usePlot('day', NUM_X_GRID, indicator, limit);
+  } = usePlot(
+    'day',
+    NUM_X_GRID,
+    indicator,
+    limit,
+    indicator === 'tokenAnalysis' ? tokenInfo.address : '',
+  );
 
   const initialDomain = {
     min: {
@@ -82,6 +101,9 @@ export const LineChart = ({
       dailyTransactionTokens: 0,
       cfxHoldingAccounts: 0,
       accountGrowth: 0,
+      activeAccounts: 0,
+      contractAmount: 0,
+      contractGrowth: 0,
     },
     max: {
       blockTime: 'auto',
@@ -93,6 +115,9 @@ export const LineChart = ({
       dailyTransactionTokens: 'auto',
       cfxHoldingAccounts: 'auto',
       accountGrowth: 'auto',
+      activeAccounts: 'auto',
+      contractAmount: 'auto',
+      contractGrowth: 'auto',
     },
   };
 
@@ -124,7 +149,12 @@ export const LineChart = ({
               dataKey = 'holderCount';
               break;
             case 'accountGrowth':
+            case 'activeAccounts':
               dataKey = 'cnt';
+              break;
+            case 'contractAmount':
+            case 'contractGrowth':
+              dataKey = 'contractCount';
               break;
             default:
               break;
@@ -140,43 +170,52 @@ export const LineChart = ({
       : initialDomain;
 
   const strokeColor = () => {
-    switch (indicator) {
-      case 'dailyTransaction':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'dailyTransactionCFX':
-      case 'dailyTransactionTokens':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['txnCount'] - plot[0]['txnCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'cfxHoldingAccounts':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      case 'accountGrowth':
-        // because of reverse
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-      default:
-        return plot &&
-          plot.length > 0 &&
-          plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
-          ? '#1E54FF'
-          : '#FA5D8E';
-    }
+    return '#1E54FF';
+    // switch (indicator) {
+    //   case 'dailyTransaction':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['txCount'] - plot[0]['txCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'dailyTransactionCFX':
+    //   case 'dailyTransactionTokens':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['txnCount'] - plot[0]['txnCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'cfxHoldingAccounts':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['holderCount'] - plot[0]['holderCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'accountGrowth':
+    //   case 'activeAccounts':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['cnt'] - plot[0]['cnt'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   case 'contractAmount':
+    //     // because of reverse
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1]['contractCount'] - plot[0]['contractCount'] <= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    //   default:
+    //     return plot &&
+    //       plot.length > 0 &&
+    //       plot[plot.length - 1][indicator] - plot[0][indicator] >= 0
+    //       ? '#1E54FF'
+    //       : '#FA5D8E';
+    // }
   };
 
   // x axis date format
@@ -240,6 +279,12 @@ export const LineChart = ({
       case 'dailyTransactionCFX':
       case 'dailyTransactionTokens':
       case 'accountGrowth':
+      case 'activeAccounts':
+        return 'day';
+      case 'contractAmount':
+      case 'contractGrowth':
+        return 'statDay';
+      case 'tokenAnalysis':
         return 'day';
       default:
         return 'timestamp';
@@ -256,7 +301,18 @@ export const LineChart = ({
       case 'cfxHoldingAccounts':
         return 'holderCount';
       case 'accountGrowth':
+      case 'activeAccounts':
         return 'cnt';
+      case 'contractAmount':
+      case 'contractGrowth':
+        return 'contractCount';
+      case 'tokenAnalysis':
+        return [
+          // 'transferAmount',
+          'transferCount',
+          'uniqueReceiver',
+          'uniqueSender',
+        ];
       default:
         return indicator;
     }
@@ -281,8 +337,13 @@ export const LineChart = ({
         isThumb={isThumb}
       >
         <Title>{t(`charts.${indicator}.title`)}</Title>
-        {!isThumb ? (
-          <Description>{t(`charts.${indicator}.description`)}</Description>
+        {!isThumb && t(`charts.${indicator}.description`) ? (
+          <Description>
+            {t(
+              `charts.${indicator}.description`,
+              indicator === 'tokenAnalysis' ? { token: tokenInfo.name } : null,
+            )}
+          </Description>
         ) : null}
         {isLoading ? (
           <LoadingContainer>
@@ -295,6 +356,10 @@ export const LineChart = ({
           'dailyTransactionTokens',
           'cfxHoldingAccounts',
           'accountGrowth',
+          'activeAccounts',
+          'contractAmount',
+          'contractGrowth',
+          'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
             width={width}
@@ -309,7 +374,13 @@ export const LineChart = ({
             height={isThumb ? 180 : chartHeight}
           >
             <Chart
-              data={plot}
+              data={
+                plot && plot.length > 0
+                  ? _.cloneDeep(plot).sort((a, b) =>
+                      a[xAxisKey()].localeCompare(b[xAxisKey()]),
+                    )
+                  : _.cloneDeep(plot)
+              }
               margin={
                 isThumb
                   ? {
@@ -332,7 +403,7 @@ export const LineChart = ({
                   dataKey={xAxisKey()}
                   tick={xAxisFormat}
                   interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
-                  reversed={!hasDurationFilter}
+                  reversed={false}
                   stroke="#333333"
                 />
               ) : null}
@@ -350,6 +421,9 @@ export const LineChart = ({
                     'dailyTransactionTokens',
                     'cfxHoldingAccounts',
                     'accountGrowth',
+                    'activeAccounts',
+                    'contractAmount',
+                    'contractGrowth',
                   ].includes(indicator)
                     ? 60
                     : 50

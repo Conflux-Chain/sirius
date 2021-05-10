@@ -6,7 +6,9 @@
             <g id="Recent-History" transform="translate(208.000000, 330.000000)">
                 <g id="Out" transform="translate(566.000000, 127.000000)">
                     <rect id="Tag-background" fill-opacity="0.1" x="0" y="0" width="36" height="20" rx="9.5"></rect>
-                    <text font-family="CircularStd-Medium, Circular Std" font-size="10" font-weight="400" line-spacing="12">
+                    <text font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  'Segoe UI Symbol', 'Noto Color Emoji'" font-size="10" font-weight="400" line-spacing="12">
                         <tspan x="8.755" y="14">Out</tspan>
                     </text>
                 </g>
