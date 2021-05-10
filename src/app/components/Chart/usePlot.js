@@ -67,6 +67,9 @@ export default function usePlot(
       swrKey = `/stat/daily-active-address`;
       break;
     case 'contractAmount':
+      swrKey = `/stat/contract/total/list`;
+      break;
+    case 'contractGrowth':
       swrKey = `/stat/contract/daily/list`;
       break;
     case 'tokenAnalysis':
@@ -85,6 +88,7 @@ export default function usePlot(
     case 'accountGrowth':
     case 'activeAccounts':
     case 'contractAmount':
+    case 'contractGrowth':
       axisFormat = ['MMM DD', 'MM-DD'];
       popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
       fetcher = () => fetch(appendApiPrefix(`${swrKey}?limit=${limit}`));
@@ -122,6 +126,7 @@ export default function usePlot(
         listData = data?.list || [];
         break;
       case 'contractAmount':
+      case 'contractGrowth':
         listData = data?.data?.rows || [];
         break;
       default:

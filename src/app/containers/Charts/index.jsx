@@ -165,6 +165,15 @@ export function Charts() {
                 />
               </Link>
             </Col>
+            <Col span={24} sm={12} lg={8}>
+              <Link to="/chart/contractGrowth">
+                <Chart
+                  width={chartWidth}
+                  indicator="contractGrowth"
+                  isThumb={true}
+                />
+              </Link>
+            </Col>
           </Row>
         </ChartsWrap>
       </PageWrap>

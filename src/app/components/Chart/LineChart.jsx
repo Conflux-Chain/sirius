@@ -17,6 +17,7 @@ import { formatNumber } from '../../../utils';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
+import _ from 'lodash';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -51,6 +52,7 @@ export const LineChart = ({
     'accountGrowth',
     'activeAccounts',
     'contractAmount',
+    'contractGrowth',
     'tokenAnalysis',
   ].includes(indicator);
 
@@ -66,6 +68,7 @@ export const LineChart = ({
     'accountGrowth',
     'activeAccounts',
     'contractAmount',
+    'contractGrowth',
     'tokenAnalysis', // without thumb
   ].includes(indicator)
     ? 365
@@ -100,6 +103,7 @@ export const LineChart = ({
       accountGrowth: 0,
       activeAccounts: 0,
       contractAmount: 0,
+      contractGrowth: 0,
     },
     max: {
       blockTime: 'auto',
@@ -113,6 +117,7 @@ export const LineChart = ({
       accountGrowth: 'auto',
       activeAccounts: 'auto',
       contractAmount: 'auto',
+      contractGrowth: 'auto',
     },
   };
 
@@ -148,6 +153,7 @@ export const LineChart = ({
               dataKey = 'cnt';
               break;
             case 'contractAmount':
+            case 'contractGrowth':
               dataKey = 'contractCount';
               break;
             default:
@@ -276,6 +282,7 @@ export const LineChart = ({
       case 'activeAccounts':
         return 'day';
       case 'contractAmount':
+      case 'contractGrowth':
         return 'statDay';
       case 'tokenAnalysis':
         return 'day';
@@ -297,6 +304,7 @@ export const LineChart = ({
       case 'activeAccounts':
         return 'cnt';
       case 'contractAmount':
+      case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
         return [
@@ -350,6 +358,7 @@ export const LineChart = ({
           'accountGrowth',
           'activeAccounts',
           'contractAmount',
+          'contractGrowth',
           'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
@@ -365,7 +374,13 @@ export const LineChart = ({
             height={isThumb ? 180 : chartHeight}
           >
             <Chart
-              data={plot}
+              data={
+                plot && plot.length > 0
+                  ? _.cloneDeep(plot).sort((a, b) =>
+                      a[xAxisKey()].localeCompare(b[xAxisKey()]),
+                    )
+                  : _.cloneDeep(plot)
+              }
               margin={
                 isThumb
                   ? {
@@ -388,7 +403,7 @@ export const LineChart = ({
                   dataKey={xAxisKey()}
                   tick={xAxisFormat}
                   interval={hasDurationFilter ? 0 : Math.floor(30 / NUM_X_GRID)}
-                  reversed={!hasDurationFilter}
+                  reversed={false}
                   stroke="#333333"
                 />
               ) : null}
@@ -408,6 +423,7 @@ export const LineChart = ({
                     'accountGrowth',
                     'activeAccounts',
                     'contractAmount',
+                    'contractGrowth',
                   ].includes(indicator)
                     ? 60
                     : 50
