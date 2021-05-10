@@ -834,14 +834,14 @@
       "marketCap": "The market value of a cryptocurrency's total supply. Market Cap = Current Price x Total Supply.",
       "fullyDilutedMarketCap": "The market cap if the max supply was in circulation. Fully-diluted market cap = price x max supply.",
       "totalSupply": "Total supply of the token.",
-      "holders": "The amout of addresses which hold the token.",
-      "transfers": "The amout of token transactions which belongs to the address.",
+      "holders": "The amount of addresses which hold the token.",
+      "transfers": "The amount of token transactions which belongs to the address.",
       "contract": "The contract which deploys the token.",
       "decimals": "Decimals of the token. "
     },
     "contract": {
-      "balance": "The amout of assets which belongs to the address.",
-      "token": "The amout of tokens which belongs to the address.",
+      "balance": "The amount of assets which belongs to the address.",
+      "token": "The amount of tokens which belongs to the address.",
       "storageCollateral": "The amount of storage collaterals paid by the contract sponsor, the unit is the CFX.",
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",

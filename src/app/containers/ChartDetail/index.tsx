@@ -36,6 +36,7 @@ export function ChartDetail() {
       title = t(translations.charts.subtitle4);
       break;
     case 'contractAmount':
+    case 'contractGrowth':
       title = t(translations.charts.subtitle5);
       break;
     default:
