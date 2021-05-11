@@ -179,9 +179,12 @@ const EventLog = ({ log }) => {
     // get contract info
     reqContract({ address: log.address, fields: fields })
       .then(body => {
+        let outerTopics: Array<{
+          cfxAddress?: string;
+        }> = [];
         try {
           if (!body.abi) {
-            throw new Error(`not abi of this contract: ${log.address}`);
+            throw new Error(`no abi of this contract: ${log.address}`);
           } else {
             // in case of invalid abi
             const contract = cfx.Contract({
@@ -206,19 +209,7 @@ const EventLog = ({ log }) => {
               },
             );
 
-            let addressList = topics
-              .map(t => t.cfxAddress)
-              .filter(t => t)
-              .concat(formatAddress(log.address));
-            addressList = _.uniq(addressList);
-
-            reqContractAndToken({
-              address: addressList,
-            })
-              .then(data => {
-                data.total && setContractAndTokenInfo(data.map);
-              })
-              .catch(e => {});
+            outerTopics = topics;
 
             setEventInfo({
               address: log.address,
@@ -230,6 +221,20 @@ const EventLog = ({ log }) => {
             });
           }
         } catch (e) {}
+
+        let addressList = outerTopics
+          .map(t => t.cfxAddress)
+          .filter(t => t)
+          .concat(formatAddress(log.address));
+        addressList = _.uniq(addressList);
+
+        reqContractAndToken({
+          address: addressList,
+        })
+          .then(data => {
+            data.total && setContractAndTokenInfo(data.map);
+          })
+          .catch(() => {});
       })
       .finally(() => {
         setLoading(false);
