@@ -1,50 +1,54 @@
 import React from 'react';
 import { defaultContractIcon, defaultTokenIcon } from '../../../../constants';
+import { Link } from 'app/components/Link';
+import { formatAddress } from 'utils/cfx';
 
 export const ContractDetail = ({ info }) => {
   if (info) {
     const { contract, token } = info;
-    let contractBody: React.ReactNode = null;
-    let tokenBody: React.ReactNode = null;
+    let child: React.ReactNode = null;
 
-    if (contract && contract.name) {
-      contractBody = (
+    if (token && (token.name || token.symbol)) {
+      const name = token['name'] || '--';
+      let symbol = token['symbol'];
+      symbol = `(${symbol ? symbol : '--'})`;
+      const icon = token['icon'] || defaultTokenIcon;
+
+      child = (
         <>
           <img
-            src={(contract && contract['icon']) || defaultContractIcon}
+            src={icon}
             alt="icon"
             style={{
               width: '1.1429rem',
             }}
           />{' '}
-          {contract && contract['name']}
+          <Link href={`/token/${formatAddress(token.address)}`}>
+            {name} {symbol}
+          </Link>{' '}
         </>
       );
-    }
+    } else if (contract && contract.name) {
+      const name = contract['name'];
+      const icon = contract['icon'] || defaultContractIcon;
 
-    if (token && token.name) {
-      tokenBody = (
+      child = (
         <>
-          <span>; </span>
           <img
-            src={(token && token['icon']) || defaultTokenIcon}
+            src={icon}
             alt="icon"
             style={{
               width: '1.1429rem',
             }}
           />{' '}
-          {token && token['name']}
+          <Link href={`/contract/${formatAddress(contract.address)}`}>
+            {name}
+          </Link>{' '}
         </>
       );
     }
 
-    return (
-      <>
-        {' '}
-        ({contractBody}
-        {tokenBody})
-      </>
-    );
+    return <> {child}</>;
   }
   return null;
 };
