@@ -214,6 +214,12 @@
     }
   },
   "footer": {
+    "aboutUs": {
+      "title": "关于我们",
+      "helpCenter": "帮助中心",
+      "privacyPolicy": "隐私条款",
+      "terms": "法律政策"
+    },
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
     "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
     "cookieAgree": "知道了",
