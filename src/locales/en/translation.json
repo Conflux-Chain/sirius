@@ -610,6 +610,8 @@
     "tx": "tx"
   },
   "transaction": {
+    "gotoDetail": "Click to view details",
+    "inThePosition": "(in the position {{position}})",
     "overview": "Overview",
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",

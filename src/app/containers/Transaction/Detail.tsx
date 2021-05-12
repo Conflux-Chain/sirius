@@ -39,18 +39,19 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
+import { GasFee, StorageFee } from 'app/components/TxnComponents/index';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import imgSponsoredEn from 'images/sponsored.png';
-import imgSponsoredZh from 'images/sponsored-zh.png';
+// import imgSponsoredEn from 'images/sponsored.png';
+// import imgSponsoredZh from 'images/sponsored-zh.png';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Detail = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
@@ -96,9 +97,9 @@ export const Detail = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
-  const imgSponsored = i18n.language.startsWith('en')
-    ? imgSponsoredEn
-    : imgSponsoredZh;
+  // const imgSponsored = i18n.language.startsWith('en')
+  //   ? imgSponsoredEn
+  //   : imgSponsoredZh;
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -737,7 +738,13 @@ export const Detail = () => {
           </SkeletonContainer>
         </Description>
         {generatedDiv()}
+
+        {/* @todo check if can be use new TokenTransfer component to instead of getTransferListDiv() */}
+        {/* {isContract ? (
+          <TokenTransfer tokenList={tokenList} transferList={transferList} />
+        ) : null} */}
         {getTransferListDiv()}
+
         <Description
           title={
             <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
@@ -757,14 +764,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {`${toThousands(gasFee)} drip`}{' '}
-            {gasCoveredBySponsor && (
-              <img
-                src={imgSponsored}
-                alt="sponsored"
-                className="icon-sponsored"
-              />
-            )}
+            <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
           </SkeletonContainer>
         </Description>
         <div
@@ -797,14 +797,10 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {getStorageFee(storageCollateralized)} CFX{' '}
-              {storageCoveredBySponsor && (
-                <img
-                  src={imgSponsored}
-                  alt="sponsored"
-                  className="icon-sponsored"
-                />
-              )}
+              <StorageFee
+                fee={storageCollateralized}
+                sponsored={storageCoveredBySponsor}
+              />
             </SkeletonContainer>
           </Description>
           <Description

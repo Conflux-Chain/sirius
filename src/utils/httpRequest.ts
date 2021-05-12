@@ -40,7 +40,7 @@ export const reqBlockDetail = (param?: object, extra?: object) => {
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
-    ...extra,
+    query: extra,
   });
 };
 
