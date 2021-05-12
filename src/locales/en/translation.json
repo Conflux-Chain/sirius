@@ -262,6 +262,11 @@
     "block": "block",
     "transaction": "transaction"
   },
+  "networkError": {
+    "title": "Tip",
+    "label": "The address you are searching for is Conflux {{network}} address, please switch the network before searching.",
+    "btn": "Switch the network to {{network}}"
+  },
   "token": {
     "token": "Token",
     "totalSupplay": "Total Supply",

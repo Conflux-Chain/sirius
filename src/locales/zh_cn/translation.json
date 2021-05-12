@@ -262,6 +262,11 @@
     "block": "区块",
     "transaction": "交易"
   },
+  "networkError": {
+    "title": "温馨提示",
+    "label": "当前搜索地址为 Conflux {{network}} 地址，请切换网络后再尝试搜索。",
+    "btn": "切换网络至 {{network}}"
+  },
   "token": {
     "token": "代币",
     "totalSupplay": "总供应量",
