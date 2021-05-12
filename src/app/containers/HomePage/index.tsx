@@ -20,7 +20,7 @@ export function HomePage() {
   const bp = useBreakpoint();
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 2, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -29,7 +29,7 @@ export function HomePage() {
     blockColunms.miner,
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercent,
-    blockColunms.reward,
+    // blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
