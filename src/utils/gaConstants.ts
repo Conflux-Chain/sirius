@@ -41,6 +41,9 @@ export const ScanEvent = {
       naver: 'naver',
       forum: 'forum',
       reddit: 'reddit',
+      terms: 'terms',
+      privacyPolicy: 'privacy_policy',
+      helpCenter: 'help_center',
     },
   },
   // global search

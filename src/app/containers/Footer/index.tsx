@@ -94,42 +94,42 @@ export function Footer() {
       {t(translations.footer.confluxbounty)}
     </Link>
   );
-  const addressConverterLink = (
+  const privacyPolicy = (
     <Link
       className="footer-link"
-      href="/address-converter"
+      href="https://confluxnetwork.org/privacy"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.addressConverter,
+        action: ScanEvent.menu.action.privacyPolicy,
       }}
     >
-      {t(translations.footer.addressFormatConversion)}
+      {t(translations.footer.aboutUs.privacyPolicy)}
     </Link>
   );
-  const broadcastTxLink = (
+  const terms = (
     <Link
       className="footer-link"
-      href="/push-tx"
+      href="https://confluxnetwork.org/terms"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.broadcastTx,
+        action: ScanEvent.menu.action.terms,
       }}
     >
-      {t(translations.footer.broadcastTx)}
+      {t(translations.footer.aboutUs.terms)}
     </Link>
   );
-  const blocknumberCalcLink = (
-    <Link
-      className="footer-link"
-      href="/block-countdown"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.blocknumberCalc,
-      }}
-    >
-      {t(translations.footer.blocknumberCalc)}
-    </Link>
-  );
+  // const helpCenter = (
+  //   <Link
+  //     className="footer-link"
+  //     href=""
+  //     ga={{
+  //       category: ScanEvent.menu.category,
+  //       action: ScanEvent.menu.action.helpCenter,
+  //     }}
+  //   >
+  //     {t(translations.footer.aboutUs.helpCenter)}
+  //   </Link>
+  // );
 
   const icons = (
     <FooterContentIconWrapper>
@@ -211,18 +211,6 @@ export function Footer() {
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
-        {/* <Link
-          href="https://open.kakao.com/o/gmyEjl2b"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.kakao,
-          }}
-        >
-          <img alt="kakao icon" src={iconWechat} />
-        </Link> */}
-        {/* <Tooltip text={<img alt="kakao icon" src={iconWechat} />}>
-          
-        </Tooltip> */}
         <StyledIconWechatWrapper>
           <img
             alt="wechat qrcode icon"
@@ -232,7 +220,6 @@ export function Footer() {
           <img alt="wechat icon" src={iconWechat} />
         </StyledIconWechatWrapper>
       </FooterContentIconLink>
-      {/* @todo wechat */}
       <FooterContentIconLink>
         <Link
           href="https://www.youtube.com/channel/UCFSTmjoSU8jn6DE_4V2TIzA"
@@ -352,18 +339,6 @@ export function Footer() {
         </FooterContent>
       </FooterContentWrapper>
       <FooterContentWrapper>
-        <FooterContentTitle className="footer-tool">
-          {t(translations.footer.tool)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            <FooterContentLink>{addressConverterLink}</FooterContentLink>
-            <FooterContentLink>{broadcastTxLink}</FooterContentLink>
-            <FooterContentLink>{blocknumberCalcLink}</FooterContentLink>
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
-      <FooterContentWrapper>
         <FooterContentTitle className="contact-us">
           {t(translations.footer.contactUs)}
         </FooterContentTitle>
@@ -371,6 +346,18 @@ export function Footer() {
           <FooterContentRow>
             <FooterContentLink>{techIssueLink}</FooterContentLink>
             <FooterContentLink>{reportLink}</FooterContentLink>
+          </FooterContentRow>
+        </FooterContent>
+      </FooterContentWrapper>
+      <FooterContentWrapper>
+        <FooterContentTitle className="footer-tool">
+          {t(translations.footer.aboutUs.title)}
+        </FooterContentTitle>
+        <FooterContent>
+          <FooterContentRow>
+            <FooterContentLink>{privacyPolicy}</FooterContentLink>
+            <FooterContentLink>{terms}</FooterContentLink>
+            {/* <FooterContentLink>{helpCenter}</FooterContentLink> */}
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
