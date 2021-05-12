@@ -60,10 +60,12 @@ function Select({ children = [] } = {}) {
                 {children20.length})
               </Title>
               {children20}
-              <Title className="token-type">
-                {t(translations.header.tokens721).replace('Tokens', 'Token')} (
-                {children721.length})
-              </Title>
+              {children721.length > 0 ? (
+                <Title className="token-type">
+                  {t(translations.header.tokens721).replace('Tokens', 'Token')}{' '}
+                  ({children721.length})
+                </Title>
+              ) : null}
               {children721}
             </Card>
           </SelectDropdown>
@@ -196,10 +198,11 @@ const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
 const SelectDropdown = styled.div`
   z-index: 210;
   position: absolute;
-  left: -1.2857rem;
+  left: -1.5rem;
   top: 4.5rem;
   min-width: 400px;
   max-height: 400px;
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   overflow-y: auto;
 
   .token-balance-select-content.card > .content {
@@ -222,8 +225,8 @@ const SelectDropdown = styled.div`
     padding: 0.6rem 0;
   }
   ${media.s} {
-    //top: 3.5rem;
-    min-width: calc(100vw - 30px);
+    top: 3.8rem;
+    min-width: calc(100vw - 40px);
   }
 `;
 
