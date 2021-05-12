@@ -386,7 +386,14 @@
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
-      "address": "address"
+      "address": "address",
+      "more": {
+        "title": "More",
+        "report": "Report",
+        "editContract": "Edit Contract",
+        "sponsor": "Apply Sponsorship",
+        "website": "Official Website"
+      }
     },
     "loading": "loading...",
     "contract": "contract",

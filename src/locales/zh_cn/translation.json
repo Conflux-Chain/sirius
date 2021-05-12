@@ -386,7 +386,14 @@
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
-      "address": "地址"
+      "address": "地址",
+      "more": {
+        "title": "更多",
+        "report": "举报",
+        "editContract": "编辑合约",
+        "sponsor": "申请赞助",
+        "website": "官方网站"
+      }
     },
     "loading": "加载中...",
     "contract": "合约",
