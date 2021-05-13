@@ -117,6 +117,14 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       },
       ...extra,
     });
+  } else if (['overview'].includes(param.action)) {
+    return sendRequest({
+      url: `${statPrefix}/recent-overview`,
+      query: {
+        days: param.span === '24h' ? '1' : param.span.slice(0, -1),
+      },
+      ...extra,
+    });
   } else {
     // rank_contract_by_number_of_participants_1d;
     // rank_contract_by_number_of_participants_3d;

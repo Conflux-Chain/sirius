@@ -14,8 +14,14 @@ import { useAccounts } from '../../../utils/hooks/usePortal';
 import ReactECharts from 'echarts-for-react';
 import { media } from '../../../styles/media';
 import { monospaceFont } from '../../../styles/variable';
+import { Link } from '../Link';
+import { Description } from '../Description/Loadable';
 
 export enum StatsType {
+  overviewTransactions = 'overviewTransactions',
+  overviewTokens = 'overviewTokens',
+  overviewMiners = 'overviewMiners',
+  overviewNetwork = 'overviewNetwork',
   topCFXSend = 'topCFXSend',
   topCFXReceived = 'topCFXReceived',
   topTxnCountSent = 'topTxnCountSent',
@@ -33,6 +39,8 @@ interface Props {
   span: string;
   type: StatsType;
   withChart?: boolean;
+  tabsChange?: any;
+  statsData?: any;
 }
 
 const cfxValue = (value, opt = {}) => (
@@ -69,6 +77,8 @@ export const StatsCard = ({
   span = '7d',
   type = StatsType.topTxnCountSent,
   withChart = false,
+  tabsChange = () => {},
+  statsData = null,
 }: Partial<Props>) => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>([]);
@@ -80,10 +90,61 @@ export const StatsCard = ({
   // get portal selected address
   const [accounts] = useAccounts();
 
-  let columns = [];
+  let columns: any[] = [];
   let action = '';
   let category = '';
   switch (type) {
+    case StatsType.overviewTransactions:
+      columns = [
+        {
+          title: t(translations.statistics.overviewColumns.totalCFXSent),
+          index: 'cfxAmount',
+          unit: 'CFX',
+        },
+        {
+          title: t(translations.statistics.overviewColumns.totalTxnCountSent),
+          index: 'cfxTxn',
+        },
+      ];
+      action = 'transactions';
+      category = 'overview';
+      break;
+    case StatsType.overviewTokens:
+      columns = [
+        {
+          title: t(
+            translations.statistics.overviewColumns.totalTokenTransfersCount,
+          ),
+          index: 'tokenTransfer',
+        },
+        {
+          title: t(translations.statistics.overviewColumns.totalTxnCountSent),
+          index: 'tokenAccount',
+        },
+      ];
+      action = 'tokens';
+      category = 'overview';
+      break;
+    case StatsType.overviewMiners:
+      columns = [
+        {
+          title: t(translations.statistics.overviewColumns.totalMiners),
+          index: 'minerCount',
+        },
+      ];
+      action = 'miners';
+      category = 'overview';
+      break;
+    case StatsType.overviewNetwork:
+      columns = [
+        {
+          title: t(translations.statistics.overviewColumns.totalGasUsed),
+          index: 'gasUsed',
+        },
+      ];
+      action = 'network';
+      category = 'overview';
+      break;
     case StatsType.topCFXSend:
       columns = [
         t(translations.statistics.column.address),
@@ -177,7 +238,11 @@ export const StatsCard = ({
   }
 
   useEffect(() => {
-    if (action) {
+    if (category === 'overview') {
+      if (statsData) {
+        setLoading(false);
+      }
+    } else if (action) {
       setLoading(true);
       setLoadingTokenInfo(true);
       reqTopStatistics({
@@ -253,7 +318,7 @@ export const StatsCard = ({
           setLoading(false);
         });
     }
-  }, [action, category, span, type]);
+  }, [action, category, span, statsData, type]);
 
   const tableHeader = category => {
     switch (category) {
@@ -548,24 +613,56 @@ export const StatsCard = ({
   };
 
   return (
-    <CardWrapper>
-      <h2>{t(translations.statistics[type])}</h2>
+    <CardWrapper className={category}>
+      <h2>
+        {t(translations.statistics[type])}{' '}
+        {category === 'overview' ? (
+          <Link
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              tabsChange && tabsChange(action);
+            }}
+          >
+            {t(translations.statistics.overviewColumns.top10)}
+          </Link>
+        ) : null}
+      </h2>
       <SkelontonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
-        <div className={`table-wrapper ${withChart ? 'hasChart' : ''}`}>
+        <div
+          className={`table-wrapper ${withChart ? 'hasChart' : ''} ${category}`}
+        >
           {withChart ? (
             <div className="chart-wrapper">{chartContent(category, data)}</div>
           ) : null}
-          <table>
-            <thead>
-              <tr>
-                <th>{t(translations.statistics.column.rank)}</th>
-                {tableHeader(category)}
-              </tr>
-            </thead>
-            <tbody>{tableBody(category, data)}</tbody>
-          </table>
+          {category === 'overview' ? (
+            <>
+              {columns.map(c => (
+                <Description title={c['title']} key={c['title']}>
+                  {statsData[c['index']]
+                    ? c['unit'] === 'CFX'
+                      ? cfxValue(statsData[c['index']])
+                      : formatNumber(statsData[c['index']], {
+                          withUnit: false,
+                        })
+                    : '--'}{' '}
+                  {c['unit'] ? ` ${c['unit']}` : ''}
+                </Description>
+              ))}
+            </>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>{t(translations.statistics.column.rank)}</th>
+                  {tableHeader(category)}
+                </tr>
+              </thead>
+              <tbody>{tableBody(category, data)}</tbody>
+            </table>
+          )}
         </div>
       </SkelontonContainer>
     </CardWrapper>
@@ -580,6 +677,11 @@ const CardWrapper = styled.div`
   border: 1px solid #e8e9ea;
   white-space: nowrap;
 
+  &.overview {
+    min-height: unset;
+    padding-bottom: 10px;
+  }
+
   h2 {
     font-size: 16px;
     font-weight: 500;
@@ -587,6 +689,12 @@ const CardWrapper = styled.div`
     line-height: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid #e8e9ea;
+
+    a {
+      font-size: 16px;
+      float: right;
+      font-weight: normal;
+    }
   }
 
   .table-wrapper {
@@ -594,6 +702,31 @@ const CardWrapper = styled.div`
     min-height: 450px;
     padding-bottom: 16px;
     overflow-x: auto;
+
+    &.overview {
+      min-height: unset;
+      padding-bottom: 0;
+
+      .description {
+        .left {
+          width: auto;
+          max-width: unset;
+          white-space: nowrap;
+        }
+        .right {
+          text-align: right;
+          width: auto;
+        }
+        ${media.s} {
+          .right {
+            text-align: left;
+          }
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
 
     &.hasChart {
       display: flex;

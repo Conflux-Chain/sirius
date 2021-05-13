@@ -272,7 +272,7 @@ export function App() {
                   <Route
                     exact
                     path="/statistics"
-                    render={() => <Redirect to="/statistics/transactions" />}
+                    render={() => <Redirect to="/statistics/overview" />}
                   />
                   <Route
                     exact
