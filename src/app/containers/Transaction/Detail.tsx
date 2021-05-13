@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { Status } from 'app/components/Status/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { InputData } from 'app/components/InputData/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
@@ -39,7 +38,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
-import { GasFee, StorageFee } from 'app/components/TxnComponents/index';
+import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';

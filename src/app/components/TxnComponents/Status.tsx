@@ -7,10 +7,11 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';
+
 import imgSuccess from 'images/status/success.svg';
 import imgError from 'images/status/error.svg';
 import imgSkip from 'images/status/skip.svg';
@@ -20,6 +21,7 @@ interface Props {
   type: string | number;
   variant?: 'dot' | 'text';
   popoverProps?: Partial<PopoverProps>;
+  showMessage?: boolean;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -31,6 +33,7 @@ export const Status = ({
   variant,
   popoverProps,
   children,
+  showMessage,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
@@ -75,7 +78,7 @@ export const Status = ({
       <>
         <img className="icon" src={typeMap[type].icon} alt={type} />
         <span className="text">{typeMap[type].name}</span>
-        {variant === 'dot' ? null : (
+        {!showMessage || variant === 'dot' ? null : (
           <span className="description">{explanation}</span>
         )}
       </>
@@ -115,6 +118,9 @@ export const Status = ({
   } else {
     return null;
   }
+};
+Status.defaultProps = {
+  showMessage: true,
 };
 
 const Wrapper = styled.span`

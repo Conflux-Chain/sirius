@@ -18,6 +18,7 @@ import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { cfxTokenTypes } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { TxnHashRenderComponent } from './transaction';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -284,13 +285,7 @@ export const txnHash = {
   ),
   dataIndex: 'transactionHash',
   key: 'transactionHash',
-  render: value => (
-    <Link href={`/transaction/${value}`}>
-      <Text span hoverValue={value}>
-        {formatString(value, 'hash')}
-      </Text>
-    </Link>
-  ),
+  render: value => <TxnHashRenderComponent hash={value} />,
 };
 
 export const age = (ageFormat, toggleAgeFormat) =>

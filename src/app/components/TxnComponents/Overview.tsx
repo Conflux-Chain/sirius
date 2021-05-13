@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Status } from 'app/components/Status/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
@@ -10,6 +9,7 @@ import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
 import { Nonce } from './Nonce';
 import { TokenTransfer } from './TokenTransfer';
+import { Status } from './Status';
 
 export const Overview = ({ data }) => {
   const { t } = useTranslation();
@@ -32,9 +32,13 @@ export const Overview = ({ data }) => {
       <div className="overview-title">
         {t(translations.transaction.overview)}
       </div>
-      <Description verticle small title={t(translations.transaction.status)}>
+      <Description
+        verticle
+        size="tiny"
+        title={t(translations.transaction.status)}
+      >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status} />
+          <Status type={status} showMessage={false} />
           {t(translations.transaction.epochConfirmations, {
             count: confirmedEpochCount || '--',
           })}
@@ -43,23 +47,20 @@ export const Overview = ({ data }) => {
       {tokenTransfer?.total ? (
         <Description
           verticle
-          small
-          title={
-            <>
-              {t(translations.transaction.tokenTransferred)}
-              {` (${tokenTransfer.list.length}/${tokenTransfer.total})`}
-            </>
-          }
+          size="tiny"
+          title={t(translations.transaction.tokenTransferred)}
         >
-          <TokenTransfer
-            transferList={tokenTransfer.list.slice(0, 3)}
-            tokenInfoMap={tokenTransferTokenInfo}
-          />
+          <StyledTokenTransferWrapper>
+            <TokenTransfer
+              transferList={tokenTransfer.list}
+              tokenInfoMap={tokenTransferTokenInfo}
+            />
+          </StyledTokenTransferWrapper>
         </Description>
       ) : null}
       <Description
         verticle
-        small
+        size="tiny"
         title={t(translations.transaction.storageCollateralized)}
       >
         <StorageFee
@@ -67,12 +68,16 @@ export const Overview = ({ data }) => {
           sponsored={storageCoveredBySponsor}
         />
       </Description>
-      <Description verticle small title={t(translations.transaction.gasFee)}>
+      <Description
+        verticle
+        size="tiny"
+        title={t(translations.transaction.gasFee)}
+      >
         <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
       </Description>
       <Description
         verticle
-        small
+        size="tiny"
         title={t(translations.transaction.nonce)}
         noBorder
       >
@@ -106,7 +111,7 @@ const StyledWrapper = styled.div`
   }
 
   .overview-gotoDetail-container {
-    padding: 1.4286rem 0 0 0;
+    padding: 1rem 0 0 0;
     margin-bottom: -0.5714rem;
     display: flex;
     justify-content: flex-end;
@@ -130,4 +135,9 @@ const StyledWrapper = styled.div`
       }
     }
   }
+`;
+
+const StyledTokenTransferWrapper = styled.div`
+  max-height: 11.4286rem;
+  overflow: auto;
 `;

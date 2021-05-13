@@ -60,12 +60,6 @@ const Wrapper = styled.div`
     border-bottom: none;
   }
 
-  &.small {
-    .left {
-      width: 10rem;
-    }
-  }
-
   .left {
     padding: 0.8571rem 0;
     line-height: calc(3.2857rem - 1.7143rem);
@@ -91,6 +85,13 @@ const Wrapper = styled.div`
     flex-direction: column;
   }
 
+  &.tiny {
+    .left,
+    .right {
+      padding: 0.5rem 0;
+    }
+  }
+
   &.verticle {
     flex-direction: column;
 
@@ -100,6 +101,12 @@ const Wrapper = styled.div`
 
     .right {
       padding-top: 0;
+    }
+  }
+
+  &.small {
+    .left {
+      width: 10rem;
     }
   }
 `;

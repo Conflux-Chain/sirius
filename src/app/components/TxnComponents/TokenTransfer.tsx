@@ -115,14 +115,7 @@ export const TokenTransfer = ({
             <span>{imgIcon}</span>
             <span>{nameContainer}</span>
             <span className="type">
-              {transferItem['tokenId'].length > 10 ? (
-                <>
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                </>
-              ) : (
-                <>&nbsp;</>
-              )}
+              &nbsp;
               {t(translations.transaction.tokenId)}:
               <span className="tokenId">{transferItem['tokenId']}</span>
             </span>
