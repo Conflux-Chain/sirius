@@ -41,12 +41,18 @@ exports[`<Description  /> should match snapshot 1`] = `
   color: #97a3b4;
 }
 
-@media (max-width:600px) {
-  .c0 {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
+.c0.verticle {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0.verticle .left {
+  width: 100%;
+}
+
+.c0.verticle .right {
+  padding-top: 0;
 }
 
 @media (max-width:600px) {
@@ -55,8 +61,16 @@ exports[`<Description  /> should match snapshot 1`] = `
   }
 }
 
+@media (max-width:600px) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
 <div
-  class="c0 description"
+  class="c0 description medium"
 >
   <div
     class="left"
