@@ -14,6 +14,7 @@ interface Props {
   children: React.ReactNode;
   noBorder?: boolean;
   verticle?: boolean;
+  size?: 'medium' | 'small' | 'tiny';
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
 export type DescriptionProps = React.PropsWithChildren<Props & NativeAttrs>;
@@ -26,12 +27,13 @@ export const Description = ({
   small,
   noBorder,
   verticle,
+  size,
   ...others
 }: DescriptionProps) => {
   return (
     <Wrapper
       style={style}
-      className={clsx('description', className, {
+      className={clsx('description', className, size, {
         small: small,
         'no-border': noBorder,
         verticle: verticle,
@@ -45,6 +47,7 @@ export const Description = ({
 };
 Description.defaultProps = {
   verticle: false,
+  size: 'medium',
 };
 
 const Wrapper = styled.div`
