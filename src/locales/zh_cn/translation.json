@@ -383,6 +383,7 @@
     }
   },
   "general": {
+    "totalRecord": "共计 {{total}} 个记录",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",

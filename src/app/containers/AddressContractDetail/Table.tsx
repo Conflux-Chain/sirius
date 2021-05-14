@@ -22,11 +22,13 @@ import { Link } from 'app/components/Link';
 import { Text } from 'app/components/Text';
 import { ColumnsType } from 'app/components/TabsTablePanel';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
+import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
-  TabLabel,
-  TabsTablePanel,
-} from 'app/components/TabsTablePanel/Loadable';
-import { formatString, isContractAddress, isInnerContractAddress } from 'utils';
+  formatString,
+  isContractAddress,
+  isInnerContractAddress,
+  toThousands,
+} from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
 import {
@@ -473,98 +475,87 @@ export function Table({ address, addressInfo }) {
     {
       value: 'transaction',
       action: 'accountTransactions',
-      label: (total: number, realTotal: number) => {
-        return (
-          <>
-            {t(translations.transactions.title)}
-            <TabLabel total={total} realTotal={realTotal} />
-          </>
-        );
-      },
+      label: t(translations.transactions.title),
       url: `/transaction?accountAddress=${address}`,
       pagination: true,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
       },
-      hasFilter: true,
+      tableHeader: ({ total }) => (
+        <StyledTableHeaderWrapper>
+          {t(translations.general.totalRecord, {
+            total: toThousands(total),
+          })}
+        </StyledTableHeaderWrapper>
+      ),
     },
   ];
 
   tabs.push({
     value: `transfers-${cfxTokenTypes.cfx}`,
     action: 'cfxTransfers',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.cfxTransfer)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.cfxTransfer),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`,
     table: {
       columns: columnsCFXTrasfer,
       rowKey: row => `${row.transactionHash}${row.transactionTraceIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
     value: `transfers-${cfxTokenTypes.erc20}`,
     action: 'transfersCrc20',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc20)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc20),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`,
     table: {
       columns: columnsTokenTrasfersErc20,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
     value: `transfers-${cfxTokenTypes.erc721}`,
     action: 'transfersCrc721',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc721)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc721),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`,
     table: {
       columns: columnsTokenTrasfersErc721,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
     value: `transfers-${cfxTokenTypes.erc1155}`,
     action: 'transfersCrc1155',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc1155)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc1155),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
     table: {
@@ -573,7 +564,13 @@ export function Table({ address, addressInfo }) {
       rowKey: row =>
         `${row.transactionHash}${row.transactionLogIndex}${row.batchIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
   });
 
   tabs.push(
@@ -589,21 +586,19 @@ export function Table({ address, addressInfo }) {
           action: 'minedBlocks',
           hideTotalZero: true,
           pagination: true,
-          label: (total: number, realTotal: number) => {
-            return (
-              <>
-                {t(translations.addressDetail.minedBlocks)}
-                <TabLabel total={total} realTotal={realTotal} />
-              </>
-            );
-          },
-
+          label: t(translations.addressDetail.minedBlocks),
           url: `/block?miner=${address}`,
           table: {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
           },
-          hasFilter: true,
+          tableHeader: ({ total }) => (
+            <StyledTableHeaderWrapper>
+              {t(translations.general.totalRecord, {
+                total: toThousands(total),
+              })}
+            </StyledTableHeaderWrapper>
+          ),
         },
   );
 
@@ -742,4 +737,9 @@ const ExportRecordsButtonWrapper = styled.span`
   &.show {
     display: inherit;
   }
+`;
+
+// @todo, used for temp, should be replace when update table filter group, add filter group to tableHeader
+const StyledTableHeaderWrapper = styled.div`
+  padding: 8px;
 `;

@@ -383,6 +383,7 @@
     }
   },
   "general": {
+    "totalRecord": "Total of {{total}} records",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
     "invalidABI": "Invaild ABI",
