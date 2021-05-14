@@ -272,6 +272,7 @@ export function Transfers({
           tokenInfo={{
             name: tokenName,
             address: tokenAddress,
+            type: transferType,
           }}
         />
       </Card>

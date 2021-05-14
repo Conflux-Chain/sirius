@@ -18,6 +18,7 @@ import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
 import _ from 'lodash';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -33,6 +34,7 @@ export const LineChart = ({
   tokenInfo = {
     name: '',
     address: '',
+    type: '',
   },
 }) => {
   const { t } = useTranslation();
@@ -307,12 +309,15 @@ export const LineChart = ({
       case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
-        return [
-          // 'transferAmount',
-          'transferCount',
-          'uniqueReceiver',
-          'uniqueSender',
-        ];
+        return tokenInfo.type === cfxTokenTypes.erc20 ||
+          tokenInfo.type === cfxTokenTypes.erc721
+          ? [
+              'transferAmount',
+              'transferCount',
+              'uniqueReceiver',
+              'uniqueSender',
+            ]
+          : ['transferCount', 'uniqueReceiver', 'uniqueSender'];
       default:
         return indicator;
     }
