@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
-import imgNetworkError from 'images/home/404.svg';
+import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
 import { isConfluxTestNet } from '../../../utils/cfx';
 import {
@@ -76,6 +76,9 @@ const PageWrapper = styled.div`
 // img
 const LeftImage = styled.img`
   margin-right: 7rem;
+  margin-left: 1rem;
+  max-width: 234px;
+
   ${media.s} {
     margin-right: 0;
     max-width: 80%;

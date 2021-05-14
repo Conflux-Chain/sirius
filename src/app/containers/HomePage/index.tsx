@@ -7,13 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
 import { ColumnsType, useTabTableData } from '../../components/TabsTablePanel';
-import { SmallChart } from '../../components/Chart/Loadable';
 import { blockColunms, transactionColunms } from '../../../utils/tableColumns';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { useAge } from '../../../utils/hooks/useAge';
 import { Notice } from './Notice';
-
-// import { MarketInfo } from './MarketInfo';
+import { BlockchainInfo } from './BlockchainInfo';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -69,17 +67,17 @@ export function HomePage() {
     },
   ];
 
-  const clientWidth = document.body.clientWidth;
-  let chartWidth;
-  if (clientWidth < 600) {
-    chartWidth = clientWidth - 30;
-  } else if (clientWidth < 1000) {
-    chartWidth = (clientWidth - 68) / 2;
-  } else if (clientWidth < 1368) {
-    chartWidth = (clientWidth - 116) / 4;
-  } else {
-    chartWidth = 323;
-  }
+  // const clientWidth = document.body.clientWidth;
+  // let chartWidth;
+  // if (clientWidth < 600) {
+  //   chartWidth = clientWidth - 30;
+  // } else if (clientWidth < 1000) {
+  //   chartWidth = (clientWidth - 68) / 2;
+  // } else if (clientWidth < 1368) {
+  //   chartWidth = (clientWidth - 116) / 4;
+  // } else {
+  //   chartWidth = 323;
+  // }
 
   const { currentTabValue } = useTabTableData(tabs);
 
@@ -94,21 +92,21 @@ export function HomePage() {
       </Helmet>
       <Main>
         {bp === 's' ? <Notice /> : null}
-        {/* <MarketInfo /> */}
-        <Top>
-          <SmallChartWrap>
-            <SmallChart width={chartWidth} />
-          </SmallChartWrap>
-          <SmallChartWrap>
-            <SmallChart width={chartWidth} indicator="hashRate" />
-          </SmallChartWrap>
-          <SmallChartWrap>
-            <SmallChart width={chartWidth} indicator="tps" />
-          </SmallChartWrap>
-          <SmallChartWrap>
-            <SmallChart width={chartWidth} indicator="difficulty" />
-          </SmallChartWrap>
-        </Top>
+        <BlockchainInfo />
+        {/*<Top>*/}
+        {/*  <SmallChartWrap>*/}
+        {/*    <SmallChart width={chartWidth} />*/}
+        {/*  </SmallChartWrap>*/}
+        {/*  <SmallChartWrap>*/}
+        {/*    <SmallChart width={chartWidth} indicator="hashRate" />*/}
+        {/*  </SmallChartWrap>*/}
+        {/*  <SmallChartWrap>*/}
+        {/*    <SmallChart width={chartWidth} indicator="tps" />*/}
+        {/*  </SmallChartWrap>*/}
+        {/*  <SmallChartWrap>*/}
+        {/*    <SmallChart width={chartWidth} indicator="difficulty" />*/}
+        {/*  </SmallChartWrap>*/}
+        {/*</Top>*/}
         <Bottom>
           <TabsTablePanel tabs={tabs} />
           <ViewAllLinkWrapper>
@@ -156,45 +154,45 @@ const Main = styled.div`
     margin-bottom: 0;
   }
 `;
-const Top = styled.section`
-  display: flex;
-  width: 100%;
-  margin-bottom: 0;
-  margin-top: 32px;
-  justify-content: center;
-
-  > * {
-    margin-bottom: 24px;
-  }
-
-  > * + * {
-    margin-left: 24px;
-  }
-
-  ${media.m} {
-    flex-wrap: wrap;
-
-    > *:nth-child(3) {
-      margin-left: 0;
-    }
-  }
-
-  ${media.s} {
-    margin-top: 24px;
-    margin-bottom: 12px;
-    flex-direction: column;
-
-    > * {
-      margin-left: 0;
-      margin-bottom: 10px;
-    }
-  }
-`;
-
-const SmallChartWrap = styled.div`
-  ${media.m} {
-  }
-`;
+// const Top = styled.section`
+//   display: flex;
+//   width: 100%;
+//   margin-bottom: 0;
+//   margin-top: 32px;
+//   justify-content: center;
+//
+//   > * {
+//     margin-bottom: 24px;
+//   }
+//
+//   > * + * {
+//     margin-left: 24px;
+//   }
+//
+//   ${media.m} {
+//     flex-wrap: wrap;
+//
+//     > *:nth-child(3) {
+//       margin-left: 0;
+//     }
+//   }
+//
+//   ${media.s} {
+//     margin-top: 24px;
+//     margin-bottom: 12px;
+//     flex-direction: column;
+//
+//     > * {
+//       margin-left: 0;
+//       margin-bottom: 10px;
+//     }
+//   }
+// `;
+//
+// const SmallChartWrap = styled.div`
+//   ${media.m} {
+//   }
+// `;
 
 const Bottom = styled.section`
   position: relative;

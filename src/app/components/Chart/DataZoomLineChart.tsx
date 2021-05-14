@@ -9,7 +9,8 @@ interface Props {
   dateKey?: string;
   valueKey?: string | string[];
   indicator?: string;
-  width?: number;
+  width?: number | string;
+  minHeight?: number;
   data?: any[];
 }
 export const DataZoomLineChart = ({
@@ -17,12 +18,21 @@ export const DataZoomLineChart = ({
   dateKey = 'day',
   valueKey = 'value',
   width = document.body.clientWidth,
+  minHeight = 500,
   data = [],
 }: Props) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
-  const dateFormatter = function (value) {
-    return dayjs(value).format(lang === 'zh' ? 'YYYY-MM-DD' : 'MMM DD, YYYY');
+  const dateFormatter = function (value, simple = false) {
+    return dayjs(value).format(
+      lang === 'zh'
+        ? simple
+          ? 'MM月DD日'
+          : 'YYYY-MM-DD'
+        : simple
+        ? 'MMM DD'
+        : 'MMM DD, YYYY',
+    );
   };
 
   if (!Array.isArray(valueKey)) {
@@ -36,7 +46,7 @@ export const DataZoomLineChart = ({
 
   return (
     <ReactECharts
-      style={{ minHeight: 500 }}
+      style={{ minHeight }}
       notMerge={true}
       option={{
         tooltip: {
@@ -71,9 +81,10 @@ export const DataZoomLineChart = ({
           },
         },
         grid: {
+          top: minHeight < 400 ? 20 : 40,
           left: '80',
           right: '10',
-          bottom: width < 800 ? '100' : '70',
+          bottom: typeof width === 'number' && width < 800 ? '100' : '70',
         },
         legend: {
           show: valueKey.length > 1,
@@ -84,8 +95,8 @@ export const DataZoomLineChart = ({
           type: 'time',
           boundaryGap: false,
           axisLabel: {
-            rotate: width < 800 ? -30 : 0,
-            formatter: dateFormatter,
+            rotate: typeof width === 'number' && width < 800 ? -30 : 0,
+            formatter: v => dateFormatter(v, minHeight < 400),
           },
         },
         yAxis: {
@@ -105,7 +116,7 @@ export const DataZoomLineChart = ({
             filterMode: 'filter',
             rangeMode: ['percent', 'percent'],
             start: 100,
-            end: 0,
+            end: 30,
           },
           {
             id: 'dataZoomY',

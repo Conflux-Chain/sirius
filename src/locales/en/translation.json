@@ -981,6 +981,13 @@
       "totalTxnFees": "Total Txn Fees",
       "hashRate": "Est. Hash Rate (GH/s)",
       "gasUsed": "Gas Used"
+    },
+    "home": {
+      "currentBlockNumber": "Current Block Number",
+      "currentEpoch": "Current Epoch",
+      "account": "Account",
+      "transactions": "Transactions",
+      "contract": "Contract"
     }
   },
   "swap": {

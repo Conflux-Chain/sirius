@@ -119,7 +119,32 @@ export function App() {
         }}
       >
         <BrowserRouter>
-          <CfxProvider>
+          <CfxProvider
+            theme={{
+              breakpoints: {
+                xs: {
+                  min: '0',
+                  max: '600px',
+                },
+                sm: {
+                  min: '600px',
+                  max: '1024px',
+                },
+                md: {
+                  min: '1024px',
+                  max: '1280px',
+                },
+                lg: {
+                  min: '1280px',
+                  max: '1440px',
+                },
+                xl: {
+                  min: '1440px',
+                  max: '10000px',
+                },
+              },
+            }}
+          >
             <CssBaseline />
             <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
               <meta

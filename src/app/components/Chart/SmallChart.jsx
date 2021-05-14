@@ -10,9 +10,10 @@ import { formatNumber } from 'utils';
 import { Tooltip } from '../Tooltip';
 
 export const SmallChart = ({
-  width,
+  width = document.body.clientWidth,
   height = width * 0.39,
   indicator = 'blockTime',
+  plain = false,
 } = {}) => {
   const small = width < 300;
 
@@ -34,7 +35,29 @@ export const SmallChart = ({
       : 'up'
     : null;
 
-  return (
+  return plain ? (
+    <>
+      <div>
+        {firstlast &&
+          formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
+      </div>
+      <Change trend={trend} className="trend">
+        {diff}
+      </Change>
+      <Draw
+        small={small}
+        setFirstLast={setFirstLast}
+        indicator={indicator}
+        plot={plot}
+        plain={true}
+        width={small ? width - 100 : width - 130}
+        height={Math.min(
+          small ? (width - 100) * 0.6 : (width - 130) * 0.45,
+          small ? height - 20 : height - 36,
+        )}
+      />
+    </>
+  ) : (
     <Container style={{ width, height }} small={small}>
       <Title>
         <Tooltip text={t(`charts.${indicator}.description`)}>
@@ -52,6 +75,7 @@ export const SmallChart = ({
         setFirstLast={setFirstLast}
         indicator={indicator}
         plot={plot}
+        plain={false}
         width={small ? width - 100 : width - 130}
         height={Math.min(
           small ? (width - 100) * 0.6 : (width - 130) * 0.45,
@@ -70,6 +94,7 @@ function Draw({
   plot,
   indicator,
   setFirstLast,
+  plain,
 }) {
   const backgroundCanvasRef = useRef(null);
   const lineCanvasRef = useRef(null);
@@ -89,12 +114,13 @@ function Draw({
       plot,
       small: true,
       indicator,
+      plain,
     });
-    if (draw) {
+    if (draw && !plain) {
       draw();
     }
     setFirstLast([first, last]);
-  }, [width, height, plot, indicator, setFirstLast]);
+  }, [width, height, plot, indicator, setFirstLast, plain]);
   // if (plot.length <= 1) {
   //   return null;
   // }

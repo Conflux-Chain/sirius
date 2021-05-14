@@ -161,3 +161,10 @@ export const reqCfxSupply = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqHomeDashboard = (extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/homeDashboard`,
+    ...extra,
+  });
+};

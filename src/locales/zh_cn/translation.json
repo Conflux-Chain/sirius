@@ -981,6 +981,13 @@
       "totalTxnFees": "总交易费",
       "hashRate": "哈希算力 (GH/s)",
       "gasUsed": "燃料用量"
+    },
+    "home": {
+      "currentBlockNumber": "当前区块号",
+      "currentEpoch": "当前纪元",
+      "account": "账户总数",
+      "transactions": "交易总数",
+      "contract": "合约总数"
     }
   },
   "swap": {

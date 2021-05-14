@@ -22,7 +22,34 @@ exports[`<App /> should render and match the snapshot 1`] = `
     }
   >
     <BrowserRouter>
-      <CfxProvider>
+      <CfxProvider
+        theme={
+          Object {
+            "breakpoints": Object {
+              "lg": Object {
+                "max": "1440px",
+                "min": "1280px",
+              },
+              "md": Object {
+                "max": "1280px",
+                "min": "1024px",
+              },
+              "sm": Object {
+                "max": "1024px",
+                "min": "600px",
+              },
+              "xl": Object {
+                "max": "10000px",
+                "min": "1440px",
+              },
+              "xs": Object {
+                "max": "600px",
+                "min": "0",
+              },
+            },
+          }
+        }
+      >
         <UNDEFINED />
         <Helmet
           defaultTitle="ConfluxScan"

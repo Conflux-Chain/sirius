@@ -28,7 +28,9 @@ const DURATIONS = [
 ];
 
 export const LineChart = ({
+  widthRatio = '',
   width = 500,
+  minHeight = 500,
   indicator = 'blockTime',
   isThumb = false,
   tokenInfo = {
@@ -326,7 +328,7 @@ export const LineChart = ({
   if (isError) {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
@@ -337,7 +339,7 @@ export const LineChart = ({
   } else {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
@@ -367,7 +369,8 @@ export const LineChart = ({
           'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
-            width={width}
+            width={widthRatio ? widthRatio : width}
+            minHeight={minHeight}
             indicator={indicator}
             dateKey={xAxisKey()}
             valueKey={lineKey()}
