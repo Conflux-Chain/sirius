@@ -73,6 +73,10 @@ import BigNumber from 'bignumber.js';
 // });
 
 BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
+// @ts-ignore
+window.recaptchaOptions = {
+  useRecaptchaNet: true,
+};
 
 export function App() {
   const { t } = useTranslation();
