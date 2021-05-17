@@ -588,7 +588,12 @@
     "connnectWalletSubmit": "Submit",
     "waitForConfirm": "Waiting For Confirmation",
     "txRejected": "Transaction Rejected",
-    "exportRecords": "Export Current Records"
+    "exportRecords": "Export Current Records",
+    "downloadCSV": {
+      "latest5000records": "Only the latest 5000 records are supported",
+      "download": "Download ",
+      "csvFile": "CSV file"
+    }
   },
   "sponsor": {
     "title": "Contract Sponsor",

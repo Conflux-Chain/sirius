@@ -13,11 +13,6 @@ import { useMessages } from '@cfxjs/react-ui';
 import { isConfluxTestNet } from 'utils/cfx';
 import { address as sdkAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
-// @ts-ignore
-window.recaptchaOptions = {
-  useRecaptchaNet: true,
-};
-
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
 export function Report() {

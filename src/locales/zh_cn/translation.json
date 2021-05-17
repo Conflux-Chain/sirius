@@ -588,7 +588,12 @@
     "connnectWalletSubmit": "提交",
     "waitForConfirm": "等待确认",
     "txRejected": "交易已被拒绝",
-    "exportRecords": "导出当前记录"
+    "exportRecords": "导出当前记录",
+    "downloadCSV": {
+      "latest5000records": "仅支持下载最近的 5000 条记录",
+      "download": "下载 ",
+      "csvFile": "CSV 文件"
+    }
   },
   "sponsor": {
     "title": "赞助合约",
