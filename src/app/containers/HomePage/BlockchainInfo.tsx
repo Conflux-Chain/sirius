@@ -4,7 +4,7 @@ import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../../components/Card/Loadable';
 import { translations } from '../../../locales/i18n';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { formatNumber } from '../../../utils';
 import {
   LineChart as Chart,
@@ -24,6 +24,7 @@ function Info(title, number: any) {
 // TODO redesign
 export function BlockchainInfo() {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
   const [dashboardData, setDashboardData] = useState<any>({});
 
   useEffect(() => {
@@ -43,27 +44,13 @@ export function BlockchainInfo() {
           <Grid xs={24} sm={24} md={3}>
             {Info(
               t(translations.statistics.home.currentEpoch),
-              `${
-                dashboardData.epochNumber
-                  ? formatNumber(dashboardData.epochNumber, {
-                      withUnit: false,
-                      keepDecimal: false,
-                    })
-                  : '--'
-              }`,
+              `${dashboardData.epochNumber ? dashboardData.epochNumber : '--'}`,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={3.5}>
             {Info(
               t(translations.statistics.home.currentBlockNumber),
-              `${
-                dashboardData.blockNumber
-                  ? formatNumber(dashboardData.blockNumber, {
-                      withUnit: false,
-                      keepDecimal: false,
-                    })
-                  : '--'
-              }`,
+              `${dashboardData.blockNumber ? dashboardData.blockNumber : '--'}`,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={3.5}>
@@ -125,14 +112,14 @@ export function BlockchainInfo() {
             <Chart
               indicator="dailyTransaction"
               widthRatio="100%"
-              minHeight={300}
+              minHeight={bp === 's' ? 200 : 280}
             />
           </Grid>
           <Grid xs={24} sm={24} md={12} className="chart-item">
             <Chart
               indicator="accountGrowth"
               widthRatio="100%"
-              minHeight={300}
+              minHeight={bp === 's' ? 200 : 280}
             />
           </Grid>
         </Grid.Container>
@@ -152,6 +139,11 @@ const CardWrapper = styled.div`
     .chart-item {
       > div {
         padding: 12px 18px;
+      }
+      ${media.m} {
+        > div {
+          padding: 10px 12px 5px;
+        }
       }
     }
   }
@@ -204,6 +196,10 @@ const CardWrapper = styled.div`
       color: #7e8598;
       line-height: 24px;
       white-space: nowrap;
+
+      ${media.s} {
+        font-size: 12px;
+      }
     }
 
     .number {
@@ -215,6 +211,10 @@ const CardWrapper = styled.div`
       flex-direction: row;
       align-items: baseline;
       justify-content: flex-start;
+
+      ${media.s} {
+        font-size: 16px;
+      }
 
       .trend {
         margin-left: 10px;

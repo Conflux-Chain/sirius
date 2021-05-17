@@ -27,7 +27,7 @@ export const DataZoomLineChart = ({
     return dayjs(value).format(
       lang === 'zh'
         ? simple
-          ? 'MM月DD日'
+          ? 'MM-DD'
           : 'YYYY-MM-DD'
         : simple
         ? 'MMM DD'
@@ -46,7 +46,7 @@ export const DataZoomLineChart = ({
 
   return (
     <ReactECharts
-      style={{ minHeight }}
+      style={{ minHeight, height: minHeight }}
       notMerge={true}
       option={{
         tooltip: {
@@ -82,9 +82,10 @@ export const DataZoomLineChart = ({
         },
         grid: {
           top: minHeight < 400 ? 20 : 40,
-          left: '80',
-          right: '10',
-          bottom: typeof width === 'number' && width < 800 ? '100' : '70',
+          left: '10',
+          right: '20',
+          bottom: 50, // typeof width === 'number' && width < 800 ? '100' : '70',
+          containLabel: true,
         },
         legend: {
           show: valueKey.length > 1,
@@ -92,11 +93,13 @@ export const DataZoomLineChart = ({
           right: 10,
         },
         xAxis: {
-          type: 'time',
+          type: 'category',
           boundaryGap: false,
+          minInterval: 1000 * 3600 * 24 * 10,
           axisLabel: {
-            rotate: typeof width === 'number' && width < 800 ? -30 : 0,
-            formatter: v => dateFormatter(v, minHeight < 400),
+            rotate: 0, // typeof width === 'number' && width < 800 ? -30 : 0,
+            formatter: v => dateFormatter(v, true),
+            showMinLabel: true,
           },
         },
         yAxis: {
@@ -116,15 +119,19 @@ export const DataZoomLineChart = ({
             filterMode: 'filter',
             rangeMode: ['percent', 'percent'],
             start: 100,
-            end: 30,
+            end: 90,
           },
           {
             id: 'dataZoomY',
             type: 'slider',
             filterMode: 'empty',
             labelFormatter: function (value) {
-              return dateFormatter(value);
+              // category date formatter: value is index
+              return chartData && chartData[value] && chartData[value][0]
+                ? dateFormatter(chartData[value][0])
+                : value;
             },
+            height: minHeight < 250 ? 20 : 30,
           },
         ],
         series: valueKey.map((v, i) => ({
