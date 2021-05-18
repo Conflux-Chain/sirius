@@ -62,6 +62,8 @@ import { GlobalTip } from './components/GlobalTip';
 import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
+import { NetworkError } from './containers/NetworkError/Loadable';
+import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
 //   custom: {
@@ -69,6 +71,8 @@ import { useEffect } from 'react';
 //     urls: ['/font.css'],
 //   },
 // });
+
+BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
 
 export function App() {
   const { t } = useTranslation();
@@ -118,7 +122,32 @@ export function App() {
         }}
       >
         <BrowserRouter>
-          <CfxProvider>
+          <CfxProvider
+            theme={{
+              breakpoints: {
+                xs: {
+                  min: '0',
+                  max: '600px',
+                },
+                sm: {
+                  min: '600px',
+                  max: '1024px',
+                },
+                md: {
+                  min: '1024px',
+                  max: '1280px',
+                },
+                lg: {
+                  min: '1280px',
+                  max: '1440px',
+                },
+                xl: {
+                  min: '1440px',
+                  max: '10000px',
+                },
+              },
+            }}
+          >
             <CssBaseline />
             <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
               <meta
@@ -271,7 +300,7 @@ export function App() {
                   <Route
                     exact
                     path="/statistics"
-                    render={() => <Redirect to="/statistics/transactions" />}
+                    render={() => <Redirect to="/statistics/overview" />}
                   />
                   <Route
                     exact
@@ -325,6 +354,11 @@ export function App() {
                     exact
                     path={['/notices', '/notice', '/notice/:id']}
                     component={Notices}
+                  />
+                  <Route
+                    exact
+                    path={['/networkError', '/networkError/:network']}
+                    component={NetworkError}
                   />
                   <Route component={NotFoundPage} />
                 </Switch>

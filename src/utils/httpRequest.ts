@@ -40,7 +40,7 @@ export const reqBlockDetail = (param?: object, extra?: object) => {
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/transaction/${param && param['hash']}`,
-    ...extra,
+    query: extra,
   });
 };
 
@@ -117,6 +117,14 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       },
       ...extra,
     });
+  } else if (['overview'].includes(param.action)) {
+    return sendRequest({
+      url: `${statPrefix}/recent-overview`,
+      query: {
+        days: param.span === '24h' ? '1' : param.span.slice(0, -1),
+      },
+      ...extra,
+    });
   } else {
     // rank_contract_by_number_of_participants_1d;
     // rank_contract_by_number_of_participants_3d;
@@ -150,6 +158,13 @@ export const reqTopStatistics = (param: any, extra?: object) => {
 export const reqCfxSupply = (extra?: object) => {
   return sendRequest({
     url: `${apiPrefix}/supply`,
+    ...extra,
+  });
+};
+
+export const reqHomeDashboard = (extra?: object) => {
+  return sendRequest({
+    url: `${apiPrefix}/homeDashboard`,
     ...extra,
   });
 };

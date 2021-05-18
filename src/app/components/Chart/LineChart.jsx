@@ -18,6 +18,7 @@ import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
 import _ from 'lodash';
+import { cfxTokenTypes } from '../../../utils/constants';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -27,12 +28,15 @@ const DURATIONS = [
 ];
 
 export const LineChart = ({
+  widthRatio = '',
   width = 500,
+  minHeight = 500,
   indicator = 'blockTime',
   isThumb = false,
   tokenInfo = {
     name: '',
     address: '',
+    type: '',
   },
 }) => {
   const { t } = useTranslation();
@@ -307,12 +311,15 @@ export const LineChart = ({
       case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
-        return [
-          // 'transferAmount',
-          'transferCount',
-          'uniqueReceiver',
-          'uniqueSender',
-        ];
+        return tokenInfo.type === cfxTokenTypes.erc20 ||
+          tokenInfo.type === cfxTokenTypes.erc721
+          ? [
+              'transferAmount',
+              'transferCount',
+              'uniqueReceiver',
+              'uniqueSender',
+            ]
+          : ['transferCount', 'uniqueReceiver', 'uniqueSender'];
       default:
         return indicator;
     }
@@ -321,7 +328,7 @@ export const LineChart = ({
   if (isError) {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
@@ -332,7 +339,7 @@ export const LineChart = ({
   } else {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
@@ -362,7 +369,8 @@ export const LineChart = ({
           'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
-            width={width}
+            width={widthRatio ? widthRatio : width}
+            minHeight={minHeight}
             indicator={indicator}
             dateKey={xAxisKey()}
             valueKey={lineKey()}

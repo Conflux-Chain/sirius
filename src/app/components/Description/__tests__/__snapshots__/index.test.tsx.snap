@@ -15,10 +15,6 @@ exports[`<Description  /> should match snapshot 1`] = `
   border-bottom: none;
 }
 
-.c0.small .left {
-  width: 10rem;
-}
-
 .c0 .left {
   padding: 0.8571rem 0;
   line-height: calc(3.2857rem - 1.7143rem);
@@ -41,12 +37,27 @@ exports[`<Description  /> should match snapshot 1`] = `
   color: #97a3b4;
 }
 
-@media (max-width:600px) {
-  .c0 {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
+.c0.tiny .left,
+.c0.tiny .right {
+  padding: 0.5rem 0;
+}
+
+.c0.verticle {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0.verticle .left {
+  width: 100%;
+}
+
+.c0.verticle .right {
+  padding-top: 0;
+}
+
+.c0.small .left {
+  width: 10rem;
 }
 
 @media (max-width:600px) {
@@ -55,8 +66,16 @@ exports[`<Description  /> should match snapshot 1`] = `
   }
 }
 
+@media (max-width:600px) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
 <div
-  class="c0 description"
+  class="c0 description medium"
 >
   <div
     class="left"

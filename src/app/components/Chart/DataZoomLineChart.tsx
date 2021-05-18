@@ -9,7 +9,8 @@ interface Props {
   dateKey?: string;
   valueKey?: string | string[];
   indicator?: string;
-  width?: number;
+  width?: number | string;
+  minHeight?: number;
   data?: any[];
 }
 export const DataZoomLineChart = ({
@@ -17,12 +18,21 @@ export const DataZoomLineChart = ({
   dateKey = 'day',
   valueKey = 'value',
   width = document.body.clientWidth,
+  minHeight = 500,
   data = [],
 }: Props) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
-  const dateFormatter = function (value) {
-    return dayjs(value).format(lang === 'zh' ? 'YYYY-MM-DD' : 'MMM DD, YYYY');
+  const dateFormatter = function (value, simple = false) {
+    return dayjs(value).format(
+      lang === 'zh'
+        ? simple
+          ? 'MM-DD'
+          : 'YYYY-MM-DD'
+        : simple
+        ? 'MMM DD'
+        : 'MMM DD, YYYY',
+    );
   };
 
   if (!Array.isArray(valueKey)) {
@@ -36,7 +46,7 @@ export const DataZoomLineChart = ({
 
   return (
     <ReactECharts
-      style={{ minHeight: 500 }}
+      style={{ minHeight, height: minHeight }}
       notMerge={true}
       option={{
         tooltip: {
@@ -71,9 +81,11 @@ export const DataZoomLineChart = ({
           },
         },
         grid: {
-          left: '80',
-          right: '10',
-          bottom: width < 800 ? '100' : '70',
+          top: minHeight < 400 ? 20 : 40,
+          left: '10',
+          right: '20',
+          bottom: 50, // typeof width === 'number' && width < 800 ? '100' : '70',
+          containLabel: true,
         },
         legend: {
           show: valueKey.length > 1,
@@ -81,11 +93,13 @@ export const DataZoomLineChart = ({
           right: 10,
         },
         xAxis: {
-          type: 'time',
+          type: 'category',
           boundaryGap: false,
+          minInterval: 1000 * 3600 * 24 * 10,
           axisLabel: {
-            rotate: width < 800 ? -30 : 0,
-            formatter: dateFormatter,
+            rotate: 0, // typeof width === 'number' && width < 800 ? -30 : 0,
+            formatter: v => dateFormatter(v, true),
+            showMinLabel: true,
           },
         },
         yAxis: {
@@ -105,15 +119,19 @@ export const DataZoomLineChart = ({
             filterMode: 'filter',
             rangeMode: ['percent', 'percent'],
             start: 100,
-            end: 0,
+            end: 90,
           },
           {
             id: 'dataZoomY',
             type: 'slider',
             filterMode: 'empty',
             labelFormatter: function (value) {
-              return dateFormatter(value);
+              // category date formatter: value is index
+              return chartData && chartData[value] && chartData[value][0]
+                ? dateFormatter(chartData[value][0])
+                : value;
             },
+            height: minHeight < 250 ? 20 : 30,
           },
         ],
         series: valueKey.map((v, i) => ({

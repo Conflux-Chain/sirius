@@ -39,7 +39,10 @@ export type TablePanelType = {
   table: TableType;
   hasFilter?: boolean;
   className?: string;
-  tableHeader?: React.ReactNode | Array<React.ReactNode>;
+  tableHeader?:
+    | React.ReactNode
+    | Array<React.ReactNode>
+    | ((option: Object) => React.ReactNode);
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -103,12 +106,13 @@ export const TablePanel = ({
   pagination,
   table,
   hasFilter = false,
-  tableHeader = null,
+  tableHeader: outerTableHeader = null,
 }: TablePanelType) => {
   const {
     pageNumber,
     pageSize,
     total,
+    realTotal,
     data,
     gotoPage,
     setPageSize,
@@ -201,6 +205,14 @@ export const TablePanel = ({
   const numberCacheTotal = cacheTotal;
   const showPagination =
     pagination !== false && numberCacheTotal > numberPageSize;
+
+  let tableHeader = outerTableHeader;
+  if (typeof tableHeader === 'function') {
+    // add related params to tableHeader
+    tableHeader = tableHeader({
+      total: realTotal,
+    });
+  }
 
   return (
     <>

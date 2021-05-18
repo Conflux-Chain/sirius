@@ -13,6 +13,8 @@ interface Props {
   small?: boolean;
   children: React.ReactNode;
   noBorder?: boolean;
+  verticle?: boolean;
+  size?: 'medium' | 'small' | 'tiny';
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
 export type DescriptionProps = React.PropsWithChildren<Props & NativeAttrs>;
@@ -24,14 +26,17 @@ export const Description = ({
   children,
   small,
   noBorder,
+  verticle,
+  size,
   ...others
 }: DescriptionProps) => {
   return (
     <Wrapper
       style={style}
-      className={clsx('description', className, {
+      className={clsx('description', className, size, {
         small: small,
         'no-border': noBorder,
+        verticle: verticle,
       })}
       {...others}
     >
@@ -40,6 +45,10 @@ export const Description = ({
     </Wrapper>
   );
 };
+Description.defaultProps = {
+  verticle: false,
+  size: 'medium',
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,18 +56,8 @@ const Wrapper = styled.div`
   line-height: 3.2857rem;
   border-bottom: 1px solid #e8e9ea;
 
-  ${media.s} {
-    flex-direction: column;
-  }
-
   &.no-border {
     border-bottom: none;
-  }
-
-  &.small {
-    .left {
-      width: 10rem;
-    }
   }
 
   .left {
@@ -79,6 +78,35 @@ const Wrapper = styled.div`
 
     ${media.s} {
       padding-top: 0;
+    }
+  }
+
+  ${media.s} {
+    flex-direction: column;
+  }
+
+  &.tiny {
+    .left,
+    .right {
+      padding: 0.5rem 0;
+    }
+  }
+
+  &.verticle {
+    flex-direction: column;
+
+    .left {
+      width: 100%;
+    }
+
+    .right {
+      padding-top: 0;
+    }
+  }
+
+  &.small {
+    .left {
+      width: 10rem;
     }
   }
 `;

@@ -214,6 +214,12 @@
     }
   },
   "footer": {
+    "aboutUs": {
+      "title": "关于我们",
+      "helpCenter": "帮助中心",
+      "privacyPolicy": "隐私条款",
+      "terms": "法律政策"
+    },
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
     "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
     "cookieAgree": "知道了",
@@ -255,6 +261,11 @@
     "contract": "合约",
     "block": "区块",
     "transaction": "交易"
+  },
+  "networkError": {
+    "title": "温馨提示",
+    "label": "当前搜索地址为 Conflux {{network}} 地址，请切换网络后再尝试搜索。",
+    "btn": "切换网络至 {{network}}"
   },
   "token": {
     "token": "代币",
@@ -372,6 +383,7 @@
     }
   },
   "general": {
+    "totalRecord": "共计 {{total}} 个记录",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",
@@ -386,7 +398,14 @@
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
-      "address": "地址"
+      "address": "地址",
+      "more": {
+        "title": "更多",
+        "report": "举报",
+        "editContract": "编辑合约",
+        "sponsor": "申请赞助",
+        "website": "官方网站"
+      }
     },
     "loading": "加载中...",
     "contract": "合约",
@@ -593,6 +612,8 @@
     "tx": "交易"
   },
   "transaction": {
+    "gotoDetail": "查看更多",
+    "inThePosition": "（处于位置 {{position}}）",
     "overview": "概览",
     "viewOutgoingTxns": "查看发送交易",
     "viewIncomingTxns": "查看接收交易",
@@ -906,10 +927,15 @@
   },
   "statistics": {
     "statistics": "最佳统计",
+    "overview": "概览",
     "transactions": "交易",
     "tokens": "代币",
     "miners": "矿工",
     "network": "网络",
+    "overviewTransactions": "交易",
+    "overviewTokens": "代币",
+    "overviewMiners": "矿工",
+    "overviewNetwork": "网络",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
@@ -926,6 +952,20 @@
       "3d": "3天",
       "7d": "7天"
     },
+    "overviewColumns": {
+      "totalCFXSent": "CFX 总发送量",
+      "totalCFXReceived": "CFX 总接收量",
+      "totalTxnCountSent": "发送交易总数",
+      "totalTxnCountReceived": "接收交易总数",
+      "totalTokenSent": "代币发送总数",
+      "totalTokenReceived": "代币接收总数",
+      "totalTokenTransfersCount": "代币交易总数",
+      "totalTokenTransfersAccountsCount": "代币交易账户总数",
+      "totalMiners": "矿工总数",
+      "totalBlocksMined": "挖出总区块",
+      "totalGasUsed": "燃气使用总量",
+      "top10": "查看 10 佳"
+    },
     "column": {
       "rank": "排名",
       "address": "地址",
@@ -941,6 +981,13 @@
       "totalTxnFees": "总交易费",
       "hashRate": "哈希算力 (GH/s)",
       "gasUsed": "燃料用量"
+    },
+    "home": {
+      "currentBlockNumber": "当前区块号",
+      "currentEpoch": "当前纪元",
+      "account": "账户总数",
+      "transactions": "交易总数",
+      "contract": "合约总数"
     }
   },
   "swap": {

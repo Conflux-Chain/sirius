@@ -6,10 +6,10 @@
 
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Apply, Copy, Edit, Jump, Qrcode, Report } from './HeadLineButtons';
+import { Copy, Qrcode } from './HeadLineButtons';
 import {
   BalanceCard,
   NonceCard,
@@ -36,6 +36,9 @@ import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
+import DownIcon from '../../../images/down.png';
+import { Menu } from '@jnoodle/antd';
+import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 
 interface RouteParams {
   address: string;
@@ -86,6 +89,40 @@ export const ContractDetailPage = memo(() => {
     websiteUrl !== 'http://' &&
     websiteUrl !== t(translations.general.loading);
 
+  const menu = (
+    <MenuWrapper>
+      <Menu.Item>
+        <RouterLink to={`/contract/${address}`}>
+          {t(translations.general.address.more.editContract)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
+        <RouterLink to={`/sponsor/${address}`}>
+          {t(translations.general.address.more.sponsor)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
+        <RouterLink to={`/report?address=${address}`}>
+          {t(translations.general.address.more.report)}
+        </RouterLink>
+      </Menu.Item>
+      {hasWebsite && (
+        <Menu.Item>
+          <RouterLink
+            to={
+              websiteUrl.startsWith('http')
+                ? websiteUrl
+                : `http://${websiteUrl}`
+            }
+            target="_blank"
+          >
+            {t(translations.general.address.more.report)}
+          </RouterLink>
+        </Menu.Item>
+      )}
+    </MenuWrapper>
+  );
+
   return (
     <>
       <Helmet>
@@ -125,19 +162,28 @@ export const ContractDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <Edit address={address} />
-              <Apply address={address} />
-              <Report address={address} />
-              {hasWebsite && (
-                <Jump
-                  onClick={() => {
-                    const url = websiteUrl.startsWith('http')
-                      ? websiteUrl
-                      : `http://${websiteUrl}`;
-                    window.open(url);
-                  }}
-                />
-              )}
+              <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+                <span onClick={e => e.preventDefault()}>
+                  {t(translations.general.address.more.title)}{' '}
+                  <img
+                    src={DownIcon}
+                    alt={t(translations.general.address.more.title)}
+                  />
+                </span>
+              </DropdownWrapper>
+              {/*<Edit address={address} />*/}
+              {/*<Apply address={address} />*/}
+              {/*<Report address={address} />*/}
+              {/*{hasWebsite && (*/}
+              {/*  <Jump*/}
+              {/*    onClick={() => {*/}
+              {/*      const url = websiteUrl.startsWith('http')*/}
+              {/*        ? websiteUrl*/}
+              {/*        : `http://${websiteUrl}`;*/}
+              {/*      window.open(url);*/}
+              {/*    }}*/}
+              {/*  />*/}
+              {/*)}*/}
               {isSpecialAddress(address) ? (
                 <WarningInfoWrapper>
                   <img src={warningInfo} alt="warning" />
