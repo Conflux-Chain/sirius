@@ -19,6 +19,7 @@ import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
 import _ from 'lodash';
 import { cfxTokenTypes } from '../../../utils/constants';
+import { Link } from 'react-router-dom';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -33,6 +34,7 @@ export const LineChart = ({
   minHeight = 500,
   indicator = 'blockTime',
   isThumb = false,
+  withDetailLink = false,
   tokenInfo = {
     name: '',
     address: '',
@@ -343,7 +345,15 @@ export const LineChart = ({
         small={small}
         isThumb={isThumb}
       >
-        <Title>{t(`charts.${indicator}.title`)}</Title>
+        <Title>
+          {withDetailLink ? (
+            <Link to={`/chart/${indicator}`} className="chart-link">
+              {t(`charts.${indicator}.title`)}
+            </Link>
+          ) : (
+            t(`charts.${indicator}.title`)
+          )}
+        </Title>
         {!isThumb && t(`charts.${indicator}.description`) ? (
           <Description>
             {t(

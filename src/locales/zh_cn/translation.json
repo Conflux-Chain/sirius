@@ -964,7 +964,7 @@
       "totalMiners": "矿工总数",
       "totalBlocksMined": "挖出总区块",
       "totalGasUsed": "燃气使用总量",
-      "top10": "查看 10 佳"
+      "top10": "查看十佳"
     },
     "column": {
       "rank": "排名",

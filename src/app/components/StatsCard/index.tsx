@@ -118,7 +118,10 @@ export const StatsCard = ({
           index: 'tokenTransfer',
         },
         {
-          title: t(translations.statistics.overviewColumns.totalTxnCountSent),
+          title: t(
+            translations.statistics.overviewColumns
+              .totalTokenTransfersAccountsCount,
+          ),
           index: 'tokenAccount',
         },
       ];

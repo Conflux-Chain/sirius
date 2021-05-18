@@ -21,7 +21,7 @@ exports[`<Description  /> should match snapshot 1`] = `
   width: 25%;
   min-width: 160px;
   max-width: 260px;
-  color: #002257;
+  color: #74798c;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -34,7 +34,7 @@ exports[`<Description  /> should match snapshot 1`] = `
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-  color: #97a3b4;
+  color: #282d30;
 }
 
 .c0.tiny .left,
