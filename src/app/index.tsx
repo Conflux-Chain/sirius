@@ -62,6 +62,7 @@ import { GlobalTip } from './components/GlobalTip';
 import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
 //   custom: {
@@ -69,6 +70,8 @@ import { useEffect } from 'react';
 //     urls: ['/font.css'],
 //   },
 // });
+
+BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
 
 export function App() {
   const { t } = useTranslation();
