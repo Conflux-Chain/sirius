@@ -63,6 +63,7 @@ import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
 import { NetworkError } from './containers/NetworkError/Loadable';
+import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
 //   custom: {
@@ -70,6 +71,8 @@ import { NetworkError } from './containers/NetworkError/Loadable';
 //     urls: ['/font.css'],
 //   },
 // });
+
+BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
 
 export function App() {
   const { t } = useTranslation();
