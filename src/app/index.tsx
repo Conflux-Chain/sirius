@@ -63,6 +63,7 @@ import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
 import { NetworkError } from './containers/NetworkError/Loadable';
+import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
@@ -359,6 +360,11 @@ export function App() {
                     exact
                     path={['/networkError', '/networkError/:network']}
                     component={NetworkError}
+                  />
+                  <Route
+                    exact
+                    path="/balance-checker"
+                    component={BalanceChecker}
                   />
                   <Route component={NotFoundPage} />
                 </Switch>
