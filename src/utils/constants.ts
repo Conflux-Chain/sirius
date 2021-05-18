@@ -85,3 +85,21 @@ export enum ADDRESS_CETHS {
 export const ADDRESS_CETH = IS_TESTNET
   ? ADDRESS_CETHS.testnet
   : ADDRESS_CETHS.mainnet;
+
+export enum LOCALSTORAGE_KEYS {
+  currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
+}
+
+export const CURRENCY_SYMBOLS = {
+  USD: '$',
+  CNY: '¥',
+  GBP: '£',
+  KRW: '₩',
+  RUB: '₽',
+  EUR: '€',
+};
+
+export const CURRENCY =
+  localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
+
+export const CURRENCY_SYMBOL = CURRENCY_SYMBOLS[CURRENCY];

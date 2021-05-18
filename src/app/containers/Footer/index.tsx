@@ -13,6 +13,7 @@ import { Footer as FooterComp } from 'app/components/Footer/Loadable';
 import { TextLogo } from 'app/components/TextLogo/Loadable';
 import { translations } from 'locales/i18n';
 import { Language } from './Language';
+import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
 
 import iconTwitter from 'images/footer/twitter.svg';
@@ -369,6 +370,9 @@ export function Footer() {
           <FooterContentRow>
             <FooterContentLink>
               <Language />
+            </FooterContentLink>
+            <FooterContentLink>
+              <Currency />
             </FooterContentLink>
           </FooterContentRow>
         </FooterContent>

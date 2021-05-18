@@ -214,6 +214,14 @@
     }
   },
   "footer": {
+    "currency": {
+      "usd": "USD",
+      "cny": "CNY",
+      "gbp": "GBP",
+      "krw": "KRW",
+      "rub": "RUB",
+      "eur": "EUR"
+    },
     "aboutUs": {
       "title": "About Us",
       "helpCenter": "Help Center",

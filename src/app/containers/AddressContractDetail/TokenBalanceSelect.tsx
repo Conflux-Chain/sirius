@@ -15,6 +15,7 @@ import { cfxTokenTypes } from '../../../utils/constants';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
+import { CURRENCY_SYMBOL } from 'utils/constants';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
@@ -85,7 +86,7 @@ function SelectItem({
   decimals,
   transferType,
 }) {
-  const currencyUnit = '$';
+  const currencyUnit = CURRENCY_SYMBOL;
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon

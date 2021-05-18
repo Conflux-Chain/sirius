@@ -144,6 +144,7 @@ export const ScanEvent = {
     action: {
       changeLang: 'change_lang', // event label === lang
       changeNet: 'change_net', // event label === net
+      changeCurrency: 'change_currency', // event label === currency
     },
   },
   // all function

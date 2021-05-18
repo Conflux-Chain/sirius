@@ -5,18 +5,18 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { List } from '../../components/List/Loadable';
-import { Text } from '../../components/Text/Loadable';
-import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatBalance, formatNumber, toThousands } from '../../../utils';
-import { cfxTokenTypes } from '../../../utils/constants';
-import { AddressContainer } from '../../components/AddressContainer';
-import { LinkA } from '../../../utils/tableColumns/token';
-import CRC20bg from '../../../images/token/crc20bg.png';
-import CRC721bg from '../../../images/token/crc721bg.png';
-import CRC1155bg from '../../../images/token/crc1155bg.png';
-import { CopyButton } from '../../components/CopyButton/Loadable';
-import { formatAddress } from '../../../utils/cfx';
+import { List } from 'app/components/List/Loadable';
+import { Text } from 'app/components/Text/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { formatBalance, formatNumber, toThousands } from 'utils';
+import { cfxTokenTypes, CURRENCY_SYMBOL } from 'utils/constants';
+import { AddressContainer } from 'app/components/AddressContainer';
+import { LinkA } from 'utils/tableColumns/token';
+import CRC20bg from 'images/token/crc20bg.png';
+import CRC721bg from 'images/token/crc721bg.png';
+import CRC1155bg from 'images/token/crc1155bg.png';
+import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { formatAddress } from 'utils/cfx';
 
 export interface BasicProps {
   address?: string;
@@ -56,13 +56,14 @@ export const Basic = ({
     ),
     children:
       price != null ? (
-        <Text hoverValue={`$${price}`}>
+        <Text hoverValue={`${CURRENCY_SYMBOL}${price}`}>
           {quoteUrl ? (
             <LinkA href={quoteUrl} target="_blank">
-              ${formatNumber(price || 0, { withUnit: false })}
+              {CURRENCY_SYMBOL}
+              {formatNumber(price || 0, { withUnit: false })}
             </LinkA>
           ) : (
-            `$${formatNumber(price || 0, { withUnit: false })}`
+            `${CURRENCY_SYMBOL}${formatNumber(price || 0, { withUnit: false })}`
           )}
         </Text>
       ) : address ? (
@@ -80,9 +81,15 @@ export const Basic = ({
     ),
     children:
       totalPrice !== undefined ? (
-        <Text hoverValue={totalPrice != null ? `$${totalPrice}` : '-'}>
+        <Text
+          hoverValue={
+            totalPrice != null ? `${CURRENCY_SYMBOL}${totalPrice}` : '-'
+          }
+        >
           {totalPrice != null && totalPrice > 0
-            ? `$${formatNumber(totalPrice || 0, { unit: 'K' })}`
+            ? `${CURRENCY_SYMBOL}${formatNumber(totalPrice || 0, {
+                unit: 'K',
+              })}`
             : '-'}
         </Text>
       ) : address ? (

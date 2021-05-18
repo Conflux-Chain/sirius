@@ -13,6 +13,7 @@ import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatAddress } from '../../../utils/cfx';
 import { media } from '../../../styles/media';
+import { CURRENCY } from 'utils/constants';
 
 interface RouteParams {
   tokenAddress: string;
@@ -24,6 +25,7 @@ export function TokenDetail() {
   const params = {
     address: tokenAddress,
     fields: ['icon', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
+    currency: CURRENCY,
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 
