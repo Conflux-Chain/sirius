@@ -62,6 +62,7 @@ import { GlobalTip } from './components/GlobalTip';
 import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
+import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 
 // WebFontLoader.load({
 //   custom: {
@@ -325,6 +326,11 @@ export function App() {
                     exact
                     path={['/notices', '/notice', '/notice/:id']}
                     component={Notices}
+                  />
+                  <Route
+                    exact
+                    path="/balance-checker"
+                    component={BalanceChecker}
                   />
                   <Route component={NotFoundPage} />
                 </Switch>
