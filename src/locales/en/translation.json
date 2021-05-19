@@ -351,7 +351,7 @@
     },
     "dailyTransaction": {
       "title": "Daily Transactions",
-      "description": "The total number of transactions per day for the Conflux network."
+      "description": "The total number of transactions per day on the Conflux network."
     },
     "dailyTransactionCFX": {
       "title": "Daily Transactions -- CFX",

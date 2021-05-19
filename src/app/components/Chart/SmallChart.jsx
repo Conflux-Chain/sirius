@@ -24,7 +24,7 @@ export const SmallChart = ({
   height = Math.min(height, 124);
 
   if (!plot) {
-    return <Container style={{ width, height }}></Container>;
+    return null; //<Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
   const trend = diff
@@ -41,9 +41,6 @@ export const SmallChart = ({
         {firstlast &&
           formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
       </div>
-      <Change trend={trend} className="trend">
-        {diff}
-      </Change>
       <Draw
         small={small}
         setFirstLast={setFirstLast}
