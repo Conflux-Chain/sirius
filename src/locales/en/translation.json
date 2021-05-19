@@ -679,7 +679,7 @@
       "from": "The contract call from",
       "to": "to",
       "produced": "produced",
-      "txns": "internal transactions.",
+      "txns": "{{type}} internal transactions.",
       "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {
