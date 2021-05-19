@@ -7,16 +7,26 @@ import { Modal } from '@cfxjs/react-ui';
 import ReCAPTCHA from 'react-google-recaptcha';
 import iconInfo from 'images/info.svg';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
+import querystring from 'query-string';
 
-export const DownloadCSV = ({ url }) => {
+export const DownloadCSV = ({ url: outerUrl }) => {
   const { t, i18n } = useTranslation();
   const [recaptchaVisible, setRecaptchaVisible] = useState(false);
 
   const handleRecaptchaModalClose = () => setRecaptchaVisible(false);
   const onRecaptchaChange = value => {
     if (value) {
+      const { url, query } = querystring.parseUrl(outerUrl);
       // download csv file
-      window.open(url);
+      window.open(
+        querystring.stringifyUrl({
+          url: url,
+          query: {
+            ...query,
+            token: value,
+          },
+        }),
+      );
       // close google recaptcha
       setRecaptchaVisible(false);
     }
@@ -34,7 +44,11 @@ export const DownloadCSV = ({ url }) => {
         placement="top"
       >
         <IconWrapper>
-          <img src={iconInfo} alt="warning-icon" className="img"></img>
+          <img
+            src={iconInfo}
+            alt="warning-icon"
+            className="download-svg-img"
+          ></img>
         </IconWrapper>
       </Tooltip>
       <span>{t(translations.general.downloadCSV.download)} </span>
@@ -71,4 +85,8 @@ const IconWrapper = styled.div`
   padding-right: 0.2857rem;
   width: 1.2857rem;
   cursor: pointer;
+
+  .download-svg-img {
+    margin-top: -0.2857rem;
+  }
 `;

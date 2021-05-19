@@ -16,6 +16,7 @@ import { cfxTokenTypes } from '../../../utils/constants';
 import { useAge } from '../../../utils/hooks/useAge';
 import { Card } from '../../components/Card';
 import { LineChart as Chart } from '../../components/Chart/Loadable';
+import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 interface TransferProps {
   tokenName: string;
@@ -208,6 +209,19 @@ export function Transfers({
             <TableSearchDatepicker />
           </div>
         </StyledSearchAreaWrapper>
+      ),
+      tableFooter: (
+        <DownloadCSV
+          url={queryString.stringifyUrl({
+            url: '/v1/report/transfer',
+            query: {
+              transferType: transferType,
+              address: tokenAddress,
+              limit: '5000',
+              reverse: 'true',
+            },
+          })}
+        />
       ),
     },
   ];

@@ -285,8 +285,7 @@ TablePanel.defaultProps = {
 };
 
 const StyledTableFooterWrapper = styled.div`
-  padding: 0.7143rem 0;
-  border-top: 1px solid #e8e9ea;
+  padding: 0 0 0.7143rem 0;
 `;
 
 const StyledTableHeaderWrapper = styled.div`

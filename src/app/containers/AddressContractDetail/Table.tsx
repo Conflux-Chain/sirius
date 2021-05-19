@@ -499,7 +499,7 @@ export function Table({ address, addressInfo }) {
               maxTimestamp,
               accountAddress,
               limit: '5000',
-              reverse: 'false',
+              reverse: 'true',
             },
           })}
         />
@@ -533,7 +533,7 @@ export function Table({ address, addressInfo }) {
             maxTimestamp,
             accountAddress,
             limit: '5000',
-            reverse: 'false',
+            reverse: 'true',
             transferType: 'CFX',
           },
         })}
@@ -568,7 +568,7 @@ export function Table({ address, addressInfo }) {
             maxTimestamp,
             accountAddress,
             limit: '5000',
-            reverse: 'false',
+            reverse: 'true',
             transferType: 'ERC20',
           },
         })}
@@ -603,7 +603,7 @@ export function Table({ address, addressInfo }) {
             maxTimestamp,
             accountAddress,
             limit: '5000',
-            reverse: 'false',
+            reverse: 'true',
             transferType: 'ERC721',
           },
         })}
@@ -640,7 +640,7 @@ export function Table({ address, addressInfo }) {
             maxTimestamp,
             accountAddress,
             limit: '5000',
-            reverse: 'false',
+            reverse: 'true',
             transferType: 'ERC1155',
           },
         })}
@@ -683,7 +683,7 @@ export function Table({ address, addressInfo }) {
                   maxTimestamp,
                   accountAddress,
                   limit: '5000',
-                  reverse: 'false',
+                  reverse: 'true',
                 },
               })}
             />
