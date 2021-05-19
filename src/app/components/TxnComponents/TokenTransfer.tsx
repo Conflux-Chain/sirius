@@ -13,6 +13,7 @@ interface Props {
   transferList: Array<any>;
   tokenList?: Array<any>;
   tokenInfoMap?: any;
+  type?: string;
 }
 
 export const getItemByKey = (key, list, value) => {
@@ -29,6 +30,7 @@ export const TokenTransfer = ({
   transferList,
   tokenList,
   tokenInfoMap,
+  type,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -105,19 +107,25 @@ export const TokenTransfer = ({
             className="lineContainer"
             key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
           >
-            <span className="index">{index++}. </span>
-            <span className="from">{t(translations.transaction.from)} </span>
-            <AddressContainer value={transferItem['from']} />
-            <span className="to"> {t(translations.transaction.to)} </span>
-            <AddressContainer value={transferItem['to']} />
-            <span className="for"> {t(translations.transaction.for)} </span>
-            <span className="type">CRC721</span>
-            <span>{imgIcon}</span>
-            <span>{nameContainer}</span>
-            <span className="type">
-              &nbsp;
-              {t(translations.transaction.tokenId)}:
-              <span className="tokenId">{transferItem['tokenId']}</span>
+            <span className="transfer-item-group">
+              <span className="index">{index++}. </span>
+              <span className="from">{t(translations.transaction.from)} </span>
+              <AddressContainer value={transferItem['from']} />
+            </span>
+            <span className="transfer-item-group">
+              <span className="to"> {t(translations.transaction.to)} </span>
+              <AddressContainer value={transferItem['to']} />
+            </span>
+            <span className="transfer-item-group">
+              <span className="for"> {t(translations.transaction.for)} </span>
+              <span className="type">CRC721</span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+              <span className="type">
+                &nbsp;
+                {t(translations.transaction.tokenId)}:
+                <span className="tokenId">{transferItem['tokenId']}</span>
+              </span>
             </span>
           </div>,
         );
@@ -129,28 +137,34 @@ export const TokenTransfer = ({
             className="lineContainer"
             key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
           >
-            <span className="index">{index++}. </span>
-            <span className="from">{t(translations.transaction.from)} </span>
-            <AddressContainer value={transferItem['from']} />
-            <span className="to"> {t(translations.transaction.to)} </span>
-            <AddressContainer value={transferItem['to']} />
-            <span className="type">CRC1155</span>
-            <span>{imgIcon}</span>
-            <span>{nameContainer}</span>
-            {transferItem['batch'].map((item, index) => (
-              <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
-                <span className="batch">
-                  - {t(translations.transaction.for)}{' '}
-                  <span className="value">
-                    {typeof tokenDecimals !== 'undefined'
-                      ? `${formatBalance(item['value'], tokenDecimals, true)}`
-                      : item['value']}
+            <span className="transfer-item-group">
+              <span className="index">{index++}. </span>
+              <span className="from">{t(translations.transaction.from)} </span>
+              <AddressContainer value={transferItem['from']} />
+            </span>
+            <span className="transfer-item-group">
+              <span className="to"> {t(translations.transaction.to)} </span>
+              <AddressContainer value={transferItem['to']} />
+              <span className="type">CRC1155</span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+            </span>
+            <span className="transfer-item-group">
+              {transferItem['batch'].map((item, index) => (
+                <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
+                  <span className="batch">
+                    - {t(translations.transaction.for)}{' '}
+                    <span className="value">
+                      {typeof tokenDecimals !== 'undefined'
+                        ? `${formatBalance(item['value'], tokenDecimals, true)}`
+                        : item['value']}
+                    </span>
+                    &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
+                    <span className="tokenId">{item['tokenId']}</span>
                   </span>
-                  &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
-                  <span className="tokenId">{item['tokenId']}</span>
                 </span>
-              </span>
-            ))}
+              ))}
+            </span>
           </div>,
         );
         break;
@@ -161,19 +175,29 @@ export const TokenTransfer = ({
             className="lineContainer"
             key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
           >
-            <span className="index">{index++}. </span>
-            <span className="from">{t(translations.transaction.from)} </span>
-            <AddressContainer value={transferItem['from']} />
-            <span className="to"> {t(translations.transaction.to)} </span>
-            <AddressContainer value={transferItem['to']} />
-            <span className="for"> {t(translations.transaction.for)} </span>
-            <span className="value">
-              {typeof tokenDecimals !== 'undefined'
-                ? `${formatBalance(transferItem['value'], tokenDecimals, true)}`
-                : transferItem['value']}
+            <span className="transfer-item-group">
+              <span className="index">{index++}. </span>
+              <span className="from">{t(translations.transaction.from)} </span>
+              <AddressContainer value={transferItem['from']} />
             </span>
-            <span>{imgIcon}</span>
-            <span>{nameContainer}</span>
+            <span className="transfer-item-group">
+              <span className="to">{t(translations.transaction.to)} </span>
+              <AddressContainer value={transferItem['to']} />
+            </span>
+            <span className="transfer-item-group">
+              <span className="for">{t(translations.transaction.for)} </span>
+              <span className="value">
+                {typeof tokenDecimals !== 'undefined'
+                  ? `${formatBalance(
+                      transferItem['value'],
+                      tokenDecimals,
+                      true,
+                    )}`
+                  : transferItem['value']}
+              </span>
+              <span>{imgIcon}</span>
+              <span>{nameContainer}</span>
+            </span>
           </div>,
         );
         break;
@@ -188,7 +212,7 @@ export const TokenTransfer = ({
     <StyledTokenTransferWrapper
       // style={transferListContainerStyle}
       className={
-        clsx('transferListContainer', {
+        clsx('transferListContainer', type, {
           onlyOne: transferListContainer.length === 1,
           moreThanFive: transferList.length > 5,
         })
@@ -216,6 +240,20 @@ const StyledTokenTransferWrapper = styled.div`
   &.moreThanFive {
     height: '8.5714rem';
     overflow: 'auto';
+  }
+
+  &.overview {
+    .transfer-item-group {
+      flex-grow: 1;
+      width: 100%;
+
+      .to {
+        margin: 0;
+      }
+      .for {
+        margin: 0;
+      }
+    }
   }
 
   .logo {

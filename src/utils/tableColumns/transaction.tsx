@@ -10,7 +10,8 @@ import { formatNumber, fromDripToCfx, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
-import { Popover } from '@cfxjs/react-ui';
+// import { Popover } from '@cfxjs/react-ui';
+import { Popover } from '@jnoodle/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
@@ -79,6 +80,7 @@ export const TxnHashRenderComponent = ({
           <Popover
             className="txn-overview-popup"
             placement="right"
+            trigger="click"
             content={
               <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
                 <Overview data={txnDetail} />
