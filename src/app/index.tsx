@@ -383,7 +383,7 @@ const Main = styled.div`
   margin: 0 auto;
   padding-top: 106px;
   padding-bottom: 20px;
-  min-height: calc(100vh - 327px);
+  min-height: calc(100vh - 260px);
 
   ${media.xl} {
     padding-top: 106px;
@@ -397,6 +397,6 @@ const Main = styled.div`
 
   ${media.s} {
     padding: 100px 16px 32px;
-    min-height: calc(100vh - 254px);
+    //min-height: calc(100vh - 254px);
   }
 `;

@@ -11,6 +11,7 @@ import {
   SmallChart,
 } from '../../components/Chart/Loadable';
 import { reqHomeDashboard } from '../../../utils/httpRequest';
+import { Link } from 'react-router-dom';
 
 function Info(title, number: any) {
   return (
@@ -94,13 +95,17 @@ export function BlockchainInfo() {
           </Grid>
           <Grid xs={24} sm={24} md={4.5}>
             {Info(
-              t(translations.charts.blockTime.title),
+              <Link to="/chart/blockTime" className="info-link">
+                {t(translations.charts.blockTime.title)}
+              </Link>,
               <SmallChart plain={true} indicator="blockTime" />,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              t(translations.charts.tps.title),
+              <Link to="/chart/tps" className="info-link">
+                {t(translations.charts.tps.title)}
+              </Link>,
               <SmallChart plain={true} indicator="tps" />,
             )}
           </Grid>
@@ -113,6 +118,7 @@ export function BlockchainInfo() {
               indicator="dailyTransaction"
               widthRatio="100%"
               minHeight={bp === 's' ? 200 : 280}
+              withDetailLink={true}
             />
           </Grid>
           <Grid xs={24} sm={24} md={12} className="chart-item">
@@ -120,6 +126,7 @@ export function BlockchainInfo() {
               indicator="accountGrowth"
               widthRatio="100%"
               minHeight={bp === 's' ? 200 : 280}
+              withDetailLink={true}
             />
           </Grid>
         </Grid.Container>
@@ -219,6 +226,15 @@ const CardWrapper = styled.div`
       .trend {
         margin-left: 10px;
       }
+    }
+  }
+
+  .info-link,
+  .chart-link {
+    cursor: pointer;
+
+    &:hover {
+      border-bottom: 1px solid #1e3de4;
     }
   }
 `;

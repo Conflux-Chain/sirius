@@ -19,6 +19,7 @@ import BigNumber from 'bignumber.js';
 import { cfxTokenTypes } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
+import { CURRENCY_SYMBOL } from 'utils/constants';
 
 const renderAddress = (value, row, type?: 'to' | 'from') => {
   const { accountAddress } = queryString.parse(window.location.search);
@@ -137,7 +138,7 @@ export const price = {
   key: 'price',
   sortable: true,
   render: (value, row) => {
-    const count = `$${formatNumber(value || 0, {
+    const count = `${CURRENCY_SYMBOL}${formatNumber(value || 0, {
       withUnit: false,
       precision: 2,
       keepZero: true,
@@ -196,7 +197,7 @@ export const marketCap = {
   render: value => (
     <ContentWrapper right monospace>
       {value != null && value > 0
-        ? `$${formatNumber(value || 0, {
+        ? `${CURRENCY_SYMBOL}${formatNumber(value || 0, {
             keepDecimal: false,
             withUnit: false,
           })}`

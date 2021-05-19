@@ -132,6 +132,7 @@ export const DataZoomLineChart = ({
                 : value;
             },
             height: minHeight < 250 ? 20 : 30,
+            showDetail: minHeight >= 400,
           },
         ],
         series: valueKey.map((v, i) => ({

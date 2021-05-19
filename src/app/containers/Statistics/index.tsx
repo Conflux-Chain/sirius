@@ -52,7 +52,7 @@ export function Statistics() {
             `stats${val.charAt(0).toUpperCase() + val.slice(1)}`
           ],
       });
-      history.push(`/statistics/${val}`);
+      history.push(`/statistics/${val}?span=${span}`);
     }
   };
   const spanChange = val => {

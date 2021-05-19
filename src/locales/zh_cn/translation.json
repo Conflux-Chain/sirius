@@ -214,6 +214,14 @@
     }
   },
   "footer": {
+    "currency": {
+      "usd": "美元",
+      "cny": "人民币",
+      "gbp": "英镑",
+      "krw": "韩元",
+      "rub": "卢布",
+      "eur": "欧元"
+    },
     "aboutUs": {
       "title": "关于我们",
       "helpCenter": "帮助中心",
@@ -964,7 +972,7 @@
       "totalMiners": "矿工总数",
       "totalBlocksMined": "挖出总区块",
       "totalGasUsed": "燃气使用总量",
-      "top10": "查看 10 佳"
+      "top10": "查看十佳"
     },
     "column": {
       "rank": "排名",

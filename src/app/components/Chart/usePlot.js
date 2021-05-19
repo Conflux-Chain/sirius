@@ -135,7 +135,10 @@ export default function usePlot(
           ? (data.list || []).map(l => ({
               ...l,
               transferAmount: new BigNumber(l.transferAmount).dividedBy(
-                10 ** (data.decimal || 18),
+                10 **
+                  (data.token
+                    ? data.token.decimals || 18
+                    : data.decimals || 18),
               ),
             }))
           : [];

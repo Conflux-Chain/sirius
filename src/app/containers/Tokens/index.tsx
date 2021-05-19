@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { translations } from '../../../locales/i18n';
-import { TablePanel } from '../../components/TablePanel/Loadable';
-import { ColumnsType } from '../../components/TabsTablePanel';
-import { TipLabel } from '../../components/TabsTablePanel/Loadable';
-import { PageHeader } from '../../components/PageHeader/Loadable';
-import { useTableData } from './../../components/TabsTablePanel/useTableData';
-import { tokenColunms } from '../../../utils/tableColumns';
+import { translations } from 'locales/i18n';
+import { TablePanel } from 'app/components/TablePanel/Loadable';
+import { ColumnsType } from 'app/components/TabsTablePanel';
+import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { useTableData } from 'app/components/TabsTablePanel/useTableData';
+import { tokenColunms } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
-import { Tooltip } from '../../components/Tooltip/Loadable';
-import { cfxTokenTypes } from '../../../utils/constants';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { cfxTokenTypes } from 'utils/constants';
 import queryString from 'query-string';
 
 import imgInfo from 'images/info.svg';
-import { trackEvent } from '../../../utils/ga';
-import { ScanEvent } from '../../../utils/gaConstants';
+import { trackEvent } from 'utils/ga';
+import { ScanEvent } from 'utils/gaConstants';
+import { CURRENCY } from 'utils/constants';
 
 interface RouteParams {
   tokenType: string;
@@ -38,7 +39,7 @@ export function Tokens() {
     tokenColunms.contract(),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
+  let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${CURRENCY}`;
 
   let title = t(translations.header.tokens20);
 
@@ -58,7 +59,7 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${CURRENCY}`;
     title = t(translations.header.tokens721);
     defaultSortKey = 'transferCount';
   }
@@ -75,7 +76,7 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
+    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${CURRENCY}`;
     title = t(translations.header.tokens1155);
     defaultSortKey = 'transferCount';
   }

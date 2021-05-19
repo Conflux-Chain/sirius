@@ -66,7 +66,8 @@ const Wrapper = styled.div`
     width: 25%;
     min-width: 160px;
     max-width: 260px;
-    color: #002257;
+    //color: #002257;
+    color: #74798c;
     flex-shrink: 0;
   }
 
@@ -74,7 +75,8 @@ const Wrapper = styled.div`
     padding: 0.8571rem 0;
     line-height: calc(3.2857rem - 1.7143rem);
     flex-grow: 1;
-    color: #97a3b4;
+    //color: #97a3b4;
+    color: #282d30;
 
     ${media.s} {
       padding-top: 0;
