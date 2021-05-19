@@ -48,7 +48,7 @@ export function Block() {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -56,7 +56,7 @@ export function Block() {
     blockColunms.hash,
     blockColunms.miner,
     blockColunms.difficulty,
-    blockColunms.gasUsedPercent,
+    blockColunms.gasUsedPercentWithProgress,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
 
