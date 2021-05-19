@@ -81,10 +81,10 @@ export const DataZoomLineChart = ({
           },
         },
         grid: {
-          top: minHeight < 400 ? 20 : 40,
+          top: minHeight < 300 ? 20 : 40,
           left: '10',
           right: '20',
-          bottom: 50, // typeof width === 'number' && width < 800 ? '100' : '70',
+          bottom: minHeight < 300 ? 35 : 50, // typeof width === 'number' && width < 800 ? '100' : '70',
           containLabel: true,
         },
         legend: {
@@ -104,6 +104,7 @@ export const DataZoomLineChart = ({
         },
         yAxis: {
           type: 'value',
+          splitNumber: minHeight < 300 ? 2 : 5,
           // boundaryGap: [0, '10%'],
           // axisLabel: {
           //   formatter: function (value) {
@@ -117,9 +118,9 @@ export const DataZoomLineChart = ({
             type: 'inside',
             xAxisIndex: [0],
             filterMode: 'filter',
-            rangeMode: ['percent', 'percent'],
+            rangeMode: ['percent', 'value'],
             start: 100,
-            end: 90,
+            endValue: chartData.length - 31,
           },
           {
             id: 'dataZoomY',
@@ -131,8 +132,9 @@ export const DataZoomLineChart = ({
                 ? dateFormatter(chartData[value][0])
                 : value;
             },
-            height: minHeight < 250 ? 20 : 30,
-            showDetail: minHeight >= 400,
+            height: minHeight < 300 ? 20 : 30,
+            bottom: minHeight < 300 ? 10 : 'auto',
+            showDetail: minHeight >= 300,
           },
         ],
         series: valueKey.map((v, i) => ({

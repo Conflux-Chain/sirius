@@ -63,6 +63,7 @@ import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
 import { NetworkError } from './containers/NetworkError/Loadable';
+import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
@@ -73,6 +74,10 @@ import BigNumber from 'bignumber.js';
 // });
 
 BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
+// @ts-ignore
+window.recaptchaOptions = {
+  useRecaptchaNet: true,
+};
 
 export function App() {
   const { t } = useTranslation();
@@ -359,6 +364,11 @@ export function App() {
                     exact
                     path={['/networkError', '/networkError/:network']}
                     component={NetworkError}
+                  />
+                  <Route
+                    exact
+                    path="/balance-checker"
+                    component={BalanceChecker}
                   />
                   <Route component={NotFoundPage} />
                 </Switch>

@@ -43,6 +43,10 @@ export type TablePanelType = {
     | React.ReactNode
     | Array<React.ReactNode>
     | ((option: Object) => React.ReactNode);
+  tableFooter?:
+    | React.ReactNode
+    | Array<React.ReactNode>
+    | ((option?: Object) => React.ReactNode);
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -107,6 +111,7 @@ export const TablePanel = ({
   table,
   hasFilter = false,
   tableHeader: outerTableHeader = null,
+  tableFooter: outerTableFooter = null,
 }: TablePanelType) => {
   const {
     pageNumber,
@@ -214,6 +219,12 @@ export const TablePanel = ({
     });
   }
 
+  let tableFooter = outerTableFooter;
+  if (typeof tableFooter === 'function') {
+    // add related params to tableFooter
+    tableFooter = tableFooter({});
+  }
+
   return (
     <>
       <StyledTableWrapper hasFilter={hasFilter}>
@@ -234,6 +245,11 @@ export const TablePanel = ({
             />
             {/* may rewrite a new Table component with empty placeholder is better */}
             <Empty show={empty} type="fixed" />
+            {tableFooter && (
+              <StyledTableFooterWrapper key={url}>
+                {tableFooter}
+              </StyledTableFooterWrapper>
+            )}
           </div>
         </Card>
       </StyledTableWrapper>
@@ -267,6 +283,10 @@ TablePanel.defaultProps = {
   pagination: defaultPaginationConfig,
   table: defaultTableConfig,
 };
+
+const StyledTableFooterWrapper = styled.div`
+  padding: 0 0 0.7143rem 0;
+`;
 
 const StyledTableHeaderWrapper = styled.div`
   padding: 0.7143rem 0;

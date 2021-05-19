@@ -211,6 +211,28 @@
     "learnMore": "了解更多",
     "search": {
       "tokens": "代币"
+    },
+    "balanceChecker": {
+      "tokenBalanceChecker": "代币余额检索器",
+      "balanceChecker": "余额检索器",
+      "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
+      "tokenQuantity": "代币数量",
+      "tokenSupply": "代币供应",
+      "cfxBalance": "CFX 余额",
+      "address": "地址",
+      "contractAddress": "合约地址",
+      "blockNoOrDate": "区块号或者日期",
+      "or": "或",
+      "enterBlockNo": "输入区块号",
+      "error": "不能为空",
+      "lookUp": "搜索",
+      "reset": "重置",
+      "tokenQuantityForAccountAddress": "账户地址代币总数量",
+      "totalSupplyForContractAddress": "合约地址代币总供应量",
+      "cfxBalanceForAddress": "地址 CFX 总余额",
+      "snapshotDate": "截止日期",
+      "block": "区块",
+      "blockNo": "区块号"
     }
   },
   "footer": {
@@ -588,7 +610,12 @@
     "connnectWalletSubmit": "提交",
     "waitForConfirm": "等待确认",
     "txRejected": "交易已被拒绝",
-    "exportRecords": "导出当前记录"
+    "exportRecords": "导出当前记录",
+    "downloadCSV": {
+      "latest5000records": "仅支持下载最近的 5000 条记录",
+      "download": "下载 ",
+      "csvFile": "CSV 文件"
+    }
   },
   "sponsor": {
     "title": "赞助合约",

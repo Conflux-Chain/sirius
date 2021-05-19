@@ -38,10 +38,12 @@ export const Overview = ({ data }) => {
         title={t(translations.transaction.status)}
       >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status} showMessage={false} />
-          {t(translations.transaction.epochConfirmations, {
-            count: confirmedEpochCount || '--',
-          })}
+          <Status type={status} showMessage={false} />{' '}
+          <span className="overview-confirmedEpochCount">
+            {t(translations.transaction.epochConfirmations, {
+              count: confirmedEpochCount || '--',
+            })}
+          </span>
         </div>
       </Description>
       {tokenTransfer?.total ? (
@@ -54,6 +56,7 @@ export const Overview = ({ data }) => {
             <TokenTransfer
               transferList={tokenTransfer.list}
               tokenInfoMap={tokenTransferTokenInfo}
+              type="overview"
             />
           </StyledTokenTransferWrapper>
         </Description>
@@ -93,7 +96,6 @@ export const Overview = ({ data }) => {
 };
 
 const StyledWrapper = styled.div`
-  border: 1px solid;
   width: 25.7143rem;
   padding: 0.3571rem;
   overflow: hidden;
@@ -108,6 +110,10 @@ const StyledWrapper = styled.div`
 
   .overview-status-and-confirmedEpochCount {
     display: flex;
+
+    .overview-confirmedEpochCount {
+      padding-left: 0.7143rem;
+    }
   }
 
   .overview-gotoDetail-container {
@@ -125,10 +131,6 @@ const StyledWrapper = styled.div`
   }
 
   .description {
-    .right {
-      border-bottom: 1px solid #e8e9ea !important;
-    }
-
     &.no-border {
       .right {
         border-bottom: none !important;

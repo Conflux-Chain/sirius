@@ -4,7 +4,7 @@ import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../../components/Card/Loadable';
 import { translations } from '../../../locales/i18n';
-import { media, useBreakpoint } from '../../../styles/media';
+import { media } from '../../../styles/media';
 import { formatNumber } from '../../../utils';
 import {
   LineChart as Chart,
@@ -25,7 +25,6 @@ function Info(title, number: any) {
 // TODO redesign
 export function BlockchainInfo() {
   const { t } = useTranslation();
-  const bp = useBreakpoint();
   const [dashboardData, setDashboardData] = useState<any>({});
 
   useEffect(() => {
@@ -93,7 +92,7 @@ export function BlockchainInfo() {
               }`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4.5}>
+          <Grid xs={24} sm={24} md={3.5}>
             {Info(
               <Link to="/chart/blockTime" className="info-link">
                 {t(translations.charts.blockTime.title)}
@@ -101,7 +100,7 @@ export function BlockchainInfo() {
               <SmallChart plain={true} indicator="blockTime" />,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          <Grid xs={24} sm={24} md={2.5}>
             {Info(
               <Link to="/chart/tps" className="info-link">
                 {t(translations.charts.tps.title)}
@@ -109,15 +108,23 @@ export function BlockchainInfo() {
               <SmallChart plain={true} indicator="tps" />,
             )}
           </Grid>
+          <Grid xs={24} sm={24} md={2.5}>
+            {Info(
+              <Link to="/chart/hashRate" className="info-link">
+                {t(translations.charts.hashRate.title)}
+              </Link>,
+              <SmallChart plain={true} indicator="hashRate" />,
+            )}
+          </Grid>
         </Grid.Container>
       </Card>
       <div className="charts">
-        <Grid.Container gap={3} justify="center">
+        <Grid.Container gap={2.7} justify="center">
           <Grid xs={24} sm={24} md={12} className="chart-item">
             <Chart
               indicator="dailyTransaction"
               widthRatio="100%"
-              minHeight={bp === 's' ? 200 : 280}
+              minHeight={180}
               withDetailLink={true}
             />
           </Grid>
@@ -125,7 +132,7 @@ export function BlockchainInfo() {
             <Chart
               indicator="accountGrowth"
               widthRatio="100%"
-              minHeight={bp === 's' ? 200 : 280}
+              minHeight={180}
               withDetailLink={true}
             />
           </Grid>
@@ -136,12 +143,13 @@ export function BlockchainInfo() {
 }
 
 const CardWrapper = styled.div`
-  margin-top: 24px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 16px;
   width: 100%;
 
   .charts {
-    margin-top: 24px;
+    margin-top: 20px;
+    width: calc(100% - 1px); // fix shaking
 
     .chart-item {
       > div {
@@ -156,7 +164,7 @@ const CardWrapper = styled.div`
   }
 
   .stats-container {
-    padding: 16px 0;
+    padding: 12px 0;
     ${media.m} {
       padding: 0;
     }
@@ -213,7 +221,6 @@ const CardWrapper = styled.div`
       font-size: 18px;
       font-weight: bold;
       color: #282d30;
-      line-height: 30px;
       display: flex;
       flex-direction: row;
       align-items: baseline;

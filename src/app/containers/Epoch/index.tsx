@@ -18,14 +18,14 @@ export const Epoch = () => {
   const { t } = useTranslation();
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsWidth = [2, 4, 2, 4, 3, 3, 4];
+  const columnsWidth = [2, 4, 2, 4, 3, 4, 4];
   const columns: ColumnsType = [
     blockColunms.position,
     blockColunms.hashWithPivot,
     blockColunms.txns,
     blockColunms.miner,
     blockColunms.difficulty,
-    blockColunms.gasUsedPercent,
+    blockColunms.gasUsedPercentWithProgress,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 

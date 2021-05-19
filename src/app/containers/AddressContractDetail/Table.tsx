@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
@@ -42,6 +42,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
+import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 const AceEditorStyle = {
   width: '100%',
@@ -455,7 +456,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -466,7 +467,7 @@ export function Table({ address, addressInfo }) {
       render: value => <AddressContainer isLink={false} value={value} />,
     },
     blockColunms.avgGasPrice,
-    blockColunms.gasUsedPercent,
+    blockColunms.gasUsedPercentWithProgress,
     blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
@@ -489,6 +490,20 @@ export function Table({ address, addressInfo }) {
           })}
         </StyledTableHeaderWrapper>
       ),
+      tableFooter: (
+        <DownloadCSV
+          url={queryString.stringifyUrl({
+            url: '/v1/report/transaction',
+            query: {
+              minTimestamp,
+              maxTimestamp,
+              accountAddress,
+              limit: '5000',
+              reverse: 'true',
+            },
+          })}
+        />
+      ),
     },
   ];
 
@@ -508,6 +523,21 @@ export function Table({ address, addressInfo }) {
           total: toThousands(total),
         })}
       </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'CFX',
+          },
+        })}
+      />
     ),
   });
 
@@ -529,6 +559,21 @@ export function Table({ address, addressInfo }) {
         })}
       </StyledTableHeaderWrapper>
     ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC20',
+          },
+        })}
+      />
+    ),
   });
 
   tabs.push({
@@ -548,6 +593,21 @@ export function Table({ address, addressInfo }) {
           total: toThousands(total),
         })}
       </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC721',
+          },
+        })}
+      />
     ),
   });
 
@@ -570,6 +630,21 @@ export function Table({ address, addressInfo }) {
           total: toThousands(total),
         })}
       </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC1155',
+          },
+        })}
+      />
     ),
   });
 
@@ -598,6 +673,20 @@ export function Table({ address, addressInfo }) {
                 total: toThousands(total),
               })}
             </StyledTableHeaderWrapper>
+          ),
+          tableFooter: (
+            <DownloadCSV
+              url={queryString.stringifyUrl({
+                url: '/v1/report/mined_block', // @todo replace with real url
+                query: {
+                  minTimestamp,
+                  maxTimestamp,
+                  accountAddress,
+                  limit: '5000',
+                  reverse: 'true',
+                },
+              })}
+            />
           ),
         },
   );

@@ -26,13 +26,15 @@ export function Transaction() {
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const [checked, setChecked] = useState(() => {
-    const { zeroValue } = queryString.parse(location.search);
-    return zeroValue === 'true';
+    return queryString.parse(location.search).zeroValue === 'true';
   });
   const { hash } = useParams<{
     hash: string;
   }>();
   const [txnDetail, setTxnDetail] = useState<any>({});
+
+  const transactionAdvanced = t(translations.transaction.internalTxns.advanced);
+  const transactionSimple = t(translations.transaction.internalTxns.simple);
 
   useEffect(() => {
     reqTransactionDetail({
@@ -42,7 +44,23 @@ export function Transaction() {
     });
   }, [hash]);
 
-  const { from, to, cfxTransferCount, eventLogCount } = txnDetail;
+  const {
+    from,
+    to,
+    cfxTransferCount,
+    cfxTransferAllCount,
+    eventLogCount,
+  } = txnDetail;
+
+  useEffect(() => {
+    if (!queryString.parse(location.search).zeroValue) {
+      if (cfxTransferCount) {
+        setChecked(false);
+      } else if (cfxTransferAllCount) {
+        setChecked(true);
+      }
+    }
+  }, [cfxTransferCount, cfxTransferAllCount, location.search]);
 
   const fromContent = (isFull = false) => (
     <span>
@@ -92,28 +110,35 @@ export function Transaction() {
     history.push(newUrl);
   };
 
-  let tableHeader = (total = 0) => (
-    <StyledTipWrapper>
-      <div>
-        {t(translations.transaction.internalTxnsTip.from)} {fromContent()}{' '}
-        {t(translations.transaction.internalTxnsTip.to)} {toContent()}{' '}
-        {t(translations.transaction.internalTxnsTip.produced)}{' '}
-        <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
-        {t(translations.transaction.internalTxnsTip.txns)}
-      </div>
-      <Tooltip text={t(translations.transaction.internalTxnsTip.tip)}>
-        <Switch
-          checked={checked}
-          onChange={handleSwitch}
-          checkedChildren={t(translations.transaction.internalTxns.advanced)}
-          unCheckedChildren={t(translations.transaction.internalTxns.simple)}
-          style={{
-            width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
-          }}
-        />
-      </Tooltip>
-    </StyledTipWrapper>
-  );
+  let tableHeader = () => {
+    const total = checked ? cfxTransferAllCount : cfxTransferCount;
+    return (
+      <StyledTipWrapper>
+        <div>
+          {t(translations.transaction.internalTxnsTip.from)} {fromContent()}{' '}
+          {t(translations.transaction.internalTxnsTip.to)} {toContent()}{' '}
+          {t(translations.transaction.internalTxnsTip.produced)}{' '}
+          <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
+          {t(translations.transaction.internalTxnsTip.txns, {
+            type: checked
+              ? transactionAdvanced.toLowerCase()
+              : transactionSimple.toLowerCase(),
+          })}
+        </div>
+        <Tooltip text={t(translations.transaction.internalTxnsTip.tip)}>
+          <Switch
+            checked={checked}
+            onChange={handleSwitch}
+            checkedChildren={transactionAdvanced}
+            unCheckedChildren={transactionSimple}
+            style={{
+              width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
+            }}
+          />
+        </Tooltip>
+      </StyledTipWrapper>
+    );
+  };
 
   let tabs: any[] = [
     {
@@ -124,16 +149,7 @@ export function Transaction() {
     {
       value: 'cfxTransfer',
       action: 'transactionCfxTransfers',
-      label: (total, _, item) => {
-        // it is not good, but if use useState to update will cause warning:
-        // Warning: Cannot update a component from inside the function body of a different component.
-        item.tableHeader = tableHeader(total);
-        return (
-          <TabLabel total={total || cfxTransferCount} showTooltip={false}>
-            {t(translations.transaction.internalTxns.title)}
-          </TabLabel>
-        );
-      },
+      label: t(translations.transaction.internalTxns.title),
       url,
       table: {
         columns: columnsCFXTrasfer,
@@ -142,8 +158,8 @@ export function Transaction() {
             row.transactionTraceIndex || 0
           }${index}`,
       },
-      tableHeader: tableHeader(cfxTransferCount),
-      hidden: !cfxTransferCount,
+      tableHeader: tableHeader(),
+      hidden: !cfxTransferCount && !cfxTransferAllCount,
     },
     {
       value: 'logs',
