@@ -313,8 +313,7 @@ export const LineChart = ({
       case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
-        return tokenInfo.type === cfxTokenTypes.erc20 ||
-          tokenInfo.type === cfxTokenTypes.erc721
+        return tokenInfo.type === cfxTokenTypes.erc20
           ? [
               'transferAmount',
               'transferCount',
