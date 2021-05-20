@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { Link } from '../../components/Link/Loadable';
@@ -12,11 +12,13 @@ import { ScanEvent } from '../../../utils/gaConstants';
 import { useAge } from '../../../utils/hooks/useAge';
 import { Notice } from './Notice';
 import { BlockchainInfo } from './BlockchainInfo';
+import { useInterval } from 'react-use';
 
 export function HomePage() {
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const [ageFormat, toggleAgeFormat] = useAge();
+  const [timestamp, setTimestamp] = useState(+new Date());
 
   const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 5];
   const columnsBlocks: ColumnsType = [
@@ -47,7 +49,7 @@ export function HomePage() {
       value: 'blocks',
       action: 'latestBlocks',
       label: t(translations.blocks.latestBlocks),
-      url: '/block',
+      url: '/block?t=' + timestamp,
       pagination: false,
       table: {
         columns: columnsBlocks,
@@ -58,7 +60,7 @@ export function HomePage() {
       value: 'transactions',
       action: 'latestTransactions',
       label: t(translations.transactions.latestTransactions),
-      url: '/transaction',
+      url: '/transaction?t=' + timestamp,
       pagination: false,
       table: {
         columns: columnsTransactions,
@@ -66,6 +68,11 @@ export function HomePage() {
       },
     },
   ];
+
+  // auto update
+  useInterval(() => {
+    setTimestamp(+new Date());
+  }, 20000);
 
   // const clientWidth = document.body.clientWidth;
   // let chartWidth;
@@ -92,7 +99,7 @@ export function HomePage() {
       </Helmet>
       <Main>
         {bp === 's' ? <Notice /> : null}
-        <BlockchainInfo />
+        <BlockchainInfo timestamp={timestamp} />
         {/*<Top>*/}
         {/*  <SmallChartWrap>*/}
         {/*    <SmallChart width={chartWidth} />*/}

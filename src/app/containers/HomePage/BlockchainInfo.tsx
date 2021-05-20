@@ -23,7 +23,7 @@ function Info(title, number: any) {
 }
 
 // TODO redesign
-export function BlockchainInfo() {
+export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const { t } = useTranslation();
   const [dashboardData, setDashboardData] = useState<any>({});
 
@@ -35,7 +35,7 @@ export function BlockchainInfo() {
       .catch(e => {
         console.error(e);
       });
-  }, []);
+  }, [timestamp]);
 
   return (
     <CardWrapper>
