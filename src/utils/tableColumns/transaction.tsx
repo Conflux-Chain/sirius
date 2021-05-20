@@ -10,7 +10,6 @@ import { formatNumber, fromDripToCfx, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
-// import { Popover } from '@cfxjs/react-ui';
 import { Popover } from '@jnoodle/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
@@ -218,6 +217,38 @@ export const gasFee = {
 export const age = (ageFormat, toggleAgeFormat) =>
   ColumnAge({ ageFormat, toggleAgeFormat });
 
+export const method = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.transaction.method)}
+    </Translation>
+  ),
+  dataIndex: 'method',
+  key: 'method',
+  width: 1,
+  render: (value, row) => {
+    if (value === '0x' || value === null || value === undefined) {
+      return '--';
+    }
+    const reg = /(.*)(?=\(.*\))/;
+    const match = reg.exec(value);
+    let text = '';
+    if (match) {
+      text = match[0];
+    } else {
+      text = value;
+    }
+
+    return (
+      <Text span hoverValue={text}>
+        <StyledMethodContainerWrapper>
+          <StyledMethodWrapper>{text}</StyledMethodWrapper>
+        </StyledMethodContainerWrapper>
+      </Text>
+    );
+  },
+};
+
 const StyledTransactionHashWrapper = styled.span`
   display: flex;
   align-items: center;
@@ -263,7 +294,25 @@ const StyledStatusWrapper = styled.span`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 7.1429rem;
+  max-width: 85px;
   overflow: hidden;
   vertical-align: bottom;
+`;
+
+const StyledMethodContainerWrapper = styled.span`
+  display: flex;
+`;
+const StyledMethodWrapper = styled.span`
+  background: rgba(171, 172, 181, 0.1);
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #424a71;
+  line-height: 12px;
+  max-width: 95px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;

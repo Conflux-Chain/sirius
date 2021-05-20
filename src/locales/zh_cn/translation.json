@@ -475,6 +475,7 @@
       },
       "transaction": {
         "hash": "交易哈希",
+        "method": "方法",
         "from": "发送方",
         "to": "接收方",
         "value": "价值",
