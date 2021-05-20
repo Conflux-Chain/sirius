@@ -15,7 +15,7 @@ export function Transactions() {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 3, 6, 6, 3, 3, 4, 4];
+  const columnsTransactionsWidth = [4, 3, 7, 7, 3, 3, 3, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.method,
@@ -53,7 +53,7 @@ export function Transactions() {
           rowKey: 'hash',
         }}
         tableHeader={tip}
-      ></TablePanel>
+      />
     </>
   );
 }

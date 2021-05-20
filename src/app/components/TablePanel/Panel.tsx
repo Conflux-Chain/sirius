@@ -312,6 +312,11 @@ const StyledTableWrapper: any = styled.div`
         width: 1100px !important;
       }
     }
+    &.transaction-wide {
+      .table-content > table {
+        width: 1180px !important;
+      }
+    }
     &.monospaced {
       font-family: ${monospaceFont};
     }
