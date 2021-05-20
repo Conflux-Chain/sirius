@@ -7,6 +7,7 @@ import { Link } from 'app/components/Link';
 import { cfxTokenTypes } from 'utils/constants';
 import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
+import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';
 
 interface Props {
@@ -178,11 +179,22 @@ export const TokenTransfer = ({
             <span className="transfer-item-group">
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)} </span>
-              <AddressContainer value={transferItem['from']} />
+              {/* <AddressContainer value={transferItem['from']} /> */}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
             </span>
             <span className="transfer-item-group">
               <span className="to">{t(translations.transaction.to)} </span>
-              <AddressContainer value={transferItem['to']} />
+              {/* <AddressContainer value={transferItem['to']} /> */}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
             </span>
             <span className="transfer-item-group">
               <span className="for">{t(translations.transaction.for)} </span>
@@ -289,4 +301,10 @@ const StyledTokenTransferWrapper = styled.div`
   .batch {
     margin: 0 0.1429rem 0 1.1429rem;
   }
+`;
+
+const InlineWrapper = styled.div`
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
 `;
