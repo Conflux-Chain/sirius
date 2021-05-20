@@ -690,13 +690,13 @@
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract registration",
     "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
+      "0": "Unknown error.",
       "1": "Contract error: ",
       "2": "Insufficient storage fees.",
       "3": "Insufficient address balance. ",
       "4": "Insufficient gas fee.",
       "5": "Unknown contract error.",
-      "6": "Contract deployment failed.",
-      "7": "Unknown error."
+      "6": "Contract deployment failed."
     },
     "internalTxns": {
       "title": "Internal Txns",

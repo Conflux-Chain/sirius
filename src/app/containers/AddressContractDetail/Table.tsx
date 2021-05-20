@@ -368,7 +368,7 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 4, 7, 7, 3, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 3, 8, 7, 3, 3, 3, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.method,
@@ -483,6 +483,7 @@ export function Table({ address, addressInfo }) {
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
+        className: 'transaction-wide',
       },
       tableHeader: ({ total }) => (
         <StyledTableHeaderWrapper>

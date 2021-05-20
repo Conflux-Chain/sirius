@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Translation } from 'react-i18next';
+import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
@@ -28,6 +28,7 @@ interface HashProps {
   hash: string;
   status?: number;
   txExecErrorMsg?: string;
+  txExecErrorInfo?: any;
 }
 
 export const TxnHashRenderComponent = ({
@@ -35,7 +36,9 @@ export const TxnHashRenderComponent = ({
   hash,
   status,
   txExecErrorMsg,
+  txExecErrorInfo,
 }: HashProps) => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [txnDetail, setTxnDetail] = useState({});
   const bp = useBreakpoint();
@@ -55,6 +58,20 @@ export const TxnHashRenderComponent = ({
     });
   };
 
+  // txn status error detail info
+  let statusErrorMessage = txExecErrorMsg;
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
+
   return (
     <StyledTransactionHashWrapper>
       {status !== undefined ? (
@@ -64,7 +81,7 @@ export const TxnHashRenderComponent = ({
           })}
         >
           <Status type={status} variant="dot">
-            {txExecErrorMsg}
+            {statusErrorMessage}
           </Status>
         </StyledStatusWrapper>
       ) : null}
@@ -87,10 +104,7 @@ export const TxnHashRenderComponent = ({
               </SkeletonContainer>
             }
           >
-            <button
-              className="icon-view-txn-container"
-              onClick={handleClick}
-            ></button>
+            <button className="icon-view-txn-container" onClick={handleClick} />
           </Popover>
         </div>
       ) : null}
@@ -118,6 +132,7 @@ export const hash = {
       hash={row.hash}
       status={row.status}
       txExecErrorMsg={row.txExecErrorMsg}
+      txExecErrorInfo={row.txExecErrorInfo}
     />
   ),
 };
