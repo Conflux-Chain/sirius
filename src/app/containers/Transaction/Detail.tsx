@@ -42,6 +42,7 @@ import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
+import { renderAddress } from '../../../utils/tableColumns/token';
 // import imgSponsoredEn from 'images/sponsored.png';
 // import imgSponsoredZh from 'images/sponsored-zh.png';
 
@@ -304,18 +305,23 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>
               {t(translations.transaction.contract)}{' '}
-              {contractInfo && contractInfo['name'] && (
+              {contractInfo && (
                 <>
                   <img
                     className="logo"
                     src={
-                      (contractInfo && contractInfo['icon']) ||
+                      contractInfo['icon'] ||
+                      (contractInfo['token'] &&
+                        contractInfo['token']['icon']) ||
                       defaultContractIcon
                     }
                     alt="icon"
-                  />{' '}
+                  />
                   <Link href={`/address/${formatAddress(to)}`}>
-                    {contractInfo && contractInfo['name']}
+                    {contractInfo['name'] ||
+                      (contractInfo['token'] && contractInfo['token']['name']
+                        ? `${contractInfo['token']['name']} (${contractInfo['token']['symbol']})`
+                        : '')}
                   </Link>{' '}
                 </>
               )}
@@ -469,9 +475,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">CRC721</span>
               <span>{imgIcon}</span>
@@ -500,9 +517,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
@@ -533,9 +561,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="value">
                 {typeof tokenDecimals !== 'undefined'
@@ -1068,4 +1107,10 @@ const StyledFoldButtonWrapper = styled.div`
       transform: rotate(0);
     }
   }
+`;
+
+const InlineWrapper = styled.div`
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
 `;

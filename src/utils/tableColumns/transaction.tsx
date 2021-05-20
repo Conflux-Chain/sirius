@@ -18,6 +18,7 @@ import { useBreakpoint } from 'styles/media';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.png';
+import { InternalContracts } from '../constants';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -149,19 +150,25 @@ export const to = {
   dataIndex: 'to',
   key: 'hash',
   width: 1,
-  render: (value, row) => (
-    <AddressContainer
-      value={value}
-      alias={
-        row.toContractInfo
-          ? row.toContractInfo.name
-          : row.contractInfo
-          ? row.contractInfo.name
-          : ''
-      }
-      contractCreated={row.contractCreated}
-    />
-  ),
+  render: (value, row) => {
+    let alias = '';
+
+    if (InternalContracts[value]) alias = InternalContracts[value];
+    else if (row.toContractInfo && row.toContractInfo.name)
+      alias = row.toContractInfo.name;
+    else if (row.contractInfo && row.contractInfo.name)
+      alias = row.contractInfo.name;
+    else if (row.tokenInfo && row.tokenInfo.name)
+      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+
+    return (
+      <AddressContainer
+        value={value}
+        alias={alias}
+        contractCreated={row.contractCreated}
+      />
+    );
+  },
 };
 
 export const value = {
