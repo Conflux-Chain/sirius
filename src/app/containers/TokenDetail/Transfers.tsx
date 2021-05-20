@@ -1,21 +1,21 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { media, useBreakpoint } from '../../../styles/media';
-import { translations } from '../../../locales/i18n';
+import { media, useBreakpoint } from 'styles/media';
+import { translations } from 'locales/i18n';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { isAddress, isHash, toThousands } from 'utils';
-import { TabsTablePanel } from '../../components/TabsTablePanel/Loadable';
+import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   TableSearchDatepicker,
   TableSearchInput,
-} from '../../components/TablePanel';
-import { tokenColunms } from '../../../utils/tableColumns';
-import { cfxTokenTypes } from '../../../utils/constants';
-import { useAge } from '../../../utils/hooks/useAge';
-import { Card } from '../../components/Card';
-import { LineChart as Chart } from '../../components/Chart/Loadable';
+} from 'app/components/TablePanel';
+import { tokenColunms } from 'utils/tableColumns';
+import { cfxTokenTypes } from 'utils/constants';
+import { useAge } from 'utils/hooks/useAge';
+import { Card } from 'app/components/Card';
+import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 interface TransferProps {

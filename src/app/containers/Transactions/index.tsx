@@ -15,9 +15,10 @@ export function Transactions() {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 6, 6, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 3, 6, 6, 3, 3, 4, 4];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
+    transactionColunms.method,
     transactionColunms.from,
     transactionColunms.to,
     transactionColunms.value,

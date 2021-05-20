@@ -102,7 +102,7 @@ export const StatsCard = ({
           unit: 'CFX',
         },
         {
-          title: t(translations.statistics.overviewColumns.totalTxnCountSent),
+          title: t(translations.statistics.overviewColumns.totalTxnCount),
           index: 'cfxTxn',
         },
       ];

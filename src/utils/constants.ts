@@ -103,3 +103,13 @@ export const CURRENCY =
   localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
 
 export const CURRENCY_SYMBOL = CURRENCY_SYMBOLS[CURRENCY];
+
+export const InternalContracts = {
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MHJJU8K': 'AdminControl',
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar': 'SponsorWhitelistControl',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGG2R16AR':
+    'SponsorWhitelistControl',
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb': 'Staking',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRWUC9JNB': 'Staking',
+};

@@ -475,6 +475,7 @@
       },
       "transaction": {
         "hash": "交易哈希",
+        "method": "方法",
         "from": "发送方",
         "to": "接收方",
         "value": "价值",
@@ -990,6 +991,7 @@
     "overviewColumns": {
       "totalCFXSent": "CFX 总发送量",
       "totalCFXReceived": "CFX 总接收量",
+      "totalTxnCount": "交易总数",
       "totalTxnCountSent": "发送交易总数",
       "totalTxnCountReceived": "接收交易总数",
       "totalTokenSent": "代币发送总数",
