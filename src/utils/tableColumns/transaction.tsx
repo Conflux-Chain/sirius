@@ -248,11 +248,11 @@ export const method = {
   dataIndex: 'method',
   key: 'method',
   width: 1,
-  render: (value, row) => {
+  render: value => {
     if (value === '0x' || value === null || value === undefined) {
       return '--';
     }
-    const reg = /(.*)(?=\(.*\))/;
+    const reg = /([^(]*)(?=\(.*\))/;
     const match = reg.exec(value);
     let text = '';
     if (match) {
