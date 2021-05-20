@@ -990,6 +990,7 @@
     "overviewColumns": {
       "totalCFXSent": "Total CFX Sent",
       "totalCFXReceived": "Total CFX Received",
+      "totalTxnCount": "Total Txn Count",
       "totalTxnCountSent": "Total Txn Count Sent",
       "totalTxnCountReceived": "Total Txn Count Received",
       "totalTokenSent": "Total Token Sent",
