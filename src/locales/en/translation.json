@@ -475,6 +475,7 @@
       },
       "transaction": {
         "hash": "Txn Hash",
+        "method": "Method",
         "from": "From",
         "to": "To",
         "value": "Value",
