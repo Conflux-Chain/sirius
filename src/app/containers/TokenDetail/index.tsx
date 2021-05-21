@@ -13,7 +13,7 @@ import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatAddress } from '../../../utils/cfx';
 import { media } from '../../../styles/media';
-import { CURRENCY } from 'utils/constants';
+import { useGlobal } from 'utils/hooks/useGlobal';
 
 interface RouteParams {
   tokenAddress: string;
@@ -21,11 +21,12 @@ interface RouteParams {
 
 export function TokenDetail() {
   const { t } = useTranslation();
+  const { data: globalData } = useGlobal();
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
     fields: ['icon', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
-    currency: CURRENCY,
+    currency: globalData.currency,
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 

@@ -99,10 +99,13 @@ export const CURRENCY_SYMBOLS = {
   EUR: '€',
 };
 
-export const CURRENCY =
-  localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
+export const getCurrency = () => {
+  return localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
+};
 
-export const CURRENCY_SYMBOL = CURRENCY_SYMBOLS[CURRENCY];
+export const getCurrencySymbol = () => {
+  return CURRENCY_SYMBOLS[getCurrency()];
+};
 
 export const InternalContracts = {
   'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',

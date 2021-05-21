@@ -5,19 +5,24 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { LOCALSTORAGE_KEYS, CURRENCY } from 'utils/constants';
+import { LOCALSTORAGE_KEYS } from 'utils/constants';
+import { useGlobal } from 'utils/hooks/useGlobal';
 
 export function Currency() {
   const { t } = useTranslation();
+  const { data, setGlobalData } = useGlobal();
 
   const handleCurrencyChange = currency => {
     localStorage.setItem(LOCALSTORAGE_KEYS.currency, currency);
     trackEvent({
       category: ScanEvent.preference.category,
       action: ScanEvent.preference.action.changeCurrency,
-      label: CURRENCY,
+      label: data.currency,
     });
-    window.location.reload();
+    setGlobalData({
+      ...data,
+      currency,
+    });
   };
   const options = [
     { value: 'USD', name: t(translations.footer.currency.usd) },
@@ -64,7 +69,7 @@ export function Currency() {
         </g>
       </svg>
       <Select
-        value={CURRENCY}
+        value={data.currency}
         onChange={handleCurrencyChange}
         disableMatchWidth
         size="small"

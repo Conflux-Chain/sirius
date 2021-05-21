@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
-import { CURRENCY } from 'utils/constants';
+import { getCurrency } from 'utils/constants';
 
 export const appendApiPrefix = (url: string) => {
   // for cfx top N
@@ -336,7 +336,7 @@ export const useAccountTokenList = (
           query: {
             accountAddress,
             fields,
-            currency: CURRENCY,
+            currency: getCurrency(),
           },
         })
       : null,
