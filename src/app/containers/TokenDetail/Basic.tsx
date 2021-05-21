@@ -9,7 +9,7 @@ import { List } from 'app/components/List/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { formatBalance, formatNumber, toThousands } from 'utils';
-import { cfxTokenTypes, CURRENCY_SYMBOL } from 'utils/constants';
+import { cfxTokenTypes, getCurrencySymbol } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
@@ -47,6 +47,8 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
+
+  const CURRENCY_SYMBOL = getCurrencySymbol();
 
   const fieldPrice = {
     title: (
