@@ -168,7 +168,7 @@ export const Basic = ({
     children:
       holderCount !== undefined ? (
         <span>
-          {toThousands(holderCount)}
+          {toThousands(holderCount)}{' '}
           {holderIncreasePercent !== undefined ? (
             holderIncreasePercent > 0 ? (
               <HolderCountPercentWhenUp>
