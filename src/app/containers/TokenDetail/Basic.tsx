@@ -15,6 +15,9 @@ import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';
 import CRC1155bg from 'images/token/crc1155bg.png';
+import DownIcon from 'images/token/down.svg';
+import UpIcon from 'images/token/up.svg';
+import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
 
@@ -29,6 +32,7 @@ export interface BasicProps {
   name?: string;
   tokenAddress?: string;
   holderCount?: number;
+  holderIncreasePercent?: number;
   decimals?: number;
   transferCount?: number;
 }
@@ -44,6 +48,7 @@ export const Basic = ({
   decimals,
   tokenAddress,
   holderCount,
+  holderIncreasePercent,
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
@@ -159,7 +164,32 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      holderCount !== undefined ? `${toThousands(holderCount)}` : undefined,
+      holderCount !== undefined ? (
+        <span>
+          {toThousands(holderCount)}
+          {holderIncreasePercent !== undefined ? (
+            holderIncreasePercent > 0 ? (
+              <HolderCountPercentWhenUp>
+                (<img src={UpIcon} alt="UpIcon" />
+                &nbsp;
+                {(holderIncreasePercent * 100).toFixed(3)}%)
+              </HolderCountPercentWhenUp>
+            ) : holderIncreasePercent < 0 ? (
+              <HolderCountPercentWhenDown>
+                (<img src={DownIcon} alt="DownIcon" />
+                &nbsp;
+                {(-holderIncreasePercent * 100).toFixed(3)}%)
+              </HolderCountPercentWhenDown>
+            ) : (
+              <HolderCountPercentWhenZero>
+                (<img src={FlatIcon} alt="FlatIcon" />
+                &nbsp;
+                {(holderIncreasePercent * 100).toFixed(3)}%)
+              </HolderCountPercentWhenZero>
+            )
+          ) : undefined}
+        </span>
+      ) : undefined,
   };
 
   const fieldTransfers = {
@@ -275,4 +305,14 @@ const TokenTypeTag = styled.div`
     background: url(${CRC1155bg}) no-repeat right top;
     background-size: 118px 30px;
   }
+`;
+
+const HolderCountPercentWhenUp = styled.span`
+  color: #4ac0aa;
+`;
+const HolderCountPercentWhenDown = styled.span`
+  color: #e36057;
+`;
+const HolderCountPercentWhenZero = styled.span`
+  color: #6f7282;
 `;
