@@ -1022,9 +1022,9 @@
     "home": {
       "currentBlockNumber": "Current Block Number",
       "currentEpoch": "Current Epoch",
-      "account": "Account",
+      "account": "Accounts",
       "transactions": "Transactions",
-      "contract": "Contract"
+      "contract": "Contracts"
     }
   },
   "swap": {
