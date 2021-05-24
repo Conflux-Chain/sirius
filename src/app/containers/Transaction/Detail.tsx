@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { Status } from 'app/components/Status/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { InputData } from 'app/components/InputData/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
@@ -39,18 +38,20 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
+import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import imgSponsoredEn from 'images/sponsored.png';
-import imgSponsoredZh from 'images/sponsored-zh.png';
+import { renderAddress } from '../../../utils/tableColumns/token';
+// import imgSponsoredEn from 'images/sponsored.png';
+// import imgSponsoredZh from 'images/sponsored-zh.png';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
 export const Detail = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [decodedData, setDecodedData] = useState({});
@@ -96,9 +97,9 @@ export const Detail = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
-  const imgSponsored = i18n.language.startsWith('en')
-    ? imgSponsoredEn
-    : imgSponsoredZh;
+  // const imgSponsored = i18n.language.startsWith('en')
+  //   ? imgSponsoredEn
+  //   : imgSponsoredZh;
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -304,18 +305,23 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>
               {t(translations.transaction.contract)}{' '}
-              {contractInfo && contractInfo['name'] && (
+              {contractInfo && (
                 <>
                   <img
                     className="logo"
                     src={
-                      (contractInfo && contractInfo['icon']) ||
+                      contractInfo['icon'] ||
+                      (contractInfo['token'] &&
+                        contractInfo['token']['icon']) ||
                       defaultContractIcon
                     }
                     alt="icon"
-                  />{' '}
+                  />
                   <Link href={`/address/${formatAddress(to)}`}>
-                    {contractInfo && contractInfo['name']}
+                    {contractInfo['name'] ||
+                      (contractInfo['token'] && contractInfo['token']['name']
+                        ? `${contractInfo['token']['name']} (${contractInfo['token']['symbol']})`
+                        : '')}
                   </Link>{' '}
                 </>
               )}
@@ -469,9 +475,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">CRC721</span>
               <span>{imgIcon}</span>
@@ -500,9 +517,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
@@ -533,9 +561,20 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              <AddressContainer value={transferItem['from']} />
+              {/*<AddressContainer value={transferItem['from']} />*/}
+              <InlineWrapper>
+                {renderAddress(
+                  transferItem['from'],
+                  transferItem,
+                  'from',
+                  false,
+                )}
+              </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              <AddressContainer value={transferItem['to']} />
+              {/*<AddressContainer value={transferItem['to']} />*/}
+              <InlineWrapper>
+                {renderAddress(transferItem['to'], transferItem, 'to', false)}
+              </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="value">
                 {typeof tokenDecimals !== 'undefined'
@@ -737,7 +776,13 @@ export const Detail = () => {
           </SkeletonContainer>
         </Description>
         {generatedDiv()}
+
+        {/* @todo check if can be use new TokenTransfer component to instead of getTransferListDiv() */}
+        {/* {isContract ? (
+          <TokenTransfer tokenList={tokenList} transferList={transferList} />
+        ) : null} */}
         {getTransferListDiv()}
+
         <Description
           title={
             <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
@@ -757,14 +802,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {`${toThousands(gasFee)} drip`}{' '}
-            {gasCoveredBySponsor && (
-              <img
-                src={imgSponsored}
-                alt="sponsored"
-                className="icon-sponsored"
-              />
-            )}
+            <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
           </SkeletonContainer>
         </Description>
         <div
@@ -797,14 +835,10 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {getStorageFee(storageCollateralized)} CFX{' '}
-              {storageCoveredBySponsor && (
-                <img
-                  src={imgSponsored}
-                  alt="sponsored"
-                  className="icon-sponsored"
-                />
-              )}
+              <StorageFee
+                fee={storageCollateralized}
+                sponsored={storageCoveredBySponsor}
+              />
             </SkeletonContainer>
           </Description>
           <Description
@@ -1073,4 +1107,10 @@ const StyledFoldButtonWrapper = styled.div`
       transform: rotate(0);
     }
   }
+`;
+
+const InlineWrapper = styled.div`
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
 `;

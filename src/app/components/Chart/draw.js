@@ -35,6 +35,7 @@ export default function createDraw({
   small,
   NUM_X_GRID = 7,
   NUM_Y_GRID = 5,
+  plain,
 }) {
   if (!plot || plot.length === 0) {
     return {

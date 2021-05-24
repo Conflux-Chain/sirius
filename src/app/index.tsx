@@ -25,6 +25,7 @@ import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
+import { GlobalProvider } from 'utils/hooks/useGlobal';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -62,6 +63,8 @@ import { GlobalTip } from './components/GlobalTip';
 import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { useEffect } from 'react';
+import { NetworkError } from './containers/NetworkError/Loadable';
+import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import BigNumber from 'bignumber.js';
 
 // WebFontLoader.load({
@@ -72,6 +75,10 @@ import BigNumber from 'bignumber.js';
 // });
 
 BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
+// @ts-ignore
+window.recaptchaOptions = {
+  useRecaptchaNet: true,
+};
 
 export function App() {
   const { t } = useTranslation();
@@ -87,261 +94,310 @@ export function App() {
   const ScrollToTop = withRouter(_ScrollToTop);
 
   return (
-    <TxnHistoryProvider
-      value={{
-        config: {
-          // txn history record i18n handler
-          convert: info => {
-            try {
-              let data = JSON.parse(info);
-              if (data.code === '107') {
-                return t(translations.connectWallet.notify.action[data.code], {
-                  cfxValue: data.cfxValue,
-                  wcfxValue: data.wcfxValue,
-                });
-              } else {
-                return t(translations.connectWallet.notify.action[data.code], {
-                  cfxValue: data.cfxValue,
-                  wcfxValue: data.wcfxValue,
-                });
-              }
-            } catch (e) {}
-          },
-        },
-      }}
-    >
-      <SWRConfig
+    <GlobalProvider>
+      <TxnHistoryProvider
         value={{
-          // disable auto polling, reconnect or retry
-          revalidateOnFocus: false,
-          revalidateOnReconnect: false,
-          refreshInterval: 0,
-          shouldRetryOnError: false,
-          errorRetryCount: 0,
+          config: {
+            // txn history record i18n handler
+            convert: info => {
+              try {
+                let data = JSON.parse(info);
+                if (data.code === '107') {
+                  return t(
+                    translations.connectWallet.notify.action[data.code],
+                    {
+                      cfxValue: data.cfxValue,
+                      wcfxValue: data.wcfxValue,
+                    },
+                  );
+                } else {
+                  return t(
+                    translations.connectWallet.notify.action[data.code],
+                    {
+                      cfxValue: data.cfxValue,
+                      wcfxValue: data.wcfxValue,
+                    },
+                  );
+                }
+              } catch (e) {}
+            },
+          },
         }}
       >
-        <BrowserRouter>
-          <CfxProvider>
-            <CssBaseline />
-            <Helmet titleTemplate="%s - ConfluxScan" defaultTitle="ConfluxScan">
-              <meta
-                name="description"
-                content={t(translations.metadata.description)}
-              />
-            </Helmet>
-            <Header />
-            <Main>
-              <ScrollToTop>
-                <Switch>
-                  <Route exact path="/" component={HomePage} />
-                  <Route
-                    exact
-                    path="/packing/:txHash"
-                    component={PackingPage}
-                  />
-                  <Route
-                    exact
-                    path="/notfound/:contractAddress"
-                    component={NotFoundAddressPage}
-                  />
-                  <Route exact path="/contract" component={Contract} />
-                  <Route
-                    exact
-                    path="/contract/:contractAddress"
-                    render={(routeProps: any) => {
-                      if (
-                        routeProps.match.params.contractAddress &&
-                        ((!getGlobalShowHexAddress() &&
-                          routeProps.match.params.contractAddress.startsWith(
-                            '0x',
-                          )) ||
-                          routeProps.match.params.contractAddress
-                            .toLowerCase()
-                            .indexOf('type.') > -1)
-                      )
-                        return (
-                          <Redirect
-                            to={`/contract/${formatAddress(
-                              routeProps.match.params.contractAddress,
-                            )}`}
-                          />
-                        );
-                      return <Contract {...routeProps} />;
-                    }}
-                  />
-                  <Route exact path="/contracts" component={Contracts} />
-                  <Route
-                    exact
-                    path="/registered-contracts"
-                    component={RegisteredContracts}
-                  />
-                  <Route
-                    exact
-                    path="/token/:tokenAddress"
-                    render={(routeProps: any) => {
-                      if (
-                        routeProps.match.params.tokenAddress &&
-                        ((!getGlobalShowHexAddress() &&
-                          routeProps.match.params.tokenAddress.startsWith(
-                            '0x',
-                          )) ||
-                          routeProps.match.params.tokenAddress
-                            .toLowerCase()
-                            .indexOf('type.') > -1)
-                      )
-                        return (
-                          <Redirect
-                            to={`/token/${formatAddress(
-                              routeProps.match.params.tokenAddress,
-                            )}`}
-                          />
-                        );
-                      return <TokenDetail {...routeProps} />;
-                    }}
-                  />
-                  {/* compatible for previous user bookmark */}
-                  <Route
-                    exact
-                    path={[
-                      '/blocks-and-transactions',
-                      '/blockchain',
-                      '/blockchain/blocks-and-transactions',
-                    ]}
-                    render={() => <Redirect to="/blockchain/blocks" />}
-                  />
-                  <Route exact path="/blockchain/blocks" component={Blocks} />
-                  <Route
-                    exact
-                    path="/blockchain/transactions"
-                    component={Transactions}
-                  />
-                  <Route
-                    exact
-                    path="/blockchain/cfx-transfers"
-                    component={CFXTransfers}
-                  />
-                  <Route
-                    exact
-                    path="/blockchain/accounts"
-                    component={Accounts}
-                  />
-                  <Route exact path="/tokens" component={Tokens} />
-                  <Route
-                    exact
-                    path="/tokens/:tokenType"
-                    render={(routeProps: any) => {
-                      if (routeProps.match.params.tokenType)
-                        routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
-                      return <Tokens {...routeProps} />;
-                    }}
-                  />
-                  <Route exact path="/sponsor" component={Sponsor} />
-                  <Route
-                    exact
-                    path="/contract-deployment"
-                    component={ContractDeployment}
-                  />
-                  <Route
-                    exact
-                    path="/sponsor/:contractAddress"
-                    render={(routeProps: any) => {
-                      if (
-                        routeProps.match.params.contractAddress &&
-                        ((!getGlobalShowHexAddress() &&
-                          routeProps.match.params.contractAddress.startsWith(
-                            '0x',
-                          )) ||
-                          routeProps.match.params.contractAddress
-                            .toLowerCase()
-                            .indexOf('type.') > -1)
-                      )
-                        return (
-                          <Redirect
-                            to={`/sponsor/${formatAddress(
-                              routeProps.match.params.contractAddress,
-                            )}`}
-                          />
-                        );
-                      return <Sponsor {...routeProps} />;
-                    }}
-                  />
-                  <Route path="/charts" component={Chart} />
-                  <Route
-                    exact
-                    path="/chart/:indicator"
-                    component={ChartDetail}
-                  />
-                  <Route
-                    exact
-                    path="/statistics"
-                    render={() => <Redirect to="/statistics/transactions" />}
-                  />
-                  <Route
-                    exact
-                    path="/statistics/:statsType"
-                    component={Statistics}
-                  />
-                  <Route
-                    exact
-                    path="/transaction/:hash"
-                    component={Transaction}
-                  />
-                  <Route exact path="/block/:hash" component={Block} />
-                  <Route exact path="/epoch/:number" component={Epoch} />
-                  <Route
-                    path="/address/:address"
-                    render={(routeProps: any) => {
-                      if (
-                        routeProps.match.params.address &&
-                        ((!getGlobalShowHexAddress() &&
-                          routeProps.match.params.address.startsWith('0x')) ||
-                          routeProps.match.params.address
-                            .toLowerCase()
-                            .indexOf('type.') > -1)
-                      )
-                        return (
-                          <Redirect
-                            to={`/address/${formatAddress(
-                              routeProps.match.params.address,
-                            )}`}
-                          />
-                        );
-                      return <AddressContractDetailPage {...routeProps} />;
-                    }}
-                  />
-                  <Route path="/search/:text" component={Search} />
-                  {/* Tools */}
-                  <Route
-                    exact
-                    path={['/address-converter', '/address-converter/:address']}
-                    component={AddressConverter}
-                  />
-                  <Route exact path="/push-tx" component={BroadcastTx} />
-                  <Route
-                    exact
-                    path={['/block-countdown', '/block-countdown/:block']}
-                    component={BlocknumberCalc}
-                  />
-                  <Route exact path="/swap" component={Swap} />
-                  <Route exact path="/report" component={Report} />
-                  <Route
-                    exact
-                    path={['/notices', '/notice', '/notice/:id']}
-                    component={Notices}
-                  />
-                  <Route component={NotFoundPage} />
-                </Switch>
-              </ScrollToTop>
-            </Main>
-            <Footer />
-            <GlobalNotify />
-            <GlobalStyle />
-            <CookieTip />
-            <GlobalTip tipKey="addressWarning" />
-          </CfxProvider>
-        </BrowserRouter>
-      </SWRConfig>
-    </TxnHistoryProvider>
+        <SWRConfig
+          value={{
+            // disable auto polling, reconnect or retry
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+            refreshInterval: 0,
+            shouldRetryOnError: false,
+            errorRetryCount: 0,
+          }}
+        >
+          <BrowserRouter>
+            <CfxProvider
+              theme={{
+                breakpoints: {
+                  xs: {
+                    min: '0',
+                    max: '600px',
+                  },
+                  sm: {
+                    min: '600px',
+                    max: '1024px',
+                  },
+                  md: {
+                    min: '1024px',
+                    max: '1280px',
+                  },
+                  lg: {
+                    min: '1280px',
+                    max: '1440px',
+                  },
+                  xl: {
+                    min: '1440px',
+                    max: '10000px',
+                  },
+                },
+              }}
+            >
+              <CssBaseline />
+              <Helmet
+                titleTemplate="%s - ConfluxScan"
+                defaultTitle="ConfluxScan"
+              >
+                <meta
+                  name="description"
+                  content={t(translations.metadata.description)}
+                />
+              </Helmet>
+              <Header />
+              <Main>
+                <ScrollToTop>
+                  <Switch>
+                    <Route exact path="/" component={HomePage} />
+                    <Route
+                      exact
+                      path="/packing/:txHash"
+                      component={PackingPage}
+                    />
+                    <Route
+                      exact
+                      path="/notfound/:contractAddress"
+                      component={NotFoundAddressPage}
+                    />
+                    <Route exact path="/contract" component={Contract} />
+                    <Route
+                      exact
+                      path="/contract/:contractAddress"
+                      render={(routeProps: any) => {
+                        if (
+                          routeProps.match.params.contractAddress &&
+                          ((!getGlobalShowHexAddress() &&
+                            routeProps.match.params.contractAddress.startsWith(
+                              '0x',
+                            )) ||
+                            routeProps.match.params.contractAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1)
+                        )
+                          return (
+                            <Redirect
+                              to={`/contract/${formatAddress(
+                                routeProps.match.params.contractAddress,
+                              )}`}
+                            />
+                          );
+                        return <Contract {...routeProps} />;
+                      }}
+                    />
+                    <Route exact path="/contracts" component={Contracts} />
+                    <Route
+                      exact
+                      path="/registered-contracts"
+                      component={RegisteredContracts}
+                    />
+                    <Route
+                      exact
+                      path="/token/:tokenAddress"
+                      render={(routeProps: any) => {
+                        if (
+                          routeProps.match.params.tokenAddress &&
+                          ((!getGlobalShowHexAddress() &&
+                            routeProps.match.params.tokenAddress.startsWith(
+                              '0x',
+                            )) ||
+                            routeProps.match.params.tokenAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1)
+                        )
+                          return (
+                            <Redirect
+                              to={`/token/${formatAddress(
+                                routeProps.match.params.tokenAddress,
+                              )}`}
+                            />
+                          );
+                        return <TokenDetail {...routeProps} />;
+                      }}
+                    />
+                    {/* compatible for previous user bookmark */}
+                    <Route
+                      exact
+                      path={[
+                        '/blocks-and-transactions',
+                        '/blockchain',
+                        '/blockchain/blocks-and-transactions',
+                      ]}
+                      render={() => <Redirect to="/blockchain/blocks" />}
+                    />
+                    <Route exact path="/blockchain/blocks" component={Blocks} />
+                    <Route
+                      exact
+                      path="/blockchain/transactions"
+                      component={Transactions}
+                    />
+                    <Route
+                      exact
+                      path="/blockchain/cfx-transfers"
+                      component={CFXTransfers}
+                    />
+                    <Route
+                      exact
+                      path="/blockchain/accounts"
+                      component={Accounts}
+                    />
+                    <Route exact path="/tokens" component={Tokens} />
+                    <Route
+                      exact
+                      path="/tokens/:tokenType"
+                      render={(routeProps: any) => {
+                        if (routeProps.match.params.tokenType)
+                          routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
+                        return <Tokens {...routeProps} />;
+                      }}
+                    />
+                    <Route exact path="/sponsor" component={Sponsor} />
+                    <Route
+                      exact
+                      path="/contract-deployment"
+                      component={ContractDeployment}
+                    />
+                    <Route
+                      exact
+                      path="/sponsor/:contractAddress"
+                      render={(routeProps: any) => {
+                        if (
+                          routeProps.match.params.contractAddress &&
+                          ((!getGlobalShowHexAddress() &&
+                            routeProps.match.params.contractAddress.startsWith(
+                              '0x',
+                            )) ||
+                            routeProps.match.params.contractAddress
+                              .toLowerCase()
+                              .indexOf('type.') > -1)
+                        )
+                          return (
+                            <Redirect
+                              to={`/sponsor/${formatAddress(
+                                routeProps.match.params.contractAddress,
+                              )}`}
+                            />
+                          );
+                        return <Sponsor {...routeProps} />;
+                      }}
+                    />
+                    <Route path="/charts" component={Chart} />
+                    <Route
+                      exact
+                      path="/chart/:indicator"
+                      component={ChartDetail}
+                    />
+                    <Route
+                      exact
+                      path="/statistics"
+                      render={() => <Redirect to="/statistics/overview" />}
+                    />
+                    <Route
+                      exact
+                      path="/statistics/:statsType"
+                      component={Statistics}
+                    />
+                    <Route
+                      exact
+                      path="/transaction/:hash"
+                      component={Transaction}
+                    />
+                    <Route exact path="/block/:hash" component={Block} />
+                    <Route exact path="/epoch/:number" component={Epoch} />
+                    <Route
+                      path="/address/:address"
+                      render={(routeProps: any) => {
+                        if (
+                          routeProps.match.params.address &&
+                          ((!getGlobalShowHexAddress() &&
+                            routeProps.match.params.address.startsWith('0x')) ||
+                            routeProps.match.params.address
+                              .toLowerCase()
+                              .indexOf('type.') > -1)
+                        )
+                          return (
+                            <Redirect
+                              to={`/address/${formatAddress(
+                                routeProps.match.params.address,
+                              )}`}
+                            />
+                          );
+                        return <AddressContractDetailPage {...routeProps} />;
+                      }}
+                    />
+                    <Route path="/search/:text" component={Search} />
+                    {/* Tools */}
+                    <Route
+                      exact
+                      path={[
+                        '/address-converter',
+                        '/address-converter/:address',
+                      ]}
+                      component={AddressConverter}
+                    />
+                    <Route exact path="/push-tx" component={BroadcastTx} />
+                    <Route
+                      exact
+                      path={['/block-countdown', '/block-countdown/:block']}
+                      component={BlocknumberCalc}
+                    />
+                    <Route exact path="/swap" component={Swap} />
+                    <Route exact path="/report" component={Report} />
+                    <Route
+                      exact
+                      path={['/notices', '/notice', '/notice/:id']}
+                      component={Notices}
+                    />
+                    <Route
+                      exact
+                      path={['/networkError', '/networkError/:network']}
+                      component={NetworkError}
+                    />
+                    <Route
+                      exact
+                      path="/balance-checker"
+                      component={BalanceChecker}
+                    />
+                    <Route component={NotFoundPage} />
+                  </Switch>
+                </ScrollToTop>
+              </Main>
+              <Footer />
+              <GlobalNotify />
+              <GlobalStyle />
+              <CookieTip />
+              <GlobalTip tipKey="addressWarning" />
+            </CfxProvider>
+          </BrowserRouter>
+        </SWRConfig>
+      </TxnHistoryProvider>
+    </GlobalProvider>
   );
 }
 
@@ -352,7 +408,7 @@ const Main = styled.div`
   margin: 0 auto;
   padding-top: 106px;
   padding-bottom: 20px;
-  min-height: calc(100vh - 327px);
+  min-height: calc(100vh - 260px);
 
   ${media.xl} {
     padding-top: 106px;
@@ -366,6 +422,6 @@ const Main = styled.div`
 
   ${media.s} {
     padding: 100px 16px 32px;
-    min-height: calc(100vh - 254px);
+    //min-height: calc(100vh - 254px);
   }
 `;

@@ -41,6 +41,9 @@ export const ScanEvent = {
       naver: 'naver',
       forum: 'forum',
       reddit: 'reddit',
+      terms: 'terms',
+      privacyPolicy: 'privacy_policy',
+      helpCenter: 'help_center',
     },
   },
   // global search
@@ -141,6 +144,7 @@ export const ScanEvent = {
     action: {
       changeLang: 'change_lang', // event label === lang
       changeNet: 'change_net', // event label === net
+      changeCurrency: 'change_currency', // event label === currency
     },
   },
   // all function

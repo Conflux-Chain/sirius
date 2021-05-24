@@ -4,6 +4,7 @@ import { appendApiPrefix } from 'utils/api';
 import fetch from 'utils/request';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+import BigNumber from 'bignumber.js';
 
 // get charts data
 export default function usePlot(
@@ -128,6 +129,19 @@ export default function usePlot(
       case 'contractAmount':
       case 'contractGrowth':
         listData = data?.data?.rows || [];
+        break;
+      case 'tokenAnalysis':
+        listData = data
+          ? (data.list || []).map(l => ({
+              ...l,
+              transferAmount: new BigNumber(l.transferAmount).dividedBy(
+                10 **
+                  (data.token
+                    ? data.token.decimals || 18
+                    : data.decimals || 18),
+              ),
+            }))
+          : [];
         break;
       default:
         listData = data?.list || [];

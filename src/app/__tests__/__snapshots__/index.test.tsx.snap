@@ -1,243 +1,293 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should render and match the snapshot 1`] = `
-<TxnHistoryProvider
-  value={
+<GlobalProvider
+  data={
     Object {
-      "config": Object {
-        "convert": [Function],
-      },
+      "currency": "USD",
     }
   }
 >
-  <Context.Provider
+  <TxnHistoryProvider
     value={
       Object {
-        "errorRetryCount": 0,
-        "refreshInterval": 0,
-        "revalidateOnFocus": false,
-        "revalidateOnReconnect": false,
-        "shouldRetryOnError": false,
+        "config": Object {
+          "convert": [Function],
+        },
       }
     }
   >
-    <BrowserRouter>
-      <CfxProvider>
-        <UNDEFINED />
-        <Helmet
-          defaultTitle="ConfluxScan"
-          defer={true}
-          encodeSpecialCharacters={true}
-          titleTemplate="%s - ConfluxScan"
+    <Context.Provider
+      value={
+        Object {
+          "errorRetryCount": 0,
+          "refreshInterval": 0,
+          "revalidateOnFocus": false,
+          "revalidateOnReconnect": false,
+          "shouldRetryOnError": false,
+        }
+      }
+    >
+      <BrowserRouter>
+        <CfxProvider
+          theme={
+            Object {
+              "breakpoints": Object {
+                "lg": Object {
+                  "max": "1440px",
+                  "min": "1280px",
+                },
+                "md": Object {
+                  "max": "1280px",
+                  "min": "1024px",
+                },
+                "sm": Object {
+                  "max": "1024px",
+                  "min": "600px",
+                },
+                "xl": Object {
+                  "max": "10000px",
+                  "min": "1440px",
+                },
+                "xs": Object {
+                  "max": "600px",
+                  "min": "0",
+                },
+              },
+            }
+          }
         >
-          <meta
-            content="BlockChain Explorer for Conflux Network"
-            name="description"
+          <UNDEFINED />
+          <Helmet
+            defaultTitle="ConfluxScan"
+            defer={true}
+            encodeSpecialCharacters={true}
+            titleTemplate="%s - ConfluxScan"
+          >
+            <meta
+              content="BlockChain Explorer for Conflux Network"
+              name="description"
+            />
+          </Helmet>
+          <UNDEFINED />
+          <ForwardRef(app__Main)>
+            <withRouter(_ScrollToTop)>
+              <Switch>
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/packing/:txHash"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/notfound/:contractAddress"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/contract"
+                />
+                <Route
+                  exact={true}
+                  path="/contract/:contractAddress"
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/contracts"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/registered-contracts"
+                />
+                <Route
+                  exact={true}
+                  path="/token/:tokenAddress"
+                  render={[Function]}
+                />
+                <Route
+                  exact={true}
+                  path={
+                    Array [
+                      "/blocks-and-transactions",
+                      "/blockchain",
+                      "/blockchain/blocks-and-transactions",
+                    ]
+                  }
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/blockchain/blocks"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/blockchain/transactions"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/blockchain/cfx-transfers"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/blockchain/accounts"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/tokens"
+                />
+                <Route
+                  exact={true}
+                  path="/tokens/:tokenType"
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/sponsor"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/contract-deployment"
+                />
+                <Route
+                  exact={true}
+                  path="/sponsor/:contractAddress"
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  path="/charts"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/chart/:indicator"
+                />
+                <Route
+                  exact={true}
+                  path="/statistics"
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/statistics/:statsType"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/transaction/:hash"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/block/:hash"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/epoch/:number"
+                />
+                <Route
+                  path="/address/:address"
+                  render={[Function]}
+                />
+                <Route
+                  component={[Function]}
+                  path="/search/:text"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path={
+                    Array [
+                      "/address-converter",
+                      "/address-converter/:address",
+                    ]
+                  }
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/push-tx"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path={
+                    Array [
+                      "/block-countdown",
+                      "/block-countdown/:block",
+                    ]
+                  }
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/swap"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/report"
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path={
+                    Array [
+                      "/notices",
+                      "/notice",
+                      "/notice/:id",
+                    ]
+                  }
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path={
+                    Array [
+                      "/networkError",
+                      "/networkError/:network",
+                    ]
+                  }
+                />
+                <Route
+                  component={[Function]}
+                  exact={true}
+                  path="/balance-checker"
+                />
+                <Route
+                  component={[Function]}
+                />
+              </Switch>
+            </withRouter(_ScrollToTop)>
+          </ForwardRef(app__Main)>
+          <Unknown />
+          <GlobalNotify />
+          <UNDEFINED />
+          <CookieTip />
+          <GlobalTip
+            tipKey="addressWarning"
           />
-        </Helmet>
-        <UNDEFINED />
-        <ForwardRef(app__Main)>
-          <withRouter(_ScrollToTop)>
-            <Switch>
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/packing/:txHash"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/notfound/:contractAddress"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/contract"
-              />
-              <Route
-                exact={true}
-                path="/contract/:contractAddress"
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/contracts"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/registered-contracts"
-              />
-              <Route
-                exact={true}
-                path="/token/:tokenAddress"
-                render={[Function]}
-              />
-              <Route
-                exact={true}
-                path={
-                  Array [
-                    "/blocks-and-transactions",
-                    "/blockchain",
-                    "/blockchain/blocks-and-transactions",
-                  ]
-                }
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/blockchain/blocks"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/blockchain/transactions"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/blockchain/cfx-transfers"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/blockchain/accounts"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/tokens"
-              />
-              <Route
-                exact={true}
-                path="/tokens/:tokenType"
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/sponsor"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/contract-deployment"
-              />
-              <Route
-                exact={true}
-                path="/sponsor/:contractAddress"
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                path="/charts"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/chart/:indicator"
-              />
-              <Route
-                exact={true}
-                path="/statistics"
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/statistics/:statsType"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/transaction/:hash"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/block/:hash"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/epoch/:number"
-              />
-              <Route
-                path="/address/:address"
-                render={[Function]}
-              />
-              <Route
-                component={[Function]}
-                path="/search/:text"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path={
-                  Array [
-                    "/address-converter",
-                    "/address-converter/:address",
-                  ]
-                }
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/push-tx"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path={
-                  Array [
-                    "/block-countdown",
-                    "/block-countdown/:block",
-                  ]
-                }
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/swap"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path="/report"
-              />
-              <Route
-                component={[Function]}
-                exact={true}
-                path={
-                  Array [
-                    "/notices",
-                    "/notice",
-                    "/notice/:id",
-                  ]
-                }
-              />
-              <Route
-                component={[Function]}
-              />
-            </Switch>
-          </withRouter(_ScrollToTop)>
-        </ForwardRef(app__Main)>
-        <Unknown />
-        <GlobalNotify />
-        <UNDEFINED />
-        <CookieTip />
-        <GlobalTip
-          tipKey="addressWarning"
-        />
-      </CfxProvider>
-    </BrowserRouter>
-  </Context.Provider>
-</TxnHistoryProvider>
+        </CfxProvider>
+      </BrowserRouter>
+    </Context.Provider>
+  </TxnHistoryProvider>
+</GlobalProvider>
 `;

@@ -4,11 +4,16 @@ import styled from 'styled-components/macro';
 import { SelectProps } from '@cfxjs/react-ui/dist/select/select';
 import clsx from 'clsx';
 
-const Select = ({ children, className, ...others }: Partial<SelectProps>) => {
+const Select = ({
+  children,
+  className,
+  dropdownClassName,
+  ...others
+}: Partial<SelectProps>) => {
   return (
     <SelectWrapper>
       <UISelect
-        dropdownClassName="sirius-select-dropdown"
+        dropdownClassName={clsx('sirius-select-dropdown', dropdownClassName)}
         className={clsx('sirius-select', className)}
         {...others}
       >

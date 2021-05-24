@@ -211,9 +211,45 @@
     "learnMore": "Learn more",
     "search": {
       "tokens": "Tokens"
+    },
+    "balanceChecker": {
+      "tokenBalanceChecker": "Token Balance Checker",
+      "balanceChecker": "Balance Checker",
+      "subtitle": "You can lookup the address historical balance on the Conflux network at a specific Block No or Date",
+      "tokenQuantity": "Token Quantity",
+      "tokenSupply": "Token Supply",
+      "cfxBalance": "CFX Balance",
+      "address": "Address",
+      "contractAddress": "Contract Address",
+      "blockNoOrDate": "Block No or Date",
+      "or": "OR",
+      "enterBlockNo": "Enter a Block No",
+      "error": "Can not be empty",
+      "lookUp": "Look Up",
+      "reset": "Reset",
+      "tokenQuantityForAccountAddress": "Token Quantity for Account Address",
+      "totalSupplyForContractAddress": "Total Supply for Contract Address",
+      "cfxBalanceForAddress": "CFX Balance for Address",
+      "snapshotDate": "Snapshot Date",
+      "block": "Block",
+      "blockNo": "Block No"
     }
   },
   "footer": {
+    "currency": {
+      "usd": "USD",
+      "cny": "CNY",
+      "gbp": "GBP",
+      "krw": "KRW",
+      "rub": "RUB",
+      "eur": "EUR"
+    },
+    "aboutUs": {
+      "title": "About Us",
+      "helpCenter": "Help Center",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms"
+    },
     "cookie": "This website uses cookies to improve your experience. View <a href='https://confluxnetwork.org/privacy/' target='_blank'>Privacy Policy</a> for more information.",
     "addressWarning": "To prevent loss of assets, please review <a href='https://forum.conflux.fun/t/announcement-conflux-address-formats-and-their-implications-of-asset-transfers/6727' target='_blank'>THE DESCRIPTION OF THE RULES RELATING TO THE ADDRESS INVOLVED IN THE TRANSFER OF ASSETS</a> carefully. ",
     "cookieAgree": "Got it",
@@ -255,6 +291,11 @@
     "contract": "contract",
     "block": "block",
     "transaction": "transaction"
+  },
+  "networkError": {
+    "title": "Tip",
+    "label": "The address you are searching for is Conflux {{network}} address, please switch the network before searching.",
+    "btn": "Switch the network to {{network}}"
   },
   "token": {
     "token": "Token",
@@ -332,7 +373,7 @@
     },
     "dailyTransaction": {
       "title": "Daily Transactions",
-      "description": "The total number of transactions per day for the Conflux network."
+      "description": "The total number of transactions per day on the Conflux network."
     },
     "dailyTransactionCFX": {
       "title": "Daily Transactions -- CFX",
@@ -372,6 +413,7 @@
     }
   },
   "general": {
+    "totalRecord": "Total of {{total}} records",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
     "invalidABI": "Invaild ABI",
@@ -386,7 +428,14 @@
     "address": {
       "editContract": "Click to edit contract",
       "website": "Click to enter the official site",
-      "address": "address"
+      "address": "address",
+      "more": {
+        "title": "More",
+        "report": "Report",
+        "editContract": "Edit Contract",
+        "sponsor": "Apply Sponsorship",
+        "website": "Official Website"
+      }
     },
     "loading": "loading...",
     "contract": "contract",
@@ -426,6 +475,7 @@
       },
       "transaction": {
         "hash": "Txn Hash",
+        "method": "Method",
         "from": "From",
         "to": "To",
         "value": "Value",
@@ -561,7 +611,12 @@
     "connnectWalletSubmit": "Submit",
     "waitForConfirm": "Waiting For Confirmation",
     "txRejected": "Transaction Rejected",
-    "exportRecords": "Export Current Records"
+    "exportRecords": "Export Current Records",
+    "downloadCSV": {
+      "latest5000records": "Only the latest 5000 records are supported",
+      "download": "Download ",
+      "csvFile": "CSV file"
+    }
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -574,6 +629,7 @@
     "availStorage": "Remaining Storage Fees By Conflux Foundation",
     "availGas": "Remaining Gas Fees By Conflux Foundation",
     "connectToApply": "Apply",
+    "notice": "Remark",
     "noticeFirst": "1. Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
     "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",
     "noticeFourthOne": "3. If you don't have ConfluxPortal as a browser extension installed yet, please visit",
@@ -592,6 +648,8 @@
     "tx": "tx"
   },
   "transaction": {
+    "gotoDetail": "Click to view details",
+    "inThePosition": "(in the position {{position}})",
     "overview": "Overview",
     "viewOutgoingTxns": "View Outgoing Txns",
     "viewIncomingTxns": "View Incoming Txns",
@@ -632,13 +690,13 @@
     "inputTips": "The binary data that formed the input to the transaction, either the input data if it was a message call or the contract initialisation if it was a contract registration",
     "epochConfirmations": "{{count}} Epoch Confirmations",
     "statusError": {
+      "0": "Unknown error.",
       "1": "Contract error: ",
       "2": "Insufficient storage fees.",
       "3": "Insufficient address balance. ",
       "4": "Insufficient gas fee.",
       "5": "Unknown contract error.",
-      "6": "Contract deployment failed.",
-      "7": "Unknown error."
+      "6": "Contract deployment failed."
     },
     "internalTxns": {
       "title": "Internal Txns",
@@ -649,7 +707,7 @@
       "from": "The contract call from",
       "to": "to",
       "produced": "produced",
-      "txns": "internal transactions.",
+      "txns": "{{type}} internal transactions.",
       "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {
@@ -905,10 +963,15 @@
   },
   "statistics": {
     "statistics": "Top Statistics",
+    "overview": "Overview",
     "transactions": "Transactions",
     "tokens": "Tokens",
     "miners": "Miners",
     "network": "Network",
+    "overviewTransactions": "Transactions",
+    "overviewTokens": "Tokens",
+    "overviewMiners": "Miners",
+    "overviewNetwork": "Network",
     "topTxnCountSent": "Top Txn Count Sent",
     "topTxnCountReceived": "Top Txn Count Received",
     "topCFXSend": "Top CFX Sent",
@@ -925,6 +988,21 @@
       "3d": "3 Days",
       "7d": "7 Days"
     },
+    "overviewColumns": {
+      "totalCFXSent": "Total CFX Sent",
+      "totalCFXReceived": "Total CFX Received",
+      "totalTxnCount": "Total Txn Count",
+      "totalTxnCountSent": "Total Txn Count Sent",
+      "totalTxnCountReceived": "Total Txn Count Received",
+      "totalTokenSent": "Total Token Sent",
+      "totalTokenReceived": "Total Token Received",
+      "totalTokenTransfersCount": "Total Token Transfers Count",
+      "totalTokenTransfersAccountsCount": "Total Token Transfers Accounts Count",
+      "totalMiners": "Total Miners",
+      "totalBlocksMined": "Total Blocks Mined",
+      "totalGasUsed": "Total Gas Used",
+      "top10": "View Top 10"
+    },
     "column": {
       "rank": "Rank",
       "address": "Address",
@@ -940,6 +1018,13 @@
       "totalTxnFees": "Total Txn Fees",
       "hashRate": "Est. Hash Rate (GH/s)",
       "gasUsed": "Gas Used"
+    },
+    "home": {
+      "currentBlockNumber": "Current Block Number",
+      "currentEpoch": "Current Epoch",
+      "account": "Accounts",
+      "transactions": "Transactions",
+      "contract": "Contracts"
     }
   },
   "swap": {

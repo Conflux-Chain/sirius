@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Card } from '../../components/Card';
 import { Tabs } from '../../components/Tabs';
@@ -16,6 +16,7 @@ import { StatsType } from '../../components/StatsCard';
 import { media } from '../../../styles/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { reqTopStatistics } from '../../../utils/httpRequest';
 
 interface RouteParams {
   statsType: string;
@@ -26,6 +27,8 @@ export function Statistics() {
   const isZh = i18n.language.includes('zh');
   const { statsType } = useParams<RouteParams>();
   const history = useHistory();
+  const [tabValue, setTabValue] = useState(statsType || 'overview');
+  const [statsData, setStatsData] = useState({});
   const timespan = ['24h', '3d', '7d'];
 
   let { span = '7d' } = queryString.parse(window.location.search);
@@ -36,6 +39,7 @@ export function Statistics() {
 
   const tabsChange = val => {
     if (val && val !== statsType) {
+      setTabValue(val);
       // ga
       trackEvent({
         category: ScanEvent.stats.category,
@@ -48,7 +52,7 @@ export function Statistics() {
             `stats${val.charAt(0).toUpperCase() + val.slice(1)}`
           ],
       });
-      history.push(`/statistics/${val}`);
+      history.push(`/statistics/${val}?span=${span}`);
     }
   };
   const spanChange = val => {
@@ -97,6 +101,21 @@ export function Statistics() {
     );
   };
 
+  useEffect(() => {
+    if (tabValue === 'overview') {
+      reqTopStatistics({
+        span,
+        action: 'overview',
+      })
+        .then(res => {
+          setStatsData(res.stat || {});
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
+  }, [span, tabValue]);
+
   return (
     <>
       <Helmet>
@@ -104,7 +123,46 @@ export function Statistics() {
         <meta name="description" content={t(title)} />
       </Helmet>
       <PageHeader>{title}</PageHeader>
-      <TabsWrapper initialValue={statsType} onChange={tabsChange}>
+      <TabsWrapper value={tabValue} onChange={tabsChange}>
+        <Tabs.Item label={t(translations.statistics.overview)} value="overview">
+          <CardWrapper>
+            {spanButtons(span)}
+            <Row gutter={[24, 24]}>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.overviewTransactions}
+                  tabsChange={tabsChange}
+                  statsData={statsData}
+                />
+              </Col>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.overviewTokens}
+                  tabsChange={tabsChange}
+                  statsData={statsData}
+                />
+              </Col>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.overviewMiners}
+                  tabsChange={tabsChange}
+                  statsData={statsData}
+                />
+              </Col>
+              <Col span={24} lg={12}>
+                <StatsCard
+                  span={span as string}
+                  type={StatsType.overviewNetwork}
+                  tabsChange={tabsChange}
+                  statsData={statsData}
+                />
+              </Col>
+            </Row>
+          </CardWrapper>
+        </Tabs.Item>
         <Tabs.Item
           label={t(translations.statistics.transactions)}
           value="transactions"

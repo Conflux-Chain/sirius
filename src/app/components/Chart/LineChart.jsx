@@ -18,6 +18,10 @@ import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
 import _ from 'lodash';
+import { cfxTokenTypes } from '../../../utils/constants';
+import { Link } from 'react-router-dom';
+import imgInfo from '../../../images/info.svg';
+import { Tooltip as ToolTipInfo } from 'app/components/Tooltip/Loadable';
 
 const DURATIONS = [
   ['hour', '1H'],
@@ -27,12 +31,16 @@ const DURATIONS = [
 ];
 
 export const LineChart = ({
+  widthRatio = '',
   width = 500,
+  minHeight = 500,
   indicator = 'blockTime',
   isThumb = false,
+  withDetailLink = false,
   tokenInfo = {
     name: '',
     address: '',
+    type: '',
   },
 }) => {
   const { t } = useTranslation();
@@ -307,12 +315,14 @@ export const LineChart = ({
       case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
-        return [
-          // 'transferAmount',
-          'transferCount',
-          'uniqueReceiver',
-          'uniqueSender',
-        ];
+        return tokenInfo.type === cfxTokenTypes.erc20
+          ? [
+              'transferAmount',
+              'transferCount',
+              'uniqueReceiver',
+              'uniqueSender',
+            ]
+          : ['transferCount', 'uniqueReceiver', 'uniqueSender'];
       default:
         return indicator;
     }
@@ -321,7 +331,7 @@ export const LineChart = ({
   if (isError) {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
@@ -332,12 +342,29 @@ export const LineChart = ({
   } else {
     return (
       <Container
-        style={{ width: isThumb ? '100%' : width }}
+        style={{ width: isThumb ? '100%' : widthRatio ? widthRatio : width }}
         small={small}
         isThumb={isThumb}
       >
-        <Title>{t(`charts.${indicator}.title`)}</Title>
-        {!isThumb && t(`charts.${indicator}.description`) ? (
+        <Title>
+          {withDetailLink ? (
+            <>
+              <Link to={`/chart/${indicator}`} className="chart-link">
+                {t(`charts.${indicator}.title`)}
+              </Link>
+              <ToolTipInfo
+                hoverable
+                text={t(`charts.${indicator}.description`)}
+                placement="top"
+              >
+                <img src={imgInfo} alt="tips" />
+              </ToolTipInfo>
+            </>
+          ) : (
+            t(`charts.${indicator}.title`)
+          )}
+        </Title>
+        {!isThumb && t(`charts.${indicator}.description`) && !withDetailLink ? (
           <Description>
             {t(
               `charts.${indicator}.description`,
@@ -362,7 +389,8 @@ export const LineChart = ({
           'tokenAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
-            width={width}
+            width={widthRatio ? widthRatio : width}
+            minHeight={minHeight}
             indicator={indicator}
             dateKey={xAxisKey()}
             valueKey={lineKey()}
@@ -476,7 +504,7 @@ const Container = styled.div`
     props.isThumb ? '8px 20px' : props.small ? '8px' : '24px'};
   box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
   border-radius: 5px;
-  min-height: ${props => (props.small || props.isThumb ? '200px' : '250px')};
+  min-height: ${props => (props.small || props.isThumb ? '200px' : '230px')};
   background-color: #fff;
 
   svg {
@@ -498,6 +526,12 @@ const Title = styled.div`
   font-size: 1.1429rem;
   color: black;
   line-height: 2.1429rem;
+
+  img {
+    width: 18px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+  }
 `;
 
 const Description = styled.div`
@@ -506,7 +540,7 @@ const Description = styled.div`
   font-size: 0.8571rem;
   color: #4a6078;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: ${props => (props.minHeight < 300 ? '10px' : '1rem')};
 `;
 
 const Buttons = styled.div`

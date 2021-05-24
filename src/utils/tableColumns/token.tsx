@@ -16,31 +16,47 @@ import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
-import { cfxTokenTypes } from '../constants';
+import { cfxTokenTypes, InternalContracts } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { TxnHashRenderComponent } from './transaction';
+import { getCurrencySymbol } from 'utils/constants';
 
-const renderAddress = (value, row, type?: 'to' | 'from') => {
+export const renderAddress = (
+  value,
+  row,
+  type?: 'to' | 'from',
+  withArrow = true,
+) => {
   const { accountAddress } = queryString.parse(window.location.search);
   const filter = (accountAddress as string) || '';
   let alias = '';
-  if (type === 'from')
-    alias = row.fromContractInfo ? row.fromContractInfo.name : '';
-  else if (type === 'to')
-    alias = row.toContractInfo
-      ? row.toContractInfo.name
-      : row.contractInfo
-      ? row.contractInfo.name
-      : '';
+  if (type === 'from') {
+    if (InternalContracts[value]) alias = InternalContracts[value];
+    else if (row.fromContractInfo && row.fromContractInfo.name)
+      alias = row.fromContractInfo.name;
+    else if (row.fromTokenInfo && row.fromTokenInfo.name)
+      alias = `${row.fromTokenInfo.name} (${row.fromTokenInfo.symbol || '-'})`;
+  } else if (type === 'to') {
+    if (InternalContracts[value]) alias = InternalContracts[value];
+    else if (row.toContractInfo && row.toContractInfo.name)
+      alias = row.toContractInfo.name;
+    else if (row.toTokenInfo && row.toTokenInfo.name)
+      alias = `${row.toTokenInfo.name} (${row.toTokenInfo.symbol || '-'})`;
+    else if (row.contractInfo && row.contractInfo.name)
+      alias = row.contractInfo.name;
+    else if (row.tokenInfo && row.tokenInfo.name)
+      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+  }
 
   return (
-    <FromWrap>
+    <>
       <AddressContainer
         value={value}
         alias={alias}
         isLink={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
       />
-      {type === 'from' && (
+      {type === 'from' && withArrow && (
         <ImgWrap
           src={
             !filter
@@ -51,7 +67,7 @@ const renderAddress = (value, row, type?: 'to' | 'from') => {
           }
         />
       )}
-    </FromWrap>
+    </>
   );
 };
 
@@ -136,11 +152,16 @@ export const price = {
   key: 'price',
   sortable: true,
   render: (value, row) => {
-    const count = `$${formatNumber(value || 0, {
-      withUnit: false,
-      precision: 2,
-      keepZero: true,
-    })}`;
+    const count = (
+      <>
+        {getCurrencySymbol()}
+        {formatNumber(value || 0, {
+          withUnit: false,
+          precision: 2,
+          keepZero: true,
+        })}
+      </>
+    );
     return (
       <ContentWrapper right monospace>
         {value != null ? (
@@ -195,7 +216,7 @@ export const marketCap = {
   render: value => (
     <ContentWrapper right monospace>
       {value != null && value > 0
-        ? `$${formatNumber(value || 0, {
+        ? `${getCurrencySymbol()}${formatNumber(value || 0, {
             keepDecimal: false,
             withUnit: false,
           })}`
@@ -284,13 +305,7 @@ export const txnHash = {
   ),
   dataIndex: 'transactionHash',
   key: 'transactionHash',
-  render: value => (
-    <Link href={`/transaction/${value}`}>
-      <Text span hoverValue={value}>
-        {formatString(value, 'hash')}
-      </Text>
-    </Link>
-  ),
+  render: value => <TxnHashRenderComponent hash={value} />,
 };
 
 export const age = (ageFormat, toggleAgeFormat) =>
@@ -326,7 +341,9 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row) => renderAddress(value, row, 'to'),
+  render: (value, row) => (
+    <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>
+  ),
 };
 
 export const from = {
@@ -336,7 +353,9 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => renderAddress(value, row, 'from'),
+  render: (value, row) => (
+    <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>
+  ),
 };
 
 export const account = {
@@ -381,7 +400,7 @@ export const balance = (decimal, price, transferType) => ({
   render: value => {
     const decimals = decimal || 0;
     // Decimal places are determined according to the price
-    const decimalPlace = price > 1 ? price.toFixed(0).length + 1 : 2;
+    const decimalPlace = +price > 1 ? (+price).toFixed(0).length + 1 : 2;
     const tinyBalanceThreshold = `0.${Array(decimalPlace).join('0')}1`;
     return (
       <ContentWrapper right>

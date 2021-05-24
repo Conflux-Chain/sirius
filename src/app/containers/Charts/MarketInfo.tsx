@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { Card } from '../../components/Card/Loadable';
-import { Tooltip } from '../../components/Tooltip/Loadable';
-import { translations } from '../../../locales/i18n';
-import { media } from '../../../styles/media';
-import { reqCfxSupply } from '../../../utils/httpRequest';
-import { formatBalance } from '../../../utils';
+import { Card } from 'app/components/Card/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { translations } from 'locales/i18n';
+import { media } from 'styles/media';
+import { reqCfxSupply } from 'utils/httpRequest';
+import { formatBalance, formatNumber } from 'utils';
 import zeroAddressIcon from '../../../images/home/zeroAddress.svg';
-import circulatingMarketCap from '../../../images/home/circulatingMarketCap.svg';
+import circulatingMarketCap from 'images/home/circulatingMarketCap.svg';
 
 function Info(icon, title, tooltip, number) {
   return (

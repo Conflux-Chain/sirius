@@ -5,8 +5,7 @@ import { LineChart as Chart, PieChart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button } from '@cfxjs/react-ui';
 
 interface RouteParams {
@@ -15,6 +14,7 @@ interface RouteParams {
 
 export function ChartDetail() {
   const { t } = useTranslation();
+  const history = useHistory();
   const { indicator } = useParams<RouteParams>();
 
   let title = t(translations.charts.subtitle2);
@@ -60,11 +60,14 @@ export function ChartDetail() {
       <PageWrap>
         <HeaderWrap>
           <div className="title">{title}</div>
-          <Link to="/charts">
-            <Button variant="solid" color="primary" size="small">
-              {t(translations.general.back)}
-            </Button>
-          </Link>
+          <Button
+            variant="solid"
+            color="primary"
+            size="small"
+            onClick={() => history.goBack()}
+          >
+            {t(translations.general.back)}
+          </Button>
         </HeaderWrap>
         {indicator ? (
           <ChartsWrap>

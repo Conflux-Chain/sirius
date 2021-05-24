@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Copy, Qrcode, Report } from './HeadLineButtons';
+import { Copy, Qrcode } from './HeadLineButtons';
 import {
   BalanceCard,
   TokensCard,
@@ -28,6 +28,10 @@ import {
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
+import { Dropdown, Menu } from '@jnoodle/antd';
+import { Link as RouterLink } from 'react-router-dom';
+import DownIcon from '../../../images/down.png';
+import styled from 'styled-components';
 
 interface RouteParams {
   address: string;
@@ -43,6 +47,16 @@ export const AddressDetailPage = memo(() => {
     'erc1155TransferCount',
     'stakingBalance',
   ]);
+
+  const menu = (
+    <MenuWrapper>
+      <Menu.Item>
+        <RouterLink to={`/report?address=${address}`}>
+          {t(translations.general.address.more.report)}
+        </RouterLink>
+      </Menu.Item>
+    </MenuWrapper>
+  );
 
   return (
     <>
@@ -65,7 +79,16 @@ export const AddressDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <Report address={address} />
+              <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+                <span onClick={e => e.preventDefault()}>
+                  {t(translations.general.address.more.title)}{' '}
+                  <img
+                    src={DownIcon}
+                    alt={t(translations.general.address.more.title)}
+                  />
+                </span>
+              </DropdownWrapper>
+              {/*<Report address={address} />*/}
             </div>
           </HeadAddressLine>
         </Head>
@@ -85,3 +108,32 @@ export const AddressDetailPage = memo(() => {
     </>
   );
 });
+
+export const DropdownWrapper = styled(Dropdown)`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 11px;
+    margin-left: 5px;
+  }
+`;
+
+export const MenuWrapper = styled(Menu)`
+  min-width: 100px;
+  li {
+    list-style: none;
+    &:before {
+      display: none;
+    }
+    a {
+      color: #65709a;
+    }
+    &:hover {
+      background-color: #65709a;
+      a {
+        color: #fff;
+      }
+    }
+  }
+`;

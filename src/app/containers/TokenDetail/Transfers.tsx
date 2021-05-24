@@ -1,24 +1,22 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { media, useBreakpoint } from '../../../styles/media';
-import { translations } from '../../../locales/i18n';
+import { media, useBreakpoint } from 'styles/media';
+import { translations } from 'locales/i18n';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { isAddress, isHash } from 'utils';
-import {
-  TabLabel,
-  TabsTablePanel,
-} from '../../components/TabsTablePanel/Loadable';
+import { isAddress, isHash, toThousands } from 'utils';
+import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   TableSearchDatepicker,
   TableSearchInput,
-} from '../../components/TablePanel';
-import { tokenColunms } from '../../../utils/tableColumns';
-import { cfxTokenTypes } from '../../../utils/constants';
-import { useAge } from '../../../utils/hooks/useAge';
-import { Card } from '../../components/Card';
-import { LineChart as Chart } from '../../components/Chart/Loadable';
+} from 'app/components/TablePanel';
+import { tokenColunms } from 'utils/tableColumns';
+import { cfxTokenTypes } from 'utils/constants';
+import { useAge } from 'utils/hooks/useAge';
+import { Card } from 'app/components/Card';
+import { LineChart as Chart } from 'app/components/Chart/Loadable';
+import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 interface TransferProps {
   tokenName: string;
@@ -174,14 +172,7 @@ export function Transfers({
     {
       value: 'transfers',
       action: 'tokenTransfers',
-      label: (total: number, realTotal: number) => {
-        return (
-          <>
-            {t(translations.token.transfers)}
-            <TabLabel total={total} realTotal={realTotal} />
-          </>
-        );
-      },
+      label: t(translations.token.transfers),
       // address filter contract transfers events
       // accountAddress filter from or to transfers, regard accountAddress as ordinary address
       url: `/transfer?address=${tokenAddress}&transferType=${transferType}`,
@@ -189,29 +180,48 @@ export function Transfers({
         columns: columns,
         rowKey: (row, index) => `${row.transactionHash}${index}`,
       },
-      tableHeader: (
+      tableHeader: ({ total }) => (
         <StyledSearchAreaWrapper>
-          <TableSearchInput
-            decimals={decimals}
-            symbol={symbol}
-            tokenAddress={tokenAddress}
-            transferType={transferType}
-            onFilter={onFilter}
-            filter={filter}
-            placeholder={
-              transferType === cfxTokenTypes.erc20
-                ? t(translations.token.transferList.searchPlaceHolder).replace(
-                    bp === 's' ? / \/ /gi : '/',
-                    '/',
-                  )
-                : t(
-                    translations.token.transferList
-                      .searchPlaceHolderWithTokenId,
-                  ).replace(bp === 's' ? / \/ /gi : '/', '/')
-            }
-          />
-          <TableSearchDatepicker />
+          <StyledTotalWrapper>
+            {t(translations.general.totalRecord, {
+              total: toThousands(total),
+            })}
+          </StyledTotalWrapper>
+          <div className="token-search-container">
+            <TableSearchInput
+              decimals={decimals}
+              symbol={symbol}
+              tokenAddress={tokenAddress}
+              transferType={transferType}
+              onFilter={onFilter}
+              filter={filter}
+              placeholder={
+                transferType === cfxTokenTypes.erc20
+                  ? t(
+                      translations.token.transferList.searchPlaceHolder,
+                    ).replace(bp === 's' ? / \/ /gi : '/', '/')
+                  : t(
+                      translations.token.transferList
+                        .searchPlaceHolderWithTokenId,
+                    ).replace(bp === 's' ? / \/ /gi : '/', '/')
+              }
+            />
+            <TableSearchDatepicker />
+          </div>
         </StyledSearchAreaWrapper>
+      ),
+      tableFooter: (
+        <DownloadCSV
+          url={queryString.stringifyUrl({
+            url: '/v1/report/transfer',
+            query: {
+              transferType: transferType,
+              address: tokenAddress,
+              limit: '5000',
+              reverse: 'true',
+            },
+          })}
+        />
       ),
     },
   ];
@@ -223,20 +233,20 @@ export function Transfers({
     tabs.push({
       value: 'holders',
       action: 'tokenHolders',
-      label: () => {
-        return (
-          <>
-            {t(translations.token.holders)}
-            <TabLabel total={holderCount} realTotal={holderCount} />
-          </>
-        );
-      },
+      label: t(translations.token.holders),
       url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
       table: {
         className: 'monospaced',
         columns: holdersColumns,
         rowKey: row => `${tokenAddress}${row.account.address}`,
       },
+      tableHeader: ({ total }) => (
+        <StyledTotalWrapper>
+          {t(translations.general.totalRecord, {
+            total: toThousands(total),
+          })}
+        </StyledTotalWrapper>
+      ),
     });
   }
 
@@ -276,6 +286,7 @@ export function Transfers({
           tokenInfo={{
             name: tokenName,
             address: tokenAddress,
+            type: transferType,
           }}
         />
       </Card>
@@ -296,7 +307,20 @@ export function Transfers({
 
 const StyledSearchAreaWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .token-search-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+
+    ${media.s} {
+      justify-content: flex-start;
+      margin-top: 0.3571rem;
+    }
+  }
 
   ${media.s} {
     justify-content: flex-start;
@@ -305,7 +329,7 @@ const StyledSearchAreaWrapper = styled.div`
 
 const StyledTabWrapper = styled.div`
   .card {
-    padding: 5px !important;
+    padding: 0.3571rem !important;
 
     .content {
       overflow-x: auto;
@@ -313,5 +337,12 @@ const StyledTabWrapper = styled.div`
         box-shadow: none !important;
       }
     }
+  }
+`;
+
+const StyledTotalWrapper = styled.div`
+  padding: 8px;
+  ${media.s} {
+    width: 100%;
   }
 `;

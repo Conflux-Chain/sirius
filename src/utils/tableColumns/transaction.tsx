@@ -1,18 +1,120 @@
-import React from 'react';
-import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import React, { useState } from 'react';
+import { Translation, useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
-import { Link } from '../../app/components/Link/Loadable';
-import { Text } from '../../app/components/Text/Loadable';
-import { Status } from '../../app/components/Status/Loadable';
-import { formatNumber, fromDripToCfx, toThousands } from '../../utils/';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { Link } from 'app/components/Link/Loadable';
+import { Text } from 'app/components/Text/Loadable';
+import { Status } from 'app/components/TxnComponents';
+import { formatNumber, fromDripToCfx, toThousands } from 'utils';
+import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
+import { reqTransactionDetail } from 'utils/httpRequest';
+import { Popover } from '@jnoodle/antd';
+import { Overview } from 'app/components/TxnComponents';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { useBreakpoint } from 'styles/media';
+
+import iconViewTxn from 'images/view-txn.png';
+import iconViewTxnActive from 'images/view-txn-active.png';
+import { InternalContracts } from '../constants';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
 `;
+
+interface HashProps {
+  showOverview?: boolean;
+  hash: string;
+  status?: number;
+  txExecErrorMsg?: string;
+  txExecErrorInfo?: any;
+}
+
+export const TxnHashRenderComponent = ({
+  showOverview,
+  hash,
+  status,
+  txExecErrorMsg,
+  txExecErrorInfo,
+}: HashProps) => {
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+  const [txnDetail, setTxnDetail] = useState({});
+  const bp = useBreakpoint();
+
+  const handleClick = () => {
+    setLoading(true);
+    reqTransactionDetail(
+      {
+        hash: hash,
+      },
+      {
+        aggregate: true,
+      },
+    ).then(body => {
+      setTxnDetail(body);
+      setLoading(false);
+    });
+  };
+
+  // txn status error detail info
+  let statusErrorMessage = txExecErrorMsg;
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
+
+  return (
+    <StyledTransactionHashWrapper>
+      {status !== undefined ? (
+        <StyledStatusWrapper
+          className={clsx({
+            show: status !== 0,
+          })}
+        >
+          <Status type={status} variant="dot">
+            {statusErrorMessage}
+          </Status>
+        </StyledStatusWrapper>
+      ) : null}
+
+      <Link href={`/transaction/${hash}`}>
+        <Text span hoverValue={hash}>
+          <SpanWrap>{hash}</SpanWrap>
+        </Text>
+      </Link>
+
+      {bp !== 's' && showOverview ? (
+        <div className="txn-overview-popup-container">
+          <Popover
+            className="txn-overview-popup"
+            placement="right"
+            trigger="click"
+            content={
+              <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
+                <Overview data={txnDetail} />
+              </SkeletonContainer>
+            }
+          >
+            <button className="icon-view-txn-container" onClick={handleClick} />
+          </Popover>
+        </div>
+      ) : null}
+    </StyledTransactionHashWrapper>
+  );
+};
+TxnHashRenderComponent.defaultProps = {
+  showOverview: true,
+  showStatus: true,
+};
 
 export const hash = {
   title: (
@@ -25,26 +127,14 @@ export const hash = {
   dataIndex: 'hash',
   key: 'hash',
   width: 1,
-  render: (value, row: any) => {
-    return (
-      <StyledTransactionHashWrapper>
-        <StyledStatusWrapper
-          className={clsx({
-            show: row.status !== 0,
-          })}
-        >
-          <Status type={row.status} variant="dot">
-            {row.txExecErrorMsg}
-          </Status>
-        </StyledStatusWrapper>
-        <Link href={`/transaction/${value}`}>
-          <Text span hoverValue={value}>
-            <SpanWrap>{value}</SpanWrap>
-          </Text>
-        </Link>
-      </StyledTransactionHashWrapper>
-    );
-  },
+  render: (_, row: any) => (
+    <TxnHashRenderComponent
+      hash={row.hash}
+      status={row.status}
+      txExecErrorMsg={row.txExecErrorMsg}
+      txExecErrorInfo={row.txExecErrorInfo}
+    />
+  ),
 };
 
 export const from = {
@@ -74,19 +164,25 @@ export const to = {
   dataIndex: 'to',
   key: 'hash',
   width: 1,
-  render: (value, row) => (
-    <AddressContainer
-      value={value}
-      alias={
-        row.toContractInfo
-          ? row.toContractInfo.name
-          : row.contractInfo
-          ? row.contractInfo.name
-          : ''
-      }
-      contractCreated={row.contractCreated}
-    />
-  ),
+  render: (value, row) => {
+    let alias = '';
+
+    if (InternalContracts[value]) alias = InternalContracts[value];
+    else if (row.toContractInfo && row.toContractInfo.name)
+      alias = row.toContractInfo.name;
+    else if (row.contractInfo && row.contractInfo.name)
+      alias = row.contractInfo.name;
+    else if (row.tokenInfo && row.tokenInfo.name)
+      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+
+    return (
+      <AddressContainer
+        value={value}
+        alias={alias}
+        contractCreated={row.contractCreated}
+      />
+    );
+  },
 };
 
 export const value = {
@@ -143,12 +239,70 @@ export const gasFee = {
 export const age = (ageFormat, toggleAgeFormat) =>
   ColumnAge({ ageFormat, toggleAgeFormat });
 
+export const method = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.transaction.method)}
+    </Translation>
+  ),
+  dataIndex: 'method',
+  key: 'method',
+  width: 1,
+  render: value => {
+    if (value === '0x' || value === null || value === undefined) {
+      return '--';
+    }
+    const reg = /([^(]*)(?=\(.*\))/;
+    const match = reg.exec(value);
+    let text = '';
+    if (match) {
+      text = match[0];
+    } else {
+      text = value;
+    }
+
+    return (
+      <Text span hoverValue={text}>
+        <StyledMethodContainerWrapper>
+          <StyledMethodWrapper>{text}</StyledMethodWrapper>
+        </StyledMethodContainerWrapper>
+      </Text>
+    );
+  },
+};
+
 const StyledTransactionHashWrapper = styled.span`
   display: flex;
   align-items: center;
 
   .status {
     margin-right: 0.5714rem;
+  }
+
+  .txn-overview-popup-container {
+    flex-shrink: 0;
+  }
+  /* reset tooltip-content style */
+  .popover.txn-overview-popup + div.tooltip-content {
+    .items {
+      max-height: inherit;
+    }
+  }
+
+  .icon-view-txn-container {
+    display: inline-block;
+    width: 1.4286rem;
+    height: 1.4286rem;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(${iconViewTxn});
+    background-position: center;
+    background-size: contain;
+    vertical-align: middle;
+
+    &:focus {
+      background-image: url(${iconViewTxnActive});
+    }
   }
 `;
 
@@ -162,7 +316,25 @@ const StyledStatusWrapper = styled.span`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 85px;
   overflow: hidden;
   vertical-align: bottom;
+`;
+
+const StyledMethodContainerWrapper = styled.span`
+  display: flex;
+`;
+const StyledMethodWrapper = styled.span`
+  background: rgba(171, 172, 181, 0.1);
+  border-radius: 10px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #424a71;
+  line-height: 12px;
+  max-width: 95px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;

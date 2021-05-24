@@ -73,6 +73,10 @@ export const GlobalStyle = createGlobalStyle`
       background-color: #65709a;
       border: none;
     }
+
+    &.currency-select {
+      max-height: 7.1429rem;
+    }
   }
   .transactionModalContainer{
     .contentContainer{

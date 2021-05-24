@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
@@ -22,11 +22,13 @@ import { Link } from 'app/components/Link';
 import { Text } from 'app/components/Text';
 import { ColumnsType } from 'app/components/TabsTablePanel';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
+import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
-  TabLabel,
-  TabsTablePanel,
-} from 'app/components/TabsTablePanel/Loadable';
-import { formatString, isContractAddress, isInnerContractAddress } from 'utils';
+  formatString,
+  isContractAddress,
+  isInnerContractAddress,
+  toThousands,
+} from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
 import {
@@ -40,6 +42,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
+import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 const AceEditorStyle = {
   width: '100%',
@@ -365,9 +368,10 @@ export function Table({ address, addressInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
 
-  const columnsTransactionsWidth = [4, 8, 7, 4, 3, 4, 5];
+  const columnsTransactionsWidth = [4, 3, 7, 6, 3, 2, 3, 4];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
+    transactionColunms.method,
     tokenColunms.from,
     tokenColunms.to,
     transactionColunms.value,
@@ -453,7 +457,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 3, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
@@ -464,7 +468,7 @@ export function Table({ address, addressInfo }) {
       render: value => <AddressContainer isLink={false} value={value} />,
     },
     blockColunms.avgGasPrice,
-    blockColunms.gasUsedPercent,
+    blockColunms.gasUsedPercentWithProgress,
     blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsBlocksWidth[i] }));
@@ -473,98 +477,147 @@ export function Table({ address, addressInfo }) {
     {
       value: 'transaction',
       action: 'accountTransactions',
-      label: (total: number, realTotal: number) => {
-        return (
-          <>
-            {t(translations.transactions.title)}
-            <TabLabel total={total} realTotal={realTotal} />
-          </>
-        );
-      },
+      label: t(translations.transactions.title),
       url: `/transaction?accountAddress=${address}`,
       pagination: true,
       table: {
         columns: columnsTransactions,
         rowKey: 'hash',
+        className: 'transaction-wide',
       },
-      hasFilter: true,
+      tableHeader: ({ total }) => (
+        <StyledTableHeaderWrapper>
+          {t(translations.general.totalRecord, {
+            total: toThousands(total),
+          })}
+        </StyledTableHeaderWrapper>
+      ),
+      tableFooter: (
+        <DownloadCSV
+          url={queryString.stringifyUrl({
+            url: '/v1/report/transaction',
+            query: {
+              minTimestamp,
+              maxTimestamp,
+              accountAddress,
+              limit: '5000',
+              reverse: 'true',
+            },
+          })}
+        />
+      ),
     },
   ];
 
   tabs.push({
     value: `transfers-${cfxTokenTypes.cfx}`,
     action: 'cfxTransfers',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.cfxTransfer)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.cfxTransfer),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`,
     table: {
       columns: columnsCFXTrasfer,
       rowKey: row => `${row.transactionHash}${row.transactionTraceIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'CFX',
+          },
+        })}
+      />
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
     value: `transfers-${cfxTokenTypes.erc20}`,
     action: 'transfersCrc20',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc20)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc20),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`,
     table: {
       columns: columnsTokenTrasfersErc20,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC20',
+          },
+        })}
+      />
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
     value: `transfers-${cfxTokenTypes.erc721}`,
     action: 'transfersCrc721',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc721)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc721),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`,
     table: {
       columns: columnsTokenTrasfersErc721,
       rowKey: row => `${row.transactionHash}${row.transactionLogIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC721',
+          },
+        })}
+      />
+    ),
   });
 
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
     value: `transfers-${cfxTokenTypes.erc1155}`,
     action: 'transfersCrc1155',
-    label: (total: number, realTotal: number) => {
-      return (
-        <>
-          {t(translations.general.tokenTxnsErc1155)}
-          <TabLabel total={total} realTotal={realTotal} />
-        </>
-      );
-    },
+    label: t(translations.general.tokenTxnsErc1155),
     pagination: true,
     url: `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`,
     table: {
@@ -573,7 +626,28 @@ export function Table({ address, addressInfo }) {
       rowKey: row =>
         `${row.transactionHash}${row.transactionLogIndex}${row.batchIndex}`,
     },
-    hasFilter: true,
+    tableHeader: ({ total }) => (
+      <StyledTableHeaderWrapper>
+        {t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })}
+      </StyledTableHeaderWrapper>
+    ),
+    tableFooter: (
+      <DownloadCSV
+        url={queryString.stringifyUrl({
+          url: '/v1/report/transfer',
+          query: {
+            minTimestamp,
+            maxTimestamp,
+            accountAddress,
+            limit: '5000',
+            reverse: 'true',
+            transferType: 'ERC1155',
+          },
+        })}
+      />
+    ),
   });
 
   tabs.push(
@@ -589,21 +663,33 @@ export function Table({ address, addressInfo }) {
           action: 'minedBlocks',
           hideTotalZero: true,
           pagination: true,
-          label: (total: number, realTotal: number) => {
-            return (
-              <>
-                {t(translations.addressDetail.minedBlocks)}
-                <TabLabel total={total} realTotal={realTotal} />
-              </>
-            );
-          },
-
+          label: t(translations.addressDetail.minedBlocks),
           url: `/block?miner=${address}`,
           table: {
             columns: columnsMinedBlocks,
             rowKey: 'hash',
           },
-          hasFilter: true,
+          tableHeader: ({ total }) => (
+            <StyledTableHeaderWrapper>
+              {t(translations.general.totalRecord, {
+                total: toThousands(total),
+              })}
+            </StyledTableHeaderWrapper>
+          ),
+          tableFooter: (
+            <DownloadCSV
+              url={queryString.stringifyUrl({
+                url: '/v1/report/mined_block', // @todo replace with real url
+                query: {
+                  minTimestamp,
+                  maxTimestamp,
+                  accountAddress,
+                  limit: '5000',
+                  reverse: 'true',
+                },
+              })}
+            />
+          ),
         },
   );
 
@@ -742,4 +828,9 @@ const ExportRecordsButtonWrapper = styled.span`
   &.show {
     display: inherit;
   }
+`;
+
+// @todo, used for temp, should be replace when update table filter group, add filter group to tableHeader
+const StyledTableHeaderWrapper = styled.div`
+  padding: 8px;
 `;

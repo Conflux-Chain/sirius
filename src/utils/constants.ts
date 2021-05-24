@@ -85,3 +85,34 @@ export enum ADDRESS_CETHS {
 export const ADDRESS_CETH = IS_TESTNET
   ? ADDRESS_CETHS.testnet
   : ADDRESS_CETHS.mainnet;
+
+export enum LOCALSTORAGE_KEYS {
+  currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
+}
+
+export const CURRENCY_SYMBOLS = {
+  USD: '$',
+  CNY: '¥',
+  GBP: '£',
+  KRW: '₩',
+  RUB: '₽',
+  EUR: '€',
+};
+
+export const getCurrency = () => {
+  return localStorage.getItem(LOCALSTORAGE_KEYS.currency) || 'USD';
+};
+
+export const getCurrencySymbol = () => {
+  return CURRENCY_SYMBOLS[getCurrency()];
+};
+
+export const InternalContracts = {
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k': 'AdminControl',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MHJJU8K': 'AdminControl',
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar': 'SponsorWhitelistControl',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAEGG2R16AR':
+    'SponsorWhitelistControl',
+  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb': 'Staking',
+  'CFX:TYPE.BUILTIN:AAEJUAAAAAAAAAAAAAAAAAAAAAAAAAAAAJRWUC9JNB': 'Staking',
+};

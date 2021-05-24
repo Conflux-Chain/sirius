@@ -39,7 +39,14 @@ export type TablePanelType = {
   table: TableType;
   hasFilter?: boolean;
   className?: string;
-  tableHeader?: React.ReactNode | Array<React.ReactNode>;
+  tableHeader?:
+    | React.ReactNode
+    | Array<React.ReactNode>
+    | ((option: Object) => React.ReactNode);
+  tableFooter?:
+    | React.ReactNode
+    | Array<React.ReactNode>
+    | ((option?: Object) => React.ReactNode);
 };
 
 const mockTableConfig = (columns, type = 'skeleton') => {
@@ -103,12 +110,14 @@ export const TablePanel = ({
   pagination,
   table,
   hasFilter = false,
-  tableHeader = null,
+  tableHeader: outerTableHeader = null,
+  tableFooter: outerTableFooter = null,
 }: TablePanelType) => {
   const {
     pageNumber,
     pageSize,
     total,
+    realTotal,
     data,
     gotoPage,
     setPageSize,
@@ -202,6 +211,20 @@ export const TablePanel = ({
   const showPagination =
     pagination !== false && numberCacheTotal > numberPageSize;
 
+  let tableHeader = outerTableHeader;
+  if (typeof tableHeader === 'function') {
+    // add related params to tableHeader
+    tableHeader = tableHeader({
+      total: realTotal,
+    });
+  }
+
+  let tableFooter = outerTableFooter;
+  if (typeof tableFooter === 'function') {
+    // add related params to tableFooter
+    tableFooter = tableFooter({});
+  }
+
   return (
     <>
       <StyledTableWrapper hasFilter={hasFilter}>
@@ -222,6 +245,11 @@ export const TablePanel = ({
             />
             {/* may rewrite a new Table component with empty placeholder is better */}
             <Empty show={empty} type="fixed" />
+            {tableFooter && (
+              <StyledTableFooterWrapper key={url}>
+                {tableFooter}
+              </StyledTableFooterWrapper>
+            )}
           </div>
         </Card>
       </StyledTableWrapper>
@@ -256,6 +284,10 @@ TablePanel.defaultProps = {
   table: defaultTableConfig,
 };
 
+const StyledTableFooterWrapper = styled.div`
+  padding: 0 0 0.7143rem 0;
+`;
+
 const StyledTableHeaderWrapper = styled.div`
   padding: 0.7143rem 0;
   border-bottom: 1px solid #e8e9ea;
@@ -278,6 +310,11 @@ const StyledTableWrapper: any = styled.div`
 
       > table {
         width: 1100px !important;
+      }
+    }
+    &.transaction-wide {
+      .table-content > table {
+        width: 1180px !important;
       }
     }
     &.monospaced {

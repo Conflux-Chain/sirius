@@ -211,9 +211,45 @@
     "learnMore": "了解更多",
     "search": {
       "tokens": "代币"
+    },
+    "balanceChecker": {
+      "tokenBalanceChecker": "代币余额检索器",
+      "balanceChecker": "余额检索器",
+      "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
+      "tokenQuantity": "代币数量",
+      "tokenSupply": "代币供应",
+      "cfxBalance": "CFX 余额",
+      "address": "地址",
+      "contractAddress": "合约地址",
+      "blockNoOrDate": "区块号或者日期",
+      "or": "或",
+      "enterBlockNo": "输入区块号",
+      "error": "不能为空",
+      "lookUp": "搜索",
+      "reset": "重置",
+      "tokenQuantityForAccountAddress": "账户地址代币总数量",
+      "totalSupplyForContractAddress": "合约地址代币总供应量",
+      "cfxBalanceForAddress": "地址 CFX 总余额",
+      "snapshotDate": "截止日期",
+      "block": "区块",
+      "blockNo": "区块号"
     }
   },
   "footer": {
+    "currency": {
+      "usd": "美元",
+      "cny": "人民币",
+      "gbp": "英镑",
+      "krw": "韩元",
+      "rub": "卢布",
+      "eur": "欧元"
+    },
+    "aboutUs": {
+      "title": "关于我们",
+      "helpCenter": "帮助中心",
+      "privacyPolicy": "隐私条款",
+      "terms": "法律政策"
+    },
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
     "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
     "cookieAgree": "知道了",
@@ -255,6 +291,11 @@
     "contract": "合约",
     "block": "区块",
     "transaction": "交易"
+  },
+  "networkError": {
+    "title": "温馨提示",
+    "label": "当前搜索地址为 Conflux {{network}} 地址，请切换网络后再尝试搜索。",
+    "btn": "切换网络至 {{network}}"
   },
   "token": {
     "token": "代币",
@@ -372,6 +413,7 @@
     }
   },
   "general": {
+    "totalRecord": "共计 {{total}} 个记录",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",
@@ -386,7 +428,14 @@
     "address": {
       "editContract": "点击编辑合约",
       "website": "点击进入官方网站",
-      "address": "地址"
+      "address": "地址",
+      "more": {
+        "title": "更多",
+        "report": "举报",
+        "editContract": "编辑合约",
+        "sponsor": "申请赞助",
+        "website": "官方网站"
+      }
     },
     "loading": "加载中...",
     "contract": "合约",
@@ -426,6 +475,7 @@
       },
       "transaction": {
         "hash": "交易哈希",
+        "method": "方法",
         "from": "发送方",
         "to": "接收方",
         "value": "价值",
@@ -561,7 +611,12 @@
     "connnectWalletSubmit": "提交",
     "waitForConfirm": "等待确认",
     "txRejected": "交易已被拒绝",
-    "exportRecords": "导出当前记录"
+    "exportRecords": "导出当前记录",
+    "downloadCSV": {
+      "latest5000records": "仅支持下载最近的 5000 条记录",
+      "download": "下载 ",
+      "csvFile": "CSV 文件"
+    }
   },
   "sponsor": {
     "title": "赞助合约",
@@ -593,6 +648,8 @@
     "tx": "交易"
   },
   "transaction": {
+    "gotoDetail": "查看更多",
+    "inThePosition": "（处于位置 {{position}}）",
     "overview": "概览",
     "viewOutgoingTxns": "查看发送交易",
     "viewIncomingTxns": "查看接收交易",
@@ -633,13 +690,13 @@
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
     "epochConfirmations": "{{count}} 个纪元已确认",
     "statusError": {
+      "0": "未知错误。",
       "1": "合约错误：",
       "2": "存储费不足。",
       "3": "账户余额不足。",
       "4": "燃气费不足。",
       "5": "未知合约错误。",
-      "6": "合约部署失败。",
-      "7": "未知错误。"
+      "6": "合约部署失败。"
     },
     "internalTxns": {
       "title": "内部交易",
@@ -906,10 +963,15 @@
   },
   "statistics": {
     "statistics": "最佳统计",
+    "overview": "概览",
     "transactions": "交易",
     "tokens": "代币",
     "miners": "矿工",
     "network": "网络",
+    "overviewTransactions": "交易",
+    "overviewTokens": "代币",
+    "overviewMiners": "矿工",
+    "overviewNetwork": "网络",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
@@ -926,6 +988,21 @@
       "3d": "3天",
       "7d": "7天"
     },
+    "overviewColumns": {
+      "totalCFXSent": "CFX 总发送量",
+      "totalCFXReceived": "CFX 总接收量",
+      "totalTxnCount": "交易总数",
+      "totalTxnCountSent": "发送交易总数",
+      "totalTxnCountReceived": "接收交易总数",
+      "totalTokenSent": "代币发送总数",
+      "totalTokenReceived": "代币接收总数",
+      "totalTokenTransfersCount": "代币交易总数",
+      "totalTokenTransfersAccountsCount": "代币交易账户总数",
+      "totalMiners": "矿工总数",
+      "totalBlocksMined": "挖出总区块",
+      "totalGasUsed": "燃气使用总量",
+      "top10": "查看十佳"
+    },
     "column": {
       "rank": "排名",
       "address": "地址",
@@ -941,6 +1018,13 @@
       "totalTxnFees": "总交易费",
       "hashRate": "哈希算力 (GH/s)",
       "gasUsed": "燃料用量"
+    },
+    "home": {
+      "currentBlockNumber": "当前区块号",
+      "currentEpoch": "当前纪元",
+      "account": "账户总数",
+      "transactions": "交易总数",
+      "contract": "合约总数"
     }
   },
   "swap": {
