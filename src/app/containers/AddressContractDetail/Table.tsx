@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
 import styled from 'styled-components/macro';
-import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
@@ -10,7 +9,6 @@ import 'ace-builds/src-noconflict/theme-chrome';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Button } from '@cfxjs/react-ui';
-import { Card } from 'app/components/Card/Loadable';
 import { useHistory, useLocation } from 'react-router';
 import {
   blockColunms,
@@ -21,7 +19,6 @@ import { StyledIconWrapper } from 'utils/tableColumns/token';
 import { Link } from 'app/components/Link';
 import { Text } from 'app/components/Text';
 import { ColumnsType } from 'app/components/TabsTablePanel';
-import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   formatString,
@@ -35,283 +32,12 @@ import {
   TableSearchDatepicker,
   TableSearchDropdown,
 } from 'app/components/TablePanel';
-import { cfx } from 'utils/cfx';
-import { ContractAbi } from 'app/components/ContractAbi/Loadable';
 import { cfxTokenTypes } from 'utils/constants';
-import { trackEvent } from 'utils/ga';
-import { ScanEvent } from 'utils/gaConstants';
 import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
-const AceEditorStyle = {
-  width: '100%',
-};
-
-function ContractSourceCodeAbi({ contractInfo }) {
-  const { t } = useTranslation();
-  const { sourceCode, abi, address } = contractInfo;
-  const [dataForRead, setDataForRead] = useState([]);
-  const [dataForWrite, setDataForWrite] = useState([]);
-  let abiJson = [];
-  try {
-    abiJson = JSON.parse(abi);
-  } catch (error) {}
-  const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
-  const clickHandler = (btnType: React.SetStateAction<string>) => {
-    setSelectedBtnType(btnType);
-    if (btnType) {
-      trackEvent({
-        category: ScanEvent.tab.category,
-        action:
-          ScanEvent.tab.action[
-            `contract${
-              (btnType + '').charAt(0).toUpperCase() + (btnType + '').slice(1)
-            }`
-          ],
-      });
-    }
-  };
-
-  // init contract object by abi and address
-  const contract = cfx.Contract({
-    abi: abiJson,
-    address,
-  });
-  useEffect(() => {
-    getReadWriteData(abiJson).then(res => {
-      const [dataForR, dataForW] = res;
-      setDataForRead(dataForR as any);
-      setDataForWrite(dataForW as any);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractInfo]);
-
-  async function getReadWriteData(abiJson) {
-    let dataForRead: object[] = [];
-    let dataForWrite: object[] = [];
-    let proArr: object[] = [];
-    if (Array.isArray(abiJson)) {
-      for (let abiItem of abiJson) {
-        if (abiItem.name !== '' && abiItem.type === 'function') {
-          const stateMutability = abiItem.stateMutability;
-          switch (stateMutability) {
-            case 'pure':
-            case 'view':
-              if (abiItem.inputs && abiItem.inputs.length === 0) {
-                const fullNameWithType = formatType({
-                  name: abiItem['name'],
-                  inputs: abiItem['inputs'],
-                });
-                proArr.push(contract[fullNameWithType]());
-              }
-              dataForRead.push(abiItem);
-              break;
-            case 'nonpayable':
-              dataForWrite.push(abiItem);
-              break;
-            case 'payable':
-              const payableObjs = [
-                {
-                  internalType: 'cfx',
-                  name: abiItem['name'],
-                  type: 'cfx',
-                },
-              ];
-              abiItem['inputs'] = payableObjs.concat(abiItem['inputs']);
-              dataForWrite.push(abiItem);
-              break;
-            default:
-              break;
-          }
-        }
-      }
-      const list = await Promise.allSettled(proArr);
-      let i = 0;
-      dataForRead.forEach(function (dValue, dIndex) {
-        if (dValue['inputs'].length === 0) {
-          const listItem = list[i];
-          const status = listItem['status'];
-          if (status === 'fulfilled') {
-            const val = listItem['value'];
-            if (dValue['outputs'].length > 1) {
-              dValue['value'] = val;
-            } else {
-              const arr: any = [];
-              arr.push(val);
-              dValue['value'] = arr;
-            }
-          } else {
-            dValue['error'] = listItem['reason']['message'];
-          }
-          ++i;
-        }
-      });
-    }
-    return [dataForRead, dataForWrite];
-  }
-
-  return (
-    <>
-      <ContractBody>
-        <ButtonWrapper>
-          <Button
-            className={clsx(
-              selectedBtnType === 'sourceCode' && 'enabled',
-              'btnWeight',
-            )}
-            onClick={() => clickHandler('sourceCode')}
-          >
-            {t(translations.contract.sourceCodeShort)}
-          </Button>
-          <Button
-            className={clsx(
-              selectedBtnType === 'abi' && 'enabled',
-              'btn-item',
-              'btnWeight',
-            )}
-            onClick={() => clickHandler('abi')}
-          >
-            {t(translations.contract.abiShort)}
-          </Button>
-          {abi && (
-            <Button
-              className={clsx(
-                selectedBtnType === 'read' && 'enabled',
-                'btn-item',
-                'btnWeight',
-              )}
-              onClick={() => clickHandler('read')}
-            >
-              {t(translations.contract.readContract)}
-            </Button>
-          )}
-          {abi && (
-            <Button
-              className={clsx(
-                selectedBtnType === 'write' && 'enabled',
-                'btn-item',
-                'btnWeight',
-              )}
-              onClick={() => clickHandler('write')}
-            >
-              {t(translations.contract.writeContract)}
-            </Button>
-          )}
-
-          <div className="line"></div>
-        </ButtonWrapper>
-        <ContractCard>
-          {selectedBtnType === 'sourceCode' && (
-            <AceEditor
-              readOnly
-              style={AceEditorStyle}
-              mode="solidity"
-              theme="chrome"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              showGutter={false}
-              showPrintMargin={false}
-              value={sourceCode}
-            />
-          )}
-          {selectedBtnType === 'abi' && (
-            <AceEditor
-              readOnly
-              style={AceEditorStyle}
-              mode="json"
-              theme="chrome"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              showGutter={false}
-              showPrintMargin={false}
-              value={abi}
-            />
-          )}
-          {selectedBtnType === 'read' && (
-            <ContractAbi
-              type="read"
-              data={dataForRead}
-              contractAddress={address}
-              contract={contract}
-            ></ContractAbi>
-          )}
-          {selectedBtnType === 'write' && (
-            <ContractAbi
-              type="write"
-              data={dataForWrite}
-              contractAddress={address}
-              contract={contract}
-            ></ContractAbi>
-          )}
-        </ContractCard>
-      </ContractBody>
-    </>
-  );
-}
-const ContractCard = styled(Card)`
-  padding-bottom: 1.2857rem !important;
-`;
-const ContractBody = styled.div`
-  padding-bottom: 3.5714rem;
-`;
-const ButtonWrapper = styled.div`
-  width: 100%;
-  float: left;
-  box-sizing: border-box;
-  padding: 0 1.2857rem;
-  margin: 0.5714rem 0 0 0;
-  .line {
-    height: 0.0714rem;
-    background-color: #e8e9ea;
-    margin-top: 0.5714rem;
-  }
-  .btn {
-    color: #74798c;
-    font-size: 1rem;
-  }
-  .btn.btnWeight {
-    border-radius: 1.1429rem;
-    padding: 0 1rem;
-    min-width: initial;
-    height: 1.8571rem;
-    line-height: 1.8571rem;
-    border: none;
-    top: 0px;
-    background-color: #f5f8ff;
-
-    ${media.s} {
-      margin: 5px 0;
-    }
-
-    &:hover {
-      color: #ffffff;
-      background-color: rgba(0, 84, 254, 0.8);
-    }
-    &:active {
-      color: #ffffff;
-      background-color: rgba(0, 84, 254, 0.8);
-    }
-    .text {
-      top: 0px !important;
-    }
-  }
-  .enabled.btn {
-    color: #ffffff;
-    background-color: rgba(0, 84, 254, 0.8);
-  }
-
-  .btn-item.btn {
-    margin-left: 0.2857rem;
-  }
-  .hidden {
-    display: none;
-  }
-`;
+import { ContractContent } from './ContractContent';
 
 export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
@@ -320,41 +46,19 @@ export function Table({ address, addressInfo }) {
   const location = useLocation();
   const history = useHistory();
   const queries = queryString.parse(location.search);
-  const [filterVisible, setFilterVisible] = useState(
-    queries?.tab !== 'contract-viewer',
-  );
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
     [address],
   );
   const [ageFormat, toggleAgeFormat] = useAge();
-  const [txFilterVisible, setTxFilterVisible] = useState(
-    queries?.tab !== 'mined-blocks' &&
-      queries?.tab !== 'transfers' &&
-      queries?.tab !== `transfers-${cfxTokenTypes.erc20}` &&
-      queries?.tab !== `transfers-${cfxTokenTypes.erc721}` &&
-      queries?.tab !== `transfers-${cfxTokenTypes.erc1155}` &&
-      !isContract,
-  );
-  // set default tab to transaction
+
   const {
     minTimestamp,
     maxTimestamp,
     tab = 'transaction',
     accountAddress,
   } = queryString.parse(location.search || '');
-  // let { data: contractInfo } = useContract(isContract && address, [
-  //   'erc20TransferCount',
-  //   'erc721TransferCount',
-  //   'erc1155TransferCount',
-  //   'sourceCode',
-  //   'abi',
-  // ]);
-  // let { data: accountInfo } = useAccount(!isContract && address, [
-  //   'erc20TransferCount',
-  //   'erc721TransferCount',
-  //   'erc1155TransferCount',
-  // ]);
+
   useEffect(() => {
     history.replace(
       queryString.stringifyUrl({
@@ -367,6 +71,92 @@ export function Table({ address, addressInfo }) {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search, location.pathname, address, history]);
+
+  const showExportRecordsButton =
+    bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
+  const handleExportRecords = () => {
+    const exportRecordsPathMap = {
+      transaction: 'transaction',
+    };
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc20}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc721}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc1155}`] = 'transfer';
+    exportRecordsPathMap[`transfers-${cfxTokenTypes.cfx}`] = 'transfer';
+    const exportRecordsPath =
+      typeof tab === 'string' && exportRecordsPathMap[tab];
+
+    if (exportRecordsPath) {
+      // @todo why need transferType of /v1/report/transfer?
+      const url = queryString.stringifyUrl({
+        url: `/v1/report/${exportRecordsPath}`,
+        query: {
+          minTimestamp,
+          maxTimestamp,
+          accountAddress,
+          limit: '5000',
+          reverse: 'false',
+          transferType:
+            tab === 'transaction' ? null : tab!['replace']('transfers-', ''),
+        },
+      });
+      window.open(url);
+    }
+  };
+
+  const exportRecordsField = (
+    <ExportRecordsButtonWrapper
+      className={clsx({
+        show: showExportRecordsButton,
+      })}
+      key={`${tab}-tableSearchExportButton`}
+    >
+      <Button
+        size="small"
+        variant="solid"
+        color="primary"
+        onClick={handleExportRecords}
+      >
+        {t(translations.general.exportRecords)}
+      </Button>
+    </ExportRecordsButtonWrapper>
+  );
+
+  const datepickField = (
+    <TableSearchDatepicker key={`${tab}-tableSearchDatepicker`} />
+  );
+
+  const dropdownField = (
+    <TableSearchDropdown
+      key={`${tab}-tableSearchDropdown`}
+      options={[
+        {
+          key: 'txType',
+          value: 'all',
+          name: t(translations.general.viewAll),
+        },
+        {
+          key: 'txType',
+          value: 'outgoing',
+          name: t(translations.transaction.viewOutgoingTxns),
+        },
+        {
+          key: 'txType',
+          value: 'incoming',
+          name: t(translations.transaction.viewIncomingTxns),
+        },
+        {
+          key: 'status',
+          value: '1',
+          name: t(translations.transaction.viewFailedTxns),
+        },
+        {
+          key: 'txType',
+          value: 'create',
+          name: t(translations.transaction.viewCreationTxns),
+        },
+      ]}
+    />
+  );
 
   const columnsTransactionsWidth = [4, 3, 7, 6, 3, 2, 3, 4];
   const columnsTransactions: ColumnsType = [
@@ -490,6 +280,12 @@ export function Table({ address, addressInfo }) {
           {t(translations.general.totalRecord, {
             total: toThousands(total),
           })}
+
+          <FilterWrap>
+            {exportRecordsField}
+            {datepickField}
+            {isContract ? null : dropdownField}
+          </FilterWrap>
         </StyledTableHeaderWrapper>
       ),
       tableFooter: (
@@ -524,6 +320,10 @@ export function Table({ address, addressInfo }) {
         {t(translations.general.totalRecord, {
           total: toThousands(total),
         })}
+        <FilterWrap>
+          {exportRecordsField}
+          {datepickField}
+        </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
     tableFooter: (
@@ -559,6 +359,10 @@ export function Table({ address, addressInfo }) {
         {t(translations.general.totalRecord, {
           total: toThousands(total),
         })}
+        <FilterWrap>
+          {exportRecordsField}
+          {datepickField}
+        </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
     tableFooter: (
@@ -594,6 +398,10 @@ export function Table({ address, addressInfo }) {
         {t(translations.general.totalRecord, {
           total: toThousands(total),
         })}
+        <FilterWrap>
+          {exportRecordsField}
+          {datepickField}
+        </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
     tableFooter: (
@@ -631,6 +439,10 @@ export function Table({ address, addressInfo }) {
         {t(translations.general.totalRecord, {
           total: toThousands(total),
         })}
+        <FilterWrap>
+          {exportRecordsField}
+          {datepickField}
+        </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
     tableFooter: (
@@ -656,7 +468,7 @@ export function Table({ address, addressInfo }) {
           value: 'contract-viewer',
           action: 'contractViewer',
           label: t(translations.token.contract),
-          content: <ContractSourceCodeAbi contractInfo={addressInfo} />,
+          content: <ContractContent contractInfo={addressInfo} />,
         }
       : {
           value: 'mined-blocks',
@@ -674,6 +486,10 @@ export function Table({ address, addressInfo }) {
               {t(translations.general.totalRecord, {
                 total: toThousands(total),
               })}
+              <FilterWrap>
+                {exportRecordsField}
+                {datepickField}
+              </FilterWrap>
             </StyledTableHeaderWrapper>
           ),
           tableFooter: (
@@ -693,120 +509,20 @@ export function Table({ address, addressInfo }) {
         },
   );
 
-  const showExportRecordsButton =
-    bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
-  const handleExportRecords = () => {
-    const exportRecordsPathMap = {
-      transaction: 'transaction',
-    };
-    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc20}`] = 'transfer';
-    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc721}`] = 'transfer';
-    exportRecordsPathMap[`transfers-${cfxTokenTypes.erc1155}`] = 'transfer';
-    exportRecordsPathMap[`transfers-${cfxTokenTypes.cfx}`] = 'transfer';
-    const exportRecordsPath =
-      typeof tab === 'string' && exportRecordsPathMap[tab];
-
-    if (exportRecordsPath) {
-      // @todo why need transferType of /v1/report/transfer?
-      const url = queryString.stringifyUrl({
-        url: `/v1/report/${exportRecordsPath}`,
-        query: {
-          minTimestamp,
-          maxTimestamp,
-          accountAddress,
-          limit: '5000',
-          reverse: 'false',
-          transferType:
-            tab === 'transaction' ? null : tab!['replace']('transfers-', ''),
-        },
-      });
-      window.open(url);
-    }
-  };
-
   // TODO change tab cause multi api request
 
-  return (
-    <TableWrap>
-      {filterVisible && (
-        <FilterWrap>
-          <ExportRecordsButtonWrapper
-            className={clsx({
-              show: showExportRecordsButton,
-            })}
-            key={`${tab}-tableSearchExportButton`}
-          >
-            <Button
-              size="small"
-              variant="solid"
-              color="primary"
-              onClick={handleExportRecords}
-            >
-              {t(translations.general.exportRecords)}
-            </Button>
-          </ExportRecordsButtonWrapper>
-          <TableSearchDatepicker key={`${tab}-tableSearchDatepicker`} />
-          {txFilterVisible && (
-            <TableSearchDropdown
-              key={`${tab}-tableSearchDropdown`}
-              options={[
-                {
-                  key: 'txType',
-                  value: 'all',
-                  name: t(translations.general.viewAll),
-                },
-                {
-                  key: 'txType',
-                  value: 'outgoing',
-                  name: t(translations.transaction.viewOutgoingTxns),
-                },
-                {
-                  key: 'txType',
-                  value: 'incoming',
-                  name: t(translations.transaction.viewIncomingTxns),
-                },
-                {
-                  key: 'status',
-                  value: '1',
-                  name: t(translations.transaction.viewFailedTxns),
-                },
-                {
-                  key: 'txType',
-                  value: 'create',
-                  name: t(translations.transaction.viewCreationTxns),
-                },
-              ]}
-            />
-          )}
-        </FilterWrap>
-      )}
-      <TabsTablePanel
-        key="table"
-        tabs={tabs}
-        onTabsChange={value => {
-          if (
-            value.startsWith('transfers') ||
-            value === 'mined-blocks' ||
-            isContract
-          )
-            setTxFilterVisible(false);
-          else setTxFilterVisible(true);
-          if (value === 'contract-viewer') return setFilterVisible(false);
-          setFilterVisible(true);
-        }}
-      />
-    </TableWrap>
-  );
+  return <TabsTablePanel key="table" tabs={tabs} />;
 }
 
-const TableWrap = styled.div`
-  position: relative;
+const ExportRecordsButtonWrapper = styled.span`
+  display: none;
+  margin-right: 1rem;
+  &.show {
+    display: inherit;
+  }
 `;
 
 const FilterWrap = styled.div`
-  position: absolute;
-  right: 10px;
-  top: 75px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -822,15 +538,9 @@ const FilterWrap = styled.div`
   }
 `;
 
-const ExportRecordsButtonWrapper = styled.span`
-  display: none;
-  margin-right: 1rem;
-  &.show {
-    display: inherit;
-  }
-`;
-
 // @todo, used for temp, should be replace when update table filter group, add filter group to tableHeader
 const StyledTableHeaderWrapper = styled.div`
-  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
