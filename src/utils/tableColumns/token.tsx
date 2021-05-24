@@ -400,7 +400,7 @@ export const balance = (decimal, price, transferType) => ({
   render: value => {
     const decimals = decimal || 0;
     // Decimal places are determined according to the price
-    const decimalPlace = price > 1 ? price.toFixed(0).length + 1 : 2;
+    const decimalPlace = +price > 1 ? (+price).toFixed(0).length + 1 : 2;
     const tinyBalanceThreshold = `0.${Array(decimalPlace).join('0')}1`;
     return (
       <ContentWrapper right>
