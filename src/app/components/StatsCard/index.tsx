@@ -43,13 +43,14 @@ interface Props {
   statsData?: any;
 }
 
-const cfxValue = (value, opt = {}) => (
+const cfxValue = (value, opt: any = { showUnit: false }) => (
   <Text hoverValue={`${fromDripToCfx(value, true)} CFX`}>
     {fromDripToCfx(value, false, {
       withUnit: false,
       keepDecimal: false,
       ...opt,
     })}
+    {opt.showUnit ? ' CFX' : ''}
   </Text>
 );
 
@@ -660,14 +661,15 @@ export const StatsCard = ({
                   }
                   key={c['title']}
                 >
-                  {statsData[c['index']]
-                    ? c['unit'] === 'CFX'
-                      ? cfxValue(statsData[c['index']])
-                      : formatNumber(statsData[c['index']], {
-                          withUnit: false,
-                        })
-                    : '--'}{' '}
-                  {c['unit'] ? ` ${c['unit']}` : ''}
+                  <SkelontonContainer shown={!statsData[c['index']]}>
+                    {statsData[c['index']]
+                      ? c['unit'] === 'CFX'
+                        ? cfxValue(statsData[c['index']], { showUnit: true })
+                        : formatNumber(statsData[c['index']], {
+                            withUnit: false,
+                          })
+                      : null}
+                  </SkelontonContainer>
                 </Description>
               ))}
             </>
