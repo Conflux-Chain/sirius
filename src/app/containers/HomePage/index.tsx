@@ -98,7 +98,7 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
-        {bp === 's' ? <Notice /> : null}
+        {bp && bp === 's' ? <Notice /> : null}
         <BlockchainInfo timestamp={timestamp} />
         {/*<Top>*/}
         {/*  <SmallChartWrap>*/}
