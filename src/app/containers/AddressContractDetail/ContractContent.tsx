@@ -12,10 +12,9 @@ import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-chrome';
-import { Button } from '@cfxjs/react-ui';
-import clsx from 'clsx';
 import { Card } from 'app/components/Card/Loadable';
-import { media } from 'styles/media';
+
+import { SubTabs } from 'app/components/Tabs/Loadable';
 
 const AceEditorStyle = {
   width: '100%',
@@ -26,13 +25,14 @@ export const ContractContent = ({ contractInfo }) => {
   const { sourceCode, abi, address } = contractInfo;
   const [dataForRead, setDataForRead] = useState([]);
   const [dataForWrite, setDataForWrite] = useState([]);
+  const [activeKey, setActiveKey] = useState('sourceCode');
+
   let abiJson = [];
   try {
     abiJson = JSON.parse(abi);
   } catch (error) {}
-  const [selectedBtnType, setSelectedBtnType] = useState('sourceCode');
   const clickHandler = (btnType: React.SetStateAction<string>) => {
-    setSelectedBtnType(btnType);
+    setActiveKey(btnType);
     if (btnType) {
       trackEvent({
         category: ScanEvent.tab.category,
@@ -124,58 +124,41 @@ export const ContractContent = ({ contractInfo }) => {
     return [dataForRead, dataForWrite];
   }
 
+  let tabs = [
+    {
+      key: 'sourceCode',
+      label: t(translations.contract.sourceCodeShort),
+    },
+    {
+      key: 'abi',
+      label: t(translations.contract.abiShort),
+    },
+  ];
+
+  if (abi) {
+    tabs = tabs.concat([
+      {
+        key: 'read',
+        label: t(translations.contract.readContract),
+      },
+      {
+        key: 'write',
+        label: t(translations.contract.writeContract),
+      },
+    ]);
+  }
+
   return (
     <>
       <ContractBody>
-        <ButtonWrapper>
-          <Button
-            className={clsx(
-              selectedBtnType === 'sourceCode' && 'enabled',
-              'btnWeight',
-            )}
-            onClick={() => clickHandler('sourceCode')}
-          >
-            {t(translations.contract.sourceCodeShort)}
-          </Button>
-          <Button
-            className={clsx(
-              selectedBtnType === 'abi' && 'enabled',
-              'btn-item',
-              'btnWeight',
-            )}
-            onClick={() => clickHandler('abi')}
-          >
-            {t(translations.contract.abiShort)}
-          </Button>
-          {abi && (
-            <Button
-              className={clsx(
-                selectedBtnType === 'read' && 'enabled',
-                'btn-item',
-                'btnWeight',
-              )}
-              onClick={() => clickHandler('read')}
-            >
-              {t(translations.contract.readContract)}
-            </Button>
-          )}
-          {abi && (
-            <Button
-              className={clsx(
-                selectedBtnType === 'write' && 'enabled',
-                'btn-item',
-                'btnWeight',
-              )}
-              onClick={() => clickHandler('write')}
-            >
-              {t(translations.contract.writeContract)}
-            </Button>
-          )}
-
-          <div className="line"></div>
-        </ButtonWrapper>
+        <SubTabs
+          tabs={tabs}
+          activeKey={activeKey}
+          onChange={clickHandler}
+          className="contract-body-subtabs"
+        ></SubTabs>
         <ContractCard>
-          {selectedBtnType === 'sourceCode' && (
+          {activeKey === 'sourceCode' && (
             <AceEditor
               readOnly
               style={AceEditorStyle}
@@ -190,7 +173,7 @@ export const ContractContent = ({ contractInfo }) => {
               value={sourceCode}
             />
           )}
-          {selectedBtnType === 'abi' && (
+          {activeKey === 'abi' && (
             <AceEditor
               readOnly
               style={AceEditorStyle}
@@ -205,7 +188,7 @@ export const ContractContent = ({ contractInfo }) => {
               value={abi}
             />
           )}
-          {selectedBtnType === 'read' && (
+          {activeKey === 'read' && (
             <ContractAbi
               type="read"
               data={dataForRead}
@@ -213,7 +196,7 @@ export const ContractContent = ({ contractInfo }) => {
               contract={contract}
             ></ContractAbi>
           )}
-          {selectedBtnType === 'write' && (
+          {activeKey === 'write' && (
             <ContractAbi
               type="write"
               data={dataForWrite}
@@ -226,62 +209,17 @@ export const ContractContent = ({ contractInfo }) => {
     </>
   );
 };
-const ContractCard = styled(Card)`
-  padding-bottom: 1.2857rem !important;
-`;
+
 const ContractBody = styled.div`
   padding-bottom: 3.5714rem;
+  background-color: #ffffff;
+
+  .contract-body-subtabs {
+    padding: 0.5714rem 1.2857rem;
+    border-bottom: 1px solid #e8e9ea;
+  }
 `;
-const ButtonWrapper = styled.div`
-  width: 100%;
-  float: left;
-  box-sizing: border-box;
-  padding: 0 1.2857rem;
-  margin: 0.5714rem 0 0 0;
-  .line {
-    height: 0.0714rem;
-    background-color: #e8e9ea;
-    margin-top: 0.5714rem;
-  }
-  .btn {
-    color: #74798c;
-    font-size: 1rem;
-  }
-  .btn.btnWeight {
-    border-radius: 1.1429rem;
-    padding: 0 1rem;
-    min-width: initial;
-    height: 1.8571rem;
-    line-height: 1.8571rem;
-    border: none;
-    top: 0px;
-    background-color: #f5f8ff;
 
-    ${media.s} {
-      margin: 5px 0;
-    }
-
-    &:hover {
-      color: #ffffff;
-      background-color: rgba(0, 84, 254, 0.8);
-    }
-    &:active {
-      color: #ffffff;
-      background-color: rgba(0, 84, 254, 0.8);
-    }
-    .text {
-      top: 0px !important;
-    }
-  }
-  .enabled.btn {
-    color: #ffffff;
-    background-color: rgba(0, 84, 254, 0.8);
-  }
-
-  .btn-item.btn {
-    margin-left: 0.2857rem;
-  }
-  .hidden {
-    display: none;
-  }
+const ContractCard = styled(Card)`
+  padding-bottom: 1.2857rem !important;
 `;
