@@ -972,6 +972,7 @@
     "overviewTokens": "Tokens",
     "overviewMiners": "Miners",
     "overviewNetwork": "Network",
+    "overviewMore": "View Charts",
     "topTxnCountSent": "Top Txn Count Sent",
     "topTxnCountReceived": "Top Txn Count Received",
     "topCFXSend": "Top CFX Sent",

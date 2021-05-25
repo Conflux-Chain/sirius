@@ -972,6 +972,7 @@
     "overviewTokens": "代币",
     "overviewMiners": "矿工",
     "overviewNetwork": "网络",
+    "overviewMore": "查看图表",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
