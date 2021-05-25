@@ -311,6 +311,7 @@
     "marketCap": "Market Cap",
     "shuttleflow": "This Token is cross-chained from the BTC/Ethereum network to the Conflux network via ",
     "fcMining": "FC-CFX Non-reversible Exchange",
+    "notRegistered": "Token is not registered.",
     "transferList": {
       "searchPlaceHolder": "Txn hash / Holder address",
       "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
