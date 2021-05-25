@@ -58,6 +58,9 @@ const getAddress = data => format.address(data, NETWORK_ID);
  */
 const formatData = (data, type) => {
   try {
+    if (type.startsWith('bytes')) {
+      return format.hex(data);
+    }
     // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
     if (data.sign !== undefined) {
       return data.toString();
