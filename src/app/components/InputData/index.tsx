@@ -25,6 +25,7 @@ export const InputData = ({
         str = byteCode;
         break;
       case 'utf8':
+        // str = byteCode;
         str = hex2utf8(
           byteCode.startsWith('0x') ? byteCode.substr(2) : byteCode,
         );
