@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@cfxjs/react-ui';
 import { Link } from '../../components/Link/Loadable';
@@ -13,6 +13,10 @@ import { defaultTokenIcon } from '../../../constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { formatAddress } from '../../../utils/cfx';
 import { media } from '../../../styles/media';
+import DownIcon from '../../../images/down.png';
+import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
+import { Dropdown, Menu } from '@jnoodle/antd';
+
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
 interface RouteParams {
@@ -71,6 +75,16 @@ export function TokenDetail() {
     formatAddress(tokenAddress) ===
     'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2';
 
+  const menu = (
+    <MenuWrapper>
+      <Menu.Item>
+        <RouterLink to={`/report?address=${tokenAddress}`}>
+          {t(translations.general.address.more.report)}
+        </RouterLink>
+      </Menu.Item>
+    </MenuWrapper>
+  );
+
   return (
     <>
       <Helmet>
@@ -78,7 +92,7 @@ export function TokenDetail() {
         <meta name="description" content={t(translations.tokens.description)} />
       </Helmet>
       <TokenDetailWrap>
-        {data.address ? (
+        {data.address || tokenAddress ? (
           <HeaderWrap>
             {!data.isCustodianToken ? (
               <img
@@ -114,6 +128,26 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
+            <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+              <span onClick={e => e.preventDefault()}>
+                {t(translations.general.address.more.title)}{' '}
+                <img
+                  src={DownIcon}
+                  alt={t(translations.general.address.more.title)}
+                />
+              </span>
+            </DropdownWrapper>
+            {data &&
+            typeof data.isRegistered !== 'undefined' &&
+            !data.isRegistered ? (
+              <WarningInfoWrapper>
+                {t(translations.token.notRegistered)}
+                {'  '}
+                <Link href={`/contract/${tokenAddress}`}>
+                  {t(translations.token.tokenRegistration)}
+                </Link>
+              </WarningInfoWrapper>
+            ) : undefined}
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
@@ -127,14 +161,15 @@ export function TokenDetail() {
         />
         {data.transferType ? (
           <Transfers
-            tokenName={data.name}
-            decimals={data.decimals || 0}
-            price={data.price || 0}
-            totalSupply={data.totalSupply || 0}
-            holderCount={data.holderCount || 0}
-            tokenAddress={tokenAddress}
-            symbol={data.symbol}
-            transferType={data.transferType}
+            tokenData={data}
+            // tokenName={data.name}
+            // decimals={data.decimals || 0}
+            // price={data.price || 0}
+            // totalSupply={data.totalSupply || 0}
+            // holderCount={data.holderCount || 0}
+            // tokenAddress={tokenAddress}
+            // symbol={data.symbol}
+            // transferType={data.transferType}
           />
         ) : null}
       </TokenDetailWrap>
@@ -155,6 +190,7 @@ const SkeletonWrap = styled.div`
 `;
 
 const HeaderWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   line-height: 2.2857rem;
@@ -199,4 +235,23 @@ const HeaderWrap = styled.div`
       }
     }
   }
+`;
+
+export const DropdownWrapper = styled(Dropdown)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  img {
+    width: 11px;
+    height: 6px;
+    margin-left: 5px;
+  }
+`;
+
+const WarningInfoWrapper = styled.div`
+  color: #c65252;
+  margin-left: 10px;
 `;

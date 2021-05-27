@@ -214,33 +214,81 @@ export const Header = memo(() => {
     {
       title: t(translations.header.more),
       matched: moreMatched,
+      className: 'plain',
       children: [
         {
           title: [
-            t(translations.header.addressConverter),
+            t(translations.header.tools),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.addressConverter,
-          afterClick: menuClick,
-          href: '/address-converter',
+          name: ScanEvent.menu.action.tools,
+          plain: true,
+          children: [
+            {
+              title: [
+                t(translations.header.addressConverter),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.addressConverter,
+              afterClick: menuClick,
+              href: '/address-converter',
+            },
+            {
+              title: [
+                t(translations.header.broadcastTx),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.broadcastTx,
+              afterClick: menuClick,
+              href: '/push-tx',
+            },
+            {
+              title: [
+                t(translations.header.blocknumberCalc),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.blocknumberCalc,
+              afterClick: menuClick,
+              href: '/block-countdown',
+            },
+          ],
         },
         {
           title: [
-            t(translations.header.broadcastTx),
+            t(translations.header.support),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.broadcastTx,
-          afterClick: menuClick,
-          href: '/push-tx',
-        },
-        {
-          title: [
-            t(translations.header.blocknumberCalc),
-            <Check size={18} key="check" />,
+          name: ScanEvent.menu.action.support,
+          plain: true,
+          children: [
+            // {
+            //   title: [
+            //     t(translations.header.faq),
+            //     <Check size={18} key="check" />,
+            //   ],
+            //   name: ScanEvent.menu.action.faq,
+            //   afterClick: menuClick,
+            //   href: '/faq',
+            // },
+            {
+              title: [
+                t(translations.header.techIssue),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.techIssue,
+              afterClick: menuClick,
+              href: 'https://github.com/Conflux-Chain/sirius/issues',
+            },
+            {
+              title: [
+                t(translations.header.report),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.report,
+              afterClick: menuClick,
+              href: '/report',
+            },
           ],
-          name: ScanEvent.menu.action.blocknumberCalc,
-          afterClick: menuClick,
-          href: '/block-countdown',
         },
       ],
     },

@@ -43,13 +43,14 @@ interface Props {
   statsData?: any;
 }
 
-const cfxValue = (value, opt = {}) => (
+const cfxValue = (value, opt: any = { showUnit: false }) => (
   <Text hoverValue={`${fromDripToCfx(value, true)} CFX`}>
     {fromDripToCfx(value, false, {
       withUnit: false,
       keepDecimal: false,
       ...opt,
     })}
+    {opt.showUnit ? ' CFX' : ''}
   </Text>
 );
 
@@ -99,10 +100,12 @@ export const StatsCard = ({
         {
           title: t(translations.statistics.overviewColumns.totalCFXSent),
           index: 'cfxAmount',
+          more: '/chart/dailyTransactionCFX',
           unit: 'CFX',
         },
         {
           title: t(translations.statistics.overviewColumns.totalTxnCount),
+          more: '/chart/dailyTransaction',
           index: 'cfxTxn',
         },
       ];
@@ -115,6 +118,7 @@ export const StatsCard = ({
           title: t(
             translations.statistics.overviewColumns.totalTokenTransfersCount,
           ),
+          more: '/chart/dailyTransactionTokens',
           index: 'tokenTransfer',
         },
         {
@@ -122,6 +126,7 @@ export const StatsCard = ({
             translations.statistics.overviewColumns
               .totalTokenTransfersAccountsCount,
           ),
+          more: '/chart/dailyTransactionTokens',
           index: 'tokenAccount',
         },
       ];
@@ -643,15 +648,28 @@ export const StatsCard = ({
           {category === 'overview' ? (
             <>
               {columns.map(c => (
-                <Description title={c['title']} key={c['title']}>
-                  {statsData[c['index']]
-                    ? c['unit'] === 'CFX'
-                      ? cfxValue(statsData[c['index']])
-                      : formatNumber(statsData[c['index']], {
-                          withUnit: false,
-                        })
-                    : '--'}{' '}
-                  {c['unit'] ? ` ${c['unit']}` : ''}
+                <Description
+                  title={
+                    <>
+                      {c['title']}
+                      {c['more'] ? (
+                        <Link href={c['more']} style={{ marginLeft: 8 }}>
+                          {t(translations.statistics.overviewMore)}
+                        </Link>
+                      ) : null}
+                    </>
+                  }
+                  key={c['title']}
+                >
+                  <SkelontonContainer shown={!statsData[c['index']]}>
+                    {statsData[c['index']]
+                      ? c['unit'] === 'CFX'
+                        ? cfxValue(statsData[c['index']], { showUnit: true })
+                        : formatNumber(statsData[c['index']], {
+                            withUnit: false,
+                          })
+                      : null}
+                  </SkelontonContainer>
                 </Description>
               ))}
             </>

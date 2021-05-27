@@ -98,12 +98,12 @@ export function BalanceChecker() {
   };
 
   const validateMessages = {
-    required: t(translations.header.balanceChecker.error),
+    required: t(translations.balanceChecker.error),
   };
 
   const AccountAddressFormItem = (
     <Form.Item
-      label={t(translations.header.balanceChecker.address)}
+      label={t(translations.balanceChecker.address)}
       name="address"
       rules={[{ required: true }, { validator: validateAddress }]}
     >
@@ -112,7 +112,7 @@ export function BalanceChecker() {
   );
   const ContractAddressFormItem = (
     <Form.Item
-      label={t(translations.header.balanceChecker.contractAddress)}
+      label={t(translations.balanceChecker.contractAddress)}
       name="contractAddress"
       rules={[{ required: true }, { validator: validateContractAddress }]}
     >
@@ -122,7 +122,7 @@ export function BalanceChecker() {
   const BlockNoOrDateFormItem = (
     <Form.Item
       required
-      label={t(translations.header.balanceChecker.blockNoOrDate)}
+      label={t(translations.balanceChecker.blockNoOrDate)}
       style={{ marginBottom: 0 }}
     >
       <Form.Item
@@ -143,7 +143,7 @@ export function BalanceChecker() {
       <Form.Item
         style={{ display: 'inline-block', width: '3%', textAlign: 'center' }}
       >
-        <Or>{t(translations.header.balanceChecker.or)}</Or>
+        <Or>{t(translations.balanceChecker.or)}</Or>
       </Form.Item>
       <Form.Item
         name={'blockNo'}
@@ -152,7 +152,7 @@ export function BalanceChecker() {
       >
         <Input
           allowClear
-          placeholder={t(translations.header.balanceChecker.enterBlockNo)}
+          placeholder={t(translations.balanceChecker.enterBlockNo)}
           onFocus={onFocusBlockNoInput}
           onChange={onChangeBlockNo}
         />
@@ -182,7 +182,7 @@ export function BalanceChecker() {
   const TokenQuantityCard = (
     <AntdCard.Meta
       avatar={<Avatar src={TokenIcon} />}
-      title={t(translations.header.balanceChecker.tokenQuantity)}
+      title={t(translations.balanceChecker.tokenQuantity)}
       description={
         // todo 添加单位
         <Text hoverValue={'9441614704711111.123456789'}>
@@ -197,7 +197,7 @@ export function BalanceChecker() {
   const CFXCard = (
     <AntdCard.Meta
       avatar={<Avatar src={TokenIcon} />}
-      title={t(translations.header.balanceChecker.cfxBalance)}
+      title={t(translations.balanceChecker.cfxBalance)}
       description={
         <Text hoverValue={'9441614704711111.123456789'}>
           {formatNumber(9441614704711111.123456789, {
@@ -222,13 +222,11 @@ export function BalanceChecker() {
   return (
     <>
       <Helmet>
-        <title>
-          {t(translations.header.balanceChecker.tokenBalanceChecker)}
-        </title>
+        <title>{t(translations.balanceChecker.tokenBalanceChecker)}</title>
       </Helmet>
 
-      <PageHeader subtitle={t(translations.header.balanceChecker.subtitle)}>
-        {t(translations.header.balanceChecker.tokenBalanceChecker)}
+      <PageHeader subtitle={t(translations.balanceChecker.subtitle)}>
+        {t(translations.balanceChecker.tokenBalanceChecker)}
       </PageHeader>
 
       <CardWrap>
@@ -236,13 +234,13 @@ export function BalanceChecker() {
           <RadioGroup>
             <Radio.Group onChange={onChangeRadio} value={radioValue}>
               <Radio value={1}>
-                {t(translations.header.balanceChecker.tokenQuantity)}
+                {t(translations.balanceChecker.tokenQuantity)}
               </Radio>
               <Radio value={2}>
-                {t(translations.header.balanceChecker.tokenSupply)}
+                {t(translations.balanceChecker.tokenSupply)}
               </Radio>
               <Radio value={3}>
-                {t(translations.header.balanceChecker.cfxBalance)}
+                {t(translations.balanceChecker.cfxBalance)}
               </Radio>
             </Radio.Group>
           </RadioGroup>
@@ -253,10 +251,10 @@ export function BalanceChecker() {
 
       <ButtonGroup>
         <Button type="primary" onClick={onClickLookUp}>
-          {t(translations.header.balanceChecker.lookUp)}
+          {t(translations.balanceChecker.lookUp)}
         </Button>
         <Button type="primary" className={'reset'} onClick={onClickReset}>
-          {t(translations.header.balanceChecker.reset)}
+          {t(translations.balanceChecker.reset)}
         </Button>
       </ButtonGroup>
 
@@ -269,11 +267,7 @@ export function BalanceChecker() {
           <TopLine>
             <TopLineTitle>
               <img src={SuccessIcon} alt={''} />
-              {t(
-                translations.header.balanceChecker
-                  .tokenQuantityForAccountAddress,
-              )}
-              ：
+              {t(translations.balanceChecker.tokenQuantityForAccountAddress)}：
             </TopLineTitle>
             <TopLineValue>
               {
@@ -285,7 +279,7 @@ export function BalanceChecker() {
             <AntdCard>
               <AntdCard.Meta
                 avatar={<Avatar src={DateIcon} />}
-                title={t(translations.header.balanceChecker.snapshotDate)}
+                title={t(translations.balanceChecker.snapshotDate)}
                 description={
                   i18n.language.indexOf('en') > -1
                     ? dayjs().format('MMM DD,YYYY')
@@ -296,7 +290,7 @@ export function BalanceChecker() {
             <AntdCard>
               <AntdCard.Meta
                 avatar={<Avatar src={BlockIcon} />}
-                title={t(translations.header.balanceChecker.block)}
+                title={t(translations.balanceChecker.block)}
                 description={'12345678'}
               />
             </AntdCard>

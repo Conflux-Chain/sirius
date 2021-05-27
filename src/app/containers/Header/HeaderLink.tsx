@@ -21,6 +21,7 @@ export interface HeaderLink {
   isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
   matched?: boolean;
   afterClick?: any;
+  plain?: boolean;
 }
 
 export type HeaderLinks = HeaderLink[];
@@ -37,6 +38,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
       isMatchedFn,
       matched: customMatched,
       afterClick,
+      plain,
     } = link;
 
     let matched: boolean = customMatched || false;
@@ -62,13 +64,21 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
         key={idx}
         href={href}
         name={name}
-        className={`navbar-link level-${level} ${className}`}
+        level={level}
+        className={`navbar-link level-${level} ${
+          plain ? 'plain' : ''
+        } ${className}`}
         onClick={onClick}
         matched={matched}
         afterClick={afterClick}
+        plain={plain}
       >
-        {title}
-        {childrenUI}
+        {plain ? <span>{title}</span> : title}
+        <SubLinkWrap
+          className={`sub-link-wrap level-${level} ${plain ? 'plain' : ''}`}
+        >
+          {childrenUI}
+        </SubLinkWrap>
       </HeaderLink>
     );
   }
@@ -93,7 +103,8 @@ const Menu = styled.div<{ name?: string }>`
     svg {
       visibility: hidden;
     }
-    &.level-1.matched {
+    &.level-1.matched,
+    &.level-2.matched {
       color: white;
       background-color: #65709a;
       :hover {
@@ -117,6 +128,21 @@ const Menu = styled.div<{ name?: string }>`
   }
 `;
 
+const SubLinkWrap = styled.div`
+  &.level-0 {
+    &.plain {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: row;
+    }
+  }
+  &.level-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
 export const HeaderLink: React.FC<{
   isMenu?: boolean;
   className: string;
@@ -125,6 +151,8 @@ export const HeaderLink: React.FC<{
   matched?: boolean;
   onClick?: MouseEventHandler;
   afterClick?: any;
+  level: number;
+  plain?: boolean;
 }> = ({
   className,
   href,
@@ -134,6 +162,8 @@ export const HeaderLink: React.FC<{
   onClick,
   isMenu,
   afterClick,
+  level,
+  plain = false,
 }) => {
   const [expanded, toggle] = useToggle(false);
   const ref = useRef(null);
@@ -146,7 +176,7 @@ export const HeaderLink: React.FC<{
 
   if (href) {
     return (
-      <WrappLink>
+      <WrappLink className={`link-wrap level-${level} ${className}`}>
         <RouterLink
           className={clsx('link', className, matched && 'matched')}
           onClick={() => {
@@ -160,8 +190,17 @@ export const HeaderLink: React.FC<{
             if (afterClick && typeof afterClick === 'function') {
               afterClick();
             }
+            if (href.startsWith('http')) {
+              // @ts-ignore
+              window.location = href;
+            }
           }}
-          to={href}
+          to={
+            href.startsWith('http')
+              ? // @ts-ignore
+                window.location.pathname + window.location.search
+              : href
+          }
         >
           {children}
         </RouterLink>
@@ -171,6 +210,7 @@ export const HeaderLink: React.FC<{
     // select
     return (
       <WrappLink
+        className={`link-wrap level-${level} ${className}`}
         onClick={e => {
           e.preventDefault();
           onClick(e);
@@ -196,11 +236,19 @@ export const HeaderLink: React.FC<{
         </div>
       </WrappLink>
     );
+  } else if (plain) {
+    // sub menu
+    return (
+      <WrappLink className={`plain-wrap level-${level} ${className}`}>
+        {children}
+      </WrappLink>
+    );
   } else {
     const [text, links] = children as ReactNode[];
 
     return (
       <WrappLink
+        className={`link-wrap level-${level} ${className}`}
         ref={ref}
         onClick={e => {
           toggle();
@@ -301,7 +349,8 @@ const WrappLink = styled.span`
       padding-right: 2rem;
     }
 
-    &.level-1 {
+    &.level-1,
+    &.level-2 {
       width: auto;
       padding-top: 0.43rem;
       padding-bottom: 0.43rem;
@@ -311,6 +360,62 @@ const WrappLink = styled.span`
       }
       :hover:not(.matched) {
         background-color: #f1f4f6;
+      }
+    }
+  }
+
+  &.navbar-link.plain.level-0 {
+    .sub-link-wrap.level-0 {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: row;
+    }
+  }
+
+  &.navbar-link.plain.level-1 {
+    > span {
+      display: block;
+      margin-top: 5px;
+      color: #424a71;
+      padding: 0.43rem 1rem;
+      svg {
+        visibility: hidden;
+      }
+      &:hover {
+        color: #424a71;
+      }
+    }
+  }
+
+  &.plain-wrap.level-1 {
+    border-right: 1px solid #eee;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  ${media.m} {
+    &.navbar-link.plain.level-0 {
+      .sub-link-wrap.level-0 {
+        flex-direction: column;
+      }
+    }
+
+    &.navbar-link.plain.level-1 {
+      > span {
+        color: #999fb3;
+        &:hover {
+          color: #999fb3;
+        }
+      }
+    }
+
+    &.plain-wrap.level-1 {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid #515c82;
+      &:last-child {
+        border-bottom: none;
       }
     }
   }
