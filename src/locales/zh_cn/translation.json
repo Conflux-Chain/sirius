@@ -296,8 +296,8 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "fcMining": "FC-CFX 不可逆兑换",
-    "notRegistered": "代币未注册，部分功能不可用",
-    "tokenRegistration": "代币注册",
+    "notRegistered": "该代币尚未被注册，",
+    "tokenRegistration": "立即注册",
     "transferList": {
       "searchPlaceHolder": "交易哈希 / 持有人地址",
       "searchPlaceHolderWithTokenId": "交易哈希 / 持有人地址 / 代币 ID",

@@ -16,7 +16,6 @@ import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@jnoodle/antd';
-import { cfxTokenTypes } from '../../../utils/constants';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
@@ -40,7 +39,6 @@ export function TokenDetail() {
   }
 
   data.holderCount = data.holderCount === '-' ? 0 : data.holderCount;
-  data.transferType = data.transferType || cfxTokenTypes.erc20; // TODO
 
   // data.transferStatistic = data.transferStatistic || {};
 
@@ -139,11 +137,14 @@ export function TokenDetail() {
                 />
               </span>
             </DropdownWrapper>
-            {data && !data.address ? (
+            {data &&
+            typeof data.isRegistered !== 'undefined' &&
+            !data.isRegistered ? (
               <WarningInfoWrapper>
-                {t(translations.token.notRegistered)}{' '}
+                {t(translations.token.notRegistered)}
+                {'  '}
                 <Link href={`/contract/${tokenAddress}`}>
-                  {t(translations.header.contractCreation)}
+                  {t(translations.token.tokenRegistration)}
                 </Link>
               </WarningInfoWrapper>
             ) : undefined}
@@ -160,14 +161,15 @@ export function TokenDetail() {
         />
         {data.transferType ? (
           <Transfers
-            tokenName={data.name}
-            decimals={data.decimals || 0}
-            price={data.price || 0}
-            totalSupply={data.totalSupply || 0}
-            holderCount={data.holderCount || 0}
-            tokenAddress={tokenAddress}
-            symbol={data.symbol}
-            transferType={data.transferType}
+            tokenData={data}
+            // tokenName={data.name}
+            // decimals={data.decimals || 0}
+            // price={data.price || 0}
+            // totalSupply={data.totalSupply || 0}
+            // holderCount={data.holderCount || 0}
+            // tokenAddress={tokenAddress}
+            // symbol={data.symbol}
+            // transferType={data.transferType}
           />
         ) : null}
       </TokenDetailWrap>
