@@ -43,7 +43,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     decimals,
     totalSupply,
     price,
-    holderCount,
+    // holderCount,
     transferType,
     isRegistered,
   } = tokenData;
