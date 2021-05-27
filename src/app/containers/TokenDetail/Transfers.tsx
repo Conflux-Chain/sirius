@@ -44,7 +44,9 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     totalSupply,
     price,
     // holderCount,
-    transferType,
+    transferType = typeof tokenData.decimals !== 'undefined'
+      ? cfxTokenTypes.erc20
+      : '',
     isRegistered,
   } = tokenData;
   const bp = useBreakpoint();
@@ -308,7 +310,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     tabs.push(analysisTab);
   }
 
-  return <TabsTablePanel tabs={tabs} />;
+  return transferType ? <TabsTablePanel tabs={tabs} /> : null;
 }
 
 const StyledSearchAreaWrapper = styled.div`

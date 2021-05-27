@@ -159,7 +159,7 @@ export function TokenDetail() {
           tokenAddress={tokenAddress}
           transferType={data.transferType}
         />
-        {data.transferType ? (
+        {data.address ? (
           <Transfers
             tokenData={data}
             // tokenName={data.name}
