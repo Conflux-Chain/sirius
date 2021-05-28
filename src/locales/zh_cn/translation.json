@@ -198,8 +198,15 @@
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
     "more": "更多",
+    "tools": "工具",
+    "balanceChecker": "余额检索器",
     "charts": "图表",
     "statistics": "最佳统计数据",
+    "support": "支持与帮助",
+    "faq": "常见问题",
+    "feedback": "反馈",
+    "techIssue": "技术问题",
+    "report": "举报",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币",
@@ -211,28 +218,6 @@
     "learnMore": "了解更多",
     "search": {
       "tokens": "代币"
-    },
-    "balanceChecker": {
-      "tokenBalanceChecker": "代币余额检索器",
-      "balanceChecker": "余额检索器",
-      "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
-      "tokenQuantity": "代币数量",
-      "tokenSupply": "代币供应",
-      "cfxBalance": "CFX 余额",
-      "address": "地址",
-      "contractAddress": "合约地址",
-      "blockNoOrDate": "区块号或者日期",
-      "or": "或",
-      "enterBlockNo": "输入区块号",
-      "error": "不能为空",
-      "lookUp": "搜索",
-      "reset": "重置",
-      "tokenQuantityForAccountAddress": "账户地址代币总数量",
-      "totalSupplyForContractAddress": "合约地址代币总供应量",
-      "cfxBalanceForAddress": "地址 CFX 总余额",
-      "snapshotDate": "截止日期",
-      "block": "区块",
-      "blockNo": "区块号"
     }
   },
   "footer": {
@@ -311,6 +296,8 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "fcMining": "FC-CFX 不可逆兑换",
+    "notRegistered": "该代币尚未被注册，",
+    "tokenRegistration": "立即注册",
     "transferList": {
       "searchPlaceHolder": "交易哈希 / 持有人地址",
       "searchPlaceHolderWithTokenId": "交易哈希 / 持有人地址 / 代币 ID",
@@ -972,6 +959,7 @@
     "overviewTokens": "代币",
     "overviewMiners": "矿工",
     "overviewNetwork": "网络",
+    "overviewMore": "查看图表",
     "topTxnCountSent": "最佳地址--发送交易数",
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
@@ -1075,5 +1063,27 @@
       "success": "提交成功",
       "fail": "提交失败"
     }
+  },
+  "balanceChecker": {
+    "tokenBalanceChecker": "代币余额检索器",
+    "balanceChecker": "余额检索器",
+    "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
+    "tokenQuantity": "代币数量",
+    "tokenSupply": "代币供应",
+    "cfxBalance": "CFX 余额",
+    "address": "地址",
+    "contractAddress": "合约地址",
+    "blockNoOrDate": "区块号或者日期",
+    "or": "或",
+    "enterBlockNo": "输入区块号",
+    "error": "不能为空",
+    "lookUp": "搜索",
+    "reset": "重置",
+    "tokenQuantityForAccountAddress": "账户地址代币总数量",
+    "totalSupplyForContractAddress": "合约地址代币总供应量",
+    "cfxBalanceForAddress": "地址 CFX 总余额",
+    "snapshotDate": "截止日期",
+    "block": "区块",
+    "blockNo": "区块号"
   }
 }

@@ -20,13 +20,14 @@ import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 
 interface TransferProps {
   tokenName: string;
-  tokenAddress: string;
+  address: string;
   symbol: string;
   decimals: number;
   totalSupply: number;
   price: number;
   holderCount: number;
   transferType: string;
+  isRegistered: boolean;
 }
 interface Query {
   accountAddress?: string;
@@ -34,16 +35,20 @@ interface Query {
   tokenId?: string;
 }
 
-export function Transfers({
-  tokenName,
-  tokenAddress,
-  symbol,
-  decimals,
-  totalSupply,
-  price,
-  holderCount,
-  transferType,
-}: TransferProps) {
+export function Transfers({ tokenData }: { tokenData: TransferProps }) {
+  const {
+    tokenName,
+    address: tokenAddress,
+    symbol,
+    decimals,
+    totalSupply,
+    price,
+    // holderCount,
+    transferType = typeof tokenData.decimals !== 'undefined'
+      ? cfxTokenTypes.erc20
+      : '',
+    isRegistered,
+  } = tokenData;
   const bp = useBreakpoint();
   const { t } = useTranslation();
   const location = useLocation();
@@ -227,8 +232,9 @@ export function Transfers({
   ];
 
   if (
-    transferType === cfxTokenTypes.erc20 ||
-    transferType === cfxTokenTypes.erc721
+    isRegistered &&
+    (transferType === cfxTokenTypes.erc20 ||
+      transferType === cfxTokenTypes.erc721)
   ) {
     tabs.push({
       value: 'holders',
@@ -300,9 +306,11 @@ export function Transfers({
     content: analysisPanel(),
   };
 
-  tabs.push(analysisTab);
+  if (isRegistered) {
+    tabs.push(analysisTab);
+  }
 
-  return <TabsTablePanel tabs={tabs} />;
+  return transferType ? <TabsTablePanel tabs={tabs} /> : null;
 }
 
 const StyledSearchAreaWrapper = styled.div`

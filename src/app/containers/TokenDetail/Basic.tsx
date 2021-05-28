@@ -52,6 +52,7 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
+  transferType = typeof decimals !== 'undefined' ? cfxTokenTypes.erc20 : '';
 
   const CURRENCY_SYMBOL = getCurrencySymbol();
 
@@ -191,6 +192,8 @@ export const Basic = ({
             )
           ) : undefined}
         </span>
+      ) : address ? (
+        <span>{t(translations.general.notAvailable)}</span>
       ) : undefined,
   };
 
@@ -201,7 +204,11 @@ export const Basic = ({
       </Tooltip>
     ),
     children:
-      transferCount !== undefined ? toThousands(transferCount) : undefined,
+      transferCount !== undefined
+        ? toThousands(transferCount)
+        : address
+        ? t(translations.general.notAvailable)
+        : undefined,
   };
 
   let list: any;
