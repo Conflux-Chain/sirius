@@ -16,6 +16,7 @@ import imgSuccess from 'images/status/success.svg';
 import imgError from 'images/status/error.svg';
 import imgSkip from 'images/status/skip.svg';
 import imgUnexecuted from 'images/status/unexecuted.svg';
+import imgPending from 'images/status/pending.svg';
 
 interface Props {
   type: string | number;
@@ -61,6 +62,11 @@ export const Status = ({
         name: t(translations.general.status.unexecuted.text),
         icon: imgUnexecuted,
       },
+      '4': {
+        status: 'pending',
+        name: t(translations.general.status.pending.text),
+        icon: imgPending,
+      },
     }),
     [t],
   );
@@ -71,14 +77,14 @@ export const Status = ({
       translations.general.status[typeMap[type].status].explanation,
     );
     // only error message come from outside
-    if (type === '1' && children) {
+    if ((type === '1' || type === '4') && children) {
       explanation = children;
     }
     const content = (
       <>
         <img className="icon" src={typeMap[type].icon} alt={type} />
         <span className="text">{typeMap[type].name}</span>
-        {!showMessage || variant === 'dot' ? null : (
+        {!showMessage || variant === 'dot' || type === '4' ? null : (
           <span className="description">{explanation}</span>
         )}
       </>
@@ -87,7 +93,7 @@ export const Status = ({
       popoverProps || {};
 
     return (
-      <Wrapper
+      <StyledStatusWrapper
         className={clsx('status', className, typeMap[type].status)}
         {...others}
       >
@@ -113,7 +119,7 @@ export const Status = ({
         ) : (
           content
         )}
-      </Wrapper>
+      </StyledStatusWrapper>
     );
   } else {
     return null;
@@ -123,10 +129,12 @@ Status.defaultProps = {
   showMessage: true,
 };
 
-const Wrapper = styled.span`
+const StyledStatusWrapper = styled.span`
   display: flex;
   align-items: center;
   vertical-align: middle;
+  margin-right: 0.7143rem;
+
   &.success {
     color: #7cd77b;
     .dot {
@@ -149,6 +157,12 @@ const Wrapper = styled.span`
     color: #b279c9;
     .dot {
       background-color: #b279c9;
+    }
+  }
+  &.pending {
+    color: #fa8000;
+    .dot {
+      background-color: #fa8000;
     }
   }
   .dot {

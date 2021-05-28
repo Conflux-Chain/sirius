@@ -39,12 +39,11 @@ import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
 import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
+import _ from 'lodash';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import { renderAddress } from '../../../utils/tableColumns/token';
-// import imgSponsoredEn from 'images/sponsored.png';
-// import imgSponsoredZh from 'images/sponsored-zh.png';
+import { renderAddress } from 'utils/tableColumns/token';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -97,9 +96,6 @@ export const Detail = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
-  // const imgSponsored = i18n.language.startsWith('en')
-  //   ? imgSponsoredEn
-  //   : imgSponsoredZh;
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -680,9 +676,13 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Link href={`/epoch/${epochNumber}`}>
-              {toThousands(epochNumber)}
-            </Link>
+            {_.isNil(epochNumber) ? (
+              '--'
+            ) : (
+              <Link href={`/epoch/${epochNumber}`}>
+                {toThousands(epochNumber)}
+              </Link>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -712,8 +712,14 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
-            <CopyButton copyText={blockHash} />
+            {_.isNil(blockHash) ? (
+              '--'
+            ) : (
+              <>
+                <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+                <CopyButton copyText={blockHash} />
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -726,9 +732,15 @@ export const Detail = () => {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading || syncTimestamp === undefined}>
-            <CountDown from={syncTimestamp} retainDurations={4} />
-            {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+          <SkeletonContainer shown={loading}>
+            {_.isNil(syncTimestamp) ? (
+              '--'
+            ) : (
+              <>
+                <CountDown from={syncTimestamp} retainDurations={4} />
+                {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -739,7 +751,9 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {!loading && <Status type={status}>{statusErrorMessage}</Status>}
+            {_.isNil(status)
+              ? '--'
+              : !loading && <Status type={status}>{statusErrorMessage}</Status>}
           </SkeletonContainer>
         </Description>
         <Description
@@ -750,18 +764,24 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Security blockHash={blockHash}></Security>
-            <StyledEpochConfirmationsWrapper>
-              {t(translations.transaction.epochConfirmations, {
-                count: confirmedEpochCount || '-',
-              })}
-              {partLoading ? (
-                <Spinner
-                  size="small"
-                  style={{ display: 'inline-block', marginLeft: 5 }}
-                />
-              ) : null}
-            </StyledEpochConfirmationsWrapper>
+            {_.isNil(blockHash) ? (
+              '--'
+            ) : (
+              <>
+                <Security blockHash={blockHash}></Security>
+                <StyledEpochConfirmationsWrapper>
+                  {t(translations.transaction.epochConfirmations, {
+                    count: confirmedEpochCount || '--',
+                  })}
+                  {partLoading ? (
+                    <Spinner
+                      size="small"
+                      style={{ display: 'inline-block', marginLeft: 5 }}
+                    />
+                  ) : null}
+                </StyledEpochConfirmationsWrapper>
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -866,7 +886,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
+              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
             </SkeletonContainer>
           </Description>
           <Description
@@ -905,7 +925,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && transactionIndex}
+              {_.isNil(transactionIndex) ? '--' : !loading && transactionIndex}
             </SkeletonContainer>
           </Description>
           <Description

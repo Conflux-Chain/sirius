@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import React from 'react';
 import { toThousands } from 'utils';
 import BigNumber from 'bignumber.js';
+import _ from 'lodash';
 
 import imgSponsoredEn from 'images/sponsored.png';
 import imgSponsoredZh from 'images/sponsored-zh.png';
@@ -18,7 +19,7 @@ export const StorageFee = ({ fee, sponsored }) => {
 
   return (
     <StyledFeeWrapper>
-      {getStorageFee(fee)} CFX{' '}
+      {`${_.isNil(fee) ? '--' : getStorageFee(fee)} CFX `}
       {sponsored && (
         <img src={imgSponsored} alt="sponsored" className="icon-sponsored" />
       )}

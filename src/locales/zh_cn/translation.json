@@ -121,7 +121,11 @@
     "description": "交易",
     "tipCountBefore": "共计",
     "tipCountAfter": "个交易",
-    "latestTransactions": "最新交易"
+    "latestTransactions": "最新交易",
+    "pending": "待处理交易",
+    "executed": "已执行交易",
+    "pendingTxnGasFee": "待处理",
+    "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）"
   },
   "cfxTransfers": {
     "title": "CFX 转移",
@@ -540,6 +544,10 @@
       "unexecuted": {
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
+      },
+      "pending": {
+        "text": "待处理",
+        "explanation": ""
       }
     },
     "countdown": {

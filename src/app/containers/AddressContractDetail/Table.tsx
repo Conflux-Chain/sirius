@@ -2,10 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import clsx from 'clsx';
 import queryString from 'query-string';
 import styled from 'styled-components/macro';
-import 'ace-builds/webpack-resolver';
-import 'ace-mode-solidity/build/remix-ide/mode-solidity';
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-chrome';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Button } from '@cfxjs/react-ui';
@@ -25,6 +21,7 @@ import {
   isContractAddress,
   isInnerContractAddress,
   toThousands,
+  isAccountAddress,
 } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
@@ -170,6 +167,19 @@ export function Table({ address, addressInfo }) {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
+  const columnsPendingTransactionsWidth = [4, 6, 5, 3, 2, 3];
+  const columnsPendingTransactions: ColumnsType = [
+    transactionColunms.hash,
+    tokenColunms.from,
+    tokenColunms.to,
+    transactionColunms.value,
+    transactionColunms.gasPrice,
+    {
+      ...transactionColunms.gasFee,
+      render: () => t(translations.transactions.pendingTxnGasFee),
+    },
+  ].map((item, i) => ({ ...item, width: columnsPendingTransactionsWidth[i] }));
+
   const tokenColumnsToken = {
     ...tokenColunms.token,
     render: row => (
@@ -267,7 +277,7 @@ export function Table({ address, addressInfo }) {
     {
       value: 'transaction',
       action: 'accountTransactions',
-      label: t(translations.transactions.title),
+      label: t(translations.transactions.executed),
       url: `/transaction?accountAddress=${address}`,
       pagination: true,
       table: {
@@ -304,6 +314,32 @@ export function Table({ address, addressInfo }) {
       ),
     },
   ];
+
+  if (isAccountAddress(address)) {
+    tabs.push({
+      value: 'transaction-pending',
+      action: 'accountTransactions-pending',
+      label: t(translations.transactions.pending),
+      url: `/rpc/cfx_getAccountPendingTransactions?address=${'cfxtest:aapryh881k6ft10t3z1bg2p90k5w50j3wyeay8wku6'}`,
+      pagination: false,
+      table: {
+        columns: columnsPendingTransactions,
+        rowKey: 'hash',
+        className: 'transaction-wide',
+      },
+      tableHeader: ({ total }) => (
+        <StyledTableHeaderWrapper>
+          {total > 10
+            ? t(translations.transactions.pendingTotal, {
+                total: toThousands(total),
+              })
+            : t(translations.general.totalRecord, {
+                total: toThousands(total),
+              })}
+        </StyledTableHeaderWrapper>
+      ),
+    });
+  }
 
   tabs.push({
     value: `transfers-${cfxTokenTypes.cfx}`,

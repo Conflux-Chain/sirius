@@ -110,10 +110,6 @@ const StyledWrapper = styled.div`
 
   .overview-status-and-confirmedEpochCount {
     display: flex;
-
-    .overview-confirmedEpochCount {
-      padding-left: 0.7143rem;
-    }
   }
 
   .overview-gotoDetail-container {

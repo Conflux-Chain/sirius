@@ -121,7 +121,11 @@
     "description": "Transactions",
     "tipCountBefore": "A total of",
     "tipCountAfter": "transactions",
-    "latestTransactions": "Latest Transactions"
+    "latestTransactions": "Latest Transactions",
+    "pending": "Pending Txns",
+    "executed": "Executed Txns",
+    "pendingTxnGasFee": "pending",
+    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)"
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
@@ -540,6 +544,10 @@
       "unexecuted": {
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
+      },
+      "pending": {
+        "text": "Pending",
+        "explanation": ""
       }
     },
     "countdown": {
