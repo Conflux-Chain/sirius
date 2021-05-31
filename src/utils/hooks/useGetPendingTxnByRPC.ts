@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { cfx } from 'utils/cfx';
 import BigNumber from 'bignumber.js';
+import pubsub from 'utils/pubsub';
 
 // @ts-ignore
 window.format = format;
@@ -82,6 +83,13 @@ export const useGetPendingTxnByRPC = (url: string, inactive = false) => {
         setData2({
           ...data2,
           error: e,
+        });
+        pubsub.publish('notify', {
+          type: 'request',
+          option: {
+            code: '30001', // rpc call error
+            message: e.message,
+          },
         });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps

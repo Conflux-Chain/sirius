@@ -277,7 +277,9 @@ export function Table({ address, addressInfo }) {
     {
       value: 'transaction',
       action: 'accountTransactions',
-      label: t(translations.transactions.executed),
+      label: isAccountAddress(address)
+        ? t(translations.transactions.executed)
+        : t(translations.general.transactions),
       url: `/transaction?accountAddress=${address}`,
       pagination: true,
       table: {
@@ -320,7 +322,7 @@ export function Table({ address, addressInfo }) {
       value: 'transaction-pending',
       action: 'accountTransactions-pending',
       label: t(translations.transactions.pending),
-      url: `/rpc/cfx_getAccountPendingTransactions?address=${'cfxtest:aapryh881k6ft10t3z1bg2p90k5w50j3wyeay8wku6'}`,
+      url: `/rpc/cfx_getAccountPendingTransactions?address=${address}`,
       pagination: false,
       table: {
         columns: columnsPendingTransactions,
