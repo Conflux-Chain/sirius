@@ -591,6 +591,7 @@
         "20002": "Request timeout.",
         "20003": "Request abort.",
         "20004": "Network error.",
+        "30001": "RPC call error.",
         "400": "Bad request.",
         "401": "Unauthorized.",
         "403": "Forbidden.",
