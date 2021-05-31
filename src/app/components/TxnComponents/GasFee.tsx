@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import React from 'react';
 import { toThousands } from 'utils';
+import _ from 'lodash';
 
 import imgSponsoredEn from 'images/sponsored.png';
 import imgSponsoredZh from 'images/sponsored-zh.png';
@@ -14,7 +15,7 @@ export const GasFee = ({ fee, sponsored }) => {
 
   return (
     <StyledFeeWrapper>
-      {`${toThousands(fee)} drip`}{' '}
+      {`${_.isNil(fee) ? '--' : toThousands(fee)} drip `}
       {sponsored && (
         <img src={imgSponsored} alt="sponsored" className="icon-sponsored" />
       )}

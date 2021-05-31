@@ -49,7 +49,7 @@ export const ScanEvent = {
       reddit: 'reddit',
       terms: 'terms',
       privacyPolicy: 'privacy_policy',
-      helpCenter: 'help_center',
+      supportCenter: 'support_center',
     },
   },
   // global search

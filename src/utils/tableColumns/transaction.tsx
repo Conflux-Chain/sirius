@@ -131,7 +131,7 @@ export const hash = {
     <TxnHashRenderComponent
       hash={row.hash}
       status={row.status}
-      txExecErrorMsg={row.txExecErrorMsg}
+      txExecErrorMsg={row.txExecErrorMsg || row?.reason?.pending}
       txExecErrorInfo={row.txExecErrorInfo}
     />
   ),

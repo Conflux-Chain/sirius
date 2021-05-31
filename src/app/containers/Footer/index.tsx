@@ -119,18 +119,18 @@ export function Footer() {
       {t(translations.footer.aboutUs.terms)}
     </Link>
   );
-  // const helpCenter = (
-  //   <Link
-  //     className="footer-link"
-  //     href=""
-  //     ga={{
-  //       category: ScanEvent.menu.category,
-  //       action: ScanEvent.menu.action.helpCenter,
-  //     }}
-  //   >
-  //     {t(translations.footer.aboutUs.helpCenter)}
-  //   </Link>
-  // );
+  const supportCenter = (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.supportCenter,
+      }}
+    >
+      {t(translations.footer.aboutUs.supportCenter)}
+    </Link>
+  );
 
   const icons = (
     <FooterContentIconWrapper>
@@ -358,7 +358,7 @@ export function Footer() {
           <FooterContentRow>
             <FooterContentLink>{privacyPolicy}</FooterContentLink>
             <FooterContentLink>{terms}</FooterContentLink>
-            {/* <FooterContentLink>{helpCenter}</FooterContentLink> */}
+            <FooterContentLink>{supportCenter}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
