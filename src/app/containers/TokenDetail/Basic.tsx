@@ -52,7 +52,9 @@ export const Basic = ({
   transferCount,
 }: BasicProps) => {
   const { t } = useTranslation();
-  transferType = typeof decimals !== 'undefined' ? cfxTokenTypes.erc20 : '';
+  if (address && !transferType) {
+    transferType = typeof decimals !== 'undefined' ? cfxTokenTypes.erc20 : '';
+  }
 
   const CURRENCY_SYMBOL = getCurrencySymbol();
 
