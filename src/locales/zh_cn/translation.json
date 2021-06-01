@@ -304,8 +304,6 @@
     "notRegistered": "该代币尚未被注册，",
     "tokenRegistration": "立即注册",
     "transferList": {
-      "searchPlaceHolder": "交易哈希 / 持有人地址",
-      "searchPlaceHolderWithTokenId": "交易哈希 / 持有人地址 / 代币 ID",
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
     }
@@ -405,6 +403,14 @@
     }
   },
   "general": {
+    "searchInputPlaceholder": {
+      "txnHash": "交易哈希",
+      "address": "地址",
+      "holderAddress": "持有人地址",
+      "tokenID": "代币 ID",
+      "blockHash": "区块哈希",
+      "epoch": "纪元"
+    },
     "totalRecord": "共计 {{total}} 个记录",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",

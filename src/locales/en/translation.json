@@ -304,8 +304,6 @@
     "notRegistered": "The token has not been registered.",
     "tokenRegistration": "Register now",
     "transferList": {
-      "searchPlaceHolder": "Txn hash / Holder address",
-      "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }
@@ -405,6 +403,14 @@
     }
   },
   "general": {
+    "searchInputPlaceholder": {
+      "txnHash": "Txn Hash",
+      "address": "Address",
+      "holderAddress": "Holder Address",
+      "tokenID": "TokenID",
+      "blockHash": "Block Hash",
+      "epoch": "Epoch"
+    },
     "totalRecord": "Total of {{total}} records",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
