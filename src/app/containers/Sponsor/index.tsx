@@ -423,11 +423,11 @@ export function Sponsor() {
               {t(translations.sponsor.noticeFourthOne)}
               &nbsp;
               <a
-                href="https://portal.conflux-chain.org/"
+                href="https://portal.confluxnetwork.org/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                https://portal.conflux-chain.org/
+                https://portal.confluxnetwork.org/
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
