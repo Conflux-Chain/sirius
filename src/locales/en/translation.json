@@ -125,7 +125,8 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)"
+    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown."
   },
   "cfxTransfers": {
     "title": "CFX Transfers",

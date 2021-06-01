@@ -33,8 +33,10 @@ import { cfxTokenTypes } from 'utils/constants';
 import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
-
+import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { ContractContent } from './ContractContent';
+
+import iconInfo from 'images/info.svg';
 
 export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
@@ -331,13 +333,29 @@ export function Table({ address, addressInfo }) {
       },
       tableHeader: ({ total }) => (
         <StyledTableHeaderWrapper>
-          {total > 10
-            ? t(translations.transactions.pendingTotal, {
-                total: toThousands(total),
-              })
-            : t(translations.general.totalRecord, {
-                total: toThousands(total),
-              })}
+          <div>
+            <Tooltip
+              className="download-csv-tooltip"
+              text={t(translations.transactions.pendingTip)}
+              placement="top"
+            >
+              <IconWrapper>
+                <img
+                  src={iconInfo}
+                  alt="warning-icon"
+                  className="download-svg-img"
+                ></img>
+              </IconWrapper>
+            </Tooltip>
+
+            {total > 10
+              ? t(translations.transactions.pendingTotal, {
+                  total: toThousands(total),
+                })
+              : t(translations.general.totalRecord, {
+                  total: toThousands(total),
+                })}
+          </div>
         </StyledTableHeaderWrapper>
       ),
     });
@@ -581,4 +599,14 @@ const StyledTableHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const IconWrapper = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
+
+  .download-svg-img {
+    margin-top: -0.2857rem;
+  }
 `;
