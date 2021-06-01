@@ -22,12 +22,15 @@ import {
   isInnerContractAddress,
   toThousands,
   isAccountAddress,
+  isAddress,
+  isHash,
 } from 'utils';
 import { media, useBreakpoint } from 'styles/media';
 import { defaultTokenIcon } from '../../../constants';
 import {
   TableSearchDatepicker,
   TableSearchDropdown,
+  TableSearchInput,
 } from 'app/components/TablePanel';
 import { cfxTokenTypes } from 'utils/constants';
 import { useAge } from 'utils/hooks/useAge';
@@ -39,6 +42,14 @@ import { ContractContent } from './ContractContent';
 import iconInfo from 'images/info.svg';
 
 const PendingReasonText = transactionColunms.PendingReasonText;
+// @ts-ignore
+window.queryString = queryString;
+
+interface Query {
+  accountAddress?: string;
+  transactionHash?: string;
+  tokenId?: string;
+}
 
 export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
@@ -46,32 +57,136 @@ export function Table({ address, addressInfo }) {
   const loadingText = t(translations.general.loading);
   const location = useLocation();
   const history = useHistory();
-  const queries = queryString.parse(location.search);
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
     [address],
   );
   const [ageFormat, toggleAgeFormat] = useAge();
+  const dropdownOptions = useMemo(
+    () => [
+      {
+        key: 'txType',
+        value: 'all',
+        name: t(translations.general.viewAll),
+      },
+      {
+        key: 'txType',
+        value: 'outgoing',
+        name: t(translations.transaction.viewOutgoingTxns),
+      },
+      {
+        key: 'txType',
+        value: 'incoming',
+        name: t(translations.transaction.viewIncomingTxns),
+      },
+      {
+        key: 'status',
+        value: '1',
+        name: t(translations.transaction.viewFailedTxns),
+      },
+      {
+        key: 'txType',
+        value: 'create',
+        name: t(translations.transaction.viewCreationTxns),
+      },
+    ],
+    [t],
+  );
 
+  // const queries = queryString.parse(location.search);
   const {
+    page = 1,
+    pageSize = 10,
     minTimestamp,
     maxTimestamp,
     tab = 'transaction',
-    accountAddress,
-  } = queryString.parse(location.search || '');
+    // accountAddress,
+    accountAddress: filterAddr,
+    transactionHash: filterHash,
+    tokenId: filterTokenId,
+    ...others
+  } = queryString.parse(location.search);
 
-  useEffect(() => {
-    history.replace(
-      queryString.stringifyUrl({
-        url: location.pathname,
-        query: {
-          accountAddress: address,
-          ...queries,
-        },
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search, location.pathname, address, history]);
+  const filter =
+    (filterAddr as string) ||
+    (filterHash as string) ||
+    (filterTokenId as string) ||
+    '';
+
+  // get transfer type
+  let transferType = '';
+  if (tab === 'mined-blocks' || tab === 'transaction') {
+    transferType = tab;
+  } else if (String(tab).startsWith('transfer')) {
+    transferType = String(tab).substr(10);
+  }
+
+  // table search config
+  const searchFieldConfig = {
+    transaction: {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.txnHash,
+      )} / ${t(translations.general.searchInputPlaceholder.address)}`,
+      input: true,
+      datepicker: true,
+      dropdown: dropdownOptions,
+    },
+    [cfxTokenTypes.cfx]: {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.txnHash,
+      )} / ${t(translations.general.searchInputPlaceholder.address)}`,
+      input: true,
+      datepicker: true,
+      dropdown: dropdownOptions.slice(0, 4),
+    },
+    [cfxTokenTypes.erc20]: {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.txnHash,
+      )} / ${t(translations.general.searchInputPlaceholder.address)}`,
+      input: true,
+      datepicker: true,
+      dropdown: dropdownOptions.slice(0, 4),
+    },
+    [cfxTokenTypes.erc721]: {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.txnHash,
+      )} / ${t(translations.general.searchInputPlaceholder.address)} / ${t(
+        translations.general.searchInputPlaceholder.tokenID,
+      )}`,
+      input: true,
+      datepicker: true,
+      dropdown: dropdownOptions.slice(0, 4),
+    },
+    [cfxTokenTypes.erc1155]: {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.txnHash,
+      )} / ${t(translations.general.searchInputPlaceholder.address)}`,
+      input: true,
+      datepicker: true,
+      dropdown: dropdownOptions.slice(0, 4),
+    },
+    'mined-blocks': {
+      placeholder: `${t(
+        translations.general.searchInputPlaceholder.blockHash,
+      )} / ${t(translations.general.searchInputPlaceholder.epoch)}`,
+      input: true,
+      datepicker: true,
+      dropdown: [],
+    },
+  };
+
+  // useEffect(() => {
+  //   history.replace(
+  //     queryString.stringifyUrl({
+  //       url: location.pathname,
+  //       query: {
+  //         // accountAddress: address,
+  //         ...queries,
+  //       },
+  //     }),
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location.search, location.pathname, address, history]);
 
   const showExportRecordsButton =
     bp !== 's' && localStorage.getItem('showExportRecordsButton') === 'true';
@@ -93,7 +208,7 @@ export function Table({ address, addressInfo }) {
         query: {
           minTimestamp,
           maxTimestamp,
-          accountAddress,
+          accountAddress: address,
           limit: '5000',
           reverse: 'false',
           transferType:
@@ -122,41 +237,56 @@ export function Table({ address, addressInfo }) {
     </ExportRecordsButtonWrapper>
   );
 
-  const datepickField = (
-    <TableSearchDatepicker key={`${tab}-tableSearchDatepicker`} />
-  );
+  const onFilter = (filter: string) => {
+    console.log('filter: ', filter);
 
-  const dropdownField = (
-    <TableSearchDropdown
-      key={`${tab}-tableSearchDropdown`}
-      options={[
-        {
-          key: 'txType',
-          value: 'all',
-          name: t(translations.general.viewAll),
-        },
-        {
-          key: 'txType',
-          value: 'outgoing',
-          name: t(translations.transaction.viewOutgoingTxns),
-        },
-        {
-          key: 'txType',
-          value: 'incoming',
-          name: t(translations.transaction.viewIncomingTxns),
-        },
-        {
-          key: 'status',
-          value: '1',
-          name: t(translations.transaction.viewFailedTxns),
-        },
-        {
-          key: 'txType',
-          value: 'create',
-          name: t(translations.transaction.viewCreationTxns),
-        },
-      ]}
-    />
+    let object: Query = {};
+    if (isAddress(filter)) {
+      object.accountAddress = filter;
+    } else if (isHash(filter)) {
+      object.transactionHash = filter;
+    } else if (transferType !== cfxTokenTypes.erc20 && filter.trim()) {
+      object.tokenId = filter;
+    }
+
+    // @todo 过滤 object 中 所有 search query 中 value !== undefined 值
+
+    const urlWithQuery = queryString.stringifyUrl({
+      url: location.pathname,
+      query: {
+        ...others,
+        page: '1',
+        pageSize: pageSize as string,
+        ...object,
+      },
+    });
+    history.push(urlWithQuery);
+  };
+
+  const getSearchField = type => {
+    return (
+      <TableSearchInput
+        onFilter={onFilter}
+        filter={filter}
+        placeholder={searchFieldConfig[type].placeholder.replace(
+          bp === 's' ? / \/ /gi : '/',
+          '/',
+        )}
+      />
+    );
+  };
+
+  const getDropdownField = type => {
+    return isContract ? null : (
+      <TableSearchDropdown
+        key={`${type}-tableSearchDropdown`}
+        options={searchFieldConfig[type].dropdown}
+      />
+    );
+  };
+
+  const getDatepickField = (type = tab) => (
+    <TableSearchDatepicker key={`${type}-tableSearchDatepicker`} />
   );
 
   const columnsTransactionsWidth = [4, 3, 7, 6, 3, 2, 3, 4];
@@ -300,8 +430,9 @@ export function Table({ address, addressInfo }) {
 
           <FilterWrap>
             {exportRecordsField}
-            {datepickField}
-            {isContract ? null : dropdownField}
+            {getSearchField('transaction')}
+            {getDatepickField()}
+            {getDropdownField('transaction')}
           </FilterWrap>
         </StyledTableHeaderWrapper>
       ),
@@ -312,7 +443,7 @@ export function Table({ address, addressInfo }) {
             query: {
               minTimestamp,
               maxTimestamp,
-              accountAddress,
+              accountAddress: address,
               limit: '5000',
               reverse: 'true',
             },
@@ -389,7 +520,9 @@ export function Table({ address, addressInfo }) {
         })}
         <FilterWrap>
           {exportRecordsField}
-          {datepickField}
+          {getSearchField(cfxTokenTypes.cfx)}
+          {getDatepickField()}
+          {getDropdownField(cfxTokenTypes.cfx)}
         </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
@@ -400,7 +533,7 @@ export function Table({ address, addressInfo }) {
           query: {
             minTimestamp,
             maxTimestamp,
-            accountAddress,
+            accountAddress: address,
             limit: '5000',
             reverse: 'true',
             transferType: 'CFX',
@@ -428,7 +561,9 @@ export function Table({ address, addressInfo }) {
         })}
         <FilterWrap>
           {exportRecordsField}
-          {datepickField}
+          {getSearchField(cfxTokenTypes.erc20)}
+          {getDatepickField()}
+          {getDropdownField(cfxTokenTypes.erc20)}
         </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
@@ -439,7 +574,7 @@ export function Table({ address, addressInfo }) {
           query: {
             minTimestamp,
             maxTimestamp,
-            accountAddress,
+            accountAddress: address,
             limit: '5000',
             reverse: 'true',
             transferType: 'ERC20',
@@ -467,7 +602,9 @@ export function Table({ address, addressInfo }) {
         })}
         <FilterWrap>
           {exportRecordsField}
-          {datepickField}
+          {getSearchField(cfxTokenTypes.erc721)}
+          {getDatepickField()}
+          {getDropdownField(cfxTokenTypes.erc721)}
         </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
@@ -478,7 +615,7 @@ export function Table({ address, addressInfo }) {
           query: {
             minTimestamp,
             maxTimestamp,
-            accountAddress,
+            accountAddress: address,
             limit: '5000',
             reverse: 'true',
             transferType: 'ERC721',
@@ -508,7 +645,9 @@ export function Table({ address, addressInfo }) {
         })}
         <FilterWrap>
           {exportRecordsField}
-          {datepickField}
+          {getSearchField(cfxTokenTypes.erc1155)}
+          {getDatepickField()}
+          {getDropdownField(cfxTokenTypes.erc1155)}
         </FilterWrap>
       </StyledTableHeaderWrapper>
     ),
@@ -519,7 +658,7 @@ export function Table({ address, addressInfo }) {
           query: {
             minTimestamp,
             maxTimestamp,
-            accountAddress,
+            accountAddress: address,
             limit: '5000',
             reverse: 'true',
             transferType: 'ERC1155',
@@ -555,7 +694,8 @@ export function Table({ address, addressInfo }) {
               })}
               <FilterWrap>
                 {exportRecordsField}
-                {datepickField}
+                {getSearchField('mined-blocks')}
+                {getDatepickField()}
               </FilterWrap>
             </StyledTableHeaderWrapper>
           ),
@@ -566,7 +706,7 @@ export function Table({ address, addressInfo }) {
                 query: {
                   minTimestamp,
                   maxTimestamp,
-                  accountAddress,
+                  accountAddress: address,
                   limit: '5000',
                   reverse: 'true',
                 },
