@@ -6,6 +6,7 @@
   "contract": {
     "address": "Contract Address",
     "nameTag": "Contract Name Tag",
+    "registered": "Registered",
     "site": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",

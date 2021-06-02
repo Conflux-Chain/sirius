@@ -39,6 +39,7 @@ import styled from 'styled-components/macro';
 import DownIcon from '../../../images/down.png';
 import { Menu } from '@jnoodle/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
+import { tokenTypeTag } from '../TokenDetail/Basic';
 
 interface RouteParams {
   address: string;
@@ -65,6 +66,7 @@ export const ContractDetailPage = memo(() => {
     'stakingBalance',
     'sourceCode',
     'abi',
+    'isRegistered',
   ]);
 
   useEffect(() => {
@@ -208,7 +210,10 @@ export const ContractDetailPage = memo(() => {
                 <AddressMetadata address={address} accountInfo={contractInfo} />
               </StakingWrapper>
             ) : null}
-            <ContractMetadata address={address} contractInfo={contractInfo} />
+            <div style={{ position: 'relative' }}>
+              <ContractMetadata address={address} contractInfo={contractInfo} />
+              {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
+            </div>
           </Middle>
         )}
         <Bottom key="bottom">
