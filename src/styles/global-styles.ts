@@ -54,6 +54,14 @@ export const GlobalStyle = createGlobalStyle`
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     border-radius: 3px;
   }
+  
+  // image preview text
+  .ant-image-mask-info{
+    font-size: 0;
+    > span{
+      font-size: 12px
+    }
+  }
 
   .sirius-select-dropdown.select-dropdown {
     .option {
