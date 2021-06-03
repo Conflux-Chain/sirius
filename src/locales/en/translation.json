@@ -127,7 +127,11 @@
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
     "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
-    "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown."
+    "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
+    "pendingReason": {
+      "futureNonce": "Wrong nonce",
+      "notEnoughCash": "Insufficient balance"
+    }
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
@@ -480,7 +484,8 @@
         "value": "Value",
         "gasPrice": "Gas Price",
         "gasFee": "Gas Fee",
-        "age": "Age"
+        "age": "Age",
+        "pendingReason": "Reason"
       },
       "token": {
         "number": "#",

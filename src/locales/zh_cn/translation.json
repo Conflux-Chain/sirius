@@ -127,7 +127,11 @@
     "executed": "已执行交易",
     "pendingTxnGasFee": "待处理",
     "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）",
-    "pendingTip": "仅确认展示确认时间超过 5 分钟的待处理交易。"
+    "pendingTip": "仅确认展示确认时间超过 5 分钟的待处理交易。",
+    "pendingReason": {
+      "futureNonce": "错误随机数",
+      "notEnoughCash": "余额不足"
+    }
   },
   "cfxTransfers": {
     "title": "CFX 转移",
@@ -480,7 +484,8 @@
         "value": "价值",
         "gasPrice": "燃料价格",
         "gasFee": "燃气费",
-        "age": "块龄"
+        "age": "块龄",
+        "pendingReason": "原因"
       },
       "token": {
         "number": "#",

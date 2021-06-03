@@ -14,6 +14,7 @@ import { Popover } from '@jnoodle/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
+import { CONST } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.png';
@@ -74,6 +75,23 @@ export const TxnHashRenderComponent = ({
 
   return (
     <StyledTransactionHashWrapper>
+      {bp !== 's' && showOverview ? (
+        <div className="txn-overview-popup-container">
+          <Popover
+            className="txn-overview-popup"
+            placement="right"
+            trigger="click"
+            content={
+              <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
+                <Overview data={txnDetail} />
+              </SkeletonContainer>
+            }
+          >
+            <button className="icon-view-txn-container" onClick={handleClick} />
+          </Popover>
+        </div>
+      ) : null}
+
       {status !== undefined ? (
         <StyledStatusWrapper
           className={clsx({
@@ -91,23 +109,6 @@ export const TxnHashRenderComponent = ({
           <SpanWrap>{hash}</SpanWrap>
         </Text>
       </Link>
-
-      {bp !== 's' && showOverview ? (
-        <div className="txn-overview-popup-container">
-          <Popover
-            className="txn-overview-popup"
-            placement="right"
-            trigger="click"
-            content={
-              <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
-                <Overview data={txnDetail} />
-              </SkeletonContainer>
-            }
-          >
-            <button className="icon-view-txn-container" onClick={handleClick} />
-          </Popover>
-        </div>
-      ) : null}
     </StyledTransactionHashWrapper>
   );
 };
@@ -271,16 +272,41 @@ export const method = {
   },
 };
 
+const PendingReasonText = ({ value }) => {
+  const { t } = useTranslation();
+  let reason = value?.pending;
+  if (reason === CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
+    reason = t(translations.transactions.pendingReason.futureNonce);
+  } else if (reason === CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
+    reason = t(translations.transactions.pendingReason.notEnoughCash);
+  } else {
+    reason = <span>--</span>;
+  }
+  return reason;
+};
+export const pendingReason = {
+  title: (
+    <Translation>
+      {t => t(translations.general.table.transaction.pendingReason)}
+    </Translation>
+  ),
+  dataIndex: 'reason',
+  key: 'reason',
+  width: 1,
+  render: value => <PendingReasonText value={value}></PendingReasonText>,
+};
+
 const StyledTransactionHashWrapper = styled.span`
   display: flex;
   align-items: center;
 
   .status {
-    margin-right: 0.5714rem;
+    margin-right: 0;
   }
 
   .txn-overview-popup-container {
     flex-shrink: 0;
+    margin-right: 0.3571rem;
   }
   /* reset tooltip-content style */
   .popover.txn-overview-popup + div.tooltip-content {
@@ -290,7 +316,7 @@ const StyledTransactionHashWrapper = styled.span`
   }
 
   .icon-view-txn-container {
-    display: inline-block;
+    display: block;
     width: 1.4286rem;
     height: 1.4286rem;
     cursor: pointer;

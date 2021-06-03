@@ -751,9 +751,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {_.isNil(status)
-              ? '--'
-              : !loading && <Status type={status}>{statusErrorMessage}</Status>}
+            <Status type={status}>{statusErrorMessage}</Status>
           </SkeletonContainer>
         </Description>
         <Description

@@ -169,7 +169,7 @@ export function Table({ address, addressInfo }) {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsPendingTransactionsWidth = [4, 6, 5, 3, 2, 3];
+  const columnsPendingTransactionsWidth = [4, 6, 5, 3, 2, 3, 5];
   const columnsPendingTransactions: ColumnsType = [
     transactionColunms.hash,
     tokenColunms.from,
@@ -180,6 +180,7 @@ export function Table({ address, addressInfo }) {
       ...transactionColunms.gasFee,
       render: () => t(translations.transactions.pendingTxnGasFee),
     },
+    transactionColunms.pendingReason,
   ].map((item, i) => ({ ...item, width: columnsPendingTransactionsWidth[i] }));
 
   const tokenColumnsToken = {

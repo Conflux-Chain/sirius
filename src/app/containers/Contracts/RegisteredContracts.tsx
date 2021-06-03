@@ -72,8 +72,6 @@ export function RegisteredContracts() {
 
   const { total } = useTableData(queryUrl);
 
-  console.log(11, queryUrl);
-
   return (
     <>
       <Helmet>

@@ -9212,10 +9212,10 @@ jest@24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-js-conflux-sdk@1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.6.2.tgz#2305fa5dc2e6a290948cf54387c1f22af5cd9dd2"
-  integrity sha512-QrwsYA2jTOflYgCC/WKWOafSuEgY/xlcoyt5GJGKrEqVrkmq9yFWw2tlgFW0Xky09fARdxR/F/ejA6/SGl8FIA==
+js-conflux-sdk@1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.6.3.tgz#adfb2bc6cb74ae8821c7108836e181225b9f6e2b"
+  integrity sha512-jfPwLb4W/sUmLiyvtvhPFHoCYkRLjMH9N14s/viibqURdKw+ziYKxNv70kKKrd1wn4X1gIacA/cL8ABc9H3JJg==
   dependencies:
     "@babel/runtime" "^7.8.4"
     "@conflux-dev/conflux-address-js" "^1.0.0"
