@@ -44,6 +44,7 @@ import _ from 'lodash';
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
+import { NFTPreview } from '../../components/NFTPreview/Loadable';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -541,7 +542,13 @@ export const Detail = () => {
                         : item['value']}
                     </span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
-                    <span className="tokenId">{item['tokenId']}</span>
+                    <span className="tokenId">
+                      {item['tokenId']}{' '}
+                      <NFTPreview
+                        contractAddress={transferItem['address']}
+                        tokenId={item['tokenId']}
+                      />
+                    </span>
                   </span>
                 </span>
               ))}

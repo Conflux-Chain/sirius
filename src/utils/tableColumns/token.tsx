@@ -20,6 +20,7 @@ import { cfxTokenTypes, InternalContracts } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
+import { NFTPreview } from '../../app/components/NFTPreview/Loadable';
 
 export const renderAddress = (
   value,
@@ -479,7 +480,7 @@ export const percentage = total => ({
   },
 });
 
-export const tokenId = {
+export const tokenId = (contractAddress?: string) => ({
   width: 1,
   title: (
     <Translation>
@@ -490,10 +491,13 @@ export const tokenId = {
   key: 'tokenId',
   render: value => (
     <Text span hoverValue={value}>
-      <SpanWrap>{value || '-'}</SpanWrap>
+      <SpanWrap>
+        {value || '-'}{' '}
+        <NFTPreview contractAddress={contractAddress} tokenId={value} />
+      </SpanWrap>
     </Text>
   ),
-};
+});
 
 export const traceType = {
   width: 1,

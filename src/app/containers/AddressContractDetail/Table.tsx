@@ -243,7 +243,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
-    tokenColunms.tokenId,
+    tokenColunms.tokenId(),
     tokenColumnsToken,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
@@ -254,7 +254,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-    tokenColunms.tokenId,
+    tokenColunms.tokenId(address),
     tokenColumnsToken,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));

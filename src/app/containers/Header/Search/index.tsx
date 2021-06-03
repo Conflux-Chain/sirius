@@ -15,7 +15,6 @@ import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
 import { defaultTokenIcon } from '../../../../constants';
 import { formatAddress } from '../../../../utils/cfx';
-import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import fetch from 'utils/request';
 import {
