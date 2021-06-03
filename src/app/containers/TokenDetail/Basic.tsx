@@ -21,6 +21,7 @@ import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
+import { Tag } from '@jnoodle/antd';
 
 export interface BasicProps {
   address?: string;
@@ -211,25 +212,30 @@ export const Basic = ({
         <span>
           {toThousands(holderCount)}{' '}
           {holderIncreasePercent !== undefined ? (
-            holderIncreasePercent > 0 ? (
-              <HolderCountPercentWhenUp>
-                (<img src={UpIcon} alt="UpIcon" />
-                &nbsp;
-                {(holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenUp>
-            ) : holderIncreasePercent < 0 ? (
-              <HolderCountPercentWhenDown>
-                (<img src={DownIcon} alt="DownIcon" />
-                &nbsp;
-                {(-holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenDown>
-            ) : (
-              <HolderCountPercentWhenZero>
-                (<img src={FlatIcon} alt="FlatIcon" />
-                &nbsp;
-                {(holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenZero>
-            )
+            <>
+              {holderIncreasePercent > 0 ? (
+                <HolderCountPercentWhenUp>
+                  (<img src={UpIcon} alt="UpIcon" />
+                  &nbsp;
+                  {(holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenUp>
+              ) : holderIncreasePercent < 0 ? (
+                <HolderCountPercentWhenDown>
+                  (<img src={DownIcon} alt="DownIcon" />
+                  &nbsp;
+                  {(-holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenDown>
+              ) : (
+                <HolderCountPercentWhenZero>
+                  (<img src={FlatIcon} alt="FlatIcon" />
+                  &nbsp;
+                  {(holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenZero>
+              )}{' '}
+              <Tag style={{ transform: 'translateY(-1px) scale(0.8)' }}>
+                24H
+              </Tag>
+            </>
           ) : undefined}
         </span>
       ) : address ? (
