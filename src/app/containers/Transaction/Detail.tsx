@@ -832,21 +832,49 @@ export const Detail = () => {
         </Description>
         <div
           className={clsx('detailResetWrapper', {
-            folded: folded,
+            folded: !folded, // FIXME
           })}
         >
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
+                text={t(translations.toolTip.tx.gasPrice)}
                 placement="top"
               >
-                {t(translations.transaction.storageLimit)}
+                {t(translations.transaction.gasPrice)}
               </Tooltip>
             }
           >
             <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
+              {`${toThousands(gasPrice)} drip`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasUsedLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.gasUsed)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasCharged)}
+                placement="top"
+              >
+                {t(translations.transaction.gasCharged)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {gasUsed && gas ? Math.max(+gasUsed, (+gas * 3) / 4) : '--'}
             </SkeletonContainer>
           </Description>
           <Description
@@ -869,6 +897,20 @@ export const Detail = () => {
           <Description
             title={
               <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {storageCollateralized * 1024}/{toThousands(storageLimit)}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
                 text={t(translations.toolTip.tx.storageReleased)}
                 placement="top"
               >
@@ -878,34 +920,6 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>
               {storageReleasedTotal} CFX
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasUsedLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.gasUsed)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasPrice)}
-                placement="top"
-              >
-                {t(translations.transaction.gasPrice)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${toThousands(gasPrice)} drip`}
             </SkeletonContainer>
           </Description>
           <Description
