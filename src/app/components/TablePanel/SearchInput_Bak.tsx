@@ -1,31 +1,58 @@
 /**
  * TokenDetail
  */
+
+/**
+ * Back up on 2021.6.1
+ *
+ * 1. token balance - not show now
+ * 2. input value format check - should done outside
+ */
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
-import { tranferToLowerCase } from 'utils';
+import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
+import { useMessages } from '@cfxjs/react-ui';
+import { isAddress, isHash, tranferToLowerCase } from 'utils';
+// import { useBalance } from '@cfxjs/react-hooks';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
-import { zeroAddress } from 'utils/constants';
-import { ActionButton } from 'app/components/ActionButton';
+import { cfxTokenTypes, zeroAddress } from 'utils/constants';
+import { ActionButton } from '../ActionButton';
 import { useClickAway } from '@cfxjs/react-ui';
-import { media, useBreakpoint } from 'styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 
 import imgSearch from 'images/search.svg';
 
 interface FilterProps {
   filter: string;
+  tokenAddress?: string;
+  transferType: string;
+  symbol: string;
+  decimals: number;
   onFilter: (value: string) => void;
   placeholder: string;
+}
+
+interface Query {
+  accountAddress?: string;
+  transactionHash?: string;
 }
 
 // @todo extract to common search component with mobile compatible
 export const TableSearchInput = ({
   filter,
+  // tokenAddress,
+  transferType,
+  // symbol,
+  // decimals,
   onFilter,
   placeholder,
 }: FilterProps) => {
+  const { t } = useTranslation();
   const bp = useBreakpoint();
+  const [, setMessage] = useMessages();
   const lFilter = tranferToLowerCase(filter);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState(lFilter);
@@ -39,7 +66,20 @@ export const TableSearchInput = ({
     setValue(lFilter);
   }, [lFilter]);
 
+  // let addr: null | string = null;
+  // if (isAddress(lFilter)) {
+  //   addr = lFilter;
+  // }
+
+  // const tokenAddrs = [tokenAddress];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const [, [tokenBalanceRaw]] = useBalance(addr, tokenAddrs);
+  // const tokenBalance = formatBalance(tokenBalanceRaw || '0', decimals);
+
   const onEnterPress = () => {
+    if (value === '') {
+      return;
+    }
     // deal with zero address
     if (value === '0x0') {
       setValue(zeroAddress);
@@ -49,6 +89,16 @@ export const TableSearchInput = ({
       return;
     }
 
+    if (
+      !isAddress(value) &&
+      !isHash(value) &&
+      !(transferType !== cfxTokenTypes.erc20 && _.isInteger(+value))
+    ) {
+      setMessage({
+        text: t(translations.token.transferList.searchError),
+      });
+      return;
+    }
     if (value !== lFilter) {
       onFilter(value);
     }
@@ -85,6 +135,16 @@ export const TableSearchInput = ({
             onClear={onClear}
             val={value}
           />
+          {/* add date range filter, may cause user confuse */}
+          {/* {transferType === cfxTokenTypes.erc20 &&
+             tokenBalance !== '0' &&
+             symbol && (
+               <BalanceWrap>
+                 {`${t(
+                   translations.token.transferList.balance,
+                 )}${tokenBalance} ${symbol}`}{' '}
+               </BalanceWrap>
+             )} */}
         </div>
       )}
     </FilterWrap>
@@ -135,3 +195,15 @@ const FilterWrap = styled.div`
     width: 14px;
   }
 `;
+
+// const BalanceWrap = styled.div`
+//   background-color: #4b5fe3;
+//   border-radius: 1.1429rem;
+//   height: 1.7143rem;
+//   color: #fff;
+//   padding: 0.2857rem 1.7143rem;
+//   margin-left: 1.2857rem;
+//   white-space: nowrap;
+//   display: flex;
+//   align-items: center;
+// `;

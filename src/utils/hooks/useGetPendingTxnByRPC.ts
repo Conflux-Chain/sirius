@@ -66,9 +66,8 @@ export const useGetPendingTxnByRPC = (url: string, inactive = false) => {
 
   useEffect(() => {
     // rpc call
-    cfx.provider
-      .call(
-        'cfx_getAccountPendingTransactions',
+    cfx
+      .getAccountPendingTransactions(
         query.address,
         txnStartNonce,
         format.hex(Number(parsedPageSize) || 10), // default limit

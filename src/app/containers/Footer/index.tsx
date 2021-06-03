@@ -74,7 +74,7 @@ export function Footer() {
   const portalLink = (
     <Link
       className="footer-link"
-      href="https://portal.conflux-chain.org"
+      href="https://portal.confluxnetwork.org"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.confluxPortal,
@@ -272,7 +272,7 @@ export function Footer() {
     developerDocuments: (
       <Link
         className="footer-link"
-        href="https://developer.conflux-chain.org/"
+        href="https://developer.confluxnetwork.org/"
         ga={{
           category: ScanEvent.menu.category,
           action: ScanEvent.menu.action.developerDocuments,

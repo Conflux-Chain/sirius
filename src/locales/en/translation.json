@@ -6,6 +6,7 @@
   "contract": {
     "address": "Contract Address",
     "nameTag": "Contract Name Tag",
+    "registered": "Registered",
     "site": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
@@ -125,7 +126,12 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)"
+    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
+    "pendingReason": {
+      "futureNonce": "Wrong nonce",
+      "notEnoughCash": "Insufficient balance"
+    }
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
@@ -303,8 +309,6 @@
     "notRegistered": "The token has not been registered.",
     "tokenRegistration": "Register now",
     "transferList": {
-      "searchPlaceHolder": "Txn hash / Holder address",
-      "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }
@@ -404,6 +408,14 @@
     }
   },
   "general": {
+    "searchInputPlaceholder": {
+      "txnHash": "Txn Hash",
+      "address": "Address",
+      "holderAddress": "Holder Address",
+      "tokenID": "TokenID",
+      "blockHash": "Block Hash",
+      "epoch": "Epoch"
+    },
     "totalRecord": "Total of {{total}} records",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
@@ -472,7 +484,8 @@
         "value": "Value",
         "gasPrice": "Gas Price",
         "gasFee": "Gas Fee",
-        "age": "Age"
+        "age": "Age",
+        "pendingReason": "Reason"
       },
       "token": {
         "number": "#",

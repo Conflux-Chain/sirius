@@ -81,7 +81,7 @@ export const Modal = ({
     <div className="modal-tip">
       <span>{t(translations.connectWallet.modal.newToConflux)}</span>
       <a
-        href="https://portal.conflux-chain.org/"
+        href="https://portal.confluxnetwork.org/"
         target="_blank"
         className="modal-tip-link"
         rel="noopener noreferrer"
@@ -162,7 +162,7 @@ export const Modal = ({
   } else {
     portal = (
       <a
-        href="https://portal.conflux-chain.org/"
+        href="https://portal.confluxnetwork.org/"
         target="_blank"
         className="modal-portal-link"
         rel="noopener noreferrer"

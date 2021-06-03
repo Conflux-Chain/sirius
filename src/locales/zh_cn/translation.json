@@ -6,6 +6,7 @@
   "contract": {
     "address": "合约地址",
     "nameTag": "合约名称标签",
+    "registered": "已注册",
     "site": "官方网站",
     "contractIcon": "合约图标",
     "remove": "移除",
@@ -125,7 +126,12 @@
     "pending": "待处理交易",
     "executed": "已执行交易",
     "pendingTxnGasFee": "待处理",
-    "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）"
+    "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）",
+    "pendingTip": "仅确认展示确认时间超过 5 分钟的待处理交易。",
+    "pendingReason": {
+      "futureNonce": "错误随机数",
+      "notEnoughCash": "余额不足"
+    }
   },
   "cfxTransfers": {
     "title": "CFX 转移",
@@ -303,8 +309,6 @@
     "notRegistered": "该代币尚未被注册，",
     "tokenRegistration": "立即注册",
     "transferList": {
-      "searchPlaceHolder": "交易哈希 / 持有人地址",
-      "searchPlaceHolderWithTokenId": "交易哈希 / 持有人地址 / 代币 ID",
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
     }
@@ -404,6 +408,14 @@
     }
   },
   "general": {
+    "searchInputPlaceholder": {
+      "txnHash": "交易哈希",
+      "address": "地址",
+      "holderAddress": "持有人地址",
+      "tokenID": "代币 ID",
+      "blockHash": "区块哈希",
+      "epoch": "纪元"
+    },
     "totalRecord": "共计 {{total}} 个记录",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
@@ -472,7 +484,8 @@
         "value": "价值",
         "gasPrice": "燃料价格",
         "gasFee": "燃气费",
-        "age": "块龄"
+        "age": "块龄",
+        "pendingReason": "原因"
       },
       "token": {
         "number": "#",
