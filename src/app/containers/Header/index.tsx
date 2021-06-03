@@ -83,16 +83,6 @@ export const Header = memo(() => {
           href: '/blockchain/transactions',
         },
         {
-          // cfx transfers
-          title: [
-            t(translations.header.cfxTransfers),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.cfxTransfers,
-          afterClick: menuClick,
-          href: '/blockchain/cfx-transfers',
-        },
-        {
           // accounts
           title: [
             t(translations.header.accounts),
@@ -101,6 +91,16 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.accounts,
           afterClick: menuClick,
           href: '/blockchain/accounts',
+        },
+        {
+          // cfx transfers
+          title: [
+            t(translations.header.cfxTransfers),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.cfxTransfers,
+          afterClick: menuClick,
+          href: '/blockchain/cfx-transfers',
         },
       ],
     },
