@@ -25,6 +25,7 @@ import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
 import imgNotice from 'images/notice2.png';
 import { Link } from '../../components/Link/Loadable';
 import { useToggle } from 'react-use';
+import { getLatestNoticeLink } from '../HomePage/Notice';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -426,7 +427,10 @@ export const Header = memo(() => {
           ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
           : CurrentTethysNotice[iszh ? 'zh' : 'en']}
       </div>
-      <Link href="/notices" className="more">
+      <Link
+        href={getLatestNoticeLink(iszh ? 'zh' : 'en', isTestnet)}
+        className="more"
+      >
         {t(translations.header.learnMore)}
       </Link>
     </NoticeWrapper>
