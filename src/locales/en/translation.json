@@ -215,15 +215,16 @@
     "report": "Report",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token",
-    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token",
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
-      "tokens": "Tokens"
+      "tokens": "Tokens",
+      "contracts": "Contracts"
     }
   },
   "footer": {
