@@ -289,6 +289,17 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/report',
             },
+            {
+              title: [
+                t(translations.header.supportCenter),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.supportCenter,
+              afterClick: menuClick,
+              href: iszh
+                ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
+                : 'https://confluxscansupportcenter.zendesk.com/hc/en-us',
+            },
           ],
         },
       ],

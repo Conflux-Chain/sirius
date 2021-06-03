@@ -217,6 +217,7 @@
     "feedback": "Feedback",
     "techIssue": "Tech Issue",
     "report": "Report",
+    "supportCenter": "Support Center",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
