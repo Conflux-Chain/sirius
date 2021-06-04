@@ -306,7 +306,7 @@ export const LineChart = ({
       case 'dailyTransactionCFX':
         return ['txnCount', 'userCount', 'amount'];
       case 'dailyTransactionTokens':
-        return 'txnCount';
+        return ['txnCount', 'userCount'];
       case 'cfxHoldingAccounts':
         return 'holderCount';
       case 'accountGrowth':

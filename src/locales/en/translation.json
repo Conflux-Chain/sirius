@@ -381,8 +381,10 @@
       "userCount": "CFX Daily Txn Accounts Count"
     },
     "dailyTransactionTokens": {
-      "title": "Daily Transactions -- Tokens",
-      "description": "The total daily transfer of all tokens on the Conflux network."
+      "title": "Daily Transfers -- Tokens",
+      "description": "Daily transfer statistics for all tokens on the Conflux network.",
+      "txnCount": "Daily Token Transfers Count",
+      "userCount": "Daily Transfer Accounts Count"
     },
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
