@@ -17,7 +17,7 @@ import { useBreakpoint } from 'styles/media';
 import { CONST } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconViewTxn from 'images/view-txn.png';
-import iconViewTxnActive from 'images/view-txn-active.png';
+import iconViewTxnActive from 'images/view-txn-active.svg';
 import { InternalContracts } from '../constants';
 
 const StyledHashWrapper = styled.span`
@@ -272,9 +272,9 @@ export const method = {
   },
 };
 
-const PendingReasonText = ({ value }) => {
+export const PendingReasonText = ({ value }) => {
   const { t } = useTranslation();
-  let reason = value?.pending;
+  let reason = value;
   if (reason === CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
     reason = t(translations.transactions.pendingReason.futureNonce);
   } else if (reason === CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
@@ -293,7 +293,9 @@ export const pendingReason = {
   dataIndex: 'reason',
   key: 'reason',
   width: 1,
-  render: value => <PendingReasonText value={value}></PendingReasonText>,
+  render: value => (
+    <PendingReasonText value={value?.pending}></PendingReasonText>
+  ),
 };
 
 const StyledTransactionHashWrapper = styled.span`

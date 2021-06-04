@@ -217,6 +217,7 @@ export const TablePanel = ({
     // add related params to tableHeader
     tableHeader = tableHeader({
       total: realTotal,
+      data: tableData,
     });
   }
 
