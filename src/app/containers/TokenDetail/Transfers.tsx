@@ -144,7 +144,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
-      tokenColunms.tokenId,
+      tokenColunms.tokenId(),
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
@@ -155,7 +155,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tokenColunms.from,
       tokenColunms.to,
       tokenColunms.quantity,
-      tokenColunms.tokenId,
+      tokenColunms.tokenId(tokenAddress),
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }

@@ -263,6 +263,7 @@ const Outer = styled.nav`
   width: 100vw;
   z-index: 1000;
   min-height: 5rem;
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
 
   // mobile
   ${media.m} {

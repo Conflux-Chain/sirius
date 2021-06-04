@@ -44,6 +44,7 @@ import _ from 'lodash';
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
+import { NFTPreview } from '../../components/NFTPreview/Loadable';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -541,7 +542,13 @@ export const Detail = () => {
                         : item['value']}
                     </span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
-                    <span className="tokenId">{item['tokenId']}</span>
+                    <span className="tokenId">
+                      {item['tokenId']}
+                      <NFTPreview
+                        contractAddress={transferItem['address']}
+                        tokenId={item['tokenId']}
+                      />
+                    </span>
                   </span>
                 </span>
               ))}
@@ -825,21 +832,49 @@ export const Detail = () => {
         </Description>
         <div
           className={clsx('detailResetWrapper', {
-            folded: folded,
+            folded: !folded, // FIXME
           })}
         >
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
+                text={t(translations.toolTip.tx.gasPrice)}
                 placement="top"
               >
-                {t(translations.transaction.storageLimit)}
+                {t(translations.transaction.gasPrice)}
               </Tooltip>
             }
           >
             <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
+              {`${toThousands(gasPrice)} drip`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasUsedLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.gasUsed)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasCharged)}
+                placement="top"
+              >
+                {t(translations.transaction.gasCharged)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {gasUsed && gas ? Math.max(+gasUsed, (+gas * 3) / 4) : '--'}
             </SkeletonContainer>
           </Description>
           <Description
@@ -862,6 +897,20 @@ export const Detail = () => {
           <Description
             title={
               <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {storageCollateralized * 1024}/{toThousands(storageLimit)}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
                 text={t(translations.toolTip.tx.storageReleased)}
                 placement="top"
               >
@@ -871,34 +920,6 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>
               {storageReleasedTotal} CFX
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasUsedLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.gasUsed)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasPrice)}
-                placement="top"
-              >
-                {t(translations.transaction.gasPrice)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${toThousands(gasPrice)} drip`}
             </SkeletonContainer>
           </Description>
           <Description

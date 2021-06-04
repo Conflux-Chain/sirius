@@ -128,6 +128,7 @@
     "pendingTxnGasFee": "待处理",
     "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）",
     "pendingTip": "仅确认展示确认时间超过 5 分钟的待处理交易。",
+    "pendingReasonTip": "；待处理交易原因：",
     "pendingReason": {
       "futureNonce": "错误随机数",
       "notEnoughCash": "余额不足"
@@ -217,17 +218,19 @@
     "feedback": "反馈",
     "techIssue": "技术问题",
     "report": "举报",
+    "supportCenter": "帮助中心",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币",
-    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币",
+    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
+    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币/合约名称标签",
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
     "notice": "通知中心",
     "learnMore": "了解更多",
     "search": {
-      "tokens": "代币"
+      "tokens": "代币",
+      "contracts": "合约"
     }
   },
   "footer": {
@@ -625,7 +628,8 @@
       "latest5000records": "仅支持下载最近的 5000 条记录",
       "download": "下载 ",
       "csvFile": "CSV 文件"
-    }
+    },
+    "preview": "预览"
   },
   "sponsor": {
     "title": "赞助合约",
@@ -678,10 +682,11 @@
     "gasUsed": "燃料用量/限制",
     "gasPrice": "燃料价格",
     "gasFee": "燃气费",
+    "gasCharged": "计费燃气",
     "nonce": "随机数",
     "blockHash": "区块哈希",
     "position": "位置",
-    "storageLimit": "存储限制",
+    "storageLimit": "存储用量/限制",
     "storageCollateralized": "存储押金",
     "storageReleased": "存储释放",
     "chainID": "区块链编号",
@@ -874,10 +879,11 @@
       "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
       "gasPrice": "交易指定的每单位燃料成本，GDrip为支付单位。燃料费用越高，被写入区块的机会就越大。",
       "gasFee": "交易所使用的燃料费用。",
+      "gasCharged": "Conflux 协议要求产生计费的燃气用量不少于燃气限制的 3/4. 一般计费燃气等于燃气用量，但如果燃气用量低于 3/4 的燃气限制，计费燃气等于 3/4 的燃气限制。",
       "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
       "blockHash": "区块哈希是一个唯一的66字符的标识符，该标识符在每次交易执行时都会生成。",
       "position": "交易在区块中的索引位置。",
-      "storageLimit": "发送者愿意为交易支付存储押金的最大存储空间数量 （字节）。",
+      "storageLimit": "存储用量 ÷ 1024 = 存储押金；发送者愿意为存储支付存储押金的最大存储空间限制（字节）。",
       "storageCollateralized": "需要支付的用来存储的费用。",
       "storageReleased": "返还的存储押金。",
       "chainID": "交易被发往的区块链的编号，用以防止重放攻击。",

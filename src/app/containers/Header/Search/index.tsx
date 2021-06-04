@@ -14,9 +14,7 @@ import { AutoComplete, Input, SelectProps } from '@jnoodle/antd';
 import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
 import { defaultTokenIcon } from '../../../../constants';
-import { Link } from '../../../components/Link/Loadable';
 import { formatAddress } from '../../../../utils/cfx';
-import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import fetch from 'utils/request';
 import {
@@ -30,43 +28,6 @@ import { appendApiPrefix } from '../../../../utils/api';
 
 const { Search: SearchInput } = Input;
 
-const searchResult = (list: any[], notAvailable = '-') =>
-  list.map(l => {
-    const token = {
-      ...l,
-      icon: l.icon || defaultTokenIcon,
-      name: l.name || notAvailable,
-    };
-    return {
-      value: formatAddress(token.address),
-      label: (
-        <TokenItemWrapper>
-          <img src={token?.icon || defaultTokenIcon} alt="token icon" />
-          <Link href={`/token/${formatAddress(token.address)}`}>
-            <Translation>
-              {t => (
-                <>
-                  <div className="title">
-                    {token?.name} ({token?.symbol}){' '}
-                    <span className="tag">
-                      {token?.transferType.replace('ERC', 'CRC')}
-                    </span>
-                  </div>
-                  {token?.address ? (
-                    <div className="address">{token?.address}</div>
-                  ) : null}
-                  {token?.website ? (
-                    <div className="website">{token?.website}</div>
-                  ) : null}
-                </>
-              )}
-            </Translation>
-          </Link>
-        </TokenItemWrapper>
-      ),
-    };
-  });
-
 const TokenItemWrapper = styled.div`
   display: flex;
   align-items: flex-start;
@@ -78,7 +39,7 @@ const TokenItemWrapper = styled.div`
     margin-right: 10px;
   }
 
-  > a {
+  > span {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -105,11 +66,60 @@ const TokenItemWrapper = styled.div`
   }
 `;
 
+const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
+  list.map(l => {
+    const token = {
+      ...l,
+      icon: l.icon || defaultTokenIcon,
+      name: l.name || notAvailable,
+    };
+    return {
+      key: `${type}-${formatAddress(token.address)}`,
+      value: formatAddress(token.address),
+      type,
+      label: (
+        <TokenItemWrapper
+          onClick={() => {
+            window.location.href = `/${
+              type === 'token' ? 'token' : 'address'
+            }/${formatAddress(token.address)}`;
+          }}
+        >
+          {type === 'token' && (
+            <img src={token?.icon || defaultTokenIcon} alt="icon" />
+          )}
+          <span>
+            <Translation>
+              {t => (
+                <>
+                  <div className="title">
+                    {token?.name}
+                    {token?.symbol ? ` (${token.symbol}) ` : ' '}
+                    {token?.transferType && (
+                      <span className="tag">
+                        {token?.transferType.replace('ERC', 'CRC')}
+                      </span>
+                    )}
+                  </div>
+                  {token?.address ? (
+                    <div className="address">{token?.address}</div>
+                  ) : null}
+                  {token?.website ? (
+                    <div className="website">{token?.website}</div>
+                  ) : null}
+                </>
+              )}
+            </Translation>
+          </span>
+        </TokenItemWrapper>
+      ),
+    };
+  });
+
 let controller = new AbortController();
 
 export const Search = () => {
   const { t } = useTranslation();
-  const history = useHistory();
   const bp = useBreakpoint();
   const [, setSearch] = useSearch();
   const [options, setOptions] = useState<SelectProps<object>['options']>([]);
@@ -142,15 +152,31 @@ export const Search = () => {
         signal: controller.signal,
       })
         .then(res => {
-          if (res && res.list && res.list.length > 0) {
-            setOptions([
-              {
+          if (res) {
+            const options: any = [];
+            if (res.list && res.list.length > 0)
+              options.push({
                 label: (
-                  <LabelWrapper>{t(translations.header.tokens)}</LabelWrapper>
+                  <LabelWrapper>
+                    {t(translations.header.search.tokens)}
+                  </LabelWrapper>
                 ),
-                options: searchResult(res.list, notAvailable),
-              },
-            ]);
+                options: searchResult(res.list, notAvailable, 'token'),
+              });
+            if (res.contractList && res.contractList.length > 0)
+              options.push({
+                label: (
+                  <LabelWrapper>
+                    {t(translations.header.search.contracts)}
+                  </LabelWrapper>
+                ),
+                options: searchResult(
+                  res.contractList,
+                  notAvailable,
+                  'contract',
+                ),
+              });
+            setOptions(options);
           } else {
             setOptions([]);
           }
@@ -165,8 +191,9 @@ export const Search = () => {
     }
   };
 
-  const onSelect = (value: string) => {
-    history.push(`/token/${value}`);
+  const onSelect = (value: string, option: any) => {
+    // if (option.type === 'token') history.push(`/token/${value}`);
+    // else history.push(`/address/${value}`);
   };
 
   return (

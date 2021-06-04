@@ -128,6 +128,7 @@
     "pendingTxnGasFee": "pending",
     "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
+    "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
       "futureNonce": "Wrong nonce",
       "notEnoughCash": "Insufficient balance"
@@ -217,17 +218,19 @@
     "feedback": "Feedback",
     "techIssue": "Tech Issue",
     "report": "Report",
+    "supportCenter": "Support Center",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token",
-    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token",
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
-      "tokens": "Tokens"
+      "tokens": "Tokens",
+      "contracts": "Contracts"
     }
   },
   "footer": {
@@ -625,7 +628,8 @@
       "latest5000records": "Only the latest 5000 records are supported",
       "download": "Download ",
       "csvFile": "CSV file"
-    }
+    },
+    "preview": "Preview"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -678,10 +682,11 @@
     "gasUsed": "Gas Used/Limit",
     "gasPrice": "Gas Price",
     "gasFee": "Gas Fee",
+    "gasCharged": "Gas Charged",
     "nonce": "Nonce",
     "blockHash": "Block Hash",
     "position": "Position",
-    "storageLimit": "Storage Limit",
+    "storageLimit": "Storage Used/Limit",
     "storageCollateralized": "Storage Collateralize Fee",
     "storageReleased": "Storage Released",
     "chainID": "Chain ID",
@@ -874,10 +879,11 @@
       "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
       "gasPrice": "Cost per unit of gas specified for the transaction in GDrip. The higher the gas price the higher chance of getting included in a block.",
       "gasFee": "The exact fee of gas that was used for the transaction.",
+      "gasCharged": "Conflux protocol requires that the gas-charged should be at least 3/4 of the gas limit. Usually, gas-charged equals the gas used. But if the gas used is less than 3/4 of the gas limit, gas-charged equals 3/4 of the gas limit.",
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
       "blockHash": "A block hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
       "position": "Index position of Transaction in the block.",
-      "storageLimit": "Maximum amount of storage (bytes) the sender is willing to pay for storage collateral.",
+      "storageLimit": "Storage Used ÷ 1024 = Storage Collateralize Fee; Maximum amount of storage(byte) the sender is willing to pay for storage collateral.",
       "storageCollateralized": "The cost of storage that needs to be paid.",
       "storageReleased": "The refund of storage collateralize fees.",
       "chainID": "The ID indicating which blockchain this transaction is meant to send to. Provides protection against replay-attack.",

@@ -25,6 +25,7 @@ import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
 import imgNotice from 'images/notice2.png';
 import { Link } from '../../components/Link/Loadable';
 import { useToggle } from 'react-use';
+import { getLatestNoticeLink } from '../HomePage/Notice';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -83,16 +84,6 @@ export const Header = memo(() => {
           href: '/blockchain/transactions',
         },
         {
-          // cfx transfers
-          title: [
-            t(translations.header.cfxTransfers),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.cfxTransfers,
-          afterClick: menuClick,
-          href: '/blockchain/cfx-transfers',
-        },
-        {
           // accounts
           title: [
             t(translations.header.accounts),
@@ -101,6 +92,16 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.accounts,
           afterClick: menuClick,
           href: '/blockchain/accounts',
+        },
+        {
+          // cfx transfers
+          title: [
+            t(translations.header.cfxTransfers),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.cfxTransfers,
+          afterClick: menuClick,
+          href: '/blockchain/cfx-transfers',
         },
       ],
     },
@@ -288,6 +289,17 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/report',
             },
+            {
+              title: [
+                t(translations.header.supportCenter),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.supportCenter,
+              afterClick: menuClick,
+              href: iszh
+                ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
+                : 'https://confluxscansupportcenter.zendesk.com/hc/en-us',
+            },
           ],
         },
       ],
@@ -426,7 +438,10 @@ export const Header = memo(() => {
           ? CurrentTestnetNotice[iszh ? 'zh' : 'en']
           : CurrentTethysNotice[iszh ? 'zh' : 'en']}
       </div>
-      <Link href="/notices" className="more">
+      <Link
+        href={getLatestNoticeLink(iszh ? 'zh' : 'en', isTestnet)}
+        className="more"
+      >
         {t(translations.header.learnMore)}
       </Link>
     </NoticeWrapper>
