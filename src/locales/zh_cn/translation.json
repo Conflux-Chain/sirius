@@ -627,7 +627,8 @@
       "latest5000records": "仅支持下载最近的 5000 条记录",
       "download": "下载 ",
       "csvFile": "CSV 文件"
-    }
+    },
+    "preview": "预览"
   },
   "sponsor": {
     "title": "赞助合约",

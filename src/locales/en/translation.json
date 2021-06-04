@@ -627,7 +627,8 @@
       "latest5000records": "Only the latest 5000 records are supported",
       "download": "Download ",
       "csvFile": "CSV file"
-    }
+    },
+    "preview": "Preview"
   },
   "sponsor": {
     "title": "Contract Sponsor",

@@ -58,9 +58,25 @@ export const GlobalStyle = createGlobalStyle`
   // image preview text
   .ant-image-mask-info{
     font-size: 0;
-    > span{
+    > span {
       font-size: 12px
     }
+  }
+  
+  .image-preview-popover {
+    line-height: 1;
+    .ant-popover-inner-content {
+      padding: 16px;
+    }
+  }
+  
+  .ant-popover-arrow {
+    box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
+  }
+  
+  .ant-popover-inner {
+    border-radius: 5px;
+    box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
   }
 
   .sirius-select-dropdown.select-dropdown {
