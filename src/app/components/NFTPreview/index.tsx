@@ -3,7 +3,7 @@
  * NFTPreview
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Popover, Image } from '@jnoodle/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import { default as abi } from 'utils/contract/crc1155core.json';
@@ -48,6 +48,12 @@ const crc1155Contracts = {
   TREAGenesisFeitian: 'cfx:accfeg3rcm430khhbz09r4t38aswm5u9dezucjxjcf',
   // From March 3 at 3:00 am UTC to March 5 at 4:00 pm UTC, all participants who deposit 1,000 CFX or more to OKEx will be eligible to receive a nonfungible token.1068 total
   OKExNft: 'cfx:acg22hydxwbnf5wg6webmg84se6ukk3jkujdvm4su0',
+  // To commemorate the Conflux Network's success as the third-largest decentralized network in the world during the testing phase
+  minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
+  // Practitioner Medals are customized commemorative badges for participants who have reached the final stage of "Practitioner Program".
+  honorOfPractitioner: 'cfx:acgugys133t7mbd277w5c1s2xcgrpknc126pdy0m85',
+  // Schrödinger's box is a collection of encrypted art
+  confiOfSchrodinger: 'cfx:ach6uf6tw78g1jn9k06m7t0dy80z9tc9yjc8yw32w3',
 };
 
 const cacheNFT = (
@@ -182,9 +188,7 @@ export const NFTPreview = ({
         console.error(e);
       });
   };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getImageUri = (contractAddress, tokenId) => {
+  const getImageUri = useCallback((contractAddress, tokenId) => {
     const formatContractAddress = formatAddress(contractAddress) as string;
     switch (formatContractAddress) {
       case crc1155Contracts.confi:
@@ -302,11 +306,25 @@ export const NFTPreview = ({
         );
         break;
 
+      case crc1155Contracts.minerNft:
+        // TODO
+        break;
+
+      case crc1155Contracts.honorOfPractitioner:
+        setImageMinHeight(288);
+        setImageUri('https://cdn.image.htlm8.top/practitioner/nft.png');
+        break;
+
+      case crc1155Contracts.confiOfSchrodinger:
+        setImageMinHeight(150);
+        setImageUri('https://cj.yzbbanban.com/purplerr.jpeg');
+        break;
+
       default:
         setImageMinHeight(200);
         break;
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (contractAddress && tokenId) {
