@@ -38,6 +38,8 @@ import { ContractContent } from './ContractContent';
 
 import iconInfo from 'images/info.svg';
 
+const PendingReasonText = transactionColunms.PendingReasonText;
+
 export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
   const { t } = useTranslation();
@@ -180,7 +182,7 @@ export function Table({ address, addressInfo }) {
       ...transactionColunms.gasFee,
       render: () => t(translations.transactions.pendingTxnGasFee),
     },
-    transactionColunms.pendingReason,
+    // transactionColunms.pendingReason,
   ].map((item, i) => ({ ...item, width: columnsPendingTransactionsWidth[i] }));
 
   const tokenColumnsToken = {
@@ -332,33 +334,41 @@ export function Table({ address, addressInfo }) {
         rowKey: 'hash',
         className: 'transaction-wide',
       },
-      tableHeader: ({ total }) => (
-        <StyledTableHeaderWrapper>
-          <div>
-            <Tooltip
-              className="download-csv-tooltip"
-              text={t(translations.transactions.pendingTip)}
-              placement="top"
-            >
-              <IconWrapper>
-                <img
-                  src={iconInfo}
-                  alt="warning-icon"
-                  className="download-svg-img"
-                ></img>
-              </IconWrapper>
-            </Tooltip>
+      tableHeader: ({ total, data }) => {
+        return (
+          <StyledTableHeaderWrapper>
+            <div>
+              <Tooltip
+                className="download-csv-tooltip"
+                text={t(translations.transactions.pendingTip)}
+                placement="top"
+              >
+                <IconWrapper>
+                  <img
+                    src={iconInfo}
+                    alt="warning-icon"
+                    className="download-svg-img"
+                  ></img>
+                </IconWrapper>
+              </Tooltip>
 
-            {total > 10
-              ? t(translations.transactions.pendingTotal, {
-                  total: toThousands(total),
-                })
-              : t(translations.general.totalRecord, {
-                  total: toThousands(total),
-                })}
-          </div>
-        </StyledTableHeaderWrapper>
-      ),
+              {total > 10
+                ? t(translations.transactions.pendingTotal, {
+                    total: toThousands(total),
+                  })
+                : t(translations.general.totalRecord, {
+                    total: toThousands(total),
+                  })}
+
+              <span>
+                {' '}
+                {t(translations.transactions.pendingReasonTip)}
+                <PendingReasonText value={data![0]?.reason?.pending} />
+              </span>
+            </div>
+          </StyledTableHeaderWrapper>
+        );
+      },
     });
   }
 
