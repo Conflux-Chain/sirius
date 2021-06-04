@@ -6,7 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import { Popover, Image } from '@jnoodle/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
-import iconViewTxn from 'images/view-txn.png';
 import { default as abi } from 'utils/contract/crc1155core.json';
 import { cfx, formatAddress } from '../../../utils/cfx';
 import styled from 'styled-components';
@@ -184,6 +183,7 @@ export const NFTPreview = ({
       });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getImageUri = (contractAddress, tokenId) => {
     const formatContractAddress = formatAddress(contractAddress) as string;
     switch (formatContractAddress) {
