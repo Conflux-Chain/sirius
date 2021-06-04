@@ -374,8 +374,11 @@
       "description": "Conflux 网络每日的交易总量"
     },
     "dailyTransactionCFX": {
-      "title": "日交易量 -- CFX",
-      "description": "Conflux 网络上 CFX 的日交易量"
+      "title": "日交易 -- CFX",
+      "description": "Conflux 网络上 CFX 的每日交易数据统计",
+      "amount": "CFX 日交易量",
+      "txnCount": "CFX 日交易次数",
+      "userCount": "CFX 日交易账户数"
     },
     "dailyTransactionTokens": {
       "title": "日交易量 -- 代币",

@@ -375,7 +375,10 @@
     },
     "dailyTransactionCFX": {
       "title": "Daily Transactions -- CFX",
-      "description": "The daily volume of CFX on the Conflux network."
+      "description": "Daily transactions statistics for CFX on the Conflux network.",
+      "amount": "CFX Daily Volume",
+      "txnCount": "CFX Daily Txn Count",
+      "userCount": "CFX Daily Txn Accounts Count"
     },
     "dailyTransactionTokens": {
       "title": "Daily Transactions -- Tokens",
