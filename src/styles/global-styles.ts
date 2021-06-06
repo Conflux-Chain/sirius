@@ -72,7 +72,7 @@ export const GlobalStyle = createGlobalStyle`
       margin-top: 10px;
       text-align: center;
       max-width: 200px;
-      word-break: break-all;
+      word-break: break-word;
       white-space: normal;
       line-height: 1.4;
     }

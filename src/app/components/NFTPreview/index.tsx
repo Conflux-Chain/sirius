@@ -49,15 +49,12 @@ const cacheNFT = (
   if (cachedNFT) {
     const cachedNFTObj = JSON.parse(cachedNFT);
     if (cachedNFTObj.timeout > +new Date()) {
-      console.log('cached', tokenId);
       return cachedNFTObj;
     } else {
-      console.log('cache timeout', tokenId);
       localStorage.removeItem(cacheKey);
       return null;
     }
   }
-  console.log('not cached', tokenId);
   return null;
 };
 
@@ -73,7 +70,7 @@ export const NFTPreview = ({
   const [imageUri, setImageUri] = useState('');
   const [imageMinHeight, setImageMinHeight] = useState(200);
   const [previewIcon, setPreviewIcon] = useState(nftPreview);
-  const [imageName, setImageName] = useState('123');
+  const [imageName, setImageName] = useState('');
 
   const getName = ({
     address,
@@ -81,13 +78,108 @@ export const NFTPreview = ({
     meta,
   }: {
     address: string;
-    tokenId: string | number;
+    tokenId?: string | number;
     meta?: any;
   }) => {
     try {
       switch (address) {
         case NFTContracts.confi:
           return NFTNames.confi[JSON.parse(meta).title.split('_')[0]];
+        case NFTContracts.confiCard:
+          return {
+            zh: JSON.parse(meta.contents).name || null,
+            en: JSON.parse(meta.contents).name || null,
+          };
+        case NFTContracts.conDragon:
+          return {
+            zh: JSON.parse(meta.contents).name || null,
+            en: JSON.parse(meta.contents).name_en || null,
+          };
+        case NFTContracts.confluxGuardian:
+          return {
+            zh: '守护者勋章',
+            en: 'Guardian',
+          };
+        case NFTContracts.ancientChineseGod:
+          // const zhUri = JSON.parse(meta.contents).localization.replace(
+          //   '{locale}',
+          //   'zh-cn',
+          // );
+          return {
+            zh:
+              NFTNames.ancientChineseGod[JSON.parse(meta.contents).name] ||
+              null,
+            en: JSON.parse(meta.contents).name || null,
+          };
+        case NFTContracts.moonswapGenesis:
+          return {
+            zh: '创世 NFT',
+            en: 'Genesis NFT',
+          };
+        case NFTContracts.conHero:
+          return {
+            zh: JSON.parse(meta.contents).name || null,
+            en: JSON.parse(meta.contents).name_en || null,
+          };
+        case NFTContracts.conDragonStone:
+          return {
+            zh: '龙石',
+            en: 'Dragon Stone NFT',
+          };
+        case NFTContracts.satoshiGift:
+          return {
+            zh: "Satoshi's gift",
+            en: "Satoshi's gift",
+          };
+        case NFTContracts.shanhaijing:
+          return {
+            zh: JSON.parse(meta.contents).name || null,
+            en: JSON.parse(meta.contents).name || null,
+          };
+        case NFTContracts.shanhaichingSeriesCard:
+          return {
+            zh: '山海经卡包',
+            en: 'Shanhaiching Series Card Pack',
+          };
+        case NFTContracts.shuttleflowBscNft:
+          return {
+            zh: 'ShuttleFlow-BSC NFT',
+            en: 'ShuttleFlow-BSC NFT',
+          };
+        case NFTContracts.crossChainNftGloryEdition:
+          return {
+            zh: '荣耀版跨链NFT',
+            en: 'Cross-Chain NFT / Glory Edition',
+          };
+        case NFTContracts.happyBirthdayToConfi:
+          return {
+            zh: 'Happy Birthday to ConFi',
+            en: 'Happy Birthday to ConFi',
+          };
+        case NFTContracts.TREAGenesisFeitian:
+          return {
+            zh: 'TREA 创世飞天',
+            en: 'TREA Genesis Feitian',
+          };
+        case NFTContracts.OKExNft:
+          return {
+            zh: 'OKEx NFT',
+            en: 'OKEx NFT',
+          };
+
+        // TODO
+        case NFTContracts.minerNft:
+          return null;
+        case NFTContracts.honorOfPractitioner:
+          return {
+            zh: '践行者计划',
+            en: 'Honor of Practitioner',
+          };
+        case NFTContracts.confiOfSchrodinger:
+          return {
+            zh: '薛定谔的盒',
+            en: 'Confi of Schrodinger',
+          };
         default:
           return null;
       }
@@ -95,6 +187,11 @@ export const NFTPreview = ({
       console.error(e);
       return null;
     }
+  };
+
+  const setConstName = address => {
+    const name = getName({ address });
+    if (name) setImageName(name[lang] || '');
   };
 
   const setImage = useCallback(
@@ -115,16 +212,12 @@ export const NFTPreview = ({
       jsonUriFormatter?: any;
       imageUriFormatter?: any;
     }) => {
-      console.log(`setImage`, {
-        address,
-        tokenId,
-      });
       const cachedNFTObj = cacheNFT({ address, tokenId });
       if (cachedNFTObj) {
         setImageMinHeight(minHeight);
         setImageUri(cachedNFTObj.imageUri);
         if (cachedNFTObj.imageName) {
-          setImageName(cachedNFTObj.imageName[lang]);
+          setImageName(cachedNFTObj.imageName[lang] || '');
         }
         return;
       }
@@ -135,7 +228,6 @@ export const NFTPreview = ({
       });
       contract[method](tokenId)
         .then(res => {
-          console.log(res);
           if (res) {
             if (needFetchJson) {
               fetch(
@@ -152,7 +244,7 @@ export const NFTPreview = ({
                       : JSON.parse(data.contents).image,
                   );
                   const nameObj = getName({ address, tokenId, meta: data });
-                  if (nameObj) setImageName(nameObj[lang]);
+                  if (nameObj) setImageName(nameObj[lang] || '');
                   cacheNFT(
                     {
                       address,
@@ -172,7 +264,7 @@ export const NFTPreview = ({
               setImageMinHeight(minHeight);
               setImageUri(imageUriFormatter ? imageUriFormatter(res) : res);
               const nameObj = getName({ address, tokenId, meta: res });
-              if (nameObj) setImageName(nameObj[lang]);
+              if (nameObj) setImageName(nameObj[lang] || '');
               cacheNFT(
                 {
                   address,
@@ -225,6 +317,7 @@ export const NFTPreview = ({
         case NFTContracts.confluxGuardian:
           setImageMinHeight(200);
           setImageUri('https://cdn.image.htlm8.top/guardian/nft.png');
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.ancientChineseGod:
@@ -258,11 +351,13 @@ export const NFTPreview = ({
           setImageUri(
             'https://cdn.image.htlm8.top/dragon-stone/dragon-stone.png',
           );
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.satoshiGift:
           setImageMinHeight(282);
           setImageUri('https://cdn.image.htlm8.top/pizza-day/nft.png');
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.shanhaijing:
@@ -276,6 +371,7 @@ export const NFTPreview = ({
         case NFTContracts.shanhaichingSeriesCard:
           setImageMinHeight(267);
           setImageUri('https://metadata.boxnft.io/nftbox.gif');
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.shuttleflowBscNft:
@@ -283,6 +379,7 @@ export const NFTPreview = ({
           setImageUri(
             'https://cdn.image.htlm8.top/bsc-shuttleflow-nft/nft.png',
           );
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.crossChainNftGloryEdition:
@@ -290,11 +387,13 @@ export const NFTPreview = ({
           setImageUri(
             'https://cdn.image.htlm8.top/flux-shuttleflow-nft/nft.jpg',
           );
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.happyBirthdayToConfi:
           setImageMinHeight(50);
           setImageUri('https://cdn.image.htlm8.top/confi-birthday-nft/nft.png');
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.TREAGenesisFeitian:
@@ -313,6 +412,7 @@ export const NFTPreview = ({
           setImageUri(
             'https://cdn.image.htlm8.top/okex-listing-nft/okex-listing-nft.gif',
           );
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.minerNft:
@@ -322,11 +422,13 @@ export const NFTPreview = ({
         case NFTContracts.honorOfPractitioner:
           setImageMinHeight(288);
           setImageUri('https://cdn.image.htlm8.top/practitioner/nft.png');
+          setConstName(formatContractAddress);
           break;
 
         case NFTContracts.confiOfSchrodinger:
           setImageMinHeight(150);
           setImageUri('https://cj.yzbbanban.com/purplerr.jpeg');
+          setConstName(formatContractAddress);
           break;
 
         default:
@@ -334,7 +436,7 @@ export const NFTPreview = ({
           break;
       }
     },
-    [setImage],
+    [setConstName, setImage],
   );
 
   useEffect(() => {
@@ -358,7 +460,9 @@ export const NFTPreview = ({
             fallback={tokenIdNotFound}
             alt={tokenId + ''}
           />
-          {imageName && <div className="image-preview-name">{imageName}</div>}
+          {imageName ? (
+            <div className="image-preview-name">{imageName}</div>
+          ) : null}
         </>
       }
       onVisibleChange={(visible: boolean) => {

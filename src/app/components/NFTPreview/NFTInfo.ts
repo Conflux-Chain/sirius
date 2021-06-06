@@ -32,6 +32,7 @@ export const NFTContracts = {
   // From March 3 at 3:00 am UTC to March 5 at 4:00 pm UTC, all participants who deposit 1,000 CFX or more to OKEx will be eligible to receive a nonfungible token.1068 total
   OKExNft: 'cfx:acg22hydxwbnf5wg6webmg84se6ukk3jkujdvm4su0',
   // To commemorate the Conflux Network's success as the third-largest decentralized network in the world during the testing phase
+  // TODO
   minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
   // Practitioner Medals are customized commemorative badges for participants who have reached the final stage of "Practitioner Program".
   honorOfPractitioner: 'cfx:acgugys133t7mbd277w5c1s2xcgrpknc126pdy0m85',
@@ -73,5 +74,17 @@ export const NFTNames = {
       en: 'ConFiRapper',
       zh: '嘻哈烤仔',
     },
+  },
+  ancientChineseGod: {
+    'Pan Gu': '盘古',
+    'Nü Wa': '女娲',
+    'Fu Xi': '伏羲',
+    'Sui Ren': '燧人',
+    'Shen Nong': '神农',
+    Yu: '禹',
+    'Yellow Emperor': '黄帝',
+    'Chi You': '蚩尤',
+    'Gong Gong': '共工',
+    'Kua Fu': '夸父',
   },
 };
