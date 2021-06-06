@@ -832,7 +832,7 @@ export const Detail = () => {
         </Description>
         <div
           className={clsx('detailResetWrapper', {
-            folded: !folded, // FIXME
+            folded: folded,
           })}
         >
           <Description
