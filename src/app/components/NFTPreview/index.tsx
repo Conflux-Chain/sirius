@@ -189,10 +189,13 @@ export const NFTPreview = ({
     }
   };
 
-  const setConstName = address => {
-    const name = getName({ address });
-    if (name) setImageName(name[lang] || '');
-  };
+  const setConstName = useCallback(
+    address => {
+      const name = getName({ address });
+      if (name) setImageName(name[lang] || '');
+    },
+    [lang],
+  );
 
   const setImage = useCallback(
     ({
