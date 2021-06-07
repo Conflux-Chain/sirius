@@ -12,7 +12,7 @@ const mainNetworkId = 1029;
 const testnetNetworkId = 1;
 // do not support other private network
 // const networkId = isConfluxTestNet ? testnetNetworkId : mainNetworkId;
-const networkId = 1921;
+const networkId = 2;
 
 const cfx = new Conflux({
   url: cfxUrlV2,

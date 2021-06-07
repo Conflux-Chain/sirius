@@ -22,7 +22,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
       if (
         (chainId === '0x405' && !isTestnet) ||
         (chainId !== '0x405' && isTestnet) ||
-        chainId === '0x781'
+        chainId === '0x2'
       ) {
         return true;
       }
