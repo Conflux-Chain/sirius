@@ -133,6 +133,7 @@ export const Search = () => {
   const handleSearch = (value: string) => {
     if (
       value &&
+      value.length > 1 &&
       !(
         value === '0x0' ||
         isAccountAddress(value) ||
