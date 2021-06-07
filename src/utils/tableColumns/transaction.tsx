@@ -275,7 +275,9 @@ export const method = {
 export const PendingReasonText = ({ value }) => {
   const { t } = useTranslation();
   let reason = value;
-  if (reason === CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
+  if (reason === 'ready') {
+    reason = t(translations.transactions.pendingReason.ready);
+  } else if (reason === CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
     reason = t(translations.transactions.pendingReason.futureNonce);
   } else if (reason === CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
     reason = t(translations.transactions.pendingReason.notEnoughCash);
@@ -294,7 +296,9 @@ export const pendingReason = {
   key: 'reason',
   width: 1,
   render: value => (
-    <PendingReasonText value={value?.pending}></PendingReasonText>
+    <PendingReasonText
+      value={typeof value === 'string' ? value : value?.pending}
+    ></PendingReasonText>
   ),
 };
 

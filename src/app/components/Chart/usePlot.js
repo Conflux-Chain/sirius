@@ -112,6 +112,14 @@ export default function usePlot(
       case 'dailyTransaction':
         listData = data?.data?.rows || [];
         break;
+      case 'dailyTransactionCFX':
+        listData = (data?.list || []).map(l => ({
+          ...l,
+          amount: new BigNumber(l.amount)
+            .div(new BigNumber(10).pow(18))
+            .toFixed(),
+        }));
+        break;
       case 'cfxHoldingAccounts':
         listData = data?.data?.rows || [];
         break;

@@ -68,6 +68,14 @@ export const GlobalStyle = createGlobalStyle`
     .ant-popover-inner-content {
       padding: 16px;
     }
+    .image-preview-name{
+      margin-top: 10px;
+      text-align: center;
+      max-width: 200px;
+      word-break: break-word;
+      white-space: normal;
+      line-height: 1.4;
+    }
   }
   
   .ant-popover-arrow {

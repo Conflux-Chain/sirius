@@ -304,8 +304,9 @@ export const LineChart = ({
       case 'dailyTransaction':
         return 'txCount';
       case 'dailyTransactionCFX':
+        return ['txnCount', 'userCount', 'amount'];
       case 'dailyTransactionTokens':
-        return 'txnCount';
+        return ['txnCount', 'userCount'];
       case 'cfxHoldingAccounts':
         return 'holderCount';
       case 'accountGrowth':
@@ -459,7 +460,7 @@ export const LineChart = ({
               />
               <Line
                 type="linear"
-                dataKey={lineKey()}
+                dataKey={Array.isArray(lineKey()) ? lineKey()[0] : lineKey()}
                 stroke={strokeColor()}
                 strokeWidth={2}
                 dot={!isThumb}
