@@ -382,7 +382,7 @@
       "userCount": "CFX 日交易账户数"
     },
     "dailyTransactionTokens": {
-      "title": "日交易量 -- 代币",
+      "title": "日交易 -- 代币",
       "description": "Conflux 网络上全部代币的每日转移数据统计",
       "txnCount": "日转移次数",
       "userCount": "日转移账户数"
