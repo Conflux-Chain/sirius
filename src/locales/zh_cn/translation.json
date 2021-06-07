@@ -127,11 +127,12 @@
     "executed": "已执行交易",
     "pendingTxnGasFee": "待处理",
     "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）",
-    "pendingTip": "仅确认展示确认时间超过 5 分钟的待处理交易。",
+    "pendingTip": "仅展示确认时间超过 5 分钟的待处理交易。",
     "pendingReasonTip": "；待处理交易原因：",
     "pendingReason": {
       "futureNonce": "错误随机数",
-      "notEnoughCash": "余额不足"
+      "notEnoughCash": "余额不足",
+      "ready": "待打包"
     }
   },
   "cfxTransfers": {

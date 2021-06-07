@@ -131,7 +131,8 @@
     "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
       "futureNonce": "Wrong nonce",
-      "notEnoughCash": "Insufficient balance"
+      "notEnoughCash": "Insufficient balance",
+      "ready": "Ready to pack"
     }
   },
   "cfxTransfers": {
