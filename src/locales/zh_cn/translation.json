@@ -131,7 +131,8 @@
     "pendingReasonTip": "；待处理交易原因：",
     "pendingReason": {
       "futureNonce": "错误随机数",
-      "notEnoughCash": "余额不足"
+      "notEnoughCash": "余额不足",
+      "ready": "待打包"
     }
   },
   "cfxTransfers": {
