@@ -79,7 +79,7 @@ export const TableSearchDropdown = ({
     if (onChange) {
       onChange(option.value);
     } else {
-      let query = qs.parse(location.search || '');
+      let { page, pageSize, ...query } = qs.parse(location.search || '');
       let queryValue: any = '';
 
       keyList.forEach(k => {
@@ -95,7 +95,11 @@ export const TableSearchDropdown = ({
         history.push(
           qs.stringifyUrl({
             url: location.pathname,
-            query,
+            query: {
+              page: '1',
+              pageSize,
+              ...query,
+            },
           }),
         );
       }
