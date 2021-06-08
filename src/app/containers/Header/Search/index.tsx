@@ -75,7 +75,8 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
     };
     return {
       key: `${type}-${formatAddress(token.address)}`,
-      value: formatAddress(token.address),
+      // add type prefix for duplicate value with different type
+      value: `${type}-${formatAddress(token.address)}`,
       type,
       label: (
         <TokenItemWrapper
@@ -123,12 +124,9 @@ export const Search = () => {
   const bp = useBreakpoint();
   const [, setSearch] = useSearch();
   const [options, setOptions] = useState<SelectProps<object>['options']>([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState('');
 
   const notAvailable = t(translations.general.notAvailable);
-
-  const onEnterPress = value => {
-    setSearch(value);
-  };
 
   const handleSearch = (value: string) => {
     if (
@@ -192,9 +190,18 @@ export const Search = () => {
     }
   };
 
-  const onSelect = (value: string, option: any) => {
-    // if (option.type === 'token') history.push(`/token/${value}`);
-    // else history.push(`/address/${value}`);
+  const onSelect = (value: string, option?: any) => {
+    if (option && option.type) {
+      const address = value.replace(option.type + '-', '');
+      setAutoCompleteValue('');
+      // @ts-ignore
+      window.location =
+        window.location.origin +
+        `/${option.type === 'token' ? 'token' : 'address'}/${address}`;
+    } else {
+      setSearch(value);
+      setAutoCompleteValue('');
+    }
   };
 
   return (
@@ -204,6 +211,10 @@ export const Search = () => {
           width: '100%',
         }}
         options={options}
+        value={autoCompleteValue}
+        onChange={v => {
+          setAutoCompleteValue(v);
+        }}
         onSelect={onSelect}
         onSearch={_.debounce(handleSearch, 500)}
         dropdownClassName="header-search-dropdown"
@@ -211,16 +222,13 @@ export const Search = () => {
         <SearchInput
           allowClear
           onSearch={value => {
-            onEnterPress(value);
+            onSelect(value);
           }}
           placeholder={
             bp === 's'
               ? t(translations.header.searchPlaceHolderMobile)
               : t(translations.header.searchPlaceHolder)
           }
-          onPressEnter={e => {
-            onEnterPress(e.currentTarget.value);
-          }}
           enterButton={<SearchIcon color="#fff" />}
         />
       </AutoComplete>
