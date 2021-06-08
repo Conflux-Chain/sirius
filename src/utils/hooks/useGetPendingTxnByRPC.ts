@@ -51,7 +51,8 @@ export const useGetPendingTxnByRPC = (url: string, inactive = false) => {
     parsedPageSize = String(pageSize);
   } catch (e) {}
 
-  const txnStartNonce = searchTxnStartNonce || '0x0';
+  // @todo, undefined is not good, 0x0 is better. Due to conflux-rust issue, use it for temporary. Issue detail: https://github.com/Conflux-Chain/conflux-rust/issues/2187
+  const txnStartNonce = searchTxnStartNonce || undefined;
 
   const urlWithQuery = queryString.stringifyUrl({
     url,
