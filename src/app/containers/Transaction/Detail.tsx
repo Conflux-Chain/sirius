@@ -905,7 +905,8 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {storageCollateralized * 1024}/{toThousands(storageLimit)}
+              {_.isNil(storageCollateralized) ? '--' : storageCollateralized}/
+              {toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
           <Description
