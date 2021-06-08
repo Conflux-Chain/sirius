@@ -1,13 +1,14 @@
-import React, { ReactNode, MouseEventHandler, useRef } from 'react';
+import React, { MouseEventHandler, ReactNode, useRef } from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
-import { useRouteMatch, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
 import { media, useBreakpoint } from 'styles/media';
 import { ChevronDown } from '@zeit-ui/react-icons';
-import { useToggle, useClickAway } from 'react-use';
+import { useClickAway, useToggle } from 'react-use';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { trackEvent } from '../../../utils/ga';
+import { Link } from '../../components/Link/Loadable';
 
 export type HeaderLinkTitle = ReactNode | Array<ReactNode>;
 
@@ -177,33 +178,47 @@ export const HeaderLink: React.FC<{
   if (href) {
     return (
       <WrappLink className={`link-wrap level-${level} ${className}`}>
-        <RouterLink
-          className={clsx('link', className, matched && 'matched')}
-          onClick={() => {
-            if (name) {
-              // ga
-              trackEvent({
-                category: ScanEvent.menu.category,
-                action: name,
-              });
+        {href.startsWith('http') ? (
+          <Link
+            className={clsx('link', className, matched && 'matched')}
+            href={href}
+            target="_blank"
+            ga={{
+              category: ScanEvent.menu.category,
+              action: name,
+            }}
+          >
+            {children}
+          </Link>
+        ) : (
+          <RouterLink
+            className={clsx('link', className, matched && 'matched')}
+            onClick={() => {
+              if (name) {
+                // ga
+                trackEvent({
+                  category: ScanEvent.menu.category,
+                  action: name,
+                });
+              }
+              if (afterClick && typeof afterClick === 'function') {
+                afterClick();
+              }
+              if (href.startsWith('http')) {
+                // @ts-ignore
+                window.location = href;
+              }
+            }}
+            to={
+              href.startsWith('http')
+                ? // @ts-ignore
+                  window.location.pathname + window.location.search
+                : href
             }
-            if (afterClick && typeof afterClick === 'function') {
-              afterClick();
-            }
-            if (href.startsWith('http')) {
-              // @ts-ignore
-              window.location = href;
-            }
-          }}
-          to={
-            href.startsWith('http')
-              ? // @ts-ignore
-                window.location.pathname + window.location.search
-              : href
-          }
-        >
-          {children}
-        </RouterLink>
+          >
+            {children}
+          </RouterLink>
+        )}
       </WrappLink>
     );
   } else if (onClick) {
