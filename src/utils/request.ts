@@ -75,6 +75,9 @@ const parseJSON = async function (response) {
       return { data: response, response };
     }
   } catch (error) {
+    if (error.name === 'AbortError') {
+      return { data: response, response };
+    }
     notify({
       code: 20001,
     });
