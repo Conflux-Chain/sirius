@@ -19,7 +19,7 @@ import { translations } from 'locales/i18n';
 import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
-import { Event } from './Event';
+import { Event } from 'app/components/TxnComponents/Event';
 import { media } from 'styles/media';
 
 interface Props {

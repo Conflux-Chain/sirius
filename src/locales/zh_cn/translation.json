@@ -698,9 +698,12 @@
     "chainID": "区块链编号",
     "inputData": "输入数据",
     "select": {
+      "decodeInputData": "解码输入数据",
       "original": "原始数据",
       "utf8": "UTF-8",
-      "decodeInputData": "解码输入数据"
+      "json": "解码为 JSON",
+      "generalDecode": "通用解码",
+      "optimizationDecode": "优化解码"
     },
     "contract": "合约",
     "created": "已创建",

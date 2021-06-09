@@ -48,10 +48,10 @@ const StyledEventWrapper = styled.div`
   }
 
   .arg-name {
-    color: #cc3c20;
+    color: #e79d35;
   }
 
   .type {
-    color: #7cd77b;
+    color: #d96349;
   }
 `;
