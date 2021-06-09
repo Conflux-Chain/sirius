@@ -39,12 +39,12 @@ import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
 import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
+import _ from 'lodash';
 
 import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
-import { renderAddress } from '../../../utils/tableColumns/token';
-// import imgSponsoredEn from 'images/sponsored.png';
-// import imgSponsoredZh from 'images/sponsored-zh.png';
+import { renderAddress } from 'utils/tableColumns/token';
+import { NFTPreview } from '../../components/NFTPreview/Loadable';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -97,9 +97,6 @@ export const Detail = () => {
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
-  // const imgSponsored = i18n.language.startsWith('en')
-  //   ? imgSponsoredEn
-  //   : imgSponsoredZh;
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -545,7 +542,13 @@ export const Detail = () => {
                         : item['value']}
                     </span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
-                    <span className="tokenId">{item['tokenId']}</span>
+                    <span className="tokenId">
+                      {item['tokenId']}
+                      <NFTPreview
+                        contractAddress={transferItem['address']}
+                        tokenId={item['tokenId']}
+                      />
+                    </span>
                   </span>
                 </span>
               ))}
@@ -680,9 +683,13 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Link href={`/epoch/${epochNumber}`}>
-              {toThousands(epochNumber)}
-            </Link>
+            {_.isNil(epochNumber) ? (
+              '--'
+            ) : (
+              <Link href={`/epoch/${epochNumber}`}>
+                {toThousands(epochNumber)}
+              </Link>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -712,8 +719,14 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
-            <CopyButton copyText={blockHash} />
+            {_.isNil(blockHash) ? (
+              '--'
+            ) : (
+              <>
+                <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+                <CopyButton copyText={blockHash} />
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -726,9 +739,15 @@ export const Detail = () => {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading || syncTimestamp === undefined}>
-            <CountDown from={syncTimestamp} retainDurations={4} />
-            {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+          <SkeletonContainer shown={loading}>
+            {_.isNil(syncTimestamp) ? (
+              '--'
+            ) : (
+              <>
+                <CountDown from={syncTimestamp} retainDurations={4} />
+                {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -739,7 +758,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {!loading && <Status type={status}>{statusErrorMessage}</Status>}
+            <Status type={status}>{statusErrorMessage}</Status>
           </SkeletonContainer>
         </Description>
         <Description
@@ -750,18 +769,24 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Security blockHash={blockHash}></Security>
-            <StyledEpochConfirmationsWrapper>
-              {t(translations.transaction.epochConfirmations, {
-                count: confirmedEpochCount || '-',
-              })}
-              {partLoading ? (
-                <Spinner
-                  size="small"
-                  style={{ display: 'inline-block', marginLeft: 5 }}
-                />
-              ) : null}
-            </StyledEpochConfirmationsWrapper>
+            {_.isNil(blockHash) ? (
+              '--'
+            ) : (
+              <>
+                <Security blockHash={blockHash}></Security>
+                <StyledEpochConfirmationsWrapper>
+                  {t(translations.transaction.epochConfirmations, {
+                    count: confirmedEpochCount || '--',
+                  })}
+                  {partLoading ? (
+                    <Spinner
+                      size="small"
+                      style={{ display: 'inline-block', marginLeft: 5 }}
+                    />
+                  ) : null}
+                </StyledEpochConfirmationsWrapper>
+              </>
+            )}
           </SkeletonContainer>
         </Description>
         <Description
@@ -813,15 +838,43 @@ export const Detail = () => {
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.storageLimit)}
+                text={t(translations.toolTip.tx.gasPrice)}
                 placement="top"
               >
-                {t(translations.transaction.storageLimit)}
+                {t(translations.transaction.gasPrice)}
               </Tooltip>
             }
           >
             <SkeletonContainer shown={loading}>
-              {toThousands(storageLimit)}
+              {`${toThousands(gasPrice)} drip`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasUsedLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.gasUsed)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.toolTip.tx.gasCharged)}
+                placement="top"
+              >
+                {t(translations.transaction.gasCharged)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {gasUsed && gas ? Math.max(+gasUsed, (+gas * 3) / 4) : '--'}
             </SkeletonContainer>
           </Description>
           <Description
@@ -844,6 +897,21 @@ export const Detail = () => {
           <Description
             title={
               <Tooltip
+                text={t(translations.toolTip.tx.storageLimit)}
+                placement="top"
+              >
+                {t(translations.transaction.storageLimit)}
+              </Tooltip>
+            }
+          >
+            <SkeletonContainer shown={loading}>
+              {_.isNil(storageCollateralized) ? '--' : storageCollateralized}/
+              {toThousands(storageLimit)}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={
+              <Tooltip
                 text={t(translations.toolTip.tx.storageReleased)}
                 placement="top"
               >
@@ -853,34 +921,6 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>
               {storageReleasedTotal} CFX
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasUsedLimit)}
-                placement="top"
-              >
-                {t(translations.transaction.gasUsed)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${gasUsed}/${gas} (${getPercent(gasUsed, gas)})`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasPrice)}
-                placement="top"
-              >
-                {t(translations.transaction.gasPrice)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {`${toThousands(gasPrice)} drip`}
             </SkeletonContainer>
           </Description>
           <Description
@@ -905,7 +945,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {!loading && transactionIndex}
+              {_.isNil(transactionIndex) ? '--' : !loading && transactionIndex}
             </SkeletonContainer>
           </Description>
           <Description

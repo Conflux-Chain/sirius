@@ -44,6 +44,13 @@ export const DataZoomLineChart = ({
     .sort((a, b) => a[dateKey].localeCompare(b[dateKey]))
     .map(d => [d[dateKey], ...(valueKey as string[]).map(v => +d[v])]);
 
+  const unit = (indicator, index: any) => {
+    if (indicator === 'dailyTransactionCFX' && index === 2) {
+      return ' CFX';
+    }
+    return '';
+  };
+
   return (
     <ReactECharts
       style={{ minHeight, height: minHeight }}
@@ -56,9 +63,10 @@ export const DataZoomLineChart = ({
             return [pt[0], '10%'];
           },
           formatter: function (params) {
+            console.log(params);
             const data = params
               .map(
-                p =>
+                (p, index) =>
                   `<div>
 <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${
                     p.color
@@ -70,7 +78,7 @@ export const DataZoomLineChart = ({
                     p.seriesName ? 'float:right;margin-left:20px;' : ''
                   }font-size:14px;color:#666;font-weight:700">${formatNumber(
                     p.data[1],
-                  )}</span>
+                  )}${unit(indicator, index)}</span>
 <div style="clear:both"></div>
 </div>`,
               )

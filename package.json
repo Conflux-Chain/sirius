@@ -40,7 +40,7 @@
     "i18next": "19.3.4",
     "i18next-browser-languagedetector": "4.0.2",
     "jest-styled-components": "7.0.2",
-    "js-conflux-sdk": "1.5.13",
+    "js-conflux-sdk": "1.6.3",
     "lint-staged": "10.0.8",
     "lodash": "4.17.20",
     "node-plop": "0.25.0",

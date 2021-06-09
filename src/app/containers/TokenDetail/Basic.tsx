@@ -15,11 +15,13 @@ import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';
 import CRC1155bg from 'images/token/crc1155bg.png';
+import Registeredbg from 'images/contract/registered.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
+import { Tag } from '@jnoodle/antd';
 
 export interface BasicProps {
   address?: string;
@@ -36,6 +38,43 @@ export interface BasicProps {
   decimals?: number;
   transferCount?: number;
 }
+
+export const tokenTypeTag = (t, transferType: any) => {
+  switch (transferType) {
+    case cfxTokenTypes.erc1155:
+      return (
+        <TokenTypeTagWrapper className={transferType}>
+          <span>
+            {t(translations.header.tokens1155).replace('Tokens', 'Token')}
+          </span>
+        </TokenTypeTagWrapper>
+      );
+    case cfxTokenTypes.erc721:
+      return (
+        <TokenTypeTagWrapper className={transferType}>
+          <span>
+            {t(translations.header.tokens721).replace('Tokens', 'Token')}
+          </span>
+        </TokenTypeTagWrapper>
+      );
+    case cfxTokenTypes.erc20:
+      return (
+        <TokenTypeTagWrapper className={transferType}>
+          <span>
+            {t(translations.header.tokens20).replace('Tokens', 'Token')}
+          </span>
+        </TokenTypeTagWrapper>
+      );
+    case 'registered':
+      return (
+        <TokenTypeTagWrapper className="registered">
+          <span>{t(translations.contract.registered)}</span>
+        </TokenTypeTagWrapper>
+      );
+    default:
+      return null;
+  }
+};
 
 export const Basic = ({
   address, // address === undefined when token api is pending
@@ -173,25 +212,30 @@ export const Basic = ({
         <span>
           {toThousands(holderCount)}{' '}
           {holderIncreasePercent !== undefined ? (
-            holderIncreasePercent > 0 ? (
-              <HolderCountPercentWhenUp>
-                (<img src={UpIcon} alt="UpIcon" />
-                &nbsp;
-                {(holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenUp>
-            ) : holderIncreasePercent < 0 ? (
-              <HolderCountPercentWhenDown>
-                (<img src={DownIcon} alt="DownIcon" />
-                &nbsp;
-                {(-holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenDown>
-            ) : (
-              <HolderCountPercentWhenZero>
-                (<img src={FlatIcon} alt="FlatIcon" />
-                &nbsp;
-                {(holderIncreasePercent * 100).toFixed(3)}%)
-              </HolderCountPercentWhenZero>
-            )
+            <>
+              {holderIncreasePercent > 0 ? (
+                <HolderCountPercentWhenUp>
+                  (<img src={UpIcon} alt="UpIcon" />
+                  &nbsp;
+                  {(holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenUp>
+              ) : holderIncreasePercent < 0 ? (
+                <HolderCountPercentWhenDown>
+                  (<img src={DownIcon} alt="DownIcon" />
+                  &nbsp;
+                  {(-holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenDown>
+              ) : (
+                <HolderCountPercentWhenZero>
+                  (<img src={FlatIcon} alt="FlatIcon" />
+                  &nbsp;
+                  {(holderIncreasePercent * 100).toFixed(3)}%)
+                </HolderCountPercentWhenZero>
+              )}{' '}
+              <Tag style={{ transform: 'translateY(-1px) scale(0.8)' }}>
+                24H
+              </Tag>
+            </>
           ) : undefined}
         </span>
       ) : address ? (
@@ -239,41 +283,10 @@ export const Basic = ({
     list = [fieldTransfers, fieldContractAddress];
   }
 
-  const tokenTypeTag = transferType => {
-    switch (transferType) {
-      case cfxTokenTypes.erc1155:
-        return (
-          <TokenTypeTag className={transferType}>
-            <span>
-              {t(translations.header.tokens1155).replace('Tokens', 'Token')}
-            </span>
-          </TokenTypeTag>
-        );
-      case cfxTokenTypes.erc721:
-        return (
-          <TokenTypeTag className={transferType}>
-            <span>
-              {t(translations.header.tokens721).replace('Tokens', 'Token')}
-            </span>
-          </TokenTypeTag>
-        );
-      case cfxTokenTypes.erc20:
-        return (
-          <TokenTypeTag className={transferType}>
-            <span>
-              {t(translations.header.tokens20).replace('Tokens', 'Token')}
-            </span>
-          </TokenTypeTag>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <BasicWrap>
       {list.length ? <List list={list} /> : null}
-      {tokenTypeTag(transferType)}
+      {tokenTypeTag(t, transferType)}
     </BasicWrap>
   );
 };
@@ -283,7 +296,7 @@ const BasicWrap = styled.div`
   margin-bottom: 2.2857rem;
 `;
 
-const TokenTypeTag = styled.div`
+export const TokenTypeTagWrapper = styled.div`
   position: absolute;
   right: 0;
   top: 0;
@@ -314,6 +327,11 @@ const TokenTypeTag = styled.div`
 
   &.ERC1155 {
     background: url(${CRC1155bg}) no-repeat right top;
+    background-size: 118px 30px;
+  }
+
+  &.registered {
+    background: url(${Registeredbg}) no-repeat right top;
     background-size: 118px 30px;
   }
 `;

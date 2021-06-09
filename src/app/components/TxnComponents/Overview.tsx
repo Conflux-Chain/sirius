@@ -25,7 +25,22 @@ export const Overview = ({ data }) => {
     transactionIndex,
     tokenTransferTokenInfo,
     tokenTransfer,
+    txExecErrorInfo,
   } = data;
+
+  // txn status error detail info
+  let statusErrorMessage = '';
+  if (txExecErrorInfo) {
+    if (txExecErrorInfo?.type === 1) {
+      statusErrorMessage = `${t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      )}${txExecErrorInfo.message}`;
+    } else {
+      statusErrorMessage = t(
+        translations.transaction.statusError[txExecErrorInfo?.type],
+      );
+    }
+  }
 
   return (
     <StyledWrapper>
@@ -38,12 +53,7 @@ export const Overview = ({ data }) => {
         title={t(translations.transaction.status)}
       >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status} showMessage={false} />{' '}
-          <span className="overview-confirmedEpochCount">
-            {t(translations.transaction.epochConfirmations, {
-              count: confirmedEpochCount || '--',
-            })}
-          </span>
+          <Status type={status}>{statusErrorMessage}</Status>
         </div>
       </Description>
       {tokenTransfer?.total ? (
@@ -61,6 +71,17 @@ export const Overview = ({ data }) => {
           </StyledTokenTransferWrapper>
         </Description>
       ) : null}
+      <Description
+        verticle
+        size="tiny"
+        title={t(translations.transaction.epochConfirmations)}
+      >
+        <span className="overview-confirmedEpochCount">
+          {t(translations.transaction.epochConfirmations, {
+            count: confirmedEpochCount || '--',
+          })}
+        </span>
+      </Description>
       <Description
         verticle
         size="tiny"
@@ -110,10 +131,6 @@ const StyledWrapper = styled.div`
 
   .overview-status-and-confirmedEpochCount {
     display: flex;
-
-    .overview-confirmedEpochCount {
-      padding-left: 0.7143rem;
-    }
   }
 
   .overview-gotoDetail-container {

@@ -20,6 +20,7 @@ import { cfxTokenTypes, InternalContracts } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
+import { NFTPreview } from '../../app/components/NFTPreview/Loadable';
 
 export const renderAddress = (
   value,
@@ -98,15 +99,23 @@ export const token = {
             {t => (
               <Text
                 span
-                hoverValue={`${
-                  row?.name || t(translations.general.notAvailable)
-                } (${row?.symbol || t(translations.general.notAvailable)})`}
+                hoverValue={
+                  row.name || row.symbol
+                    ? `${row?.name || t(translations.general.notAvailable)} (${
+                        row?.symbol || t(translations.general.notAvailable)
+                      })`
+                    : formatAddress(row.address)
+                }
               >
-                {formatString(
-                  `${row?.name || t(translations.general.notAvailable)} (${
-                    row?.symbol || t(translations.general.notAvailable)
-                  })`,
-                  32,
+                {row.name || row.symbol ? (
+                  formatString(
+                    `${row?.name || t(translations.general.notAvailable)} (${
+                      row?.symbol || t(translations.general.notAvailable)
+                    })`,
+                    32,
+                  )
+                ) : (
+                  <AddressContainer value={row?.address} showIcon={false} />
                 )}
               </Text>
             )}
@@ -479,7 +488,7 @@ export const percentage = total => ({
   },
 });
 
-export const tokenId = {
+export const tokenId = (contractAddress?: string) => ({
   width: 1,
   title: (
     <Translation>
@@ -489,11 +498,14 @@ export const tokenId = {
   dataIndex: 'tokenId',
   key: 'tokenId',
   render: value => (
-    <Text span hoverValue={value}>
-      <SpanWrap>{value || '-'}</SpanWrap>
-    </Text>
+    <>
+      <Text span hoverValue={value}>
+        <SpanWrap>{value || '-'}</SpanWrap>
+      </Text>
+      <NFTPreview contractAddress={contractAddress} tokenId={value} />
+    </>
   ),
-};
+});
 
 export const traceType = {
   width: 1,
@@ -512,7 +524,7 @@ export const StyledIconWrapper = styled.div`
   img {
     width: 1.1429rem;
     height: 1.1429rem;
-    margin-right: 0.5714rem;
+    margin-right: 0.4rem;
   }
 `;
 
@@ -534,7 +546,7 @@ const ImgWrap = styled.img`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 120px;
   overflow: hidden;
   vertical-align: bottom;
 `;

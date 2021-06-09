@@ -17,6 +17,8 @@ import { useAge } from 'utils/hooks/useAge';
 import { Card } from 'app/components/Card';
 import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
+import { useMessages } from '@cfxjs/react-ui';
+import _ from 'lodash';
 
 interface TransferProps {
   tokenName: string;
@@ -36,10 +38,10 @@ interface Query {
 }
 
 export function Transfers({ tokenData }: { tokenData: TransferProps }) {
+  const [, setMessage] = useMessages();
   const {
     tokenName,
     address: tokenAddress,
-    symbol,
     decimals,
     totalSupply,
     price,
@@ -73,13 +75,22 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   const onFilter = (filter: string) => {
     let object: Query = {};
-    if (isAddress(filter)) {
-      object.accountAddress = filter;
-    } else if (isHash(filter)) {
-      object.transactionHash = filter;
-    } else if (transferType !== cfxTokenTypes.erc20 && filter.trim()) {
-      object.tokenId = filter;
+
+    if (filter) {
+      if (isAddress(filter)) {
+        object.accountAddress = filter;
+      } else if (isHash(filter)) {
+        object.transactionHash = filter;
+      } else if (transferType !== cfxTokenTypes.erc20 && _.isInteger(+filter)) {
+        object.tokenId = filter;
+      } else {
+        setMessage({
+          text: t(translations.token.transferList.searchError),
+        });
+        return;
+      }
     }
+
     const urlWithQuery = queryString.stringifyUrl({
       url: location.pathname,
       query: {
@@ -133,7 +144,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
-      tokenColunms.tokenId,
+      tokenColunms.tokenId(),
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
@@ -144,7 +155,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tokenColunms.from,
       tokenColunms.to,
       tokenColunms.quantity,
-      tokenColunms.tokenId,
+      tokenColunms.tokenId(tokenAddress),
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
@@ -194,21 +205,22 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
           </StyledTotalWrapper>
           <div className="token-search-container">
             <TableSearchInput
-              decimals={decimals}
-              symbol={symbol}
-              tokenAddress={tokenAddress}
-              transferType={transferType}
               onFilter={onFilter}
               filter={filter}
               placeholder={
                 transferType === cfxTokenTypes.erc20
-                  ? t(
-                      translations.token.transferList.searchPlaceHolder,
-                    ).replace(bp === 's' ? / \/ /gi : '/', '/')
-                  : t(
-                      translations.token.transferList
-                        .searchPlaceHolderWithTokenId,
-                    ).replace(bp === 's' ? / \/ /gi : '/', '/')
+                  ? `${t(
+                      translations.general.searchInputPlaceholder.txnHash,
+                    )} / ${t(
+                      translations.general.searchInputPlaceholder.holderAddress,
+                    )}`.replace(bp === 's' ? / \/ /gi : '/', '/')
+                  : `${t(
+                      translations.general.searchInputPlaceholder.txnHash,
+                    )} / ${t(
+                      translations.general.searchInputPlaceholder.holderAddress,
+                    )} / ${t(
+                      translations.general.searchInputPlaceholder.tokenID,
+                    )}`.replace(bp === 's' ? / \/ /gi : '/', '/')
               }
             />
             <TableSearchDatepicker />

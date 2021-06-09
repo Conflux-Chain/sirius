@@ -6,6 +6,7 @@
   "contract": {
     "address": "Contract Address",
     "nameTag": "Contract Name Tag",
+    "registered": "Registered",
     "site": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
@@ -121,7 +122,18 @@
     "description": "Transactions",
     "tipCountBefore": "A total of",
     "tipCountAfter": "transactions",
-    "latestTransactions": "Latest Transactions"
+    "latestTransactions": "Latest Transactions",
+    "pending": "Pending Txns",
+    "executed": "Executed Txns",
+    "pendingTxnGasFee": "pending",
+    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
+    "pendingReasonTip": "; the reason of pending txn: ",
+    "pendingReason": {
+      "futureNonce": "Wrong nonce",
+      "notEnoughCash": "Insufficient balance",
+      "ready": "Ready to pack"
+    }
   },
   "cfxTransfers": {
     "title": "CFX Transfers",
@@ -207,17 +219,19 @@
     "feedback": "Feedback",
     "techIssue": "Tech Issue",
     "report": "Report",
+    "supportCenter": "Support Center",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
-    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token",
-    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token",
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
-      "tokens": "Tokens"
+      "tokens": "Tokens",
+      "contracts": "Contracts"
     }
   },
   "footer": {
@@ -231,7 +245,7 @@
     },
     "aboutUs": {
       "title": "About Us",
-      "helpCenter": "Help Center",
+      "supportCenter": "Support Center",
       "privacyPolicy": "Privacy Policy",
       "terms": "Terms"
     },
@@ -299,8 +313,6 @@
     "notRegistered": "The token has not been registered.",
     "tokenRegistration": "Register now",
     "transferList": {
-      "searchPlaceHolder": "Txn hash / Holder address",
-      "searchPlaceHolderWithTokenId": "Txn hash / Holder address / TokenID",
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
     }
@@ -364,11 +376,16 @@
     },
     "dailyTransactionCFX": {
       "title": "Daily Transactions -- CFX",
-      "description": "The daily volume of CFX on the Conflux network."
+      "description": "Daily transactions statistics for CFX on the Conflux network.",
+      "amount": "CFX Daily Volume",
+      "txnCount": "CFX Daily Txn Count",
+      "userCount": "CFX Daily Txn Accounts Count"
     },
     "dailyTransactionTokens": {
-      "title": "Daily Transactions -- Tokens",
-      "description": "The total daily transfer of all tokens on the Conflux network."
+      "title": "Daily Transfers -- Tokens",
+      "description": "Daily transfer statistics for all tokens on the Conflux network.",
+      "txnCount": "Daily Token Transfers Count",
+      "userCount": "Daily Transfer Accounts Count"
     },
     "cfxHoldingAccounts": {
       "title": "CFX Holding Accounts",
@@ -400,6 +417,14 @@
     }
   },
   "general": {
+    "searchInputPlaceholder": {
+      "txnHash": "Txn Hash",
+      "address": "Address",
+      "holderAddress": "Holder Address",
+      "tokenID": "TokenID",
+      "blockHash": "Block Hash",
+      "epoch": "Epoch"
+    },
     "totalRecord": "Total of {{total}} records",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
@@ -468,7 +493,8 @@
         "value": "Value",
         "gasPrice": "Gas Price",
         "gasFee": "Gas Fee",
-        "age": "Age"
+        "age": "Age",
+        "pendingReason": "Reason"
       },
       "token": {
         "number": "#",
@@ -540,6 +566,10 @@
       "unexecuted": {
         "text": "Unexecuted",
         "explanation": "Transaction has not been executed yet, please wait."
+      },
+      "pending": {
+        "text": "Pending",
+        "explanation": ""
       }
     },
     "countdown": {
@@ -583,6 +613,7 @@
         "20002": "Request timeout.",
         "20003": "Request abort.",
         "20004": "Network error.",
+        "30001": "RPC call error.",
         "400": "Bad request.",
         "401": "Unauthorized.",
         "403": "Forbidden.",
@@ -603,7 +634,8 @@
       "latest5000records": "Only the latest 5000 records are supported",
       "download": "Download ",
       "csvFile": "CSV file"
-    }
+    },
+    "preview": "Preview"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -656,10 +688,11 @@
     "gasUsed": "Gas Used/Limit",
     "gasPrice": "Gas Price",
     "gasFee": "Gas Fee",
+    "gasCharged": "Gas Charged",
     "nonce": "Nonce",
     "blockHash": "Block Hash",
     "position": "Position",
-    "storageLimit": "Storage Limit",
+    "storageLimit": "Storage Used/Limit",
     "storageCollateralized": "Storage Collateralize Fee",
     "storageReleased": "Storage Released",
     "chainID": "Chain ID",
@@ -852,10 +885,11 @@
       "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
       "gasPrice": "Cost per unit of gas specified for the transaction in GDrip. The higher the gas price the higher chance of getting included in a block.",
       "gasFee": "The exact fee of gas that was used for the transaction.",
+      "gasCharged": "Conflux protocol requires that the gas-charged should be at least 3/4 of the gas limit. Usually, gas-charged equals the gas used. But if the gas used is less than 3/4 of the gas limit, gas-charged equals 3/4 of the gas limit.",
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
       "blockHash": "A block hash is a unique 66 characters identifier that is generated whenever a transaction is executed.",
       "position": "Index position of Transaction in the block.",
-      "storageLimit": "Maximum amount of storage (bytes) the sender is willing to pay for storage collateral.",
+      "storageLimit": "Storage Used ÷ 1024 = Storage Collateralize Fee; Maximum amount of storage(byte) the sender is willing to pay for storage collateral.",
       "storageCollateralized": "The cost of storage that needs to be paid.",
       "storageReleased": "The refund of storage collateralize fees.",
       "chainID": "The ID indicating which blockchain this transaction is meant to send to. Provides protection against replay-attack.",

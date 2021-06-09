@@ -360,8 +360,6 @@ function createRender(container, width, height) {
     drawHover.forEach(f => f());
     drawPoints.forEach(f => f());
 
-    // console.log(drawHover);
-
     return tooptip;
   };
 }
@@ -439,8 +437,6 @@ function dag({ container }) {
         epochsToRender.length - RENDER_SIZE,
       );
     }
-
-    // console.log("to render", epochsToRender.length);
 
     growingEpoch = currentEpoch.epochNumber;
     growingRate = 0;

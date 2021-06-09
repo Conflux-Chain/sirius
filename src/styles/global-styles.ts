@@ -54,6 +54,38 @@ export const GlobalStyle = createGlobalStyle`
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     border-radius: 3px;
   }
+  
+  // image preview text
+  .ant-image-mask-info{
+    font-size: 0;
+    > span {
+      font-size: 12px
+    }
+  }
+  
+  .image-preview-popover {
+    line-height: 1;
+    .ant-popover-inner-content {
+      padding: 16px;
+    }
+    .image-preview-name{
+      margin-top: 10px;
+      text-align: center;
+      max-width: 200px;
+      word-break: break-word;
+      white-space: normal;
+      line-height: 1.4;
+    }
+  }
+  
+  .ant-popover-arrow {
+    box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
+  }
+  
+  .ant-popover-inner {
+    border-radius: 5px;
+    box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
+  }
 
   .sirius-select-dropdown.select-dropdown {
     .option {

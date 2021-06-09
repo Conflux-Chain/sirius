@@ -40,7 +40,19 @@ export function Tokens() {
     tokenColunms.contract(),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount`;
+  let url = `/stat/tokens/list?transferType=${
+    cfxTokenTypes.erc20
+  }&reverse=true&orderBy=totalPrice&${queryString.stringify({
+    fields: [
+      'transferCount',
+      'icon',
+      'price',
+      'totalPrice',
+      'quoteUrl',
+      'transactionCount',
+      'erc20TransferCount',
+    ],
+  })}`;
   // let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${globalData.currency}`; // @todo wait for new api handler
 
   let title = t(translations.header.tokens20);
@@ -61,7 +73,11 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
+    url = `/stat/tokens/list?transferType=${
+      cfxTokenTypes.erc721
+    }&reverse=true&orderBy=transferCount&${queryString.stringify({
+      fields: ['transferCount', 'icon', 'transactionCount'],
+    })}`;
     // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens721);
     defaultSortKey = 'transferCount';
@@ -79,7 +95,11 @@ export function Tokens() {
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-    url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount`;
+    url = `/stat/tokens/list?transferType=${
+      cfxTokenTypes.erc1155
+    }&reverse=true&orderBy=transferCount&${queryString.stringify({
+      fields: ['transferCount', 'icon', 'transactionCount'],
+    })}`;
     // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);
     defaultSortKey = 'transferCount';

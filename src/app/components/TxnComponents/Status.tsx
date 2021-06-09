@@ -11,17 +11,20 @@ import { translations } from 'locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';
+import _ from 'lodash';
 
 import imgSuccess from 'images/status/success.svg';
 import imgError from 'images/status/error.svg';
 import imgSkip from 'images/status/skip.svg';
 import imgUnexecuted from 'images/status/unexecuted.svg';
+import imgPending from 'images/status/pending.svg';
 
 interface Props {
   type: string | number;
   variant?: 'dot' | 'text';
   popoverProps?: Partial<PopoverProps>;
   showMessage?: boolean;
+  showTooltip?: boolean;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -34,11 +37,12 @@ export const Status = ({
   popoverProps,
   children,
   showMessage,
+  showTooltip,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
   const { t } = useTranslation();
-  const type = String(outerType);
+  const type = String(_.isNil(outerType) ? '4' : outerType);
   const typeMap = useMemo(
     () => ({
       '0': {
@@ -61,6 +65,11 @@ export const Status = ({
         name: t(translations.general.status.unexecuted.text),
         icon: imgUnexecuted,
       },
+      '4': {
+        status: 'pending',
+        name: t(translations.general.status.pending.text),
+        icon: imgPending,
+      },
     }),
     [t],
   );
@@ -71,14 +80,16 @@ export const Status = ({
       translations.general.status[typeMap[type].status].explanation,
     );
     // only error message come from outside
-    if (type === '1' && children) {
+    if ((type === '1' || type === '4') && children) {
       explanation = children;
     }
     const content = (
       <>
-        <img className="icon" src={typeMap[type].icon} alt={type} />
-        <span className="text">{typeMap[type].name}</span>
-        {!showMessage || variant === 'dot' ? null : (
+        <span className="icon-and-text">
+          <img className="icon" src={typeMap[type].icon} alt={type} />
+          <span className="text">{typeMap[type].name}</span>
+        </span>
+        {!showMessage || variant === 'dot' || type === '4' ? null : (
           <span className="description">{explanation}</span>
         )}
       </>
@@ -87,33 +98,37 @@ export const Status = ({
       popoverProps || {};
 
     return (
-      <Wrapper
+      <StyledStatusWrapper
         className={clsx('status', className, typeMap[type].status)}
         {...others}
       >
         {variant === 'dot' ? (
           <StyledPopoverWrapper>
-            <Popover
-              notSeperateTitle
-              title={content}
-              content={explanation}
-              placement="auto-start"
-              hoverable={true}
-              hoverableTimeout={1000}
-              trigger={breakpoint === 's' ? 'click' : 'hover'}
-              contentClassName={clsx(
-                'siriuse-status-popover',
-                popoverContentClassName,
-              )}
-              {...popoverOthers}
-            >
+            {showTooltip ? (
+              <Popover
+                notSeperateTitle
+                title={content}
+                content={explanation}
+                placement="auto-start"
+                hoverable={true}
+                hoverableTimeout={1000}
+                trigger={breakpoint === 's' ? 'click' : 'hover'}
+                contentClassName={clsx(
+                  'siriuse-status-popover',
+                  popoverContentClassName,
+                )}
+                {...popoverOthers}
+              >
+                <span className="dot"></span>
+              </Popover>
+            ) : (
               <span className="dot"></span>
-            </Popover>
+            )}
           </StyledPopoverWrapper>
         ) : (
           content
         )}
-      </Wrapper>
+      </StyledStatusWrapper>
     );
   } else {
     return null;
@@ -121,12 +136,15 @@ export const Status = ({
 };
 Status.defaultProps = {
   showMessage: true,
+  showTooltip: false,
 };
 
-const Wrapper = styled.span`
+const StyledStatusWrapper = styled.span`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   vertical-align: middle;
+  margin-right: 0.7143rem;
+
   &.success {
     color: #7cd77b;
     .dot {
@@ -151,12 +169,25 @@ const Wrapper = styled.span`
       background-color: #b279c9;
     }
   }
+  &.pending {
+    color: #fa8000;
+    .dot {
+      background-color: #fa8000;
+    }
+  }
   .dot {
     display: inline-block;
-    width: 0.5714rem;
-    height: 0.5714rem;
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 50%;
     cursor: pointer;
+    margin-left: -0.9rem;
+    margin-bottom: -0.2rem;
+  }
+  .icon-and-text {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
   }
   .icon {
     width: 1.1429rem;
@@ -178,6 +209,7 @@ const StyledPopoverWrapper = styled.div`
     padding: 0.2857rem 0.8571rem;
     .item.title {
       padding: 0;
+
       .icon {
         width: 0.8571rem;
         height: 0.8571rem;

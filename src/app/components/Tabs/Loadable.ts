@@ -5,5 +5,11 @@ const Tabs = lazyLoad(
   module => module.Tabs,
 );
 
+const SubTabs = lazyLoad(
+  () => import('./SubTabsComponent'),
+  module => module.SubTabs,
+);
+
 // can't export Tabs.Item
 export default Tabs;
+export { SubTabs };

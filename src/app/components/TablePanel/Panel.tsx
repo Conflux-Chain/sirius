@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { Table, Pagination, Skeleton } from '@cfxjs/react-ui';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import clsx from 'clsx';
 import styled from 'styled-components/macro';
 import { Card } from '../Card';
-import { media, useBreakpoint } from '../../../styles/media';
+import { media, useBreakpoint } from 'styles/media';
 import { useTableData } from '../TabsTablePanel';
-import descIcon from '../../../images/table-desc.svg';
-import descHoverIcon from '../../../images/table-desc-hover.svg';
-import ascIcon from '../../../images/table-asc.svg';
-import ascHoverIcon from '../../../images/table-asc-hover.svg';
+import descIcon from 'images/table-desc.svg';
+import descHoverIcon from 'images/table-desc-hover.svg';
+import ascIcon from 'images/table-asc.svg';
+import ascHoverIcon from 'images/table-asc-hover.svg';
 import { Empty } from '../Empty';
-import { monospaceFont } from '../../../styles/variable';
+import { monospaceFont } from 'styles/variable';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 export type TableType = TableProps<unknown> & {
@@ -122,6 +122,7 @@ export const TablePanel = ({
     gotoPage,
     setPageSize,
   } = useTableData(url);
+
   const [cacheTotal, setCacheTotal] = useState(total);
 
   useEffect(() => {
@@ -216,6 +217,7 @@ export const TablePanel = ({
     // add related params to tableHeader
     tableHeader = tableHeader({
       total: realTotal,
+      data: tableData,
     });
   }
 
