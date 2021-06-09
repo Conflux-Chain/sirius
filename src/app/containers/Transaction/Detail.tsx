@@ -38,7 +38,12 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
-import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
+import {
+  GasFee,
+  StorageFee,
+  Status,
+  InputDataNew,
+} from 'app/components/TxnComponents';
 import _ from 'lodash';
 
 import imgWarning from 'images/warning.png';
@@ -96,7 +101,7 @@ export const Detail = () => {
   } = transactionDetail;
   const [warningMessage, setWarningMessage] = useState('');
   const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(true);
+  const [folded, setFolded] = useState(false);
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -960,7 +965,7 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
-          <Description
+          {/* <Description
             title={
               <Tooltip
                 text={t(translations.transaction.inputTips)}
@@ -999,6 +1004,26 @@ export const Detail = () => {
                   <span className="text">{t(warningMessage)}</span>
                 </div>
               ) : null}
+            </SkeletonContainer>
+          </Description> */}
+          <Description
+            title={
+              <Tooltip
+                text={t(translations.transaction.inputTips)}
+                placement="top"
+              >
+                {t(translations.transaction.inputData)}
+              </Tooltip>
+            }
+            className="inputLine"
+          >
+            <SkeletonContainer shown={loading}>
+              <InputDataNew
+                txnHash={routeHash}
+                toHash={to}
+                data={data}
+                isContractCreated={!!contractCreated}
+              ></InputDataNew>
             </SkeletonContainer>
           </Description>
         </div>

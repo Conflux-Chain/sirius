@@ -698,9 +698,12 @@
     "chainID": "Chain ID",
     "inputData": "Input Data",
     "select": {
+      "decodeInputData": "Decode Input Data",
       "original": "Original",
       "utf8": "UTF-8",
-      "decodeInputData": "Decode Input Data"
+      "json": "Decode as JSON",
+      "generalDecode": "General Decode",
+      "optimizationDecode": "Optimization Decode"
     },
     "contract": "Contract",
     "created": "Created",

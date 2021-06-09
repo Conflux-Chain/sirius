@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultContractIcon, defaultTokenIcon } from '../../../../constants';
+import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import { Link } from 'app/components/Link';
 import { formatAddress } from 'utils/cfx';
 
