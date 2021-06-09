@@ -39,6 +39,7 @@ export const formatData = (data, type) => {
   }
 };
 
+// @todo, use this for eventlogs
 export const disassembleEvent = (decodedLog, log) => {
   try {
     var r = /(.*?)(?=\()(\((.*)\))$/;
