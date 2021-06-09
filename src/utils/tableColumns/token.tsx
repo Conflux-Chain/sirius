@@ -99,15 +99,23 @@ export const token = {
             {t => (
               <Text
                 span
-                hoverValue={`${
-                  row?.name || t(translations.general.notAvailable)
-                } (${row?.symbol || t(translations.general.notAvailable)})`}
+                hoverValue={
+                  row.name || row.symbol
+                    ? `${row?.name || t(translations.general.notAvailable)} (${
+                        row?.symbol || t(translations.general.notAvailable)
+                      })`
+                    : formatAddress(row.address)
+                }
               >
-                {formatString(
-                  `${row?.name || t(translations.general.notAvailable)} (${
-                    row?.symbol || t(translations.general.notAvailable)
-                  })`,
-                  32,
+                {row.name || row.symbol ? (
+                  formatString(
+                    `${row?.name || t(translations.general.notAvailable)} (${
+                      row?.symbol || t(translations.general.notAvailable)
+                    })`,
+                    32,
+                  )
+                ) : (
+                  <AddressContainer value={row?.address} showIcon={false} />
                 )}
               </Text>
             )}
@@ -490,12 +498,12 @@ export const tokenId = (contractAddress?: string) => ({
   dataIndex: 'tokenId',
   key: 'tokenId',
   render: value => (
-    <SpanWrap>
+    <>
       <Text span hoverValue={value}>
-        {value || '-'}
+        <SpanWrap>{value || '-'}</SpanWrap>
       </Text>
       <NFTPreview contractAddress={contractAddress} tokenId={value} />
-    </SpanWrap>
+    </>
   ),
 });
 
@@ -516,7 +524,7 @@ export const StyledIconWrapper = styled.div`
   img {
     width: 1.1429rem;
     height: 1.1429rem;
-    margin-right: 0.5714rem;
+    margin-right: 0.4rem;
   }
 `;
 
@@ -538,7 +546,7 @@ const ImgWrap = styled.img`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 120px;
   overflow: hidden;
   vertical-align: bottom;
 `;

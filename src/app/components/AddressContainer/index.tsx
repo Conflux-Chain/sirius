@@ -28,6 +28,7 @@ interface Props {
   zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
   suffixAddressSize?: number; // suffix address size, default is 8
   prefixFloat?: boolean; // prefix icon float or take up space, default false
+  showIcon?: boolean; // whether show contract icon, default true
 }
 
 // TODO code simplify
@@ -43,6 +44,7 @@ export const AddressContainer = ({
   zeroAddressAutoShowAlias = true,
   suffixAddressSize = 8,
   prefixFloat = false,
+  showIcon = true,
 }: Props) => {
   const { t } = useTranslation();
   const txtContractCreation = t(translations.transaction.contractCreation);
@@ -155,7 +157,7 @@ export const AddressContainer = ({
         : translations.general.contract,
     );
     return RenderAddress({
-      prefix: (
+      prefix: showIcon ? (
         <IconWrapper
           className={`${isFull ? 'icon' : ''} ${prefixFloat ? 'float' : ''}`}
         >
@@ -167,7 +169,7 @@ export const AddressContainer = ({
             )}
           </Text>
         </IconWrapper>
-      ),
+      ) : null,
     });
   }
 
