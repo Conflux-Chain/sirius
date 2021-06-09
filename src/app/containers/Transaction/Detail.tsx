@@ -4,14 +4,12 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Card, Spinner } from '@cfxjs/react-ui';
-import { Select } from 'app/components/Select';
 import { Description } from 'app/components/Description/Loadable';
 import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { InputData } from 'app/components/InputData/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import {
   reqTransactionDetail,
@@ -27,7 +25,7 @@ import {
   getPercent,
   toThousands,
 } from 'utils';
-import { decodeContract, formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
@@ -46,7 +44,6 @@ import {
 } from 'app/components/TxnComponents';
 import _ from 'lodash';
 
-import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
@@ -59,20 +56,17 @@ export const Detail = () => {
   const { t } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
-  const [decodedData, setDecodedData] = useState({});
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
-  const [dataTypeList, setDataTypeList] = useState(['original']);
   const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
   const history = useHistory();
   const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
-  const [dataType, setDataType] = useState('original');
   const {
     epochHeight,
     from,
@@ -99,9 +93,7 @@ export const Detail = () => {
     storageReleased,
     storageCollateralized,
   } = transactionDetail;
-  const [warningMessage, setWarningMessage] = useState('');
-  const [isAbiError, setIsAbiError] = useState(false);
-  const [folded, setFolded] = useState(false);
+  const [folded, setFolded] = useState(true);
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -184,21 +176,6 @@ export const Detail = () => {
                 // update contract info
                 setContractInfo(contractResponse);
                 const transferListReponse = proRes[1];
-                let decodedData = {};
-
-                try {
-                  decodedData = decodeContract({
-                    abi: JSON.parse(contractResponse['abi']),
-                    address: contractResponse['address'],
-                    transacionData: txDetailDta.data,
-                  });
-
-                  // no abi scenario
-                  if (!decodedData) setIsAbiError(true);
-                } catch {
-                  setIsAbiError(true);
-                }
-                setDecodedData(decodedData);
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
@@ -212,15 +189,9 @@ export const Detail = () => {
                     setLoading(false);
                     setTokenList(res.list);
                   })
-                  .catch(() => {
-                    //TODO: In the first stage, a temporary solution:no need to cancel loading
-                    // setLoading(false);
-                  });
+                  .catch(() => {});
               })
-              .catch(() => {
-                //TODO: In the first stage, a temporary solution:no need to cancel loading
-                // setLoading(false);
-              });
+              .catch(() => {});
           } else {
             setLoading(false);
           }
@@ -229,10 +200,6 @@ export const Detail = () => {
     },
     [history, routeHash, detailsInfoSetHash],
   );
-
-  const handleDataTypeChange = type => {
-    setDataType(type);
-  };
 
   useEffect(() => {
     fetchTxDetail(routeHash);
@@ -252,34 +219,6 @@ export const Detail = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
-
-  useEffect(() => {
-    // only to address could decoded to utf8 or input fn
-
-    if (!to || contractCreated) {
-    } else {
-      if (isContract) {
-        if (contractInfo['abi'] && !isAbiError) {
-          setDataTypeList(['original', 'decodeInputData']);
-          setDataType('decodeInputData');
-          setWarningMessage('');
-        }
-        if (!contractInfo['abi']) {
-          setDataTypeList(['original']);
-          setDataType('original');
-          setWarningMessage('contract.abiNotUploaded');
-        } else if (to !== null && isAbiError) {
-          setDataTypeList(['original']);
-          setDataType('original');
-          setWarningMessage('contract.abiError');
-        }
-      } else {
-        setDataTypeList(['original', 'utf8']);
-        setDataType('utf8');
-        setWarningMessage('');
-      }
-    }
-  }, [isContract, contractInfo, isAbiError, contractCreated, to]);
 
   const fromContent = (isFull = false) => (
     <span>
@@ -965,47 +904,6 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
-          {/* <Description
-            title={
-              <Tooltip
-                text={t(translations.transaction.inputTips)}
-                placement="top"
-              >
-                {t(translations.transaction.inputData)}
-              </Tooltip>
-            }
-            className="inputLine"
-          >
-            <SkeletonContainer shown={loading}>
-              <InputData
-                byteCode={data}
-                inputType={dataType}
-                decodedDataStr={JSON.stringify(decodedData)}
-              ></InputData>
-              <Select
-                value={dataType}
-                onChange={handleDataTypeChange}
-                disableMatchWidth
-                size="small"
-                className="btnSelectContainer"
-                disabled={dataTypeList.length === 1}
-              >
-                {dataTypeList.map(dataTypeItem => {
-                  return (
-                    <Select.Option key={dataTypeItem} value={dataTypeItem}>
-                      {`${t(translations.transaction.select[dataTypeItem])}`}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-              {warningMessage ? (
-                <div className="warningContainer shown">
-                  <img src={imgWarning} alt="warning" className="warningImg" />
-                  <span className="text">{t(warningMessage)}</span>
-                </div>
-              ) : null}
-            </SkeletonContainer>
-          </Description> */}
           <Description
             title={
               <Tooltip
