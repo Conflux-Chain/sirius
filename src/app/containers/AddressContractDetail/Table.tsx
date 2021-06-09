@@ -35,6 +35,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 // import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { ContractContent } from './ContractContent';
+import { formatAddress } from '../../../utils/cfx';
 
 // import iconInfo from 'images/info.svg';
 
@@ -199,19 +200,33 @@ export function Table({ address, addressInfo }) {
               <Link key="link" href={`/token/${row?.token?.address}`}>
                 <Text
                   span
-                  hoverValue={`${
-                    row?.token?.name || t(translations.general.notAvailable)
-                  } (${
-                    row?.token?.symbol || t(translations.general.notAvailable)
-                  })`}
+                  hoverValue={
+                    row?.token?.name
+                      ? `${
+                          row?.token?.name ||
+                          t(translations.general.notAvailable)
+                        } (${
+                          row?.token?.symbol ||
+                          t(translations.general.notAvailable)
+                        })`
+                      : formatAddress(row?.token?.address)
+                  }
                 >
-                  {formatString(
-                    `${
-                      row?.token?.name || t(translations.general.notAvailable)
-                    } (${
-                      row?.token?.symbol || t(translations.general.notAvailable)
-                    })`,
-                    36,
+                  {row?.token?.name ? (
+                    formatString(
+                      `${
+                        row?.token?.name || t(translations.general.notAvailable)
+                      } (${
+                        row?.token?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`,
+                      36,
+                    )
+                  ) : (
+                    <AddressContainer
+                      value={row?.token?.address}
+                      showIcon={false}
+                    />
                   )}
                 </Text>
               </Link>,
@@ -241,7 +256,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc20[i] }));
 
-  const columnsTokensWidthErc721 = [3, 6, 5, 4, 6, 4];
+  const columnsTokensWidthErc721 = [3, 7, 6, 4, 6, 4];
   const columnsTokenTrasfersErc721: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
@@ -251,7 +266,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc721[i] }));
 
-  const columnsTokensWidthErc1155 = [3, 6, 5, 2, 4, 5, 4];
+  const columnsTokensWidthErc1155 = [3, 7, 6, 2, 3, 6, 4];
   const columnsTokenTrasfersErc1155: ColumnsType = [
     tokenColunms.txnHash,
     tokenColunms.from,
