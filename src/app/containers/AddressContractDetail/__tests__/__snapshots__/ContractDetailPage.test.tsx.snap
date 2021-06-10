@@ -12,7 +12,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
   color: #cdcdcd;
   line-height: 1.1429rem;
   min-width: 40px;
-  max-width: 38rem;
+  max-width: 40rem;
 }
 
 .c6 a {

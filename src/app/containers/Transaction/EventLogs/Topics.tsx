@@ -4,8 +4,8 @@ import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
-import { ContractDetail } from './ContractDetail';
-import { media } from '../../../../styles/media';
+import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
+import { media } from 'styles/media';
 import { formatAddress } from 'utils/cfx';
 
 export const Topics = ({ data, signature, contractAndTokenInfo }) => {
@@ -63,12 +63,13 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
             address?: string;
           } = {
             hex: d.hexValue,
-            decode: d.value,
+            decode:
+              d.type === 'address' // only address type show hexAddress prior
+                ? d.hexAddress || d.formattedValue
+                : d.formattedValue,
             address: d.cfxAddress,
           };
-          const availableOptions = options.filter(
-            o => valueMap[o.value] !== null,
-          );
+          const availableOptions = options.filter(o => !!valueMap[o.value]);
 
           value = valueMap[name];
 

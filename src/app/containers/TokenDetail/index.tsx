@@ -38,6 +38,8 @@ export function TokenDetail() {
     data = {};
   }
 
+  if (data.base32 && !data.address) data.address = data.base32;
+
   data.holderCount = data.holderCount === '-' ? 0 : data.holderCount;
 
   // data.transferStatistic = data.transferStatistic || {};
