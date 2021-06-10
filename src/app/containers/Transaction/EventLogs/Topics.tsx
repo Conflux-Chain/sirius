@@ -63,12 +63,13 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
             address?: string;
           } = {
             hex: d.hexValue,
-            decode: d.value,
+            decode:
+              d.type === 'address' // only address type show hexAddress prior
+                ? d.hexAddress || d.formattedValue
+                : d.formattedValue,
             address: d.cfxAddress,
           };
-          const availableOptions = options.filter(
-            o => valueMap[o.value] !== null,
-          );
+          const availableOptions = options.filter(o => !!valueMap[o.value]);
 
           value = valueMap[name];
 

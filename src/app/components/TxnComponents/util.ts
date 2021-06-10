@@ -19,7 +19,6 @@ export const formatData = (data, type) => {
     //   const hex = format.hex(bytes);
     //   return hex;
     // }
-
     // bytes is formatted to hex
     if (type.startsWith('bytes')) {
       if (Array.isArray(data)) {
@@ -49,6 +48,18 @@ export const formatData = (data, type) => {
   }
 };
 
+export interface DecodedParams {
+  argName: string;
+  type: string;
+  indexed: number;
+  originalValue?: any; // original value
+  value?: any;
+  formattedValue?: any; // decoded value with formatData method, equal to value
+  hexValue?: string; // @todo, hex formatted value
+  hexAddress?: string; // hex formatted address
+  cfxAddress?: string; // base32 formatted address
+}
+
 // @todo, use this for eventlogs
 export const disassembleEvent = (decodedLog, log) => {
   try {
@@ -56,19 +67,7 @@ export const disassembleEvent = (decodedLog, log) => {
     const result = r.exec(decodedLog.fullName);
 
     if (result !== null) {
-      let args:
-        | string
-        | Array<{
-            argName: string;
-            type: string;
-            indexed: number;
-            originalValue?: any; // original value
-            value?: any;
-            formattedValue?: any; // decoded value with formatData method, equal to value
-            hexValue?: string; // @todo, hex formatted value
-            hexAddress?: string; // hex formatted address
-            cfxAddress?: string; // base32 formatted address
-          }> = result[3];
+      let args: string | Array<DecodedParams> = result[3];
       let indexCount = 1;
 
       args = args
@@ -95,7 +94,7 @@ export const disassembleEvent = (decodedLog, log) => {
           // for eventlog topic decode
           if (item.length === 3) {
             r.indexed = indexCount;
-            r.hexValue = log.topics[indexCount];
+            r.hexValue = log.topics ? log.topics[indexCount] : '';
 
             valueIndex = 2;
             indexCount += 1;

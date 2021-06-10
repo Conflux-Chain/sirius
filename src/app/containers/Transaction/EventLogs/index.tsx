@@ -9,8 +9,6 @@ import { Empty } from 'app/components/Empty/Loadable';
 import { cfx, formatAddress } from 'utils/cfx';
 import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { NETWORK_ID } from 'utils/constants';
 import _ from 'lodash';
 import SkeletonContainer from 'app/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +18,7 @@ import { Address } from './Address';
 import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from 'app/components/TxnComponents/Event';
+import { disassembleEvent } from 'app/components/TxnComponents/util';
 import { media } from 'styles/media';
 
 interface Props {
@@ -28,122 +27,6 @@ interface Props {
   abi?: Array<any>;
   bytecode?: string;
 }
-
-/**
- * @example:
- * contract has registered abi
- * {
- *   fnName: 'transfer', // event function name
- *   args: { // event topics
- *     "argName": "from", // params name
- *     "type": "address", // params type
- *     "indexed": 1, // topic index, same as indexed order
- *     "value": "0x1f3c6b9696604cdc3ce1ca277d4c69a9c2770c9x", // decoded value
- *     "hexValue": "0x0000000000000000000000001f3c6b9696604cdc3ce1ca277d4c69a9c2770c9f", // original hex value of topic list
- *     "cfxAddress": null // if decoded value is start with 0x0, 0x1, 0x8, then checkout cfx base32 address
- *   }
- * }
- */
-
-const getAddress = data => format.address(data, NETWORK_ID);
-
-/**
- *
- * @param data
- * @param type
- * @returns
- * @todo
- * 1. convert hex data
- * 2. handle JSON.stringify issue
- */
-const formatData = (data, type) => {
-  try {
-    // handle string type specially, translate to hex format
-    // if (type === 'string') {
-    //   const bytes = format.bytes(data);
-    //   const hex = format.hex(bytes);
-    //   return hex;
-    // }
-    if (type.startsWith('bytes')) {
-      return format.hex(data);
-    }
-    // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
-    if (data.sign !== undefined) {
-      return data.toString();
-    }
-    // bytes[], uint[], int[], tuple
-    // @todo use JSON.stringify to decode data, will cause inner value to be wrapped with quotation mark, like "string" type
-    if (Object.prototype.toString.call(data) === '[object Array]') {
-      return JSON.stringify(data, null, 4);
-    }
-    // others: bytes, address, uint, int,
-    return data.toString();
-  } catch (e) {
-    return data.toString();
-  }
-};
-
-const disassembleEvent = (log, decodedLog) => {
-  try {
-    var r = /(.*?)(?=\()(\((.*)\))$/;
-    const result = r.exec(decodedLog.fullName);
-
-    if (result !== null) {
-      const fnName = result[1];
-      let args:
-        | string
-        | Array<{
-            argName: string;
-            type: string;
-            indexed: number;
-          }> = result[3];
-      let indexCount = 1;
-
-      args = args
-        .split(', ')
-        .filter(a => a !== '')
-        .map(i => {
-          let item = i.trim().split(' ');
-          const type = item[0];
-
-          let r = {
-            argName: '',
-            type: type,
-            indexed: 0, // 0 is mean not indexed
-            value: null,
-            hexValue: null,
-            cfxAddress: null,
-          };
-
-          if (item.length === 2) {
-            r.argName = item[1];
-            r.value = formatData(decodedLog.object[item[1]], r.type);
-          } else if (item.length === 3) {
-            r.argName = item[2];
-            r.type = type;
-            r.indexed = indexCount;
-            r.value = formatData(decodedLog.object[item[2]], r.type);
-            r.hexValue = log.topics[indexCount];
-
-            try {
-              r.value = format.hexAddress(r.value);
-              r.cfxAddress = getAddress(r.value);
-            } catch (e) {}
-
-            indexCount += 1;
-          }
-          return r;
-        });
-
-      return {
-        fnName,
-        args,
-      };
-    }
-  } catch (e) {
-    return decodedLog.fullName;
-  }
-};
 
 const EventLog = ({ log }) => {
   const { t } = useTranslation();
@@ -202,7 +85,8 @@ const EventLog = ({ log }) => {
             });
             const decodedLog = contract.abi.decodeLog(log);
 
-            const { fnName, args } = disassembleEvent(log, decodedLog);
+            const args = disassembleEvent(decodedLog, log);
+
             const { topics, data } = args.reduce(
               (prev, curr) => {
                 if (curr.indexed) {
@@ -213,16 +97,16 @@ const EventLog = ({ log }) => {
                 return prev;
               },
               {
-                topics: [],
-                data: [],
+                topics: [] as any,
+                data: [] as any,
               },
             );
 
-            outerTopics = topics;
+            outerTopics = args;
 
             setEventInfo({
               address: log.address,
-              fnName,
+              fnName: decodedLog.name,
               args,
               topics,
               data,
@@ -313,7 +197,11 @@ const EventLog = ({ log }) => {
                 small
                 noBorder
               >
-                <Data data={data} hexData={log.data} />
+                <Data
+                  data={data}
+                  hexData={log.data}
+                  contractAndTokenInfo={contractAndTokenInfo}
+                />
               </Description>
             )}
           </div>

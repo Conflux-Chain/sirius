@@ -7,6 +7,9 @@ import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '../../../../styles/media';
+import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
+import { formatAddress } from 'utils/cfx';
+import { DecodedParams } from 'app/components/TxnComponents/util';
 
 const isPossibleAddress = data => {
   try {
@@ -133,12 +136,11 @@ const StyledSelectItemWrapper = styled.div`
 export const Data = ({
   data,
   hexData,
+  contractAndTokenInfo,
 }: {
-  data: Array<{
-    argName?: string;
-    value: string;
-  }>;
+  data: Array<DecodedParams>;
   hexData: string;
+  contractAndTokenInfo: any;
 }) => {
   const { t } = useTranslation();
   if (!data.length) {
@@ -157,10 +159,28 @@ export const Data = ({
 
       if (value === 'decode') {
         content = data.map((d, index) => {
+          let value: React.ReactNode = <pre>{d.value}</pre>;
+
+          if (d.type === 'address') {
+            const contractInfo =
+              contractAndTokenInfo[
+                formatAddress(d.value, {
+                  withType: true,
+                })
+              ];
+
+            value = (
+              <>
+                <Link href={`/address/${d.value}`}>{d.value} </Link>
+                <ContractDetail info={contractInfo}></ContractDetail>
+              </>
+            );
+          }
+
           return (
             <div className="data-item" key={index}>
               <span className="data-item-title">{d.argName}: </span>
-              <pre>{d.value}</pre>
+              {value}
             </div>
           );
         });
@@ -260,6 +280,11 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
 
     .data-item-title {
       margin-right: 0.3571rem;
+      flex-shrink: 0;
+    }
+
+    img {
+      margin: 0 0.1429rem;
     }
   }
 `;
