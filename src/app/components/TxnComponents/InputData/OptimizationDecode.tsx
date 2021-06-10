@@ -6,7 +6,7 @@ import { formatAddress } from 'utils/cfx';
 import _ from 'lodash';
 import { ContractDetail } from '../ContractDetail';
 import { Link } from 'app/components/Link/Loadable';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Text } from 'app/components/Text/Loadable';
 import { Event } from '../Event';
 import Info from '@zeit-ui/react-icons/info';
 import { media } from 'styles/media';
@@ -68,12 +68,12 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
               let type: React.ReactNode = a.type;
               if (/\(.*\)/.test(type as string)) {
                 type = (
-                  <Tooltip text={a.type} placement="top">
+                  <Text hoverValue={a.type}>
                     <>
                       <span style={{ marginRight: '2px' }}>turple</span>
                       <Info size={12} />
                     </>
-                  </Tooltip>
+                  </Text>
                 );
               }
               return (
@@ -89,7 +89,7 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                   </div>
                   <div className="optimization-decode-data-item-value">
                     {' '}
-                    {value}
+                    <pre>{value}</pre>
                   </div>
                 </div>
               );
@@ -126,6 +126,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
       align-items: center;
       min-height: 32px;
       border-bottom: 1px solid #e8e9ea;
+      padding: 0.3571rem 0.3571rem 0.3571rem 0;
 
       ${media.s} {
         flex-direction: column;

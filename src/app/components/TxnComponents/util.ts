@@ -9,8 +9,7 @@ export const getAddress = data => format.address(data, NETWORK_ID);
  * @param type
  * @returns
  * @todo
- * 1. convert hex data
- * 2. handle JSON.stringify issue
+ * 1. handle JSON.stringify issue
  */
 export const formatData = (data, type) => {
   try {
@@ -20,8 +19,18 @@ export const formatData = (data, type) => {
     //   const hex = format.hex(bytes);
     //   return hex;
     // }
+
+    // bytes is formatted to hex
     if (type.startsWith('bytes')) {
-      return format.hex(data);
+      if (Array.isArray(data)) {
+        return JSON.stringify(
+          data.map(d => formatData(d, 'bytes')),
+          null,
+          4,
+        );
+      } else {
+        return format.hex(data);
+      }
     }
     // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
     if (data.sign !== undefined) {
@@ -30,11 +39,12 @@ export const formatData = (data, type) => {
     // bytes[], uint[], int[], tuple
     // @todo use JSON.stringify to decode data, will cause inner value to be wrapped with quotation mark, like "string" type
     if (Object.prototype.toString.call(data) === '[object Array]') {
-      return JSON.stringify(data);
+      return JSON.stringify(data, null, 4);
     }
     // others: address, uint, int,
     return data.toString();
   } catch (e) {
+    console.log('format data error: ', e);
     return data.toString();
   }
 };

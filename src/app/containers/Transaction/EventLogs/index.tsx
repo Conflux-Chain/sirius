@@ -74,7 +74,7 @@ const formatData = (data, type) => {
     // bytes[], uint[], int[], tuple
     // @todo use JSON.stringify to decode data, will cause inner value to be wrapped with quotation mark, like "string" type
     if (Object.prototype.toString.call(data) === '[object Array]') {
-      return JSON.stringify(data);
+      return JSON.stringify(data, null, 4);
     }
     // others: bytes, address, uint, int,
     return data.toString();

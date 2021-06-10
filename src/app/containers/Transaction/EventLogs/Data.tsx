@@ -159,8 +159,8 @@ export const Data = ({
         content = data.map((d, index) => {
           return (
             <div className="data-item" key={index}>
-              <span>{d.argName}: </span>
-              <span>{d.value}</span>
+              <span className="data-item-title">{d.argName}: </span>
+              <pre>{d.value}</pre>
             </div>
           );
         });
@@ -251,6 +251,15 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
       top: auto;
       right: auto;
       margin-bottom: 10px;
+    }
+  }
+
+  .data-item {
+    display: flex;
+    align-items: center;
+
+    .data-item-title {
+      margin-right: 0.3571rem;
     }
   }
 `;
