@@ -225,6 +225,7 @@ export function Table({ address, addressInfo }) {
                   ) : (
                     <AddressContainer
                       value={row?.token?.address}
+                      alias={row?.token?.contractName || null}
                       showIcon={false}
                     />
                   )}

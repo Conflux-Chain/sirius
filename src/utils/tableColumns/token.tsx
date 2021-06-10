@@ -115,7 +115,11 @@ export const token = {
                     32,
                   )
                 ) : (
-                  <AddressContainer value={row?.address} showIcon={false} />
+                  <AddressContainer
+                    value={row?.address}
+                    alias={row?.contractName || null}
+                    showIcon={false}
+                  />
                 )}
               </Text>
             )}
