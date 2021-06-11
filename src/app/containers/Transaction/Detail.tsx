@@ -48,6 +48,8 @@ import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
 
+import iconInfo from 'images/info.svg';
+
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
@@ -549,16 +551,33 @@ export const Detail = () => {
     return (
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.tx.tokenTransferred)}
-            placement="top"
-          >
-            {`${t(translations.transaction.tokenTransferred)} ${
-              transferListContainer.length > 1
-                ? `(${transferListContainer.length})`
-                : ''
-            }`}
-          </Tooltip>
+          <>
+            <Tooltip
+              text={t(translations.toolTip.tx.tokenTransferred)}
+              placement="top"
+            >
+              {`${t(translations.transaction.tokenTransferred)} ${
+                transferListContainer.length > 1
+                  ? `(${transferListContainer.length})`
+                  : ''
+              }`}
+            </Tooltip>
+            {transferListContainer.length > 1 ? (
+              <Tooltip
+                className="download-csv-tooltip"
+                text={t(translations.transaction.tipOfTokenTransferCount)}
+                placement="top"
+              >
+                <IconWrapper>
+                  <img
+                    src={iconInfo}
+                    alt="warning-icon"
+                    className="download-svg-img"
+                  ></img>
+                </IconWrapper>
+              </Tooltip>
+            ) : null}
+          </>
         }
       >
         <SkeletonContainer shown={loading}>
@@ -1076,4 +1095,14 @@ const InlineWrapper = styled.div`
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
+`;
+
+const IconWrapper = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
+
+  .download-svg-img {
+    margin-left: 0.3571rem;
+  }
 `;

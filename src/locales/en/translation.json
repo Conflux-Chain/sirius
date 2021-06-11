@@ -672,6 +672,7 @@
     "tx": "tx"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",
     "inThePosition": "(in the position {{position}})",
     "overview": "Overview",

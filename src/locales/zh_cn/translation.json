@@ -672,6 +672,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",
     "overview": "概览",
