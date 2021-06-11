@@ -32,6 +32,7 @@ export const ScanEvent = {
       blocknumberCalc: 'block_countdown',
       techIssue: 'tech_issue',
       report: 'report',
+      suggestionBox: 'suggestion_box',
       developerDocuments: 'developer_documents',
       confluxStudio: 'conflux_studio',
       confluxTruffle: 'conflux_truffle',
@@ -50,6 +51,8 @@ export const ScanEvent = {
       terms: 'terms',
       privacyPolicy: 'privacy_policy',
       supportCenter: 'support_center',
+      stakingAndGovernance: 'staking_governance',
+      fcCfx: 'fc_cfx',
     },
   },
   // global search
