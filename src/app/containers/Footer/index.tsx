@@ -49,14 +49,21 @@ export function Footer() {
     </Link>
   );
 
-  const suggestionBoxLink = (
+  const suggestionBoxLink = iszh ? (
     <Link
       className="footer-link"
-      href={
-        iszh
-          ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-          : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-      }
+      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.suggestionBox,
+      }}
+    >
+      {t(translations.footer.suggestionBox)}
+    </Link>
+  ) : (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.suggestionBox,
@@ -137,14 +144,21 @@ export function Footer() {
       {t(translations.footer.aboutUs.terms)}
     </Link>
   );
-  const supportCenter = (
+  const supportCenter = iszh ? (
     <Link
       className="footer-link"
-      href={
-        iszh
-          ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
-          : 'https://confluxscansupportcenter.zendesk.com/hc/en-us'
-      }
+      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.supportCenter,
+      }}
+    >
+      {t(translations.footer.aboutUs.supportCenter)}
+    </Link>
+  ) : (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/en-us"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.supportCenter,

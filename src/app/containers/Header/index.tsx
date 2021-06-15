@@ -35,9 +35,9 @@ export const Header = memo(() => {
   const isTestnet = useTestnet();
 
   const location = useLocation();
-  const contractMatched =
-    location.pathname.startsWith('/sponsor') ||
-    location.pathname.startsWith('/contract');
+  // const contractMatched =
+  //   location.pathname.startsWith('/sponsor') ||
+  //   location.pathname.startsWith('/contract');
   const statisticsMatched =
     location.pathname.startsWith('/chart') ||
     location.pathname.startsWith('/statistics');
