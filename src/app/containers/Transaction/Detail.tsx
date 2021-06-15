@@ -923,26 +923,29 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.transaction.inputTips)}
-                placement="top"
-              >
-                {t(translations.transaction.inputData)}
-              </Tooltip>
-            }
-            className="inputLine"
-          >
-            <SkeletonContainer shown={loading}>
-              <InputDataNew
-                txnHash={routeHash}
-                toHash={to}
-                data={data}
-                isContractCreated={!!contractCreated}
-              ></InputDataNew>
-            </SkeletonContainer>
-          </Description>
+          {/* only send to user type will with empty data */}
+          {!data || data === '0x' ? null : (
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.transaction.inputTips)}
+                  placement="top"
+                >
+                  {t(translations.transaction.inputData)}
+                </Tooltip>
+              }
+              className="inputLine"
+            >
+              <SkeletonContainer shown={loading}>
+                <InputDataNew
+                  txnHash={routeHash}
+                  toHash={to}
+                  data={data}
+                  isContractCreated={!!contractCreated}
+                ></InputDataNew>
+              </SkeletonContainer>
+            </Description>
+          )}
         </div>
         <StyledFoldButtonWrapper>
           <div
