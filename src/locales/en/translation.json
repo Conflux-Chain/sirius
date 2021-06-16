@@ -412,6 +412,12 @@
       "title": "Contract Amount",
       "description": "The number of contracts on the Conflux network."
     },
+    "contractDeploy": {
+      "title": "All Contract",
+      "description": "The statistics of contracts on the Conflux network.",
+      "contractCount": "Daily Contract Growth",
+      "contractTotalCount": "Contract Amount"
+    },
     "tokenAnalysis": {
       "title": "Token Analysis",
       "description": "{{token}} daily transfers statistics.",

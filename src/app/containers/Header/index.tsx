@@ -49,6 +49,8 @@ export const Header = memo(() => {
     location?.pathname?.startsWith('/blockchain') ||
     location.pathname.startsWith('/contract') ||
     location.pathname.startsWith('/sponsor');
+  const ecosystemMatched = false;
+
   const bp = useBreakpoint();
   const [visible, toggleMenu] = useToggle(false);
 
@@ -276,7 +278,7 @@ export const Header = memo(() => {
     // ecosystem
     {
       title: t(translations.header.ecosystem),
-      matched: statisticsMatched,
+      matched: ecosystemMatched,
       children: [
         {
           title: [

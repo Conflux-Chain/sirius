@@ -412,6 +412,12 @@
       "title": "合约数量",
       "description": "Conflux 网络上的合约数量"
     },
+    "contractDeploy": {
+      "title": "全部合约",
+      "description": "Conflux 网络上的合约统计",
+      "contractCount": "日新增合约量",
+      "contractTotalCount": "合约量"
+    },
     "tokenAnalysis": {
       "title": "代币分析",
       "description": "{{token}} 每日转账统计",

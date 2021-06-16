@@ -157,19 +157,10 @@ export function Charts() {
         <ChartsWrap>
           <Row gutter={[24, 24]}>
             <Col span={24} sm={12} lg={8}>
-              <Link to="/chart/contractAmount">
+              <Link to="/chart/contractDeploy">
                 <Chart
                   width={chartWidth}
-                  indicator="contractAmount"
-                  isThumb={true}
-                />
-              </Link>
-            </Col>
-            <Col span={24} sm={12} lg={8}>
-              <Link to="/chart/contractGrowth">
-                <Chart
-                  width={chartWidth}
-                  indicator="contractGrowth"
+                  indicator="contractDeploy"
                   isThumb={true}
                 />
               </Link>
