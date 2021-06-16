@@ -123,7 +123,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
 
     .optimization-decode-data-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       min-height: 32px;
       border-bottom: 1px solid #e8e9ea;
       padding: 0.3571rem 0.3571rem 0.3571rem 0;
@@ -138,18 +138,18 @@ const StyledOptimizationDecodeWrapper = styled.div`
       }
 
       .optimization-decode-data-item-index {
-        margin-left: 7px;
+        margin-left: 0.5rem;
         font-size: 14px;
-        line-height: 18px;
         color: #6a737d;
         min-width: 8px;
         flex-shrink: 0;
+        height: 1.4286rem;
+        line-height: 1.4286rem;
       }
       .optimization-decode-data-item-type {
-        margin-left: 16px;
+        margin-left: 1.1429rem;
         border: 1px solid rgba(217, 99, 73, 0.5);
         border-radius: 10px;
-        padding: 4px 12px;
         font-size: 10px;
         line-height: 12px;
         color: #d96349;
@@ -159,19 +159,21 @@ const StyledOptimizationDecodeWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 1.4286rem;
       }
       .optimization-decode-data-item-name {
-        margin-left: 16px;
+        margin-left: 1.1429rem;
         font-size: 14px;
-        line-height: 16px;
         color: #e79d35;
         flex-shrink: 0;
+        height: 1.4286rem;
+        line-height: 1.4286rem;
       }
       .optimization-decode-data-item-value {
         font-size: 14px;
         line-height: 16px;
         color: #25282d;
-        margin-left: 5px;
+        margin: 0.1429rem 0 -0.1429rem 0.3571rem;
       }
     }
   }
