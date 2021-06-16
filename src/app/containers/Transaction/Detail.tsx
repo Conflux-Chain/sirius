@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Card, Spinner } from '@cfxjs/react-ui';
 import { Description } from 'app/components/Description/Loadable';
-import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import {
-  reqTransactionDetail,
   reqContract,
-  reqTransferList,
   reqTokenList,
+  reqTransactionDetail,
+  reqTransferList,
 } from 'utils/httpRequest';
 import {
-  getAddressType,
-  formatTimeStamp,
   formatBalance,
+  formatTimeStamp,
   fromDripToCfx,
+  getAddressType,
   getPercent,
   toThousands,
 } from 'utils';
@@ -31,16 +30,16 @@ import {
   addressTypeInternalContract,
   cfxTokenTypes,
 } from 'utils/constants';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
 import {
   GasFee,
-  StorageFee,
-  Status,
   InputDataNew,
+  Status,
+  StorageFee,
 } from 'app/components/TxnComponents';
 import _ from 'lodash';
 
@@ -250,16 +249,15 @@ export const Detail = () => {
               {t(translations.transaction.contract)}{' '}
               {contractInfo && (
                 <>
-                  <img
-                    className="logo"
-                    src={
-                      contractInfo['icon'] ||
-                      (contractInfo['token'] &&
-                        contractInfo['token']['icon']) ||
-                      defaultContractIcon
-                    }
-                    alt="icon"
-                  />
+                  {contractInfo['token'] && contractInfo['token']['icon'] ? (
+                    <img
+                      className="logo"
+                      src={
+                        contractInfo['token'] && contractInfo['token']['icon']
+                      }
+                      alt="icon"
+                    />
+                  ) : null}
                   <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo['name'] ||
                       (contractInfo['token'] && contractInfo['token']['name']

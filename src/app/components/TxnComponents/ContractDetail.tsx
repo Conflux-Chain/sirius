@@ -1,5 +1,6 @@
 import React from 'react';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from '../../../constants';
+import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
 import { formatAddress } from 'utils/cfx';
 
@@ -21,8 +22,9 @@ export const ContractDetail = ({ info }) => {
             alt="icon"
             style={{
               width: '1.1429rem',
+              marginRight: 2,
             }}
-          />{' '}
+          />
           <Link href={`/token/${formatAddress(token.address)}`}>
             {name} {symbol}
           </Link>{' '}
@@ -30,7 +32,7 @@ export const ContractDetail = ({ info }) => {
       );
     } else if (contract && contract.name) {
       const name = contract['name'];
-      const icon = contract['icon'] || defaultContractIcon;
+      const icon = ContractIcon;
 
       child = (
         <>
@@ -39,8 +41,10 @@ export const ContractDetail = ({ info }) => {
             alt="icon"
             style={{
               width: '1.1429rem',
+              marginBottom: 3,
+              marginRight: 2,
             }}
-          />{' '}
+          />
           <Link href={`/contract/${formatAddress(contract.address)}`}>
             {name}
           </Link>{' '}
