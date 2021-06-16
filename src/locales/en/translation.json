@@ -126,7 +126,7 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTotal": "Showing the last 10 records (A total of {{total}} records)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
     "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
@@ -430,7 +430,9 @@
       "blockHash": "Block Hash",
       "epoch": "Epoch"
     },
-    "totalRecord": "Total of {{total}} records",
+    "totalRecord": "A total of {{total}} records",
+    "totalHolders": "A total of {{total}} holders",
+    "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
     "invalidABI": "Invaild ABI",

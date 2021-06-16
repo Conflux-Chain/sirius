@@ -431,6 +431,8 @@
       "epoch": "纪元"
     },
     "totalRecord": "共计 {{total}} 个记录",
+    "totalHolders": "共计 {{total}} 个持有人",
+    "totalRecordLimit": "仅展示最新的 10k 条记录（共计 {{total}} 条记录）",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",
