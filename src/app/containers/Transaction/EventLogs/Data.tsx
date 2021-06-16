@@ -180,7 +180,7 @@ export const Data = ({
           return (
             <div className="data-item" key={index}>
               <span className="data-item-title">{d.argName}: </span>
-              {value}
+              <span className="data-item-value">{value}</span>
             </div>
           );
         });
@@ -276,11 +276,16 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
 
   .data-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     .data-item-title {
       margin-right: 0.3571rem;
       flex-shrink: 0;
+    }
+
+    .data-item-value {
+      margin-top: 0.1429rem;
+      margin-bottom: -0.1429rem;
     }
 
     img {

@@ -4,12 +4,21 @@ import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
 import { formatAddress } from 'utils/cfx';
 
-export const ContractDetail = ({ info }) => {
+interface Props {
+  info: {
+    contract: any;
+    token: any;
+  };
+  showTokenInfo: boolean;
+  showContractInfo: boolean;
+}
+
+export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
   if (info) {
     const { contract, token } = info;
     let child: React.ReactNode = null;
 
-    if (token && (token.name || token.symbol)) {
+    if (showTokenInfo && token && (token.name || token.symbol)) {
       const name = token['name'] || '--';
       let symbol = token['symbol'];
       symbol = `(${symbol ? symbol : '--'})`;
@@ -30,7 +39,7 @@ export const ContractDetail = ({ info }) => {
           </Link>{' '}
         </>
       );
-    } else if (contract && contract.name) {
+    } else if (showContractInfo && contract && contract.name) {
       const name = contract['name'];
       const icon = ContractIcon;
 
@@ -55,4 +64,9 @@ export const ContractDetail = ({ info }) => {
     return <> {child}</>;
   }
   return null;
+};
+
+ContractDetail.defaultProps = {
+  showTokenInfo: true,
+  showContractInfo: false,
 };
