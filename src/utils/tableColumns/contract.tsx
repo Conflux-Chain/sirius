@@ -4,8 +4,7 @@ import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
-import { defaultTokenIcon } from '../../constants';
-import { formatString, formatNumber } from '..';
+import { formatNumber, formatString } from '..';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
@@ -36,7 +35,7 @@ export const name = {
   key: 'blockIndex',
   render: row => (
     <StyledIconWrapper>
-      <img src={row?.icon || defaultTokenIcon} alt="contract icon" />
+      {/*<img src={row?.icon || defaultTokenIcon} alt="contract icon" />*/}
       <Link href={`/address/${formatAddress(row.address)}`}>
         <Text span hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}

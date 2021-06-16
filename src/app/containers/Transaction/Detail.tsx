@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Card, Spinner } from '@cfxjs/react-ui';
 import { Description } from 'app/components/Description/Loadable';
-import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import {
-  reqTransactionDetail,
   reqContract,
-  reqTransferList,
   reqTokenList,
+  reqTransactionDetail,
+  reqTransferList,
 } from 'utils/httpRequest';
 import {
-  getAddressType,
-  formatTimeStamp,
   formatBalance,
+  formatTimeStamp,
   fromDripToCfx,
+  getAddressType,
   getPercent,
   toThousands,
 } from 'utils';
@@ -31,22 +30,24 @@ import {
   addressTypeInternalContract,
   cfxTokenTypes,
 } from 'utils/constants';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
 import {
   GasFee,
-  StorageFee,
-  Status,
   InputDataNew,
+  Status,
+  StorageFee,
 } from 'app/components/TxnComponents';
 import _ from 'lodash';
 
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
+
+import iconInfo from 'images/info.svg';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -248,16 +249,15 @@ export const Detail = () => {
               {t(translations.transaction.contract)}{' '}
               {contractInfo && (
                 <>
-                  <img
-                    className="logo"
-                    src={
-                      contractInfo['icon'] ||
-                      (contractInfo['token'] &&
-                        contractInfo['token']['icon']) ||
-                      defaultContractIcon
-                    }
-                    alt="icon"
-                  />
+                  {contractInfo['token'] && contractInfo['token']['icon'] ? (
+                    <img
+                      className="logo"
+                      src={
+                        contractInfo['token'] && contractInfo['token']['icon']
+                      }
+                      alt="icon"
+                    />
+                  ) : null}
                   <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo['name'] ||
                       (contractInfo['token'] && contractInfo['token']['name']
@@ -549,16 +549,33 @@ export const Detail = () => {
     return (
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.tx.tokenTransferred)}
-            placement="top"
-          >
-            {`${t(translations.transaction.tokenTransferred)} ${
-              transferListContainer.length > 1
-                ? `(${transferListContainer.length})`
-                : ''
-            }`}
-          </Tooltip>
+          <>
+            <Tooltip
+              text={t(translations.toolTip.tx.tokenTransferred)}
+              placement="top"
+            >
+              {`${t(translations.transaction.tokenTransferred)} ${
+                transferListContainer.length > 1
+                  ? `(${transferListContainer.length})`
+                  : ''
+              }`}
+            </Tooltip>
+            {transferListContainer.length > 1 ? (
+              <Tooltip
+                className="download-csv-tooltip"
+                text={t(translations.transaction.tipOfTokenTransferCount)}
+                placement="top"
+              >
+                <IconWrapper>
+                  <img
+                    src={iconInfo}
+                    alt="warning-icon"
+                    className="download-svg-img"
+                  ></img>
+                </IconWrapper>
+              </Tooltip>
+            ) : null}
+          </>
         }
       >
         <SkeletonContainer shown={loading}>
@@ -904,26 +921,29 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.transaction.inputTips)}
-                placement="top"
-              >
-                {t(translations.transaction.inputData)}
-              </Tooltip>
-            }
-            className="inputLine"
-          >
-            <SkeletonContainer shown={loading}>
-              <InputDataNew
-                txnHash={routeHash}
-                toHash={to}
-                data={data}
-                isContractCreated={!!contractCreated}
-              ></InputDataNew>
-            </SkeletonContainer>
-          </Description>
+          {/* only send to user type will with empty data */}
+          {!data || data === '0x' ? null : (
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.transaction.inputTips)}
+                  placement="top"
+                >
+                  {t(translations.transaction.inputData)}
+                </Tooltip>
+              }
+              className="inputLine"
+            >
+              <SkeletonContainer shown={loading}>
+                <InputDataNew
+                  txnHash={routeHash}
+                  toHash={to}
+                  data={data}
+                  isContractCreated={!!contractCreated}
+                ></InputDataNew>
+              </SkeletonContainer>
+            </Description>
+          )}
         </div>
         <StyledFoldButtonWrapper>
           <div
@@ -1076,4 +1096,14 @@ const InlineWrapper = styled.div`
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
+`;
+
+const IconWrapper = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
+
+  .download-svg-img {
+    margin-left: 0.3571rem;
+  }
 `;

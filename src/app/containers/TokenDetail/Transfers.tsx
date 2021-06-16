@@ -199,9 +199,14 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tableHeader: ({ total }) => (
         <StyledSearchAreaWrapper>
           <StyledTotalWrapper>
-            {t(translations.general.totalRecord, {
-              total: toThousands(total),
-            })}
+            {t(
+              total > 10000
+                ? translations.general.totalRecordLimit
+                : translations.general.totalRecord,
+              {
+                total: toThousands(total),
+              },
+            )}
           </StyledTotalWrapper>
           <div className="token-search-container">
             <TableSearchInput
@@ -260,7 +265,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       },
       tableHeader: ({ total }) => (
         <StyledTotalWrapper>
-          {t(translations.general.totalRecord, {
+          {t(translations.general.totalHolders, {
             total: toThousands(total),
           })}
         </StyledTotalWrapper>

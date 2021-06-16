@@ -126,7 +126,7 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTotal": "Showing the last 10 records (A total of {{total}} records)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
     "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
@@ -209,6 +209,9 @@
     "contractDeployment": "Contract Deployment",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
+    "ecosystem": "Ecosystem",
+    "stakingAndGovernance": "Staking & Governance",
+    "fcCfx": "FC-CFX Non-reversible Exchange",
     "more": "More",
     "tools": "Tools",
     "balanceChecker": "Balance Checker",
@@ -220,6 +223,7 @@
     "techIssue": "Tech Issue",
     "report": "Report",
     "supportCenter": "Support Center",
+    "suggestionBox": "Suggestion Box",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
@@ -265,6 +269,7 @@
     "contactUs": "Contact Us",
     "techIssue": "Tech Issue",
     "report": "Report",
+    "suggestionBox": "Suggestion Box",
     "developResource": {
       "title": "Developer Resources",
       "developerDocuments": "Developer Documents",
@@ -407,6 +412,12 @@
       "title": "Contract Amount",
       "description": "The number of contracts on the Conflux network."
     },
+    "contractDeploy": {
+      "title": "All Contract",
+      "description": "The statistics of contracts on the Conflux network.",
+      "contractCount": "Daily Contract Growth",
+      "contractTotalCount": "Contract Amount"
+    },
     "tokenAnalysis": {
       "title": "Token Analysis",
       "description": "{{token}} daily transfers statistics.",
@@ -425,7 +436,9 @@
       "blockHash": "Block Hash",
       "epoch": "Epoch"
     },
-    "totalRecord": "Total of {{total}} records",
+    "totalRecord": "A total of {{total}} records",
+    "totalHolders": "A total of {{total}} holders",
+    "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
     "invalidABI": "Invaild ABI",
@@ -667,6 +680,7 @@
     "tx": "tx"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",
     "inThePosition": "(in the position {{position}})",
     "overview": "Overview",

@@ -209,6 +209,9 @@
     "contractDeployment": "合约部署",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
+    "ecosystem": "生态",
+    "stakingAndGovernance": "质押 & 治理",
+    "fcCfx": "FC-CFX 不可逆兑换",
     "more": "更多",
     "tools": "工具",
     "balanceChecker": "余额检索器",
@@ -220,6 +223,7 @@
     "techIssue": "技术问题",
     "report": "举报",
     "supportCenter": "帮助中心",
+    "suggestionBox": "意见箱",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
@@ -265,6 +269,7 @@
     "contactUs": "联系我们",
     "techIssue": "技术问题",
     "report": "举报",
+    "suggestionBox": "意见箱",
     "developResource": {
       "title": "开发中心",
       "developerDocuments": "开发者文档",
@@ -407,6 +412,12 @@
       "title": "合约数量",
       "description": "Conflux 网络上的合约数量"
     },
+    "contractDeploy": {
+      "title": "全部合约",
+      "description": "Conflux 网络上的合约统计",
+      "contractCount": "日新增合约量",
+      "contractTotalCount": "合约量"
+    },
     "tokenAnalysis": {
       "title": "代币分析",
       "description": "{{token}} 每日转账统计",
@@ -426,6 +437,8 @@
       "epoch": "纪元"
     },
     "totalRecord": "共计 {{total}} 个记录",
+    "totalHolders": "共计 {{total}} 个持有人",
+    "totalRecordLimit": "仅展示最新的 10k 条记录（共计 {{total}} 条记录）",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",
@@ -667,6 +680,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",
     "overview": "概览",

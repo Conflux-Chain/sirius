@@ -404,6 +404,7 @@ const WrappLink = styled.span`
 
   &.plain-wrap.level-1 {
     border-right: 1px solid #eee;
+    min-height: 180px;
     &:last-child {
       border-right: none;
     }
