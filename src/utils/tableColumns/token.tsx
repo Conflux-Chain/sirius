@@ -501,12 +501,15 @@ export const tokenId = (contractAddress?: string) => ({
   ),
   dataIndex: 'tokenId',
   key: 'tokenId',
-  render: value => (
+  render: (value, row) => (
     <>
       <Text span hoverValue={value}>
         <SpanWrap>{value || '-'}</SpanWrap>
       </Text>
-      <NFTPreview contractAddress={contractAddress} tokenId={value} />
+      <NFTPreview
+        contractAddress={contractAddress || row?.token?.address}
+        tokenId={value}
+      />
     </>
   ),
 });
