@@ -413,7 +413,7 @@
       "description": "The number of contracts on the Conflux network."
     },
     "contractDeploy": {
-      "title": "All Contract",
+      "title": "All Contracts",
       "description": "The statistics of contracts on the Conflux network.",
       "contractCount": "Daily Contract Growth",
       "contractTotalCount": "Contract Amount"
