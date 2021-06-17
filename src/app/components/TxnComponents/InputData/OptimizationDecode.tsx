@@ -126,6 +126,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
       min-height: 32px;
       border-bottom: 1px solid #e8e9ea;
       padding: 0.3571rem 0.3571rem 0.3571rem 0;
+      overflow: hidden;
 
       ${media.s} {
         flex-direction: column;

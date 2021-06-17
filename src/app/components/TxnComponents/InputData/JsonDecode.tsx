@@ -39,7 +39,7 @@ export const JsonDecode = ({ data }: Props) => {
         showPrintMargin={false}
         value={json}
         readOnly={true}
-        height="11.8571rem"
+        height="11.1429rem"
         wrapEnabled={true}
       />
     </Wrapper>
