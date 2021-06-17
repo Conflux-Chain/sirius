@@ -8,7 +8,7 @@ import { ContractDetail } from '../ContractDetail';
 import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Event } from '../Event';
-import Info from '@zeit-ui/react-icons/info';
+// import Info from '@zeit-ui/react-icons/info';
 import { media } from 'styles/media';
 
 export const OptimizationDecode = ({ data = '', decodedData }) => {
@@ -68,10 +68,10 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
               let type: React.ReactNode = a.type;
               if (/\(.*\)/.test(type as string)) {
                 type = (
-                  <div className="optimization-decode-data-item-type-turple">
+                  <span className="optimization-decode-data-item-type-turple">
                     <span style={{ marginRight: '2px' }}>turple</span>
-                    <Info size={12} />
-                  </div>
+                    {/* <Info size={12} /> */}
+                  </span>
                 );
               }
               return (
