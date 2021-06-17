@@ -68,12 +68,10 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
               let type: React.ReactNode = a.type;
               if (/\(.*\)/.test(type as string)) {
                 type = (
-                  <Text hoverValue={a.type}>
-                    <div className="optimization-decode-data-item-type-turple">
-                      <span style={{ marginRight: '2px' }}>turple</span>
-                      <Info size={12} />
-                    </div>
-                  </Text>
+                  <div className="optimization-decode-data-item-type-turple">
+                    <span style={{ marginRight: '2px' }}>turple</span>
+                    <Info size={12} />
+                  </div>
                 );
               }
               return (
@@ -82,7 +80,9 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                     {index}
                   </div>
                   <div className="optimization-decode-data-item-type">
-                    {type}
+                    <Text maxWidth={'70px'} hoverValue={a.type}>
+                      {type}
+                    </Text>
                   </div>
                   <div className="optimization-decode-data-item-name">
                     {a.argName}:
@@ -146,14 +146,14 @@ const StyledOptimizationDecodeWrapper = styled.div`
         line-height: 1.4286rem;
       }
       .optimization-decode-data-item-type {
-        margin-left: 1.1429rem;
+        margin-left: 0.6rem;
         border: 1px solid rgba(217, 99, 73, 0.5);
         border-radius: 10px;
         font-size: 12px;
         line-height: 1.4286rem;
         color: #d96349;
         flex-shrink: 0;
-        width: 6.5714rem;
+        width: 5.7143rem;
         text-align: center;
         display: flex;
         justify-content: center;
@@ -166,7 +166,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
         }
       }
       .optimization-decode-data-item-name {
-        margin-left: 1.1429rem;
+        margin-left: 0.6rem;
         font-size: 14px;
         color: #e79d35;
         flex-shrink: 0;
