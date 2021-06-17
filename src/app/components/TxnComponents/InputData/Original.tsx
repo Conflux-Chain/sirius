@@ -9,6 +9,7 @@ interface Props {
 export const Original = ({ data }: Props) => {
   return (
     <Wrapper
+      isMonospace={true}
       style={{
         paddingTop: 0,
         paddingBottom: 0,
