@@ -376,15 +376,29 @@ export const StatsCard = ({
           <tr key={i}>
             <td>{i + 1}</td>
             <td className="address">
-              <AddressContainer
-                value={d.base32 || d.hex}
-                isMe={
-                  accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) ===
-                      formatAddress(d.base32 || d.hex)
-                    : false
-                }
-              />
+              {d.tokenInfo && d.tokenInfo.name ? (
+                token.render({
+                  icon: d.tokenInfo.icon || null,
+                  address: d.base32 || d.hex,
+                  name: d.tokenInfo.name,
+                  symbol: d.tokenInfo.symbol,
+                })
+              ) : (
+                <AddressContainer
+                  value={d.base32 || d.hex}
+                  alias={
+                    d.contractInfo && d.contractInfo.name
+                      ? d.contractInfo.name
+                      : null
+                  }
+                  isMe={
+                    accounts && accounts.length > 0
+                      ? formatAddress(accounts[0]) ===
+                        formatAddress(d.base32 || d.hex)
+                      : false
+                  }
+                />
+              )}
             </td>
             <td className="text-right">
               {action === 'cfxSend' || action === 'cfxReceived'
