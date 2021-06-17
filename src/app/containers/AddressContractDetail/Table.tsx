@@ -273,7 +273,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-    tokenColunms.tokenId(address),
+    tokenColunms.tokenId(),
     tokenColumnsToken,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));

@@ -8,7 +8,7 @@ import { ContractDetail } from '../ContractDetail';
 import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Event } from '../Event';
-import Info from '@zeit-ui/react-icons/info';
+// import Info from '@zeit-ui/react-icons/info';
 import { media } from 'styles/media';
 
 export const OptimizationDecode = ({ data = '', decodedData }) => {
@@ -68,12 +68,10 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
               let type: React.ReactNode = a.type;
               if (/\(.*\)/.test(type as string)) {
                 type = (
-                  <Text hoverValue={a.type}>
-                    <>
-                      <span style={{ marginRight: '2px' }}>turple</span>
-                      <Info size={12} />
-                    </>
-                  </Text>
+                  <span className="optimization-decode-data-item-type-turple">
+                    <span style={{ marginRight: '2px' }}>turple</span>
+                    {/* <Info size={12} /> */}
+                  </span>
                 );
               }
               return (
@@ -82,14 +80,15 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                     {index}
                   </div>
                   <div className="optimization-decode-data-item-type">
-                    {type}
+                    <Text maxWidth={'70px'} hoverValue={a.type}>
+                      {type}
+                    </Text>
                   </div>
                   <div className="optimization-decode-data-item-name">
                     {a.argName}:
                   </div>
                   <div className="optimization-decode-data-item-value">
-                    {' '}
-                    <pre>{value}</pre>
+                    <pre className="prev">{value}</pre>
                   </div>
                 </div>
               );
@@ -147,22 +146,27 @@ const StyledOptimizationDecodeWrapper = styled.div`
         line-height: 1.4286rem;
       }
       .optimization-decode-data-item-type {
-        margin-left: 1.1429rem;
+        margin-left: 0.6rem;
         border: 1px solid rgba(217, 99, 73, 0.5);
         border-radius: 10px;
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 12px;
+        line-height: 1.4286rem;
         color: #d96349;
         flex-shrink: 0;
-        width: 92px;
+        width: 5.7143rem;
         text-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 1.4286rem;
+
+        .optimization-decode-data-item-type-turple {
+          display: flex;
+          align-items: center;
+        }
       }
       .optimization-decode-data-item-name {
-        margin-left: 1.1429rem;
+        margin-left: 0.6rem;
         font-size: 14px;
         color: #e79d35;
         flex-shrink: 0;
@@ -171,9 +175,14 @@ const StyledOptimizationDecodeWrapper = styled.div`
       }
       .optimization-decode-data-item-value {
         font-size: 14px;
-        line-height: 16px;
         color: #25282d;
-        margin: 0.1429rem 0 -0.1429rem 0.3571rem;
+        padding-left: 0.3571rem;
+
+        .prev {
+          padding-top: 0.1071rem;
+          margin-bottom: -0.2857rem;
+          font-size: 1rem;
+        }
       }
     }
   }
