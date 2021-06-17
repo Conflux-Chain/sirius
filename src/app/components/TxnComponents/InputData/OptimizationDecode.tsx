@@ -69,10 +69,10 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
               if (/\(.*\)/.test(type as string)) {
                 type = (
                   <Text hoverValue={a.type}>
-                    <>
+                    <div className="optimization-decode-data-item-type-turple">
                       <span style={{ marginRight: '2px' }}>turple</span>
                       <Info size={12} />
-                    </>
+                    </div>
                   </Text>
                 );
               }
@@ -88,8 +88,7 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                     {a.argName}:
                   </div>
                   <div className="optimization-decode-data-item-value">
-                    {' '}
-                    <pre>{value}</pre>
+                    <pre className="prev">{value}</pre>
                   </div>
                 </div>
               );
@@ -150,16 +149,21 @@ const StyledOptimizationDecodeWrapper = styled.div`
         margin-left: 1.1429rem;
         border: 1px solid rgba(217, 99, 73, 0.5);
         border-radius: 10px;
-        font-size: 10px;
-        line-height: 12px;
+        font-size: 12px;
+        line-height: 1.4286rem;
         color: #d96349;
         flex-shrink: 0;
-        width: 92px;
+        width: 6.5714rem;
         text-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 1.4286rem;
+
+        .optimization-decode-data-item-type-turple {
+          display: flex;
+          align-items: center;
+        }
       }
       .optimization-decode-data-item-name {
         margin-left: 1.1429rem;
@@ -171,9 +175,14 @@ const StyledOptimizationDecodeWrapper = styled.div`
       }
       .optimization-decode-data-item-value {
         font-size: 14px;
-        line-height: 16px;
         color: #25282d;
-        margin: 0.1429rem 0 -0.1429rem 0.3571rem;
+        padding-left: 0.3571rem;
+
+        .prev {
+          padding-top: 0.1071rem;
+          margin-bottom: -0.2857rem;
+          font-size: 1rem;
+        }
       }
     }
   }
