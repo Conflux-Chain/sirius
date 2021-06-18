@@ -90,7 +90,7 @@ export const token = {
     <Translation>{t => t(translations.general.table.token.token)}</Translation>
   ),
   key: 'blockIndex',
-  render: (row, length?) => {
+  render: row => {
     return (
       <StyledIconWrapper>
         <img src={row?.icon || defaultTokenIcon} alt="token icon" />
@@ -112,7 +112,7 @@ export const token = {
                     `${row?.name || t(translations.general.notAvailable)} (${
                       row?.symbol || t(translations.general.notAvailable)
                     })`,
-                    length || 32,
+                    row?.length || 32,
                   )
                 ) : (
                   <AddressContainer
@@ -383,15 +383,13 @@ export const account = {
   render: (value, row) => (
     <>
       {row.tokenInfo && row.tokenInfo.name ? (
-        token.render(
-          {
-            icon: row.tokenInfo.icon || null,
-            address: value.address,
-            name: row.tokenInfo.name,
-            symbol: row.tokenInfo.symbol,
-          },
-          60,
-        )
+        token.render({
+          icon: row.tokenInfo.icon || null,
+          address: value.address,
+          name: row.tokenInfo.name,
+          symbol: row.tokenInfo.symbol,
+          length: 60,
+        })
       ) : (
         <AddressContainer
           value={value.address}
