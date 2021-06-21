@@ -55,6 +55,13 @@ const TokenItemWrapper = styled.div`
       color: #6c6d75;
     }
 
+    .holders {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      margin-top: -11px;
+    }
+
     .tag {
       color: #6c6d75;
       padding: 1px 5px;
@@ -105,8 +112,14 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
                   {token?.address ? (
                     <div className="address">{token?.address}</div>
                   ) : null}
-                  {token?.website ? (
-                    <div className="website">{token?.website}</div>
+                  {/*{token?.website ? (*/}
+                  {/*  <div className="website">{token?.website}</div>*/}
+                  {/*) : null}*/}
+                  {token?.holderCount ? (
+                    <div className="holders">
+                      {token?.holderCount}{' '}
+                      {t(translations.tokens.table.holders)}
+                    </div>
                   ) : null}
                 </>
               )}
@@ -167,10 +180,15 @@ export const Search = () => {
                 label: (
                   <LabelWrapper>
                     {t(translations.header.search.contracts)}
+                    {res.contractList.length > 10
+                      ? ` (${t(translations.header.search.contractsTip)})`
+                      : null}
                   </LabelWrapper>
                 ),
                 options: searchResult(
-                  res.contractList,
+                  res.contractList.length > 10
+                    ? res.contractList.slice(0, 10)
+                    : res.contractList,
                   notAvailable,
                   'contract',
                 ),
@@ -215,6 +233,7 @@ export const Search = () => {
         onChange={v => {
           setAutoCompleteValue(v);
         }}
+        // open={true}
         onSelect={onSelect}
         onSearch={_.debounce(handleSearch, 500)}
         dropdownClassName="header-search-dropdown"

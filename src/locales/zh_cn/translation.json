@@ -235,7 +235,8 @@
     "learnMore": "了解更多",
     "search": {
       "tokens": "代币",
-      "contracts": "合约"
+      "contracts": "合约",
+      "contractsTip": "仅显示注册日期最早的 10 个合约"
     }
   },
   "footer": {

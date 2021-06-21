@@ -235,7 +235,8 @@
     "learnMore": "Learn more",
     "search": {
       "tokens": "Tokens",
-      "contracts": "Contracts"
+      "contracts": "Contracts",
+      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
     }
   },
   "footer": {
