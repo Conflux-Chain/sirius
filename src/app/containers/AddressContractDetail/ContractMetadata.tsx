@@ -254,6 +254,15 @@ export function ContractMetadata({ address, contractInfo }) {
                       <AddressContainer
                         key={contractInfo.sponsor.sponsorForCollateral}
                         value={contractInfo.sponsor.sponsorForCollateral}
+                        alias={
+                          contractInfo.sponsor
+                            .sponsorForCollateralContractInfo &&
+                          contractInfo.sponsor.sponsorForCollateralContractInfo
+                            .name
+                            ? contractInfo.sponsor
+                                .sponsorForCollateralContractInfo.name
+                            : null
+                        }
                       />,
                     ]
                   ) : (
@@ -338,6 +347,13 @@ export function ContractMetadata({ address, contractInfo }) {
                       <AddressContainer
                         key={contractInfo.sponsor.sponsorForGas}
                         value={contractInfo.sponsor.sponsorForGas}
+                        alias={
+                          contractInfo.sponsor.sponsorForGasContractInfo &&
+                          contractInfo.sponsor.sponsorForGasContractInfo.name
+                            ? contractInfo.sponsor.sponsorForGasContractInfo
+                                .name
+                            : null
+                        }
                       />,
                     ]
                   ) : (

@@ -36,17 +36,17 @@ export const renderAddress = (
     else if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;
     else if (row.fromTokenInfo && row.fromTokenInfo.name)
-      alias = `${row.fromTokenInfo.name} (${row.fromTokenInfo.symbol || '-'})`;
+      alias = `${row.fromTokenInfo.name}`;
   } else if (type === 'to') {
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.toTokenInfo && row.toTokenInfo.name)
-      alias = `${row.toTokenInfo.name} (${row.toTokenInfo.symbol || '-'})`;
+      alias = `${row.toTokenInfo.name}`;
     else if (row.contractInfo && row.contractInfo.name)
       alias = row.contractInfo.name;
     else if (row.tokenInfo && row.tokenInfo.name)
-      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+      alias = `${row.tokenInfo.name}`;
   }
 
   return (
@@ -112,7 +112,7 @@ export const token = {
                     `${row?.name || t(translations.general.notAvailable)} (${
                       row?.symbol || t(translations.general.notAvailable)
                     })`,
-                    32,
+                    row?.length || 32,
                   )
                 ) : (
                   <AddressContainer
@@ -380,8 +380,17 @@ export const account = {
   ),
   dataIndex: 'account',
   key: 'account',
-  render: value => (
-    <AddressContainer value={value.address} alias={value.name} isFull={true} />
+  render: (value, row) => (
+    <AccountWrapper>
+      <AddressContainer
+        value={value.address}
+        alias={
+          value.name ||
+          (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
+        }
+        isFull={true}
+      />
+    </AccountWrapper>
   ),
 };
 
@@ -574,5 +583,12 @@ export const LinkA = styled.a`
   color: #1e3de4 !important;
   &:hover {
     color: #0f23bd !important;
+  }
+`;
+
+export const AccountWrapper = styled.div`
+  img {
+    margin-bottom: 6px;
+    margin-right: 2px;
   }
 `;

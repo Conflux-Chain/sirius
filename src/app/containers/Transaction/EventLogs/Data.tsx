@@ -78,7 +78,7 @@ const decodeData = (value, type) => {
     switch (type) {
       case 'address':
         const address = format.address(`0x${value.substr(24)}`, NETWORK_ID);
-        result = <Link href={`/contract/${address}`}>{address}</Link>;
+        result = <Link href={`/address/${address}`}>{address}</Link>;
         break;
       case 'number':
         result = format.bigInt(v).toString();

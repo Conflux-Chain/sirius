@@ -18,6 +18,7 @@ import { useAccounts } from '../../../utils/hooks/usePortal';
 import { AddressContainer } from '../../components/AddressContainer/Loadable';
 import { formatAddress } from '../../../utils/cfx';
 import { monospaceFont } from '../../../styles/variable';
+import { AccountWrapper } from 'utils/tableColumns/token';
 const { ContentWrapper } = tableColumnsUtils;
 
 export function Accounts() {
@@ -69,16 +70,21 @@ export function Accounts() {
     {
       ...accountColunms.address,
       render: (value, row: any) => (
-        <AddressContainer
-          value={value}
-          alias={row.name}
-          isFull={true}
-          isMe={
-            accounts && accounts.length > 0
-              ? formatAddress(accounts[0]) === formatAddress(value)
-              : false
-          }
-        />
+        <AccountWrapper>
+          <AddressContainer
+            value={value}
+            alias={
+              row.name ||
+              (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
+            }
+            isFull={true}
+            isMe={
+              accounts && accounts.length > 0
+                ? formatAddress(accounts[0]) === formatAddress(value)
+                : false
+            }
+          />
+        </AccountWrapper>
       ),
     },
     {

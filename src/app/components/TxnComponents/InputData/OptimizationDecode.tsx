@@ -60,7 +60,7 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                     <Link href={`/address/${a.formattedValue}`}>
                       {a.formattedValue}{' '}
                     </Link>
-                    <ContractDetail info={contractInfo}></ContractDetail>
+                    <ContractDetail info={contractInfo} />
                   </>
                 );
               }
@@ -126,6 +126,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
       min-height: 32px;
       border-bottom: 1px solid #e8e9ea;
       padding: 0.3571rem 0.3571rem 0.3571rem 0;
+      overflow: hidden;
 
       ${media.s} {
         flex-direction: column;
