@@ -5,11 +5,8 @@ import { ColumnsType } from 'app/components/TabsTablePanel';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
-import { cfxTokenTypes } from 'utils/constants';
 import { EventLogs } from './EventLogs/Loadable';
 import { TabLabel } from 'app/components/TabsTablePanel/Label';
-import { Switch } from '@jnoodle/antd';
-import { Detail } from './Detail';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
@@ -17,24 +14,14 @@ import { reqTransactionDetail } from 'utils/httpRequest';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { useHistory, useLocation } from 'react-router-dom';
-import queryString from 'query-string';
-import { Tooltip } from 'app/components/Tooltip';
+import { Detail } from './Detail';
 
 export function Transaction() {
-  const history = useHistory();
-  const location = useLocation();
-  const { t, i18n } = useTranslation();
-  const [checked, setChecked] = useState(() => {
-    return queryString.parse(location.search).zeroValue === 'true';
-  });
+  const { t } = useTranslation();
   const { hash } = useParams<{
     hash: string;
   }>();
   const [txnDetail, setTxnDetail] = useState<any>({});
-
-  const transactionAdvanced = t(translations.transaction.internalTxns.advanced);
-  const transactionSimple = t(translations.transaction.internalTxns.simple);
 
   useEffect(() => {
     reqTransactionDetail({
@@ -52,16 +39,6 @@ export function Transaction() {
     eventLogCount,
   } = txnDetail;
 
-  useEffect(() => {
-    if (!queryString.parse(location.search).zeroValue) {
-      if (cfxTransferCount) {
-        setChecked(false);
-      } else if (cfxTransferAllCount) {
-        setChecked(true);
-      }
-    }
-  }, [cfxTransferCount, cfxTransferAllCount, location.search]);
-
   const fromContent = (isFull = false) => (
     <span>
       <AddressContainer value={from} isFull={isFull} />{' '}
@@ -75,43 +52,16 @@ export function Transaction() {
     </span>
   );
 
-  const url = `/transfer?transferType=${
-    cfxTokenTypes.cfx
-  }&reverse=true&transactionHash=${hash}${checked ? '&zeroValue=true' : ''}`;
-
-  const columnsCFXTransferWidth = [2, 3, 3, 2];
+  const columnsCFXTransferWidth = [3, 4, 4, 2, 4];
   const columnsCFXTrasfer: ColumnsType = [
     tokenColunms.traceType,
     tokenColunms.from,
     tokenColunms.to,
     transactionColunms.value,
+    tokenColunms.traceResult,
   ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
 
-  const handleSwitch = value => {
-    setChecked(value);
-    const { zeroValue, ...others } = queryString.parse(location.search);
-    let newUrl = '';
-    if (value) {
-      newUrl = queryString.stringifyUrl({
-        url: location.pathname,
-        query: {
-          ...others,
-          zeroValue: 'true',
-        },
-      });
-    } else {
-      newUrl = queryString.stringifyUrl({
-        url: location.pathname,
-        query: {
-          ...others,
-        },
-      });
-    }
-    history.push(newUrl);
-  };
-
-  let tableHeader = () => {
-    const total = checked ? cfxTransferAllCount : cfxTransferCount;
+  let tableHeader = ({ total }) => {
     return (
       <StyledTipWrapper>
         <div>
@@ -119,23 +69,8 @@ export function Transaction() {
           {t(translations.transaction.internalTxnsTip.to)} {toContent()}{' '}
           {t(translations.transaction.internalTxnsTip.produced)}{' '}
           <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
-          {t(translations.transaction.internalTxnsTip.txns, {
-            type: checked
-              ? transactionAdvanced.toLowerCase()
-              : transactionSimple.toLowerCase(),
-          })}
+          {t(translations.transaction.internalTxnsTip.txns)}
         </div>
-        <Tooltip text={t(translations.transaction.internalTxnsTip.tip)}>
-          <Switch
-            checked={checked}
-            onChange={handleSwitch}
-            checkedChildren={transactionAdvanced}
-            unCheckedChildren={transactionSimple}
-            style={{
-              width: i18n.language.indexOf('en') > -1 ? '6.5714rem' : 'inherit',
-            }}
-          />
-        </Tooltip>
       </StyledTipWrapper>
     );
   };
@@ -150,7 +85,7 @@ export function Transaction() {
       value: 'cfxTransfer',
       action: 'transactionCfxTransfers',
       label: t(translations.transaction.internalTxns.title),
-      url,
+      url: `/rpc/trace_transaction?address=${hash}`,
       table: {
         columns: columnsCFXTrasfer,
         rowKey: (row, index) =>
@@ -158,7 +93,8 @@ export function Transaction() {
             row.transactionTraceIndex || 0
           }${index}`,
       },
-      tableHeader: tableHeader(),
+      pagination: false,
+      tableHeader: info => tableHeader(info),
       hidden: !cfxTransferCount && !cfxTransferAllCount,
     },
     {
@@ -185,7 +121,7 @@ export function Transaction() {
         />
       </Helmet>
       <PageHeader>{t(translations.transaction.title)}</PageHeader>
-      <TabsTablePanel tabs={tabs} key={url} />
+      <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );
 }

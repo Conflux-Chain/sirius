@@ -21,6 +21,10 @@ import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
 import { NFTPreview } from '../../app/components/NFTPreview/Loadable';
+import clsx from 'clsx';
+import { Popover } from '@cfxjs/react-ui';
+import { useBreakpoint } from 'styles/media';
+import { useTranslation } from 'react-i18next';
 
 export const renderAddress = (
   value,
@@ -523,15 +527,81 @@ export const tokenId = (contractAddress?: string) => ({
   ),
 });
 
+const TraceTypeElement = ({ info }) => {
+  const breakpoint = useBreakpoint();
+  const { t } = useTranslation();
+
+  const outcome = info?.result?.outcome;
+
+  return (
+    <StyledTractTypeWrapper className={clsx(outcome)}>
+      {outcome && outcome !== 'success' ? (
+        <Popover
+          notSeperateTitle
+          title={t(translations.general.table.token.traceStatusTitle)}
+          content={t(translations.general.table.token.traceStatus[outcome])}
+          placement="auto-start"
+          hoverable={true}
+          trigger={breakpoint === 's' ? 'click' : 'hover'}
+          contentClassName={clsx('siriuse-status-popover')}
+        >
+          <span className="dot"></span>
+        </Popover>
+      ) : null}
+      {info.type}
+      {info.index}
+    </StyledTractTypeWrapper>
+  );
+};
+
 export const traceType = {
   width: 1,
   title: (
     <Translation>
-      {t => t(translations.general.table.token.traceType)}
+      {t => (
+        <span style={{ marginLeft: '1rem' }}>
+          {t(translations.general.table.token.traceType)}
+        </span>
+      )}
     </Translation>
   ),
   dataIndex: 'type',
   key: 'type',
+  render: (_, row) => <TraceTypeElement info={row} />,
+};
+
+export const traceResult = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceResult)}
+    </Translation>
+  ),
+  dataIndex: 'result',
+  key: 'result',
+  render(_, row) {
+    const result = row.result?.returnData;
+    const text = !result || result === '0x' ? '--' : result;
+    const hoverValue = (
+      <span
+        style={{
+          maxWidth: '34.2857rem',
+          maxHeight: '5.7143rem',
+          whiteSpace: 'break-spaces',
+          display: 'block',
+          overflow: 'auto',
+        }}
+      >
+        {text}
+      </span>
+    );
+
+    return (
+      <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
+        {text}
+      </Text>
+    );
+  },
 };
 
 export const StyledIconWrapper = styled.div`
@@ -590,5 +660,68 @@ export const AccountWrapper = styled.div`
   img {
     margin-bottom: 6px;
     margin-right: 2px;
+  }
+`;
+const StyledTractTypeWrapper = styled.span`
+  padding-left: 0.2rem;
+
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    top: 7px;
+    left: -2px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  &.success {
+    .dot {
+      background-color: #7cd77b;
+      pointer-events: none;
+    }
+  }
+
+  &.fail {
+    .dot {
+      background-color: #e64e4e;
+    }
+  }
+
+  &.revert {
+    .dot {
+      background-color: #fa8000;
+    }
+  }
+
+  .tooltip-content.siriuse-status-popover {
+    padding: 0.2857rem 0.8571rem;
+    .item.title {
+      padding: 0;
+
+      .icon {
+        width: 0.8571rem;
+        height: 0.8571rem;
+      }
+      .text {
+        margin-left: 0.2857rem;
+        color: #333333;
+        text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
+      }
+    }
+    .items {
+      color: #a4a8b6;
+      text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
+      max-width: 14.2857rem;
+      line-height: 1.0714rem;
+      white-space: break-spaces;
+      padding-bottom: 0.1429rem;
+      background-color: transparent;
+      overflow: hidden !important;
+    }
+    .inner {
+      min-width: inherit;
+    }
   }
 `;
