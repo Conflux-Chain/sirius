@@ -60,7 +60,7 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
                     <Link href={`/address/${a.formattedValue}`}>
                       {a.formattedValue}{' '}
                     </Link>
-                    <ContractDetail info={contractInfo}></ContractDetail>
+                    <ContractDetail info={contractInfo} />
                   </>
                 );
               }

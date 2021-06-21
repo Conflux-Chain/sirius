@@ -261,7 +261,7 @@ export const Detail = () => {
                   <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo['name'] ||
                       (contractInfo['token'] && contractInfo['token']['name']
-                        ? `${contractInfo['token']['name']} (${contractInfo['token']['symbol']})`
+                        ? `${contractInfo['token']['name']}`
                         : '')}
                   </Link>{' '}
                 </>
