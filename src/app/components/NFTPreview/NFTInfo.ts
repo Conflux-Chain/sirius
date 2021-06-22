@@ -9,6 +9,8 @@ export const NFTContracts = {
   confluxGuardian: 'cfx:ach7c9fr2skv5fft98cygac0g93999z1refedecnn1',
   // Ancient Chinese God NFT
   ancientChineseGod: 'cfx:acbp6r5kpgvz3pcxax557r2xrnk4rv9f02tpkng9ne',
+  // Ancient Chinese God Genesis NFT
+  ancientChineseGodGenesis: 'cfx:acfpey6redpxtprhktcb78yvfg69ru69hefu7jze7r',
   // Genesis NFT is the NFT airdropped by moonswap to 1024 pilots participating in Genesis lunar landing
   moonswapGenesis: 'cfx:ace6x5ckj2d47fzsfj5pvu8uejf6hkj2denccrga1x',
   // ConHero is published by the Conflux community development team "FengYun Studio".
@@ -33,12 +35,105 @@ export const NFTContracts = {
   OKExNft: 'cfx:acg22hydxwbnf5wg6webmg84se6ukk3jkujdvm4su0',
   // To commemorate the Conflux Network's success as the third-largest decentralized network in the world during the testing phase
   // TODO
-  minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
+  // minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
   // Practitioner Medals are customized commemorative badges for participants who have reached the final stage of "Practitioner Program".
   honorOfPractitioner: 'cfx:acgugys133t7mbd277w5c1s2xcgrpknc126pdy0m85',
   // Schrödinger's box is a collection of encrypted art
   confiOfSchrodinger: 'cfx:ach6uf6tw78g1jn9k06m7t0dy80z9tc9yjc8yw32w3',
+  // Three Kingdoms
+  threeKingdoms: 'cfx:acepdehsmt07kcd2hspae9dashzgddrva240azrmm5',
+  // TODO add nft
 };
+
+export const NFTContractNames = {
+  confi: {
+    zh: '烤仔',
+    en: 'ConFi',
+  },
+  confiCard: {
+    zh: '烤仔卡',
+    en: 'ConFi Card',
+  },
+  conDragon: {
+    zh: 'ConDragon 恐龙',
+    en: 'ConDragon',
+  },
+  confluxGuardian: {
+    zh: '守护者勋章',
+    en: 'Guardian Badge',
+  },
+  ancientChineseGod: {
+    zh: '古国序列',
+    en: 'Ancient Chinese God',
+  },
+  ancientChineseGodGenesis: {
+    zh: '古国创世纪念卡',
+    en: 'Ancient Chinese God Genesis',
+  },
+  moonswapGenesis: {
+    zh: 'MoonSwap 创世',
+    en: 'MoonSwap Genesis',
+  },
+  conHero: {
+    zh: 'ConHero',
+    en: 'ConHero',
+  },
+  conDragonStone: {
+    zh: '龙石',
+    en: 'Dragon Stone',
+  },
+  satoshiGift: {
+    zh: "Satoshi's gift",
+    en: "Satoshi's gift",
+  },
+  shanhaijing: {
+    zh: '山海经',
+    en: 'Shanhaijing',
+  },
+  shanhaichingSeriesCard: {
+    zh: '山海经系列卡包',
+    en: 'Shanhaiching Series Card Pack',
+  },
+  shuttleflowBscNft: {
+    zh: 'ShuttleFlow-BSC',
+    en: 'ShuttleFlow-BSC',
+  },
+  crossChainNftGloryEdition: {
+    zh: '荣耀版跨链',
+    en: 'Cross-Chain / Glory Edition',
+  },
+  happyBirthdayToConfi: {
+    zh: 'Happy Birthday to ConFi',
+    en: 'Happy Birthday to ConFi',
+  },
+  TREAGenesisFeitian: {
+    zh: 'TREA创世飞天',
+    en: 'TREA Genesis Feitian',
+  },
+  OKExNft: {
+    zh: 'OKEx',
+    en: 'OKEx',
+  },
+  // minerNft: {
+  //   zh: '矿工',
+  //   en: 'Miner',
+  // },
+  honorOfPractitioner: {
+    zh: '践行者计划',
+    en: 'Honor of Practitioner',
+  },
+  confiOfSchrodinger: {
+    zh: '薛定谔的盒',
+    en: 'Confi of Schrodinger',
+  },
+  threeKingdoms: {
+    zh: '拓扑三国',
+    en: 'Three Kingdoms',
+  },
+  // TODO add nft
+};
+
+export const NFTContractAddresses = Object.values(NFTContracts);
 
 export const NFTNames = {
   confi: {

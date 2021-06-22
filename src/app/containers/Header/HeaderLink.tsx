@@ -386,6 +386,10 @@ const WrappLink = styled.span`
         background-color: #65709a;
       }
     }
+
+    .sub-link-wrap.level-2:empty {
+      display: none;
+    }
   }
 
   &.navbar-link.plain.level-0 {

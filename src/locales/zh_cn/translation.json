@@ -231,6 +231,7 @@
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
+    "nftChecker": "NFT 查看器",
     "notice": "通知中心",
     "learnMore": "了解更多",
     "search": {
@@ -1137,5 +1138,11 @@
     "snapshotDate": "截止日期",
     "block": "区块",
     "blockNo": "区块号"
+  },
+  "nftChecker": {
+    "title": "NFT 查看器",
+    "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
+    "incorrectFormat": "地址格式错误",
+    "tokenId": "代币 ID"
   }
 }

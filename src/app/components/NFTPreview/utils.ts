@@ -85,6 +85,7 @@ export const getNFTName = async ({
           en: 'Guardian',
         };
       case NFTContracts.ancientChineseGod:
+      case NFTContracts.ancientChineseGodGenesis:
         const zhUri = JSON.parse(meta.contents).localization.uri.replace(
           '{locale}',
           'zh-cn',
@@ -152,10 +153,8 @@ export const getNFTName = async ({
           zh: 'OKEx NFT',
           en: 'OKEx NFT',
         };
-
-      // TODO
-      case NFTContracts.minerNft:
-        return null;
+      // case NFTContracts.minerNft:
+      //   return null;
       case NFTContracts.honorOfPractitioner:
         return {
           zh: '践行者计划',
@@ -165,6 +164,11 @@ export const getNFTName = async ({
         return {
           zh: '薛定谔的盒',
           en: 'Confi of Schrodinger',
+        };
+      case NFTContracts.threeKingdoms:
+        return {
+          zh: JSON.parse(meta.contents).name || null,
+          en: JSON.parse(meta.contents).name || null,
         };
       default:
         // try get name by 1155 spec
@@ -359,6 +363,7 @@ export const getNFTInfo = async ({
       };
 
     case NFTContracts.ancientChineseGod:
+    case NFTContracts.ancientChineseGodGenesis:
       return await queryNFTImageInfo({
         address,
         tokenId,
@@ -448,8 +453,8 @@ export const getNFTInfo = async ({
         imageName: await getNFTName({ address }),
       };
 
-    case NFTContracts.minerNft:
-      return null;
+    // case NFTContracts.minerNft:
+    //   return null;
 
     case NFTContracts.honorOfPractitioner:
       return {
@@ -464,6 +469,13 @@ export const getNFTInfo = async ({
         imageUri: 'https://cj.yzbbanban.com/purplerr.jpeg',
         imageName: await getNFTName({ address }),
       };
+
+    case NFTContracts.threeKingdoms:
+      return await queryNFTImageInfo({
+        address: address,
+        tokenId,
+        minHeight: 286,
+      });
 
     default:
       // try get image and name by 1155 spec

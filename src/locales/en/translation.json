@@ -231,6 +231,7 @@
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
+    "nftChecker": "NFT Checker",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
@@ -605,7 +606,7 @@
     "endDate": "End date",
     "submitSucceed": "Submit succeed",
     "tabLabel": {
-      "lt10000": "Total of {{total}} records",
+      "lt10000": "A total of {{total}} records",
       "gte10000": "A total of {{realTotal}} records found (showing the last {{total}} records)"
     },
     "errorOccurred": "Error occurred",
@@ -1137,5 +1138,11 @@
     "snapshotDate": "Snapshot Date",
     "block": "Block",
     "blockNo": "Block No"
+  },
+  "nftChecker": {
+    "title": "NFT Checker",
+    "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "incorrectFormat": "Invalid address format",
+    "tokenId": "TokenID"
   }
 }
