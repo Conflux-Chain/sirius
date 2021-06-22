@@ -9,6 +9,8 @@ export const NFTContracts = {
   confluxGuardian: 'cfx:ach7c9fr2skv5fft98cygac0g93999z1refedecnn1',
   // Ancient Chinese God NFT
   ancientChineseGod: 'cfx:acbp6r5kpgvz3pcxax557r2xrnk4rv9f02tpkng9ne',
+  // Ancient Chinese God Genesis NFT
+  ancientChineseGodGenesis: 'cfx:acfpey6redpxtprhktcb78yvfg69ru69hefu7jze7r',
   // Genesis NFT is the NFT airdropped by moonswap to 1024 pilots participating in Genesis lunar landing
   moonswapGenesis: 'cfx:ace6x5ckj2d47fzsfj5pvu8uejf6hkj2denccrga1x',
   // ConHero is published by the Conflux community development team "FengYun Studio".
@@ -38,6 +40,8 @@ export const NFTContracts = {
   honorOfPractitioner: 'cfx:acgugys133t7mbd277w5c1s2xcgrpknc126pdy0m85',
   // Schrödinger's box is a collection of encrypted art
   confiOfSchrodinger: 'cfx:ach6uf6tw78g1jn9k06m7t0dy80z9tc9yjc8yw32w3',
+  // Three Kingdoms
+  threeKingdoms: 'cfx:acepdehsmt07kcd2hspae9dashzgddrva240azrmm5',
   // TODO add nft
 };
 
@@ -61,6 +65,10 @@ export const NFTContractNames = {
   ancientChineseGod: {
     zh: '古国序列',
     en: 'Ancient Chinese God',
+  },
+  ancientChineseGodGenesis: {
+    zh: '古国创世纪念卡',
+    en: 'Ancient Chinese God Genesis',
   },
   moonswapGenesis: {
     zh: 'MoonSwap 创世',
@@ -117,6 +125,10 @@ export const NFTContractNames = {
   confiOfSchrodinger: {
     zh: '薛定谔的盒',
     en: 'Confi of Schrodinger',
+  },
+  threeKingdoms: {
+    zh: '拓扑三国',
+    en: 'Three Kingdoms',
   },
   // TODO add nft
 };

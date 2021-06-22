@@ -22,6 +22,7 @@ import {
 } from '../../components/NFTPreview/NFTInfo';
 import { getNFTBalances, getNFTTokens } from './utils';
 import { NFTPreview } from '../../components/NFTPreview';
+import { AddressContainer } from '../../components/AddressContainer';
 
 const { Search } = Input;
 
@@ -199,17 +200,32 @@ export function NFTChecker() {
                   {t(translations.general.table.noData)}
                 </div>
               ) : (
-                <Row gutter={20}>
-                  {displayTokenIds.map((id, i) => (
-                    <Col xs={24} sm={12} lg={6} xl={4} key={i}>
-                      <NFTPreview
-                        contractAddress={NFTContracts[currentNFTType]}
-                        tokenId={id}
-                        type="card"
-                      />
-                    </Col>
-                  ))}
-                </Row>
+                <>
+                  {currentNFTCount > 0 ? (
+                    <div className="total">
+                      {t(translations.blocks.tipCountBefore)} {currentNFTCount}{' '}
+                      {NFTContractNames[currentNFTType][lang]} NFT{' '}
+                      <span>
+                        {NFTContractNames[currentNFTType][lang]}{' '}
+                        {t(translations.contract.address)}:{' '}
+                        <AddressContainer
+                          value={NFTContracts[currentNFTType]}
+                        />
+                      </span>
+                    </div>
+                  ) : null}
+                  <Row gutter={20}>
+                    {displayTokenIds.map((id, i) => (
+                      <Col xs={24} sm={12} lg={6} xl={4} key={i}>
+                        <NFTPreview
+                          contractAddress={NFTContracts[currentNFTType]}
+                          tokenId={id}
+                          type="card"
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                </>
               )}
 
               {currentNFTCount > defaultLimit ? (
@@ -243,6 +259,7 @@ const SearchWrapper = styled.div`
     border-radius: 16px !important;
     background: rgba(30, 61, 228, 0.04);
     border: none !important;
+    padding-right: 41px;
   }
 
   .ant-input-group-addon {
@@ -322,15 +339,28 @@ const TagsWrapper = styled.div`
 
 const NFTWrapper = styled.div`
   width: 100%;
-  padding: 40px 0;
+  padding: 16px 0 40px;
   min-height: 100px;
 
   .nodata {
     color: #74798c;
   }
 
+  .total {
+    color: #002257;
+    margin-bottom: 14px;
+
+    > span {
+      float: right;
+      ${media.m} {
+        display: block;
+        float: none;
+      }
+    }
+  }
+
   .ant-pagination {
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: right;
 
     li {
