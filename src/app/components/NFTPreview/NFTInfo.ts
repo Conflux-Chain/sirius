@@ -33,12 +33,95 @@ export const NFTContracts = {
   OKExNft: 'cfx:acg22hydxwbnf5wg6webmg84se6ukk3jkujdvm4su0',
   // To commemorate the Conflux Network's success as the third-largest decentralized network in the world during the testing phase
   // TODO
-  minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
+  // minerNft: 'cfx:achmupumcabzu59dj90nn400uppgy4gf2u1775528k',
   // Practitioner Medals are customized commemorative badges for participants who have reached the final stage of "Practitioner Program".
   honorOfPractitioner: 'cfx:acgugys133t7mbd277w5c1s2xcgrpknc126pdy0m85',
   // Schrödinger's box is a collection of encrypted art
   confiOfSchrodinger: 'cfx:ach6uf6tw78g1jn9k06m7t0dy80z9tc9yjc8yw32w3',
+  // TODO add nft
 };
+
+export const NFTContractNames = {
+  confi: {
+    zh: '烤仔',
+    en: 'ConFi',
+  },
+  confiCard: {
+    zh: '烤仔卡',
+    en: 'ConFi Card',
+  },
+  conDragon: {
+    zh: 'ConDragon 恐龙',
+    en: 'ConDragon',
+  },
+  confluxGuardian: {
+    zh: '守护者勋章',
+    en: 'Guardian Badge',
+  },
+  ancientChineseGod: {
+    zh: '古国序列',
+    en: 'Ancient Chinese God',
+  },
+  moonswapGenesis: {
+    zh: 'MoonSwap 创世',
+    en: 'MoonSwap Genesis',
+  },
+  conHero: {
+    zh: 'ConHero',
+    en: 'ConHero',
+  },
+  conDragonStone: {
+    zh: '龙石',
+    en: 'Dragon Stone',
+  },
+  satoshiGift: {
+    zh: "Satoshi's gift",
+    en: "Satoshi's gift",
+  },
+  shanhaijing: {
+    zh: '山海经',
+    en: 'Shanhaijing',
+  },
+  shanhaichingSeriesCard: {
+    zh: '山海经系列卡包',
+    en: 'Shanhaiching Series Card Pack',
+  },
+  shuttleflowBscNft: {
+    zh: 'ShuttleFlow-BSC',
+    en: 'ShuttleFlow-BSC',
+  },
+  crossChainNftGloryEdition: {
+    zh: '荣耀版跨链',
+    en: 'Cross-Chain / Glory Edition',
+  },
+  happyBirthdayToConfi: {
+    zh: 'Happy Birthday to ConFi',
+    en: 'Happy Birthday to ConFi',
+  },
+  TREAGenesisFeitian: {
+    zh: 'TREA创世飞天',
+    en: 'TREA Genesis Feitian',
+  },
+  OKExNft: {
+    zh: 'OKEx',
+    en: 'OKEx',
+  },
+  // minerNft: {
+  //   zh: '矿工',
+  //   en: 'Miner',
+  // },
+  honorOfPractitioner: {
+    zh: '践行者计划',
+    en: 'Honor of Practitioner',
+  },
+  confiOfSchrodinger: {
+    zh: '薛定谔的盒',
+    en: 'Confi of Schrodinger',
+  },
+  // TODO add nft
+};
+
+export const NFTContractAddresses = Object.values(NFTContracts);
 
 export const NFTNames = {
   confi: {

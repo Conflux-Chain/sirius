@@ -44,7 +44,8 @@ export const Header = memo(() => {
   const moreMatched =
     location.pathname.startsWith('/address-converter') ||
     location.pathname.startsWith('/push-tx') ||
-    location.pathname.startsWith('/block-countdown');
+    location.pathname.startsWith('/block-countdown') ||
+    location.pathname.startsWith('/nft-checker');
   const blockchainMatched =
     location?.pathname?.startsWith('/blockchain') ||
     location.pathname.startsWith('/contract') ||
@@ -346,6 +347,15 @@ export const Header = memo(() => {
               name: ScanEvent.menu.action.blocknumberCalc,
               afterClick: menuClick,
               href: '/block-countdown',
+            },
+            {
+              title: [
+                t(translations.header.nftChecker),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.nftChecker,
+              afterClick: menuClick,
+              href: '/nft-checker',
             },
           ],
         },

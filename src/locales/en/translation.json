@@ -231,6 +231,7 @@
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
+    "nftChecker": "NFT Checker",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
@@ -1137,5 +1138,11 @@
     "snapshotDate": "Snapshot Date",
     "block": "Block",
     "blockNo": "Block No"
+  },
+  "nftChecker": {
+    "title": "NFT Checker",
+    "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "incorrectFormat": "Invalid address format",
+    "tokenId": "TokenID"
   }
 }

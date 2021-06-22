@@ -152,10 +152,8 @@ export const getNFTName = async ({
           zh: 'OKEx NFT',
           en: 'OKEx NFT',
         };
-
-      // TODO
-      case NFTContracts.minerNft:
-        return null;
+      // case NFTContracts.minerNft:
+      //   return null;
       case NFTContracts.honorOfPractitioner:
         return {
           zh: '践行者计划',
@@ -448,8 +446,8 @@ export const getNFTInfo = async ({
         imageName: await getNFTName({ address }),
       };
 
-    case NFTContracts.minerNft:
-      return null;
+    // case NFTContracts.minerNft:
+    //   return null;
 
     case NFTContracts.honorOfPractitioner:
       return {

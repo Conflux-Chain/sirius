@@ -30,6 +30,7 @@ export const ScanEvent = {
       faq: 'faq',
       broadcastTx: 'push_tx',
       blocknumberCalc: 'block_countdown',
+      nftChecker: 'nft_checker',
       techIssue: 'tech_issue',
       report: 'report',
       suggestionBox: 'suggestion_box',
