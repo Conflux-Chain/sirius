@@ -533,14 +533,27 @@ const TraceTypeElement = ({ info }) => {
 
   const outcome = info?.result?.outcome;
 
+  const level = (
+    <span className="level">
+      <span className="vertical"></span>
+      {info.index
+        .replace(/\d+/g, '')
+        .split('')
+        .map((_, i) => (
+          <span className="horizontal" key={i}></span>
+        ))}
+    </span>
+  );
+
   return (
     <StyledTractTypeWrapper className={clsx(outcome)}>
+      {level}
       {outcome && outcome !== 'success' ? (
         <Popover
           notSeperateTitle
           title={t(translations.general.table.token.traceStatusTitle)}
           content={t(translations.general.table.token.traceStatus[outcome])}
-          placement="auto-start"
+          placement="top"
           hoverable={true}
           trigger={breakpoint === 's' ? 'click' : 'hover'}
           contentClassName={clsx('siriuse-status-popover')}
@@ -580,27 +593,41 @@ export const traceResult = {
   dataIndex: 'result',
   key: 'result',
   render(_, row) {
-    const result = row.result?.returnData;
-    const text = !result || result === '0x' ? '--' : result;
-    const hoverValue = (
-      <span
-        style={{
-          maxWidth: '34.2857rem',
-          maxHeight: '5.7143rem',
-          whiteSpace: 'break-spaces',
-          display: 'block',
-          overflow: 'auto',
-        }}
-      >
-        {text}
-      </span>
-    );
+    const returnData = row.result?.returnData;
+    const outcome = row.result?.outcome;
+    const decodedMessage = row.result?.decodedMessage;
 
-    return (
-      <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
-        {text}
-      </Text>
-    );
+    const text = !returnData || returnData === '0x' ? '--' : returnData;
+    let body: React.ReactNode = null;
+
+    if (outcome === 'success') {
+      if (!returnData || returnData === '0x') {
+        body = '--';
+      } else {
+        const hoverValue = (
+          <span
+            style={{
+              maxWidth: '34.2857rem',
+              maxHeight: '5.7143rem',
+              whiteSpace: 'break-spaces',
+              display: 'block',
+              overflow: 'auto',
+            }}
+          >
+            {text}
+          </span>
+        );
+        body = (
+          <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
+            {returnData}
+          </Text>
+        );
+      }
+    } else {
+      body = decodedMessage;
+    }
+
+    return body;
   },
 };
 
@@ -665,14 +692,34 @@ export const AccountWrapper = styled.div`
 const StyledTractTypeWrapper = styled.span`
   padding-left: 0.2rem;
 
+  .level {
+    .vertical {
+      width: 0.0714rem;
+      height: 0.4286rem;
+      border-left: 1px solid !important;
+      display: inline-block;
+      margin-bottom: 0.1429rem;
+      color: #94a3b6;
+    }
+    .horizontal {
+      width: 0.4286rem;
+      height: 0.1429rem;
+      border-top: 1px solid !important;
+      display: inline-block;
+      margin-right: 0.2143rem;
+      margin-bottom: 0.0714rem;
+      color: #94a3b6;
+    }
+  }
+
   .dot {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    top: 7px;
-    left: -2px;
+    top: 0.5rem;
+    left: -0.1429rem;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 0.2143rem;
     cursor: pointer;
   }
 

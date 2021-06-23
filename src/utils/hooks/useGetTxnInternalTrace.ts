@@ -1,29 +1,30 @@
 import { useEffect, useState } from 'react';
-import { tracesInTree } from 'js-conflux-sdk/src/util/trace';
-import { cfx } from 'utils/cfx';
-import pubsub from 'utils/pubsub';
 import queryString from 'query-string';
+import { fetchWithPrefix } from 'utils/request';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
-  const fn = (t, level: number, parentLevel) => {
-    if (Array.isArray(t)) {
-      t.map((item, index) => fn(item, index, parentLevel));
-    } else {
-      const index = `${parentLevel}_${level}`;
-      list.push({
-        index,
-        type: `${t.action.callType}`,
-        from: t.action.from,
-        to: t.action.to,
-        value: t.action.value,
-        result: t.result,
-      });
-      fn(t.calls, level + 1, `${parentLevel}_${level}`);
-    }
-  };
 
-  fn(tree, 0, '');
+  try {
+    const fn = (t, level: number, parentLevel) => {
+      if (Array.isArray(t)) {
+        t.map((item, index) => fn(item, index, parentLevel));
+      } else {
+        const index = `${parentLevel}_${level}`;
+        list.push({
+          index,
+          type: `${t.action.callType || t.type}`,
+          from: t.action.from,
+          to: t.action.to,
+          value: t.action.value,
+          result: t.result,
+        });
+        fn(t.calls, level + 1, `${parentLevel}_${level}`);
+      }
+    };
+
+    fn(tree, 0, '');
+  } catch (e) {}
 
   return list;
 };
@@ -43,26 +44,17 @@ export const useGetTxnInternalTrace = (url: string) => {
 
   useEffect(() => {
     if (address) {
-      // rpc call
-      cfx
-        .traceTransaction(address)
+      fetchWithPrefix(`/transferTree/${address}`)
         .then(data => {
           setData2({
             ...data2,
-            data: treeToFlat(tracesInTree(data)),
+            data: treeToFlat(data.calls),
           });
         })
         .catch(e => {
           setData2({
             ...data2,
             error: e,
-          });
-          pubsub.publish('notify', {
-            type: 'request',
-            option: {
-              code: '30001', // rpc call error
-              message: e.message,
-            },
           });
         });
     }
