@@ -23,6 +23,7 @@ import {
 import { getNFTBalances, getNFTTokens } from './utils';
 import { NFTPreview } from '../../components/NFTPreview';
 import { AddressContainer } from '../../components/AddressContainer';
+import { Empty } from '../../components/Empty';
 
 const { Search } = Input;
 
@@ -194,7 +195,7 @@ export function NFTChecker() {
               (!NFTBalances || NFTBalances.length === 0) &&
               hasSearched ? (
                 <div className="nodata">
-                  {t(translations.general.table.noData)}
+                  <Empty show={true} type="fluid" />
                 </div>
               ) : (
                 <>
@@ -341,6 +342,7 @@ const NFTWrapper = styled.div`
   min-height: 100px;
 
   .nodata {
+    margin-top: 20px;
     color: #74798c;
   }
 
