@@ -23,6 +23,7 @@ import {
 import { getNFTBalances, getNFTTokens } from './utils';
 import { NFTPreview } from '../../components/NFTPreview';
 import { AddressContainer } from '../../components/AddressContainer';
+import { Empty } from '../../components/Empty';
 
 const { Search } = Input;
 
@@ -52,6 +53,7 @@ export function NFTChecker() {
 
   const handleNFTSearch = async () => {
     setLoading(true);
+    reset();
     const formattedAddress = formatAddress(address);
     if (formattedAddress && !formattedAddress.startsWith('invalid')) {
       setHasSearched(true);
@@ -72,11 +74,7 @@ export function NFTChecker() {
         if (_NFTBalances && _NFTBalances.length > 0) {
           setNFTBalances(_NFTBalances);
           await selectTag(_NFTBalances[0]);
-        } else {
-          reset();
         }
-      } else {
-        reset();
       }
     } else {
       setAddressFormatError(true);
@@ -197,16 +195,17 @@ export function NFTChecker() {
               (!NFTBalances || NFTBalances.length === 0) &&
               hasSearched ? (
                 <div className="nodata">
-                  {t(translations.general.table.noData)}
+                  <Empty show={true} type="fluid" />
                 </div>
               ) : (
                 <>
                   {currentNFTCount > 0 ? (
                     <div className="total">
                       {t(translations.blocks.tipCountBefore)} {currentNFTCount}{' '}
-                      {NFTContractNames[currentNFTType][lang]} NFT{' '}
+                      {lang === 'zh' ? '个 ' : ''}
+                      {NFTContractNames[currentNFTType][lang] || ''} NFT{' '}
                       <span>
-                        {NFTContractNames[currentNFTType][lang]}{' '}
+                        {NFTContractNames[currentNFTType][lang] || ''}{' '}
                         {t(translations.contract.address)}:{' '}
                         <AddressContainer
                           value={NFTContracts[currentNFTType]}
@@ -343,6 +342,7 @@ const NFTWrapper = styled.div`
   min-height: 100px;
 
   .nodata {
+    margin-top: 20px;
     color: #74798c;
   }
 
