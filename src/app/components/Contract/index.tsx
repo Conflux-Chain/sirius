@@ -858,6 +858,11 @@ const TopContainer = styled.div`
     ${media.m} {
       padding: 0.8333rem;
     }
+
+    &.firstInner {
+      display: none;
+    }
+
     .itemContainer {
       width: 100%;
       display: flex;

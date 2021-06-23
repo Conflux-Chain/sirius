@@ -21,6 +21,10 @@ import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
 import { NFTPreview } from '../../app/components/NFTPreview/Loadable';
+import clsx from 'clsx';
+import { Popover } from '@cfxjs/react-ui';
+import { useBreakpoint } from 'styles/media';
+import { useTranslation } from 'react-i18next';
 
 export const renderAddress = (
   value,
@@ -36,17 +40,17 @@ export const renderAddress = (
     else if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;
     else if (row.fromTokenInfo && row.fromTokenInfo.name)
-      alias = `${row.fromTokenInfo.name} (${row.fromTokenInfo.symbol || '-'})`;
+      alias = `${row.fromTokenInfo.name}`;
   } else if (type === 'to') {
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.toTokenInfo && row.toTokenInfo.name)
-      alias = `${row.toTokenInfo.name} (${row.toTokenInfo.symbol || '-'})`;
+      alias = `${row.toTokenInfo.name}`;
     else if (row.contractInfo && row.contractInfo.name)
       alias = row.contractInfo.name;
     else if (row.tokenInfo && row.tokenInfo.name)
-      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+      alias = `${row.tokenInfo.name}`;
   }
 
   return (
@@ -112,10 +116,14 @@ export const token = {
                     `${row?.name || t(translations.general.notAvailable)} (${
                       row?.symbol || t(translations.general.notAvailable)
                     })`,
-                    32,
+                    row?.length || 32,
                   )
                 ) : (
-                  <AddressContainer value={row?.address} showIcon={false} />
+                  <AddressContainer
+                    value={row?.address}
+                    alias={row?.contractName || null}
+                    showIcon={false}
+                  />
                 )}
               </Text>
             )}
@@ -376,8 +384,17 @@ export const account = {
   ),
   dataIndex: 'account',
   key: 'account',
-  render: value => (
-    <AddressContainer value={value.address} alias={value.name} isFull={true} />
+  render: (value, row) => (
+    <AccountWrapper>
+      <AddressContainer
+        value={value.address}
+        alias={
+          value.name ||
+          (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
+        }
+        isFull={true}
+      />
+    </AccountWrapper>
   ),
 };
 
@@ -497,25 +514,127 @@ export const tokenId = (contractAddress?: string) => ({
   ),
   dataIndex: 'tokenId',
   key: 'tokenId',
-  render: value => (
+  render: (value, row) => (
     <>
       <Text span hoverValue={value}>
         <SpanWrap>{value || '-'}</SpanWrap>
       </Text>
-      <NFTPreview contractAddress={contractAddress} tokenId={value} />
+      <NFTPreview
+        contractAddress={contractAddress || row?.token?.address}
+        tokenId={value}
+      />
     </>
   ),
 });
+
+const TraceTypeElement = ({ info }) => {
+  const breakpoint = useBreakpoint();
+  const { t } = useTranslation();
+
+  const outcome = info?.result?.outcome;
+
+  const level = (
+    <span className="level">
+      <span className="vertical"></span>
+      {info.index
+        .replace(/\d+/g, '')
+        .split('')
+        .map((_, i) => (
+          <span className="horizontal" key={i}></span>
+        ))}
+    </span>
+  );
+
+  return (
+    <StyledTractTypeWrapper className={clsx(outcome)}>
+      {level}
+      {outcome && outcome !== 'success' ? (
+        <Popover
+          notSeperateTitle
+          title={t(translations.general.table.token.traceStatusTitle)}
+          content={t(translations.general.table.token.traceStatus[outcome])}
+          placement="top"
+          hoverable={true}
+          trigger={breakpoint === 's' ? 'click' : 'hover'}
+          contentClassName={clsx('siriuse-status-popover')}
+        >
+          <span className="dot"></span>
+        </Popover>
+      ) : null}
+      <Text hoverValue={`${info.type}${info.index}`}>
+        <div className="type-container">
+          {info.type}
+          {info.index}
+        </div>
+      </Text>
+    </StyledTractTypeWrapper>
+  );
+};
 
 export const traceType = {
   width: 1,
   title: (
     <Translation>
-      {t => t(translations.general.table.token.traceType)}
+      {t => (
+        <span style={{ marginLeft: '1rem' }}>
+          {t(translations.general.table.token.traceType)}
+        </span>
+      )}
     </Translation>
   ),
   dataIndex: 'type',
   key: 'type',
+  render: (_, row) => <TraceTypeElement info={row} />,
+};
+
+export const traceResult = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceResult)}
+    </Translation>
+  ),
+  dataIndex: 'result',
+  key: 'result',
+  render(_, row) {
+    const returnData = row.result?.returnData;
+    const outcome = row.result?.outcome;
+    const decodedMessage = row.result?.decodedMessage;
+
+    const text = !returnData || returnData === '0x' ? '--' : returnData;
+    let body: React.ReactNode = null;
+
+    if (outcome === 'success') {
+      if (!returnData || returnData === '0x') {
+        body = '--';
+      } else {
+        const hoverValue = (
+          <span
+            style={{
+              maxWidth: '34.2857rem',
+              maxHeight: '5.7143rem',
+              whiteSpace: 'break-spaces',
+              display: 'block',
+              overflow: 'auto',
+            }}
+          >
+            {text}
+          </span>
+        );
+        body = (
+          <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
+            {returnData}
+          </Text>
+        );
+      }
+    } else if (['fail', 'revert'].includes(outcome)) {
+      body = decodedMessage;
+    } else {
+      body = '--';
+    }
+
+    return body;
+  },
 };
 
 export const StyledIconWrapper = styled.div`
@@ -567,5 +686,104 @@ export const LinkA = styled.a`
   color: #1e3de4 !important;
   &:hover {
     color: #0f23bd !important;
+  }
+`;
+
+export const AccountWrapper = styled.div`
+  img {
+    margin-bottom: 6px;
+    margin-right: 2px;
+  }
+`;
+const StyledTractTypeWrapper = styled.span`
+  padding-left: 0.2rem;
+
+  .type-container {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 8.5714rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .level {
+    .vertical {
+      width: 0.0714rem;
+      height: 0.4286rem;
+      border-left: 1px solid !important;
+      display: inline-block;
+      margin-bottom: 0.1429rem;
+      color: #94a3b6;
+    }
+    .horizontal {
+      width: 0.4286rem;
+      height: 0.1429rem;
+      border-top: 1px solid !important;
+      display: inline-block;
+      margin-right: 0.2143rem;
+      margin-bottom: 0.0714rem;
+      color: #94a3b6;
+    }
+  }
+
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    top: 0.5rem;
+    left: -0.1429rem;
+    display: inline-block;
+    margin-right: 0.2143rem;
+    cursor: pointer;
+  }
+
+  &.success {
+    .dot {
+      background-color: #7cd77b;
+      pointer-events: none;
+    }
+  }
+
+  &.fail {
+    .dot {
+      background-color: #e64e4e;
+    }
+  }
+
+  &.revert {
+    .dot {
+      background-color: #fa8000;
+    }
+  }
+
+  .tooltip-content.siriuse-status-popover {
+    padding: 0.2857rem 0.8571rem;
+    .item.title {
+      padding: 0;
+
+      .icon {
+        width: 0.8571rem;
+        height: 0.8571rem;
+      }
+      .text {
+        margin-left: 0.2857rem;
+        color: #333333;
+        text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
+      }
+    }
+    .items {
+      color: #a4a8b6;
+      text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
+      max-width: 14.2857rem;
+      line-height: 1.0714rem;
+      white-space: break-spaces;
+      padding-bottom: 0.1429rem;
+      background-color: transparent;
+      overflow: hidden !important;
+    }
+    .inner {
+      min-width: inherit;
+    }
   }
 `;

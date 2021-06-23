@@ -225,6 +225,7 @@ export function Table({ address, addressInfo }) {
                   ) : (
                     <AddressContainer
                       value={row?.token?.address}
+                      alias={row?.token?.contractName || null}
                       showIcon={false}
                     />
                   )}
@@ -272,7 +273,7 @@ export function Table({ address, addressInfo }) {
     tokenColunms.from,
     tokenColunms.to,
     tokenColunms.quantity,
-    tokenColunms.tokenId(address),
+    tokenColunms.tokenId(),
     tokenColumnsToken,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
@@ -309,9 +310,14 @@ export function Table({ address, addressInfo }) {
       },
       tableHeader: ({ total }) => (
         <StyledTableHeaderWrapper>
-          {t(translations.general.totalRecord, {
-            total: toThousands(total),
-          })}
+          {t(
+            total > 10000
+              ? translations.general.totalRecordLimit
+              : translations.general.totalRecord,
+            {
+              total: toThousands(total),
+            },
+          )}
 
           <FilterWrap>
             {exportRecordsField}
@@ -393,9 +399,14 @@ export function Table({ address, addressInfo }) {
     },
     tableHeader: ({ total }) => (
       <StyledTableHeaderWrapper>
-        {t(translations.general.totalRecord, {
-          total: toThousands(total),
-        })}
+        {t(
+          total > 10000
+            ? translations.general.totalRecordLimit
+            : translations.general.totalRecord,
+          {
+            total: toThousands(total),
+          },
+        )}
         <FilterWrap>
           {exportRecordsField}
           {datepickField}
@@ -432,9 +443,14 @@ export function Table({ address, addressInfo }) {
     },
     tableHeader: ({ total }) => (
       <StyledTableHeaderWrapper>
-        {t(translations.general.totalRecord, {
-          total: toThousands(total),
-        })}
+        {t(
+          total > 10000
+            ? translations.general.totalRecordLimit
+            : translations.general.totalRecord,
+          {
+            total: toThousands(total),
+          },
+        )}
         <FilterWrap>
           {exportRecordsField}
           {datepickField}
@@ -471,9 +487,14 @@ export function Table({ address, addressInfo }) {
     },
     tableHeader: ({ total }) => (
       <StyledTableHeaderWrapper>
-        {t(translations.general.totalRecord, {
-          total: toThousands(total),
-        })}
+        {t(
+          total > 10000
+            ? translations.general.totalRecordLimit
+            : translations.general.totalRecord,
+          {
+            total: toThousands(total),
+          },
+        )}
         <FilterWrap>
           {exportRecordsField}
           {datepickField}
@@ -512,9 +533,14 @@ export function Table({ address, addressInfo }) {
     },
     tableHeader: ({ total }) => (
       <StyledTableHeaderWrapper>
-        {t(translations.general.totalRecord, {
-          total: toThousands(total),
-        })}
+        {t(
+          total > 10000
+            ? translations.general.totalRecordLimit
+            : translations.general.totalRecord,
+          {
+            total: toThousands(total),
+          },
+        )}
         <FilterWrap>
           {exportRecordsField}
           {datepickField}
@@ -559,9 +585,14 @@ export function Table({ address, addressInfo }) {
           },
           tableHeader: ({ total }) => (
             <StyledTableHeaderWrapper>
-              {t(translations.general.totalRecord, {
-                total: toThousands(total),
-              })}
+              {t(
+                total > 10000
+                  ? translations.general.totalRecordLimit
+                  : translations.general.totalRecord,
+                {
+                  total: toThousands(total),
+                },
+              )}
               <FilterWrap>
                 {exportRecordsField}
                 {datepickField}

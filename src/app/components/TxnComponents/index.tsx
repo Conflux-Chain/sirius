@@ -4,3 +4,4 @@ export { StorageFee } from './StorageFee';
 export { Nonce } from './Nonce';
 export { TokenTransfer } from './TokenTransfer';
 export { Overview } from './Overview';
+export { InputData as InputDataNew } from './InputData';

@@ -209,6 +209,9 @@
     "contractDeployment": "合约部署",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
+    "ecosystem": "生态",
+    "stakingAndGovernance": "质押 & 治理",
+    "fcCfx": "FC-CFX 不可逆兑换",
     "more": "更多",
     "tools": "工具",
     "balanceChecker": "余额检索器",
@@ -220,6 +223,7 @@
     "techIssue": "技术问题",
     "report": "举报",
     "supportCenter": "帮助中心",
+    "suggestionBox": "意见箱",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
@@ -227,11 +231,13 @@
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
+    "nftChecker": "NFT 查看器",
     "notice": "通知中心",
     "learnMore": "了解更多",
     "search": {
       "tokens": "代币",
-      "contracts": "合约"
+      "contracts": "合约",
+      "contractsTip": "仅显示注册日期最早的 10 个合约"
     }
   },
   "footer": {
@@ -265,6 +271,7 @@
     "contactUs": "联系我们",
     "techIssue": "技术问题",
     "report": "举报",
+    "suggestionBox": "意见箱",
     "developResource": {
       "title": "开发中心",
       "developerDocuments": "开发者文档",
@@ -407,6 +414,12 @@
       "title": "合约数量",
       "description": "Conflux 网络上的合约数量"
     },
+    "contractDeploy": {
+      "title": "全部合约",
+      "description": "Conflux 网络上的合约统计",
+      "contractCount": "日新增合约量",
+      "contractTotalCount": "合约量"
+    },
     "tokenAnalysis": {
       "title": "代币分析",
       "description": "{{token}} 每日转账统计",
@@ -426,6 +439,8 @@
       "epoch": "纪元"
     },
     "totalRecord": "共计 {{total}} 个记录",
+    "totalHolders": "共计 {{total}} 个持有人",
+    "totalRecordLimit": "仅展示最新的 10k 条记录（共计 {{total}} 条记录）",
     "remark": "说明：",
     "invalidBytecode": "无效的 bytecode",
     "invalidABI": "无效的 ABI",
@@ -516,7 +531,14 @@
         "quantity": "数量",
         "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
-        "traceType": "追溯类型"
+        "traceType": "追溯类型",
+        "traceResult": "返回值",
+        "traceStatusTitle": "状态",
+        "traceStatus": {
+          "success": "成功",
+          "fail": "失败",
+          "revert": "回滚"
+        }
       },
       "contracts": {
         "number": "#",
@@ -667,6 +689,7 @@
     "tx": "交易"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",
     "overview": "概览",
@@ -698,9 +721,12 @@
     "chainID": "区块链编号",
     "inputData": "输入数据",
     "select": {
+      "decodeInputData": "解码输入数据",
       "original": "原始数据",
       "utf8": "UTF-8",
-      "decodeInputData": "解码输入数据"
+      "json": "解码为 JSON",
+      "generalDecode": "通用解码",
+      "optimizationDecode": "优化解码"
     },
     "contract": "合约",
     "created": "已创建",
@@ -1119,5 +1145,11 @@
     "snapshotDate": "截止日期",
     "block": "区块",
     "blockNo": "区块号"
+  },
+  "nftChecker": {
+    "title": "NFT 查看器",
+    "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
+    "incorrectFormat": "地址格式错误",
+    "tokenId": "代币 ID"
   }
 }

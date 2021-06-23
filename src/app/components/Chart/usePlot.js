@@ -67,6 +67,9 @@ export default function usePlot(
     case 'activeAccounts':
       swrKey = `/stat/daily-active-address`;
       break;
+    case 'contractDeploy':
+      swrKey = `/stat/contract/deploy/list`;
+      break;
     case 'contractAmount':
       swrKey = `/stat/contract/total/list`;
       break;
@@ -88,6 +91,7 @@ export default function usePlot(
     case 'cfxHoldingAccounts':
     case 'accountGrowth':
     case 'activeAccounts':
+    case 'contractDeploy':
     case 'contractAmount':
     case 'contractGrowth':
       axisFormat = ['MMM DD', 'MM-DD'];
@@ -133,6 +137,9 @@ export default function usePlot(
       case 'activeAccounts':
         // filter genesis block
         listData = data?.list || [];
+        break;
+      case 'contractDeploy':
+        listData = data?.data?.rows || [];
         break;
       case 'contractAmount':
       case 'contractGrowth':

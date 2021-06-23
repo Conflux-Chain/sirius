@@ -31,7 +31,8 @@ import iconWechat from 'images/footer/wechat.svg';
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const iszh = i18n.language.includes('zh');
 
   const left = [<TextLogo key="logo" />];
 
@@ -45,6 +46,30 @@ export function Footer() {
       }}
     >
       {t(translations.footer.report)}
+    </Link>
+  );
+
+  const suggestionBoxLink = iszh ? (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.suggestionBox,
+      }}
+    >
+      {t(translations.footer.suggestionBox)}
+    </Link>
+  ) : (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.suggestionBox,
+      }}
+    >
+      {t(translations.footer.suggestionBox)}
     </Link>
   );
   const techIssueLink = (
@@ -119,10 +144,21 @@ export function Footer() {
       {t(translations.footer.aboutUs.terms)}
     </Link>
   );
-  const supportCenter = (
+  const supportCenter = iszh ? (
     <Link
       className="footer-link"
       href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn"
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.supportCenter,
+      }}
+    >
+      {t(translations.footer.aboutUs.supportCenter)}
+    </Link>
+  ) : (
+    <Link
+      className="footer-link"
+      href="https://confluxscansupportcenter.zendesk.com/hc/en-us"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.supportCenter,
@@ -347,6 +383,7 @@ export function Footer() {
           <FooterContentRow>
             <FooterContentLink>{techIssueLink}</FooterContentLink>
             <FooterContentLink>{reportLink}</FooterContentLink>
+            <FooterContentLink>{suggestionBoxLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>

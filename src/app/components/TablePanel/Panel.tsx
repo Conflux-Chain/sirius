@@ -377,7 +377,7 @@ const StyledTableWrapper: any = styled.div`
   }
 `;
 
-const StyledPaginationWrapper = styled.div`
+export const StyledPaginationWrapper = styled.div`
   .pagination.sirius-pagination {
     margin: 1.7143rem 0;
 

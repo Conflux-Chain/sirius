@@ -126,7 +126,7 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (Total of {{total}} records)",
+    "pendingTotal": "Showing the last 10 records (A total of {{total}} records)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
     "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
@@ -209,6 +209,9 @@
     "contractDeployment": "Contract Deployment",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
+    "ecosystem": "Ecosystem",
+    "stakingAndGovernance": "Staking & Governance",
+    "fcCfx": "FC-CFX Non-reversible Exchange",
     "more": "More",
     "tools": "Tools",
     "balanceChecker": "Balance Checker",
@@ -220,6 +223,7 @@
     "techIssue": "Tech Issue",
     "report": "Report",
     "supportCenter": "Support Center",
+    "suggestionBox": "Suggestion Box",
     "testnet": "Conflux Testnet",
     "oceanus": "Conflux Tethys",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
@@ -227,11 +231,13 @@
     "addressConverter": "Address Format Conversion",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
+    "nftChecker": "NFT Checker",
     "notice": "Notice Center",
     "learnMore": "Learn more",
     "search": {
       "tokens": "Tokens",
-      "contracts": "Contracts"
+      "contracts": "Contracts",
+      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
     }
   },
   "footer": {
@@ -265,6 +271,7 @@
     "contactUs": "Contact Us",
     "techIssue": "Tech Issue",
     "report": "Report",
+    "suggestionBox": "Suggestion Box",
     "developResource": {
       "title": "Developer Resources",
       "developerDocuments": "Developer Documents",
@@ -407,6 +414,12 @@
       "title": "Contract Amount",
       "description": "The number of contracts on the Conflux network."
     },
+    "contractDeploy": {
+      "title": "All Contracts",
+      "description": "The statistics of contracts on the Conflux network.",
+      "contractCount": "Daily Contract Growth",
+      "contractTotalCount": "Contract Amount"
+    },
     "tokenAnalysis": {
       "title": "Token Analysis",
       "description": "{{token}} daily transfers statistics.",
@@ -425,7 +438,9 @@
       "blockHash": "Block Hash",
       "epoch": "Epoch"
     },
-    "totalRecord": "Total of {{total}} records",
+    "totalRecord": "A total of {{total}} records",
+    "totalHolders": "A total of {{total}} holders",
+    "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",
     "invalidBytecode": "Invaild bytecode",
     "invalidABI": "Invaild ABI",
@@ -516,7 +531,14 @@
         "quantity": "Quantity",
         "erc1155QuantityTip": "The quantity of CRC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",
-        "traceType": "Trace Type"
+        "traceType": "Trace Type",
+        "traceResult": "Result",
+        "traceStatusTitle": "Status",
+        "traceStatus": {
+          "success": "success",
+          "fail": "fail",
+          "revert": "revert"
+        }
       },
       "contracts": {
         "number": "#",
@@ -591,7 +613,7 @@
     "endDate": "End date",
     "submitSucceed": "Submit succeed",
     "tabLabel": {
-      "lt10000": "Total of {{total}} records",
+      "lt10000": "A total of {{total}} records",
       "gte10000": "A total of {{realTotal}} records found (showing the last {{total}} records)"
     },
     "errorOccurred": "Error occurred",
@@ -667,6 +689,7 @@
     "tx": "tx"
   },
   "transaction": {
+    "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",
     "inThePosition": "(in the position {{position}})",
     "overview": "Overview",
@@ -698,9 +721,12 @@
     "chainID": "Chain ID",
     "inputData": "Input Data",
     "select": {
+      "decodeInputData": "Decode Input Data",
       "original": "Original",
       "utf8": "UTF-8",
-      "decodeInputData": "Decode Input Data"
+      "json": "Decode as JSON",
+      "generalDecode": "General Decode",
+      "optimizationDecode": "Optimization Decode"
     },
     "contract": "Contract",
     "created": "Created",
@@ -727,7 +753,7 @@
       "from": "The contract call from",
       "to": "to",
       "produced": "produced",
-      "txns": "{{type}} internal transactions.",
+      "txns": "internal transactions.",
       "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {
@@ -1119,5 +1145,11 @@
     "snapshotDate": "Snapshot Date",
     "block": "Block",
     "blockNo": "Block No"
+  },
+  "nftChecker": {
+    "title": "NFT Checker",
+    "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "incorrectFormat": "Invalid address format",
+    "tokenId": "TokenID"
   }
 }

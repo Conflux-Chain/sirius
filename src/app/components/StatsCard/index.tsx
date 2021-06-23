@@ -378,6 +378,13 @@ export const StatsCard = ({
             <td className="address">
               <AddressContainer
                 value={d.base32 || d.hex}
+                alias={
+                  d.contractInfo && d.contractInfo.name
+                    ? d.contractInfo.name
+                    : d.tokenInfo && d.tokenInfo.name
+                    ? d.tokenInfo.name
+                    : null
+                }
                 isMe={
                   accounts && accounts.length > 0
                     ? formatAddress(accounts[0]) ===

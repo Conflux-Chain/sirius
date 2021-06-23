@@ -118,7 +118,7 @@ export const ContractDetailPage = memo(() => {
             }
             target="_blank"
           >
-            {t(translations.general.address.more.report)}
+            {t(translations.general.address.more.website)}
           </RouterLink>
         </Menu.Item>
       )}

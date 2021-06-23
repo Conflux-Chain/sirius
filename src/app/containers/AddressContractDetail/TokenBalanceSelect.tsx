@@ -46,6 +46,10 @@ function Select({ children = [] } = {}) {
     .filter((c: any) => c && c.transferType === cfxTokenTypes.erc721)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
+  const children1155 = children
+    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc1155)
+    .map((t, idx) => <SelectItem key={idx} {...t} />);
+
   return (
     <SelectWrapper ref={selectRef}>
       <SelectTokenBox onClick={() => tokenCount && toggle()}>
@@ -68,6 +72,13 @@ function Select({ children = [] } = {}) {
                 </Title>
               ) : null}
               {children721}
+              {children1155.length > 0 ? (
+                <Title className="token-type">
+                  {t(translations.header.tokens1155).replace('Tokens', 'Token')}{' '}
+                  ({children1155.length})
+                </Title>
+              ) : null}
+              {children1155}
             </Card>
           </SelectDropdown>
         )}
@@ -103,20 +114,14 @@ function SelectItem({
     decimal = 0;
   }
   if (transferType === cfxTokenTypes.erc1155) {
-    decimal = -1;
+    decimal = 0;
   }
   const content = (
     <SelectItemContent key="content">
       <SelectItemContentBalance key="balance">
-        {transferType !== cfxTokenTypes.erc1155 ? (
-          <Text
-            hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}
-          >
-            {formatBalance(balance, decimal) + ' ' + symbol}
-          </Text>
-        ) : (
-          '-'
-        )}
+        <Text hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}>
+          {formatBalance(balance, decimal) + ' ' + symbol}
+        </Text>
       </SelectItemContentBalance>
       {transferType === cfxTokenTypes.erc20 ? (
         <SelectItemContentBalance key="price">

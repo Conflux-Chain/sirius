@@ -1,5 +1,6 @@
 import { PromiseType } from 'react-use/lib/util';
 import pubsub from 'utils/pubsub';
+import { appendApiPrefix } from './api';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -166,3 +167,7 @@ const fetch = (url, opts = {}) => {
 };
 
 export default fetch;
+
+export const fetchWithPrefix = (url, opts?) => {
+  return fetch(appendApiPrefix(url), opts);
+};

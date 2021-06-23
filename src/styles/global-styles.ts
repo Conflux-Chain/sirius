@@ -31,6 +31,14 @@ export const GlobalStyle = createGlobalStyle`
     input, select {
       font-size: inherit;
     }
+
+    pre {
+      border: none;
+      margin: 0;
+      padding: 0;
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
   }
 
   #root {

@@ -22,6 +22,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from '../../components/AddressContainer';
 import { zeroAddress } from '../../../utils/constants';
 import { formatAddress } from '../../../utils/cfx';
+import { defaultTokenIcon } from '../../../constants';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -206,12 +207,14 @@ export function ContractMetadata({ address, contractInfo }) {
           children: (
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
-                {tokenInfo.icon && (
-                  <Icon
-                    src={tokenInfo.icon}
-                    alt={`${contractInfo.name} logo`}
-                  />
-                )}
+                <Icon
+                  src={
+                    tokenInfo && tokenInfo.icon
+                      ? tokenInfo.icon
+                      : defaultTokenIcon
+                  }
+                  alt={`${contractInfo.name} logo`}
+                />
                 <Content className={clsx(!tokenInfo.name && 'not-available')}>
                   {tokenInfo.name ? (
                     <Link to={`/token/${address}`}>
@@ -254,6 +257,15 @@ export function ContractMetadata({ address, contractInfo }) {
                       <AddressContainer
                         key={contractInfo.sponsor.sponsorForCollateral}
                         value={contractInfo.sponsor.sponsorForCollateral}
+                        alias={
+                          contractInfo.sponsor
+                            .sponsorForCollateralContractInfo &&
+                          contractInfo.sponsor.sponsorForCollateralContractInfo
+                            .name
+                            ? contractInfo.sponsor
+                                .sponsorForCollateralContractInfo.name
+                            : null
+                        }
                       />,
                     ]
                   ) : (
@@ -338,6 +350,13 @@ export function ContractMetadata({ address, contractInfo }) {
                       <AddressContainer
                         key={contractInfo.sponsor.sponsorForGas}
                         value={contractInfo.sponsor.sponsorForGas}
+                        alias={
+                          contractInfo.sponsor.sponsorForGasContractInfo &&
+                          contractInfo.sponsor.sponsorForGasContractInfo.name
+                            ? contractInfo.sponsor.sponsorForGasContractInfo
+                                .name
+                            : null
+                        }
                       />,
                     ]
                   ) : (

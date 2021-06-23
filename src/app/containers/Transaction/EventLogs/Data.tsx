@@ -7,6 +7,9 @@ import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '../../../../styles/media';
+import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
+import { formatAddress } from 'utils/cfx';
+import { DecodedParams } from 'app/components/TxnComponents/util';
 
 const isPossibleAddress = data => {
   try {
@@ -75,7 +78,7 @@ const decodeData = (value, type) => {
     switch (type) {
       case 'address':
         const address = format.address(`0x${value.substr(24)}`, NETWORK_ID);
-        result = <Link href={`/contract/${address}`}>{address}</Link>;
+        result = <Link href={`/address/${address}`}>{address}</Link>;
         break;
       case 'number':
         result = format.bigInt(v).toString();
@@ -133,12 +136,11 @@ const StyledSelectItemWrapper = styled.div`
 export const Data = ({
   data,
   hexData,
+  contractAndTokenInfo,
 }: {
-  data: Array<{
-    argName?: string;
-    value: string;
-  }>;
+  data: Array<DecodedParams>;
   hexData: string;
+  contractAndTokenInfo: any;
 }) => {
   const { t } = useTranslation();
   if (!data.length) {
@@ -157,10 +159,28 @@ export const Data = ({
 
       if (value === 'decode') {
         content = data.map((d, index) => {
+          let value: React.ReactNode = <pre>{d.value}</pre>;
+
+          if (d.type === 'address') {
+            const contractInfo =
+              contractAndTokenInfo[
+                formatAddress(d.value, {
+                  withType: true,
+                })
+              ];
+
+            value = (
+              <>
+                <Link href={`/address/${d.value}`}>{d.value} </Link>
+                <ContractDetail info={contractInfo}></ContractDetail>
+              </>
+            );
+          }
+
           return (
             <div className="data-item" key={index}>
-              <span>{d.argName}: </span>
-              <span>{d.value}</span>
+              <span className="data-item-title">{d.argName}: </span>
+              <span className="data-item-value">{value}</span>
             </div>
           );
         });
@@ -251,6 +271,25 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
       top: auto;
       right: auto;
       margin-bottom: 10px;
+    }
+  }
+
+  .data-item {
+    display: flex;
+    align-items: flex-start;
+
+    .data-item-title {
+      margin-right: 0.3571rem;
+      flex-shrink: 0;
+    }
+
+    .data-item-value {
+      margin-top: 0.1429rem;
+      margin-bottom: -0.1429rem;
+    }
+
+    img {
+      margin: 0 0.1429rem;
     }
   }
 `;

@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   Switch,
@@ -17,6 +18,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import BigNumber from 'bignumber.js';
 // import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
@@ -62,10 +64,9 @@ import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
 import { Notices } from './containers/Notices/Loadable';
 import { ChartDetail } from './containers/ChartDetail/Loadable';
-import { useEffect } from 'react';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
-import BigNumber from 'bignumber.js';
+import { NFTChecker } from './containers/NFTChecker/Loadable';
 
 // WebFontLoader.load({
 //   custom: {
@@ -383,6 +384,11 @@ export function App() {
                       exact
                       path="/balance-checker"
                       component={BalanceChecker}
+                    />
+                    <Route
+                      exact
+                      path={['/nft-checker', '/nft-checker/:address']}
+                      component={NFTChecker}
                     />
                     <Route component={NotFoundPage} />
                   </Switch>

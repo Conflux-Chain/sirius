@@ -35,16 +35,23 @@ export const Header = memo(() => {
   const isTestnet = useTestnet();
 
   const location = useLocation();
-  const contractMatched =
-    location.pathname.startsWith('/sponsor') ||
-    location.pathname.startsWith('/contract');
+  // const contractMatched =
+  //   location.pathname.startsWith('/sponsor') ||
+  //   location.pathname.startsWith('/contract');
   const statisticsMatched =
     location.pathname.startsWith('/chart') ||
     location.pathname.startsWith('/statistics');
   const moreMatched =
     location.pathname.startsWith('/address-converter') ||
     location.pathname.startsWith('/push-tx') ||
-    location.pathname.startsWith('/block-countdown');
+    location.pathname.startsWith('/block-countdown') ||
+    location.pathname.startsWith('/nft-checker');
+  const blockchainMatched =
+    location?.pathname?.startsWith('/blockchain') ||
+    location.pathname.startsWith('/contract') ||
+    location.pathname.startsWith('/sponsor');
+  const ecosystemMatched = false;
+
   const bp = useBreakpoint();
   const [visible, toggleMenu] = useToggle(false);
 
@@ -64,44 +71,102 @@ export const Header = memo(() => {
     // blockchain
     {
       title: t(translations.header.blockchain),
-      matched: location?.pathname?.startsWith('/blockchain'),
+      className: 'plain',
+      matched: blockchainMatched,
       children: [
         {
-          // block
           title: [
-            t(translations.header.block),
+            t(translations.header.blockchain),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.blocks,
-          afterClick: menuClick,
-          href: '/blockchain/blocks',
+          plain: true,
+          children: [
+            {
+              // block
+              title: [
+                t(translations.header.block),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.blocks,
+              afterClick: menuClick,
+              href: '/blockchain/blocks',
+            },
+            {
+              // txn
+              title: [
+                t(translations.header.txn),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.transactions,
+              afterClick: menuClick,
+              href: '/blockchain/transactions',
+            },
+            {
+              // accounts
+              title: [
+                t(translations.header.accounts),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.accounts,
+              afterClick: menuClick,
+              href: '/blockchain/accounts',
+            },
+            {
+              // cfx transfers
+              title: [
+                t(translations.header.cfxTransfers),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.cfxTransfers,
+              afterClick: menuClick,
+              href: '/blockchain/cfx-transfers',
+            },
+          ],
         },
         {
-          // txn
-          title: [t(translations.header.txn), <Check size={18} key="check" />],
-          name: ScanEvent.menu.action.transactions,
-          afterClick: menuClick,
-          href: '/blockchain/transactions',
-        },
-        {
-          // accounts
           title: [
-            t(translations.header.accounts),
+            t(translations.header.contract),
             <Check size={18} key="check" />,
           ],
-          name: ScanEvent.menu.action.accounts,
-          afterClick: menuClick,
-          href: '/blockchain/accounts',
-        },
-        {
-          // cfx transfers
-          title: [
-            t(translations.header.cfxTransfers),
-            <Check size={18} key="check" />,
+          plain: true,
+          children: [
+            {
+              // deploy
+              title: [
+                t(translations.header.contractDeployment),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.contractDeployment,
+              afterClick: menuClick,
+              href: '/contract-deployment',
+            },
+            {
+              // create contract
+              title: [
+                t(translations.header.contractCreation),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.contractReg,
+              afterClick: menuClick,
+              href: '/contract',
+            },
+            {
+              // sponsor
+              title: [
+                t(translations.header.contractSponsor),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.sponsor,
+              afterClick: menuClick,
+              href: '/sponsor',
+            },
+            {
+              title: t(translations.header.contracts),
+              name: ScanEvent.menu.action.contractsList,
+              afterClick: menuClick,
+              href: '/contracts',
+            },
           ],
-          name: ScanEvent.menu.action.cfxTransfers,
-          afterClick: menuClick,
-          href: '/blockchain/cfx-transfers',
         },
       ],
     },
@@ -143,48 +208,48 @@ export const Header = memo(() => {
       ],
     },
     // contract
-    {
-      title: t(translations.header.contract),
-      matched: contractMatched,
-      children: [
-        {
-          // deploy
-          title: [
-            t(translations.header.contractDeployment),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.contractDeployment,
-          afterClick: menuClick,
-          href: '/contract-deployment',
-        },
-        {
-          // create contract
-          title: [
-            t(translations.header.contractCreation),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.contractReg,
-          afterClick: menuClick,
-          href: '/contract',
-        },
-        {
-          // sponsor
-          title: [
-            t(translations.header.contractSponsor),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.sponsor,
-          afterClick: menuClick,
-          href: '/sponsor',
-        },
-        {
-          title: t(translations.header.contracts),
-          name: ScanEvent.menu.action.contractsList,
-          afterClick: menuClick,
-          href: '/contracts',
-        },
-      ],
-    },
+    // {
+    //   title: t(translations.header.contract),
+    //   matched: contractMatched,
+    //   children: [
+    //     {
+    //       // deploy
+    //       title: [
+    //         t(translations.header.contractDeployment),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       name: ScanEvent.menu.action.contractDeployment,
+    //       afterClick: menuClick,
+    //       href: '/contract-deployment',
+    //     },
+    //     {
+    //       // create contract
+    //       title: [
+    //         t(translations.header.contractCreation),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       name: ScanEvent.menu.action.contractReg,
+    //       afterClick: menuClick,
+    //       href: '/contract',
+    //     },
+    //     {
+    //       // sponsor
+    //       title: [
+    //         t(translations.header.contractSponsor),
+    //         <Check size={18} key="check" />,
+    //       ],
+    //       name: ScanEvent.menu.action.sponsor,
+    //       afterClick: menuClick,
+    //       href: '/sponsor',
+    //     },
+    //     {
+    //       title: t(translations.header.contracts),
+    //       name: ScanEvent.menu.action.contractsList,
+    //       afterClick: menuClick,
+    //       href: '/contracts',
+    //     },
+    //   ],
+    // },
     // charts
     {
       title: t(translations.header.chartsAndStatistics),
@@ -208,6 +273,37 @@ export const Header = memo(() => {
           afterClick: menuClick,
           href: '/statistics',
           isMatchedFn: () => !!location?.pathname?.startsWith('/statistics'),
+        },
+      ],
+    },
+    // ecosystem
+    {
+      title: t(translations.header.ecosystem),
+      matched: ecosystemMatched,
+      children: [
+        {
+          title: [
+            t(translations.header.stakingAndGovernance),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.stakingAndGovernance,
+          afterClick: menuClick,
+          href: iszh
+            ? isTestnet
+              ? 'https://votetest.confluxnetwork.org/zh/'
+              : 'https://governance.confluxnetwork.org/zh/'
+            : isTestnet
+            ? 'https://votetest.confluxnetwork.org/en/'
+            : 'https://governance.confluxnetwork.org/en/',
+        },
+        {
+          title: [
+            t(translations.header.fcCfx),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.fcCfx,
+          afterClick: menuClick,
+          href: 'https://fccfx.confluxscan.io/',
         },
       ],
     },
@@ -251,6 +347,15 @@ export const Header = memo(() => {
               name: ScanEvent.menu.action.blocknumberCalc,
               afterClick: menuClick,
               href: '/block-countdown',
+            },
+            {
+              title: [
+                t(translations.header.nftChecker),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.nftChecker,
+              afterClick: menuClick,
+              href: '/nft-checker',
             },
           ],
         },
@@ -299,6 +404,17 @@ export const Header = memo(() => {
               href: iszh
                 ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn'
                 : 'https://confluxscansupportcenter.zendesk.com/hc/en-us',
+            },
+            {
+              title: [
+                t(translations.header.suggestionBox),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.suggestionBox,
+              afterClick: menuClick,
+              href: iszh
+                ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new',
             },
           ],
         },

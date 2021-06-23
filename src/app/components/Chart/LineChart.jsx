@@ -59,6 +59,7 @@ export const LineChart = ({
     'cfxHoldingAccounts',
     'accountGrowth',
     'activeAccounts',
+    'contractDeploy',
     'contractAmount',
     'contractGrowth',
     'tokenAnalysis',
@@ -75,6 +76,7 @@ export const LineChart = ({
     'cfxHoldingAccounts',
     'accountGrowth',
     'activeAccounts',
+    'contractDeploy',
     'contractAmount',
     'contractGrowth',
     'tokenAnalysis', // without thumb
@@ -110,6 +112,7 @@ export const LineChart = ({
       cfxHoldingAccounts: 0,
       accountGrowth: 0,
       activeAccounts: 0,
+      contractDeploy: 0,
       contractAmount: 0,
       contractGrowth: 0,
     },
@@ -124,6 +127,7 @@ export const LineChart = ({
       cfxHoldingAccounts: 'auto',
       accountGrowth: 'auto',
       activeAccounts: 'auto',
+      contractDeploy: 'auto',
       contractAmount: 'auto',
       contractGrowth: 'auto',
     },
@@ -159,6 +163,9 @@ export const LineChart = ({
             case 'accountGrowth':
             case 'activeAccounts':
               dataKey = 'cnt';
+              break;
+            case 'contractDeploy':
+              dataKey = 'contractTotalCount';
               break;
             case 'contractAmount':
             case 'contractGrowth':
@@ -289,6 +296,7 @@ export const LineChart = ({
       case 'accountGrowth':
       case 'activeAccounts':
         return 'day';
+      case 'contractDeploy':
       case 'contractAmount':
       case 'contractGrowth':
         return 'statDay';
@@ -312,6 +320,8 @@ export const LineChart = ({
       case 'accountGrowth':
       case 'activeAccounts':
         return 'cnt';
+      case 'contractDeploy':
+        return ['contractTotalCount', 'contractCount'];
       case 'contractAmount':
       case 'contractGrowth':
         return 'contractCount';
@@ -385,6 +395,7 @@ export const LineChart = ({
           'cfxHoldingAccounts',
           'accountGrowth',
           'activeAccounts',
+          'contractDeploy',
           'contractAmount',
           'contractGrowth',
           'tokenAnalysis',
@@ -451,6 +462,7 @@ export const LineChart = ({
                     'cfxHoldingAccounts',
                     'accountGrowth',
                     'activeAccounts',
+                    'contractDeploy',
                     'contractAmount',
                     'contractGrowth',
                   ].includes(indicator)

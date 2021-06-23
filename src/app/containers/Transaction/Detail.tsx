@@ -1,50 +1,53 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Card, Spinner } from '@cfxjs/react-ui';
-import { Select } from 'app/components/Select';
 import { Description } from 'app/components/Description/Loadable';
-import { useParams } from 'react-router-dom';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { InputData } from 'app/components/InputData/Loadable';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import {
-  reqTransactionDetail,
   reqContract,
-  reqTransferList,
   reqTokenList,
+  reqTransactionDetail,
+  reqTransferList,
 } from 'utils/httpRequest';
 import {
-  getAddressType,
-  formatTimeStamp,
   formatBalance,
+  formatTimeStamp,
   fromDripToCfx,
+  getAddressType,
   getPercent,
   toThousands,
 } from 'utils';
-import { decodeContract, formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils/cfx';
 import {
   addressTypeContract,
   addressTypeInternalContract,
   cfxTokenTypes,
 } from 'utils/constants';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
-import { GasFee, StorageFee, Status } from 'app/components/TxnComponents';
+import {
+  GasFee,
+  InputDataNew,
+  Status,
+  StorageFee,
+} from 'app/components/TxnComponents';
 import _ from 'lodash';
 
-import imgWarning from 'images/warning.png';
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
+
+import iconInfo from 'images/info.svg';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -54,20 +57,17 @@ export const Detail = () => {
   const { t } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
-  const [decodedData, setDecodedData] = useState({});
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
   const [tokenList, setTokenList] = useState([]);
-  const [dataTypeList, setDataTypeList] = useState(['original']);
   const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
   const history = useHistory();
   const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
-  const [dataType, setDataType] = useState('original');
   const {
     epochHeight,
     from,
@@ -94,8 +94,6 @@ export const Detail = () => {
     storageReleased,
     storageCollateralized,
   } = transactionDetail;
-  const [warningMessage, setWarningMessage] = useState('');
-  const [isAbiError, setIsAbiError] = useState(false);
   const [folded, setFolded] = useState(true);
 
   // get txn detail info
@@ -179,21 +177,6 @@ export const Detail = () => {
                 // update contract info
                 setContractInfo(contractResponse);
                 const transferListReponse = proRes[1];
-                let decodedData = {};
-
-                try {
-                  decodedData = decodeContract({
-                    abi: JSON.parse(contractResponse['abi']),
-                    address: contractResponse['address'],
-                    transacionData: txDetailDta.data,
-                  });
-
-                  // no abi scenario
-                  if (!decodedData) setIsAbiError(true);
-                } catch {
-                  setIsAbiError(true);
-                }
-                setDecodedData(decodedData);
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
@@ -207,15 +190,9 @@ export const Detail = () => {
                     setLoading(false);
                     setTokenList(res.list);
                   })
-                  .catch(() => {
-                    //TODO: In the first stage, a temporary solution:no need to cancel loading
-                    // setLoading(false);
-                  });
+                  .catch(() => {});
               })
-              .catch(() => {
-                //TODO: In the first stage, a temporary solution:no need to cancel loading
-                // setLoading(false);
-              });
+              .catch(() => {});
           } else {
             setLoading(false);
           }
@@ -224,10 +201,6 @@ export const Detail = () => {
     },
     [history, routeHash, detailsInfoSetHash],
   );
-
-  const handleDataTypeChange = type => {
-    setDataType(type);
-  };
 
   useEffect(() => {
     fetchTxDetail(routeHash);
@@ -247,34 +220,6 @@ export const Detail = () => {
       intervalToClear.current = false;
     };
   }, [intervalToClear]);
-
-  useEffect(() => {
-    // only to address could decoded to utf8 or input fn
-
-    if (!to || contractCreated) {
-    } else {
-      if (isContract) {
-        if (contractInfo['abi'] && !isAbiError) {
-          setDataTypeList(['original', 'decodeInputData']);
-          setDataType('decodeInputData');
-          setWarningMessage('');
-        }
-        if (!contractInfo['abi']) {
-          setDataTypeList(['original']);
-          setDataType('original');
-          setWarningMessage('contract.abiNotUploaded');
-        } else if (to !== null && isAbiError) {
-          setDataTypeList(['original']);
-          setDataType('original');
-          setWarningMessage('contract.abiError');
-        }
-      } else {
-        setDataTypeList(['original', 'utf8']);
-        setDataType('utf8');
-        setWarningMessage('');
-      }
-    }
-  }, [isContract, contractInfo, isAbiError, contractCreated, to]);
 
   const fromContent = (isFull = false) => (
     <span>
@@ -304,20 +249,19 @@ export const Detail = () => {
               {t(translations.transaction.contract)}{' '}
               {contractInfo && (
                 <>
-                  <img
-                    className="logo"
-                    src={
-                      contractInfo['icon'] ||
-                      (contractInfo['token'] &&
-                        contractInfo['token']['icon']) ||
-                      defaultContractIcon
-                    }
-                    alt="icon"
-                  />
+                  {contractInfo['token'] && contractInfo['token']['icon'] ? (
+                    <img
+                      className="logo"
+                      src={
+                        contractInfo['token'] && contractInfo['token']['icon']
+                      }
+                      alt="icon"
+                    />
+                  ) : null}
                   <Link href={`/address/${formatAddress(to)}`}>
                     {contractInfo['name'] ||
                       (contractInfo['token'] && contractInfo['token']['name']
-                        ? `${contractInfo['token']['name']} (${contractInfo['token']['symbol']})`
+                        ? `${contractInfo['token']['name']}`
                         : '')}
                   </Link>{' '}
                 </>
@@ -605,16 +549,33 @@ export const Detail = () => {
     return (
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.tx.tokenTransferred)}
-            placement="top"
-          >
-            {`${t(translations.transaction.tokenTransferred)} ${
-              transferListContainer.length > 1
-                ? `(${transferListContainer.length})`
-                : ''
-            }`}
-          </Tooltip>
+          <>
+            <Tooltip
+              text={t(translations.toolTip.tx.tokenTransferred)}
+              placement="top"
+            >
+              {`${t(translations.transaction.tokenTransferred)} ${
+                transferListContainer.length > 1
+                  ? `(${transferListContainer.length})`
+                  : ''
+              }`}
+            </Tooltip>
+            {transferListContainer.length > 1 ? (
+              <Tooltip
+                className="download-csv-tooltip"
+                text={t(translations.transaction.tipOfTokenTransferCount)}
+                placement="top"
+              >
+                <IconWrapper>
+                  <img
+                    src={iconInfo}
+                    alt="warning-icon"
+                    className="download-svg-img"
+                  ></img>
+                </IconWrapper>
+              </Tooltip>
+            ) : null}
+          </>
         }
       >
         <SkeletonContainer shown={loading}>
@@ -960,47 +921,29 @@ export const Detail = () => {
           >
             <SkeletonContainer shown={loading}>{chainId}</SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.transaction.inputTips)}
-                placement="top"
-              >
-                {t(translations.transaction.inputData)}
-              </Tooltip>
-            }
-            className="inputLine"
-          >
-            <SkeletonContainer shown={loading}>
-              <InputData
-                byteCode={data}
-                inputType={dataType}
-                decodedDataStr={JSON.stringify(decodedData)}
-              ></InputData>
-              <Select
-                value={dataType}
-                onChange={handleDataTypeChange}
-                disableMatchWidth
-                size="small"
-                className="btnSelectContainer"
-                disabled={dataTypeList.length === 1}
-              >
-                {dataTypeList.map(dataTypeItem => {
-                  return (
-                    <Select.Option key={dataTypeItem} value={dataTypeItem}>
-                      {`${t(translations.transaction.select[dataTypeItem])}`}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-              {warningMessage ? (
-                <div className="warningContainer shown">
-                  <img src={imgWarning} alt="warning" className="warningImg" />
-                  <span className="text">{t(warningMessage)}</span>
-                </div>
-              ) : null}
-            </SkeletonContainer>
-          </Description>
+          {/* only send to user type will with empty data */}
+          {!data || data === '0x' ? null : (
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.transaction.inputTips)}
+                  placement="top"
+                >
+                  {t(translations.transaction.inputData)}
+                </Tooltip>
+              }
+              className="inputLine"
+            >
+              <SkeletonContainer shown={loading}>
+                <InputDataNew
+                  txnHash={routeHash}
+                  toHash={to}
+                  data={data}
+                  isContractCreated={!!contractCreated}
+                ></InputDataNew>
+              </SkeletonContainer>
+            </Description>
+          )}
         </div>
         <StyledFoldButtonWrapper>
           <div
@@ -1153,4 +1096,14 @@ const InlineWrapper = styled.div`
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
+`;
+
+const IconWrapper = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
+
+  .download-svg-img {
+    margin-left: 0.3571rem;
+  }
 `;

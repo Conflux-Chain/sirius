@@ -12,7 +12,7 @@ exports[`<Text  /> should match snapshot 1`] = `
   color: #cdcdcd;
   line-height: 1.1429rem;
   min-width: 40px;
-  max-width: 38rem;
+  max-width: 40rem;
 }
 
 .c0 a {
@@ -92,7 +92,7 @@ exports[`<Text  /> should match snapshot when set maxCount 1`] = `
   color: #cdcdcd;
   line-height: 1.1429rem;
   min-width: 40px;
-  max-width: 38rem;
+  max-width: 40rem;
 }
 
 .c0 a {
