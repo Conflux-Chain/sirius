@@ -95,7 +95,7 @@ export function Transaction() {
       },
       pagination: false,
       tableHeader: info => tableHeader(info),
-      hidden: !cfxTransferCount && !cfxTransferAllCount,
+      hidden: !cfxTransferCount && cfxTransferAllCount < 2,
     },
     {
       value: 'logs',

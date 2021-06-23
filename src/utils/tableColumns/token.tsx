@@ -561,8 +561,12 @@ const TraceTypeElement = ({ info }) => {
           <span className="dot"></span>
         </Popover>
       ) : null}
-      {info.type}
-      {info.index}
+      <Text hoverValue={`${info.type}${info.index}`}>
+        <div className="type-container">
+          {info.type}
+          {info.index}
+        </div>
+      </Text>
     </StyledTractTypeWrapper>
   );
 };
@@ -623,8 +627,10 @@ export const traceResult = {
           </Text>
         );
       }
-    } else {
+    } else if (['fail', 'revert'].includes(outcome)) {
       body = decodedMessage;
+    } else {
+      body = '--';
     }
 
     return body;
@@ -691,6 +697,15 @@ export const AccountWrapper = styled.div`
 `;
 const StyledTractTypeWrapper = styled.span`
   padding-left: 0.2rem;
+
+  .type-container {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 8.5714rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   .level {
     .vertical {
