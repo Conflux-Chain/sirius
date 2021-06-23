@@ -531,7 +531,14 @@
         "quantity": "Quantity",
         "erc1155QuantityTip": "The quantity of CRC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",
-        "traceType": "Trace Type"
+        "traceType": "Trace Type",
+        "traceResult": "Result",
+        "traceStatusTitle": "Status",
+        "traceStatus": {
+          "success": "success",
+          "fail": "fail",
+          "revert": "revert"
+        }
       },
       "contracts": {
         "number": "#",
@@ -746,7 +753,7 @@
       "from": "The contract call from",
       "to": "to",
       "produced": "produced",
-      "txns": "{{type}} internal transactions.",
+      "txns": "internal transactions.",
       "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {

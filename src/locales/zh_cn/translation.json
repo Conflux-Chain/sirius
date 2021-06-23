@@ -531,7 +531,14 @@
         "quantity": "数量",
         "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
-        "traceType": "追溯类型"
+        "traceType": "追溯类型",
+        "traceResult": "返回值",
+        "traceStatusTitle": "状态",
+        "traceStatus": {
+          "success": "成功",
+          "fail": "失败",
+          "revert": "回滚"
+        }
       },
       "contracts": {
         "number": "#",
