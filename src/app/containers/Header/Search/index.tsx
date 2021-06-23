@@ -25,6 +25,7 @@ import {
   isSpecialAddress,
 } from '../../../../utils';
 import { appendApiPrefix } from '../../../../utils/api';
+import { cfxTokenTypes } from '../../../../utils/constants';
 
 const { Search: SearchInput } = Input;
 
@@ -115,7 +116,8 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
                   {/*{token?.website ? (*/}
                   {/*  <div className="website">{token?.website}</div>*/}
                   {/*) : null}*/}
-                  {token?.holderCount ? (
+                  {token?.holderCount &&
+                  token?.transferType !== cfxTokenTypes.erc1155 ? (
                     <div className="holders">
                       {token?.holderCount}{' '}
                       {t(translations.tokens.table.holders)}

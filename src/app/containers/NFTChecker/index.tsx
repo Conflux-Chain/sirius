@@ -52,6 +52,7 @@ export function NFTChecker() {
 
   const handleNFTSearch = async () => {
     setLoading(true);
+    reset();
     const formattedAddress = formatAddress(address);
     if (formattedAddress && !formattedAddress.startsWith('invalid')) {
       setHasSearched(true);
@@ -72,11 +73,7 @@ export function NFTChecker() {
         if (_NFTBalances && _NFTBalances.length > 0) {
           setNFTBalances(_NFTBalances);
           await selectTag(_NFTBalances[0]);
-        } else {
-          reset();
         }
-      } else {
-        reset();
       }
     } else {
       setAddressFormatError(true);
@@ -204,9 +201,10 @@ export function NFTChecker() {
                   {currentNFTCount > 0 ? (
                     <div className="total">
                       {t(translations.blocks.tipCountBefore)} {currentNFTCount}{' '}
-                      {NFTContractNames[currentNFTType][lang]} NFT{' '}
+                      {lang === 'zh' ? '个 ' : ''}
+                      {NFTContractNames[currentNFTType][lang] || ''} NFT{' '}
                       <span>
-                        {NFTContractNames[currentNFTType][lang]}{' '}
+                        {NFTContractNames[currentNFTType][lang] || ''}{' '}
                         {t(translations.contract.address)}:{' '}
                         <AddressContainer
                           value={NFTContracts[currentNFTType]}
