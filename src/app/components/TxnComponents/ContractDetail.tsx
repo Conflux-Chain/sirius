@@ -68,5 +68,5 @@ export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
 
 ContractDetail.defaultProps = {
   showTokenInfo: true,
-  showContractInfo: true,
+  showContractInfo: false,
 };
