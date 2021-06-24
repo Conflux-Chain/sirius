@@ -24,6 +24,7 @@ import { getNFTBalances, getNFTTokens } from './utils';
 import { NFTPreview } from '../../components/NFTPreview';
 import { AddressContainer } from '../../components/AddressContainer';
 import { Empty } from '../../components/Empty';
+import { useHistory } from 'react-router';
 
 const { Search } = Input;
 
@@ -50,12 +51,18 @@ export function NFTChecker() {
   const [currentNFTCount, setCurrentNFTCount] = useState<number>(0);
   const [displayTokenIds, setDisplayTokenIds] = useState<number[]>([]);
   const [NFTBalances, setNFTBalances] = useState<NFTBalancesType[]>([]);
+  const history = useHistory();
+
+  const validateAddress = address => {
+    const formattedAddress = formatAddress(address);
+    return formattedAddress && !formattedAddress.startsWith('invalid');
+  };
 
   const handleNFTSearch = async () => {
     setLoading(true);
     reset();
     const formattedAddress = formatAddress(address);
-    if (formattedAddress && !formattedAddress.startsWith('invalid')) {
+    if (validateAddress(address)) {
       setHasSearched(true);
       // get all supported nft balances
       const balances = await getNFTBalances(formattedAddress);
@@ -134,13 +141,11 @@ export function NFTChecker() {
   };
 
   useEffect(() => {
-    if (address) {
-      (async () => {
-        await handleNFTSearch();
-      })();
+    if (routerAddress) {
+      handleNFTSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [routerAddress]);
 
   return (
     <>
@@ -160,8 +165,12 @@ export function NFTChecker() {
           value={address}
           onChange={handleAddressChange}
           placeholder={t(translations.addressConverter.inputPlaceholder)}
-          onSearch={async () => {
-            await handleNFTSearch();
+          onSearch={value => {
+            if (validateAddress(value)) {
+              history.push(`/nft-checker/${value}`);
+            } else {
+              setAddressFormatError(true);
+            }
           }}
         />
         {addressFormatError ? (

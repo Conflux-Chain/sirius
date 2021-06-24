@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from './media';
-import { sansSerifFont } from './variable';
+import { sansSerifFont, monospaceFont } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -38,6 +38,7 @@ export const GlobalStyle = createGlobalStyle`
       padding: 0;
       word-break: break-all;
       white-space: pre-wrap;
+      font-family: ${monospaceFont};
     }
   }
 

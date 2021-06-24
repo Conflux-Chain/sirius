@@ -256,9 +256,9 @@ const queryNFTImageInfo = async ({
           `https://api.allorigins.win/get?url=${encodeURIComponent(
             jsonUriFormatter
               ? jsonUriFormatter(res)
-              : res.indexOf(tokenId) > -1
-              ? res
-              : res.replace('{id}', Number(tokenId).toString(16)),
+              : res.indexOf('{id}') > -1
+              ? res.replace('{id}', Number(tokenId).toString(16))
+              : res,
           )}`,
         );
         const data = await response.json();
