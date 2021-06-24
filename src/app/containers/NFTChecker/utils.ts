@@ -33,11 +33,6 @@ export const getNFTTokens = async (
   try {
     if (!tokenAddress) return null;
 
-    console.log(tokenAddress);
-    console.log(ownerAddress);
-    console.log(offset);
-    console.log(limit);
-
     const tokens = await contract['getTokens(address,address,uint256,uint256)'](
       tokenAddress,
       ownerAddress,
