@@ -172,7 +172,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
         color: #e79d35;
         flex-shrink: 0;
         height: 1.4286rem;
-        line-height: 1.4286rem;
+        line-height: 1.2857rem;
       }
       .optimization-decode-data-item-value {
         font-size: 14px;
@@ -180,7 +180,6 @@ const StyledOptimizationDecodeWrapper = styled.div`
         padding-left: 0.3571rem;
 
         .prev {
-          padding-top: 0.1071rem;
           margin-bottom: -0.2857rem;
           font-size: 1rem;
         }
