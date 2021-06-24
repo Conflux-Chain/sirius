@@ -54,7 +54,7 @@ export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
               marginRight: 2,
             }}
           />
-          <Link href={`/contract/${formatAddress(contract.address)}`}>
+          <Link href={`/address/${formatAddress(contract.address)}`}>
             {name}
           </Link>{' '}
         </>

@@ -34,16 +34,24 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
   return (
     <StyledOptimizationDecodeWrapper>
       <div className="optimization-decode-item optimization-decode-fullname">
-        <div className="optimization-decode-item-title">Function: </div>
-        <Event fnName={name} args={args}></Event>
+        <div className="optimization-decode-item-title function">
+          Function:{' '}
+        </div>
+        <div className="optimization-decode-item-body">
+          <Event fnName={name} args={args}></Event>
+        </div>
       </div>
       <div className="optimization-decode-item optimization-decode-signature">
-        <div className="optimization-decode-item-title">MethodID: </div>
+        <div className="optimization-decode-item-title method-id">
+          MethodID:{' '}
+        </div>
         <div className="optimization-decode-item-body">{signature}</div>
       </div>
       {args.length > 0 ? (
         <div className="optimization-decode-item optimization-decode-data">
-          <div className="optimization-decode-item-title">Parameters:</div>
+          <div className="optimization-decode-item-title parameters">
+            Parameters:
+          </div>
           <div className="optimization-decode-item-body optimization-decode-data-body">
             {args.map((a, index) => {
               let value = a.formattedValue;
@@ -111,6 +119,18 @@ const StyledOptimizationDecodeWrapper = styled.div`
       font-size: 14px;
       line-height: 18px;
       color: #6a737d;
+
+      &.function {
+        padding-top: 1px;
+      }
+
+      &.method-id {
+        padding-top: 1px;
+      }
+
+      &.parameters {
+        padding-top: 6px;
+      }
     }
   }
 
@@ -172,7 +192,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
         color: #e79d35;
         flex-shrink: 0;
         height: 1.4286rem;
-        line-height: 1.4286rem;
+        line-height: 1.2857rem;
       }
       .optimization-decode-data-item-value {
         font-size: 14px;
@@ -180,7 +200,6 @@ const StyledOptimizationDecodeWrapper = styled.div`
         padding-left: 0.3571rem;
 
         .prev {
-          padding-top: 0.1071rem;
           margin-bottom: -0.2857rem;
           font-size: 1rem;
         }
