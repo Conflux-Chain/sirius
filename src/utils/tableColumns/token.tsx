@@ -753,7 +753,7 @@ const StyledTractTypeWrapper = styled.span`
 
   &.revert {
     .dot {
-      background-color: #fa8000;
+      background-color: #e467b3;
     }
   }
 
