@@ -134,7 +134,7 @@ const NFTCard = styled.div`
       left: 0;
       right: 0;
       bottom: 0;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 5px 5px 0 0;
     }
   }
@@ -153,7 +153,7 @@ const NFTCard = styled.div`
       left: 0;
       right: 0;
       bottom: 0;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 5px 5px 0 0;
     }
   }
