@@ -37,8 +37,8 @@ export const NFTPreview = ({
 
       (async () => {
         const info = await getNFTInfo({ contractAddress, tokenId });
+
         if (info) {
-          // console.log('info', info);
           setImageMinHeight(info.imageMinHeight);
           setImageUri(info.imageUri || tokenIdNotFound);
           setImageName(info.imageName ? info.imageName[lang] || '' : '');
