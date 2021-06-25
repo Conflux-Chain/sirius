@@ -67,6 +67,7 @@ import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
+import ScanBenchmark from './containers/_Benchmark';
 
 // WebFontLoader.load({
 //   custom: {
@@ -390,6 +391,7 @@ export function App() {
                       path={['/nft-checker', '/nft-checker/:address']}
                       component={NFTChecker}
                     />
+                    <Route exact path="/_benchmark" component={ScanBenchmark} />
                     <Route component={NotFoundPage} />
                   </Switch>
                 </ScrollToTop>
