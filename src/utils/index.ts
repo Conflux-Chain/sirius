@@ -308,16 +308,16 @@ export const getDuration = (pFrom: number, pTo?: number) => {
       throw new Error('invalid timestamp pair');
     }
 
-    const fullDay = dayjs(to).diff(from, 'day');
-    const fullHour = dayjs(to).diff(from, 'hour');
-    const fullMinute = dayjs(to).diff(from, 'minute');
+    const dayjsTo = dayjs(to);
 
-    const day = dayjs(to).diff(from, 'day');
-    const hour = dayjs(to).subtract(fullDay, 'day').diff(from, 'hour');
-    const minute = dayjs(to).subtract(fullHour, 'hour').diff(from, 'minute');
-    const second = dayjs(to)
-      .subtract(fullMinute, 'minute')
-      .diff(from, 'second');
+    const fullDay = dayjsTo.diff(from, 'day');
+    const fullHour = dayjsTo.diff(from, 'hour');
+    const fullMinute = dayjsTo.diff(from, 'minute');
+
+    const day = dayjsTo.diff(from, 'day');
+    const hour = dayjsTo.subtract(fullDay, 'day').diff(from, 'hour');
+    const minute = dayjsTo.subtract(fullHour, 'hour').diff(from, 'minute');
+    const second = dayjsTo.subtract(fullMinute, 'minute').diff(from, 'second');
 
     return [day, hour, minute, second];
   } catch (e) {
