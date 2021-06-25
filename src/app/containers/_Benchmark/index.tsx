@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 import { CountDown } from '../../components/CountDown';
 import { Button } from '@cfxjs/react-ui';
 
-function Text() {
-  return <div>123</div>;
-}
-
 export default function ScanBenchmark() {
   const ref: any = React.useRef();
   const [result, setResult] = useState<any>({});
