@@ -11,7 +11,13 @@ import { Event } from '../Event';
 // import Info from '@zeit-ui/react-icons/info';
 import { media } from 'styles/media';
 
-export const OptimizationDecode = ({ data = '', decodedData }) => {
+export const OptimizationDecode = ({
+  data = '',
+  decodedData = {},
+}: {
+  data: string;
+  decodedData: any;
+}) => {
   const { signature, name } = decodedData;
   const [contractAndTokenInfo, setContractAndTokenInfo] = useState({});
 
@@ -45,7 +51,9 @@ export const OptimizationDecode = ({ data = '', decodedData }) => {
         <div className="optimization-decode-item-title method-id">
           MethodID:{' '}
         </div>
-        <div className="optimization-decode-item-body">{signature}</div>
+        <div className="optimization-decode-item-body">
+          {signature || data.slice(0, 10)}
+        </div>
       </div>
       {args.length > 0 ? (
         <div className="optimization-decode-item optimization-decode-data">
