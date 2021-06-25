@@ -84,6 +84,32 @@
       "fourth": "4. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
     }
   },
+  "contractVerification": {
+    "title": "Contract Verification",
+    "description": "Contract Verification",
+    "tip": "To be defined.",
+    "notice": {
+      "first": "1. You can provide transparency to users who interact with a contract by verifying the source code of a contract.",
+      "second": "2. ConfluxScan compares the code you upload with the code on the blockchain and the configuration of the code; the contract you upload will pass the verification if the codes are matched successfully.",
+      "third": "3. Only single-file verification is supported.",
+      "fourth": "4. Constructor arguments are not supported currently."
+    },
+    "upload": "Upload Contract File",
+    "submit": "Submit",
+    "contractAddress": "Contract Address",
+    "runs": "Runs",
+    "contractNameTag": "Contract Name Tag",
+    "compiler": "Compiler",
+    "optimization": "Optimization",
+    "license": "License",
+    "contractSourceCode": "Contract Source Code",
+    "error": {
+      "required": "required, to be defined",
+      "isNotAddress": "Invalid address format",
+      "isNotMainnet": "Please enter Conflux Tethys address",
+      "isNotTestnet": "Please enter Conflux Testnet address"
+    }
+  },
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
@@ -208,6 +234,7 @@
     "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
     "contractDeployment": "Contract Deployment",
+    "contractVerification": "Contract Verification",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
     "ecosystem": "Ecosystem",

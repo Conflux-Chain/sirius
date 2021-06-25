@@ -84,6 +84,32 @@
       "fourth": "4. 您可以点击页面右上角的账户，在您的账户交易历史中查看合约部署详情。"
     }
   },
+  "contractVerification": {
+    "title": "合约验证",
+    "description": "合约验证",
+    "tip": "To be defined.",
+    "notice": {
+      "first": "1. 您可以通过验证某合约源码为与该合约产生交互的用户提供透明度。",
+      "second": "2. ConfluxScan 将您上传的代码与区块链上的代码，及代码的相关配置进行比较；若代码匹配成功，则上传的合约将通过验证。",
+      "third": "3. 仅支持单文件验证。",
+      "fourth": "4. 目前暂不支持构造函数。"
+    },
+    "upload": "上传合约文件",
+    "submit": "提交",
+    "contractAddress": "合约地址",
+    "runs": "运行",
+    "contractNameTag": "合约名称标签",
+    "compiler": "编译器",
+    "optimization": "优化",
+    "license": "许可协议",
+    "contractSourceCode": "合约源码",
+    "error": {
+      "required": "required, to be defined",
+      "isNotAddress": "地址格式错误",
+      "isNotMainnet": "请输入 Conflux Tethys 地址",
+      "isNotTestnet": "请输入 Conflux Testnet 地址"
+    }
+  },
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
@@ -208,6 +234,7 @@
     "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
     "contractDeployment": "合约部署",
+    "contractVerification": "合约验证",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
     "ecosystem": "生态",

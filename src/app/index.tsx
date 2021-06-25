@@ -36,6 +36,7 @@ import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { ContractDeployment } from './containers/ContractDeployment/Loadable';
+import { ContractVerification } from './containers/ContractVerification/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { CFXTransfers } from './containers/CFXTransfers/Loadable';
@@ -291,6 +292,11 @@ export function App() {
                       exact
                       path="/contract-deployment"
                       component={ContractDeployment}
+                    />
+                    <Route
+                      exact
+                      path="/contract-verification"
+                      component={ContractVerification}
                     />
                     <Route
                       exact

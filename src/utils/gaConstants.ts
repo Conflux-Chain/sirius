@@ -15,6 +15,7 @@ export const ScanEvent = {
       contractReg: 'contract_reg',
       sponsor: 'sponsor',
       contractDeployment: 'contract_deployment',
+      contractVerification: 'contract_verification',
       contractsList: 'contracts_list',
       charts: 'charts',
       statistics: 'statistics',
