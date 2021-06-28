@@ -32,7 +32,7 @@ interface Props {
   showIcon?: boolean; // whether show contract icon, default true
 }
 
-const defaultPCMaxWidth = isConfluxTestNet ? 180 : 138;
+const defaultPCMaxWidth = 138;
 const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
 const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
 const defaultMobileSuffixAddressSize = 4;
@@ -69,6 +69,7 @@ export const AddressContainer = ({
     link = isLink,
     full = isFull,
     style = {},
+    maxwidth = maxWidth,
     prefix = null,
     suffix = null,
   }: any) => (
@@ -79,7 +80,7 @@ export const AddressContainer = ({
           <LinkWrapper
             style={style}
             href={`/address/${hrefAddress}`}
-            maxwidth={full ? 430 : maxWidth}
+            maxwidth={full ? 430 : maxwidth}
             aftercontent={
               cfxAddress && !full && !alias
                 ? cfxAddress.substr(
@@ -127,6 +128,7 @@ export const AddressContainer = ({
         hoverValue: formatAddress(contractCreated),
         hrefAddress: formatAddress(contractCreated),
         content: txtContractCreation,
+        maxwidth: 160,
         prefix: (
           <IconWrapper className={prefixFloat ? 'float' : ''}>
             <Text span hoverValue={txtContractCreation}>
@@ -250,7 +252,9 @@ const addressStyle = (props: any) => `
   box-sizing: border-box;
   display: inline-flex !important;
   flex-wrap: nowrap;
-  max-width: ${props.maxwidth || defaultPCMaxWidth}px !important;
+  max-width: ${
+    props.maxwidth || (props.alias ? 190 : defaultPCMaxWidth)
+  }px !important;
   outline: none;
   
   > span {
@@ -261,7 +265,9 @@ const addressStyle = (props: any) => `
   }
 
   ${media.m} {
-    max-width: ${props.maxwidth || defaultMobileMaxWidth}px !important;
+    max-width: ${
+      props.maxwidth || (props.alias ? 160 : defaultMobileMaxWidth)
+    }px !important;
   }
 
   &:after {
