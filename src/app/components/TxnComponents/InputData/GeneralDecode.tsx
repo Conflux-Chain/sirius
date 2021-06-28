@@ -2,7 +2,13 @@ import React from 'react';
 import { Wrapper } from './Common';
 import _ from 'lodash';
 
-export const GeneralDecode = ({ data = '', decodedData }) => {
+export const GeneralDecode = ({
+  data = '',
+  decodedData = {},
+}: {
+  data: string;
+  decodedData: any;
+}) => {
   const { fullName } = decodedData;
   const originalDataSlice = _.words(data.slice(10), /.{64}/g);
 
