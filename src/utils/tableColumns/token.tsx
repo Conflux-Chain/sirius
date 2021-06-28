@@ -291,7 +291,7 @@ export const holders = {
   sortable: true,
   render: value => (
     <ContentWrapper right monospace>
-      {Number.isInteger(value)
+      {Number.isInteger(value) && Number(value) > 0
         ? formatNumber(value, {
             keepDecimal: false,
             withUnit: false,

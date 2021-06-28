@@ -19,6 +19,8 @@ import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
 import _ from 'lodash';
+import { ContractContent } from '../AddressContractDetail/ContractContent';
+import { useContract } from '../../../utils/api';
 
 interface TransferProps {
   tokenName: string;
@@ -56,6 +58,25 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   const location = useLocation();
   const history = useHistory();
   const [ageFormat, toggleAgeFormat] = useAge();
+
+  const { data: contractInfo } = useContract(tokenAddress, [
+    'name',
+    'icon',
+    'sponsor',
+    'admin',
+    'from',
+    'code',
+    'website',
+    'transactionHash',
+    'cfxTransferCount',
+    'erc20TransferCount',
+    'erc721TransferCount',
+    'erc1155TransferCount',
+    'stakingBalance',
+    'sourceCode',
+    'abi',
+    'isRegistered',
+  ]);
 
   let {
     page = 1,
@@ -326,6 +347,14 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   if (isRegistered) {
     tabs.push(analysisTab);
   }
+
+  // Contract tab
+  tabs.push({
+    value: 'contract-viewer',
+    action: 'contractViewer',
+    label: t(translations.token.contract),
+    content: <ContractContent contractInfo={contractInfo} />,
+  });
 
   return transferType ? <TabsTablePanel tabs={tabs} /> : null;
 }
