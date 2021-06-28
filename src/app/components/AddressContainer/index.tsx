@@ -9,13 +9,14 @@ import { Link } from '../Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress, isConfluxTestNet } from '../../../utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from '../../../images/contract-icon.png';
 import isMeIcon from '../../../images/me.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { zeroAddress } from '../../../utils/constants';
+import { monospaceFont } from '../../../styles/variable';
 
 interface Props {
   value: string; // address value
@@ -31,6 +32,11 @@ interface Props {
   showIcon?: boolean; // whether show contract icon, default true
 }
 
+const defaultPCMaxWidth = isConfluxTestNet ? 180 : 138;
+const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
+const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
+const defaultMobileSuffixAddressSize = 4;
+
 // TODO code simplify
 // TODO new address display format
 export const AddressContainer = ({
@@ -42,11 +48,12 @@ export const AddressContainer = ({
   isLink = true,
   isMe = false,
   zeroAddressAutoShowAlias = true,
-  suffixAddressSize = 8,
+  suffixAddressSize,
   prefixFloat = false,
   showIcon = true,
 }: Props) => {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
   const txtContractCreation = t(translations.transaction.contractCreation);
   const cfxAddress = formatAddress(value);
 
@@ -75,7 +82,14 @@ export const AddressContainer = ({
             maxwidth={full ? 430 : maxWidth}
             aftercontent={
               cfxAddress && !full && !alias
-                ? cfxAddress.substr(-suffixAddressSize)
+                ? cfxAddress.substr(
+                    -(
+                      suffixAddressSize ||
+                      (bp === 's' || bp === 'm'
+                        ? defaultMobileSuffixAddressSize
+                        : defaultPCSuffixAddressSize)
+                    ),
+                  )
                 : ''
             }
           >
@@ -87,7 +101,14 @@ export const AddressContainer = ({
             maxwidth={full ? 430 : maxWidth}
             aftercontent={
               cfxAddress && !full && !alias
-                ? cfxAddress.substr(-suffixAddressSize)
+                ? cfxAddress.substr(
+                    -(
+                      suffixAddressSize ||
+                      (bp === 's' || bp === 'm'
+                        ? defaultMobileSuffixAddressSize
+                        : defaultPCSuffixAddressSize)
+                    ),
+                  )
                 : ''
             }
           >
@@ -199,19 +220,20 @@ const IconWrapper = styled.span`
 
   svg {
     vertical-align: bottom;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 
   img {
     width: 16px;
     height: 16px;
     vertical-align: bottom;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 `;
 
 const AddressWrapper = styled.div`
   display: inline-block;
+  font-family: ${monospaceFont};
 
   // TODO icon position
   //position: relative;
@@ -228,7 +250,7 @@ const addressStyle = (props: any) => `
   box-sizing: border-box;
   display: inline-flex !important;
   flex-wrap: nowrap;
-  max-width: ${props.maxwidth || 190}px !important;
+  max-width: ${props.maxwidth || defaultPCMaxWidth}px !important;
   outline: none;
   
   > span {
@@ -239,7 +261,7 @@ const addressStyle = (props: any) => `
   }
 
   ${media.m} {
-    max-width: ${props.maxwidth || 160}px !important;
+    max-width: ${props.maxwidth || defaultMobileMaxWidth}px !important;
   }
 
   &:after {

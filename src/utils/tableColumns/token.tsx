@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
+import { monospaceFont } from '../../styles/variable';
 
 export const renderAddress = (
   value,
@@ -640,6 +641,7 @@ export const traceResult = {
 export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
+  font-family: ${monospaceFont};
   img {
     width: 1.1429rem;
     height: 1.1429rem;

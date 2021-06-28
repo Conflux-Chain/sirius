@@ -1,5 +1,5 @@
 export const sansSerifFont = `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  'Helvetica Neue', Helvetica, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
   'Segoe UI Symbol', 'Noto Color Emoji'`;
 
-export const monospaceFont = `Consolas, 'Liberation Mono', Menlo, Courier, monospace`;
+export const monospaceFont = `'Lucida Console', Consolas, 'Liberation Mono', Menlo, Courier, monospace`;
