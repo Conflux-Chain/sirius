@@ -284,6 +284,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
                 />
                 <Route
                   component={[Function]}
+                  exact={true}
+                  path="/_benchmark"
+                />
+                <Route
+                  component={[Function]}
                 />
               </Switch>
             </withRouter(_ScrollToTop)>

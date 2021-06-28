@@ -280,7 +280,7 @@ export const Basic = ({
       fieldTransfers,
     ];
   } else {
-    list = [fieldTransfers, fieldContractAddress];
+    list = [fieldTransfers, fieldContractAddress, fieldHolders];
   }
 
   return (

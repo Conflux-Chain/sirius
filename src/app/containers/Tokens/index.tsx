@@ -87,11 +87,12 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc1155 ||
     tokenType === cfxTokenTypes.crc1155
   ) {
-    columnsWidth = [1, 8, 5, 8];
+    columnsWidth = [1, 6, 2, 2, 6];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
+      tokenColunms.holders,
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
