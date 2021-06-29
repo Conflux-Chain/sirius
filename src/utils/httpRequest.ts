@@ -168,3 +168,10 @@ export const reqHomeDashboard = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqContractNameTag = (name: string, extra?: object) => {
+  return sendRequest({
+    url: `${statPrefix}/contract/registered/name?name=${name}`,
+    ...extra,
+  });
+};

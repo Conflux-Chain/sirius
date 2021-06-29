@@ -33,6 +33,7 @@
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "合约地址无效，或格式错误",
     "invalidNameTag": "字符长度已达到最大限制",
+    "duplicatedNameTag": "该名称标签已被注册了 {{times}} 次",
     "invalidUrl": "URL 格式错误",
     "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
     "invalidIconSize": "图片过大，请重试",

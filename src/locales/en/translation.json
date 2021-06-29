@@ -33,6 +33,7 @@
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
     "invalidNameTag": "The character length has reached the maximum limit",
+    "duplicatedNameTag": "The name tag has been registered {{times}} time",
     "invalidUrl": "Incorrect URL",
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
