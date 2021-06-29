@@ -98,7 +98,7 @@
     "submit": "提交",
     "contractAddress": "合约地址",
     "runs": "运行",
-    "contractNameTag": "合约名称标签",
+    "contractName": "合约名称",
     "compiler": "编译器",
     "optimization": "优化",
     "license": "许可协议",
@@ -107,7 +107,27 @@
       "required": "required, to be defined",
       "isNotAddress": "地址格式错误",
       "isNotMainnet": "请输入 Conflux Tethys 地址",
-      "isNotTestnet": "请输入 Conflux Testnet 地址"
+      "isNotTestnet": "请输入 Conflux Testnet 地址",
+      "pleaseSelect": "请选择",
+      "pleaseEnter": "请输入"
+    },
+    "OptimizationOption": {
+      "yes": "是",
+      "no": "否"
+    },
+    "placeholder": {
+      "contractAddress": "请输入合约地址",
+      "runs": "请输一个整数",
+      "contractName": "请输入合约名称",
+      "compiler": "请选择编译器",
+      "optimization": "请选择是否优化",
+      "license": "请选择许可协议",
+      "contractSourceCode": "请上传合约源码"
+    },
+    "status": {
+      "loading": "验证中",
+      "success": "验证成功",
+      "error": "验证失败"
     }
   },
   "contractDetail": {

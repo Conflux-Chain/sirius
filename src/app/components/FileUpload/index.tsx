@@ -1,7 +1,15 @@
 import React from 'react';
 
-export const JSONFileUpload = React.forwardRef(
-  ({ onChange, onError }: { onChange?; onError? }, ref: any) => {
+export const FileUpload = React.forwardRef(
+  (
+    {
+      onChange,
+      onError,
+      accept,
+      ...others
+    }: { onChange?; onError?; accept?: string },
+    ref: any,
+  ) => {
     const handleInputChange = e => {
       let reader = new FileReader();
       let file = e.target.files[0];
@@ -9,8 +17,7 @@ export const JSONFileUpload = React.forwardRef(
       if (file) {
         reader.onloadend = () => {
           try {
-            let data = JSON.parse(reader.result as string);
-            onChange(data);
+            onChange(reader.result as string);
           } catch (e) {
             onError(e);
           }
@@ -27,10 +34,16 @@ export const JSONFileUpload = React.forwardRef(
         type="file"
         name="File"
         style={{ display: 'none' }}
-        accept=".json"
+        accept={accept}
         ref={ref}
         onChange={handleInputChange}
+        {...others}
       />
     );
   },
 );
+FileUpload.defaultProps = {
+  accept: '',
+  onChange: () => {},
+  onError: () => {},
+};

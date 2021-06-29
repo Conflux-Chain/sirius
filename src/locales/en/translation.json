@@ -98,7 +98,7 @@
     "submit": "Submit",
     "contractAddress": "Contract Address",
     "runs": "Runs",
-    "contractNameTag": "Contract Name Tag",
+    "contractName": "Contract Name",
     "compiler": "Compiler",
     "optimization": "Optimization",
     "license": "License",
@@ -107,7 +107,27 @@
       "required": "required, to be defined",
       "isNotAddress": "Invalid address format",
       "isNotMainnet": "Please enter Conflux Tethys address",
-      "isNotTestnet": "Please enter Conflux Testnet address"
+      "isNotTestnet": "Please enter Conflux Testnet address",
+      "pleaseSelect": "Please Select",
+      "pleaseEnter": "Please Enter"
+    },
+    "OptimizationOption": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "placeholder": {
+      "contractAddress": "Pleaser enter a contract address",
+      "runs": "Please enter an integer",
+      "contractName": "Please enter the contract name",
+      "compiler": "Please select a compiler",
+      "optimization": "Please select a optimization",
+      "license": "Please select a license",
+      "contractSourceCode": "Please upload contract source code"
+    },
+    "status": {
+      "loading": "Verifying...",
+      "success": "Verification Succeed",
+      "error": "Verification Failed"
     }
   },
   "contractDetail": {

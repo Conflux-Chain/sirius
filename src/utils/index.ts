@@ -12,11 +12,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
-import { cfxAddress, formatAddress, isConfluxTestNet } from './cfx';
-import {
-  address as sdkAddress,
-  format as sdkFormat,
-} from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { cfxAddress, formatAddress } from './cfx';
 
 dayjs.extend(relativeTime);
 
@@ -665,102 +661,3 @@ export const addDays = (date, days) => {
  */
 export const isSafeNumberOrNumericStringInput = data =>
   /^\d+\.?\d*$|^\.\d*$/.test(data);
-
-export type ValidateContractAddressReturnProps =
-  | {
-      status: 'valid' | 'invalid';
-      type: '1' | '2' | '3' | '4' | '5' | '6' | '7';
-      message?: string;
-    }
-  | boolean;
-
-/**
- * @dev validate contract address, not only format, but also validate network
- * @example
- * type:
- * 1 - valid, hex address
- * 2 - valid, base32 address
- * 3 - invalid, hex address
- * 4 - invalid, base32 address
- * 5 - invalid, should be mainnet address
- * 6 - invalid, should be testnet address
- * 7 - invalid, others
- */
-export const validateAddress = (
-  addr: string,
-  advanced?: boolean,
-): ValidateContractAddressReturnProps => {
-  let address = addr.trim();
-  let result: ValidateContractAddressReturnProps = false;
-
-  try {
-    if (address.startsWith('0x')) {
-      if (sdkFormat.hexAddress(address) && sdkFormat.address(address, 1)) {
-        result = {
-          status: 'valid',
-          type: '1',
-        };
-      } else {
-        result = {
-          status: 'invalid',
-          type: '3',
-          message: 'invalid hex address',
-        };
-      }
-    } else if (isConfluxTestNet) {
-      address = address.toLowerCase();
-      if (!address.startsWith('cfxtest:')) {
-        result = {
-          status: 'invalid',
-          type: '6',
-          message: 'invalid network, should be testnet format',
-        };
-      } else if (sdkAddress.isValidCfxAddress(address)) {
-        result = {
-          status: 'valid',
-          type: '2',
-        };
-      } else {
-        result = {
-          status: 'invalid',
-          type: '4',
-          message: 'invalid base32 address',
-        };
-      }
-    } else if (!isConfluxTestNet) {
-      address = address.toLowerCase();
-      if (!address.startsWith('cfx:')) {
-        result = {
-          status: 'invalid',
-          type: '5',
-          message: 'invalid network, should be mainnet format',
-        };
-      } else if (sdkAddress.isValidCfxAddress(address)) {
-        result = {
-          status: 'valid',
-          type: '2',
-        };
-      } else {
-        result = {
-          status: 'invalid',
-          type: '4',
-          message: 'invalid base32 address',
-        };
-      }
-    } else {
-      throw new Error('other reason');
-    }
-  } catch (e) {
-    result = {
-      status: 'invalid',
-      type: '7',
-      message: 'other reason',
-    };
-  }
-
-  if (advanced) {
-    return result;
-  } else {
-    return result.status === 'valid';
-  }
-};
