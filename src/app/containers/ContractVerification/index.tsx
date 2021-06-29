@@ -42,6 +42,7 @@ export const ContractVerification = () => {
   const [sourceCode, setSourceCode] = useState('');
   const [modalStatus, setModalStatus] = useState('loading');
   const [modalShow, setModalShow] = useState(false);
+  const [respErrors, setRespErrors] = useState<Array<string>>([]);
 
   useEffect(() => {
     reqContractCompiler().then(resp => {
@@ -64,32 +65,43 @@ export const ContractVerification = () => {
   }, []);
 
   const onFinish = (data: any) => {
-    const payload = {
+    const payload: {
+      address: string;
+      name: string;
+      sourceCode: string;
+      compiler: string;
+      license: string;
+      optimizeRuns?: number;
+    } = {
       address: data.contractAddress,
       name: data.contractName,
       sourceCode: data.contractSourceCode,
       compiler: data.compiler,
-      optimizeRuns: Number(data.runs),
       license: data.license,
     };
 
-    console.log('payload: ', payload);
+    if (data.optimization === 'yes') {
+      payload.optimizeRuns = Number(data.runs);
+    }
 
     setModalStatus('loading');
     setModalShow(true);
     setLoading(true);
+    setRespErrors([]);
 
     reqContractVerification(payload)
       .then(resp => {
-        console.log('post success: ', resp);
-        setModalStatus('success');
+        if (resp.exactMatch) {
+          setModalStatus('success');
+        } else {
+          setModalStatus('error');
+          setRespErrors(resp.errors);
+        }
       })
       .catch(e => {
-        console.log('post error: ', e);
         setModalStatus('error');
       })
       .finally(() => {
-        setModalShow(false);
         setLoading(false);
       });
   };
@@ -373,6 +385,15 @@ export const ContractVerification = () => {
               marginBottom: 0,
             }}
           >
+            {respErrors.length ? (
+              <div className="errors-container">
+                {respErrors.map((e, index) => (
+                  <div className="error-item" key={index}>
+                    {e}
+                  </div>
+                ))}
+              </div>
+            ) : null}
             <Button
               type="primary"
               htmlType="submit"
@@ -419,5 +440,16 @@ const StyledContractVerificationWrapper = styled.div`
     position: absolute;
     right: 0;
     top: -2rem;
+  }
+
+  .errors-container {
+    color: #e64e4e;
+    margin-bottom: 0.7143rem;
+    margin-top: -0.7143rem;
+
+    .error-item {
+      font-size: 12px;
+      line-height: 1.2;
+    }
   }
 `;
