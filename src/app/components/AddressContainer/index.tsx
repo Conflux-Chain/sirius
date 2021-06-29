@@ -81,6 +81,7 @@ export const AddressContainer = ({
             style={style}
             href={`/address/${hrefAddress}`}
             maxwidth={full ? 430 : maxwidth}
+            alias={alias}
             aftercontent={
               cfxAddress && !full && !alias
                 ? cfxAddress.substr(
@@ -100,6 +101,7 @@ export const AddressContainer = ({
           <PlainWrapper
             style={style}
             maxwidth={full ? 430 : maxWidth}
+            alias={alias}
             aftercontent={
               cfxAddress && !full && !alias
                 ? cfxAddress.substr(
@@ -282,6 +284,7 @@ const addressStyle = (props: any) => `
 const LinkWrapper = styled(Link)<{
   maxwidth?: number;
   aftercontent?: string;
+  alias?: string;
 }>`
   ${props => addressStyle(props)}
 `;
@@ -289,6 +292,7 @@ const LinkWrapper = styled(Link)<{
 const PlainWrapper = styled.span<{
   maxwidth?: number;
   aftercontent?: string;
+  alias?: string;
 }>`
   ${props => addressStyle(props)}
 
