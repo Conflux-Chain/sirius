@@ -137,10 +137,10 @@
     }
   },
   "cfxTransfers": {
-    "title": "CFX Transfers",
-    "description": "Show only CFX transfers on the Conflux network.",
+    "title": "CFX Txns",
+    "description": "Show only CFX txns on the Conflux network.",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "CFX transfers"
+    "tipCountAfter": "records"
   },
   "tokens": {
     "title": "Tokens",
@@ -197,7 +197,7 @@
     "bnt": "Blocks & Transactions",
     "block": "Blocks",
     "txn": "Transactions",
-    "cfxTransfers": "CFX Transfers",
+    "cfxTransfers": "CFX Txns",
     "blockchain": "Blockchain",
     "accounts": "Accounts",
     "tokens": "Tokens",
@@ -482,7 +482,7 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
-    "cfxTransfer": "CFX Transfers",
+    "cfxTransfer": "CFX Txns",
     "tokenTxnsErc20": "CRC20 Txns",
     "tokenTxnsErc721": "CRC721 Txns",
     "tokenTxnsErc1155": "CRC1155 Txns",
@@ -758,7 +758,7 @@
       "to": "to",
       "produced": "produced",
       "txns": "internal transactions.",
-      "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
+      "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {
       "title": "logs",
