@@ -431,6 +431,9 @@
     }
   },
   "general": {
+    "tokenTypeTag": {
+      "token": "Token"
+    },
     "searchInputPlaceholder": {
       "txnHash": "Txn Hash",
       "address": "Address",

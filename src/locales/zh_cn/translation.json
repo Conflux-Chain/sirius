@@ -431,6 +431,9 @@
     }
   },
   "general": {
+    "tokenTypeTag": {
+      "token": "代币"
+    },
     "searchInputPlaceholder": {
       "txnHash": "交易哈希",
       "address": "地址",
