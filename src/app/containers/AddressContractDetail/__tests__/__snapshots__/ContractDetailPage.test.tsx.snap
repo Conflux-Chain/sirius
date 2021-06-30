@@ -187,6 +187,7 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 .c3 {
+  position: relative;
   line-height: 1.29rem;
   color: #74798c;
   display: -webkit-box;
@@ -264,6 +265,9 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
 }
 
 .c7 {
+  position: absolute;
+  right: 0;
+  top: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -432,6 +436,12 @@ exports[`<ContractDetailPage /> should match the snapshot 1`] = `
     width: 100%;
     margin-left: 0;
     margin-bottom: 10px !important;
+  }
+}
+
+@media (max-width:600px) {
+  .c7 {
+    position: relative;
   }
 }
 

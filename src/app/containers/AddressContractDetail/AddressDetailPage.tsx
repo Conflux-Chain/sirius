@@ -32,6 +32,7 @@ import { Dropdown, Menu } from '@jnoodle/antd';
 import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
+import { media } from '../../../styles/media';
 
 interface RouteParams {
   address: string;
@@ -79,7 +80,7 @@ export const AddressDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+              <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img
@@ -110,9 +111,15 @@ export const AddressDetailPage = memo(() => {
 });
 
 export const DropdownWrapper = styled(Dropdown)`
+  position: absolute;
+  right: 0;
+  top: 0;
   display: flex;
   align-items: center;
   cursor: pointer;
+  ${media.s} {
+    position: relative;
+  }
   img {
     width: 11px;
     margin-left: 5px;

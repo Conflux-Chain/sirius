@@ -130,7 +130,7 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
-            <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+            <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
                 <img

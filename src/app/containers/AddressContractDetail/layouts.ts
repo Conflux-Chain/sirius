@@ -34,6 +34,7 @@ export const Title = styled.div`
   }
 `;
 export const HeadAddressLine = styled.span`
+  position: relative;
   line-height: 1.29rem;
   color: #74798c;
   display: flex;
