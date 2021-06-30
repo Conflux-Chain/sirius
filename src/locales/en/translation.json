@@ -379,7 +379,7 @@
       "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
-      "title": "Daily Transactions",
+      "title": "Daily Txn Count",
       "description": "The total number of transactions per day on the Conflux network."
     },
     "dailyTransactionCFX": {

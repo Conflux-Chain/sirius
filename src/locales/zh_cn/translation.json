@@ -379,8 +379,8 @@
       "description": "零地址中的 CFX 为已销毁的 CFX"
     },
     "dailyTransaction": {
-      "title": "日交易量",
-      "description": "Conflux 网络每日的交易总量"
+      "title": "日交易次数",
+      "description": "Conflux 网络每日的交易总次数"
     },
     "dailyTransactionCFX": {
       "title": "日交易 -- CFX",
