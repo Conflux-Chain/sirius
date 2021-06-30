@@ -19,7 +19,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import BigNumber from 'bignumber.js';
-// import WebFontLoader from 'webfontloader';
+import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
@@ -75,6 +75,13 @@ import ScanBenchmark from './containers/_Benchmark';
 //     urls: ['/font.css'],
 //   },
 // });
+
+WebFontLoader.load({
+  custom: {
+    families: ['Roboto Mono:n1,n2,n3,n4,n5,n6,n7'],
+    urls: ['/fontmono.css'],
+  },
+});
 
 BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
 // @ts-ignore
