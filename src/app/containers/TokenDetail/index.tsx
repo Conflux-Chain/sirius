@@ -203,8 +203,8 @@ const HeaderWrap = styled.div`
   }
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
   }
   a {
     color: #00acff !important;
@@ -213,7 +213,7 @@ const HeaderWrap = styled.div`
     font-size: 1.7143rem;
     font-weight: 500;
     color: #1a1a1a;
-    margin: 0 0.5714rem;
+    margin: 0 0.6rem;
   }
   .basic-symbol {
     color: #74798c;

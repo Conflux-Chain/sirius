@@ -193,16 +193,19 @@ export function Tokens() {
         </Tooltip>
       </PageHeader>
 
-      <TablePanel
-        table={{
-          columns: columns,
-          rowKey: 'address',
-          sorter,
-          sortOrder: tableSortOrder,
-          sortKey: tableSortKey,
-        }}
-        url={queryUrl}
-      />
+      <TableWrapper>
+        <TablePanel
+          table={{
+            className: 'token-list',
+            columns: columns,
+            rowKey: 'address',
+            sorter,
+            sortOrder: tableSortOrder,
+            sortKey: tableSortKey,
+          }}
+          url={queryUrl}
+        />
+      </TableWrapper>
     </>
   );
 }
@@ -211,4 +214,16 @@ const IconWrapper = styled.div`
   padding-left: 0.2857rem;
   width: 1.2857rem;
   cursor: pointer;
+`;
+
+const TableWrapper = styled.div`
+  .token-list {
+    table {
+      tbody td:nth-child(2) img {
+        width: 20px;
+        height: 20px;
+        margin-right: 7px;
+      }
+    }
+  }
 `;
