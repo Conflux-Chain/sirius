@@ -25,6 +25,18 @@
     "edit": {
       "title": "Contract Edit"
     },
+    "verify": {
+      "contractCodeVerified": "Contract Source Code Verified",
+      "contractName": "Contract Name: ",
+      "optimizationEnabled": "Optimization Enabled: ",
+      "otherSettings": "Other Settings: ",
+      "compilerVersion": "Compiler Version: ",
+      "runs": "{{status}} with {{count}} runs",
+      "tipLeft": "You can ",
+      "tipCenter": "verify your contract",
+      "tipRight": " now!"
+    },
+    "code": "Code",
     "sourceCodeShort": "Source Code",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
@@ -104,7 +116,8 @@
     "license": "License",
     "contractSourceCode": "Contract Source Code",
     "error": {
-      "required": "required, to be defined",
+      "required": "Required",
+      "min": "The minimum value is 0",
       "isNotAddress": "Invalid address format",
       "isNotMainnet": "Please enter Conflux Tethys address",
       "isNotTestnet": "Please enter Conflux Testnet address",

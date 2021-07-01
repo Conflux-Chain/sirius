@@ -25,6 +25,18 @@
     "edit": {
       "title": "合约编辑"
     },
+    "verify": {
+      "contractCodeVerified": "Contract Source Code Verified",
+      "contractName": "合约名：",
+      "optimizationEnabled": "是否优化：",
+      "otherSettings": "其他设置：",
+      "compilerVersion": "编译版本：",
+      "runs": "{{status}} with {{count}} runs",
+      "tipLeft": "立刻前往",
+      "tipCenter": "验证您的合约",
+      "tipRight": "！"
+    },
+    "code": "合约",
     "sourceCodeShort": "源码",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
@@ -104,7 +116,8 @@
     "license": "许可协议",
     "contractSourceCode": "合约源码",
     "error": {
-      "required": "required, to be defined",
+      "required": "请输入",
+      "min": "最小值为 0",
       "isNotAddress": "地址格式错误",
       "isNotMainnet": "请输入 Conflux Tethys 地址",
       "isNotTestnet": "请输入 Conflux Testnet 地址",

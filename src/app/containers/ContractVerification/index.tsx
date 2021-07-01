@@ -17,21 +17,26 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-chrome';
+import 'ace-builds/src-noconflict/theme-tomorrow';
 import { FileUpload } from 'app/components/FileUpload';
 import { useMessages } from '@cfxjs/react-ui';
 import { cfxAddress } from 'utils/cfx';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import FullScreen from '@zeit-ui/react-icons/fullScreen';
+import FullScreenClose from '@zeit-ui/react-icons/fullScreenClose';
+import { useLocation } from 'react-router-dom';
+import querystring from 'query-string';
 
 const { Option } = Select;
 const AceEditorStyle = {
   width: '100%',
-  height: '200px',
   backgroundColor: '#F8F9FB',
+  minHeight: '28.5714rem',
 };
 
 export const ContractVerification = () => {
   const { t } = useTranslation();
+  const { search } = useLocation();
   const [, setMessage] = useMessages();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -43,6 +48,7 @@ export const ContractVerification = () => {
   const [modalStatus, setModalStatus] = useState('loading');
   const [modalShow, setModalShow] = useState(false);
   const [respErrors, setRespErrors] = useState<Array<string>>([]);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useEffect(() => {
     reqContractCompiler().then(resp => {
@@ -189,6 +195,7 @@ export const ContractVerification = () => {
               <Form.Item
                 name="contractAddress"
                 label={t(translations.contractVerification.contractAddress)}
+                initialValue={querystring.parse(search).address}
                 rules={[
                   {
                     required: true,
@@ -335,9 +342,22 @@ export const ContractVerification = () => {
               <Form.Item
                 name="runs"
                 label={t(translations.contractVerification.runs)}
-                required
                 validateFirst
                 initialValue={'0'}
+                rules={[
+                  {
+                    required: true,
+                    message: t(
+                      translations.contractVerification.error.required,
+                    ),
+                  },
+                  {
+                    min: 0,
+                    type: 'number',
+                    transform: value => Number(value),
+                    message: t(translations.contractVerification.error.min),
+                  },
+                ]}
               >
                 <Input
                   type="number"
@@ -361,19 +381,35 @@ export const ContractVerification = () => {
             validateFirst
           >
             <Input style={{ display: 'none' }}></Input>
-            <div className="link" onClick={handleImport}>
-              {t(translations.contractVerification.upload)}
+            <div className="link-and-fullscreen">
+              <div className="link" onClick={handleImport}>
+                {t(translations.contractVerification.upload)}
+              </div>
+              <span
+                className="fullscreen"
+                onClick={() => {
+                  setFullscreen(!fullscreen);
+                }}
+              >
+                {fullscreen ? (
+                  <FullScreenClose size={16}></FullScreenClose>
+                ) : (
+                  <FullScreen size={16}></FullScreen>
+                )}
+              </span>
             </div>
             <AceEditor
               style={AceEditorStyle}
               mode="solidity"
-              theme="chrome"
+              theme="tomorrow"
               name="UNIQUE_ID_OF_DIV"
               setOptions={{
                 wrap: true,
                 indentedSoftWrap: false,
                 showLineNumbers: true,
               }}
+              maxLines={fullscreen ? Infinity : 20}
+              fontSize="1rem"
               showGutter={false}
               showPrintMargin={false}
               value={sourceCode}
@@ -421,25 +457,38 @@ export const ContractVerification = () => {
 
 const StyledRemarkWrapper = styled.div`
   margin-bottom: 1.7143rem;
-  margin-top: 24px;
+  margin-top: 1.7143rem;
 `;
 
 const StyledContractVerificationWrapper = styled.div`
   .card.contract-verification-form-container {
-    padding: 12px 20px 18px 20px;
+    padding: 0.8571rem 1.4286rem 1.2857rem 1.4286rem;
   }
 
-  .link {
-    color: #1e3de4;
-    font-weight: 500;
-    line-height: 1.2857rem;
-    text-align: right;
-    padding-bottom: 0.8571rem;
-    text-decoration: underline;
-    cursor: pointer;
+  .link-and-fullscreen {
     position: absolute;
     right: 0;
     top: -2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .link {
+      color: #1e3de4;
+      font-weight: 500;
+      line-height: 1.2857rem;
+      text-align: right;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .fullscreen {
+      margin-left: 0.3571rem;
+      width: 1.1429rem;
+      height: 1.1429rem;
+      display: flex;
+      cursor: pointer;
+    }
   }
 
   .errors-container {

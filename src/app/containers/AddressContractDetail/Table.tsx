@@ -36,6 +36,7 @@ import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 // import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { ContractContent } from './ContractContent';
 import { formatAddress } from '../../../utils/cfx';
+import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 
 // import iconInfo from 'images/info.svg';
 
@@ -569,7 +570,16 @@ export function Table({ address, addressInfo }) {
       ? {
           value: 'contract-viewer',
           action: 'contractViewer',
-          label: t(translations.token.contract),
+          label: (
+            <div>
+              {t(translations.token.contract)}{' '}
+              {!addressInfo.isVerified ? (
+                <span>
+                  <CheckCircle size={16} color="#7cd77b" />
+                </span>
+              ) : null}
+            </div>
+          ),
           content: <ContractContent contractInfo={addressInfo} />,
         }
       : {
