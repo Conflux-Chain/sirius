@@ -424,6 +424,7 @@ export const balance = (decimal, price, transferType) => ({
   ),
   dataIndex: 'balance',
   key: 'balance',
+  sortable: true,
   render: value => {
     const decimals = decimal || 0;
     // Decimal places are determined according to the price

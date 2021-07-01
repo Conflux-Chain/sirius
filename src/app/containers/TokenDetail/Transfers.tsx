@@ -283,6 +283,9 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
             ? holdersColumns
             : holders1155Columns,
         rowKey: row => `${tokenAddress}${row.account.address}`,
+        sorter: () => {},
+        sortOrder: 'desc',
+        sortKey: 'balance',
       },
       tableHeader: ({ total }) => (
         <StyledTotalWrapper>

@@ -16,6 +16,7 @@ import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@jnoodle/antd';
+import descIcon from 'images/table-desc.svg';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
@@ -181,6 +182,14 @@ export function TokenDetail() {
 
 const TokenDetailWrap = styled.div`
   padding: 2.2857rem 0;
+
+  table .sortable.balance.desc {
+    cursor: not-allowed !important;
+    background-image: url(${descIcon}) !important;
+    &:hover {
+      color: inherit !important;
+    }
+  }
 `;
 
 const SkeletonWrap = styled.div`
