@@ -17,8 +17,6 @@ import { cfxAddress } from 'utils/cfx';
 import { Link } from 'app/components/Link/Loadable';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
-import FullScreen from '@zeit-ui/react-icons/fullScreen';
-import FullScreenClose from '@zeit-ui/react-icons/fullScreenClose';
 
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
@@ -30,8 +28,6 @@ const AceEditorStyle = {
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
   const { sourceCode, abi, address } = contractInfo;
-  const [sourceCodeFullscreen, setSourceCodeFullscreen] = useState(false);
-  const [ABIFullscreen, setABIFullscreen] = useState(false);
   const isVerified = false;
 
   return (
@@ -91,18 +87,6 @@ const Code = ({ contractInfo }) => {
         <div className="contract-sourcecode">
           <div className="contract-sourcecode-and-abi-title">
             {t(translations.contract.sourceCodeShort)}
-            <span
-              className="contract-sourcecode-fullscreen"
-              onClick={() => {
-                setSourceCodeFullscreen(!sourceCodeFullscreen);
-              }}
-            >
-              {sourceCodeFullscreen ? (
-                <FullScreenClose size={16}></FullScreenClose>
-              ) : (
-                <FullScreen size={16}></FullScreen>
-              )}
-            </span>
           </div>
           {sourceCode ? (
             <AceEditor
@@ -116,7 +100,7 @@ const Code = ({ contractInfo }) => {
               }}
               value={sourceCode}
               wrapEnabled={true}
-              maxLines={sourceCodeFullscreen ? Infinity : 20}
+              height="28rem"
               fontSize="1rem"
               showGutter={false}
               showPrintMargin={false}
@@ -126,18 +110,6 @@ const Code = ({ contractInfo }) => {
         <div className="contract-abi">
           <div className="contract-sourcecode-and-abi-title">
             {t(translations.contract.abi)}
-            <span
-              className="contract-sourcecode-fullscreen"
-              onClick={() => {
-                setABIFullscreen(!ABIFullscreen);
-              }}
-            >
-              {ABIFullscreen ? (
-                <FullScreenClose size={16}></FullScreenClose>
-              ) : (
-                <FullScreen size={16}></FullScreen>
-              )}
-            </span>
           </div>
           {abi ? (
             <AceEditor
@@ -150,8 +122,8 @@ const Code = ({ contractInfo }) => {
               setOptions={{
                 showLineNumbers: true,
               }}
+              height="28rem"
               wrapEnabled={true}
-              maxLines={ABIFullscreen ? Infinity : 20}
               fontSize="1rem"
               showGutter={false}
               showPrintMargin={false}
