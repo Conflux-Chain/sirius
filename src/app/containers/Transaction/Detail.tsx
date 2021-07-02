@@ -40,6 +40,7 @@ import {
   InputDataNew,
   Status,
   StorageFee,
+  TokenTypeTag,
 } from 'app/components/TxnComponents';
 import _ from 'lodash';
 
@@ -433,7 +434,7 @@ export const Detail = () => {
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">CRC721</span>
               <span>{imgIcon}</span>
-              <span>{nameContainer}</span>
+              <span>{nameContainer}</span> <TokenTypeTag type="crc721" />
               <span className="type">
                 {transferItem['tokenId'].length > 10 ? (
                   <>
@@ -474,7 +475,7 @@ export const Detail = () => {
               </InlineWrapper>
               <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
-              <span>{nameContainer}</span>
+              <span>{nameContainer}</span> <TokenTypeTag type="crc1155" />
               {transferItem['batch'].map((item, index) => (
                 <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
                   <br />
@@ -533,7 +534,7 @@ export const Detail = () => {
                   : transferItem['value']}
               </span>
               <span>{imgIcon}</span>
-              <span>{nameContainer}</span>
+              <span>{nameContainer}</span> <TokenTypeTag type="crc20" />
             </div>,
           );
           break;

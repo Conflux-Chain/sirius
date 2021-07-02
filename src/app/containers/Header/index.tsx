@@ -151,6 +151,16 @@ export const Header = memo(() => {
               href: '/contract',
             },
             {
+              // contract verification
+              title: [
+                t(translations.header.contractVerification),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.contractVerification,
+              afterClick: menuClick,
+              href: '/contract-verification',
+            },
+            {
               // sponsor
               title: [
                 t(translations.header.contractSponsor),

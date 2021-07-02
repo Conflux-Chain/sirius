@@ -15,6 +15,7 @@ export const ScanEvent = {
       contractReg: 'contract_reg',
       sponsor: 'sponsor',
       contractDeployment: 'contract_deployment',
+      contractVerification: 'contract_verification',
       contractsList: 'contracts_list',
       charts: 'charts',
       statistics: 'statistics',
@@ -165,6 +166,7 @@ export const ScanEvent = {
       addressConvert: 'address_convert', // event label === address
       broadcastTx: 'broadcast_tx', // event label === success/failure
       blockCountdownCalc: 'block_countdown_calc', // event label === target blocknumber
+      nftChecker: 'nft_checker', // event label === address
     },
   },
 };

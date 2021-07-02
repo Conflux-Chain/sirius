@@ -18,6 +18,7 @@ import { AddressContainer } from '../../components/AddressContainer';
 import { TxnAction } from '../../../utils/constants';
 import { Remark } from '../../components/Remark';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { reqTokenList } from '../../../utils/httpRequest';
 
 interface RouteParams {
   contractAddress: string;
@@ -34,10 +35,14 @@ export function Sponsor() {
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
+  const [storageSponsorAddressAlias, setStorageSponsorAddressAlias] = useState(
+    '',
+  );
   const [currentStorageFee, setCurrentStorageFee] = useState(defaultStr);
   const [providedStorageFee, setProvidedStorageFee] = useState(defaultStr);
   const [avialStorageFee, setAvialStorageFee] = useState(defaultStr);
   const [gasFeeAddress, setGasFeeAddress] = useState('');
+  const [gasFeeAddressAlias, setGasFeeAddressAlias] = useState('');
   const [currentGasFee, setCurrentGasFee] = useState(defaultStr);
   const [providedGasFee, setProvidedGasFee] = useState(defaultStr);
   const [avialGasFee, setAvialGasFee] = useState(defaultStr);
@@ -66,8 +71,27 @@ export function Sponsor() {
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
-      setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
-      setGasFeeAddress(sponsorInfo.sponsorForGas);
+      // get address name
+      reqTokenList({
+        addressArray: [
+          sponsorInfo.sponsorForCollateral,
+          sponsorInfo.sponsorForGas,
+        ],
+        fields: ['icon'],
+      })
+        .then(res => {
+          if (res && res.list && res.list.length === 2) {
+            setStorageSponsorAddressAlias(res.list[0].contractName || '');
+            setGasFeeAddressAlias(res.list[1].contractName || '');
+          }
+        })
+        .catch(e => {
+          console.error(e);
+        })
+        .finally(() => {
+          setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
+          setGasFeeAddress(sponsorInfo.sponsorForGas);
+        });
       setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
       setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
       setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
@@ -235,7 +259,10 @@ export function Sponsor() {
               <SkelontonContainer shown={loading}>
                 {storageSponsorAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
-                    <AddressContainer value={storageSponsorAddress} />
+                    <AddressContainer
+                      value={storageSponsorAddress}
+                      alias={storageSponsorAddressAlias}
+                    />
                   ) : (
                     '--'
                   )
@@ -307,7 +334,10 @@ export function Sponsor() {
               <SkelontonContainer shown={loading}>
                 {gasFeeAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
-                    <AddressContainer value={gasFeeAddress} />
+                    <AddressContainer
+                      value={gasFeeAddress}
+                      alias={gasFeeAddressAlias}
+                    />
                   ) : (
                     '--'
                   )

@@ -187,6 +187,7 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 }
 
 .c3 {
+  position: relative;
   line-height: 1.29rem;
   color: #74798c;
   display: -webkit-box;
@@ -268,6 +269,9 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 }
 
 .c6 {
+  position: absolute;
+  right: 0;
+  top: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -432,6 +436,12 @@ exports[`<AddressDetailPage /> should match the snapshot 1`] = `
 @media (max-width:600px) {
   .c20 {
     margin-bottom: 2rem;
+  }
+}
+
+@media (max-width:600px) {
+  .c6 {
+    position: relative;
   }
 }
 

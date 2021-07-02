@@ -42,6 +42,8 @@ export const NFTContracts = {
   confiOfSchrodinger: 'cfx:ach6uf6tw78g1jn9k06m7t0dy80z9tc9yjc8yw32w3',
   // Three Kingdoms
   threeKingdoms: 'cfx:acepdehsmt07kcd2hspae9dashzgddrva240azrmm5',
+  // EpiK Protocol Knowledge Badge
+  epiKProtocolKnowledgeBadge: 'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk',
   // TODO add nft
 };
 
@@ -129,6 +131,10 @@ export const NFTContractNames = {
   threeKingdoms: {
     zh: '拓扑三国',
     en: 'Three Kingdoms',
+  },
+  epiKProtocolKnowledgeBadge: {
+    zh: 'EpiK 知识徽章',
+    en: 'EpiK Knowledge Badges',
   },
   // TODO add nft
 };

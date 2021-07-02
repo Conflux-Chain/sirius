@@ -19,7 +19,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import BigNumber from 'bignumber.js';
-// import WebFontLoader from 'webfontloader';
+import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +36,7 @@ import { Footer } from './containers/Footer/Loadable';
 import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { ContractDeployment } from './containers/ContractDeployment/Loadable';
+import { ContractVerification } from './containers/ContractVerification/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { CFXTransfers } from './containers/CFXTransfers/Loadable';
@@ -67,6 +68,7 @@ import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
+import ScanBenchmark from './containers/_Benchmark';
 
 // WebFontLoader.load({
 //   custom: {
@@ -74,6 +76,13 @@ import { NFTChecker } from './containers/NFTChecker/Loadable';
 //     urls: ['/font.css'],
 //   },
 // });
+
+WebFontLoader.load({
+  custom: {
+    families: ['Roboto Mono:n1,n2,n3,n4,n5,n6,n7'],
+    urls: ['/fontmono.css'],
+  },
+});
 
 BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
 // @ts-ignore
@@ -286,6 +295,11 @@ export function App() {
                     />
                     <Route
                       exact
+                      path="/contract-verification"
+                      component={ContractVerification}
+                    />
+                    <Route
+                      exact
                       path="/sponsor/:contractAddress"
                       render={(routeProps: any) => {
                         if (
@@ -390,6 +404,7 @@ export function App() {
                       path={['/nft-checker', '/nft-checker/:address']}
                       component={NFTChecker}
                     />
+                    <Route exact path="/_benchmark" component={ScanBenchmark} />
                     <Route component={NotFoundPage} />
                   </Switch>
                 </ScrollToTop>

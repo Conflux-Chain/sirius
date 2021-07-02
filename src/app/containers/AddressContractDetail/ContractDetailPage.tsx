@@ -164,7 +164,7 @@ export const ContractDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+              <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img

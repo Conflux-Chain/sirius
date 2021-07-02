@@ -4,7 +4,7 @@
  *
  */
 import React, { useEffect, useState } from 'react';
-import { Image, Popover, Spin, Skeleton } from '@jnoodle/antd';
+import { Image, Popover, Skeleton, Spin } from '@jnoodle/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
 import { Text } from '../Text/Loadable';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import { getNFTInfo } from './utils';
+import { NFTContracts } from './NFTInfo';
 
 export const NFTPreview = ({
   contractAddress,
@@ -58,14 +59,23 @@ export const NFTPreview = ({
           overlayClassName="image-preview-popover"
           content={
             <>
-              <Image
-                width={200}
-                style={{ minHeight: imageMinHeight }}
-                src={imageUri}
-                preview={true}
-                fallback={tokenIdNotFound}
-                alt={tokenId + ''}
-              />
+              {contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
+                <iframe
+                  title={imageName}
+                  width={200}
+                  style={{ minHeight: imageMinHeight }}
+                  src={imageUri}
+                />
+              ) : (
+                <Image
+                  width={200}
+                  style={{ minHeight: imageMinHeight }}
+                  src={imageUri}
+                  preview={true}
+                  fallback={tokenIdNotFound}
+                  alt={tokenId + ''}
+                />
+              )}
               {imageName ? (
                 <div className="image-preview-name">{imageName}</div>
               ) : null}
@@ -88,12 +98,18 @@ export const NFTPreview = ({
       <NFTCard>
         <Spin spinning={loading || !imageUri}>
           {imageUri ? (
-            <Image
-              width={500}
-              src={imageUri}
-              preview={true}
-              alt={tokenId + ''}
-            />
+            contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
+              <div className="ant-image">
+                <iframe title={imageName} src={imageUri} />
+              </div>
+            ) : (
+              <Image
+                width={500}
+                src={imageUri}
+                preview={true}
+                alt={tokenId + ''}
+              />
+            )
           ) : (
             <Skeleton.Image />
           )}
@@ -126,7 +142,8 @@ const NFTCard = styled.div`
     max-width: 100%;
     padding-top: 100%;
 
-    img {
+    img,
+    iframe {
       position: absolute;
       width: 100%;
       height: 100%;
@@ -136,6 +153,12 @@ const NFTCard = styled.div`
       bottom: 0;
       object-fit: contain;
       border-radius: 5px 5px 0 0;
+    }
+
+    iframe {
+      .album .btn {
+        cursor: pointer;
+      }
     }
   }
 

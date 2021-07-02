@@ -19,6 +19,8 @@ import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import { useMessages } from '@cfxjs/react-ui';
 import _ from 'lodash';
+import { ContractContent } from '../AddressContractDetail/ContractContent';
+import { useContract } from '../../../utils/api';
 
 interface TransferProps {
   tokenName: string;
@@ -56,6 +58,25 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   const location = useLocation();
   const history = useHistory();
   const [ageFormat, toggleAgeFormat] = useAge();
+
+  const { data: contractInfo } = useContract(tokenAddress, [
+    'name',
+    'icon',
+    'sponsor',
+    'admin',
+    'from',
+    'code',
+    'website',
+    'transactionHash',
+    'cfxTransferCount',
+    'erc20TransferCount',
+    'erc721TransferCount',
+    'erc1155TransferCount',
+    'stakingBalance',
+    'sourceCode',
+    'abi',
+    'isRegistered',
+  ]);
 
   let {
     page = 1,
@@ -173,16 +194,12 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     tokenColunms.percentage(totalSupply),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
-  // let holders1155ColumnsWidth = [2, 10, 10];
-  // let holders1155Columns = [
-  //   tokenColunms.number(page, pageSize),
-  //   tokenColunms.account,
-  //   tokenColunms.balance(
-  //     transferType === cfxTokenTypes.erc20 ? decimals : 0,
-  //     price,
-  //     transferType,
-  //   ),
-  // ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
+  let holders1155ColumnsWidth = [2, 10, 10];
+  let holders1155Columns = [
+    tokenColunms.number(page, pageSize),
+    tokenColunms.account,
+    tokenColunms.balance(0, price, transferType),
+  ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
 
   const tabs: any = [
     {
@@ -251,7 +268,8 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   if (
     isRegistered &&
     (transferType === cfxTokenTypes.erc20 ||
-      transferType === cfxTokenTypes.erc721)
+      transferType === cfxTokenTypes.erc721 ||
+      transferType === cfxTokenTypes.erc1155)
   ) {
     tabs.push({
       value: 'holders',
@@ -260,8 +278,14 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
       table: {
         className: 'monospaced',
-        columns: holdersColumns,
+        columns:
+          transferType !== cfxTokenTypes.erc1155
+            ? holdersColumns
+            : holders1155Columns,
         rowKey: row => `${tokenAddress}${row.account.address}`,
+        sorter: () => {},
+        sortOrder: 'desc',
+        sortKey: 'balance',
       },
       tableHeader: ({ total }) => (
         <StyledTotalWrapper>
@@ -326,6 +350,14 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   if (isRegistered) {
     tabs.push(analysisTab);
   }
+
+  // Contract tab
+  tabs.push({
+    value: 'contract-viewer',
+    action: 'contractViewer',
+    label: t(translations.token.contract),
+    content: <ContractContent contractInfo={contractInfo} />,
+  });
 
   return transferType ? <TabsTablePanel tabs={tabs} /> : null;
 }

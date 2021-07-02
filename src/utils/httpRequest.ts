@@ -168,3 +168,33 @@ export const reqHomeDashboard = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqContractNameTag = (name: string, extra?: object) => {
+  return sendRequest({
+    url: `${statPrefix}/contract/registered/name?name=${name}`,
+    ...extra,
+  });
+};
+
+export const reqContractLicense = () => {
+  return sendRequest({
+    url: `${apiPrefix}/contract/license`,
+  });
+};
+
+export const reqContractCompiler = () => {
+  return sendRequest({
+    url: `${apiPrefix}/contract/compiler`,
+  });
+};
+
+export const reqContractVerification = param => {
+  return sendRequest({
+    url: `${apiPrefix}/contract/verify`,
+    type: 'POST',
+    body: JSON.stringify(param),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+};

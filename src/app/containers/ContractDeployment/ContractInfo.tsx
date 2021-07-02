@@ -5,9 +5,9 @@ import 'ace-builds/src-noconflict/theme-github';
 import { useMessages } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { JSONFileUpload } from '../../components/JSONFileUpload';
+import { FileUpload } from 'app/components/FileUpload';
 import { translations } from 'locales/i18n';
-import { Card } from '../../components/Card';
+import { Card } from 'app/components/Card';
 
 const AceEditorStyle = {
   width: '100%',
@@ -92,8 +92,9 @@ export const ContractInfo = ({ onChange }) => {
     inputRef.current.click();
   };
 
-  const handleFileChange = data => {
+  const handleFileChange = file => {
     try {
+      let data = JSON.parse(file);
       // const abi = JSON.stringify(data.abi, null, '\t');
       const abi = '';
       let bytecode = data.bytecode || data.data?.bytecode?.object;
@@ -135,7 +136,8 @@ export const ContractInfo = ({ onChange }) => {
 
   return (
     <>
-      <JSONFileUpload
+      <FileUpload
+        accept=".json"
         ref={inputRef}
         onChange={handleFileChange}
         onError={handleFileError}

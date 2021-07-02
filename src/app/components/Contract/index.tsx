@@ -24,7 +24,11 @@ import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-github';
 import { Tabs } from './../Tabs';
-import { reqContract, reqToken } from '../../../utils/httpRequest';
+import {
+  reqContract,
+  reqContractNameTag,
+  reqToken,
+} from '../../../utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
@@ -61,7 +65,8 @@ const fieldsContract = [
   'typeCode',
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const { accounts } = usePortal();
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
@@ -76,6 +81,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const [addressDisabled, setAddressDisabled] = useState(true);
   const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
   const [errorMsgForName, setErrorMsgForName] = useState('');
+  const [warningMsgTimesForName, setWarningMsgTimesForName] = useState(0);
   const [errorMsgForSite, setErrorMsgForSite] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [isAddressError, setIsAddressError] = useState(true);
@@ -197,6 +203,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const addressOnBlur = () => {
     checkAdminThenToken(tokenImgSrc);
   };
+
   function checkContractName() {
     if (contractName) {
       if (contractName.length > 35) {
@@ -211,6 +218,23 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       setErrorMsgForName('');
     }
   }
+
+  function checkContractNameDuplicated() {
+    // check contract name tag is registered
+    reqContractNameTag(contractName)
+      .then(res => {
+        if (res && res.registered > 0) {
+          setWarningMsgTimesForName(res.registered);
+        } else {
+          setWarningMsgTimesForName(0);
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        setWarningMsgTimesForName(0);
+      });
+  }
+
   useEffect(() => {
     checkAdminThenToken(tokenImgSrc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -218,6 +242,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
 
   const nameOnBlur = () => {
     checkContractName();
+    checkContractNameDuplicated();
   };
   useEffect(() => {
     checkContractName();
@@ -480,6 +505,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             <div>
               <span className="blankSpan"></span>
               <span className="errorSpan">{t(errorMsgForName)}</span>
+              {warningMsgTimesForName > 0 ? (
+                <span className="warningSpan">
+                  {t(translations.contract.duplicatedNameTag, {
+                    times: warningMsgTimesForName,
+                  })}
+                  {lang === 'en' && warningMsgTimesForName > 1 ? 's' : ''}
+                </span>
+              ) : null}
             </div>
           </div>
           <div className="lineContainer">
@@ -780,26 +813,37 @@ const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   flex-direction: row;
+
   .lineContainer {
     padding: 1.7857rem 0 0 0;
     border-bottom: 0.0714rem solid #e8e9ea;
+
     .firstLine {
       display: flex;
       align-items: center;
     }
+
     .with-label {
       flex: 1;
     }
+
     .blankSpan {
       display: inline-block;
       width: 11rem;
     }
-    .errorSpan {
+
+    .errorSpan,
+    .warningSpan {
       display: inline-block;
       font-size: 0.8571rem;
       color: #e64e4e;
       line-height: 1.5714rem;
     }
+
+    .warningSpan {
+      color: #e68d4e;
+    }
+
     &:last-child {
       border: none;
     }
@@ -821,12 +865,14 @@ const TopContainer = styled.div`
     //  }
     //}
   }
+
   .bodyContainer {
     flex: 1;
     box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
     border-radius: 0.3571rem;
     display: flex;
   }
+
   .first {
     flex-direction: column;
     flex-grow: 2;
@@ -834,17 +880,21 @@ const TopContainer = styled.div`
     background: #fff;
     padding: 0 1.2857rem;
     margin-right: 1.7143rem;
+
     ${media.m} {
       margin-right: initial;
     }
   }
+
   .second {
     flex-direction: row;
     background: #f5f6fa;
+
     ${media.m} {
       margin-top: 1.0833rem;
     }
   }
+
   .innerContainer {
     flex: 1;
     width: 238px;
@@ -855,6 +905,7 @@ const TopContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 2.8571rem 1.2857rem;
+
     ${media.m} {
       padding: 0.8333rem;
     }
@@ -875,9 +926,11 @@ const TopContainer = styled.div`
           display: flex;
           align-items: center;
         }
+
         .secondItem {
         }
       }
+
       .iconContainer {
         display: flex;
         background: #f1f4f6;
@@ -892,6 +945,7 @@ const TopContainer = styled.div`
           height: 3.6667rem;
         }
       }
+
       .iconTips {
         color: #97a3b4;
         line-height: 1.5714rem;
@@ -899,27 +953,33 @@ const TopContainer = styled.div`
         margin-left: 1.4286rem;
       }
     }
+
     .labelIcon {
       width: 0.8571rem;
       height: 0.8571rem;
     }
+
     .labelText {
       margin-left: 0.3571rem;
       color: #002257;
       font-size: 1rem;
+
       &:hover {
         color: #0070ff;
       }
+
       ${media.m} {
         font-size: 1rem;
       }
     }
+
     .contractIcon {
       width: 2rem;
     }
 
     &:first-child {
       margin-right: 1.7143rem;
+
       ${media.m} {
         margin-right: 1.25rem;
       }

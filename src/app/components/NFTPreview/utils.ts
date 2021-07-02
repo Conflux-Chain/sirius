@@ -170,6 +170,11 @@ export const getNFTName = async ({
           zh: JSON.parse(meta.contents).name || null,
           en: JSON.parse(meta.contents).name || null,
         };
+      case NFTContracts.epiKProtocolKnowledgeBadge:
+        return {
+          zh: JSON.parse(meta.contents).data.title || null,
+          en: JSON.parse(meta.contents).data.title || null,
+        };
       default:
         // try get name by 1155 spec
         if (meta && meta.contents) {
@@ -475,6 +480,17 @@ export const getNFTInfo = async ({
         address: address,
         tokenId,
         minHeight: 286,
+      });
+
+    case NFTContracts.epiKProtocolKnowledgeBadge:
+      return await queryNFTImageInfo({
+        address: address,
+        tokenId,
+        minHeight: 200,
+        imageUriFormatter: data => {
+          // iframe url
+          return JSON.parse(data.contents).data.page_url;
+        },
       });
 
     default:

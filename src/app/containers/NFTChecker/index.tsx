@@ -25,6 +25,8 @@ import { NFTPreview } from '../../components/NFTPreview';
 import { AddressContainer } from '../../components/AddressContainer';
 import { Empty } from '../../components/Empty';
 import { useHistory } from 'react-router';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 const { Search } = Input;
 
@@ -62,6 +64,12 @@ export function NFTChecker() {
     setLoading(true);
     reset();
     const formattedAddress = formatAddress(address);
+    // ga
+    trackEvent({
+      category: ScanEvent.function.category,
+      action: ScanEvent.function.action.nftChecker,
+      label: formattedAddress,
+    });
     if (validateAddress(address)) {
       setHasSearched(true);
       // get all supported nft balances

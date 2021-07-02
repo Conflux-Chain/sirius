@@ -13728,6 +13728,11 @@ react-base16-styling@^0.6.0:
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
 
+react-component-benchmark@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-component-benchmark/-/react-component-benchmark-1.0.0.tgz#272bd0af29042a4412f12a70e429752e2d267d36"
+  integrity sha512-YC+PPhfevw1NHYjgb8NeFXdH9gq1D0bG1zcLUxetQ1PregdBwX3t9LTU4fJviDI4IgU/bL3xR6BB3ZID59Sprw==
+
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"
