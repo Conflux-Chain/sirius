@@ -573,7 +573,7 @@ export function Table({ address, addressInfo }) {
           label: (
             <div>
               {t(translations.token.contract)}{' '}
-              {!addressInfo.isVerified ? (
+              {addressInfo.isVerified ? (
                 <span>
                   <CheckCircle size={16} color="#7cd77b" />
                 </span>

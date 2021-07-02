@@ -32,7 +32,7 @@ const Code = ({ contractInfo }) => {
   const { sourceCode, abi, address } = contractInfo;
   const [sourceCodeFullscreen, setSourceCodeFullscreen] = useState(false);
   const [ABIFullscreen, setABIFullscreen] = useState(false);
-  const isVerified = true;
+  const isVerified = false;
 
   return (
     <StyledContractContentCodeWrapper>
@@ -371,7 +371,6 @@ export const ContractContent = ({ contractInfo }) => {
 };
 
 const ContractBody = styled.div`
-  padding-bottom: 3.5714rem;
   background-color: #ffffff;
 
   .contract-body-subtabs {
