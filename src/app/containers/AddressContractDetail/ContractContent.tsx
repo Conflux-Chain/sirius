@@ -15,6 +15,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
 import { cfxAddress } from 'utils/cfx';
 import { Link } from 'app/components/Link/Loadable';
+import clsx from 'clsx';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 
@@ -71,7 +72,11 @@ const Code = ({ contractInfo }) => {
           </div>
         </>
       ) : (
-        <div className="contract-code-verified contract-verify-tip">
+        <div
+          className={clsx('contract-code-verified contract-verify-tip', {
+            'margin-bottom-0': !isVerified && !sourceCode && !abi,
+          })}
+        >
           {t(translations.contract.verify.tipLeft)}
           <Link
             href={`/contract-verification?address=${cfxAddress.simplifyCfxAddress(
@@ -85,49 +90,57 @@ const Code = ({ contractInfo }) => {
       )}
       <div className="contract-sourcecode-and-abi">
         <div className="contract-sourcecode">
-          <div className="contract-sourcecode-and-abi-title">
-            {t(translations.contract.sourceCodeShort)}
-          </div>
           {sourceCode ? (
-            <AceEditor
-              readOnly
-              style={AceEditorStyle}
-              mode="solidity"
-              theme="tomorrow"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              value={sourceCode}
-              wrapEnabled={true}
-              height="28rem"
-              fontSize="1rem"
-              showGutter={false}
-              showPrintMargin={false}
-            />
+            <>
+              <div className="contract-sourcecode-and-abi-title">
+                {t(translations.contract.sourceCodeShort)}
+              </div>
+              (
+              <AceEditor
+                readOnly
+                style={AceEditorStyle}
+                mode="solidity"
+                theme="tomorrow"
+                name="UNIQUE_ID_OF_DIV"
+                setOptions={{
+                  showLineNumbers: true,
+                }}
+                value={sourceCode}
+                wrapEnabled={true}
+                height="28rem"
+                fontSize="1rem"
+                showGutter={false}
+                showPrintMargin={false}
+              />
+              ){' '}
+            </>
           ) : null}
         </div>
         <div className="contract-abi">
-          <div className="contract-sourcecode-and-abi-title">
-            {t(translations.contract.abi)}
-          </div>
           {abi ? (
-            <AceEditor
-              value={abi}
-              readOnly
-              style={AceEditorStyle}
-              mode="json"
-              theme="tomorrow"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              height="28rem"
-              wrapEnabled={true}
-              fontSize="1rem"
-              showGutter={false}
-              showPrintMargin={false}
-            />
+            <>
+              <div className="contract-sourcecode-and-abi-title">
+                {t(translations.contract.abi)}
+              </div>
+              (
+              <AceEditor
+                value={abi}
+                readOnly
+                style={AceEditorStyle}
+                mode="json"
+                theme="tomorrow"
+                name="UNIQUE_ID_OF_DIV"
+                setOptions={{
+                  showLineNumbers: true,
+                }}
+                height="28rem"
+                wrapEnabled={true}
+                fontSize="1rem"
+                showGutter={false}
+                showPrintMargin={false}
+              />
+              ){' '}
+            </>
           ) : null}
         </div>
       </div>
@@ -142,6 +155,10 @@ const StyledContractContentCodeWrapper = styled.div`
     color: #0f1327;
     line-height: 22px;
     margin: 15px 0;
+
+    &.margin-bottom-0 {
+      margin-bottom: 0;
+    }
   }
 
   .contract-code-verify-info {
