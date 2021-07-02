@@ -16,6 +16,7 @@ import { Card } from 'app/components/Card/Loadable';
 import { cfxAddress } from 'utils/cfx';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
+import { Row, Col } from '@jnoodle/antd';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 
@@ -28,53 +29,53 @@ const AceEditorStyle = {
 
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { sourceCode, abi, address } = contractInfo;
-  const isVerified = false;
+  const { sourceCode, abi, address, verify = {} } = contractInfo;
+  const { exactMatch, license, name, optimization, runs, version } = verify;
 
   return (
     <StyledContractContentCodeWrapper>
-      {isVerified ? (
+      {exactMatch ? (
         <>
           <div className="contract-code-verified">
             {t(translations.contract.verify.contractCodeVerified)}{' '}
             <CheckCircle size={16} color="#7cd77b" />
           </div>
-          <div className="contract-code-verify-info">
-            <div className="verify-info-item">
+          <Row className="contract-code-verify-info">
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.contractName)}
               </span>
-              <span className="verify-info-content">xxx</span>
-            </div>
-            <div className="verify-info-item">
+              <span className="verify-info-content">{name}</span>
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.compilerVersion)}
               </span>
-              <span className="verify-info-content">xxx</span>
-            </div>
-            <div className="verify-info-item">
+              <span className="verify-info-content">{version}</span>
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.optimizationEnabled)}
               </span>
               <span className="verify-info-content">
                 {t(translations.contract.verify.runs, {
-                  count: 0,
-                  status: 'no',
+                  count: runs,
+                  status: optimization ? 'yes' : 'no',
                 })}
               </span>
-            </div>
-            <div className="verify-info-item">
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.otherSettings)}
               </span>
-              <span className="verify-info-content">xxxxxxx</span>
-            </div>
-          </div>
+              <span className="verify-info-content">{license}</span>
+            </Col>
+          </Row>
         </>
       ) : (
         <div
           className={clsx('contract-code-verified contract-verify-tip', {
-            'margin-bottom-0': !isVerified && !sourceCode && !abi,
+            'margin-bottom-0': !exactMatch && !sourceCode && !abi,
           })}
         >
           {t(translations.contract.verify.tipLeft)}
@@ -95,7 +96,6 @@ const Code = ({ contractInfo }) => {
               <div className="contract-sourcecode-and-abi-title">
                 {t(translations.contract.sourceCodeShort)}
               </div>
-              (
               <AceEditor
                 readOnly
                 style={AceEditorStyle}
@@ -111,8 +111,7 @@ const Code = ({ contractInfo }) => {
                 fontSize="1rem"
                 showGutter={false}
                 showPrintMargin={false}
-              />
-              ){' '}
+              />{' '}
             </>
           ) : null}
         </div>
@@ -122,7 +121,6 @@ const Code = ({ contractInfo }) => {
               <div className="contract-sourcecode-and-abi-title">
                 {t(translations.contract.abi)}
               </div>
-              (
               <AceEditor
                 value={abi}
                 readOnly
@@ -138,8 +136,7 @@ const Code = ({ contractInfo }) => {
                 fontSize="1rem"
                 showGutter={false}
                 showPrintMargin={false}
-              />
-              ){' '}
+              />{' '}
             </>
           ) : null}
         </div>
@@ -162,8 +159,6 @@ const StyledContractContentCodeWrapper = styled.div`
   }
 
   .contract-code-verify-info {
-    display: flex;
-    flex-flow: wrap;
     border-bottom: 1px solid #ebeced;
     padding-bottom: 12px;
 
