@@ -609,20 +609,20 @@ export function Table({ address, addressInfo }) {
               </FilterWrap>
             </StyledTableHeaderWrapper>
           ),
-          tableFooter: (
-            <DownloadCSV
-              url={queryString.stringifyUrl({
-                url: '/v1/report/mined_block', // @todo replace with real url
-                query: {
-                  minTimestamp,
-                  maxTimestamp,
-                  accountAddress,
-                  limit: '5000',
-                  reverse: 'true',
-                },
-              })}
-            />
-          ),
+          // tableFooter: (
+          //   <DownloadCSV
+          //     url={queryString.stringifyUrl({
+          //       url: '/v1/report/mined_block', // @todo replace with real url
+          //       query: {
+          //         minTimestamp,
+          //         maxTimestamp,
+          //         accountAddress,
+          //         limit: '5000',
+          //         reverse: 'true',
+          //       },
+          //     })}
+          //   />
+          // ),
         },
   );
 
