@@ -22,8 +22,6 @@ import { FileUpload } from 'app/components/FileUpload';
 import { useMessages } from '@cfxjs/react-ui';
 import { cfxAddress } from 'utils/cfx';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
-import FullScreen from '@zeit-ui/react-icons/fullScreen';
-import FullScreenClose from '@zeit-ui/react-icons/fullScreenClose';
 import { useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 
@@ -48,7 +46,6 @@ export const ContractVerification = () => {
   const [modalStatus, setModalStatus] = useState('loading');
   const [modalShow, setModalShow] = useState(false);
   const [respErrors, setRespErrors] = useState<Array<string>>([]);
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useEffect(() => {
     reqContractCompiler().then(resp => {
@@ -385,18 +382,6 @@ export const ContractVerification = () => {
               <div className="link" onClick={handleImport}>
                 {t(translations.contractVerification.upload)}
               </div>
-              <span
-                className="fullscreen"
-                onClick={() => {
-                  setFullscreen(!fullscreen);
-                }}
-              >
-                {fullscreen ? (
-                  <FullScreenClose size={16}></FullScreenClose>
-                ) : (
-                  <FullScreen size={16}></FullScreen>
-                )}
-              </span>
             </div>
             <AceEditor
               style={AceEditorStyle}
@@ -408,7 +393,7 @@ export const ContractVerification = () => {
                 indentedSoftWrap: false,
                 showLineNumbers: true,
               }}
-              maxLines={fullscreen ? Infinity : 20}
+              height="28rem"
               fontSize="1rem"
               showGutter={false}
               showPrintMargin={false}
@@ -479,14 +464,6 @@ const StyledContractVerificationWrapper = styled.div`
       line-height: 1.2857rem;
       text-align: right;
       text-decoration: underline;
-      cursor: pointer;
-    }
-
-    .fullscreen {
-      margin-left: 0.3571rem;
-      width: 1.1429rem;
-      height: 1.1429rem;
-      display: flex;
       cursor: pointer;
     }
   }

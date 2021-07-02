@@ -15,10 +15,10 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
 import { cfxAddress } from 'utils/cfx';
 import { Link } from 'app/components/Link/Loadable';
+import clsx from 'clsx';
+import { Row, Col } from '@jnoodle/antd';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
-import FullScreen from '@zeit-ui/react-icons/fullScreen';
-import FullScreenClose from '@zeit-ui/react-icons/fullScreenClose';
 
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
@@ -29,53 +29,55 @@ const AceEditorStyle = {
 
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { sourceCode, abi, address } = contractInfo;
-  const [sourceCodeFullscreen, setSourceCodeFullscreen] = useState(false);
-  const [ABIFullscreen, setABIFullscreen] = useState(false);
-  const isVerified = true;
+  const { sourceCode, abi, address, verify = {} } = contractInfo;
+  const { exactMatch, license, name, optimization, runs, version } = verify;
 
   return (
     <StyledContractContentCodeWrapper>
-      {isVerified ? (
+      {exactMatch ? (
         <>
           <div className="contract-code-verified">
             {t(translations.contract.verify.contractCodeVerified)}{' '}
             <CheckCircle size={16} color="#7cd77b" />
           </div>
-          <div className="contract-code-verify-info">
-            <div className="verify-info-item">
+          <Row className="contract-code-verify-info">
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.contractName)}
               </span>
-              <span className="verify-info-content">xxx</span>
-            </div>
-            <div className="verify-info-item">
+              <span className="verify-info-content">{name}</span>
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.compilerVersion)}
               </span>
-              <span className="verify-info-content">xxx</span>
-            </div>
-            <div className="verify-info-item">
+              <span className="verify-info-content">{version}</span>
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.optimizationEnabled)}
               </span>
               <span className="verify-info-content">
                 {t(translations.contract.verify.runs, {
-                  count: 0,
-                  status: 'no',
+                  count: runs,
+                  status: optimization ? 'yes' : 'no',
                 })}
               </span>
-            </div>
-            <div className="verify-info-item">
+            </Col>
+            <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
                 {t(translations.contract.verify.otherSettings)}
               </span>
-              <span className="verify-info-content">xxxxxxx</span>
-            </div>
-          </div>
+              <span className="verify-info-content">{license}</span>
+            </Col>
+          </Row>
         </>
       ) : (
-        <div className="contract-code-verified contract-verify-tip">
+        <div
+          className={clsx('contract-code-verified contract-verify-tip', {
+            'margin-bottom-0': !exactMatch && !sourceCode && !abi,
+          })}
+        >
           {t(translations.contract.verify.tipLeft)}
           <Link
             href={`/contract-verification?address=${cfxAddress.simplifyCfxAddress(
@@ -89,73 +91,53 @@ const Code = ({ contractInfo }) => {
       )}
       <div className="contract-sourcecode-and-abi">
         <div className="contract-sourcecode">
-          <div className="contract-sourcecode-and-abi-title">
-            {t(translations.contract.sourceCodeShort)}
-            <span
-              className="contract-sourcecode-fullscreen"
-              onClick={() => {
-                setSourceCodeFullscreen(!sourceCodeFullscreen);
-              }}
-            >
-              {sourceCodeFullscreen ? (
-                <FullScreenClose size={16}></FullScreenClose>
-              ) : (
-                <FullScreen size={16}></FullScreen>
-              )}
-            </span>
-          </div>
           {sourceCode ? (
-            <AceEditor
-              readOnly
-              style={AceEditorStyle}
-              mode="solidity"
-              theme="tomorrow"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              value={sourceCode}
-              wrapEnabled={true}
-              maxLines={sourceCodeFullscreen ? Infinity : 20}
-              fontSize="1rem"
-              showGutter={false}
-              showPrintMargin={false}
-            />
+            <>
+              <div className="contract-sourcecode-and-abi-title">
+                {t(translations.contract.sourceCodeShort)}
+              </div>
+              <AceEditor
+                readOnly
+                style={AceEditorStyle}
+                mode="solidity"
+                theme="tomorrow"
+                name="UNIQUE_ID_OF_DIV"
+                setOptions={{
+                  showLineNumbers: true,
+                }}
+                value={sourceCode}
+                wrapEnabled={true}
+                height="28rem"
+                fontSize="1rem"
+                showGutter={false}
+                showPrintMargin={false}
+              />{' '}
+            </>
           ) : null}
         </div>
         <div className="contract-abi">
-          <div className="contract-sourcecode-and-abi-title">
-            {t(translations.contract.abi)}
-            <span
-              className="contract-sourcecode-fullscreen"
-              onClick={() => {
-                setABIFullscreen(!ABIFullscreen);
-              }}
-            >
-              {ABIFullscreen ? (
-                <FullScreenClose size={16}></FullScreenClose>
-              ) : (
-                <FullScreen size={16}></FullScreen>
-              )}
-            </span>
-          </div>
           {abi ? (
-            <AceEditor
-              value={abi}
-              readOnly
-              style={AceEditorStyle}
-              mode="json"
-              theme="tomorrow"
-              name="UNIQUE_ID_OF_DIV"
-              setOptions={{
-                showLineNumbers: true,
-              }}
-              wrapEnabled={true}
-              maxLines={ABIFullscreen ? Infinity : 20}
-              fontSize="1rem"
-              showGutter={false}
-              showPrintMargin={false}
-            />
+            <>
+              <div className="contract-sourcecode-and-abi-title">
+                {t(translations.contract.abi)}
+              </div>
+              <AceEditor
+                value={abi}
+                readOnly
+                style={AceEditorStyle}
+                mode="json"
+                theme="tomorrow"
+                name="UNIQUE_ID_OF_DIV"
+                setOptions={{
+                  showLineNumbers: true,
+                }}
+                height="28rem"
+                wrapEnabled={true}
+                fontSize="1rem"
+                showGutter={false}
+                showPrintMargin={false}
+              />{' '}
+            </>
           ) : null}
         </div>
       </div>
@@ -170,11 +152,13 @@ const StyledContractContentCodeWrapper = styled.div`
     color: #0f1327;
     line-height: 22px;
     margin: 15px 0;
+
+    &.margin-bottom-0 {
+      margin-bottom: 0;
+    }
   }
 
   .contract-code-verify-info {
-    display: flex;
-    flex-flow: wrap;
     border-bottom: 1px solid #ebeced;
     padding-bottom: 12px;
 
@@ -371,7 +355,6 @@ export const ContractContent = ({ contractInfo }) => {
 };
 
 const ContractBody = styled.div`
-  padding-bottom: 3.5714rem;
   background-color: #ffffff;
 
   .contract-body-subtabs {

@@ -249,8 +249,8 @@ export const method = {
   dataIndex: 'method',
   key: 'method',
   width: 1,
-  render: value => {
-    if (value === '0x' || value === null || value === undefined) {
+  render: (value, row) => {
+    if (value === '0x' || value === null || value === undefined || !row.to) {
       return '--';
     }
     const reg = /([^(]*)(?=\(.*\))/;

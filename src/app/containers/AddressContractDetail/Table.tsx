@@ -37,6 +37,7 @@ import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import { ContractContent } from './ContractContent';
 import { formatAddress } from '../../../utils/cfx';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
+import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 // import iconInfo from 'images/info.svg';
 
@@ -573,11 +574,11 @@ export function Table({ address, addressInfo }) {
           label: (
             <div>
               {t(translations.token.contract)}{' '}
-              {!addressInfo.isVerified ? (
-                <span>
-                  <CheckCircle size={16} color="#7cd77b" />
-                </span>
-              ) : null}
+              {addressInfo.verify?.exactMatch ? (
+                <CheckCircle size={16} color="#7cd77b" />
+              ) : (
+                <AlertCircle size={16} color="#e36057" />
+              )}
             </div>
           ),
           content: <ContractContent contractInfo={addressInfo} />,
@@ -609,20 +610,20 @@ export function Table({ address, addressInfo }) {
               </FilterWrap>
             </StyledTableHeaderWrapper>
           ),
-          tableFooter: (
-            <DownloadCSV
-              url={queryString.stringifyUrl({
-                url: '/v1/report/mined_block', // @todo replace with real url
-                query: {
-                  minTimestamp,
-                  maxTimestamp,
-                  accountAddress,
-                  limit: '5000',
-                  reverse: 'true',
-                },
-              })}
-            />
-          ),
+          // tableFooter: (
+          //   <DownloadCSV
+          //     url={queryString.stringifyUrl({
+          //       url: '/v1/report/mined_block', // @todo replace with real url
+          //       query: {
+          //         minTimestamp,
+          //         maxTimestamp,
+          //         accountAddress,
+          //         limit: '5000',
+          //         reverse: 'true',
+          //       },
+          //     })}
+          //   />
+          // ),
         },
   );
 

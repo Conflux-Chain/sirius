@@ -21,6 +21,8 @@ import { useMessages } from '@cfxjs/react-ui';
 import _ from 'lodash';
 import { ContractContent } from '../AddressContractDetail/ContractContent';
 import { useContract } from '../../../utils/api';
+import CheckCircle from '@zeit-ui/react-icons/checkCircle';
+import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 interface TransferProps {
   tokenName: string;
@@ -355,7 +357,18 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   tabs.push({
     value: 'contract-viewer',
     action: 'contractViewer',
-    label: t(translations.token.contract),
+    label: (
+      <div>
+        {t(translations.token.contract)}{' '}
+        {contractInfo.verify?.exactMatch ? (
+          <span>
+            <CheckCircle size={16} color="#7cd77b" />
+          </span>
+        ) : (
+          <AlertCircle size={16} color="#e36057" />
+        )}
+      </div>
+    ),
     content: <ContractContent contractInfo={contractInfo} />,
   });
 
