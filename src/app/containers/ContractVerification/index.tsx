@@ -98,7 +98,14 @@ export const ContractVerification = () => {
           setModalStatus('success');
         } else {
           setModalStatus('error');
-          setRespErrors(resp.errors);
+          if (resp.errors?.length) {
+            setRespErrors(resp.errors);
+          } else {
+            // bytecode not match
+            setRespErrors([
+              t(translations.contractVerification.error.notMatch),
+            ]);
+          }
         }
       })
       .catch(e => {
