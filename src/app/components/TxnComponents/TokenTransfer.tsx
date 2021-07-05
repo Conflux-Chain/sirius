@@ -9,6 +9,7 @@ import { defaultTokenIcon } from '../../../constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';
+import { TokenTypeTag } from './TokenTypeTag';
 
 interface Props {
   transferList: Array<any>;
@@ -119,9 +120,9 @@ export const TokenTransfer = ({
             </span>
             <span className="transfer-item-group">
               <span className="for"> {t(translations.transaction.for)} </span>
-              <span className="type">CRC721</span>
+              <span className="type">1</span>
               <span>{imgIcon}</span>
-              <span>{nameContainer}</span>
+              <span>{nameContainer}</span> <TokenTypeTag type="crc721" />
               <span className="type">
                 &nbsp;
                 {t(translations.transaction.tokenId)}:
@@ -146,9 +147,8 @@ export const TokenTransfer = ({
             <span className="transfer-item-group">
               <span className="to"> {t(translations.transaction.to)} </span>
               <AddressContainer value={transferItem['to']} />
-              <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
-              <span>{nameContainer}</span>
+              <span>{nameContainer}</span> <TokenTypeTag type="crc1155" />
             </span>
             <span className="transfer-item-group">
               {transferItem['batch'].map((item, index) => (

@@ -122,7 +122,8 @@
       "isNotMainnet": "请输入 Conflux Tethys 地址",
       "isNotTestnet": "请输入 Conflux Testnet 地址",
       "pleaseSelect": "请选择",
-      "pleaseEnter": "请输入"
+      "pleaseEnter": "请输入",
+      "notMatch": "生成的字节码与存储在地址上的字节代码不匹配"
     },
     "OptimizationOption": {
       "yes": "是",

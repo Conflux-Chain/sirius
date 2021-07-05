@@ -24,6 +24,7 @@ const StyledTokenTypeTag = styled.span`
   font-size: 10px;
   border-radius: 0.7143rem;
   padding: 0 0.3571rem;
+  white-space: nowrap;
 
   &.crc20 {
     background-color: rgb(104, 206, 252);

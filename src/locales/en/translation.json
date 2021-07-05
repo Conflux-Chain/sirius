@@ -122,7 +122,8 @@
       "isNotMainnet": "Please enter Conflux Tethys address",
       "isNotTestnet": "Please enter Conflux Testnet address",
       "pleaseSelect": "Please Select",
-      "pleaseEnter": "Please Enter"
+      "pleaseEnter": "Please Enter",
+      "notMatch": "The resulting bytecode does NOT match with the bytecode that is stored on the address"
     },
     "OptimizationOption": {
       "yes": "Yes",

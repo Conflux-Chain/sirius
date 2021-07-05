@@ -432,7 +432,7 @@ export const Detail = () => {
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
-              <span className="type">CRC721</span>
+              <span className="type">1</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc721" />
               <span className="type">
@@ -473,7 +473,6 @@ export const Detail = () => {
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
-              <span className="type">CRC1155</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc1155" />
               {transferItem['batch'].map((item, index) => (
