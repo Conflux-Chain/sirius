@@ -34,9 +34,8 @@ import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 // import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { ContractContent } from './ContractContent';
+import { ContractContent, CheckCircleIcon } from './ContractContent';
 import { formatAddress } from '../../../utils/cfx';
-import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 // import iconInfo from 'images/info.svg';
@@ -575,7 +574,7 @@ export function Table({ address, addressInfo }) {
             <div>
               {t(translations.token.contract)}{' '}
               {addressInfo.verify?.exactMatch ? (
-                <CheckCircle size={16} color="#7cd77b" />
+                <CheckCircleIcon />
               ) : (
                 <AlertCircle size={16} color="#e36057" />
               )}

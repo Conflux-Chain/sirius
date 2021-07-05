@@ -34,7 +34,8 @@
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "立刻前往",
       "tipCenter": "验证您的合约",
-      "tipRight": "！"
+      "tipRight": "！",
+      "isVerifiedTip": "该合约已注册，源码和 ABI 无法修改"
     },
     "code": "合约",
     "sourceCodeShort": "源码",

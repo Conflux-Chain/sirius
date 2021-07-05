@@ -67,6 +67,7 @@ export const ContractDetailPage = memo(() => {
     'sourceCode',
     'abi',
     'isRegistered',
+    'verifyInfo',
   ]);
 
   useEffect(() => {
