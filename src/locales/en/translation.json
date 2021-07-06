@@ -1214,7 +1214,10 @@
   "nftChecker": {
     "title": "NFT Checker",
     "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "inputPlaceholder": "Please enter an address",
     "incorrectFormat": "Invalid address format",
-    "tokenId": "TokenID"
+    "tokenId": "TokenID",
+    "plzSearch": "Plz Search",
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
   }
 }
