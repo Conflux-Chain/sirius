@@ -35,7 +35,7 @@ export function Transaction() {
     from,
     to,
     // cfxTransferCount,
-    // cfxTransferAllCount,
+    cfxTransferAllCount,
     eventLogCount,
   } = txnDetail;
 
@@ -95,7 +95,7 @@ export function Transaction() {
       },
       pagination: false,
       tableHeader: info => tableHeader(info),
-      // hidden: !cfxTransferCount && cfxTransferAllCount < 2,
+      hidden: cfxTransferAllCount < 2,
     },
     {
       value: 'logs',
