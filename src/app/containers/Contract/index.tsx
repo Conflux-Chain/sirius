@@ -24,6 +24,7 @@ export function Contract(props) {
     'icon',
     'sourceCode',
     'typeCode',
+    'verifyInfo',
   ];
   const params = useMemo(() => ({ address: contractAddress, fields }), [
     contractAddress,
