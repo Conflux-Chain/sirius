@@ -22,7 +22,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Tabs } from './../Tabs';
 import {
   reqContract,
@@ -40,6 +40,8 @@ import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
+import { Text } from 'app/components/Text/Loadable';
 
 interface Props {
   contractDetail: any;
@@ -457,6 +459,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const importClick = () => {
     fileJsonInputRef.current.click();
   };
+
+  const isVerified = contractDetail.verify?.exactMatch;
+
   return (
     <Wrapper>
       <PageHeader>{title}</PageHeader>
@@ -478,6 +483,15 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   placeholder={t(translations.contract.addressPlaceholder)}
                   onBlur={addressOnBlur}
                 />
+                {isVerified ? (
+                  <div className="is-verified-tip">
+                    <Text
+                      hoverValue={t(translations.contract.verify.isVerifiedTip)}
+                    >
+                      <CheckCircleIcon />
+                    </Text>
+                  </div>
+                ) : null}
               </SkelontonContainer>
             </div>
             <div>
@@ -636,9 +650,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             ref={fileJsonInputRef}
             onChange={handleJsonChange}
           />
-          <span className="text" onClick={importClick}>
-            {t(translations.general.importJsonFile)}
-          </span>
+          {isVerified ? null : (
+            <span className="text" onClick={importClick}>
+              {t(translations.general.importJsonFile)}
+            </span>
+          )}
         </div>
         <Tabs initialValue="1">
           <Tabs.Item label={tabsLabelSourceCode} value="1">
@@ -648,9 +664,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   <div className="content">
                     <div className="contentHeader" />
                     <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
                       style={AceEditorStyle}
                       mode="solidity"
-                      theme="github"
+                      theme="tomorrow"
                       name="UNIQUE_ID_OF_DIV"
                       setOptions={{
                         showLineNumbers: true,
@@ -673,9 +691,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   <div className="content abiContainer">
                     <div className="contentHeader" />
                     <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
                       style={AceEditorStyle}
                       mode="json"
-                      theme="github"
+                      theme="tomorrow"
                       name="UNIQUE_ID_OF_DIV_ABI"
                       setOptions={{
                         showLineNumbers: true,
@@ -712,6 +732,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
 };
 const Wrapper = styled.div`
   background: #f5f6fa;
+
+  .is-verified-tip {
+    background-color: #fafbfc;
+    height: 2.1429rem;
+    display: flex;
+    align-items: center;
+    padding-right: 0.7143rem;
+  }
 
   .inputComp {
     background-color: #fafbfc;
@@ -821,6 +849,7 @@ const TopContainer = styled.div`
     .firstLine {
       display: flex;
       align-items: center;
+      position: relative;
     }
 
     .with-label {

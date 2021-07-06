@@ -34,7 +34,8 @@
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "立刻前往",
       "tipCenter": "验证您的合约",
-      "tipRight": "！"
+      "tipRight": "！",
+      "isVerifiedTip": "该合约已注册，源码和 ABI 无法修改"
     },
     "code": "合约",
     "sourceCodeShort": "源码",
@@ -1214,7 +1215,10 @@
   "nftChecker": {
     "title": "NFT 查看器",
     "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
+    "inputPlaceholder": "请输入地址",
     "incorrectFormat": "地址格式错误",
-    "tokenId": "代币 ID"
+    "tokenId": "代币 ID",
+    "plzSearch": "请搜索",
+    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
   }
 }

@@ -27,6 +27,8 @@ const AceEditorStyle = {
   backgroundColor: '#F8F9FB',
 };
 
+export const CheckCircleIcon = () => <CheckCircle size={16} color="#7cd77b" />;
+
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
   const { sourceCode, abi, address, verify = {} } = contractInfo;
@@ -38,7 +40,7 @@ const Code = ({ contractInfo }) => {
         <>
           <div className="contract-code-verified">
             {t(translations.contract.verify.contractCodeVerified)}{' '}
-            <CheckCircle size={16} color="#7cd77b" />
+            <CheckCircleIcon />
           </div>
           <Row className="contract-code-verify-info">
             <Col span={6} sm={12} xs={24}>

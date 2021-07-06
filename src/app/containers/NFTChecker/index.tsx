@@ -172,7 +172,7 @@ export function NFTChecker() {
         <Search
           value={address}
           onChange={handleAddressChange}
-          placeholder={t(translations.addressConverter.inputPlaceholder)}
+          placeholder={t(translations.nftChecker.inputPlaceholder)}
           onSearch={value => {
             if (validateAddress(value)) {
               history.push(`/nft-checker/${value}`);
@@ -208,11 +208,21 @@ export function NFTChecker() {
               </TagsWrapper>
             ) : null}
             <NFTWrapper>
-              {!loading &&
-              (!NFTBalances || NFTBalances.length === 0) &&
-              hasSearched ? (
+              {!loading && (!NFTBalances || NFTBalances.length === 0) ? (
                 <div className="nodata">
-                  <Empty show={true} type="fluid" />
+                  <Empty
+                    show={true}
+                    type="fluid"
+                    noTitle={!hasSearched}
+                    title={
+                      !hasSearched ? t(translations.nftChecker.plzSearch) : null
+                    }
+                    description={
+                      !hasSearched
+                        ? t(translations.nftChecker.plzSearchDesc)
+                        : null
+                    }
+                  />
                 </div>
               ) : (
                 <>
@@ -356,10 +366,10 @@ const TagsWrapper = styled.div`
 const NFTWrapper = styled.div`
   width: 100%;
   padding: 16px 0 40px;
-  min-height: 100px;
+  min-height: 500px;
 
   .nodata {
-    margin-top: 20px;
+    margin-top: 100px;
     color: #74798c;
   }
 

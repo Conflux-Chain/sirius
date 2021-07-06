@@ -34,7 +34,8 @@
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "You can ",
       "tipCenter": "verify your contract",
-      "tipRight": " now!"
+      "tipRight": " now!",
+      "isVerifiedTip": "The contract has been verified, the source code and ABI cannot be modified"
     },
     "code": "Code",
     "sourceCodeShort": "Source Code",
@@ -1214,7 +1215,10 @@
   "nftChecker": {
     "title": "NFT Checker",
     "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "inputPlaceholder": "Please enter an address",
     "incorrectFormat": "Invalid address format",
-    "tokenId": "TokenID"
+    "tokenId": "TokenID",
+    "plzSearch": "Plz Search",
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
   }
 }
