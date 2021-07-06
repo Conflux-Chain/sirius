@@ -18,6 +18,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 
 import iconLoadingWhite from './assets/loading-white.svg';
+import { isConfluxTestNet } from '../../../utils/cfx';
 
 interface Button {
   className?: string;
@@ -59,7 +60,9 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = accounts[0].replace(/(.*:.{6}).*(.{8})/, '$1...$2');
+        buttonText = isConfluxTestNet
+          ? accounts[0].replace(/(.*:.{3}).*(.{4})/, '$1...$2')
+          : accounts[0].replace(/(.*:.{3}).*(.{8})/, '$1...$2');
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
