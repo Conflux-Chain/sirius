@@ -15,7 +15,7 @@ import { RotateImg } from './RotateImg';
 import { History } from './History';
 // @todo extract an independent component, do not use outside one
 import { CopyButton } from './../CopyButton';
-import { AddressContainer } from './../../components/AddressContainer';
+// import { AddressContainer } from './../../components/AddressContainer';
 import { useCheckHook } from './useCheckHook';
 
 import iconLogo from './assets/logo.png';
@@ -111,11 +111,12 @@ export const Modal = ({
               {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
             </span>
             <span className="modal-portal-name">
-              <AddressContainer
+              {accounts[0]}
+              {/* <AddressContainer
                 value={accounts[0]}
                 isLink={false}
                 maxWidth={350}
-              />
+              /> */}
             </span>
             <span className="modal-portal-connected-tip">
               <span className="modal-portal-connected-copy">
@@ -263,7 +264,7 @@ const ModalWrapper = styled.div`
 
   .modal-body {
     position: relative;
-    width: 32rem;
+    width: 39rem;
     background: #ffffff;
     padding: 1.7143rem 2.2857rem 2.2857rem;
     box-sizing: border-box;
@@ -276,7 +277,7 @@ const ModalWrapper = styled.div`
   }
 
   .modal-portal {
-    width: 27.4286rem;
+    width: 34.5rem;
     border-radius: 0.2857rem;
     border: 1px solid #cccccc;
     margin-top: 1.1429rem;
@@ -306,7 +307,7 @@ const ModalWrapper = styled.div`
     }
 
     .modal-portal-name {
-      font-size: 18px;
+      font-size: 16px;
       color: #3a3a3a;
       margin: 0.2857rem 0;
     }
