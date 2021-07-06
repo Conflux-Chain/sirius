@@ -163,5 +163,6 @@ const ButtonWrapper = styled.div`
     background: #f5f6fa;
     border-radius: 3.5714rem;
     cursor: pointer;
+    flex-grow: 1;
   }
 `;
