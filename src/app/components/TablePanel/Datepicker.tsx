@@ -205,7 +205,7 @@ export const TableSearchDatepicker = ({
   const queries = qs.parse(location.search || '');
   let minT = outerMinT || queries.minTimestamp;
   // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
-  let maxT = (outerMaxT && String(Number(queries.maxTimestamp) - 1)) || '';
+  let maxT = outerMaxT || String(Number(queries.maxTimestamp) - 1) || '';
 
   let handleChange =
     onChange ||
