@@ -123,7 +123,7 @@ export const History = ({
 };
 
 const HistoryWrapper = styled.span`
-  width: 32rem;
+  width: 39rem;
   max-height: 21.4286rem;
   overflow: auto;
   background: #f1f3f6;
