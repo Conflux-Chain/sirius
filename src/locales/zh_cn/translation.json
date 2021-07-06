@@ -26,7 +26,7 @@
       "title": "合约编辑"
     },
     "verify": {
-      "contractCodeVerified": "Contract Source Code Verified",
+      "contractCodeVerified": "合约源码已验证",
       "contractName": "合约名：",
       "optimizationEnabled": "是否优化：",
       "otherSettings": "其他设置：",
