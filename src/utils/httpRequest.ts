@@ -1,8 +1,9 @@
 import qs from 'query-string';
 import fetch from './request';
 
-export const apiPrefix = '/v1';
+export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
+
 export const sendRequest = config => {
   return fetch(qs.stringifyUrl({ url: config.url, query: config.query }), {
     method: config.type || 'GET',
@@ -24,7 +25,7 @@ export const reqReport = (param?: object) => {
 
 export const reqTransactionEventlogs = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/eventLog`,
+    url: `${v1Prefix}/eventLog`,
     query: param,
     ...extra,
   });
@@ -32,21 +33,21 @@ export const reqTransactionEventlogs = (param?: object, extra?: object) => {
 
 export const reqBlockDetail = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/block/${param && param['hash']}`,
+    url: `${v1Prefix}/block/${param && param['hash']}`,
     ...extra,
   });
 };
 
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/transaction/${param && param['hash']}`,
+    url: `${v1Prefix}/transaction/${param && param['hash']}`,
     query: extra,
   });
 };
 
 export const reqContract = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/contract/${param && param['address']}`,
+    url: `${v1Prefix}/contract/${param && param['address']}`,
     query: param,
     ...extra,
   });
@@ -54,7 +55,7 @@ export const reqContract = (param?: object, extra?: object) => {
 
 export const reqContractAndToken = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/contract-and-token`,
+    url: `${v1Prefix}/contract-and-token`,
     query: param,
     ...extra,
   });
@@ -62,7 +63,7 @@ export const reqContractAndToken = (param?: object, extra?: object) => {
 
 export const reqTransferList = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/transfer`,
+    url: `${v1Prefix}/transfer`,
     query: param,
     ...extra,
   });
@@ -70,7 +71,7 @@ export const reqTransferList = (param?: object, extra?: object) => {
 
 export const reqTokenList = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/token`,
+    url: `${v1Prefix}/token`,
     query: param,
     ...extra,
   });
@@ -78,7 +79,7 @@ export const reqTokenList = (param?: object, extra?: object) => {
 
 export const reqToken = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/token/${param && param['address']}`,
+    url: `${v1Prefix}/token/${param && param['address']}`,
     query: param,
     ...extra,
   });
@@ -157,14 +158,14 @@ export const reqTopStatistics = (param: any, extra?: object) => {
 
 export const reqCfxSupply = (extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/supply`,
+    url: `${v1Prefix}/supply`,
     ...extra,
   });
 };
 
 export const reqHomeDashboard = (extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/homeDashboard`,
+    url: `${v1Prefix}/homeDashboard`,
     ...extra,
   });
 };
@@ -178,23 +179,30 @@ export const reqContractNameTag = (name: string, extra?: object) => {
 
 export const reqContractLicense = () => {
   return sendRequest({
-    url: `${apiPrefix}/contract/license`,
+    url: `${v1Prefix}/contract/license`,
   });
 };
 
 export const reqContractCompiler = () => {
   return sendRequest({
-    url: `${apiPrefix}/contract/compiler`,
+    url: `${v1Prefix}/contract/compiler`,
   });
 };
 
 export const reqContractVerification = param => {
   return sendRequest({
-    url: `${apiPrefix}/contract/verify`,
+    url: `${v1Prefix}/contract/verify`,
     type: 'POST',
     body: JSON.stringify(param),
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+};
+
+export const reqTransactions = (extra?: object) => {
+  return sendRequest({
+    url: `${v1Prefix}/transaction`,
+    ...extra,
   });
 };

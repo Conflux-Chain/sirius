@@ -331,6 +331,7 @@ const StyledTransactionHashWrapper = styled.span`
     background-position: center;
     background-size: contain;
     vertical-align: middle;
+    border: none;
 
     &:focus {
       background-image: url(${iconViewTxnActive});

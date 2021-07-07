@@ -71,6 +71,36 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 12px
     }
   }
+
+  .ant-pagination-next, .ant-pagination-prev {
+    button.ant-pagination-item-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,84,254,0.04); 
+      color: #74798c;
+      border-color: rgba(0,84,254,0.04);
+    }
+  }
+
+  .ant-pagination-item, .ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-pagination-options-quick-jumper input {
+    background-color: rgba(0,84,254,0.04); 
+    color: #74798c;
+    border-color: rgba(0,84,254,0.04);
+  }
+
+  .ant-pagination-item-active, .ant-pagination-item-active:hover {
+    border-color: #1e3de4;
+    background-color: #1e3de4;
+
+    a {
+      color: #ffffff;
+    }
+  }
+
+  ul li:before {
+    content: '';
+  }
   
   .image-preview-popover {
     line-height: 1;

@@ -9,13 +9,14 @@ import { toThousands } from '../../../utils';
 import styled from 'styled-components/macro';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { useAge } from '../../../utils/hooks/useAge';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export function Transactions() {
   const { t } = useTranslation();
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 3, 7, 7, 3, 3, 3, 5];
+  const columnsTransactionsWidth = [4, 3, 7, 7, 3, 4, 3, 5];
   const columnsTransactions: ColumnsType = [
     transactionColunms.hash,
     transactionColunms.method,
@@ -25,7 +26,10 @@ export function Transactions() {
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age(ageFormat, toggleAgeFormat),
-  ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
+  ].map((item, i) => ({
+    ...item,
+    width: columnsTransactionsWidth[i],
+  }));
 
   const { total } = useTableData(url);
   const tip = (
@@ -46,6 +50,13 @@ export function Transactions() {
         />
       </Helmet>
       <PageHeader>{t(translations.transactions.title)}</PageHeader>
+
+      <TablePanelNew
+        url="/transaction"
+        columns={columnsTransactions}
+        rowKey="hash"
+      ></TablePanelNew>
+
       <TablePanel
         url={url}
         table={{
