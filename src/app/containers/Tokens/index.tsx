@@ -64,7 +64,7 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc721 ||
     tokenType === cfxTokenTypes.crc721
   ) {
-    columnsWidth = [1, 8, 4, 4, 8];
+    columnsWidth = [1, 7, 3, 3, 9];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
@@ -87,11 +87,12 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc1155 ||
     tokenType === cfxTokenTypes.crc1155
   ) {
-    columnsWidth = [1, 8, 5, 8];
+    columnsWidth = [1, 7, 3, 3, 9];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
       tokenColunms.transfer,
+      tokenColunms.holders,
       tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
@@ -192,16 +193,19 @@ export function Tokens() {
         </Tooltip>
       </PageHeader>
 
-      <TablePanel
-        table={{
-          columns: columns,
-          rowKey: 'address',
-          sorter,
-          sortOrder: tableSortOrder,
-          sortKey: tableSortKey,
-        }}
-        url={queryUrl}
-      />
+      <TableWrapper>
+        <TablePanel
+          table={{
+            className: 'token-list',
+            columns: columns,
+            rowKey: 'address',
+            sorter,
+            sortOrder: tableSortOrder,
+            sortKey: tableSortKey,
+          }}
+          url={queryUrl}
+        />
+      </TableWrapper>
     </>
   );
 }
@@ -210,4 +214,16 @@ const IconWrapper = styled.div`
   padding-left: 0.2857rem;
   width: 1.2857rem;
   cursor: pointer;
+`;
+
+const TableWrapper = styled.div`
+  .token-list {
+    table {
+      tbody td:nth-child(2) img {
+        width: 20px;
+        height: 20px;
+        margin-right: 7px;
+      }
+    }
+  }
 `;

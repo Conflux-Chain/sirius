@@ -25,6 +25,19 @@
     "edit": {
       "title": "合约编辑"
     },
+    "verify": {
+      "contractCodeVerified": "合约源码已验证",
+      "contractName": "合约名：",
+      "optimizationEnabled": "是否优化：",
+      "otherSettings": "其他设置：",
+      "compilerVersion": "编译版本：",
+      "runs": "{{status}} with {{count}} runs",
+      "tipLeft": "立刻前往",
+      "tipCenter": "验证您的合约",
+      "tipRight": "！",
+      "isVerifiedTip": "该合约已验证，源码和 ABI 无法修改"
+    },
+    "code": "合约",
     "sourceCodeShort": "源码",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
@@ -33,6 +46,7 @@
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "合约地址无效，或格式错误",
     "invalidNameTag": "字符长度已达到最大限制",
+    "duplicatedNameTag": "该名称标签已被注册了 {{times}} 次",
     "invalidUrl": "URL 格式错误",
     "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
     "invalidIconSize": "图片过大，请重试",
@@ -81,6 +95,54 @@
       "second": "2. 仅支持 ConfluxStudio，cfxtruffle ，remix 编译后的 .json 文件导入；同时支持手动拷贝 bytecode （必填）和 ABI （选填）。",
       "third": "3. 暂不支持输入构造函数参数。",
       "fourth": "4. 您可以点击页面右上角的账户，在您的账户交易历史中查看合约部署详情。"
+    }
+  },
+  "contractVerification": {
+    "title": "合约验证",
+    "description": "合约验证",
+    "tip": "To be defined.",
+    "notice": {
+      "first": "1. 您可以通过验证某合约源码为与该合约产生交互的用户提供透明度。",
+      "second": "2. ConfluxScan 将您上传的代码与区块链上的代码，及代码的相关配置进行比较；若代码匹配成功，则上传的合约将通过验证。",
+      "third": "3. 仅支持单文件验证。",
+      "fourth": "4. 目前暂不支持构造函数。"
+    },
+    "upload": "上传合约文件",
+    "submit": "提交",
+    "contractAddress": "合约地址",
+    "runs": "运行",
+    "contractName": "合约名称",
+    "compiler": "编译器",
+    "optimization": "优化",
+    "license": "许可协议",
+    "contractSourceCode": "合约源码",
+    "error": {
+      "required": "请输入",
+      "min": "最小值为 0",
+      "isNotAddress": "地址格式错误",
+      "isNotMainnet": "请输入 Conflux Tethys 地址",
+      "isNotTestnet": "请输入 Conflux Testnet 地址",
+      "pleaseSelect": "请选择",
+      "pleaseEnter": "请输入",
+      "notMatch": "生成的字节码与存储在地址上的字节代码不匹配"
+    },
+    "OptimizationOption": {
+      "yes": "是",
+      "no": "否"
+    },
+    "placeholder": {
+      "contractAddress": "请输入合约地址",
+      "runs": "请输一个整数",
+      "contractName": "请输入合约名称",
+      "compiler": "请选择编译器",
+      "optimization": "请选择是否优化",
+      "license": "请选择许可协议",
+      "contractSourceCode": "请上传合约源码"
+    },
+    "status": {
+      "loading": "验证中",
+      "success": "验证成功",
+      "error": "验证失败"
     }
   },
   "contractDetail": {
@@ -207,6 +269,7 @@
     "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
     "contractDeployment": "合约部署",
+    "contractVerification": "合约验证",
     "contracts": "内置合约",
     "chartsAndStatistics": "图表&统计",
     "ecosystem": "生态",
@@ -378,8 +441,8 @@
       "description": "零地址中的 CFX 为已销毁的 CFX"
     },
     "dailyTransaction": {
-      "title": "日交易量",
-      "description": "Conflux 网络每日的交易总量"
+      "title": "日交易次数",
+      "description": "Conflux 网络每日的交易总次数"
     },
     "dailyTransactionCFX": {
       "title": "日交易 -- CFX",
@@ -430,6 +493,9 @@
     }
   },
   "general": {
+    "tokenTypeTag": {
+      "token": "代币"
+    },
     "searchInputPlaceholder": {
       "txnHash": "交易哈希",
       "address": "地址",
@@ -754,7 +820,7 @@
       "to": "到",
       "produced": "共生成",
       "txns": "个内部交易。",
-      "tip": "“高级”功能支持显示价值为 0 的 CFX 转移，而“简单”功能仅显示价值大于 0 的 CFX 转移。"
+      "tip": "“高级“功能支持显示价值为 0 的 CFX 交易，而“简单”功能仅显示价值大于 0 的 CFX 交易。"
     },
     "logs": {
       "title": "事件日志",
@@ -1149,7 +1215,10 @@
   "nftChecker": {
     "title": "NFT 查看器",
     "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
+    "inputPlaceholder": "请输入地址",
     "incorrectFormat": "地址格式错误",
-    "tokenId": "代币 ID"
+    "tokenId": "代币 ID",
+    "plzSearch": "请搜索",
+    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
   }
 }

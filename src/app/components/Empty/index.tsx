@@ -13,6 +13,9 @@ import imgTableWhoops from 'images/table-whoops.png';
 interface Props {
   show: boolean;
   type?: 'fixed' | 'fluid';
+  title?: string | null;
+  noTitle?: boolean;
+  description?: string | null;
   className?: string;
   children?: React.ReactNode;
 }
@@ -23,12 +26,13 @@ export const Empty = ({
   show,
   type = 'fluid',
   className,
+  title,
+  noTitle = false,
+  description,
   children,
   ...others
 }: EmptyProps) => {
   const { t } = useTranslation();
-  const noData = t(translations.general.table.noData);
-  const whoops = t(translations.general.table.whoops);
   return (
     <Wrapper
       className={clsx('empty', className, {
@@ -38,8 +42,14 @@ export const Empty = ({
       {...others}
     >
       <img className="img" src={imgTableWhoops} alt="no data"></img>
-      <p className="title">{whoops}</p>
-      <h1 className="description">{noData}</h1>
+      {noTitle ? (
+        <p className="noTitle" />
+      ) : (
+        <p className="title">{title || t(translations.general.table.whoops)}</p>
+      )}
+      <h1 className="description">
+        {description || t(translations.general.table.noData)}
+      </h1>
       {children}
     </Wrapper>
   );

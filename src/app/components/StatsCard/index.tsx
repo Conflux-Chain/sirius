@@ -430,7 +430,6 @@ export const StatsCard = ({
             <td className="address">
               <AddressContainer
                 value={d.base32 || '0x' + d.miner}
-                maxWidth={220}
                 isMe={
                   accounts && accounts.length > 0
                     ? formatAddress(accounts[0]) ===
@@ -440,13 +439,15 @@ export const StatsCard = ({
               />
             </td>
             <td className="text-right">{intValue(d.blockCount)}</td>
-            <td className="text-right">{cfxValue(d.totalReward)} CFX</td>
+            <td className="text-right">
+              {cfxValue(d.totalReward, { showUnit: true })}
+            </td>
             <td className="text-right">
               {cfxValue(d.txFee, {
                 keepDecimal: true,
                 keepZero: true,
-              })}{' '}
-              CFX
+                showUnit: true,
+              })}
             </td>
             <td className="text-right">
               <Text
@@ -820,6 +821,7 @@ const CardWrapper = styled.div`
     }
     td {
       color: #23304f;
+      font-family: ${monospaceFont};
     }
     tbody tr:nth-child(odd) {
       background: rgba(250, 251, 252, 0.62);

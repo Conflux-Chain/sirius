@@ -25,6 +25,8 @@ import { NFTPreview } from '../../components/NFTPreview';
 import { AddressContainer } from '../../components/AddressContainer';
 import { Empty } from '../../components/Empty';
 import { useHistory } from 'react-router';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
 
 const { Search } = Input;
 
@@ -62,6 +64,12 @@ export function NFTChecker() {
     setLoading(true);
     reset();
     const formattedAddress = formatAddress(address);
+    // ga
+    trackEvent({
+      category: ScanEvent.function.category,
+      action: ScanEvent.function.action.nftChecker,
+      label: formattedAddress,
+    });
     if (validateAddress(address)) {
       setHasSearched(true);
       // get all supported nft balances
@@ -164,7 +172,7 @@ export function NFTChecker() {
         <Search
           value={address}
           onChange={handleAddressChange}
-          placeholder={t(translations.addressConverter.inputPlaceholder)}
+          placeholder={t(translations.nftChecker.inputPlaceholder)}
           onSearch={value => {
             if (validateAddress(value)) {
               history.push(`/nft-checker/${value}`);
@@ -200,11 +208,21 @@ export function NFTChecker() {
               </TagsWrapper>
             ) : null}
             <NFTWrapper>
-              {!loading &&
-              (!NFTBalances || NFTBalances.length === 0) &&
-              hasSearched ? (
+              {!loading && (!NFTBalances || NFTBalances.length === 0) ? (
                 <div className="nodata">
-                  <Empty show={true} type="fluid" />
+                  <Empty
+                    show={true}
+                    type="fluid"
+                    noTitle={!hasSearched}
+                    title={
+                      !hasSearched ? t(translations.nftChecker.plzSearch) : null
+                    }
+                    description={
+                      !hasSearched
+                        ? t(translations.nftChecker.plzSearchDesc)
+                        : null
+                    }
+                  />
                 </div>
               ) : (
                 <>
@@ -348,10 +366,10 @@ const TagsWrapper = styled.div`
 const NFTWrapper = styled.div`
   width: 100%;
   padding: 16px 0 40px;
-  min-height: 100px;
+  min-height: 500px;
 
   .nodata {
-    margin-top: 20px;
+    margin-top: 100px;
     color: #74798c;
   }
 

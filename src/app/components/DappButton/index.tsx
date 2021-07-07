@@ -141,7 +141,7 @@ const DappButton = ({
           <span
             className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
           >
-            <AddressContainer value={accounts[0]} maxWidth={205} />
+            <AddressContainer value={accounts[0]} />
           </span>
         </>
       )}
@@ -181,7 +181,7 @@ const BtnContainer = styled.div`
   .accountAddress {
     margin-left: 0.5714rem;
     color: #97a3b4;
-    font-size: 1.1429rem;
+    font-size: 14px;
   }
   .btnInnerClass.btn {
     height: 30px;

@@ -34,8 +34,9 @@ import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 // import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { ContractContent } from './ContractContent';
+import { ContractContent, CheckCircleIcon } from './ContractContent';
 import { formatAddress } from '../../../utils/cfx';
+import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 // import iconInfo from 'images/info.svg';
 
@@ -569,7 +570,16 @@ export function Table({ address, addressInfo }) {
       ? {
           value: 'contract-viewer',
           action: 'contractViewer',
-          label: t(translations.token.contract),
+          label: (
+            <div>
+              {t(translations.token.contract)}{' '}
+              {addressInfo.verify?.exactMatch ? (
+                <CheckCircleIcon />
+              ) : (
+                <AlertCircle size={16} color="#e36057" />
+              )}
+            </div>
+          ),
           content: <ContractContent contractInfo={addressInfo} />,
         }
       : {
@@ -599,20 +609,20 @@ export function Table({ address, addressInfo }) {
               </FilterWrap>
             </StyledTableHeaderWrapper>
           ),
-          tableFooter: (
-            <DownloadCSV
-              url={queryString.stringifyUrl({
-                url: '/v1/report/mined_block', // @todo replace with real url
-                query: {
-                  minTimestamp,
-                  maxTimestamp,
-                  accountAddress,
-                  limit: '5000',
-                  reverse: 'true',
-                },
-              })}
-            />
-          ),
+          // tableFooter: (
+          //   <DownloadCSV
+          //     url={queryString.stringifyUrl({
+          //       url: '/v1/report/mined_block', // @todo replace with real url
+          //       query: {
+          //         minTimestamp,
+          //         maxTimestamp,
+          //         accountAddress,
+          //         limit: '5000',
+          //         reverse: 'true',
+          //       },
+          //     })}
+          //   />
+          // ),
         },
   );
 

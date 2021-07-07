@@ -25,6 +25,7 @@ import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
+import { monospaceFont } from '../../styles/variable';
 
 export const renderAddress = (
   value,
@@ -290,7 +291,7 @@ export const holders = {
   sortable: true,
   render: value => (
     <ContentWrapper right monospace>
-      {Number.isInteger(value)
+      {Number.isInteger(value) && Number(value) > 0
         ? formatNumber(value, {
             keepDecimal: false,
             withUnit: false,
@@ -423,6 +424,7 @@ export const balance = (decimal, price, transferType) => ({
   ),
   dataIndex: 'balance',
   key: 'balance',
+  sortable: true,
   render: value => {
     const decimals = decimal || 0;
     // Decimal places are determined according to the price
@@ -640,6 +642,7 @@ export const traceResult = {
 export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
+  font-family: ${monospaceFont};
   img {
     width: 1.1429rem;
     height: 1.1429rem;

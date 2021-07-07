@@ -16,6 +16,7 @@ import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@jnoodle/antd';
+import descIcon from 'images/table-desc.svg';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
@@ -130,7 +131,7 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
-            <DropdownWrapper overlay={menu} trigger={['hover', 'click']}>
+            <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
                 <img
@@ -181,6 +182,14 @@ export function TokenDetail() {
 
 const TokenDetailWrap = styled.div`
   padding: 2.2857rem 0;
+
+  table .sortable.balance.desc {
+    cursor: not-allowed !important;
+    background-image: url(${descIcon}) !important;
+    &:hover {
+      color: inherit !important;
+    }
+  }
 `;
 
 const SkeletonWrap = styled.div`
@@ -203,8 +212,8 @@ const HeaderWrap = styled.div`
   }
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
   }
   a {
     color: #00acff !important;
@@ -213,7 +222,7 @@ const HeaderWrap = styled.div`
     font-size: 1.7143rem;
     font-weight: 500;
     color: #1a1a1a;
-    margin: 0 0.5714rem;
+    margin: 0 0.6rem;
   }
   .basic-symbol {
     color: #74798c;

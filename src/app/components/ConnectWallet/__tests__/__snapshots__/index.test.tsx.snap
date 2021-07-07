@@ -71,6 +71,10 @@ exports[`<ConnectWallet  /> should match snapshot 1`] = `
   background: #f5f6fa;
   border-radius: 3.5714rem;
   cursor: pointer;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 <span>

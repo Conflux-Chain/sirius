@@ -25,6 +25,19 @@
     "edit": {
       "title": "Contract Edit"
     },
+    "verify": {
+      "contractCodeVerified": "Contract Source Code Verified",
+      "contractName": "Contract Name: ",
+      "optimizationEnabled": "Optimization Enabled: ",
+      "otherSettings": "Other Settings: ",
+      "compilerVersion": "Compiler Version: ",
+      "runs": "{{status}} with {{count}} runs",
+      "tipLeft": "You can ",
+      "tipCenter": "verify your contract",
+      "tipRight": " now!",
+      "isVerifiedTip": "The contract has been verified, the source code and ABI cannot be modified"
+    },
+    "code": "Code",
     "sourceCodeShort": "Source Code",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
@@ -33,6 +46,7 @@
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
     "invalidNameTag": "The character length has reached the maximum limit",
+    "duplicatedNameTag": "The name tag has been registered {{times}} time",
     "invalidUrl": "Incorrect URL",
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
@@ -81,6 +95,54 @@
       "second": "2. Only ConfluxStudio, cfxtruffle, remix-compiled .json file imports are supported, and manual copy bytecode (required) and ABI (optional) are supported.",
       "third": "3. Enter constructor arguments are not currently supported.",
       "fourth": "4. You can click on the account in the upper right corner of the page to view the contract deployment details in your transaction history."
+    }
+  },
+  "contractVerification": {
+    "title": "Contract Verification",
+    "description": "Contract Verification",
+    "tip": "To be defined.",
+    "notice": {
+      "first": "1. You can provide transparency to users who interact with a contract by verifying the source code of a contract.",
+      "second": "2. ConfluxScan compares the code you upload with the code on the blockchain and the configuration of the code; the contract you upload will pass the verification if the codes are matched successfully.",
+      "third": "3. Only single-file verification is supported.",
+      "fourth": "4. Constructor arguments are not supported currently."
+    },
+    "upload": "Upload Contract File",
+    "submit": "Submit",
+    "contractAddress": "Contract Address",
+    "runs": "Runs",
+    "contractName": "Contract Name",
+    "compiler": "Compiler",
+    "optimization": "Optimization",
+    "license": "License",
+    "contractSourceCode": "Contract Source Code",
+    "error": {
+      "required": "Required",
+      "min": "The minimum value is 0",
+      "isNotAddress": "Invalid address format",
+      "isNotMainnet": "Please enter Conflux Tethys address",
+      "isNotTestnet": "Please enter Conflux Testnet address",
+      "pleaseSelect": "Please Select",
+      "pleaseEnter": "Please Enter",
+      "notMatch": "The resulting bytecode does NOT match with the bytecode that is stored on the address"
+    },
+    "OptimizationOption": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "placeholder": {
+      "contractAddress": "Pleaser enter a contract address",
+      "runs": "Please enter an integer",
+      "contractName": "Please enter the contract name",
+      "compiler": "Please select a compiler",
+      "optimization": "Please select a optimization",
+      "license": "Please select a license",
+      "contractSourceCode": "Please upload contract source code"
+    },
+    "status": {
+      "loading": "Verifying...",
+      "success": "Verification Succeed",
+      "error": "Verification Failed"
     }
   },
   "contractDetail": {
@@ -136,10 +198,10 @@
     }
   },
   "cfxTransfers": {
-    "title": "CFX Transfers",
-    "description": "Show only CFX transfers on the Conflux network.",
+    "title": "CFX Txns",
+    "description": "Show only CFX txns on the Conflux network.",
     "tipCountBefore": "A total of",
-    "tipCountAfter": "CFX transfers"
+    "tipCountAfter": "records"
   },
   "tokens": {
     "title": "Tokens",
@@ -196,7 +258,7 @@
     "bnt": "Blocks & Transactions",
     "block": "Blocks",
     "txn": "Transactions",
-    "cfxTransfers": "CFX Transfers",
+    "cfxTransfers": "CFX Txns",
     "blockchain": "Blockchain",
     "accounts": "Accounts",
     "tokens": "Tokens",
@@ -207,6 +269,7 @@
     "contractCreation": "Contract Registration",
     "contractSponsor": "Contract Sponsor",
     "contractDeployment": "Contract Deployment",
+    "contractVerification": "Contract Verification",
     "contracts": "Internal Contracts",
     "chartsAndStatistics": "Charts & Stats",
     "ecosystem": "Ecosystem",
@@ -378,7 +441,7 @@
       "description": "CFX in Zero address is burned CFX."
     },
     "dailyTransaction": {
-      "title": "Daily Transactions",
+      "title": "Daily Txn Count",
       "description": "The total number of transactions per day on the Conflux network."
     },
     "dailyTransactionCFX": {
@@ -430,6 +493,9 @@
     }
   },
   "general": {
+    "tokenTypeTag": {
+      "token": "Token"
+    },
     "searchInputPlaceholder": {
       "txnHash": "Txn Hash",
       "address": "Address",
@@ -478,7 +544,7 @@
     "transaction": "transaction",
     "transactions": "transactions",
     "tokenTxns": "Token Txns",
-    "cfxTransfer": "CFX Transfers",
+    "cfxTransfer": "CFX Txns",
     "tokenTxnsErc20": "CRC20 Txns",
     "tokenTxnsErc721": "CRC721 Txns",
     "tokenTxnsErc1155": "CRC1155 Txns",
@@ -754,7 +820,7 @@
       "to": "to",
       "produced": "produced",
       "txns": "internal transactions.",
-      "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
+      "tip": "The 'Advanced' view also shows zero value CFX transfers, while the 'Simple' view only shows CFX transfers with value."
     },
     "logs": {
       "title": "logs",
@@ -1149,7 +1215,10 @@
   "nftChecker": {
     "title": "NFT Checker",
     "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
+    "inputPlaceholder": "Please enter an address",
     "incorrectFormat": "Invalid address format",
-    "tokenId": "TokenID"
+    "tokenId": "TokenID",
+    "plzSearch": "Plz Search",
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
   }
 }

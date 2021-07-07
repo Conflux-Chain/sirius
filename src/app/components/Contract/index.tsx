@@ -22,9 +22,13 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-github';
+import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Tabs } from './../Tabs';
-import { reqContract, reqToken } from '../../../utils/httpRequest';
+import {
+  reqContract,
+  reqContractNameTag,
+  reqToken,
+} from '../../../utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
@@ -36,6 +40,8 @@ import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { PageHeader } from '../../components/PageHeader/Loadable';
+import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
+import { Text } from 'app/components/Text/Loadable';
 
 interface Props {
   contractDetail: any;
@@ -61,7 +67,8 @@ const fieldsContract = [
   'typeCode',
 ];
 export const Contract = ({ contractDetail, type, address, loading }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const { accounts } = usePortal();
   const [, setMessage] = useMessages();
   const [title, setTitle] = useState('');
@@ -76,6 +83,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const [addressDisabled, setAddressDisabled] = useState(true);
   const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
   const [errorMsgForName, setErrorMsgForName] = useState('');
+  const [warningMsgTimesForName, setWarningMsgTimesForName] = useState(0);
   const [errorMsgForSite, setErrorMsgForSite] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [isAddressError, setIsAddressError] = useState(true);
@@ -197,6 +205,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const addressOnBlur = () => {
     checkAdminThenToken(tokenImgSrc);
   };
+
   function checkContractName() {
     if (contractName) {
       if (contractName.length > 35) {
@@ -211,6 +220,23 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       setErrorMsgForName('');
     }
   }
+
+  function checkContractNameDuplicated() {
+    // check contract name tag is registered
+    reqContractNameTag(contractName)
+      .then(res => {
+        if (res && res.registered > 0) {
+          setWarningMsgTimesForName(res.registered);
+        } else {
+          setWarningMsgTimesForName(0);
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        setWarningMsgTimesForName(0);
+      });
+  }
+
   useEffect(() => {
     checkAdminThenToken(tokenImgSrc);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -218,6 +244,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
 
   const nameOnBlur = () => {
     checkContractName();
+    checkContractNameDuplicated();
   };
   useEffect(() => {
     checkContractName();
@@ -432,6 +459,9 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const importClick = () => {
     fileJsonInputRef.current.click();
   };
+
+  const isVerified = contractDetail.verify?.exactMatch;
+
   return (
     <Wrapper>
       <PageHeader>{title}</PageHeader>
@@ -453,6 +483,15 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   placeholder={t(translations.contract.addressPlaceholder)}
                   onBlur={addressOnBlur}
                 />
+                {isVerified ? (
+                  <div className="is-verified-tip">
+                    <Text
+                      hoverValue={t(translations.contract.verify.isVerifiedTip)}
+                    >
+                      <CheckCircleIcon />
+                    </Text>
+                  </div>
+                ) : null}
               </SkelontonContainer>
             </div>
             <div>
@@ -480,6 +519,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             <div>
               <span className="blankSpan"></span>
               <span className="errorSpan">{t(errorMsgForName)}</span>
+              {warningMsgTimesForName > 0 ? (
+                <span className="warningSpan">
+                  {t(translations.contract.duplicatedNameTag, {
+                    times: warningMsgTimesForName,
+                  })}
+                  {lang === 'en' && warningMsgTimesForName > 1 ? 's' : ''}
+                </span>
+              ) : null}
             </div>
           </div>
           <div className="lineContainer">
@@ -603,9 +650,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
             ref={fileJsonInputRef}
             onChange={handleJsonChange}
           />
-          <span className="text" onClick={importClick}>
-            {t(translations.general.importJsonFile)}
-          </span>
+          {isVerified ? null : (
+            <span className="text" onClick={importClick}>
+              {t(translations.general.importJsonFile)}
+            </span>
+          )}
         </div>
         <Tabs initialValue="1">
           <Tabs.Item label={tabsLabelSourceCode} value="1">
@@ -615,9 +664,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   <div className="content">
                     <div className="contentHeader" />
                     <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
                       style={AceEditorStyle}
                       mode="solidity"
-                      theme="github"
+                      theme="tomorrow"
                       name="UNIQUE_ID_OF_DIV"
                       setOptions={{
                         showLineNumbers: true,
@@ -640,9 +691,11 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   <div className="content abiContainer">
                     <div className="contentHeader" />
                     <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
                       style={AceEditorStyle}
                       mode="json"
-                      theme="github"
+                      theme="tomorrow"
                       name="UNIQUE_ID_OF_DIV_ABI"
                       setOptions={{
                         showLineNumbers: true,
@@ -679,6 +732,14 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
 };
 const Wrapper = styled.div`
   background: #f5f6fa;
+
+  .is-verified-tip {
+    background-color: #fafbfc;
+    height: 2.1429rem;
+    display: flex;
+    align-items: center;
+    padding-right: 0.7143rem;
+  }
 
   .inputComp {
     background-color: #fafbfc;
@@ -780,26 +841,38 @@ const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   flex-direction: row;
+
   .lineContainer {
     padding: 1.7857rem 0 0 0;
     border-bottom: 0.0714rem solid #e8e9ea;
+
     .firstLine {
       display: flex;
       align-items: center;
+      position: relative;
     }
+
     .with-label {
       flex: 1;
     }
+
     .blankSpan {
       display: inline-block;
       width: 11rem;
     }
-    .errorSpan {
+
+    .errorSpan,
+    .warningSpan {
       display: inline-block;
       font-size: 0.8571rem;
       color: #e64e4e;
       line-height: 1.5714rem;
     }
+
+    .warningSpan {
+      color: #e68d4e;
+    }
+
     &:last-child {
       border: none;
     }
@@ -821,12 +894,14 @@ const TopContainer = styled.div`
     //  }
     //}
   }
+
   .bodyContainer {
     flex: 1;
     box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
     border-radius: 0.3571rem;
     display: flex;
   }
+
   .first {
     flex-direction: column;
     flex-grow: 2;
@@ -834,17 +909,21 @@ const TopContainer = styled.div`
     background: #fff;
     padding: 0 1.2857rem;
     margin-right: 1.7143rem;
+
     ${media.m} {
       margin-right: initial;
     }
   }
+
   .second {
     flex-direction: row;
     background: #f5f6fa;
+
     ${media.m} {
       margin-top: 1.0833rem;
     }
   }
+
   .innerContainer {
     flex: 1;
     width: 238px;
@@ -855,6 +934,7 @@ const TopContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 2.8571rem 1.2857rem;
+
     ${media.m} {
       padding: 0.8333rem;
     }
@@ -875,9 +955,11 @@ const TopContainer = styled.div`
           display: flex;
           align-items: center;
         }
+
         .secondItem {
         }
       }
+
       .iconContainer {
         display: flex;
         background: #f1f4f6;
@@ -892,6 +974,7 @@ const TopContainer = styled.div`
           height: 3.6667rem;
         }
       }
+
       .iconTips {
         color: #97a3b4;
         line-height: 1.5714rem;
@@ -899,27 +982,33 @@ const TopContainer = styled.div`
         margin-left: 1.4286rem;
       }
     }
+
     .labelIcon {
       width: 0.8571rem;
       height: 0.8571rem;
     }
+
     .labelText {
       margin-left: 0.3571rem;
       color: #002257;
       font-size: 1rem;
+
       &:hover {
         color: #0070ff;
       }
+
       ${media.m} {
         font-size: 1rem;
       }
     }
+
     .contractIcon {
       width: 2rem;
     }
 
     &:first-child {
       margin-right: 1.7143rem;
+
       ${media.m} {
         margin-right: 1.25rem;
       }

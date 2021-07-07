@@ -9,13 +9,14 @@ import { Link } from '../Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress, isConfluxTestNet } from '../../../utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from '../../../images/contract-icon.png';
 import isMeIcon from '../../../images/me.png';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
-import { media } from '../../../styles/media';
+import { media, useBreakpoint } from '../../../styles/media';
 import { zeroAddress } from '../../../utils/constants';
+import { monospaceFont } from '../../../styles/variable';
 
 interface Props {
   value: string; // address value
@@ -31,6 +32,11 @@ interface Props {
   showIcon?: boolean; // whether show contract icon, default true
 }
 
+const defaultPCMaxWidth = 138;
+const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
+const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
+const defaultMobileSuffixAddressSize = 4;
+
 // TODO code simplify
 // TODO new address display format
 export const AddressContainer = ({
@@ -42,11 +48,12 @@ export const AddressContainer = ({
   isLink = true,
   isMe = false,
   zeroAddressAutoShowAlias = true,
-  suffixAddressSize = 8,
+  suffixAddressSize,
   prefixFloat = false,
   showIcon = true,
 }: Props) => {
   const { t } = useTranslation();
+  const bp = useBreakpoint();
   const txtContractCreation = t(translations.transaction.contractCreation);
   const cfxAddress = formatAddress(value);
 
@@ -62,6 +69,7 @@ export const AddressContainer = ({
     link = isLink,
     full = isFull,
     style = {},
+    maxwidth = maxWidth,
     prefix = null,
     suffix = null,
   }: any) => (
@@ -72,10 +80,18 @@ export const AddressContainer = ({
           <LinkWrapper
             style={style}
             href={`/address/${hrefAddress}`}
-            maxwidth={full ? 430 : maxWidth}
+            maxwidth={full ? 430 : maxwidth}
+            alias={alias}
             aftercontent={
               cfxAddress && !full && !alias
-                ? cfxAddress.substr(-suffixAddressSize)
+                ? cfxAddress.substr(
+                    -(
+                      suffixAddressSize ||
+                      (bp === 's' || bp === 'm'
+                        ? defaultMobileSuffixAddressSize
+                        : defaultPCSuffixAddressSize)
+                    ),
+                  )
                 : ''
             }
           >
@@ -85,9 +101,17 @@ export const AddressContainer = ({
           <PlainWrapper
             style={style}
             maxwidth={full ? 430 : maxWidth}
+            alias={alias}
             aftercontent={
               cfxAddress && !full && !alias
-                ? cfxAddress.substr(-suffixAddressSize)
+                ? cfxAddress.substr(
+                    -(
+                      suffixAddressSize ||
+                      (bp === 's' || bp === 'm'
+                        ? defaultMobileSuffixAddressSize
+                        : defaultPCSuffixAddressSize)
+                    ),
+                  )
                 : ''
             }
           >
@@ -106,6 +130,7 @@ export const AddressContainer = ({
         hoverValue: formatAddress(contractCreated),
         hrefAddress: formatAddress(contractCreated),
         content: txtContractCreation,
+        maxwidth: 160,
         prefix: (
           <IconWrapper className={prefixFloat ? 'float' : ''}>
             <Text span hoverValue={txtContractCreation}>
@@ -199,19 +224,20 @@ const IconWrapper = styled.span`
 
   svg {
     vertical-align: bottom;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 
   img {
     width: 16px;
     height: 16px;
     vertical-align: bottom;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
 `;
 
 const AddressWrapper = styled.div`
   display: inline-block;
+  font-family: ${monospaceFont};
 
   // TODO icon position
   //position: relative;
@@ -228,7 +254,9 @@ const addressStyle = (props: any) => `
   box-sizing: border-box;
   display: inline-flex !important;
   flex-wrap: nowrap;
-  max-width: ${props.maxwidth || 190}px !important;
+  max-width: ${
+    props.maxwidth || (props.alias ? 190 : defaultPCMaxWidth)
+  }px !important;
   outline: none;
   
   > span {
@@ -239,7 +267,9 @@ const addressStyle = (props: any) => `
   }
 
   ${media.m} {
-    max-width: ${props.maxwidth || 160}px !important;
+    max-width: ${
+      props.maxwidth || (props.alias ? 160 : defaultMobileMaxWidth)
+    }px !important;
   }
 
   &:after {
@@ -254,6 +284,7 @@ const addressStyle = (props: any) => `
 const LinkWrapper = styled(Link)<{
   maxwidth?: number;
   aftercontent?: string;
+  alias?: string;
 }>`
   ${props => addressStyle(props)}
 `;
@@ -261,6 +292,7 @@ const LinkWrapper = styled(Link)<{
 const PlainWrapper = styled.span<{
   maxwidth?: number;
   aftercontent?: string;
+  alias?: string;
 }>`
   ${props => addressStyle(props)}
 

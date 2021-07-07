@@ -56,6 +56,7 @@ export function AddressMetadata({ address, accountInfo }) {
   const skeletonStyle = { height: '1.5714rem' };
   const [earned, setEarned] = useState(0);
   const [voteList, setVoteList] = useState<any>([]);
+  const [lockedCFX, setLockedCFX] = useState(0);
   const [currentVotingRights, setCurrentVotingRights] = useState(0);
   const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
   const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
@@ -93,6 +94,17 @@ export function AddressMetadata({ address, accountInfo }) {
               .then(res => {
                 const votePower = res;
                 setCurrentVotingRights(votePower);
+              })
+              .catch(e => {
+                console.error(e);
+              });
+
+            // get locked CFX
+            cfx
+              .InternalContract('Staking')
+              .getLockedStakingBalance(address, currentBlockN)
+              .then(res => {
+                setLockedCFX(res || 0);
               })
               .catch(e => {
                 console.error(e);
@@ -207,23 +219,9 @@ export function AddressMetadata({ address, accountInfo }) {
                     {voteList && voteList.length > 0 ? (
                       <>
                         <Text
-                          hoverValue={`${fromDripToCfx(
-                            voteList.reduce((a, c) => {
-                              return new BigNumber(a).plus(
-                                new BigNumber(c.amount),
-                              );
-                            }, 0),
-                            true,
-                          )} CFX`}
+                          hoverValue={`${fromDripToCfx(lockedCFX, true)} CFX`}
                         >
-                          {fromDripToCfx(
-                            voteList.reduce((a, c) => {
-                              return new BigNumber(a).plus(
-                                new BigNumber(c.amount),
-                              );
-                            }, 0),
-                          )}{' '}
-                          CFX
+                          {fromDripToCfx(lockedCFX)} CFX
                         </Text>
                         &nbsp;
                         <Text

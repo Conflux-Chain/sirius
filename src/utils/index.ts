@@ -8,7 +8,6 @@ import {
   zeroAddress,
 } from './constants';
 import BigNumber from 'bignumber.js';
-import numeral from 'numeral';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
@@ -22,10 +21,6 @@ export const innerContract = [
   formatAddress('0x0888000000000000000000000000000000000001'),
   formatAddress('0x0888000000000000000000000000000000000002'),
 ];
-
-export const delay = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
 
 export const getAddressType = address => {
   try {
@@ -104,20 +99,6 @@ export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
     );
   }
   return '';
-};
-
-/**
- * 格式化数字
- * @param { number | string } number 数字或字符串
- * @return { string } 数字 n 的整数部分超过3位后，使用 k、M、G… 增加依次，小数部分最多支持 3 位，四舍五入，末位为 0 时省略
- */
-export const formatNumber_bak = (num: number | string) => {
-  if (num === 0 || num === '0') return '0';
-  if (new BigNumber(num).lt(0.001)) return '< 0.001';
-  return numeral(num)
-    .format('0,0a.[000]', Math.floor)
-    .toUpperCase()
-    .replace('B', 'G');
 };
 
 // alternative of String.prototype.replaceAll
@@ -308,28 +289,21 @@ export const getDuration = (pFrom: number, pTo?: number) => {
       throw new Error('invalid timestamp pair');
     }
 
-    const fullDay = dayjs(to).diff(from, 'day');
-    const fullHour = dayjs(to).diff(from, 'hour');
-    const fullMinute = dayjs(to).diff(from, 'minute');
+    const dayjsTo = dayjs(to);
 
-    const day = dayjs(to).diff(from, 'day');
-    const hour = dayjs(to).subtract(fullDay, 'day').diff(from, 'hour');
-    const minute = dayjs(to).subtract(fullHour, 'hour').diff(from, 'minute');
-    const second = dayjs(to)
-      .subtract(fullMinute, 'minute')
-      .diff(from, 'second');
+    const fullDay = dayjsTo.diff(from, 'day');
+    const fullHour = dayjsTo.diff(from, 'hour');
+    const fullMinute = dayjsTo.diff(from, 'minute');
+
+    const day = dayjsTo.diff(from, 'day');
+    const hour = dayjsTo.subtract(fullDay, 'day').diff(from, 'hour');
+    const minute = dayjsTo.subtract(fullHour, 'hour').diff(from, 'minute');
+    const second = dayjsTo.subtract(fullMinute, 'minute').diff(from, 'second');
 
     return [day, hour, minute, second];
   } catch (e) {
     return [0, 0, 0, 0];
   }
-};
-
-export const convertToValueorFee = bigNumber => {
-  const result = new BigNumber(bigNumber).dividedBy(10 ** 18);
-  if (result.toNumber() === 0) return '0';
-  if (result.toNumber() < 0.001) return `< 0.001`;
-  return `${result.toString(10)}`;
 };
 
 /**
@@ -443,30 +417,6 @@ export const formatBalance = (
   } catch {}
 };
 
-export const getUnitByCfxNum = (
-  num: number | string,
-  isShowFull: boolean = false,
-) => {
-  const bn = new BigNumber(num);
-  let numFormatted: number | string = '';
-  let unit = '';
-  if (bn.toNumber() < 10 ** 9) {
-    if (isShowFull) {
-      numFormatted = toThousands(bn.toNumber());
-    } else {
-      numFormatted = formatNumber(bn.toNumber());
-    }
-    unit = 'drip';
-  } else if (10 ** 9 <= bn.toNumber() && bn.toNumber() < 10 ** 18) {
-    numFormatted = fromDripToGdrip(bn.toNumber(), isShowFull);
-    unit = 'Gdrip';
-  } else {
-    numFormatted = fromDripToCfx(bn.toNumber(), isShowFull);
-    unit = 'CFX';
-  }
-  return { num: numFormatted, unit };
-};
-
 interface BodyElement extends HTMLBodyElement {
   createTextRange?(): Range;
 }
@@ -577,9 +527,6 @@ export function byteToKb(bytes) {
 export function isObject(o) {
   return o !== null && typeof o === 'object' && Array.isArray(o) === false;
 }
-export function isBetween(x: number, min: number, max: number) {
-  return x >= min && x <= max;
-}
 export function checkInt(value, type) {
   const num = Number(type.substr(3));
   const min = new BigNumber(-Math.pow(2, num - 1));
@@ -676,10 +623,6 @@ export function checkCfxType(value) {
 
 export const sleep = timeout =>
   new Promise(resolve => setTimeout(resolve, timeout));
-
-export const getRandomString = () => {
-  return Math.random().toString(32).substr(2);
-};
 
 // get two block interval time
 export const getTimeByBlockInterval = (minuend = 0, subtrahend = 0) => {
