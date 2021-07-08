@@ -1,19 +1,19 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
-import { TablePanel } from '../../components/TablePanel/Loadable';
-import { ColumnsType } from '../../components/TabsTablePanel';
-import { TipLabel } from '../../components/TabsTablePanel/Loadable';
-import { PageHeader } from '../../components/PageHeader/Loadable';
-import { useTableData } from './../../components/TabsTablePanel/useTableData';
-import { contractColunms } from '../../../utils/tableColumns';
+import { translations } from 'locales/i18n';
+import { TablePanel } from 'app/components/TablePanel/Loadable';
+import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { useTableData } from 'app/components/TabsTablePanel/useTableData';
+import { contractColunms } from 'utils/tableColumns';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export function Contracts() {
   const { t } = useTranslation();
 
   const columnsWidth = [3, 10, 8, 5];
-  const columns: ColumnsType = [
+  const columns = [
     contractColunms.number,
     contractColunms.name,
     contractColunms.contract,
@@ -44,6 +44,13 @@ export function Contracts() {
         {t(translations.contracts.title)}
       </PageHeader>
 
+      <TablePanelNew
+        url={url}
+        columns={columns}
+        rowKey="address"
+      ></TablePanelNew>
+
+      {/* @todo, table-refactor, need to remove */}
       <TablePanel
         table={{
           columns: columns,
