@@ -112,12 +112,17 @@ export const ContractDetailPage = memo(() => {
       {hasWebsite && (
         <Menu.Item>
           <RouterLink
-            to={
-              websiteUrl.startsWith('http')
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const link = websiteUrl.startsWith('http')
                 ? websiteUrl
-                : `http://${websiteUrl}`
-            }
-            target="_blank"
+                : `http://${websiteUrl}`;
+
+              window.open(link);
+            }}
+            to=""
           >
             {t(translations.general.address.more.website)}
           </RouterLink>
