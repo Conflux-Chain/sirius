@@ -111,7 +111,7 @@ export const ColumnAge = ({
     ),
     dataIndex: dataIndex || 'syncTimestamp',
     key: key || 'syncTimestamp',
-    width: 4,
+    width: 1,
     render: value =>
       ageFormat === 'age' ? (
         <CountDown from={value} />

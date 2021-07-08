@@ -17,7 +17,7 @@ import { Empty } from '../Empty';
 import { monospaceFont } from 'styles/variable';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
-export type TableType = TableProps<unknown> & {
+export type TableType = TableProps<any> & {
   sortOrder?: string; // sort order: asc / desc
   // default sort key
   // should equal dataIndex, not equal url param

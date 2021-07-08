@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { ColumnsType, useTableData } from '../../components/TabsTablePanel';
+import { useTableData } from '../../components/TabsTablePanel';
 import { TablePanel } from '../../components/TablePanel';
 import { transactionColunms } from '../../../utils/tableColumns';
 import { toThousands } from '../../../utils';
@@ -16,8 +16,8 @@ export function Transactions() {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = '/transaction';
 
-  const columnsTransactionsWidth = [4, 3, 7, 7, 3, 4, 3, 5];
-  const columnsTransactions: ColumnsType = [
+  const columnsTransactionsWidth = [4, 3, 6, 6, 3, 4, 4, 5];
+  const columnsTransactions = [
     transactionColunms.hash,
     transactionColunms.method,
     transactionColunms.from,
@@ -57,6 +57,7 @@ export function Transactions() {
         rowKey="hash"
       ></TablePanelNew>
 
+      {/* @todo, table-refactor, need to remove */}
       <TablePanel
         url={url}
         table={{

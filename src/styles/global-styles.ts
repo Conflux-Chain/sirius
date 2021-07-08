@@ -98,6 +98,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-table-thead > tr > th:not(:first-child, :last-child), .ant-table-tbody > tr > td:not(:first-child, :last-child), .ant-table tfoot > tr > th:not(:first-child, :last-child), .ant-table tfoot > tr > td:not(:first-child, :last-child) {
+    padding: 16px 8px;
+  }
+
   ul li:before {
     content: '';
   }

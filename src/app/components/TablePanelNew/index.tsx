@@ -1,19 +1,18 @@
 import React, { useMemo, useEffect } from 'react';
-import { reqTransactions } from 'utils/httpRequest';
+import { sendRequest, v1Prefix } from 'utils/httpRequest';
 import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@jnoodle/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import { TableProps } from '@jnoodle/antd/es/table';
 
-interface TransactionsWithNewTableProp {
+interface TableProp extends TableProps<any> {
   url: string;
-  columns: Array<any>; // todo, use ant table column interface
-  rowKey: string;
 }
 
-interface TransactionsWithNewTableStateProp {
+interface TableStateProp {
   data: Array<any>;
   total: number;
   loading: boolean;
@@ -22,14 +21,21 @@ interface TransactionsWithNewTableStateProp {
 
 export const TablePanel = ({
   url: outerUrl,
+  dataSource,
   columns,
   rowKey,
-}: TransactionsWithNewTableProp) => {
+  scroll,
+  tableLayout,
+  pagination,
+  loading: outerLoading,
+  onChange,
+  ...others
+}: TableProp) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pathname, search } = useLocation();
 
-  const [state, setState] = useState<TransactionsWithNewTableStateProp>({
+  const [state, setState] = useState<TableStateProp>({
     data: [],
     total: 0,
     loading: false,
@@ -52,32 +58,35 @@ export const TablePanel = ({
     // const { url, query } = qs.parseUrl(outerUrl);
     // const searchQuery = qs.parse(search);
 
-    setState({
-      ...state,
-      loading: true,
-    });
-
-    reqTransactions({
-      query: {
-        ...getSkipAndLimit,
-      },
-    })
-      .then(resp => {
-        setState({
-          ...state,
-          data: resp.list,
-          total: Math.min(resp.total, resp.listLimit) || resp.total || 0,
-          loading: false,
-        });
-      })
-      .catch(e => {
-        setState({
-          ...state,
-          error: e,
-        });
+    if (outerUrl) {
+      setState({
+        ...state,
+        loading: true,
       });
+
+      sendRequest({
+        url: `${v1Prefix}/${outerUrl}`,
+        query: {
+          ...getSkipAndLimit,
+        },
+      })
+        .then(resp => {
+          setState({
+            ...state,
+            data: resp.list,
+            total: Math.min(resp.total, resp.listLimit) || resp.total || 0,
+            loading: false,
+          });
+        })
+        .catch(e => {
+          setState({
+            ...state,
+            error: e,
+          });
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [outerUrl, search]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     const { current, pageSize } = pagination;
@@ -97,9 +106,11 @@ export const TablePanel = ({
 
   return (
     <Table
+      tableLayout={tableLayout}
+      scroll={scroll}
       columns={columns}
       rowKey={rowKey}
-      dataSource={data}
+      dataSource={dataSource || data}
       pagination={{
         showQuickJumper: true,
         showTotal: total =>
@@ -110,10 +121,16 @@ export const TablePanel = ({
         current:
           Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit) + 1,
         total: total,
+        ...pagination,
       }}
-      loading={loading}
-      onChange={handleTableChange}
-      scroll={{ x: 1000 }}
+      loading={outerLoading || loading}
+      onChange={onChange || handleTableChange}
+      {...others}
     />
   );
+};
+TablePanel.defaultProps = {
+  scroll: { x: 1200 },
+  tableLayout: 'fixed',
+  rowKey: Math.random().toString().substr(2),
 };
