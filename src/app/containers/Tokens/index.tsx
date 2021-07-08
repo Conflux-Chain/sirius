@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { TablePanel } from 'app/components/TablePanel/Loadable';
-import { ColumnsType } from 'app/components/TabsTablePanel';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTableData } from 'app/components/TabsTablePanel/useTableData';
@@ -14,6 +13,7 @@ import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { cfxTokenTypes } from 'utils/constants';
 import queryString from 'query-string';
 // import { useGlobal } from 'utils/hooks/useGlobal';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 import imgInfo from 'images/info.svg';
 import { trackEvent } from 'utils/ga';
@@ -30,7 +30,7 @@ export function Tokens() {
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
   let columnsWidth = [1, 6, 3, 3, 3, 3, 5];
-  let columns: ColumnsType = [
+  let columns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
     tokenColunms.price,
@@ -194,6 +194,13 @@ export function Tokens() {
       </PageHeader>
 
       <TableWrapper>
+        <TablePanelNew
+          url={queryUrl}
+          columns={columns}
+          rowKey="address"
+        ></TablePanelNew>
+
+        {/* @todo, table-refactor, need to remove */}
         <TablePanel
           table={{
             className: 'token-list',
