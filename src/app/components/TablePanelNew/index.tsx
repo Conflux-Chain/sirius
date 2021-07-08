@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { sendRequest, v1Prefix } from 'utils/httpRequest';
+import { sendRequest } from 'utils/httpRequest';
 import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@jnoodle/antd';
@@ -65,7 +65,7 @@ export const TablePanel = ({
       });
 
       sendRequest({
-        url: `${v1Prefix}/${outerUrl}`,
+        url: outerUrl,
         query: {
           ...getSkipAndLimit,
         },
