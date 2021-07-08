@@ -111,18 +111,23 @@ export const TablePanel = ({
       columns={columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
-      pagination={{
-        showQuickJumper: true,
-        showTotal: total =>
-          t(translations.general.totalRecord, {
-            total,
-          }),
-        pageSize: Number(getSkipAndLimit.limit),
-        current:
-          Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit) + 1,
-        total: total,
-        ...pagination,
-      }}
+      pagination={
+        typeof pagination === 'boolean'
+          ? pagination
+          : {
+              showQuickJumper: true,
+              showTotal: total =>
+                t(translations.general.totalRecord, {
+                  total,
+                }),
+              pageSize: Number(getSkipAndLimit.limit),
+              current:
+                Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit) +
+                1,
+              total: total,
+              ...pagination,
+            }
+      }
       loading={outerLoading || loading}
       onChange={onChange || handleTableChange}
       {...others}
