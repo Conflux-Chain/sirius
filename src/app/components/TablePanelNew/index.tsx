@@ -122,8 +122,9 @@ export const TablePanel = ({
                 }),
               pageSize: Number(getSkipAndLimit.limit),
               current:
-                Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit) +
-                1,
+                Math.floor(
+                  Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit),
+                ) + 1,
               total: total,
               ...pagination,
             }

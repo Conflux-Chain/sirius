@@ -26,6 +26,8 @@ import {
 import { useContract } from '../../../utils/api';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
+import { Holders } from './Holders';
+
 interface TransferProps {
   tokenName: string;
   address: string;
@@ -51,7 +53,6 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     decimals,
     totalSupply,
     price,
-    // holderCount,
     transferType = typeof tokenData.decimals !== 'undefined'
       ? cfxTokenTypes.erc20
       : '',
@@ -121,7 +122,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       url: location.pathname,
       query: {
         ...others,
-        page: '1',
+        page: page as string,
         pageSize: pageSize as string,
         ...object,
       },
@@ -131,26 +132,6 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   let columnsWidth = [3, 6, 6, 4, 4];
   let columns = [
-    // {
-    //   ...tokenColunms.txnHash,
-    //   render: value => {
-    //     if (value === filter) {
-    //       return (
-    //         <Text onClick={() => onFilter(value)} span hoverValue={value}>
-    //           {formatString(value, 'hash')}
-    //         </Text>
-    //       );
-    //     } else {
-    //       return (
-    //         <Link>
-    //           <Text onClick={() => onFilter(value)} span hoverValue={value}>
-    //             {formatString(value, 'hash')}
-    //           </Text>
-    //         </Link>
-    //       );
-    //     }
-    //   },
-    // },
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
@@ -185,26 +166,6 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
-
-  // holders
-  let holdersColumnsWidth = [2, 10, 6, 4];
-  let holdersColumns = [
-    tokenColunms.number(page, pageSize),
-    tokenColunms.account,
-    tokenColunms.balance(
-      transferType === cfxTokenTypes.erc20 ? decimals : 0,
-      price,
-      transferType,
-    ),
-    tokenColunms.percentage(totalSupply),
-  ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
-
-  let holders1155ColumnsWidth = [2, 10, 10];
-  let holders1155Columns = [
-    tokenColunms.number(page, pageSize),
-    tokenColunms.account,
-    tokenColunms.balance(0, price, transferType),
-  ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
 
   const tabs: any = [
     {
@@ -280,48 +241,17 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       value: 'holders',
       action: 'tokenHolders',
       label: t(translations.token.holders),
-      url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
-      table: {
-        className: 'monospaced',
-        columns:
-          transferType !== cfxTokenTypes.erc1155
-            ? holdersColumns
-            : holders1155Columns,
-        rowKey: row => `${tokenAddress}${row.account.address}`,
-        sorter: () => {},
-        sortOrder: 'desc',
-        sortKey: 'balance',
-      },
-      tableHeader: ({ total }) => (
-        <StyledTotalWrapper>
-          {t(translations.general.totalHolders, {
-            total: toThousands(total),
-          })}
-        </StyledTotalWrapper>
+      content: (
+        <Holders
+          url={`/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`}
+          type={transferType}
+          decimals={decimals}
+          price={price}
+          totalSupply={totalSupply}
+        />
       ),
     });
   }
-
-  // if (transferType === cfxTokenTypes.erc1155) {
-  //   tabs.push({
-  //     value: 'holders',
-  //     action: 'tokenHolders',
-  //     label: () => {
-  //       return (
-  //         <>
-  //           {t(translations.token.holders)}
-  //           <TabLabel total={holderCount} realTotal={holderCount} />
-  //         </>
-  //       );
-  //     },
-  //     url: `/stat/tokens/holder-rank?address=${tokenAddress}&reverse=true&orderBy=balance`,
-  //     table: {
-  //       className: 'monospaced',
-  //       columns: holders1155Columns,
-  //       rowKey: row => `${tokenAddress}${row.account.address}`,
-  //     },
-  //   });
-  // }
 
   const clientWidth = document.body.clientWidth;
   let chartWidth = clientWidth - 36;
