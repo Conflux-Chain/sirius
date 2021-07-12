@@ -9,7 +9,7 @@ import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
 
 interface TableProp extends TableProps<any> {
-  url: string;
+  url?: string;
 }
 
 interface TableStateProp {
@@ -43,7 +43,7 @@ export const TablePanel = ({
   });
 
   const getSkipAndLimit = useMemo(() => {
-    const { query } = qs.parseUrl(outerUrl);
+    const { query } = qs.parseUrl(outerUrl || '');
     const searchQuery = qs.parse(search);
     const skip = searchQuery.skip || query.skip || '0';
     const limit = searchQuery.limit || query.limit || '10';
@@ -136,7 +136,8 @@ export const TablePanel = ({
   );
 };
 TablePanel.defaultProps = {
+  url: '',
   scroll: { x: 1200 },
   tableLayout: 'fixed',
-  rowKey: Math.random().toString().substr(2),
+  rowKey: () => Math.random().toString().substr(2),
 };
