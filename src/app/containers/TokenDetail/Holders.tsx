@@ -7,14 +7,21 @@ import qs from 'query-string';
 import { useLocation } from 'react-router-dom';
 
 interface Props {
-  url: string;
+  address: string;
   type: string;
   decimals: number;
   price: number;
   totalSupply: number;
 }
 
-export const Holders = ({ url, type, decimals, price, totalSupply }: Props) => {
+export const Holders = ({
+  address,
+  type,
+  decimals,
+  price,
+  totalSupply,
+}: Props) => {
+  const url = `/stat/tokens/holder-rank?address=${address}&reverse=true&orderBy=balance`;
   const { search } = useLocation();
   const { skip = 0, limit = 10 } = qs.parse(search);
   const current = Math.floor(Number(skip) / Number(limit)) + 1;

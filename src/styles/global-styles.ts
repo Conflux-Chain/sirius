@@ -103,7 +103,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ul li:before {
-    content: '';
+    content: '' !important;
   }
   
   .image-preview-popover {

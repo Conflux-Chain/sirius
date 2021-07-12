@@ -505,6 +505,7 @@
       "epoch": "Epoch"
     },
     "totalRecord": "A total of {{total}} records",
+    "totalRecordWithLimit": "Showing the last {{limit}} records (A total of {{total}} records)",
     "totalHolders": "A total of {{total}} holders",
     "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",

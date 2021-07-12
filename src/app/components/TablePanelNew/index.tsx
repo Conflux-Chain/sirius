@@ -8,13 +8,16 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
 
-interface TableProp extends TableProps<any> {
+interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
+  title?: (info: any) => React.ReactNode;
+  footer?: (info: any) => React.ReactNode;
 }
 
 interface TableStateProp {
   data: Array<any>;
   total: number;
+  listLimit?: number;
   loading: boolean;
   error: ErrorConstructor | null;
 }
@@ -29,6 +32,8 @@ export const TablePanel = ({
   pagination,
   loading: outerLoading,
   onChange,
+  title,
+  footer,
   ...others
 }: TableProp) => {
   const { t } = useTranslation();
@@ -38,36 +43,38 @@ export const TablePanel = ({
   const [state, setState] = useState<TableStateProp>({
     data: [],
     total: 0,
+    listLimit: 0,
     loading: false,
     error: null,
   });
 
-  const getSkipAndLimit = useMemo(() => {
+  const getQuery = useMemo(() => {
     const { query } = qs.parseUrl(outerUrl || '');
     const searchQuery = qs.parse(search);
     const skip = searchQuery.skip || query.skip || '0';
     const limit = searchQuery.limit || query.limit || '10';
 
     return {
+      ...query,
+      ...searchQuery,
       skip: skip,
       limit: limit,
     };
   }, [outerUrl, search]);
 
   useEffect(() => {
-    // const { url, query } = qs.parseUrl(outerUrl);
-    // const searchQuery = qs.parse(search);
-
     if (outerUrl) {
+      const { url } = qs.parseUrl(outerUrl);
+
       setState({
         ...state,
         loading: true,
       });
 
       sendRequest({
-        url: outerUrl,
+        url: url,
         query: {
-          ...getSkipAndLimit,
+          ...getQuery,
         },
       })
         .then(resp => {
@@ -75,6 +82,7 @@ export const TablePanel = ({
             ...state,
             data: resp.list,
             total: Math.min(resp.total, resp.listLimit) || resp.total || 0,
+            listLimit: resp.listLimit || 0,
             loading: false,
           });
         })
@@ -102,7 +110,7 @@ export const TablePanel = ({
     history.push(url);
   };
 
-  const { data, loading, total } = state;
+  const { data, loading, total, listLimit } = state;
 
   return (
     <Table
@@ -116,21 +124,49 @@ export const TablePanel = ({
           ? pagination
           : {
               showQuickJumper: true,
-              showTotal: total =>
-                t(translations.general.totalRecord, {
-                  total,
-                }),
-              pageSize: Number(getSkipAndLimit.limit),
+              showTotal: total => {
+                if (listLimit && total > listLimit) {
+                  return t(translations.general.totalRecordWithLimit, {
+                    total,
+                    limit: listLimit,
+                  });
+                } else {
+                  return t(translations.general.totalRecord, {
+                    total,
+                  });
+                }
+              },
+              pageSize: Number(getQuery.limit),
               current:
-                Math.floor(
-                  Number(getSkipAndLimit.skip) / Number(getSkipAndLimit.limit),
-                ) + 1,
+                Math.floor(Number(getQuery.skip) / Number(getQuery.limit)) + 1,
               total: total,
               ...pagination,
             }
       }
       loading={outerLoading || loading}
       onChange={onChange || handleTableChange}
+      title={() => {
+        if (typeof title === 'function') {
+          return title({
+            data,
+            total,
+            loading,
+          });
+        } else {
+          return null;
+        }
+      }}
+      footer={() => {
+        if (typeof footer === 'function') {
+          return footer({
+            data,
+            total,
+            loading,
+          });
+        } else {
+          return null;
+        }
+      }}
       {...others}
     />
   );
@@ -140,4 +176,5 @@ TablePanel.defaultProps = {
   scroll: { x: 1200 },
   tableLayout: 'fixed',
   rowKey: () => Math.random().toString().substr(2),
+  title: () => null,
 };
