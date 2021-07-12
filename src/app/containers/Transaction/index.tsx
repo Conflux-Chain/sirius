@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Detail } from './Detail';
 
-import { InternalTxns } from './InternalTxns';
+import { InternalTxns } from 'app/containers/Transactions/Loadable';
 
 export function Transaction() {
   const { t } = useTranslation();

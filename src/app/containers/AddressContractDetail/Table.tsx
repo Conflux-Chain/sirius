@@ -33,14 +33,10 @@ import { cfxTokenTypes } from 'utils/constants';
 import { useAge } from 'utils/hooks/useAge';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
-// import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { ContractContent, CheckCircleIcon } from './ContractContent';
 import { formatAddress } from '../../../utils/cfx';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
-
-// import iconInfo from 'images/info.svg';
-
-// const PendingReasonText = transactionColunms.PendingReasonText;
+import { PendingTxns } from 'app/containers/Transactions/Loadable';
 
 export function Table({ address, addressInfo }) {
   const bp = useBreakpoint();
@@ -172,20 +168,6 @@ export function Table({ address, addressInfo }) {
     transactionColunms.gasFee,
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
-
-  const columnsPendingTransactionsWidth = [4, 6, 5, 3, 2, 3, 5];
-  const columnsPendingTransactions: ColumnsType = [
-    transactionColunms.hash,
-    tokenColunms.from,
-    tokenColunms.to,
-    transactionColunms.value,
-    transactionColunms.gasPrice,
-    {
-      ...transactionColunms.gasFee,
-      render: () => t(translations.transactions.pendingTxnGasFee),
-    },
-    transactionColunms.pendingReason,
-  ].map((item, i) => ({ ...item, width: columnsPendingTransactionsWidth[i] }));
 
   const tokenColumnsToken = {
     ...tokenColunms.token,
@@ -349,42 +331,7 @@ export function Table({ address, addressInfo }) {
       value: 'transaction-pending',
       action: 'accountTransactions-pending',
       label: t(translations.transactions.pending),
-      url: `/rpc/cfx_getAccountPendingTransactions?address=${address}`,
-      pagination: false,
-      table: {
-        columns: columnsPendingTransactions,
-        rowKey: 'hash',
-        className: 'transaction-wide',
-      },
-      tableHeader: ({ total }) => {
-        return (
-          <StyledTableHeaderWrapper>
-            <div>
-              {/* <Tooltip
-                className="download-csv-tooltip"
-                text={t(translations.transactions.pendingTip)}
-                placement="top"
-              >
-                <IconWrapper>
-                  <img
-                    src={iconInfo}
-                    alt="warning-icon"
-                    className="download-svg-img"
-                  ></img>
-                </IconWrapper>
-              </Tooltip> */}
-
-              {total > 10
-                ? t(translations.transactions.pendingTotal, {
-                    total: toThousands(total),
-                  })
-                : t(translations.general.totalRecord, {
-                    total: toThousands(total),
-                  })}
-            </div>
-          </StyledTableHeaderWrapper>
-        );
-      },
+      content: <PendingTxns address={address} />,
     });
   }
 

@@ -9,6 +9,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
 import styled from 'styled-components/macro';
+import pubsub from 'utils/pubsub';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
@@ -82,6 +83,14 @@ export const InternalTxns = ({ address, from, to }: Props) => {
           setState({
             ...state,
             error: e,
+          });
+
+          pubsub.publish('notify', {
+            type: 'request',
+            option: {
+              code: '30001', // rpc call error
+              message: e.message,
+            },
           });
         });
     }
