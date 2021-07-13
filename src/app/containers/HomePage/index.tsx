@@ -20,7 +20,7 @@ export function HomePage() {
   const [ageFormat, toggleAgeFormat] = useAge();
   const [timestamp, setTimestamp] = useState(+new Date());
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 5];
+  const columnsBlocksWidth = [4, 2, 2, 6, 6, 3, 5, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
