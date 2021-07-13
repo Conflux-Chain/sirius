@@ -10,6 +10,8 @@ import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
 import { Tooltip } from '../Tooltip';
 import { translations } from 'locales/i18n';
+import styled from 'styled-components';
+import { isAccountAddress } from '../../../utils';
 
 interface QrcodeButtonProps {
   value: string;
@@ -70,9 +72,84 @@ export const QrcodeButton = ({
       >
         <Modal.Title>{title}</Modal.Title>
         <Modal.Content>
-          <QRCode size={200} value={value} />
+          <BugleBorderWrapper>
+            <BugleBorder>
+              <BugleBorderDivLeftTop />
+              <BugleBorderDivRightTop />
+              <BugleBorderDivRightBottom />
+              <BugleBorderDivLeftBottom />
+              <QRCodeWrapper>
+                <QRCode size={200} value={value} level={'H'} />
+              </QRCodeWrapper>
+            </BugleBorder>
+          </BugleBorderWrapper>
+          <AddressTitle>
+            {isAccountAddress(value)
+              ? t(translations.general.qrcodeButton.address)
+              : t(translations.general.qrcodeButton.contract)}
+          </AddressTitle>
+          <Address>{value}</Address>
         </Modal.Content>
       </Modal>
     </>
   );
 };
+const BugleBorderWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+`;
+const BugleBorder = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const BugleBorderDiv = styled.div`
+  width: 10px;
+  height: 10px;
+  position: absolute;
+`;
+const BugleBorderDivLeftTop = styled(BugleBorderDiv)`
+  top: 0;
+  left: 0;
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+`;
+const BugleBorderDivRightTop = styled(BugleBorderDiv)`
+  top: 0;
+  right: 0;
+  border-right: 2px solid black;
+  border-top: 2px solid black;
+`;
+const BugleBorderDivRightBottom = styled(BugleBorderDiv)`
+  bottom: 0;
+  right: 0;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+`;
+const BugleBorderDivLeftBottom = styled(BugleBorderDiv)`
+  bottom: 0;
+  left: 0;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+`;
+
+const QRCodeWrapper = styled.div`
+  text-align: center;
+  margin: 14px 0 14px 0;
+`;
+
+const AddressTitle = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 2px 0 2px 0;
+`;
+const Address = styled.p`
+  text-align: center;
+  margin-top: 0;
+`;
