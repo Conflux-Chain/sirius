@@ -23,7 +23,7 @@ export function Blocks() {
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     blockColunms.miner,
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercentWithProgress,

@@ -284,7 +284,7 @@ export function Table({ address, addressInfo }) {
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
       render: value => <AddressContainer isLink={false} value={value} />,

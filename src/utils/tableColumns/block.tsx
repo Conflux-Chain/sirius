@@ -42,32 +42,13 @@ export const txns = {
   render: formatNumber,
 };
 
-export const hash = {
+export const hashWithPivot = {
   title: (
     <Translation>{t => t(translations.general.table.block.hash)}</Translation>
   ),
   dataIndex: 'hash',
   key: 'hash',
   width: 1,
-  render: (value, row: any) => {
-    let pivotTag: React.ReactNode = null;
-    if (row.pivotHash === row.hash) {
-      pivotTag = <img className="img" src={imgPivot} alt="pivot" />;
-    }
-    return (
-      <StyledHashWrapper>
-        <Link href={`/block/${value}`}>
-          <Text span hoverValue={value}>
-            <SpanWrap>{value}</SpanWrap>
-          </Text>
-        </Link>
-        {pivotTag}
-      </StyledHashWrapper>
-    );
-  },
-};
-export const hashWithPivot = {
-  ...hash,
   render: (value, row: any) => {
     let pivotTag: React.ReactNode = null;
     if (row.pivotHash === row.hash) {
