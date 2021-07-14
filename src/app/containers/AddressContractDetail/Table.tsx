@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
-import queryString from 'query-string';
+import React, { /*useEffect,*/ useMemo } from 'react';
+// import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useHistory, useLocation } from 'react-router';
+// import { useHistory, useLocation } from 'react-router';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   isContractAddress,
@@ -25,26 +25,26 @@ import { MinedBlocks } from 'app/containers/Blocks/Loadable';
 
 export function Table({ address, addressInfo }) {
   const { t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
-  const queries = queryString.parse(location.search);
+  // const location = useLocation();
+  // const history = useHistory();
+  // const queries = queryString.parse(location.search);
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
     [address],
   );
 
-  useEffect(() => {
-    history.replace(
-      queryString.stringifyUrl({
-        url: location.pathname,
-        query: {
-          accountAddress: address,
-          ...queries,
-        },
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search, location.pathname, address, history]);
+  // useEffect(() => {
+  //   history.replace(
+  //     queryString.stringifyUrl({
+  //       url: location.pathname,
+  //       query: {
+  //         accountAddress: address,
+  //         ...queries,
+  //       },
+  //     }),
+  //   );
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location.search, location.pathname, address, history]);
 
   const tabs: any = [
     {

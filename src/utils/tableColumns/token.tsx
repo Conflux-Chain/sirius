@@ -27,15 +27,30 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const reg = /address\/(.*)$/;
+
 export const renderAddress = (
   value,
   row,
   type?: 'to' | 'from',
   withArrow = true,
 ) => {
-  const { accountAddress } = queryString.parse(window.location.search);
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
   const filter = (accountAddress as string) || '';
   let alias = '';
+
   if (type === 'from') {
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.fromContractInfo && row.fromContractInfo.name)
