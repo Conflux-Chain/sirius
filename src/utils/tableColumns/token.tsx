@@ -135,6 +135,60 @@ export const token = {
   },
 };
 
+const Token2 = ({ row }) => {
+  const { t } = useTranslation();
+
+  return (
+    <StyledIconWrapper>
+      {row?.token
+        ? [
+            <img
+              key="img"
+              src={row?.token?.icon || defaultTokenIcon}
+              alt="token icon"
+            />,
+            <Link key="link" href={`/token/${row?.token?.address}`}>
+              <Text
+                span
+                hoverValue={
+                  row?.token?.name
+                    ? `${
+                        row?.token?.name || t(translations.general.notAvailable)
+                      } (${
+                        row?.token?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`
+                    : formatAddress(row?.token?.address)
+                }
+              >
+                {row?.token?.name ? (
+                  formatString(
+                    `${
+                      row?.token?.name || t(translations.general.notAvailable)
+                    } (${
+                      row?.token?.symbol || t(translations.general.notAvailable)
+                    })`,
+                    36,
+                  )
+                ) : (
+                  <AddressContainer
+                    value={row?.token?.address}
+                    alias={row?.token?.contractName || null}
+                    showIcon={false}
+                  />
+                )}
+              </Text>
+            </Link>,
+          ]
+        : t(translations.general.loading)}
+    </StyledIconWrapper>
+  );
+};
+export const token2 = {
+  ...token,
+  render: row => <Token2 row={row} />,
+};
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;

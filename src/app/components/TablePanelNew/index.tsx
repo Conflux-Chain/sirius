@@ -10,8 +10,8 @@ import { TableProps } from '@jnoodle/antd/es/table';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
-  title?: (info: any) => React.ReactNode;
-  footer?: (info: any) => React.ReactNode;
+  title?: ((info: any) => React.ReactNode) | React.ReactNode;
+  footer?: ((info: any) => React.ReactNode) | React.ReactNode;
 }
 
 interface TableStateProp {
@@ -81,7 +81,7 @@ export const TablePanel = ({
           setState({
             ...state,
             data: resp.list,
-            total: Math.min(resp.total, resp.listLimit) || resp.total || 0,
+            total: resp.total,
             listLimit: resp.listLimit || 0,
             loading: false,
           });
@@ -124,7 +124,7 @@ export const TablePanel = ({
           ? pagination
           : {
               showQuickJumper: true,
-              showTotal: total => {
+              showTotal: () => {
                 if (listLimit && total > listLimit) {
                   return t(translations.general.totalRecordWithLimit, {
                     total,
@@ -139,34 +139,34 @@ export const TablePanel = ({
               pageSize: Number(getQuery.limit),
               current:
                 Math.floor(Number(getQuery.skip) / Number(getQuery.limit)) + 1,
-              total: total,
+              total: Math.min(total, listLimit || 0) || total || 0,
               ...pagination,
             }
       }
       loading={outerLoading || loading}
       onChange={onChange || handleTableChange}
-      title={() => {
-        if (typeof title === 'function') {
-          return title({
-            data,
-            total,
-            loading,
-          });
-        } else {
-          return null;
-        }
-      }}
-      footer={() => {
-        if (typeof footer === 'function') {
-          return footer({
-            data,
-            total,
-            loading,
-          });
-        } else {
-          return null;
-        }
-      }}
+      title={
+        typeof title === 'function'
+          ? () =>
+              title({
+                data,
+                total,
+                listLimit,
+                loading,
+              })
+          : () => title
+      }
+      footer={
+        typeof footer === 'function'
+          ? () =>
+              footer({
+                data,
+                total,
+                listLimit,
+                loading,
+              })
+          : () => footer
+      }
       {...others}
     />
   );
@@ -176,5 +176,6 @@ TablePanel.defaultProps = {
   scroll: { x: 1200 },
   tableLayout: 'fixed',
   rowKey: () => Math.random().toString().substr(2),
-  title: () => null,
+  title: undefined,
+  footer: undefined,
 };
