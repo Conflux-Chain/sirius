@@ -102,6 +102,10 @@ export const GlobalStyle = createGlobalStyle`
     padding: 16px 8px;
   }
 
+  .ant-table-thead > tr > th:last-child.ant-table-column-has-sorters {
+    padding: 16px 8px;
+  }
+
   .ant-table-column-sorters {
     display: flex;
     align-items: center;

@@ -13,7 +13,7 @@ export function Contracts() {
 
   const columnsWidth = [3, 10, 8, 5];
   const columns = [
-    contractColunms.number,
+    contractColunms.number(),
     contractColunms.name,
     contractColunms.contract,
     contractColunms.transactionCount,
