@@ -630,7 +630,8 @@
     "qrcodeButton": {
       "clickToShow": "Click to view QR code",
       "contract": "Contract",
-      "address": "Address"
+      "address": "Address",
+      "scanQRCode": "Scan QR Code"
     },
     "notAvailable": "Not Available",
     "security": {
