@@ -22,6 +22,10 @@ interface TableStateProp {
   error: ErrorConstructor | null;
 }
 
+interface Query {
+  [index: string]: string;
+}
+
 export const TablePanel = ({
   url: outerUrl,
   dataSource,
@@ -99,13 +103,21 @@ export const TablePanel = ({
   const handleTableChange = (pagination, filters, sorter) => {
     const { current, pageSize } = pagination;
     const { skip, limit, ...others } = qs.parse(search);
+
+    let query: Query = {
+      ...others,
+      skip: String((current - 1) * pageSize) || '0',
+      limit: pageSize || '10',
+    };
+
+    if (sorter) {
+      query.orderBy = sorter.field;
+      query.reverse = sorter.order === 'ascend' ? 'false' : 'true';
+    }
+
     const url = qs.stringifyUrl({
       url: pathname,
-      query: {
-        ...others,
-        skip: String((current - 1) * pageSize) || '0',
-        limit: pageSize || '10',
-      },
+      query,
     });
     history.push(url);
   };

@@ -102,6 +102,18 @@ export const GlobalStyle = createGlobalStyle`
     padding: 16px 8px;
   }
 
+  .ant-table-column-sorters {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    justify-content: flex-end;
+
+    .ant-table-column-sorter {
+      margin-top: -0.4em;
+    }
+  }
+
   ul li:before {
     content: '' !important;
   }
