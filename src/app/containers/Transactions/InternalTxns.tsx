@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import { fetchWithPrefix } from 'utils/request';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { AddressContainer } from 'app/components/AddressContainer';
@@ -136,25 +135,13 @@ export const InternalTxns = ({ address, from, to }: Props) => {
   };
 
   return (
-    <>
-      <TablePanelNew
-        columns={columns}
-        pagination={false}
-        dataSource={data}
-        loading={loading}
-        title={tableHeader}
-      ></TablePanelNew>
-
-      {/* @todo, table-refactor, need to remove */}
-      <br></br>
-      <TablePanel
-        url={url}
-        table={{
-          columns: columns,
-          rowKey: () => Math.random().toString().substr(2),
-        }}
-      />
-    </>
+    <TablePanelNew
+      columns={columns}
+      pagination={false}
+      dataSource={data}
+      loading={loading}
+      title={tableHeader}
+    ></TablePanelNew>
   );
 };
 

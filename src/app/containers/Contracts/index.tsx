@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTableData } from 'app/components/TabsTablePanel/useTableData';
@@ -49,15 +48,6 @@ export function Contracts() {
         columns={columns}
         rowKey="address"
       ></TablePanelNew>
-
-      {/* @todo, table-refactor, need to remove */}
-      <TablePanel
-        table={{
-          columns: columns,
-          rowKey: 'address',
-        }}
-        url={url}
-      />
     </>
   );
 }

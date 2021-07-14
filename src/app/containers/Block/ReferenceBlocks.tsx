@@ -2,7 +2,6 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { blockColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 
 interface Props {
   url: string;
@@ -24,11 +23,6 @@ export const ReferenceBlocks = ({ url }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (
-    <>
-      <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
-
-      {/* @todo, table-refactor, need to remove */}
-      <TablePanel url={url} table={{ columns: columns, rowKey: 'hash' }} />
-    </>
+    <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
   );
 };

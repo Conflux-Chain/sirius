@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';
@@ -157,16 +156,6 @@ export function Accounts() {
           rowKey="base32address"
           pagination={false}
         ></TablePanelNew>
-
-        {/* @todo, table-refactor, need to remove */}
-        <TablePanel
-          table={{
-            columns: columns,
-            rowKey: 'base32address',
-          }}
-          pagination={false}
-          url={url}
-        />
       </StyledTableWrapper>
     </>
   );

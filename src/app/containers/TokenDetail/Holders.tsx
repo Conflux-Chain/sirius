@@ -1,7 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms } from 'utils/tableColumns';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 import { cfxTokenTypes } from 'utils/constants';
 import qs from 'query-string';
 import { useLocation } from 'react-router-dom';
@@ -50,16 +49,11 @@ export const Holders = ({
     type === cfxTokenTypes.erc1155 ? holders1155Columns : holdersColumns;
 
   return (
-    <>
-      <TablePanelNew
-        url={url}
-        columns={columns}
-        rowKey="hash"
-        // pagination={false}
-      ></TablePanelNew>
-
-      {/* @todo, table-refactor, need to remove */}
-      <TablePanel url={url} table={{ columns: columns, rowKey: 'hash' }} />
-    </>
+    <TablePanelNew
+      url={url}
+      columns={columns}
+      rowKey="hash"
+      // pagination={false}
+    ></TablePanelNew>
   );
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { blockColunms } from 'utils/tableColumns';
@@ -39,9 +38,6 @@ export const Epoch = () => {
       <PageHeader subtitle={number}>{t(translations.epoch.title)}</PageHeader>
 
       <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
-
-      {/* @todo, table-refactor, need to remove */}
-      <TablePanel url={url} table={{ columns: columns, rowKey: 'hash' }} />
     </>
   );
 };
