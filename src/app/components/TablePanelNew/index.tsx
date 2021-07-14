@@ -146,26 +146,30 @@ export const TablePanel = ({
       loading={outerLoading || loading}
       onChange={onChange || handleTableChange}
       title={
-        typeof title === 'function'
-          ? () =>
-              title({
-                data,
-                total,
-                listLimit,
-                loading,
-              })
-          : () => title
+        title
+          ? typeof title === 'function'
+            ? () =>
+                title({
+                  data,
+                  total,
+                  listLimit,
+                  loading,
+                })
+            : () => title
+          : undefined
       }
       footer={
-        typeof footer === 'function'
-          ? () =>
-              footer({
-                data,
-                total,
-                listLimit,
-                loading,
-              })
-          : () => footer
+        footer
+          ? typeof footer === 'function'
+            ? () =>
+                footer({
+                  data,
+                  total,
+                  listLimit,
+                  loading,
+                })
+            : () => footer
+          : undefined
       }
       {...others}
     />
