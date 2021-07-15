@@ -48,12 +48,12 @@ export function Block() {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTransactionsWidth[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 5];
+  const columnsBlocksWidth = [4, 2, 2, 6, 6, 3, 5, 5];
   const columnsBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,

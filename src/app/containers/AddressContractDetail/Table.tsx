@@ -279,12 +279,12 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 6, 6, 3, 5, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
       render: value => <AddressContainer isLink={false} value={value} />,
