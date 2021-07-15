@@ -627,7 +627,10 @@
     "apply": "申请",
     "search": "搜索",
     "qrcodeButton": {
-      "clickToShow": "点击查看二维码"
+      "clickToShow": "点击查看二维码",
+      "contract": "合约",
+      "address": "地址",
+      "scanQRCode": "扫描二维码"
     },
     "notAvailable": "暂无信息",
     "security": {

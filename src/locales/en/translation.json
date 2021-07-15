@@ -627,7 +627,10 @@
     "apply": "Apply",
     "search": "Search",
     "qrcodeButton": {
-      "clickToShow": "Click to view QR code"
+      "clickToShow": "Click to view QR code",
+      "contract": "Contract",
+      "address": "Address",
+      "scanQRCode": "Scan QR Code"
     },
     "notAvailable": "Not Available",
     "security": {
