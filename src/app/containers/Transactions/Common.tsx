@@ -11,6 +11,7 @@ import { toThousands, isContractAddress, isInnerContractAddress } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import { useLocation } from 'react-router-dom';
 import qs from 'query-string';
+import { useParams } from 'react-router-dom';
 
 interface TitleProps {
   readonly address: string;
@@ -130,11 +131,12 @@ Title.defaultProps = {
 };
 
 export const Footer = ({ pathname, type }: FooterProps) => {
+  const { address } = useParams<{ address: string }>();
   const location = useLocation();
   const {
     minTimestamp,
     maxTimestamp,
-    accountAddress,
+    accountAddress = address || '',
     txType,
     status,
   } = qs.parse(location.search || '');
@@ -144,6 +146,7 @@ export const Footer = ({ pathname, type }: FooterProps) => {
   const query: QueryProps = {
     limit: '5000',
     reverse: 'true',
+    accountAddress: accountAddress as string,
   };
 
   if (typeof minTimestamp === 'string') {
@@ -152,10 +155,6 @@ export const Footer = ({ pathname, type }: FooterProps) => {
 
   if (typeof maxTimestamp === 'string') {
     query.maxTimestamp = maxTimestamp;
-  }
-
-  if (typeof accountAddress === 'string') {
-    query.accountAddress = accountAddress;
   }
 
   if (typeof type === 'string') {
