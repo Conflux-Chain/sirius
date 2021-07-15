@@ -7,14 +7,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
-import { Tooltip } from '../Tooltip';
+import { Tooltip } from 'app/components/Tooltip';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { isAccountAddress } from '../../../utils';
-import { Text } from '../Text/Loadable';
-import { media, useBreakpoint } from '../../../styles/media';
-import { Link } from '../Link/Loadable';
-import { isConfluxTestNet } from '../../../utils/cfx';
+import { isAccountAddress } from 'utils';
+import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 
 interface QrcodeButtonProps {
   value: string;
@@ -24,11 +21,6 @@ interface QrcodeButtonProps {
   size?: number;
 }
 
-const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
-const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
-const defaultMobileSuffixAddressSize = 4;
-
 export const QrcodeButton = ({
   value,
   tooltipText,
@@ -36,7 +28,6 @@ export const QrcodeButton = ({
   className,
   size,
 }: QrcodeButtonProps) => {
-  const bp = useBreakpoint();
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const handleClick = () => {
@@ -92,18 +83,7 @@ export const QrcodeButton = ({
               : t(translations.general.qrcodeButton.contract)}
             ：
           </AddressType>
-          <Text span hoverValue={value}>
-            <LinkWrapper
-              href={`/address/${value}`}
-              aftercontent={value.substr(
-                -(bp === 's' || bp === 'm'
-                  ? defaultMobileSuffixAddressSize
-                  : defaultPCSuffixAddressSize),
-              )}
-            >
-              <span>{value}</span>
-            </LinkWrapper>
-          </Text>
+          <AddressContainer value={value} showIcon={false}></AddressContainer>
         </Modal.Content>
       </Modal>
     </>
@@ -121,42 +101,4 @@ const Title = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 8px 0 8px 0;
-`;
-const addressStyle = (props: any) => `
-position: relative;
-box-sizing: border-box;
-display: inline-flex !important;
-flex-wrap: nowrap;
-max-width: ${
-  props.maxwidth || (props.alias ? 190 : defaultPCMaxWidth)
-}px !important;
-outline: none;
-
-> span {
-    flex: 0 1 auto;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-${media.m} {
-    max-width: ${
-      props.maxwidth || (props.alias ? 160 : defaultMobileMaxWidth)
-    }px !important;
-  }
-
-&:after {
-    ${!props.aftercontent ? 'display: none;' : ''}
-    content: '${props.aftercontent || ''}';
-    flex: 1 0 auto;
-    white-space: nowrap;
-    margin-left: -1px;
-  }
-`;
-const LinkWrapper = styled(Link)<{
-  maxwidth?: number;
-  aftercontent?: string;
-  alias?: string;
-}>`
-  ${props => addressStyle(props)}
 `;
