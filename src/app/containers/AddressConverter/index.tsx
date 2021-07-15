@@ -102,6 +102,7 @@ export function AddressConverter() {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
       } else if (utilAddress.hasNetworkPrefix(address)) {
+        // 有network前缀
         hexAddress = format.hexAddress(address);
         hexChecksumAddress = format.checksumAddress(hexAddress);
         bytes32MainnetAddress = format.address(hexAddress, 1029);
@@ -109,6 +110,7 @@ export function AddressConverter() {
         bytes32TestnetAddress = format.address(hexAddress, 1);
         bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
       } else {
+        // 没有network前缀
         hexAddress = address.toLowerCase();
         hexChecksumAddress = format.checksumAddress(hexAddress);
         bytes32MainnetAddress = format.address(hexAddress, 1029);
