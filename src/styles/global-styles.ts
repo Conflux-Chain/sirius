@@ -118,6 +118,46 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-table-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .ant-table-thead {
+    & > tr > th {
+    color: rgb(155, 158, 172);
+    white-space: nowrap;
+    background-color: #ffffff;
+    border-bottom: none;
+
+    & > td {
+      border: none;
+    }
+  }
+  }
+
+  .ant-table-tbody > tr {
+    td.ant-table-cell {
+      border: none;
+    }
+
+    &:not(:nth-child(odd)) {
+      background-color: #f9fafb;
+    }
+
+    &:hover {
+      background-color: #f0f5ff;
+
+      td.ant-table-cell {
+        background-color: #f0f5ff;
+      }
+    }
+  }
+
+  .ant-table-title {
+    border-bottom: 1px solid rgb(232, 233, 234)
+  }
+
   ul li:before {
     content: '' !important;
   }
