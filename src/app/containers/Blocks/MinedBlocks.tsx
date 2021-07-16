@@ -2,8 +2,8 @@ import React from 'react';
 import { blockColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
-import { Title, Footer } from '../Transactions/Common';
-import { cfxTokenTypes } from 'utils/constants';
+import { Title /*Footer*/ } from '../Transactions/Common';
+// import { cfxTokenTypes } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 
 interface Props {
@@ -35,13 +35,13 @@ export const MinedBlocks = ({ address }: Props) => {
     <Title address={address} total={total} showDatepicker={true} />
   );
 
-  const footer = <Footer pathname="transfer" type={cfxTokenTypes.erc20} />;
+  // const footer = <Footer pathname="transfer" type={cfxTokenTypes.erc20} />;
 
   return (
     <TablePanel
       url={url}
       columns={columns}
-      footer={footer}
+      // footer={footer}
       title={title}
       rowKey="hash"
     ></TablePanel>
