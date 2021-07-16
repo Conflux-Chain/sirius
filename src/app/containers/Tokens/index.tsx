@@ -24,10 +24,11 @@ export function Tokens() {
   const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 6, 3, 3, 3, 3, 5];
+  let columnsWidth = [1, 6, 5, 3, 3, 3, 3];
   let columns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
+    tokenColunms.contract(),
     {
       ...tokenColunms.price,
       sorter: true,
@@ -44,7 +45,6 @@ export function Tokens() {
       ...tokenColunms.holders,
       sorter: true,
     },
-    tokenColunms.contract(),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   let url = `/stat/tokens/list?transferType=${
@@ -67,10 +67,11 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc721 ||
     tokenType === cfxTokenTypes.crc721
   ) {
-    columnsWidth = [1, 7, 3, 3, 9];
+    columnsWidth = [1, 7, 9, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
+      tokenColunms.contract(true),
       {
         ...tokenColunms.transfer,
         sorter: true,
@@ -79,7 +80,6 @@ export function Tokens() {
         ...tokenColunms.holders,
         sorter: true,
       },
-      tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
@@ -95,10 +95,11 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc1155 ||
     tokenType === cfxTokenTypes.crc1155
   ) {
-    columnsWidth = [1, 7, 3, 3, 9];
+    columnsWidth = [1, 7, 9, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
+      tokenColunms.contract(true),
       {
         ...tokenColunms.transfer,
         sorter: true,
@@ -107,7 +108,6 @@ export function Tokens() {
         ...tokenColunms.holders,
         sorter: true,
       },
-      tokenColunms.contract(true),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${

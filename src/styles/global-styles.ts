@@ -125,20 +125,28 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-table-thead {
     & > tr > th {
-    color: rgb(155, 158, 172);
-    white-space: nowrap;
-    background-color: #ffffff;
-    border-bottom: none;
+      color: rgb(155, 158, 172);
+      white-space: nowrap;
+      background-color: #ffffff;
+      border-bottom: none;
 
-    & > td {
-      border: none;
+      &.ant-table-column-sort {
+        background: inherit;
+      }
+
+      & > td {
+        border: none;
+      }
     }
-  }
   }
 
   .ant-table-tbody > tr {
     td.ant-table-cell {
       border: none;
+    }
+
+    td.ant-table-column-sort {
+      background: inherit;
     }
 
     &:not(:nth-child(odd)) {
@@ -148,7 +156,7 @@ export const GlobalStyle = createGlobalStyle`
     &:hover {
       background-color: #f0f5ff;
 
-      td.ant-table-cell {
+      td.ant-table-cell{
         background-color: #f0f5ff;
       }
     }
