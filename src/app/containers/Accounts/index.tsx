@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -108,23 +108,9 @@ export function Accounts() {
     );
   };
 
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={t(title)} />
-      </Helmet>
-      <PageHeader>{title}</PageHeader>
-      <TipLabel
-        total={100}
-        left={t(translations.accounts.tipLeft, {
-          type: options[number].name,
-        })}
-        right={t(translations.accounts.tipRight, {
-          type: options[number].name,
-        })}
-      />
-      <StyledTableWrapper>
+  const tableTitle = useMemo(
+    () => {
+      return (
         <StyledSelectWrapper isEn={isEn}>
           <span className="selectLabel">
             {t(translations.accounts.sortButtonBefore)}
@@ -149,12 +135,35 @@ export function Accounts() {
             {t(translations.accounts.sortButtonAfter)}
           </span>
         </StyledSelectWrapper>
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isEn, number],
+  );
 
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={t(title)} />
+      </Helmet>
+      <PageHeader>{title}</PageHeader>
+      <TipLabel
+        total={100}
+        left={t(translations.accounts.tipLeft, {
+          type: options[number].name,
+        })}
+        right={t(translations.accounts.tipRight, {
+          type: options[number].name,
+        })}
+      />
+      <StyledTableWrapper>
         <TablePanelNew
           url={url}
           columns={columns}
           rowKey="base32address"
           pagination={false}
+          title={() => tableTitle}
         ></TablePanelNew>
       </StyledTableWrapper>
     </>
@@ -175,7 +184,6 @@ const StyledSelectWrapper = styled.div<{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0.8571rem 1.4286rem;
   position: relative;
 
   &:after {
