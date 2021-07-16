@@ -433,7 +433,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
-    value: `transfers-${cfxTokenTypes.erc20}`,
+    value: `transfers-${cfxTokenTypes.crc20}`,
     action: 'transfersCrc20',
     label: t(translations.general.tokenTxnsErc20),
     pagination: true,
@@ -477,7 +477,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
-    value: `transfers-${cfxTokenTypes.erc721}`,
+    value: `transfers-${cfxTokenTypes.crc721}`,
     action: 'transfersCrc721',
     label: t(translations.general.tokenTxnsErc721),
     pagination: true,
@@ -521,7 +521,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
-    value: `transfers-${cfxTokenTypes.erc1155}`,
+    value: `transfers-${cfxTokenTypes.crc1155}`,
     action: 'transfersCrc1155',
     label: t(translations.general.tokenTxnsErc1155),
     pagination: true,

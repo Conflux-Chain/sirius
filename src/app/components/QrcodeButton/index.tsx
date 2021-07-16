@@ -83,7 +83,9 @@ export const QrcodeButton = ({
               : t(translations.general.qrcodeButton.contract)}
             ：
           </AddressType>
-          <AddressContainer value={value} showIcon={false}></AddressContainer>
+          <AddressWrapper onClick={handleClose}>
+            <AddressContainer value={value} showIcon={false} isLink={false} />
+          </AddressWrapper>
         </Modal.Content>
       </Modal>
     </>
@@ -101,4 +103,15 @@ const Title = styled.div`
   font-weight: bold;
   text-align: center;
   margin: 8px 0 8px 0;
+`;
+const AddressWrapper = styled.span`
+  span {
+    color: #1a42e4 !important;
+    cursor: pointer;
+  }
+
+  span:after {
+    color: #1a42e4 !important;
+    cursor: pointer;
+  }
 `;
