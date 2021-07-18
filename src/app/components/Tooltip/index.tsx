@@ -5,26 +5,28 @@ import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import clsx from 'clsx';
 import { media } from 'styles/media';
 
-export const Tooltip = ({
-  children,
-  contentClassName,
-  text,
-  placement,
-  ...others
-}: TooltipProps) => {
-  return (
-    <TooltipWrapper>
-      <UITooltip
-        contentClassName={clsx('sirius-tooltip', contentClassName)}
-        text={text}
-        placement={placement || 'top'}
-        {...others}
-      >
-        {children}
-      </UITooltip>
-    </TooltipWrapper>
-  );
-};
+export const Tooltip = React.memo(
+  ({
+    children,
+    contentClassName,
+    text,
+    placement,
+    ...others
+  }: TooltipProps) => {
+    return (
+      <TooltipWrapper>
+        <UITooltip
+          contentClassName={clsx('sirius-tooltip', contentClassName)}
+          text={text}
+          placement={placement || 'top'}
+          {...others}
+        >
+          {children}
+        </UITooltip>
+      </TooltipWrapper>
+    );
+  },
+);
 
 const TooltipWrapper = styled.span`
   .tooltip-content.sirius-tooltip {

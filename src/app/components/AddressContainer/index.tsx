@@ -1,22 +1,18 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Text } from '../Text/Loadable';
-import {
-  formatString,
-  isContractAddress,
-  isInnerContractAddress,
-} from '../../../utils';
+import { formatString, isContractAddress, isInnerContractAddress } from 'utils';
 import { Link } from '../Link/Loadable';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress, isConfluxTestNet } from '../../../utils/cfx';
+import { formatAddress, isConfluxTestNet } from 'utils/cfx';
 import { AlertTriangle } from '@zeit-ui/react-icons';
-import ContractIcon from '../../../images/contract-icon.png';
-import isMeIcon from '../../../images/me.png';
-import InternalContractIcon from '../../../images/internal-contract-icon.png';
-import { media, useBreakpoint } from '../../../styles/media';
-import { zeroAddress } from '../../../utils/constants';
-import { monospaceFont } from '../../../styles/variable';
+import ContractIcon from 'images/contract-icon.png';
+import isMeIcon from 'images/me.png';
+import InternalContractIcon from 'images/internal-contract-icon.png';
+import { media, useBreakpoint } from 'styles/media';
+import { zeroAddress } from 'utils/constants';
+import { monospaceFont } from 'styles/variable';
 
 interface Props {
   value: string; // address value
@@ -39,181 +35,189 @@ const defaultMobileSuffixAddressSize = 4;
 
 // TODO code simplify
 // TODO new address display format
-export const AddressContainer = ({
-  value,
-  alias,
-  contractCreated,
-  maxWidth,
-  isFull = false,
-  isLink = true,
-  isMe = false,
-  zeroAddressAutoShowAlias = true,
-  suffixAddressSize,
-  prefixFloat = false,
-  showIcon = true,
-}: Props) => {
-  const { t } = useTranslation();
-  const bp = useBreakpoint();
-  const txtContractCreation = t(translations.transaction.contractCreation);
-  const cfxAddress = formatAddress(value);
+export const AddressContainer = memo(
+  ({
+    value,
+    alias,
+    contractCreated,
+    maxWidth,
+    isFull = false,
+    isLink = true,
+    isMe = false,
+    zeroAddressAutoShowAlias = true,
+    suffixAddressSize,
+    prefixFloat = false,
+    showIcon = true,
+  }: Props) => {
+    const { t } = useTranslation();
+    const bp = useBreakpoint();
+    const txtContractCreation = t(translations.transaction.contractCreation);
+    const cfxAddress = formatAddress(value);
 
-  // zero address auto set alias
-  if (!alias && zeroAddressAutoShowAlias && cfxAddress === zeroAddress) {
-    alias = t(translations.general.zeroAddress);
-  }
+    // zero address auto set alias
+    if (!alias && zeroAddressAutoShowAlias && cfxAddress === zeroAddress) {
+      alias = t(translations.general.zeroAddress);
+    }
 
-  const RenderAddress = ({
-    hoverValue = cfxAddress,
-    hrefAddress = cfxAddress,
-    content = alias || cfxAddress,
-    link = isLink,
-    full = isFull,
-    style = {},
-    maxwidth = maxWidth,
-    prefix = null,
-    suffix = null,
-  }: any) => (
-    <AddressWrapper>
-      {prefix}
-      <Text span hoverValue={hoverValue}>
-        {link ? (
-          <LinkWrapper
-            style={style}
-            href={`/address/${hrefAddress}`}
-            maxwidth={full ? 430 : maxwidth}
-            alias={alias}
-            aftercontent={
-              cfxAddress && !full && !alias
-                ? cfxAddress.substr(
-                    -(
-                      suffixAddressSize ||
-                      (bp === 's' || bp === 'm'
-                        ? defaultMobileSuffixAddressSize
-                        : defaultPCSuffixAddressSize)
-                    ),
-                  )
-                : ''
-            }
-          >
-            <span>{content}</span>
-          </LinkWrapper>
-        ) : (
-          <PlainWrapper
-            style={style}
-            maxwidth={full ? 430 : maxWidth}
-            alias={alias}
-            aftercontent={
-              cfxAddress && !full && !alias
-                ? cfxAddress.substr(
-                    -(
-                      suffixAddressSize ||
-                      (bp === 's' || bp === 'm'
-                        ? defaultMobileSuffixAddressSize
-                        : defaultPCSuffixAddressSize)
-                    ),
-                  )
-                : ''
-            }
-          >
-            <span>{content}</span>
-          </PlainWrapper>
-        )}
-      </Text>
-      {suffix}
-    </AddressWrapper>
-  );
+    const RenderAddress = ({
+      hoverValue = cfxAddress,
+      hrefAddress = cfxAddress,
+      content = alias || cfxAddress,
+      link = isLink,
+      full = isFull,
+      style = {},
+      maxwidth = maxWidth,
+      prefix = null,
+      suffix = null,
+    }: any) => {
+      return (
+        <AddressWrapper>
+          {prefix}
+          <Text span hoverValue={hoverValue}>
+            {link ? (
+              <LinkWrapper
+                style={style}
+                href={`/address/${hrefAddress}`}
+                maxwidth={full ? 430 : maxwidth}
+                alias={alias}
+                aftercontent={
+                  cfxAddress && !full && !alias
+                    ? cfxAddress.substr(
+                        -(
+                          suffixAddressSize ||
+                          (bp === 's' || bp === 'm'
+                            ? defaultMobileSuffixAddressSize
+                            : defaultPCSuffixAddressSize)
+                        ),
+                      )
+                    : ''
+                }
+              >
+                <span>{content}</span>
+              </LinkWrapper>
+            ) : (
+              <PlainWrapper
+                style={style}
+                maxwidth={full ? 430 : maxWidth}
+                alias={alias}
+                aftercontent={
+                  cfxAddress && !full && !alias
+                    ? cfxAddress.substr(
+                        -(
+                          suffixAddressSize ||
+                          (bp === 's' || bp === 'm'
+                            ? defaultMobileSuffixAddressSize
+                            : defaultPCSuffixAddressSize)
+                        ),
+                      )
+                    : ''
+                }
+              >
+                <span>{content}</span>
+              </PlainWrapper>
+            )}
+          </Text>
+          {suffix}
+        </AddressWrapper>
+      );
+    };
 
-  if (!value) {
-    // Contract Registration txn to prop is null
-    if (contractCreated)
-      return RenderAddress({
-        hoverValue: formatAddress(contractCreated),
-        hrefAddress: formatAddress(contractCreated),
-        content: txtContractCreation,
-        maxwidth: 160,
-        prefix: (
-          <IconWrapper className={prefixFloat ? 'float' : ''}>
+    if (!value) {
+      // Contract Registration txn to prop is null
+      if (contractCreated)
+        return RenderAddress({
+          hoverValue: formatAddress(contractCreated),
+          hrefAddress: formatAddress(contractCreated),
+          content: txtContractCreation,
+          maxwidth: 160,
+          prefix: (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <Text span hoverValue={txtContractCreation}>
+                <img src={ContractIcon} alt={txtContractCreation} />
+              </Text>
+            </IconWrapper>
+          ),
+        });
+
+      // Contract Registration fail, no link
+      // TODO deal with zero address value
+      return (
+        <AddressWrapper>
+          <IconWrapper>
             <Text span hoverValue={txtContractCreation}>
               <img src={ContractIcon} alt={txtContractCreation} />
             </Text>
           </IconWrapper>
+          <Text span>{txtContractCreation}</Text>
+        </AddressWrapper>
+      );
+    }
+
+    if (cfxAddress.startsWith('invalid-')) {
+      const sourceValue = cfxAddress.replace('invalid-', '');
+      const tip = t(translations.general.invalidAddress);
+      return RenderAddress({
+        hoverValue: `${tip}: ${sourceValue}`,
+        content: alias ? formatString(alias, 'tag') : sourceValue,
+        link: false,
+        style: { color: '#e00909' },
+        prefix: (
+          <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <Text span hoverValue={tip}>
+              <AlertTriangle size={16} color="#e00909" />
+            </Text>
+          </IconWrapper>
         ),
       });
+    }
 
-    // Contract Registration fail, no link
-    // TODO deal with zero address value
-    return (
-      <AddressWrapper>
-        <IconWrapper>
-          <Text span hoverValue={txtContractCreation}>
-            <img src={ContractIcon} alt={txtContractCreation} />
-          </Text>
-        </IconWrapper>
-        <Text span>{txtContractCreation}</Text>
-      </AddressWrapper>
-    );
-  }
+    const isContract = isContractAddress(value);
+    const isInternalContract = isInnerContractAddress(value);
 
-  if (cfxAddress.startsWith('invalid-')) {
-    const sourceValue = cfxAddress.replace('invalid-', '');
-    const tip = t(translations.general.invalidAddress);
-    return RenderAddress({
-      hoverValue: `${tip}: ${sourceValue}`,
-      content: alias ? formatString(alias, 'tag') : sourceValue,
-      link: false,
-      style: { color: '#e00909' },
-      prefix: (
-        <IconWrapper className={prefixFloat ? 'float' : ''}>
-          <Text span hoverValue={tip}>
-            <AlertTriangle size={16} color="#e00909" />
-          </Text>
-        </IconWrapper>
-      ),
-    });
-  }
+    if (isContract || isInternalContract) {
+      const typeText = t(
+        isInternalContract
+          ? translations.general.internalContract
+          : translations.general.contract,
+      );
+      return RenderAddress({
+        prefix: showIcon ? (
+          <IconWrapper
+            className={`${isFull ? 'icon' : ''} ${prefixFloat ? 'float' : ''}`}
+          >
+            <Text span hoverValue={typeText}>
+              {isInternalContract ? (
+                <img src={InternalContractIcon} alt={typeText} />
+              ) : (
+                <img src={ContractIcon} alt={typeText} />
+              )}
+            </Text>
+          </IconWrapper>
+        ) : null,
+      });
+    }
 
-  const isContract = isContractAddress(value);
-  const isInternalContract = isInnerContractAddress(value);
+    if (isMe) {
+      return RenderAddress({
+        suffix: (
+          <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <img
+              src={isMeIcon}
+              alt="is me"
+              style={{
+                width: 38.5,
+                marginLeft: 3,
+                marginBottom: isFull ? 6 : 4,
+              }}
+            />
+          </IconWrapper>
+        ),
+      });
+    }
 
-  if (isContract || isInternalContract) {
-    const typeText = t(
-      isInternalContract
-        ? translations.general.internalContract
-        : translations.general.contract,
-    );
-    return RenderAddress({
-      prefix: showIcon ? (
-        <IconWrapper
-          className={`${isFull ? 'icon' : ''} ${prefixFloat ? 'float' : ''}`}
-        >
-          <Text span hoverValue={typeText}>
-            {isInternalContract ? (
-              <img src={InternalContractIcon} alt={typeText} />
-            ) : (
-              <img src={ContractIcon} alt={typeText} />
-            )}
-          </Text>
-        </IconWrapper>
-      ) : null,
-    });
-  }
-
-  if (isMe) {
-    return RenderAddress({
-      suffix: (
-        <IconWrapper className={prefixFloat ? 'float' : ''}>
-          <img
-            src={isMeIcon}
-            alt="is me"
-            style={{ width: 38.5, marginLeft: 3, marginBottom: isFull ? 6 : 4 }}
-          />
-        </IconWrapper>
-      ),
-    });
-  }
-
-  return RenderAddress({});
-};
+    return RenderAddress({});
+  },
+);
 
 const IconWrapper = styled.span`
   margin-right: 2px;

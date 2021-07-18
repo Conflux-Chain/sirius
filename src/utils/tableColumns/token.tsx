@@ -428,9 +428,9 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>
-  ),
+  render: (value, row) => {
+    return <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>;
+  },
 };
 
 export const from = {
@@ -440,9 +440,9 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>
-  ),
+  render: (value, row) => {
+    return <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>;
+  },
 };
 
 export const account = {
