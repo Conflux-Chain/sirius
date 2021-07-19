@@ -41,7 +41,6 @@
     "sourceCodeShort": "Source Code",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
-    "addressPlaceholder": "Please enter an conflux address",
     "namePlaceholder": "Support up to 35 characters",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
@@ -628,7 +627,10 @@
     "apply": "Apply",
     "search": "Search",
     "qrcodeButton": {
-      "clickToShow": "Click to view QR code"
+      "clickToShow": "Click to view QR code",
+      "contract": "Contract",
+      "address": "Address",
+      "scanQRCode": "Scan QR Code"
     },
     "notAvailable": "Not Available",
     "security": {

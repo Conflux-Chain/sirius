@@ -3,20 +3,20 @@
  * Contract Detail
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { media } from '../../../styles/media';
-import { Input } from '@cfxjs/react-ui';
+import { Input, useMessages } from '@cfxjs/react-ui';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
 import {
-  tranferToLowerCase,
-  isContractAddress,
-  validURL,
   byteToKb,
-  isObject,
+  isContractAddress,
   isInnerContractAddress,
+  isObject,
+  tranferToLowerCase,
+  validURL,
 } from '../../../utils';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -35,9 +35,12 @@ import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
-import { useMessages } from '@cfxjs/react-ui';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { contractManagerAddress, formatAddress } from '../../../utils/cfx';
+import {
+  contractManagerAddress,
+  formatAddress,
+  isConfluxTestNet,
+} from '../../../utils/cfx';
 import { TxnAction } from '../../../utils/constants';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
@@ -390,7 +393,10 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   }
   function checkAdminThenToken(tokenIcon) {
     if (addressVal) {
-      if (isContractAddress(addressVal) || isInnerContractAddress(addressVal)) {
+      if (
+        (isContractAddress(addressVal) || isInnerContractAddress(addressVal)) &&
+        !addressVal.startsWith('0x')
+      ) {
         setIsAddressError(false);
         setErrorMsgForAddress('');
         if (accounts[0]) {
@@ -480,7 +486,7 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
                   readOnly={addressDisabled}
-                  placeholder={t(translations.contract.addressPlaceholder)}
+                  placeholder={isConfluxTestNet ? 'cfxtest:...' : 'cfx:...'}
                   onBlur={addressOnBlur}
                 />
                 {isVerified ? (

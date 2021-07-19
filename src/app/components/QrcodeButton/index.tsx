@@ -5,11 +5,13 @@
  */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// import styled from 'styled-components/macro';
 import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
-import { Tooltip } from '../Tooltip';
+import { Tooltip } from 'app/components/Tooltip';
 import { translations } from 'locales/i18n';
+import styled from 'styled-components';
+import { isAccountAddress } from 'utils';
+import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 
 interface QrcodeButtonProps {
   value: string;
@@ -67,12 +69,49 @@ export const QrcodeButton = ({
         width="22rem"
         open={visible}
         onClose={handleClose}
+        closable
       >
         <Modal.Title>{title}</Modal.Title>
         <Modal.Content>
-          <QRCode size={200} value={value} />
+          <QRCodeWrapper>
+            <QRCode size={108} value={value} level={'H'} />
+          </QRCodeWrapper>
+          <Title>{t(translations.general.qrcodeButton.scanQRCode)}</Title>
+          <AddressType>
+            {isAccountAddress(value)
+              ? t(translations.general.qrcodeButton.address)
+              : t(translations.general.qrcodeButton.contract)}
+            ：
+          </AddressType>
+          <AddressWrapper onClick={handleClose}>
+            <AddressContainer value={value} showIcon={false} isLink={false} />
+          </AddressWrapper>
         </Modal.Content>
       </Modal>
     </>
   );
 };
+const QRCodeWrapper = styled.div`
+  text-align: center;
+  margin-top: 16px !important;
+`;
+const AddressType = styled.span`
+  color: #a4a8b6;
+  text-align: center;
+`;
+const Title = styled.div`
+  font-weight: bold;
+  text-align: center;
+  margin: 8px 0 8px 0;
+`;
+const AddressWrapper = styled.span`
+  span {
+    color: #1a42e4 !important;
+    cursor: pointer;
+  }
+
+  span:after {
+    color: #1a42e4 !important;
+    cursor: pointer;
+  }
+`;

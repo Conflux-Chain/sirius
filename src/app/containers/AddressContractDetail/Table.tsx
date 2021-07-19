@@ -279,12 +279,12 @@ export function Table({ address, addressInfo }) {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsTokensWidthErc1155[i] }));
 
-  const columnsBlocksWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 6, 6, 3, 5, 3, 5];
   const columnsMinedBlocks: ColumnsType = [
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
       render: value => <AddressContainer isLink={false} value={value} />,
@@ -433,7 +433,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
-    value: `transfers-${cfxTokenTypes.erc20}`,
+    value: `transfers-${cfxTokenTypes.crc20}`,
     action: 'transfersCrc20',
     label: t(translations.general.tokenTxnsErc20),
     pagination: true,
@@ -477,7 +477,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
-    value: `transfers-${cfxTokenTypes.erc721}`,
+    value: `transfers-${cfxTokenTypes.crc721}`,
     action: 'transfersCrc721',
     label: t(translations.general.tokenTxnsErc721),
     pagination: true,
@@ -521,7 +521,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
-    value: `transfers-${cfxTokenTypes.erc1155}`,
+    value: `transfers-${cfxTokenTypes.crc1155}`,
     action: 'transfersCrc1155',
     label: t(translations.general.tokenTxnsErc1155),
     pagination: true,
