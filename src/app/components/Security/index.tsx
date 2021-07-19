@@ -15,7 +15,7 @@ export declare type SecurityProps = React.PropsWithChildren<
   Props & NativeAttrs
 >;
 
-export const Security = ({ blockHash }: Props) => {
+export const Security = React.memo(({ blockHash }: Props) => {
   const type = useConfirmRisk(blockHash);
   const { t } = useTranslation();
   const levelMap = {
@@ -64,7 +64,7 @@ export const Security = ({ blockHash }: Props) => {
       <span className={`text`}>{text}</span>
     </StyledSecurityWrapper>
   );
-};
+});
 
 const StyledSecurityWrapper = styled.span`
   @keyframes blinker {

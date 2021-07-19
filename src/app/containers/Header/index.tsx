@@ -568,7 +568,7 @@ export const Header = memo(() => {
         href={getLatestNoticeLink(iszh ? 'zh' : 'en', isTestnet)}
         className="more"
       >
-        {t(translations.header.learnMore)}
+        {t(translations.header.more)}
       </Link>
     </NoticeWrapper>
   );

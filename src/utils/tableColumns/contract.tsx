@@ -14,17 +14,19 @@ interface Query {
   transactionHash?: string;
 }
 
-export const number = {
+export const number = (page = 1, pageSize = 10) => ({
+  width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.contracts.number)}
     </Translation>
   ),
+  dataIndex: 'epochNumber',
   key: 'epochNumber',
   render: (value, row, index) => {
-    return index + 1;
+    return (page - 1) * pageSize + index + 1;
   },
-};
+});
 
 export const name = {
   title: (

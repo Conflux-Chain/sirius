@@ -15,117 +15,119 @@ import nftPreview from 'images/token/nftPreview2.svg';
 import { getNFTInfo } from './utils';
 import { NFTContracts } from './NFTInfo';
 
-export const NFTPreview = ({
-  contractAddress,
-  tokenId,
-  type = 'preview',
-}: {
-  contractAddress?: string;
-  tokenId?: number | string;
-  type?: 'preview' | 'card';
-}) => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language.includes('zh') ? 'zh' : 'en';
-  const [imageUri, setImageUri] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [imageMinHeight, setImageMinHeight] = useState(200);
-  const [previewIcon, setPreviewIcon] = useState(nftPreview);
-  const [imageName, setImageName] = useState('');
+export const NFTPreview = React.memo(
+  ({
+    contractAddress,
+    tokenId,
+    type = 'preview',
+  }: {
+    contractAddress?: string;
+    tokenId?: number | string;
+    type?: 'preview' | 'card';
+  }) => {
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language.includes('zh') ? 'zh' : 'en';
+    const [imageUri, setImageUri] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [imageMinHeight, setImageMinHeight] = useState(200);
+    const [previewIcon, setPreviewIcon] = useState(nftPreview);
+    const [imageName, setImageName] = useState('');
 
-  useEffect(() => {
-    if (contractAddress && tokenId) {
-      setLoading(true);
+    useEffect(() => {
+      if (contractAddress && tokenId) {
+        setLoading(true);
 
-      (async () => {
-        const info = await getNFTInfo({ contractAddress, tokenId });
+        (async () => {
+          const info = await getNFTInfo({ contractAddress, tokenId });
 
-        if (info) {
-          setImageMinHeight(info.imageMinHeight);
-          setImageUri(info.imageUri || tokenIdNotFound);
-          setImageName(info.imageName ? info.imageName[lang] || '' : '');
-        }
-      })();
+          if (info) {
+            setImageMinHeight(info.imageMinHeight);
+            setImageUri(info.imageUri || tokenIdNotFound);
+            setImageName(info.imageName ? info.imageName[lang] || '' : '');
+          }
+        })();
 
-      setLoading(false);
-    }
-  }, [contractAddress, tokenId, lang]);
+        setLoading(false);
+      }
+    }, [contractAddress, tokenId, lang]);
 
-  return contractAddress && tokenId ? (
-    type === 'preview' ? (
-      imageUri ? (
-        <PopoverWrapper
-          placement="right"
-          trigger="click"
-          overlayClassName="image-preview-popover"
-          content={
-            <>
-              {contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
-                <iframe
-                  title={imageName}
-                  width={200}
-                  style={{ minHeight: imageMinHeight }}
-                  src={imageUri}
-                />
+    return contractAddress && tokenId ? (
+      type === 'preview' ? (
+        imageUri ? (
+          <PopoverWrapper
+            placement="right"
+            trigger="click"
+            overlayClassName="image-preview-popover"
+            content={
+              <>
+                {contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
+                  <iframe
+                    title={imageName}
+                    width={200}
+                    style={{ minHeight: imageMinHeight }}
+                    src={imageUri}
+                  />
+                ) : (
+                  <Image
+                    width={200}
+                    style={{ minHeight: imageMinHeight }}
+                    src={imageUri}
+                    preview={true}
+                    fallback={tokenIdNotFound}
+                    alt={tokenId + ''}
+                  />
+                )}
+                {imageName ? (
+                  <div className="image-preview-name">{imageName}</div>
+                ) : null}
+              </>
+            }
+            onVisibleChange={(visible: boolean) => {
+              setPreviewIcon(visible ? nftPreviewActive : nftPreview);
+            }}
+          >
+            <Text span hoverValue={t(translations.general.preview)}>
+              <img
+                src={previewIcon}
+                alt="Preview"
+                style={{ width: 17, height: 17, marginTop: -4 }}
+              />
+            </Text>
+          </PopoverWrapper>
+        ) : null
+      ) : (
+        <NFTCard>
+          <Spin spinning={loading || !imageUri}>
+            {imageUri ? (
+              contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
+                <div className="ant-image">
+                  <iframe title={imageName} src={imageUri} />
+                </div>
               ) : (
                 <Image
-                  width={200}
-                  style={{ minHeight: imageMinHeight }}
+                  width={500}
                   src={imageUri}
                   preview={true}
-                  fallback={tokenIdNotFound}
                   alt={tokenId + ''}
                 />
-              )}
-              {imageName ? (
-                <div className="image-preview-name">{imageName}</div>
-              ) : null}
-            </>
-          }
-          onVisibleChange={(visible: boolean) => {
-            setPreviewIcon(visible ? nftPreviewActive : nftPreview);
-          }}
-        >
-          <Text span hoverValue={t(translations.general.preview)}>
-            <img
-              src={previewIcon}
-              alt="Preview"
-              style={{ width: 17, height: 17, marginTop: -4 }}
-            />
-          </Text>
-        </PopoverWrapper>
-      ) : null
-    ) : (
-      <NFTCard>
-        <Spin spinning={loading || !imageUri}>
-          {imageUri ? (
-            contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
-              <div className="ant-image">
-                <iframe title={imageName} src={imageUri} />
-              </div>
+              )
             ) : (
-              <Image
-                width={500}
-                src={imageUri}
-                preview={true}
-                alt={tokenId + ''}
-              />
-            )
-          ) : (
-            <Skeleton.Image />
-          )}
-          <div className="info">
-            <div className="name">
-              {imageName} <span>#{tokenId}</span>
+              <Skeleton.Image />
+            )}
+            <div className="info">
+              <div className="name">
+                {imageName} <span>#{tokenId}</span>
+              </div>
+              <div className="id">
+                {t(translations.nftChecker.tokenId)}: {tokenId}
+              </div>
             </div>
-            <div className="id">
-              {t(translations.nftChecker.tokenId)}: {tokenId}
-            </div>
-          </div>
-        </Spin>
-      </NFTCard>
-    )
-  ) : null;
-};
+          </Spin>
+        </NFTCard>
+      )
+    ) : null;
+  },
+);
 
 const PopoverWrapper = styled(Popover)`
   margin-left: 8px;

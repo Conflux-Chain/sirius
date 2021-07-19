@@ -13,3 +13,8 @@ export const Dag = lazyLoad(
   () => import('./Dag'),
   module => module.Dag,
 );
+
+export const MinedBlocks = lazyLoad(
+  () => import('./MinedBlocks'),
+  module => module.MinedBlocks,
+);

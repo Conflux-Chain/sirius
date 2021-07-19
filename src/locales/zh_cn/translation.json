@@ -207,6 +207,7 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "tip": "该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看",
     "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "crcTip": "{{crc}} 是发布在 Conflux 网络上，采用 {{erc}} 标准的数字资产。",
     "table": {
@@ -295,7 +296,6 @@
     "blocknumberCalc": "区块计算器",
     "nftChecker": "NFT 查看器",
     "notice": "通知中心",
-    "learnMore": "了解更多",
     "search": {
       "tokens": "代币",
       "contracts": "合约",
@@ -314,8 +314,8 @@
     "aboutUs": {
       "title": "关于我们",
       "supportCenter": "帮助中心",
-      "privacyPolicy": "隐私条款",
-      "terms": "法律政策"
+      "privacyPolicy": "隐私政策",
+      "terms": "法律条款"
     },
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
     "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
@@ -504,6 +504,7 @@
       "epoch": "纪元"
     },
     "totalRecord": "共计 {{total}} 个记录",
+    "totalRecordWithLimit": "仅展示最新的 {{limit}} 条记录（共计 {{total}} 条记录）",
     "totalHolders": "共计 {{total}} 个持有人",
     "totalRecordLimit": "仅展示最新的 10k 条记录（共计 {{total}} 条记录）",
     "remark": "说明：",

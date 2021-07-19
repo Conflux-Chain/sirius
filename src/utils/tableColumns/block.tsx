@@ -198,6 +198,7 @@ export const gasLimit = {
 const StyledHashWrapper = styled.span`
   display: flex;
   align-items: center;
+  white-space: nowrap;
 
   .img {
     width: 3rem;

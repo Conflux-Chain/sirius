@@ -207,6 +207,7 @@
     "description": "Tokens",
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "tip": "The following list only displays certain tokens, undisplayed tokens can be found by searching contract address",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
     "table": {
@@ -295,7 +296,6 @@
     "blocknumberCalc": "Blocknumber Calculator",
     "nftChecker": "NFT Checker",
     "notice": "Notice Center",
-    "learnMore": "Learn more",
     "search": {
       "tokens": "Tokens",
       "contracts": "Contracts",
@@ -504,6 +504,7 @@
       "epoch": "Epoch"
     },
     "totalRecord": "A total of {{total}} records",
+    "totalRecordWithLimit": "Showing the last {{limit}} records (A total of {{total}} records)",
     "totalHolders": "A total of {{total}} holders",
     "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",

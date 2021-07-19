@@ -27,15 +27,30 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const reg = /address\/(.*)$/;
+
 export const renderAddress = (
   value,
   row,
   type?: 'to' | 'from',
   withArrow = true,
 ) => {
-  const { accountAddress } = queryString.parse(window.location.search);
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
   const filter = (accountAddress as string) || '';
   let alias = '';
+
   if (type === 'from') {
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.fromContractInfo && row.fromContractInfo.name)
@@ -133,6 +148,60 @@ export const token = {
       </StyledIconWrapper>
     );
   },
+};
+
+const Token2 = ({ row }) => {
+  const { t } = useTranslation();
+
+  return (
+    <StyledIconWrapper>
+      {row?.token
+        ? [
+            <img
+              key="img"
+              src={row?.token?.icon || defaultTokenIcon}
+              alt="token icon"
+            />,
+            <Link key="link" href={`/token/${row?.token?.address}`}>
+              <Text
+                span
+                hoverValue={
+                  row?.token?.name
+                    ? `${
+                        row?.token?.name || t(translations.general.notAvailable)
+                      } (${
+                        row?.token?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`
+                    : formatAddress(row?.token?.address)
+                }
+              >
+                {row?.token?.name ? (
+                  formatString(
+                    `${
+                      row?.token?.name || t(translations.general.notAvailable)
+                    } (${
+                      row?.token?.symbol || t(translations.general.notAvailable)
+                    })`,
+                    36,
+                  )
+                ) : (
+                  <AddressContainer
+                    value={row?.token?.address}
+                    alias={row?.token?.contractName || null}
+                    showIcon={false}
+                  />
+                )}
+              </Text>
+            </Link>,
+          ]
+        : t(translations.general.loading)}
+    </StyledIconWrapper>
+  );
+};
+export const token2 = {
+  ...token,
+  render: row => <Token2 row={row} />,
 };
 
 const IconWrapper = styled.div`
@@ -359,9 +428,9 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>
-  ),
+  render: (value, row) => {
+    return <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>;
+  },
 };
 
 export const from = {
@@ -371,9 +440,9 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>
-  ),
+  render: (value, row) => {
+    return <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>;
+  },
 };
 
 export const account = {

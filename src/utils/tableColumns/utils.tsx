@@ -116,7 +116,13 @@ export const ColumnAge = ({
       ageFormat === 'age' ? (
         <CountDown from={value} />
       ) : (
-        dayjs.unix(value).format('YYYY-MM-DD HH:mm:ss')
+        <div
+          style={{
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {dayjs.unix(value).format('YYYY-MM-DD HH:mm:ss')}
+        </div>
       ),
   };
 };
