@@ -18,18 +18,7 @@ export const epoch = {
   dataIndex: 'epochNumber',
   key: 'epochNumber',
   width: 1,
-  render: (value, row: any) => {
-    let pivotTag: React.ReactNode = null;
-    if (row.pivotHash === row.hash) {
-      pivotTag = <img className="img" src={imgPivot} alt="pivot"></img>;
-    }
-    return (
-      <StyledEpochWrapper>
-        <Link href={`/epoch/${value}`}>{value}</Link>
-        {pivotTag}
-      </StyledEpochWrapper>
-    );
-  },
+  render: value => <Link href={`/epoch/${value}`}>{value}</Link>,
 };
 
 export const position = {
@@ -53,38 +42,27 @@ export const txns = {
   render: formatNumber,
 };
 
-export const hash = {
+export const hashWithPivot = {
   title: (
     <Translation>{t => t(translations.general.table.block.hash)}</Translation>
   ),
   dataIndex: 'hash',
   key: 'hash',
   width: 1,
-  render: value => (
-    <Link href={`/block/${value}`}>
-      <Text span hoverValue={value}>
-        <SpanWrap>{value}</SpanWrap>
-      </Text>
-    </Link>
-  ),
-};
-
-export const hashWithPivot = {
-  ...hash,
   render: (value, row: any) => {
     let pivotTag: React.ReactNode = null;
     if (row.pivotHash === row.hash) {
-      pivotTag = <img className="img" src={imgPivot} alt="pivot"></img>;
+      pivotTag = <img className="img" src={imgPivot} alt="pivot" />;
     }
     return (
-      <StyledEpochWrapper>
+      <StyledHashWrapper>
         <Link href={`/block/${value}`}>
           <Text span hoverValue={value}>
             <SpanWrap>{value}</SpanWrap>
           </Text>
         </Link>
         {pivotTag}
-      </StyledEpochWrapper>
+      </StyledHashWrapper>
     );
   },
 };
@@ -217,7 +195,7 @@ export const gasLimit = {
   render: formatNumber,
 };
 
-const StyledEpochWrapper = styled.span`
+const StyledHashWrapper = styled.span`
   display: flex;
   align-items: center;
   white-space: nowrap;

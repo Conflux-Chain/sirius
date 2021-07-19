@@ -20,7 +20,7 @@ export const MinedBlocks = ({ address }: Props) => {
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
       render: value => <AddressContainer isLink={false} value={value} />,

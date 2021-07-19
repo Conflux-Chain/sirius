@@ -15,7 +15,7 @@ export const ReferenceBlocks = ({ url }: Props) => {
     blockColunms.epoch,
     blockColunms.position,
     blockColunms.txns,
-    blockColunms.hash,
+    blockColunms.hashWithPivot,
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,
