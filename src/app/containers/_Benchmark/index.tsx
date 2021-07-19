@@ -1,7 +1,7 @@
 import Benchmark, { BenchmarkType } from 'react-component-benchmark';
 import React, { useState } from 'react';
-import { CountDown } from '../../components/CountDown';
 import { Button } from '@cfxjs/react-ui';
+import { AddressContainer } from '../../components/AddressContainer';
 
 export default function ScanBenchmark() {
   const ref: any = React.useRef();
@@ -36,13 +36,14 @@ export default function ScanBenchmark() {
         <p>mean: {result.mean}</p>
       </div>
       <Benchmark
-        component={CountDown}
+        component={AddressContainer}
         componentProps={{
-          from: +new Date('2021-01-01'),
+          value: '0x8f3f525d17159351e4b34fe766ef139470da0b02',
+          alias: '',
         }}
         onComplete={handleComplete}
         ref={ref}
-        samples={100}
+        samples={30}
         timeout={10000}
         type={BenchmarkType.MOUNT}
       />
