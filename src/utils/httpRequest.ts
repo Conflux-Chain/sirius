@@ -7,7 +7,9 @@ export const statPrefix = '/stat';
 export const sendRequest = config => {
   const url = config.url.startsWith('/stat')
     ? config.url
-    : `${v1Prefix}/${config.url}`;
+    : `${v1Prefix}${
+        config.url.startsWith('/') ? config.url : '/' + config.url
+      }`;
   return fetch(qs.stringifyUrl({ url: url, query: config.query }), {
     method: config.type || 'GET',
     body: config.body,
