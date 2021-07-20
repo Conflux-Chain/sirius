@@ -7,6 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
+import { toThousands } from 'utils';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
@@ -139,12 +140,12 @@ export const TablePanel = ({
               showTotal: () => {
                 if (listLimit && total > listLimit) {
                   return t(translations.general.totalRecordWithLimit, {
-                    total,
+                    total: toThousands(total),
                     limit: listLimit,
                   });
                 } else {
                   return t(translations.general.totalRecord, {
-                    total,
+                    total: toThousands(total),
                   });
                 }
               },
