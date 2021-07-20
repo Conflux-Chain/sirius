@@ -1204,6 +1204,7 @@
     "contractAddress": "Contract Address",
     "blockNoOrDate": "Block No or Date",
     "or": "OR",
+    "chooseDate": "Please select date",
     "enterBlockNo": "Enter a Block No",
     "error": "Can not be empty",
     "lookUp": "Look Up",

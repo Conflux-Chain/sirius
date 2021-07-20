@@ -1204,6 +1204,7 @@
     "contractAddress": "合约地址",
     "blockNoOrDate": "区块号或者日期",
     "or": "或",
+    "chooseDate": "请选择日期",
     "enterBlockNo": "输入区块号",
     "error": "不能为空",
     "lookUp": "搜索",
