@@ -28,7 +28,7 @@ export function Transaction() {
     });
   }, [hash]);
 
-  const { from, to, cfxTransferAllCount, eventLogCount } = txnDetail;
+  const { from, to, eventLogCount } = txnDetail;
 
   let tabs: any[] = [
     {
@@ -41,7 +41,7 @@ export function Transaction() {
       action: 'transactionCfxTransfers',
       label: t(translations.transaction.internalTxns.title),
       content: <InternalTxns address={hash} from={from} to={to} />,
-      hidden: cfxTransferAllCount < 2,
+      // hidden: cfxTransferAllCount < 2,
     },
     {
       value: 'logs',
