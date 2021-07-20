@@ -95,6 +95,11 @@ export const ContractDetailPage = memo(() => {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
+        <RouterLink to={`/balance-checker`}>
+          {t(translations.general.address.more.balanceChecker)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
         <RouterLink to={`/contract/${address}`}>
           {t(translations.general.address.more.editContract)}
         </RouterLink>

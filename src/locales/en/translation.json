@@ -527,7 +527,8 @@
         "report": "Report",
         "editContract": "Edit Contract",
         "sponsor": "Apply Sponsorship",
-        "website": "Official Website"
+        "website": "Official Website",
+        "balanceChecker": "Balance Checker"
       }
     },
     "loading": "loading...",
