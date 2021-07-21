@@ -130,6 +130,7 @@ export {
   cfx,
   formatAddress,
   faucetAddress,
+  faucetLastAddress,
   faucet,
   cfxFormat,
   cfxAddress,
