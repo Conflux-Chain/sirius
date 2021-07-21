@@ -6,13 +6,26 @@ import { media } from 'styles/media';
 import clsx from 'clsx';
 import { useTestnet } from 'utils/hooks/useTestnet';
 import { Link } from 'app/components/Link/Loadable';
-import imgNotice from 'images/notice2.png';
+import announcementNotification from 'images/notice/announcementNotification.png';
+import FAQNotification from 'images/notice/FAQNotification.png';
+import updateNotification from 'images/notice/updateNotification.png';
 import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
+
+const ImgNotice = () => {
+  if (CurrentTethysNotice.type === 'Announcement') {
+    return <img src={announcementNotification} alt="notice indicator" />;
+  } else if (CurrentTethysNotice.type === 'FAQ') {
+    return <img src={FAQNotification} alt="notice indicator" />;
+  } else if (CurrentTethysNotice.type === 'update') {
+    return <img src={updateNotification} alt="notice indicator" />;
+  }
+  return null;
+};
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
     <div className="img">
-      <img src={imgNotice} alt="notice indicator" />
+      <ImgNotice />
     </div>
     <div className="text">{children}</div>
   </StyledNoticeItemWrapper>
@@ -99,6 +112,7 @@ const StyledNoticeItemWrapper = styled.div`
     padding: 0 16px;
     max-width: 100%;
   }
+
   ${media.xl} {
     padding-left: 10px;
     padding-right: 10px;
@@ -106,6 +120,7 @@ const StyledNoticeItemWrapper = styled.div`
 
   .img {
     margin-right: 10px;
+
     img {
       width: 16px;
       height: 16px;
@@ -166,6 +181,7 @@ const Main = styled.div`
   }
 
   /* only show the first one trumpet now, hide others, may show back in the future */
+
   .notice-item-wrapper:first-child {
     img {
       visibility: visible;
