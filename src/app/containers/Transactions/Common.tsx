@@ -6,22 +6,22 @@ import { media } from 'styles/media';
 import {
   TableSearchDatepicker,
   TableSearchDropdown,
+  TableSearchInput,
 } from 'app/components/TablePanel';
-import { toThousands, isContractAddress, isInnerContractAddress } from 'utils';
+import {
+  toThousands,
+  // isAccountAddress,
+  isContractAddress,
+  isInnerContractAddress,
+  isAddress,
+  isHash,
+} from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
-import { useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import { useParams } from 'react-router-dom';
-
-interface TitleProps {
-  readonly address: string;
-  readonly total: number;
-  readonly showDatepicker?: boolean;
-  readonly showTotalTip?: boolean;
-  readonly showFilter?: boolean;
-  readonly showSearchInput?: boolean;
-  readonly filterOptions?: Array<any>; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
-}
+import lodash from 'lodash';
+import { useMessages } from '@cfxjs/react-ui';
+import { useHistory, useLocation } from 'react-router-dom';
 
 interface FooterProps {
   readonly type?: string;
@@ -32,6 +32,147 @@ interface QueryProps {
   [index: string]: string;
 }
 
+interface SearchInputQueryProps {
+  accountAddress?: string;
+  address?: string;
+  transactionHash?: string;
+  blockHash?: string;
+  tokenId?: string;
+  epochNumber?: string;
+}
+
+interface SearchInputProps {
+  type?: 'txn' | 'crc20' | 'crc721' | 'crc1155' | 'minedBlock' | 'cfxTxn';
+  inputFields?: Array<
+    'blockHash' | 'txnHash' | 'address' | 'tokenID' | 'epoch' | 'accountAddress'
+  >;
+  addressType?: 'user' | 'contract';
+}
+
+interface TitleProps {
+  readonly address: string;
+  readonly total: number;
+  readonly showDatepicker?: boolean;
+  readonly showTotalTip?: boolean;
+  readonly showFilter?: boolean;
+  readonly showSearchInput?: boolean;
+  readonly filterOptions?: Array<any>; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
+  readonly searchInputOptions?: SearchInputProps; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
+}
+
+// accountAddress - user address
+// address - contract address
+
+// inputFields: ['blockHash', 'txnHash', 'address', 'tokenId', 'epochNumber']
+// type: txn, crc20, crc721, crc1155, minedBlock, cfxTxn
+const SearchInput = React.memo(
+  ({
+    type = 'txn',
+    inputFields = [],
+  }: // addressType = 'user',
+  SearchInputProps) => {
+    const [, setMessage] = useMessages();
+    const location = useLocation();
+    const history = useHistory();
+    const { t } = useTranslation();
+
+    const {
+      accountAddress,
+      address,
+      transactionHash,
+      blockHash,
+      tokenId,
+      epoch,
+      ...others
+    } = qs.parse(location.search);
+
+    let inputValue =
+      accountAddress ||
+      address ||
+      transactionHash ||
+      blockHash ||
+      tokenId ||
+      epoch;
+
+    const placeholder = useMemo(() => {
+      const len = inputFields.length;
+      return inputFields
+        .map((i, index) => {
+          return (
+            t(translations.general.searchInputPlaceholder[i]) +
+            (index === len - 1 ? '' : ' / ')
+          );
+        })
+        .join('');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const onSearch = (str: string) => {
+      let object: SearchInputQueryProps = {};
+
+      if (str) {
+        if (type === 'txn') {
+          // /transaction api always need a accountAddress param
+          object.accountAddress = accountAddress as string;
+        }
+
+        if (isAddress(str)) {
+          object.accountAddress = str;
+          // if (type === 'txn') {
+          //   object.accountAddress = str;
+          // } else if (isContractAddress(str) || isInnerContractAddress(str)) {
+          //   object.address = str;
+          // } else {
+          //   object.accountAddress = str;
+          // }
+        } else if (isHash(str)) {
+          if (type === 'minedBlock') {
+            object.blockHash = str;
+          } else {
+            object.transactionHash = str;
+          }
+        } else if (lodash.isInteger(+str)) {
+          if (['crc721', 'crc1155'].includes(type)) {
+            object.tokenId = str;
+          } else if (type === 'minedBlock') {
+            object.epochNumber = str;
+            // @ts-ignore
+            // object.miner = '';
+          } else {
+            setMessage({
+              text: t(translations.token.transferList.searchError),
+            });
+            return;
+          }
+        } else {
+          setMessage({
+            text: t(translations.token.transferList.searchError),
+          });
+          return;
+        }
+      }
+
+      const urlWithQuery = qs.stringifyUrl({
+        url: location.pathname,
+        query: {
+          ...others,
+          ...object,
+          skip: '0',
+        },
+      });
+      history.push(urlWithQuery);
+    };
+
+    return (
+      <TableSearchInput
+        onFilter={onSearch}
+        filter={inputValue as string}
+        placeholder={placeholder}
+      />
+    );
+  },
+);
+
 export const Title = ({
   address,
   total,
@@ -40,8 +181,10 @@ export const Title = ({
   showFilter,
   showSearchInput,
   filterOptions = [],
+  searchInputOptions,
 }: TitleProps) => {
   const { t } = useTranslation();
+
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
     [address],
@@ -77,6 +220,11 @@ export const Title = ({
     }),
     [t],
   );
+
+  const getSearchInput = useMemo(() => {
+    return showSearchInput ? <SearchInput {...searchInputOptions} /> : null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showSearchInput]);
 
   const getSearchDatepicker = useMemo(() => {
     return showDatepicker ? <TableSearchDatepicker /> : null;
@@ -114,6 +262,7 @@ export const Title = ({
     <StyledTableHeaderWrapper>
       {getTotalTip}
       <FilterWrap>
+        {getSearchInput}
         {getSearchDatepicker}
         {getSearchFilter}
       </FilterWrap>
@@ -128,6 +277,11 @@ Title.defaultProps = {
   showFilter: false,
   showSearchInput: false,
   filterOptions: [],
+  searchInputOptions: {
+    type: 'txn',
+    addressType: 'user',
+    inputFields: [],
+  },
 };
 
 export const Footer = ({ pathname, type }: FooterProps) => {
