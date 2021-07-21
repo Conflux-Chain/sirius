@@ -1,10 +1,16 @@
 import qs from 'query-string';
 import fetch from './request';
 
-export const apiPrefix = '/v1';
+export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
+
 export const sendRequest = config => {
-  return fetch(qs.stringifyUrl({ url: config.url, query: config.query }), {
+  const url = config.url.startsWith('/stat')
+    ? config.url
+    : `${v1Prefix}${
+        config.url.startsWith('/') ? config.url : '/' + config.url
+      }`;
+  return fetch(qs.stringifyUrl({ url: url, query: config.query }), {
     method: config.type || 'GET',
     body: config.body,
     headers: config.headers,
@@ -24,7 +30,7 @@ export const reqReport = (param?: object) => {
 
 export const reqTransactionEventlogs = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/eventLog`,
+    url: `/eventLog`,
     query: param,
     ...extra,
   });
@@ -32,21 +38,21 @@ export const reqTransactionEventlogs = (param?: object, extra?: object) => {
 
 export const reqBlockDetail = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/block/${param && param['hash']}`,
+    url: `/block/${param && param['hash']}`,
     ...extra,
   });
 };
 
 export const reqTransactionDetail = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/transaction/${param && param['hash']}`,
+    url: `/transaction/${param && param['hash']}`,
     query: extra,
   });
 };
 
 export const reqContract = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/contract/${param && param['address']}`,
+    url: `/contract/${param && param['address']}`,
     query: param,
     ...extra,
   });
@@ -54,7 +60,7 @@ export const reqContract = (param?: object, extra?: object) => {
 
 export const reqContractAndToken = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/contract-and-token`,
+    url: `/contract-and-token`,
     query: param,
     ...extra,
   });
@@ -62,7 +68,7 @@ export const reqContractAndToken = (param?: object, extra?: object) => {
 
 export const reqTransferList = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/transfer`,
+    url: `/transfer`,
     query: param,
     ...extra,
   });
@@ -70,7 +76,7 @@ export const reqTransferList = (param?: object, extra?: object) => {
 
 export const reqTokenList = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/token`,
+    url: `/token`,
     query: param,
     ...extra,
   });
@@ -78,7 +84,7 @@ export const reqTokenList = (param?: object, extra?: object) => {
 
 export const reqToken = (param?: object, extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/token/${param && param['address']}`,
+    url: `/token/${param && param['address']}`,
     query: param,
     ...extra,
   });
@@ -157,14 +163,14 @@ export const reqTopStatistics = (param: any, extra?: object) => {
 
 export const reqCfxSupply = (extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/supply`,
+    url: `/supply`,
     ...extra,
   });
 };
 
 export const reqHomeDashboard = (extra?: object) => {
   return sendRequest({
-    url: `${apiPrefix}/homeDashboard`,
+    url: `/homeDashboard`,
     ...extra,
   });
 };
@@ -178,23 +184,30 @@ export const reqContractNameTag = (name: string, extra?: object) => {
 
 export const reqContractLicense = () => {
   return sendRequest({
-    url: `${apiPrefix}/contract/license`,
+    url: `/contract/license`,
   });
 };
 
 export const reqContractCompiler = () => {
   return sendRequest({
-    url: `${apiPrefix}/contract/compiler`,
+    url: `/contract/compiler`,
   });
 };
 
 export const reqContractVerification = param => {
   return sendRequest({
-    url: `${apiPrefix}/contract/verify`,
+    url: `/contract/verify`,
     type: 'POST',
     body: JSON.stringify(param),
     headers: {
       'Content-Type': 'application/json',
     },
+  });
+};
+
+export const reqTransactions = (extra?: object) => {
+  return sendRequest({
+    url: `/transaction`,
+    ...extra,
   });
 };

@@ -83,7 +83,7 @@ export function Notice() {
   notices.push(
     <NoticeItem key="more">
       <Link href={getLatestNoticeLink(lang, isTestnet)} className="more">
-        {t(translations.header.learnMore)}
+        {t(translations.header.more)}
       </Link>
     </NoticeItem>,
   );

@@ -71,6 +71,104 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 12px
     }
   }
+
+  .ant-pagination-next, .ant-pagination-prev {
+    button.ant-pagination-item-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,84,254,0.04); 
+      color: #74798c;
+      border-color: rgba(0,84,254,0.04);
+    }
+  }
+
+  .ant-pagination-item, .ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-pagination-options-quick-jumper input {
+    background-color: rgba(0,84,254,0.04); 
+    color: #74798c;
+    border-color: rgba(0,84,254,0.04);
+  }
+
+  .ant-pagination-item-active, .ant-pagination-item-active:hover {
+    border-color: #1e3de4;
+    background-color: #1e3de4;
+
+    a {
+      color: #ffffff;
+    }
+  }
+
+  .ant-table-thead > tr > th:not(:first-child, :last-child), .ant-table-tbody > tr > td:not(:first-child, :last-child), .ant-table tfoot > tr > th:not(:first-child, :last-child), .ant-table tfoot > tr > td:not(:first-child, :last-child) {
+    padding: 16px 8px;
+  }
+
+  .ant-table-thead > tr > th:last-child.ant-table-column-has-sorters {
+    padding: 16px 8px;
+  }
+
+  .ant-table-column-sorters {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    justify-content: flex-end;
+
+    .ant-table-column-sorter {
+      margin-top: -0.4em;
+    }
+  }
+
+  .ant-table-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .ant-table-thead {
+    & > tr > th {
+      color: rgb(155, 158, 172);
+      white-space: nowrap;
+      background-color: #ffffff;
+      border-bottom: none;
+
+      &.ant-table-column-sort {
+        background: inherit;
+      }
+
+      & > td {
+        border: none;
+      }
+    }
+  }
+
+  .ant-table-tbody > tr {
+    td.ant-table-cell {
+      border: none;
+    }
+
+    td.ant-table-column-sort {
+      background: inherit;
+    }
+
+    &:not(:nth-child(odd)) {
+      background-color: #f9fafb;
+    }
+
+    &:hover {
+      background-color: #f0f5ff;
+
+      td.ant-table-cell{
+        background-color: #f0f5ff;
+      }
+    }
+  }
+
+  .ant-table-title {
+    border-bottom: 1px solid rgb(232, 233, 234)
+  }
+
+  ul li:before {
+    content: '' !important;
+  }
   
   .image-preview-popover {
     line-height: 1;

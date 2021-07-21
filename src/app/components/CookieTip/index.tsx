@@ -5,7 +5,7 @@ import CookieIcon from '../../../images/cookie.svg';
 import { translations } from '../../../locales/i18n';
 import docCookies from '../../../utils/cookie';
 
-export const CookieTip = () => {
+export const CookieTip = React.memo(() => {
   const { t } = useTranslation();
   const key = 'confluxscan_cookie_agreed';
   const [cookieAgreed, setCookieAgreed] = useState(
@@ -31,7 +31,7 @@ export const CookieTip = () => {
       </span>
     </CookieTipWrapper>
   );
-};
+});
 
 const CookieTipWrapper = styled.div`
   position: fixed;
