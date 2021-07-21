@@ -756,7 +756,8 @@
     "txHash": "交易哈希",
     "searchAddress": "搜索合约地址",
     "applicationUnit": "次",
-    "tx": "交易"
+    "tx": "交易",
+    "byFoundation": "（来自基金会）"
   },
   "transaction": {
     "tipOfTokenTransferCount": "最多展示 100 条记录",
