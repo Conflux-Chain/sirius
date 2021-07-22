@@ -527,7 +527,8 @@
         "report": "Report",
         "editContract": "Edit Contract",
         "sponsor": "Apply Sponsorship",
-        "website": "Official Website"
+        "website": "Official Website",
+        "balanceChecker": "Balance Checker"
       }
     },
     "loading": "loading...",
@@ -755,7 +756,8 @@
     "txHash": "Transaction Hash",
     "searchAddress": "Search contract address",
     "applicationUnit": "application",
-    "tx": "tx"
+    "tx": "tx",
+    "byFoundation": " (by Foundation)"
   },
   "transaction": {
     "tipOfTokenTransferCount": "Show up to 100 records",
@@ -1204,6 +1206,7 @@
     "contractAddress": "Contract Address",
     "blockNoOrDate": "Block No or Date",
     "or": "OR",
+    "chooseDate": "Please select date",
     "enterBlockNo": "Enter a Block No",
     "error": "Can not be empty",
     "lookUp": "Look Up",

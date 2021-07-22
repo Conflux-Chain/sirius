@@ -55,7 +55,7 @@ const getStorageFee = byteSize =>
 
 // Transaction Detail Page
 export const Detail = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [contractInfo, setContractInfo] = useState({});
@@ -532,6 +532,7 @@ export const Detail = () => {
                     )}`
                   : transferItem['value']}
               </span>
+              <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc20" />
             </div>,

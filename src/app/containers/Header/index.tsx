@@ -22,10 +22,12 @@ import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
 import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
-import imgNotice from 'images/notice2.png';
 import { Link } from '../../components/Link/Loadable';
 import { useToggle } from 'react-use';
 import { getLatestNoticeLink } from '../HomePage/Notice';
+import announcementNotification from '../../../images/notice/announcementNotification.png';
+import FAQNotification from '../../../images/notice/FAQNotification.png';
+import updateNotification from '../../../images/notice/updateNotification.png';
 
 export const Header = memo(() => {
   const { t, i18n } = useTranslation();
@@ -367,6 +369,15 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/nft-checker',
             },
+            {
+              title: [
+                t(translations.header.balanceChecker),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.balanceChecker,
+              afterClick: menuClick,
+              href: '/balance-checker',
+            },
           ],
         },
         {
@@ -549,10 +560,20 @@ export const Header = memo(() => {
     endLinksJSX,
   ];
 
+  const ImgNotice = () => {
+    if (CurrentTethysNotice.type === 'Announcement') {
+      return <img src={announcementNotification} alt="notice indicator" />;
+    } else if (CurrentTethysNotice.type === 'FAQ') {
+      return <img src={FAQNotification} alt="notice indicator" />;
+    } else if (CurrentTethysNotice.type === 'update') {
+      return <img src={updateNotification} alt="notice indicator" />;
+    }
+    return null;
+  };
   // notice
   const subMenu = (
     <NoticeWrapper className="notice">
-      <img src={imgNotice} alt="" />
+      <ImgNotice />
       <div
         className={`content ${
           (isTestnet ? CurrentTestnetNotice.hot : CurrentTethysNotice.hot)
@@ -597,6 +618,7 @@ const LogoWrapper = styled.div`
     margin-right: 0.57rem;
     width: 3.3571rem;
   }
+
   a.link {
     display: flex;
     align-items: center;
@@ -615,11 +637,13 @@ const Wrapper = styled.header`
         .navbar-link-menu {
           .navbar-link.level-0 {
             padding: 0 0.57rem;
+
             svg {
               display: none;
             }
           }
         }
+
         &:nth-child(1) {
           flex-grow: 1;
           justify-content: flex-end;
@@ -642,10 +666,12 @@ const Wrapper = styled.header`
           .header-link-menu {
             padding-left: 0;
           }
+
           .navbar-link-menu {
             .navbar-link {
               &.level-0 {
                 padding: 0.43rem 1.3rem;
+
                 svg {
                   display: block;
                 }
@@ -660,6 +686,7 @@ const Wrapper = styled.header`
       }
     }
   }
+
   ${media.s} {
     .navbar-menu {
       padding-left: 3rem;
@@ -670,9 +697,11 @@ const Wrapper = styled.header`
 
 const SearchWrapper = styled.div`
   flex-grow: 1;
+
   .header-search-container {
     max-width: unset;
   }
+
   ${media.m} {
     .header-search-container {
       position: fixed;
@@ -683,6 +712,7 @@ const SearchWrapper = styled.div`
       z-index: 2000;
     }
   }
+
   ${media.s} {
     .header-search-container {
       position: absolute;

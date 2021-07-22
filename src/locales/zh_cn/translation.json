@@ -527,7 +527,8 @@
         "report": "举报",
         "editContract": "编辑合约",
         "sponsor": "申请赞助",
-        "website": "官方网站"
+        "website": "官方网站",
+        "balanceChecker": "余额检索器"
       }
     },
     "loading": "加载中...",
@@ -755,7 +756,8 @@
     "txHash": "交易哈希",
     "searchAddress": "搜索合约地址",
     "applicationUnit": "次",
-    "tx": "交易"
+    "tx": "交易",
+    "byFoundation": "（来自基金会）"
   },
   "transaction": {
     "tipOfTokenTransferCount": "最多展示 100 条记录",
@@ -800,7 +802,7 @@
     "contract": "合约",
     "created": "已创建",
     "contractCreation": "合约创建",
-    "for": "For",
+    "for": "转移",
     "tokenId": "代币ID",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
     "epochConfirmations": "{{count}} 个纪元已确认",
@@ -1204,6 +1206,7 @@
     "contractAddress": "合约地址",
     "blockNoOrDate": "区块号或者日期",
     "or": "或",
+    "chooseDate": "请选择日期",
     "enterBlockNo": "输入区块号",
     "error": "不能为空",
     "lookUp": "搜索",

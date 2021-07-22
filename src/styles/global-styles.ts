@@ -98,6 +98,18 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  ${media.s} {
+    .ant-pagination-total-text {
+      width: 100%;
+      text-align: right;
+    }
+    .ant-pagination-options {
+      display: inherit;
+    }
+  }
+  
+  
+
   .ant-table-thead > tr > th:not(:first-child, :last-child), .ant-table-tbody > tr > td:not(:first-child, :last-child), .ant-table tfoot > tr > th:not(:first-child, :last-child), .ant-table tfoot > tr > td:not(:first-child, :last-child) {
     padding: 16px 8px;
   }

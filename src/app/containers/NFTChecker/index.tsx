@@ -27,6 +27,7 @@ import { Empty } from '../../components/Empty';
 import { useHistory } from 'react-router';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
+import { toThousands } from '../../../utils';
 
 const { Search } = Input;
 
@@ -203,7 +204,7 @@ export function NFTChecker() {
                       )
                     }
                     key={i}
-                  >{`${n.name[lang]} (${n.balance})`}</Tag>
+                  >{`${n.name[lang]} (${toThousands(n.balance[0])})`}</Tag>
                 ))}
               </TagsWrapper>
             ) : null}
@@ -228,7 +229,8 @@ export function NFTChecker() {
                 <>
                   {currentNFTCount > 0 ? (
                     <div className="total">
-                      {t(translations.blocks.tipCountBefore)} {currentNFTCount}{' '}
+                      {t(translations.blocks.tipCountBefore)}{' '}
+                      {toThousands(currentNFTCount[0])}{' '}
                       {lang === 'zh' ? '个 ' : ''}
                       {NFTContractNames[currentNFTType][lang] || ''} NFT{' '}
                       <span>
@@ -348,6 +350,7 @@ const StyledResultWrapper = styled.div`
 const TagsWrapper = styled.div`
   padding: 10px 0 0;
   border-bottom: 1px solid #ebeced;
+
   .ant-tag {
     margin-bottom: 10px;
     background: rgba(30, 61, 228, 0.04);
@@ -379,6 +382,7 @@ const NFTWrapper = styled.div`
 
     > span {
       float: right;
+
       ${media.m} {
         display: block;
         float: none;
@@ -392,9 +396,11 @@ const NFTWrapper = styled.div`
 
     li {
       margin-bottom: 0;
+
       &:before {
         display: none;
       }
+
       .anticon {
         vertical-align: 1px;
       }

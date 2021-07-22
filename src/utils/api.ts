@@ -609,3 +609,10 @@ export const useClientVersion = () => {
   const { data: version } = useSWR('client version', fetchClientVersion);
   return version?.result;
 };
+
+export const useCfxBalance: useApi = params => {
+  if (!Array.isArray(params)) {
+    params = [params];
+  }
+  return useSWR(['/stat/get-cfx-balance-at', ...params], simpleGetFetcher);
+};

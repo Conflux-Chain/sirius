@@ -67,11 +67,11 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc721 ||
     tokenType === cfxTokenTypes.crc721
   ) {
-    columnsWidth = [1, 7, 9, 3, 3];
+    columnsWidth = [1, 7, 5, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
-      tokenColunms.contract(true),
+      tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,
@@ -95,11 +95,11 @@ export function Tokens() {
     tokenType === cfxTokenTypes.erc1155 ||
     tokenType === cfxTokenTypes.crc1155
   ) {
-    columnsWidth = [1, 7, 9, 3, 3];
+    columnsWidth = [1, 7, 5, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
-      tokenColunms.contract(true),
+      tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,

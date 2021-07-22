@@ -7,6 +7,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
+import { toThousands } from 'utils';
+import { useBreakpoint } from 'styles/media';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
@@ -43,6 +45,7 @@ export const TablePanel = ({
   const { t } = useTranslation();
   const history = useHistory();
   const { pathname, search } = useLocation();
+  const bp = useBreakpoint();
 
   const [state, setState] = useState<TableStateProp>({
     data: [],
@@ -135,16 +138,18 @@ export const TablePanel = ({
         typeof pagination === 'boolean'
           ? pagination
           : {
+              size: bp === 's' ? 'small' : 'default',
+              showSizeChanger: true,
               showQuickJumper: true,
               showTotal: () => {
                 if (listLimit && total > listLimit) {
                   return t(translations.general.totalRecordWithLimit, {
-                    total,
+                    total: toThousands(total),
                     limit: listLimit,
                   });
                 } else {
                   return t(translations.general.totalRecord, {
-                    total,
+                    total: toThousands(total),
                   });
                 }
               },

@@ -208,6 +208,7 @@ export const TestnetNotices = [
 
 export const CurrentTethysNotice = {
   hot: false,
+  type: 'Announcement',
   en:
     'Scan and Portal have been fully adapted to CIP-37. User assets will not be affected.',
   zh: 'Scan 和 Portal 已升级为全面适配 CIP-37，不会对个人资产有任何影响。',
@@ -215,6 +216,7 @@ export const CurrentTethysNotice = {
 
 export const CurrentTestnetNotice = {
   hot: false,
+  type: 'Announcement',
   en:
     'Scan and Portal have been fully adapted to CIP-37. User assets will not be affected.',
   zh: 'Scan 和 Portal 已升级为全面适配 CIP-37，不会对个人资产有任何影响。',
