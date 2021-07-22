@@ -28,6 +28,7 @@ export const Blocks = ({ url }: Props) => {
       columns={columns}
       rowKey="hash"
       pagination={false}
+      hideDefaultTitle={true}
     ></TablePanelNew>
   );
 };

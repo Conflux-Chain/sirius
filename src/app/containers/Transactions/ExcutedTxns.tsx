@@ -38,6 +38,12 @@ export const ExcutedTxns = ({ address }: Props) => {
         'status1',
         'txTypeCreate',
       ]}
+      showSearchInput={true}
+      searchInputOptions={{
+        type: 'txn',
+        addressType: 'user',
+        inputFields: ['txnHash', 'address'],
+      }}
     />
   );
 

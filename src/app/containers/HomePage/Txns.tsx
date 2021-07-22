@@ -27,6 +27,7 @@ export const Txns = ({ url }: Props) => {
       columns={columns}
       rowKey="hash"
       pagination={false}
+      hideDefaultTitle={true}
     ></TablePanelNew>
   );
 };
