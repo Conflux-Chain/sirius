@@ -260,7 +260,7 @@ export const Title = ({
 
   return (
     <StyledTableHeaderWrapper>
-      {getTotalTip}
+      <div className="table-title-tip-total">{getTotalTip}</div>
       <FilterWrap>
         {getSearchInput}
         {getSearchDatepicker}
@@ -337,6 +337,16 @@ const StyledTableHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${media.s} {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .table-title-tip-total {
+    margin-bottom: 5px;
+  }
 `;
 
 const FilterWrap = styled.div`
@@ -346,7 +356,7 @@ const FilterWrap = styled.div`
   z-index: 200;
 
   ${media.s} {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     right: unset;
     left: 0;
