@@ -34,6 +34,7 @@ interface QueryProps {
 
 interface SearchInputQueryProps {
   accountAddress?: string;
+  opponentAddress?: string;
   address?: string;
   transactionHash?: string;
   blockHash?: string;
@@ -78,11 +79,12 @@ const SearchInput = React.memo(
 
     const {
       accountAddress,
+      opponentAddress,
       address,
       transactionHash,
       blockHash,
       tokenId,
-      epoch,
+      epochNumber,
       ...others
     } = qs.parse(location.search);
 
@@ -92,7 +94,7 @@ const SearchInput = React.memo(
       transactionHash ||
       blockHash ||
       tokenId ||
-      epoch;
+      epochNumber;
 
     const placeholder = useMemo(() => {
       const len = inputFields.length;
@@ -117,7 +119,7 @@ const SearchInput = React.memo(
         }
 
         if (isAddress(str)) {
-          object.accountAddress = str;
+          object.opponentAddress = str;
           // if (type === 'txn') {
           //   object.accountAddress = str;
           // } else if (isContractAddress(str) || isInnerContractAddress(str)) {

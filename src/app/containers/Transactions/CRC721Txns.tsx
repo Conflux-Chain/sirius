@@ -32,12 +32,7 @@ export const CRC721Txns = ({ address }: Props) => {
       total={total}
       showDatepicker={true}
       showFilter={true}
-      filterOptions={[
-        'txTypeAll',
-        'txTypeOutgoing',
-        'txTypeIncoming',
-        'status1',
-      ]}
+      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
       showSearchInput={true}
       searchInputOptions={{
         type: 'crc721',

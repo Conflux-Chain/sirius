@@ -63,7 +63,6 @@ export const DataZoomLineChart = ({
             return [pt[0], '10%'];
           },
           formatter: function (params) {
-            console.log(params);
             const data = params
               .map(
                 (p, index) =>
