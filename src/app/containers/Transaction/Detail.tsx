@@ -433,6 +433,7 @@ export const Detail = () => {
               </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">1</span>
+              <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc721" />
               <span className="type">
@@ -485,6 +486,7 @@ export const Detail = () => {
                         ? `${formatBalance(item['value'], tokenDecimals, true)}`
                         : item['value']}
                     </span>
+                    <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                     <span className="tokenId">
                       {item['tokenId']}
