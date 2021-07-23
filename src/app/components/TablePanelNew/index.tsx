@@ -169,6 +169,7 @@ export const TablePanel = ({
         typeof pagination === 'boolean'
           ? pagination
           : {
+              showLessItems: true,
               hideOnSinglePage: true,
               size: bp === 's' ? 'small' : 'default',
               showSizeChanger: true,
