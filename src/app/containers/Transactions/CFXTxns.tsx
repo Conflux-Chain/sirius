@@ -15,7 +15,6 @@ interface Props {
 
 export const CFXTxns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
-
   const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`;
 
   const columnsWidth = [4, 4, 8, 7, 4, 5];
@@ -29,7 +28,19 @@ export const CFXTxns = ({ address }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = ({ total }) => (
-    <Title address={address} total={total} showDatepicker={true} />
+    <Title
+      address={address}
+      total={total}
+      showDatepicker={true}
+      showFilter={true}
+      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
+      showSearchInput={true}
+      searchInputOptions={{
+        type: 'cfxTxn',
+        addressType: 'user',
+        inputFields: ['txnHash', 'address'],
+      }}
+    />
   );
 
   const footer = <Footer pathname="transfer" type={cfxTokenTypes.cfx} />;

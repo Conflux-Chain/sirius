@@ -8,11 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
 import { toThousands } from 'utils';
+import { useBreakpoint } from 'styles/media';
+import styled from 'styled-components/macro';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
   title?: ((info: any) => React.ReactNode) | React.ReactNode;
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
+  hideDefaultTitle?: boolean;
 }
 
 interface TableStateProp {
@@ -27,6 +30,28 @@ interface Query {
   [index: string]: string;
 }
 
+export const TitleTotal = ({
+  total,
+  listLimit,
+}: {
+  total: number;
+  listLimit: number;
+}) => {
+  const { t } = useTranslation();
+
+  const content =
+    listLimit && total > listLimit
+      ? t(translations.general.totalRecordWithLimit, {
+          total: toThousands(total),
+          limit: listLimit,
+        })
+      : t(translations.general.totalRecord, {
+          total: toThousands(total),
+        });
+
+  return <StyleTableTitleTotalWrapper>{content}</StyleTableTitleTotalWrapper>;
+};
+
 export const TablePanel = ({
   url: outerUrl,
   dataSource,
@@ -39,11 +64,12 @@ export const TablePanel = ({
   onChange,
   title,
   footer,
+  hideDefaultTitle,
   ...others
 }: TableProp) => {
-  const { t } = useTranslation();
   const history = useHistory();
   const { pathname, search } = useLocation();
+  const bp = useBreakpoint();
 
   const [state, setState] = useState<TableStateProp>({
     data: [],
@@ -136,19 +162,22 @@ export const TablePanel = ({
         typeof pagination === 'boolean'
           ? pagination
           : {
+              hideOnSinglePage: true,
+              size: bp === 's' ? 'small' : 'default',
+              showSizeChanger: true,
               showQuickJumper: true,
-              showTotal: () => {
-                if (listLimit && total > listLimit) {
-                  return t(translations.general.totalRecordWithLimit, {
-                    total: toThousands(total),
-                    limit: listLimit,
-                  });
-                } else {
-                  return t(translations.general.totalRecord, {
-                    total: toThousands(total),
-                  });
-                }
-              },
+              // showTotal: () => {
+              //   if (listLimit && total > listLimit) {
+              //     return t(translations.general.totalRecordWithLimit, {
+              //       total: toThousands(total),
+              //       limit: listLimit,
+              //     });
+              //   } else {
+              //     return t(translations.general.totalRecord, {
+              //       total: toThousands(total),
+              //     });
+              //   }
+              // },
               pageSize: Number(getQuery.limit),
               current:
                 Math.floor(Number(getQuery.skip) / Number(getQuery.limit)) + 1,
@@ -169,7 +198,9 @@ export const TablePanel = ({
                   loading,
                 })
             : () => title
-          : undefined
+          : hideDefaultTitle
+          ? undefined
+          : () => <TitleTotal total={total} listLimit={listLimit || total} /> // default show total records in title
       }
       footer={
         footer
@@ -195,4 +226,7 @@ TablePanel.defaultProps = {
   rowKey: () => Math.random().toString().substr(2),
   title: undefined,
   footer: undefined,
+  hideDefaultTitle: false,
 };
+
+const StyleTableTitleTotalWrapper = styled.div``;

@@ -495,6 +495,7 @@ export function Sponsor() {
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
+            t(translations.sponsor.noticeFive),
           ]}
         ></Remark>
       </Wrapper>

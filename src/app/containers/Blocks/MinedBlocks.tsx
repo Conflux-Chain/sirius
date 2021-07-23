@@ -32,7 +32,17 @@ export const MinedBlocks = ({ address }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = ({ total }) => (
-    <Title address={address} total={total} showDatepicker={true} />
+    <Title
+      address={address}
+      total={total}
+      showDatepicker={true}
+      showSearchInput={true}
+      searchInputOptions={{
+        type: 'minedBlock',
+        addressType: 'user',
+        inputFields: ['epoch', 'blockHash'],
+      }}
+    />
   );
 
   // const footer = <Footer pathname="transfer" type={cfxTokenTypes.erc20} />;

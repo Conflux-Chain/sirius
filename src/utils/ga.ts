@@ -44,12 +44,12 @@ export const trackEvent = (eventInfo: TrackEventParams) => {
     if (typeof eventInfo.value !== 'undefined') {
       eventObject.value = eventInfo.value;
     }
-    if (
-      window.location.hostname.includes('127.0.0.1') ||
-      window.location.hostname.includes('localhost')
-    ) {
-      console.info(`trackEvent`, eventInfo);
-    }
+    // if (
+    //   window.location.hostname.includes('127.0.0.1') ||
+    //   window.location.hostname.includes('localhost')
+    // ) {
+    //   console.info(`trackEvent`, eventInfo);
+    // }
     window.gtag &&
       window.gtag(
         'event',

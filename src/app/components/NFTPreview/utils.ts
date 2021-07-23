@@ -493,11 +493,21 @@ export const getNFTInfo = async ({
         },
       });
 
-    default:
+    default: {
       // try get image and name by 1155 spec
-      return await queryNFTImageInfo({
+      let result = await queryNFTImageInfo({
         address: address,
         tokenId,
       });
+      if (result == null) {
+        // try 721
+        result = await queryNFTImageInfo({
+          address: address,
+          method: 'tokenURI',
+          tokenId,
+        });
+      }
+      return result;
+    }
   }
 };
