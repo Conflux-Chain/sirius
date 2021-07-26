@@ -528,7 +528,8 @@
         "editContract": "Edit Contract",
         "sponsor": "Apply Sponsorship",
         "website": "Official Website",
-        "balanceChecker": "Balance Checker"
+        "balanceChecker": "Balance Checker",
+        "verifyContract": "Verify Contract"
       }
     },
     "loading": "loading...",

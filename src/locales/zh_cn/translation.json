@@ -528,7 +528,8 @@
         "editContract": "编辑合约",
         "sponsor": "申请赞助",
         "website": "官方网站",
-        "balanceChecker": "余额检索器"
+        "balanceChecker": "余额检索器",
+        "verifyContract": "验证合约"
       }
     },
     "loading": "加载中...",
