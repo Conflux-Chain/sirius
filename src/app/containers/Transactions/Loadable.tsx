@@ -43,3 +43,8 @@ export const CRC1155Txns = lazyLoad(
   () => import('./CRC1155Txns'),
   module => module.CRC1155Txns,
 );
+
+export const ExcutedAndPendingTxns = lazyLoad(
+  () => import('./ExcutedAndPendingTxns'),
+  module => module.ExcutedAndPendingTxns,
+);

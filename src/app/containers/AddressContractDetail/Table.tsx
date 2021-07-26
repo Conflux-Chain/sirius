@@ -7,19 +7,20 @@ import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   isContractAddress,
   isInnerContractAddress,
-  isAccountAddress,
+  // isAccountAddress,
 } from 'utils';
 import { cfxTokenTypes } from 'utils/constants';
 import { ContractContent, CheckCircleIcon } from './ContractContent';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
+import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
 
 import {
-  ExcutedTxns,
+  // ExcutedTxns,
   CFXTxns,
   CRC20Txns,
   CRC721Txns,
   CRC1155Txns,
-  PendingTxns,
+  // PendingTxns,
 } from 'app/containers/Transactions/Loadable';
 import { MinedBlocks } from 'app/containers/Blocks/Loadable';
 
@@ -48,23 +49,29 @@ export function Table({ address, addressInfo }) {
 
   const tabs: any = [
     {
-      value: 'transaction',
+      value: `transaction`,
       action: 'accountTransactions',
-      label: isAccountAddress(address)
-        ? t(translations.transactions.executed)
-        : t(translations.general.transactions),
-      content: <ExcutedTxns address={address} />,
+      label: t(translations.general.transactions),
+      content: <ExcutedAndPendingTxns address={address} />,
     },
+    // {
+    //   value: 'transaction',
+    //   action: 'accountTransactions',
+    //   label: isAccountAddress(address)
+    //     ? t(translations.transactions.executed)
+    //     : t(translations.general.transactions),
+    //   content: <ExcutedTxns address={address} />,
+    // },
   ];
 
-  if (isAccountAddress(address)) {
-    tabs.push({
-      value: 'transaction-pending',
-      action: 'accountTransactions-pending',
-      label: t(translations.transactions.pending),
-      content: <PendingTxns address={address} />,
-    });
-  }
+  // if (isAccountAddress(address)) {
+  //   tabs.push({
+  //     value: 'transaction-pending',
+  //     action: 'accountTransactions-pending',
+  //     label: t(translations.transactions.pending),
+  //     content: <PendingTxns address={address} />,
+  //   });
+  // }
 
   tabs.push({
     value: `transfers-${cfxTokenTypes.cfx}`,
