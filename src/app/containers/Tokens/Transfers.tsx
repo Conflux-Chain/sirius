@@ -1,5 +1,8 @@
 import React from 'react';
-import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import {
+  TablePanel as TablePanelNew,
+  TitleTotal,
+} from 'app/components/TablePanelNew';
 import { tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { cfxTokenTypes } from 'utils/constants';
@@ -121,9 +124,10 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     history.push(urlWithQuery);
   };
 
-  const tableHeader = () => {
+  const tableHeader = ({ total, listLimit }) => {
     return (
       <StyledSearchAreaWrapper>
+        <TitleTotal total={total} listLimit={listLimit} />
         <div className="token-search-container">
           <TableSearchInput
             onFilter={onFilter}

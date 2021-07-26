@@ -10,12 +10,14 @@ import { TableProps } from '@jnoodle/antd/es/table';
 import { toThousands } from 'utils';
 import { useBreakpoint } from 'styles/media';
 import styled from 'styled-components/macro';
+import clsx from 'clsx';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
   title?: ((info: any) => React.ReactNode) | React.ReactNode;
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
   hideDefaultTitle?: boolean;
+  hideShadow?: boolean;
 }
 
 interface TableStateProp {
@@ -65,6 +67,8 @@ export const TablePanel = ({
   title,
   footer,
   hideDefaultTitle,
+  hideShadow,
+  className,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -153,6 +157,9 @@ export const TablePanel = ({
 
   return (
     <Table
+      className={clsx(className, {
+        shadowed: !hideShadow,
+      })}
       tableLayout={tableLayout}
       scroll={scroll}
       columns={columns}
@@ -162,6 +169,7 @@ export const TablePanel = ({
         typeof pagination === 'boolean'
           ? pagination
           : {
+              showLessItems: true,
               hideOnSinglePage: true,
               size: bp === 's' ? 'small' : 'default',
               showSizeChanger: true,
@@ -227,6 +235,9 @@ TablePanel.defaultProps = {
   title: undefined,
   footer: undefined,
   hideDefaultTitle: false,
+  hideShadow: false,
 };
 
-const StyleTableTitleTotalWrapper = styled.div``;
+const StyleTableTitleTotalWrapper = styled.div`
+  margin-right: 10px;
+`;

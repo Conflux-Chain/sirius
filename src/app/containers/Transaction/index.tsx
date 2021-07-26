@@ -47,7 +47,7 @@ export function Transaction() {
       value: 'logs',
       label: () => {
         return (
-          <TabLabel total={eventLogCount} showTooltip={false}>
+          <TabLabel showTooltip={false}>
             {t(translations.transaction.logs.title)}
           </TabLabel>
         );

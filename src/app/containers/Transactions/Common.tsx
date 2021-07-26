@@ -90,6 +90,7 @@ const SearchInput = React.memo(
 
     let inputValue =
       accountAddress ||
+      opponentAddress ||
       address ||
       transactionHash ||
       blockHash ||

@@ -4,6 +4,7 @@ import {
   reqContract,
   reqContractAndToken,
 } from 'utils/httpRequest';
+import { toThousands } from 'utils';
 import { Card } from 'app/components/Card/Loadable';
 import { Empty } from 'app/components/Empty/Loadable';
 import { cfx, formatAddress } from 'utils/cfx';
@@ -219,6 +220,7 @@ export const EventLogs = ({ hash }: Props) => {
   // }]
   const [eventlogs, setEventlogs] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true);
@@ -238,9 +240,18 @@ export const EventLogs = ({ hash }: Props) => {
     <StyledEventLogsWrapper>
       <Card>
         {loading ? null : <Empty show={!eventlogs.length} />}
-        {eventlogs.map((log, index) => (
-          <EventLog log={log} key={`${log.address}-${index}`} />
-        ))}
+        {eventlogs.length ? (
+          <>
+            <div className="eventlog-title-total">
+              {t(translations.general.totalRecord, {
+                total: toThousands(eventlogs.length),
+              })}
+            </div>
+            {eventlogs.map((log, index) => (
+              <EventLog log={log} key={`${log.address}-${index}`} />
+            ))}
+          </>
+        ) : null}
       </Card>
     </StyledEventLogsWrapper>
   );
@@ -250,6 +261,11 @@ const StyledEventLogsWrapper = styled.div`
   position: relative;
   margin-bottom: 2.2857rem;
   min-height: 16.4286rem;
+
+  .eventlog-title-total {
+    padding: 1.1429rem 0;
+    border-bottom: 1px solid #e8e9ea;
+  }
 
   .eventlog-content {
     display: flex;
