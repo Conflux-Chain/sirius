@@ -1294,10 +1294,10 @@
   resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-9.1.2.tgz#d05f66db03e3a3638a654e8badf2deb489eb220d"
   integrity sha512-r3fwVbVH+M8W0qYlBBZFsUwKe6NT5qvz+EmU7sr8VeN1cQ63z+3cfXyTo7WGGEMEgKiT0jboNAK3b1FZp8k9LQ==
 
-"@conflux-dev/conflux-address-js@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@conflux-dev/conflux-address-js/-/conflux-address-js-1.0.0.tgz#e779547f40b4436d428e1ea7f616ea23ad895979"
-  integrity sha512-RJMXfleBz3286irDsQ0T+2STsowSUklnqAOglBfQA7dAy274zZ466Sd7l1bQsknJVJ0Q9Y5AGLYv2RIajZpYbg==
+"@conflux-dev/conflux-address-js@^1.1.7":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@conflux-dev/conflux-address-js/-/conflux-address-js-1.1.8.tgz#98204cf9447d87875bab1447483799b86ed45f34"
+  integrity sha512-WKnlIqsKAJ2aZ1CsLnZ8v2qCVjUKGozSQMl3OEgzR7n6K5L5ctexc5CfossOPZQBd+wRNu35ImXjy58XxMGJLQ==
   dependencies:
     jsbi "^3.1.4"
 
@@ -4394,6 +4394,11 @@ commander@^4.0.1, commander@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
+
+commander@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.0.0.tgz#1da2139548caef59bd23e66d18908dfb54b02258"
+  integrity sha512-Xvf85aAtu6v22+E5hfVoLHqyul/jyxh91zvqk/ioJTQuJR7Z78n7H558vMPKanPSRgIEeZemT92I2g9Y8LPbSQ==
 
 commitizen@^4.0.3:
   version "4.2.1"
@@ -9266,14 +9271,14 @@ jest@24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-js-conflux-sdk@1.6.8:
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.6.8.tgz#79567e59a9a79a3f30b3c23fc51ef90554e0647e"
-  integrity sha512-Sxs5t8lXDycB9VkuwG6sJyfwzWvBiCRCl9oJHHTtk7inkgt6AUiwlXmCbbuKOggyQv1Tbio93sGE93A8NjLWMA==
+js-conflux-sdk@1.6.11:
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-1.6.11.tgz#df7f3d0e66d4bb4536405811648e620d462b6b54"
+  integrity sha512-XlNiFc9jgZLFfR8M/+yUfoscqEFegUy//MJHYRLG0Dc3eZt5Cp6skPuyroRRws2Hc2KsJZxgveAYBNJSr5um4A==
   dependencies:
-    "@babel/runtime" "^7.8.4"
-    "@conflux-dev/conflux-address-js" "^1.0.0"
+    "@conflux-dev/conflux-address-js" "^1.1.7"
     big.js "^5.2.2"
+    commander "^8.0.0"
     keccak "^2.0.0"
     lodash "^4.17.19"
     scrypt-js "^3.0.1"
