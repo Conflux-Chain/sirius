@@ -13,8 +13,7 @@ interface Props {
 export const CRC721Txns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const addressType = isContractAddress(address) ? 'contract' : 'user';
-  const addressKey = addressType === 'contract' ? 'address' : 'accountAddress';
-  const url = `/transfer?${addressKey}=${address}&transferType=${cfxTokenTypes.erc721}`;
+  const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc721}`;
 
   const columnsWidth = [3, 7, 6, 4, 6, 4];
   const columns = [
