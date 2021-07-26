@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import SkelontonContainer from '../SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
-import { formatNumber, fromDripToCfx } from '../../../utils';
+import { formatNumber, fromDripToCfx, toThousands } from '../../../utils';
 import { AddressContainer } from '../AddressContainer';
 import { formatAddress } from '../../../utils/cfx';
 import { token } from '../../../utils/tableColumns/token';
@@ -87,6 +87,14 @@ export const StatsCard = ({
   const [totalGas, setTotalGas] = useState<number>(Infinity);
   const [loading, setLoading] = useState(true);
   const [loadingTokenInfo, setLoadingTokenInfo] = useState(true);
+  const [totalTopCfxSent, setTotalTopCfxSent] = useState(new BigNumber(0));
+  const [totalTopCfxReceived, setTotalTopCfxReceived] = useState(
+    new BigNumber(0),
+  );
+  const [totalTopTxnSent, setTotalTopTxnSent] = useState(new BigNumber(0));
+  const [totalTopTxnReceived, setTotalTopTxnReceived] = useState(
+    new BigNumber(0),
+  );
 
   // get portal selected address
   const [accounts] = useAccounts();
@@ -246,6 +254,12 @@ export const StatsCard = ({
   }
 
   useEffect(() => {
+    setTotalTopCfxSent(new BigNumber(0));
+    setTotalTopCfxReceived(new BigNumber(0));
+    setTotalTopTxnSent(new BigNumber(0));
+    setTotalTopTxnReceived(new BigNumber(0));
+  }, [span]);
+  useEffect(() => {
     if (category === 'overview') {
       if (statsData) {
         setLoading(false);
@@ -372,35 +386,55 @@ export const StatsCard = ({
   const tableBody = (category, data: any = []) => {
     switch (category) {
       case 'transaction':
-        return data.map((d, i) => (
-          <tr key={i}>
-            <td>{i + 1}</td>
-            <td className="address">
-              <AddressContainer
-                value={d.base32 || d.hex}
-                alias={
-                  d.contractInfo && d.contractInfo.name
-                    ? d.contractInfo.name
-                    : d.tokenInfo && d.tokenInfo.name
-                    ? d.tokenInfo.name
-                    : null
-                }
-                isMe={
-                  accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) ===
-                      formatAddress(d.base32 || d.hex)
-                    : false
-                }
-              />
-            </td>
-            <td className="text-right">
-              {action === 'cfxSend' || action === 'cfxReceived'
-                ? cfxValue(d.value)
-                : intValue(d.value)}
-            </td>
-            <td className="text-right">{percentageValue(d.percent)}</td>
-          </tr>
-        ));
+        return data.map((d, i) => {
+          switch (action) {
+            case 'cfxSend':
+              setTotalTopCfxSent(oldValue => BigNumber.sum(d.value, oldValue));
+              break;
+            case 'cfxReceived':
+              setTotalTopCfxReceived(oldValue =>
+                BigNumber.sum(d.value, oldValue),
+              );
+              break;
+            case 'txnSend':
+              setTotalTopTxnSent(oldValue => BigNumber.sum(d.value, oldValue));
+              break;
+            case 'txnReceived':
+              setTotalTopTxnReceived(oldValue =>
+                BigNumber.sum(d.value, oldValue),
+              );
+              break;
+          }
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td className="address">
+                <AddressContainer
+                  value={d.base32 || d.hex}
+                  alias={
+                    d.contractInfo && d.contractInfo.name
+                      ? d.contractInfo.name
+                      : d.tokenInfo && d.tokenInfo.name
+                      ? d.tokenInfo.name
+                      : null
+                  }
+                  isMe={
+                    accounts && accounts.length > 0
+                      ? formatAddress(accounts[0]) ===
+                        formatAddress(d.base32 || d.hex)
+                      : false
+                  }
+                />
+              </td>
+              <td className="text-right">
+                {action === 'cfxSend' || action === 'cfxReceived'
+                  ? cfxValue(d.value)
+                  : intValue(d.value)}
+              </td>
+              <td className="text-right">{percentageValue(d.percent)}</td>
+            </tr>
+          );
+        });
       case 'token':
         return data.map((d, i) => (
           <tr key={i}>
@@ -543,6 +577,11 @@ export const StatsCard = ({
         return null;
     }
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const tableBodyMemo = useMemo(() => tableBody(category, data), [
+    category,
+    data,
+  ]);
 
   const chartContent = (category, data: any = []) => {
     switch (category) {
@@ -628,9 +667,48 @@ export const StatsCard = ({
     }
   };
 
+  let total;
+  if (action === 'cfxSend') {
+    total = (
+      <span>
+        {t(translations.statistics.valueInTotal)}：
+        {fromDripToCfx(totalTopCfxSent.toString(), false, {
+          withUnit: false,
+          keepDecimal: false,
+        })}{' '}
+        CFX
+      </span>
+    );
+  } else if (action === 'cfxReceived') {
+    total = (
+      <span>
+        {t(translations.statistics.valueInTotal)}：
+        {fromDripToCfx(totalTopCfxReceived.toString(), false, {
+          withUnit: false,
+          keepDecimal: false,
+        })}{' '}
+        CFX
+      </span>
+    );
+  } else if (action === 'txnSend') {
+    total = (
+      <span>
+        {t(translations.statistics.txnCountInTotal)}：
+        {toThousands(totalTopTxnSent.toString())}
+      </span>
+    );
+  } else if (action === 'txnReceived') {
+    total = (
+      <span>
+        {t(translations.statistics.txnCountInTotal)}：
+        {toThousands(totalTopTxnReceived.toString())}
+      </span>
+    );
+  }
+
   return (
     <CardWrapper className={category}>
-      <h2>
+      <HeaderWrapper>
         {t(translations.statistics[type])}{' '}
         {category === 'overview' ? (
           <Link
@@ -643,7 +721,8 @@ export const StatsCard = ({
             {t(translations.statistics.overviewColumns.top10)}
           </Link>
         ) : null}
-      </h2>
+        {category === 'transaction' ? total : null}
+      </HeaderWrapper>
       <SkelontonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
@@ -689,7 +768,7 @@ export const StatsCard = ({
                   {tableHeader(category)}
                 </tr>
               </thead>
-              <tbody>{tableBody(category, data)}</tbody>
+              <tbody>{tableBodyMemo}</tbody>
             </table>
           )}
         </div>
@@ -742,15 +821,18 @@ const CardWrapper = styled.div`
           max-width: unset;
           white-space: nowrap;
         }
+
         .right {
           text-align: right;
           width: auto;
         }
+
         ${media.s} {
           .right {
             text-align: left;
           }
         }
+
         &:last-child {
           border-bottom: none;
         }
@@ -787,9 +869,11 @@ const CardWrapper = styled.div`
         align-items: center;
         margin: 0;
         line-height: 2;
+
         &:first-child {
           border-bottom: 1px solid #ccc;
         }
+
         & > span {
           &:first-child {
             font-weight: 700;
@@ -804,6 +888,7 @@ const CardWrapper = styled.div`
     font-size: 14px;
     text-align: left;
     padding: 10px 0;
+
     th,
     td {
       font-weight: normal;
@@ -819,15 +904,22 @@ const CardWrapper = styled.div`
         font-family: ${monospaceFont};
       }
     }
+
     td {
       color: #23304f;
       font-family: ${monospaceFont};
     }
+
     tbody tr:nth-child(odd) {
       background: rgba(250, 251, 252, 0.62);
     }
+
     .text-right {
       text-align: right;
     }
   }
+`;
+const HeaderWrapper = styled.h2`
+  display: flex;
+  justify-content: space-between;
 `;

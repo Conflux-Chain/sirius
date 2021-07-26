@@ -570,7 +570,7 @@ export function checkUint(value, type) {
   return [isType, num, min.toFixed(), max.toFixed()];
 }
 export function isHex(num) {
-  return Boolean(num.match(/^0x[0-9a-f]+$/i));
+  return Boolean(num.match(/^0x[0-9a-f]*$/i));
 }
 export function isEvenLength(str) {
   const length = str.length;

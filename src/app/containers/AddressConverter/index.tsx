@@ -162,7 +162,7 @@ export function AddressConverter() {
 
   const handleNetworkIdChange = e => {
     let num = e.target.value.trim();
-    if (num !== '' && Number(num) < 1) {
+    if (num !== '' && Number(num) < 0) {
       return;
     } else {
       setNetworkId(num);

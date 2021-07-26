@@ -7,7 +7,9 @@ import { cfx } from 'utils/cfx';
 import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { translations } from 'locales/i18n';
 import BigNumber from 'bignumber.js';
-import { toThousands } from 'utils';
+// import { toThousands } from 'utils';
+import { TxnSwitcher } from './Common';
+import { isAccountAddress } from 'utils';
 
 interface Props {
   address: string;
@@ -96,13 +98,17 @@ export const PendingTxns = ({ address }: Props) => {
   const tableHeader = () => {
     return (
       <div>
-        {total > 10
+        <TxnSwitcher
+          total={total}
+          isAccount={isAccountAddress(address)}
+        ></TxnSwitcher>
+        {/* {total > 10
           ? t(translations.transactions.pendingTotal, {
               total: toThousands(total),
             })
           : t(translations.general.totalRecord, {
               total: toThousands(total),
-            })}
+            })} */}
       </div>
     );
   };

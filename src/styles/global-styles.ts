@@ -133,6 +133,7 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table-footer {
     background-color: #ffffff;
     border-top: 1px solid #f0f0f0;
+    padding-bottom: 0;
   }
 
   .ant-table-thead {
@@ -175,7 +176,22 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-table-title {
-    border-bottom: 1px solid rgb(232, 233, 234)
+    border-bottom: 1px solid rgb(232, 233, 234);
+    padding: 16px 0;
+  }
+
+  .ant-table-wrapper.shadowed {
+    .ant-table {
+      box-shadow: rgb(20 27 50 / 12%) 0.8571rem 0.5714rem 1.7143rem -0.8571rem;
+      padding: 0rem 1.1429rem 1.1429rem;
+      border-radius: 4px;
+    }
+  }
+
+  .ant-pagination-options-quick-jumper {
+    input {
+      margin-right: 0;
+    } 
   }
 
   ul li:before {

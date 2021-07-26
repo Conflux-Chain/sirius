@@ -22,6 +22,7 @@ import { useParams } from 'react-router-dom';
 import lodash from 'lodash';
 import { useMessages } from '@cfxjs/react-ui';
 import { useHistory, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 
 interface FooterProps {
   readonly type?: string;
@@ -90,6 +91,7 @@ const SearchInput = React.memo(
 
     let inputValue =
       accountAddress ||
+      opponentAddress ||
       address ||
       transactionHash ||
       blockHash ||
@@ -263,11 +265,11 @@ export const Title = ({
   return (
     <StyledTableHeaderWrapper>
       <div className="table-title-tip-total">{getTotalTip}</div>
-      <FilterWrap>
+      <StyledFilterWrapper>
         {getSearchInput}
         {getSearchDatepicker}
         {getSearchFilter}
-      </FilterWrap>
+      </StyledFilterWrapper>
     </StyledTableHeaderWrapper>
   );
 };
@@ -335,6 +337,72 @@ export const Footer = ({ pathname, type }: FooterProps) => {
   );
 };
 
+interface TxnSwitcherProps {
+  total: number;
+  isAccount?: boolean;
+}
+
+export const TxnSwitcher = ({
+  total = 0,
+  isAccount = false,
+}: TxnSwitcherProps) => {
+  const history = useHistory();
+  const location = useLocation();
+  const { t } = useTranslation();
+
+  const { transactionType } = qs.parse(location.search);
+
+  const handleClick = type => {
+    history.push(
+      qs.stringifyUrl({
+        url: location.pathname,
+        query: {
+          transactionType: type,
+        },
+      }),
+    );
+  };
+
+  const type = transactionType || 'executed';
+
+  const tip =
+    type === 'executed'
+      ? t(translations.general.totalRecord, {
+          total: toThousands(total),
+        })
+      : total > 10
+      ? t(translations.transactions.pendingTotal, {
+          total: toThousands(total),
+        })
+      : t(translations.general.totalRecord, {
+          total: toThousands(total),
+        });
+
+  return (
+    <StyledTxnSwitcherWrapper>
+      <div
+        className={clsx('txn-switcher-button', {
+          active: type === 'executed',
+        })}
+        onClick={() => handleClick('executed')}
+      >
+        {t(translations.transactions.executed)}
+      </div>
+      {isAccount ? (
+        <div
+          className={clsx('txn-switcher-button', {
+            active: type === 'pending',
+          })}
+          onClick={() => handleClick('pending')}
+        >
+          {t(translations.transactions.pending)}
+        </div>
+      ) : null}
+      <div className="txn-switcher-tip">{tip}</div>
+    </StyledTxnSwitcherWrapper>
+  );
+};
+
 const StyledTableHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -351,7 +419,7 @@ const StyledTableHeaderWrapper = styled.div`
   }
 `;
 
-const FilterWrap = styled.div`
+const StyledFilterWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -364,5 +432,40 @@ const FilterWrap = styled.div`
     left: 0;
     top: 7rem;
     z-index: 10;
+  }
+`;
+
+const StyledTxnSwitcherWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px 0;
+
+  .txn-switcher-button {
+    border-radius: 1.1429rem;
+    padding: 0 1rem;
+    height: 1.8571rem;
+    line-height: 1.8571rem;
+    border: none;
+    background-color: #f5f8ff;
+    margin-right: 10px;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+
+    &.active {
+      color: #ffffff;
+      background-color: rgba(0, 84, 254, 0.8);
+    }
+  }
+
+  ${media.s} {
+    .txn-switcher-tip {
+      margin-top: 8px;
+    }
   }
 `;

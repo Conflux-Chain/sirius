@@ -48,8 +48,8 @@ export function Block() {
       label: () => {
         return (
           <TabLabel
-            total={transactionCount}
-            realTotal={transactionCount}
+            // total={transactionCount}
+            // realTotal={transactionCount}
             showTooltip={bp !== 's'}
           >
             {bp === 's' ? (
@@ -73,7 +73,10 @@ export function Block() {
       action: 'blockTransactions',
       label: () => {
         return (
-          <TabLabel total={refereeHashes?.length} showTooltip={bp !== 's'}>
+          <TabLabel
+            // total={refereeHashes?.length}
+            showTooltip={bp !== 's'}
+          >
             {bp === 's' ? (
               t(translations.block.tabs.referenceBlocks)
             ) : (
