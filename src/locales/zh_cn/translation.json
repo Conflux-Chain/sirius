@@ -1103,6 +1103,8 @@
     "topMinersByBlocksMined": "最佳矿工--挖出区块",
     "topAccountsByGasUsed": "最佳账户--燃料用量",
     "topAccountsByTxnCount": "最佳账户--交易数",
+    "valueInTotal": "交易值共计",
+    "txnCountInTotal": "交易数共计",
     "span": {
       "24h": "24小时",
       "3d": "3天",

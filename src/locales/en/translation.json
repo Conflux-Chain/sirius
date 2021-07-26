@@ -1103,6 +1103,8 @@
     "topMinersByBlocksMined": "Top Miners by Blocks Mined",
     "topAccountsByGasUsed": "Top Accounts by Gas Used",
     "topAccountsByTxnCount": "Top Accounts by Txn Count",
+    "valueInTotal": "Value in total",
+    "txnCountInTotal": "Txn Count in total",
     "span": {
       "24h": "24 Hours",
       "3d": "3 Days",
