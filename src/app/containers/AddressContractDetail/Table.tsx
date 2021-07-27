@@ -23,6 +23,9 @@ import {
   // PendingTxns,
 } from 'app/containers/Transactions/Loadable';
 import { MinedBlocks } from 'app/containers/Blocks/Loadable';
+import { Card } from '../../components/Card';
+import { LineChart as Chart } from '../../components/Chart/Loadable';
+import styled from 'styled-components/macro';
 
 export function Table({ address, addressInfo }) {
   const { t } = useTranslation();
@@ -104,6 +107,30 @@ export function Table({ address, addressInfo }) {
     content: <CRC1155Txns address={address} />,
   });
 
+  const clientWidth = document.body.clientWidth;
+  let chartWidth = clientWidth - 36;
+  if (clientWidth > 1350) chartWidth = 1350;
+  if (chartWidth < 365) chartWidth = 365;
+  const analysisPanel = () => (
+    <StyledTabWrapper>
+      <Card>
+        <Chart
+          width={chartWidth}
+          indicator="contractAnalysis"
+          contractAddress={address}
+        />
+      </Card>
+    </StyledTabWrapper>
+  );
+  if (isContract) {
+    tabs.push({
+      value: 'analysis',
+      action: 'contractAnalysis',
+      label: t(translations.token.analysis),
+      content: analysisPanel(),
+    });
+  }
+
   if (isContract) {
     tabs.push({
       value: 'contract-viewer',
@@ -133,3 +160,15 @@ export function Table({ address, addressInfo }) {
 
   return <TabsTablePanel key="table" tabs={tabs} />;
 }
+const StyledTabWrapper = styled.div`
+  .card {
+    padding: 0.3571rem !important;
+
+    .content {
+      overflow-x: auto;
+      & > div {
+        box-shadow: none !important;
+      }
+    }
+  }
+`;

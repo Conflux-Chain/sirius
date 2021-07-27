@@ -489,6 +489,13 @@
       "transferCount": "转账次数",
       "uniqueReceiver": "接收账户数",
       "uniqueSender": "发送账户数"
+    },
+    "contractAnalysis": {
+      "title": "合约分析",
+      "description": "每日转账统计",
+      "tx": "交易",
+      "cfxTransfer": "CFX转移",
+      "tokenTransfer": "代币转移"
     }
   },
   "general": {

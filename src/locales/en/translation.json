@@ -489,6 +489,13 @@
       "transferCount": "Transfers Count",
       "uniqueReceiver": "Unique Receivers",
       "uniqueSender": "Unique Senders"
+    },
+    "contractAnalysis": {
+      "title": "Contract Analysis",
+      "description": "daily transfers statistics.",
+      "tx": "Transactions",
+      "cfxTransfer": "CFX Transfers",
+      "tokenTransfer": "Token Transfers"
     }
   },
   "general": {
