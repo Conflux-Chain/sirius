@@ -31,10 +31,11 @@ export const MinedBlocks = ({ address }: Props) => {
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  const title = ({ total }) => (
+  const title = ({ total, listLimit }) => (
     <Title
       address={address}
       total={total}
+      listLimit={listLimit}
       showDatepicker={true}
       showSearchInput={true}
       searchInputOptions={{
