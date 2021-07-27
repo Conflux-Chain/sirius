@@ -122,7 +122,7 @@ const contractManagerAddress = isConfluxTestNet
 const faucet = new Faucet(cfxUrlV2, faucetAddress, faucetLastAddress);
 
 export const decodeContract = ({ abi, address, transacionData }) => {
-  const contract = cfx.Contract({ abi, address });
+  const contract = cfx.Contract({ abi, address, decodeByteToHex: true });
   return contract.abi.decodeData(transacionData);
 };
 

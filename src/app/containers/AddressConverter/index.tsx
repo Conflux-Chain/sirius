@@ -229,7 +229,7 @@ export function AddressConverter() {
               <span className="input-spacer"></span>
               <Input
                 type="number"
-                min="1"
+                min="0"
                 size="small"
                 variant="solid"
                 className="convert-address-input input-network-id"
