@@ -26,10 +26,11 @@ export const CRC1155Txns = ({ address }: Props) => {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  const title = ({ total }) => (
+  const title = ({ total, listLimit }) => (
     <Title
       address={address}
       total={total}
+      listLimit={listLimit}
       showDatepicker={true}
       showFilter={true}
       filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
