@@ -7,7 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@jnoodle/antd/es/table';
-import { toThousands } from 'utils';
+import { toThousands, formatNumber } from 'utils';
 import { useBreakpoint } from 'styles/media';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
@@ -45,7 +45,7 @@ export const TitleTotal = ({
     listLimit && total > listLimit
       ? t(translations.general.totalRecordWithLimit, {
           total: toThousands(total),
-          limit: listLimit,
+          limit: formatNumber(listLimit),
         })
       : t(translations.general.totalRecord, {
           total: toThousands(total),

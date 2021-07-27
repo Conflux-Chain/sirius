@@ -23,10 +23,11 @@ import lodash from 'lodash';
 import { useMessages } from '@cfxjs/react-ui';
 import { useHistory, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+import { TitleTotal } from 'app/components/TablePanelNew';
 
 interface FooterProps {
-  readonly type?: string;
-  readonly pathname: string;
+  type?: string;
+  pathname: string;
 }
 
 interface QueryProps {
@@ -52,14 +53,15 @@ interface SearchInputProps {
 }
 
 interface TitleProps {
-  readonly address: string;
-  readonly total: number;
-  readonly showDatepicker?: boolean;
-  readonly showTotalTip?: boolean;
-  readonly showFilter?: boolean;
-  readonly showSearchInput?: boolean;
-  readonly filterOptions?: Array<any>; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
-  readonly searchInputOptions?: SearchInputProps; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
+  address: string;
+  total: number;
+  listLimit?: number;
+  showDatepicker?: boolean;
+  showTotalTip?: boolean;
+  showFilter?: boolean;
+  showSearchInput?: boolean;
+  filterOptions?: Array<any>; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
+  searchInputOptions?: SearchInputProps; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
 }
 
 // accountAddress - user address
@@ -180,13 +182,14 @@ const SearchInput = React.memo(
 export const Title = ({
   address,
   total,
+  listLimit,
   showDatepicker,
   showTotalTip,
   showFilter,
   showSearchInput,
   filterOptions = [],
   searchInputOptions,
-}: TitleProps) => {
+}: Readonly<TitleProps>) => {
   const { t } = useTranslation();
 
   const isContract = useMemo(
@@ -249,18 +252,19 @@ export const Title = ({
   }, [filterOptions, isContract, options, showFilter]);
 
   const getTotalTip = useMemo(() => {
-    return showTotalTip
-      ? t(
-          total > 10000
-            ? translations.general.totalRecordLimit
-            : translations.general.totalRecord,
-          {
-            total: toThousands(total),
-          },
-        )
-      : null;
+    return showTotalTip ? (
+      <TitleTotal total={total} listLimit={listLimit || total}></TitleTotal>
+    ) : // ? t(
+    //     total > 10000
+    //       ? translations.general.totalRecordLimit
+    //       : translations.general.totalRecord,
+    //     {
+    //       total: toThousands(total),
+    //     },
+    //   )
+    null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [total]);
+  }, [total, listLimit]);
 
   return (
     <StyledTableHeaderWrapper>
@@ -276,6 +280,7 @@ export const Title = ({
 Title.defaultProps = {
   address: '',
   total: 0,
+  listLimit: 0,
   showDatepicker: false,
   showTotalTip: true,
   showFilter: false,
@@ -288,7 +293,7 @@ Title.defaultProps = {
   },
 };
 
-export const Footer = ({ pathname, type }: FooterProps) => {
+export const Footer = ({ pathname, type }: Readonly<FooterProps>) => {
   const { address } = useParams<{ address: string }>();
   const location = useLocation();
   const {
@@ -415,7 +420,7 @@ const StyledTableHeaderWrapper = styled.div`
   }
 
   .table-title-tip-total {
-    margin-bottom: 5px;
+    margin: 0.3571rem 0;
   }
 `;
 
@@ -439,7 +444,7 @@ const StyledTxnSwitcherWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin: 5px 0;
+  margin: 0.3571rem 0;
 
   .txn-switcher-button {
     border-radius: 1.1429rem;
@@ -448,7 +453,7 @@ const StyledTxnSwitcherWrapper = styled.div`
     line-height: 1.8571rem;
     border: none;
     background-color: #f5f8ff;
-    margin-right: 10px;
+    margin-right: 0.7143rem;
     cursor: pointer;
 
     &:hover,
@@ -465,7 +470,7 @@ const StyledTxnSwitcherWrapper = styled.div`
 
   ${media.s} {
     .txn-switcher-tip {
-      margin-top: 8px;
+      margin-top: 0.5714rem;
     }
   }
 `;

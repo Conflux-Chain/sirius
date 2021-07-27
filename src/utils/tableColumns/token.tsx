@@ -152,43 +152,45 @@ export const token = {
 
 const Token2 = ({ row }) => {
   const { t } = useTranslation();
-
   return (
     <StyledIconWrapper>
-      {row?.token
+      {row?.transferTokenInfo
         ? [
             <img
               key="img"
-              src={row?.token?.icon || defaultTokenIcon}
+              src={row?.transferTokenInfo?.icon || defaultTokenIcon}
               alt="token icon"
             />,
-            <Link key="link" href={`/token/${row?.token?.address}`}>
+            <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
               <Text
                 span
                 hoverValue={
-                  row?.token?.name
+                  row?.transferTokenInfo?.name
                     ? `${
-                        row?.token?.name || t(translations.general.notAvailable)
+                        row?.transferTokenInfo?.name ||
+                        t(translations.general.notAvailable)
                       } (${
-                        row?.token?.symbol ||
+                        row?.transferTokenInfo?.symbol ||
                         t(translations.general.notAvailable)
                       })`
-                    : formatAddress(row?.token?.address)
+                    : formatAddress(row?.transferTokenInfo?.address)
                 }
               >
-                {row?.token?.name ? (
+                {row?.transferTokenInfo?.name ? (
                   formatString(
                     `${
-                      row?.token?.name || t(translations.general.notAvailable)
+                      row?.transferTokenInfo?.name ||
+                      t(translations.general.notAvailable)
                     } (${
-                      row?.token?.symbol || t(translations.general.notAvailable)
+                      row?.transferTokenInfo?.symbol ||
+                      t(translations.general.notAvailable)
                     })`,
                     36,
                   )
                 ) : (
                   <AddressContainer
-                    value={row?.token?.address}
-                    alias={row?.token?.contractName || null}
+                    value={row?.transferTokenInfo?.address}
+                    alias={row?.transferTokenInfo?.contractName || null}
                     showIcon={false}
                   />
                 )}
@@ -410,7 +412,7 @@ export const quantity = {
   render: (value, row, index, opt?) => {
     const decimals = opt
       ? opt.decimals
-      : row.token?.decimals || row.token?.decimal || 0;
+      : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
     return value ? (
       <Text span hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
@@ -591,7 +593,7 @@ export const tokenId = (contractAddress?: string) => ({
         <SpanWrap>{value || '-'}</SpanWrap>
       </Text>
       <NFTPreview
-        contractAddress={contractAddress || row?.token?.address}
+        contractAddress={contractAddress || row?.transferTokenInfo?.address}
         tokenId={value}
       />
     </>

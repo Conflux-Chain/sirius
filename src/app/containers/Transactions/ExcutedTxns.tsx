@@ -27,7 +27,7 @@ export const ExcutedTxns = ({ address }: Props) => {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  const title = ({ total }) => (
+  const title = ({ total, listLimit }) => (
     <StyledTitleWrapper>
       <TxnSwitcher
         total={total}
@@ -37,6 +37,7 @@ export const ExcutedTxns = ({ address }: Props) => {
         address={address}
         showTotalTip={false}
         total={total}
+        listLimit={listLimit}
         showDatepicker={true}
         showFilter={true}
         filterOptions={[
