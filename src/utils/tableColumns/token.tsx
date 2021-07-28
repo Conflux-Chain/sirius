@@ -432,7 +432,24 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   render: (value, row) => {
-    return <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>;
+    let contractInfo = {};
+
+    try {
+      contractInfo = row.contractInfo[value];
+    } catch (e) {}
+
+    return (
+      <FromWrap>
+        {renderAddress(
+          value,
+          {
+            ...row,
+            contractInfo,
+          },
+          'to',
+        )}
+      </FromWrap>
+    );
   },
 };
 
@@ -444,7 +461,24 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   render: (value, row) => {
-    return <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>;
+    let contractInfo = {};
+
+    try {
+      contractInfo = row.contractInfo[value];
+    } catch (e) {}
+
+    return (
+      <FromWrap>
+        {renderAddress(
+          value,
+          {
+            ...row,
+            contractInfo,
+          },
+          'from',
+        )}
+      </FromWrap>
+    );
   },
 };
 
