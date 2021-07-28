@@ -26,12 +26,15 @@ function scaleLinear() {
     return r0 + ((r1 - r0) * (v - d0)) / (d1 - d0);
   }
   scale.domain = function (v) {
+    // eslint-disable-next-line no-sequences
     return v ? ((domain = v), scale) : domain;
   };
   scale.range = function (v) {
+    // eslint-disable-next-line no-sequences
     return v ? ((range = v), scale) : range;
   };
   scale.clamp = function (v) {
+    // eslint-disable-next-line no-sequences
     return v ? ((clamp = v), scale) : clamp;
   };
   return scale;
