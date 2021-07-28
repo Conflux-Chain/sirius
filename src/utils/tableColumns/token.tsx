@@ -175,6 +175,7 @@ const Token2 = ({ row }) => {
                       })`
                     : formatAddress(row?.transferTokenInfo?.address)
                 }
+                maxWidth="180px"
               >
                 {row?.transferTokenInfo?.name ? (
                   formatString(
@@ -714,6 +715,7 @@ export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
   font-family: ${monospaceFont};
+
   img {
     width: 1.1429rem;
     height: 1.1429rem;
