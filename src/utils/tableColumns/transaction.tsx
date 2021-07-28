@@ -83,7 +83,7 @@ export const TxnHashRenderComponent = ({
             trigger="click"
             content={
               <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
-                <Overview data={txnDetail} />
+                <Overview data={{ ...txnDetail, status }} />
               </SkeletonContainer>
             }
           >

@@ -653,7 +653,7 @@
     "status": {
       "skip": {
         "text": "Skip",
-        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+        "explanation": "Possible reasons: Wrong nonce; insufficient balance; the transactions fail to execute at the appropriate epoch height; the transaction executed in earlier blocks."
       },
       "error": {
         "text": "Error",
