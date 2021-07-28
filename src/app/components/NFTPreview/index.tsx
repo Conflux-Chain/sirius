@@ -12,8 +12,10 @@ import { translations } from '../../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
+import nftInfo from 'images/info.svg';
 import { getNFTInfo } from './utils';
 import { NFTContracts } from './NFTInfo';
+import { Tooltip } from '../Tooltip/Loadable';
 
 export const NFTPreview = React.memo(
   ({
@@ -42,7 +44,7 @@ export const NFTPreview = React.memo(
 
           if (info) {
             setImageMinHeight(info.imageMinHeight);
-            setImageUri(info.imageUri || tokenIdNotFound);
+            setImageUri(info.imageUri);
             setImageName(info.imageName ? info.imageName[lang] || '' : '');
           }
         })();
@@ -94,6 +96,10 @@ export const NFTPreview = React.memo(
               />
             </Text>
           </PopoverWrapper>
+        ) : imageName ? (
+          <Tooltip hoverable text={imageName} placement="top">
+            <img src={nftInfo} alt="?" style={{ marginLeft: 4 }} />
+          </Tooltip>
         ) : null
       ) : (
         <NFTCard>
