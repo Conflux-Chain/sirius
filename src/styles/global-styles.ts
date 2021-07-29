@@ -91,14 +91,14 @@ export const GlobalStyle = createGlobalStyle`
   //   border-color: rgba(0,84,254,0.04);
   // }
   //
-  // .ant-pagination-item-active, .ant-pagination-item-active:hover {
-  //   border-color: #1e3de4;
-  //   background-color: #1e3de4;
-  //
-  //   a {
-  //     color: #ffffff;
-  //   }
-  // }
+  .ant-pagination-item-active, .ant-pagination-item-active:hover {
+    border-color: #1e3de4;
+    background-color: #1e3de4;
+  
+    a {
+      color: #ffffff;
+    }
+  }
   //
   //.ant-pagination-options-quick-jumper {
   //  input {
