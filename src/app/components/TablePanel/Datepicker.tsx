@@ -240,6 +240,7 @@ export const TableSearchDatepicker = ({
             url: location.pathname,
             query: {
               ...queries,
+              skip: '0',
               minTimestamp: undefined,
               maxTimestamp: undefined,
             },
