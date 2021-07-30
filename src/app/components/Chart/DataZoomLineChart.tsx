@@ -59,9 +59,6 @@ export const DataZoomLineChart = ({
         tooltip: {
           trigger: 'axis',
           confine: true,
-          position: function (pt) {
-            return [pt[0], '10%'];
-          },
           formatter: function (params) {
             const data = params
               .map(
