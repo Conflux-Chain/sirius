@@ -369,15 +369,15 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/nft-checker',
             },
-            {
-              title: [
-                t(translations.header.balanceChecker),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.balanceChecker,
-              afterClick: menuClick,
-              href: '/balance-checker',
-            },
+            // {
+            //   title: [
+            //     t(translations.header.balanceChecker),
+            //     <Check size={18} key="check" />,
+            //   ],
+            //   name: ScanEvent.menu.action.balanceChecker,
+            //   afterClick: menuClick,
+            //   href: '/balance-checker',
+            // },
           ],
         },
         {
