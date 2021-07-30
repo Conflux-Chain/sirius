@@ -107,11 +107,13 @@ export const Overview = ({ data }) => {
       >
         <Nonce nonce={nonce} position={transactionIndex}></Nonce>
       </Description>
-      <div className="overview-gotoDetail-container">
-        <Link className="overview-gotoDetail" href={`/transaction/${hash}`}>
-          {t(translations.transaction.gotoDetail)}
-        </Link>{' '}
-      </div>
+      {hash ? (
+        <div className="overview-gotoDetail-container">
+          <Link className="overview-gotoDetail" href={`/transaction/${hash}`}>
+            {t(translations.transaction.gotoDetail)}
+          </Link>{' '}
+        </div>
+      ) : null}
     </StyledWrapper>
   );
 };

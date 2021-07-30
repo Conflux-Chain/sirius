@@ -489,6 +489,13 @@
       "transferCount": "转账次数",
       "uniqueReceiver": "接收账户数",
       "uniqueSender": "发送账户数"
+    },
+    "contractAnalysis": {
+      "title": "合约分析",
+      "description": "每日转账统计",
+      "tx": "交易",
+      "cfxTransfer": "CFX转移",
+      "tokenTransfer": "代币转移"
     }
   },
   "general": {
@@ -646,7 +653,7 @@
     "status": {
       "skip": {
         "text": "跳过",
-        "explanation": "随机数错误，签名验证失败，或余额不足"
+        "explanation": "可能的原因：错误随机数；余额不足；交易未在合适的纪元高度执行；交易在更早的区块被执行。"
       },
       "error": {
         "text": "失败",

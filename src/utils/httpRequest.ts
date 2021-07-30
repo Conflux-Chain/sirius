@@ -211,3 +211,25 @@ export const reqTransactions = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqNFTBalances = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/checker/balance`,
+    ...extra,
+  });
+};
+
+export const reqNFTTokenIds = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/checker/token`,
+    ...extra,
+  });
+};
+
+export const reqNFTInfo = (extra?: object) => {
+  // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
+  return sendRequest({
+    url: `/stat/nft/checker/preview`,
+    ...extra,
+  });
+};

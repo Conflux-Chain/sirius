@@ -446,7 +446,13 @@ export const Detail = () => {
                   <>&nbsp;</>
                 )}
                 {t(translations.transaction.tokenId)}:
-                <span className="tokenId">{transferItem['tokenId']}</span>
+                <span className="tokenId">
+                  {transferItem['tokenId']}
+                  <NFTPreview
+                    contractAddress={transferItem['address']}
+                    tokenId={transferItem['tokenId']}
+                  />
+                </span>
               </span>
             </div>,
           );

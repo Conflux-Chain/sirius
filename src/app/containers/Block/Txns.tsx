@@ -2,6 +2,9 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { transactionColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
+import lodash from 'lodash';
+
+const TxnHashRenderComponent = transactionColunms.TxnHashRenderComponent;
 
 interface Props {
   url: string;
@@ -12,7 +15,19 @@ export const Txns = ({ url }: Props) => {
 
   const columnsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columns = [
-    transactionColunms.hash,
+    {
+      ...transactionColunms.hash,
+      render: (_, row) => {
+        return (
+          <TxnHashRenderComponent
+            hash={row.hash}
+            status={lodash.isNil(row.status) ? '2' : row.status}
+            txExecErrorMsg={row.txExecErrorMsg || row?.reason?.pending}
+            txExecErrorInfo={row.txExecErrorInfo}
+          ></TxnHashRenderComponent>
+        );
+      },
+    },
     transactionColunms.from,
     transactionColunms.to,
     transactionColunms.value,

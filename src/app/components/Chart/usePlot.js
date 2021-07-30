@@ -79,6 +79,9 @@ export default function usePlot(
     case 'tokenAnalysis':
       swrKey = `/stat/daily-token-stat`;
       break;
+    case 'contractAnalysis':
+      swrKey = `/stat/contract/stat/list`;
+      break;
     default:
       break;
   }
@@ -104,7 +107,12 @@ export default function usePlot(
       fetcher = () =>
         fetch(appendApiPrefix(`${swrKey}?limit=${limit}&base32=${address}`));
       break;
-
+    case 'contractAnalysis':
+      axisFormat = ['MMM DD', 'MM-DD'];
+      popupFormat = ['MMM DD, YYYY', 'YYYY-MM-DD'];
+      fetcher = () =>
+        fetch(appendApiPrefix(`${swrKey}?limit=${limit}&address=${address}`));
+      break;
     default:
       break;
   }
@@ -155,6 +163,14 @@ export default function usePlot(
                     ? data.token.decimals || 18
                     : data.decimals || 18),
               ),
+            }))
+          : [];
+        break;
+      case 'contractAnalysis':
+        listData = data?.data
+          ? (data.data.list || []).map(l => ({
+              ...l,
+              statTime: dayjs(l.statTime).format('YYYY-MM-DD'),
             }))
           : [];
         break;

@@ -1,28 +1,34 @@
 /**
  *
  * NFT Checker
+ * bak on 2021.7.29 in sprint S16, should be removed two sprint later
  *
  */
 
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import { PageHeader } from 'app/components/PageHeader';
-import { Card } from 'app/components/Card';
+import { translations } from 'locales/i18n';
+import { PageHeader } from '../../components/PageHeader';
+import { Card } from '../../components/Card';
 import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { formatAddress } from 'utils/cfx';
-import { NFTPreview } from 'app/components/NFTPreview';
-import { AddressContainer } from 'app/components/AddressContainer';
-import { Empty } from 'app/components/Empty';
-import { trackEvent } from 'utils/ga';
-import { ScanEvent } from 'utils/gaConstants';
-import { toThousands } from 'utils';
-import { reqNFTBalances, reqNFTTokenIds } from 'utils/httpRequest';
-import qs from 'query-string';
+import {
+  NFTContractAddresses,
+  NFTContractNames,
+  NFTContracts,
+} from '../../components/NFTPreview.bak/NFTInfo';
+import { getNFTBalances, getNFTTokens } from './utils';
+import { NFTPreview } from '../../components/NFTPreview';
+import { AddressContainer } from '../../components/AddressContainer';
+import { Empty } from '../../components/Empty';
+import { useHistory } from 'react-router';
+import { trackEvent } from '../../../utils/ga';
+import { ScanEvent } from '../../../utils/gaConstants';
+import { toThousands } from '../../../utils';
 
 const { Search } = Input;
 
@@ -31,15 +37,6 @@ type NFTBalancesType = {
   address: string;
   name: any;
   balance: number;
-  index: number;
-};
-
-const defaultSelectedNFT = {
-  type: '',
-  address: '',
-  name: '',
-  balance: 0,
-  index: 0,
 };
 
 export function NFTChecker() {
@@ -47,28 +44,18 @@ export function NFTChecker() {
     address?: string;
   }>();
   const { t, i18n } = useTranslation();
-  const history = useHistory();
-  const { pathname, search } = useLocation();
-  const {
-    NFTType: outerNFTType,
-    skip = '0',
-    limit = '12',
-    ...others
-  } = qs.parse(search);
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const [address, setAddress] = useState<string>(routerAddress);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [addressFormatError, setAddressFormatError] = useState<boolean>(false);
+  const [currentNFTType, setCurrentNFTType] = useState<string>('');
+  const [currentNFTOffset, setCurrentNFTOffset] = useState<number>(0);
+  const defaultLimit = 12;
+  const [currentNFTCount, setCurrentNFTCount] = useState<number>(0);
   const [displayTokenIds, setDisplayTokenIds] = useState<number[]>([]);
   const [NFTBalances, setNFTBalances] = useState<NFTBalancesType[]>([]);
-  const [selectedNFT, setSelectedNFT] = useState<NFTBalancesType>(
-    defaultSelectedNFT,
-  );
-
-  const pageSize = Number(limit);
-  const page = Math.floor((Number(skip) || 0) / pageSize) + 1;
-  const total = selectedNFT.balance;
+  const history = useHistory();
 
   const validateAddress = address => {
     const formattedAddress = formatAddress(address);
@@ -76,58 +63,50 @@ export function NFTChecker() {
   };
 
   const handleNFTSearch = async () => {
+    setLoading(true);
+    reset();
+    const formattedAddress = formatAddress(address);
+    // ga
+    trackEvent({
+      category: ScanEvent.function.category,
+      action: ScanEvent.function.action.nftChecker,
+      label: formattedAddress,
+    });
     if (validateAddress(address)) {
-      // ga
-      trackEvent({
-        category: ScanEvent.function.category,
-        action: ScanEvent.function.action.nftChecker,
-        label: address,
-      });
+      setHasSearched(true);
+      // get all supported nft balances
+      const balances = await getNFTBalances(formattedAddress);
+      console.log('balances', balances);
 
-      try {
-        setLoading(true);
-        setHasSearched(true);
+      if (balances) {
+        const _NFTBalances = Object.keys(NFTContracts)
+          .map((n, i) => ({
+            type: n,
+            address: NFTContractAddresses[i],
+            name: NFTContractNames[n],
+            balance: balances[i],
+          }))
+          .filter(n => n.balance > 0);
 
-        const { data } = await reqNFTBalances({
-          query: {
-            ownerAddress: address,
-          },
-        });
+        console.log('_NFTBalances: ', _NFTBalances);
 
-        if (data && data.length > 0) {
-          const NFTBalances = data.map((d, index) => ({
-            ...d,
-            index,
-          }));
-          let selectedNFT = NFTBalances[0];
-
-          if (outerNFTType) {
-            selectedNFT = NFTBalances.filter(n => n.type === outerNFTType)[0];
-          }
-
-          const resp = await reqNFTTokenIds({
-            query: {
-              ownerAddress: address,
-              contractAddress: selectedNFT.address, // default NFT
-              skip: skip,
-              limit: limit,
-            },
-          });
-
-          setNFTBalances(NFTBalances);
-          setSelectedNFT(selectedNFT);
-          setDisplayTokenIds(resp.data[1]);
-        } else {
-          setNFTBalances([]);
-          setSelectedNFT(defaultSelectedNFT);
-          setDisplayTokenIds([]);
+        if (_NFTBalances && _NFTBalances.length > 0) {
+          setNFTBalances(_NFTBalances);
+          await selectTag(_NFTBalances[0]);
         }
-      } catch (e) {}
-
-      setLoading(false);
+      }
     } else {
       setAddressFormatError(true);
     }
+    setLoading(false);
+  };
+
+  const reset = () => {
+    setNFTBalances([]);
+    setCurrentNFTType('');
+    setCurrentNFTOffset(0);
+    setCurrentNFTCount(0);
+    setDisplayTokenIds([]);
   };
 
   const handleAddressChange = e => {
@@ -135,32 +114,46 @@ export function NFTChecker() {
     setAddressFormatError(false);
   };
 
-  const handlePaginationChange = (page, pageSize) => {
-    history.push(
-      qs.stringifyUrl({
-        url: pathname,
-        query: {
-          ...others,
-          NFTType: outerNFTType,
-          skip: String((page - 1) * pageSize),
-          limit: String(pageSize),
-        },
-      }),
-    );
+  const selectTag = async balanceObj => {
+    // console.log('balanceObj', balanceObj);
+    if (balanceObj) {
+      setCurrentNFTType(balanceObj.type);
+      setCurrentNFTOffset(0);
+      setCurrentNFTCount(balanceObj.balance || 0);
+      await getTokenIds({ contractAddress: balanceObj.address });
+    }
   };
 
-  const handleNFTTypeChange = type => {
-    history.push(
-      qs.stringifyUrl({
-        url: pathname,
-        query: {
-          ...others,
-          NFTType: type,
-          skip: '0',
-          limit: limit,
-        },
-      }),
+  // get token ids TODO cache
+  const getTokenIds = async ({
+    contractAddress,
+    offset,
+  }: {
+    contractAddress?: string;
+    offset?: number;
+  }) => {
+    setLoading(true);
+    setDisplayTokenIds([]);
+    const tokens = await getNFTTokens(
+      contractAddress || NFTContracts[currentNFTType],
+      formatAddress(address),
+      (offset == null ? currentNFTOffset : offset) * defaultLimit,
+      defaultLimit,
     );
+
+    if (tokens && tokens.length > 1) {
+      console.log(
+        'tokens: ',
+        tokens[1].map(t => t.toString()),
+      );
+      setDisplayTokenIds(tokens[1]);
+    }
+    setLoading(false);
+  };
+
+  const onPaginationChange = async (page: number) => {
+    setCurrentNFTOffset(page - 1);
+    await getTokenIds({ offset: page - 1 });
   };
 
   useEffect(() => {
@@ -168,7 +161,7 @@ export function NFTChecker() {
       handleNFTSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routerAddress, outerNFTType, skip, limit]);
+  }, [routerAddress]);
 
   return (
     <>
@@ -207,19 +200,23 @@ export function NFTChecker() {
           <Spin spinning={loading}>
             {NFTBalances && NFTBalances.length > 0 ? (
               <TagsWrapper>
-                {NFTBalances.map((n: NFTBalancesType) => {
-                  return (
-                    <Tag
-                      className={selectedNFT.type === n.type ? 'current' : ''}
-                      onClick={() => handleNFTTypeChange(n.type)}
-                      key={n.address}
-                    >{`${n.name[lang]} (${toThousands(n.balance)})`}</Tag>
-                  );
-                })}
+                {NFTBalances.map((n: NFTBalancesType, i) => (
+                  <Tag
+                    className={currentNFTType === n.type ? 'current' : ''}
+                    onClick={() =>
+                      selectTag(
+                        NFTBalances.find(
+                          (b: NFTBalancesType) => b.type === n.type,
+                        ),
+                      )
+                    }
+                    key={i}
+                  >{`${n.name[lang]} (${toThousands(n.balance[0])})`}</Tag>
+                ))}
               </TagsWrapper>
             ) : null}
             <NFTWrapper>
-              {!loading && !NFTBalances.length ? (
+              {!loading && (!NFTBalances || NFTBalances.length === 0) ? (
                 <div className="nodata">
                   <Empty
                     show={true}
@@ -237,23 +234,26 @@ export function NFTChecker() {
                 </div>
               ) : (
                 <>
-                  {selectedNFT ? (
+                  {currentNFTCount > 0 ? (
                     <div className="total">
                       {t(translations.blocks.tipCountBefore)}{' '}
-                      {toThousands(total)} {lang === 'zh' ? '个 ' : ''}
-                      {selectedNFT.name[lang] || ''} NFT{' '}
+                      {toThousands(currentNFTCount[0])}{' '}
+                      {lang === 'zh' ? '个 ' : ''}
+                      {NFTContractNames[currentNFTType][lang] || ''} NFT{' '}
                       <span>
-                        {selectedNFT.name[lang] || ''}{' '}
+                        {NFTContractNames[currentNFTType][lang] || ''}{' '}
                         {t(translations.contract.address)}:{' '}
-                        <AddressContainer value={selectedNFT.address} />
+                        <AddressContainer
+                          value={NFTContracts[currentNFTType]}
+                        />
                       </span>
                     </div>
                   ) : null}
                   <Row gutter={20}>
-                    {displayTokenIds.map(id => (
-                      <Col xs={24} sm={12} lg={6} xl={4} key={id}>
+                    {displayTokenIds.map((id, i) => (
+                      <Col xs={24} sm={12} lg={6} xl={4} key={i}>
                         <NFTPreview
-                          contractAddress={selectedNFT?.address}
+                          contractAddress={NFTContracts[currentNFTType]}
                           tokenId={id}
                           type="card"
                         />
@@ -263,15 +263,18 @@ export function NFTChecker() {
                 </>
               )}
 
-              <Pagination
-                hideOnSinglePage={true}
-                current={page}
-                defaultPageSize={pageSize}
-                total={total}
-                showSizeChanger={false}
-                showQuickJumper={false}
-                onChange={handlePaginationChange}
-              />
+              {currentNFTCount > defaultLimit ? (
+                <Pagination
+                  current={currentNFTOffset + 1}
+                  defaultPageSize={defaultLimit}
+                  total={currentNFTCount}
+                  showSizeChanger={false}
+                  showQuickJumper={false}
+                  onChange={async page => {
+                    await onPaginationChange(page);
+                  }}
+                />
+              ) : null}
             </NFTWrapper>
           </Spin>
         </Card>

@@ -1,23 +1,21 @@
 /**
  *
  * NFTPreview
- *
+ * bak on 2021.7.29 in sprint S16, should be removed two sprint later
  */
 import React, { useEffect, useState } from 'react';
 import { Image, Popover, Skeleton, Spin } from '@jnoodle/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
 import { Text } from '../Text/Loadable';
-import { translations } from 'locales/i18n';
+import { translations } from '../../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import nftInfo from 'images/info.svg';
-import { reqNFTInfo } from 'utils/httpRequest';
+import { getNFTInfo } from './utils';
+import { NFTContracts } from './NFTInfo';
 import { Tooltip } from '../Tooltip/Loadable';
-
-const epiKProtocolKnowledgeBadge =
-  'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
 export const NFTPreview = React.memo(
   ({
@@ -41,20 +39,17 @@ export const NFTPreview = React.memo(
       if (contractAddress && tokenId) {
         setLoading(true);
 
-        reqNFTInfo({
-          query: { contractAddress, tokenId },
-        })
-          .then(({ data }) => {
-            if (data) {
-              setImageMinHeight(data.imageMinHeight);
-              setImageUri(data.imageUri);
-              setImageName(data.imageName ? data.imageName[lang] || '' : '');
-            }
-          })
-          .catch(e => {
-            console.log(e);
-          })
-          .finally(() => setLoading(false));
+        (async () => {
+          const info = await getNFTInfo({ contractAddress, tokenId });
+
+          if (info) {
+            setImageMinHeight(info.imageMinHeight);
+            setImageUri(info.imageUri);
+            setImageName(info.imageName ? info.imageName[lang] || '' : '');
+          }
+        })();
+
+        setLoading(false);
       }
     }, [contractAddress, tokenId, lang]);
 
@@ -67,7 +62,7 @@ export const NFTPreview = React.memo(
             overlayClassName="image-preview-popover"
             content={
               <>
-                {contractAddress === epiKProtocolKnowledgeBadge ? (
+                {contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
                   <iframe
                     title={imageName}
                     width={200}
@@ -110,7 +105,7 @@ export const NFTPreview = React.memo(
         <NFTCard>
           <Spin spinning={loading || !imageUri}>
             {imageUri ? (
-              contractAddress === epiKProtocolKnowledgeBadge ? (
+              contractAddress === NFTContracts.epiKProtocolKnowledgeBadge ? (
                 <div className="ant-image">
                   <iframe title={imageName} src={imageUri} />
                 </div>

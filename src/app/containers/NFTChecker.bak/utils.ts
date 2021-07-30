@@ -1,6 +1,6 @@
 import scanUtilAbi from './scanUtilAbi';
 import { cfx } from '../../../utils/cfx';
-import { NFTContractAddresses } from '../../components/NFTPreview/NFTInfo';
+import { NFTContractAddresses } from '../../components/NFTPreview.bak/NFTInfo';
 
 export const scanUtilContractAddress =
   'cfx:acef1ym9m16fc94x29h0800k0ugnaj91sjjbm60hfh';

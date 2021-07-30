@@ -68,7 +68,10 @@ export const InternalTxns = ({ address, from, to }: Props) => {
         .then(resp => {
           if (resp) {
             try {
-              const list = treeToFlat(resp.calls);
+              const list = treeToFlat(resp.calls).map(l => ({
+                ...l,
+                contractInfo: resp.contractMap,
+              }));
               setState({
                 ...state,
                 data: list,
