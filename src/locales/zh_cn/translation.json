@@ -1209,16 +1209,16 @@
   "balanceChecker": {
     "tokenBalanceChecker": "代币余额检索器",
     "balanceChecker": "余额检索器",
-    "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
+    "subtitle": "您可以在特定的纪元号或日期查找 Conflux 网络上的账户历史余额",
     "tokenQuantity": "代币数量",
     "tokenSupply": "代币供应",
     "cfxBalance": "CFX 余额",
     "address": "地址",
     "contractAddress": "合约地址",
-    "blockNoOrDate": "区块号或者日期",
+    "epochNoOrDate": "纪元号或者日期",
     "or": "或",
     "chooseDate": "请选择日期",
-    "enterBlockNo": "输入区块号",
+    "enterEpochNo": "输入纪元号",
     "error": "不能为空",
     "lookUp": "搜索",
     "reset": "重置",
@@ -1226,8 +1226,8 @@
     "totalSupplyForContractAddress": "合约地址代币总供应量",
     "cfxBalanceForAddress": "地址 CFX 总余额",
     "snapshotDate": "截止日期",
-    "block": "区块",
-    "blockNo": "区块号"
+    "epoch": "纪元",
+    "epochNo": "纪元号"
   },
   "nftChecker": {
     "title": "NFT 查看器",

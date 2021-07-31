@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card';
 import styled from 'styled-components/macro';
-import { Button, Divider, Form, Input, Radio } from '@jnoodle/antd';
+import {
+  Button,
+  Divider,
+  Form,
+  Input,
+  Radio,
+  InputNumber,
+} from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
@@ -41,9 +48,11 @@ export function BalanceChecker() {
     form.setFieldsValue({ date: dateObject, blockNo: '' });
     setToggle(true);
   };
-  const onChangeBlockNo = e => {
-    form.setFieldsValue({ blockNo: e.target.value });
-    setToggle(false);
+  const onChangeBlockNo = value => {
+    if (/^0|[1-9]\d*$/.test(value)) {
+      form.setFieldsValue({ blockNo: value });
+      setToggle(false);
+    }
   };
   const onFocusBlockNoInput = () => {
     form.setFieldsValue({ date: '' });
@@ -117,7 +126,7 @@ export function BalanceChecker() {
   const BlockNoOrDateFormItem = (
     <Form.Item
       required
-      label={t(translations.balanceChecker.blockNoOrDate)}
+      label={t(translations.balanceChecker.epochNoOrDate)}
       style={{ marginBottom: 0 }}
     >
       <Form.Item
@@ -149,9 +158,10 @@ export function BalanceChecker() {
         rules={[{ required: !toggle }]}
         style={{ display: 'inline-block', width: '74%' }}
       >
-        <Input
-          allowClear
-          placeholder={t(translations.balanceChecker.enterBlockNo)}
+        <InputNumber
+          precision={0}
+          min={0}
+          placeholder={t(translations.balanceChecker.enterEpochNo)}
           onFocus={onFocusBlockNoInput}
           onChange={onChangeBlockNo}
         />
@@ -215,34 +225,31 @@ export function BalanceChecker() {
           </RadioGroup>
           <Divider />
           {formComp}
+          <ButtonGroup>
+            <Button type="primary" onClick={onClickLookUp}>
+              {t(translations.balanceChecker.lookUp)}
+            </Button>
+            <Button type="primary" className={'reset'} onClick={onClickReset}>
+              {t(translations.balanceChecker.reset)}
+            </Button>
+          </ButtonGroup>
+          <Result
+            radioValue={radioValue}
+            resultVisible={resultVisible}
+            formData={formData}
+          />
         </Card>
       </CardWrap>
-
-      <ButtonGroup>
-        <Button type="primary" onClick={onClickLookUp}>
-          {t(translations.balanceChecker.lookUp)}
-        </Button>
-        <Button type="primary" className={'reset'} onClick={onClickReset}>
-          {t(translations.balanceChecker.reset)}
-        </Button>
-      </ButtonGroup>
-
-      <Result
-        radioValue={radioValue}
-        resultVisible={resultVisible}
-        formData={formData}
-      />
     </>
   );
 }
 
 const ButtonGroup = styled.div`
-  margin: 24px 0;
-
   .ant-btn {
     width: 133px;
     margin-right: 8px;
     font-weight: 500;
+    margin-bottom: 24px;
   }
 
   .reset {
@@ -289,5 +296,13 @@ const CardWrap = styled.div`
     &::before {
       margin-left: 2px;
     }
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+
+  .ant-input-number-handler-wrap {
+    display: none;
   }
 `;

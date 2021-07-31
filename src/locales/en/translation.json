@@ -1209,16 +1209,16 @@
   "balanceChecker": {
     "tokenBalanceChecker": "Token Balance Checker",
     "balanceChecker": "Balance Checker",
-    "subtitle": "You can lookup the address historical balance on the Conflux network at a specific Block No or Date",
+    "subtitle": "You can lookup the address historical balance on the Conflux network at a specific Epoch No or Date",
     "tokenQuantity": "Token Quantity",
     "tokenSupply": "Token Supply",
     "cfxBalance": "CFX Balance",
     "address": "Address",
     "contractAddress": "Contract Address",
-    "blockNoOrDate": "Block No or Date",
+    "epochNoOrDate": "Epoch No or Date",
     "or": "OR",
     "chooseDate": "Please select date",
-    "enterBlockNo": "Enter a Block No",
+    "enterEpochNo": "Enter a Epoch No",
     "error": "Can not be empty",
     "lookUp": "Look Up",
     "reset": "Reset",
@@ -1226,8 +1226,8 @@
     "totalSupplyForContractAddress": "Total Supply for Contract Address",
     "cfxBalanceForAddress": "CFX Balance for Address",
     "snapshotDate": "Snapshot Date",
-    "block": "Block",
-    "blockNo": "Block No"
+    "epoch": "Epoch",
+    "epochNo": "Epoch No"
   },
   "nftChecker": {
     "title": "NFT Checker",
