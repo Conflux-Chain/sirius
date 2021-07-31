@@ -51,11 +51,11 @@ export const AddressDetailPage = memo(() => {
 
   const menu = (
     <MenuWrapper>
-      {/*<Menu.Item>*/}
-      {/*  <RouterLink to={`/balance-checker`}>*/}
-      {/*    {t(translations.general.address.more.balanceChecker)}*/}
-      {/*  </RouterLink>*/}
-      {/*</Menu.Item>*/}
+      <Menu.Item>
+        <RouterLink to={`/balance-checker`}>
+          {t(translations.general.address.more.balanceChecker)}
+        </RouterLink>
+      </Menu.Item>
       <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
