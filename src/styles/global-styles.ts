@@ -91,6 +91,9 @@ export const GlobalStyle = createGlobalStyle`
   //   border-color: rgba(0,84,254,0.04);
   // }
   //
+  .ant-table .ant-table-expanded-row-fixed {
+    max-width: 100%;
+  }
   .ant-pagination-item-active, .ant-pagination-item-active:hover {
     border-color: #1e3de4;
     background-color: #1e3de4;
