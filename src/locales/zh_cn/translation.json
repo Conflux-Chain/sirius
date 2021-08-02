@@ -1223,6 +1223,7 @@
     "or": "或",
     "chooseDate": "请选择日期",
     "enterEpochNo": "输入纪元号",
+    "invalidEpochNo": "不合法的纪元号",
     "error": "不能为空",
     "lookUp": "搜索",
     "reset": "重置",

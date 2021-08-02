@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card';
 import styled from 'styled-components/macro';
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  Radio,
-  InputNumber,
-} from '@jnoodle/antd';
+import { Button, Divider, Form, Input, Radio } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
@@ -21,8 +14,11 @@ import {
 } from '../../../utils';
 import { Result } from './Result';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
+import querystring from 'query-string';
 
 export function BalanceChecker() {
+  const { search } = useLocation();
   const { t, i18n } = useTranslation();
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState(3);
@@ -52,9 +48,9 @@ export function BalanceChecker() {
     form.setFieldsValue({ date: dateObject, blockNo: '' });
     setToggle(true);
   };
-  const onChangeBlockNo = value => {
-    if (isZeroOrPositiveInteger(value)) {
-      form.setFieldsValue({ blockNo: value });
+  const onChangeBlockNo = e => {
+    if (isZeroOrPositiveInteger(e.target.value)) {
+      form.setFieldsValue({ blockNo: e.target.value });
       setToggle(false);
     }
   };
@@ -100,6 +96,14 @@ export function BalanceChecker() {
     }
     return Promise.resolve();
   };
+  const validateEpochIsNumber = (rule, epoch) => {
+    if (epoch && !isZeroOrPositiveInteger(epoch)) {
+      return Promise.reject(
+        new Error(t(translations.balanceChecker.invalidEpochNo)),
+      );
+    }
+    return Promise.resolve();
+  };
   const disabledDate = (currentDate: dayjs.Dayjs) => {
     if (dayjs.isDayjs(currentDate)) {
       return currentDate.unix() > dayjs().unix();
@@ -114,6 +118,7 @@ export function BalanceChecker() {
       label={t(translations.balanceChecker.address)}
       name="address"
       rules={[{ required: true }, { validator: validateAddress }]}
+      initialValue={querystring.parse(search).address}
     >
       <Input allowClear onChange={onChangeAccountAddress} />
     </Form.Item>
@@ -159,12 +164,11 @@ export function BalanceChecker() {
       </Form.Item>
       <Form.Item
         name={'blockNo'}
-        rules={[{ required: !toggle }]}
+        rules={[{ required: !toggle }, { validator: validateEpochIsNumber }]}
         style={{ display: 'inline-block', width: '74%' }}
       >
-        <InputNumber
-          precision={0}
-          min={0}
+        <Input
+          allowClear
           placeholder={t(translations.balanceChecker.enterEpochNo)}
           onFocus={onFocusBlockNoInput}
           onChange={onChangeBlockNo}

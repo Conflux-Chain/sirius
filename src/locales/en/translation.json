@@ -1223,6 +1223,7 @@
     "or": "OR",
     "chooseDate": "Please select date",
     "enterEpochNo": "Enter a Epoch No",
+    "invalidEpochNo": "Invalid Epoch No",
     "error": "Can not be empty",
     "lookUp": "Look Up",
     "reset": "Reset",
