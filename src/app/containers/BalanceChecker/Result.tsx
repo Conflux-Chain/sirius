@@ -52,9 +52,15 @@ export function Result({ radioValue, resultVisible, formData }) {
     } else if (data?.code === 0) {
       const { cfxByEpoch, cfxByDt } = data;
       if (cfxByEpoch) {
-        setResultData(cfxByEpoch);
+        setResultData({
+          ...cfxByEpoch,
+          epoch_dt: formData.dt === '' ? cfxByEpoch.epoch_dt : formData.dt,
+        });
       } else if (cfxByDt) {
-        setResultData(cfxByDt);
+        setResultData({
+          ...cfxByDt,
+          epoch_dt: formData.dt === '' ? cfxByDt.epoch_dt : formData.dt,
+        });
       } else {
         setResultData({
           epoch_dt: '--',
