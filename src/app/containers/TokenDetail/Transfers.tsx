@@ -15,6 +15,7 @@ import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
+import lodash from 'lodash';
 
 interface TransferProps {
   tokenName: string;
@@ -137,20 +138,26 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     tabs.push(analysisTab);
   }
 
+  // trick by frontend, the better way is api always return 'verify' info
+  let checkIcon: React.ReactNode = '';
+  if (
+    !lodash.isNil(contractInfo.isRegistered) ||
+    !lodash.isNil(contractInfo.cfxTransferCount)
+  ) {
+    if (contractInfo.verify?.exactMatch === true) {
+      checkIcon = <CheckCircleIcon />;
+    } else {
+      checkIcon = <AlertCircle size={16} color="#e36057" />;
+    }
+  }
+
   // Contract tab
   tabs.push({
     value: 'contract-viewer',
     action: 'contractViewer',
     label: (
       <div>
-        {t(translations.token.contract)}{' '}
-        {contractInfo.verify?.exactMatch ? (
-          <span>
-            <CheckCircleIcon />
-          </span>
-        ) : (
-          <AlertCircle size={16} color="#e36057" />
-        )}
+        {t(translations.token.contract)} {checkIcon}
       </div>
     ),
     content: <ContractContent contractInfo={contractInfo} />,
