@@ -1,7 +1,5 @@
-import { Card } from '../../components/Card';
-import SuccessIcon from '../../../images/balance-checker/success.png';
 import { translations } from '../../../locales/i18n';
-import { Card as AntdCard, Avatar } from '@jnoodle/antd';
+import { Card as AntdCard, Avatar, Spin } from '@jnoodle/antd';
 import DateIcon from '../../../images/balance-checker/date.png';
 import dayjs from 'dayjs';
 import BlockIcon from '../../../images/balance-checker/block.png';
@@ -12,7 +10,6 @@ import TokenIcon from '../../../images/balance-checker/token-icon.png';
 import { Text } from '../../components/Text/Loadable';
 import { formatNumber, fromDripToCfx } from '../../../utils';
 import { useCfxBalance } from '../../../utils/api';
-import { Empty } from '../../components/Empty';
 
 export function Result({ radioValue, resultVisible, formData }) {
   const { t, i18n } = useTranslation();
@@ -20,26 +17,53 @@ export function Result({ radioValue, resultVisible, formData }) {
   const [date, setDate] = useState('');
   const [epoch, setEpoch] = useState('');
   const [balance, setBalance] = useState('');
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [hoverBalance, setHoverBalance] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const setFormData = data => {
+  const setResultData = data => {
     setDate(data.epoch_dt);
     setEpoch(data.epoch);
-    setBalance(fromDripToCfx(data.balance, true));
+    setBalance(
+      fromDripToCfx(data.balance, false, { precision: 6, withUnit: false }),
+    );
+    setHoverBalance(fromDripToCfx(data.balance, true));
   };
-
+  const initResult = () => {
+    setDate('');
+    setEpoch('');
+    setBalance('');
+    setHoverBalance('');
+    setLoading(true);
+  };
+  const formatDate = date => {
+    return i18n.language.indexOf('en') > -1
+      ? dayjs(date).format('MMM DD,YYYY')
+      : dayjs(date).format('YYYY-MM-DD');
+  };
   useEffect(() => {
-    if (data && data.code === 0) {
+    initResult();
+    if (data?.code === 501) {
+      setResultData({
+        epoch_dt: '--',
+        epoch: '--',
+        balance: 0,
+      });
+      setLoading(false);
+    } else if (data?.code === 0) {
       const { cfxByEpoch, cfxByDt } = data;
-      setIsEmpty(false); // 重新搜索后重置isEmpty状态
       if (cfxByEpoch) {
-        setFormData(cfxByEpoch);
+        setResultData(cfxByEpoch);
       } else if (cfxByDt) {
-        setFormData(cfxByDt);
+        setResultData(cfxByDt);
       } else {
-        setIsEmpty(true);
+        setResultData({
+          epoch_dt: '--',
+          epoch: '--',
+          balance: 0,
+        });
       }
-    }
+      setLoading(false);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const TokenQuantityCard = (
@@ -61,7 +85,13 @@ export function Result({ radioValue, resultVisible, formData }) {
     <AntdCard.Meta
       avatar={<Avatar src={TokenIcon} />}
       title={t(translations.balanceChecker.cfxBalance)}
-      description={<Text hoverValue={balance}>{balance} CFX</Text>}
+      description={
+        loading ? (
+          <Spin />
+        ) : (
+          <Text hoverValue={hoverBalance}>{balance} CFX</Text>
+        )
+      }
     />
   );
 
@@ -70,44 +100,27 @@ export function Result({ radioValue, resultVisible, formData }) {
       // @ts-ignore
       visible={resultVisible}
     >
-      <Card>
-        <TopLine>
-          <TopLineTitle>
-            <img src={SuccessIcon} alt={''} />
-            {t(translations.balanceChecker.tokenQuantityForAccountAddress)}：
-          </TopLineTitle>
-          <TopLineValue>{formData.accountBase32}</TopLineValue>
-        </TopLine>
-        {isEmpty ? (
-          <Empty show={true} />
-        ) : (
-          <CardGroup>
-            <AntdCard>
-              <AntdCard.Meta
-                avatar={<Avatar src={DateIcon} />}
-                title={t(translations.balanceChecker.snapshotDate)}
-                description={
-                  i18n.language.indexOf('en') > -1
-                    ? dayjs(date).format('MMM DD,YYYY')
-                    : dayjs(date).format('YYYY-MM-DD')
-                }
-              />
-            </AntdCard>
-            <AntdCard>
-              <AntdCard.Meta
-                avatar={<Avatar src={BlockIcon} />}
-                title={t(translations.balanceChecker.block)}
-                description={epoch}
-              />
-            </AntdCard>
-            <AntdCard>
-              {radioValue === 1 || radioValue === 2
-                ? TokenQuantityCard
-                : CFXCard}
-            </AntdCard>
-          </CardGroup>
-        )}
-      </Card>
+      <CardGroup>
+        <AntdCard>
+          <AntdCard.Meta
+            avatar={<Avatar src={DateIcon} />}
+            title={t(translations.balanceChecker.snapshotDate)}
+            description={
+              loading ? <Spin /> : date === '--' ? date : formatDate(date)
+            }
+          />
+        </AntdCard>
+        <AntdCard>
+          <AntdCard.Meta
+            avatar={<Avatar src={BlockIcon} />}
+            title={t(translations.balanceChecker.epoch)}
+            description={loading ? <Spin /> : epoch}
+          />
+        </AntdCard>
+        <AntdCard>
+          {radioValue === 1 || radioValue === 2 ? TokenQuantityCard : CFXCard}
+        </AntdCard>
+      </CardGroup>
     </ResultWrap>
   );
 }
@@ -120,19 +133,6 @@ const ResultWrap = styled.div`
 
   // @ts-ignore
   display: ${props => props.visible};
-`;
-const TopLineTitle = styled.span`
-  color: #002257;
-
-  img {
-    margin-right: 4px;
-  }
-`;
-const TopLineValue = styled.span`
-  color: #97a3b4;
-`;
-const TopLine = styled.div`
-  padding: 24px 0;
 `;
 const CardGroup = styled.div`
   display: flex;
@@ -169,7 +169,7 @@ const CardGroup = styled.div`
       }
 
       .ant-card-meta-description {
-        width: 300px;
+        width: 250px;
 
         p {
           font-weight: 450;

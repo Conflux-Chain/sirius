@@ -372,14 +372,14 @@ export const TxnSwitcher = ({
 
   const tip =
     type === 'executed'
-      ? t(translations.general.totalRecord, {
+      ? t(translations.transactions.executedTotal, {
           total: toThousands(total),
         })
       : total > 10
       ? t(translations.transactions.pendingTotal, {
           total: toThousands(total),
         })
-      : t(translations.general.totalRecord, {
+      : t(translations.transactions.pendingTotalLt10, {
           total: toThousands(total),
         });
 
