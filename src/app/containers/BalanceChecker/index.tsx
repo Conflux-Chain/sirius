@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card';
 import styled from 'styled-components/macro';
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  Radio,
-  InputNumber,
-} from '@jnoodle/antd';
+import { Button, Divider, Form, Input, Radio } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
@@ -55,9 +48,9 @@ export function BalanceChecker() {
     form.setFieldsValue({ date: dateObject, blockNo: '' });
     setToggle(true);
   };
-  const onChangeBlockNo = value => {
-    if (isZeroOrPositiveInteger(value)) {
-      form.setFieldsValue({ blockNo: value });
+  const onChangeBlockNo = e => {
+    if (isZeroOrPositiveInteger(e.target.value)) {
+      form.setFieldsValue({ blockNo: e.target.value });
       setToggle(false);
     }
   };
@@ -99,6 +92,14 @@ export function BalanceChecker() {
     if (contractAddress && !isContractAddress(contractAddress)) {
       return Promise.reject(
         new Error(t(translations.contract.invalidContractAddress)),
+      );
+    }
+    return Promise.resolve();
+  };
+  const validateEpochIsNumber = (rule, epoch) => {
+    if (epoch && !isZeroOrPositiveInteger(epoch)) {
+      return Promise.reject(
+        new Error(t(translations.balanceChecker.invalidEpochNo)),
       );
     }
     return Promise.resolve();
@@ -163,12 +164,11 @@ export function BalanceChecker() {
       </Form.Item>
       <Form.Item
         name={'blockNo'}
-        rules={[{ required: !toggle }]}
+        rules={[{ required: !toggle }, { validator: validateEpochIsNumber }]}
         style={{ display: 'inline-block', width: '74%' }}
       >
-        <InputNumber
-          precision={0}
-          min={0}
+        <Input
+          allowClear
           placeholder={t(translations.balanceChecker.enterEpochNo)}
           onFocus={onFocusBlockNoInput}
           onChange={onChangeBlockNo}
