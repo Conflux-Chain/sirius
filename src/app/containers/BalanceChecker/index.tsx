@@ -21,8 +21,11 @@ import {
 } from '../../../utils';
 import { Result } from './Result';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
+import querystring from 'query-string';
 
 export function BalanceChecker() {
+  const { search } = useLocation();
   const { t, i18n } = useTranslation();
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState(3);
@@ -114,6 +117,7 @@ export function BalanceChecker() {
       label={t(translations.balanceChecker.address)}
       name="address"
       rules={[{ required: true }, { validator: validateAddress }]}
+      initialValue={querystring.parse(search).address}
     >
       <Input allowClear onChange={onChangeAccountAddress} />
     </Form.Item>

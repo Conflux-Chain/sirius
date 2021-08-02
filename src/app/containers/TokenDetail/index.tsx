@@ -81,7 +81,7 @@ export function TokenDetail() {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
-        <RouterLink to={`/balance-checker`}>
+        <RouterLink to={`/balance-checker?address=${tokenAddress}`}>
           {t(translations.general.address.more.balanceChecker)}
         </RouterLink>
       </Menu.Item>

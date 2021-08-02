@@ -100,7 +100,7 @@ export const ContractDetailPage = memo(() => {
         </RouterLink>
       </Menu.Item>
       <Menu.Item>
-        <RouterLink to={`/balance-checker`}>
+        <RouterLink to={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
         </RouterLink>
       </Menu.Item>
