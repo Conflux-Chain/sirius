@@ -521,12 +521,15 @@ export function validURL(str: string) {
   ); // fragment locator
   return !!pattern.test(str);
 }
+
 export function byteToKb(bytes) {
   return bytes / 1024;
 }
+
 export function isObject(o) {
   return o !== null && typeof o === 'object' && Array.isArray(o) === false;
 }
+
 export function checkInt(value, type) {
   const num = Number(type.substr(3));
   const min = new BigNumber(-Math.pow(2, num - 1));
@@ -548,6 +551,7 @@ export function checkInt(value, type) {
   }
   return [isType, num, min.toString(), max.toString()];
 }
+
 export function checkUint(value, type) {
   const num = Number(type.substr(4));
   const min = new BigNumber(0);
@@ -569,13 +573,16 @@ export function checkUint(value, type) {
   }
   return [isType, num, min.toFixed(), max.toFixed()];
 }
+
 export function isHex(num) {
   return Boolean(num.match(/^0x[0-9a-f]*$/i));
 }
+
 export function isEvenLength(str) {
   const length = str.length;
   return length > 0 && length % 2 === 0;
 }
+
 export function checkBytes(value, type) {
   if (type === 'byte') {
     type = 'bytes1';
@@ -659,5 +666,19 @@ export const addDays = (date, days) => {
  * e    -> false
  * @todo support config, such as negative and exponential notation
  */
+
+/**
+ *
+ * @param {number|string} data
+ * @returns {boolean}
+ * @example
+ * 0    -> true
+ * .    -> false
+ * 11   -> true
+ * 011  -> false
+ * -1   -> false
+ */
 export const isSafeNumberOrNumericStringInput = data =>
   /^\d+\.?\d*$|^\.\d*$/.test(data);
+
+export const isZeroOrPositiveInteger = data => /^(0|[1-9]\d*)$/.test(data);

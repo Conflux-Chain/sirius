@@ -14,7 +14,11 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { DatePicker } from '@cfxjs/react-ui';
 import { translations } from '../../../locales/i18n';
-import { isAddress, isContractAddress } from '../../../utils';
+import {
+  isAddress,
+  isContractAddress,
+  isZeroOrPositiveInteger,
+} from '../../../utils';
 import { Result } from './Result';
 import dayjs from 'dayjs';
 
@@ -49,7 +53,7 @@ export function BalanceChecker() {
     setToggle(true);
   };
   const onChangeBlockNo = value => {
-    if (/^0|[1-9]\d*$/.test(value)) {
+    if (isZeroOrPositiveInteger(value)) {
       form.setFieldsValue({ blockNo: value });
       setToggle(false);
     }
