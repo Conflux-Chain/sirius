@@ -15,7 +15,7 @@ export const formatData = (data, type) => {
   try {
     // handle string type specially, translate to hex format
     // if (type === 'string') {
-    //   const bytes = format.bytes(data);
+    //   const bytes = format.bytes(data); // format.bytes should update, not accept string
     //   const hex = format.hex(bytes);
     //   return hex;
     // }

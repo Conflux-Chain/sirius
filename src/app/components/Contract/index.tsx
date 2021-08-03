@@ -376,20 +376,25 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
     e.target.value = '';
   };
   function getTxData() {
-    const bodyParams: RequestBody = {};
-    bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
-    bodyParams.name = contractName;
-    bodyParams.website = site;
-    bodyParams.icon = contractImgSrc;
-    if (tokenImgSrc) {
-      bodyParams.tokenIcon = tokenImgSrc;
-    } else {
-      bodyParams.tokenIcon = '';
+    try {
+      const bodyParams: RequestBody = {};
+      bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
+      bodyParams.name = contractName;
+      bodyParams.website = site;
+      bodyParams.icon = contractImgSrc;
+      if (tokenImgSrc) {
+        bodyParams.tokenIcon = tokenImgSrc;
+      } else {
+        bodyParams.tokenIcon = '';
+      }
+      bodyParams.sourceCode = sourceCode;
+      bodyParams.abi = abi;
+      console.log('bodyParams: ', bodyParams);
+      const data = packContractAndToken(bodyParams);
+      return data[0];
+    } catch (e) {
+      console.log('packContractAndToken error: ', e);
     }
-    bodyParams.sourceCode = sourceCode;
-    bodyParams.abi = abi;
-    const data = packContractAndToken(bodyParams);
-    return data[0];
   }
   function checkAdminThenToken(tokenIcon) {
     if (addressVal) {

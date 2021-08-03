@@ -3,21 +3,22 @@ import {
   format,
 } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js'; // >= v1.1.6
 import { gzip } from 'pako';
+import { parseString } from 'utils';
 
 // TODO zip use hex address, should change to base32 address
-
 const zipContract = format(
   {
     address: format.hexAddress, // cip-37
-    name: format.bytes.$or(undefined),
-    website: format.bytes.$or(undefined),
+    name: format.bytes.$before(parseString).$or(undefined),
+    website: format.bytes.$before(parseString).$or(undefined),
     abi: format.bytes
+      .$before(parseString)
       .$parse(JSON.stringify, Array.isArray)
       .$after(gzip)
       .$or(undefined),
-    sourceCode: format.bytes.$after(gzip).$or(undefined),
+    sourceCode: format.bytes.$before(parseString).$after(gzip).$or(undefined),
     optimizeRuns: format.uInt.$after(String).$or(undefined),
-    icon: format.bytes.$after(gzip).$or(undefined),
+    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
 );
@@ -25,7 +26,7 @@ const zipContract = format(
 const zipToken = format(
   {
     address: format.hexAddress, // cip-37
-    icon: format.bytes.$after(gzip).$or(undefined),
+    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
 );
@@ -33,22 +34,26 @@ const zipToken = format(
 const zipContractAndToken = format(
   {
     address: format.hexAddress, // cip-37
-    name: format.bytes.$or(undefined),
-    website: format.bytes.$or(undefined),
+    name: format.bytes.$before(parseString).$or(undefined),
+    website: format.bytes.$before(parseString).$or(undefined),
     abi: format.bytes
+      .$before(parseString)
       .$parse(JSON.stringify, Array.isArray)
       .$after(gzip)
       .$or(undefined),
-    sourceCode: format.bytes.$after(gzip).$or(undefined),
+    sourceCode: format.bytes.$before(parseString).$after(gzip).$or(undefined),
     optimizeRuns: format.uInt.$after(String).$or(undefined),
-    icon: format.bytes.$after(gzip).$or(undefined),
-    tokenIcon: format.bytes.$after(gzip).$or(undefined),
+    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
+    tokenIcon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
 );
 
 const formatAnnounceArray = format([
-  { key: format.bytes, value: format.bytes },
+  {
+    key: format.bytes.$before(parseString),
+    value: format.bytes.$before(parseString),
+  },
 ]);
 
 const announcement = new Contract({

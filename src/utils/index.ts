@@ -682,3 +682,10 @@ export const isSafeNumberOrNumericStringInput = data =>
   /^\d+\.?\d*$|^\.\d*$/.test(data);
 
 export const isZeroOrPositiveInteger = data => /^(0|[1-9]\d*)$/.test(data);
+
+export const parseString = v => {
+  if (typeof v === 'string' && !v.startsWith('0x')) {
+    return Buffer.from(v);
+  }
+  return v;
+};
