@@ -19,6 +19,7 @@ import { CONST } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
 import { InternalContracts } from '../constants';
+import lodash from 'lodash';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -41,7 +42,9 @@ export const TxnHashRenderComponent = ({
 }: HashProps) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
-  const [txnDetail, setTxnDetail] = useState({});
+  const [txnDetail, setTxnDetail] = useState<{
+    status?: string;
+  }>({});
   const bp = useBreakpoint();
 
   const handleClick = () => {
@@ -73,6 +76,12 @@ export const TxnHashRenderComponent = ({
     }
   }
 
+  // used for skip status in block transactions list
+  // original status is null, manually set to 2
+  const innerStatus = lodash.isNil(txnDetail.status)
+    ? status
+    : txnDetail.status;
+
   return (
     <StyledTransactionHashWrapper>
       {bp !== 's' && showOverview ? (
@@ -83,7 +92,7 @@ export const TxnHashRenderComponent = ({
             trigger="click"
             content={
               <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
-                <Overview data={{ ...txnDetail, status }} />
+                <Overview data={{ ...txnDetail, status: innerStatus }} />
               </SkeletonContainer>
             }
           >
