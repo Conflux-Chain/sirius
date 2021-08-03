@@ -87,7 +87,11 @@ const useLogin = (outerConnected?, outerAccounts?) => {
   const [accounts, setAccounts] = useAccounts(outerAccounts);
 
   if (!installed) {
-    return { connected: 0, accounts, login: () => {}, ensureLogin: () => {} };
+    return {
+      connected: 0,
+      accounts,
+      login: () => Promise.resolve(),
+    };
   }
 
   // 0 - not connect, 1 - connected, 2 - connecting
@@ -97,21 +101,24 @@ const useLogin = (outerConnected?, outerAccounts?) => {
   );
 
   // 登录功能 + 登录状态同步
-  const login = () => {
-    if (!accounts.length) {
-      setConnected(2);
-      globalThis.conflux
-        ?.enable()
-        ?.then(accounts => {
-          setConnected(1);
-          // @todo why need to check setAccount type ?
-          typeof setAccounts === 'function' && setAccounts(accounts);
-        })
-        ?.catch(e => {
-          setConnected(0);
-        });
-    }
-  };
+  const login = () =>
+    new Promise((resolve, reject) => {
+      if (!accounts.length) {
+        setConnected(2);
+        globalThis.conflux
+          ?.enable()
+          ?.then(accounts => {
+            setConnected(1);
+            // @todo why need to check setAccount type ?
+            typeof setAccounts === 'function' && setAccounts(accounts);
+            resolve(accounts);
+          })
+          ?.catch(e => {
+            setConnected(0);
+            reject(e);
+          });
+      }
+    });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -119,12 +126,7 @@ const useLogin = (outerConnected?, outerAccounts?) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts[0]]);
 
-  const ensureLogin = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffectOnce(login);
-  };
-
-  return { connected, accounts, login, ensureLogin };
+  return { connected, accounts, login };
 };
 
 // @todo 是否应该和 @cfxjs/react-hooks 合并到一起？
@@ -143,8 +145,7 @@ export const usePortal = () => {
         ceth: '0',
       },
       // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
-      login: () => {},
-      ensureLogin: () => {},
+      login: () => Promise.resolve(),
       Big: null,
       conflux: null,
       confluxJS: null,
@@ -168,7 +169,7 @@ export const usePortal = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [chainId] = useChainId();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { connected, accounts, login, ensureLogin } = useLogin();
+  const { connected, accounts, login } = useLogin();
 
   return {
     installed: Number(installed), // 0 - not install, 1 - installed
@@ -182,7 +183,6 @@ export const usePortal = () => {
     },
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,
-    ensureLogin,
     Big,
     conflux: globalThis.conflux,
     confluxJS: globalThis.confluxJS,

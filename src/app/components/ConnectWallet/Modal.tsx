@@ -67,7 +67,7 @@ export const Modal = ({
   };
 
   const handleLogin = () => {
-    login();
+    login().finally(() => onClose());
   };
 
   let title: string = t(translations.connectWallet.modal.title);
