@@ -187,34 +187,6 @@ export const useBlockQuery: useApi = (params, shouldFetch = true, ...rest) => {
     rest[0],
   );
 };
-export const useTransactionList: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/transaction/list', ...params] : null,
-    rest[1] || simpleGetFetcher,
-    rest[0],
-  );
-};
-export const useTransactionQuery = (
-  params?: Params | any[],
-  shouldFetch = true,
-  ...rest: any[]
-) => {
-  if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
-  return useSWR(
-    shouldFetch
-      ? [`/transaction/${params[0].hash}?${params[0].hash}:''}`, ...params]
-      : null,
-    rest[1] || simpleGetFetcher,
-    rest[0],
-  );
-};
 export const useTransferList: useApi = (
   params,
   shouldFetch = true,
@@ -568,49 +540,6 @@ export const useToken = (
 };
 
 // this is the new api
-export const useTransactions = (query: any = {}, opts = {}) => {
-  return useSWR(
-    qs.stringifyUrl({
-      url: '/transaction',
-      query,
-    }),
-    url =>
-      fetch(url)
-        .then(rst => {
-          const { list } = rst;
-          return {
-            ...rst,
-            list: list.map(i => {
-              const { value, gasPrice } = i;
-              return {
-                ...i,
-                value: value !== undefined ? formatBalance(value) : 0,
-                gasPrice:
-                  gasPrice !== undefined ? formatBalance(gasPrice, 10) : 0,
-              };
-            }),
-          };
-        })
-        .catch(error => {
-          return {
-            total: 0,
-            listLimit: 0,
-            list: [],
-          };
-        }),
-    {
-      initialData: {
-        total: 0,
-        listLimit: 0,
-        list: [],
-      },
-      ...opts,
-      revalidateOnMount: true,
-    },
-  );
-};
-
-// this is the new api
 export const useTransfers = (query = {}, opts = {}) => {
   return useSWR(
     qs.stringifyUrl({
@@ -679,4 +608,11 @@ const fetchClientVersion = async () => {
 export const useClientVersion = () => {
   const { data: version } = useSWR('client version', fetchClientVersion);
   return version?.result;
+};
+
+export const useCfxBalance: useApi = params => {
+  if (!Array.isArray(params)) {
+    params = [params];
+  }
+  return useSWR(['/stat/get-cfx-balance-at', ...params], simpleGetFetcher);
 };

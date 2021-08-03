@@ -83,7 +83,7 @@ export const TxnHashRenderComponent = ({
             trigger="click"
             content={
               <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
-                <Overview data={txnDetail} />
+                <Overview data={{ ...txnDetail, status }} />
               </SkeletonContainer>
             }
           >
@@ -331,6 +331,7 @@ const StyledTransactionHashWrapper = styled.span`
     background-position: center;
     background-size: contain;
     vertical-align: middle;
+    border: none;
 
     &:focus {
       background-image: url(${iconViewTxnActive});

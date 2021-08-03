@@ -60,6 +60,32 @@ const transformDate = dates => {
   }
 };
 
+const getInitialDate = (minTimestamp, maxTimestamp) => {
+  const startDate = dayjs('2020-10-29T00:00:00+08:00');
+  const endDate = dayjs();
+  const innerMinTimestamp = minTimestamp
+    ? dayjs(new Date(parseInt((minTimestamp + '000') as string)))
+    : startDate;
+  const innerMaxTimestamp = maxTimestamp
+    ? dayjs(new Date(parseInt((maxTimestamp + '000') as string)))
+    : endDate;
+  const disabledDateD1 = date =>
+    date &&
+    (date > innerMaxTimestamp.endOf('day') ||
+      date < startDate.subtract(1, 'day').endOf('day'));
+  const disabledDateD2 = date =>
+    date &&
+    (date < innerMinTimestamp.subtract(1, 'day').endOf('day') ||
+      date > endDate.endOf('day'));
+
+  return {
+    minT: innerMinTimestamp,
+    maxT: innerMaxTimestamp,
+    dMinT: disabledDateD1,
+    dMaxT: disabledDateD2,
+  };
+};
+
 const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
@@ -94,27 +120,16 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
     t(translations.general.startDate),
     t(translations.general.endDate),
   ];
-  const startDate = dayjs('2020-10-29T00:00:00+08:00');
-  const endDate = dayjs();
-  const innerMinTimestamp = minTimestamp
-    ? dayjs(new Date(parseInt((minTimestamp + '000') as string)))
-    : startDate;
-  const innerMaxTimestamp = maxTimestamp
-    ? dayjs(new Date(parseInt((maxTimestamp + '000') as string)))
-    : endDate;
-  const disabledDateD1 = date =>
-    date &&
-    (date > innerMaxTimestamp.endOf('day') ||
-      date < startDate.subtract(1, 'day').endOf('day'));
-  const disabledDateD2 = date =>
-    date &&
-    (date < innerMinTimestamp.subtract(1, 'day').endOf('day') ||
-      date > endDate.endOf('day'));
+
+  const { minT, maxT, dMinT, dMaxT } = useMemo(() => {
+    return getInitialDate(minTimestamp, maxTimestamp);
+  }, [minTimestamp, maxTimestamp]);
+
   const handleStartChange = value => {
-    onChange(transformDate([value, innerMaxTimestamp]));
+    onChange(transformDate([value, maxT]));
   };
   const handleEndChange = value => {
-    onChange(transformDate([innerMinTimestamp, value]));
+    onChange(transformDate([minT, value]));
   };
 
   return (
@@ -131,8 +146,8 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             color="primary"
             placeholder={datePlaceholder[0]}
             onChange={handleStartChange}
-            defaultValue={innerMinTimestamp}
-            disabledDate={disabledDateD1}
+            defaultValue={minT}
+            disabledDate={dMinT}
             allowClear={false}
           />
           <UIDatePicker
@@ -142,8 +157,8 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
             color="primary"
             placeholder={datePlaceholder[1]}
             onChange={handleEndChange}
-            defaultValue={innerMaxTimestamp}
-            disabledDate={disabledDateD2}
+            defaultValue={maxT}
+            disabledDate={dMaxT}
             allowClear={false}
           />
         </div>
@@ -156,7 +171,12 @@ const MobilePicker = ({ minTimestamp, maxTimestamp, onChange }) => {
 // PC picker start
 const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
   const { t } = useTranslation();
-  let defaultDateRange = useMemo(
+  const disabledDate = date => {
+    const startDate = dayjs('2020-10-29T00:00:00+08:00');
+    const endDate = dayjs();
+    return date < startDate || date > endDate;
+  };
+  const defaultDateRange = useMemo(
     () =>
       minTimestamp && maxTimestamp
         ? [
@@ -183,6 +203,7 @@ const Picker = ({ minTimestamp, maxTimestamp, onChange }) => {
         // @ts-ignore
         placeholder={datePlaceholder}
         onChange={dates => onChange(transformDate(dates))}
+        disabledDate={disabledDate}
       />
     </PickerWrap>
   );
@@ -203,9 +224,12 @@ export const TableSearchDatepicker = ({
   const history = useHistory();
   const location = useLocation();
   const queries = qs.parse(location.search || '');
-  let minT = outerMinT || queries.minTimestamp;
+  let minT = outerMinT || queries.minTimestamp || '';
   // url 上的 maxTimestamp 是第二天的 00:00:00，datepicker 上需要减掉一秒，展示为前一天的 23:59:59
-  let maxT = outerMaxT || String(Number(queries.maxTimestamp) - 1) || '';
+  let maxT =
+    outerMaxT || queries.maxTimestamp
+      ? String(Number(queries.maxTimestamp) - 1) || ''
+      : '';
 
   let handleChange =
     onChange ||
@@ -216,6 +240,7 @@ export const TableSearchDatepicker = ({
             url: location.pathname,
             query: {
               ...queries,
+              skip: '0',
               minTimestamp: undefined,
               maxTimestamp: undefined,
             },
@@ -242,6 +267,7 @@ export const TableSearchDatepicker = ({
             url: location.pathname,
             query: {
               ...queries,
+              skip: '0',
               minTimestamp,
               maxTimestamp,
             },

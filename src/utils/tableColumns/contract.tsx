@@ -2,11 +2,9 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
-import { Link } from '../../app/components/Link/Loadable';
 import { Text } from '../../app/components/Text/Loadable';
 import { formatNumber, formatString } from '..';
 import { AddressContainer } from '../../app/components/AddressContainer';
-import { formatAddress } from '../cfx';
 import { ContentWrapper } from './utils';
 
 interface Query {
@@ -14,17 +12,19 @@ interface Query {
   transactionHash?: string;
 }
 
-export const number = {
+export const number = (page = 1, pageSize = 10) => ({
+  width: 1,
   title: (
     <Translation>
       {t => t(translations.general.table.contracts.number)}
     </Translation>
   ),
+  dataIndex: 'epochNumber',
   key: 'epochNumber',
   render: (value, row, index) => {
-    return index + 1;
+    return (page - 1) * pageSize + index + 1;
   },
-};
+});
 
 export const name = {
   title: (
@@ -36,11 +36,11 @@ export const name = {
   render: row => (
     <StyledIconWrapper>
       {/*<img src={row?.icon || defaultTokenIcon} alt="contract icon" />*/}
-      <Link href={`/address/${formatAddress(row.address)}`}>
+      <span>
         <Text span hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}
         </Text>
-      </Link>
+      </span>
     </StyledIconWrapper>
   ),
 };

@@ -1,40 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card';
 import styled from 'styled-components/macro';
-import {
-  Avatar,
-  Button,
-  Card as AntdCard,
-  Divider,
-  Form,
-  Input,
-  Radio,
-} from '@jnoodle/antd';
+import { Button, Divider, Form, Input, Radio } from '@jnoodle/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { DatePicker } from '@cfxjs/react-ui';
 import { translations } from '../../../locales/i18n';
-import TokenIcon from 'images/balance-checker/token-icon.png';
-import BlockIcon from 'images/balance-checker/block.png';
-import DateIcon from 'images/balance-checker/date.png';
-import SuccessIcon from 'images/balance-checker/success.png';
-import { formatNumber, isAddress, isContractAddress } from '../../../utils';
-import { Text } from '../../components/Text/Loadable';
+import {
+  isAddress,
+  isContractAddress,
+  isZeroOrPositiveInteger,
+} from '../../../utils';
+import { Result } from './Result';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
+import querystring from 'query-string';
 
 export function BalanceChecker() {
+  const { search } = useLocation();
   const { t, i18n } = useTranslation();
   const [form] = Form.useForm();
-  const [radioValue, setRadioValue] = useState(1);
+  const [radioValue, setRadioValue] = useState(3);
   const [toggle, setToggle] = useState(true);
   const [resultVisible, setResultVisible] = useState('none');
-  const datePlaceholder = [
-    t(translations.general.startDate),
-    t(translations.general.endDate),
-  ];
+  const [formData, setFormData] = useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     form
       .validateFields(['blockNo'])
       .then(res => {})
@@ -52,23 +44,31 @@ export function BalanceChecker() {
   const onChangeContractAddress = e => {
     form.setFieldsValue({ contractAddress: e.target.value });
   };
-  const onChangeDate = (newDates, dateStrings) => {
-    form.setFieldsValue({ date: newDates, blockNo: '' });
-    if (dateStrings !== []) {
-      setToggle(true);
-    }
+  const onChangeDate = dateObject => {
+    form.setFieldsValue({ date: dateObject, blockNo: '' });
+    setToggle(true);
   };
   const onChangeBlockNo = e => {
-    form.setFieldsValue({ blockNo: e.target.value });
-    setToggle(false);
+    if (isZeroOrPositiveInteger(e.target.value)) {
+      form.setFieldsValue({ blockNo: e.target.value });
+      setToggle(false);
+    }
   };
   const onFocusBlockNoInput = () => {
-    form.setFieldsValue({ date: [] });
+    form.setFieldsValue({ date: '' });
   };
   const onClickLookUp = e => {
     form
       .validateFields()
       .then(values => {
+        if (values.date !== '') {
+          values.date = values.date.format('YYYY-MM-DD');
+        }
+        setFormData({
+          accountBase32: values.address,
+          epoch: values.blockNo,
+          dt: values.date,
+        });
         setResultVisible('block');
       })
       .catch(error => {});
@@ -96,7 +96,19 @@ export function BalanceChecker() {
     }
     return Promise.resolve();
   };
-
+  const validateEpochIsNumber = (rule, epoch) => {
+    if (epoch && !isZeroOrPositiveInteger(epoch)) {
+      return Promise.reject(
+        new Error(t(translations.balanceChecker.invalidEpochNo)),
+      );
+    }
+    return Promise.resolve();
+  };
+  const disabledDate = (currentDate: dayjs.Dayjs) => {
+    if (dayjs.isDayjs(currentDate)) {
+      return currentDate.unix() > dayjs().unix();
+    }
+  };
   const validateMessages = {
     required: t(translations.balanceChecker.error),
   };
@@ -106,6 +118,7 @@ export function BalanceChecker() {
       label={t(translations.balanceChecker.address)}
       name="address"
       rules={[{ required: true }, { validator: validateAddress }]}
+      initialValue={querystring.parse(search).address}
     >
       <Input allowClear onChange={onChangeAccountAddress} />
     </Form.Item>
@@ -122,7 +135,7 @@ export function BalanceChecker() {
   const BlockNoOrDateFormItem = (
     <Form.Item
       required
-      label={t(translations.balanceChecker.blockNoOrDate)}
+      label={t(translations.balanceChecker.epochNoOrDate)}
       style={{ marginBottom: 0 }}
     >
       <Form.Item
@@ -130,14 +143,18 @@ export function BalanceChecker() {
         rules={[{ required: toggle }]}
         style={{ display: 'inline-block', width: '23%' }}
       >
-        <DatePicker.RangePicker
-          style={{ height: '32px' }}
+        <DatePicker
+          style={{ height: '32px', width: '300px' }}
           color="primary"
           variant="solid"
           // @ts-ignore
-          placeholder={datePlaceholder}
-          format={'MM-DD-YYYY'}
+          placeholder={t(translations.balanceChecker.chooseDate)}
+          locale={i18n.language}
+          // @ts-ignore
+          format={['MM-DD-YYYY', 'M-D-YYYY', 'YYYY-MM-DD', 'YYYY-M-D']}
           onChange={onChangeDate}
+          // @ts-ignore
+          disabledDate={disabledDate}
         />
       </Form.Item>
       <Form.Item
@@ -147,12 +164,12 @@ export function BalanceChecker() {
       </Form.Item>
       <Form.Item
         name={'blockNo'}
-        rules={[{ required: !toggle }]}
+        rules={[{ required: !toggle }, { validator: validateEpochIsNumber }]}
         style={{ display: 'inline-block', width: '74%' }}
       >
         <Input
           allowClear
-          placeholder={t(translations.balanceChecker.enterBlockNo)}
+          placeholder={t(translations.balanceChecker.enterEpochNo)}
           onFocus={onFocusBlockNoInput}
           onChange={onChangeBlockNo}
         />
@@ -179,36 +196,6 @@ export function BalanceChecker() {
       {BlockNoOrDateFormItem}
     </Form>
   );
-  const TokenQuantityCard = (
-    <AntdCard.Meta
-      avatar={<Avatar src={TokenIcon} />}
-      title={t(translations.balanceChecker.tokenQuantity)}
-      description={
-        // todo 添加单位
-        <Text hoverValue={'9441614704711111.123456789'}>
-          {formatNumber('9441614704711111.123456789', {
-            precision: 6,
-            withUnit: false,
-          })}
-        </Text>
-      }
-    />
-  );
-  const CFXCard = (
-    <AntdCard.Meta
-      avatar={<Avatar src={TokenIcon} />}
-      title={t(translations.balanceChecker.cfxBalance)}
-      description={
-        <Text hoverValue={'9441614704711111.123456789'}>
-          {formatNumber(9441614704711111.123456789, {
-            precision: 6,
-            withUnit: false,
-          })}
-          CFX
-        </Text>
-      }
-    />
-  );
 
   let formComp = <></>;
   if (radioValue === 1) {
@@ -233,12 +220,12 @@ export function BalanceChecker() {
         <Card className={`sirius-list-card`}>
           <RadioGroup>
             <Radio.Group onChange={onChangeRadio} value={radioValue}>
-              <Radio value={1}>
-                {t(translations.balanceChecker.tokenQuantity)}
-              </Radio>
-              <Radio value={2}>
-                {t(translations.balanceChecker.tokenSupply)}
-              </Radio>
+              {/*<Radio value={1}>*/}
+              {/*  {t(translations.balanceChecker.tokenQuantity)}*/}
+              {/*</Radio>*/}
+              {/*<Radio value={2}>*/}
+              {/*  {t(translations.balanceChecker.tokenSupply)}*/}
+              {/*</Radio>*/}
               <Radio value={3}>
                 {t(translations.balanceChecker.cfxBalance)}
               </Radio>
@@ -246,142 +233,31 @@ export function BalanceChecker() {
           </RadioGroup>
           <Divider />
           {formComp}
+          <ButtonGroup>
+            <Button type="primary" onClick={onClickLookUp}>
+              {t(translations.balanceChecker.lookUp)}
+            </Button>
+            <Button type="primary" className={'reset'} onClick={onClickReset}>
+              {t(translations.balanceChecker.reset)}
+            </Button>
+          </ButtonGroup>
+          <Result
+            radioValue={radioValue}
+            resultVisible={resultVisible}
+            formData={formData}
+          />
         </Card>
       </CardWrap>
-
-      <ButtonGroup>
-        <Button type="primary" onClick={onClickLookUp}>
-          {t(translations.balanceChecker.lookUp)}
-        </Button>
-        <Button type="primary" className={'reset'} onClick={onClickReset}>
-          {t(translations.balanceChecker.reset)}
-        </Button>
-      </ButtonGroup>
-
-      {/*todo 增加网络请求*/}
-      <ResultWrap
-        // @ts-ignore
-        visible={resultVisible}
-      >
-        <Card>
-          <TopLine>
-            <TopLineTitle>
-              <img src={SuccessIcon} alt={''} />
-              {t(translations.balanceChecker.tokenQuantityForAccountAddress)}：
-            </TopLineTitle>
-            <TopLineValue>
-              {
-                '0x832cc5618eaa0caa90fa067d8c122d55d7d9c68e74b502939e158e0377c11c8b'
-              }
-            </TopLineValue>
-          </TopLine>
-          <CardGroup>
-            <AntdCard>
-              <AntdCard.Meta
-                avatar={<Avatar src={DateIcon} />}
-                title={t(translations.balanceChecker.snapshotDate)}
-                description={
-                  i18n.language.indexOf('en') > -1
-                    ? dayjs().format('MMM DD,YYYY')
-                    : dayjs().format('YYYY-MM-DD')
-                }
-              />
-            </AntdCard>
-            <AntdCard>
-              <AntdCard.Meta
-                avatar={<Avatar src={BlockIcon} />}
-                title={t(translations.balanceChecker.block)}
-                description={'12345678'}
-              />
-            </AntdCard>
-            <AntdCard>
-              {radioValue === 1 || radioValue === 2
-                ? TokenQuantityCard
-                : CFXCard}
-            </AntdCard>
-          </CardGroup>
-        </Card>
-      </ResultWrap>
     </>
   );
 }
 
-const CardGroup = styled.div`
-  display: flex;
-
-  .ant-card {
-    margin: 0 24px 32px 0;
-
-    .ant-card-meta-title {
-      font-size: 14px;
-    }
-
-    .ant-card-meta {
-      display: flex;
-      flex-direction: row-reverse;
-
-      .ant-card-meta-avatar {
-        margin-left: 24px;
-        padding: 0;
-
-        .ant-avatar {
-          width: 48px;
-          height: 48px;
-          background: #f5f6fa;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          img {
-            width: 60%;
-            height: 60%;
-          }
-        }
-      }
-
-      .ant-card-meta-description {
-        width: 190px;
-
-        p {
-          font-weight: 450;
-        }
-      }
-    }
-  }
-`;
-
-const TopLineTitle = styled.span`
-  color: #002257;
-
-  img {
-    margin-right: 4px;
-  }
-`;
-const TopLineValue = styled.span`
-  color: #97a3b4;
-`;
-const TopLine = styled.div`
-  padding: 24px 0;
-`;
-
-const ResultWrap = styled.div`
-  font-family: 'Circular Std', 'PingFang SC', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-weight: 450;
-
-  // @ts-ignore
-  display: ${props => props.visible};
-`;
-
 const ButtonGroup = styled.div`
-  margin: 24px 0;
-
   .ant-btn {
     width: 133px;
     margin-right: 8px;
     font-weight: 500;
+    margin-bottom: 24px;
   }
 
   .reset {
@@ -428,5 +304,13 @@ const CardWrap = styled.div`
     &::before {
       margin-left: 2px;
     }
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+
+  .ant-input-number-handler-wrap {
+    display: none;
   }
 `;

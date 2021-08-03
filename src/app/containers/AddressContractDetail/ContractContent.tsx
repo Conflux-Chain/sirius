@@ -358,6 +358,7 @@ export const ContractContent = ({ contractInfo }) => {
 
 const ContractBody = styled.div`
   background-color: #ffffff;
+  border-radius: 4px;
 
   .contract-body-subtabs {
     padding: 0.5714rem 1.2857rem;

@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
-import { TablePanel } from 'app/components/TablePanel/Loadable';
-import { ColumnsType } from 'app/components/TabsTablePanel';
-import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { useTableData } from 'app/components/TabsTablePanel/useTableData';
 import { tokenColunms } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { cfxTokenTypes } from 'utils/constants';
 import queryString from 'query-string';
 // import { useGlobal } from 'utils/hooks/useGlobal';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 import imgInfo from 'images/info.svg';
-import { trackEvent } from 'utils/ga';
-import { ScanEvent } from 'utils/gaConstants';
 
 interface RouteParams {
   tokenType: string;
@@ -26,18 +21,30 @@ interface RouteParams {
 export function Tokens() {
   const { t } = useTranslation();
   // const { data: globalData } = useGlobal();
-  const { tokenType } = useParams<RouteParams>();
+  const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
-  let columnsWidth = [1, 6, 3, 3, 3, 3, 5];
-  let columns: ColumnsType = [
+  let columnsWidth = [1, 6, 5, 3, 3, 3, 3];
+  let columns = [
     tokenColunms.number(page, pageSize),
     tokenColunms.token,
-    tokenColunms.price,
-    tokenColunms.marketCap,
-    tokenColunms.transfer,
-    tokenColunms.holders,
     tokenColunms.contract(),
+    {
+      ...tokenColunms.price,
+      sorter: true,
+    },
+    {
+      ...tokenColunms.marketCap,
+      sorter: true,
+    },
+    {
+      ...tokenColunms.transfer,
+      sorter: true,
+    },
+    {
+      ...tokenColunms.holders,
+      sorter: true,
+    },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   let url = `/stat/tokens/list?transferType=${
@@ -54,23 +61,25 @@ export function Tokens() {
     ],
   })}`;
   // let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${globalData.currency}`; // @todo wait for new api handler
-
   let title = t(translations.header.tokens20);
-
-  let defaultSortOrder = 'desc';
-  let defaultSortKey = 'totalPrice';
 
   if (
     tokenType === cfxTokenTypes.erc721 ||
     tokenType === cfxTokenTypes.crc721
   ) {
-    columnsWidth = [1, 7, 3, 3, 9];
+    columnsWidth = [1, 7, 5, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
-      tokenColunms.transfer,
-      tokenColunms.holders,
-      tokenColunms.contract(true),
+      tokenColunms.contract(),
+      {
+        ...tokenColunms.transfer,
+        sorter: true,
+      },
+      {
+        ...tokenColunms.holders,
+        sorter: true,
+      },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
@@ -80,20 +89,25 @@ export function Tokens() {
     })}`;
     // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens721);
-    defaultSortKey = 'transferCount';
   }
 
   if (
     tokenType === cfxTokenTypes.erc1155 ||
     tokenType === cfxTokenTypes.crc1155
   ) {
-    columnsWidth = [1, 7, 3, 3, 9];
+    columnsWidth = [1, 7, 5, 3, 3];
     columns = [
       tokenColunms.number(page, pageSize),
       tokenColunms.token,
-      tokenColunms.transfer,
-      tokenColunms.holders,
-      tokenColunms.contract(true),
+      tokenColunms.contract(),
+      {
+        ...tokenColunms.transfer,
+        sorter: true,
+      },
+      {
+        ...tokenColunms.holders,
+        sorter: true,
+      },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
@@ -103,65 +117,7 @@ export function Tokens() {
     })}`;
     // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);
-    defaultSortKey = 'transferCount';
   }
-
-  const [tableTokenType, setTableTokenType] = useState(tokenType);
-  const [queryUrl, setQueryUrl] = useState(url);
-  const [tableSortOrder, setTableSortOrder] = useState(defaultSortOrder);
-  const [tableSortKey, setTableSortKey] = useState(defaultSortKey);
-  const { total } = useTableData(url);
-
-  useEffect(() => {
-    setQueryUrl(url);
-    // reset default sort after token type change
-    if (tableTokenType !== tokenType) {
-      setTableTokenType(tokenType);
-      setTableSortOrder(defaultSortOrder);
-      setTableSortKey(defaultSortKey);
-    }
-  }, [url, tableTokenType, tokenType, defaultSortOrder, defaultSortKey]);
-
-  // deal with column sort
-  const sorter = opt => {
-    const { column, url: oldUrl, oldSortKey, newSortKey } = opt;
-
-    // default order is desc
-    let newSortOrder =
-      oldSortKey === newSortKey
-        ? tableSortOrder === 'asc'
-          ? 'desc'
-          : 'asc'
-        : 'desc';
-    let urlSortKey = column.dataIndex;
-    // deal with especial key
-    // if (urlSortKey === 'transferCount') {
-    //   if (tokenType === cfxTokenTypes.erc721) {
-    //     urlSortKey = 'erc721TransferCount';
-    //   } else if (tokenType === cfxTokenTypes.erc1155) {
-    //     urlSortKey = 'erc1155TransferCount';
-    //   }
-    // }
-
-    // generate new url by replace sort params
-    const newUrl = oldUrl
-      .replace(
-        /reverse=[^&]*/g,
-        newSortOrder === 'desc' ? 'reverse=true' : 'reverse=false',
-      )
-      .replace(/orderBy=[^&]*/g, 'orderBy=' + urlSortKey);
-
-    setTableSortKey(column.dataIndex);
-    setTableSortOrder(newSortOrder);
-    if (newUrl !== oldUrl) {
-      setQueryUrl(newUrl);
-      trackEvent({
-        category: ScanEvent.function.category,
-        action: ScanEvent.function.action.tokenTableSort,
-        label: `${tokenType}_${column.dataIndex}_${newSortOrder}`,
-      });
-    }
-  };
 
   return (
     <>
@@ -169,15 +125,7 @@ export function Tokens() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <PageHeader
-        subtitle={
-          <TipLabel
-            total={total}
-            left={t(translations.tokens.tipCountBefore)}
-            right={t(translations.tokens.tipCountAfter)}
-          />
-        }
-      >
+      <PageHeader subtitle={t(translations.tokens.tip)}>
         {title}
         <Tooltip
           hoverable
@@ -194,17 +142,11 @@ export function Tokens() {
       </PageHeader>
 
       <TableWrapper>
-        <TablePanel
-          table={{
-            className: 'token-list',
-            columns: columns,
-            rowKey: 'address',
-            sorter,
-            sortOrder: tableSortOrder,
-            sortKey: tableSortKey,
-          }}
-          url={queryUrl}
-        />
+        <TablePanelNew
+          url={url}
+          columns={columns}
+          rowKey="address"
+        ></TablePanelNew>
       </TableWrapper>
     </>
   );

@@ -35,7 +35,7 @@ const ActionButtonWrap = styled.div`
     min-width: 2.2857rem;
     height: 2.2857rem;
     padding: 0 0.4286rem;
-    margin-right: 0.7143rem;
+    /* margin-right: 0.7143rem; */
     color: #b1b3b9;
     font-weight: normal;
 

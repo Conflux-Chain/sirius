@@ -2,23 +2,29 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { media } from '../../../styles/media';
-import { cfx, faucet, faucetAddress, formatAddress } from '../../../utils/cfx';
-import SkelontonContainer from '../../components/SkeletonContainer';
-import { Text } from '../../components/Text/Loadable';
-import { Search as SearchComp } from '../../components/Search/Loadable';
-import { DappButton } from '../../components/DappButton/Loadable';
-import { isAddress, fromDripToGdrip, fromDripToCfx } from '../../../utils';
+import { media } from 'styles/media';
+import {
+  cfx,
+  faucet,
+  faucetAddress,
+  formatAddress,
+  faucetLastAddress,
+} from 'utils/cfx';
+import SkelontonContainer from 'app/components/SkeletonContainer';
+import { Text } from 'app/components/Text/Loadable';
+import { Search as SearchComp } from 'app/components/Search/Loadable';
+import { DappButton } from 'app/components/DappButton/Loadable';
+import { isAddress, fromDripToGdrip, fromDripToCfx } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import { AddressContainer } from '../../components/AddressContainer';
-import { TxnAction } from '../../../utils/constants';
-import { Remark } from '../../components/Remark';
-import { PageHeader } from '../../components/PageHeader/Loadable';
-import { reqTokenList } from '../../../utils/httpRequest';
+import { AddressContainer } from 'app/components/AddressContainer';
+import { TxnAction } from 'utils/constants';
+import { Remark } from 'app/components/Remark';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { reqTokenList } from 'utils/httpRequest';
 
 interface RouteParams {
   contractAddress: string;
@@ -47,6 +53,9 @@ export function Sponsor() {
   const [providedGasFee, setProvidedGasFee] = useState(defaultStr);
   const [avialGasFee, setAvialGasFee] = useState(defaultStr);
   const [upperBound, setUpperBound] = useState(defaultStr);
+  const [isUpperBoundFromFoundation, setIsUpperBoundFromFoundation] = useState(
+    false,
+  );
   const [gasBound, setGasBound] = useState(defaultStr);
   const [storageBound, setStorageBound] = useState(defaultStr);
   const [loading, setLoading] = useState(false);
@@ -56,6 +65,26 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { accounts } = usePortal();
+
+  const getSponsorFromSDK = address => {
+    cfx.getSponsorInfo(address).then(
+      resp => {
+        const sponsorGasBound = resp.sponsorGasBound.toString();
+        const sponsorForGas = formatAddress(resp.sponsorForGas, {
+          hex: true,
+        });
+        setUpperBound(sponsorGasBound);
+        if (
+          sponsorForGas === faucetAddress ||
+          sponsorForGas === faucetLastAddress
+        ) {
+          setIsUpperBoundFromFoundation(true);
+        }
+      },
+      e => console.log,
+    );
+  };
+
   const getSponsorInfo = async _address => {
     setLoading(true);
     // cip-37 compatible
@@ -69,6 +98,7 @@ export function Sponsor() {
     }
     const faucetParams = await faucet.getFaucetParams(address);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
+    getSponsorFromSDK(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
       // get address name
@@ -95,7 +125,7 @@ export function Sponsor() {
       setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
       setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
       setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
-      setUpperBound(faucetParams.upper_bound);
+      // setUpperBound(faucetParams.upper_bound);
       setGasBound(faucetParams.gas_bound);
       setStorageBound(faucetParams.collateral_bound);
       setAvialStorageFee(
@@ -219,6 +249,7 @@ export function Sponsor() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts[0]]);
+
   const failCallback = message => {
     setCanApply(false);
   };
@@ -374,6 +405,9 @@ export function Sponsor() {
                 </Text>
                 &nbsp;
                 <span className="unit">Gdrip/{t(translations.sponsor.tx)}</span>
+                {isUpperBoundFromFoundation ? (
+                  <span>{t(translations.sponsor.byFoundation)}</span>
+                ) : null}
               </SkelontonContainer>
             </div>
             <div className="feeContainer gas">
@@ -461,6 +495,7 @@ export function Sponsor() {
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
+            t(translations.sponsor.noticeFive),
           ]}
         ></Remark>
       </Wrapper>

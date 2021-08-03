@@ -79,7 +79,7 @@ export const TableSearchDropdown = ({
     if (onChange) {
       onChange(option.value);
     } else {
-      let { page, pageSize, ...query } = qs.parse(location.search || '');
+      let { skip, ...query } = qs.parse(location.search || '');
       let queryValue: any = '';
 
       keyList.forEach(k => {
@@ -96,8 +96,7 @@ export const TableSearchDropdown = ({
           qs.stringifyUrl({
             url: location.pathname,
             query: {
-              page: '1',
-              pageSize,
+              skip: '0',
               ...query,
             },
           }),

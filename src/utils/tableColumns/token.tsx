@@ -27,15 +27,30 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const reg = /address\/(.*)$/;
+
 export const renderAddress = (
   value,
   row,
   type?: 'to' | 'from',
   withArrow = true,
 ) => {
-  const { accountAddress } = queryString.parse(window.location.search);
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
   const filter = (accountAddress as string) || '';
   let alias = '';
+
   if (type === 'from') {
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.fromContractInfo && row.fromContractInfo.name)
@@ -133,6 +148,63 @@ export const token = {
       </StyledIconWrapper>
     );
   },
+};
+
+const Token2 = ({ row }) => {
+  const { t } = useTranslation();
+  return (
+    <StyledIconWrapper>
+      {row?.transferTokenInfo
+        ? [
+            <img
+              key="img"
+              src={row?.transferTokenInfo?.icon || defaultTokenIcon}
+              alt="token icon"
+            />,
+            <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
+              <Text
+                span
+                hoverValue={
+                  row?.transferTokenInfo?.name
+                    ? `${
+                        row?.transferTokenInfo?.name ||
+                        t(translations.general.notAvailable)
+                      } (${
+                        row?.transferTokenInfo?.symbol ||
+                        t(translations.general.notAvailable)
+                      })`
+                    : formatAddress(row?.transferTokenInfo?.address)
+                }
+                maxWidth="180px"
+              >
+                {row?.transferTokenInfo?.name ? (
+                  formatString(
+                    `${
+                      row?.transferTokenInfo?.name ||
+                      t(translations.general.notAvailable)
+                    } (${
+                      row?.transferTokenInfo?.symbol ||
+                      t(translations.general.notAvailable)
+                    })`,
+                    36,
+                  )
+                ) : (
+                  <AddressContainer
+                    value={row?.transferTokenInfo?.address}
+                    alias={row?.transferTokenInfo?.contractName || null}
+                    showIcon={false}
+                  />
+                )}
+              </Text>
+            </Link>,
+          ]
+        : t(translations.general.loading)}
+    </StyledIconWrapper>
+  );
+};
+export const token2 = {
+  ...token,
+  render: row => <Token2 row={row} />,
 };
 
 const IconWrapper = styled.div`
@@ -341,7 +413,7 @@ export const quantity = {
   render: (value, row, index, opt?) => {
     const decimals = opt
       ? opt.decimals
-      : row.token?.decimals || row.token?.decimal || 0;
+      : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
     return value ? (
       <Text span hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
@@ -359,9 +431,26 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'to')}</FromWrap>
-  ),
+  render: (value, row) => {
+    let contractInfo = {};
+
+    try {
+      contractInfo = row.contractInfo[value];
+    } catch (e) {}
+
+    return (
+      <FromWrap>
+        {renderAddress(
+          value,
+          {
+            ...row,
+            contractInfo,
+          },
+          'to',
+        )}
+      </FromWrap>
+    );
+  },
 };
 
 export const from = {
@@ -371,9 +460,26 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => (
-    <FromWrap>{renderAddress(value, row, 'from')}</FromWrap>
-  ),
+  render: (value, row) => {
+    let contractInfo = {};
+
+    try {
+      contractInfo = row.contractInfo[value];
+    } catch (e) {}
+
+    return (
+      <FromWrap>
+        {renderAddress(
+          value,
+          {
+            ...row,
+            contractInfo,
+          },
+          'from',
+        )}
+      </FromWrap>
+    );
+  },
 };
 
 export const account = {
@@ -522,7 +628,7 @@ export const tokenId = (contractAddress?: string) => ({
         <SpanWrap>{value || '-'}</SpanWrap>
       </Text>
       <NFTPreview
-        contractAddress={contractAddress || row?.token?.address}
+        contractAddress={contractAddress || row?.transferTokenInfo?.address}
         tokenId={value}
       />
     </>
@@ -643,6 +749,7 @@ export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
   font-family: ${monospaceFont};
+
   img {
     width: 1.1429rem;
     height: 1.1429rem;

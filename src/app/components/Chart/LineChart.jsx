@@ -42,6 +42,7 @@ export const LineChart = ({
     address: '',
     type: '',
   },
+  contractAddress = '',
 }) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
@@ -63,6 +64,7 @@ export const LineChart = ({
     'contractAmount',
     'contractGrowth',
     'tokenAnalysis',
+    'contractAnalysis',
   ].includes(indicator);
 
   const chartWidth =
@@ -80,6 +82,7 @@ export const LineChart = ({
     'contractAmount',
     'contractGrowth',
     'tokenAnalysis', // without thumb
+    'contractAnalysis',
   ].includes(indicator)
     ? 365
     : 31;
@@ -97,7 +100,11 @@ export const LineChart = ({
     NUM_X_GRID,
     indicator,
     limit,
-    indicator === 'tokenAnalysis' ? tokenInfo.address : '',
+    indicator === 'tokenAnalysis'
+      ? tokenInfo.address
+      : indicator === 'contractAnalysis'
+      ? contractAddress
+      : '',
   );
 
   const initialDomain = {
@@ -302,6 +309,8 @@ export const LineChart = ({
         return 'statDay';
       case 'tokenAnalysis':
         return 'day';
+      case 'contractAnalysis':
+        return 'statTime';
       default:
         return 'timestamp';
     }
@@ -334,6 +343,8 @@ export const LineChart = ({
               'uniqueSender',
             ]
           : ['transferCount', 'uniqueReceiver', 'uniqueSender'];
+      case 'contractAnalysis':
+        return ['tx', 'tokenTransfer', 'cfxTransfer'];
       default:
         return indicator;
     }
@@ -399,6 +410,7 @@ export const LineChart = ({
           'contractAmount',
           'contractGrowth',
           'tokenAnalysis',
+          'contractAnalysis',
         ].includes(indicator) && !isThumb ? (
           <DataZoomLineChart
             width={widthRatio ? widthRatio : width}
@@ -590,6 +602,7 @@ const TooltipWrapper = styled.div`
   p {
     margin: 0;
   }
+
   .desc {
     font-size: 12px;
     font-weight: bold;

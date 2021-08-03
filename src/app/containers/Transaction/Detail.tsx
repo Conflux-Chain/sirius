@@ -55,7 +55,7 @@ const getStorageFee = byteSize =>
 
 // Transaction Detail Page
 export const Detail = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [contractInfo, setContractInfo] = useState({});
@@ -433,6 +433,7 @@ export const Detail = () => {
               </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="type">1</span>
+              <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc721" />
               <span className="type">
@@ -445,7 +446,13 @@ export const Detail = () => {
                   <>&nbsp;</>
                 )}
                 {t(translations.transaction.tokenId)}:
-                <span className="tokenId">{transferItem['tokenId']}</span>
+                <span className="tokenId">
+                  {transferItem['tokenId']}
+                  <NFTPreview
+                    contractAddress={transferItem['address']}
+                    tokenId={transferItem['tokenId']}
+                  />
+                </span>
               </span>
             </div>,
           );
@@ -485,6 +492,7 @@ export const Detail = () => {
                         ? `${formatBalance(item['value'], tokenDecimals, true)}`
                         : item['value']}
                     </span>
+                    <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                     <span className="tokenId">
                       {item['tokenId']}
@@ -532,6 +540,7 @@ export const Detail = () => {
                     )}`
                   : transferItem['value']}
               </span>
+              <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc20" />
             </div>,

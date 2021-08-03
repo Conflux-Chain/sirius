@@ -45,14 +45,10 @@ const StyledSubTabsWrapper = styled.div`
     line-height: 1.8571rem;
     border: none;
     background-color: #f5f8ff;
-    margin-left: 0.2857rem;
+    margin-right: 0.2857rem;
 
     ${media.s} {
       margin: 0.3571rem 0;
-    }
-
-    &:first-child {
-      margin-left: 0;
     }
 
     &:hover,

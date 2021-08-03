@@ -187,7 +187,9 @@
     "pending": "待处理交易",
     "executed": "已执行交易",
     "pendingTxnGasFee": "待处理",
-    "pendingTotal": "仅展示最新的 10 条记录（共计 {{total}} 条记录）",
+    "executedTotal": "共计 {{total}} 条已执行记录",
+    "pendingTotal": "仅展示最新的 10 条待处理记录（共计 {{total}} 条待处理记录）",
+    "pendingTotalLt10": "共计 {{total}} 条待处理记录",
     "pendingTip": "仅展示确认时间超过 5 分钟的待处理交易。",
     "pendingReasonTip": "；待处理交易原因：",
     "pendingReason": {
@@ -207,6 +209,7 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "tip": "该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看",
     "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "crcTip": "{{crc}} 是发布在 Conflux 网络上，采用 {{erc}} 标准的数字资产。",
     "table": {
@@ -295,7 +298,6 @@
     "blocknumberCalc": "区块计算器",
     "nftChecker": "NFT 查看器",
     "notice": "通知中心",
-    "learnMore": "了解更多",
     "search": {
       "tokens": "代币",
       "contracts": "合约",
@@ -314,8 +316,8 @@
     "aboutUs": {
       "title": "关于我们",
       "supportCenter": "帮助中心",
-      "privacyPolicy": "隐私条款",
-      "terms": "法律政策"
+      "privacyPolicy": "隐私政策",
+      "terms": "法律条款"
     },
     "cookie": "此网站使用 Cookies 来改善您的体验，更多信息请查看 <a href='https://confluxnetwork.org/zh/privacy/' target='_blank'>隐私条款</a>。",
     "addressWarning": "为防止资产丢失，请仔细查看 <a href='https://forum.conflux.fun/t/topic/6720' target='_blank'>涉及资产转账的地址相关规则说明</a>。 ",
@@ -489,6 +491,13 @@
       "transferCount": "转账次数",
       "uniqueReceiver": "接收账户数",
       "uniqueSender": "发送账户数"
+    },
+    "contractAnalysis": {
+      "title": "合约分析",
+      "description": "每日转账统计",
+      "tx": "交易",
+      "cfxTransfer": "CFX转移",
+      "tokenTransfer": "代币转移"
     }
   },
   "general": {
@@ -504,6 +513,9 @@
       "epoch": "纪元"
     },
     "totalRecord": "共计 {{total}} 个记录",
+    "totalRecordWithLimit": "仅展示最新的 {{limit}} 条记录（共计 {{total}} 条记录）",
+    "totalRecordWithType": "共计 {{total}} 个 {{type}}",
+    "totalRecordWithLimitWithType": "仅展示最新的 {{limit}} 条 {{type}}（共计 {{total}} 条 {{type}}）",
     "totalHolders": "共计 {{total}} 个持有人",
     "totalRecordLimit": "仅展示最新的 10k 条记录（共计 {{total}} 条记录）",
     "remark": "说明：",
@@ -526,7 +538,9 @@
         "report": "举报",
         "editContract": "编辑合约",
         "sponsor": "申请赞助",
-        "website": "官方网站"
+        "website": "官方网站",
+        "balanceChecker": "余额检索器",
+        "verifyContract": "验证合约"
       }
     },
     "loading": "加载中...",
@@ -643,7 +657,7 @@
     "status": {
       "skip": {
         "text": "跳过",
-        "explanation": "随机数错误，签名验证失败，或余额不足"
+        "explanation": "可能的原因：错误随机数；余额不足；交易未在合适的纪元高度执行；交易在更早的区块被执行。"
       },
       "error": {
         "text": "失败",
@@ -743,6 +757,7 @@
     "noticeSecond": "2. 申请前需要链接 ConfluxPortal，连接完成后点击申请即可获得赞助。",
     "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
     "noticeFourthTwo": "下载。",
+    "noticeFive": "4. 若合约为基金会赞助，则燃气上限为 10 Gdrip/交易；若合约不为基金会赞助，则燃气费不设上限。",
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
     "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",
@@ -754,7 +769,8 @@
     "txHash": "交易哈希",
     "searchAddress": "搜索合约地址",
     "applicationUnit": "次",
-    "tx": "交易"
+    "tx": "交易",
+    "byFoundation": "（来自基金会）"
   },
   "transaction": {
     "tipOfTokenTransferCount": "最多展示 100 条记录",
@@ -799,7 +815,7 @@
     "contract": "合约",
     "created": "已创建",
     "contractCreation": "合约创建",
-    "for": "For",
+    "for": "转移",
     "tokenId": "代币ID",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
     "epochConfirmations": "{{count}} 个纪元已确认",
@@ -1099,6 +1115,8 @@
     "topMinersByBlocksMined": "最佳矿工--挖出区块",
     "topAccountsByGasUsed": "最佳账户--燃料用量",
     "topAccountsByTxnCount": "最佳账户--交易数",
+    "valueInTotal": "交易值共计",
+    "txnCountInTotal": "交易数共计",
     "span": {
       "24h": "24小时",
       "3d": "3天",
@@ -1195,15 +1213,17 @@
   "balanceChecker": {
     "tokenBalanceChecker": "代币余额检索器",
     "balanceChecker": "余额检索器",
-    "subtitle": "您可以在特定的区块号或日期查找 Conflux 网络上的账户历史余额",
+    "subtitle": "您可以在特定的纪元号或日期查找 Conflux 网络上的账户历史余额",
     "tokenQuantity": "代币数量",
     "tokenSupply": "代币供应",
     "cfxBalance": "CFX 余额",
     "address": "地址",
     "contractAddress": "合约地址",
-    "blockNoOrDate": "区块号或者日期",
+    "epochNoOrDate": "纪元号或者日期",
     "or": "或",
-    "enterBlockNo": "输入区块号",
+    "chooseDate": "请选择日期",
+    "enterEpochNo": "输入纪元号",
+    "invalidEpochNo": "不合法的纪元号",
     "error": "不能为空",
     "lookUp": "搜索",
     "reset": "重置",
@@ -1211,8 +1231,8 @@
     "totalSupplyForContractAddress": "合约地址代币总供应量",
     "cfxBalanceForAddress": "地址 CFX 总余额",
     "snapshotDate": "截止日期",
-    "block": "区块",
-    "blockNo": "区块号"
+    "epoch": "纪元",
+    "epochNo": "纪元号"
   },
   "nftChecker": {
     "title": "NFT 查看器",

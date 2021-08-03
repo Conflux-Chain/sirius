@@ -30,7 +30,7 @@ interface Props {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
 export declare type StatusProps = React.PropsWithChildren<Props & NativeAttrs>;
 
-export const Status = ({
+const StatusComponent = ({
   type: outerType,
   className,
   variant,
@@ -134,10 +134,12 @@ export const Status = ({
     return null;
   }
 };
-Status.defaultProps = {
+StatusComponent.defaultProps = {
   showMessage: true,
   showTooltip: false,
 };
+
+export const Status = React.memo(StatusComponent);
 
 const StyledStatusWrapper = styled.span`
   display: flex;

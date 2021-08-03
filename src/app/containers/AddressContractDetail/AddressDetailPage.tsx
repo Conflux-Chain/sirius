@@ -52,6 +52,11 @@ export const AddressDetailPage = memo(() => {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
+        <RouterLink to={`/balance-checker?address=${address}`}>
+          {t(translations.general.address.more.balanceChecker)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
         </RouterLink>
@@ -117,9 +122,11 @@ export const DropdownWrapper = styled(Dropdown)`
   display: flex;
   align-items: center;
   cursor: pointer;
+
   ${media.s} {
     position: relative;
   }
+
   img {
     width: 11px;
     margin-left: 5px;
@@ -128,16 +135,21 @@ export const DropdownWrapper = styled(Dropdown)`
 
 export const MenuWrapper = styled(Menu)`
   min-width: 100px;
+
   li {
     list-style: none;
+
     &:before {
       display: none;
     }
+
     a {
       color: #65709a;
     }
+
     &:hover {
       background-color: #65709a;
+
       a {
         color: #fff;
       }

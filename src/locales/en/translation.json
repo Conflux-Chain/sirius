@@ -187,7 +187,9 @@
     "pending": "Pending Txns",
     "executed": "Executed Txns",
     "pendingTxnGasFee": "pending",
-    "pendingTotal": "Showing the last 10 records (A total of {{total}} records)",
+    "executedTotal": "A total of {{total}} executed txns",
+    "pendingTotalLt10": "A total of {{total}} pending txns",
+    "pendingTotal": "Showing the last 10 pending txns (A total of {{total}} pending txns)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
     "pendingReasonTip": "; the reason of pending txn: ",
     "pendingReason": {
@@ -207,6 +209,7 @@
     "description": "Tokens",
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "tip": "The following list only displays certain tokens, undisplayed tokens can be found by searching contract address",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
     "table": {
@@ -295,7 +298,6 @@
     "blocknumberCalc": "Blocknumber Calculator",
     "nftChecker": "NFT Checker",
     "notice": "Notice Center",
-    "learnMore": "Learn more",
     "search": {
       "tokens": "Tokens",
       "contracts": "Contracts",
@@ -489,6 +491,13 @@
       "transferCount": "Transfers Count",
       "uniqueReceiver": "Unique Receivers",
       "uniqueSender": "Unique Senders"
+    },
+    "contractAnalysis": {
+      "title": "Contract Analysis",
+      "description": "daily transfers statistics.",
+      "tx": "Transactions",
+      "cfxTransfer": "CFX Transfers",
+      "tokenTransfer": "Token Transfers"
     }
   },
   "general": {
@@ -504,6 +513,9 @@
       "epoch": "Epoch"
     },
     "totalRecord": "A total of {{total}} records",
+    "totalRecordWithLimit": "Showing the last {{limit}} records (A total of {{total}} records)",
+    "totalRecordWithType": "A total of {{total}} {{type}}",
+    "totalRecordWithLimitWithType": "Showing the last {{limit}} {{type}} (A total of {{total}} {{type}})",
     "totalHolders": "A total of {{total}} holders",
     "totalRecordLimit": "Showing the last 10k records (A total of {{total}} records)",
     "remark": "Remark:",
@@ -526,7 +538,9 @@
         "report": "Report",
         "editContract": "Edit Contract",
         "sponsor": "Apply Sponsorship",
-        "website": "Official Website"
+        "website": "Official Website",
+        "balanceChecker": "Balance Checker",
+        "verifyContract": "Verify Contract"
       }
     },
     "loading": "loading...",
@@ -643,7 +657,7 @@
     "status": {
       "skip": {
         "text": "Skip",
-        "explanation": "Wrong nonce, signature verification failed, or insufficient funds."
+        "explanation": "Possible reasons: Wrong nonce; insufficient balance; the transactions fail to execute at the appropriate epoch height; the transaction executed in earlier blocks."
       },
       "error": {
         "text": "Error",
@@ -743,6 +757,7 @@
     "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal. After connection you can apply for the sponsorship.",
     "noticeFourthOne": "3. If you don't have ConfluxPortal as a browser extension installed yet, please visit",
     "noticeFourthTwo": "for instructions.",
+    "noticeFive": "4. If the Foundation sponsors a contract, the upper bound of the gas price is at 10 Gdrip/txn; if the Foundation does not sponsor a contract, there is no cap on the gas price of each transaction.",
     "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
     "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
     "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
@@ -754,7 +769,8 @@
     "txHash": "Transaction Hash",
     "searchAddress": "Search contract address",
     "applicationUnit": "application",
-    "tx": "tx"
+    "tx": "tx",
+    "byFoundation": " (by Foundation)"
   },
   "transaction": {
     "tipOfTokenTransferCount": "Show up to 100 records",
@@ -1099,6 +1115,8 @@
     "topMinersByBlocksMined": "Top Miners by Blocks Mined",
     "topAccountsByGasUsed": "Top Accounts by Gas Used",
     "topAccountsByTxnCount": "Top Accounts by Txn Count",
+    "valueInTotal": "Value in total",
+    "txnCountInTotal": "Txn Count in total",
     "span": {
       "24h": "24 Hours",
       "3d": "3 Days",
@@ -1195,15 +1213,17 @@
   "balanceChecker": {
     "tokenBalanceChecker": "Token Balance Checker",
     "balanceChecker": "Balance Checker",
-    "subtitle": "You can lookup the address historical balance on the Conflux network at a specific Block No or Date",
+    "subtitle": "You can lookup the address historical balance on the Conflux network at a specific Epoch No or Date",
     "tokenQuantity": "Token Quantity",
     "tokenSupply": "Token Supply",
     "cfxBalance": "CFX Balance",
     "address": "Address",
     "contractAddress": "Contract Address",
-    "blockNoOrDate": "Block No or Date",
+    "epochNoOrDate": "Epoch No or Date",
     "or": "OR",
-    "enterBlockNo": "Enter a Block No",
+    "chooseDate": "Please select date",
+    "enterEpochNo": "Enter a Epoch No",
+    "invalidEpochNo": "Invalid Epoch No",
     "error": "Can not be empty",
     "lookUp": "Look Up",
     "reset": "Reset",
@@ -1211,8 +1231,8 @@
     "totalSupplyForContractAddress": "Total Supply for Contract Address",
     "cfxBalanceForAddress": "CFX Balance for Address",
     "snapshotDate": "Snapshot Date",
-    "block": "Block",
-    "blockNo": "Block No"
+    "epoch": "Epoch",
+    "epochNo": "Epoch No"
   },
   "nftChecker": {
     "title": "NFT Checker",

@@ -208,14 +208,14 @@ export const TestnetNotices = [
 
 export const CurrentTethysNotice = {
   hot: false,
-  en:
-    'Scan and Portal have been fully adapted to CIP-37. User assets will not be affected.',
-  zh: 'Scan 和 Portal 已升级为全面适配 CIP-37，不会对个人资产有任何影响。',
+  type: 'Announcement',
+  en: 'ConfluxScan V2.2.3 Released!',
+  zh: 'ConfluxScan V2.2.3 发布喽！',
 };
 
 export const CurrentTestnetNotice = {
   hot: false,
-  en:
-    'Scan and Portal have been fully adapted to CIP-37. User assets will not be affected.',
-  zh: 'Scan 和 Portal 已升级为全面适配 CIP-37，不会对个人资产有任何影响。',
+  type: 'Announcement',
+  en: 'ConfluxScan V2.2.3 Released!',
+  zh: 'ConfluxScan V2.2.3 发布喽！',
 };

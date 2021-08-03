@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
-import { TablePanel } from '../../components/TablePanel/Loadable';
-import { ColumnsType } from '../../components/TabsTablePanel';
-import { TipLabel } from '../../components/TabsTablePanel/Loadable';
-import { PageHeader } from '../../components/PageHeader/Loadable';
-import {
-  accountColunms,
-  utils as tableColumnsUtils,
-} from '../../../utils/tableColumns';
+import { translations } from 'locales/i18n';
+import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
-import { Select } from '../../components/Select';
+import { Select } from 'app/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
-import { useAccounts } from '../../../utils/hooks/usePortal';
-import { AddressContainer } from '../../components/AddressContainer/Loadable';
-import { formatAddress } from '../../../utils/cfx';
-import { monospaceFont } from '../../../styles/variable';
+import { useAccounts } from 'utils/hooks/usePortal';
+import { AddressContainer } from 'app/components/AddressContainer/Loadable';
+import { formatAddress } from 'utils/cfx';
+import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+
 const { ContentWrapper } = tableColumnsUtils;
 
 export function Accounts() {
@@ -64,8 +61,8 @@ export function Accounts() {
     }
   }, [queryNumber, number]);
 
-  let columnsWidth = [1, 9, 4, 3, 3];
-  let columns: ColumnsType = [
+  let columnsWidth = [2, 9, 4, 3, 3];
+  let columns = [
     accountColunms.rank,
     {
       ...accountColunms.address,
@@ -111,23 +108,9 @@ export function Accounts() {
     );
   };
 
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={t(title)} />
-      </Helmet>
-      <PageHeader>{title}</PageHeader>
-      <TipLabel
-        total={100}
-        left={t(translations.accounts.tipLeft, {
-          type: options[number].name,
-        })}
-        right={t(translations.accounts.tipRight, {
-          type: options[number].name,
-        })}
-      />
-      <StyledTableWrapper>
+  const tableTitle = useMemo(
+    () => {
+      return (
         <StyledSelectWrapper isEn={isEn}>
           <span className="selectLabel">
             {t(translations.accounts.sortButtonBefore)}
@@ -152,15 +135,36 @@ export function Accounts() {
             {t(translations.accounts.sortButtonAfter)}
           </span>
         </StyledSelectWrapper>
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isEn, number],
+  );
 
-        <TablePanel
-          table={{
-            columns: columns,
-            rowKey: 'base32address',
-          }}
-          pagination={false}
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={t(title)} />
+      </Helmet>
+      <PageHeader>{title}</PageHeader>
+      <TipLabel
+        total={100}
+        left={t(translations.accounts.tipLeft, {
+          type: options[number].name,
+        })}
+        right={t(translations.accounts.tipRight, {
+          type: options[number].name,
+        })}
+      />
+      <StyledTableWrapper>
+        <TablePanelNew
           url={url}
-        />
+          columns={columns}
+          rowKey="base32address"
+          pagination={false}
+          title={() => tableTitle}
+        ></TablePanelNew>
       </StyledTableWrapper>
     </>
   );
@@ -180,12 +184,10 @@ const StyledSelectWrapper = styled.div<{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0.8571rem 1.4286rem;
   position: relative;
 
   &:after {
     content: '';
-    border-bottom: 0.0714rem solid #e8e9ea;
     position: absolute;
     bottom: 0;
     left: 1.4286rem;

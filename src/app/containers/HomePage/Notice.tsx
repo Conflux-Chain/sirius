@@ -6,13 +6,26 @@ import { media } from 'styles/media';
 import clsx from 'clsx';
 import { useTestnet } from 'utils/hooks/useTestnet';
 import { Link } from 'app/components/Link/Loadable';
-import imgNotice from 'images/notice2.png';
+import announcementNotification from 'images/notice/announcementNotification.png';
+import FAQNotification from 'images/notice/FAQNotification.png';
+import updateNotification from 'images/notice/updateNotification.png';
 import { CurrentTestnetNotice, CurrentTethysNotice } from '../Notices/notices';
+
+const ImgNotice = () => {
+  if (CurrentTethysNotice.type === 'Announcement') {
+    return <img src={announcementNotification} alt="notice indicator" />;
+  } else if (CurrentTethysNotice.type === 'FAQ') {
+    return <img src={FAQNotification} alt="notice indicator" />;
+  } else if (CurrentTethysNotice.type === 'update') {
+    return <img src={updateNotification} alt="notice indicator" />;
+  }
+  return null;
+};
 
 const NoticeItem = ({ children }) => (
   <StyledNoticeItemWrapper className="notice-item-wrapper">
     <div className="img">
-      <img src={imgNotice} alt="notice indicator" />
+      <ImgNotice />
     </div>
     <div className="text">{children}</div>
   </StyledNoticeItemWrapper>
@@ -21,12 +34,12 @@ const NoticeItem = ({ children }) => (
 export function getLatestNoticeLink(lang, isTestnet): string {
   if (lang === 'en') {
     return isTestnet
-      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806724650-Conflux-Testnet-Version-Update-CIP37-Support'
-      : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806651550-Conflux-Tethys-Version-update-CIP37-Support';
+      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4404540235675-Jul-19-2021-Aug-1-2021'
+      : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4404540235675-Jul-19-2021-Aug-1-2021';
   } else {
     return isTestnet
-      ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806724650-%E6%B5%8B%E8%AF%95%E7%BD%91-%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0%E5%8F%8A%E5%9C%B0%E5%9D%80%E6%A0%BC%E5%BC%8F%E9%80%82%E9%85%8D'
-      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806651550-%E4%B8%BB%E7%BD%91-%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0%E5%8F%8A%E5%9C%B0%E5%9D%80%E6%A0%BC%E5%BC%8F%E9%80%82%E9%85%8D';
+      ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4404540235675-2021-7-19-2021-8-1'
+      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4404540235675-2021-7-19-2021-8-1';
   }
 }
 
@@ -83,7 +96,7 @@ export function Notice() {
   notices.push(
     <NoticeItem key="more">
       <Link href={getLatestNoticeLink(lang, isTestnet)} className="more">
-        {t(translations.header.learnMore)}
+        {t(translations.header.more)}
       </Link>
     </NoticeItem>,
   );
@@ -99,6 +112,7 @@ const StyledNoticeItemWrapper = styled.div`
     padding: 0 16px;
     max-width: 100%;
   }
+
   ${media.xl} {
     padding-left: 10px;
     padding-right: 10px;
@@ -106,6 +120,7 @@ const StyledNoticeItemWrapper = styled.div`
 
   .img {
     margin-right: 10px;
+
     img {
       width: 16px;
       height: 16px;
@@ -166,6 +181,7 @@ const Main = styled.div`
   }
 
   /* only show the first one trumpet now, hide others, may show back in the future */
+
   .notice-item-wrapper:first-child {
     img {
       visibility: visible;
