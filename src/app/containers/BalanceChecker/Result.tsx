@@ -11,6 +11,9 @@ import { Text } from '../../components/Text/Loadable';
 import { formatNumber, fromDripToCfx } from '../../../utils';
 import { useCfxBalance } from '../../../utils/api';
 
+const isToday = require('dayjs/plugin/isToday');
+dayjs.extend(isToday);
+
 export function Result({ radioValue, resultVisible, formData }) {
   const { t, i18n } = useTranslation();
   const { data } = useCfxBalance(formData);
@@ -59,7 +62,10 @@ export function Result({ radioValue, resultVisible, formData }) {
       } else if (cfxByDt) {
         setResultData({
           ...cfxByDt,
-          epoch_dt: formData.dt === '' ? cfxByDt.epoch_dt : formData.dt,
+          // @ts-ignore
+          epoch_dt: dayjs(formData.dt).isToday()
+            ? formData.dt
+            : dayjs(formData.dt).add(1, 'day').toString(),
         });
       } else {
         setResultData({
