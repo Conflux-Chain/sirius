@@ -201,13 +201,21 @@ const NFTCard = styled.div`
 
     .name {
       margin-bottom: 6px;
+
       > span {
         font-size: 10px;
       }
+
+      white-space: nowrap; //强制不换行
+      overflow: hidden; //超出部分隐藏，只在块级元素中生效
+      text-overflow: ellipsis; //省略号代替超出的部分
     }
 
     .id {
       color: #74798c;
+      white-space: nowrap; //强制不换行
+      overflow: hidden; //超出部分隐藏，只在块级元素中生效
+      text-overflow: ellipsis; //省略号代替超出的部分
     }
   }
 `;

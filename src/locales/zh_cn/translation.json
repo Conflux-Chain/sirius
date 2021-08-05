@@ -386,7 +386,14 @@
     "transferList": {
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
-    }
+    },
+    "NFT": "NFT",
+    "total": "共计",
+    "tokens": "代币",
+    "sortBy": "排序",
+    "recentlyActive": "最近活跃",
+    "newest": "最新",
+    "oldest": "最旧"
   },
   "charts": {
     "title": "图表",

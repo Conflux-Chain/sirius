@@ -15,6 +15,7 @@ import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
+import { NFTs } from './NFTs';
 import lodash from 'lodash';
 
 interface TransferProps {
@@ -28,6 +29,7 @@ interface TransferProps {
   transferType: string;
   isRegistered: boolean;
 }
+
 interface Query {
   accountAddress?: string;
   transactionHash?: string;
@@ -151,13 +153,28 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     }
   }
 
+  // NFT tab
+  tabs.push({
+    value: 'NFT',
+    action: 'tokenNFT',
+    label: t(translations.token.NFT),
+    content: <NFTs address={tokenAddress} />,
+  });
+
   // Contract tab
   tabs.push({
     value: 'contract-viewer',
     action: 'contractViewer',
     label: (
       <div>
-        {t(translations.token.contract)} {checkIcon}
+        {t(translations.token.contract)}{' '}
+        {contractInfo.verify?.exactMatch ? (
+          <span>
+            <CheckCircleIcon />
+          </span>
+        ) : (
+          <AlertCircle size={16} color="#e36057" />
+        )}
       </div>
     ),
     content: <ContractContent contractInfo={contractInfo} />,
@@ -172,6 +189,7 @@ const StyledTabWrapper = styled.div`
 
     .content {
       overflow-x: auto;
+
       & > div {
         box-shadow: none !important;
       }

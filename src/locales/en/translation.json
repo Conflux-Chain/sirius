@@ -386,7 +386,14 @@
     "transferList": {
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
-    }
+    },
+    "NFT": "NFT",
+    "total": "A total of",
+    "tokens": "tokens",
+    "sortBy": "sort by",
+    "recentlyActive": "Recently Active",
+    "newest": "Newest",
+    "oldest": "Oldest"
   },
   "charts": {
     "title": "Charts",
