@@ -19,10 +19,11 @@ import { Link as UILink } from '@cfxjs/react-ui';
 import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { AddressContainer } from '../../components/AddressContainer';
+import { AddressContainer } from 'app/components/AddressContainer';
 import { zeroAddress } from '../../../utils/constants';
 import { formatAddress } from '../../../utils/cfx';
 import { defaultTokenIcon } from '../../../constants';
+import Edit3 from '@zeit-ui/react-icons/edit3';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -160,6 +161,13 @@ export function ContractMetadata({ address, contractInfo }) {
                   />
                 )}
                 <Content>{contractInfo.name || notAvailableText}</Content>
+
+                <RouterLink
+                  className="contract-info-update"
+                  to={`/contract-info/${address}`}
+                >
+                  <Edit3 size={18} color="#1e3de4" />
+                </RouterLink>
               </CenterLine>
             </SkeletonContainer>
           ),
@@ -376,6 +384,7 @@ const CenterLine = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 
   .metadata-tooltip-btn {
     margin-left: 0.5rem;
@@ -383,6 +392,11 @@ const CenterLine = styled.div`
     ${media.s} {
       margin-left: 1rem;
     }
+  }
+
+  .contract-info-update {
+    position: absolute;
+    right: 0;
   }
 `;
 

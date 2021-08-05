@@ -23,8 +23,10 @@
       "title": "Contract Registration"
     },
     "edit": {
-      "title": "Contract Edit"
+      "title": "Update Contract Info"
     },
+    "updateContract": "Update Contract Info",
+    "updateToken": "Update Token Info",
     "verify": {
       "contractCodeVerified": "Contract Source Code Verified",
       "contractName": "Contract Name: ",
@@ -543,7 +545,8 @@
       "more": {
         "title": "More",
         "report": "Report",
-        "editContract": "Edit Contract",
+        "editContract": "Update Contract Info",
+        "editToken": "Update Token Info",
         "sponsor": "Apply Sponsorship",
         "website": "Official Website",
         "balanceChecker": "Balance Checker",

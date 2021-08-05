@@ -15,7 +15,6 @@ import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';
 import CRC1155bg from 'images/token/crc1155bg.png';
-import Registeredbg from 'images/contract/registered.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
@@ -63,12 +62,6 @@ export const tokenTypeTag = (t, transferType: any) => {
           <span>
             {t(translations.header.tokens20).replace('Tokens', 'Token')}
           </span>
-        </TokenTypeTagWrapper>
-      );
-    case 'registered':
-      return (
-        <TokenTypeTagWrapper className="registered">
-          <span>{t(translations.contract.registered)}</span>
         </TokenTypeTagWrapper>
       );
     default:
@@ -327,11 +320,6 @@ export const TokenTypeTagWrapper = styled.div`
 
   &.ERC1155 {
     background: url(${CRC1155bg}) no-repeat right top;
-    background-size: 118px 30px;
-  }
-
-  &.registered {
-    background: url(${Registeredbg}) no-repeat right top;
     background-size: 118px 30px;
   }
 `;

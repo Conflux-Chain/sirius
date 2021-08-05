@@ -23,8 +23,10 @@
       "title": "合约注册"
     },
     "edit": {
-      "title": "合约编辑"
+      "title": "更新合约信息"
     },
+    "updateContract": "更新合约信息",
+    "updateToken": "更新代币信息",
     "verify": {
       "contractCodeVerified": "合约源码已验证",
       "contractName": "合约名：",
@@ -543,7 +545,8 @@
       "more": {
         "title": "更多",
         "report": "举报",
-        "editContract": "编辑合约",
+        "editContract": "更新合约信息",
+        "editToken": "更新代币信息",
         "sponsor": "申请赞助",
         "website": "官方网站",
         "balanceChecker": "余额检索器",
