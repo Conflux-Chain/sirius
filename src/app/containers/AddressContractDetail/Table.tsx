@@ -13,6 +13,7 @@ import { cfxTokenTypes } from 'utils/constants';
 import { ContractContent, CheckCircleIcon } from './ContractContent';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
+import lodash from 'lodash';
 
 import {
   // ExcutedTxns,
@@ -132,17 +133,25 @@ export function Table({ address, addressInfo }) {
   }
 
   if (isContract) {
+    // trick by frontend, the better way is api always return 'verify' info
+    let checkIcon: React.ReactNode = '';
+    if (
+      !lodash.isNil(addressInfo.isRegistered) ||
+      !lodash.isNil(addressInfo.cfxTransferCount)
+    ) {
+      if (addressInfo.verify?.exactMatch === true) {
+        checkIcon = <CheckCircleIcon />;
+      } else {
+        checkIcon = <AlertCircle size={16} color="#e36057" />;
+      }
+    }
+
     tabs.push({
       value: 'contract-viewer',
       action: 'contractViewer',
       label: (
         <div>
-          {t(translations.token.contract)}{' '}
-          {addressInfo.verify?.exactMatch ? (
-            <CheckCircleIcon />
-          ) : (
-            <AlertCircle size={16} color="#e36057" />
-          )}
+          {t(translations.token.contract)} {checkIcon}
         </div>
       ),
       content: <ContractContent contractInfo={addressInfo} />,
