@@ -118,7 +118,7 @@ const Code = ({ contractInfo }) => {
           ) : null}
         </div>
         <div className="contract-abi">
-          {abi ? (
+          {abi && verify.exactMatch ? (
             <>
               <div className="contract-sourcecode-and-abi-title">
                 {t(translations.contract.abi)}
@@ -138,7 +138,7 @@ const Code = ({ contractInfo }) => {
                 fontSize="1rem"
                 showGutter={false}
                 showPrintMargin={false}
-              />{' '}
+              />
             </>
           ) : null}
         </div>
