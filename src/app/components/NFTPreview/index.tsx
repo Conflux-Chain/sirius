@@ -14,7 +14,7 @@ import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import nftInfo from 'images/info.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
-import { Tooltip } from '../Tooltip/Loadable';
+import { Tooltip } from '@cfxjs/react-ui';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -126,12 +126,12 @@ export const NFTPreview = React.memo(
               <Skeleton.Image />
             )}
             <div className="info">
-              <div className="name">
-                {imageName} <span>#{tokenId}</span>
-              </div>
-              <div className="id">
-                {t(translations.nftChecker.tokenId)}: {tokenId}
-              </div>
+              <div className="name">{imageName}</div>
+              <Tooltip text={tokenId} placement={'top-start'} hoverable>
+                <div className="id">
+                  {t(translations.nftChecker.tokenId)}:{tokenId}
+                </div>
+              </Tooltip>
             </div>
           </Spin>
         </NFTCard>
@@ -205,17 +205,17 @@ const NFTCard = styled.div`
       > span {
         font-size: 10px;
       }
-
-      white-space: nowrap; //强制不换行
-      overflow: hidden; //超出部分隐藏，只在块级元素中生效
-      text-overflow: ellipsis; //省略号代替超出的部分
     }
 
-    .id {
-      color: #74798c;
-      white-space: nowrap; //强制不换行
-      overflow: hidden; //超出部分隐藏，只在块级元素中生效
-      text-overflow: ellipsis; //省略号代替超出的部分
+    .tooltip {
+      width: 179px;
+
+      .id {
+        color: #74798c;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 `;
