@@ -18,6 +18,7 @@ interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
   hideDefaultTitle?: boolean;
   hideShadow?: boolean;
+  changeTotal?: (total: string | Number) => void;
 }
 
 interface TableStateProp {
@@ -69,6 +70,7 @@ export const TablePanel = ({
   hideDefaultTitle,
   hideShadow,
   className,
+  changeTotal,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -120,6 +122,9 @@ export const TablePanel = ({
             listLimit: resp.listLimit || 0,
             loading: false,
           });
+          if (changeTotal) {
+            changeTotal(resp.total);
+          }
         })
         .catch(e => {
           setState({
