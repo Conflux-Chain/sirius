@@ -29,7 +29,7 @@ export function Edit({ address = '' } = {}) {
       <IconButton
         size={8}
         className="address-line-icon"
-        url={`/contract/${address}`}
+        url={`/contract-info/${address}`}
         tooltipText={t(translations.general.address.editContract)}
       >
         <path d="M880 1024h-736A144.128 144.128 0 0 1 0 880v-736C0 64.64 64.512 0.128 144 0h373.632a48 48 0 0 1 0 96H144a48 48 0 0 0-48 48v736c0 26.496 21.504 48 48 48h736a48 48 0 0 0 48-48V512A48 48 0 1 1 1024 512v368C1024 959.488 959.488 1023.872 880 1024zM517.632 560a48 48 0 0 1-34.176-81.664L941.696 14.336a48 48 0 1 1 68.48 67.456L551.68 545.792a47.872 47.872 0 0 1-34.176 14.208z" />

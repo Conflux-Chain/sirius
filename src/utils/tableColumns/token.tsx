@@ -154,7 +154,7 @@ const Token2 = ({ row }) => {
   const { t } = useTranslation();
   return (
     <StyledIconWrapper>
-      {row?.transferTokenInfo
+      {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
         ? [
             <img
               key="img"
@@ -198,7 +198,7 @@ const Token2 = ({ row }) => {
               </Text>
             </Link>,
           ]
-        : t(translations.general.loading)}
+        : '--'}
     </StyledIconWrapper>
   );
 };

@@ -145,18 +145,20 @@ export const AddressContainer = withTranslation()(
             ),
           });
 
-        // Contract Registration fail, no link
+        // If a txn receipth has no 'to' address or 'contractCreated', show -- for temp
+        return <>--</>;
+        // Contract create fail, no link
         // TODO deal with zero address value
-        return (
-          <AddressWrapper>
-            <IconWrapper>
-              <Text span hoverValue={txtContractCreation}>
-                <img src={ContractIcon} alt={txtContractCreation} />
-              </Text>
-            </IconWrapper>
-            <Text span>{txtContractCreation}</Text>
-          </AddressWrapper>
-        );
+        // return (
+        //   <AddressWrapper>
+        //     <IconWrapper>
+        //       <Text span hoverValue={txtContractCreation}>
+        //         <img src={ContractIcon} alt={txtContractCreation} />
+        //       </Text>
+        //     </IconWrapper>
+        //     <Text span>{txtContractCreation}</Text>
+        //   </AddressWrapper>
+        // );
       }
 
       if (cfxAddress.startsWith('invalid-')) {

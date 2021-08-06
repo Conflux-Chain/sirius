@@ -167,14 +167,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     action: 'contractViewer',
     label: (
       <div>
-        {t(translations.token.contract)}{' '}
-        {contractInfo.verify?.exactMatch ? (
-          <span>
-            <CheckCircleIcon />
-          </span>
-        ) : (
-          <AlertCircle size={16} color="#e36057" />
-        )}
+        {t(translations.token.contract)} {checkIcon}
       </div>
     ),
     content: <ContractContent contractInfo={contractInfo} />,

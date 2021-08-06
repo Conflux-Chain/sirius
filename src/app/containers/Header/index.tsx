@@ -142,16 +142,16 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/contract-deployment',
             },
-            {
-              // create contract
-              title: [
-                t(translations.header.contractCreation),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.contractReg,
-              afterClick: menuClick,
-              href: '/contract',
-            },
+            // {
+            //   // create contract
+            //   title: [
+            //     t(translations.header.contractCreation),
+            //     <Check size={18} key="check" />,
+            //   ],
+            //   name: ScanEvent.menu.action.contractReg,
+            //   afterClick: menuClick,
+            //   href: '/contract',
+            // },
             {
               // contract verification
               title: [
