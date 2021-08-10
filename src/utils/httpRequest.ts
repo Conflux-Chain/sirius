@@ -82,6 +82,14 @@ export const reqTokenList = (param?: object, extra?: object) => {
   });
 };
 
+export const reqTokenListByName = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: '/stat/tokens/name',
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqToken = (param?: object, extra?: object) => {
   return sendRequest({
     url: `/token/${param && param['address']}`,

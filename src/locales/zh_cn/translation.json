@@ -200,7 +200,8 @@
       "futureNonce": "错误随机数",
       "notEnoughCash": "余额不足",
       "ready": "待打包"
-    }
+    },
+    "viewTxn": "查看{{type}}"
   },
   "cfxTransfers": {
     "title": "CFX 转移",
@@ -512,6 +513,46 @@
     }
   },
   "general": {
+    "advancedSearch": {
+      "label": {
+        "txnHash": "Txn Hash",
+        "blockHash": "Block Hash",
+        "fromOrTo": "From or To",
+        "from": "From",
+        "to": "To",
+        "tokenId": "TokenID",
+        "nonce": "Nonce",
+        "token": "Token",
+        "rangePicker": "Date",
+        "epochNumber": "Epoch Number",
+        "minEpochNumber": "Min Epoch Number",
+        "maxEpochNumber": "Max Epoch Number"
+      },
+      "error": {
+        "invalidHash": "invalid transaction hash format",
+        "invalidAddress": "Invalid address format"
+      },
+      "placeholder": {
+        "pleaseSelect": "Please select",
+        "pleaseEnter": "Please enter",
+        "pleaseEnterTxnHash": "Please enter a txn hash",
+        "pleaseEnterBlockHash": "Please enter a block hash",
+        "pleaseEnterAddress": "Please enter an address",
+        "pleaseEnterTokenId": "Please enter a tokenID",
+        "pleaseEnterNonce": "Please enter a nonce",
+        "pleaseEnterEpochNumber": "Please enter a epochNumber"
+      },
+      "button": {
+        "lookup": "Look Up",
+        "reset": "Reset"
+      },
+      "others": {
+        "recommend": "Recommend",
+        "recommendTip": "Tokens with the top 10 txn count in the last 7 days",
+        "searchResult": "Search Result",
+        "noData": "No data"
+      }
+    },
     "tokenTypeTag": {
       "token": "代币"
     },

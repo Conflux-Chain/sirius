@@ -2,8 +2,7 @@ import React from 'react';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
-import { Title, Footer, TxnSwitcher } from './Common';
-import styled from 'styled-components/macro';
+import { Title, Footer, TxnSwitcher } from './components';
 import { isAccountAddress } from 'utils';
 
 interface Props {
@@ -34,33 +33,42 @@ export const ExcutedTxns = ({ address }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = ({ total, listLimit }) => (
-    <StyledTitleWrapper>
-      <TxnSwitcher
-        total={total}
-        isAccount={isAccountAddress(address)}
-      ></TxnSwitcher>
-      <Title
-        address={address}
-        showTotalTip={false}
-        total={total}
-        listLimit={listLimit}
-        showDatepicker={true}
-        showFilter={true}
-        filterOptions={[
-          'txTypeAll',
-          'txTypeOutgoing',
-          'txTypeIncoming',
-          'status1',
-          'txTypeCreate',
-        ]}
-        showSearchInput={true}
-        searchInputOptions={{
-          type: 'txn',
-          addressType: 'user',
-          inputFields: ['txnHash', 'address'],
-        }}
-      />
-    </StyledTitleWrapper>
+    <Title
+      address={address}
+      total={total}
+      listLimit={listLimit}
+      showFilter={true}
+      showSearch={true}
+      searchOptions={{
+        transactionHash: true,
+        fromOrTo: true,
+        nonce: true,
+        epoch: true,
+        rangePicker: true,
+        button: {
+          col: {
+            xs: 24,
+            sm: 10,
+            md: 10,
+            lg: 10,
+            xl: 10,
+          },
+        },
+      }}
+      filterOptions={[
+        'txTypeAll',
+        'txTypeOutgoing',
+        'txTypeIncoming',
+        'status1',
+        'txTypeCreate',
+      ]}
+      extraContent={
+        <TxnSwitcher
+          total={total}
+          isAccount={isAccountAddress(address)}
+        ></TxnSwitcher>
+      }
+    />
   );
 
   const footer = <Footer pathname="transaction" />;
@@ -75,10 +83,3 @@ export const ExcutedTxns = ({ address }: Props) => {
     ></TablePanel>
   );
 };
-
-const StyledTitleWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-`;

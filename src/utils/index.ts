@@ -689,3 +689,30 @@ export const parseString = v => {
   }
   return v;
 };
+
+// process datepicker initial value
+export const getInitialDate = (minTimestamp, maxTimestamp) => {
+  const startDate = dayjs('2020-10-29T00:00:00+08:00');
+  const endDate = dayjs();
+  const innerMinTimestamp = minTimestamp
+    ? dayjs(new Date(parseInt((minTimestamp + '000') as string)))
+    : startDate;
+  const innerMaxTimestamp = maxTimestamp
+    ? dayjs(new Date(parseInt((maxTimestamp + '000') as string)))
+    : endDate;
+  const disabledDateD1 = date =>
+    date &&
+    (date > innerMaxTimestamp.endOf('day') ||
+      date < startDate.subtract(1, 'day').endOf('day'));
+  const disabledDateD2 = date =>
+    date &&
+    (date < innerMinTimestamp.subtract(1, 'day').endOf('day') ||
+      date > endDate.endOf('day'));
+
+  return {
+    minT: innerMinTimestamp,
+    maxT: innerMaxTimestamp,
+    dMinT: disabledDateD1,
+    dMaxT: disabledDateD2,
+  };
+};
