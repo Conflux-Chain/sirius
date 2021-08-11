@@ -206,11 +206,17 @@ export function App() {
                         path="/notfound/:contractAddress"
                         component={NotFoundAddressPage}
                       />
-                      <Route exact path="/contract" component={Contract} />
+                      {/* <Route exact path="/contract" component={Contract} /> */}
                       <Route
                         exact
-                        path="/contract/:contractAddress"
+                        path={[
+                          '/contract-info/:contractAddress',
+                          '/token-info/:contractAddress',
+                        ]}
                         render={(routeProps: any) => {
+                          const path = routeProps.match.path.match(
+                            /(\/.*\/)/,
+                          )[1];
                           if (
                             routeProps.match.params.contractAddress &&
                             ((!getGlobalShowHexAddress() &&
@@ -223,7 +229,7 @@ export function App() {
                           )
                             return (
                               <Redirect
-                                to={`/contract/${formatAddress(
+                                to={`${path}${formatAddress(
                                   routeProps.match.params.contractAddress,
                                 )}`}
                               />

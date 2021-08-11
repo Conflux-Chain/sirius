@@ -225,7 +225,12 @@ export const reqNFTTokenIds = (extra?: object) => {
     ...extra,
   });
 };
-
+export const reqNFTTokenIdsInTokenPage = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/active-token-ids`,
+    ...extra,
+  });
+};
 export const reqNFTInfo = (extra?: object) => {
   // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
   return sendRequest({

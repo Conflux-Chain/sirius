@@ -23,8 +23,10 @@
       "title": "Contract Registration"
     },
     "edit": {
-      "title": "Contract Edit"
+      "title": "Update Contract Info"
     },
+    "updateContract": "Update Contract Info",
+    "updateToken": "Update Token Info",
     "verify": {
       "contractCodeVerified": "Contract Source Code Verified",
       "contractName": "Contract Name: ",
@@ -207,8 +209,9 @@
   "tokens": {
     "title": "Tokens",
     "description": "Tokens",
-    "tipCountBefore": "Showing",
-    "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
+    "tipCountBefore": "Showing ",
+    "tipCountMiddle": " tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address, go to ",
+    "tipCountAfter": "register and display tokens",
     "tip": "The following list only displays certain tokens, undisplayed tokens can be found by searching contract address",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
@@ -386,7 +389,14 @@
     "transferList": {
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
-    }
+    },
+    "NFT": "NFT",
+    "total": "A total of",
+    "tokens": "tokens",
+    "sortBy": "sort by",
+    "recentlyActive": "Recently Active",
+    "newest": "Newest",
+    "oldest": "Oldest"
   },
   "charts": {
     "title": "Charts",
@@ -536,7 +546,8 @@
       "more": {
         "title": "More",
         "report": "Report",
-        "editContract": "Edit Contract",
+        "editContract": "Update Contract Info",
+        "editToken": "Update Token Info",
         "sponsor": "Apply Sponsorship",
         "website": "Official Website",
         "balanceChecker": "Balance Checker",
@@ -604,6 +615,10 @@
         "txnHash": "Txn Hash",
         "age": "Age",
         "from": "From",
+        "fromType": "Type",
+        "fromTypeIn": "In",
+        "fromTypeOut": "Out",
+        "fromTypeArrow": "Out",
         "to": "To",
         "accountAddress": "Address",
         "tokenId": "TokenID",

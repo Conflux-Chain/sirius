@@ -27,7 +27,58 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const fromTypeInfo = {
+  arrow: {
+    src: imgArrow,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  out: {
+    src: imgOut,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  in: {
+    src: imgIn,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeIn)}
+      </Translation>
+    ),
+  },
+};
+
 const reg = /address\/(.*)$/;
+
+type GetFromTypeReturnValueType = 'in' | 'out' | 'arrow';
+const getFromType = (value: string): GetFromTypeReturnValueType => {
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
+  const filter = accountAddress as string;
+
+  return !filter
+    ? 'arrow'
+    : formatAddress(filter) === formatAddress(value)
+    ? 'out'
+    : 'in';
+};
 
 export const renderAddress = (
   value,
@@ -78,15 +129,7 @@ export const renderAddress = (
         contractCreated={row.contractCreated}
       />
       {type === 'from' && withArrow && (
-        <ImgWrap
-          src={
-            !filter
-              ? imgArrow
-              : formatAddress(filter) === formatAddress(value)
-              ? imgOut
-              : imgIn
-          }
-        />
+        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
       )}
     </>
   );
@@ -154,7 +197,7 @@ const Token2 = ({ row }) => {
   const { t } = useTranslation();
   return (
     <StyledIconWrapper>
-      {row?.transferTokenInfo
+      {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
         ? [
             <img
               key="img"
@@ -198,7 +241,7 @@ const Token2 = ({ row }) => {
               </Text>
             </Link>,
           ]
-        : t(translations.general.loading)}
+        : '--'}
     </StyledIconWrapper>
   );
 };
@@ -460,7 +503,7 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => {
+  render: (value, row, _, withArrow = true) => {
     let contractInfo = {};
 
     try {
@@ -476,10 +519,23 @@ export const from = {
             contractInfo,
           },
           'from',
+          withArrow,
         )}
       </FromWrap>
     );
   },
+};
+
+export const fromType = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.fromType)}
+    </Translation>
+  ),
+  dataIndex: 'from',
+  key: 'from',
+  render: value => fromTypeInfo[getFromType(value)].text,
 };
 
 export const account = {

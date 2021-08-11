@@ -81,6 +81,11 @@ export function TokenDetail() {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
+        <RouterLink to={`/token-info/${tokenAddress}`}>
+          {t(translations.general.address.more.editToken)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
         <RouterLink to={`/balance-checker?address=${tokenAddress}`}>
           {t(translations.general.address.more.balanceChecker)}
         </RouterLink>
@@ -138,24 +143,30 @@ export function TokenDetail() {
             ) : null}
             <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
-                {t(translations.general.address.more.title)}{' '}
+                <span
+                  style={{
+                    color: '#65709a',
+                  }}
+                >
+                  {t(translations.general.address.more.title)}{' '}
+                </span>
                 <img
                   src={DownIcon}
                   alt={t(translations.general.address.more.title)}
                 />
               </span>
             </DropdownWrapper>
-            {data &&
+            {/* {data &&
             typeof data.isRegistered !== 'undefined' &&
-            !data.isRegistered ? (
+            data.isRegistered ? (
               <WarningInfoWrapper>
                 {t(translations.token.notRegistered)}
                 {'  '}
-                <Link href={`/contract/${tokenAddress}`}>
+                <Link href={`/token-info/${tokenAddress}`}>
                   {t(translations.token.tokenRegistration)}
                 </Link>
               </WarningInfoWrapper>
-            ) : undefined}
+            ) : undefined} */}
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
@@ -267,7 +278,7 @@ export const DropdownWrapper = styled(Dropdown)`
   }
 `;
 
-const WarningInfoWrapper = styled.div`
-  color: #c65252;
-  margin-left: 10px;
-`;
+// const WarningInfoWrapper = styled.div`
+//   color: #c65252;
+//   margin-left: 10px;
+// `;

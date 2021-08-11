@@ -1,13 +1,13 @@
 /**
  *
  * Contract Detail
+ * @todo backup file, should be removed after two sprint, mark date: 2021.8.5
  *
  */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { useRouteMatch } from 'react-router-dom';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
@@ -15,9 +15,16 @@ import {
   byteToKb,
   isContractAddress,
   isInnerContractAddress,
+  isObject,
   tranferToLowerCase,
   validURL,
 } from '../../../utils';
+import AceEditor from 'react-ace';
+import 'ace-builds/webpack-resolver';
+import 'ace-mode-solidity/build/remix-ide/mode-solidity';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-tomorrow';
+import { Tabs } from '../Tabs';
 import {
   reqContract,
   reqContractNameTag,
@@ -57,30 +64,25 @@ const fieldsContract = [
   'name',
   'website',
   'token',
+  'abi',
+  'bytecode',
   'icon',
+  'sourceCode',
   'typeCode',
 ];
-export const ContractOrTokenInfo = ({
-  contractDetail,
-  type,
-  address,
-  loading,
-}: Props) => {
-  const routeMatch = useRouteMatch();
-  const updateInfoType = routeMatch.path.startsWith('/contract-info/')
-    ? 'contract'
-    : 'token';
+export const Contract = ({ contractDetail, type, address, loading }: Props) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const { accounts } = usePortal();
   const [, setMessage] = useMessages();
+  const [title, setTitle] = useState('');
   const [addressVal, setAddressVal] = useState('');
-  const [contractName, setContractName] = useState(() => {
-    return updateInfoType === 'token' ? Math.random().toString().substr(2) : ''; // maybe there is not contract name when update token info
-  });
+  const [contractName, setContractName] = useState('');
   const [site, setSite] = useState('');
   const [contractImgSrc, setContractImgSrc] = useState('');
   const [tokenImgSrc, setTokenImgSrc] = useState('');
+  const [sourceCode, setSourceCode] = useState('');
+  const [abi, setAbi] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
   const [addressDisabled, setAddressDisabled] = useState(true);
   const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
@@ -93,18 +95,16 @@ export const ContractOrTokenInfo = ({
   const [isErc20Error, setIsErc20Error] = useState(true);
   const [isNameError, setIsNameError] = useState(true);
   const [isSiteError, setIsSiteError] = useState(false);
+  const [isSourceCodeError, setIsSourceCodeError] = useState(true);
+  const [isAbiError, setIsAbiError] = useState(true);
   const [txData, setTxData] = useState('');
   const fileContractInputRef = React.createRef<any>();
   const fileTokenInputRef = React.createRef<any>();
+  const fileJsonInputRef = React.createRef<any>();
   const inputStyle = { margin: '0 0.2857rem' };
   const displayNone = {
     display: 'none',
   };
-  const title =
-    updateInfoType === 'token'
-      ? t(translations.contract.updateToken)
-      : t(translations.contract.updateContract);
-
   const addressInputChanger = e => {
     setAddressVal(e.target.value);
   };
@@ -117,20 +117,30 @@ export const ContractOrTokenInfo = ({
     setSite(e.target.value);
   };
 
+  // store txn action name for wallet plugin history
+  let txnAction = TxnAction.default;
+  if (type === 'create') {
+    txnAction = TxnAction.contractWrite;
+  } else if (type === 'edit') {
+    txnAction = TxnAction.contractEdit;
+  }
+
   useEffect(() => {
     setContractImgSrc(contractDetail.icon || '');
     setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
-    if (updateInfoType === 'contract') {
-      setContractName(contractDetail.name || '');
-    }
+    setContractName(contractDetail.name || '');
+    setSourceCode(contractDetail.sourceCode || '');
+    setAbi(contractDetail.abi || '');
     setSite(contractDetail.website || '');
     switch (type) {
       case 'create':
         setAddressVal(address || '');
+        setTitle(t(translations.contract.create.title));
         setAddressDisabled(false);
         break;
       case 'edit':
         setAddressVal(formatAddress(contractDetail.address));
+        setTitle(t(translations.contract.edit.title));
         setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
         break;
@@ -138,9 +148,11 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
+    contractDetail.abi,
     contractDetail.address,
     contractDetail.icon,
     contractDetail.name,
+    contractDetail.sourceCode,
     contractDetail.tokenIcon,
     contractDetail.website,
     contractDetail.token,
@@ -157,6 +169,9 @@ export const ContractOrTokenInfo = ({
           !isErc20Error &&
           !isNameError &&
           !isSiteError
+          // &&
+          // !isSourceCodeError &&
+          // !isAbiError
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -175,6 +190,9 @@ export const ContractOrTokenInfo = ({
       addressVal,
       contractName,
       site,
+      sourceCode,
+      abi,
+      contractImgSrc,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
@@ -183,6 +201,8 @@ export const ContractOrTokenInfo = ({
       isErc20Error,
       isNameError,
       isSiteError,
+      isSourceCodeError,
+      isAbiError,
     ],
   );
 
@@ -243,6 +263,22 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [site]);
   useEffect(() => {
+    if (sourceCode) {
+      setIsSourceCodeError(false);
+    } else {
+      setIsSourceCodeError(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sourceCode]);
+  useEffect(() => {
+    if (abi) {
+      setIsAbiError(false);
+    } else {
+      setIsAbiError(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [abi]);
+  useEffect(() => {
     if (accounts[0]) {
       checkAdminThenToken(tokenImgSrc);
     }
@@ -266,6 +302,12 @@ export const ContractOrTokenInfo = ({
     fileTokenInputRef.current.click();
   };
 
+  const handleSourceChange = code => {
+    setSourceCode(code);
+  };
+  const abiChangeHandler = abi => {
+    setAbi(abi);
+  };
   const handleContractIconChange = e => {
     e.preventDefault();
     let reader = new FileReader();
@@ -299,13 +341,46 @@ export const ContractOrTokenInfo = ({
     }
     e.target.value = '';
   };
+  const handleJsonChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    if (file) {
+      reader.onloadend = () => {
+        try {
+          let jsonContent = JSON.parse(reader.result as string);
+          if (Array.isArray(jsonContent)) {
+            setAbi(JSON.stringify(jsonContent));
+          } else {
+            if (isObject(jsonContent)) {
+              if (jsonContent.abi && Array.isArray(jsonContent.abi)) {
+                setAbi(JSON.stringify(jsonContent.abi));
+              } else {
+                setMessage({
+                  text: t('contract.invalidJsonAbi'),
+                  color: 'error',
+                });
+              }
+            } else {
+              setMessage({
+                text: t('contract.invalidJsonAbi'),
+                color: 'error',
+              });
+            }
+          }
+        } catch (error) {
+          setMessage({ text: t('general.invalidJsonFile'), color: 'error' });
+        }
+      };
+      reader.readAsText(file);
+    }
+    e.target.value = '';
+  };
   function getTxData() {
     try {
       const bodyParams: RequestBody = {};
       bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
-      if (updateInfoType === 'contract') {
-        bodyParams.name = contractName; // only submit name when update contract info
-      }
+      bodyParams.name = contractName;
       bodyParams.website = site;
       bodyParams.icon = contractImgSrc;
       if (tokenImgSrc) {
@@ -313,9 +388,9 @@ export const ContractOrTokenInfo = ({
       } else {
         bodyParams.tokenIcon = '';
       }
-
+      bodyParams.sourceCode = sourceCode;
+      bodyParams.abi = abi;
       console.log('bodyParams: ', bodyParams);
-
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
@@ -379,6 +454,24 @@ export const ContractOrTokenInfo = ({
       setErrorMsgForSite('');
     }
   }
+  // TODO: modify the types of div to ReactNode
+  let tabsLabelSourceCode = (
+    <LabelWithIcon className="tabs">
+      {/*<span className="labelIcon">*</span>*/}
+      {t(translations.contract.sourceCode)}
+    </LabelWithIcon>
+  ) as any;
+  // TODO: modify the types of div to ReactNode
+  let tabsLabelAbi = (
+    <LabelWithIcon className="tabs">
+      {/*<span className="labelIcon">*</span>*/}
+      {t(translations.contract.abi)}
+    </LabelWithIcon>
+  ) as any;
+  const importClick = () => {
+    fileJsonInputRef.current.click();
+  };
+
   const isVerified = contractDetail.verify?.exactMatch;
 
   return (
@@ -418,167 +511,226 @@ export const ContractOrTokenInfo = ({
               <span className="errorSpan">{t(errorMsgForAddress)}</span>
             </div>
           </div>
-          {updateInfoType === 'contract' ? (
-            <>
-              <div className="lineContainer">
-                <div className="firstLine">
-                  <LabelWithIcon>
-                    <span className="labelIcon">*</span>
-                    {t(translations.contract.nameTag)}
-                  </LabelWithIcon>
-                  <SkelontonContainer shown={loading}>
-                    <Input
-                      className="inputComp"
-                      defaultValue={contractName}
-                      style={inputStyle}
-                      onChange={nameInputChanger}
-                      placeholder={t(translations.contract.namePlaceholder)}
-                      onBlur={nameOnBlur}
-                    />
-                  </SkelontonContainer>
-                </div>
-                <div>
-                  <span className="blankSpan"></span>
-                  <span className="errorSpan">{t(errorMsgForName)}</span>
-                  {warningMsgTimesForName > 0 ? (
-                    <span className="warningSpan">
-                      {t(translations.contract.duplicatedNameTag, {
-                        times: warningMsgTimesForName,
-                      })}
-                      {lang === 'en' && warningMsgTimesForName > 1 ? 's' : ''}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-              <div className="lineContainer">
-                <div className="firstLine">
-                  <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
-                  <SkelontonContainer shown={loading}>
-                    <Input
-                      className="inputComp"
-                      defaultValue={site}
-                      style={inputStyle}
-                      onChange={siteInputChanger}
-                      placeholder={t(translations.contract.sitePlaceholder)}
-                      onBlur={siteOnBlur}
-                    />
-                  </SkelontonContainer>
-                </div>
-                <div>
-                  <span className="blankSpan"></span>
-                  <span className="errorSpan">{t(errorMsgForSite)}</span>
-                </div>
-              </div>
-            </>
-          ) : null}
-        </div>
-        {updateInfoType === 'token' ? (
-          <div className="bodyContainer second">
-            <div className="innerContainer firstInner">
-              <div className="itemContainer">
-                <div className="item left">
-                  <input
-                    type="file"
-                    name="File"
-                    style={displayNone}
-                    accept="image/*"
-                    ref={fileContractInputRef}
-                    onChange={handleContractIconChange}
-                  />
-                  <div className="firstItem" onClick={uploadContractIcon}>
-                    <img
-                      src={imgUpload}
-                      className="labelIcon"
-                      alt={t(translations.contract.contractIcon)}
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.contractIcon)}
-                    </span>
-                  </div>
-                  <div className="iconTips">
-                    {t(translations.contract.maxSize)}
-                  </div>
-                  <div className="secondItem" onClick={removeContractIcon}>
-                    <img
-                      src={imgRemove}
-                      className="labelIcon"
-                      alt={t(translations.contract.remove)}
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.remove)}
-                    </span>
-                  </div>
-                </div>
-                <div className="item right">
-                  <SkelontonContainer shown={loading}>
-                    <div className="iconContainer">
-                      <img
-                        src={contractImgSrc || defaultContractIcon}
-                        className="contractIcon"
-                        alt="contract icon"
-                      ></img>
-                    </div>
-                  </SkelontonContainer>
-                </div>
-              </div>
+          <div className="lineContainer">
+            <div className="firstLine">
+              <LabelWithIcon>
+                <span className="labelIcon">*</span>
+                {t(translations.contract.nameTag)}
+              </LabelWithIcon>
+              <SkelontonContainer shown={loading}>
+                <Input
+                  className="inputComp"
+                  defaultValue={contractName}
+                  style={inputStyle}
+                  onChange={nameInputChanger}
+                  placeholder={t(translations.contract.namePlaceholder)}
+                  onBlur={nameOnBlur}
+                />
+              </SkelontonContainer>
             </div>
-            <div className="innerContainer secondInner">
-              <div className="itemContainer">
-                <div className="item left">
-                  <input
-                    type="file"
-                    name="File"
-                    style={displayNone}
-                    accept="image/*"
-                    ref={fileTokenInputRef}
-                    onChange={handleTokenIconChange}
-                  />
-                  <div className="firstItem" onClick={uploadTokenIcon}>
-                    <img
-                      src={imgUpload}
-                      className="labelIcon"
-                      alt="upload"
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.tokenIcon)}
-                    </span>
-                  </div>
-                  <div className="iconTips">
-                    {t(translations.contract.maxSize)}
-                  </div>
-                  <div className="secondItem" onClick={removeTokenIcon}>
-                    <img
-                      src={imgRemove}
-                      className="labelIcon"
-                      alt="remove"
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.remove)}
-                    </span>
-                  </div>
+            <div>
+              <span className="blankSpan"></span>
+              <span className="errorSpan">{t(errorMsgForName)}</span>
+              {warningMsgTimesForName > 0 ? (
+                <span className="warningSpan">
+                  {t(translations.contract.duplicatedNameTag, {
+                    times: warningMsgTimesForName,
+                  })}
+                  {lang === 'en' && warningMsgTimesForName > 1 ? 's' : ''}
+                </span>
+              ) : null}
+            </div>
+          </div>
+          <div className="lineContainer">
+            <div className="firstLine">
+              <LabelWithIcon>{t(translations.contract.site)}</LabelWithIcon>
+              <SkelontonContainer shown={loading}>
+                <Input
+                  className="inputComp"
+                  defaultValue={site}
+                  style={inputStyle}
+                  onChange={siteInputChanger}
+                  placeholder={t(translations.contract.sitePlaceholder)}
+                  onBlur={siteOnBlur}
+                />
+              </SkelontonContainer>
+            </div>
+            <div>
+              <span className="blankSpan"></span>
+              <span className="errorSpan">{t(errorMsgForSite)}</span>
+            </div>
+          </div>
+        </div>
+        <div className="bodyContainer second">
+          <div className="innerContainer firstInner">
+            <div className="itemContainer">
+              <div className="item left">
+                <input
+                  type="file"
+                  name="File"
+                  style={displayNone}
+                  accept="image/*"
+                  ref={fileContractInputRef}
+                  onChange={handleContractIconChange}
+                />
+                <div className="firstItem" onClick={uploadContractIcon}>
+                  <img
+                    src={imgUpload}
+                    className="labelIcon"
+                    alt={t(translations.contract.contractIcon)}
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.contractIcon)}
+                  </span>
                 </div>
-                <div className="item right">
-                  <SkelontonContainer shown={loading}>
-                    <div className="iconContainer">
-                      <img
-                        src={tokenImgSrc || defaultTokenIcon}
-                        className="contractIcon"
-                        alt="token icon"
-                      ></img>
-                    </div>
-                  </SkelontonContainer>
+                <div className="iconTips">
+                  {t(translations.contract.maxSize)}
                 </div>
+                <div className="secondItem" onClick={removeContractIcon}>
+                  <img
+                    src={imgRemove}
+                    className="labelIcon"
+                    alt={t(translations.contract.remove)}
+                  ></img>
+                  <span className="labelText">
+                    {t(translations.contract.remove)}
+                  </span>
+                </div>
+              </div>
+              <div className="item right">
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={contractImgSrc || defaultContractIcon}
+                      className="contractIcon"
+                      alt="contract icon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
               </div>
             </div>
           </div>
-        ) : null}
+          <div className="innerContainer secondInner">
+            <div className="itemContainer">
+              <div className="item left">
+                <input
+                  type="file"
+                  name="File"
+                  style={displayNone}
+                  accept="image/*"
+                  ref={fileTokenInputRef}
+                  onChange={handleTokenIconChange}
+                />
+                <div className="firstItem" onClick={uploadTokenIcon}>
+                  <img src={imgUpload} className="labelIcon" alt="upload"></img>
+                  <span className="labelText">
+                    {t(translations.contract.tokenIcon)}
+                  </span>
+                </div>
+                <div className="iconTips">
+                  {t(translations.contract.maxSize)}
+                </div>
+                <div className="secondItem" onClick={removeTokenIcon}>
+                  <img src={imgRemove} className="labelIcon" alt="remove"></img>
+                  <span className="labelText">
+                    {t(translations.contract.remove)}
+                  </span>
+                </div>
+              </div>
+              <div className="item right">
+                <SkelontonContainer shown={loading}>
+                  <div className="iconContainer">
+                    <img
+                      src={tokenImgSrc || defaultTokenIcon}
+                      className="contractIcon"
+                      alt="token icon"
+                    ></img>
+                  </div>
+                </SkelontonContainer>
+              </div>
+            </div>
+          </div>
+        </div>
       </TopContainer>
+      <TabContainer>
+        <div className="jsonContainer">
+          <input
+            type="file"
+            name="File"
+            style={displayNone}
+            accept=".json"
+            ref={fileJsonInputRef}
+            onChange={handleJsonChange}
+          />
+          {isVerified ? null : (
+            <span className="text" onClick={importClick}>
+              {t(translations.general.importJsonFile)}
+            </span>
+          )}
+        </div>
+        <Tabs initialValue="1">
+          <Tabs.Item label={tabsLabelSourceCode} value="1">
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
+                      style={AceEditorStyle}
+                      mode="solidity"
+                      theme="tomorrow"
+                      name="UNIQUE_ID_OF_DIV"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      fontSize="1rem"
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={handleSourceChange}
+                      value={sourceCode}
+                    />
+                  </div>
+                </div>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
+          </Tabs.Item>
+          <Tabs.Item label={tabsLabelAbi} value="2">
+            <SkelontonContainer shown={loading}>
+              <StyledTabelWrapper>
+                <div className="ui fluid card">
+                  <div className="content abiContainer">
+                    <div className="contentHeader" />
+                    <AceEditor
+                      readOnly={isVerified}
+                      wrapEnabled={true}
+                      style={AceEditorStyle}
+                      mode="json"
+                      theme="tomorrow"
+                      name="UNIQUE_ID_OF_DIV_ABI"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      fontSize="1rem"
+                      showGutter={false}
+                      showPrintMargin={false}
+                      onChange={abiChangeHandler}
+                      value={abi}
+                    />
+                  </div>
+                </div>
+              </StyledTabelWrapper>
+            </SkelontonContainer>
+          </Tabs.Item>
+        </Tabs>
+      </TabContainer>
       <div className="submitContainer">
         <DappButton
           contractAddress={contractManagerAddress}
           data={txData}
           btnDisabled={!btnShouldClick}
-          txnAction={TxnAction.contractEdit}
+          txnAction={txnAction}
         ></DappButton>
         <div
           className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}
@@ -682,9 +834,11 @@ const LabelWithIcon = styled.div`
     width: auto;
   }
   .labelIcon {
+    position: absolute;
+    left: -0.3571rem;
+    top: -0.0714rem;
     color: #ff5599;
     font-size: 1rem;
-    margin-right: 5px;
   }
   &.tabs {
     width: initial;
@@ -699,10 +853,9 @@ const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   flex-direction: row;
-  align-items: flex-start;
 
   .lineContainer {
-    padding: 1.5714rem 0 0 0;
+    padding: 1.7857rem 0 0 0;
     border-bottom: 0.0714rem solid #e8e9ea;
 
     .firstLine {
@@ -739,6 +892,19 @@ const TopContainer = styled.div`
 
   ${media.m} {
     flex-direction: column;
+    //.lineContainer {
+    //  display: flex;
+    //  flex-direction: column;
+    //  align-items: flex-start;
+    //  padding: 1rem 0;
+    //  border-bottom: 1px solid #e8e9ea;
+    //  .with-label {
+    //    width: 100%;
+    //  }
+    //  &:last-child {
+    //    border: none;
+    //  }
+    //}
   }
 
   .bodyContainer {
@@ -859,5 +1025,67 @@ const TopContainer = styled.div`
         margin-right: 1.25rem;
       }
     }
+  }
+`;
+const AceEditorStyle = {
+  width: 'initial',
+  backgroundColor: '#F8F9FB',
+  opacity: 0.62,
+  margin: '0 1.2857rem 1.7143rem 1.2857rem',
+};
+const StyledTabelWrapper = styled.div`
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
+  border-radius: 0.3571rem;
+  .content {
+  }
+  thead tr th {
+    background: rgba(0, 0, 0, 0.05) !important;
+  }
+  tr th {
+    padding: 1.1429rem 1.4286rem !important;
+    padding-right: 0 !important;
+    &:last-of-type {
+      padding: 1.1429rem 1.1429rem !important;
+      padding-right: 0 !important;
+    }
+    &.right-pad {
+      padding-right: 1.1429rem !important;
+    }
+  }
+  &.right {
+    margin-left: 1.1429rem;
+  }
+  .abiContainer {
+    border: none;
+  }
+  .contentHeader {
+    margin: 2.8571rem 1.2857rem 0 1.2857rem;
+    height: 1px;
+    background: #e8e9ea;
+  }
+`;
+const TabContainer = styled.div`
+  margin-top: 2.3571rem;
+  position: relative;
+  .jsonContainer {
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    ${media.m} {
+      display: none;
+    }
+    .text {
+      display: inline-block;
+      color: #1e3de4;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.2857rem;
+      border-bottom: 2px solid #1e3de4;
+    }
+  }
+  ${media.m} {
+    margin-top: 2rem;
   }
 `;
