@@ -10,6 +10,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';
 import { TokenTypeTag } from './TokenTypeTag';
+import lodash from 'lodash';
 
 interface Props {
   transferList: Array<any>;
@@ -156,9 +157,13 @@ export const TokenTransfer = ({
                   <span className="batch">
                     - {t(translations.transaction.for)}{' '}
                     <span className="value">
-                      {typeof tokenDecimals !== 'undefined'
-                        ? `${formatBalance(item['value'], tokenDecimals, true)}`
-                        : item['value']}
+                      {lodash.isNil(tokenDecimals)
+                        ? item['value']
+                        : `${formatBalance(
+                            item['value'],
+                            tokenDecimals,
+                            true,
+                          )}`}
                     </span>
                     &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                     <span className="tokenId">{item['tokenId']}</span>
@@ -199,13 +204,13 @@ export const TokenTransfer = ({
             <span className="transfer-item-group">
               <span className="for">{t(translations.transaction.for)} </span>
               <span className="value">
-                {typeof tokenDecimals !== 'undefined'
-                  ? `${formatBalance(
+                {lodash.isNil(tokenDecimals)
+                  ? transferItem['value']
+                  : `${formatBalance(
                       transferItem['value'],
                       tokenDecimals,
                       true,
-                    )}`
-                  : transferItem['value']}
+                    )}`}
               </span>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span>
