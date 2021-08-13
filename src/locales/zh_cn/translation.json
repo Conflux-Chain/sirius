@@ -556,6 +556,8 @@
     },
     "loading": "加载中...",
     "contract": "合约",
+    "verifiedContract": "已验证合约",
+    "unverifiedContract": "未验证合约",
     "internalContract": "内置合约",
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",

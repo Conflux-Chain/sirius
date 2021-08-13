@@ -556,6 +556,8 @@
     },
     "loading": "loading...",
     "contract": "contract",
+    "verifiedContract": "Verified Contract",
+    "unverifiedContract": "Unverified Contract",
     "internalContract": "internal contract",
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
