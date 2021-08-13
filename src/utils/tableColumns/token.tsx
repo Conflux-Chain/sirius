@@ -194,7 +194,6 @@ export const token = {
 };
 
 const Token2 = ({ row }) => {
-  const { t } = useTranslation();
   return (
     <StyledIconWrapper>
       {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
@@ -205,40 +204,32 @@ const Token2 = ({ row }) => {
               alt="token icon"
             />,
             <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
-              <Text
-                span
-                hoverValue={
-                  row?.transferTokenInfo?.name
-                    ? `${
-                        row?.transferTokenInfo?.name ||
-                        t(translations.general.notAvailable)
-                      } (${
-                        row?.transferTokenInfo?.symbol ||
-                        t(translations.general.notAvailable)
-                      })`
-                    : formatAddress(row?.transferTokenInfo?.address)
-                }
-                maxWidth="180px"
-              >
-                {row?.transferTokenInfo?.name ? (
-                  formatString(
-                    `${
-                      row?.transferTokenInfo?.name ||
-                      t(translations.general.notAvailable)
-                    } (${
-                      row?.transferTokenInfo?.symbol ||
-                      t(translations.general.notAvailable)
+              {row?.transferTokenInfo?.name ? (
+                <Text
+                  span
+                  hoverValue={
+                    row?.transferTokenInfo?.name
+                      ? `${row?.transferTokenInfo?.name} (${
+                          row?.transferTokenInfo?.symbol || '--'
+                        })`
+                      : formatAddress(row?.transferTokenInfo?.address)
+                  }
+                  maxWidth="180px"
+                >
+                  {formatString(
+                    `${row?.transferTokenInfo?.name} (${
+                      row?.transferTokenInfo?.symbol || '--'
                     })`,
                     36,
-                  )
-                ) : (
-                  <AddressContainer
-                    value={row?.transferTokenInfo?.address}
-                    alias={row?.transferTokenInfo?.contractName || null}
-                    showIcon={false}
-                  />
-                )}
-              </Text>
+                  )}
+                </Text>
+              ) : (
+                <AddressContainer
+                  value={row?.transferTokenInfo?.address}
+                  alias={row?.transferTokenInfo?.name || null}
+                  showIcon={false}
+                />
+              )}
             </Link>,
           ]
         : '--'}
