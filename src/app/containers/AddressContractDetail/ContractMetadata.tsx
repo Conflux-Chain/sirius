@@ -297,7 +297,7 @@ export function ContractMetadata({ address, contractInfo }) {
             <SkeletonContainer shown={loading} style={skeletonStyle}>
               <CenterLine>
                 {/* TODO use codeHash */}
-                {!contractInfo.code ? (
+                {!contractInfo.codeHash ? (
                   <Content className="not-available">
                     <Text type="error">
                       {t(translations.contractDetail.notDeployed)}

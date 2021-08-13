@@ -294,6 +294,7 @@ const ImgWrapper = styled.span`
 `;
 const IconWrapper = styled.span`
   margin-right: 2px;
+  flex-shrink: 0;
 
   &.float {
     margin-left: -18px;
@@ -301,19 +302,20 @@ const IconWrapper = styled.span`
 
   svg {
     vertical-align: bottom;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
 
   img {
     width: 16px;
     height: 16px;
     vertical-align: bottom;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
 `;
 
 const AddressWrapper = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  /* display: inline-block; */
   font-family: ${monospaceFont};
 
   // TODO icon position
@@ -332,7 +334,7 @@ const addressStyle = (props: any) => `
   display: inline-flex !important;
   flex-wrap: nowrap;
   max-width: ${
-    props.maxwidth || (props.alias ? 190 : defaultPCMaxWidth)
+    props.maxwidth || (props.alias ? 180 : defaultPCMaxWidth)
   }px !important;
   outline: none;
   

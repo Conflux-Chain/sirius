@@ -27,7 +27,58 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const fromTypeInfo = {
+  arrow: {
+    src: imgArrow,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  out: {
+    src: imgOut,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  in: {
+    src: imgIn,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeIn)}
+      </Translation>
+    ),
+  },
+};
+
 const reg = /address\/(.*)$/;
+
+type GetFromTypeReturnValueType = 'in' | 'out' | 'arrow';
+const getFromType = (value: string): GetFromTypeReturnValueType => {
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
+  const filter = accountAddress as string;
+
+  return !filter
+    ? 'arrow'
+    : formatAddress(filter) === formatAddress(value)
+    ? 'out'
+    : 'in';
+};
 
 export const renderAddress = (
   value,
@@ -80,15 +131,7 @@ export const renderAddress = (
         verify={verify}
       />
       {type === 'from' && withArrow && (
-        <ImgWrap
-          src={
-            !filter
-              ? imgArrow
-              : formatAddress(filter) === formatAddress(value)
-              ? imgOut
-              : imgIn
-          }
-        />
+        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
       )}
     </>
   );
@@ -153,7 +196,6 @@ export const token = {
 };
 
 const Token2 = ({ row }) => {
-  const { t } = useTranslation();
   return (
     <StyledIconWrapper>
       {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
@@ -164,40 +206,32 @@ const Token2 = ({ row }) => {
               alt="token icon"
             />,
             <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
-              <Text
-                span
-                hoverValue={
-                  row?.transferTokenInfo?.name
-                    ? `${
-                        row?.transferTokenInfo?.name ||
-                        t(translations.general.notAvailable)
-                      } (${
-                        row?.transferTokenInfo?.symbol ||
-                        t(translations.general.notAvailable)
-                      })`
-                    : formatAddress(row?.transferTokenInfo?.address)
-                }
-                maxWidth="180px"
-              >
-                {row?.transferTokenInfo?.name ? (
-                  formatString(
-                    `${
-                      row?.transferTokenInfo?.name ||
-                      t(translations.general.notAvailable)
-                    } (${
-                      row?.transferTokenInfo?.symbol ||
-                      t(translations.general.notAvailable)
+              {row?.transferTokenInfo?.name ? (
+                <Text
+                  span
+                  hoverValue={
+                    row?.transferTokenInfo?.name
+                      ? `${row?.transferTokenInfo?.name} (${
+                          row?.transferTokenInfo?.symbol || '--'
+                        })`
+                      : formatAddress(row?.transferTokenInfo?.address)
+                  }
+                  maxWidth="180px"
+                >
+                  {formatString(
+                    `${row?.transferTokenInfo?.name} (${
+                      row?.transferTokenInfo?.symbol || '--'
                     })`,
                     36,
-                  )
-                ) : (
-                  <AddressContainer
-                    value={row?.transferTokenInfo?.address}
-                    alias={row?.transferTokenInfo?.contractName || null}
-                    showIcon={false}
-                  />
-                )}
-              </Text>
+                  )}
+                </Text>
+              ) : (
+                <AddressContainer
+                  value={row?.transferTokenInfo?.address}
+                  alias={row?.transferTokenInfo?.name || null}
+                  showIcon={false}
+                />
+              )}
             </Link>,
           ]
         : '--'}
@@ -477,7 +511,7 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => {
+  render: (value, row, _, withArrow = true) => {
     let contractInfo = {};
     let verify = false;
     if (row.contractInfo) {
@@ -498,12 +532,24 @@ export const from = {
             contractInfo,
           },
           'from',
-          true,
+          withArrow,
           verify,
         )}
       </FromWrap>
     );
   },
+};
+
+export const fromType = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.fromType)}
+    </Translation>
+  ),
+  dataIndex: 'from',
+  key: 'from',
+  render: value => fromTypeInfo[getFromType(value)].text,
 };
 
 export const account = {

@@ -482,28 +482,36 @@ export const Detail = () => {
               </InlineWrapper>
               <span>{imgIcon}</span>
               <span>{nameContainer}</span> <TokenTypeTag type="crc1155" />
-              {transferItem['batch'].map((item, index) => (
-                <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
-                  <br />
-                  <span className="batch">
-                    - {t(translations.transaction.for)}{' '}
-                    <span className="value">
-                      {typeof tokenDecimals !== 'undefined'
-                        ? `${formatBalance(item['value'], tokenDecimals, true)}`
-                        : item['value']}
-                    </span>
-                    <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
-                    &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
-                    <span className="tokenId">
-                      {item['tokenId']}
-                      <NFTPreview
-                        contractAddress={transferItem['address']}
-                        tokenId={item['tokenId']}
-                      />
+              {transferItem['batch'].map((item, index) => {
+                return (
+                  <span
+                    key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}
+                  >
+                    <br />
+                    <span className="batch">
+                      - {t(translations.transaction.for)}{' '}
+                      <span className="value">
+                        {_.isNil(tokenDecimals)
+                          ? item['value']
+                          : `${formatBalance(
+                              item['value'],
+                              tokenDecimals,
+                              true,
+                            )}`}
+                      </span>
+                      <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
+                      &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
+                      <span className="tokenId">
+                        {item['tokenId']}
+                        <NFTPreview
+                          contractAddress={transferItem['address']}
+                          tokenId={item['tokenId']}
+                        />
+                      </span>
                     </span>
                   </span>
-                </span>
-              ))}
+                );
+              })}
             </div>,
           );
           break;
@@ -532,13 +540,13 @@ export const Detail = () => {
               </InlineWrapper>
               <span className="for">{t(translations.transaction.for)}</span>
               <span className="value">
-                {typeof tokenDecimals !== 'undefined'
-                  ? `${formatBalance(
+                {_.isNil(tokenDecimals)
+                  ? transferItem['value']
+                  : `${formatBalance(
                       transferItem['value'],
                       tokenDecimals,
                       true,
-                    )}`
-                  : transferItem['value']}
+                    )}`}
               </span>
               <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
               <span>{imgIcon}</span>
