@@ -154,11 +154,11 @@ export const ContractOrTokenInfo = ({
       let isSubmitable = false;
       if (accounts[0]) {
         if (
-          !isAddressError &&
+          // !isAddressError &&
           !isAdminError &&
-          !isErc20Error &&
-          !isNameError &&
-          !isSiteError
+          !isErc20Error
+          // !isNameError &&
+          // !isSiteError
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -174,17 +174,17 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       type,
-      addressVal,
-      contractName,
-      site,
+      // addressVal,
+      // contractName,
+      // site,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
-      isAddressError,
+      // isAddressError,
       isAdminError,
       isErc20Error,
-      isNameError,
-      isSiteError,
+      // isNameError,
+      // isSiteError,
     ],
   );
 
@@ -381,7 +381,14 @@ export const ContractOrTokenInfo = ({
     }
   }
   const isVerified = contractDetail.verify?.exactMatch;
-  const isDisabled = !btnShouldClick || isAddressError || isNameError;
+
+  let isDisabled = false;
+  if (updateInfoType === 'contract') {
+    isDisabled =
+      !btnShouldClick || isAddressError || isNameError || isSiteError;
+  } else {
+    isDisabled = !btnShouldClick || !tokenImgSrc;
+  }
 
   return (
     <Wrapper>
