@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -11,29 +11,18 @@ import { cfxTokenTypes } from 'utils/constants';
 import queryString from 'query-string';
 // import { useGlobal } from 'utils/hooks/useGlobal';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+
 import imgInfo from 'images/info.svg';
-import { Link } from '../../components/Link/Loadable';
-import { useTestnet } from '../../../utils/hooks/useTestnet';
 
 interface RouteParams {
   tokenType: string;
 }
 
 export function Tokens() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   // const { data: globalData } = useGlobal();
   const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
   const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
-  const [total, setTotal] = useState(0);
-  const isTestnet = useTestnet();
-  const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-
-  const getRegisterLink = (lang, isTestnet): string => {
-    if (lang === 'en') {
-      return 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806651610-ConfluxScan-Token-List-Registration-Listing-Regulation';
-    }
-    return 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806651610-%E5%A6%82%E4%BD%95%E5%9C%A8-ConfluxScan-%E6%B3%A8%E5%86%8C%E5%B9%B6%E5%B1%95%E7%A4%BA%E4%BB%A3%E5%B8%81';
-  };
 
   let columnsWidth = [1, 6, 5, 3, 3, 3, 3];
   let columns = [
@@ -57,9 +46,7 @@ export function Tokens() {
       sorter: true,
     },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
-  const changeTotal = total => {
-    setTotal(total);
-  };
+
   let url = `/stat/tokens/list?transferType=${
     cfxTokenTypes.erc20
   }&reverse=true&orderBy=totalPrice&${queryString.stringify({
@@ -138,19 +125,7 @@ export function Tokens() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <PageHeader
-        subtitle={
-          <TotalWrapper>
-            {t(translations.tokens.tipCountBefore)}
-            <span className="total">{total}</span>
-            {t(translations.tokens.tipCountMiddle)}
-            <Link href={getRegisterLink(lang, isTestnet)}>
-              {t(translations.tokens.tipCountAfter)}
-            </Link>
-            )
-          </TotalWrapper>
-        }
-      >
+      <PageHeader subtitle={t(translations.tokens.tip)}>
         {title}
         <Tooltip
           hoverable
@@ -171,19 +146,11 @@ export function Tokens() {
           url={url}
           columns={columns}
           rowKey="address"
-          hideDefaultTitle
-          changeTotal={total => changeTotal(total)}
-        />
+        ></TablePanelNew>
       </TableWrapper>
     </>
   );
 }
-
-const TotalWrapper = styled.span`
-  .total {
-    color: #1a42e4;
-  }
-`;
 
 const IconWrapper = styled.div`
   padding-left: 0.2857rem;
