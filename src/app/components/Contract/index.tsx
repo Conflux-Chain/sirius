@@ -82,7 +82,7 @@ export const ContractOrTokenInfo = ({
   const [contractImgSrc, setContractImgSrc] = useState('');
   const [tokenImgSrc, setTokenImgSrc] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
-  const [addressDisabled, setAddressDisabled] = useState(true);
+  // const [addressDisabled, setAddressDisabled] = useState(true);
   const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
   const [errorMsgForName, setErrorMsgForName] = useState('');
   const [warningMsgTimesForName, setWarningMsgTimesForName] = useState(0);
@@ -127,11 +127,11 @@ export const ContractOrTokenInfo = ({
     switch (type) {
       case 'create':
         setAddressVal(address || '');
-        setAddressDisabled(false);
+        // setAddressDisabled(false);
         break;
       case 'edit':
         setAddressVal(formatAddress(contractDetail.address));
-        setAddressDisabled(true);
+        // setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
         break;
     }
@@ -398,7 +398,7 @@ export const ContractOrTokenInfo = ({
                   style={inputStyle}
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
-                  readOnly={addressDisabled}
+                  readOnly={true}
                   placeholder={isConfluxTestNet ? 'cfxtest:...' : 'cfx:...'}
                   onBlur={addressOnBlur}
                 />
