@@ -17,7 +17,7 @@ export const CFXTxns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`;
 
-  const columnsWidth = [4, 4, 8, 2, 7, 4, 5];
+  const columnsWidth = [4, 4, 8, 7, 2, 4, 5];
   const columns = [
     tokenColunms.txnHash,
     blockColunms.epoch,
@@ -27,8 +27,8 @@ export const CFXTxns = ({ address }: Props) => {
         return tokenColunms.from.render(text, record, index, false);
       },
     },
-    tokenColunms.fromType,
     tokenColunms.to,
+    tokenColunms.fromType,
     transactionColunms.value,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
