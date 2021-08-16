@@ -110,7 +110,9 @@ export const ContractOrTokenInfo = ({
   };
 
   const nameInputChanger = e => {
-    setContractName(e.target.value);
+    const value = e.target.value;
+    setContractName(value);
+    checkContractName(value);
   };
 
   const siteInputChanger = e => {
@@ -190,9 +192,9 @@ export const ContractOrTokenInfo = ({
     checkAdminThenToken(tokenImgSrc);
   };
 
-  function checkContractName() {
-    if (contractName) {
-      if (contractName.length > 35) {
+  function checkContractName(name) {
+    if (name) {
+      if (name.length > 35) {
         setIsNameError(true);
         setErrorMsgForName('contract.invalidNameTag');
       } else {
@@ -205,26 +207,24 @@ export const ContractOrTokenInfo = ({
     }
   }
 
-  function checkContractNameDuplicated() {
-    // check contract name tag is registered
-    reqContractNameTag(contractName)
-      .then(res => {
-        if (res && res.registered > 0) {
-          if (contractName) {
+  function checkContractNameDuplicated(value) {
+    if (value) {
+      // check contract name tag is registered
+      reqContractNameTag(value)
+        .then(res => {
+          if (res && res.registered > 0) {
             setWarningMsgTimesForName(res.registered);
           } else {
-            setIsNameError(true);
             setWarningMsgTimesForName(0);
-            setErrorMsgForName('contract.requiredNameTag');
           }
-        } else {
+        })
+        .catch(e => {
+          console.error(e);
           setWarningMsgTimesForName(0);
-        }
-      })
-      .catch(e => {
-        console.error(e);
-        setWarningMsgTimesForName(0);
-      });
+        });
+    } else {
+      setWarningMsgTimesForName(0);
+    }
   }
 
   useEffect(() => {
@@ -232,14 +232,12 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressVal]);
 
-  const nameOnBlur = () => {
-    checkContractName();
-    checkContractNameDuplicated();
+  const nameOnBlur = e => {
+    const value = e.target.value;
+    checkContractName(value);
+    checkContractNameDuplicated(value);
+    setContractName(value);
   };
-  useEffect(() => {
-    checkContractName();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractName]);
 
   const siteOnBlur = () => {
     checkSite();
@@ -703,7 +701,7 @@ const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
 
   .lineContainer {
     padding: 1.5714rem 0 0 0;
