@@ -80,7 +80,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
           type={transferType}
           address={tokenAddress}
           decimals={decimals}
-        ></TokenTransfers>
+        />
       ),
     },
   ];
@@ -153,13 +153,17 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     }
   }
 
-  // NFT tab
-  tabs.push({
-    value: 'NFT',
-    action: 'tokenNFT',
-    label: t(translations.token.NFT),
-    content: <NFTs address={tokenAddress} />,
-  });
+  if (
+    transferType === cfxTokenTypes.erc721 ||
+    transferType === cfxTokenTypes.erc1155
+  ) {
+    tabs.push({
+      value: 'NFT',
+      action: 'tokenNFT',
+      label: t(translations.token.NFT),
+      content: <NFTs address={tokenAddress} />,
+    });
+  }
 
   // Contract tab
   tabs.push({
