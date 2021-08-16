@@ -85,6 +85,7 @@ export const renderAddress = (
   row,
   type?: 'to' | 'from',
   withArrow = true,
+  verify?,
 ) => {
   let address = '';
 
@@ -127,6 +128,7 @@ export const renderAddress = (
         alias={alias}
         isLink={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
+        verify={verify}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
@@ -416,7 +418,15 @@ export const contract = (isFull = false) => ({
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => <AddressContainer value={value} isFull={isFull} />,
+  render: (value, row) => {
+    let verify = false;
+    if (row.contractInfo) {
+      verify = row.contractInfo.verify.result !== 0;
+    } else if (row.verified === true) {
+      verify = true;
+    }
+    return <AddressContainer value={value} isFull={isFull} verify={verify} />;
+  },
 });
 
 // token detail columns
@@ -467,7 +477,12 @@ export const to = {
   key: 'to',
   render: (value, row) => {
     let contractInfo = {};
-
+    let verify = false;
+    if (row.contractInfo) {
+      verify = row.contractInfo.verify.result !== 0;
+    } else if (row.verified === true) {
+      verify = true;
+    }
     try {
       contractInfo = row.contractInfo[value];
     } catch (e) {}
@@ -481,6 +496,8 @@ export const to = {
             contractInfo,
           },
           'to',
+          true,
+          verify,
         )}
       </FromWrap>
     );
@@ -496,7 +513,12 @@ export const from = {
   key: 'from',
   render: (value, row, _, withArrow = true) => {
     let contractInfo = {};
-
+    let verify = false;
+    if (row.contractInfo) {
+      verify = row.contractInfo.verify.result !== 0;
+    } else if (row.verified === true) {
+      verify = true;
+    }
     try {
       contractInfo = row.contractInfo[value];
     } catch (e) {}
@@ -511,6 +533,7 @@ export const from = {
           },
           'from',
           withArrow,
+          verify,
         )}
       </FromWrap>
     );
@@ -814,6 +837,7 @@ const ImgWrap = styled.img`
   height: 20px;
   right: -0.8571rem;
   top: 0.1429rem;
+
   ${media.s} {
     right: -0.98rem;
   }
@@ -841,6 +865,7 @@ const ThTipWrap = styled.span`
 
 export const LinkA = styled.a`
   color: #1e3de4 !important;
+
   &:hover {
     color: #0f23bd !important;
   }
@@ -873,6 +898,7 @@ const StyledTractTypeWrapper = styled.span`
       margin-bottom: 0.1429rem;
       color: #94a3b6;
     }
+
     .horizontal {
       width: 0.4286rem;
       height: 0.1429rem;
@@ -916,6 +942,7 @@ const StyledTractTypeWrapper = styled.span`
 
   .tooltip-content.siriuse-status-popover {
     padding: 0.2857rem 0.8571rem;
+
     .item.title {
       padding: 0;
 
@@ -923,12 +950,14 @@ const StyledTractTypeWrapper = styled.span`
         width: 0.8571rem;
         height: 0.8571rem;
       }
+
       .text {
         margin-left: 0.2857rem;
         color: #333333;
         text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       }
     }
+
     .items {
       color: #a4a8b6;
       text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
@@ -939,6 +968,7 @@ const StyledTractTypeWrapper = styled.span`
       background-color: transparent;
       overflow: hidden !important;
     }
+
     .inner {
       min-width: inherit;
     }

@@ -15,7 +15,7 @@ export const ExcutedTxns = ({ address }: Props) => {
 
   const url = `/transaction?accountAddress=${address}`;
 
-  const columnsWidth = [4, 3, 7, 2, 6, 3, 3, 3, 5];
+  const columnsWidth = [4, 3, 7, 6, 2, 3, 3, 3, 5];
   const columns = [
     transactionColunms.hash,
     transactionColunms.method,
@@ -25,8 +25,8 @@ export const ExcutedTxns = ({ address }: Props) => {
         return tokenColunms.from.render(text, record, index, false);
       },
     },
-    tokenColunms.fromType,
     tokenColunms.to,
+    tokenColunms.fromType,
     transactionColunms.value,
     transactionColunms.gasPrice,
     transactionColunms.gasFee,

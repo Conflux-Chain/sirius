@@ -122,13 +122,15 @@ const EventLog = ({ log }) => {
           .concat(formatAddress(log.address));
         addressList = _.uniq(addressList);
 
-        reqContractAndToken({
-          address: addressList,
-        })
-          .then(data => {
-            data.total && setContractAndTokenInfo(data.map);
+        if (addressList.length) {
+          reqContractAndToken({
+            address: addressList,
           })
-          .catch(() => {});
+            .then(data => {
+              data.total && setContractAndTokenInfo(data.map);
+            })
+            .catch(() => {});
+        }
       })
       .finally(() => {
         setLoading(false);

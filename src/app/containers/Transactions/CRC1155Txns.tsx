@@ -15,7 +15,7 @@ export const CRC1155Txns = ({ address }: Props) => {
   const addressType = isContractAddress(address) ? 'contract' : 'user';
   const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc1155}`;
 
-  const columnsWidth = [3, 7, 2, 6, 2, 3, 6, 4];
+  const columnsWidth = [3, 7, 6, 2, 2, 3, 6, 4];
   const columns = [
     tokenColunms.txnHash,
     {
@@ -24,8 +24,8 @@ export const CRC1155Txns = ({ address }: Props) => {
         return tokenColunms.from.render(text, record, index, false);
       },
     },
-    tokenColunms.fromType,
     tokenColunms.to,
+    tokenColunms.fromType,
     tokenColunms.quantity,
     tokenColunms.tokenId(),
     tokenColunms.token2,
