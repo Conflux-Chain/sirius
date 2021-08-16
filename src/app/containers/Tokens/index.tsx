@@ -30,14 +30,9 @@ export function Tokens() {
 
   const getRegisterLink = (lang, isTestnet): string => {
     if (lang === 'en') {
-      return isTestnet
-        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806651610-ConfluxScan-Token-List-Registration-Listing-Regulation'
-        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806651610-%E5%A6%82%E4%BD%95%E5%9C%A8-ConfluxScan-%E6%B3%A8%E5%86%8C%E5%B9%B6%E5%B1%95%E7%A4%BA%E4%BB%A3%E5%B8%81';
-    } else {
-      return isTestnet
-        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806651610-ConfluxScan-Token-List-Registration-Listing-Regulation'
-        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806651610-%E5%A6%82%E4%BD%95%E5%9C%A8-ConfluxScan-%E6%B3%A8%E5%86%8C%E5%B9%B6%E5%B1%95%E7%A4%BA%E4%BB%A3%E5%B8%81';
+      return 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/1260806651610-ConfluxScan-Token-List-Registration-Listing-Regulation';
     }
+    return 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/1260806651610-%E5%A6%82%E4%BD%95%E5%9C%A8-ConfluxScan-%E6%B3%A8%E5%86%8C%E5%B9%B6%E5%B1%95%E7%A4%BA%E4%BB%A3%E5%B8%81';
   };
 
   let columnsWidth = [1, 6, 5, 3, 3, 3, 3];
