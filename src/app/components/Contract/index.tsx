@@ -201,7 +201,7 @@ export const ContractOrTokenInfo = ({
       }
     } else {
       setIsNameError(true);
-      setErrorMsgForName('');
+      setErrorMsgForName('contract.requiredNameTag');
     }
   }
 
@@ -210,7 +210,13 @@ export const ContractOrTokenInfo = ({
     reqContractNameTag(contractName)
       .then(res => {
         if (res && res.registered > 0) {
-          setWarningMsgTimesForName(res.registered);
+          if (contractName) {
+            setWarningMsgTimesForName(res.registered);
+          } else {
+            setIsNameError(true);
+            setWarningMsgTimesForName(0);
+            setErrorMsgForName('contract.requiredNameTag');
+          }
         } else {
           setWarningMsgTimesForName(0);
         }
@@ -313,9 +319,6 @@ export const ContractOrTokenInfo = ({
       } else {
         bodyParams.tokenIcon = '';
       }
-
-      console.log('bodyParams: ', bodyParams);
-
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
@@ -367,7 +370,7 @@ export const ContractOrTokenInfo = ({
       }
     } else {
       setIsAddressError(true);
-      setErrorMsgForAddress('');
+      setErrorMsgForAddress('contract.requiredAddress');
     }
   }
   function checkSite() {
@@ -380,6 +383,7 @@ export const ContractOrTokenInfo = ({
     }
   }
   const isVerified = contractDetail.verify?.exactMatch;
+  const isDisabled = !btnShouldClick || isAddressError || isNameError;
 
   return (
     <Wrapper>
@@ -440,7 +444,7 @@ export const ContractOrTokenInfo = ({
                 <div>
                   <span className="blankSpan"></span>
                   <span className="errorSpan">{t(errorMsgForName)}</span>
-                  {warningMsgTimesForName > 0 ? (
+                  {!errorMsgForName && warningMsgTimesForName > 0 ? (
                     <span className="warningSpan">
                       {t(translations.contract.duplicatedNameTag, {
                         times: warningMsgTimesForName,
@@ -577,7 +581,7 @@ export const ContractOrTokenInfo = ({
         <DappButton
           contractAddress={contractManagerAddress}
           data={txData}
-          btnDisabled={!btnShouldClick}
+          btnDisabled={isDisabled}
           txnAction={TxnAction.contractEdit}
         ></DappButton>
         <div

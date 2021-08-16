@@ -44,6 +44,8 @@
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
     "namePlaceholder": "Support up to 35 characters",
+    "requiredAddress": "Please enter a conflux address",
+    "requiredNameTag": "Please enter a contract name tag",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
     "invalidNameTag": "The character length has reached the maximum limit",
