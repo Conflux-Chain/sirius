@@ -27,13 +27,15 @@ export const OptimizationDecode = ({
     let addressList = args.map(t => t.cfxAddress).filter(t => t);
     addressList = _.uniq(addressList);
 
-    reqContractAndToken({
-      address: addressList,
-    })
-      .then(data => {
-        data.total && setContractAndTokenInfo(data.map);
+    if (addressList.length) {
+      reqContractAndToken({
+        address: addressList,
       })
-      .catch(() => {});
+        .then(data => {
+          data.total && setContractAndTokenInfo(data.map);
+        })
+        .catch(() => {});
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [decodedData]);
 

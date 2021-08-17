@@ -82,7 +82,7 @@ export const ContractOrTokenInfo = ({
   const [contractImgSrc, setContractImgSrc] = useState('');
   const [tokenImgSrc, setTokenImgSrc] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
-  const [addressDisabled, setAddressDisabled] = useState(true);
+  // const [addressDisabled, setAddressDisabled] = useState(true);
   const [errorMsgForAddress, setErrorMsgForAddress] = useState('');
   const [errorMsgForName, setErrorMsgForName] = useState('');
   const [warningMsgTimesForName, setWarningMsgTimesForName] = useState(0);
@@ -110,7 +110,9 @@ export const ContractOrTokenInfo = ({
   };
 
   const nameInputChanger = e => {
-    setContractName(e.target.value);
+    const value = e.target.value;
+    setContractName(value);
+    checkContractName(value);
   };
 
   const siteInputChanger = e => {
@@ -127,11 +129,11 @@ export const ContractOrTokenInfo = ({
     switch (type) {
       case 'create':
         setAddressVal(address || '');
-        setAddressDisabled(false);
+        // setAddressDisabled(false);
         break;
       case 'edit':
         setAddressVal(formatAddress(contractDetail.address));
-        setAddressDisabled(true);
+        // setAddressDisabled(true);
         checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
         break;
     }
@@ -152,11 +154,11 @@ export const ContractOrTokenInfo = ({
       let isSubmitable = false;
       if (accounts[0]) {
         if (
-          !isAddressError &&
+          // !isAddressError &&
           !isAdminError &&
-          !isErc20Error &&
-          !isNameError &&
-          !isSiteError
+          !isErc20Error
+          // !isNameError &&
+          // !isSiteError
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -172,17 +174,17 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       type,
-      addressVal,
-      contractName,
-      site,
+      // addressVal,
+      // contractName,
+      // site,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
-      isAddressError,
+      // isAddressError,
       isAdminError,
       isErc20Error,
-      isNameError,
-      isSiteError,
+      // isNameError,
+      // isSiteError,
     ],
   );
 
@@ -190,9 +192,9 @@ export const ContractOrTokenInfo = ({
     checkAdminThenToken(tokenImgSrc);
   };
 
-  function checkContractName() {
-    if (contractName) {
-      if (contractName.length > 35) {
+  function checkContractName(name) {
+    if (name) {
+      if (name.length > 35) {
         setIsNameError(true);
         setErrorMsgForName('contract.invalidNameTag');
       } else {
@@ -201,24 +203,28 @@ export const ContractOrTokenInfo = ({
       }
     } else {
       setIsNameError(true);
-      setErrorMsgForName('');
+      setErrorMsgForName('contract.requiredNameTag');
     }
   }
 
-  function checkContractNameDuplicated() {
-    // check contract name tag is registered
-    reqContractNameTag(contractName)
-      .then(res => {
-        if (res && res.registered > 0) {
-          setWarningMsgTimesForName(res.registered);
-        } else {
+  function checkContractNameDuplicated(value) {
+    if (value) {
+      // check contract name tag is registered
+      reqContractNameTag(value)
+        .then(res => {
+          if (res && res.registered > 0) {
+            setWarningMsgTimesForName(res.registered);
+          } else {
+            setWarningMsgTimesForName(0);
+          }
+        })
+        .catch(e => {
+          console.error(e);
           setWarningMsgTimesForName(0);
-        }
-      })
-      .catch(e => {
-        console.error(e);
-        setWarningMsgTimesForName(0);
-      });
+        });
+    } else {
+      setWarningMsgTimesForName(0);
+    }
   }
 
   useEffect(() => {
@@ -226,14 +232,12 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressVal]);
 
-  const nameOnBlur = () => {
-    checkContractName();
-    checkContractNameDuplicated();
+  const nameOnBlur = e => {
+    const value = e.target.value;
+    checkContractName(value);
+    checkContractNameDuplicated(value);
+    setContractName(value);
   };
-  useEffect(() => {
-    checkContractName();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractName]);
 
   const siteOnBlur = () => {
     checkSite();
@@ -313,9 +317,6 @@ export const ContractOrTokenInfo = ({
       } else {
         bodyParams.tokenIcon = '';
       }
-
-      console.log('bodyParams: ', bodyParams);
-
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
@@ -367,7 +368,7 @@ export const ContractOrTokenInfo = ({
       }
     } else {
       setIsAddressError(true);
-      setErrorMsgForAddress('');
+      setErrorMsgForAddress('contract.requiredAddress');
     }
   }
   function checkSite() {
@@ -380,6 +381,14 @@ export const ContractOrTokenInfo = ({
     }
   }
   const isVerified = contractDetail.verify?.exactMatch;
+
+  let isDisabled = false;
+  if (updateInfoType === 'contract') {
+    isDisabled =
+      !btnShouldClick || isAddressError || isNameError || isSiteError;
+  } else {
+    isDisabled = !btnShouldClick || !tokenImgSrc;
+  }
 
   return (
     <Wrapper>
@@ -398,7 +407,7 @@ export const ContractOrTokenInfo = ({
                   style={inputStyle}
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
-                  readOnly={addressDisabled}
+                  readOnly={true}
                   placeholder={isConfluxTestNet ? 'cfxtest:...' : 'cfx:...'}
                   onBlur={addressOnBlur}
                 />
@@ -440,7 +449,7 @@ export const ContractOrTokenInfo = ({
                 <div>
                   <span className="blankSpan"></span>
                   <span className="errorSpan">{t(errorMsgForName)}</span>
-                  {warningMsgTimesForName > 0 ? (
+                  {!errorMsgForName && warningMsgTimesForName > 0 ? (
                     <span className="warningSpan">
                       {t(translations.contract.duplicatedNameTag, {
                         times: warningMsgTimesForName,
@@ -577,7 +586,7 @@ export const ContractOrTokenInfo = ({
         <DappButton
           contractAddress={contractManagerAddress}
           data={txData}
-          btnDisabled={!btnShouldClick}
+          btnDisabled={isDisabled}
           txnAction={TxnAction.contractEdit}
         ></DappButton>
         <div
@@ -699,7 +708,7 @@ const TopContainer = styled.div`
   display: flex;
   background: #f5f6fa;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
 
   .lineContainer {
     padding: 1.5714rem 0 0 0;
