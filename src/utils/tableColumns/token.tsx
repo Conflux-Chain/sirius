@@ -85,7 +85,6 @@ export const renderAddress = (
   row,
   type?: 'to' | 'from',
   withArrow = true,
-  verify?,
 ) => {
   let address = '';
 
@@ -120,6 +119,23 @@ export const renderAddress = (
     else if (row.tokenInfo && row.tokenInfo.name)
       alias = `${row.tokenInfo.name}`;
   }
+
+  let verify = false;
+
+  try {
+    // default verify info
+    let info = {
+      verify: {
+        result: 0,
+      },
+    };
+    if (type === 'to') {
+      info = row.toContractInfo;
+    } else if (type === 'from') {
+      info = row.fromContractInfo;
+    }
+    verify = info.verify.result !== 0;
+  } catch (e) {}
 
   return (
     <>
@@ -476,31 +492,7 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   render: (value, row) => {
-    let contractInfo = {};
-    let verify = false;
-    if (row.contractInfo) {
-      verify = row.contractInfo.verify.result !== 0;
-    } else if (row.verified === true) {
-      verify = true;
-    }
-    try {
-      contractInfo = row.contractInfo[value];
-    } catch (e) {}
-
-    return (
-      <FromWrap>
-        {renderAddress(
-          value,
-          {
-            ...row,
-            contractInfo,
-          },
-          'to',
-          true,
-          verify,
-        )}
-      </FromWrap>
-    );
+    return <FromWrap>{renderAddress(value, row, 'to', false)}</FromWrap>;
   },
 };
 
@@ -512,31 +504,7 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   render: (value, row, _, withArrow = true) => {
-    let contractInfo = {};
-    let verify = false;
-    if (row.contractInfo) {
-      verify = row.contractInfo.verify.result !== 0;
-    } else if (row.verified === true) {
-      verify = true;
-    }
-    try {
-      contractInfo = row.contractInfo[value];
-    } catch (e) {}
-
-    return (
-      <FromWrap>
-        {renderAddress(
-          value,
-          {
-            ...row,
-            contractInfo,
-          },
-          'from',
-          withArrow,
-          verify,
-        )}
-      </FromWrap>
-    );
+    return <FromWrap>{renderAddress(value, row, 'from', withArrow)}</FromWrap>;
   },
 };
 

@@ -15,6 +15,7 @@ import nftPreview from 'images/token/nftPreview2.svg';
 import nftInfo from 'images/info.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/react-ui';
+import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -36,6 +37,7 @@ export const NFTPreview = React.memo(
     const [imageMinHeight, setImageMinHeight] = useState(200);
     const [previewIcon, setPreviewIcon] = useState(nftPreview);
     const [imageName, setImageName] = useState('');
+    const [isFirstTime, setIsFirstTime] = useState(true);
 
     useEffect(() => {
       if (contractAddress && tokenId) {
@@ -47,14 +49,19 @@ export const NFTPreview = React.memo(
           .then(({ data }) => {
             if (data) {
               setImageMinHeight(data.imageMinHeight);
-              setImageUri(data.imageUri);
+              if (data.imageUri) {
+                setImageUri(data.imageUri);
+              }
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
             }
           })
           .catch(e => {
             console.log(e);
           })
-          .finally(() => setLoading(false));
+          .finally(() => {
+            setLoading(false);
+            setIsFirstTime(false);
+          });
       }
     }, [contractAddress, tokenId, lang]);
 
@@ -108,7 +115,7 @@ export const NFTPreview = React.memo(
         ) : null
       ) : (
         <NFTCard>
-          <Spin spinning={loading || !imageUri}>
+          <Spin spinning={loading}>
             {imageUri ? (
               contractAddress === epiKProtocolKnowledgeBadge ? (
                 <div className="ant-image">
@@ -122,8 +129,10 @@ export const NFTPreview = React.memo(
                   alt={tokenId + ''}
                 />
               )
-            ) : (
+            ) : isFirstTime ? (
               <Skeleton.Image />
+            ) : (
+              <Image width={500} src={NotFoundIcon} alt={'not found'} />
             )}
             <div className="info">
               <div className="name">{imageName}</div>
@@ -200,6 +209,7 @@ const NFTCard = styled.div`
     color: #002257;
 
     .name {
+      height: 1em;
       margin-bottom: 6px;
 
       > span {

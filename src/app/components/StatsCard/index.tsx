@@ -406,8 +406,8 @@ export const StatsCard = ({
               break;
           }
           let verify = false;
-          if (d.contractInfo) {
-            verify = d.contractInfo.verified;
+          if (d.contractInfo && d.contractInfo.verify) {
+            verify = d.contractInfo.verify.result !== 0;
           }
           return (
             <tr key={i}>
