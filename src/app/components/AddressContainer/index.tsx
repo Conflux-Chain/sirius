@@ -285,8 +285,8 @@ const ImgWrapper = styled.span`
   }
 
   .verified {
-    width: 5px;
-    height: 5px;
+    width: 8px;
+    height: 8px;
     position: absolute;
     bottom: -1px;
     right: 1px;
