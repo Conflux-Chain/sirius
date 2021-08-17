@@ -37,7 +37,7 @@ export const NFTPreview = React.memo(
     const [imageMinHeight, setImageMinHeight] = useState(200);
     const [previewIcon, setPreviewIcon] = useState(nftPreview);
     const [imageName, setImageName] = useState('');
-    const [isNotFound, setIsNotFound] = useState(false);
+    const [isFirstTime, setIsFirstTime] = useState(true);
 
     useEffect(() => {
       if (contractAddress && tokenId) {
@@ -51,18 +51,17 @@ export const NFTPreview = React.memo(
               setImageMinHeight(data.imageMinHeight);
               if (data.imageUri) {
                 setImageUri(data.imageUri);
-              } else {
-                setIsNotFound(true);
               }
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
-            } else {
-              setIsNotFound(true);
             }
           })
           .catch(e => {
             console.log(e);
           })
-          .finally(() => setLoading(false));
+          .finally(() => {
+            setLoading(false);
+            setIsFirstTime(false);
+          });
       }
     }, [contractAddress, tokenId, lang]);
 
@@ -116,7 +115,7 @@ export const NFTPreview = React.memo(
         ) : null
       ) : (
         <NFTCard>
-          <Spin spinning={loading || (!imageUri && !isNotFound)}>
+          <Spin spinning={loading}>
             {imageUri ? (
               contractAddress === epiKProtocolKnowledgeBadge ? (
                 <div className="ant-image">
@@ -130,10 +129,10 @@ export const NFTPreview = React.memo(
                   alt={tokenId + ''}
                 />
               )
-            ) : isNotFound ? (
-              <Image width={500} src={NotFoundIcon} alt={'not found'} />
-            ) : (
+            ) : isFirstTime ? (
               <Skeleton.Image />
+            ) : (
+              <Image width={500} src={NotFoundIcon} alt={'not found'} />
             )}
             <div className="info">
               <div className="name">{imageName}</div>
