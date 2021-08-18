@@ -34,12 +34,12 @@ const NoticeItem = ({ children }) => (
 export function getLatestNoticeLink(lang, isTestnet): string {
   if (lang === 'en') {
     return isTestnet
-      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4404540235675-Jul-19-2021-Aug-1-2021'
-      : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4404540235675-Jul-19-2021-Aug-1-2021';
+      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4405361894555-Aug-2-2021-Aug-15-2021'
+      : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4405361894555-Aug-2-2021-Aug-15-2021';
   } else {
     return isTestnet
-      ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4404540235675-2021-7-19-2021-8-1'
-      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4404540235675-2021-7-19-2021-8-1';
+      ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4405361894555-2021-8-2-2021-8-15'
+      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4405361894555-2021-8-2-2021-8-15';
   }
 }
 

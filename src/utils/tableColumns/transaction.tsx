@@ -176,6 +176,7 @@ export const to = {
   width: 1,
   render: (value, row) => {
     let alias = '';
+    let verify = false;
 
     if (InternalContracts[value]) alias = InternalContracts[value];
     else if (row.toContractInfo && row.toContractInfo.name)
@@ -185,11 +186,18 @@ export const to = {
     else if (row.tokenInfo && row.tokenInfo.name)
       alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
 
+    if (row.contractInfo) {
+      verify = row.contractInfo.verify.result !== 0;
+    } else if (row.verified === true) {
+      verify = true;
+    }
+
     return (
       <AddressContainer
         value={value}
         alias={alias}
         contractCreated={row.contractCreated}
+        verify={verify}
       />
     );
   },
@@ -323,7 +331,9 @@ const StyledTransactionHashWrapper = styled.span`
     flex-shrink: 0;
     margin-right: 0.3571rem;
   }
+
   /* reset tooltip-content style */
+
   .popover.txn-overview-popup + div.tooltip-content {
     .items {
       max-height: inherit;
@@ -350,6 +360,7 @@ const StyledTransactionHashWrapper = styled.span`
 
 const StyledStatusWrapper = styled.span`
   visibility: hidden;
+
   &.show {
     visibility: visible;
   }

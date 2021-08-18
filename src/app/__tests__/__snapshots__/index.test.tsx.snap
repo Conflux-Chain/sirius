@@ -352,13 +352,13 @@ exports[`<App /> should render and match the snapshot 1`] = `
                     path="/notfound/:contractAddress"
                   />
                   <Route
-                    component={[Function]}
                     exact={true}
-                    path="/contract"
-                  />
-                  <Route
-                    exact={true}
-                    path="/contract/:contractAddress"
+                    path={
+                      Array [
+                        "/contract-info/:contractAddress",
+                        "/token-info/:contractAddress",
+                      ]
+                    }
                     render={[Function]}
                   />
                   <Route

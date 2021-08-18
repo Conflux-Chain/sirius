@@ -23,8 +23,10 @@
       "title": "Contract Registration"
     },
     "edit": {
-      "title": "Contract Edit"
+      "title": "Update Contract Info"
     },
+    "updateContract": "Update Contract Info",
+    "updateToken": "Update Token Info",
     "verify": {
       "contractCodeVerified": "Contract Source Code Verified",
       "contractName": "Contract Name: ",
@@ -42,6 +44,8 @@
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
     "namePlaceholder": "Support up to 35 characters",
+    "requiredAddress": "Please enter a conflux address",
+    "requiredNameTag": "Please enter a contract name tag",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "Invalid contract address, or incorrect format",
     "invalidNameTag": "The character length has reached the maximum limit",
@@ -386,7 +390,14 @@
     "transferList": {
       "searchError": "Sorry! This is an invalid search string.",
       "balance": "Balance: "
-    }
+    },
+    "NFT": "NFT",
+    "total": "A total of",
+    "tokens": "tokens",
+    "sortBy": "sort by",
+    "recentlyActive": "Recently Active",
+    "newest": "Newest",
+    "oldest": "Oldest"
   },
   "charts": {
     "title": "Charts",
@@ -536,7 +547,8 @@
       "more": {
         "title": "More",
         "report": "Report",
-        "editContract": "Edit Contract",
+        "editContract": "Update Contract Info",
+        "editToken": "Update Token Info",
         "sponsor": "Apply Sponsorship",
         "website": "Official Website",
         "balanceChecker": "Balance Checker",
@@ -545,6 +557,8 @@
     },
     "loading": "loading...",
     "contract": "contract",
+    "verifiedContract": "Verified Contract",
+    "unverifiedContract": "Unverified Contract",
     "internalContract": "internal contract",
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
@@ -604,6 +618,10 @@
         "txnHash": "Txn Hash",
         "age": "Age",
         "from": "From",
+        "fromType": "Type",
+        "fromTypeIn": "In",
+        "fromTypeOut": "Out",
+        "fromTypeArrow": "Out",
         "to": "To",
         "accountAddress": "Address",
         "tokenId": "TokenID",

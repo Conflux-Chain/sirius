@@ -27,7 +27,58 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
 
+const fromTypeInfo = {
+  arrow: {
+    src: imgArrow,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  out: {
+    src: imgOut,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  in: {
+    src: imgIn,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeIn)}
+      </Translation>
+    ),
+  },
+};
+
 const reg = /address\/(.*)$/;
+
+type GetFromTypeReturnValueType = 'in' | 'out' | 'arrow';
+const getFromType = (value: string): GetFromTypeReturnValueType => {
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
+  const filter = accountAddress as string;
+
+  return !filter
+    ? 'arrow'
+    : formatAddress(filter) === formatAddress(value)
+    ? 'out'
+    : 'in';
+};
 
 export const renderAddress = (
   value,
@@ -69,6 +120,23 @@ export const renderAddress = (
       alias = `${row.tokenInfo.name}`;
   }
 
+  let verify = false;
+
+  try {
+    // default verify info
+    let info = {
+      verify: {
+        result: 0,
+      },
+    };
+    if (type === 'to') {
+      info = row.toContractInfo;
+    } else if (type === 'from') {
+      info = row.fromContractInfo;
+    }
+    verify = info.verify.result !== 0;
+  } catch (e) {}
+
   return (
     <>
       <AddressContainer
@@ -76,17 +144,10 @@ export const renderAddress = (
         alias={alias}
         isLink={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
+        verify={verify}
       />
       {type === 'from' && withArrow && (
-        <ImgWrap
-          src={
-            !filter
-              ? imgArrow
-              : formatAddress(filter) === formatAddress(value)
-              ? imgOut
-              : imgIn
-          }
-        />
+        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
       )}
     </>
   );
@@ -151,10 +212,9 @@ export const token = {
 };
 
 const Token2 = ({ row }) => {
-  const { t } = useTranslation();
   return (
     <StyledIconWrapper>
-      {row?.transferTokenInfo
+      {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
         ? [
             <img
               key="img"
@@ -162,43 +222,35 @@ const Token2 = ({ row }) => {
               alt="token icon"
             />,
             <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
-              <Text
-                span
-                hoverValue={
-                  row?.transferTokenInfo?.name
-                    ? `${
-                        row?.transferTokenInfo?.name ||
-                        t(translations.general.notAvailable)
-                      } (${
-                        row?.transferTokenInfo?.symbol ||
-                        t(translations.general.notAvailable)
-                      })`
-                    : formatAddress(row?.transferTokenInfo?.address)
-                }
-                maxWidth="180px"
-              >
-                {row?.transferTokenInfo?.name ? (
-                  formatString(
-                    `${
-                      row?.transferTokenInfo?.name ||
-                      t(translations.general.notAvailable)
-                    } (${
-                      row?.transferTokenInfo?.symbol ||
-                      t(translations.general.notAvailable)
+              {row?.transferTokenInfo?.name ? (
+                <Text
+                  span
+                  hoverValue={
+                    row?.transferTokenInfo?.name
+                      ? `${row?.transferTokenInfo?.name} (${
+                          row?.transferTokenInfo?.symbol || '--'
+                        })`
+                      : formatAddress(row?.transferTokenInfo?.address)
+                  }
+                  maxWidth="180px"
+                >
+                  {formatString(
+                    `${row?.transferTokenInfo?.name} (${
+                      row?.transferTokenInfo?.symbol || '--'
                     })`,
                     36,
-                  )
-                ) : (
-                  <AddressContainer
-                    value={row?.transferTokenInfo?.address}
-                    alias={row?.transferTokenInfo?.contractName || null}
-                    showIcon={false}
-                  />
-                )}
-              </Text>
+                  )}
+                </Text>
+              ) : (
+                <AddressContainer
+                  value={row?.transferTokenInfo?.address}
+                  alias={row?.transferTokenInfo?.name || null}
+                  showIcon={false}
+                />
+              )}
             </Link>,
           ]
-        : t(translations.general.loading)}
+        : '--'}
     </StyledIconWrapper>
   );
 };
@@ -382,7 +434,15 @@ export const contract = (isFull = false) => ({
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => <AddressContainer value={value} isFull={isFull} />,
+  render: (value, row) => {
+    let verify = false;
+    if (row.contractInfo) {
+      verify = row.contractInfo.verify.result !== 0;
+    } else if (row.verified === true) {
+      verify = true;
+    }
+    return <AddressContainer value={value} isFull={isFull} verify={verify} />;
+  },
 });
 
 // token detail columns
@@ -432,24 +492,7 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   render: (value, row) => {
-    let contractInfo = {};
-
-    try {
-      contractInfo = row.contractInfo[value];
-    } catch (e) {}
-
-    return (
-      <FromWrap>
-        {renderAddress(
-          value,
-          {
-            ...row,
-            contractInfo,
-          },
-          'to',
-        )}
-      </FromWrap>
-    );
+    return <FromWrap>{renderAddress(value, row, 'to', false)}</FromWrap>;
   },
 };
 
@@ -460,26 +503,21 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row) => {
-    let contractInfo = {};
-
-    try {
-      contractInfo = row.contractInfo[value];
-    } catch (e) {}
-
-    return (
-      <FromWrap>
-        {renderAddress(
-          value,
-          {
-            ...row,
-            contractInfo,
-          },
-          'from',
-        )}
-      </FromWrap>
-    );
+  render: (value, row, _, withArrow = true) => {
+    return <FromWrap>{renderAddress(value, row, 'from', withArrow)}</FromWrap>;
   },
+};
+
+export const fromType = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.fromType)}
+    </Translation>
+  ),
+  dataIndex: 'from',
+  key: 'from',
+  render: value => fromTypeInfo[getFromType(value)].text,
 };
 
 export const account = {
@@ -767,6 +805,7 @@ const ImgWrap = styled.img`
   height: 20px;
   right: -0.8571rem;
   top: 0.1429rem;
+
   ${media.s} {
     right: -0.98rem;
   }
@@ -794,6 +833,7 @@ const ThTipWrap = styled.span`
 
 export const LinkA = styled.a`
   color: #1e3de4 !important;
+
   &:hover {
     color: #0f23bd !important;
   }
@@ -826,6 +866,7 @@ const StyledTractTypeWrapper = styled.span`
       margin-bottom: 0.1429rem;
       color: #94a3b6;
     }
+
     .horizontal {
       width: 0.4286rem;
       height: 0.1429rem;
@@ -869,6 +910,7 @@ const StyledTractTypeWrapper = styled.span`
 
   .tooltip-content.siriuse-status-popover {
     padding: 0.2857rem 0.8571rem;
+
     .item.title {
       padding: 0;
 
@@ -876,12 +918,14 @@ const StyledTractTypeWrapper = styled.span`
         width: 0.8571rem;
         height: 0.8571rem;
       }
+
       .text {
         margin-left: 0.2857rem;
         color: #333333;
         text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       }
     }
+
     .items {
       color: #a4a8b6;
       text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
@@ -892,6 +936,7 @@ const StyledTractTypeWrapper = styled.span`
       background-color: transparent;
       overflow: hidden !important;
     }
+
     .inner {
       min-width: inherit;
     }

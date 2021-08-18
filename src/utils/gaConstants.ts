@@ -97,6 +97,7 @@ export const ScanEvent = {
       tokenTransfers: 'token_transfers',
       tokenHolders: 'token_holders',
       tokenAnalysis: 'token_analysis',
+      tokenNFT: 'token_nft',
       statsTransactions: 'stats_transactions',
       statsTokens: 'stats_tokens',
       statsMiners: 'stats_miners',
@@ -167,6 +168,14 @@ export const ScanEvent = {
       broadcastTx: 'broadcast_tx', // event label === success/failure
       blockCountdownCalc: 'block_countdown_calc', // event label === target blocknumber
       nftChecker: 'nft_checker', // event label === address
+    },
+  },
+  token: {
+    category: 'token',
+    action: {
+      recentlyActive: 'recently_active',
+      newest: 'newest',
+      oldest: 'oldest',
     },
   },
 };

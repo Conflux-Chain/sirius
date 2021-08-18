@@ -405,6 +405,10 @@ export const StatsCard = ({
               );
               break;
           }
+          let verify = false;
+          if (d.contractInfo && d.contractInfo.verify) {
+            verify = d.contractInfo.verify.result !== 0;
+          }
           return (
             <tr key={i}>
               <td>{i + 1}</td>
@@ -424,6 +428,7 @@ export const StatsCard = ({
                         formatAddress(d.base32 || d.hex)
                       : false
                   }
+                  verify={verify}
                 />
               </td>
               <td className="text-right">

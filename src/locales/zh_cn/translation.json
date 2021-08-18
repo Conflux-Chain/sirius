@@ -23,8 +23,10 @@
       "title": "合约注册"
     },
     "edit": {
-      "title": "合约编辑"
+      "title": "更新合约信息"
     },
+    "updateContract": "更新合约信息",
+    "updateToken": "更新代币信息",
     "verify": {
       "contractCodeVerified": "合约源码已验证",
       "contractName": "合约名：",
@@ -42,6 +44,8 @@
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
     "namePlaceholder": "支持输入最长 35 个字符",
+    "requiredAddress": "请输入一个合法的 Conflux 地址",
+    "requiredNameTag": "请输入一个合法的合约名称标签",
     "sitePlaceholder": "http(s)://",
     "invalidContractAddress": "合约地址无效，或格式错误",
     "invalidNameTag": "字符长度已达到最大限制",
@@ -386,7 +390,14 @@
     "transferList": {
       "searchError": "抱歉！您搜索的字符串无效。",
       "balance": "余额: "
-    }
+    },
+    "NFT": "NFT",
+    "total": "共计",
+    "tokens": "代币",
+    "sortBy": "排序",
+    "recentlyActive": "最近活跃",
+    "newest": "最新",
+    "oldest": "最旧"
   },
   "charts": {
     "title": "图表",
@@ -536,7 +547,8 @@
       "more": {
         "title": "更多",
         "report": "举报",
-        "editContract": "编辑合约",
+        "editContract": "更新合约信息",
+        "editToken": "更新代币信息",
         "sponsor": "申请赞助",
         "website": "官方网站",
         "balanceChecker": "余额检索器",
@@ -545,6 +557,8 @@
     },
     "loading": "加载中...",
     "contract": "合约",
+    "verifiedContract": "已验证合约",
+    "unverifiedContract": "未验证合约",
     "internalContract": "内置合约",
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",
@@ -604,6 +618,10 @@
         "txnHash": "交易哈希",
         "age": "块龄",
         "from": "发送方",
+        "fromType": "类型",
+        "fromTypeIn": "接收",
+        "fromTypeOut": "发送",
+        "fromTypeArrow": "发送",
         "to": "接收方",
         "accountAddress": "地址",
         "tokenId": "代币 ID",

@@ -15,11 +15,17 @@ export const CRC20Txns = ({ address }: Props) => {
   const addressType = isContractAddress(address) ? 'contract' : 'user';
   const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`;
 
-  const columnsWidth = [3, 6, 5, 3, 6, 4];
+  const columnsWidth = [3, 6, 5, 2, 3, 6, 4];
   const columns = [
     tokenColunms.txnHash,
-    tokenColunms.from,
+    {
+      ...tokenColunms.from,
+      render(text, record, index) {
+        return tokenColunms.from.render(text, record, index, false);
+      },
+    },
     tokenColunms.to,
+    tokenColunms.fromType,
     tokenColunms.quantity,
     tokenColunms.token2, // @todo, why not use tokenColunms.token
     tokenColunms.age(ageFormat, toggleAgeFormat),

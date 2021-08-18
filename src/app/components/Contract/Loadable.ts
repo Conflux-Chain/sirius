@@ -6,7 +6,12 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const Contract = lazyLoad(
+export const ContractOrTokenInfo = lazyLoad(
   () => import('./index'),
+  module => module.ContractOrTokenInfo,
+);
+
+export const Contract = lazyLoad(
+  () => import('./index.bak'),
   module => module.Contract,
 );

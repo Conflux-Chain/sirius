@@ -10,6 +10,7 @@ import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
+import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
 import { zeroAddress } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
@@ -26,6 +27,7 @@ interface Props {
   suffixAddressSize?: number; // suffix address size, default is 8
   prefixFloat?: boolean; // prefix icon float or take up space, default false
   showIcon?: boolean; // whether show contract icon, default true
+  verify?: boolean; // show verified contract icon or unverified contract icon
 }
 
 const defaultPCMaxWidth = 138;
@@ -104,6 +106,7 @@ export const AddressContainer = withTranslation()(
       prefixFloat = false,
       showIcon = true,
       t,
+      verify = false,
     }: Props & WithTranslation) => {
       // const { t } = useTranslation(); // fix rerender twice
       const suffixSize =
@@ -145,18 +148,20 @@ export const AddressContainer = withTranslation()(
             ),
           });
 
-        // Contract Registration fail, no link
+        // If a txn receipth has no 'to' address or 'contractCreated', show -- for temp
+        return <>--</>;
+        // Contract create fail, no link
         // TODO deal with zero address value
-        return (
-          <AddressWrapper>
-            <IconWrapper>
-              <Text span hoverValue={txtContractCreation}>
-                <img src={ContractIcon} alt={txtContractCreation} />
-              </Text>
-            </IconWrapper>
-            <Text span>{txtContractCreation}</Text>
-          </AddressWrapper>
-        );
+        // return (
+        //   <AddressWrapper>
+        //     <IconWrapper>
+        //       <Text span hoverValue={txtContractCreation}>
+        //         <img src={ContractIcon} alt={txtContractCreation} />
+        //       </Text>
+        //     </IconWrapper>
+        //     <Text span>{txtContractCreation}</Text>
+        //   </AddressWrapper>
+        // );
       }
 
       if (cfxAddress.startsWith('invalid-')) {
@@ -192,7 +197,9 @@ export const AddressContainer = withTranslation()(
         const typeText = t(
           isInternalContract
             ? translations.general.internalContract
-            : translations.general.contract,
+            : verify
+            ? translations.general.verifiedContract
+            : translations.general.unverifiedContract,
         );
         return RenderAddress({
           cfxAddress,
@@ -208,11 +215,22 @@ export const AddressContainer = withTranslation()(
               }`}
             >
               <Text span hoverValue={typeText}>
-                {isInternalContract ? (
-                  <img src={InternalContractIcon} alt={typeText} />
-                ) : (
-                  <img src={ContractIcon} alt={typeText} />
-                )}
+                <ImgWrapper>
+                  {isInternalContract ? (
+                    <img src={InternalContractIcon} alt={typeText} />
+                  ) : (
+                    <>
+                      <img src={ContractIcon} alt={typeText} />
+                      {verify ? (
+                        <img
+                          className={'verified'}
+                          src={VerifiedIcon}
+                          alt={''}
+                        />
+                      ) : null}
+                    </>
+                  )}
+                </ImgWrapper>
               </Text>
             </IconWrapper>
           ) : null,
@@ -254,18 +272,10 @@ export const AddressContainer = withTranslation()(
     },
   ),
 );
-
-const IconWrapper = styled.span`
-  margin-right: 2px;
-
-  &.float {
-    margin-left: -18px;
-  }
-
-  svg {
-    vertical-align: bottom;
-    margin-bottom: 5px;
-  }
+const ImgWrapper = styled.span`
+  position: relative;
+  width: 16px;
+  height: 16px;
 
   img {
     width: 16px;
@@ -273,10 +283,39 @@ const IconWrapper = styled.span`
     vertical-align: bottom;
     margin-bottom: 5px;
   }
+
+  .verified {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    bottom: -1px;
+    right: 1px;
+  }
+`;
+const IconWrapper = styled.span`
+  margin-right: 2px;
+  flex-shrink: 0;
+
+  &.float {
+    margin-left: -18px;
+  }
+
+  svg {
+    vertical-align: bottom;
+    margin-bottom: 4px;
+  }
+
+  img {
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+    margin-bottom: 4px;
+  }
 `;
 
 const AddressWrapper = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  /* display: inline-block; */
   font-family: ${monospaceFont};
 
   // TODO icon position
@@ -295,7 +334,7 @@ const addressStyle = (props: any) => `
   display: inline-flex !important;
   flex-wrap: nowrap;
   max-width: ${
-    props.maxwidth || (props.alias ? 190 : defaultPCMaxWidth)
+    props.maxwidth || (props.alias ? 180 : defaultPCMaxWidth)
   }px !important;
   outline: none;
   
