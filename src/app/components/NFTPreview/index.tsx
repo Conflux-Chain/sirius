@@ -127,12 +127,18 @@ export const NFTPreview = React.memo(
                   src={imageUri}
                   preview={true}
                   alt={tokenId + ''}
+                  fallback={tokenIdNotFound}
                 />
               )
             ) : isFirstTime ? (
               <Skeleton.Image />
             ) : (
-              <Image width={500} src={NotFoundIcon} alt={'not found'} />
+              <Image
+                width={500}
+                src={NotFoundIcon}
+                alt={'not found'}
+                fallback={tokenIdNotFound}
+              />
             )}
             <div className="info">
               <div className="name">{imageName}</div>
