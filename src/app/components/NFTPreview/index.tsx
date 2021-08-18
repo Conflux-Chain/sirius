@@ -141,7 +141,9 @@ export const NFTPreview = React.memo(
               />
             )}
             <div className="info">
-              <div className="name">{imageName}</div>
+              <Tooltip text={imageName} placement={'top-start'} hoverable>
+                <div className="name">{imageName}</div>
+              </Tooltip>
               <Tooltip text={tokenId} placement={'top-start'} hoverable>
                 <div className="id">
                   {t(translations.nftChecker.tokenId)}:{tokenId}
@@ -215,8 +217,10 @@ const NFTCard = styled.div`
     color: #002257;
 
     .name {
-      height: 1em;
-      margin-bottom: 6px;
+      height: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       > span {
         font-size: 10px;
