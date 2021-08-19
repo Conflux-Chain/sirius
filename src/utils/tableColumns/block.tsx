@@ -218,6 +218,7 @@ const SpanWrap = styled.span`
 const StyledGasPercentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin: -8px 0;
 
   .gas-detail {
     margin-bottom: -10px;
