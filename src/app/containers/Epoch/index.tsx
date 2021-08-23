@@ -16,7 +16,7 @@ export const Epoch = () => {
   const { number } = useParams<epochNumber>();
   const { t } = useTranslation();
   const [ageFormat, toggleAgeFormat] = useAge();
-  const url = `/block?epochNumber=${number}`;
+  const url = `/block?minEpochNumber=${number}&maxEpochNumber=${number}`;
 
   const columnsWidth = [2, 4, 2, 4, 3, 4, 4];
   const columns = [
