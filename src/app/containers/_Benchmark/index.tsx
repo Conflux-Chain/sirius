@@ -8,7 +8,6 @@ export default function ScanBenchmark() {
   const [result, setResult] = useState<any>({});
 
   const handleComplete = React.useCallback(results => {
-    console.log(results);
     setResult(results);
   }, []);
 

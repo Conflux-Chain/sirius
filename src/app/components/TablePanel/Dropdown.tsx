@@ -7,8 +7,7 @@ import clsx from 'clsx';
 import { Check } from '@zeit-ui/react-icons';
 import { media } from 'styles/media';
 import { ActionButton } from '../ActionButton';
-
-import imgDot from 'images/contract-address/dot-dot-dot.svg';
+import MoreHorizontal from '@zeit-ui/react-icons/moreHorizontal';
 
 // options example:
 // [
@@ -108,7 +107,7 @@ export const TableSearchDropdown = ({
   return (
     <StyledDropdownWrapper>
       <ActionButton onClick={() => setVisible(!visible)}>
-        <img src={imgDot} alt="alarm" />
+        <MoreHorizontal size={18} />
       </ActionButton>
       {visible && (
         <div className="option-container" ref={dropdownRef}>

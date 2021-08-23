@@ -8,7 +8,7 @@ import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { translations } from 'locales/i18n';
 import BigNumber from 'bignumber.js';
 // import { toThousands } from 'utils';
-import { TxnSwitcher } from './Common';
+import { TxnSwitcher, Title } from './components';
 import { isAccountAddress } from 'utils';
 
 interface Props {
@@ -93,25 +93,22 @@ export const PendingTxns = ({ address }: Props) => {
     transactionColunms.pendingReason,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  const { data, total, loading } = state;
+  const { data, loading } = state;
 
-  const tableHeader = () => {
-    return (
-      <div>
+  const title = ({ total, listLimit }) => (
+    <Title
+      address={address}
+      total={total}
+      listLimit={listLimit}
+      showFilter={false}
+      extraContent={
         <TxnSwitcher
           total={total}
           isAccount={isAccountAddress(address)}
         ></TxnSwitcher>
-        {/* {total > 10
-          ? t(translations.transactions.pendingTotal, {
-              total: toThousands(total),
-            })
-          : t(translations.general.totalRecord, {
-              total: toThousands(total),
-            })} */}
-      </div>
-    );
-  };
+      }
+    />
+  );
 
   return (
     <TablePanelNew
@@ -119,7 +116,7 @@ export const PendingTxns = ({ address }: Props) => {
       pagination={false}
       dataSource={data}
       loading={loading}
-      title={tableHeader}
+      title={title}
       rowKey="hash"
     ></TablePanelNew>
   );

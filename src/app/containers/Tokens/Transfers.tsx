@@ -1,25 +1,12 @@
 import React from 'react';
-import {
-  TablePanel as TablePanelNew,
-  TitleTotal,
-} from 'app/components/TablePanelNew';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { cfxTokenTypes } from 'utils/constants';
-import { media, useBreakpoint } from 'styles/media';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
-import styled from 'styled-components/macro';
-import { translations } from 'locales/i18n';
-import { useTranslation } from 'react-i18next';
-import { isAddress, isHash } from 'utils';
-import { useHistory, useLocation } from 'react-router-dom';
-import {
-  TableSearchDatepicker,
-  TableSearchInput,
-} from 'app/components/TablePanel';
 import qs from 'query-string';
-import { useMessages } from '@cfxjs/react-ui';
-import lodash from 'lodash';
+import { Title } from 'app/containers/Transactions/components';
+import { AdvancedSearchFormProps } from 'app/containers/Transactions/components/AdvancedSearchForm';
 
 interface Props {
   type: string;
@@ -36,21 +23,7 @@ interface Query {
 export const Transfers = ({ type, address, decimals }: Props) => {
   const url = `/transfer?address=${address}&transferType=${type}`;
 
-  const bp = useBreakpoint();
-  const { t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
-  const [, setMessage] = useMessages();
-
   const [ageFormat, toggleAgeFormat] = useAge();
-
-  let {
-    accountAddress: filterAddr,
-    transactionHash: filterHash,
-    tokenId: filterTokenId,
-    tab: currentTab,
-    ...others
-  } = qs.parse(location.search);
 
   let columnsWidth = [3, 6, 6, 4, 4];
   let columns = [
@@ -89,70 +62,47 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 
-  const filter =
-    (filterAddr as string) ||
-    (filterHash as string) ||
-    (filterTokenId as string) ||
-    '';
+  const title = ({ total, listLimit }) => {
+    let searchOptions: AdvancedSearchFormProps = {
+      transactionHash: true,
+      fromOrTo: true,
+      epoch: true,
+      rangePicker: true,
+      button: {
+        col: {
+          xs: 24,
+          sm: 18,
+          md: 18,
+          lg: 18,
+          xl: 18,
+        },
+      },
+    };
 
-  const onFilter = (filter: string) => {
-    let object: Query = {};
-
-    if (filter) {
-      if (isAddress(filter)) {
-        object.accountAddress = filter;
-      } else if (isHash(filter)) {
-        object.transactionHash = filter;
-      } else if (type !== cfxTokenTypes.erc20 && lodash.isInteger(+filter)) {
-        object.tokenId = filter;
-      } else {
-        setMessage({
-          text: t(translations.token.transferList.searchError),
-        });
-        return;
-      }
+    if (type !== cfxTokenTypes.erc20) {
+      searchOptions.tokenId = true;
+      searchOptions.button = {
+        col: {
+          xs: 24,
+          sm: 14,
+          md: 14,
+          lg: 14,
+          xl: 14,
+        },
+      };
     }
 
-    const urlWithQuery = qs.stringifyUrl({
-      url: location.pathname,
-      query: {
-        ...others,
-        skip: '0',
-        ...object,
-      },
-    });
-    history.push(urlWithQuery);
-  };
-
-  const tableHeader = ({ total, listLimit }) => {
     return (
-      <StyledSearchAreaWrapper>
-        <TitleTotal total={total} listLimit={listLimit} />
-        <div className="token-search-container">
-          <TableSearchInput
-            onFilter={onFilter}
-            filter={filter}
-            placeholder={
-              type === cfxTokenTypes.erc20
-                ? `${t(
-                    translations.general.searchInputPlaceholder.txnHash,
-                  )} / ${t(
-                    translations.general.searchInputPlaceholder.holderAddress,
-                  )}`.replace(bp === 's' ? / \/ /gi : '/', '/')
-                : `${t(
-                    translations.general.searchInputPlaceholder.txnHash,
-                  )} / ${t(
-                    translations.general.searchInputPlaceholder.holderAddress,
-                  )} / ${t(
-                    translations.general.searchInputPlaceholder.tokenID,
-                  )}`.replace(bp === 's' ? / \/ /gi : '/', '/')
-            }
-          />
-          <TableSearchDatepicker />
-        </div>
-      </StyledSearchAreaWrapper>
+      <Title
+        address={address}
+        total={total}
+        listLimit={listLimit}
+        showSearch={true}
+        searchOptions={searchOptions}
+      />
     );
   };
+
   const tableFooter = (
     <DownloadCSV
       url={qs.stringifyUrl({
@@ -173,31 +123,9 @@ export const Transfers = ({ type, address, decimals }: Props) => {
         url={url}
         columns={columns}
         rowKey={(row, index) => `${row.transactionHash}${index}`}
-        title={tableHeader}
+        title={title}
         footer={() => tableFooter}
       ></TablePanelNew>
     </>
   );
 };
-
-const StyledSearchAreaWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-
-  .token-search-container {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-
-    ${media.s} {
-      justify-content: flex-start;
-      margin-top: 0.3571rem;
-    }
-  }
-
-  ${media.s} {
-    justify-content: flex-start;
-  }
-`;

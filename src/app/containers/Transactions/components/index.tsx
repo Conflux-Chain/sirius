@@ -1,30 +1,24 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
-import {
-  TableSearchDatepicker,
-  TableSearchDropdown,
-  TableSearchInput,
-} from 'app/components/TablePanel';
-import {
-  toThousands,
-  // isAccountAddress,
-  isContractAddress,
-  isInnerContractAddress,
-  isAddress,
-  isHash,
-} from 'utils';
+import { TableSearchDropdown } from 'app/components/TablePanel';
+import { toThousands, isContractAddress, isInnerContractAddress } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';
 import { useParams } from 'react-router-dom';
-import lodash from 'lodash';
-import { useMessages } from '@cfxjs/react-ui';
 import { useHistory, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import { TitleTotal } from 'app/components/TablePanelNew';
+import {
+  AdvancedSearchForm,
+  AdvancedSearchFormProps,
+} from './AdvancedSearchForm';
+import ChevronDown from '@zeit-ui/react-icons/chevronDown';
+import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
+import { Link } from 'app/components/Link/Loadable';
 interface FooterProps {
   type?: string;
   pathname: string;
@@ -34,163 +28,31 @@ interface QueryProps {
   [index: string]: string;
 }
 
-interface SearchInputQueryProps {
-  accountAddress?: string;
-  opponentAddress?: string;
-  address?: string;
-  transactionHash?: string;
-  blockHash?: string;
-  tokenId?: string;
-  epochNumber?: string;
-}
-
-interface SearchInputProps {
-  type?: 'txn' | 'crc20' | 'crc721' | 'crc1155' | 'minedBlock' | 'cfxTxn';
-  inputFields?: Array<
-    'blockHash' | 'txnHash' | 'address' | 'tokenID' | 'epoch' | 'accountAddress'
-  >;
-  addressType?: 'user' | 'contract';
-}
-
 interface TitleProps {
   address: string;
   total: number;
   listLimit?: number;
-  showDatepicker?: boolean;
   showTotalTip?: boolean;
   showFilter?: boolean;
-  showSearchInput?: boolean;
+  showSearch?: boolean;
+  searchOptions?: AdvancedSearchFormProps;
   filterOptions?: Array<any>; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
-  searchInputOptions?: SearchInputProps; // ['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming', 'status1', 'txTypeCreate']
+  extraContent?: React.ReactNode;
 }
-
-// accountAddress - user address
-// address - contract address
-
-// inputFields: ['blockHash', 'txnHash', 'address', 'tokenId', 'epochNumber']
-// type: txn, crc20, crc721, crc1155, minedBlock, cfxTxn
-const SearchInput = React.memo(
-  ({
-    type = 'txn',
-    inputFields = [],
-  }: // addressType = 'user',
-  SearchInputProps) => {
-    const [, setMessage] = useMessages();
-    const location = useLocation();
-    const history = useHistory();
-    const { t } = useTranslation();
-
-    const {
-      accountAddress,
-      opponentAddress,
-      address,
-      transactionHash,
-      blockHash,
-      tokenId,
-      epochNumber,
-      ...others
-    } = qs.parse(location.search);
-
-    let inputValue =
-      accountAddress ||
-      opponentAddress ||
-      address ||
-      transactionHash ||
-      blockHash ||
-      tokenId ||
-      epochNumber;
-
-    const placeholder = useMemo(() => {
-      const len = inputFields.length;
-      return inputFields
-        .map((i, index) => {
-          return (
-            t(translations.general.searchInputPlaceholder[i]) +
-            (index === len - 1 ? '' : ' / ')
-          );
-        })
-        .join('');
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const onSearch = (str: string) => {
-      let object: SearchInputQueryProps = {};
-
-      if (str) {
-        if (type === 'txn') {
-          // /transaction api always need a accountAddress param
-          object.accountAddress = accountAddress as string;
-        }
-
-        if (isAddress(str)) {
-          object.opponentAddress = str;
-          // if (type === 'txn') {
-          //   object.accountAddress = str;
-          // } else if (isContractAddress(str) || isInnerContractAddress(str)) {
-          //   object.address = str;
-          // } else {
-          //   object.accountAddress = str;
-          // }
-        } else if (isHash(str)) {
-          if (type === 'minedBlock') {
-            object.blockHash = str;
-          } else {
-            object.transactionHash = str;
-          }
-        } else if (lodash.isInteger(+str)) {
-          if (['crc721', 'crc1155'].includes(type)) {
-            object.tokenId = str;
-          } else if (type === 'minedBlock') {
-            object.epochNumber = str;
-            // @ts-ignore
-            // object.miner = '';
-          } else {
-            setMessage({
-              text: t(translations.token.transferList.searchError),
-            });
-            return;
-          }
-        } else {
-          setMessage({
-            text: t(translations.token.transferList.searchError),
-          });
-          return;
-        }
-      }
-
-      const urlWithQuery = qs.stringifyUrl({
-        url: location.pathname,
-        query: {
-          ...others,
-          ...object,
-          skip: '0',
-        },
-      });
-      history.push(urlWithQuery);
-    };
-
-    return (
-      <TableSearchInput
-        onFilter={onSearch}
-        filter={inputValue as string}
-        placeholder={placeholder}
-      />
-    );
-  },
-);
 
 export const Title = ({
   address,
   total,
   listLimit,
-  showDatepicker,
   showTotalTip,
   showFilter,
-  showSearchInput,
+  showSearch,
   filterOptions = [],
-  searchInputOptions,
+  extraContent,
+  searchOptions = {},
 }: Readonly<TitleProps>) => {
   const { t } = useTranslation();
+  const [fold, setFold] = useState(false);
 
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
@@ -228,15 +90,6 @@ export const Title = ({
     [t],
   );
 
-  const getSearchInput = useMemo(() => {
-    return showSearchInput ? <SearchInput {...searchInputOptions} /> : null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showSearchInput]);
-
-  const getSearchDatepicker = useMemo(() => {
-    return showDatepicker ? <TableSearchDatepicker /> : null;
-  }, [showDatepicker]);
-
   const getSearchFilter = useMemo(() => {
     if (!isContract) {
       if (showFilter && filterOptions.length > 0) {
@@ -254,26 +107,36 @@ export const Title = ({
   const getTotalTip = useMemo(() => {
     return showTotalTip ? (
       <TitleTotal total={total} listLimit={listLimit || total}></TitleTotal>
-    ) : // ? t(
-    //     total > 10000
-    //       ? translations.general.totalRecordLimit
-    //       : translations.general.totalRecord,
-    //     {
-    //       total: toThousands(total),
-    //     },
-    //   )
-    null;
+    ) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [total, listLimit]);
 
+  const getSearch = useMemo(() => {
+    return showSearch ? (
+      <StyledAdvancedSwitchWrapper onClick={() => setFold(!fold)}>
+        {fold ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+      </StyledAdvancedSwitchWrapper>
+    ) : null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fold]);
+
   return (
     <StyledTableHeaderWrapper>
-      <div className="table-title-tip-total">{getTotalTip}</div>
-      <StyledFilterWrapper>
-        {getSearchInput}
-        {getSearchDatepicker}
-        {getSearchFilter}
-      </StyledFilterWrapper>
+      <div className="table-header-top">
+        <div className="table-title-tip-total">{getTotalTip}</div>
+        {extraContent ? (
+          <div className="table-title-extra-content">{extraContent}</div>
+        ) : null}
+        <div className="table-title-filter-wrapper">
+          {getSearchFilter}
+          {getSearch}
+        </div>
+      </div>
+      {fold ? null : (
+        <div className="table-header-bottom">
+          {<AdvancedSearchForm {...searchOptions} />}
+        </div>
+      )}
     </StyledTableHeaderWrapper>
   );
 };
@@ -281,16 +144,11 @@ Title.defaultProps = {
   address: '',
   total: 0,
   listLimit: 0,
-  showDatepicker: false,
   showTotalTip: true,
   showFilter: false,
-  showSearchInput: false,
+  showSearch: false,
   filterOptions: [],
-  searchInputOptions: {
-    type: 'txn',
-    addressType: 'user',
-    inputFields: [],
-  },
+  extraContent: null,
 };
 
 export const Footer = ({ pathname, type }: Readonly<FooterProps>) => {
@@ -351,6 +209,95 @@ export const TxnSwitcher = ({
   total = 0,
   isAccount = false,
 }: TxnSwitcherProps) => {
+  const location = useLocation();
+  const { t } = useTranslation();
+
+  const { transactionType = 'executed' } = qs.parse(location.search);
+  const isExecuted = transactionType === 'executed';
+
+  if (isAccount) {
+    return (
+      <Link
+        href={qs.stringifyUrl({
+          url: location.pathname,
+          query: {
+            transactionType: isExecuted ? 'pending' : 'executed',
+          },
+        })}
+      >
+        {t(translations.transactions.viewTxn, {
+          type: isExecuted
+            ? t(translations.transactions.pending)
+            : t(translations.transactions.executed),
+        })}
+      </Link>
+    );
+  } else {
+    return null;
+  }
+};
+
+const StyledTableHeaderWrapper = styled.div`
+  .table-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ${media.s} {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .table-title-tip-total {
+      margin: 0.3571rem 0;
+    }
+
+    .table-title-button-fold {
+      display: flex;
+      align-items: center;
+    }
+
+    .table-title-filter-wrapper {
+      display: flex;
+    }
+
+    .table-title-extra-content {
+      flex-grow: 1;
+    }
+  }
+  .table-header-bottom {
+    margin-top: 16px;
+    border-top: 1px solid #e8e9ea;
+    padding: 8px 16px 0;
+    margin-bottom: -12px;
+  }
+`;
+
+const StyledAdvancedSwitchWrapper = styled.span`
+  min-width: 2.2857rem;
+  height: 2.2857rem;
+  padding: 0 0.4286rem;
+  color: #b1b3b9;
+  border-radius: 0.2857rem;
+  background-color: rgba(0, 84, 254, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 84, 254, 0.1);
+    color: #b1b3b9;
+  }
+`;
+
+// @remove content, should be removed after 2 sprint, backup date: 2021.8.18, start >>>
+export const TxnSwitcherBak = ({
+  total = 0,
+  isAccount = false,
+}: TxnSwitcherProps) => {
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
@@ -384,7 +331,7 @@ export const TxnSwitcher = ({
         });
 
   return (
-    <StyledTxnSwitcherWrapper>
+    <StyledTxnSwitcherWrapperBak>
       <div
         className={clsx('txn-switcher-button', {
           active: type === 'executed',
@@ -404,43 +351,11 @@ export const TxnSwitcher = ({
         </div>
       ) : null}
       <div className="txn-switcher-tip">{tip}</div>
-    </StyledTxnSwitcherWrapper>
+    </StyledTxnSwitcherWrapperBak>
   );
 };
 
-const StyledTableHeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  ${media.s} {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .table-title-tip-total {
-    margin: 0.3571rem 0;
-  }
-`;
-
-const StyledFilterWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  z-index: 200;
-
-  ${media.s} {
-    flex-direction: row;
-    align-items: flex-start;
-    right: unset;
-    left: 0;
-    top: 7rem;
-    z-index: 10;
-  }
-`;
-
-const StyledTxnSwitcherWrapper = styled.div`
+const StyledTxnSwitcherWrapperBak = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -474,3 +389,4 @@ const StyledTxnSwitcherWrapper = styled.div`
     }
   }
 `;
+// @remove content, should be removed after 2 sprint, backup date: 2021.8.18, end <<<
