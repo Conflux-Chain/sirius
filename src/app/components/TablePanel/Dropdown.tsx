@@ -130,6 +130,7 @@ export const TableSearchDropdown = ({
 const StyledDropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
+  margin-left: 0.5714rem;
 
   .option-container {
     position: absolute;

@@ -39,24 +39,32 @@ export const MinedBlocks = ({ address }: Props) => {
       listLimit={listLimit}
       showSearch={true}
       searchOptions={{
-        blockHash: true,
+        blockHash: {
+          col: {
+            xs: 24,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
+          },
+        },
         epoch: true,
         rangePicker: {
           col: {
             xs: 24,
-            sm: 8,
-            md: 8,
-            lg: 8,
-            xl: 8,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
           },
         },
         button: {
           col: {
             xs: 24,
-            sm: 24,
-            md: 24,
-            lg: 24,
-            xl: 24,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
           },
         },
       }}

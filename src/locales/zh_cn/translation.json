@@ -515,42 +515,42 @@
   "general": {
     "advancedSearch": {
       "label": {
-        "txnHash": "Txn Hash",
-        "blockHash": "Block Hash",
-        "fromOrTo": "From or To",
-        "from": "From",
-        "to": "To",
-        "tokenId": "TokenID",
-        "nonce": "Nonce",
-        "token": "Token",
-        "rangePicker": "Date",
-        "epochNumber": "Epoch Number",
-        "minEpochNumber": "Min Epoch Number",
-        "maxEpochNumber": "Max Epoch Number"
+        "txnHash": "交易哈希",
+        "blockHash": "区块哈希",
+        "fromOrTo": "发送方或接收方",
+        "from": "发送方",
+        "to": "接收方",
+        "tokenId": "代币 ID",
+        "nonce": "随机数",
+        "token": "代币",
+        "rangePicker": "日期",
+        "epochNumber": "纪元",
+        "minEpochNumber": "最小纪元",
+        "maxEpochNumber": "最大纪元"
       },
       "error": {
-        "invalidHash": "invalid transaction hash format",
-        "invalidAddress": "Invalid address format"
+        "invalidHash": "哈希值格式错误",
+        "invalidAddress": "地址格式错误"
       },
       "placeholder": {
-        "pleaseSelect": "Please select",
-        "pleaseEnter": "Please enter",
-        "pleaseEnterTxnHash": "Please enter a txn hash",
-        "pleaseEnterBlockHash": "Please enter a block hash",
-        "pleaseEnterAddress": "Please enter an address",
-        "pleaseEnterTokenId": "Please enter a tokenID",
-        "pleaseEnterNonce": "Please enter a nonce",
-        "pleaseEnterEpochNumber": "Please enter a epochNumber"
+        "pleaseSelect": "请选择",
+        "pleaseEnter": "请输入",
+        "pleaseEnterTxnHash": "请输入交易哈希",
+        "pleaseEnterBlockHash": "请输入区块哈希",
+        "pleaseEnterAddress": "请输入地址",
+        "pleaseEnterTokenId": "请输入代币 ID",
+        "pleaseEnterNonce": "请输入随机数",
+        "pleaseEnterEpochNumber": "请输入纪元"
       },
       "button": {
-        "lookup": "Look Up",
-        "reset": "Reset"
+        "lookup": "查找",
+        "reset": "重置"
       },
       "others": {
-        "recommend": "Recommend",
-        "recommendTip": "Tokens with the top 10 txn count in the last 7 days",
-        "searchResult": "Search Result",
-        "noData": "No data"
+        "recommend": "推荐",
+        "recommendTip": "最近 7 天内交易数排名前 10 的代币",
+        "searchResult": "搜索结果",
+        "noData": "无数据"
       }
     },
     "tokenTypeTag": {

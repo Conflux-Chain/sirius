@@ -524,12 +524,12 @@
         "nonce": "Nonce",
         "token": "Token",
         "rangePicker": "Date",
-        "epochNumber": "Epoch Number",
-        "minEpochNumber": "Min Epoch Number",
-        "maxEpochNumber": "Max Epoch Number"
+        "epochNumber": "Epoch",
+        "minEpochNumber": "Min Epoch",
+        "maxEpochNumber": "Max Epoch"
       },
       "error": {
-        "invalidHash": "invalid transaction hash format",
+        "invalidHash": "Invalid hash format",
         "invalidAddress": "Invalid address format"
       },
       "placeholder": {
@@ -540,10 +540,10 @@
         "pleaseEnterAddress": "Please enter an address",
         "pleaseEnterTokenId": "Please enter a tokenID",
         "pleaseEnterNonce": "Please enter a nonce",
-        "pleaseEnterEpochNumber": "Please enter a epochNumber"
+        "pleaseEnterEpochNumber": "Please enter an epoch"
       },
       "button": {
-        "lookup": "Look Up",
+        "lookup": "Search",
         "reset": "Reset"
       },
       "others": {
@@ -1284,7 +1284,7 @@
     "enterEpochNo": "Enter a Epoch No",
     "invalidEpochNo": "Invalid Epoch No",
     "error": "Can not be empty",
-    "lookUp": "Look Up",
+    "lookUp": "Search",
     "reset": "Reset",
     "tokenQuantityForAccountAddress": "Token Quantity for Account Address",
     "totalSupplyForContractAddress": "Total Supply for Contract Address",
