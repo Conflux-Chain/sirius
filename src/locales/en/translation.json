@@ -533,7 +533,7 @@
         "invalidAddress": "Invalid address format"
       },
       "placeholder": {
-        "pleaseSelect": "Please select",
+        "pleaseSelect": "Up to 3 tokens can be selected",
         "pleaseEnter": "Please enter",
         "pleaseEnterTxnHash": "Please enter a txn hash",
         "pleaseEnterBlockHash": "Please enter a block hash",

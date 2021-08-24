@@ -533,7 +533,7 @@
         "invalidAddress": "地址格式错误"
       },
       "placeholder": {
-        "pleaseSelect": "请选择",
+        "pleaseSelect": "最多支持选择 3 种代币",
         "pleaseEnter": "请输入",
         "pleaseEnterTxnHash": "请输入交易哈希",
         "pleaseEnterBlockHash": "请输入区块哈希",
