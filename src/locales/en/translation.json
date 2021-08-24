@@ -518,6 +518,7 @@
         "txnHash": "Txn Hash",
         "blockHash": "Block Hash",
         "fromOrTo": "From or To",
+        "address": "Address",
         "from": "From",
         "to": "To",
         "tokenId": "TokenID",

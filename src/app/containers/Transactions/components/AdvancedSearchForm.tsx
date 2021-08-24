@@ -449,7 +449,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         <Col {...colFromOrTo} key="fromOrTo">
           <Form.Item
             name={`fromOrTo`}
-            label={t(translations.general.advancedSearch.label.fromOrTo)}
+            label={t(translations.general.advancedSearch.label.address)}
             normalize={value => value.trim()}
             rules={[{ validator: validators.isAddress }]}
           >

@@ -518,6 +518,7 @@
         "txnHash": "交易哈希",
         "blockHash": "区块哈希",
         "fromOrTo": "发送方或接收方",
+        "address": "地址",
         "from": "发送方",
         "to": "接收方",
         "tokenId": "代币 ID",
