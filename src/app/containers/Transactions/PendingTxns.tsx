@@ -93,9 +93,9 @@ export const PendingTxns = ({ address }: Props) => {
     transactionColunms.pendingReason,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  const { data, loading } = state;
+  const { data, loading, total } = state;
 
-  const title = ({ total, listLimit }) => (
+  const title = ({ _, listLimit }) => (
     <Title
       address={address}
       total={total}
