@@ -13,6 +13,7 @@ export const ExcutedTxns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
 
   const url = `/transaction?accountAddress=${address}`;
+  const isAccount = isAccountAddress(address);
 
   const columnsWidth = [4, 3, 7, 6, 2, 3, 3, 3, 5];
   const columns = [
@@ -32,6 +33,48 @@ export const ExcutedTxns = ({ address }: Props) => {
     transactionColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
+  let searchOptions = {
+    transactionHash: true,
+    fromOrTo: true,
+    epoch: true,
+    rangePicker: true,
+    nonce: true,
+    button: {
+      col: {
+        xs: 24,
+        sm: 14,
+        md: 14,
+        lg: 14,
+        xl: 14,
+      },
+    },
+  };
+
+  if (!isAccount) {
+    // @ts-ignore
+    searchOptions.nonce = false;
+    searchOptions.button = {
+      col: {
+        xs: 24,
+        sm: 18,
+        md: 18,
+        lg: 18,
+        xl: 18,
+      },
+    };
+    // @ts-ignore
+    searchOptions.fromOrTo = {
+      col: {
+        xs: 24,
+        sm: 12,
+        md: 12,
+        lg: 12,
+        xl: 12,
+      },
+      disabled: true,
+    };
+  }
+
   const title = ({ total, listLimit }) => (
     <Title
       address={address}
@@ -39,22 +82,7 @@ export const ExcutedTxns = ({ address }: Props) => {
       listLimit={listLimit}
       showFilter={true}
       showSearch={true}
-      searchOptions={{
-        transactionHash: true,
-        fromOrTo: true,
-        nonce: true,
-        epoch: true,
-        rangePicker: true,
-        button: {
-          col: {
-            xs: 24,
-            sm: 10,
-            md: 10,
-            lg: 10,
-            xl: 10,
-          },
-        },
-      }}
+      searchOptions={searchOptions}
       filterOptions={[
         'txTypeAll',
         'txTypeOutgoing',
@@ -63,10 +91,7 @@ export const ExcutedTxns = ({ address }: Props) => {
         'txTypeCreate',
       ]}
       extraContent={
-        <TxnSwitcher
-          total={total}
-          isAccount={isAccountAddress(address)}
-        ></TxnSwitcher>
+        <TxnSwitcher total={total} isAccount={isAccount}></TxnSwitcher>
       }
     />
   );

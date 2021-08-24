@@ -41,13 +41,14 @@ export const CRC20Txns = ({ address }: Props) => {
         fromOrTo: true,
         epoch: true,
         rangePicker: true,
+        token: true,
         button: {
           col: {
             xs: 24,
-            sm: 18,
-            md: 18,
-            lg: 18,
-            xl: 18,
+            sm: 10,
+            md: 10,
+            lg: 10,
+            xl: 10,
           },
         },
       }}

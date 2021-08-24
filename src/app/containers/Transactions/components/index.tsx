@@ -15,7 +15,7 @@ import {
   AdvancedSearchForm,
   AdvancedSearchFormProps,
 } from './AdvancedSearchForm';
-import ChevronDown from '@zeit-ui/react-icons/chevronDown';
+import Search from '@zeit-ui/react-icons/search';
 import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
 import { Link } from 'app/components/Link/Loadable';
@@ -52,7 +52,7 @@ export const Title = ({
   searchOptions = {},
 }: Readonly<TitleProps>) => {
   const { t } = useTranslation();
-  const [fold, setFold] = useState(false);
+  const [fold, setFold] = useState(true);
 
   const isContract = useMemo(
     () => isContractAddress(address) || isInnerContractAddress(address),
@@ -114,7 +114,7 @@ export const Title = ({
   const getSearch = useMemo(() => {
     return showSearch ? (
       <StyledAdvancedSwitchWrapper onClick={() => setFold(!fold)}>
-        {fold ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+        {fold ? <Search size={18} /> : <ChevronUp size={18} />}
       </StyledAdvancedSwitchWrapper>
     ) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,8 +128,8 @@ export const Title = ({
           <div className="table-title-extra-content">{extraContent}</div>
         ) : null}
         <div className="table-title-filter-wrapper">
-          {getSearchFilter}
           {getSearch}
+          {getSearchFilter}
         </div>
       </div>
       {fold ? null : (

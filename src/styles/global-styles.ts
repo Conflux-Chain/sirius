@@ -282,6 +282,14 @@ export const GlobalStyle = createGlobalStyle`
   /* ---------- ant design form, start ---------- */
   .ant-row.ant-form-item {
     margin-bottom: 12px;
+
+    .ant-select-selection-item {
+      text-align: left;
+    }
+
+    .ant-form-item-label > label{
+      color: #74798c;
+    }
   }
   /* ---------- ant design form, end ---------- */
 

@@ -28,6 +28,7 @@ type SearchFormItemsProps =
   | boolean
   | {
       col: ColProps;
+      disabled?: boolean;
     };
 
 export interface AdvancedSearchFormProps {
@@ -67,10 +68,10 @@ const defaultProps = {
   transactionHash: {
     col: {
       xs: 24,
-      sm: 8,
-      md: 8,
-      lg: 8,
-      xl: 8,
+      sm: 6,
+      md: 6,
+      lg: 6,
+      xl: 6,
     },
   },
   blockHash: {
@@ -85,10 +86,10 @@ const defaultProps = {
   fromOrTo: {
     col: {
       xs: 24,
-      sm: 8,
-      md: 8,
-      lg: 8,
-      xl: 8,
+      sm: 12,
+      md: 12,
+      lg: 12,
+      xl: 12,
     },
   },
   rangePicker: {
@@ -112,19 +113,19 @@ const defaultProps = {
   nonce: {
     col: {
       xs: 24,
-      sm: 8,
-      md: 8,
-      lg: 8,
-      xl: 8,
+      sm: 4,
+      md: 4,
+      lg: 4,
+      xl: 4,
     },
   },
   epoch: {
     col: {
       xs: 12,
-      sm: 4,
-      md: 4,
-      lg: 4,
-      xl: 4,
+      sm: 3,
+      md: 3,
+      lg: 3,
+      xl: 3,
     },
   },
   token: {
@@ -153,6 +154,7 @@ const normalizeNumericString = (value, prevValue) => {
     : prevValue;
 };
 
+// @todo, props should be changed to Array like, easy to sort filter items
 export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
   const { t, i18n } = useTranslation();
   const { pathname, search } = useLocation();
@@ -161,6 +163,23 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
   const [form] = Form.useForm();
   const [fromOrToValue, setFromOrToValue] = useState('from');
   const [tokenValue, setTokenValue] = useState<TokenType[]>([]);
+  const fromOrToOptions = useMemo(() => {
+    return [
+      {
+        key: 'from',
+        label: t(translations.general.advancedSearch.label.from),
+      },
+      {
+        key: 'to',
+        label: t(translations.general.advancedSearch.label.to),
+      },
+      {
+        key: 'fromOrTo',
+        label: t(translations.general.advancedSearch.label.fromOrTo),
+      },
+    ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const {
     blockHash,
@@ -443,49 +462,24 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                     width: '8.5714rem',
                   }}
                   onChange={handleFromOrToChange}
+                  disabled={
+                    typeof props.fromOrTo === 'object' &&
+                    props.fromOrTo?.disabled
+                  }
                 >
-                  <Option value="from">
-                    {t(translations.general.advancedSearch.label.from)}
-                  </Option>
-                  <Option value="to">
-                    {t(translations.general.advancedSearch.label.to)}
-                  </Option>
-                  <Option value="fromOrTo">
-                    {t(translations.general.advancedSearch.label.fromOrTo)}
-                  </Option>
+                  {fromOrToOptions.map(o => {
+                    return (
+                      <Option value={o.key} key={o.key}>
+                        {o.label}
+                      </Option>
+                    );
+                  })}
                 </Select>
               }
               placeholder={t(
                 translations.general.advancedSearch.placeholder
                   .pleaseEnterAddress,
               )}
-              allowClear
-            />
-          </Form.Item>
-        </Col>,
-      );
-    }
-
-    if (nonce) {
-      const col =
-        typeof props.nonce !== 'boolean'
-          ? props.nonce?.col
-          : defaultProps.nonce.col;
-
-      children.push(
-        <Col {...col} key="nonce">
-          <Form.Item
-            name={`nonce`}
-            label={t(translations.general.advancedSearch.label.nonce)}
-            normalize={normalizeNumericString}
-          >
-            <Input
-              placeholder={t(
-                translations.general.advancedSearch.placeholder
-                  .pleaseEnterNonce,
-              )}
-              type="number"
-              min="0"
               allowClear
             />
           </Form.Item>
@@ -512,8 +506,8 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                 translations.general.advancedSearch.placeholder
                   .pleaseEnterEpochNumber,
               )}
-              type="number"
-              min="0"
+              // type="number"
+              // min="0"
               allowClear
             />
           </Form.Item>
@@ -531,9 +525,36 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                 translations.general.advancedSearch.placeholder
                   .pleaseEnterEpochNumber,
               )}
-              type="number"
-              min="0"
+              // type="number"
+              // min="0"
               allowClear
+            />
+          </Form.Item>
+        </Col>,
+      );
+    }
+
+    if (rangePicker) {
+      const col =
+        typeof props.rangePicker !== 'boolean'
+          ? props.rangePicker?.col
+          : defaultProps.rangePicker.col;
+
+      children.push(
+        <Col {...col} key="rangerPicker">
+          <Form.Item
+            name="rangePicker"
+            label={t(translations.general.advancedSearch.label.rangePicker)}
+          >
+            <RangePicker
+              style={{ width: '100%' }}
+              disabledDate={current => {
+                return (
+                  current > dayjs() ||
+                  // mainnet release
+                  current < dayjs('2020-10-29T00:00:00+08:00')
+                );
+              }}
             />
           </Form.Item>
         </Col>,
@@ -593,27 +614,27 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
       );
     }
 
-    if (rangePicker) {
+    if (nonce) {
       const col =
-        typeof props.rangePicker !== 'boolean'
-          ? props.rangePicker?.col
-          : defaultProps.rangePicker.col;
+        typeof props.nonce !== 'boolean'
+          ? props.nonce?.col
+          : defaultProps.nonce.col;
 
       children.push(
-        <Col {...col} key="rangerPicker">
+        <Col {...col} key="nonce">
           <Form.Item
-            name="rangePicker"
-            label={t(translations.general.advancedSearch.label.rangePicker)}
+            name={`nonce`}
+            label={t(translations.general.advancedSearch.label.nonce)}
+            normalize={normalizeNumericString}
           >
-            <RangePicker
-              style={{ width: '100%' }}
-              disabledDate={current => {
-                return (
-                  current > dayjs() ||
-                  // mainnet release
-                  current < dayjs('2020-10-29T00:00:00+08:00')
-                );
-              }}
+            <Input
+              placeholder={t(
+                translations.general.advancedSearch.placeholder
+                  .pleaseEnterNonce,
+              )}
+              type="number"
+              min="0"
+              allowClear
             />
           </Form.Item>
         </Col>,
