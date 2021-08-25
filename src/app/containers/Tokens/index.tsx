@@ -125,7 +125,7 @@ export function Tokens() {
         <title>{title}</title>
         <meta name="description" content={t(title)} />
       </Helmet>
-      <PageHeader subtitle={t(translations.tokens.tip)}>
+      <PageHeader>
         {title}
         <Tooltip
           hoverable
