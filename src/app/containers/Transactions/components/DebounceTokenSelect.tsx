@@ -230,7 +230,12 @@ export function DebounceTokenSelect<
               );
             })
           ) : (
-            <Option value={'searchResult-empty'} key={'searchResult-empty'}>
+            <Option
+              className="advanced-search-select-option-nodata"
+              value={'searchResult-empty'}
+              key={'searchResult-empty'}
+              disabled
+            >
               {t(translations.general.advancedSearch.others.noData)}
             </Option>
           )}
@@ -271,7 +276,12 @@ export function DebounceTokenSelect<
               );
             })
           ) : (
-            <Option value={'recommend-empty'} key={'recommend-empty'}>
+            <Option
+              className="advanced-search-select-option-nodata"
+              value={'recommend-empty'}
+              key={'recommend-empty'}
+              disabled
+            >
               {t(translations.general.advancedSearch.others.noData)}
             </Option>
           )}
@@ -286,11 +296,17 @@ const Globalstyle = createGlobalStyle`
     display: flex;
     align-items: center;
   }
+
   .advanced-search-select-option-img {
     width: 1.1429rem;
     height: 1.1429rem;
     margin-right: 0.2857rem;
   }
+
+  .advanced-search-select-option-nodata {
+    cursor: inherit;
+  }
+
   .ant-spin {
     display: flex;
   }
@@ -308,7 +324,7 @@ const StyledTagWrapper = styled.span`
   }
 `;
 
-const StyledInfoIconWrapper = styled.span`
+export const StyledInfoIconWrapper = styled.span`
   margin-left: 5px;
   cursor: pointer;
 `;

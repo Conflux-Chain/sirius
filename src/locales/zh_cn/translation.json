@@ -214,7 +214,6 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
-    "tip": "该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看",
     "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "crcTip": "{{crc}} 是发布在 Conflux 网络上，采用 {{erc}} 标准的数字资产。",
     "table": {
@@ -518,6 +517,7 @@
         "txnHash": "交易哈希",
         "blockHash": "区块哈希",
         "fromOrTo": "发送方或接收方",
+        "address": "地址",
         "from": "发送方",
         "to": "接收方",
         "tokenId": "代币 ID",
@@ -533,7 +533,7 @@
         "invalidAddress": "地址格式错误"
       },
       "placeholder": {
-        "pleaseSelect": "请选择",
+        "pleaseSelect": "最多支持选择 3 种代币",
         "pleaseEnter": "请输入",
         "pleaseEnterTxnHash": "请输入交易哈希",
         "pleaseEnterBlockHash": "请输入区块哈希",
