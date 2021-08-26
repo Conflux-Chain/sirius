@@ -539,9 +539,10 @@
         "pleaseEnterTxnHash": "Please enter a txn hash",
         "pleaseEnterBlockHash": "Please enter a block hash",
         "pleaseEnterAddress": "Please enter an address",
-        "pleaseEnterTokenId": "Please enter a tokenID",
+        "pleaseEnterTokenId": "e.g. 10",
         "pleaseEnterNonce": "Please enter a nonce",
-        "pleaseEnterEpochNumber": "Please enter an epoch"
+        "pleaseEnterEpochStart": "e.g. 100",
+        "pleaseEnterEpochEnd": "e.g. 200"
       },
       "button": {
         "lookup": "Search",

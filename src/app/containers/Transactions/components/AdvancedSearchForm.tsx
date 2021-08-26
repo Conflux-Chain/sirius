@@ -504,10 +504,8 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             <Input
               placeholder={t(
                 translations.general.advancedSearch.placeholder
-                  .pleaseEnterEpochNumber,
+                  .pleaseEnterEpochStart,
               )}
-              // type="number"
-              // min="0"
               allowClear
             />
           </Form.Item>
@@ -523,10 +521,8 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             <Input
               placeholder={t(
                 translations.general.advancedSearch.placeholder
-                  .pleaseEnterEpochNumber,
+                  .pleaseEnterEpochEnd,
               )}
-              // type="number"
-              // min="0"
               allowClear
             />
           </Form.Item>

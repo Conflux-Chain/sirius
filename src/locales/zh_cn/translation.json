@@ -539,9 +539,10 @@
         "pleaseEnterTxnHash": "请输入交易哈希",
         "pleaseEnterBlockHash": "请输入区块哈希",
         "pleaseEnterAddress": "请输入地址",
-        "pleaseEnterTokenId": "请输入代币 ID",
+        "pleaseEnterTokenId": "例如：10",
         "pleaseEnterNonce": "请输入随机数",
-        "pleaseEnterEpochNumber": "请输入纪元"
+        "pleaseEnterEpochStart": "例如：100",
+        "pleaseEnterEpochEnd": "例如：200"
       },
       "button": {
         "lookup": "查找",
