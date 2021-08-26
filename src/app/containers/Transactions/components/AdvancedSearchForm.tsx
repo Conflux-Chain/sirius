@@ -571,7 +571,14 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         <Col {...col} key="token">
           <Form.Item
             name={`token`}
-            label={t(translations.general.advancedSearch.label.token)}
+            label={
+              <>
+                {t(translations.general.advancedSearch.label.token)}
+                <small className="advanced-from-token-subtitle">
+                  {t(translations.general.advancedSearch.label.tokenSubTitle)}
+                </small>
+              </>
+            }
           >
             <DebounceTokenSelect
               mode="multiple"
@@ -710,6 +717,12 @@ const StyledAdvancedFormWrapper = styled.div`
         left: -16px;
       }
     }
+  }
+
+  .advanced-from-token-subtitle {
+    font-size: 12px;
+    margin-left: 4px;
+    opacity: 0.75;
   }
 `;
 

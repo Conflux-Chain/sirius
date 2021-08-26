@@ -523,6 +523,7 @@
         "tokenId": "代币 ID",
         "nonce": "随机数",
         "token": "代币",
+        "tokenSubTitle": "（最多支持选择 3 种代币）",
         "rangePicker": "日期",
         "epochNumber": "纪元",
         "minEpochNumber": "最小纪元",
@@ -533,7 +534,7 @@
         "invalidAddress": "地址格式错误"
       },
       "placeholder": {
-        "pleaseSelect": "最多支持选择 3 种代币",
+        "pleaseSelect": "请输入代币",
         "pleaseEnter": "请输入",
         "pleaseEnterTxnHash": "请输入交易哈希",
         "pleaseEnterBlockHash": "请输入区块哈希",

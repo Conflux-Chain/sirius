@@ -523,6 +523,7 @@
         "tokenId": "TokenID",
         "nonce": "Nonce",
         "token": "Token",
+        "tokenSubTitle": "(Up to 3 tokens can be selected)",
         "rangePicker": "Date",
         "epochNumber": "Epoch",
         "minEpochNumber": "Min Epoch",
@@ -533,7 +534,7 @@
         "invalidAddress": "Invalid address format"
       },
       "placeholder": {
-        "pleaseSelect": "Up to 3 tokens can be selected",
+        "pleaseSelect": "Search by Token",
         "pleaseEnter": "Please enter",
         "pleaseEnterTxnHash": "Please enter a txn hash",
         "pleaseEnterBlockHash": "Please enter a block hash",
