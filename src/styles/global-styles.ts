@@ -290,6 +290,10 @@ export const GlobalStyle = createGlobalStyle`
     .ant-form-item-label > label{
       color: #74798c;
     }
+
+    .ant-select-selection-placeholder {
+      color: #d8d8d8;
+    }
   }
   /* ---------- ant design form, end ---------- */
 
