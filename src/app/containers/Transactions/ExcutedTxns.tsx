@@ -83,13 +83,17 @@ export const ExcutedTxns = ({ address }: Props) => {
       showFilter={true}
       showSearch={true}
       searchOptions={searchOptions}
-      filterOptions={[
-        'txTypeAll',
-        'txTypeOutgoing',
-        'txTypeIncoming',
-        'status1',
-        'txTypeCreate',
-      ]}
+      filterOptions={
+        isAccount
+          ? [
+              'txTypeAll',
+              'txTypeOutgoing',
+              'txTypeIncoming',
+              'status1',
+              'txTypeCreate',
+            ]
+          : ['txTypeAll', 'status1', 'txTypeCreate']
+      }
       extraContent={
         <TxnSwitcher total={total} isAccount={isAccount}></TxnSwitcher>
       }
