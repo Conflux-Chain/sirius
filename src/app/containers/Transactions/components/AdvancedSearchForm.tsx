@@ -154,6 +154,22 @@ const normalizeNumericString = (value, prevValue) => {
     : prevValue;
 };
 
+const getMinAndMaxEpochNumber = (min, max) => {
+  let minEpoch = min;
+  let maxEpoch = max;
+
+  try {
+    if (!lodash.isNil(min) && !lodash.isNil(max)) {
+      if (Number(min) > Number(max)) {
+        minEpoch = max;
+        maxEpoch = min;
+      }
+    }
+  } catch (e) {}
+
+  return [minEpoch, maxEpoch];
+};
+
 // @todo, props should be changed to Array like, easy to sort filter items
 export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
   const { t, i18n } = useTranslation();
@@ -218,7 +234,15 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
 
   useEffect(() => {
     let fromOrToValue = 'from';
-    const { from, to, tokenArray, minTimestamp, maxTimestamp } = query;
+    const {
+      from,
+      to,
+      tokenArray,
+      minTimestamp,
+      maxTimestamp,
+      minEpochNumber,
+      maxEpochNumber,
+    } = query;
 
     if (from && to) {
       fromOrToValue = 'fromOrTo';
@@ -233,6 +257,12 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     try {
       const minT = parseInt(minTimestamp + '000');
       const maxT = parseInt(maxTimestamp + '000') - 1;
+
+      const [minEpoch, maxEpoch] = getMinAndMaxEpochNumber(
+        minEpochNumber,
+        maxEpochNumber,
+      );
+
       const value = {
         ...Object.keys(props)
           .map(k => ({
@@ -247,6 +277,8 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           .map(t => t.address),
         // special handle with range picker value
         rangePicker: [minT ? dayjs(minT) : null, maxT ? dayjs(maxT) : null],
+        minEpochNumber: minEpoch,
+        maxEpochNumber: maxEpoch,
       };
 
       form.setFieldsValue(value);
@@ -327,6 +359,18 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
 
     if (props.epoch && values.maxEpochNumber) {
       query.maxEpochNumber = values.maxEpochNumber;
+    }
+
+    if (
+      !lodash.isNil(query.minEpochNumber) &&
+      !lodash.isNil(query.maxEpochNumber)
+    ) {
+      if (Number(query.minEpochNumber) > Number(query.maxEpochNumber)) {
+        [query.minEpochNumber, query.maxEpochNumber] = [
+          query.maxEpochNumber,
+          query.minEpochNumber,
+        ];
+      }
     }
 
     if (props.token && values.token) {
