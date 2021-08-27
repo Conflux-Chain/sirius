@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Select, Spin, Tag } from '@jnoodle/antd';
+import { Select, Spin, Tag, Image } from '@jnoodle/antd';
 import { SelectProps } from '@jnoodle/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components/macro';
@@ -220,10 +220,11 @@ export function DebounceTokenSelect<
             options.map(o => {
               return (
                 <Option value={o.address} key={`search-${o.address}`}>
-                  <img
+                  <Image
                     className="advanced-search-select-option-img"
                     src={o.icon || defaultTokenIcon}
-                    alt={`icon-${o.address}`}
+                    fallback={defaultTokenIcon}
+                    alt="token icon"
                   />
                   <span className="option-text">{o.name}</span>
                 </Option>
@@ -266,10 +267,11 @@ export function DebounceTokenSelect<
             optionsRecommend.map(o => {
               return (
                 <Option value={o.address} key={`recommend-${o.address}`}>
-                  <img
+                  <Image
                     className="advanced-search-select-option-img"
                     src={o.icon || defaultTokenIcon}
-                    alt={`icon-${o.address}`}
+                    fallback={defaultTokenIcon}
+                    alt="token icon"
                   />
                   <span className="option-text">{o.name}</span>
                 </Option>

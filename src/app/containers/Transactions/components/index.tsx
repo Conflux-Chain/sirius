@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { TableSearchDropdown } from 'app/components/TablePanel';
-import { toThousands, isContractAddress, isInnerContractAddress } from 'utils';
+import { toThousands } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';
 import { useParams } from 'react-router-dom';
@@ -54,11 +54,6 @@ export const Title = ({
   const { t } = useTranslation();
   const [fold, setFold] = useState(true);
 
-  const isContract = useMemo(
-    () => isContractAddress(address) || isInnerContractAddress(address),
-    [address],
-  );
-
   const options = useMemo(
     () => ({
       txTypeAll: {
@@ -91,18 +86,14 @@ export const Title = ({
   );
 
   const getSearchFilter = useMemo(() => {
-    if (!isContract) {
-      if (showFilter && filterOptions.length > 0) {
-        return (
-          <TableSearchDropdown options={filterOptions.map(f => options[f])} />
-        );
-      } else {
-        return null;
-      }
+    if (showFilter && filterOptions.length > 0) {
+      return (
+        <TableSearchDropdown options={filterOptions.map(f => options[f])} />
+      );
     } else {
       return null;
     }
-  }, [filterOptions, isContract, options, showFilter]);
+  }, [filterOptions, options, showFilter]);
 
   const getTotalTip = useMemo(() => {
     return showTotalTip ? (
