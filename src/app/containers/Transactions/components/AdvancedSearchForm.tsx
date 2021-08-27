@@ -651,7 +651,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           <Form.Item
             name={`tokenId`}
             label={t(translations.general.advancedSearch.label.tokenId)}
-            normalize={value => value.trim()}
+            normalize={normalizeNumericString}
           >
             <Input
               placeholder={t(
