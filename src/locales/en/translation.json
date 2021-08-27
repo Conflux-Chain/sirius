@@ -677,6 +677,38 @@
           "success": "success",
           "fail": "fail",
           "revert": "revert"
+        },
+        "projectInfo": {
+          "projectInfo": "Project Info",
+          "security": "The token may have security issues, please be aware of risks",
+          "verify": "The contract has been verified",
+          "audit": "The contract code passes the audit",
+          "sponsor": "Sponsored by Conflux foundation",
+          "zeroAddress": "The admin of the contract is zero address",
+          "listedByCentralized": "Listed by a centralized exchange",
+          "listedByDecentralized": "Listed by a decentralized exchange ",
+          "listedByCMC": "Listed by CoinMarketCap",
+          "blackList": "The Token is blacklisted",
+          "modal": {
+            "security": "The token may have security issues, please be aware of risks (Refer to the \"Remark\" below)",
+            "verify": "The contract has been verified (<1>Verify the contract</1> now!)",
+            "audit": "The contract code passes the audit (Have an audit report or related link? <1>Submit</1> it now!)",
+            "sponsor": "Sponsored by Conflux foundation or individuals (<1>Apply for foundation sponsorship</1> now!)",
+            "zeroAddress": "The contract admin is zero address",
+            "cex": "Listed by a centralized exchange（<1>Submit</1> proof）",
+            "binance": "- <1>Binance</1>",
+            "huoBi": "- <1>HuoBi</1>",
+            "ok": "- <1>OK</1>",
+            "dex": "Listed by a decentralized exchange（<1>Submit</1> proof）",
+            "moonswap": "- <1>Moonswap</1>",
+            "cmc": "Listed by <2>CoinMarketCap</2>（<2>Submit</2> proof）Rate: --",
+            "remarkTitle": "Remark:",
+            "remarkContent1": "If any one of the following actions occurs, the token will be removed and will never be re-listed again:",
+            "remarkContent2": "- Involved in phishing, pyramid scheme, frauds, etc.",
+            "remarkContent3": "- Filled out false information in the any relevant application.",
+            "remarkContent4": "- The names and symbols of the token involve any political stance terrorism, fraud, eroticism,vulgarity, gambling, infringement, rumors, and other undesirable behaviors.",
+            "disclaimer": "Click to view the <1>Disclaimer</1>"
+          }
         }
       },
       "contracts": {

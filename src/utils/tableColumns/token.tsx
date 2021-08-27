@@ -26,6 +26,7 @@ import { Popover } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from '../../styles/variable';
+import { ProjectInfo } from '../../app/components/ProjectInfo';
 
 const fromTypeInfo = {
   arrow: {
@@ -780,6 +781,27 @@ export const traceResult = {
     }
 
     return body;
+  },
+};
+
+export const projectInfo = {
+  width: 1,
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.projectInfo.projectInfo)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'projectInfo',
+  key: 'projectInfo',
+  render: (value, row) => {
+    const { securityAudit, name } = row;
+    return (
+      <ContentWrapper right monospace>
+        <ProjectInfo securityAudit={securityAudit} tokenName={name} />
+      </ContentWrapper>
+    );
   },
 };
 

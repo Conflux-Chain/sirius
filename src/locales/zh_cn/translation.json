@@ -677,6 +677,37 @@
           "success": "成功",
           "fail": "失败",
           "revert": "回滚"
+        },
+        "projectInfo": {
+          "projectInfo": "项目信息",
+          "security": "该代币可能出现安全性问题，请防范风险",
+          "verify": "合约已通过验证",
+          "audit": "合约代码已通过审计",
+          "sponsor": "已获得 Conflux 基金会赞助",
+          "zeroAddress": "合约的管理者为零地址",
+          "listedByCentralized": "被中心化交易所收录",
+          "listedByDecentralized": "被去中心化交易所收录",
+          "listedByCMC": "被 CoinMarketCap 收录",
+          "blackList": "该代币已被列入黑名单",
+          "modal": {
+            "security": "该代币可能出现安全性问题，请防范风险（详情请查看下方“附加说明”）",
+            "verify": "合约已通过验证（立刻<1>前往验证合约</1>）",
+            "audit": "合约代码已通过审计（已有审计报告或相关链接？立刻前往<1>提交</1>）",
+            "sponsor": "已获得 Conflux 基金会或个人赞助（立刻<1>前往申请基金会赞助</1>）",
+            "zeroAddress": "合约管理者为零地址",
+            "cex": "被中心化交易所收录（前往<1>提交凭证</1>）",
+            "binance": "- <1>币安</1>",
+            "huoBi": "- <1>火币</1>",
+            "ok": "- <1>OK</1>",
+            "dex": "被去中心化交易所收录（前往<1>提交凭证</1>）",
+            "cmc": "被<2>CoinMarketCap</2>收录（前往<2>提交凭证</2>）排名：--",
+            "remarkTitle": "附加说明：",
+            "remarkContent1": "如果出现下列情况之一，代币将被列入黑名单：",
+            "remarkContent2": "- 涉及钓鱼、传销、诈骗等行为的",
+            "remarkContent3": "- 提交申请时使用虚假信息的",
+            "remarkContent4": "- 代币名称和符号没有涉及政治、暴恐、诈骗、色情、低俗、赌博、侵权、谣言等不良关键字",
+            "disclaimer": "点击查看<1>免责声明</1>"
+          }
         }
       },
       "contracts": {
