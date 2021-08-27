@@ -498,8 +498,32 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           <Form.Item
             name={`minEpochNumber`}
             label={t(translations.general.advancedSearch.label.epochNumber)}
-            // label={t(translations.general.advancedSearch.label.minEpochNumber)}
             normalize={normalizeNumericString}
+            // rules={[
+            //   ({ getFieldValue }) => ({
+            //     validator(_, value) {
+            //       if (!value) {
+            //         return Promise.resolve();
+            //       } else {
+            //         const maxEpochNumber = getFieldValue('maxEpochNumber');
+
+            //         if (maxEpochNumber) {
+            //           if (Number(maxEpochNumber) >= Number(value)) {
+            //             return Promise.resolve();
+            //           } else {
+            //             return Promise.reject(
+            //               new Error(
+            //                 'maxEpochNumber should greater than minEpochNumber',
+            //               ),
+            //             );
+            //           }
+            //         } else {
+            //           return Promise.resolve();
+            //         }
+            //       }
+            //     },
+            //   }),
+            // ]}
           >
             <Input
               placeholder={t(
@@ -514,9 +538,33 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           <Form.Item
             name={`maxEpochNumber`}
             label={' '}
-            // label={t(translations.general.advancedSearch.label.maxEpochNumber)}
             normalize={normalizeNumericString}
             className="advanced-from-maxEpochNumber"
+            // rules={[
+            //   ({ getFieldValue }) => ({
+            //     validator(_, value) {
+            //       if (!value) {
+            //         return Promise.resolve();
+            //       } else {
+            //         const minEpochNumber = getFieldValue('minEpochNumber');
+
+            //         if (minEpochNumber) {
+            //           if (Number(minEpochNumber) <= Number(value)) {
+            //             return Promise.resolve();
+            //           } else {
+            //             return Promise.reject(
+            //               new Error(
+            //                 'minEpochNumber should greater than maxEpochNumber',
+            //               ),
+            //             );
+            //           }
+            //         } else {
+            //           return Promise.resolve();
+            //         }
+            //       }
+            //     },
+            //   }),
+            // ]}
           >
             <Input
               placeholder={t(
@@ -710,7 +758,7 @@ const StyledAdvancedFormWrapper = styled.div`
         content: '-';
         position: absolute;
         top: 4px;
-        left: -16px;
+        left: -15px;
       }
     }
   }
