@@ -1,32 +1,32 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { Link } from '../../app/components/Link/Loadable';
-import { Text } from '../../app/components/Text/Loadable';
+import { Link } from 'app/components/Link/Loadable';
+import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
-import { media } from '../../styles/media';
+import { media } from 'styles/media';
 import { defaultTokenIcon } from '../../constants';
-import { formatBalance, formatNumber, formatString } from '../../utils';
+import { formatBalance, formatNumber, formatString } from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { AddressContainer } from 'app/components/AddressContainer';
 import { formatAddress } from '../cfx';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { cfxTokenTypes, InternalContracts } from '../constants';
-import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
 import { getCurrencySymbol } from 'utils/constants';
-import { NFTPreview } from '../../app/components/NFTPreview/Loadable';
+import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
 import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
-import { monospaceFont } from '../../styles/variable';
-import { ProjectInfo } from '../../app/components/ProjectInfo';
+import { monospaceFont } from 'styles/variable';
+import { ProjectInfo } from 'app/components/ProjectInfo';
 
 const fromTypeInfo = {
   arrow: {
@@ -798,7 +798,7 @@ export const projectInfo = {
   render: (value, row) => {
     const { securityAudit, name } = row;
     return (
-      <ContentWrapper right monospace>
+      <ContentWrapper monospace>
         <ProjectInfo securityAudit={securityAudit} tokenName={name} />
       </ContentWrapper>
     );

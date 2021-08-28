@@ -4,7 +4,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import {
   DexIcon,
   CexIcon,
@@ -107,10 +107,10 @@ export const ProjectInfo = React.memo(
         <ProjectInfoWrapper>
           <LeftWrapper>
             {inactiveArray.map(key => {
-              return inactiveMap[key];
+              return <span key={key}>{inactiveMap[key]}</span>;
             })}
             {activeArray.map(key => {
-              return activeMap[key];
+              return <span key={key}>{activeMap[key]}</span>;
             })}
           </LeftWrapper>
           <DetailIcon onClick={clickDetail} />
@@ -124,7 +124,6 @@ export const ProjectInfo = React.memo(
           visible={visible}
           onCancel={onCloseModal}
           footer={null}
-          maskClosable={false}
         >
           <ModalItem>
             <VerifyIcon isActive={verify === 1} />
@@ -382,6 +381,8 @@ const ProjectInfoWrapper = styled.div`
   align-items: center;
   background-color: #edf0f8;
   padding: 0 4px 0 4px;
+  width: 180px;
+  float: right;
 `;
 const LeftWrapper = styled.div`
   display: flex;
@@ -390,6 +391,14 @@ const LeftWrapper = styled.div`
 
   > span:not(:last-child) {
     margin-left: -4px; //往左偏移实现重叠效果
+  }
+
+  > span:hover {
+    z-index: 2;
+
+    svg {
+      transform: scale(1.1, 1.1);
+    }
   }
 
   svg {
