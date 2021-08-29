@@ -38,10 +38,11 @@ interface ProjectInfoProp {
     zeroAdmin: number;
   };
   tokenName: string;
+  isDetailPage?: boolean;
 }
 
 export const ProjectInfo = React.memo(
-  ({ securityAudit, tokenName }: ProjectInfoProp) => {
+  ({ securityAudit, tokenName, isDetailPage = false }: ProjectInfoProp) => {
     const { t, i18n } = useTranslation();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
@@ -87,7 +88,7 @@ export const ProjectInfo = React.memo(
         } else if (securityAudit[item] === 1) {
           tempActiveArray.push(item);
         } else {
-          if (item.length === 0) {
+          if (isAllNull(securityAudit[item])) {
             tempInactiveArray.push(item);
           } else {
             tempActiveArray.push(item);
@@ -98,13 +99,21 @@ export const ProjectInfo = React.memo(
       setInactiveArray(tempInactiveArray);
       // eslint-disable-next-line
     }, []);
-
+    const isAllNull = obj => {
+      let sign = true;
+      for (let key in obj) {
+        if (obj[key]) {
+          sign = false;
+        }
+      }
+      return sign;
+    };
     const onCloseModal = () => {
       setVisible(false);
     };
     return (
       <>
-        <ProjectInfoWrapper>
+        <ProjectInfoWrapper left={isDetailPage}>
           <LeftWrapper>
             {inactiveArray.map(key => {
               return <span key={key}>{inactiveMap[key]}</span>;
@@ -179,7 +188,7 @@ export const ProjectInfo = React.memo(
             </span>
           </ModalItem>
           <ModalItem>
-            <CexIcon isActive={Object.keys(cex).length !== 0} />
+            <CexIcon isActive={!isAllNull(cex)} />
             <ModalItems>
               <TransWrapper>
                 <Trans i18nKey="general.table.token.projectInfo.modal.cex">
@@ -248,7 +257,7 @@ export const ProjectInfo = React.memo(
             </ModalItems>
           </ModalItem>
           <ModalItem>
-            <DexIcon isActive={Object.keys(dex).length !== 0} />
+            <DexIcon isActive={!isAllNull(dex)} />
             <ModalItems>
               <TransWrapper>
                 <Trans i18nKey="general.table.token.projectInfo.modal.dex">
@@ -285,9 +294,9 @@ export const ProjectInfo = React.memo(
             </ModalItems>
           </ModalItem>
           <ModalItem>
-            <CoinMarketIcon isActive={Object.keys(track).length !== 0} />
+            <CoinMarketIcon isActive={!isAllNull(track)} />
             <span>
-              {track ? (
+              {!isAllNull(track) ? (
                 <Trans i18nKey="general.table.token.projectInfo.modal.cmc">
                   Listed by{' '}
                   <Link href={track.coinMarketCap} target={'_blank'}>
@@ -307,19 +316,21 @@ export const ProjectInfo = React.memo(
                   proof）Rate: --
                 </Trans>
               ) : (
-                <Trans i18nKey="general.table.token.projectInfo.modal.cmc">
-                  Listed by CoinMarketCap（
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  >
-                    Submit
-                  </Link>{' '}
-                  proof）Rate: --
+                <Trans
+                  i18nKey="general.table.token.projectInfo.modal.cmc"
+                  components={[
+                    null,
+                    <Link
+                      href={
+                        lang === 'en'
+                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                      }
+                      target={'_blank'}
+                    />,
+                  ]}
+                >
+                  Listed by CoinMarketCap（Submit proof）Rate: --
                 </Trans>
               )}
             </span>
@@ -373,7 +384,7 @@ export const ProjectInfo = React.memo(
   },
 );
 
-const ProjectInfoWrapper = styled.div`
+const ProjectInfoWrapper = styled('div')<{ left: boolean }>`
   height: 24px;
   border-radius: 10px;
   display: flex;
@@ -382,7 +393,7 @@ const ProjectInfoWrapper = styled.div`
   background-color: #edf0f8;
   padding: 0 4px 0 4px;
   width: 180px;
-  float: right;
+  float: ${props => (props.left ? 'left' : 'right')};
 `;
 const LeftWrapper = styled.div`
   display: flex;

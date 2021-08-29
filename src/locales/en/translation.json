@@ -702,7 +702,7 @@
             "ok": "- <1>OK</1>",
             "dex": "Listed by a decentralized exchange（<1>Submit</1> proof）",
             "moonswap": "- <1>Moonswap</1>",
-            "cmc": "Listed by <2>CoinMarketCap</2>（<2>Submit</2> proof）Rate: --",
+            "cmc": "Listed by <0>CoinMarketCap</0>（<1>Submit</1> proof）Rate: --",
             "remarkTitle": "Remark:",
             "remarkContent1": "If any one of the following actions occurs, the token will be removed and will never be re-listed again:",
             "remarkContent2": "- Involved in phishing, pyramid scheme, frauds, etc.",
