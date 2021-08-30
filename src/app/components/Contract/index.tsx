@@ -157,8 +157,9 @@ export const ContractOrTokenInfo = ({
           !isAddressError &&
           !isAdminError &&
           !isErc20Error &&
-          !isNameError &&
-          !isSiteError
+          (updateInfoType === 'contract'
+            ? !isNameError && !isSiteError
+            : tokenImgSrc)
         ) {
           isSubmitable = true;
           setTxData(getTxData());
