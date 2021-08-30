@@ -7,6 +7,7 @@ import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';
 import { Title } from 'app/containers/Transactions/components';
 import { AdvancedSearchFormProps } from 'app/containers/Transactions/components/AdvancedSearchForm';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   type: string;
@@ -21,6 +22,7 @@ interface Query {
 }
 
 export const Transfers = ({ type, address, decimals }: Props) => {
+  const location = useLocation();
   const url = `/transfer?address=${address}&transferType=${type}`;
 
   const [ageFormat, toggleAgeFormat] = useAge();
@@ -103,11 +105,14 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     );
   };
 
+  const { tab, ...query } = qs.parse(location.search || '');
+
   const tableFooter = (
     <DownloadCSV
       url={qs.stringifyUrl({
         url: '/v1/report/transfer',
         query: {
+          ...query,
           transferType: type,
           address,
           limit: '5000',

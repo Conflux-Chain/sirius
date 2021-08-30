@@ -21,6 +21,25 @@ import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils/cfx';
 import { Tag } from '@jnoodle/antd';
+import { ProjectInfo } from '../../components/ProjectInfo';
+
+interface SecurityAudit {
+  audit: number;
+  cex: {
+    binance: string;
+    huobi: string;
+    ok: string;
+  };
+  dex: {
+    moonswap: string;
+  };
+  sponsor: number;
+  track: {
+    coinMarketCap: string;
+  };
+  verify: number;
+  zeroAdmin: number;
+}
 
 export interface BasicProps {
   address?: string;
@@ -36,6 +55,7 @@ export interface BasicProps {
   holderIncreasePercent?: number;
   decimals?: number;
   transferCount?: number;
+  securityAudit?: SecurityAudit;
 }
 
 export const tokenTypeTag = (t, transferType: any) => {
@@ -82,6 +102,8 @@ export const Basic = ({
   holderCount,
   holderIncreasePercent,
   transferCount,
+  securityAudit,
+  name,
 }: BasicProps) => {
   const { t } = useTranslation();
   if (address && !transferType) {
@@ -249,6 +271,22 @@ export const Basic = ({
         ? t(translations.general.notAvailable)
         : undefined,
   };
+  const fieldProjectInfo = {
+    title: (
+      <Tooltip text={t(translations.toolTip.token.transfers)} placement="top">
+        {t(translations.general.table.token.projectInfo.projectInfo)}
+      </Tooltip>
+    ),
+    children: securityAudit ? (
+      name ? (
+        <ProjectInfo
+          securityAudit={securityAudit}
+          tokenName={name}
+          isDetailPage={true}
+        />
+      ) : undefined
+    ) : undefined,
+  };
 
   let list: any;
 
@@ -259,7 +297,7 @@ export const Basic = ({
       fieldMarketCap,
       fieldDecimal,
       fieldTotalSupply,
-      null,
+      fieldProjectInfo,
       fieldHolders,
       null,
       fieldTransfers,
@@ -269,11 +307,16 @@ export const Basic = ({
       fieldTotalSupply,
       fieldContractAddress,
       fieldHolders,
-      null,
+      fieldProjectInfo,
       fieldTransfers,
     ];
   } else {
-    list = [fieldTransfers, fieldContractAddress, fieldHolders];
+    list = [
+      fieldTransfers,
+      fieldContractAddress,
+      fieldHolders,
+      fieldProjectInfo,
+    ];
   }
 
   return (

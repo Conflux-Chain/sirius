@@ -145,47 +145,22 @@ Title.defaultProps = {
 export const Footer = ({ pathname, type }: Readonly<FooterProps>) => {
   const { address } = useParams<{ address: string }>();
   const location = useLocation();
-  const {
-    minTimestamp,
-    maxTimestamp,
-    accountAddress = address || '',
-    txType,
-    status,
-  } = qs.parse(location.search || '');
-
+  const { accountAddress = address || '', tab, ...query } = qs.parse(
+    location.search || '',
+  );
   const url = `/v1/report/${pathname}`;
-
-  const query: QueryProps = {
-    limit: '5000',
-    reverse: 'true',
-    accountAddress: accountAddress as string,
-  };
-
-  if (typeof minTimestamp === 'string') {
-    query.minTimestamp = minTimestamp;
-  }
-
-  if (typeof maxTimestamp === 'string') {
-    query.maxTimestamp = maxTimestamp;
-  }
-
-  if (typeof type === 'string') {
-    query.transferType = type;
-  }
-
-  if (typeof txType === 'string') {
-    query.txType = txType;
-  }
-
-  if (status === '1') {
-    query.status = status;
-  }
 
   return (
     <DownloadCSV
       url={qs.stringifyUrl({
         url,
-        query,
+        query: {
+          ...query,
+          limit: '5000',
+          reverse: 'true',
+          transferType: type,
+          accountAddress: accountAddress,
+        },
       })}
     />
   );
