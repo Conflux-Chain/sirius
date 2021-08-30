@@ -24,7 +24,6 @@ export const DexIcon = function ({ isActive = false, onClick }: IconProp) {
     >
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20">
-          <title>DEX</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -58,7 +57,6 @@ export const CexIcon = function ({ isActive = false, onClick }: IconProp) {
     >
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20">
-          <title>CEX</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -89,7 +87,6 @@ export const AuditIcon = function ({ isActive = false, onClick }: IconProp) {
     <Tooltip text={t(translations.general.table.token.projectInfo.audit)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>审批</title>
           <g id="Token-List/Project-Info" stroke="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -123,7 +120,6 @@ export const BlackListIcon = function ({
     <Tooltip text={t(translations.general.table.token.projectInfo.blackList)}>
       <StyledIconWrapper>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>黑名单</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -154,7 +150,6 @@ export const CoinMarketIcon = function ({
     <Tooltip text={t(translations.general.table.token.projectInfo.listedByCMC)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>coinmarket</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -185,7 +180,6 @@ export const OxIcon = function ({ isActive = false, onClick }: IconProp) {
     <Tooltip text={t(translations.general.table.token.projectInfo.zeroAddress)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>Ox</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -217,7 +211,6 @@ export const SponsorIcon = function ({ isActive = false, onClick }: IconProp) {
     <Tooltip text={t(translations.general.table.token.projectInfo.sponsor)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>赞助</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -248,7 +241,6 @@ export const VerifyIcon = function ({ isActive = false, onClick }: IconProp) {
     <Tooltip text={t(translations.general.table.token.projectInfo.verify)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>验证</title>
           <g id="Token-List/Project-Info" stroke="none" fill="none">
             <g
               id="Token-Detail/-Project-Info"
@@ -279,7 +271,6 @@ export const DetailIcon = function ({ onClick }: IconProp) {
     <Tooltip text={t(translations.general.table.token.projectInfo.projectInfo)}>
       <StyledIconWrapper onClick={onClick}>
         <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <title>list</title>
           <g id="Token-List/Hoverlist-出现弹窗" stroke="none" fill="none">
             <g
               id="Project-Info-Plan-F"

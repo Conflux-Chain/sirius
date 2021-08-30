@@ -168,12 +168,16 @@ export const ProjectInfo = React.memo(
             <SponsorIcon isActive={sponsor === 1} />
             <span>
               <Trans i18nKey="general.table.token.projectInfo.modal.sponsor">
-                Sponsored by Conflux foundation or individuals (
+                Accepted by Conflux’s Global Ecosystem Grants Program (
                 <Link
-                  href={'https://forum.conflux.fun/t/conflux/7836 '}
+                  href={
+                    lang === 'en'
+                      ? 'https://forum.conflux.fun/t/grant-proposal-review-process-project-eligibility/8273'
+                      : 'https://forum.conflux.fun/t/conflux/7836 '
+                  }
                   target={'_blank'}
                 >
-                  Apply for foundation sponsorship
+                  Apply for Grants
                 </Link>{' '}
                 now!)
               </Trans>
