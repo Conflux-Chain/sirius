@@ -16,7 +16,7 @@ export const MinedBlocks = ({ address }: Props) => {
 
   const url = `/block?miner=${address}`;
 
-  const columnsWidth = [4, 2, 2, 4, 6, 3, 5, 3, 5];
+  const columnsWidth = [3, 2, 2, 5, 6, 3, 5, 3, 5];
   const columns = [
     blockColunms.epoch,
     blockColunms.position,
