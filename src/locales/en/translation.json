@@ -280,6 +280,7 @@
     "chartsAndStatistics": "Charts & Stats",
     "ecosystem": "Ecosystem",
     "stakingAndGovernance": "Staking & Governance",
+    "developerAPI": "API Documentation",
     "fcCfx": "FC-CFX Non-reversible Exchange",
     "more": "More",
     "tools": "Tools",
@@ -343,6 +344,7 @@
     "developResource": {
       "title": "Developer Resources",
       "developerDocuments": "Developer Documents",
+      "developerAPI": "API Documentation",
       "confluxStudio": "Conflux Studio",
       "confluxTruffle": "Conflux Truffle"
     }

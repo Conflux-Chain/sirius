@@ -55,6 +55,7 @@ export const ScanEvent = {
       supportCenter: 'support_center',
       stakingAndGovernance: 'staking_governance',
       fcCfx: 'fc_cfx',
+      developerAPI: 'developer_API',
     },
   },
   // global search
