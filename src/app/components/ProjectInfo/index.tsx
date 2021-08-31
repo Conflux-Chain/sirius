@@ -301,23 +301,21 @@ export const ProjectInfo = React.memo(
             <CoinMarketIcon isActive={!isAllNull(track)} />
             <span>
               {!isAllNull(track) ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.cmc">
-                  Listed by{' '}
-                  <Link href={track.coinMarketCap} target={'_blank'}>
-                    CoinMarketCap
-                  </Link>
-                  （
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  >
-                    Submit
-                  </Link>{' '}
-                  proof）Rate: --
+                <Trans
+                  i18nKey="general.table.token.projectInfo.modal.cmc"
+                  components={[
+                    <Link href={track.coinMarketCap} target={'_blank'} />,
+                    <Link
+                      href={
+                        lang === 'en'
+                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                      }
+                      target={'_blank'}
+                    />,
+                  ]}
+                >
+                  Listed by CoinMarketCap（ Submit proof）Rate: --
                 </Trans>
               ) : (
                 <Trans

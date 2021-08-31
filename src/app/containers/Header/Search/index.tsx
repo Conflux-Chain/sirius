@@ -10,7 +10,7 @@ import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
 import { useSearch } from 'utils/hooks/useSearch';
-import { AutoComplete, Input, SelectProps } from '@jnoodle/antd';
+import { AutoComplete, Input, SelectProps, Image } from '@jnoodle/antd';
 import { SearchIcon } from '../../../components/SearchIcon/Loadable';
 import ClearIcon from '../../../../images/clear.png';
 import { defaultTokenIcon } from '../../../../constants';
@@ -32,7 +32,7 @@ const TokenItemWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  > img {
+  img {
     width: 24px;
     height: 24px;
     margin-top: 4px;
@@ -94,7 +94,11 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
           }}
         >
           {type === 'token' && (
-            <img src={token?.icon || defaultTokenIcon} alt="icon" />
+            <Image
+              src={token?.icon || defaultTokenIcon}
+              fallback={defaultTokenIcon}
+              alt="token icon"
+            />
           )}
           <span>
             <Translation>
