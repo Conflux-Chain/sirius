@@ -399,6 +399,17 @@ export const Header = memo(() => {
             // },
             {
               title: [
+                t(translations.header.developerAPI),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.developerAPI,
+              afterClick: menuClick,
+              href: isTestnet
+                ? 'https://api-testnet.confluxscan.net/doc'
+                : 'https://api.confluxscan.net/doc',
+            },
+            {
+              title: [
                 t(translations.header.techIssue),
                 <Check size={18} key="check" />,
               ],

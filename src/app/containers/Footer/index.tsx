@@ -15,6 +15,7 @@ import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
+import { useTestnet } from 'utils/hooks/useTestnet';
 
 import iconTwitter from 'images/footer/twitter.svg';
 import iconTelegram from 'images/footer/telegram.svg';
@@ -33,6 +34,7 @@ import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 export function Footer() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
+  const isTestnet = useTestnet();
 
   const left = [<TextLogo key="logo" />];
 
@@ -305,6 +307,22 @@ export function Footer() {
   );
 
   const developResourceLinks = {
+    developerAPI: (
+      <Link
+        className="footer-link"
+        href={
+          isTestnet
+            ? 'https://api-testnet.confluxscan.net/doc'
+            : 'https://api.confluxscan.net/doc'
+        }
+        ga={{
+          category: ScanEvent.menu.category,
+          action: ScanEvent.menu.action.developerAPI,
+        }}
+      >
+        {t(translations.footer.developResource.developerAPI)}
+      </Link>
+    ),
     developerDocuments: (
       <Link
         className="footer-link"
@@ -363,6 +381,9 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
+            <FooterContentLink>
+              {developResourceLinks.developerAPI}
+            </FooterContentLink>
             <FooterContentLink>
               {developResourceLinks.developerDocuments}
             </FooterContentLink>

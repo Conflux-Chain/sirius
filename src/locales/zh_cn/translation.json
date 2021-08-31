@@ -280,6 +280,7 @@
     "chartsAndStatistics": "图表&统计",
     "ecosystem": "生态",
     "stakingAndGovernance": "质押 & 治理",
+    "developerAPI": "API 文档",
     "fcCfx": "FC-CFX 不可逆兑换",
     "more": "更多",
     "tools": "工具",
@@ -343,6 +344,7 @@
     "developResource": {
       "title": "开发中心",
       "developerDocuments": "开发者文档",
+      "developerAPI": "API 文档",
       "confluxStudio": "Conflux Studio",
       "confluxTruffle": "Conflux Truffle"
     }
