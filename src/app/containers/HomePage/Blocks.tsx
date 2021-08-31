@@ -10,7 +10,7 @@ interface Props {
 export const Blocks = ({ url }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsWidth = [4, 2, 2, 4, 6, 3, 5, 5];
+  const columnsWidth = [4, 2, 2, 5, 5, 3, 5, 5];
   const columns = [
     blockColunms.epoch,
     blockColunms.position,

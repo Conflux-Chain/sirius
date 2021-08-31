@@ -15,7 +15,7 @@ export function Blocks() {
   const url = '/block';
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsBlocksWidth = [4, 3, 2, 4, 5, 4, 5, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 5, 5, 4, 5, 3, 5];
   const columnsBlocks = [
     blockColunms.epoch,
     blockColunms.position,
