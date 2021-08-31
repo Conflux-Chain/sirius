@@ -2,9 +2,8 @@ import React from 'react';
 import { tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
-import { Title, Footer } from './Common';
+import { Title, Footer } from './components';
 import { cfxTokenTypes } from 'utils/constants';
-import { isContractAddress } from 'utils';
 
 interface Props {
   address: string;
@@ -12,7 +11,6 @@ interface Props {
 
 export const CRC20Txns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
-  const addressType = isContractAddress(address) ? 'contract' : 'user';
   const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.erc20}`;
 
   const columnsWidth = [3, 6, 5, 2, 3, 6, 4];
@@ -36,15 +34,25 @@ export const CRC20Txns = ({ address }: Props) => {
       address={address}
       total={total}
       listLimit={listLimit}
-      showDatepicker={true}
       showFilter={true}
-      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
-      showSearchInput={true}
-      searchInputOptions={{
-        type: 'crc20',
-        addressType: addressType,
-        inputFields: ['txnHash', 'address'],
+      showSearch={true}
+      searchOptions={{
+        transactionHash: true,
+        fromOrTo: true,
+        epoch: true,
+        rangePicker: true,
+        token: true,
+        button: {
+          col: {
+            xs: 24,
+            sm: 10,
+            md: 10,
+            lg: 10,
+            xl: 10,
+          },
+        },
       }}
+      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
     />
   );
 

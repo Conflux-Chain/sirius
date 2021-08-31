@@ -2,9 +2,10 @@ import React from 'react';
 import { blockColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
-import { Title /*Footer*/ } from '../Transactions/Common';
+// import { Title /*Footer*/ } from '../Transactions/components/index';
 // import { cfxTokenTypes } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
+import { Title } from 'app/containers/Transactions/components';
 
 interface Props {
   address: string;
@@ -36,12 +37,36 @@ export const MinedBlocks = ({ address }: Props) => {
       address={address}
       total={total}
       listLimit={listLimit}
-      showDatepicker={true}
-      showSearchInput={true}
-      searchInputOptions={{
-        type: 'minedBlock',
-        addressType: 'user',
-        inputFields: ['epoch', 'blockHash'],
+      showSearch={true}
+      searchOptions={{
+        blockHash: {
+          col: {
+            xs: 24,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
+          },
+        },
+        epoch: true,
+        rangePicker: {
+          col: {
+            xs: 24,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
+          },
+        },
+        button: {
+          col: {
+            xs: 24,
+            sm: 6,
+            md: 6,
+            lg: 6,
+            xl: 6,
+          },
+        },
       }}
     />
   );

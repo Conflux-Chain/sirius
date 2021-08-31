@@ -76,7 +76,6 @@ export function NFTChecker() {
       setHasSearched(true);
       // get all supported nft balances
       const balances = await getNFTBalances(formattedAddress);
-      console.log('balances', balances);
 
       if (balances) {
         const _NFTBalances = Object.keys(NFTContracts)
@@ -87,8 +86,6 @@ export function NFTChecker() {
             balance: balances[i],
           }))
           .filter(n => n.balance > 0);
-
-        console.log('_NFTBalances: ', _NFTBalances);
 
         if (_NFTBalances && _NFTBalances.length > 0) {
           setNFTBalances(_NFTBalances);
@@ -115,7 +112,6 @@ export function NFTChecker() {
   };
 
   const selectTag = async balanceObj => {
-    // console.log('balanceObj', balanceObj);
     if (balanceObj) {
       setCurrentNFTType(balanceObj.type);
       setCurrentNFTOffset(0);
@@ -142,10 +138,6 @@ export function NFTChecker() {
     );
 
     if (tokens && tokens.length > 1) {
-      console.log(
-        'tokens: ',
-        tokens[1].map(t => t.toString()),
-      );
       setDisplayTokenIds(tokens[1]);
     }
     setLoading(false);

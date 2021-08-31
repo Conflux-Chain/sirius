@@ -6,7 +6,7 @@ import {
 } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
-import { Title, Footer } from './Common';
+import { Title, Footer } from './components';
 import { cfxTokenTypes } from 'utils/constants';
 
 interface Props {
@@ -38,15 +38,24 @@ export const CFXTxns = ({ address }: Props) => {
       address={address}
       total={total}
       listLimit={listLimit}
-      showDatepicker={true}
       showFilter={true}
-      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
-      showSearchInput={true}
-      searchInputOptions={{
-        type: 'cfxTxn',
-        addressType: 'user',
-        inputFields: ['txnHash', 'address'],
+      showSearch={true}
+      searchOptions={{
+        transactionHash: true,
+        fromOrTo: true,
+        epoch: true,
+        rangePicker: true,
+        button: {
+          col: {
+            xs: 24,
+            sm: 18,
+            md: 18,
+            lg: 18,
+            xl: 18,
+          },
+        },
       }}
+      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
     />
   );
 
@@ -58,7 +67,6 @@ export const CFXTxns = ({ address }: Props) => {
       columns={columns}
       footer={footer}
       title={title}
-      rowKey={row => `${row.transactionHash}${row.transactionTraceIndex}`}
     ></TablePanel>
   );
 };

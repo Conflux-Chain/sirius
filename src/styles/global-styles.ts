@@ -63,6 +63,10 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     border-radius: 3px;
+    
+  }
+  .ant-select-selection-item {
+    color: #333333;
   }
 
   // image preview text
@@ -112,6 +116,12 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table-pagination.ant-pagination {
     margin-top: 24px;
     margin-bottom: 24px;
+  }
+
+  .ant-picker-panels {
+    ${media.s} {
+      flex-direction: column;
+    }
   }
 
   ${media.s} {
@@ -211,6 +221,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-picker-separator {
+    display: inline-flex;
+  }
+
   ul li:before {
     content: '' !important;
   }
@@ -232,6 +246,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  /* ---------- ant design popover, start ---------- */
   .ant-popover-arrow {
     box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
   }
@@ -240,6 +255,47 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
   }
+  /* ---------- ant design popover, end ---------- */
+
+  /* ---------- ant design button, start ---------- */
+  .ant-btn {
+    background: rgba(0,84,254,0.04);
+    color: #424A71;
+    border: none;
+
+    &:hover, &:focus, &:active {
+      background: rgba(0,84,254,0.1);
+      color: #424A71;
+    }
+  }
+  .ant-btn.ant-btn-primary {
+    background: #1E3DE4;
+    color: #ffffff;
+    
+    &:hover {
+      background: #4665f0;
+      color: #ffffff;
+    }
+  }
+  /* ---------- ant design button, end ---------- */
+
+  /* ---------- ant design form, start ---------- */
+  .ant-row.ant-form-item {
+    margin-bottom: 12px;
+
+    .ant-select-selection-item {
+      text-align: left;
+    }
+
+    .ant-form-item-label > label{
+      color: #74798c;
+    }
+
+    .ant-select-selection-placeholder {
+      color: #d8d8d8;
+    }
+  }
+  /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {
     .option {

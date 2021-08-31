@@ -7,6 +7,7 @@ import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
   isContractAddress,
   isInnerContractAddress,
+  isZeroAddress,
   // isAccountAddress,
 } from 'utils';
 import { cfxTokenTypes } from 'utils/constants';
@@ -158,7 +159,7 @@ export function Table({ address, addressInfo }) {
     });
   }
 
-  if (!isContract) {
+  if (!(isContract || isZeroAddress(address))) {
     tabs.push({
       value: 'mined-blocks',
       action: 'minedBlocks',

@@ -35,7 +35,6 @@ const TooltipWrapper = styled.span`
     border-radius: 0;
     padding: 0.2857rem 0.7143rem 0.3571rem;
     font-weight: 400;
-    border-radius: 0;
     font-size: 12px;
     color: #cdcdcd;
     line-height: 1.1429rem;

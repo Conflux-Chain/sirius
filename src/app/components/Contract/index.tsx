@@ -154,11 +154,12 @@ export const ContractOrTokenInfo = ({
       let isSubmitable = false;
       if (accounts[0]) {
         if (
-          // !isAddressError &&
+          !isAddressError &&
           !isAdminError &&
-          !isErc20Error
-          // !isNameError &&
-          // !isSiteError
+          !isErc20Error &&
+          (updateInfoType === 'contract'
+            ? !isNameError && !isSiteError
+            : tokenImgSrc)
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -174,17 +175,17 @@ export const ContractOrTokenInfo = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       type,
-      // addressVal,
-      // contractName,
-      // site,
+      addressVal,
+      contractName,
+      site,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
-      // isAddressError,
+      isAddressError,
       isAdminError,
       isErc20Error,
-      // isNameError,
-      // isSiteError,
+      isNameError,
+      isSiteError,
     ],
   );
 

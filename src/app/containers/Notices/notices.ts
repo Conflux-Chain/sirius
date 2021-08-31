@@ -209,13 +209,13 @@ export const TestnetNotices = [
 export const CurrentTethysNotice = {
   hot: false,
   type: 'Announcement',
-  en: 'ConfluxScan V2.2.4 Released!',
-  zh: 'ConfluxScan V2.2.4 发布喽！',
+  en: 'ConfluxScan V2.2.5 Released!',
+  zh: 'ConfluxScan V2.2.5 发布喽！',
 };
 
 export const CurrentTestnetNotice = {
   hot: false,
   type: 'Announcement',
-  en: 'ConfluxScan V2.2.4 Released!',
-  zh: 'ConfluxScan V2.2.4 发布喽！',
+  en: 'ConfluxScan V2.2.5 Released!',
+  zh: 'ConfluxScan V2.2.5 发布喽！',
 };

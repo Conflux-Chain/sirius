@@ -146,7 +146,7 @@ export const NFTPreview = React.memo(
               </Tooltip>
               <Tooltip text={tokenId} placement={'top-start'} hoverable>
                 <div className="id">
-                  {t(translations.nftChecker.tokenId)}:{tokenId}
+                  {t(translations.nftChecker.tokenId)}: {tokenId}
                 </div>
               </Tooltip>
             </div>

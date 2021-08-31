@@ -200,7 +200,8 @@
       "futureNonce": "错误随机数",
       "notEnoughCash": "余额不足",
       "ready": "待打包"
-    }
+    },
+    "viewTxn": "查看{{type}}"
   },
   "cfxTransfers": {
     "title": "CFX 转移",
@@ -213,7 +214,6 @@
     "description": "代币",
     "tipCountBefore": "共展示",
     "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
-    "tip": "该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看",
     "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "crcTip": "{{crc}} 是发布在 Conflux 网络上，采用 {{erc}} 标准的数字资产。",
     "table": {
@@ -280,6 +280,7 @@
     "chartsAndStatistics": "图表&统计",
     "ecosystem": "生态",
     "stakingAndGovernance": "质押 & 治理",
+    "developerAPI": "API 文档",
     "fcCfx": "FC-CFX 不可逆兑换",
     "more": "更多",
     "tools": "工具",
@@ -343,6 +344,7 @@
     "developResource": {
       "title": "开发中心",
       "developerDocuments": "开发者文档",
+      "developerAPI": "API 文档",
       "confluxStudio": "Conflux Studio",
       "confluxTruffle": "Conflux Truffle"
     }
@@ -512,6 +514,49 @@
     }
   },
   "general": {
+    "advancedSearch": {
+      "label": {
+        "txnHash": "交易哈希",
+        "blockHash": "区块哈希",
+        "fromOrTo": "发送方或接收方",
+        "address": "地址",
+        "from": "发送方",
+        "to": "接收方",
+        "tokenId": "代币 ID",
+        "nonce": "随机数",
+        "token": "代币",
+        "tokenSubTitle": "（最多支持选择 3 种代币）",
+        "rangePicker": "日期",
+        "epochNumber": "纪元",
+        "minEpochNumber": "最小纪元",
+        "maxEpochNumber": "最大纪元"
+      },
+      "error": {
+        "invalidHash": "哈希值格式错误",
+        "invalidAddress": "地址格式错误"
+      },
+      "placeholder": {
+        "pleaseSelect": "请输入代币",
+        "pleaseEnter": "请输入",
+        "pleaseEnterTxnHash": "请输入交易哈希",
+        "pleaseEnterBlockHash": "请输入区块哈希",
+        "pleaseEnterAddress": "请输入地址",
+        "pleaseEnterTokenId": "例如：10",
+        "pleaseEnterNonce": "请输入随机数",
+        "pleaseEnterEpochStart": "例如：100",
+        "pleaseEnterEpochEnd": "例如：200"
+      },
+      "button": {
+        "lookup": "查找",
+        "reset": "重置"
+      },
+      "others": {
+        "recommend": "推荐",
+        "recommendTip": "最近 7 天内交易数排名前 10 的代币",
+        "searchResult": "搜索结果",
+        "noData": "无数据"
+      }
+    },
     "tokenTypeTag": {
       "token": "代币"
     },
@@ -635,6 +680,37 @@
           "success": "成功",
           "fail": "失败",
           "revert": "回滚"
+        },
+        "projectInfo": {
+          "projectInfo": "项目信息",
+          "security": "该代币可能出现安全性问题，请防范风险",
+          "verify": "合约已通过验证",
+          "audit": "合约代码已通过审计",
+          "sponsor": "已获得 Conflux 生态激励",
+          "zeroAddress": "合约的管理者为零地址",
+          "listedByCentralized": "被中心化交易所收录",
+          "listedByDecentralized": "被去中心化交易所收录",
+          "listedByCMC": "被 CoinMarketCap 收录",
+          "blackList": "该代币已被列入黑名单",
+          "modal": {
+            "security": "该代币可能出现安全性问题，请防范风险（详情请查看下方“附加说明”）",
+            "verify": "合约已通过验证（立刻<1>前往验证合约</1>）",
+            "audit": "合约代码已通过审计（已有审计报告或相关链接？立刻前往<1>提交</1>）",
+            "sponsor": "已获得 Conflux 生态激励（立刻前往<1>申请激励</1>）",
+            "zeroAddress": "合约管理者为零地址",
+            "cex": "被中心化交易所收录（前往<1>提交凭证</1>）",
+            "binance": "- <1>币安</1>",
+            "huoBi": "- <1>火币</1>",
+            "ok": "- <1>OK</1>",
+            "dex": "被去中心化交易所收录（前往<1>提交凭证</1>）",
+            "cmc": "被<0>CoinMarketCap</0>收录（前往<1>提交凭证</1>）排名：--",
+            "remarkTitle": "附加说明：",
+            "remarkContent1": "如果出现下列情况之一，代币将被列入黑名单：",
+            "remarkContent2": "- 涉及钓鱼、传销、诈骗等行为的",
+            "remarkContent3": "- 提交申请时使用虚假信息的",
+            "remarkContent4": "- 代币名称和符号涉及政治、暴恐、诈骗、色情、低俗、赌博、侵权、谣言等不良关键字",
+            "disclaimer": "点击查看<1>免责声明</1>"
+          }
         }
       },
       "contracts": {

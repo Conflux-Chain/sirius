@@ -200,7 +200,8 @@
       "futureNonce": "Wrong nonce",
       "notEnoughCash": "Insufficient balance",
       "ready": "Ready to pack"
-    }
+    },
+    "viewTxn": "View {{type}}"
   },
   "cfxTransfers": {
     "title": "CFX Txns",
@@ -213,7 +214,6 @@
     "description": "Tokens",
     "tipCountBefore": "Showing",
     "tipCountAfter": "tokens (The following list only displays certain tokens, undisplayed tokens can be found by searching contract address)",
-    "tip": "The following list only displays certain tokens, undisplayed tokens can be found by searching contract address",
     "dataSource": "Market Data Source: <a href='https://coinmarketcap.com/' target='_blank'>CoinMarketCap</a>",
     "crcTip": "The {{crc}} is a digital asset published on the Conflux network using the {{erc}} standard.",
     "table": {
@@ -280,6 +280,7 @@
     "chartsAndStatistics": "Charts & Stats",
     "ecosystem": "Ecosystem",
     "stakingAndGovernance": "Staking & Governance",
+    "developerAPI": "API Documentation",
     "fcCfx": "FC-CFX Non-reversible Exchange",
     "more": "More",
     "tools": "Tools",
@@ -343,6 +344,7 @@
     "developResource": {
       "title": "Developer Resources",
       "developerDocuments": "Developer Documents",
+      "developerAPI": "API Documentation",
       "confluxStudio": "Conflux Studio",
       "confluxTruffle": "Conflux Truffle"
     }
@@ -512,6 +514,49 @@
     }
   },
   "general": {
+    "advancedSearch": {
+      "label": {
+        "txnHash": "Txn Hash",
+        "blockHash": "Block Hash",
+        "fromOrTo": "From or To",
+        "address": "Address",
+        "from": "From",
+        "to": "To",
+        "tokenId": "TokenID",
+        "nonce": "Nonce",
+        "token": "Token",
+        "tokenSubTitle": "(Up to 3 tokens can be selected)",
+        "rangePicker": "Date",
+        "epochNumber": "Epoch",
+        "minEpochNumber": "Min Epoch",
+        "maxEpochNumber": "Max Epoch"
+      },
+      "error": {
+        "invalidHash": "Invalid hash format",
+        "invalidAddress": "Invalid address format"
+      },
+      "placeholder": {
+        "pleaseSelect": "Search by Token",
+        "pleaseEnter": "Please enter",
+        "pleaseEnterTxnHash": "Please enter a txn hash",
+        "pleaseEnterBlockHash": "Please enter a block hash",
+        "pleaseEnterAddress": "Please enter an address",
+        "pleaseEnterTokenId": "e.g. 10",
+        "pleaseEnterNonce": "Please enter a nonce",
+        "pleaseEnterEpochStart": "e.g. 100",
+        "pleaseEnterEpochEnd": "e.g. 200"
+      },
+      "button": {
+        "lookup": "Search",
+        "reset": "Reset"
+      },
+      "others": {
+        "recommend": "Recommend",
+        "recommendTip": "Tokens with the top 10 txn count in the last 7 days",
+        "searchResult": "Search Result",
+        "noData": "No data"
+      }
+    },
     "tokenTypeTag": {
       "token": "Token"
     },
@@ -635,6 +680,38 @@
           "success": "success",
           "fail": "fail",
           "revert": "revert"
+        },
+        "projectInfo": {
+          "projectInfo": "Project Info",
+          "security": "The token may have security issues, please be aware of risks",
+          "verify": "The contract has been verified",
+          "audit": "The contract code passes the audit",
+          "sponsor": "Accepted by Conflux’s Global Ecosystem Grants Program ",
+          "zeroAddress": "The admin of the contract is zero address",
+          "listedByCentralized": "Listed by a centralized exchange",
+          "listedByDecentralized": "Listed by a decentralized exchange ",
+          "listedByCMC": "Listed by CoinMarketCap",
+          "blackList": "The Token is blacklisted",
+          "modal": {
+            "security": "The token may have security issues, please be aware of risks (Refer to the \"Remark\" below)",
+            "verify": "The contract has been verified (<1>Verify the contract</1> now!)",
+            "audit": "The contract code passes the audit (Have an audit report or related link? <1>Submit</1> it now!)",
+            "sponsor": "Accepted by Conflux’s Global Ecosystem Grants Program (<1>Apply for Grants</1> now!)",
+            "zeroAddress": "The contract admin is zero address",
+            "cex": "Listed by a centralized exchange（<1>Submit</1> proof）",
+            "binance": "- <1>Binance</1>",
+            "huoBi": "- <1>HuoBi</1>",
+            "ok": "- <1>OK</1>",
+            "dex": "Listed by a decentralized exchange（<1>Submit</1> proof）",
+            "moonswap": "- <1>Moonswap</1>",
+            "cmc": "Listed by <0>CoinMarketCap</0>（<1>Submit</1> proof）Rate: --",
+            "remarkTitle": "Additional Remark:",
+            "remarkContent1": "If any one of the following actions occurs, the token will be removed and will never be re-listed again:",
+            "remarkContent2": "- Involved in phishing, pyramid scheme, frauds, etc.",
+            "remarkContent3": "- Filled out false information in the any relevant application.",
+            "remarkContent4": "- The names and symbols of the token involve any political stance, terrorism, fraud, eroticism, vulgarity, gambling, infringement, rumors, and other undesirable behaviors.",
+            "disclaimer": "Click to view the <1>Disclaimer</1>"
+          }
         }
       },
       "contracts": {
@@ -1243,7 +1320,7 @@
     "enterEpochNo": "Enter a Epoch No",
     "invalidEpochNo": "Invalid Epoch No",
     "error": "Can not be empty",
-    "lookUp": "Look Up",
+    "lookUp": "Search",
     "reset": "Reset",
     "tokenQuantityForAccountAddress": "Token Quantity for Account Address",
     "totalSupplyForContractAddress": "Total Supply for Contract Address",

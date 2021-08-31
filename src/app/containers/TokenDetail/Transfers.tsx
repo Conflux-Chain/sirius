@@ -56,7 +56,6 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     'sponsor',
     'admin',
     'from',
-    'code',
     'website',
     'transactionHash',
     'cfxTransferCount',

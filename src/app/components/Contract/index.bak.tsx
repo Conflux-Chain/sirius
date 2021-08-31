@@ -390,7 +390,6 @@ export const Contract = ({ contractDetail, type, address, loading }: Props) => {
       }
       bodyParams.sourceCode = sourceCode;
       bodyParams.abi = abi;
-      console.log('bodyParams: ', bodyParams);
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
