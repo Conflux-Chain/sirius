@@ -662,9 +662,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
             label={
               <>
                 {t(translations.general.advancedSearch.label.token)}
-                <small className="advanced-from-token-subtitle">
+                <div className="advanced-from-token-subtitle">
                   {t(translations.general.advancedSearch.label.tokenSubTitle)}
-                </small>
+                </div>
               </>
             }
           >
