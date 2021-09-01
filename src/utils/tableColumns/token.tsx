@@ -154,18 +154,6 @@ export const renderAddress = (
   );
 };
 
-export const number = (page, pageSize) => ({
-  width: 1,
-  title: (
-    <Translation>{t => t(translations.general.table.token.number)}</Translation>
-  ),
-  dataIndex: 'epochNumber',
-  key: 'epochNumber',
-  render: (value, row, index) => {
-    return (page - 1) * pageSize + index + 1;
-  },
-});
-
 export const token = {
   width: 1,
   title: (

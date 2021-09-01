@@ -7,6 +7,7 @@ import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
 import { CountDown } from '../../app/components/CountDown/Loadable';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import queryString from 'query-string';
 
 export interface ContentWrapperProps {
   children: React.ReactNode;
@@ -131,3 +132,24 @@ const AgeTHeader = styled.div`
   color: #1e3de4;
   cursor: pointer;
 `;
+
+export const number = {
+  width: 1,
+  title: (
+    <Translation>{t => t(translations.general.table.token.number)}</Translation>
+  ),
+  dataIndex: 'epochNumber',
+  key: 'epochNumber',
+  render: (value, row, index) => {
+    const { skip = 0, limit = 10 } = queryString.parse(window.location.search);
+    let page = 0;
+    let pageSize = 10;
+
+    try {
+      page = Math.floor(Number(skip) / Number(limit)) + 1;
+      pageSize = Math.floor(Number(limit));
+    } catch (e) {}
+
+    return (page - 1) * pageSize + index + 1;
+  },
+};

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { tokenColunms } from 'utils/tableColumns';
+import { tokenColunms, utils } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { cfxTokenTypes } from 'utils/constants';
@@ -22,11 +22,10 @@ export function Tokens() {
   const { t } = useTranslation();
   // const { data: globalData } = useGlobal();
   const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
-  const { page = 1, pageSize = 10 } = queryString.parse(window.location.search);
 
   let columnsWidth = [1, 6, 3, 3, 3, 3, 3, 4];
   let columns = [
-    tokenColunms.number(page, pageSize),
+    utils.number,
     tokenColunms.token,
     tokenColunms.contract(),
     {
@@ -70,7 +69,7 @@ export function Tokens() {
   ) {
     columnsWidth = [1, 7, 5, 3, 3, 4];
     columns = [
-      tokenColunms.number(page, pageSize),
+      utils.number,
       tokenColunms.token,
       tokenColunms.contract(),
       {
@@ -99,7 +98,7 @@ export function Tokens() {
   ) {
     columnsWidth = [1, 5, 4, 2, 2, 3];
     columns = [
-      tokenColunms.number(page, pageSize),
+      utils.number,
       tokenColunms.token,
       tokenColunms.contract(),
       {
