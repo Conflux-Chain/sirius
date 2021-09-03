@@ -122,6 +122,7 @@ export const DropdownWrapper = styled(Dropdown)`
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-right: 0 !important;
 
   ${media.s} {
     position: relative;
