@@ -22,6 +22,7 @@ import {
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import { useTestnet } from '../../../../utils/hooks/useTestnet';
 
 type SearchFormItemsProps =
   | undefined
@@ -196,7 +197,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const isTestnet = useTestnet();
   const {
     blockHash,
     epoch,
@@ -520,10 +521,17 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                   })}
                 </Select>
               }
-              placeholder={t(
-                translations.general.advancedSearch.placeholder
-                  .pleaseEnterAddress,
-              )}
+              placeholder={
+                isTestnet
+                  ? t(
+                      translations.general.advancedSearch.placeholder
+                        .pleaseEnterTestnetAddress,
+                    )
+                  : t(
+                      translations.general.advancedSearch.placeholder
+                        .pleaseEnterMainnetAddress,
+                    )
+              }
               allowClear
             />
           </Form.Item>
@@ -792,8 +800,6 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
 };
 
 const StyledAdvancedFormWrapper = styled.div`
-  border: 1px solod #ccc;
-
   .advanced-from-maxEpochNumber {
     .ant-form-item-control {
       position: relative;
