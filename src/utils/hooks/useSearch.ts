@@ -2,15 +2,17 @@ import { useHistory } from 'react-router';
 import {
   isAccountAddress,
   isContractAddress,
-  isInnerContractAddress,
   isBlockHash,
   isHash,
   isEpochNumber,
   tranferToLowerCase,
-  isSpecialAddress,
+  formatAddress,
+  getAddressInfo,
+  isAddress,
+  isCurrentNetworkAddress,
 } from 'utils';
-import { zeroAddress } from '../constants';
-import { formatAddress, isConfluxTestNet } from '../cfx';
+import { CONTRACTS, DEFAULT_NETWORK_IDS } from '../constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 
@@ -32,9 +34,9 @@ export const useSearch = (value?: string) => {
 
     // zero address support
     if (innerValue === '0x0') {
-      history.push(`/address/${zeroAddress}`);
+      history.push(`/address/${CONTRACTS.zero}`);
       // update searchbar value from 0x0 to zeroAddress
-      setValue && setValue(zeroAddress);
+      setValue && setValue(CONTRACTS.zero);
       trackEvent({
         category: ScanEvent.search.category,
         action: ScanEvent.search.action.zeroAddress,
@@ -43,21 +45,29 @@ export const useSearch = (value?: string) => {
       return;
     }
 
-    if (
-      (innerValue.toLowerCase().startsWith('cfx:') && isConfluxTestNet) ||
-      (innerValue.toLowerCase().startsWith('cfxtest:') && !isConfluxTestNet)
-    ) {
-      history.push('/networkError');
-      return;
-    }
+    if (isAddress(innerValue)) {
+      if (!isCurrentNetworkAddress(innerValue)) {
+        if (
+          // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
+          [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+            NETWORK_TYPE,
+          ) &&
+          [DEFAULT_NETWORK_IDS.mainnet, DEFAULT_NETWORK_IDS.testnet].includes(
+            getAddressInfo(innerValue)?.netId as number,
+          )
+        ) {
+          history.push('/networkError');
 
-    if (
-      isAccountAddress(innerValue) ||
-      isContractAddress(innerValue) ||
-      isInnerContractAddress(innerValue) ||
-      isSpecialAddress(innerValue)
-    ) {
-      history.push(`/address/${formatAddress(innerValue)}`); // cip-37 convert to new format
+          return;
+        } else {
+          history.push('/404');
+
+          return;
+        }
+      }
+
+      history.push(`/address/${formatAddress(innerValue)}`);
+
       trackEvent({
         category: ScanEvent.search.category,
         action: isAccountAddress(innerValue)
@@ -67,6 +77,7 @@ export const useSearch = (value?: string) => {
           : ScanEvent.search.action.innerContract,
         label: innerValue,
       });
+
       return;
     }
 

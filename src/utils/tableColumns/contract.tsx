@@ -35,7 +35,6 @@ export const name = {
   key: 'blockIndex',
   render: row => (
     <StyledIconWrapper>
-      {/*<img src={row?.icon || defaultTokenIcon} alt="contract icon" />*/}
       <span>
         <Text span hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}

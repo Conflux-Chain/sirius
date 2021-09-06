@@ -11,24 +11,20 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
-import { isConfluxTestNet } from '../../../utils/cfx';
-import {
-  toMainnet,
-  toTestnet,
-  useTestnet,
-} from '../../../utils/hooks/useTestnet';
+import { gotoNetwork } from 'utils';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 interface RouteParams {
   network: string;
 }
 
+// only in testnet or mainnet environment will come to this page
 export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
-  const isTestnet = useTestnet();
-  const { network = isConfluxTestNet ? 'Tethys' : 'Testnet' } = useParams<
-    RouteParams
-  >();
+  const {
+    network = NETWORK_TYPE === NETWORK_TYPES.testnet ? 'Tethys' : 'Testnet',
+  } = useParams<RouteParams>();
 
   return (
     <PageWrapper>
@@ -45,7 +41,9 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            isTestnet ? toMainnet() : toTestnet();
+            NETWORK_TYPE === NETWORK_TYPES.testnet
+              ? gotoNetwork(1029)
+              : gotoNetwork(1);
           }}
         >
           {t(translations.networkError.btn, { network })}

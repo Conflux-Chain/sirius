@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getAddressType } from 'utils';
-import {
-  addressTypeContract,
-  addressTypeInternalContract,
-} from 'utils/constants';
+import { isContractAddress, isInnerContractAddress } from 'utils';
 import { reqContract } from 'utils/httpRequest';
-import { decodeContract } from 'utils/cfx';
+import { CFX } from 'utils/constants';
 import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -68,8 +64,7 @@ export const InputData = ({
           setTip('');
         } else {
           const isContract =
-            getAddressType(toHash) === addressTypeContract ||
-            getAddressType(toHash) === addressTypeInternalContract;
+            isContractAddress(toHash) || isInnerContractAddress(toHash);
 
           if (isContract) {
             let isAbiError = false;
@@ -87,11 +82,12 @@ export const InputData = ({
             abi = resp['abi'];
 
             try {
-              const decodedBytecode = decodeContract({
+              const contract = CFX.Contract({
                 abi: JSON.parse(abi),
                 address: toHash,
-                transacionData: originalData,
+                decodeByteToHex: true,
               });
+              const decodedBytecode = contract.abi.decodeData(originalData);
 
               setData({
                 ...data,

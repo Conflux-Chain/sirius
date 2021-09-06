@@ -1,8 +1,8 @@
 import React from 'react';
-import { defaultTokenIcon } from '../../../constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 
 interface Props {
   info: {
@@ -22,7 +22,7 @@ export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
       const name = token['name'] || '--';
       let symbol = token['symbol'];
       symbol = `(${symbol ? symbol : '--'})`;
-      const icon = token['icon'] || defaultTokenIcon;
+      const icon = token['icon'] || ICON_DEFAULT_TOKEN;
 
       child = (
         <>

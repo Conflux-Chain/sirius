@@ -1157,6 +1157,7 @@
       "versionNotice": "版本说明",
       "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
       "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
+      "switchToScanNetwork": "请在 ConfluxPortal 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
       "upgradeTipVersion": "请升级 ConfluxPortal 至最新版本。"
     },

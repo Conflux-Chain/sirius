@@ -1,62 +1,68 @@
-import {
-  Contract,
-  format,
-} from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js'; // >= v1.1.6
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js'; // >= v1.1.6
 import { gzip } from 'pako';
 import { parseString } from 'utils';
 
 // TODO zip use hex address, should change to base32 address
-const zipContract = format(
+const zipContract = SDK.format(
   {
-    address: format.hexAddress, // cip-37
-    name: format.bytes.$before(parseString).$or(undefined),
-    website: format.bytes.$before(parseString).$or(undefined),
-    abi: format.bytes
+    address: SDK.format.hexAddress, // cip-37
+    name: SDK.format.bytes.$before(parseString).$or(undefined),
+    website: SDK.format.bytes.$before(parseString).$or(undefined),
+    abi: SDK.format.bytes
       .$before(parseString)
       .$parse(JSON.stringify, Array.isArray)
       .$after(gzip)
       .$or(undefined),
-    sourceCode: format.bytes.$before(parseString).$after(gzip).$or(undefined),
-    optimizeRuns: format.uInt.$after(String).$or(undefined),
-    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
+    sourceCode: SDK.format.bytes
+      .$before(parseString)
+      .$after(gzip)
+      .$or(undefined),
+    optimizeRuns: SDK.format.uInt.$after(String).$or(undefined),
+    icon: SDK.format.bytes.$before(parseString).$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
 );
 
-const zipToken = format(
+const zipToken = SDK.format(
   {
-    address: format.hexAddress, // cip-37
-    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
+    address: SDK.format.hexAddress, // cip-37
+    icon: SDK.format.bytes.$before(parseString).$after(gzip).$or(undefined),
   },
   { pick: true, strict: true },
 );
 
-const zipContractAndToken = format(
+const zipContractAndToken = SDK.format(
   {
-    address: format.hexAddress, // cip-37
-    name: format.bytes.$before(parseString).$or(undefined),
-    website: format.bytes.$before(parseString).$or(undefined),
-    abi: format.bytes
+    address: SDK.format.hexAddress, // cip-37
+    name: SDK.format.bytes.$before(parseString).$or(undefined),
+    website: SDK.format.bytes.$before(parseString).$or(undefined),
+    abi: SDK.format.bytes
       .$before(parseString)
       .$parse(JSON.stringify, Array.isArray)
       .$after(gzip)
       .$or(undefined),
-    sourceCode: format.bytes.$before(parseString).$after(gzip).$or(undefined),
-    optimizeRuns: format.uInt.$after(String).$or(undefined),
-    icon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
-    tokenIcon: format.bytes.$before(parseString).$after(gzip).$or(undefined),
+    sourceCode: SDK.format.bytes
+      .$before(parseString)
+      .$after(gzip)
+      .$or(undefined),
+    optimizeRuns: SDK.format.uInt.$after(String).$or(undefined),
+    icon: SDK.format.bytes.$before(parseString).$after(gzip).$or(undefined),
+    tokenIcon: SDK.format.bytes
+      .$before(parseString)
+      .$after(gzip)
+      .$or(undefined),
   },
   { pick: true, strict: true },
 );
 
-const formatAnnounceArray = format([
+const formatAnnounceArray = SDK.format([
   {
-    key: format.bytes.$before(parseString),
-    value: format.bytes.$before(parseString),
+    key: SDK.format.bytes.$before(parseString),
+    value: SDK.format.bytes.$before(parseString),
   },
 ]);
 
-const announcement = new Contract({
+const announcement = new SDK.Contract({
   abi: [
     {
       type: 'function',

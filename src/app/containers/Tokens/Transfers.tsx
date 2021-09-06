@@ -2,7 +2,7 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';
 import { Title } from 'app/containers/Transactions/components';
@@ -42,7 +42,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
-  if (type === cfxTokenTypes.erc721) {
+  if (type === CFX_TOKEN_TYPES.erc721) {
     columnsWidth = [3, 6, 6, 4, 3];
     columns = [
       tokenColunms.txnHash,
@@ -52,7 +52,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       tokenColunms.age(ageFormat, toggleAgeFormat),
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
-  if (type === cfxTokenTypes.erc1155) {
+  if (type === CFX_TOKEN_TYPES.erc1155) {
     columnsWidth = [3, 7, 7, 3, 4, 4];
     columns = [
       tokenColunms.txnHash,
@@ -81,7 +81,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       },
     };
 
-    if (type !== cfxTokenTypes.erc20) {
+    if (type !== CFX_TOKEN_TYPES.erc20) {
       searchOptions.tokenId = true;
       searchOptions.button = {
         col: {

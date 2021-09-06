@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { cfx } from 'utils/cfx';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { CFX } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import pubsub from 'utils/pubsub';
-
-// @ts-ignore
-window.format = format;
 
 // @ts-ignore
 window.BigNumber = BigNumber;
@@ -67,12 +64,11 @@ export const useGetPendingTxnByRPC = (url: string, inactive = false) => {
 
   useEffect(() => {
     // rpc call
-    cfx
-      .getAccountPendingTransactions(
-        query.address,
-        txnStartNonce,
-        format.hex(Number(parsedPageSize) || 10), // default limit
-      )
+    CFX.getAccountPendingTransactions(
+      query.address,
+      txnStartNonce,
+      SDK.format.hex(Number(parsedPageSize) || 10), // default limit
+    )
       .then(data => {
         setData2({
           ...data2,

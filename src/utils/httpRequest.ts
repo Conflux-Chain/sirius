@@ -246,3 +246,10 @@ export const reqNFTInfo = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqProjectConfig = (extra?: object) => {
+  return sendRequest({
+    url: '/frontend',
+    ...extra,
+  });
+};

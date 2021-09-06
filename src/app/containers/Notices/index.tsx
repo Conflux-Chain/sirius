@@ -1,142 +1,92 @@
 import React from 'react';
-import dayjs from 'dayjs';
+import announcementNotification from 'images/notice/announcementNotification.png';
+import FAQNotification from 'images/notice/FAQNotification.png';
+import updateNotification from 'images/notice/updateNotification.png';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
-import styled from 'styled-components/macro';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader';
-import { Timeline } from '@jnoodle/antd';
-import { TethysNotices, TestnetNotices } from './notices';
-import { useTestnet } from '../../../utils/hooks/useTestnet';
-import { media } from '../../../styles/media';
-import { useClientVersion } from '../../../utils/api';
-import { monospaceFont } from '../../../styles/variable';
+import { Link } from 'app/components/Link/Loadable';
+import styled from 'styled-components/macro';
+import { media } from 'styles/media';
 
-export function Notices() {
+export const noticeInfo = {
+  hot: false,
+  type: 'Announcement',
+  brief: {
+    en: 'ConfluxScan V2.2.5 Released!',
+    zh: 'ConfluxScan V2.2.5 发布喽！',
+  },
+  link: {
+    en:
+      'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4406027326235-Aug-16-2021-Aug-30-2021',
+    zh:
+      'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4406027326235-2021-8-16-2021-8-30',
+  },
+};
+
+const ImgNotice = () => {
+  if (noticeInfo.type === 'Announcement') {
+    return <img src={announcementNotification} alt="notice indicator" />;
+  } else if (noticeInfo.type === 'FAQ') {
+    return <img src={FAQNotification} alt="notice indicator" />;
+  } else if (noticeInfo.type === 'update') {
+    return <img src={updateNotification} alt="notice indicator" />;
+  }
+  return null;
+};
+// notice
+export const Notices = React.memo(() => {
   const { t, i18n } = useTranslation();
-  const isTestnet = useTestnet();
-  let v = useClientVersion();
-  const notices = (
-    (isTestnet ? TestnetNotices : TethysNotices) || []
-  ).sort((a, b) => b.date.localeCompare(a.date));
-  const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-  const loadingText = t(translations.general.loading);
-  const version = (v && v?.replace('conflux-rust-', '')) || loadingText;
-  const dateFormat = date =>
-    dayjs(date).format(lang === 'en' ? 'MMM DD, YYYY' : 'YYYY-MM-DD');
+  const iszh = i18n.language.includes('zh');
+
   return (
-    <>
-      <Helmet>
-        <title>{t(translations.header.notice)}</title>
-        <meta
-          name="description"
-          content={t(translations.metadata.description)}
-        />
-      </Helmet>
-      <PageHeader>{t(translations.header.notice)}</PageHeader>
-      <StyledListWrapper>
-        <Timeline>
-          {notices.map((n, i) => (
-            <Timeline.Item key={i}>
-              <div className="content-container">
-                <div className="date">{n.date ? dateFormat(n.date) : '--'}</div>
-                <div className="content">
-                  <ol>
-                    {n.content[lang].map((c, j) => (
-                      <li
-                        dangerouslySetInnerHTML={{
-                          __html: c.replace('{{version}}', version),
-                        }}
-                        key={j}
-                      />
-                    ))}
-                  </ol>
-                </div>
-              </div>
-            </Timeline.Item>
-          ))}
-        </Timeline>
-      </StyledListWrapper>
-    </>
+    <NoticeWrapper className="notice">
+      <ImgNotice />
+      <div className={`content ${noticeInfo.hot ? 'hot' : ''}`}>
+        {noticeInfo.brief[iszh ? 'zh' : 'en']}
+      </div>
+      <Link href={noticeInfo.link[iszh ? 'zh' : 'en']} className="more">
+        {t(translations.header.more)}
+      </Link>
+    </NoticeWrapper>
   );
-}
+});
 
-const StyledListWrapper = styled.div`
-  display: block;
-  margin-top: 30px;
-  margin-bottom: 30px;
+const NoticeWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 
-  ul li:before {
-    display: none;
+  ${media.s} {
+    margin-top: 10px;
   }
 
-  .content-container {
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-    color: #333333;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+  }
 
-    ${media.m} {
-      flex-direction: column;
-    }
+  .content {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #6c6d75;
 
-    .date {
-      color: #002257;
-      width: 100px;
-      white-space: nowrap;
-      margin-right: 60px;
-      margin-bottom: 16px;
-    }
-
-    .content {
-      width: 100%;
-
-      ol {
-        margin-left: 23px;
-      }
-
-      li,
-      p {
-        margin-top: 0;
-        margin-bottom: 8px;
-      }
-      li::marker {
-        font-family: ${monospaceFont};
-      }
+    &.hot {
+      color: #e64e4e;
     }
   }
 
-  .ant-timeline-item {
-    padding-bottom: 30px;
+  .more {
+    white-space: nowrap;
+    margin-left: 24px;
+    margin-right: 10px;
+    border-bottom: 1px solid #1e3de4;
 
-    .ant-timeline-item-head-blue {
-      color: #999;
-      border-color: #999;
+    &:hover,
+    &:active {
+      border-bottom: 1px solid #0f23bd;
     }
-
-    &:first-child {
-      .ant-timeline-item-head-blue {
-        color: #1e3de4;
-        border-color: #1e3de4;
-      }
-
-      .date {
-        color: #1e3de4;
-        font-weight: 600;
-      }
-    }
-  }
-
-  .ant-timeline-item-head {
-    width: 12px;
-    height: 12px;
-  }
-
-  .ant-timeline-item-tail {
-    left: 5px;
-    border: 1px solid #bdc0d6;
-  }
-  .ant-timeline-item-content {
-    top: -5px;
   }
 `;

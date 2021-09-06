@@ -9,9 +9,9 @@ import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
-import { defaultTokenIcon } from '../../../constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
@@ -61,13 +61,13 @@ export function TokenDetail() {
   // if (data.transferStatistic.ERC20 !== undefined) {
   //   switch (transferCountArray.indexOf(data.transferCount)) {
   //     case 0:
-  //       transferType = cfxTokenTypes.erc20;
+  //       transferType = CFX_TOKEN_TYPES.erc20;
   //       break;
   //     case 1:
-  //       transferType = cfxTokenTypes.erc721;
+  //       transferType = CFX_TOKEN_TYPES.erc721;
   //       break;
   //     case 2:
-  //       transferType = cfxTokenTypes.erc1155;
+  //       transferType = CFX_TOKEN_TYPES.erc1155;
   //       break;
   //     default:
   //       break;
@@ -111,7 +111,7 @@ export function TokenDetail() {
               <img
                 className="img"
                 alt="icon"
-                src={data.icon || defaultTokenIcon}
+                src={data.icon || ICON_DEFAULT_TOKEN}
               />
             ) : (
               <Tooltip
@@ -125,7 +125,7 @@ export function TokenDetail() {
                   </span>
                 }
               >
-                <img alt="icon" src={data.icon || defaultTokenIcon} />
+                <img alt="icon" src={data.icon || ICON_DEFAULT_TOKEN} />
               </Tooltip>
             )}
             <div className="basic-name">

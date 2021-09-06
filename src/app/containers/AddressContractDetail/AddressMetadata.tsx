@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +9,8 @@ import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { cfx } from '../../../utils/cfx';
-import { isTestNetEnv } from '../../../utils/hooks/useTestnet';
+import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from '../../../images/contract-address/viewmore.png';
-import { governanceAddress, stakingAddress } from '../../../utils/constants';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,
@@ -38,16 +36,10 @@ function getCurrentStakingEarned(list, rate, stakedCfx) {
   return earned;
 }
 
-const stakingContract = cfx.Contract({
+const stakingContract = CFX.Contract({
   abi: stakingAbi,
   bytecode: stakingBytecode,
-  address: stakingAddress,
-});
-
-const governanceContract = cfx.Contract({
-  abi: governanceAbi,
-  bytecode: gobernanceBytecode,
-  address: governanceAddress,
+  address: CONTRACTS.staking,
 });
 
 export function AddressMetadata({ address, accountInfo }) {
@@ -62,16 +54,22 @@ export function AddressMetadata({ address, accountInfo }) {
   const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
   const [modalShown, setModalShown] = useState<boolean>(false);
 
-  // const [] = useState();
+  const governanceContract = useMemo(() => {
+    return CFX.Contract({
+      abi: governanceAbi,
+      bytecode: gobernanceBytecode,
+      address: CONTRACTS.governance,
+    });
+  }, []);
 
   useEffect(() => {
     // get staking info
     // TODO batch
     if (accountInfo.address) {
       const proArr: any = [];
-      proArr.push(cfx.getDepositList(address));
-      proArr.push(cfx.getAccumulateInterestRate());
-      proArr.push(cfx.getVoteList(address));
+      proArr.push(CFX.getDepositList(address));
+      proArr.push(CFX.getAccumulateInterestRate());
+      proArr.push(CFX.getVoteList(address));
       proArr.push(governanceContract.getBlockNumber());
       Promise.all(proArr)
         .then(res => {
@@ -100,8 +98,7 @@ export function AddressMetadata({ address, accountInfo }) {
               });
 
             // get locked CFX
-            cfx
-              .InternalContract('Staking')
+            CFX.InternalContract('Staking')
               .getLockedStakingBalance(address, currentBlockN)
               .then(res => {
                 setLockedCFX(res || 0);
@@ -123,7 +120,7 @@ export function AddressMetadata({ address, accountInfo }) {
           setVoteListLoading(false);
         });
     }
-  }, [address, accountInfo]);
+  }, [address, accountInfo, governanceContract]);
 
   return (
     <>
@@ -137,7 +134,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 text={
                   <>
                     {t(translations.toolTip.address.stakedBegin)}
-                    {isTestNetEnv() ? (
+                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                       <a
                         href="https://votetest.confluxnetwork.org/"
                         target="_blank"
@@ -185,7 +182,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 text={
                   <>
                     {t(translations.toolTip.address.lockedBegin)}
-                    {isTestNetEnv() ? (
+                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                       <a
                         href="https://votetest.confluxnetwork.org/"
                         target="_blank"

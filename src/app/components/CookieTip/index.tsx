@@ -4,18 +4,19 @@ import styled from 'styled-components';
 import CookieIcon from '../../../images/cookie.svg';
 import { translations } from '../../../locales/i18n';
 import docCookies from '../../../utils/cookie';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 
 export const CookieTip = React.memo(() => {
   const { t } = useTranslation();
-  const key = 'confluxscan_cookie_agreed';
   const [cookieAgreed, setCookieAgreed] = useState(
-    !!docCookies.getItem(key) || !!localStorage.getItem(key),
+    !!docCookies.getItem(LOCALSTORAGE_KEYS_MAP.cookieAgreed) ||
+      !!localStorage.getItem(LOCALSTORAGE_KEYS_MAP.cookieAgreed),
   );
   const agreeCookie = () => {
     // @ts-ignore
-    docCookies.setItem(key, 'true', Infinity);
+    docCookies.setItem(LOCALSTORAGE_KEYS_MAP.cookieAgreed, 'true', Infinity);
     // for safari https://github.com/js-cookie/js-cookie/wiki/Frequently-Asked-Questions#why-is-my-expiration-time-capped-at-7-days-or-24-hours
-    localStorage.setItem(key, 'true');
+    localStorage.setItem(LOCALSTORAGE_KEYS_MAP.cookieAgreed, 'true');
     setCookieAgreed(true);
   };
   return cookieAgreed ? null : (

@@ -1158,6 +1158,7 @@
       "versionNotice": "Version Notice",
       "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
+      "switchToScanNetwork": "Please switch the network to {{networkID}} in ConfluxPortal.",
       "cannotProcess": "Cannot Process",
       "upgradeTipVersion": "Please update ConfluxPortal to the latest version."
     },

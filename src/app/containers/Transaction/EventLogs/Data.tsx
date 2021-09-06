@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Select } from '../../../components/Select';
 import styled from 'styled-components/macro';
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '../../../../styles/media';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { DecodedParams } from 'app/components/TxnComponents/util';
 
 const isPossibleAddress = data => {
@@ -77,14 +77,14 @@ const decodeData = (value, type) => {
   try {
     switch (type) {
       case 'address':
-        const address = format.address(`0x${value.substr(24)}`, NETWORK_ID);
+        const address = SDK.format.address(`0x${value.substr(24)}`, NETWORK_ID);
         result = <Link href={`/address/${address}`}>{address}</Link>;
         break;
       case 'number':
-        result = format.bigInt(v).toString();
+        result = SDK.format.bigInt(v).toString();
         break;
       case 'text':
-        result = format.hexBuffer(v).toString();
+        result = SDK.format.hexBuffer(v).toString();
         break;
       case 'bool':
         break;
@@ -162,12 +162,7 @@ export const Data = ({
           let value: React.ReactNode = <pre>{d.value}</pre>;
 
           if (d.type === 'address') {
-            const contractInfo =
-              contractAndTokenInfo[
-                formatAddress(d.value, {
-                  withType: true,
-                })
-              ];
+            const contractInfo = contractAndTokenInfo[formatAddress(d.value)];
 
             value = (
               <>

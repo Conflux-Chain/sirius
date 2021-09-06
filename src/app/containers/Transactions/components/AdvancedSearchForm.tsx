@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { isAddress, isHash, isSafeNumberOrNumericStringInput } from 'utils';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import styled from 'styled-components/macro';
 import qs from 'query-string';
 import lodash from 'lodash';
@@ -22,7 +23,6 @@ import {
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useTestnet } from '../../../../utils/hooks/useTestnet';
 
 type SearchFormItemsProps =
   | undefined
@@ -197,7 +197,6 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const isTestnet = useTestnet();
   const {
     blockHash,
     epoch,
@@ -522,15 +521,17 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                 </Select>
               }
               placeholder={
-                isTestnet
+                NETWORK_TYPE === NETWORK_TYPES.testnet
                   ? t(
                       translations.general.advancedSearch.placeholder
                         .pleaseEnterTestnetAddress,
                     )
-                  : t(
+                  : NETWORK_TYPE === NETWORK_TYPES.mainnet
+                  ? t(
                       translations.general.advancedSearch.placeholder
                         .pleaseEnterMainnetAddress,
                     )
+                  : ''
               }
               allowClear
             />

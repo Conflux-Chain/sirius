@@ -18,6 +18,7 @@ import {
 } from './AddressInfoCards';
 import { AddressMetadata, ContractMetadata, Table } from './Loadable';
 import { useContract } from 'utils/api';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import {
   Bottom,
   Head,
@@ -109,11 +110,13 @@ export const ContractDetailPage = memo(() => {
           {t(translations.general.address.more.editContract)}
         </RouterLink>
       </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/sponsor/${address}`}>
-          {t(translations.general.address.more.sponsor)}
-        </RouterLink>
-      </Menu.Item>
+      {[NETWORK_TYPES.testnet, NETWORK_TYPES.mainnet].includes(NETWORK_TYPE) ? (
+        <Menu.Item>
+          <RouterLink to={`/sponsor/${address}`}>
+            {t(translations.general.address.more.sponsor)}
+          </RouterLink>
+        </Menu.Item>
+      ) : null}
       <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
@@ -189,19 +192,6 @@ export const ContractDetailPage = memo(() => {
                   />
                 </span>
               </DropdownWrapper>
-              {/*<Edit address={address} />*/}
-              {/*<Apply address={address} />*/}
-              {/*<Report address={address} />*/}
-              {/*{hasWebsite && (*/}
-              {/*  <Jump*/}
-              {/*    onClick={() => {*/}
-              {/*      const url = websiteUrl.startsWith('http')*/}
-              {/*        ? websiteUrl*/}
-              {/*        : `http://${websiteUrl}`;*/}
-              {/*      window.open(url);*/}
-              {/*    }}*/}
-              {/*  />*/}
-              {/*)}*/}
               {isSpecialAddress(address) ? (
                 <WarningInfoWrapper>
                   <img src={warningInfo} alt="warning" />
@@ -218,20 +208,29 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) && (
-          <Middle key="middle">
-            {contractInfo.stakingBalance != null &&
-            contractInfo.stakingBalance !== '0' ? (
-              <StakingWrapper>
-                <AddressMetadata address={address} accountInfo={contractInfo} />
-              </StakingWrapper>
-            ) : null}
-            <div style={{ position: 'relative' }}>
-              <ContractMetadata address={address} contractInfo={contractInfo} />
-              {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
-            </div>
-          </Middle>
-        )}
+        {isContractAddress(address) &&
+          [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+            NETWORK_TYPE,
+          ) && (
+            <Middle key="middle">
+              {contractInfo.stakingBalance != null &&
+              contractInfo.stakingBalance !== '0' ? (
+                <StakingWrapper>
+                  <AddressMetadata
+                    address={address}
+                    accountInfo={contractInfo}
+                  />
+                </StakingWrapper>
+              ) : null}
+              <div style={{ position: 'relative' }}>
+                <ContractMetadata
+                  address={address}
+                  contractInfo={contractInfo}
+                />
+                {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
+              </div>
+            </Middle>
+          )}
         <Bottom key="bottom">
           <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>

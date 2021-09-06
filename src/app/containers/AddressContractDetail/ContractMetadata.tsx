@@ -20,9 +20,8 @@ import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { zeroAddress } from '../../../utils/constants';
-import { formatAddress } from '../../../utils/cfx';
-import { defaultTokenIcon } from '../../../constants';
+import { isZeroAddress } from 'utils';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
@@ -36,9 +35,7 @@ const WarnningButton = ({ address }) => {
         className="metadata-tooltip-btn"
         size={16}
         tooltipContentClassName="warnning-tooltip"
-        viewBox={
-          formatAddress(address) !== zeroAddress ? '0 0 1024 1024' : '0 0 16 16'
-        }
+        viewBox={!isZeroAddress(address) ? '0 0 1024 1024' : '0 0 16 16'}
         tooltipText={
           <WarnningTooltipWrapper>
             <p className="warnning-text">
@@ -59,7 +56,7 @@ const WarnningButton = ({ address }) => {
           </WarnningTooltipWrapper>
         }
       >
-        {formatAddress(address) !== zeroAddress ? (
+        {!isZeroAddress(address) ? (
           <path
             d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
             fill="#FFB84B"
@@ -189,7 +186,7 @@ export function ContractMetadata({ address, contractInfo }) {
                     <AddressContainer
                       value={contractInfo.admin}
                       alias={
-                        formatAddress(contractInfo.admin) === zeroAddress
+                        isZeroAddress(contractInfo.admin)
                           ? t(translations.general.zeroAddress)
                           : undefined
                       }
@@ -219,7 +216,7 @@ export function ContractMetadata({ address, contractInfo }) {
                   src={
                     tokenInfo && tokenInfo.icon
                       ? tokenInfo.icon
-                      : defaultTokenIcon
+                      : ICON_DEFAULT_TOKEN
                   }
                   alt={`${contractInfo.name} logo`}
                 />

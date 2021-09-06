@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import { cfx, cfxFormat } from 'utils/cfx';
+import { CFX } from 'utils/constants';
 import BigNumber from 'bignumber.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const RISK_DIVIDED = new BigNumber(2).pow(256).minus(1);
 const EPS = new BigNumber(1e-6);
@@ -32,8 +33,8 @@ export const useConfirmRisk = (blockHash: string) => {
 
   const getRisk = () => {
     if (blockHash) {
-      cfx.provider
-        .call('cfx_getConfirmationRiskByHash', cfxFormat.blockHash(blockHash))
+      CFX.provider
+        .call('cfx_getConfirmationRiskByHash', SDK.format.blockHash(blockHash))
         .then(data => {
           // retry if no risk info
           if (!data) {

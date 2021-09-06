@@ -4,7 +4,7 @@ import { Select, Spin, Tag, Image } from '@jnoodle/antd';
 import { SelectProps } from '@jnoodle/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components/macro';
-import { defaultTokenIcon } from '../../../../constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Text } from 'app/components/Text/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -14,7 +14,7 @@ import {
   reqTokenList,
 } from 'utils/httpRequest';
 import qs from 'query-string';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import Info from '@zeit-ui/react-icons/info';
 
@@ -222,8 +222,8 @@ export function DebounceTokenSelect<
                 <Option value={o.address} key={`search-${o.address}`}>
                   <Image
                     className="advanced-search-select-option-img"
-                    src={o.icon || defaultTokenIcon}
-                    fallback={defaultTokenIcon}
+                    src={o.icon || ICON_DEFAULT_TOKEN}
+                    fallback={ICON_DEFAULT_TOKEN}
                     alt="token icon"
                   />
                   <span className="option-text">{o.name}</span>
@@ -269,8 +269,8 @@ export function DebounceTokenSelect<
                 <Option value={o.address} key={`recommend-${o.address}`}>
                   <Image
                     className="advanced-search-select-option-img"
-                    src={o.icon || defaultTokenIcon}
-                    fallback={defaultTokenIcon}
+                    src={o.icon || ICON_DEFAULT_TOKEN}
+                    fallback={ICON_DEFAULT_TOKEN}
                     alt="token icon"
                   />
                   <span className="option-text">{o.name}</span>

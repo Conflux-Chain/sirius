@@ -20,10 +20,10 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import { FileUpload } from 'app/components/FileUpload';
 import { useMessages } from '@cfxjs/react-ui';
-import { cfxAddress } from 'utils/cfx';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useLocation } from 'react-router-dom';
 import querystring from 'query-string';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const { Option } = Select;
 const AceEditorStyle = {
@@ -216,7 +216,7 @@ export const ContractVerification = () => {
 
                       if (
                         isContractAddress(address) &&
-                        cfxAddress.isValidCfxAddress(address)
+                        SDK.address.isValidCfxAddress(address)
                       ) {
                         return Promise.resolve();
                       } else {

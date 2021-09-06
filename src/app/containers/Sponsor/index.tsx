@@ -5,13 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import {
-  cfx,
-  faucet,
-  faucetAddress,
-  formatAddress,
-  faucetLastAddress,
-} from 'utils/cfx';
+import { formatAddress } from 'utils';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
@@ -21,10 +15,11 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction } from 'utils/constants';
+import { TXN_ACTION, RPC_SERVER, CFX, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
+import Faucet from 'utils/sponsorFaucet/faucet';
 
 interface RouteParams {
   contractAddress: string;
@@ -37,7 +32,9 @@ const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
 const errUpgraded = 'errUpgraded';
+
 export function Sponsor() {
+  const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -67,16 +64,15 @@ export function Sponsor() {
   const { accounts } = usePortal();
 
   const getSponsorFromSDK = address => {
-    cfx.getSponsorInfo(address).then(
+    CFX.getSponsorInfo(address).then(
       resp => {
         const sponsorGasBound = resp.sponsorGasBound.toString();
-        const sponsorForGas = formatAddress(resp.sponsorForGas, {
-          hex: true,
-        });
+        const sponsorForGas = formatAddress(resp.sponsorForGas);
+
         setUpperBound(sponsorGasBound);
         if (
-          sponsorForGas === faucetAddress ||
-          sponsorForGas === faucetLastAddress
+          sponsorForGas === CONTRACTS.faucet ||
+          sponsorForGas === CONTRACTS.faucetLast
         ) {
           setIsUpperBoundFromFoundation(true);
         }
@@ -88,8 +84,8 @@ export function Sponsor() {
   const getSponsorInfo = async _address => {
     setLoading(true);
     // cip-37 compatible
-    const address = formatAddress(_address, { hex: false });
-    const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
+    const address = formatAddress(_address);
+    const sponsorInfo = await CFX.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
     if (flag) {
@@ -453,14 +449,14 @@ export function Sponsor() {
         </BlockContainer>
         <ApplyContainer>
           <DappButton
-            contractAddress={faucetAddress}
+            contractAddress={CONTRACTS.faucet}
             data={txData}
             btnDisabled={!canApply}
             connectText={t('sponsor.connectToApply')}
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
-            txnAction={TxnAction.sponsorApplication}
+            txnAction={TXN_ACTION.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
 

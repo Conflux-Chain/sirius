@@ -1,11 +1,11 @@
 import scanUtilAbi from './scanUtilAbi';
-import { cfx } from '../../../utils/cfx';
+import { CFX } from '../../../utils/constants';
 import { NFTContractAddresses } from '../../components/NFTPreview.bak/NFTInfo';
 
 export const scanUtilContractAddress =
   'cfx:acef1ym9m16fc94x29h0800k0ugnaj91sjjbm60hfh';
 
-const contract = cfx.Contract({
+const contract = CFX.Contract({
   abi: scanUtilAbi,
   address: scanUtilContractAddress,
 });

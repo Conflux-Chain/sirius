@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { DappButton } from '../../components/DappButton/Loadable';
-import { TxnAction } from 'utils/constants';
+import { TXN_ACTION } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
 import { Remark } from '../../components/Remark';
 
@@ -37,7 +37,7 @@ export function ContractDeployment() {
           contractAddress=""
           data={txData}
           btnDisabled={!contractInfo.bytecode}
-          txnAction={TxnAction.contractDeplpy}
+          txnAction={TXN_ACTION.contractDeplpy}
         ></DappButton>
       </StyledButtonWrapper>
       <StyledRemarkWrapper>

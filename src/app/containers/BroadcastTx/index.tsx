@@ -7,7 +7,7 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader';
 import imgWarning from 'images/warning.png';
 import { Card } from 'app/components/Card/Loadable';
-import { cfx } from 'utils/cfx';
+import { CFX } from 'utils/constants';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
@@ -24,7 +24,7 @@ export function BroadcastTx() {
     setLoading(true);
     setError('');
     try {
-      const txHash = await cfx.sendRawTransaction(value);
+      const txHash = await CFX.sendRawTransaction(value);
       setTxHash(txHash);
       setModalShown(true);
       trackEvent({
