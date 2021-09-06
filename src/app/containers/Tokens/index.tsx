@@ -23,7 +23,7 @@ export function Tokens() {
   // const { data: globalData } = useGlobal();
   const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
 
-  let columnsWidth = [1, 6, 3, 3, 3, 3, 3, 4];
+  let columnsWidth = [1, 7, 4, 3, 3, 3, 2, 4];
   let columns = [
     utils.number,
     tokenColunms.token,
