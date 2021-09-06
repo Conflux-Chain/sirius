@@ -35,7 +35,6 @@ export const Title = styled.div`
 `;
 export const HeadAddressLine = styled.span`
   position: relative;
-  line-height: 1.29rem;
   color: #74798c;
   display: flex;
   flex-direction: row;
@@ -63,6 +62,7 @@ export const HeadAddressLine = styled.span`
     display: flex;
     flex-direction: row;
     align-items: center;
+
     > span,
     > div {
       margin-right: 0.58rem;
@@ -110,6 +110,7 @@ export const Top = styled.section`
       margin-left: 0;
       margin-bottom: 10px !important;
     }
+
     margin-bottom: 10px;
   }
 `;

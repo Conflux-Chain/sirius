@@ -68,7 +68,9 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={3}>
             {Info(
-              t(translations.statistics.home.transactions),
+              <Link to={'/chart/dailyTransaction'} className="info-link">
+                {t(translations.statistics.home.transactions)}
+              </Link>,
               `${
                 dashboardData.transactionCount
                   ? formatNumber(dashboardData.transactionCount, {
@@ -81,7 +83,9 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={2.5}>
             {Info(
-              t(translations.statistics.home.contract),
+              <Link to={'/chart/contractDeploy'} className="info-link">
+                {t(translations.statistics.home.contract)}
+              </Link>,
               `${
                 dashboardData.contractCount
                   ? formatNumber(dashboardData.contractCount, {
@@ -155,6 +159,7 @@ const CardWrapper = styled.div`
       > div {
         padding: 12px 18px;
       }
+
       ${media.m} {
         > div {
           padding: 10px 12px 5px;
@@ -165,9 +170,11 @@ const CardWrapper = styled.div`
 
   .stats-container {
     padding: 12px 0;
+
     ${media.m} {
       padding: 0;
     }
+
     > .item {
       &:nth-child(2),
       &:nth-child(5) {

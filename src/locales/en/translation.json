@@ -538,9 +538,10 @@
       "placeholder": {
         "pleaseSelect": "Search by Token",
         "pleaseEnter": "Please enter",
-        "pleaseEnterTxnHash": "Please enter a txn hash",
-        "pleaseEnterBlockHash": "Please enter a block hash",
-        "pleaseEnterAddress": "Please enter an address",
+        "pleaseEnterTxnHash": "0x...",
+        "pleaseEnterBlockHash": "0x...",
+        "pleaseEnterTestnetAddress": "cfxtest:...",
+        "pleaseEnterMainnetAddress": "cfx:...",
         "pleaseEnterTokenId": "e.g. 10",
         "pleaseEnterNonce": "Please enter a nonce",
         "pleaseEnterEpochStart": "e.g. 100",

@@ -201,7 +201,7 @@ const StyledContractContentCodeWrapper = styled.div`
 
 export const ContractContent = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { abi, address } = contractInfo;
+  const { abi, address, verify = {} } = contractInfo;
   const [dataForRead, setDataForRead] = useState([]);
   const [dataForWrite, setDataForWrite] = useState([]);
   const [activeKey, setActiveKey] = useState('code');
@@ -310,7 +310,7 @@ export const ContractContent = ({ contractInfo }) => {
     },
   ];
 
-  if (abi) {
+  if (abi && Object.keys(verify).length) {
     tabs = tabs.concat([
       {
         key: 'read',

@@ -11,6 +11,7 @@ import { toThousands, formatNumber } from 'utils';
 import { useBreakpoint } from 'styles/media';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
+import { Empty } from 'app/components/Empty/Loadable';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
@@ -98,6 +99,7 @@ export const TablePanel = ({
   }, [outerUrl, search]);
 
   useEffect(() => {
+    console.log(className);
     if (outerUrl) {
       const { url } = qs.parseUrl(outerUrl);
 
@@ -195,6 +197,7 @@ export const TablePanel = ({
       }
       loading={outerLoading || loading}
       onChange={onChange || handleTableChange}
+      locale={{ emptyText: <Empty show={true} /> }}
       title={
         title
           ? typeof title === 'function'
