@@ -7,7 +7,7 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { tokenColunms, utils } from 'utils/tableColumns';
 import styled from 'styled-components/macro';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 import queryString from 'query-string';
 // import { useGlobal } from 'utils/hooks/useGlobal';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -21,7 +21,7 @@ interface RouteParams {
 export function Tokens() {
   const { t } = useTranslation();
   // const { data: globalData } = useGlobal();
-  const { tokenType = cfxTokenTypes.erc20 } = useParams<RouteParams>();
+  const { tokenType = CFX_TOKEN_TYPES.erc20 } = useParams<RouteParams>();
 
   let columnsWidth = [1, 7, 4, 3, 3, 3, 2, 4];
   let columns = [
@@ -48,7 +48,7 @@ export function Tokens() {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   let url = `/stat/tokens/list?transferType=${
-    cfxTokenTypes.erc20
+    CFX_TOKEN_TYPES.erc20
   }&reverse=true&orderBy=totalPrice&${queryString.stringify({
     fields: [
       'transferCount',
@@ -60,12 +60,12 @@ export function Tokens() {
       'erc20TransferCount',
     ],
   })}`;
-  // let url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${globalData.currency}`; // @todo wait for new api handler
+  // let url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${globalData.currency}`; // @todo wait for new api handler
   let title = t(translations.header.tokens20);
 
   if (
-    tokenType === cfxTokenTypes.erc721 ||
-    tokenType === cfxTokenTypes.crc721
+    tokenType === CFX_TOKEN_TYPES.erc721 ||
+    tokenType === CFX_TOKEN_TYPES.crc721
   ) {
     columnsWidth = [1, 7, 5, 3, 3, 4];
     columns = [
@@ -84,17 +84,17 @@ export function Tokens() {
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
-      cfxTokenTypes.erc721
+      CFX_TOKEN_TYPES.erc721
     }&reverse=true&orderBy=transferCount&${queryString.stringify({
       fields: ['transferCount', 'icon', 'transactionCount'],
     })}`;
-    // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
+    // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens721);
   }
 
   if (
-    tokenType === cfxTokenTypes.erc1155 ||
-    tokenType === cfxTokenTypes.crc1155
+    tokenType === CFX_TOKEN_TYPES.erc1155 ||
+    tokenType === CFX_TOKEN_TYPES.crc1155
   ) {
     columnsWidth = [1, 5, 4, 2, 2, 3];
     columns = [
@@ -113,11 +113,11 @@ export function Tokens() {
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
-      cfxTokenTypes.erc1155
+      CFX_TOKEN_TYPES.erc1155
     }&reverse=true&orderBy=transferCount&${queryString.stringify({
       fields: ['transferCount', 'icon', 'transactionCount'],
     })}`;
-    // url = `/stat/tokens/list?transferType=${cfxTokenTypes.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
+    // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);
   }
 

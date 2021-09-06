@@ -6,12 +6,12 @@ import { translations } from 'locales/i18n';
 import { Form, Input, Checkbox, Button, Row, Col } from '@jnoodle/antd';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { isAddress, isHash } from 'utils';
+import { isAddress, isHash, isCurrentNetworkAddress } from 'utils';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { reqReport } from 'utils/httpRequest';
 import { useMessages } from '@cfxjs/react-ui';
-import { isConfluxTestNet } from 'utils/cfx';
-import { address as sdkAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+// import { IS_TESTNET } from 'utils/constants';
+// import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const checkboxStyle = { lineHeight: '2.2857rem', width: '9.1429rem' };
 
@@ -100,38 +100,47 @@ export function Report() {
                 const textInvalidAddress = t(
                   translations.report.error.addressInvalid,
                 );
-                const textInvalidMainnetAddress = t(
-                  translations.report.error.isNotMainnet,
-                );
-                const textInvalidTestnetAddress = t(
-                  translations.report.error.isNotTestnet,
-                );
 
-                if (address.startsWith('0x')) {
-                  if (isAddress(address)) {
-                    return Promise.resolve();
-                  } else {
-                    return Promise.reject(textInvalidAddress);
-                  }
-                } else if (isConfluxTestNet) {
-                  if (!address.startsWith('cfxtest:')) {
-                    return Promise.reject(textInvalidTestnetAddress);
-                  } else if (sdkAddress.isValidCfxAddress(address)) {
-                    return Promise.resolve();
-                  } else {
-                    return Promise.reject(textInvalidAddress);
-                  }
-                } else if (!isConfluxTestNet) {
-                  if (!address.startsWith('cfx:')) {
-                    return Promise.reject(textInvalidMainnetAddress);
-                  } else if (sdkAddress.isValidCfxAddress(address)) {
-                    return Promise.resolve();
-                  } else {
-                    return Promise.reject(textInvalidAddress);
-                  }
+                if (isCurrentNetworkAddress(address)) {
+                  return Promise.resolve();
                 } else {
                   return Promise.reject(textInvalidAddress);
                 }
+
+                // @todo, add more detail tip
+
+                // const textInvalidMainnetAddress = t(
+                //   translations.report.error.isNotMainnet,
+                // );
+                // const textInvalidTestnetAddress = t(
+                //   translations.report.error.isNotTestnet,
+                // );
+
+                // if (address.startsWith('0x')) {
+                //   if (isAddress(address)) {
+                //     return Promise.resolve();
+                //   } else {
+                //     return Promise.reject(textInvalidAddress);
+                //   }
+                // } else if (IS_TESTNET) {
+                //   if (!address.startsWith('cfxtest:')) {
+                //     return Promise.reject(textInvalidTestnetAddress);
+                //   } else if (SDK.address.isValidCfxAddress(address)) {
+                //     return Promise.resolve();
+                //   } else {
+                //     return Promise.reject(textInvalidAddress);
+                //   }
+                // } else if (!IS_TESTNET) {
+                //   if (!address.startsWith('cfx:')) {
+                //     return Promise.reject(textInvalidMainnetAddress);
+                //   } else if (SDK.address.isValidCfxAddress(address)) {
+                //     return Promise.resolve();
+                //   } else {
+                //     return Promise.reject(textInvalidAddress);
+                //   }
+                // } else {
+                //   return Promise.reject(textInvalidAddress);
+                // }
               },
             }),
           ]}

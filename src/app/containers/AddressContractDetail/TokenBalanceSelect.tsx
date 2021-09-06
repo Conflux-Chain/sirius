@@ -7,11 +7,11 @@ import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { defaultTokenIcon } from '../../../constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Link } from 'react-router-dom';
 import { Text } from '../../components/Text';
 import { formatBalance, formatNumber } from 'utils/index';
-import { cfxTokenTypes } from '../../../utils/constants';
+import { CFX_TOKEN_TYPES } from '../../../utils/constants';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -39,15 +39,15 @@ function Select({ children = [] } = {}) {
   const tokenCount = children.length;
 
   const children20 = children
-    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc20)
+    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc20)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   const children721 = children
-    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc721)
+    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc721)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   const children1155 = children
-    .filter((c: any) => c && c.transferType === cfxTokenTypes.erc1155)
+    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc1155)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   return (
@@ -101,7 +101,7 @@ function SelectItem({
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon
-        src={icon || defaultTokenIcon}
+        src={icon || ICON_DEFAULT_TOKEN}
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>
@@ -110,10 +110,10 @@ function SelectItem({
     </SelectItemTitle>
   );
   let decimal = decimals;
-  if (transferType === cfxTokenTypes.erc721) {
+  if (transferType === CFX_TOKEN_TYPES.erc721) {
     decimal = 0;
   }
-  if (transferType === cfxTokenTypes.erc1155) {
+  if (transferType === CFX_TOKEN_TYPES.erc1155) {
     decimal = 0;
   }
   const content = (
@@ -123,7 +123,7 @@ function SelectItem({
           {formatBalance(balance, decimal) + ' ' + symbol}
         </Text>
       </SelectItemContentBalance>
-      {transferType === cfxTokenTypes.erc20 ? (
+      {transferType === CFX_TOKEN_TYPES.erc20 ? (
         <SelectItemContentBalance key="price">
           <Text
             hoverValue={`1 ${symbol} ≈ ${currencyUnit}${

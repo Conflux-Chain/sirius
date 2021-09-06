@@ -14,11 +14,10 @@ import { Popover } from '@jnoodle/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
-import { CONST } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
-import { InternalContracts } from '../constants';
 import lodash from 'lodash';
 
 const StyledHashWrapper = styled.span`
@@ -178,8 +177,7 @@ export const to = {
     let alias = '';
     let verify = false;
 
-    if (InternalContracts[value]) alias = InternalContracts[value];
-    else if (row.toContractInfo && row.toContractInfo.name)
+    if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
     else if (row.contractInfo && row.contractInfo.name)
       alias = row.contractInfo.name;
@@ -294,9 +292,9 @@ export const PendingReasonText = ({ value }) => {
   let reason = value;
   if (reason === 'ready') {
     reason = t(translations.transactions.pendingReason.ready);
-  } else if (reason === CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
+  } else if (reason === SDK.CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
     reason = t(translations.transactions.pendingReason.futureNonce);
-  } else if (reason === CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
+  } else if (reason === SDK.CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
     reason = t(translations.transactions.pendingReason.notEnoughCash);
   } else {
     reason = <span>--</span>;

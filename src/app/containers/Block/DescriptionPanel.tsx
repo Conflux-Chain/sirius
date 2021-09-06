@@ -13,7 +13,7 @@ import { Security } from 'app/components/Security/Loadable';
 import { useHistory } from 'react-router-dom';
 import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { useParams } from 'react-router-dom';
 
 export function DescriptionPanel() {

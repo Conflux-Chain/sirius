@@ -3,7 +3,7 @@ import { blockColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 // import { Title /*Footer*/ } from '../Transactions/components/index';
-// import { cfxTokenTypes } from 'utils/constants';
+// import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 import { Title } from 'app/containers/Transactions/components';
 
@@ -71,7 +71,7 @@ export const MinedBlocks = ({ address }: Props) => {
     />
   );
 
-  // const footer = <Footer pathname="transfer" type={cfxTokenTypes.erc20} />;
+  // const footer = <Footer pathname="transfer" type={CFX_TOKEN_TYPES.erc20} />;
 
   return (
     <TablePanel

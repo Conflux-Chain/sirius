@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 import { tranferToLowerCase } from 'utils';
 import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
-import { zeroAddress } from 'utils/constants';
+import { CONTRACTS } from 'utils/constants';
 import { ActionButton } from 'app/components/ActionButton';
 import { useClickAway } from '@cfxjs/react-ui';
 import { media, useBreakpoint } from 'styles/media';
@@ -42,9 +42,9 @@ export const TableSearchInput = ({
   const onEnterPress = () => {
     // deal with zero address
     if (value === '0x0') {
-      setValue(zeroAddress);
-      if (zeroAddress !== lFilter) {
-        onFilter(zeroAddress);
+      setValue(CONTRACTS.zero);
+      if (CONTRACTS.zero !== lFilter) {
+        onFilter(CONTRACTS.zero);
       }
       return;
     }

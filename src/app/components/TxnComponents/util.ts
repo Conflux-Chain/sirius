@@ -1,7 +1,7 @@
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 
-export const getAddress = data => format.address(data, NETWORK_ID);
+export const getAddress = data => SDK.format.address(data, NETWORK_ID);
 
 /**
  *
@@ -15,8 +15,8 @@ export const formatData = (data, type) => {
   try {
     // handle string type specially, translate to hex format
     // if (type === 'string') {
-    //   const bytes = format.bytes(data); // format.bytes should update, not accept string
-    //   const hex = format.hex(bytes);
+    //   const bytes = SDK.format.bytes(data); // SDK.format.bytes should update, not accept string
+    //   const hex = SDK.format.hex(bytes);
     //   return hex;
     // }
     // bytes is formatted to hex
@@ -28,7 +28,7 @@ export const formatData = (data, type) => {
           4,
         );
       } else {
-        return format.hex(data);
+        return SDK.format.hex(data);
       }
     }
     // bigint value, should convert first, because Object.prototype.toString.call(data) = '[object Array]'
@@ -110,7 +110,7 @@ export const disassembleEvent = (decodedLog, log) => {
 
           // try to get hex address and base32 address
           try {
-            r.hexAddress = format.hexAddress(r.formattedValue); // try to format cfx address to hex address
+            r.hexAddress = SDK.format.hexAddress(r.formattedValue); // try to format cfx address to hex address
             r.cfxAddress = getAddress(r.formattedValue);
           } catch (e) {}
 

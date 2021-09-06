@@ -1,7 +1,7 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, utils } from 'utils/tableColumns';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 
 interface Props {
   address: string;
@@ -25,7 +25,7 @@ export const Holders = ({
     utils.number,
     tokenColunms.account,
     tokenColunms.balance(
-      type === cfxTokenTypes.erc20 ? decimals : 0,
+      type === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
       price,
       type,
     ),
@@ -40,7 +40,7 @@ export const Holders = ({
   ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
 
   const columns =
-    type === cfxTokenTypes.erc1155 ? holders1155Columns : holdersColumns;
+    type === CFX_TOKEN_TYPES.erc1155 ? holders1155Columns : holdersColumns;
 
   return (
     <TablePanelNew

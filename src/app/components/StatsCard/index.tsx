@@ -6,7 +6,7 @@ import SkelontonContainer from '../SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import { formatNumber, fromDripToCfx, toThousands } from '../../../utils';
 import { AddressContainer } from '../AddressContainer';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
@@ -414,7 +414,7 @@ export const StatsCard = ({
               <td>{i + 1}</td>
               <td className="address">
                 <AddressContainer
-                  value={d.base32 || d.hex}
+                  value={d.base32}
                   alias={
                     d.contractInfo && d.contractInfo.name
                       ? d.contractInfo.name
@@ -424,8 +424,7 @@ export const StatsCard = ({
                   }
                   isMe={
                     accounts && accounts.length > 0
-                      ? formatAddress(accounts[0]) ===
-                        formatAddress(d.base32 || d.hex)
+                      ? formatAddress(accounts[0]) === formatAddress(d.base32)
                       : false
                   }
                   verify={verify}
@@ -449,11 +448,11 @@ export const StatsCard = ({
                 token.render(d.token)
               ) : (
                 <AddressContainer
-                  value={d.base32address || d.hex}
+                  value={d.base32address}
                   isMe={
                     accounts && accounts.length > 0
                       ? formatAddress(accounts[0]) ===
-                        formatAddress(d.base32address || d.hex)
+                        formatAddress(d.base32address)
                       : false
                   }
                 />
@@ -468,11 +467,10 @@ export const StatsCard = ({
             <td>{i + 1}</td>
             <td className="address">
               <AddressContainer
-                value={d.base32 || '0x' + d.miner}
+                value={d.base32}
                 isMe={
                   accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) ===
-                      formatAddress(d.base32 || '0x' + d.miner)
+                    ? formatAddress(accounts[0]) === formatAddress(d.base32)
                     : false
                 }
               />
@@ -535,11 +533,10 @@ export const StatsCard = ({
             <td>{i + 1}</td>
             <td className="address">
               <AddressContainer
-                value={d.base32 || d.hex}
+                value={d.base32}
                 isMe={
                   accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) ===
-                      formatAddress(d.base32 || d.hex)
+                    ? formatAddress(accounts[0]) === formatAddress(d.base32)
                     : false
                 }
               />
@@ -595,7 +592,7 @@ export const StatsCard = ({
           .sort((a, b) => b.gas - a.gas >= 0)
           .map((d, i) => ({
             name: '#' + (i + 1),
-            address: formatAddress(d.base32 || d.hex),
+            address: formatAddress(d.base32),
             value: +d.gas,
           }));
         const CustomTooltip = ({ data }: any) => {

@@ -33,6 +33,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
+import { NETWORK_TYPES, NETWORK_TYPE } from '../../../utils/constants';
 
 interface RouteParams {
   address: string;
@@ -104,9 +105,13 @@ export const AddressDetailPage = memo(() => {
           <StorageStakingCard accountInfo={accountInfo} />
           <NonceCard accountInfo={accountInfo} />
         </Top>
-        <Middle key="middle">
-          <AddressMetadata address={address} accountInfo={accountInfo} />
-        </Middle>
+        {[NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+          NETWORK_TYPE,
+        ) ? (
+          <Middle key="middle">
+            <AddressMetadata address={address} accountInfo={accountInfo} />
+          </Middle>
+        ) : null}
         <Bottom>
           <Table address={address} addressInfo={accountInfo} />
         </Bottom>

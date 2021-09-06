@@ -8,9 +8,9 @@ import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { useTabTableData } from 'app/components/TabsTablePanel';
 import { ScanEvent } from 'utils/gaConstants';
-import { Notice } from './Notice';
 import { BlockchainInfo } from './BlockchainInfo';
 import { useInterval } from 'react-use';
+import { Notices } from 'app/containers/Notices/Loadable';
 
 import { Blocks } from './Blocks';
 import { Txns } from './Txns';
@@ -52,7 +52,7 @@ export function HomePage() {
         />
       </Helmet>
       <Main>
-        {bp && bp === 's' ? <Notice /> : null}
+        {bp && bp === 's' ? <Notices /> : null}
         <BlockchainInfo timestamp={timestamp} />
         {/*<Top>*/}
         {/*  <SmallChartWrap>*/}

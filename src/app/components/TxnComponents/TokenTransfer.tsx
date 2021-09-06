@@ -4,8 +4,8 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
-import { cfxTokenTypes } from 'utils/constants';
-import { defaultTokenIcon } from '../../../constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';
@@ -46,7 +46,7 @@ export const TokenTransfer = ({
   let batchCombinedTransferList: any = [];
 
   transferList.forEach((transfer: any) => {
-    if (transfer.transferType === cfxTokenTypes.erc1155) {
+    if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
       // find batch transfers
       const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
         trans =>
@@ -95,7 +95,11 @@ export const TokenTransfer = ({
       imgSrc = tokenItem['icon'];
     }
     const imgIcon = (
-      <img className="logo" src={`${imgSrc || defaultTokenIcon}`} alt="logo" />
+      <img
+        className="logo"
+        src={`${imgSrc || ICON_DEFAULT_TOKEN}`}
+        alt="logo"
+      />
     );
     const nameContainer = (
       <Link href={`/token/${transferItem['address']}`} className="nameItem">
@@ -104,11 +108,11 @@ export const TokenTransfer = ({
     );
     // do not deal with erc721
     switch (transferItem['transferType']) {
-      case cfxTokenTypes.erc721: {
+      case CFX_TOKEN_TYPES.erc721: {
         transferListContainer.push(
           <div
             className="lineContainer"
-            key={`transfer${cfxTokenTypes.erc721}${i + 1}`}
+            key={`transfer${CFX_TOKEN_TYPES.erc721}${i + 1}`}
           >
             <span className="transfer-item-group">
               <span className="index">{index++}. </span>
@@ -134,11 +138,11 @@ export const TokenTransfer = ({
         );
         break;
       }
-      case cfxTokenTypes.erc1155: {
+      case CFX_TOKEN_TYPES.erc1155: {
         transferListContainer.push(
           <div
             className="lineContainer"
-            key={`transfer${cfxTokenTypes.erc1155}${i + 1}`}
+            key={`transfer${CFX_TOKEN_TYPES.erc1155}${i + 1}`}
           >
             <span className="transfer-item-group">
               <span className="index">{index++}. </span>
@@ -153,7 +157,9 @@ export const TokenTransfer = ({
             </span>
             <span className="transfer-item-group">
               {transferItem['batch'].map((item, index) => (
-                <span key={`transfer${cfxTokenTypes.erc1155}${i + 1}${index}`}>
+                <span
+                  key={`transfer${CFX_TOKEN_TYPES.erc1155}${i + 1}${index}`}
+                >
                   <span className="batch">
                     - {t(translations.transaction.for)}{' '}
                     <span className="value">
@@ -175,11 +181,11 @@ export const TokenTransfer = ({
         );
         break;
       }
-      case cfxTokenTypes.erc20: {
+      case CFX_TOKEN_TYPES.erc20: {
         transferListContainer.push(
           <div
             className="lineContainer"
-            key={`transfer${cfxTokenTypes.erc20}${i + 1}`}
+            key={`transfer${CFX_TOKEN_TYPES.erc20}${i + 1}`}
           >
             <span className="transfer-item-group">
               <span className="index">{index++}. </span>

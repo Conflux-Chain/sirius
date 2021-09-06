@@ -15,7 +15,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams } from 'react-router-dom';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import {
   NFTContractAddresses,
   NFTContractNames,

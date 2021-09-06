@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { useTestnet } from 'utils/hooks/useTestnet';
 import { useNotifications } from '@cfxjs/react-ui';
-import { address as utilAddress } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { usePortal } from 'utils/hooks/usePortal';
+import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 
 interface Props {
@@ -13,19 +13,16 @@ interface Props {
 
 export const useCheckHook = function <Props>(showNotification = false) {
   const { t } = useTranslation();
-  const isTestnet = useTestnet();
   const { installed, connected, accounts, chainId } = usePortal();
   const [, setNotifications] = useNotifications();
 
   const checkNetworkValid = () => {
     if (installed && chainId !== '0xNaN') {
-      if (
-        (chainId === '0x405' && !isTestnet) ||
-        (chainId !== '0x405' && isTestnet)
-      ) {
+      if (Number(chainId) === NETWORK_ID) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     } else {
       return true;
     }
@@ -33,16 +30,22 @@ export const useCheckHook = function <Props>(showNotification = false) {
 
   const checkVersionValid = () => {
     if (installed && connected === 1) {
-      return utilAddress.isValidCfxAddress(accounts[0]);
+      return SDK.address.isValidCfxAddress(accounts[0]);
     }
     return true;
   };
 
   const notifyNetworkError = () => {
-    let content = t(translations.connectWallet.modal.switchToMainnet);
+    let content = '';
 
-    if (isTestnet) {
+    if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
       content = t(translations.connectWallet.modal.switchToTestnet);
+    } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+      content = t(translations.connectWallet.modal.switchToMainnet);
+    } else {
+      content = t(translations.connectWallet.modal.switchToScanNetwork, {
+        networkID: NETWORK_ID,
+      });
     }
 
     setNotifications({
@@ -85,7 +88,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
       setIsNetworkValid(isNetworkValid);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [installed, connected, chainId, isTestnet]);
+  }, [installed, connected, chainId]);
 
   return {
     isNetworkValid,

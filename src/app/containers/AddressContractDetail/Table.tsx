@@ -10,7 +10,7 @@ import {
   isZeroAddress,
   // isAccountAddress,
 } from 'utils';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ContractContent, CheckCircleIcon } from './ContractContent';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
@@ -79,7 +79,7 @@ export function Table({ address, addressInfo }) {
   // }
 
   tabs.push({
-    value: `transfers-${cfxTokenTypes.cfx}`,
+    value: `transfers-${CFX_TOKEN_TYPES.cfx}`,
     action: 'cfxTransfers',
     label: t(translations.general.cfxTransfer),
     content: <CFXTxns address={address} />,
@@ -87,7 +87,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc20TransferCount,
-    value: `transfers-${cfxTokenTypes.crc20}`,
+    value: `transfers-${CFX_TOKEN_TYPES.crc20}`,
     action: 'transfersCrc20',
     label: t(translations.general.tokenTxnsErc20),
     content: <CRC20Txns address={address} />,
@@ -95,7 +95,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc721TransferCount,
-    value: `transfers-${cfxTokenTypes.crc721}`,
+    value: `transfers-${CFX_TOKEN_TYPES.crc721}`,
     action: 'transfersCrc721',
     label: t(translations.general.tokenTxnsErc721),
     content: <CRC721Txns address={address} />,
@@ -103,7 +103,7 @@ export function Table({ address, addressInfo }) {
 
   tabs.push({
     hidden: !addressInfo.erc1155TransferCount,
-    value: `transfers-${cfxTokenTypes.crc1155}`,
+    value: `transfers-${CFX_TOKEN_TYPES.crc1155}`,
     action: 'transfersCrc1155',
     label: t(translations.general.tokenTxnsErc1155),
     content: <CRC1155Txns address={address} />,

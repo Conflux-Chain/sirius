@@ -3,7 +3,7 @@
  * Button
  *
  */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
@@ -13,12 +13,13 @@ import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
 import { formatNumber } from 'utils';
 import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
-import BigNumber from 'bignumber.js';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { CFX } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import iconLoadingWhite from './assets/loading-white.svg';
-import { isConfluxTestNet } from '../../../utils/cfx';
 
 interface Button {
   className?: string;
@@ -28,19 +29,11 @@ interface Button {
 
 export const Button = ({ className, onClick, showBalance }: Button) => {
   const { t } = useTranslation();
-  const {
-    installed,
-    connected,
-    accounts,
-    balances: { cfx },
-  } = usePortal();
+  const [balance, setBalance] = useState('0');
+  const { installed, connected, accounts } = usePortal();
+
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook(true);
-  let cfxBalance = cfx
-    ? formatNumber(new BigNumber(cfx).div(1e18).toString(), {
-        precision: 6,
-      })
-    : '0';
 
   let buttonText = t(translations.connectWallet.button.text);
   let buttonStatus: React.ReactNode = '';
@@ -60,13 +53,26 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           count: pendingRecords.length,
         });
       } else {
-        buttonText = isConfluxTestNet
-          ? accounts[0].replace(/(.*:.{3}).*(.{4})/, '$1...$2')
-          : accounts[0].replace(/(.*:.{3}).*(.{8})/, '$1...$2');
+        buttonText =
+          NETWORK_TYPE === NETWORK_TYPES.mainnet
+            ? accounts[0].replace(/(.*:.{3}).*(.{8})/, '$1...$2')
+            : accounts[0].replace(/(.*:.{3}).*(.{4})/, '$1...$2');
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
   }
+
+  useEffect(() => {
+    if (accounts.length && isValid) {
+      CFX.getBalance(accounts[0]).then(balance => {
+        setBalance(
+          formatNumber(SDK.Drip(balance).toCFX(), {
+            precision: 6,
+          }),
+        );
+      });
+    }
+  }, [connected, accounts, isValid, installed]);
 
   useEffect(() => {
     if (connected === 0) {
@@ -96,7 +102,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         <span className="text">{buttonText}</span>
       </span>
       {accounts.length && showBalance && !hasPendingRecords ? (
-        <span className="balance">{cfxBalance} CFX</span>
+        <span className="balance">{balance} CFX</span>
       ) : null}
     </ButtonWrapper>
   );
