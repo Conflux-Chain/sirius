@@ -63,8 +63,9 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
     border-radius: 3px;
-    
+
   }
+
   .ant-select-selection-item {
     color: #333333;
   }
@@ -98,14 +99,16 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table .ant-table-expanded-row-fixed {
     max-width: 100%;
   }
+
   .ant-pagination-item-active, .ant-pagination-item-active:hover {
     border-color: #1e3de4;
     background-color: #1e3de4;
-  
+
     a {
       color: #ffffff;
     }
   }
+
   //
   //.ant-pagination-options-quick-jumper {
   //  input {
@@ -221,6 +224,12 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-table-empty {
+    .ant-table-tbody > tr:hover {
+      background-color: transparent;
+    }
+  }
+
   .ant-picker-separator {
     display: inline-flex;
   }
@@ -255,28 +264,31 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     box-shadow: 8px 30px 80px 0px rgba(112, 126, 158, 0.24);
   }
+
   /* ---------- ant design popover, end ---------- */
 
   /* ---------- ant design button, start ---------- */
   .ant-btn {
-    background: rgba(0,84,254,0.04);
+    background: rgba(0, 84, 254, 0.04);
     color: #424A71;
     border: none;
 
     &:hover, &:focus, &:active {
-      background: rgba(0,84,254,0.1);
+      background: rgba(0, 84, 254, 0.1);
       color: #424A71;
     }
   }
+
   .ant-btn.ant-btn-primary {
     background: #1E3DE4;
     color: #ffffff;
-    
+
     &:hover {
       background: #4665f0;
       color: #ffffff;
     }
   }
+
   /* ---------- ant design button, end ---------- */
 
   /* ---------- ant design form, start ---------- */
@@ -287,7 +299,7 @@ export const GlobalStyle = createGlobalStyle`
       text-align: left;
     }
 
-    .ant-form-item-label > label{
+    .ant-form-item-label > label {
       color: #74798c;
     }
 
@@ -295,6 +307,7 @@ export const GlobalStyle = createGlobalStyle`
       color: #d8d8d8;
     }
   }
+
   /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {
