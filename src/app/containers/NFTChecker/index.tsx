@@ -14,7 +14,7 @@ import { PageHeader } from 'app/components/PageHeader';
 import { Card } from 'app/components/Card';
 import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { formatAddress } from 'utils';
+import { isCurrentNetworkAddress } from 'utils';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { Empty } from 'app/components/Empty';
@@ -71,8 +71,7 @@ export function NFTChecker() {
   const total = selectedNFT.balance;
 
   const validateAddress = address => {
-    const formattedAddress = formatAddress(address);
-    return formattedAddress && !formattedAddress.startsWith('invalid');
+    return isCurrentNetworkAddress(address);
   };
 
   const handleNFTSearch = async () => {

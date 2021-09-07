@@ -17,11 +17,11 @@ import Error from './Error';
 import { translations } from '../../../locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import {
-  isAddress,
   checkInt,
   checkUint,
   checkBytes,
   checkCfxType,
+  isCurrentNetworkAddress,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -215,7 +215,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       }
 
       if (type === 'address') {
-        if (isAddress(val)) {
+        if (isCurrentNetworkAddress(val)) {
           return Promise.resolve();
         }
         return Promise.reject(t(translations.contract.error.address));

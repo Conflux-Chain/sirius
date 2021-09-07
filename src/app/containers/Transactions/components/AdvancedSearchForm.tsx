@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { isAddress, isHash, isSafeNumberOrNumericStringInput } from 'utils';
+import {
+  isCurrentNetworkAddress,
+  isHash,
+  isSafeNumberOrNumericStringInput,
+} from 'utils';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import styled from 'styled-components/macro';
 import qs from 'query-string';
@@ -219,7 +223,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         );
       },
       isAddress: (_, value) => {
-        if (!value || isAddress(value)) {
+        if (!value || isCurrentNetworkAddress(value)) {
           return Promise.resolve();
         }
         return Promise.reject(
