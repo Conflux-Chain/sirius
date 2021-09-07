@@ -158,9 +158,11 @@ export function App() {
           ...globalData,
           ...(resp as object),
         });
-      })
-      .finally(() => {
+
         setLoading(false);
+      })
+      .catch(e => {
+        console.log('request frontend config error: ', e.name);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -503,12 +505,12 @@ export function App() {
                       </ScrollToTop>
                     </Main>
                     <Footer />
-                    <GlobalNotify />
                     <GlobalStyle />
                     <CookieTip />
                     <GlobalTip tipKey="addressWarning" />
                   </>
                 )}
+                <GlobalNotify />
               </CfxProvider>
             </BrowserRouter>
           </SWRConfig>
