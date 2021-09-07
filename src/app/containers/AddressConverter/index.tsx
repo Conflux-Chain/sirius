@@ -23,7 +23,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
-import { CFX } from 'utils/constants';
+import { CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -217,7 +217,13 @@ export function AddressConverter() {
         <div>
           <Input
             value={address}
-            placeholder={t(translations.addressConverter.inputPlaceholder)}
+            placeholder={
+              [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+                NETWORK_TYPE,
+              )
+                ? t(translations.addressConverter.inputPlaceholder)
+                : ''
+            }
             size="small"
             variant="solid"
             className="convert-address-input input-address"

@@ -14,13 +14,13 @@ import { PageHeader } from 'app/components/PageHeader';
 import { Card } from 'app/components/Card';
 import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { isCurrentNetworkAddress } from 'utils';
+import { isCurrentNetworkAddress, toThousands } from 'utils';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { Empty } from 'app/components/Empty';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { toThousands } from 'utils';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { reqNFTBalances, reqNFTTokenIds } from 'utils/httpRequest';
 import qs from 'query-string';
 
@@ -186,7 +186,13 @@ export function NFTChecker() {
         <Search
           value={address}
           onChange={handleAddressChange}
-          placeholder={t(translations.nftChecker.inputPlaceholder)}
+          placeholder={
+            [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+              NETWORK_TYPE,
+            )
+              ? t(translations.nftChecker.inputPlaceholder)
+              : ''
+          }
           onSearch={value => {
             if (validateAddress(value)) {
               history.push(`/nft-checker/${value}`);
