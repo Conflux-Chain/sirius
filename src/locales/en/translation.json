@@ -514,6 +514,14 @@
     }
   },
   "general": {
+    "networks": {
+      "mainnet": "mainnet",
+      "testnet": "testnet",
+      "privatenet": "privatenet"
+    },
+    "errors": {
+      "address": "Please enter a valid {{network}} address"
+    },
     "advancedSearch": {
       "label": {
         "txnHash": "Txn Hash",

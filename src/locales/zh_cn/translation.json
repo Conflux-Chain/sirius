@@ -514,6 +514,14 @@
     }
   },
   "general": {
+    "networks": {
+      "mainnet": "主网",
+      "testnet": "测试网",
+      "privatenet": "私有链"
+    },
+    "errors": {
+      "address": "请输入一个合法的{{network}}地址"
+    },
     "advancedSearch": {
       "label": {
         "txnHash": "交易哈希",

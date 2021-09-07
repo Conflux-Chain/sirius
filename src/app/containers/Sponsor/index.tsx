@@ -10,12 +10,18 @@ import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
-import { isAddress, fromDripToGdrip, fromDripToCfx } from 'utils';
+import { isCurrentNetworkAddress, fromDripToGdrip, fromDripToCfx } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TXN_ACTION, RPC_SERVER, CFX, CONTRACTS } from 'utils/constants';
+import {
+  TXN_ACTION,
+  RPC_SERVER,
+  CFX,
+  CONTRACTS,
+  NETWORK_TYPE,
+} from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
@@ -165,11 +171,18 @@ export function Sponsor() {
         setErrorMsgForApply('');
       }
       // cip-37
-      if (isAddress(inputAddressVal)) {
+      if (isCurrentNetworkAddress(inputAddressVal)) {
         getSponsorInfo(inputAddressVal);
       } else {
         resetParams();
-        setErrorMsgForApply(t(translations.contract.error.address));
+
+        setErrorMsgForApply(
+          t(translations.general.errors.address, {
+            network: t(
+              translations.general.networks[NETWORK_TYPE.toLowerCase()],
+            ),
+          }),
+        );
       }
     } else {
       resetParams();
@@ -227,8 +240,16 @@ export function Sponsor() {
 
   useEffect(() => {
     setInputAddressVal(contractAddress);
-    if (isAddress(contractAddress)) {
+    if (isCurrentNetworkAddress(contractAddress)) {
       getSponsorInfo(contractAddress);
+    } else {
+      resetParams();
+
+      setErrorMsgForApply(
+        t(translations.general.errors.address, {
+          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+        }),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractAddress]);
@@ -250,8 +271,16 @@ export function Sponsor() {
     setCanApply(false);
   };
   const closeModalCallback = () => {
-    if (isAddress(inputAddressVal)) {
+    if (isCurrentNetworkAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
+    } else {
+      resetParams();
+
+      setErrorMsgForApply(
+        t(translations.general.errors.address, {
+          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+        }),
+      );
     }
   };
   return (
