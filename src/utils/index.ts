@@ -4,7 +4,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
 import { NetworksType } from './hooks/useGlobal';
-import { CONTRACTS, IS_PRE_RELEASE, NETWORK_ID } from 'utils/constants';
+import {
+  CONTRACTS,
+  IS_PRE_RELEASE,
+  NETWORK_ID,
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+} from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
@@ -807,5 +813,15 @@ export const gotoNetwork = (networkId: number): void => {
     } else if (networkId === 1029) {
       window.location.assign('//confluxscan.io');
     }
+  }
+};
+
+export const getAddressInputPlaceholder = () => {
+  if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+    return 'cfx:...';
+  } else if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+    return 'cfxtest:...';
+  } else {
+    return '';
   }
 };
