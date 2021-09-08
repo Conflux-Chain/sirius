@@ -548,8 +548,6 @@
         "pleaseEnter": "请输入",
         "pleaseEnterTxnHash": "0x...",
         "pleaseEnterBlockHash": "0x...",
-        "pleaseEnterTestnetAddress": "cfxtest:...",
-        "pleaseEnterMainnetAddress": "cfx:...",
         "pleaseEnterTokenId": "例如：10",
         "pleaseEnterNonce": "请输入随机数",
         "pleaseEnterEpochStart": "例如：100",

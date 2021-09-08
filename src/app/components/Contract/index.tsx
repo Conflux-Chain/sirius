@@ -3,7 +3,7 @@
  * Contract Detail
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
@@ -21,6 +21,7 @@ import {
   isInnerContractAddress,
   tranferToLowerCase,
   validURL,
+  getAddressInputPlaceholder,
 } from '../../../utils';
 import {
   reqContract,
@@ -35,11 +36,7 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
 import { formatAddress } from '../../../utils';
-import {
-  TXN_ACTION,
-  NETWORK_TYPE,
-  NETWORK_TYPES,
-} from '../../../utils/constants';
+import { TXN_ACTION } from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
@@ -395,6 +392,10 @@ export const ContractOrTokenInfo = ({
     isDisabled = !btnShouldClick || !tokenImgSrc;
   }
 
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
+
   return (
     <Wrapper>
       <PageHeader>{title}</PageHeader>
@@ -413,13 +414,7 @@ export const ContractOrTokenInfo = ({
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
                   readOnly={true}
-                  placeholder={
-                    NETWORK_TYPE === NETWORK_TYPES.testnet
-                      ? 'cfxtest:...'
-                      : NETWORK_TYPE === NETWORK_TYPES.mainnet
-                      ? 'cfx:...'
-                      : ''
-                  }
+                  placeholder={addressInputPlaceholder}
                   onBlur={addressOnBlur}
                 />
                 {isVerified ? (

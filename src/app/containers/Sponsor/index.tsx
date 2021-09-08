@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import { formatAddress } from 'utils';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
-import { isCurrentNetworkAddress, fromDripToGdrip, fromDripToCfx } from 'utils';
+import {
+  isCurrentNetworkAddress,
+  fromDripToGdrip,
+  fromDripToCfx,
+  getAddressInputPlaceholder,
+  formatAddress,
+} from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
@@ -68,6 +73,10 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { accounts } = usePortal();
+
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
 
   const getSponsorFromSDK = address => {
     CFX.getSponsorInfo(address).then(
@@ -299,7 +308,7 @@ export function Sponsor() {
             outerClassname="outerContainer"
             inputClassname="sponsor-search"
             iconColor="#74798C"
-            placeholderText={t(translations.sponsor.searchAddress)}
+            placeholderText={addressInputPlaceholder}
             onEnterPress={searchClick}
             onClear={searchClear}
             onChange={addressInputChanger}

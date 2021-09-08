@@ -3,8 +3,8 @@ import {
   isCurrentNetworkAddress,
   isHash,
   isSafeNumberOrNumericStringInput,
+  getAddressInputPlaceholder,
 } from 'utils';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import styled from 'styled-components/macro';
 import qs from 'query-string';
 import lodash from 'lodash';
@@ -235,6 +235,10 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
+
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
 
   useEffect(() => {
     let fromOrToValue = 'from';
@@ -524,19 +528,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                   })}
                 </Select>
               }
-              placeholder={
-                NETWORK_TYPE === NETWORK_TYPES.testnet
-                  ? t(
-                      translations.general.advancedSearch.placeholder
-                        .pleaseEnterTestnetAddress,
-                    )
-                  : NETWORK_TYPE === NETWORK_TYPES.mainnet
-                  ? t(
-                      translations.general.advancedSearch.placeholder
-                        .pleaseEnterMainnetAddress,
-                    )
-                  : ''
-              }
+              placeholder={addressInputPlaceholder}
               allowClear
             />
           </Form.Item>

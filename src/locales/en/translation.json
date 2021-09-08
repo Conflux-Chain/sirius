@@ -548,8 +548,6 @@
         "pleaseEnter": "Please enter",
         "pleaseEnterTxnHash": "0x...",
         "pleaseEnterBlockHash": "0x...",
-        "pleaseEnterTestnetAddress": "cfxtest:...",
-        "pleaseEnterMainnetAddress": "cfx:...",
         "pleaseEnterTokenId": "e.g. 10",
         "pleaseEnterNonce": "Please enter a nonce",
         "pleaseEnterEpochStart": "e.g. 100",

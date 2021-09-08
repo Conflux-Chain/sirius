@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../../components/Card';
 import styled from 'styled-components/macro';
 import { Button, Divider, Form, Input, Radio } from '@jnoodle/antd';
@@ -11,6 +11,7 @@ import {
   isCurrentNetworkAddress,
   isContractAddress,
   isZeroOrPositiveInteger,
+  getAddressInputPlaceholder,
 } from '../../../utils';
 import { Result } from './Result';
 import dayjs from 'dayjs';
@@ -25,6 +26,10 @@ export function BalanceChecker() {
   const [toggle, setToggle] = useState(true);
   const [resultVisible, setResultVisible] = useState('none');
   const [formData, setFormData] = useState({});
+
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
 
   useEffect(() => {
     form
@@ -120,7 +125,11 @@ export function BalanceChecker() {
       rules={[{ required: true }, { validator: validateAddress }]}
       initialValue={querystring.parse(search).address}
     >
-      <Input allowClear onChange={onChangeAccountAddress} />
+      <Input
+        allowClear
+        onChange={onChangeAccountAddress}
+        placeholder={addressInputPlaceholder}
+      />
     </Form.Item>
   );
   const ContractAddressFormItem = (
