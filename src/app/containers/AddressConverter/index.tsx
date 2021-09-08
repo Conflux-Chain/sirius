@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
@@ -21,11 +21,7 @@ import { useParams } from 'react-router-dom';
 import { List } from './List';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import {
-  isZeroAddress,
-  isInnerContractAddress,
-  getAddressInputPlaceholder,
-} from 'utils';
+import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
 import { CFX } from 'utils/constants';
 
@@ -63,10 +59,6 @@ export function AddressConverter() {
   const [formattedAddresses, setFormattedAddresses] = useState<
     FormattedAddressesType
   >(DEFAULT_FORMATTED_ADDRESSES);
-
-  const addressInputPlaceholder = useMemo(() => {
-    return getAddressInputPlaceholder();
-  }, []);
 
   const checkAddress = address => {
     return new Promise((resolve, reject) => {
@@ -225,7 +217,7 @@ export function AddressConverter() {
         <div>
           <Input
             value={address}
-            placeholder={addressInputPlaceholder}
+            placeholder={'cfx:... / cfxtest:... / hex'}
             size="small"
             variant="solid"
             className="convert-address-input input-address"
