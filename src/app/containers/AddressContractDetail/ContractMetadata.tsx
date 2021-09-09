@@ -24,8 +24,10 @@ import {
   ICON_DEFAULT_TOKEN,
   NETWORK_TYPES,
   NETWORK_TYPE,
+  ICON_DEFAULT_CONTRACT,
 } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
+import { Image } from '@jnoodle/antd';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -124,17 +126,6 @@ const WarnningTooltipWrapper = styled.div`
 export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
   const notAvailableText = t(translations.general.security.notAvailable);
-
-  // const { data: contractInfo } = useContract(address, [
-  //   'name',
-  //   'icon',
-  //   'sponsor',
-  //   'website',
-  //   'admin',
-  //   'from',
-  //   'transactionHash',
-  //   'code',
-  // ]);
   const { data: tokenInfo } = useToken(address, ['name', 'icon']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
@@ -152,11 +143,17 @@ export function ContractMetadata({ address, contractInfo }) {
       children: (
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
-            {contractInfo.icon && (
-              <Icon src={contractInfo.icon} alt={`${contractInfo.name} logo`} />
-            )}
+            <Image
+              width={24} // width: 16px + padingRight: 8px = 24px
+              style={{
+                paddingRight: '8px',
+              }}
+              src={contractInfo?.icon || ''}
+              preview={false}
+              fallback={ICON_DEFAULT_CONTRACT}
+              alt={contractInfo.name + 'logo'}
+            />
             <Content>{contractInfo.name || notAvailableText}</Content>
-
             <RouterLink
               className="contract-info-update"
               to={`/contract-info/${address}`}
@@ -210,14 +207,17 @@ export function ContractMetadata({ address, contractInfo }) {
       children: (
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
-            <Icon
-              src={
-                tokenInfo && tokenInfo.icon
-                  ? tokenInfo.icon
-                  : ICON_DEFAULT_TOKEN
-              }
-              alt={`${contractInfo.name} logo`}
+            <Image
+              width={24} // width: 16px + padingRight: 8px = 24px
+              style={{
+                paddingRight: '8px',
+              }}
+              src={tokenInfo?.icon || ''}
+              preview={false}
+              fallback={ICON_DEFAULT_TOKEN}
+              alt={tokenInfo?.name + 'logo'}
             />
+
             <Content className={clsx(!tokenInfo.name && 'not-available')}>
               {tokenInfo.name ? (
                 <Link to={`/token/${address}`}>
@@ -395,11 +395,6 @@ const Content = styled.span`
   &.not-available.link {
     color: #97a3b4;
   }
-`;
-const Icon = styled.img`
-  width: 1.14rem;
-  height: 1.14rem;
-  margin-right: 0.57rem;
 `;
 
 const LinkWrap = styled(Link)`
