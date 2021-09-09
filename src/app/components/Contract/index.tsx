@@ -1,6 +1,7 @@
 /**
  *
  * Contract Detail
+ * @todo need to be refactor
  *
  */
 import React, { useEffect, useState, useMemo } from 'react';
@@ -58,7 +59,7 @@ const fieldsContract = [
   'name',
   'website',
   'token',
-  'icon',
+  'iconUrl',
   'typeCode',
 ];
 export const ContractOrTokenInfo = ({
@@ -121,8 +122,8 @@ export const ContractOrTokenInfo = ({
   };
 
   useEffect(() => {
-    setContractImgSrc(contractDetail.icon || '');
-    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
+    setContractImgSrc(contractDetail.iconUrl || ''); // contract has no icon, and update contract icon card is hide
+    setTokenImgSrc(contractDetail.token && contractDetail.token.iconUrl);
     if (updateInfoType === 'contract') {
       setContractName(contractDetail.name || '');
     }
@@ -135,14 +136,16 @@ export const ContractOrTokenInfo = ({
       case 'edit':
         setAddressVal(formatAddress(contractDetail.address));
         // setAddressDisabled(true);
-        checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
+        checkAdminThenToken(
+          contractDetail.token && contractDetail.token.iconUrl,
+        );
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
     contractDetail.address,
-    contractDetail.icon,
+    contractDetail.iconUrl,
     contractDetail.name,
     contractDetail.tokenIcon,
     contractDetail.website,

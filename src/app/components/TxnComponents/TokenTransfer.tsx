@@ -92,7 +92,7 @@ export const TokenTransfer = ({
       tokenName = tokenItem['name'] || t(translations.general.notAvailable);
       tokenSymbol = tokenItem['symbol'] || t(translations.general.notAvailable);
       tokenDecimals = tokenItem['decimals'];
-      imgSrc = tokenItem['icon'];
+      imgSrc = tokenItem['iconUrl'];
     }
     const imgIcon = (
       <img

@@ -118,7 +118,7 @@ export function Sponsor() {
           sponsorInfo.sponsorForCollateral,
           sponsorInfo.sponsorForGas,
         ],
-        fields: ['icon'],
+        fields: ['iconUrl'],
       })
         .then(res => {
           if (res && res.list && res.list.length === 2) {

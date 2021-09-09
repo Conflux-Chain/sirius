@@ -21,7 +21,7 @@ import Info from '@zeit-ui/react-icons/info';
 const { Option, OptGroup } = Select;
 
 export interface TokenType {
-  icon: string;
+  iconUrl: string;
   name: string;
   address: string;
 }
@@ -42,7 +42,7 @@ export async function getRecommendTokenList(): Promise<TokenType[]> {
     try {
       if (!resp.code) {
         result = resp.list.map(l => ({
-          icon: l.tokenInfo.icon,
+          iconUrl: l.tokenInfo.iconUrl,
           name: l.tokenInfo.name,
           address: formatAddress(l.tokenInfo.address),
         }));
@@ -60,7 +60,7 @@ const formatTokenList = resp => {
     // no 'code' from response data, use total for temp
     if (resp.total) {
       result = resp.list.map(l => ({
-        icon: l.icon,
+        iconUrl: l.iconUrl,
         name: l.name,
         address: formatAddress(l.address),
       }));
@@ -222,9 +222,10 @@ export function DebounceTokenSelect<
                 <Option value={o.address} key={`search-${o.address}`}>
                   <Image
                     className="advanced-search-select-option-img"
-                    src={o.icon || ICON_DEFAULT_TOKEN}
+                    src={o.iconUrl || ICON_DEFAULT_TOKEN}
                     fallback={ICON_DEFAULT_TOKEN}
                     alt="token icon"
+                    preview={false}
                   />
                   <span className="option-text">{o.name}</span>
                 </Option>
@@ -269,9 +270,10 @@ export function DebounceTokenSelect<
                 <Option value={o.address} key={`recommend-${o.address}`}>
                   <Image
                     className="advanced-search-select-option-img"
-                    src={o.icon || ICON_DEFAULT_TOKEN}
+                    src={o.iconUrl || ICON_DEFAULT_TOKEN}
                     fallback={ICON_DEFAULT_TOKEN}
                     alt="token icon"
+                    preview={false}
                   />
                   <span className="option-text">{o.name}</span>
                 </Option>

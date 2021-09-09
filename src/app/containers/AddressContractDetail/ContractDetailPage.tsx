@@ -53,7 +53,7 @@ export const ContractDetailPage = memo(() => {
 
   const { data: contractInfo } = useContract(address, [
     'name',
-    'icon',
+    'iconUrl',
     'sponsor',
     'admin',
     'from',

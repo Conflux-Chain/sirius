@@ -1,6 +1,5 @@
 import React from 'react';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import ContractIcon from '../../../images/contract-icon.png';
 import { Link } from 'app/components/Link';
 import { formatAddress } from 'utils';
 
@@ -9,20 +8,18 @@ interface Props {
     contract: any;
     token: any;
   };
-  showTokenInfo: boolean;
-  showContractInfo: boolean;
 }
 
-export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
+export const ContractDetail = ({ info }) => {
   if (info) {
     const { contract, token } = info;
     let child: React.ReactNode = null;
 
-    if (showTokenInfo && token && (token.name || token.symbol)) {
+    if (token && (token.name || token.symbol)) {
       const name = token['name'] || '--';
       let symbol = token['symbol'];
       symbol = `(${symbol ? symbol : '--'})`;
-      const icon = token['icon'] || ICON_DEFAULT_TOKEN;
+      const icon = token['iconUrl'] || ICON_DEFAULT_TOKEN;
 
       child = (
         <>
@@ -39,9 +36,9 @@ export const ContractDetail = ({ info, showTokenInfo, showContractInfo }) => {
           </Link>{' '}
         </>
       );
-    } else if (showContractInfo && contract && contract.name) {
+    } else if (contract && contract.name) {
       const name = contract['name'];
-      const icon = ContractIcon;
+      const icon = (token && token['iconUrl']) || ICON_DEFAULT_TOKEN;
 
       child = (
         <>

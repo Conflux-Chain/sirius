@@ -161,7 +161,7 @@ export const token = {
   render: row => {
     return (
       <StyledIconWrapper>
-        <img src={row?.icon || ICON_DEFAULT_TOKEN} alt="token icon" />
+        <img src={row?.iconUrl || ICON_DEFAULT_TOKEN} alt="token icon" />
         <Link href={`/token/${formatAddress(row.address)}`}>
           <Translation>
             {t => (
@@ -205,7 +205,7 @@ const Token2 = ({ row }) => {
         ? [
             <img
               key="img"
-              src={row?.transferTokenInfo?.icon || ICON_DEFAULT_TOKEN}
+              src={row?.transferTokenInfo?.iconUrl || ICON_DEFAULT_TOKEN}
               alt="token icon"
             />,
             <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>

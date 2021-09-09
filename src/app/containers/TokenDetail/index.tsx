@@ -30,7 +30,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
+    fields: ['iconUrl', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
     // currency: globalData.currency, // @todo wait for new api handler
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
@@ -111,7 +111,7 @@ export function TokenDetail() {
               <img
                 className="img"
                 alt="icon"
-                src={data.icon || ICON_DEFAULT_TOKEN}
+                src={data.iconUrl || ICON_DEFAULT_TOKEN}
               />
             ) : (
               <Tooltip
@@ -125,7 +125,7 @@ export function TokenDetail() {
                   </span>
                 }
               >
-                <img alt="icon" src={data.icon || ICON_DEFAULT_TOKEN} />
+                <img alt="icon" src={data.iconUrl || ICON_DEFAULT_TOKEN} />
               </Tooltip>
             )}
             <div className="basic-name">

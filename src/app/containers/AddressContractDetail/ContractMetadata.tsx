@@ -126,7 +126,7 @@ const WarnningTooltipWrapper = styled.div`
 export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
   const notAvailableText = t(translations.general.security.notAvailable);
-  const { data: tokenInfo } = useToken(address, ['name', 'icon']);
+  const { data: tokenInfo } = useToken(address, ['name', 'iconUrl']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
 
@@ -148,7 +148,7 @@ export function ContractMetadata({ address, contractInfo }) {
               style={{
                 paddingRight: '8px',
               }}
-              src={contractInfo?.icon || ''}
+              src={tokenInfo?.iconUrl || ''}
               preview={false}
               fallback={ICON_DEFAULT_CONTRACT}
               alt={contractInfo.name + 'logo'}
@@ -212,7 +212,7 @@ export function ContractMetadata({ address, contractInfo }) {
               style={{
                 paddingRight: '8px',
               }}
-              src={tokenInfo?.icon || ''}
+              src={tokenInfo?.iconUrl || ''}
               preview={false}
               fallback={ICON_DEFAULT_TOKEN}
               alt={tokenInfo?.name + 'logo'}
