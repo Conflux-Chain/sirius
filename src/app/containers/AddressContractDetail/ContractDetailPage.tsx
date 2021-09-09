@@ -208,29 +208,20 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) &&
-          [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-            NETWORK_TYPE,
-          ) && (
-            <Middle key="middle">
-              {contractInfo.stakingBalance != null &&
-              contractInfo.stakingBalance !== '0' ? (
-                <StakingWrapper>
-                  <AddressMetadata
-                    address={address}
-                    accountInfo={contractInfo}
-                  />
-                </StakingWrapper>
-              ) : null}
-              <div style={{ position: 'relative' }}>
-                <ContractMetadata
-                  address={address}
-                  contractInfo={contractInfo}
-                />
-                {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
-              </div>
-            </Middle>
-          )}
+        {isContractAddress(address) && (
+          <Middle key="middle">
+            {contractInfo.stakingBalance != null &&
+            contractInfo.stakingBalance !== '0' ? (
+              <StakingWrapper>
+                <AddressMetadata address={address} accountInfo={contractInfo} />
+              </StakingWrapper>
+            ) : null}
+            <div style={{ position: 'relative' }}>
+              <ContractMetadata address={address} contractInfo={contractInfo} />
+              {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
+            </div>
+          </Middle>
+        )}
         <Bottom key="bottom">
           <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>
