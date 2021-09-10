@@ -99,7 +99,6 @@ export const TablePanel = ({
   }, [outerUrl, search]);
 
   useEffect(() => {
-    console.log(className);
     if (outerUrl) {
       const { url } = qs.parseUrl(outerUrl);
 
