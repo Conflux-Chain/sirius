@@ -171,7 +171,7 @@ export const TablePanel = ({
           ? pagination
           : {
               showLessItems: true,
-              hideOnSinglePage: true,
+              hideOnSinglePage: false,
               size: bp === 's' ? 'small' : 'default',
               showSizeChanger: true,
               showQuickJumper: true,
