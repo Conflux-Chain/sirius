@@ -9,6 +9,7 @@ import {
   formatAddress,
   isContractAddress,
   isInnerContractAddress,
+  isZeroAddress,
   // isAddress,
 } from 'utils';
 // import { AlertTriangle } from '@zeit-ui/react-icons';
@@ -20,7 +21,7 @@ import { media, sizes } from 'styles/media';
 import {
   NETWORK_TYPE,
   NETWORK_TYPES,
-  CONTRACTS_NAME_LABEL,
+  // CONTRACTS_NAME_LABEL,
 } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
@@ -124,8 +125,13 @@ export const AddressContainer = withTranslation()(
 
       const cfxAddress = formatAddress(value);
 
-      if (!alias) {
-        alias = CONTRACTS_NAME_LABEL[cfxAddress];
+      // if (!alias) {
+      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
+      // }
+
+      // zero address auto set alias
+      if (!alias && isZeroAddress(cfxAddress)) {
+        alias = t(translations.general.zeroAddress);
       }
 
       // contract create txn

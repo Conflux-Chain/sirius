@@ -138,19 +138,20 @@ export function App() {
               ),
             ),
           );
-          localStorage.setItem(
-            LOCALSTORAGE_KEYS_MAP.contractNameTag,
-            JSON.stringify(
-              // @ts-ignore
-              resp?.contracts.reduce(
-                (prev, curr) => ({
-                  ...prev,
-                  [curr.address]: curr.name,
-                }),
-                {},
-              ),
-            ),
-          );
+          // contract name tag config, hide for temp
+          // localStorage.setItem(
+          //   LOCALSTORAGE_KEYS_MAP.contractNameTag,
+          //   JSON.stringify(
+          //     // @ts-ignore
+          //     resp?.contracts.reduce(
+          //       (prev, curr) => ({
+          //         ...prev,
+          //         [curr.address]: curr.name,
+          //       }),
+          //       {},
+          //     ),
+          //   ),
+          // );
           window.location.reload();
         }
 
