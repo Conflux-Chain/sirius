@@ -30,6 +30,7 @@ import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address } from 'utils';
+import MD5 from 'md5.js';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -122,9 +123,19 @@ export function App() {
       .then(resp => {
         // @ts-ignore
         const networkId = resp?.networkId;
+        // @ts-ignore
+        const md5String = new MD5().update(resp?.md5).digest('hex');
 
-        if (NETWORK_ID !== networkId) {
+        if (
+          NETWORK_ID !== networkId ||
+          localStorage.getItem(LOCALSTORAGE_KEYS_MAP.reqProjectConfigMD5) !==
+            md5String
+        ) {
           localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.reqProjectConfigMD5,
+            md5String,
+          );
           localStorage.setItem(
             LOCALSTORAGE_KEYS_MAP.contracts,
             JSON.stringify(

@@ -42,6 +42,7 @@ export enum DEFAULT_NETWORK_IDS {
  * @enum {number}
  */
 export enum LOCALSTORAGE_KEYS_MAP {
+  reqProjectConfigMD5 = 'CONFLUX_SCAN_REQ_PROJECT_CONFIG_MD5',
   networkId = 'CONFLUX_SCAN_NETWORK_ID',
   contracts = 'CONFLUX_SCAN_CONTRACTS',
   contractNameTag = 'CONFLUX_SCAN_CONTRACT_NAME_TAG',
