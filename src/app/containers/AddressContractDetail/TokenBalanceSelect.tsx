@@ -20,7 +20,7 @@ import { getCurrencySymbol } from 'utils/constants';
 const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
 export function TokenBalanceSelect({ address = '' } = {}) {
-  const { data: tokensData } = useAccountTokenList(address, ['icon']);
+  const { data: tokensData } = useAccountTokenList(address, ['iconUrl']);
   const tokens = tokensData?.list || [];
   const loading = tokensData?.loading;
 
@@ -88,7 +88,7 @@ function Select({ children = [] } = {}) {
 }
 
 function SelectItem({
-  icon,
+  iconUrl,
   balance,
   price,
   name,
@@ -101,7 +101,7 @@ function SelectItem({
   const title = (
     <SelectItemTitle key="title">
       <SelectItemTokenIcon
-        src={icon || ICON_DEFAULT_TOKEN}
+        src={iconUrl || ICON_DEFAULT_TOKEN}
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>

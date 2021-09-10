@@ -52,7 +52,7 @@ export function Tokens() {
   }&reverse=true&orderBy=totalPrice&${queryString.stringify({
     fields: [
       'transferCount',
-      'icon',
+      'iconUrl',
       'price',
       'totalPrice',
       'quoteUrl',
@@ -86,7 +86,7 @@ export function Tokens() {
     url = `/stat/tokens/list?transferType=${
       CFX_TOKEN_TYPES.erc721
     }&reverse=true&orderBy=transferCount&${queryString.stringify({
-      fields: ['transferCount', 'icon', 'transactionCount'],
+      fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
     // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens721);
@@ -115,7 +115,7 @@ export function Tokens() {
     url = `/stat/tokens/list?transferType=${
       CFX_TOKEN_TYPES.erc1155
     }&reverse=true&orderBy=transferCount&${queryString.stringify({
-      fields: ['transferCount', 'icon', 'transactionCount'],
+      fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
     // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);

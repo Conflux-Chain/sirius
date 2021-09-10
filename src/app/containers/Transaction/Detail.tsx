@@ -153,7 +153,7 @@ export const Detail = () => {
               'tokenDecimal',
               'abi',
               'bytecode',
-              'icon',
+              'iconUrl',
               'sourceCode',
               'typeCode',
             ];
@@ -182,7 +182,7 @@ export const Detail = () => {
                 addressList = Array.from(new Set(addressList));
                 reqTokenList({
                   addressArray: addressList,
-                  fields: ['icon'],
+                  fields: ['iconUrl'],
                 })
                   .then(res => {
                     setLoading(false);
@@ -247,11 +247,12 @@ export const Detail = () => {
               {t(translations.transaction.contract)}{' '}
               {contractInfo && (
                 <>
-                  {contractInfo['token'] && contractInfo['token']['icon'] ? (
+                  {contractInfo['token'] && contractInfo['token']['iconUrl'] ? (
                     <img
                       className="logo"
                       src={
-                        contractInfo['token'] && contractInfo['token']['icon']
+                        contractInfo['token'] &&
+                        contractInfo['token']['iconUrl']
                       }
                       alt="icon"
                     />
@@ -390,7 +391,7 @@ export const Detail = () => {
         tokenSymbol =
           tokenItem['symbol'] || t(translations.general.notAvailable);
         tokenDecimals = tokenItem['decimals'];
-        imgSrc = tokenItem['icon'];
+        imgSrc = tokenItem['iconUrl'];
       }
       const imgIcon = (
         <img

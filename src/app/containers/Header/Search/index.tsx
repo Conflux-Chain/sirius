@@ -77,7 +77,7 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
   list.map(l => {
     const token = {
       ...l,
-      icon: l.icon || ICON_DEFAULT_TOKEN,
+      icon: l.iconUrl || ICON_DEFAULT_TOKEN,
       name: l.name || notAvailable,
     };
     return {
@@ -95,7 +95,8 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
         >
           {type === 'token' && (
             <Image
-              src={token?.icon || ICON_DEFAULT_TOKEN}
+              preview={false}
+              src={token?.iconUrl || ICON_DEFAULT_TOKEN}
               fallback={ICON_DEFAULT_TOKEN}
               alt="token icon"
             />

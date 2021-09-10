@@ -62,22 +62,36 @@ export const ProjectInfo = React.memo(
       setVisible(true);
     };
     const activeMap = {
-      audit: <AuditIcon isActive={true} onClick={clickDetail} />,
-      sponsor: <SponsorIcon isActive={true} onClick={clickDetail} />,
-      verify: <VerifyIcon isActive={true} onClick={clickDetail} />,
-      zeroAdmin: <OxIcon isActive={true} onClick={clickDetail} />,
-      cex: <CexIcon isActive={true} onClick={clickDetail} />,
-      dex: <DexIcon isActive={true} onClick={clickDetail} />,
-      track: <CoinMarketIcon isActive={true} onClick={clickDetail} />,
+      audit: (
+        <AuditIcon isActive={true} onClick={clickDetail} hoverable={true} />
+      ),
+      sponsor: (
+        <SponsorIcon isActive={true} onClick={clickDetail} hoverable={true} />
+      ),
+      verify: (
+        <VerifyIcon isActive={true} onClick={clickDetail} hoverable={true} />
+      ),
+      zeroAdmin: (
+        <OxIcon isActive={true} onClick={clickDetail} hoverable={true} />
+      ),
+      cex: <CexIcon isActive={true} onClick={clickDetail} hoverable={true} />,
+      dex: <DexIcon isActive={true} onClick={clickDetail} hoverable={true} />,
+      track: (
+        <CoinMarketIcon
+          isActive={true}
+          onClick={clickDetail}
+          hoverable={true}
+        />
+      ),
     };
     const inactiveMap = {
-      audit: <AuditIcon onClick={clickDetail} />,
-      sponsor: <SponsorIcon onClick={clickDetail} />,
-      verify: <VerifyIcon onClick={clickDetail} />,
-      zeroAdmin: <OxIcon onClick={clickDetail} />,
-      cex: <CexIcon onClick={clickDetail} />,
-      dex: <DexIcon onClick={clickDetail} />,
-      track: <CoinMarketIcon onClick={clickDetail} />,
+      audit: <AuditIcon onClick={clickDetail} hoverable={true} />,
+      sponsor: <SponsorIcon onClick={clickDetail} hoverable={true} />,
+      verify: <VerifyIcon onClick={clickDetail} hoverable={true} />,
+      zeroAdmin: <OxIcon onClick={clickDetail} hoverable={true} />,
+      cex: <CexIcon onClick={clickDetail} hoverable={true} />,
+      dex: <DexIcon onClick={clickDetail} hoverable={true} />,
+      track: <CoinMarketIcon onClick={clickDetail} hoverable={true} />,
     };
 
     useEffect(() => {
@@ -127,15 +141,11 @@ export const ProjectInfo = React.memo(
         </IconWrapper>
         <ModalWrapper>
           <Modal
-            // title={`${t(
-            //   translations.general.table.token.projectInfo.projectInfo,
-            // )} - ${tokenName}`}
-            style={{ top: 20 }}
             width="50rem"
             visible={visible}
             onCancel={onCloseModal}
             footer={null}
-            getContainer={false}
+            centered={true}
           >
             <ModalTitle>
               {t(translations.general.table.token.projectInfo.projectInfo)} -{' '}

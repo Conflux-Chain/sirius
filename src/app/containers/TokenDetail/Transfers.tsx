@@ -52,7 +52,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   const { data: contractInfo } = useContract(tokenAddress, [
     'name',
-    'icon',
+    'iconUrl',
     'sponsor',
     'admin',
     'from',

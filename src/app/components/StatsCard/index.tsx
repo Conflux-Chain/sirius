@@ -287,7 +287,7 @@ export const StatsCard = ({
               if (tokenAddress.length > 0) {
                 reqTokenList({
                   addressArray: tokenAddress,
-                  fields: 'icon',
+                  fields: 'iconUrl',
                 })
                   .then(tokens => {
                     if (tokens && tokens.list) {

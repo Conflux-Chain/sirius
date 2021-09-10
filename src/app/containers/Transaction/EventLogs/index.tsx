@@ -64,7 +64,7 @@ const EventLog = ({ log }) => {
       'address',
       'abi',
       'name',
-      'icon',
+      'iconUrl',
       // 'bytecode',
       // 'sourceCode', // not need now
     ];
