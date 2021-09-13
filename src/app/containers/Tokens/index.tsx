@@ -148,6 +148,7 @@ export function Tokens() {
           url={url}
           columns={columns}
           rowKey="address"
+          pagination={{ pageSize: 100 }}
         ></TablePanelNew>
       </TableWrapper>
     </>

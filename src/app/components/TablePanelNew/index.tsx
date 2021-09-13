@@ -85,10 +85,18 @@ export const TablePanel = ({
   });
 
   const getQuery = useMemo(() => {
+    let defaultPagination = !pagination
+      ? {
+          pageSize: '10',
+          current: '1',
+        }
+      : pagination;
     const { query } = qs.parseUrl(outerUrl || '');
     const searchQuery = qs.parse(search);
     const skip = searchQuery.skip || query.skip || '0';
-    const limit = searchQuery.limit || query.limit || '10';
+
+    const limit =
+      searchQuery.limit || query.limit || defaultPagination.pageSize || '10';
 
     return {
       ...query,
@@ -96,7 +104,7 @@ export const TablePanel = ({
       skip: skip,
       limit: limit,
     };
-  }, [outerUrl, search]);
+  }, [outerUrl, search, pagination]);
 
   useEffect(() => {
     if (outerUrl) {
@@ -187,11 +195,11 @@ export const TablePanel = ({
               //     });
               //   }
               // },
-              pageSize: Number(getQuery.limit),
               current:
                 Math.floor(Number(getQuery.skip) / Number(getQuery.limit)) + 1,
               total: Math.min(total, listLimit || 0) || total || 0,
               ...pagination,
+              pageSize: Number(getQuery.limit),
             }
       }
       loading={outerLoading || loading}
