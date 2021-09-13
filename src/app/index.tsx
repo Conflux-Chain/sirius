@@ -124,7 +124,7 @@ export function App() {
         // @ts-ignore
         const networkId = resp?.networkId;
         // @ts-ignore
-        const md5String = new MD5().update(resp?.md5).digest('hex');
+        const md5String = new MD5().update(JSON.stringify(resp)).digest('hex');
 
         if (
           NETWORK_ID !== networkId ||
@@ -174,7 +174,7 @@ export function App() {
         setLoading(false);
       })
       .catch(e => {
-        console.log('request frontend config error: ', e.name);
+        console.log('request frontend config error: ', e);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
