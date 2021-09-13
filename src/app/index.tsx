@@ -30,6 +30,7 @@ import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address } from 'utils';
+import MD5 from 'md5.js';
 
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -122,9 +123,19 @@ export function App() {
       .then(resp => {
         // @ts-ignore
         const networkId = resp?.networkId;
+        // @ts-ignore
+        const md5String = new MD5().update(JSON.stringify(resp)).digest('hex');
 
-        if (NETWORK_ID !== networkId) {
+        if (
+          NETWORK_ID !== networkId ||
+          localStorage.getItem(LOCALSTORAGE_KEYS_MAP.reqProjectConfigMD5) !==
+            md5String
+        ) {
           localStorage.setItem(LOCALSTORAGE_KEYS_MAP.networkId, networkId);
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.reqProjectConfigMD5,
+            md5String,
+          );
           localStorage.setItem(
             LOCALSTORAGE_KEYS_MAP.contracts,
             JSON.stringify(
@@ -138,19 +149,20 @@ export function App() {
               ),
             ),
           );
-          localStorage.setItem(
-            LOCALSTORAGE_KEYS_MAP.contractNameTag,
-            JSON.stringify(
-              // @ts-ignore
-              resp?.contracts.reduce(
-                (prev, curr) => ({
-                  ...prev,
-                  [curr.address]: curr.name,
-                }),
-                {},
-              ),
-            ),
-          );
+          // contract name tag config, hide for temp
+          // localStorage.setItem(
+          //   LOCALSTORAGE_KEYS_MAP.contractNameTag,
+          //   JSON.stringify(
+          //     // @ts-ignore
+          //     resp?.contracts.reduce(
+          //       (prev, curr) => ({
+          //         ...prev,
+          //         [curr.address]: curr.name,
+          //       }),
+          //       {},
+          //     ),
+          //   ),
+          // );
           window.location.reload();
         }
 
@@ -162,7 +174,7 @@ export function App() {
         setLoading(false);
       })
       .catch(e => {
-        console.log('request frontend config error: ', e.name);
+        console.log('request frontend config error: ', e);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

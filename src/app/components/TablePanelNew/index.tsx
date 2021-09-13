@@ -99,7 +99,6 @@ export const TablePanel = ({
   }, [outerUrl, search]);
 
   useEffect(() => {
-    console.log(className);
     if (outerUrl) {
       const { url } = qs.parseUrl(outerUrl);
 
@@ -172,7 +171,7 @@ export const TablePanel = ({
           ? pagination
           : {
               showLessItems: true,
-              hideOnSinglePage: true,
+              hideOnSinglePage: false,
               size: bp === 's' ? 'small' : 'default',
               showSizeChanger: true,
               showQuickJumper: true,
