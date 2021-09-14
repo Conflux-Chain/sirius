@@ -15,10 +15,7 @@ import { Card } from '../../components/Card';
 import { Remark } from '../../components/Remark';
 import { CopyButton } from '../../components/CopyButton';
 import { Input, Button, Link } from '@cfxjs/react-ui';
-import {
-  format,
-  address as utilAddress,
-} from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import { useParams } from 'react-router-dom';
 import { List } from './List';
@@ -26,7 +23,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
-import { cfx } from 'utils/cfx';
+import { CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -71,8 +68,7 @@ export function AddressConverter() {
         }
         resolve('');
       } else if (address.startsWith('0x8')) {
-        cfx
-          .getCode(address)
+        CFX.getCode(address)
           .then(code => {
             resolve('');
           })
@@ -101,26 +97,34 @@ export function AddressConverter() {
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
-      } else if (utilAddress.hasNetworkPrefix(address)) {
+      } else if (SDK.address.hasNetworkPrefix(address)) {
         // 有network前缀
-        hexAddress = format.hexAddress(address);
-        hexChecksumAddress = format.checksumAddress(hexAddress);
-        bytes32MainnetAddress = format.address(hexAddress, 1029);
-        bytes32MainnetAddressWithType = format.address(hexAddress, 1029, true);
-        bytes32TestnetAddress = format.address(hexAddress, 1);
-        bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
+        hexAddress = SDK.format.hexAddress(address);
+        hexChecksumAddress = SDK.format.checksumAddress(hexAddress);
+        bytes32MainnetAddress = SDK.format.address(hexAddress, 1029);
+        bytes32MainnetAddressWithType = SDK.format.address(
+          hexAddress,
+          1029,
+          true,
+        );
+        bytes32TestnetAddress = SDK.format.address(hexAddress, 1);
+        bytes32TestnetAddressWithType = SDK.format.address(hexAddress, 1, true);
       } else {
         // 没有network前缀
         hexAddress = address.toLowerCase();
-        hexChecksumAddress = format.checksumAddress(hexAddress);
-        bytes32MainnetAddress = format.address(hexAddress, 1029);
-        bytes32MainnetAddressWithType = format.address(hexAddress, 1029, true);
-        bytes32TestnetAddress = format.address(hexAddress, 1);
-        bytes32TestnetAddressWithType = format.address(hexAddress, 1, true);
+        hexChecksumAddress = SDK.format.checksumAddress(hexAddress);
+        bytes32MainnetAddress = SDK.format.address(hexAddress, 1029);
+        bytes32MainnetAddressWithType = SDK.format.address(
+          hexAddress,
+          1029,
+          true,
+        );
+        bytes32TestnetAddress = SDK.format.address(hexAddress, 1);
+        bytes32TestnetAddressWithType = SDK.format.address(hexAddress, 1, true);
         if (networkId !== '') {
           const num = Number(networkId);
-          bytes32NetAddress = format.address(hexAddress, num);
-          bytes32NetAddressWithType = format.address(hexAddress, num, true);
+          bytes32NetAddress = SDK.format.address(hexAddress, num);
+          bytes32NetAddressWithType = SDK.format.address(hexAddress, num, true);
         }
       }
 
@@ -213,7 +217,13 @@ export function AddressConverter() {
         <div>
           <Input
             value={address}
-            placeholder={t(translations.addressConverter.inputPlaceholder)}
+            placeholder={
+              [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
+                NETWORK_TYPE,
+              )
+                ? 'cfx:... / cfxtest:... / hex'
+                : ''
+            }
             size="small"
             variant="solid"
             className="convert-address-input input-address"

@@ -22,7 +22,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
 import './locales/i18n';
-import { isTestNetEnv } from './utils/hooks/useTestnet';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -55,7 +55,7 @@ if (module.hot) {
 
 render(App);
 
-const currentVersion = '2.2.5';
+const currentVersion = '2.2.6';
 
 const brand = `
 ┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ V${currentVersion}
@@ -63,7 +63,7 @@ const brand = `
 └─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
  `;
 
-if (isTestNetEnv())
+if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
   console.log &&
     console.log(
       `%c 
@@ -74,7 +74,7 @@ ${brand}
 `,
       'color:#e4310c;',
     );
-else
+} else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
   console.log &&
     console.log(
       `%c 
@@ -85,6 +85,18 @@ ${brand}
 `,
       'color:#1e3de4;',
     );
+} else {
+  console.log &&
+    console.log(
+      `%c 
+${brand}
+╔═╗╦═╗╦╦  ╦╔═╗╔╦╗╔═╗  ┌┐┌┌─┐┌┬┐
+╠═╝╠╦╝║╚╗╔╝╠═╣ ║ ║╣   │││├┤  │ 
+╩  ╩╚═╩ ╚╝ ╩ ╩ ╩ ╚═╝  ┘└┘└─┘ ┴
+`,
+      'color:#e4c01e;',
+    );
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

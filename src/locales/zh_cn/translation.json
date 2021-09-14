@@ -514,6 +514,14 @@
     }
   },
   "general": {
+    "networks": {
+      "mainnet": "主网",
+      "testnet": "测试网",
+      "privatenet": "私有链"
+    },
+    "errors": {
+      "address": "请输入一个合法的{{network}}地址"
+    },
     "advancedSearch": {
       "label": {
         "txnHash": "交易哈希",
@@ -538,9 +546,8 @@
       "placeholder": {
         "pleaseSelect": "请输入代币",
         "pleaseEnter": "请输入",
-        "pleaseEnterTxnHash": "请输入交易哈希",
-        "pleaseEnterBlockHash": "请输入区块哈希",
-        "pleaseEnterAddress": "请输入地址",
+        "pleaseEnterTxnHash": "0x...",
+        "pleaseEnterBlockHash": "0x...",
         "pleaseEnterTokenId": "例如：10",
         "pleaseEnterNonce": "请输入随机数",
         "pleaseEnterEpochStart": "例如：100",
@@ -1156,6 +1163,7 @@
       "versionNotice": "版本说明",
       "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
       "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
+      "switchToScanNetwork": "请在 ConfluxPortal 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
       "upgradeTipVersion": "请升级 ConfluxPortal 至最新版本。"
     },

@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
-import {
-  cfx,
-  faucet,
-  faucetAddress,
-  formatAddress,
-  faucetLastAddress,
-} from 'utils/cfx';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
-import { isAddress, fromDripToGdrip, fromDripToCfx } from 'utils';
+import {
+  isCurrentNetworkAddress,
+  fromDripToGdrip,
+  fromDripToCfx,
+  getAddressInputPlaceholder,
+  formatAddress,
+} from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { TxnAction } from 'utils/constants';
+import {
+  TXN_ACTION,
+  RPC_SERVER,
+  CFX,
+  CONTRACTS,
+  NETWORK_TYPE,
+} from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
+import Faucet from 'utils/sponsorFaucet/faucet';
 
 interface RouteParams {
   contractAddress: string;
@@ -37,7 +43,9 @@ const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
 const errUpgraded = 'errUpgraded';
+
 export function Sponsor() {
+  const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -66,17 +74,20 @@ export function Sponsor() {
   const [txData, setTxData] = useState('');
   const { accounts } = usePortal();
 
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
+
   const getSponsorFromSDK = address => {
-    cfx.getSponsorInfo(address).then(
+    CFX.getSponsorInfo(address).then(
       resp => {
         const sponsorGasBound = resp.sponsorGasBound.toString();
-        const sponsorForGas = formatAddress(resp.sponsorForGas, {
-          hex: true,
-        });
+        const sponsorForGas = formatAddress(resp.sponsorForGas);
+
         setUpperBound(sponsorGasBound);
         if (
-          sponsorForGas === faucetAddress ||
-          sponsorForGas === faucetLastAddress
+          sponsorForGas === CONTRACTS.faucet ||
+          sponsorForGas === CONTRACTS.faucetLast
         ) {
           setIsUpperBoundFromFoundation(true);
         }
@@ -88,8 +99,8 @@ export function Sponsor() {
   const getSponsorInfo = async _address => {
     setLoading(true);
     // cip-37 compatible
-    const address = formatAddress(_address, { hex: false });
-    const sponsorInfo = await cfx.provider.call('cfx_getSponsorInfo', address);
+    const address = formatAddress(_address);
+    const sponsorInfo = await CFX.provider.call('cfx_getSponsorInfo', address);
     const { flag } = await fetchIsAppliable(address);
     setIsFlag(flag);
     if (flag) {
@@ -107,7 +118,7 @@ export function Sponsor() {
           sponsorInfo.sponsorForCollateral,
           sponsorInfo.sponsorForGas,
         ],
-        fields: ['icon'],
+        fields: ['iconUrl'],
       })
         .then(res => {
           if (res && res.list && res.list.length === 2) {
@@ -169,11 +180,18 @@ export function Sponsor() {
         setErrorMsgForApply('');
       }
       // cip-37
-      if (isAddress(inputAddressVal)) {
+      if (isCurrentNetworkAddress(inputAddressVal)) {
         getSponsorInfo(inputAddressVal);
       } else {
         resetParams();
-        setErrorMsgForApply(t(translations.contract.error.address));
+
+        setErrorMsgForApply(
+          t(translations.general.errors.address, {
+            network: t(
+              translations.general.networks[NETWORK_TYPE.toLowerCase()],
+            ),
+          }),
+        );
       }
     } else {
       resetParams();
@@ -231,8 +249,16 @@ export function Sponsor() {
 
   useEffect(() => {
     setInputAddressVal(contractAddress);
-    if (isAddress(contractAddress)) {
+    if (isCurrentNetworkAddress(contractAddress)) {
       getSponsorInfo(contractAddress);
+    } else {
+      resetParams();
+
+      setErrorMsgForApply(
+        t(translations.general.errors.address, {
+          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+        }),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractAddress]);
@@ -254,8 +280,16 @@ export function Sponsor() {
     setCanApply(false);
   };
   const closeModalCallback = () => {
-    if (isAddress(inputAddressVal)) {
+    if (isCurrentNetworkAddress(inputAddressVal)) {
       getSponsorInfo(inputAddressVal);
+    } else {
+      resetParams();
+
+      setErrorMsgForApply(
+        t(translations.general.errors.address, {
+          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+        }),
+      );
     }
   };
   return (
@@ -274,7 +308,7 @@ export function Sponsor() {
             outerClassname="outerContainer"
             inputClassname="sponsor-search"
             iconColor="#74798C"
-            placeholderText={t(translations.sponsor.searchAddress)}
+            placeholderText={addressInputPlaceholder}
             onEnterPress={searchClick}
             onClear={searchClear}
             onChange={addressInputChanger}
@@ -453,14 +487,14 @@ export function Sponsor() {
         </BlockContainer>
         <ApplyContainer>
           <DappButton
-            contractAddress={faucetAddress}
+            contractAddress={CONTRACTS.faucet}
             data={txData}
             btnDisabled={!canApply}
             connectText={t('sponsor.connectToApply')}
             submitText={t('general.apply')}
             failCallback={failCallback}
             closeModalCallback={closeModalCallback}
-            txnAction={TxnAction.sponsorApplication}
+            txnAction={TXN_ACTION.sponsorApplication}
           ></DappButton>
         </ApplyContainer>
 

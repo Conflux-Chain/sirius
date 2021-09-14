@@ -1,46 +1,155 @@
-import {
-  addressTypeCommon,
-  addressTypeContract,
-  addressTypeInternalContract,
-  adminControlAddress,
-  sponsorWhitelistControlAddress,
-  stakingAddress,
-  zeroAddress,
-} from './constants';
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import fetch from './request';
 import { Buffer } from 'buffer';
-import { cfxAddress, formatAddress } from './cfx';
+import { NetworksType } from './hooks/useGlobal';
+import {
+  CONTRACTS,
+  IS_PRE_RELEASE,
+  NETWORK_ID,
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+} from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
 
-export const innerContract = [
-  formatAddress('0x0888000000000000000000000000000000000000'),
-  formatAddress('0x0888000000000000000000000000000000000001'),
-  formatAddress('0x0888000000000000000000000000000000000002'),
-];
-
-export const getAddressType = address => {
+export const isHexAddress = (address: string): boolean => {
   try {
-    const type = cfxAddress.decodeCfxAddress(
-      formatAddress(address, { hex: false }),
-    ).type;
-    switch (type) {
-      case 'user':
-        return addressTypeCommon;
-      case 'contract':
-        return addressTypeContract;
-      case 'builtin':
-        return addressTypeInternalContract;
-      default:
-        return null;
+    if (address.startsWith('0x') && address.length === 42) {
+      // treat as hex40 address
+      return !!SDK.format.hexAddress(address);
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
+export const isBase32Address = (address: string): boolean => {
+  try {
+    return SDK.address.isValidCfxAddress(address);
+  } catch (e) {
+    return false;
+  }
+};
+
+export const isSimplyBase32Address = (address: string): boolean => {
+  try {
+    return isBase32Address(address) && /[a-z0-9]:[a-z0-9]/.test(address);
+  } catch (e) {
+    return false;
+  }
+};
+
+// support hex and base32
+export const isAddress = (address: string): boolean => {
+  try {
+    if (address.startsWith('0x')) {
+      return isHexAddress(address);
+    } else {
+      return isBase32Address(address);
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
+export const formatAddress = (
+  address: string,
+  outputType = 'base32', // base32 or hex
+): string => {
+  const invalidAddressReturnValue = '';
+  try {
+    if (isHexAddress(address)) {
+      if (outputType === 'hex') {
+        return address;
+      } else if (outputType === 'base32') {
+        return SDK.format.address(address, NETWORK_ID);
+      } else {
+        return invalidAddressReturnValue;
+      }
+    } else if (isBase32Address(address)) {
+      if (outputType === 'hex') {
+        return SDK.format.hexAddress(address);
+      } else if (outputType === 'base32') {
+        const reg = /(.*):(.*):(.*)/;
+        let lowercaseAddress = address;
+
+        // compatibility with verbose address, will replace with simply address later
+        if (typeof address === 'string' && reg.test(address)) {
+          lowercaseAddress = address.replace(reg, '$1:$3').toLowerCase();
+        }
+        return lowercaseAddress;
+      } else {
+        return invalidAddressReturnValue;
+      }
+    } else {
+      return invalidAddressReturnValue;
+    }
+  } catch (e) {
+    return invalidAddressReturnValue;
+  }
+};
+
+export const getAddressInfo = (
+  address: string,
+): {
+  netId: number;
+  type: string;
+  hexAddress: ArrayBuffer | string;
+} | null => {
+  try {
+    if (isHexAddress(address)) {
+      const base32Address = formatAddress(address, 'base32');
+      return SDK.address.decodeCfxAddress(base32Address);
+    } else if (isBase32Address(address)) {
+      return SDK.address.decodeCfxAddress(address);
+    } else {
+      return null;
     }
   } catch (e) {
     return null;
   }
 };
+
+export function isZeroAddress(address: string): boolean {
+  return formatAddress(address, 'base32') === CONTRACTS.zero;
+}
+
+export function isAccountAddress(address: string): boolean {
+  return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
+}
+
+export function isContractAddress(address: string): boolean {
+  return getAddressInfo(address)?.type === 'contract';
+}
+
+export function isInnerContractAddress(address: string): boolean {
+  return [
+    CONTRACTS.adminControl,
+    CONTRACTS.sponsorWhitelistControl,
+    CONTRACTS.staking,
+  ].includes(formatAddress(address, 'base32'));
+}
+
+// address start with 0x0, not valid internal contract, but fullnode support
+export function isSpecialAddress(address: string): boolean {
+  return (
+    getAddressInfo(address)?.type === 'builtin' &&
+    ![
+      CONTRACTS.adminControl,
+      CONTRACTS.sponsorWhitelistControl,
+      CONTRACTS.staking,
+    ].includes(formatAddress(address, 'base32'))
+  );
+}
+
+export function isCurrentNetworkAddress(address: string): boolean {
+  return getAddressInfo(address)?.netId === NETWORK_ID;
+}
 
 /**
  * format util fn
@@ -438,47 +547,6 @@ export const selectText = (element: HTMLElement) => {
   }
 };
 
-export const isAddress = (str: string) => {
-  return formatAddress(str) !== '';
-  // return cfxAddress.isValidCfxAddress(str); // only support new address
-  // return /^0x[0-9a-fA-F]{40}$/.test(str);
-};
-
-export function isZeroAddress(str: string) {
-  return formatAddress(str) === zeroAddress;
-}
-
-export function isAccountAddress(str: string) {
-  return getAddressType(str) === addressTypeCommon || isZeroAddress(str);
-}
-
-export function isContractAddress(str: string) {
-  return getAddressType(str) === addressTypeContract;
-}
-
-export function isInnerContractAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    [
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
-
-// address start with 0x0, not valid internal contract, but fullnode support
-export function isSpecialAddress(str: string) {
-  return (
-    getAddressType(str) === addressTypeInternalContract &&
-    ![
-      adminControlAddress,
-      sponsorWhitelistControlAddress,
-      stakingAddress,
-    ].includes(formatAddress(str, { hex: false }))
-  );
-}
-
 export const isHash = (str: string) => {
   return /^0x[0-9a-fA-F]{64}$/.test(str);
 };
@@ -715,4 +783,45 @@ export const getInitialDate = (minTimestamp, maxTimestamp) => {
     dMinT: disabledDateD1,
     dMaxT: disabledDateD2,
   };
+};
+
+export const getNetwork = (networks: Array<NetworksType>, id: number) => {
+  let matchs = networks.filter(n => n.id === id);
+  let network: NetworksType;
+
+  if (matchs) {
+    network = matchs[0];
+  } else {
+    network = networks[0];
+  }
+
+  return network;
+};
+
+// @todo, add private chain domain
+export const gotoNetwork = (networkId: number): void => {
+  if (IS_PRE_RELEASE) {
+    // only for confluxscan pre release env
+    if (networkId === 1) {
+      window.location.assign('//testnet-scantest.confluxnetwork.org');
+    } else if (networkId === 1029) {
+      window.location.assign('//scantest.confluxnetwork.org');
+    }
+  } else {
+    if (networkId === 1) {
+      window.location.assign('//testnet.confluxscan.io');
+    } else if (networkId === 1029) {
+      window.location.assign('//confluxscan.io');
+    }
+  }
+};
+
+export const getAddressInputPlaceholder = () => {
+  if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+    return 'cfx:...';
+  } else if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+    return 'cfxtest:...';
+  } else {
+    return '';
+  }
 };

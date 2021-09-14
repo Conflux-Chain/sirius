@@ -18,6 +18,7 @@ import {
 } from './AddressInfoCards';
 import { AddressMetadata, ContractMetadata, Table } from './Loadable';
 import { useContract } from 'utils/api';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import {
   Bottom,
   Head,
@@ -52,7 +53,7 @@ export const ContractDetailPage = memo(() => {
 
   const { data: contractInfo } = useContract(address, [
     'name',
-    'icon',
+    'iconUrl',
     'sponsor',
     'admin',
     'from',
@@ -109,11 +110,13 @@ export const ContractDetailPage = memo(() => {
           {t(translations.general.address.more.editContract)}
         </RouterLink>
       </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/sponsor/${address}`}>
-          {t(translations.general.address.more.sponsor)}
-        </RouterLink>
-      </Menu.Item>
+      {[NETWORK_TYPES.testnet, NETWORK_TYPES.mainnet].includes(NETWORK_TYPE) ? (
+        <Menu.Item>
+          <RouterLink to={`/sponsor/${address}`}>
+            {t(translations.general.address.more.sponsor)}
+          </RouterLink>
+        </Menu.Item>
+      ) : null}
       <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
@@ -189,19 +192,6 @@ export const ContractDetailPage = memo(() => {
                   />
                 </span>
               </DropdownWrapper>
-              {/*<Edit address={address} />*/}
-              {/*<Apply address={address} />*/}
-              {/*<Report address={address} />*/}
-              {/*{hasWebsite && (*/}
-              {/*  <Jump*/}
-              {/*    onClick={() => {*/}
-              {/*      const url = websiteUrl.startsWith('http')*/}
-              {/*        ? websiteUrl*/}
-              {/*        : `http://${websiteUrl}`;*/}
-              {/*      window.open(url);*/}
-              {/*    }}*/}
-              {/*  />*/}
-              {/*)}*/}
               {isSpecialAddress(address) ? (
                 <WarningInfoWrapper>
                   <img src={warningInfo} alt="warning" />

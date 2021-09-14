@@ -3,7 +3,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { cfx } from 'utils/cfx';
+import { CFX } from 'utils/constants';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import styled from 'styled-components/macro';
@@ -13,10 +13,10 @@ import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
-import { cfxAddress } from 'utils/cfx';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
 import { Row, Col } from '@jnoodle/antd';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 
@@ -82,7 +82,7 @@ const Code = ({ contractInfo }) => {
         >
           {t(translations.contract.verify.tipLeft)}
           <Link
-            href={`/contract-verification?address=${cfxAddress.simplifyCfxAddress(
+            href={`/contract-verification?address=${SDK.address.simplifyCfxAddress(
               address,
             )}`}
           >
@@ -201,7 +201,7 @@ const StyledContractContentCodeWrapper = styled.div`
 
 export const ContractContent = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { abi, address } = contractInfo;
+  const { abi, address, verify = {} } = contractInfo;
   const [dataForRead, setDataForRead] = useState([]);
   const [dataForWrite, setDataForWrite] = useState([]);
   const [activeKey, setActiveKey] = useState('code');
@@ -226,7 +226,7 @@ export const ContractContent = ({ contractInfo }) => {
   };
 
   // init contract object by abi and address
-  const contract = cfx.Contract({
+  const contract = CFX.Contract({
     abi: abiJson,
     address,
   });
@@ -310,7 +310,7 @@ export const ContractContent = ({ contractInfo }) => {
     },
   ];
 
-  if (abi) {
+  if (abi && Object.keys(verify).length) {
     tabs = tabs.concat([
       {
         key: 'read',

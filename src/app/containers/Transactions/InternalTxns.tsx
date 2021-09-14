@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import styled from 'styled-components/macro';
 import pubsub from 'utils/pubsub';
 

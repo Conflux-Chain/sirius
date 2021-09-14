@@ -7,7 +7,8 @@ import {
 import { toThousands } from 'utils';
 import { Card } from 'app/components/Card/Loadable';
 import { Empty } from 'app/components/Empty/Loadable';
-import { cfx, formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
+import { CFX } from 'utils/constants';
 import { Description } from 'app/components/Description/Loadable';
 import styled from 'styled-components/macro';
 import _ from 'lodash';
@@ -63,7 +64,7 @@ const EventLog = ({ log }) => {
       'address',
       'abi',
       'name',
-      'icon',
+      'iconUrl',
       // 'bytecode',
       // 'sourceCode', // not need now
     ];
@@ -80,7 +81,7 @@ const EventLog = ({ log }) => {
             throw new Error(`no abi of this contract: ${log.address}`);
           } else {
             // in case of invalid abi
-            const contract = cfx.Contract({
+            const contract = CFX.Contract({
               abi: JSON.parse(body.abi),
               address: log.address,
             });
@@ -162,13 +163,7 @@ const EventLog = ({ log }) => {
             >
               <Address
                 address={address}
-                contract={
-                  contractAndTokenInfo[
-                    formatAddress(address, {
-                      withType: true,
-                    })
-                  ]
-                }
+                contract={contractAndTokenInfo[formatAddress(address)]}
               ></Address>
             </Description>
             {fnName ? (

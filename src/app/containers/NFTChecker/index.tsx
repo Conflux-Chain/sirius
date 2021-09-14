@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -14,13 +14,16 @@ import { PageHeader } from 'app/components/PageHeader';
 import { Card } from 'app/components/Card';
 import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { formatAddress } from 'utils/cfx';
+import {
+  isCurrentNetworkAddress,
+  toThousands,
+  getAddressInputPlaceholder,
+} from 'utils';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { Empty } from 'app/components/Empty';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { toThousands } from 'utils';
 import { reqNFTBalances, reqNFTTokenIds } from 'utils/httpRequest';
 import qs from 'query-string';
 
@@ -50,7 +53,7 @@ export function NFTChecker() {
   const history = useHistory();
   const { pathname, search } = useLocation();
   const {
-    NFTType: outerNFTType,
+    NFTAddress: outerNFTAddress,
     skip = '0',
     limit = '12',
     ...others
@@ -65,14 +68,16 @@ export function NFTChecker() {
   const [selectedNFT, setSelectedNFT] = useState<NFTBalancesType>(
     defaultSelectedNFT,
   );
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
 
   const pageSize = Number(limit);
   const page = Math.floor((Number(skip) || 0) / pageSize) + 1;
   const total = selectedNFT.balance;
 
   const validateAddress = address => {
-    const formattedAddress = formatAddress(address);
-    return formattedAddress && !formattedAddress.startsWith('invalid');
+    return isCurrentNetworkAddress(address);
   };
 
   const handleNFTSearch = async () => {
@@ -101,8 +106,10 @@ export function NFTChecker() {
           }));
           let selectedNFT = NFTBalances[0];
 
-          if (outerNFTType) {
-            selectedNFT = NFTBalances.filter(n => n.type === outerNFTType)[0];
+          if (outerNFTAddress) {
+            selectedNFT = NFTBalances.filter(
+              n => n.address === outerNFTAddress,
+            )[0];
           }
 
           const resp = await reqNFTTokenIds({
@@ -141,7 +148,7 @@ export function NFTChecker() {
         url: pathname,
         query: {
           ...others,
-          NFTType: outerNFTType,
+          NFTAddress: outerNFTAddress,
           skip: String((page - 1) * pageSize),
           limit: String(pageSize),
         },
@@ -149,13 +156,13 @@ export function NFTChecker() {
     );
   };
 
-  const handleNFTTypeChange = type => {
+  const handleNFTAddressChange = address => {
     history.push(
       qs.stringifyUrl({
         url: pathname,
         query: {
           ...others,
-          NFTType: type,
+          NFTAddress: address,
           skip: '0',
           limit: limit,
         },
@@ -168,7 +175,7 @@ export function NFTChecker() {
       handleNFTSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routerAddress, outerNFTType, skip, limit]);
+  }, [routerAddress, outerNFTAddress, skip, limit]);
 
   return (
     <>
@@ -187,7 +194,7 @@ export function NFTChecker() {
         <Search
           value={address}
           onChange={handleAddressChange}
-          placeholder={t(translations.nftChecker.inputPlaceholder)}
+          placeholder={addressInputPlaceholder}
           onSearch={value => {
             if (validateAddress(value)) {
               history.push(`/nft-checker/${value}`);
@@ -210,8 +217,10 @@ export function NFTChecker() {
                 {NFTBalances.map((n: NFTBalancesType) => {
                   return (
                     <Tag
-                      className={selectedNFT.type === n.type ? 'current' : ''}
-                      onClick={() => handleNFTTypeChange(n.type)}
+                      className={
+                        selectedNFT.address === n.address ? 'current' : ''
+                      }
+                      onClick={() => handleNFTAddressChange(n.address)}
                       key={n.address}
                     >{`${n.name[lang]} (${toThousands(n.balance)})`}</Tag>
                   );

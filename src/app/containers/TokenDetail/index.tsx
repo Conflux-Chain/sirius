@@ -9,9 +9,9 @@ import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
-import { defaultTokenIcon } from '../../../constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatAddress } from '../../../utils/cfx';
+import { formatAddress } from '../../../utils';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
@@ -30,7 +30,7 @@ export function TokenDetail() {
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
-    fields: ['icon', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
+    fields: ['iconUrl', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
     // currency: globalData.currency, // @todo wait for new api handler
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
@@ -61,13 +61,13 @@ export function TokenDetail() {
   // if (data.transferStatistic.ERC20 !== undefined) {
   //   switch (transferCountArray.indexOf(data.transferCount)) {
   //     case 0:
-  //       transferType = cfxTokenTypes.erc20;
+  //       transferType = CFX_TOKEN_TYPES.erc20;
   //       break;
   //     case 1:
-  //       transferType = cfxTokenTypes.erc721;
+  //       transferType = CFX_TOKEN_TYPES.erc721;
   //       break;
   //     case 2:
-  //       transferType = cfxTokenTypes.erc1155;
+  //       transferType = CFX_TOKEN_TYPES.erc1155;
   //       break;
   //     default:
   //       break;
@@ -111,7 +111,7 @@ export function TokenDetail() {
               <img
                 className="img"
                 alt="icon"
-                src={data.icon || defaultTokenIcon}
+                src={data.iconUrl || ICON_DEFAULT_TOKEN}
               />
             ) : (
               <Tooltip
@@ -125,7 +125,7 @@ export function TokenDetail() {
                   </span>
                 }
               >
-                <img alt="icon" src={data.icon || defaultTokenIcon} />
+                <img alt="icon" src={data.iconUrl || ICON_DEFAULT_TOKEN} />
               </Tooltip>
             )}
             <div className="basic-name">
@@ -143,13 +143,7 @@ export function TokenDetail() {
             ) : null}
             <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
-                <span
-                  style={{
-                    color: '#65709a',
-                  }}
-                >
-                  {t(translations.general.address.more.title)}{' '}
-                </span>
+                {t(translations.general.address.more.title)}{' '}
                 <img
                   src={DownIcon}
                   alt={t(translations.general.address.more.title)}
@@ -202,6 +196,7 @@ const TokenDetailWrap = styled.div`
   table .sortable.balance.desc {
     cursor: not-allowed !important;
     background-image: url(${descIcon}) !important;
+
     &:hover {
       color: inherit !important;
     }
@@ -231,19 +226,23 @@ const HeaderWrap = styled.div`
     width: 32px;
     height: 32px;
   }
+
   a {
     color: #00acff !important;
   }
+
   .basic-name {
     font-size: 1.7143rem;
     font-weight: 500;
     color: #1a1a1a;
     margin: 0 0.6rem;
   }
+
   .basic-symbol {
     color: #74798c;
     font-size: 1rem;
   }
+
   .basic-link {
     font-size: 14px;
     line-height: 22px;
@@ -267,10 +266,13 @@ const HeaderWrap = styled.div`
 export const DropdownWrapper = styled(Dropdown)`
   position: absolute;
   right: 0;
-  top: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: #74798c;
+  height: 21px;
+
   img {
     width: 11px;
     height: 6px;

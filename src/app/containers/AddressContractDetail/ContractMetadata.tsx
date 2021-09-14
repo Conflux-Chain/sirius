@@ -16,14 +16,18 @@ import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
-import { formatString } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { zeroAddress } from '../../../utils/constants';
-import { formatAddress } from '../../../utils/cfx';
-import { defaultTokenIcon } from '../../../constants';
+import { isZeroAddress, formatString } from 'utils';
+import {
+  ICON_DEFAULT_TOKEN,
+  NETWORK_TYPES,
+  NETWORK_TYPE,
+  ICON_DEFAULT_CONTRACT,
+} from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
+import { Image } from '@jnoodle/antd';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -36,9 +40,7 @@ const WarnningButton = ({ address }) => {
         className="metadata-tooltip-btn"
         size={16}
         tooltipContentClassName="warnning-tooltip"
-        viewBox={
-          formatAddress(address) !== zeroAddress ? '0 0 1024 1024' : '0 0 16 16'
-        }
+        viewBox={!isZeroAddress(address) ? '0 0 1024 1024' : '0 0 16 16'}
         tooltipText={
           <WarnningTooltipWrapper>
             <p className="warnning-text">
@@ -59,7 +61,7 @@ const WarnningButton = ({ address }) => {
           </WarnningTooltipWrapper>
         }
       >
-        {formatAddress(address) !== zeroAddress ? (
+        {!isZeroAddress(address) ? (
           <path
             d="M501.28 4.16a501.248 501.248 0 1 0 0 1002.56 501.248 501.248 0 0 0 0-1002.56z m42.24 668.8c0 23.36-19.2 42.24-42.24 42.24-23.04 0-42.24-19.136-42.24-42.24 0-23.04 19.2-42.24 42.24-42.24 23.04 0 42.24 19.2 42.24 42.24z m0-176.576a41.856 41.856 0 0 1-42.24 41.408 41.856 41.856 0 0 1-42.24-41.408V284.16c0-22.848 19.2-41.408 42.24-41.408 23.04 0 42.24 18.56 42.24 41.408v212.288z"
             fill="#FFB84B"
@@ -124,260 +126,249 @@ const WarnningTooltipWrapper = styled.div`
 export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
   const notAvailableText = t(translations.general.security.notAvailable);
-
-  // const { data: contractInfo } = useContract(address, [
-  //   'name',
-  //   'icon',
-  //   'sponsor',
-  //   'website',
-  //   'admin',
-  //   'from',
-  //   'transactionHash',
-  //   'code',
-  // ]);
-  const { data: tokenInfo } = useToken(address, ['name', 'icon']);
+  const { data: tokenInfo } = useToken(address, ['name', 'iconUrl']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
 
-  return (
-    <List
-      list={[
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.nameTag)}
-              placement="top"
+  let list = [
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.nameTag)}
+          placement="top"
+        >
+          {t(translations.contract.nameTag)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            <Image
+              width={24} // width: 16px + padingRight: 8px = 24px
+              style={{
+                paddingRight: '8px',
+              }}
+              src={tokenInfo?.iconUrl || ''}
+              preview={false}
+              fallback={ICON_DEFAULT_CONTRACT}
+              alt={contractInfo.name + 'logo'}
+            />
+            <Content>{contractInfo.name || notAvailableText}</Content>
+            <RouterLink
+              className="contract-info-update"
+              to={`/contract-info/${address}`}
             >
-              {t(translations.contract.nameTag)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                {contractInfo.icon && (
-                  <Icon
-                    src={contractInfo.icon}
-                    alt={`${contractInfo.name} logo`}
-                  />
-                )}
-                <Content>{contractInfo.name || notAvailableText}</Content>
-
-                <RouterLink
-                  className="contract-info-update"
-                  to={`/contract-info/${address}`}
-                >
-                  <Edit3 size={18} color="#1e3de4" />
-                </RouterLink>
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.contractAdmin)}
-              placement="top"
-            >
-              {t(translations.contract.contractAdmin)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                <Content>
-                  {contractInfo.admin ? (
-                    <AddressContainer
-                      value={contractInfo.admin}
-                      alias={
-                        formatAddress(contractInfo.admin) === zeroAddress
-                          ? t(translations.general.zeroAddress)
-                          : undefined
-                      }
-                    />
-                  ) : (
-                    notAvailableText
-                  )}
-                </Content>
-                <WarnningButton key="warning" address={contractInfo.admin} />
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.tokenTracker)}
-              placement="top"
-            >
-              {t(translations.contract.tokenTracker)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                <Icon
-                  src={
-                    tokenInfo && tokenInfo.icon
-                      ? tokenInfo.icon
-                      : defaultTokenIcon
+              <Edit3 size={18} color="#1e3de4" />
+            </RouterLink>
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.contractAdmin)}
+          placement="top"
+        >
+          {t(translations.contract.contractAdmin)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            <Content>
+              {contractInfo.admin ? (
+                <AddressContainer
+                  value={contractInfo.admin}
+                  alias={
+                    isZeroAddress(contractInfo.admin)
+                      ? t(translations.general.zeroAddress)
+                      : undefined
                   }
-                  alt={`${contractInfo.name} logo`}
                 />
-                <Content className={clsx(!tokenInfo.name && 'not-available')}>
-                  {tokenInfo.name ? (
-                    <Link to={`/token/${address}`}>
-                      {formatString(
-                        `${tokenInfo.name || notAvailableText} (${
-                          tokenInfo.symbol || notAvailableText
-                        })`,
-                        'tokenTracker',
-                      )}
-                    </Link>
-                  ) : (
-                    notAvailableText
+              ) : (
+                notAvailableText
+              )}
+            </Content>
+            <WarnningButton key="warning" address={contractInfo.admin} />
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.tokenTracker)}
+          placement="top"
+        >
+          {t(translations.contract.tokenTracker)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            <Image
+              width={24} // width: 16px + padingRight: 8px = 24px
+              style={{
+                paddingRight: '8px',
+              }}
+              src={tokenInfo?.iconUrl || ''}
+              preview={false}
+              fallback={ICON_DEFAULT_TOKEN}
+              alt={tokenInfo?.name + 'logo'}
+            />
+
+            <Content className={clsx(!tokenInfo.name && 'not-available')}>
+              {tokenInfo.name ? (
+                <Link to={`/token/${address}`}>
+                  {formatString(
+                    `${tokenInfo.name || notAvailableText} (${
+                      tokenInfo.symbol || notAvailableText
+                    })`,
+                    'tokenTracker',
                   )}
-                </Content>
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.storageSponsor)}
-              placement="top"
+                </Link>
+              ) : (
+                notAvailableText
+              )}
+            </Content>
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.storageSponsor)}
+          placement="top"
+        >
+          {t(translations.contract.storageSponsor)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            <Content
+              className={clsx(
+                !contractInfo.sponsor.sponsorForCollateral && 'not-available',
+              )}
             >
-              {t(translations.contract.storageSponsor)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                <Content
-                  className={clsx(
-                    !contractInfo.sponsor.sponsorForCollateral &&
-                      'not-available',
-                  )}
-                >
-                  {contractInfo.sponsor &&
-                  contractInfo.sponsor.sponsorForCollateral ? (
-                    [
-                      <AddressContainer
-                        key={contractInfo.sponsor.sponsorForCollateral}
-                        value={contractInfo.sponsor.sponsorForCollateral}
-                        alias={
-                          contractInfo.sponsor
-                            .sponsorForCollateralContractInfo &&
-                          contractInfo.sponsor.sponsorForCollateralContractInfo
+              {contractInfo.sponsor &&
+              contractInfo.sponsor.sponsorForCollateral ? (
+                [
+                  <AddressContainer
+                    key={contractInfo.sponsor.sponsorForCollateral}
+                    value={contractInfo.sponsor.sponsorForCollateral}
+                    alias={
+                      contractInfo.sponsor.sponsorForCollateralContractInfo &&
+                      contractInfo.sponsor.sponsorForCollateralContractInfo.name
+                        ? contractInfo.sponsor.sponsorForCollateralContractInfo
                             .name
-                            ? contractInfo.sponsor
-                                .sponsorForCollateralContractInfo.name
-                            : null
-                        }
-                      />,
-                    ]
-                  ) : (
-                    <CenterLine>{notAvailableText}</CenterLine>
-                  )}
-                </Content>
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.contractCreator)}
-              placement="top"
-            >
-              {t(translations.contract.creator)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                {/* TODO use codeHash */}
-                {!contractInfo.codeHash ? (
-                  <Content className="not-available">
-                    <Text type="error">
-                      {t(translations.contractDetail.notDeployed)}
-                    </Text>
-                  </Content>
-                ) : (
-                  <Content
-                    className={clsx(
-                      !contractInfo.from && 'not-available',
-                      !contractInfo.transactionHash && 'not-available',
-                    )}
-                  >
-                    {contractInfo.from ? (
-                      <AddressContainer value={contractInfo.from} />
-                    ) : (
-                      notAvailableText
-                    )}
-                    {contractInfo.transactionHash ? (
-                      <>
-                        {` ${t(translations.contractDetail.at)} ${t(
-                          translations.contractDetail.txOnlyEn,
-                        )} `}
-                        <LinkWrap
-                          to={`/transaction/${contractInfo.transactionHash}`}
-                        >
-                          <Text span hoverValue={contractInfo.transactionHash}>
-                            {formatString(
-                              contractInfo.transactionHash,
-                              'address',
-                            )}
-                          </Text>
-                        </LinkWrap>
-                        {` ${t(translations.contractDetail.txOnlyZh)} `}
-                      </>
-                    ) : null}
-                  </Content>
+                        : null
+                    }
+                  />,
+                ]
+              ) : (
+                <CenterLine>{notAvailableText}</CenterLine>
+              )}
+            </Content>
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.contractCreator)}
+          placement="top"
+        >
+          {t(translations.contract.creator)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            {/* TODO use codeHash */}
+            {!contractInfo.codeHash ? (
+              <Content className="not-available">
+                <Text type="error">
+                  {t(translations.contractDetail.notDeployed)}
+                </Text>
+              </Content>
+            ) : (
+              <Content
+                className={clsx(
+                  !contractInfo.from && 'not-available',
+                  !contractInfo.transactionHash && 'not-available',
                 )}
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-        {
-          title: (
-            <Tooltip
-              text={t(translations.toolTip.contract.gasFeeSponsor)}
-              placement="top"
-            >
-              {t(translations.contract.gasSponsor)}
-            </Tooltip>
-          ),
-          children: (
-            <SkeletonContainer shown={loading} style={skeletonStyle}>
-              <CenterLine>
-                <Content>
-                  {contractInfo.sponsor &&
-                  contractInfo.sponsor.sponsorForGas ? (
-                    [
-                      <AddressContainer
-                        key={contractInfo.sponsor.sponsorForGas}
-                        value={contractInfo.sponsor.sponsorForGas}
-                        alias={
-                          contractInfo.sponsor.sponsorForGasContractInfo &&
-                          contractInfo.sponsor.sponsorForGasContractInfo.name
-                            ? contractInfo.sponsor.sponsorForGasContractInfo
-                                .name
-                            : null
-                        }
-                      />,
-                    ]
-                  ) : (
-                    <CenterLine>{notAvailableText}</CenterLine>
-                  )}
-                </Content>
-              </CenterLine>
-            </SkeletonContainer>
-          ),
-        },
-      ]}
-    />
-  );
+              >
+                {contractInfo.from ? (
+                  <AddressContainer value={contractInfo.from} />
+                ) : (
+                  notAvailableText
+                )}
+                {contractInfo.transactionHash ? (
+                  <>
+                    {` ${t(translations.contractDetail.at)} ${t(
+                      translations.contractDetail.txOnlyEn,
+                    )} `}
+                    <LinkWrap
+                      to={`/transaction/${contractInfo.transactionHash}`}
+                    >
+                      <Text span hoverValue={contractInfo.transactionHash}>
+                        {formatString(contractInfo.transactionHash, 'address')}
+                      </Text>
+                    </LinkWrap>
+                    {` ${t(translations.contractDetail.txOnlyZh)} `}
+                  </>
+                ) : null}
+              </Content>
+            )}
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+    {
+      title: (
+        <Tooltip
+          text={t(translations.toolTip.contract.gasFeeSponsor)}
+          placement="top"
+        >
+          {t(translations.contract.gasSponsor)}
+        </Tooltip>
+      ),
+      children: (
+        <SkeletonContainer shown={loading} style={skeletonStyle}>
+          <CenterLine>
+            <Content>
+              {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
+                [
+                  <AddressContainer
+                    key={contractInfo.sponsor.sponsorForGas}
+                    value={contractInfo.sponsor.sponsorForGas}
+                    alias={
+                      contractInfo.sponsor.sponsorForGasContractInfo &&
+                      contractInfo.sponsor.sponsorForGasContractInfo.name
+                        ? contractInfo.sponsor.sponsorForGasContractInfo.name
+                        : null
+                    }
+                  />,
+                ]
+              ) : (
+                <CenterLine>{notAvailableText}</CenterLine>
+              )}
+            </Content>
+          </CenterLine>
+        </SkeletonContainer>
+      ),
+    },
+  ];
+
+  if (![NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+    list = list.filter((_, index) => [0, 1, 2, 4].includes(index));
+  }
+
+  return <List list={list} />;
 }
 
 const CenterLine = styled.div`
@@ -404,11 +395,6 @@ const Content = styled.span`
   &.not-available.link {
     color: #97a3b4;
   }
-`;
-const Icon = styled.img`
-  width: 1.14rem;
-  height: 1.14rem;
-  margin-right: 0.57rem;
 `;
 
 const LinkWrap = styled(Link)`

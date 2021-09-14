@@ -1,7 +1,8 @@
 // get NFT cache info from localStorage
 import { NFTContracts, NFTNames } from './NFTInfo';
-import { cfx, formatAddress } from '../../../utils/cfx';
-import { default as abi } from '../../../utils/contract/crc1155core.json';
+import { formatAddress } from 'utils';
+import { CFX } from 'utils/constants';
+import { default as abi } from 'utils/contract/crc1155core.json';
 
 export const getNFTCacheInfo = ({
   address,
@@ -247,7 +248,7 @@ const queryNFTImageInfo = async ({
   }
 
   try {
-    const contract = await cfx.Contract({
+    const contract = await CFX.Contract({
       abi,
       address,
     });

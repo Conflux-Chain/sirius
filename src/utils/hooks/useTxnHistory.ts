@@ -2,6 +2,7 @@ import React, { useEffect, createContext, useContext } from 'react';
 import { useGetTxnStatus } from './useGetTxnStatus';
 import { usePortal } from './usePortal';
 import pubsub from '../pubsub';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 
 const noop = () => {};
 
@@ -44,7 +45,7 @@ export interface GetRecords {
 export type GetRecordsKey = Array<string>;
 
 const DEFAULT_CONTEXT_CONFIG = {
-  localstorageKey: 'SCAN_TXN_RECORDS',
+  localstorageKey: LOCALSTORAGE_KEYS_MAP.txnRecords,
   maxCount: 100,
   maxDurationSecond: 86400,
   limit: 10,

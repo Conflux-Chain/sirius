@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { Card } from 'app/components/Card';
 import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import {
@@ -44,7 +44,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     totalSupply,
     price,
     transferType = typeof tokenData.decimals !== 'undefined'
-      ? cfxTokenTypes.erc20
+      ? CFX_TOKEN_TYPES.erc20
       : '',
     isRegistered,
   } = tokenData;
@@ -52,7 +52,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   const { data: contractInfo } = useContract(tokenAddress, [
     'name',
-    'icon',
+    'iconUrl',
     'sponsor',
     'admin',
     'from',
@@ -86,9 +86,9 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   if (
     isRegistered &&
-    (transferType === cfxTokenTypes.erc20 ||
-      transferType === cfxTokenTypes.erc721 ||
-      transferType === cfxTokenTypes.erc1155)
+    (transferType === CFX_TOKEN_TYPES.erc20 ||
+      transferType === CFX_TOKEN_TYPES.erc721 ||
+      transferType === CFX_TOKEN_TYPES.erc1155)
   ) {
     tabs.push({
       value: 'holders',
@@ -153,8 +153,8 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   }
 
   if (
-    transferType === cfxTokenTypes.erc721 ||
-    transferType === cfxTokenTypes.erc1155
+    transferType === CFX_TOKEN_TYPES.erc721 ||
+    transferType === CFX_TOKEN_TYPES.erc1155
   ) {
     tabs.push({
       value: 'NFT',

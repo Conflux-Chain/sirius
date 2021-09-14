@@ -6,8 +6,8 @@ import styled from 'styled-components/macro';
 import { translations } from 'locales/i18n';
 import imgSuccess from 'images/success.png';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
-import { formatAddress } from 'utils/cfx';
-import { TxnAction } from 'utils/constants';
+import { formatAddress } from 'utils';
+import { TXN_ACTION } from 'utils/constants';
 import { AddressContainer } from '../AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
@@ -43,7 +43,7 @@ const DappButton = ({
   successCallback,
   failCallback,
   closeModalCallback,
-  txnAction = TxnAction.default,
+  txnAction = TXN_ACTION.default,
   ...props
 }: Props) => {
   const { addRecord } = useTxnHistory();

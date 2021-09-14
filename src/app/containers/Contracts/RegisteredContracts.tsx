@@ -13,7 +13,7 @@ export function RegisteredContracts() {
   let url = queryString.stringifyUrl({
     url: '/contract?reverse=true&orderBy=balance',
     query: {
-      fields: ['name', 'icon', 'balance'],
+      fields: ['name', 'iconUrl', 'balance'],
     },
   });
 

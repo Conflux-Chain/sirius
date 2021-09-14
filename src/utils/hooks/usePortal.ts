@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import Big from 'bignumber.js';
 import { useEffectOnce } from 'react-use';
-import { useConfluxPortal } from '@cfxjs/react-hooks';
-import { ADDRESS_FC, ADDRESS_CETH } from './../constants';
 
 // alias for window
 const globalThis = window as any;
@@ -137,13 +135,6 @@ export const usePortal = () => {
       connected: 0, // 0 - not connect, 1 - connected, 2 - connecting
       accounts: [],
       chainId: null, // hex value, 0xNaN mean changing network
-      // @todo check balances value
-      balances: {
-        // numeric string, NaN mean no such asset
-        cfx: '0',
-        fc: '0',
-        ceth: '0',
-      },
       // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
       login: () => Promise.resolve(),
       Big: null,
@@ -157,15 +148,6 @@ export const usePortal = () => {
   if (globalThis?.conflux?.autoRefreshOnNetworkChange)
     globalThis.conflux.autoRefreshOnNetworkChange = false;
 
-  // TODO cip-37 portal
-  const {
-    balances: [balance, [fc, ceth]],
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useConfluxPortal([
-    ADDRESS_FC, // fc contract address, can be find on confluxscan.io
-    ADDRESS_CETH, // ceth contract address, can be find on confluxscan.io
-  ]);
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [chainId] = useChainId();
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -176,11 +158,6 @@ export const usePortal = () => {
     connected, // 0 - not connect, 1 - connected, 2 - connecting
     accounts,
     chainId, // hex value, 0xNaN mean changing network
-    balances: {
-      cfx: balance.toString(),
-      fc: fc.toString(),
-      ceth: ceth.toString(),
-    },
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,
     Big,

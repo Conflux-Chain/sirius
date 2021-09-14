@@ -514,6 +514,14 @@
     }
   },
   "general": {
+    "networks": {
+      "mainnet": "mainnet",
+      "testnet": "testnet",
+      "privatenet": "privatenet"
+    },
+    "errors": {
+      "address": "Please enter a valid {{network}} address"
+    },
     "advancedSearch": {
       "label": {
         "txnHash": "Txn Hash",
@@ -538,9 +546,8 @@
       "placeholder": {
         "pleaseSelect": "Search by Token",
         "pleaseEnter": "Please enter",
-        "pleaseEnterTxnHash": "Please enter a txn hash",
-        "pleaseEnterBlockHash": "Please enter a block hash",
-        "pleaseEnterAddress": "Please enter an address",
+        "pleaseEnterTxnHash": "0x...",
+        "pleaseEnterBlockHash": "0x...",
         "pleaseEnterTokenId": "e.g. 10",
         "pleaseEnterNonce": "Please enter a nonce",
         "pleaseEnterEpochStart": "e.g. 100",
@@ -1157,6 +1164,7 @@
       "versionNotice": "Version Notice",
       "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
+      "switchToScanNetwork": "Please switch the network to {{networkID}} in ConfluxPortal.",
       "cannotProcess": "Cannot Process",
       "upgradeTipVersion": "Please update ConfluxPortal to the latest version."
     },

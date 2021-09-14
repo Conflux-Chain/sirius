@@ -9,7 +9,7 @@ import { List } from 'app/components/List/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { formatBalance, formatNumber, toThousands } from 'utils';
-import { cfxTokenTypes, getCurrencySymbol } from 'utils/constants';
+import { CFX_TOKEN_TYPES, getCurrencySymbol } from 'utils/constants';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
@@ -19,7 +19,7 @@ import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 import { Tag } from '@jnoodle/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
 
@@ -60,7 +60,7 @@ export interface BasicProps {
 
 export const tokenTypeTag = (t, transferType: any) => {
   switch (transferType) {
-    case cfxTokenTypes.erc1155:
+    case CFX_TOKEN_TYPES.erc1155:
       return (
         <TokenTypeTagWrapper className={transferType}>
           <span>
@@ -68,7 +68,7 @@ export const tokenTypeTag = (t, transferType: any) => {
           </span>
         </TokenTypeTagWrapper>
       );
-    case cfxTokenTypes.erc721:
+    case CFX_TOKEN_TYPES.erc721:
       return (
         <TokenTypeTagWrapper className={transferType}>
           <span>
@@ -76,7 +76,7 @@ export const tokenTypeTag = (t, transferType: any) => {
           </span>
         </TokenTypeTagWrapper>
       );
-    case cfxTokenTypes.erc20:
+    case CFX_TOKEN_TYPES.erc20:
       return (
         <TokenTypeTagWrapper className={transferType}>
           <span>
@@ -107,7 +107,7 @@ export const Basic = ({
 }: BasicProps) => {
   const { t } = useTranslation();
   if (address && !transferType) {
-    transferType = typeof decimals !== 'undefined' ? cfxTokenTypes.erc20 : '';
+    transferType = typeof decimals !== 'undefined' ? CFX_TOKEN_TYPES.erc20 : '';
   }
 
   const CURRENCY_SYMBOL = getCurrencySymbol();
@@ -202,13 +202,13 @@ export const Basic = ({
         <Text
           hoverValue={`${formatBalance(
             totalSupply,
-            transferType === cfxTokenTypes.erc20 ? decimals : 0,
+            transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
             true,
           )} ${symbol}`}
         >
           {`${formatBalance(
             totalSupply,
-            transferType === cfxTokenTypes.erc20 ? decimals : 0,
+            transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
           )} ${symbol}`}
         </Text>
       ) : address ? (
@@ -290,7 +290,7 @@ export const Basic = ({
 
   let list: any;
 
-  if (transferType === cfxTokenTypes.erc20) {
+  if (transferType === CFX_TOKEN_TYPES.erc20) {
     list = [
       fieldPrice,
       fieldContractAddress,
@@ -302,7 +302,7 @@ export const Basic = ({
       null,
       fieldTransfers,
     ];
-  } else if (transferType === cfxTokenTypes.erc721) {
+  } else if (transferType === CFX_TOKEN_TYPES.erc721) {
     list = [
       fieldTotalSupply,
       fieldContractAddress,

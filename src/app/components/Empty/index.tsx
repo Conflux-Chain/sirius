@@ -19,6 +19,7 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
 }
+
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
 export type EmptyProps = React.PropsWithChildren<Props & NativeAttrs>;
 
@@ -41,7 +42,7 @@ export const Empty = ({
       type={type}
       {...others}
     >
-      <img className="img" src={imgTableWhoops} alt="no data"></img>
+      <img className="img" src={imgTableWhoops} alt="no data" />
       {noTitle ? (
         <p className="noTitle" />
       ) : (

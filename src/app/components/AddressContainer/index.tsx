@@ -1,18 +1,28 @@
 import React from 'react';
 import { Text } from '../Text/Loadable';
-import { formatString } from 'utils';
+// import { formatString } from 'utils';
 import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import { formatAddress, isConfluxTestNet } from 'utils/cfx';
-import { AlertTriangle } from '@zeit-ui/react-icons';
+import {
+  formatAddress,
+  isContractAddress,
+  isInnerContractAddress,
+  isZeroAddress,
+  // isAddress,
+} from 'utils';
+// import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import { zeroAddress } from 'utils/constants';
+import {
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+  // CONTRACTS_NAME_LABEL,
+} from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 
 interface Props {
@@ -23,7 +33,6 @@ interface Props {
   isFull?: boolean; // show full address, default false
   isLink?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
-  zeroAddressAutoShowAlias?: boolean; // is auto show zero address alias
   suffixAddressSize?: number; // suffix address size, default is 8
   prefixFloat?: boolean; // prefix icon float or take up space, default false
   showIcon?: boolean; // whether show contract icon, default true
@@ -31,8 +40,10 @@ interface Props {
 }
 
 const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth = isConfluxTestNet ? 140 : 106;
-const defaultPCSuffixAddressSize = isConfluxTestNet ? 4 : 8;
+const defaultMobileMaxWidth =
+  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 106 : 140;
+const defaultPCSuffixAddressSize =
+  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 8 : 4;
 const defaultMobileSuffixAddressSize = 4;
 
 // ≈ 2.5 ms
@@ -50,7 +61,6 @@ const RenderAddress = ({
   prefix = null,
   suffix = null,
 }: any) => {
-  // return <>test</>;
   return (
     <AddressWrapper>
       {prefix}
@@ -101,33 +111,35 @@ export const AddressContainer = withTranslation()(
       isFull = false,
       isLink = true,
       isMe = false,
-      zeroAddressAutoShowAlias = true,
       suffixAddressSize,
       prefixFloat = false,
       showIcon = true,
       t,
       verify = false,
     }: Props & WithTranslation) => {
-      // const { t } = useTranslation(); // fix rerender twice
       const suffixSize =
         suffixAddressSize ||
         (window.innerWidth <= sizes.m
           ? defaultMobileSuffixAddressSize
           : defaultPCSuffixAddressSize);
 
-      // ≈ 2 ms
       const cfxAddress = formatAddress(value);
 
+      // if (!alias) {
+      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
+      // }
+
       // zero address auto set alias
-      if (!alias && zeroAddressAutoShowAlias && cfxAddress === zeroAddress) {
+      if (!alias && isZeroAddress(cfxAddress)) {
         alias = t(translations.general.zeroAddress);
       }
 
+      // contract create txn
       if (!value) {
         const txtContractCreation = t(
           translations.transaction.contractCreation,
         );
-        // Contract Registration txn to prop is null
+
         if (contractCreated)
           return RenderAddress({
             cfxAddress,
@@ -148,7 +160,7 @@ export const AddressContainer = withTranslation()(
             ),
           });
 
-        // If a txn receipth has no 'to' address or 'contractCreated', show -- for temp
+        // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
         return <>--</>;
         // Contract create fail, no link
         // TODO deal with zero address value
@@ -164,38 +176,32 @@ export const AddressContainer = withTranslation()(
         // );
       }
 
-      if (cfxAddress.startsWith('invalid-')) {
-        const sourceValue = cfxAddress.replace('invalid-', '');
-        const tip = t(translations.general.invalidAddress);
-        return RenderAddress({
-          cfxAddress,
-          alias,
-          hoverValue: `${tip}: ${sourceValue}`,
-          content: alias ? formatString(alias, 'tag') : sourceValue,
-          isLink: false,
-          isFull,
-          maxWidth,
-          suffixSize,
-          style: { color: '#e00909' },
-          prefix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
-              <Text span hoverValue={tip}>
-                <AlertTriangle size={16} color="#e00909" />
-              </Text>
-            </IconWrapper>
-          ),
-        });
-      }
+      // if (cfxAddress.startsWith('invalid-')) {
+      //   const sourceValue = cfxAddress.replace('invalid-', '');
+      //   const tip = t(translations.general.invalidAddress);
+      //   return RenderAddress({
+      //     cfxAddress,
+      //     alias,
+      //     hoverValue: `${tip}: ${sourceValue}`,
+      //     content: alias ? formatString(alias, 'tag') : sourceValue,
+      //     isLink: false,
+      //     isFull,
+      //     maxWidth,
+      //     suffixSize,
+      //     style: { color: '#e00909' },
+      //     prefix: (
+      //       <IconWrapper className={prefixFloat ? 'float' : ''}>
+      //         <Text span hoverValue={tip}>
+      //           <AlertTriangle size={16} color="#e00909" />
+      //         </Text>
+      //       </IconWrapper>
+      //     ),
+      //   });
+      // }
 
-      // cip-37 use ac/aa/aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaa for speeding up
-      const isContract = cfxAddress.indexOf(':ac') > -1;
-      // TODO support new internal contract
-      const isInternalContract =
-        cfxAddress.indexOf(':aaejuaaaaaaaaaaaaaaaaaaaaaaaaaa') > -1;
-
-      if (isContract || isInternalContract) {
+      if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(
-          isInternalContract
+          isInnerContractAddress(cfxAddress)
             ? translations.general.internalContract
             : verify
             ? translations.general.verifiedContract
@@ -216,7 +222,7 @@ export const AddressContainer = withTranslation()(
             >
               <Text span hoverValue={typeText}>
                 <ImgWrapper>
-                  {isInternalContract ? (
+                  {isInnerContractAddress(cfxAddress) ? (
                     <img src={InternalContractIcon} alt={typeText} />
                   ) : (
                     <>
@@ -272,6 +278,7 @@ export const AddressContainer = withTranslation()(
     },
   ),
 );
+
 const ImgWrapper = styled.span`
   position: relative;
   width: 16px;

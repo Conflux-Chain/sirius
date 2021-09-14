@@ -3,8 +3,8 @@ import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
 import pubsub from 'utils/pubsub';
-import { cfx } from 'utils/cfx';
-import { format } from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { CFX } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { translations } from 'locales/i18n';
 import BigNumber from 'bignumber.js';
 // import { toThousands } from 'utils';
@@ -35,12 +35,11 @@ export const PendingTxns = ({ address }: Props) => {
         ...state,
         loading: true,
       });
-      cfx
-        .getAccountPendingTransactions(
-          address,
-          undefined,
-          format.hex(10), // default limit
-        )
+      CFX.getAccountPendingTransactions(
+        address,
+        undefined,
+        SDK.format.hex(10), // default limit
+      )
         .then(resp => {
           if (resp) {
             try {

@@ -18,7 +18,7 @@ import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { DataZoomLineChart } from './Loadable';
 import _ from 'lodash';
-import { cfxTokenTypes } from '../../../utils/constants';
+import { CFX_TOKEN_TYPES } from '../../../utils/constants';
 import { Link } from 'react-router-dom';
 import imgInfo from '../../../images/info.svg';
 import { Tooltip as ToolTipInfo } from 'app/components/Tooltip/Loadable';
@@ -335,7 +335,7 @@ export const LineChart = ({
       case 'contractGrowth':
         return 'contractCount';
       case 'tokenAnalysis':
-        return tokenInfo.type === cfxTokenTypes.erc20
+        return tokenInfo.type === CFX_TOKEN_TYPES.erc20
           ? [
               'transferAmount',
               'transferCount',

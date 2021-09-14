@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { LOCALSTORAGE_KEYS } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { useGlobal } from 'utils/hooks/useGlobal';
 
 export function Currency() {
@@ -13,7 +13,7 @@ export function Currency() {
   const { data, setGlobalData } = useGlobal();
 
   const handleCurrencyChange = currency => {
-    localStorage.setItem(LOCALSTORAGE_KEYS.currency, currency);
+    localStorage.setItem(LOCALSTORAGE_KEYS_MAP.currency, currency);
     trackEvent({
       category: ScanEvent.preference.category,
       action: ScanEvent.preference.action.changeCurrency,

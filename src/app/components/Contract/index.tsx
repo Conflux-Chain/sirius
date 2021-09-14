@@ -1,22 +1,28 @@
 /**
  *
  * Contract Detail
+ * @todo need to be refactor
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
 import { media } from '../../../styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
-import { defaultContractIcon, defaultTokenIcon } from '../../../constants';
+import {
+  ICON_DEFAULT_CONTRACT,
+  ICON_DEFAULT_TOKEN,
+  CONTRACTS,
+} from 'utils/constants';
 import {
   byteToKb,
   isContractAddress,
   isInnerContractAddress,
   tranferToLowerCase,
   validURL,
+  getAddressInputPlaceholder,
 } from '../../../utils';
 import {
   reqContract,
@@ -30,12 +36,8 @@ import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from '../../../utils/contractManagerTool';
-import {
-  contractManagerAddress,
-  formatAddress,
-  isConfluxTestNet,
-} from '../../../utils/cfx';
-import { TxnAction } from '../../../utils/constants';
+import { formatAddress } from '../../../utils';
+import { TXN_ACTION } from '../../../utils/constants';
 import { PageHeader } from '../PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
@@ -57,7 +59,7 @@ const fieldsContract = [
   'name',
   'website',
   'token',
-  'icon',
+  'iconUrl',
   'typeCode',
 ];
 export const ContractOrTokenInfo = ({
@@ -120,8 +122,8 @@ export const ContractOrTokenInfo = ({
   };
 
   useEffect(() => {
-    setContractImgSrc(contractDetail.icon || '');
-    setTokenImgSrc(contractDetail.token && contractDetail.token.icon);
+    setContractImgSrc(contractDetail.iconUrl || ''); // contract has no icon, and update contract icon card is hide
+    setTokenImgSrc(contractDetail.token && contractDetail.token.iconUrl);
     if (updateInfoType === 'contract') {
       setContractName(contractDetail.name || '');
     }
@@ -134,14 +136,16 @@ export const ContractOrTokenInfo = ({
       case 'edit':
         setAddressVal(formatAddress(contractDetail.address));
         // setAddressDisabled(true);
-        checkAdminThenToken(contractDetail.token && contractDetail.token.icon);
+        checkAdminThenToken(
+          contractDetail.token && contractDetail.token.iconUrl,
+        );
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
     contractDetail.address,
-    contractDetail.icon,
+    contractDetail.iconUrl,
     contractDetail.name,
     contractDetail.tokenIcon,
     contractDetail.website,
@@ -391,6 +395,10 @@ export const ContractOrTokenInfo = ({
     isDisabled = !btnShouldClick || !tokenImgSrc;
   }
 
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
+
   return (
     <Wrapper>
       <PageHeader>{title}</PageHeader>
@@ -409,7 +417,7 @@ export const ContractOrTokenInfo = ({
                   defaultValue={addressVal}
                   onChange={addressInputChanger}
                   readOnly={true}
-                  placeholder={isConfluxTestNet ? 'cfxtest:...' : 'cfx:...'}
+                  placeholder={addressInputPlaceholder}
                   onBlur={addressOnBlur}
                 />
                 {isVerified ? (
@@ -523,7 +531,7 @@ export const ContractOrTokenInfo = ({
                   <SkelontonContainer shown={loading}>
                     <div className="iconContainer">
                       <img
-                        src={contractImgSrc || defaultContractIcon}
+                        src={contractImgSrc || ICON_DEFAULT_CONTRACT}
                         className="contractIcon"
                         alt="contract icon"
                       ></img>
@@ -571,7 +579,7 @@ export const ContractOrTokenInfo = ({
                   <SkelontonContainer shown={loading}>
                     <div className="iconContainer">
                       <img
-                        src={tokenImgSrc || defaultTokenIcon}
+                        src={tokenImgSrc || ICON_DEFAULT_TOKEN}
                         className="contractIcon"
                         alt="token icon"
                       ></img>
@@ -585,10 +593,10 @@ export const ContractOrTokenInfo = ({
       </TopContainer>
       <div className="submitContainer">
         <DappButton
-          contractAddress={contractManagerAddress}
+          contractAddress={CONTRACTS.announcement}
           data={txData}
           btnDisabled={isDisabled}
-          txnAction={TxnAction.contractEdit}
+          txnAction={TXN_ACTION.contractEdit}
         ></DappButton>
         <div
           className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}

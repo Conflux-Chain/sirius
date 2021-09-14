@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { media } from 'styles/media';
-import { formatAddress } from 'utils/cfx';
+import { formatAddress } from 'utils';
 
 export const Topics = ({ data, signature, contractAndTokenInfo }) => {
   const { t } = useTranslation();
@@ -75,11 +75,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
 
           if (name === 'address') {
             const contractInfo =
-              contractAndTokenInfo[
-                formatAddress(valueMap.decode, {
-                  withType: true,
-                })
-              ];
+              contractAndTokenInfo[formatAddress(valueMap.decode)];
 
             value = (
               <>

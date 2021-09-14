@@ -73,7 +73,7 @@ export const DownloadCSV = ({ url: outerUrl }) => {
 
 const StyledDownloadCSVWrapper = styled.div`
   text-align: right;
-
+  margin-bottom: -1rem;
   .tooltip.download-csv-tooltip + .tooltip-content {
     div.tooltip-arrow {
       left: -0.8571rem !important;

@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
-import { monospaceFont } from '../../styles/variable';
+import { monospaceFont } from 'styles/variable';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
-import { CountDown } from '../../app/components/CountDown/Loadable';
-import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { translations } from 'locales/i18n';
+import { CountDown } from 'app/components/CountDown/Loadable';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 
 export interface ContentWrapperProps {
@@ -140,16 +141,33 @@ export const number = {
   ),
   dataIndex: 'epochNumber',
   key: 'epochNumber',
-  render: (value, row, index) => {
+  render: (value, row, index, wrapperNumber = Infinity) => {
     const { skip = 0, limit = 10 } = queryString.parse(window.location.search);
     let page = 0;
     let pageSize = 10;
+    let number = 1;
 
     try {
       page = Math.floor(Number(skip) / Number(limit)) + 1;
       pageSize = Math.floor(Number(limit));
+      number = (page - 1) * pageSize + index + 1;
     } catch (e) {}
 
-    return (page - 1) * pageSize + index + 1;
+    if (String(number).length > wrapperNumber) {
+      return (
+        <Text
+          maxCount={3}
+          hoverValue={<StyledNumberWrapper>{number}</StyledNumberWrapper>}
+        >
+          {String(number)}
+        </Text>
+      );
+    } else {
+      return number;
+    }
   },
 };
+
+const StyledNumberWrapper = styled.span`
+  white-space: nowrap;
+`;

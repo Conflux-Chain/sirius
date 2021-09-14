@@ -9,7 +9,6 @@ import { translations } from 'locales/i18n';
 import styled, { keyframes } from 'styled-components/macro';
 import clsx from 'clsx';
 import { usePortal } from 'utils/hooks/usePortal';
-import { useTestnet } from 'utils/hooks/useTestnet';
 import { Link as ScanLink } from './Link';
 import { RotateImg } from './RotateImg';
 import { History } from './History';
@@ -17,6 +16,7 @@ import { History } from './History';
 import { CopyButton } from './../CopyButton';
 // import { AddressContainer } from './../../components/AddressContainer';
 import { useCheckHook } from './useCheckHook';
+import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 import iconLogo from './assets/logo.png';
 import iconClose from './assets/close.svg';
@@ -34,15 +34,26 @@ export const Modal = ({
   onClose = () => {},
 }: Modal) => {
   const { t } = useTranslation();
-  // @todo dependence of utils/useTestnet
-  const isTestnet = useTestnet();
   const { installed, login, connected, accounts } = usePortal();
   const { isNetworkValid, isValid } = useCheckHook();
-  const inValidModalTip = !isNetworkValid
-    ? isTestnet
-      ? t(translations.connectWallet.modal.switchToTestnet)
-      : t(translations.connectWallet.modal.switchToMainnet)
-    : t(translations.connectWallet.modal.upgradeTipVersion);
+  let inValidModalTip = '';
+
+  if (!isNetworkValid) {
+    if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+      inValidModalTip = t(translations.connectWallet.modal.switchToTestnet);
+    } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+      inValidModalTip = t(translations.connectWallet.modal.switchToMainnet);
+    } else {
+      inValidModalTip = t(
+        translations.connectWallet.modal.switchToScanNetwork,
+        {
+          networkID: NETWORK_ID,
+        },
+      );
+    }
+  } else {
+    inValidModalTip = t(translations.connectWallet.modal.upgradeTipVersion);
+  }
 
   useEffect(() => {
     if (show) {

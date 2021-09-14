@@ -7,7 +7,7 @@ import {
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer } from './components';
-import { cfxTokenTypes } from 'utils/constants';
+import { CFX_TOKEN_TYPES } from 'utils/constants';
 
 interface Props {
   address: string;
@@ -15,7 +15,7 @@ interface Props {
 
 export const CFXTxns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
-  const url = `/transfer?accountAddress=${address}&transferType=${cfxTokenTypes.cfx}`;
+  const url = `/transfer?accountAddress=${address}&transferType=${CFX_TOKEN_TYPES.cfx}`;
 
   const columnsWidth = [4, 4, 8, 7, 2, 4, 5];
   const columns = [
@@ -55,11 +55,16 @@ export const CFXTxns = ({ address }: Props) => {
           },
         },
       }}
-      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
+      filterOptions={[
+        'txTypeAll',
+        'txTypeOutgoing',
+        'txTypeIncoming',
+        'txTypeCreate',
+      ]}
     />
   );
 
-  const footer = <Footer pathname="transfer" type={cfxTokenTypes.cfx} />;
+  const footer = <Footer pathname="transfer" type={CFX_TOKEN_TYPES.cfx} />;
 
   return (
     <TablePanel

@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { isAddress, isHash, isSafeNumberOrNumericStringInput } from 'utils';
+import {
+  isCurrentNetworkAddress,
+  isHash,
+  isSafeNumberOrNumericStringInput,
+  getAddressInputPlaceholder,
+} from 'utils';
 import styled from 'styled-components/macro';
 import qs from 'query-string';
 import lodash from 'lodash';
@@ -196,7 +201,6 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const {
     blockHash,
     epoch,
@@ -219,7 +223,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         );
       },
       isAddress: (_, value) => {
-        if (!value || isAddress(value)) {
+        if (!value || isCurrentNetworkAddress(value)) {
           return Promise.resolve();
         }
         return Promise.reject(
@@ -231,6 +235,10 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
+
+  const addressInputPlaceholder = useMemo(() => {
+    return getAddressInputPlaceholder();
+  }, []);
 
   useEffect(() => {
     let fromOrToValue = 'from';
@@ -520,10 +528,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
                   })}
                 </Select>
               }
-              placeholder={t(
-                translations.general.advancedSearch.placeholder
-                  .pleaseEnterAddress,
-              )}
+              placeholder={addressInputPlaceholder}
               allowClear
             />
           </Form.Item>
@@ -792,8 +797,6 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
 };
 
 const StyledAdvancedFormWrapper = styled.div`
-  border: 1px solod #ccc;
-
   .advanced-from-maxEpochNumber {
     .ant-form-item-control {
       position: relative;
