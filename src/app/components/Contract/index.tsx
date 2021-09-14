@@ -7,9 +7,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
-import { media } from '../../../styles/media';
+import { media } from 'styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import {
   ICON_DEFAULT_CONTRACT,
@@ -23,22 +23,18 @@ import {
   tranferToLowerCase,
   validURL,
   getAddressInputPlaceholder,
-} from '../../../utils';
-import {
-  reqContract,
-  reqContractNameTag,
-  reqToken,
-} from '../../../utils/httpRequest';
+} from 'utils';
+import { reqContract, reqContractNameTag, reqToken } from 'utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
-import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { formatAddress } from '../../../utils';
-import { TXN_ACTION } from '../../../utils/constants';
-import { PageHeader } from '../PageHeader/Loadable';
+import { packContractAndToken } from 'utils/contractManagerTool';
+import { formatAddress } from 'utils';
+import { TXN_ACTION } from 'utils/constants';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
 
@@ -621,6 +617,12 @@ const Wrapper = styled.div`
 
   .inputComp {
     background-color: #fafbfc;
+
+    input[readonly] {
+      color: #999 !important;
+      cursor: not-allowed;
+    }
+
     .input-wrapper {
       background-color: #fafbfc;
       margin: 0;
