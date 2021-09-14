@@ -53,7 +53,7 @@ export function NFTChecker() {
   const history = useHistory();
   const { pathname, search } = useLocation();
   const {
-    NFTType: outerNFTType,
+    NFTAddress: outerNFTAddress,
     skip = '0',
     limit = '12',
     ...others
@@ -106,8 +106,10 @@ export function NFTChecker() {
           }));
           let selectedNFT = NFTBalances[0];
 
-          if (outerNFTType) {
-            selectedNFT = NFTBalances.filter(n => n.type === outerNFTType)[0];
+          if (outerNFTAddress) {
+            selectedNFT = NFTBalances.filter(
+              n => n.address === outerNFTAddress,
+            )[0];
           }
 
           const resp = await reqNFTTokenIds({
@@ -146,7 +148,7 @@ export function NFTChecker() {
         url: pathname,
         query: {
           ...others,
-          NFTType: outerNFTType,
+          NFTAddress: outerNFTAddress,
           skip: String((page - 1) * pageSize),
           limit: String(pageSize),
         },
@@ -154,13 +156,13 @@ export function NFTChecker() {
     );
   };
 
-  const handleNFTTypeChange = type => {
+  const handleNFTAddressChange = address => {
     history.push(
       qs.stringifyUrl({
         url: pathname,
         query: {
           ...others,
-          NFTType: type,
+          NFTAddress: address,
           skip: '0',
           limit: limit,
         },
@@ -173,7 +175,7 @@ export function NFTChecker() {
       handleNFTSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routerAddress, outerNFTType, skip, limit]);
+  }, [routerAddress, outerNFTAddress, skip, limit]);
 
   return (
     <>
@@ -215,8 +217,10 @@ export function NFTChecker() {
                 {NFTBalances.map((n: NFTBalancesType) => {
                   return (
                     <Tag
-                      className={selectedNFT.type === n.type ? 'current' : ''}
-                      onClick={() => handleNFTTypeChange(n.type)}
+                      className={
+                        selectedNFT.address === n.address ? 'current' : ''
+                      }
+                      onClick={() => handleNFTAddressChange(n.address)}
                       key={n.address}
                     >{`${n.name[lang]} (${toThousands(n.balance)})`}</Tag>
                   );
