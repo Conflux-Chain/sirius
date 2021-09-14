@@ -25,7 +25,12 @@ export function Tokens() {
 
   let columnsWidth = [1, 7, 4, 3, 3, 3, 2, 4];
   let columns = [
-    utils.number,
+    {
+      ...utils.number,
+      render(value, row, index) {
+        return utils.number.render(value, row, index, 3);
+      },
+    },
     tokenColunms.token,
     tokenColunms.contract(),
     {
