@@ -11,7 +11,6 @@ import {
   AuditIcon,
   CoinMarketIcon,
   OxIcon,
-  SponsorIcon,
   VerifyIcon,
   DetailIcon,
 } from './icons';
@@ -47,15 +46,7 @@ export const ProjectInfo = React.memo(
     const { t, i18n } = useTranslation();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-    const {
-      audit,
-      cex,
-      dex,
-      sponsor,
-      track,
-      verify,
-      zeroAdmin,
-    } = securityAudit;
+    const { audit, cex, dex, track, verify, zeroAdmin } = securityAudit;
     const [activeArray, setActiveArray] = useState<string[]>([]);
     const [inactiveArray, setInactiveArray] = useState<string[]>([]);
     const clickDetail = () => {
@@ -64,9 +55,6 @@ export const ProjectInfo = React.memo(
     const activeMap = {
       audit: (
         <AuditIcon isActive={true} onClick={clickDetail} hoverable={true} />
-      ),
-      sponsor: (
-        <SponsorIcon isActive={true} onClick={clickDetail} hoverable={true} />
       ),
       verify: (
         <VerifyIcon isActive={true} onClick={clickDetail} hoverable={true} />
@@ -86,7 +74,6 @@ export const ProjectInfo = React.memo(
     };
     const inactiveMap = {
       audit: <AuditIcon onClick={clickDetail} hoverable={true} />,
-      sponsor: <SponsorIcon onClick={clickDetail} hoverable={true} />,
       verify: <VerifyIcon onClick={clickDetail} hoverable={true} />,
       zeroAdmin: <OxIcon onClick={clickDetail} hoverable={true} />,
       cex: <CexIcon onClick={clickDetail} hoverable={true} />,
@@ -179,25 +166,6 @@ export const ProjectInfo = React.memo(
                     Submit{' '}
                   </Link>
                   it now!)
-                </Trans>
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <SponsorIcon isActive={sponsor === 1} />
-              <span>
-                <Trans i18nKey="general.table.token.projectInfo.modal.sponsor">
-                  Accepted by Conflux’s Global Ecosystem Grants Program (
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://forum.conflux.fun/t/grant-proposal-review-process-project-eligibility/8273'
-                        : 'https://forum.conflux.fun/t/conflux/7836 '
-                    }
-                    target={'_blank'}
-                  >
-                    Apply for Grants
-                  </Link>{' '}
-                  now!)
                 </Trans>
               </span>
             </ModalItem>
