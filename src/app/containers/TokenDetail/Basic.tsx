@@ -56,6 +56,7 @@ export interface BasicProps {
   decimals?: number;
   transferCount?: number;
   securityAudit?: SecurityAudit;
+  tokenWebsite?: string;
 }
 
 export const tokenTypeTag = (t, transferType: any) => {
@@ -104,6 +105,7 @@ export const Basic = ({
   transferCount,
   securityAudit,
   name,
+  tokenWebsite,
 }: BasicProps) => {
   const { t } = useTranslation();
   if (address && !transferType) {
@@ -287,6 +289,10 @@ export const Basic = ({
       ) : undefined
     ) : undefined,
   };
+  const fieldTokenWebsite = {
+    title: t(translations.token.website),
+    children: tokenWebsite || '--',
+  };
 
   let list: any;
 
@@ -297,9 +303,9 @@ export const Basic = ({
       fieldMarketCap,
       fieldDecimal,
       fieldTotalSupply,
-      fieldProjectInfo,
       fieldHolders,
-      null,
+      fieldProjectInfo,
+      fieldTokenWebsite,
       fieldTransfers,
     ];
   } else if (transferType === CFX_TOKEN_TYPES.erc721) {
@@ -307,8 +313,9 @@ export const Basic = ({
       fieldTotalSupply,
       fieldContractAddress,
       fieldHolders,
-      fieldProjectInfo,
       fieldTransfers,
+      fieldProjectInfo,
+      fieldTokenWebsite,
     ];
   } else {
     list = [
@@ -316,6 +323,7 @@ export const Basic = ({
       fieldContractAddress,
       fieldHolders,
       fieldProjectInfo,
+      fieldTokenWebsite,
     ];
   }
 

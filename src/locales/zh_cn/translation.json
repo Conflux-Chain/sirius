@@ -375,6 +375,7 @@
     "btn": "切换网络至 {{network}}"
   },
   "token": {
+    "website": "官方网站",
     "token": "代币",
     "totalSupplay": "总供应量",
     "contract": "合约",

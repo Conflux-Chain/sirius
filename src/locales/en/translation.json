@@ -375,6 +375,7 @@
     "btn": "Switch the network to {{network}}"
   },
   "token": {
+    "website": "Official Site",
     "token": "Token",
     "totalSupplay": "Total Supply",
     "contract": "Contract",
