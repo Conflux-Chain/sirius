@@ -114,9 +114,10 @@ export const ContractOrTokenInfo = ({
     setTokenSite(e.target.value);
   };
 
+  const contractDetailStr = JSON.stringify(contractDetail);
+
   useEffect(() => {
-    setContractImgSrc(contractDetail.iconUrl || ''); // contract has no icon, and update contract icon card is hide
-    setTokenImgSrc(contractDetail.token && contractDetail.token.iconUrl);
+    setTokenImgSrc(contractDetail?.token?.iconUrl);
     if (updateInfoType === 'contract') {
       setContractName(contractDetail.name || '');
     }
@@ -125,29 +126,16 @@ export const ContractOrTokenInfo = ({
     switch (type) {
       case 'create':
         setAddressVal(address || '');
-        // setAddressDisabled(false);
         break;
       case 'edit':
         setAddressVal(contractDetail.address);
-        // setAddressDisabled(true);
         checkAdminThenToken(
           contractDetail.token && contractDetail.token.iconUrl,
         );
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    address,
-    contractDetail.address,
-    contractDetail.iconUrl,
-    contractDetail.name,
-    contractDetail.tokenIcon,
-    contractDetail.website,
-    contractDetail.tokenWebsite,
-    contractDetail.token,
-    t,
-    type,
-  ]);
+  }, [address, contractDetailStr, type]);
   useEffect(
     () => {
       let isSubmitable = false;
