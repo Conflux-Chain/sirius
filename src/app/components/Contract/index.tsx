@@ -20,7 +20,6 @@ import {
   byteToKb,
   isContractAddress,
   isInnerContractAddress,
-  tranferToLowerCase,
   validURL,
   getAddressInputPlaceholder,
 } from 'utils';
@@ -32,7 +31,6 @@ import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
 import { packContractAndToken } from 'utils/contractManagerTool';
-import { formatAddress } from 'utils';
 import { TXN_ACTION } from 'utils/constants';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
@@ -49,16 +47,7 @@ interface RequestBody {
   [key: string]: any;
 }
 const MAXSIZEFORICON = 30; //kb
-const fieldsContract = [
-  'address',
-  'type',
-  'name',
-  'website',
-  'tokenWebsite',
-  'token',
-  'iconUrl',
-  'typeCode',
-];
+const fieldsContract = ['token'];
 export const ContractOrTokenInfo = ({
   contractDetail,
   type,
@@ -132,14 +121,14 @@ export const ContractOrTokenInfo = ({
       setContractName(contractDetail.name || '');
     }
     setSite(contractDetail.website || '');
-    setTokenSite(contractDetail.tokenWebsite || '');
+    setTokenSite(contractDetail?.token?.website || '');
     switch (type) {
       case 'create':
         setAddressVal(address || '');
         // setAddressDisabled(false);
         break;
       case 'edit':
-        setAddressVal(formatAddress(contractDetail.address));
+        setAddressVal(contractDetail.address);
         // setAddressDisabled(true);
         checkAdminThenToken(
           contractDetail.token && contractDetail.token.iconUrl,
@@ -188,6 +177,7 @@ export const ContractOrTokenInfo = ({
       addressVal,
       contractName,
       site,
+      tokenSite,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
@@ -351,7 +341,7 @@ export const ContractOrTokenInfo = ({
   function getTxData() {
     try {
       const bodyParams: RequestBody = {};
-      bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
+      bodyParams.address = addressVal;
       if (updateInfoType === 'contract') {
         bodyParams.name = contractName; // only submit name when update contract info
       }
@@ -382,10 +372,8 @@ export const ContractOrTokenInfo = ({
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
               if (
-                formatAddress(dataContractInfo.from) ===
-                  formatAddress(accounts[0]) ||
-                formatAddress(dataContractInfo.admin) ===
-                  formatAddress(accounts[0])
+                dataContractInfo.from === accounts[0] ||
+                dataContractInfo.admin === accounts[0]
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {

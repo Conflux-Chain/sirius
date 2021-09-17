@@ -56,7 +56,7 @@ export interface BasicProps {
   decimals?: number;
   transferCount?: number;
   securityAudit?: SecurityAudit;
-  tokenWebsite?: string;
+  website?: string;
 }
 
 export const tokenTypeTag = (t, transferType: any) => {
@@ -105,7 +105,7 @@ export const Basic = ({
   transferCount,
   securityAudit,
   name,
-  tokenWebsite,
+  website,
 }: BasicProps) => {
   const { t } = useTranslation();
   if (address && !transferType) {
@@ -291,7 +291,7 @@ export const Basic = ({
   };
   const fieldTokenWebsite = {
     title: t(translations.token.website),
-    children: tokenWebsite || '--',
+    children: website || '--',
   };
 
   let list: any;
