@@ -158,7 +158,7 @@ export const ContractOrTokenInfo = ({
           !isErc20Error &&
           (updateInfoType === 'contract'
             ? !isNameError && !isSiteError
-            : tokenImgSrc && !isTokenSiteError)
+            : !isTokenSiteError)
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -263,12 +263,16 @@ export const ContractOrTokenInfo = ({
     }
   }
 
-  const siteOnBlur = () => {
-    checkSite(site, 'contract');
+  const siteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'contract');
   };
 
-  const tokenSiteOnBlur = () => {
-    checkSite(tokenSite, 'token');
+  const tokenSiteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'token');
   };
 
   useEffect(() => {
@@ -414,7 +418,7 @@ export const ContractOrTokenInfo = ({
     isDisabled =
       !btnShouldClick || isAddressError || isNameError || isSiteError;
   } else {
-    isDisabled = !btnShouldClick || !tokenImgSrc || isTokenSiteError;
+    isDisabled = !btnShouldClick || isTokenSiteError;
   }
 
   const addressInputPlaceholder = useMemo(() => {

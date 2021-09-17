@@ -217,16 +217,16 @@ export function packContractAndToken(options) {
   const { address, tokenIcon, tokenWebsite, ...object } = zipContractAndToken(
     options,
   );
+
   const array = [{ key: `contract/list/${address}`, value: address }];
   Object.entries(object).forEach(([field, value]) => {
     array.push({ key: `contract/${address}/${field}`, value });
   });
   // push token info
-  if (tokenIcon || tokenWebsite) {
-    array.push({ key: `token/list/${address}`, value: address });
-    array.push({ key: `token/${address}/icon`, value: tokenIcon });
-    array.push({ key: `token/${address}/website`, value: tokenWebsite });
-  }
+  array.push({ key: `token/list/${address}`, value: address });
+  array.push({ key: `token/${address}/icon`, value: tokenIcon });
+  array.push({ key: `token/${address}/website`, value: tokenWebsite });
+
   const announceArray = formatAnnounceArray(array);
   return chunk(announceArray).map(group => announcement.announce(group).data);
 }
