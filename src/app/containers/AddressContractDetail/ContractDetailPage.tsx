@@ -95,11 +95,13 @@ export const ContractDetailPage = memo(() => {
 
   const menu = (
     <MenuWrapper>
-      <Menu.Item>
-        <RouterLink to={`/contract-verification?address=${address}`}>
-          {t(translations.general.address.more.verifyContract)}
-        </RouterLink>
-      </Menu.Item>
+      {!contractInfo?.verify?.exactMatch ? (
+        <Menu.Item>
+          <RouterLink to={`/contract-verification?address=${address}`}>
+            {t(translations.general.address.more.verifyContract)}
+          </RouterLink>
+        </Menu.Item>
+      ) : null}
       <Menu.Item>
         <RouterLink to={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}

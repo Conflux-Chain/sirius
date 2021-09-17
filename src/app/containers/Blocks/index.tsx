@@ -37,9 +37,8 @@ export function Blocks() {
         <title>{t(translations.blocks.title)}</title>
         <meta name="description" content={t(translations.blocks.description)} />
       </Helmet>
-      {bp !== 's' && <Dag />}
       <PageHeader>{t(translations.blocks.title)}</PageHeader>
-
+      {bp !== 's' && <Dag />}
       <TablePanelNew
         url={url}
         columns={columnsBlocks}

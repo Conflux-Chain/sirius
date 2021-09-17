@@ -11,10 +11,9 @@ import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
 import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@jnoodle/antd';
-import { SearchIcon } from '../../../components/SearchIcon/Loadable';
-import ClearIcon from '../../../../images/clear.png';
+import { SearchIcon } from 'app/components/SearchIcon/Loadable';
+import ClearIcon from 'images/clear.png';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { formatAddress } from 'utils';
 import _ from 'lodash';
 import fetch from 'utils/request';
 import {
@@ -23,8 +22,8 @@ import {
   isHash,
   isInnerContractAddress,
   isSpecialAddress,
-} from '../../../../utils';
-import { appendApiPrefix } from '../../../../utils/api';
+} from 'utils';
+import { appendApiPrefix } from 'utils/api';
 
 const { Search: SearchInput } = Input;
 
@@ -80,17 +79,18 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
       icon: l.iconUrl || ICON_DEFAULT_TOKEN,
       name: l.name || notAvailable,
     };
+
     return {
-      key: `${type}-${formatAddress(token.address)}`,
+      key: `${type}-${token.address}`,
       // add type prefix for duplicate value with different type
-      value: `${type}-${formatAddress(token.address)}`,
+      value: `${type}-${token.address}`,
       type,
       label: (
         <TokenItemWrapper
           onClick={() => {
             window.location.href = `/${
               type === 'token' ? 'token' : 'address'
-            }/${formatAddress(token.address)}`;
+            }/${token.address}`;
           }}
         >
           {type === 'token' && (

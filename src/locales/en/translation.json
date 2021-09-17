@@ -8,6 +8,7 @@
     "nameTag": "Contract Name Tag",
     "registered": "Registered",
     "site": "Official Site",
+    "tokenSite": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
     "tokenTracker": "Token Tracker",
@@ -374,6 +375,7 @@
     "btn": "Switch the network to {{network}}"
   },
   "token": {
+    "website": "Official Site",
     "token": "Token",
     "totalSupplay": "Total Supply",
     "contract": "Contract",

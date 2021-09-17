@@ -12,6 +12,7 @@ interface Props {
   width?: number | string;
   minHeight?: number;
   data?: any[];
+  hideRoom?: boolean;
 }
 export const DataZoomLineChart = ({
   indicator = '',
@@ -20,6 +21,7 @@ export const DataZoomLineChart = ({
   width = document.body.clientWidth,
   minHeight = 500,
   data = [],
+  hideRoom = false,
 }: Props) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -116,31 +118,33 @@ export const DataZoomLineChart = ({
           //   },
           // },
         },
-        dataZoom: [
-          {
-            id: 'dataZoomX',
-            type: 'inside',
-            xAxisIndex: [0],
-            filterMode: 'filter',
-            rangeMode: ['percent', 'value'],
-            start: 100,
-            endValue: chartData.length - 31,
-          },
-          {
-            id: 'dataZoomY',
-            type: 'slider',
-            filterMode: 'empty',
-            labelFormatter: function (value) {
-              // category date formatter: value is index
-              return chartData && chartData[value] && chartData[value][0]
-                ? dateFormatter(chartData[value][0])
-                : value;
-            },
-            height: minHeight < 300 ? 20 : 30,
-            bottom: minHeight < 300 ? 10 : 'auto',
-            showDetail: minHeight >= 300,
-          },
-        ],
+        dataZoom: hideRoom
+          ? []
+          : [
+              {
+                id: 'dataZoomX',
+                type: 'inside',
+                xAxisIndex: [0],
+                filterMode: 'filter',
+                rangeMode: ['percent', 'value'],
+                start: 100,
+                endValue: chartData.length - 31,
+              },
+              {
+                id: 'dataZoomY',
+                type: 'slider',
+                filterMode: 'empty',
+                labelFormatter: function (value) {
+                  // category date formatter: value is index
+                  return chartData && chartData[value] && chartData[value][0]
+                    ? dateFormatter(chartData[value][0])
+                    : value;
+                },
+                height: minHeight < 300 ? 20 : 30,
+                bottom: minHeight < 300 ? 10 : 'auto',
+                showDetail: minHeight >= 300,
+              },
+            ],
         series: valueKey.map((v, i) => ({
           name: t(translations.charts[indicator][v]) || '',
           type: 'line',
