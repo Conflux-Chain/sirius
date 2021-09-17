@@ -30,6 +30,9 @@ const DURATIONS = [
   ['all', 'ALL'],
 ];
 
+const LIMIT_YEAR = 365;
+const LIMIT_MONTH = 31;
+
 export const LineChart = ({
   widthRatio = '',
   width = 500,
@@ -43,6 +46,8 @@ export const LineChart = ({
     type: '',
   },
   contractAddress = '',
+  hideRoom = false,
+  ...others
 }) => {
   const { t } = useTranslation();
   const clientWidth = document.body.clientWidth;
@@ -71,21 +76,23 @@ export const LineChart = ({
     width - padding - (hasDurationFilter ? (small ? 50 : 70) : 0);
   const chartHeight = small ? chartWidth * 0.45 : chartWidth * 0.35;
 
-  const limit = [
-    'dailyTransaction',
-    'dailyTransactionCFX',
-    'dailyTransactionTokens',
-    'cfxHoldingAccounts',
-    'accountGrowth',
-    'activeAccounts',
-    'contractDeploy',
-    'contractAmount',
-    'contractGrowth',
-    'tokenAnalysis', // without thumb
-    'contractAnalysis',
-  ].includes(indicator)
-    ? 365
-    : 31;
+  const limit = others.limit
+    ? others.limit
+    : [
+        'dailyTransaction',
+        'dailyTransactionCFX',
+        'dailyTransactionTokens',
+        'cfxHoldingAccounts',
+        'accountGrowth',
+        'activeAccounts',
+        'contractDeploy',
+        'contractAmount',
+        'contractGrowth',
+        'tokenAnalysis', // without thumb
+        'contractAnalysis',
+      ].includes(indicator)
+    ? LIMIT_YEAR
+    : LIMIT_MONTH;
 
   const {
     plot,
@@ -419,6 +426,7 @@ export const LineChart = ({
             dateKey={xAxisKey()}
             valueKey={lineKey()}
             data={plot}
+            hideRoom={hideRoom}
           />
         ) : (
           <ResponsiveContainer

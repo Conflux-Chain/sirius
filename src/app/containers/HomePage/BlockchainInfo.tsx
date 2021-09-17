@@ -124,20 +124,24 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       </Card>
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
-          <Grid xs={24} sm={24} md={12} className="chart-item">
+          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
             <Chart
               indicator="dailyTransaction"
               widthRatio="100%"
               minHeight={180}
               withDetailLink={true}
+              hideRoom={true}
+              limit={33}
             />
           </Grid>
-          <Grid xs={24} sm={24} md={12} className="chart-item">
+          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
             <Chart
               indicator="accountGrowth"
               widthRatio="100%"
               minHeight={180}
               withDetailLink={true}
+              hideRoom={true}
+              limit={33}
             />
           </Grid>
         </Grid.Container>
@@ -155,9 +159,13 @@ const CardWrapper = styled.div`
     margin-top: 20px;
     width: calc(100% - 1px); // fix shaking
 
-    .chart-item {
+    .overview-chart-item {
       > div {
         padding: 12px 18px;
+        width: 100%;
+        height: 210px;
+        min-height: inherit;
+        overflow: hidden;
       }
 
       ${media.m} {
