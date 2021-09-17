@@ -49,7 +49,10 @@ export function Tokens() {
       ...tokenColunms.holders,
       sorter: true,
     },
-    tokenColunms.projectInfo,
+    {
+      ...tokenColunms.projectInfo,
+      sorter: true,
+    },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   let url = `/stat/tokens/list?transferType=${
@@ -85,12 +88,15 @@ export function Tokens() {
         ...tokenColunms.holders,
         sorter: true,
       },
-      tokenColunms.projectInfo,
+      {
+        ...tokenColunms.projectInfo,
+        sorter: true,
+      },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
       CFX_TOKEN_TYPES.erc721
-    }&reverse=true&orderBy=transferCount&${queryString.stringify({
+    }&reverse=true&orderBy=securityCredits&${queryString.stringify({
       fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
     // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
@@ -114,12 +120,15 @@ export function Tokens() {
         ...tokenColunms.holders,
         sorter: true,
       },
-      tokenColunms.projectInfo,
+      {
+        ...tokenColunms.projectInfo,
+        sorter: true,
+      },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
     url = `/stat/tokens/list?transferType=${
       CFX_TOKEN_TYPES.erc1155
-    }&reverse=true&orderBy=transferCount&${queryString.stringify({
+    }&reverse=true&orderBy=securityCredits&${queryString.stringify({
       fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
     // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
@@ -154,6 +163,9 @@ export function Tokens() {
           columns={columns}
           rowKey="address"
           pagination={{ pageSize: 100 }}
+          sortKeyMap={{
+            projectInfo: 'securityCredits',
+          }}
         ></TablePanelNew>
       </TableWrapper>
     </>

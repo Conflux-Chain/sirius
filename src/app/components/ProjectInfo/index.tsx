@@ -416,7 +416,7 @@ const IconWrapper = styled('div')<{ left: boolean }>`
   align-items: center;
   background-color: #edf0f8;
   padding: 0 4px 0 4px;
-  width: 180px;
+  width: 160px;
   float: ${props => (props.left ? 'left' : 'right')};
 `;
 const LeftWrapper = styled.div`

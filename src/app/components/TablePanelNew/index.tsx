@@ -19,6 +19,10 @@ interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
   hideDefaultTitle?: boolean;
   hideShadow?: boolean;
+  // customize and rename sort key
+  sortKeyMap?: {
+    [index: string]: string;
+  };
 }
 
 interface TableStateProp {
@@ -70,6 +74,7 @@ export const TablePanel = ({
   hideDefaultTitle,
   hideShadow,
   className,
+  sortKeyMap = {},
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -151,7 +156,7 @@ export const TablePanel = ({
     };
 
     if (sorter) {
-      query.orderBy = sorter.field;
+      query.orderBy = sortKeyMap[sorter.field] || sorter.field;
       query.reverse = sorter.order === 'ascend' ? 'false' : 'true';
     }
 
