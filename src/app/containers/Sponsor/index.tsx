@@ -112,26 +112,36 @@ export function Sponsor() {
     getSponsorFromSDK(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
       setLoading(false);
+      const sponsorInfoSponsorForGas = formatAddress(sponsorInfo.sponsorForGas);
+      const sponsorInfoSponsorForCollateral = formatAddress(
+        sponsorInfo.sponsorForCollateral,
+      );
       // get address name
       reqTokenList({
         addressArray: [
-          sponsorInfo.sponsorForCollateral,
-          sponsorInfo.sponsorForGas,
+          sponsorInfoSponsorForCollateral, // note, this is an uppercase address with verbose
+          sponsorInfoSponsorForGas, // note, this is an uppercase address with verbose
         ],
         fields: ['iconUrl'],
       })
         .then(res => {
-          if (res && res.list && res.list.length === 2) {
-            setStorageSponsorAddressAlias(res.list[0].contractName || '');
-            setGasFeeAddressAlias(res.list[1].contractName || '');
+          if (res && res.list) {
+            if (res.list.length === 1) {
+              // compatibility for /v1/token?addressArray=[] two address key with one address info issue
+              setStorageSponsorAddressAlias(res.list[0].contractName || '');
+              setGasFeeAddressAlias(res.list[0].contractName || '');
+            } else {
+              setStorageSponsorAddressAlias(res.list[0].contractName || '');
+              setGasFeeAddressAlias(res.list[1].contractName || '');
+            }
           }
         })
         .catch(e => {
           console.error(e);
         })
         .finally(() => {
-          setStorageSponsorAddress(sponsorInfo.sponsorForCollateral);
-          setGasFeeAddress(sponsorInfo.sponsorForGas);
+          setStorageSponsorAddress(sponsorInfoSponsorForCollateral); // should be transform to uppercase address
+          setGasFeeAddress(sponsorInfoSponsorForGas); // should be transform to uppercase address
         });
       setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
       setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
