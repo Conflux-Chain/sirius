@@ -560,8 +560,8 @@
         "reset": "重置"
       },
       "others": {
-        "recommend": "推荐",
-        "recommendTip": "最近 7 天内交易数排名前 10 的代币",
+        "recommend": "活跃代币",
+        "recommendTip": "仅展示表格中记录的所有代币",
         "searchResult": "搜索结果",
         "noData": "无数据"
       }

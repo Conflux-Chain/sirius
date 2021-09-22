@@ -78,10 +78,10 @@ export const ContractOrTokenInfo = ({
   const [errorMsgForSite, setErrorMsgForSite] = useState('');
   const [errorMsgForTokenSite, setErrorMsgForTokenSite] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
-  const [isAddressError, setIsAddressError] = useState(true);
-  const [isAdminError, setIsAdminError] = useState(true);
-  const [isErc20Error, setIsErc20Error] = useState(true);
-  const [isNameError, setIsNameError] = useState(true);
+  const [isAddressError, setIsAddressError] = useState(false);
+  const [isAdminError, setIsAdminError] = useState(false);
+  const [isErc20Error, setIsErc20Error] = useState(false);
+  const [isNameError, setIsNameError] = useState(false);
   const [isSiteError, setIsSiteError] = useState(false);
   const [isTokenSiteError, setIsTokenSiteError] = useState(false);
   const [txData, setTxData] = useState('');
@@ -114,9 +114,10 @@ export const ContractOrTokenInfo = ({
     setTokenSite(e.target.value);
   };
 
+  const contractDetailStr = JSON.stringify(contractDetail);
+
   useEffect(() => {
-    setContractImgSrc(contractDetail.iconUrl || ''); // contract has no icon, and update contract icon card is hide
-    setTokenImgSrc(contractDetail.token && contractDetail.token.iconUrl);
+    setTokenImgSrc(contractDetail?.token?.iconUrl);
     if (updateInfoType === 'contract') {
       setContractName(contractDetail.name || '');
     }
@@ -125,29 +126,16 @@ export const ContractOrTokenInfo = ({
     switch (type) {
       case 'create':
         setAddressVal(address || '');
-        // setAddressDisabled(false);
         break;
       case 'edit':
         setAddressVal(contractDetail.address);
-        // setAddressDisabled(true);
         checkAdminThenToken(
           contractDetail.token && contractDetail.token.iconUrl,
         );
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    address,
-    contractDetail.address,
-    contractDetail.iconUrl,
-    contractDetail.name,
-    contractDetail.tokenIcon,
-    contractDetail.website,
-    contractDetail.tokenWebsite,
-    contractDetail.token,
-    t,
-    type,
-  ]);
+  }, [address, contractDetailStr, type]);
   useEffect(
     () => {
       let isSubmitable = false;
@@ -158,7 +146,7 @@ export const ContractOrTokenInfo = ({
           !isErc20Error &&
           (updateInfoType === 'contract'
             ? !isNameError && !isSiteError
-            : tokenImgSrc && !isTokenSiteError)
+            : !isTokenSiteError)
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -263,12 +251,16 @@ export const ContractOrTokenInfo = ({
     }
   }
 
-  const siteOnBlur = () => {
-    checkSite(site, 'contract');
+  const siteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'contract');
   };
 
-  const tokenSiteOnBlur = () => {
-    checkSite(tokenSite, 'token');
+  const tokenSiteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'token');
   };
 
   useEffect(() => {
@@ -290,9 +282,9 @@ export const ContractOrTokenInfo = ({
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
-  const removeContractIcon = () => {
-    setContractImgSrc('');
-  };
+  // const removeContractIcon = () => {
+  //   setContractImgSrc('');
+  // };
   const removeTokenIcon = () => {
     setTokenImgSrc('');
     setIsErc20Error(false);
@@ -414,7 +406,7 @@ export const ContractOrTokenInfo = ({
     isDisabled =
       !btnShouldClick || isAddressError || isNameError || isSiteError;
   } else {
-    isDisabled = !btnShouldClick || !tokenImgSrc || isTokenSiteError;
+    isDisabled = !btnShouldClick || isTokenSiteError;
   }
 
   const addressInputPlaceholder = useMemo(() => {
@@ -560,7 +552,7 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeContractIcon}>
+                  {/* <div className="secondItem" onClick={removeContractIcon}>
                     <img
                       src={imgRemove}
                       className="labelIcon"
@@ -569,7 +561,7 @@ export const ContractOrTokenInfo = ({
                     <span className="labelText">
                       {t(translations.contract.remove)}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
@@ -608,16 +600,18 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeTokenIcon}>
-                    <img
-                      src={imgRemove}
-                      className="labelIcon"
-                      alt="remove"
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.remove)}
-                    </span>
-                  </div>
+                  {tokenImgSrc ? null : (
+                    <div className="secondItem" onClick={removeTokenIcon}>
+                      <img
+                        src={imgRemove}
+                        className="labelIcon"
+                        alt="remove"
+                      ></img>
+                      <span className="labelText">
+                        {t(translations.contract.remove)}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>

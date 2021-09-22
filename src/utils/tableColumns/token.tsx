@@ -779,8 +779,8 @@ export const projectInfo = {
       </Translation>
     </ContentWrapper>
   ),
-  dataIndex: 'projectInfo',
-  key: 'projectInfo',
+  dataIndex: 'securityCredits',
+  key: 'securityCredits',
   render: (value, row) => {
     const { securityAudit, name } = row;
     return (

@@ -42,12 +42,5 @@ export const Holders = ({
   const columns =
     type === CFX_TOKEN_TYPES.erc1155 ? holders1155Columns : holdersColumns;
 
-  return (
-    <TablePanelNew
-      url={url}
-      columns={columns}
-      rowKey="hash"
-      // pagination={false}
-    ></TablePanelNew>
-  );
+  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
 };

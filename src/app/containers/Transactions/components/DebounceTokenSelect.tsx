@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Select, Spin, Tag, Image } from '@jnoodle/antd';
 import { SelectProps } from '@jnoodle/antd/es/select';
 import debounce from 'lodash/debounce';
@@ -9,9 +9,9 @@ import { Text } from 'app/components/Text/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
-  reqTopStatistics,
   reqTokenListByName,
   reqTokenList,
+  reqTokensOfAccountTransfered,
 } from 'utils/httpRequest';
 import qs from 'query-string';
 import { formatAddress } from 'utils';
@@ -30,21 +30,28 @@ export interface DebounceTokenSelectProps<TokenType = any>
   extends Omit<SelectProps<TokenType>, 'options' | 'children'> {
   fetchOptions?: (search: string) => Promise<TokenType[]>;
   debounceTimeout?: number;
+  accountAddress?: string;
+  transferType?: 'ERC20' | 'ERC721' | 'ERC1155';
 }
 
-export async function getRecommendTokenList(): Promise<TokenType[]> {
-  return reqTopStatistics({
-    action: 'rank_contract_by_number_of_transfers',
-    span: '7d',
+export async function getRecommendTokenList(
+  account,
+  transferType,
+): Promise<TokenType[]> {
+  return reqTokensOfAccountTransfered({
+    query: {
+      accountAddress: account,
+      transferType: transferType,
+    },
   }).then(resp => {
     let result: Array<TokenType> = [];
 
     try {
       if (!resp.code) {
         result = resp.list.map(l => ({
-          iconUrl: l.tokenInfo.iconUrl,
-          name: l.tokenInfo.name,
-          address: formatAddress(l.tokenInfo.address),
+          iconUrl: l.iconUrl,
+          name: l.name,
+          address: formatAddress(l.address),
         }));
       }
     } catch (e) {}
@@ -97,7 +104,11 @@ export function DebounceTokenSelect<
   ...props
 }: DebounceTokenSelectProps) {
   const { t } = useTranslation();
+  const urlParams = useParams<{
+    address: string;
+  }>();
   const { search } = useLocation();
+
   const [fetchingRecommend, setFetchingRecommend] = React.useState(false);
   const [fetchingSearch, setFetchingSearch] = React.useState(false);
   const [options, setOptions] = React.useState<Array<any>>([]); // @todo, use TokenType will throw error
@@ -145,15 +156,23 @@ export function DebounceTokenSelect<
     setFetchingRecommend(true);
     setOptionsRecommend([]);
 
-    getRecommendTokenList()
-      .then(data => {
-        setOptionsRecommend(data as any);
-      })
-      .finally(() => {
-        setFetchingRecommend(false);
-      });
+    const account = props.accountAddress || urlParams.address || '';
+    const tab = query.tab as string;
+    const transferType =
+      props.transferType || tab ? tab.replace(/(.*[^\d])(\d+)/, 'ERC$2') : '';
+
+    if (account && transferType) {
+      getRecommendTokenList(account, transferType)
+        .then(data => {
+          setOptionsRecommend(data as any);
+        })
+        .finally(() => {
+          setFetchingRecommend(false);
+        });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.accountAddress, props.transferType, urlParams.address, query.tab]);
 
   // init default search token list
   useEffect(() => {

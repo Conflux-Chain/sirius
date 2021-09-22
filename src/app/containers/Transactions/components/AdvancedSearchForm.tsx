@@ -422,6 +422,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         'minTimestamp',
         'maxEpochNumber',
         'minEpochNumber',
+        'tokenArray',
       ),
     );
 

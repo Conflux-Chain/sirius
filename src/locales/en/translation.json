@@ -560,8 +560,8 @@
         "reset": "Reset"
       },
       "others": {
-        "recommend": "Recommend",
-        "recommendTip": "Tokens with the top 10 txn count in the last 7 days",
+        "recommend": "Active Tokens",
+        "recommendTip": "Only tokens found in the table are displayed",
         "searchResult": "Search Result",
         "noData": "No data"
       }

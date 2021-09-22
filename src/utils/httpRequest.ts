@@ -253,3 +253,10 @@ export const reqProjectConfig = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqTokensOfAccountTransfered = (extra?: object) => {
+  return sendRequest({
+    url: '/stat/tokens/list/latest',
+    ...extra,
+  });
+};

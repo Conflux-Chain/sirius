@@ -11,6 +11,7 @@ import { CFX_TOKEN_TYPES } from 'utils/constants';
 import queryString from 'query-string';
 // import { useGlobal } from 'utils/hooks/useGlobal';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { useLocation } from 'react-router-dom';
 
 import imgInfo from 'images/info.svg';
 
@@ -19,9 +20,11 @@ interface RouteParams {
 }
 
 export function Tokens() {
+  const location = useLocation();
   const { t } = useTranslation();
   // const { data: globalData } = useGlobal();
   const { tokenType = CFX_TOKEN_TYPES.erc20 } = useParams<RouteParams>();
+  const { orderBy } = queryString.parse(location.search);
 
   let columnsWidth = [1, 7, 4, 3, 3, 3, 2, 4];
   let columns = [
@@ -40,6 +43,7 @@ export function Tokens() {
     {
       ...tokenColunms.marketCap,
       sorter: true,
+      defaultSortOrder: 'descend' as 'descend' | 'ascend',
     },
     {
       ...tokenColunms.transfer,
@@ -91,6 +95,7 @@ export function Tokens() {
       {
         ...tokenColunms.projectInfo,
         sorter: true,
+        defaultSortOrder: 'descend',
       },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
@@ -123,6 +128,7 @@ export function Tokens() {
       {
         ...tokenColunms.projectInfo,
         sorter: true,
+        defaultSortOrder: 'descend',
       },
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
@@ -133,6 +139,20 @@ export function Tokens() {
     })}`;
     // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);
+  }
+
+  if (orderBy) {
+    columns = columns.map(c => {
+      // @ts-ignore
+      if (c.dataIndex === orderBy) {
+        // @ts-ignore
+        c.defaultSortOrder = 'descend';
+      } else {
+        // @ts-ignore
+        delete c.defaultSortOrder;
+      }
+      return c;
+    });
   }
 
   return (
@@ -163,9 +183,7 @@ export function Tokens() {
           columns={columns}
           rowKey="address"
           pagination={{ pageSize: 100 }}
-          sortKeyMap={{
-            projectInfo: 'securityCredits',
-          }}
+          key={tokenType}
         ></TablePanelNew>
       </TableWrapper>
     </>
