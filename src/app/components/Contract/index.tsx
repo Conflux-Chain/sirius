@@ -282,9 +282,9 @@ export const ContractOrTokenInfo = ({
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
-  const removeContractIcon = () => {
-    setContractImgSrc('');
-  };
+  // const removeContractIcon = () => {
+  //   setContractImgSrc('');
+  // };
   const removeTokenIcon = () => {
     setTokenImgSrc('');
     setIsErc20Error(false);
@@ -552,7 +552,7 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeContractIcon}>
+                  {/* <div className="secondItem" onClick={removeContractIcon}>
                     <img
                       src={imgRemove}
                       className="labelIcon"
@@ -561,7 +561,7 @@ export const ContractOrTokenInfo = ({
                     <span className="labelText">
                       {t(translations.contract.remove)}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
@@ -600,16 +600,18 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeTokenIcon}>
-                    <img
-                      src={imgRemove}
-                      className="labelIcon"
-                      alt="remove"
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.remove)}
-                    </span>
-                  </div>
+                  {tokenImgSrc ? null : (
+                    <div className="secondItem" onClick={removeTokenIcon}>
+                      <img
+                        src={imgRemove}
+                        className="labelIcon"
+                        alt="remove"
+                      ></img>
+                      <span className="labelText">
+                        {t(translations.contract.remove)}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
