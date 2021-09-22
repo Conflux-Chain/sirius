@@ -3,7 +3,8 @@ import BigNumber from 'bignumber.js';
 
 //sponsor faucet contract abi
 import faucetContract from './SponsorFaucet.js';
-import { CFX } from 'utils/constants';
+import { CFX, NETWORK_ID } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 //suggested factor to make sure gas is enough
 const gas_estimation_ratio_withdraw = 1.8;
@@ -32,18 +33,24 @@ class Faucet {
    * @param lastAddress The last faucet contract address
    */
   constructor(url, address, lastAddress) {
+    const uppercaseAddress = SDK.format.address(address, NETWORK_ID, true);
+    const uppercaseLastAddress = SDK.format.address(
+      lastAddress,
+      NETWORK_ID,
+      true,
+    );
     this.cfx = CFX;
     this.provider = this.cfx.provider;
-    this.address = address;
-    this.lastAddress = lastAddress;
+    this.address = uppercaseAddress;
+    this.lastAddress = uppercaseLastAddress;
     this.faucet = this.cfx.Contract({
       abi: faucetContract.abi,
-      address: address,
+      address: uppercaseAddress,
     });
     //oldFaucet is used to query accumulated details, abi is compatible for this.
     this.oldFaucet = this.cfx.Contract({
       abi: faucetContract.abi,
-      address: lastAddress,
+      address: uppercaseLastAddress,
     });
   }
 
