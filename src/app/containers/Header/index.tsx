@@ -100,14 +100,7 @@ export const Header = memo(() => {
     },
   ];
 
-  const ecosystemItems = [
-    {
-      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.fcCfx,
-      afterClick: menuClick,
-      href: 'https://fccfx.confluxscan.io/',
-    },
-  ];
+  const ecosystemItems: any = [];
 
   const contractItems = [
     {
@@ -137,6 +130,15 @@ export const Header = memo(() => {
       href: '/contracts',
     },
   ];
+
+  if (bp !== 's' && bp !== 'm') {
+    ecosystemItems.push({
+      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.fcCfx,
+      afterClick: menuClick,
+      href: '/fccfx',
+    });
+  }
 
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
     supportAndHelpMenuItems.unshift({

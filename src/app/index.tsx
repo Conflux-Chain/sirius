@@ -32,6 +32,7 @@ import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address } from 'utils';
 import MD5 from 'md5.js';
 
+import { FCCFX } from './containers/FCCFX';
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
@@ -197,7 +198,7 @@ export function App() {
               convert: info => {
                 try {
                   let data = JSON.parse(info);
-                  if (data.code === '107') {
+                  if ([107, 108].includes(data.code)) {
                     return t(
                       translations.connectWallet.notify.action[data.code],
                       {
@@ -205,13 +206,16 @@ export function App() {
                         wcfxValue: data.wcfxValue,
                       },
                     );
-                  } else {
+                  } else if ([109, 110, 111, 113].includes(data.code)) {
                     return t(
                       translations.connectWallet.notify.action[data.code],
                       {
-                        cfxValue: data.cfxValue,
-                        wcfxValue: data.wcfxValue,
+                        value: data.value,
                       },
+                    );
+                  } else {
+                    return t(
+                      translations.connectWallet.notify.action[data.code],
                     );
                   }
                 } catch (e) {}
@@ -512,6 +516,7 @@ export function App() {
                             path="/_benchmark"
                             component={ScanBenchmark}
                           />
+                          <Route exact path="/fccfx" component={FCCFX} />
                           <Route component={NotFoundPage} />
                         </Switch>
                       </ScrollToTop>

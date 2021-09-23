@@ -6,16 +6,20 @@ import { translations } from '../../../locales/i18n';
 export const Remark = function ({
   title: outerTitle,
   items,
+  hideTitle,
+  className,
 }: {
   title?: React.ReactNode;
   items: Array<React.ReactNode>;
+  hideTitle?: boolean;
+  className?: string;
 }) {
   const { t } = useTranslation();
   const title = outerTitle || t(translations.general.remark);
 
   return (
-    <StyledRemarkWrapper>
-      <div className="title">{title}</div>
+    <StyledRemarkWrapper className={className}>
+      {hideTitle ? null : <div className="title">{title}</div>}
       <div className="content">
         {items.map((i, index) => (
           <div key={index}>{i}</div>
@@ -30,9 +34,9 @@ const StyledRemarkWrapper = styled.div`
     font-size: 1.1429rem;
     font-weight: bold;
     color: #1a1a1a;
+    margin-bottom: 0.8571rem;
   }
   .content {
-    margin-top: 0.8571rem;
     font-weight: normal;
     color: #7e8598;
     line-height: 1.5714rem;
