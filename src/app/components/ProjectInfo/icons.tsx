@@ -216,7 +216,7 @@ export const OxIcon = function ({
           <g
             id="Token-Detail/-Project-Info"
             transform="translate(-1159.000000, -257.000000)"
-            fill={isActive ? '#7789D3' : '#DBDDE4'}
+            fill={isActive ? '#7789D3' : '#fa8000'}
           >
             <g id="iconsx备份-6" transform="translate(1105.000000, 255.000000)">
               <g id="Ox" transform="translate(54.000000, 2.000000)">
@@ -231,13 +231,10 @@ export const OxIcon = function ({
       </svg>
     </StyledIconWrapper>
   );
-  return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.zeroAddress)}>
-      {icon}
-    </Tooltip>
-  ) : (
-    icon
-  );
+  const tip = !isActive
+    ? t(translations.general.table.token.projectInfo.notZeroAddress)
+    : t(translations.general.table.token.projectInfo.zeroAddress);
+  return hoverable ? <Tooltip text={tip}>{icon}</Tooltip> : icon;
 };
 export const SponsorIcon = function ({
   isActive = false,
@@ -288,7 +285,7 @@ export const VerifyIcon = function ({
           <g
             id="Token-Detail/-Project-Info"
             transform="translate(-1125.000000, -257.000000)"
-            fill={isActive ? '#7789D3' : '#DBDDE4'}
+            fill={isActive ? '#7789D3' : '#fa8000'}
           >
             <g id="iconsx备份-6" transform="translate(1105.000000, 255.000000)">
               <g id="验证" transform="translate(20.000000, 2.000000)">
@@ -303,13 +300,10 @@ export const VerifyIcon = function ({
       </svg>
     </StyledIconWrapper>
   );
-  return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.verify)}>
-      {icon}
-    </Tooltip>
-  ) : (
-    icon
-  );
+  const tip = !isActive
+    ? t(translations.general.table.token.projectInfo.unverify)
+    : t(translations.general.table.token.projectInfo.verify);
+  return hoverable ? <Tooltip text={tip}>{icon}</Tooltip> : icon;
 };
 export const DetailIcon = function ({ onClick, hoverable = true }: IconProp) {
   const { t } = useTranslation();
