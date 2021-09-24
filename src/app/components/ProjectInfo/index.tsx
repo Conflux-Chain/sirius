@@ -358,8 +358,9 @@ export const ProjectInfo = React.memo(
                 return prev;
               }, [])
               .reverse()
-              .map(({ icon, desc, ...others }) =>
+              .map(({ icon, desc, ...others }, index) =>
                 React.createElement(icon, {
+                  key: index,
                   ...others,
                   hoverable: true,
                 }),
@@ -380,10 +381,19 @@ export const ProjectInfo = React.memo(
               {tokenName}
             </ModalTitle>
             <Divider />
-            {list.map(({ icon, desc, ...others }) =>
-              React.createElement(ModalItem, {}, [
-                React.createElement(icon, others),
-                desc,
+            {list.map(({ icon, desc, ...others }, index) =>
+              React.createElement(ModalItem, { key: Math.random() }, [
+                React.createElement(icon, {
+                  key: `modal-icon-${icon.name}`,
+                  ...others,
+                }),
+                React.createElement(
+                  'span',
+                  {
+                    key: `modal-desc-${icon.name}`,
+                  },
+                  desc,
+                ),
               ]),
             )}
             <Divider />
