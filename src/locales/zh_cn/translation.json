@@ -1343,6 +1343,7 @@
     "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
     "inputPlaceholder": "请输入地址",
     "incorrectFormat": "地址格式错误",
+    "incorrectAddressType": "地址类型错误，仅支持查询个人账户地址",
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"

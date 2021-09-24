@@ -1344,6 +1344,7 @@
     "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
     "inputPlaceholder": "Please enter an address",
     "incorrectFormat": "Invalid address format",
+    "incorrectAddressType": "Invalid address type, only support for account address",
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
