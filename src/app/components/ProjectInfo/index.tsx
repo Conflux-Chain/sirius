@@ -140,6 +140,15 @@ export const ProjectInfo = React.memo(
             </ModalTitle>
             <Divider />
             <ModalItem>
+              <OxIcon isActive={zeroAdmin === 1} />
+              <span>
+                {t(
+                  translations.general.table.token.projectInfo.modal
+                    .zeroAddress,
+                )}
+              </span>
+            </ModalItem>
+            <ModalItem>
               <VerifyIcon isActive={verify === 1} />
               <span>
                 <Trans i18nKey="general.table.token.projectInfo.modal.verify">
@@ -167,15 +176,6 @@ export const ProjectInfo = React.memo(
                   </Link>
                   it now!)
                 </Trans>
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <OxIcon isActive={zeroAdmin === 1} />
-              <span>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .zeroAddress,
-                )}
               </span>
             </ModalItem>
             <ModalItem>
@@ -302,7 +302,7 @@ export const ProjectInfo = React.memo(
                       />,
                     ]}
                   >
-                    Listed by CoinMarketCap（ Submit proof）Rate: --
+                    Listed by CoinMarketCap（Submit proof）
                   </Trans>
                 ) : (
                   <Trans
@@ -319,7 +319,7 @@ export const ProjectInfo = React.memo(
                       />,
                     ]}
                   >
-                    Listed by CoinMarketCap（Submit proof）Rate: --
+                    Listed by CoinMarketCap（Submit proof）
                   </Trans>
                 )}
               </span>
