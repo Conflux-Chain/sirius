@@ -14,10 +14,11 @@ import {
   VerifyIcon,
   DetailIcon,
 } from './icons';
-import { translations } from '../../../locales/i18n';
-import { Modal, Divider } from '@jnoodle/antd';
+import { translations } from 'locales/i18n';
+import { Modal, Divider, Image } from '@jnoodle/antd';
 import { Link } from '@cfxjs/react-ui';
-import { sansSerifFont } from '../../../styles/variable';
+import { sansSerifFont } from 'styles/variable';
+import iconWarning from 'images/warning.png';
 
 interface ProjectInfoProp {
   securityAudit: {
@@ -79,6 +80,10 @@ export const ProjectInfo = React.memo(
                 )}
           </span>
         ),
+        tip:
+          zeroAdmin === 1
+            ? t(translations.general.table.token.projectInfo.zeroAddress)
+            : t(translations.general.table.token.projectInfo.notZeroAddress),
         isActive: false,
         hoverable: false,
         isWarning: false,
@@ -102,6 +107,10 @@ export const ProjectInfo = React.memo(
             </Trans>
           </span>
         ),
+        tip:
+          verify === 1
+            ? t(translations.general.table.token.projectInfo.verify)
+            : t(translations.general.table.token.projectInfo.unverify),
         isActive: false,
         hoverable: false,
         isWarning: false,
@@ -342,9 +351,10 @@ export const ProjectInfo = React.memo(
             {list
               .reduce(
                 (prev, curr) => {
-                  if (curr.isWarning) {
-                    prev[0].push(curr);
-                  } else if (curr.isActive) {
+                  // if (curr.isWarning) {
+                  //   prev[0].push(curr);
+                  // } else
+                  if (curr.isActive) {
                     prev[1].push(curr);
                   } else {
                     prev[2].push(curr);
@@ -366,7 +376,18 @@ export const ProjectInfo = React.memo(
                 }),
               )}
           </LeftWrapper>
-          <DetailIcon onClick={clickDetail} />
+          <DetailIcon
+            onClick={clickDetail}
+            warnings={list
+              .map((l, index) =>
+                l.isWarning ? (
+                  <div key={`modalItem-warning-${index}`}>{l.tip}</div>
+                ) : (
+                  ''
+                ),
+              )
+              .filter(l => l)}
+          />
         </IconWrapper>
         <ModalWrapper>
           <Modal
@@ -381,7 +402,7 @@ export const ProjectInfo = React.memo(
               {tokenName}
             </ModalTitle>
             <Divider />
-            {list.map(({ icon, desc, ...others }, index) =>
+            {list.map(({ icon, desc, ...others }) =>
               React.createElement(ModalItem, { key: Math.random() }, [
                 React.createElement(icon, {
                   key: `modal-icon-${icon.name}`,
@@ -394,6 +415,18 @@ export const ProjectInfo = React.memo(
                   },
                   desc,
                 ),
+                others.isWarning ? (
+                  <span
+                    className="modal-icon-warning"
+                    key={`modal-warning-${icon.name}`}
+                  >
+                    <Image
+                      width="18px"
+                      src={iconWarning}
+                      preview={false}
+                    ></Image>
+                  </span>
+                ) : null,
               ]),
             )}
             <Divider />
@@ -488,11 +521,15 @@ const ModalItem = styled.div`
   > span {
     margin-left: 12px;
   }
+
+  .modal-icon-warning {
+    display: flex;
+    align-items: center;
+  }
 `;
 const ModalItems = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
 `;
 const TransWrapper = styled.div`
   .inactive {
