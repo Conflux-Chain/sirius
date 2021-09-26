@@ -5,9 +5,10 @@
  */
 import React from 'react';
 import { translations } from 'locales/i18n';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
+import iconWarning from 'images/warning.png';
+import { Image, Tooltip } from '@jnoodle/antd';
 
 interface IconProp {
   isActive?: boolean;
@@ -45,7 +46,7 @@ export const DexIcon = function ({
   );
   return hoverable ? (
     <Tooltip
-      text={t(
+      title={t(
         translations.general.table.token.projectInfo.listedByDecentralized,
       )}
     >
@@ -87,7 +88,9 @@ export const CexIcon = function ({
 
   return hoverable ? (
     <Tooltip
-      text={t(translations.general.table.token.projectInfo.listedByCentralized)}
+      title={t(
+        translations.general.table.token.projectInfo.listedByCentralized,
+      )}
     >
       {icon}
     </Tooltip>
@@ -124,7 +127,7 @@ export const AuditIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.audit)}>
+    <Tooltip title={t(translations.general.table.token.projectInfo.audit)}>
       {icon}
     </Tooltip>
   ) : (
@@ -160,7 +163,7 @@ export const BlackListIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.blackList)}>
+    <Tooltip title={t(translations.general.table.token.projectInfo.blackList)}>
       {icon}
     </Tooltip>
   ) : (
@@ -196,7 +199,9 @@ export const CoinMarketIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.listedByCMC)}>
+    <Tooltip
+      title={t(translations.general.table.token.projectInfo.listedByCMC)}
+    >
       {icon}
     </Tooltip>
   ) : (
@@ -216,7 +221,7 @@ export const OxIcon = function ({
           <g
             id="Token-Detail/-Project-Info"
             transform="translate(-1159.000000, -257.000000)"
-            fill={isActive ? '#7789D3' : '#fa8000'}
+            fill={isActive ? '#7789D3' : '#DBDDE4'}
           >
             <g id="iconsx备份-6" transform="translate(1105.000000, 255.000000)">
               <g id="Ox" transform="translate(54.000000, 2.000000)">
@@ -234,7 +239,7 @@ export const OxIcon = function ({
   const tip = !isActive
     ? t(translations.general.table.token.projectInfo.notZeroAddress)
     : t(translations.general.table.token.projectInfo.zeroAddress);
-  return hoverable ? <Tooltip text={tip}>{icon}</Tooltip> : icon;
+  return hoverable ? <Tooltip title={tip}>{icon}</Tooltip> : icon;
 };
 export const SponsorIcon = function ({
   isActive = false,
@@ -265,7 +270,7 @@ export const SponsorIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip text={t(translations.general.table.token.projectInfo.sponsor)}>
+    <Tooltip title={t(translations.general.table.token.projectInfo.sponsor)}>
       {icon}
     </Tooltip>
   ) : (
@@ -329,7 +334,7 @@ export const VerifyIcon = function ({
             <g
               id="画板"
               transform="translate(-127.000000, -118.000000)"
-              fill="#fa8000"
+              fill="#DBDDE4"
             >
               <g id="unVerified" transform="translate(127.000000, 118.000000)">
                 <path
@@ -346,31 +351,47 @@ export const VerifyIcon = function ({
   const tip = !isActive
     ? t(translations.general.table.token.projectInfo.unverify)
     : t(translations.general.table.token.projectInfo.verify);
-  return hoverable ? <Tooltip text={tip}>{icon}</Tooltip> : icon;
+  return hoverable ? <Tooltip title={tip}>{icon}</Tooltip> : icon;
 };
-export const DetailIcon = function ({ onClick, hoverable = true }: IconProp) {
+export const DetailIcon = function ({
+  onClick,
+  hoverable = true,
+  warnings,
+}: IconProp & { warnings?: Array<React.ReactChild> }) {
   const { t } = useTranslation();
-  return (
-    <Tooltip text={t(translations.general.table.token.projectInfo.projectInfo)}>
-      <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
-        <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
-          <g id="Token-List/Hoverlist-出现弹窗" stroke="none" fill="none">
-            <g
-              id="Project-Info-Plan-F"
-              transform="translate(-1531.000000, -302.000000)"
-              fill="#7789D3"
-            >
-              <g id="iconsx备份" transform="translate(1371.000000, 300.000000)">
-                <g id="list" transform="translate(160.000000, 2.000000)">
-                  <path
-                    d="M10,0 C12.6521649,0 15.195704,1.0535684 17.0710678,2.92893219 C18.9464316,4.80429597 20,7.3478351 20,10 C20,15.5228475 15.5228475,20 10,20 C4.4771525,20 0,15.5228475 0,10 C0,4.4771525 4.4771525,0 10,0 Z M10,1.40350877 C5.25469348,1.4093087 1.4093087,5.25469348 1.40350877,10 C1.40350877,14.747711 5.25228899,18.5964912 10,18.5964912 C14.747711,18.5964912 18.5964912,14.747711 18.5964912,10 C18.5964912,5.25228899 14.747711,1.40350877 10,1.40350877 Z M11.4035088,12.4561404 C11.791077,12.4561404 12.1052632,12.7703265 12.1052632,13.1578947 C12.1052632,13.545463 11.791077,13.8596491 11.4035088,13.8596491 L6.14035088,13.8596491 C5.75278263,13.8596491 5.43859649,13.545463 5.43859649,13.1578947 C5.43859649,12.7703265 5.75278263,12.4561404 6.14035088,12.4561404 L11.4035088,12.4561404 Z M13.8596491,12.4561404 C14.2472174,12.4561404 14.5614035,12.7703265 14.5614035,13.1578947 C14.5614035,13.545463 14.2472174,13.8596491 13.8596491,13.8596491 C13.4720809,13.8596491 13.1578947,13.545463 13.1578947,13.1578947 C13.1578947,12.7703265 13.4720809,12.4561404 13.8596491,12.4561404 Z M13.8596491,8.94736842 C14.2472174,8.94736842 14.5614035,9.26155456 14.5614035,9.64912281 C14.5614035,10.0366911 14.2472174,10.3508772 13.8596491,10.3508772 L6.14035088,10.3508772 C5.75278263,10.3508772 5.43859649,10.0366911 5.43859649,9.64912281 C5.43859649,9.26155456 5.75278263,8.94736842 6.14035088,8.94736842 L13.8596491,8.94736842 Z M13.8596491,5.43859649 C14.2472174,5.43859649 14.5614035,5.75278263 14.5614035,6.14035088 C14.5614035,6.52791912 14.2472174,6.84210526 13.8596491,6.84210526 L6.14035088,6.84210526 C5.75278263,6.84210526 5.43859649,6.52791912 5.43859649,6.14035088 C5.43859649,5.75278263 5.75278263,5.43859649 6.14035088,5.43859649 L13.8596491,5.43859649 Z"
-                    id="形状结合"
-                  />
-                </g>
-              </g>
+  const isWarning = warnings?.length;
+  const icon = isWarning ? (
+    <Image width="20px" src={iconWarning} preview={false} />
+  ) : (
+    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
+      <g id="Token-List/Hoverlist-出现弹窗" stroke="none" fill="none">
+        <g
+          id="Project-Info-Plan-F"
+          transform="translate(-1531.000000, -302.000000)"
+          fill={isWarning ? '#fa8000' : '#7789D3'}
+        >
+          <g id="iconsx备份" transform="translate(1371.000000, 300.000000)">
+            <g id="list" transform="translate(160.000000, 2.000000)">
+              <path
+                d="M10,0 C12.6521649,0 15.195704,1.0535684 17.0710678,2.92893219 C18.9464316,4.80429597 20,7.3478351 20,10 C20,15.5228475 15.5228475,20 10,20 C4.4771525,20 0,15.5228475 0,10 C0,4.4771525 4.4771525,0 10,0 Z M10,1.40350877 C5.25469348,1.4093087 1.4093087,5.25469348 1.40350877,10 C1.40350877,14.747711 5.25228899,18.5964912 10,18.5964912 C14.747711,18.5964912 18.5964912,14.747711 18.5964912,10 C18.5964912,5.25228899 14.747711,1.40350877 10,1.40350877 Z M11.4035088,12.4561404 C11.791077,12.4561404 12.1052632,12.7703265 12.1052632,13.1578947 C12.1052632,13.545463 11.791077,13.8596491 11.4035088,13.8596491 L6.14035088,13.8596491 C5.75278263,13.8596491 5.43859649,13.545463 5.43859649,13.1578947 C5.43859649,12.7703265 5.75278263,12.4561404 6.14035088,12.4561404 L11.4035088,12.4561404 Z M13.8596491,12.4561404 C14.2472174,12.4561404 14.5614035,12.7703265 14.5614035,13.1578947 C14.5614035,13.545463 14.2472174,13.8596491 13.8596491,13.8596491 C13.4720809,13.8596491 13.1578947,13.545463 13.1578947,13.1578947 C13.1578947,12.7703265 13.4720809,12.4561404 13.8596491,12.4561404 Z M13.8596491,8.94736842 C14.2472174,8.94736842 14.5614035,9.26155456 14.5614035,9.64912281 C14.5614035,10.0366911 14.2472174,10.3508772 13.8596491,10.3508772 L6.14035088,10.3508772 C5.75278263,10.3508772 5.43859649,10.0366911 5.43859649,9.64912281 C5.43859649,9.26155456 5.75278263,8.94736842 6.14035088,8.94736842 L13.8596491,8.94736842 Z M13.8596491,5.43859649 C14.2472174,5.43859649 14.5614035,5.75278263 14.5614035,6.14035088 C14.5614035,6.52791912 14.2472174,6.84210526 13.8596491,6.84210526 L6.14035088,6.84210526 C5.75278263,6.84210526 5.43859649,6.52791912 5.43859649,6.14035088 C5.43859649,5.75278263 5.75278263,5.43859649 6.14035088,5.43859649 L13.8596491,5.43859649 Z"
+                id="形状结合"
+              />
             </g>
           </g>
-        </svg>
+        </g>
+      </g>
+    </svg>
+  );
+  let title: React.ReactChild = t(
+    translations.general.table.token.projectInfo.projectInfo,
+  ) as string;
+  if (isWarning) {
+    title = React.createElement('div', {}, warnings);
+  }
+  return (
+    <Tooltip title={title}>
+      <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+        {icon}
       </StyledIconWrapper>
     </Tooltip>
   );
@@ -380,4 +401,5 @@ const StyledIconWrapper = styled.span<{
   hoverable?: boolean;
 }>`
   cursor: ${props => (props.hoverable ? 'pointer' : 'inherit')};
+  display: inline-flex;
 `;
