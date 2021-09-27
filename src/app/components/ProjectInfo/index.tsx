@@ -11,14 +11,14 @@ import {
   AuditIcon,
   CoinMarketIcon,
   OxIcon,
-  SponsorIcon,
   VerifyIcon,
   DetailIcon,
 } from './icons';
-import { translations } from '../../../locales/i18n';
-import { Modal, Divider } from '@jnoodle/antd';
+import { translations } from 'locales/i18n';
+import { Modal, Divider, Image } from '@jnoodle/antd';
 import { Link } from '@cfxjs/react-ui';
-import { sansSerifFont } from '../../../styles/variable';
+import { sansSerifFont } from 'styles/variable';
+import iconWarning from 'images/warning.png';
 
 interface ProjectInfoProp {
   securityAudit: {
@@ -47,73 +47,12 @@ export const ProjectInfo = React.memo(
     const { t, i18n } = useTranslation();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-    const {
-      audit,
-      cex,
-      dex,
-      sponsor,
-      track,
-      verify,
-      zeroAdmin,
-    } = securityAudit;
-    const [activeArray, setActiveArray] = useState<string[]>([]);
-    const [inactiveArray, setInactiveArray] = useState<string[]>([]);
+    const { cex, dex, track, verify, zeroAdmin } = securityAudit;
+    const [list, setList] = useState<any[]>([]);
     const clickDetail = () => {
       setVisible(true);
     };
-    const activeMap = {
-      audit: (
-        <AuditIcon isActive={true} onClick={clickDetail} hoverable={true} />
-      ),
-      sponsor: (
-        <SponsorIcon isActive={true} onClick={clickDetail} hoverable={true} />
-      ),
-      verify: (
-        <VerifyIcon isActive={true} onClick={clickDetail} hoverable={true} />
-      ),
-      zeroAdmin: (
-        <OxIcon isActive={true} onClick={clickDetail} hoverable={true} />
-      ),
-      cex: <CexIcon isActive={true} onClick={clickDetail} hoverable={true} />,
-      dex: <DexIcon isActive={true} onClick={clickDetail} hoverable={true} />,
-      track: (
-        <CoinMarketIcon
-          isActive={true}
-          onClick={clickDetail}
-          hoverable={true}
-        />
-      ),
-    };
-    const inactiveMap = {
-      audit: <AuditIcon onClick={clickDetail} hoverable={true} />,
-      sponsor: <SponsorIcon onClick={clickDetail} hoverable={true} />,
-      verify: <VerifyIcon onClick={clickDetail} hoverable={true} />,
-      zeroAdmin: <OxIcon onClick={clickDetail} hoverable={true} />,
-      cex: <CexIcon onClick={clickDetail} hoverable={true} />,
-      dex: <DexIcon onClick={clickDetail} hoverable={true} />,
-      track: <CoinMarketIcon onClick={clickDetail} hoverable={true} />,
-    };
 
-    useEffect(() => {
-      const tempActiveArray: string[] = [];
-      const tempInactiveArray: string[] = [];
-      for (let item in securityAudit) {
-        if (securityAudit[item] === 0) {
-          tempInactiveArray.push(item);
-        } else if (securityAudit[item] === 1) {
-          tempActiveArray.push(item);
-        } else {
-          if (isAllNull(securityAudit[item])) {
-            tempInactiveArray.push(item);
-          } else {
-            tempActiveArray.push(item);
-          }
-        }
-      }
-      setActiveArray(tempActiveArray);
-      setInactiveArray(tempInactiveArray);
-      // eslint-disable-next-line
-    }, []);
     const isAllNull = obj => {
       let sign = true;
       for (let key in obj) {
@@ -123,21 +62,332 @@ export const ProjectInfo = React.memo(
       }
       return sign;
     };
+
+    const coinsList = [
+      {
+        name: 'zeroAdmin',
+        icon: OxIcon,
+        desc: (
+          <span>
+            {zeroAdmin === 1
+              ? t(
+                  translations.general.table.token.projectInfo.modal
+                    .zeroAddress,
+                )
+              : t(
+                  translations.general.table.token.projectInfo.modal
+                    .notZeroAddress,
+                )}
+          </span>
+        ),
+        tip:
+          zeroAdmin === 1
+            ? t(translations.general.table.token.projectInfo.zeroAddress)
+            : t(translations.general.table.token.projectInfo.notZeroAddress),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+      {
+        name: 'verify',
+        icon: VerifyIcon,
+        desc: (
+          <span>
+            <Trans
+              i18nKey={
+                verify === 1
+                  ? 'general.table.token.projectInfo.modal.verify'
+                  : 'general.table.token.projectInfo.modal.unverify'
+              }
+            >
+              The contract has been verified (
+              <Link href="/contract-verification">Verify the contract</Link>{' '}
+              now!)
+            </Trans>
+          </span>
+        ),
+        tip:
+          verify === 1
+            ? t(translations.general.table.token.projectInfo.verify)
+            : t(translations.general.table.token.projectInfo.unverify),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+      {
+        name: 'audit',
+        icon: AuditIcon,
+        desc: (
+          <span>
+            <Trans i18nKey="general.table.token.projectInfo.modal.audit">
+              The contract code passes the audit (Have an audit report or
+              related link?
+              <Link
+                href={
+                  lang === 'en'
+                    ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                    : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                }
+                target={'_blank'}
+              >
+                Submit{' '}
+              </Link>
+              it now!)
+            </Trans>
+          </span>
+        ),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+      {
+        name: 'cex',
+        icon: CexIcon,
+        desc: (
+          <ModalItems>
+            <TransWrapper>
+              <Trans i18nKey="general.table.token.projectInfo.modal.cex">
+                Listed by a centralized exchange（
+                <Link
+                  href={
+                    lang === 'en'
+                      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                  }
+                  target={'_blank'}
+                >
+                  Submit
+                </Link>{' '}
+                proof）
+              </Trans>
+            </TransWrapper>
+            <TransWrapper>
+              {cex.binance ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.binance">
+                  -
+                  <Link href={cex?.binance} target={'_blank'}>
+                    Binance
+                  </Link>
+                </Trans>
+              ) : (
+                <span className={'inactive'}>
+                  <Trans i18nKey="general.table.token.projectInfo.modal.binance">
+                    - Binance
+                  </Trans>
+                </span>
+              )}
+            </TransWrapper>
+            <TransWrapper>
+              {cex.huobi ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
+                  -
+                  <Link href={cex?.huobi} target={'_blank'}>
+                    HuoBi
+                  </Link>
+                </Trans>
+              ) : (
+                <span className={'inactive'}>
+                  <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
+                    - HuoBi
+                  </Trans>
+                </span>
+              )}
+            </TransWrapper>
+            <TransWrapper>
+              {cex.ok ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.ok">
+                  -
+                  <Link href={cex?.ok} target={'_blank'}>
+                    OK
+                  </Link>
+                </Trans>
+              ) : (
+                <span className={'inactive'}>
+                  <Trans i18nKey="general.table.token.projectInfo.modal.ok">
+                    - OK
+                  </Trans>
+                </span>
+              )}
+            </TransWrapper>
+          </ModalItems>
+        ),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+      {
+        name: 'dex',
+        icon: DexIcon,
+        desc: (
+          <ModalItems>
+            <TransWrapper>
+              <Trans i18nKey="general.table.token.projectInfo.modal.dex">
+                Listed by a decentralized exchange（
+                <Link
+                  href={
+                    lang === 'en'
+                      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                  }
+                  target={'_blank'}
+                >
+                  Submit
+                </Link>{' '}
+                proof）
+              </Trans>
+            </TransWrapper>
+            <TransWrapper>
+              {dex.moonswap ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
+                  -
+                  <Link href={dex.moonswap} target={'_blank'}>
+                    Moonswap
+                  </Link>
+                </Trans>
+              ) : (
+                <span className={'inactive'}>
+                  <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
+                    - Moonswap
+                  </Trans>
+                </span>
+              )}
+            </TransWrapper>
+          </ModalItems>
+        ),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+      {
+        name: 'track',
+        icon: CoinMarketIcon,
+        desc: (
+          <span>
+            {!isAllNull(track) ? (
+              <Trans
+                i18nKey="general.table.token.projectInfo.modal.cmc"
+                components={[
+                  <Link href={track.coinMarketCap} target={'_blank'} />,
+                  <Link
+                    href={
+                      lang === 'en'
+                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                    }
+                    target={'_blank'}
+                  />,
+                ]}
+              >
+                Listed by CoinMarketCap（Submit proof）
+              </Trans>
+            ) : (
+              <Trans
+                i18nKey="general.table.token.projectInfo.modal.cmc"
+                components={[
+                  null,
+                  <Link
+                    href={
+                      lang === 'en'
+                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                    }
+                    target={'_blank'}
+                  />,
+                ]}
+              >
+                Listed by CoinMarketCap（Submit proof）
+              </Trans>
+            )}
+          </span>
+        ),
+        isActive: false,
+        hoverable: false,
+        isWarning: false,
+        onClick: clickDetail,
+      },
+    ];
+
+    useEffect(() => {
+      const list = coinsList.map(c => {
+        let isActive = false;
+        let isWarning = false;
+        if (securityAudit[c.name] === 1) {
+          isActive = true;
+        } else if (securityAudit[c.name] === 0) {
+          if (['verify', 'zeroAdmin'].includes(c.name)) {
+            isWarning = true;
+          }
+        } else {
+          if (isAllNull(securityAudit[c.name])) {
+            if (['verify', 'zeroAdmin'].includes(c.name)) {
+              isWarning = true;
+            }
+          } else {
+            isActive = true;
+          }
+        }
+        c.isActive = isActive;
+        c.isWarning = isWarning;
+        return c;
+      });
+
+      setList(list);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const onCloseModal = () => {
       setVisible(false);
     };
+
     return (
       <ProjectWrapper>
         <IconWrapper left={isDetailPage}>
           <LeftWrapper>
-            {inactiveArray.map(key => {
-              return <span key={key}>{inactiveMap[key]}</span>;
-            })}
-            {activeArray.map(key => {
-              return <span key={key}>{activeMap[key]}</span>;
-            })}
+            {list
+              .reduce(
+                (prev, curr) => {
+                  // if (curr.isWarning) {
+                  //   prev[0].push(curr);
+                  // } else
+                  if (curr.isActive) {
+                    prev[1].push(curr);
+                  } else {
+                    prev[2].push(curr);
+                  }
+                  return prev;
+                },
+                [[], [], []],
+              )
+              .reduce((prev, curr) => {
+                prev = prev.concat(curr);
+                return prev;
+              }, [])
+              .reverse()
+              .map(({ icon, desc, ...others }, index) =>
+                React.createElement(icon, {
+                  key: index,
+                  ...others,
+                  hoverable: true,
+                }),
+              )}
           </LeftWrapper>
-          <DetailIcon onClick={clickDetail} />
+          <DetailIcon
+            onClick={clickDetail}
+            warnings={list
+              .map((l, index) =>
+                l.isWarning ? (
+                  <div key={`modalItem-warning-${index}`}>{l.tip}</div>
+                ) : (
+                  ''
+                ),
+              )
+              .filter(l => l)}
+          />
         </IconWrapper>
         <ModalWrapper>
           <Modal
@@ -152,210 +402,33 @@ export const ProjectInfo = React.memo(
               {tokenName}
             </ModalTitle>
             <Divider />
-            <ModalItem>
-              <VerifyIcon isActive={verify === 1} />
-              <span>
-                <Trans i18nKey="general.table.token.projectInfo.modal.verify">
-                  The contract has been verified (
-                  <Link href="/contract-verification">Verify the contract</Link>{' '}
-                  now!)
-                </Trans>
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <AuditIcon isActive={audit === 1} />
-              <span>
-                <Trans i18nKey="general.table.token.projectInfo.modal.audit">
-                  The contract code passes the audit (Have an audit report or
-                  related link?
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
+            {list.map(({ icon, desc, ...others }) =>
+              React.createElement(ModalItem, { key: Math.random() }, [
+                React.createElement(icon, {
+                  key: `modal-icon-${icon.name}`,
+                  ...others,
+                }),
+                React.createElement(
+                  'span',
+                  {
+                    key: `modal-desc-${icon.name}`,
+                  },
+                  desc,
+                ),
+                others.isWarning ? (
+                  <span
+                    className="modal-icon-warning"
+                    key={`modal-warning-${icon.name}`}
                   >
-                    Submit{' '}
-                  </Link>
-                  it now!)
-                </Trans>
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <SponsorIcon isActive={sponsor === 1} />
-              <span>
-                <Trans i18nKey="general.table.token.projectInfo.modal.sponsor">
-                  Accepted by Conflux’s Global Ecosystem Grants Program (
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://forum.conflux.fun/t/grant-proposal-review-process-project-eligibility/8273'
-                        : 'https://forum.conflux.fun/t/conflux/7836 '
-                    }
-                    target={'_blank'}
-                  >
-                    Apply for Grants
-                  </Link>{' '}
-                  now!)
-                </Trans>
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <OxIcon isActive={zeroAdmin === 1} />
-              <span>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .zeroAddress,
-                )}
-              </span>
-            </ModalItem>
-            <ModalItem>
-              <CexIcon isActive={!isAllNull(cex)} />
-              <ModalItems>
-                <TransWrapper>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.cex">
-                    Listed by a centralized exchange（
-                    <Link
-                      href={
-                        lang === 'en'
-                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                      }
-                      target={'_blank'}
-                    >
-                      Submit
-                    </Link>{' '}
-                    proof）
-                  </Trans>
-                </TransWrapper>
-                <TransWrapper>
-                  {cex.binance ? (
-                    <Trans i18nKey="general.table.token.projectInfo.modal.binance">
-                      -
-                      <Link href={cex?.binance} target={'_blank'}>
-                        Binance
-                      </Link>
-                    </Trans>
-                  ) : (
-                    <span className={'inactive'}>
-                      <Trans i18nKey="general.table.token.projectInfo.modal.binance">
-                        - Binance
-                      </Trans>
-                    </span>
-                  )}
-                </TransWrapper>
-                <TransWrapper>
-                  {cex.huobi ? (
-                    <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
-                      -
-                      <Link href={cex?.huobi} target={'_blank'}>
-                        HuoBi
-                      </Link>
-                    </Trans>
-                  ) : (
-                    <span className={'inactive'}>
-                      <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
-                        - HuoBi
-                      </Trans>
-                    </span>
-                  )}
-                </TransWrapper>
-                <TransWrapper>
-                  {cex.ok ? (
-                    <Trans i18nKey="general.table.token.projectInfo.modal.ok">
-                      -
-                      <Link href={cex?.ok} target={'_blank'}>
-                        OK
-                      </Link>
-                    </Trans>
-                  ) : (
-                    <span className={'inactive'}>
-                      <Trans i18nKey="general.table.token.projectInfo.modal.ok">
-                        - OK
-                      </Trans>
-                    </span>
-                  )}
-                </TransWrapper>
-              </ModalItems>
-            </ModalItem>
-            <ModalItem>
-              <DexIcon isActive={!isAllNull(dex)} />
-              <ModalItems>
-                <TransWrapper>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.dex">
-                    Listed by a decentralized exchange（
-                    <Link
-                      href={
-                        lang === 'en'
-                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                      }
-                      target={'_blank'}
-                    >
-                      Submit
-                    </Link>{' '}
-                    proof）
-                  </Trans>
-                </TransWrapper>
-                <TransWrapper>
-                  {dex.moonswap ? (
-                    <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
-                      -
-                      <Link href={dex.moonswap} target={'_blank'}>
-                        Moonswap
-                      </Link>
-                    </Trans>
-                  ) : (
-                    <span className={'inactive'}>
-                      <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
-                        - Moonswap
-                      </Trans>
-                    </span>
-                  )}
-                </TransWrapper>
-              </ModalItems>
-            </ModalItem>
-            <ModalItem>
-              <CoinMarketIcon isActive={!isAllNull(track)} />
-              <span>
-                {!isAllNull(track) ? (
-                  <Trans
-                    i18nKey="general.table.token.projectInfo.modal.cmc"
-                    components={[
-                      <Link href={track.coinMarketCap} target={'_blank'} />,
-                      <Link
-                        href={
-                          lang === 'en'
-                            ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                            : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                        }
-                        target={'_blank'}
-                      />,
-                    ]}
-                  >
-                    Listed by CoinMarketCap（ Submit proof）Rate: --
-                  </Trans>
-                ) : (
-                  <Trans
-                    i18nKey="general.table.token.projectInfo.modal.cmc"
-                    components={[
-                      null,
-                      <Link
-                        href={
-                          lang === 'en'
-                            ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                            : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                        }
-                        target={'_blank'}
-                      />,
-                    ]}
-                  >
-                    Listed by CoinMarketCap（Submit proof）Rate: --
-                  </Trans>
-                )}
-              </span>
-            </ModalItem>
+                    <Image
+                      width="18px"
+                      src={iconWarning}
+                      preview={false}
+                    ></Image>
+                  </span>
+                ) : null,
+              ]),
+            )}
             <Divider />
             <RemarkTitle>
               {t(
@@ -448,11 +521,15 @@ const ModalItem = styled.div`
   > span {
     margin-left: 12px;
   }
+
+  .modal-icon-warning {
+    display: flex;
+    align-items: center;
+  }
 `;
 const ModalItems = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
 `;
 const TransWrapper = styled.div`
   .inactive {

@@ -8,6 +8,7 @@
     "nameTag": "Contract Name Tag",
     "registered": "Registered",
     "site": "Official Site",
+    "tokenSite": "Official Site",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
     "tokenTracker": "Token Tracker",
@@ -374,6 +375,7 @@
     "btn": "Switch the network to {{network}}"
   },
   "token": {
+    "website": "Official Site",
     "token": "Token",
     "totalSupplay": "Total Supply",
     "contract": "Contract",
@@ -558,8 +560,8 @@
         "reset": "Reset"
       },
       "others": {
-        "recommend": "Recommend",
-        "recommendTip": "Tokens with the top 10 txn count in the last 7 days",
+        "recommend": "Active Tokens",
+        "recommendTip": "Only tokens found in the table are displayed",
         "searchResult": "Search Result",
         "noData": "No data"
       }
@@ -692,9 +694,11 @@
           "projectInfo": "Project Info",
           "security": "The token may have security issues, please be aware of risks",
           "verify": "The contract has been verified",
+          "unverify": "Attention: The contract has not been verified ",
           "audit": "The contract code passes the audit",
           "sponsor": "Accepted by Conflux’s Global Ecosystem Grants Program ",
           "zeroAddress": "The admin of the contract is zero address",
+          "notZeroAddress": "Attention: The contract owner is non-zero address",
           "listedByCentralized": "Listed by a centralized exchange",
           "listedByDecentralized": "Listed by a decentralized exchange ",
           "listedByCMC": "Listed by CoinMarketCap",
@@ -702,16 +706,18 @@
           "modal": {
             "security": "The token may have security issues, please be aware of risks (Refer to the \"Remark\" below)",
             "verify": "The contract has been verified (<1>Verify the contract</1> now!)",
+            "unverify": "Attention: The contract has not been verified (<1>Verify the contract</1> now!)",
             "audit": "The contract code passes the audit (Have an audit report or related link? <1>Submit</1> it now!)",
             "sponsor": "Accepted by Conflux’s Global Ecosystem Grants Program (<1>Apply for Grants</1> now!)",
             "zeroAddress": "The contract admin is zero address",
-            "cex": "Listed by a centralized exchange（<1>Submit</1> proof）",
+            "notZeroAddress": "Attention: The contract owner is non-zero address",
+            "cex": "Listed by a centralized exchange (<1>Submit</1> proof)",
             "binance": "- <1>Binance</1>",
             "huoBi": "- <1>HuoBi</1>",
             "ok": "- <1>OK</1>",
-            "dex": "Listed by a decentralized exchange（<1>Submit</1> proof）",
+            "dex": "Listed by a decentralized exchange (<1>Submit</1> proof)",
             "moonswap": "- <1>Moonswap</1>",
-            "cmc": "Listed by <0>CoinMarketCap</0>（<1>Submit</1> proof）Rate: --",
+            "cmc": "Listed by <0>CoinMarketCap</0> (<1>Submit</1> proof)",
             "remarkTitle": "Additional Remark:",
             "remarkContent1": "If any one of the following actions occurs, the token will be removed and will never be re-listed again:",
             "remarkContent2": "- Involved in phishing, pyramid scheme, frauds, etc.",
@@ -860,6 +866,7 @@
     "noticeFourthOne": "3. If you don't have ConfluxPortal as a browser extension installed yet, please visit",
     "noticeFourthTwo": "for instructions.",
     "noticeFive": "4. If the Foundation sponsors a contract, the upper bound of the gas price is at 10 Gdrip/txn; if the Foundation does not sponsor a contract, there is no cap on the gas price of each transaction.",
+    "noticeSix": "5. You can apply only if the available storage fee balance is less than 600 CFX or the available gas fee balance is less than 10 CFX.",
     "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
     "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
     "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
@@ -1342,6 +1349,7 @@
     "subtitle": "Check NFT owned by an account by searching for an address (Only support the NFTs in the current token list)",
     "inputPlaceholder": "Please enter an address",
     "incorrectFormat": "Invalid address format",
+    "incorrectAddressType": "Invalid address type, only support for account address",
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"

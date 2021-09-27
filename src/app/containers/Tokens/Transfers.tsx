@@ -127,7 +127,6 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       <TablePanelNew
         url={url}
         columns={columns}
-        rowKey={(row, index) => `${row.transactionHash}${index}`}
         title={title}
         footer={() => tableFooter}
       ></TablePanelNew>

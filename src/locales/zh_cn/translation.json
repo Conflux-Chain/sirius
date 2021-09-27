@@ -8,6 +8,7 @@
     "nameTag": "合约名称标签",
     "registered": "已注册",
     "site": "官方网站",
+    "tokenSite": "官方网站",
     "contractIcon": "合约图标",
     "remove": "移除",
     "tokenTracker": "代币搜索器",
@@ -374,6 +375,7 @@
     "btn": "切换网络至 {{network}}"
   },
   "token": {
+    "website": "官方网站",
     "token": "代币",
     "totalSupplay": "总供应量",
     "contract": "合约",
@@ -558,8 +560,8 @@
         "reset": "重置"
       },
       "others": {
-        "recommend": "推荐",
-        "recommendTip": "最近 7 天内交易数排名前 10 的代币",
+        "recommend": "活跃代币",
+        "recommendTip": "仅展示表格中记录的所有代币",
         "searchResult": "搜索结果",
         "noData": "无数据"
       }
@@ -692,9 +694,11 @@
           "projectInfo": "项目信息",
           "security": "该代币可能出现安全性问题，请防范风险",
           "verify": "合约已通过验证",
+          "unverify": "注意：该合约尚未验证",
           "audit": "合约代码已通过审计",
           "sponsor": "已获得 Conflux 生态激励",
           "zeroAddress": "合约的管理者为零地址",
+          "notZeroAddress": "注意：该合约的拥有者为非零地址",
           "listedByCentralized": "被中心化交易所收录",
           "listedByDecentralized": "被去中心化交易所收录",
           "listedByCMC": "被 CoinMarketCap 收录",
@@ -702,15 +706,17 @@
           "modal": {
             "security": "该代币可能出现安全性问题，请防范风险（详情请查看下方“附加说明”）",
             "verify": "合约已通过验证（立刻<1>前往验证合约</1>）",
+            "unverify": "注意：该合约尚未验证（立刻<1>前往验证合约</1>）",
             "audit": "合约代码已通过审计（已有审计报告或相关链接？立刻前往<1>提交</1>）",
             "sponsor": "已获得 Conflux 生态激励（立刻前往<1>申请激励</1>）",
             "zeroAddress": "合约管理者为零地址",
+            "notZeroAddress": "注意：该合约的拥有者为非零地址",
             "cex": "被中心化交易所收录（前往<1>提交凭证</1>）",
             "binance": "- <1>币安</1>",
             "huoBi": "- <1>火币</1>",
             "ok": "- <1>OK</1>",
             "dex": "被去中心化交易所收录（前往<1>提交凭证</1>）",
-            "cmc": "被<0>CoinMarketCap</0>收录（前往<1>提交凭证</1>）排名：--",
+            "cmc": "被<0>CoinMarketCap</0>收录（前往<1>提交凭证</1>）",
             "remarkTitle": "附加说明：",
             "remarkContent1": "如果出现下列情况之一，代币将被列入黑名单：",
             "remarkContent2": "- 涉及钓鱼、传销、诈骗等行为的",
@@ -859,6 +865,7 @@
     "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
     "noticeFourthTwo": "下载。",
     "noticeFive": "4. 若合约为基金会赞助，则燃气上限为 10 Gdrip/交易；若合约不为基金会赞助，则燃气费不设上限。",
+    "noticeSix": "5. 您的“存储费当前可用余额”多于 600 CFX 且“燃气费当前可用余额”多于 10 CFX，暂时不能再次申请。",
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
     "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",
@@ -1341,6 +1348,7 @@
     "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
     "inputPlaceholder": "请输入地址",
     "incorrectFormat": "地址格式错误",
+    "incorrectAddressType": "地址类型错误，仅支持查询个人账户地址",
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"

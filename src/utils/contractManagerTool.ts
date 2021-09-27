@@ -51,6 +51,7 @@ const zipContractAndToken = SDK.format(
       .$before(parseString)
       .$after(gzip)
       .$or(undefined),
+    tokenWebsite: SDK.format.bytes.$before(parseString).$or(undefined),
   },
   { pick: true, strict: true },
 );
@@ -189,6 +190,7 @@ export function packToken(options) {
  * @param [options.optimizeRuns] {number} - contract code compile optimize runs times
  * @param [options.icon] {Buffer} - contract icon bytes (will be gzip)
  * @param [options.tokenIcon] {Buffer} - token icon bytes (will be gzip)
+ * @param [options.tokenWebsite] {string}
  * @return {string[]} encoded transaction data, spilt by max transaction size
  *
  * @example
@@ -212,16 +214,19 @@ export function packToken(options) {
  ]
  */
 export function packContractAndToken(options) {
-  const { address, tokenIcon, ...object } = zipContractAndToken(options);
+  const { address, tokenIcon, tokenWebsite, ...object } = zipContractAndToken(
+    options,
+  );
+
   const array = [{ key: `contract/list/${address}`, value: address }];
   Object.entries(object).forEach(([field, value]) => {
     array.push({ key: `contract/${address}/${field}`, value });
   });
   // push token info
-  if (tokenIcon) {
-    array.push({ key: `token/list/${address}`, value: address });
-    array.push({ key: `token/${address}/icon`, value: tokenIcon });
-  }
+  array.push({ key: `token/list/${address}`, value: address });
+  array.push({ key: `token/${address}/icon`, value: tokenIcon });
+  array.push({ key: `token/${address}/website`, value: tokenWebsite });
+
   const announceArray = formatAnnounceArray(array);
   return chunk(announceArray).map(group => announcement.announce(group).data);
 }

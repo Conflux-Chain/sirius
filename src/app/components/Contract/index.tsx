@@ -7,9 +7,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
-import { media } from '../../../styles/media';
+import { media } from 'styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import {
   ICON_DEFAULT_CONTRACT,
@@ -20,25 +20,19 @@ import {
   byteToKb,
   isContractAddress,
   isInnerContractAddress,
-  tranferToLowerCase,
   validURL,
   getAddressInputPlaceholder,
-} from '../../../utils';
-import {
-  reqContract,
-  reqContractNameTag,
-  reqToken,
-} from '../../../utils/httpRequest';
+} from 'utils';
+import { reqContract, reqContractNameTag, reqToken } from 'utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
 import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
 import { DappButton } from '../DappButton/Loadable';
-import { packContractAndToken } from '../../../utils/contractManagerTool';
-import { formatAddress } from '../../../utils';
-import { TXN_ACTION } from '../../../utils/constants';
-import { PageHeader } from '../PageHeader/Loadable';
+import { packContractAndToken } from 'utils/contractManagerTool';
+import { TXN_ACTION } from 'utils/constants';
+import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
 
@@ -53,15 +47,7 @@ interface RequestBody {
   [key: string]: any;
 }
 const MAXSIZEFORICON = 30; //kb
-const fieldsContract = [
-  'address',
-  'type',
-  'name',
-  'website',
-  'token',
-  'iconUrl',
-  'typeCode',
-];
+const fieldsContract = ['token'];
 export const ContractOrTokenInfo = ({
   contractDetail,
   type,
@@ -81,6 +67,7 @@ export const ContractOrTokenInfo = ({
     return updateInfoType === 'token' ? Math.random().toString().substr(2) : ''; // maybe there is not contract name when update token info
   });
   const [site, setSite] = useState('');
+  const [tokenSite, setTokenSite] = useState('');
   const [contractImgSrc, setContractImgSrc] = useState('');
   const [tokenImgSrc, setTokenImgSrc] = useState('');
   const [btnShouldClick, setBtnShouldClick] = useState(true);
@@ -89,12 +76,14 @@ export const ContractOrTokenInfo = ({
   const [errorMsgForName, setErrorMsgForName] = useState('');
   const [warningMsgTimesForName, setWarningMsgTimesForName] = useState(0);
   const [errorMsgForSite, setErrorMsgForSite] = useState('');
+  const [errorMsgForTokenSite, setErrorMsgForTokenSite] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
-  const [isAddressError, setIsAddressError] = useState(true);
-  const [isAdminError, setIsAdminError] = useState(true);
-  const [isErc20Error, setIsErc20Error] = useState(true);
-  const [isNameError, setIsNameError] = useState(true);
+  const [isAddressError, setIsAddressError] = useState(false);
+  const [isAdminError, setIsAdminError] = useState(false);
+  const [isErc20Error, setIsErc20Error] = useState(false);
+  const [isNameError, setIsNameError] = useState(false);
   const [isSiteError, setIsSiteError] = useState(false);
+  const [isTokenSiteError, setIsTokenSiteError] = useState(false);
   const [txData, setTxData] = useState('');
   const fileContractInputRef = React.createRef<any>();
   const fileTokenInputRef = React.createRef<any>();
@@ -121,38 +110,32 @@ export const ContractOrTokenInfo = ({
     setSite(e.target.value);
   };
 
+  const tokenSiteInputChanger = e => {
+    setTokenSite(e.target.value);
+  };
+
+  const contractDetailStr = JSON.stringify(contractDetail);
+
   useEffect(() => {
-    setContractImgSrc(contractDetail.iconUrl || ''); // contract has no icon, and update contract icon card is hide
-    setTokenImgSrc(contractDetail.token && contractDetail.token.iconUrl);
+    setTokenImgSrc(contractDetail?.token?.iconUrl);
     if (updateInfoType === 'contract') {
       setContractName(contractDetail.name || '');
     }
     setSite(contractDetail.website || '');
+    setTokenSite(contractDetail?.token?.website || '');
     switch (type) {
       case 'create':
         setAddressVal(address || '');
-        // setAddressDisabled(false);
         break;
       case 'edit':
-        setAddressVal(formatAddress(contractDetail.address));
-        // setAddressDisabled(true);
+        setAddressVal(contractDetail.address);
         checkAdminThenToken(
           contractDetail.token && contractDetail.token.iconUrl,
         );
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    address,
-    contractDetail.address,
-    contractDetail.iconUrl,
-    contractDetail.name,
-    contractDetail.tokenIcon,
-    contractDetail.website,
-    contractDetail.token,
-    t,
-    type,
-  ]);
+  }, [address, contractDetailStr, type]);
   useEffect(
     () => {
       let isSubmitable = false;
@@ -163,7 +146,7 @@ export const ContractOrTokenInfo = ({
           !isErc20Error &&
           (updateInfoType === 'contract'
             ? !isNameError && !isSiteError
-            : tokenImgSrc)
+            : !isTokenSiteError)
         ) {
           isSubmitable = true;
           setTxData(getTxData());
@@ -182,6 +165,7 @@ export const ContractOrTokenInfo = ({
       addressVal,
       contractName,
       site,
+      tokenSite,
       tokenImgSrc,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       accounts[0],
@@ -190,6 +174,7 @@ export const ContractOrTokenInfo = ({
       isErc20Error,
       isNameError,
       isSiteError,
+      isTokenSiteError,
     ],
   );
 
@@ -201,6 +186,7 @@ export const ContractOrTokenInfo = ({
     if (name) {
       if (name.length > 35) {
         setIsNameError(true);
+        setWarningMsgTimesForName(0);
         setErrorMsgForName('contract.invalidNameTag');
       } else {
         setIsNameError(false);
@@ -208,6 +194,7 @@ export const ContractOrTokenInfo = ({
       }
     } else {
       setIsNameError(true);
+      setWarningMsgTimesForName(0);
       setErrorMsgForName('contract.requiredNameTag');
     }
   }
@@ -244,13 +231,48 @@ export const ContractOrTokenInfo = ({
     setContractName(value);
   };
 
-  const siteOnBlur = () => {
-    checkSite();
+  function checkSite(site, type) {
+    if (site && !validURL(site)) {
+      if (type === 'contract') {
+        setIsSiteError(true);
+        setErrorMsgForSite('contract.invalidUrl');
+      } else if (type === 'token') {
+        setIsTokenSiteError(true);
+        setErrorMsgForTokenSite('contract.invalidUrl');
+      }
+    } else {
+      if (type === 'contract') {
+        setIsSiteError(false);
+        setErrorMsgForSite('');
+      } else if (type === 'token') {
+        setIsTokenSiteError(false);
+        setErrorMsgForTokenSite('');
+      }
+    }
+  }
+
+  const siteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'contract');
   };
+
+  const tokenSiteOnBlur = e => {
+    const value = e.target.value;
+    setTokenSite(value);
+    checkSite(value, 'token');
+  };
+
   useEffect(() => {
-    checkSite();
+    checkSite(site, 'contract');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [site]);
+
+  useEffect(() => {
+    checkSite(tokenSite, 'token');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tokenSite]);
+
   useEffect(() => {
     if (accounts[0]) {
       checkAdminThenToken(tokenImgSrc);
@@ -260,9 +282,9 @@ export const ContractOrTokenInfo = ({
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
-  const removeContractIcon = () => {
-    setContractImgSrc('');
-  };
+  // const removeContractIcon = () => {
+  //   setContractImgSrc('');
+  // };
   const removeTokenIcon = () => {
     setTokenImgSrc('');
     setIsErc20Error(false);
@@ -311,17 +333,19 @@ export const ContractOrTokenInfo = ({
   function getTxData() {
     try {
       const bodyParams: RequestBody = {};
-      bodyParams.address = formatAddress(tranferToLowerCase(addressVal));
+      bodyParams.address = addressVal;
       if (updateInfoType === 'contract') {
         bodyParams.name = contractName; // only submit name when update contract info
       }
       bodyParams.website = site;
+      bodyParams.tokenWebsite = tokenSite;
       bodyParams.icon = contractImgSrc;
       if (tokenImgSrc) {
         bodyParams.tokenIcon = tokenImgSrc;
       } else {
         bodyParams.tokenIcon = '';
       }
+
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
@@ -340,10 +364,8 @@ export const ContractOrTokenInfo = ({
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
               if (
-                formatAddress(dataContractInfo.from) ===
-                  formatAddress(accounts[0]) ||
-                formatAddress(dataContractInfo.admin) ===
-                  formatAddress(accounts[0])
+                dataContractInfo.from === accounts[0] ||
+                dataContractInfo.admin === accounts[0]
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {
@@ -376,15 +398,7 @@ export const ContractOrTokenInfo = ({
       setErrorMsgForAddress('contract.requiredAddress');
     }
   }
-  function checkSite() {
-    if (site && !validURL(site)) {
-      setIsSiteError(true);
-      setErrorMsgForSite('contract.invalidUrl');
-    } else {
-      setIsSiteError(false);
-      setErrorMsgForSite('');
-    }
-  }
+
   const isVerified = contractDetail.verify?.exactMatch;
 
   let isDisabled = false;
@@ -392,7 +406,7 @@ export const ContractOrTokenInfo = ({
     isDisabled =
       !btnShouldClick || isAddressError || isNameError || isSiteError;
   } else {
-    isDisabled = !btnShouldClick || !tokenImgSrc;
+    isDisabled = !btnShouldClick || isTokenSiteError;
   }
 
   const addressInputPlaceholder = useMemo(() => {
@@ -488,7 +502,29 @@ export const ContractOrTokenInfo = ({
                 </div>
               </div>
             </>
-          ) : null}
+          ) : (
+            <div className="lineContainer">
+              <div className="firstLine">
+                <LabelWithIcon>
+                  {t(translations.contract.tokenSite)}
+                </LabelWithIcon>
+                <SkelontonContainer shown={loading}>
+                  <Input
+                    className="inputComp"
+                    defaultValue={tokenSite}
+                    style={inputStyle}
+                    onChange={tokenSiteInputChanger}
+                    placeholder={t(translations.contract.sitePlaceholder)}
+                    onBlur={tokenSiteOnBlur}
+                  />
+                </SkelontonContainer>
+              </div>
+              <div>
+                <span className="blankSpan"></span>
+                <span className="errorSpan">{t(errorMsgForTokenSite)}</span>
+              </div>
+            </div>
+          )}
         </div>
         {updateInfoType === 'token' ? (
           <div className="bodyContainer second">
@@ -516,7 +552,7 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeContractIcon}>
+                  {/* <div className="secondItem" onClick={removeContractIcon}>
                     <img
                       src={imgRemove}
                       className="labelIcon"
@@ -525,7 +561,7 @@ export const ContractOrTokenInfo = ({
                     <span className="labelText">
                       {t(translations.contract.remove)}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
@@ -564,16 +600,18 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  <div className="secondItem" onClick={removeTokenIcon}>
-                    <img
-                      src={imgRemove}
-                      className="labelIcon"
-                      alt="remove"
-                    ></img>
-                    <span className="labelText">
-                      {t(translations.contract.remove)}
-                    </span>
-                  </div>
+                  {tokenImgSrc ? null : (
+                    <div className="secondItem" onClick={removeTokenIcon}>
+                      <img
+                        src={imgRemove}
+                        className="labelIcon"
+                        alt="remove"
+                      ></img>
+                      <span className="labelText">
+                        {t(translations.contract.remove)}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
@@ -621,6 +659,12 @@ const Wrapper = styled.div`
 
   .inputComp {
     background-color: #fafbfc;
+
+    input[readonly] {
+      color: #999 !important;
+      cursor: not-allowed;
+    }
+
     .input-wrapper {
       background-color: #fafbfc;
       margin: 0;

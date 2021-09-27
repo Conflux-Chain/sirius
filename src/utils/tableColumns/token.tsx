@@ -199,6 +199,7 @@ export const token = {
 };
 
 const Token2 = ({ row }) => {
+  const { t } = useTranslation();
   return (
     <StyledIconWrapper>
       {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
@@ -231,7 +232,10 @@ const Token2 = ({ row }) => {
               ) : (
                 <AddressContainer
                   value={row?.transferTokenInfo?.address}
-                  alias={row?.transferTokenInfo?.name || null}
+                  alias={
+                    row?.transferTokenInfo?.name ||
+                    t(translations.general.notAvailable)
+                  }
                   showIcon={false}
                 />
               )}
@@ -779,8 +783,8 @@ export const projectInfo = {
       </Translation>
     </ContentWrapper>
   ),
-  dataIndex: 'projectInfo',
-  key: 'projectInfo',
+  dataIndex: 'securityCredits',
+  key: 'securityCredits',
   render: (value, row) => {
     const { securityAudit, name } = row;
     return (

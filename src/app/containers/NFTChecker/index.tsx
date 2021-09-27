@@ -16,6 +16,7 @@ import { Col, Input, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import {
   isCurrentNetworkAddress,
+  isAccountAddress,
   toThousands,
   getAddressInputPlaceholder,
 } from 'utils';
@@ -62,7 +63,9 @@ export function NFTChecker() {
   const [address, setAddress] = useState<string>(routerAddress);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
-  const [addressFormatError, setAddressFormatError] = useState<boolean>(false);
+  const [addressFormatErrorMsg, setAddressFormatErrorMsg] = useState<string>(
+    '',
+  );
   const [displayTokenIds, setDisplayTokenIds] = useState<number[]>([]);
   const [NFTBalances, setNFTBalances] = useState<NFTBalancesType[]>([]);
   const [selectedNFT, setSelectedNFT] = useState<NFTBalancesType>(
@@ -76,12 +79,22 @@ export function NFTChecker() {
   const page = Math.floor((Number(skip) || 0) / pageSize) + 1;
   const total = selectedNFT.balance;
 
-  const validateAddress = address => {
-    return isCurrentNetworkAddress(address);
+  const validateAddress = (address, cb) => {
+    if (isCurrentNetworkAddress(address)) {
+      if (isAccountAddress(address)) {
+        cb && cb();
+      } else {
+        setAddressFormatErrorMsg(
+          t(translations.nftChecker.incorrectAddressType),
+        );
+      }
+    } else {
+      setAddressFormatErrorMsg(t(translations.nftChecker.incorrectFormat));
+    }
   };
 
   const handleNFTSearch = async () => {
-    if (validateAddress(address)) {
+    validateAddress(address, async () => {
       // ga
       trackEvent({
         category: ScanEvent.function.category,
@@ -132,14 +145,12 @@ export function NFTChecker() {
       } catch (e) {}
 
       setLoading(false);
-    } else {
-      setAddressFormatError(true);
-    }
+    });
   };
 
   const handleAddressChange = e => {
     setAddress(e.target.value.trim());
-    setAddressFormatError(false);
+    setAddressFormatErrorMsg('');
   };
 
   const handlePaginationChange = (page, pageSize) => {
@@ -196,17 +207,13 @@ export function NFTChecker() {
           onChange={handleAddressChange}
           placeholder={addressInputPlaceholder}
           onSearch={value => {
-            if (validateAddress(value)) {
+            validateAddress(value, () => {
               history.push(`/nft-checker/${value}`);
-            } else {
-              setAddressFormatError(true);
-            }
+            });
           }}
         />
-        {addressFormatError ? (
-          <div className="convert-address-error">
-            {t(translations.nftChecker.incorrectFormat)}
-          </div>
+        {addressFormatErrorMsg.length ? (
+          <div className="convert-address-error">{addressFormatErrorMsg}</div>
         ) : null}
       </SearchWrapper>
       <StyledResultWrapper>
