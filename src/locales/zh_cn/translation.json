@@ -865,6 +865,7 @@
     "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
     "noticeFourthTwo": "下载。",
     "noticeFive": "4. 若合约为基金会赞助，则燃气上限为 10 Gdrip/交易；若合约不为基金会赞助，则燃气费不设上限。",
+    "noticeSix": "5. 您的“存储费当前可用余额”多于 600 CFX 且“燃气费当前可用余额”多于 10 CFX，暂时不能再次申请。",
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "基金会可提供存储费赞助或燃气费赞助不足。",
     "errReplaceThird": "无法替换存储费或燃气费的第三方赞助者。",

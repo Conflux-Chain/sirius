@@ -101,7 +101,9 @@ export function Sponsor() {
     // cip-37 compatible
     const address = formatAddress(_address);
     const sponsorInfo = await CFX.provider.call('cfx_getSponsorInfo', address);
+
     const { flag } = await fetchIsAppliable(address);
+
     setIsFlag(flag);
     if (flag) {
       const { data } = await faucet.apply(address);
@@ -220,35 +222,43 @@ export function Sponsor() {
     // cip-37 compatible
     const address = formatAddress(_address);
     const { flag, message } = await faucet.checkAppliable(address);
+
     if (!flag) {
-      //can not apply sponsor this contract
-      switch (message) {
-        case 'ERROR_GAS_SPONSORED_FUND_UNUSED':
-        case 'ERROR_GAS_OVER_GAS_TOTAL_LIMIT':
-        case 'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED':
-        case 'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT':
-          setErrorMsgForApply(errReachToMax);
-          break;
-        case 'ERROR_GAS_FAUCET_OUT_OF_MONEY':
-        case 'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY':
-          setErrorMsgForApply(errInsufficientFee);
-          break;
-        case 'ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-          setErrorMsgForApply(errReplaceThird);
-          break;
-        case 'ERROR_ADDRESS_IS_NOT_CONTRACT':
-          setErrorMsgForApply(errContractNotFound);
-          break;
-        case 'ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR':
-          setErrorMsgForApply(errCannotReplaced);
-          break;
-        case 'ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET':
-          setErrorMsgForApply(errUpgraded);
-          break;
-        default:
-          setErrorMsgForApply('');
-          break;
+      if (
+        [
+          'ERROR_GAS_SPONSORED_FUND_UNUSED',
+          'ERROR_GAS_OVER_GAS_TOTAL_LIMIT',
+          'ERROR_COLLATERAL_SPONSORED_FUND_UNUSED',
+          'ERROR_COLLATERAL_OVER_COLLATERAL_TOTAL_LIMIT',
+        ].some(m => message.indexOf(m) > -1)
+      ) {
+        setErrorMsgForApply(errReachToMax);
+      } else if (
+        [
+          'ERROR_GAS_FAUCET_OUT_OF_MONEY',
+          'ERROR_COLLATERAL_FAUCET_OUT_OF_MONEY',
+        ].some(m => message.indexOf(m) > -1)
+      ) {
+        setErrorMsgForApply(errInsufficientFee);
+      } else if (
+        message.indexOf('ERROR_GAS_CANNOT_REPLACE_THIRD_PARTY_SPONSOR') > -1
+      ) {
+        setErrorMsgForApply(errReplaceThird);
+      } else if (message.indexOf('ERROR_ADDRESS_IS_NOT_CONTRACT') > -1) {
+        setErrorMsgForApply(errContractNotFound);
+      } else if (
+        message.indexOf('ERROR_COLLATERAL_CANNOT_REPLACE_THIRD_PARTY_SPONSOR') >
+        -1
+      ) {
+        setErrorMsgForApply(errCannotReplaced);
+      } else if (
+        message.indexOf('ERROR_COLLATERAL_CANNOT_REPLACE_OLD_FAUCET') > -1
+      ) {
+        setErrorMsgForApply(errUpgraded);
+      } else {
+        setErrorMsgForApply(message);
       }
+
       setCanApply(false);
     } else {
       setCanApply(true);
@@ -302,6 +312,7 @@ export function Sponsor() {
       );
     }
   };
+
   return (
     <>
       <Helmet>
@@ -540,6 +551,7 @@ export function Sponsor() {
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
             t(translations.sponsor.noticeFive),
+            t(translations.sponsor.noticeSix),
           ]}
         ></Remark>
       </Wrapper>
@@ -733,7 +745,7 @@ const ApplyContainer = styled.div`
   margin: 1.7143rem 0;
 `;
 const ErrorMsgContainer = styled.div`
-  margin-top: 0.5714rem;
+  margin-top: -0.7143rem;
   margin-bottom: 0.5714rem;
   line-height: 1.5714rem;
   display: flex;
