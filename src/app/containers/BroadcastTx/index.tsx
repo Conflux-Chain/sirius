@@ -18,7 +18,7 @@ export function BroadcastTx() {
   const [value, setValue] = useState('0x');
   const [txHash, setTxHash] = useState('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [modalShown, setModalShown] = useState<boolean>(false);
+  const [modalShow, setModalShow] = useState<boolean>(false);
 
   const handleConvert = async () => {
     setLoading(true);
@@ -26,7 +26,7 @@ export function BroadcastTx() {
     try {
       const txHash = await CFX.sendRawTransaction(value);
       setTxHash(txHash);
-      setModalShown(true);
+      setModalShow(true);
       trackEvent({
         category: ScanEvent.function.category,
         action: ScanEvent.function.action.broadcastTx,
@@ -89,9 +89,8 @@ export function BroadcastTx() {
         ) : null}
 
         <TxnStatusModal
-          show={modalShown}
-          status={'success'}
-          onClose={() => setModalShown(false)}
+          show={modalShow}
+          onClose={() => setModalShow(false)}
           hash={txHash}
         />
       </StyledInputWrapper>
