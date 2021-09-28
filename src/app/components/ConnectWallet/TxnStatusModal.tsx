@@ -1,10 +1,12 @@
-import React from 'react';
-import { Modal } from '@cfxjs/react-ui';
+import React, { useEffect, useState } from 'react';
+import { Modal } from '@jnoodle/antd';
 import styled from 'styled-components/macro';
 import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getEllipsStr } from 'utils';
+import { getTransactionLoop } from 'utils/hooks/useGetTxnStatus';
+import lodash from 'lodash';
 
 import imgSuccessBig from 'images/success_big.png';
 import imgRejected from 'images/rejected.png';
@@ -18,10 +20,12 @@ interface StatusModalProps {
   errorText?: React.ReactNode;
 }
 interface TxnStatusModalProps {
-  status: string;
+  status?: string;
   onClose?: () => void;
   hash: string;
   show: boolean;
+  onTxSuccess?: (receipt: any) => void;
+  onTxError?: (receipt: any) => void;
   loadingText?: React.ReactNode;
   successText?: React.ReactNode;
   errorText?: React.ReactNode;
@@ -64,10 +68,16 @@ export const StatusModal = ({
   }
 
   return (
-    <Modal closable open={show} onClose={onClose}>
-      <Modal.Content>
-        <StyledStatusModalWrapper>{body}</StyledStatusModalWrapper>
-      </Modal.Content>
+    <Modal
+      closable
+      visible={show}
+      onCancel={onClose}
+      footer={null}
+      width="400px"
+      maskClosable={false}
+      centered
+    >
+      <StyledStatusModalWrapper>{body}</StyledStatusModalWrapper>
     </Modal>
   );
 };
@@ -80,13 +90,48 @@ StatusModal.defaultProps = {
   errorText: 'error',
 };
 
+// compatible with outer status and inner tx status, if no outer status, then will loop tx status
 export const TxnStatusModal = ({
-  status,
+  status: oStatus,
   onClose,
-  hash,
-  show,
+  hash = '',
+  show = false,
+  onTxSuccess,
+  onTxError,
 }: TxnStatusModalProps) => {
   const { t } = useTranslation();
+  const [iStatus, setIStatus] = useState('');
+
+  useEffect(() => {
+    if (show && !oStatus && hash) {
+      getTransactionLoop(hash, {
+        callback(receipt) {
+          const status = receipt?.status;
+          if (!lodash.isNil(status)) {
+            if (status === 0) {
+              setIStatus('success');
+              onTxSuccess && onTxSuccess(receipt);
+            } else {
+              setIStatus('error');
+              onTxError && onTxError(receipt);
+            }
+          }
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hash, show, oStatus]);
+
+  useEffect(() => {
+    if (show) {
+      setIStatus('loading');
+    } else {
+      setIStatus('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show]);
+
+  const status = oStatus || iStatus;
 
   const loadingText = (
     <StyledTxnStatusModalWrapper>
@@ -96,7 +141,7 @@ export const TxnStatusModal = ({
   const successText = (
     <StyledTxnStatusModalWrapper>
       <div className="txContainer">
-        <span className="label">{t(translations.sponsor.txHash)}:</span>
+        <span className="label">{t(translations.sponsor.txHash)}: </span>
         <a
           href={`/transaction/${hash}`}
           target="_blank"
@@ -128,7 +173,7 @@ export const TxnStatusModal = ({
 TxnStatusModal.defaultProps = {
   hash: '',
   show: false,
-  status: 'loading',
+  status: '',
 };
 
 const StyledStatusModalWrapper = styled.div`
