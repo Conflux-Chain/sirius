@@ -25,7 +25,6 @@ import {
 } from 'utils';
 import { reqContract, reqContractNameTag, reqToken } from 'utils/httpRequest';
 import SkelontonContainer from '../SkeletonContainer';
-import imgRemove from 'images/contract/remove.svg';
 import imgUpload from 'images/contract/upload.svg';
 import imgWarning from 'images/warning.png';
 import { usePortal } from 'utils/hooks/usePortal';
@@ -282,17 +281,6 @@ export const ContractOrTokenInfo = ({
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
-  // const removeContractIcon = () => {
-  //   setContractImgSrc('');
-  // };
-  const removeTokenIcon = () => {
-    setTokenImgSrc('');
-    setIsErc20Error(false);
-    if (warningMessage === 'contract.errorTokenICon') {
-      setWarningMessage('');
-    }
-  };
-
   const uploadTokenIcon = () => {
     fileTokenInputRef.current.click();
   };
@@ -349,7 +337,7 @@ export const ContractOrTokenInfo = ({
       const data = packContractAndToken(bodyParams);
       return data[0];
     } catch (e) {
-      console.log('packContractAndToken error: ', e);
+      // console.log('packContractAndToken error: ', e);
     }
   }
   function checkAdminThenToken(tokenIcon) {
@@ -600,18 +588,6 @@ export const ContractOrTokenInfo = ({
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
                   </div>
-                  {tokenImgSrc ? null : (
-                    <div className="secondItem" onClick={removeTokenIcon}>
-                      <img
-                        src={imgRemove}
-                        className="labelIcon"
-                        alt="remove"
-                      ></img>
-                      <span className="labelText">
-                        {t(translations.contract.remove)}
-                      </span>
-                    </div>
-                  )}
                 </div>
                 <div className="item right">
                   <SkelontonContainer shown={loading}>
