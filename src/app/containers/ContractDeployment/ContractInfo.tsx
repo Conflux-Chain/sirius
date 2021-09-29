@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { FileUpload } from 'app/components/FileUpload';
 import { translations } from 'locales/i18n';
 import { Card } from 'app/components/Card';
+import { isHex } from 'utils';
+import imgInfo from 'images/info.svg';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
 
 const AceEditorStyle = {
   width: '100%',
@@ -16,21 +19,9 @@ const AceEditorStyle = {
   opacity: 0.62,
 };
 
-export const checkAbi = abi => {
-  return true;
-  // let valid = true;
-  // try {
-  //   abi && JSON.parse(abi);
-  // } catch (e) {
-  //   valid = false;
-  // }
-  // return valid;
-};
-
 // @TODO checkBytecode and addOx should be recheck later, user experience and code is confused
 const checkBytecode = bytecode => {
-  const reg = /^(0x)?[0-9a-fA-F]+$/;
-  return reg.test(bytecode) && bytecode !== '0';
+  return isHex(bytecode, false) && bytecode !== '0';
 };
 
 // add 0x for common
@@ -44,7 +35,7 @@ const addOx = bytecode => {
 // @TODO may intergration with contract registration later
 export const ContractInfo = ({ onChange }) => {
   const [bytecode, setBytecode] = useState('');
-  const [ABI, setABI] = useState('');
+  const [constructorArguments, setConstructorArguments] = useState('');
   const inputRef = createRef<any>();
   const [, setMessage] = useMessages();
   const { t } = useTranslation();
@@ -78,15 +69,6 @@ export const ContractInfo = ({ onChange }) => {
       setBytecode('');
     }
   };
-  // const handleABIChange = code => {
-  //   if (!checkAbi(code)) {
-  //     setMessage({
-  //       text: t(translations.general.invalidABI),
-  //       color: 'error',
-  //     });
-  //   }
-  //   setABI(code);
-  // };
 
   const handleImport = () => {
     inputRef.current.click();
@@ -95,12 +77,9 @@ export const ContractInfo = ({ onChange }) => {
   const handleFileChange = file => {
     try {
       let data = JSON.parse(file);
-      // const abi = JSON.stringify(data.abi, null, '\t');
-      const abi = '';
       let bytecode = data.bytecode || data.data?.bytecode?.object;
 
-      if (checkAbi(abi) && checkBytecode(bytecode)) {
-        setABI(abi);
+      if (checkBytecode(bytecode)) {
         setBytecode(addOx(bytecode));
       } else {
         throw new Error(textOfInvalidJsonFile);
@@ -123,16 +102,29 @@ export const ContractInfo = ({ onChange }) => {
   useEffect(() => {
     let info: {
       bytecode: string;
-      abi: string;
-    } = { bytecode: '', abi: '' };
-    if (checkBytecode(bytecode) && checkAbi(ABI)) {
+    } = { bytecode: '' };
+
+    if (checkBytecode(bytecode)) {
       info.bytecode = bytecode;
-      info.abi = ABI;
+    }
+
+    if (constructorArguments && isHex(constructorArguments, false)) {
+      info.bytecode = info.bytecode + constructorArguments;
     }
 
     onChange(info);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ABI, bytecode]);
+  }, [bytecode, constructorArguments]);
+
+  const handleConstructorArgumentsInputChange = data => {
+    setConstructorArguments(data);
+    if (!isHex(data, false)) {
+      setMessage({
+        text: t(translations.general.invalidBytecode),
+        color: 'error',
+      });
+    }
+  };
 
   return (
     <>
@@ -163,22 +155,32 @@ export const ContractInfo = ({ onChange }) => {
             onChange={handleBytecodeChange}
             value={bytecode}
           />
-          {/* hide temporary due to confused user */}
-          {/* <StyledLabelWrapper>ABI</StyledLabelWrapper>
+
+          <StyledLabelWrapper>
+            constructor arguments{' '}
+            <Tooltip
+              hoverable
+              text={t(translations.contractDeployment.tip)}
+              placement="top"
+            >
+              <img src={imgInfo} alt="?" width="14px" />
+            </Tooltip>
+          </StyledLabelWrapper>
           <AceEditor
-            style={AceEditorStyle}
-            mode="json"
+            mode="text"
+            style={{ ...AceEditorStyle, height: '150px' }}
             theme="github"
             name="UNIQUE_ID_OF_DIV"
             setOptions={{
               wrap: true,
+              indentedSoftWrap: false,
             }}
             fontSize="1rem"
             showGutter={false}
             showPrintMargin={false}
-            onChange={handleABIChange}
-            value={ABI}
-          /> */}
+            onChange={handleConstructorArgumentsInputChange}
+            value={constructorArguments}
+          />
         </Card>
       </StyledContentWrapper>
     </>

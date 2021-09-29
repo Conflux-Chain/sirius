@@ -202,7 +202,7 @@ export function Swap() {
   const [showModal, setShowModal] = useState({
     show: false,
     hash: '',
-    status: 'loading',
+    status: '',
   });
 
   const [fromToken, setFromToken] = useState({
@@ -276,7 +276,6 @@ export function Swap() {
     setShowModal({
       ...showModal,
       show: true,
-      status: 'loading',
     });
     if (fromToken.type === 'cfx') {
       const code = TXN_ACTION.swapCFXToWCFX;
@@ -290,7 +289,6 @@ export function Swap() {
         .then(hash => {
           setShowModal({
             ...showModal,
-            status: 'success',
             show: true,
             hash,
           });
@@ -308,8 +306,8 @@ export function Swap() {
         .catch(e => {
           setShowModal({
             ...showModal,
-            status: 'error',
             show: true,
+            status: 'error',
           });
         })
         .finally(() => {
@@ -341,7 +339,6 @@ export function Swap() {
         .then(hash => {
           setShowModal({
             ...showModal,
-            status: 'success',
             show: true,
             hash,
           });
@@ -359,8 +356,8 @@ export function Swap() {
         .catch(e => {
           setShowModal({
             ...showModal,
-            status: 'error',
             show: true,
+            status: 'error',
           });
         })
         .finally(() => {
@@ -432,9 +429,11 @@ export function Swap() {
   };
 
   const handleClose = () => {
+    // reset modal status
     setShowModal({
-      ...showModal,
       show: false,
+      hash: '',
+      status: '',
     });
   };
 

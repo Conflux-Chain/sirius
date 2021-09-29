@@ -58,6 +58,11 @@ export const AddressDetailPage = memo(() => {
         </RouterLink>
       </Menu.Item>
       <Menu.Item>
+        <RouterLink to={`/nft-checker/${address}`}>
+          {t(translations.general.address.more.NFTChecker)}
+        </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
         </RouterLink>

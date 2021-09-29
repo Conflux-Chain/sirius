@@ -50,7 +50,7 @@ const DappButton = ({
   const { t } = useTranslation();
   // cip-37 compatible
   const { accounts, confluxJS } = usePortal();
-  const [modalShown, setModalShown] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
   const { isValid } = useCheckHook();
@@ -72,8 +72,7 @@ const DappButton = ({
         data,
       };
       //loading
-      setModalType('loading');
-      setModalShown(true);
+      setModalShow(true);
 
       confluxJS
         .sendTransaction(txParams)
@@ -91,7 +90,6 @@ const DappButton = ({
 
           //success alert
           successCallback && successCallback(txHash);
-          setModalType('success');
           setTxHash(txHash);
         })
         .catch(error => {
@@ -110,7 +108,10 @@ const DappButton = ({
     }
   };
   const closeHandler = () => {
-    setModalShown(false);
+    // reset modal state
+    setModalShow(false);
+    setTxHash('');
+    setModalType('');
     closeModalCallback && closeModalCallback();
   };
 
@@ -157,7 +158,7 @@ const DappButton = ({
         <>{btnComp}</>
       )}
       <TxnStatusModal
-        show={modalShown}
+        show={modalShow}
         status={modalType}
         onClose={closeHandler}
         hash={txHash}
