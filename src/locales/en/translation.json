@@ -603,7 +603,8 @@
         "sponsor": "Apply Sponsorship",
         "website": "Official Website",
         "balanceChecker": "Balance Checker",
-        "verifyContract": "Verify Contract"
+        "verifyContract": "Verify Contract",
+        "NFTChecker": "NFT Checker"
       }
     },
     "loading": "loading...",
