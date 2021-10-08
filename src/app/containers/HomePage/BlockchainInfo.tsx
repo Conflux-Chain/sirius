@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { Card } from '../../components/Card/Loadable';
-import { translations } from '../../../locales/i18n';
-import { media } from '../../../styles/media';
-import { formatNumber } from '../../../utils';
+import { Card } from 'app/components/Card/Loadable';
+import { translations } from 'locales/i18n';
+import { media } from 'styles/media';
+import { formatNumber, formatBalance, formatTimeStamp } from 'utils';
+import { LineChart as Chart, SmallChart } from 'app/components/Chart/Loadable';
 import {
-  LineChart as Chart,
-  SmallChart,
-} from '../../components/Chart/Loadable';
-import { reqHomeDashboard, reqTransferTPS } from '../../../utils/httpRequest';
+  reqHomeDashboard,
+  reqHomeDashboardOfPOSSummary,
+  reqTransferTPS,
+} from 'utils/httpRequest';
 import { Link } from 'react-router-dom';
 import lodash from 'lodash';
 
@@ -26,7 +27,9 @@ function Info(title, number: any) {
 // TODO redesign
 export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const { t } = useTranslation();
+  // const iszh = i18n.language.includes('zh');
   const [dashboardData, setDashboardData] = useState<any>({});
+  const [POSSummaryInfo, setPOSSummaryInfo] = useState<any>({});
   const [transferData, setTransferData] = useState<any>({});
 
   useEffect(() => {
@@ -35,7 +38,13 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         setDashboardData(res || {});
       })
       .catch(e => {
-        console.log('reqHomeDashboard error: ', e);
+        console.error(e);
+      });
+
+    reqHomeDashboardOfPOSSummary()
+      .then(res => setPOSSummaryInfo(res))
+      .catch(e => {
+        console.error('get pos homepage summary info error: ', e);
       });
 
     reqTransferTPS()
@@ -51,7 +60,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
 
   return (
     <CardWrapper>
-      <Card>
+      <Card className="homepage-info-pow">
         <Grid.Container
           gap={1}
           justify="flex-start"
@@ -63,13 +72,19 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               `${dashboardData.epochNumber ? dashboardData.epochNumber : '--'}`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4.5}>
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.pos.finalizedEpoch),
+              POSSummaryInfo.posPivotDecision,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               t(translations.statistics.home.currentBlockNumber),
               `${dashboardData.blockNumber ? dashboardData.blockNumber : '--'}`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={5}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               t(translations.statistics.home.account),
               `${
@@ -113,7 +128,9 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
             )}
           </Grid>
         </Grid.Container>
+
         <div className="stats-container stats-container-split"></div>
+
         <Grid.Container
           gap={1}
           justify="flex-start"
@@ -127,7 +144,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <SmallChart plain={true} indicator="tps" />,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4.5}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               t(translations.charts.tokenTransferTps.title),
               lodash.isNil(transferData?.tps)
@@ -137,7 +154,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   }),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={5}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               <Link to="/chart/blockTime" className="info-link">
                 {t(translations.charts.blockTime.title)}
@@ -155,7 +172,61 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
         </Grid.Container>
       </Card>
+      <div className="stats-container stats-container-split"></div>
 
+      <Card className="homepage-info-pos">
+        <Grid.Container
+          gap={1}
+          justify="flex-start"
+          className="stats-container"
+        >
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.pos.currentBlockNumber),
+              POSSummaryInfo.latestCommitted,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.pos.totalLocked),
+              formatBalance(POSSummaryInfo.totalPosStakingTokens),
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3}>
+            {Info(
+              t(translations.statistics.pos.totalInterest),
+              formatBalance(POSSummaryInfo.distributablePosInterest),
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={5}>
+            {Info(
+              t(translations.statistics.pos.lastInterestDistributionEpoch),
+              lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
+                '--'
+              ) : (
+                <span>
+                  <span>{POSSummaryInfo.lastDistributeBlock} </span>
+                  <span className="pos-block-timestamp">
+                    {formatTimeStamp(POSSummaryInfo.lastDistributeBlockTime)}
+                  </span>
+                </span>
+              ),
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.pos.totalAccountCount),
+              POSSummaryInfo.posAccountCount,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.pos.votingBlock),
+              POSSummaryInfo.latestVoted,
+            )}
+          </Grid>
+        </Grid.Container>
+      </Card>
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
           <Grid xs={24} sm={24} md={12} className="overview-chart-item">
@@ -189,23 +260,113 @@ const CardWrapper = styled.div`
   margin-bottom: 16px;
   width: 100%;
 
-  .charts {
-    margin-top: 20px;
-    width: calc(100% - 1px); // fix shaking
+  .card {
+    &.homepage-info-pos,
+    &.homepage-info-pow {
+      margin-top: 20px;
+      position: relative;
 
-    .overview-chart-item {
-      > div {
-        padding: 12px 18px;
-        width: 100%;
-        height: 210px;
-        min-height: inherit;
-        overflow: hidden;
+      &:after {
+        content: 'POS';
+        position: absolute;
+        background: #309eee;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        top: -2px;
+        bottom: -2px;
+        right: -2px;
+        width: 36px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0px 5px 5px 0px;
+      }
+    }
+
+    &.homepage-info-pow {
+      &:after {
+        content: 'POW';
+        background: #1e3de4;
       }
 
-      ${media.m} {
-        > div {
-          padding: 10px 12px 5px;
+      .stats-container-pow-top {
+        .item {
+          &:nth-child(3) {
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              border-right: 1px solid #e8e9ea;
+              height: 70%;
+              top: 15%;
+              right: 15%;
+            }
+          }
+
+          /* &:nth-child(4) {
+            padding-left: 2rem;
+          } */
         }
+      }
+
+      .stats-container-pow-bottom {
+        .item {
+          &:nth-child(2) {
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              border-right: 1px solid #e8e9ea;
+              height: 70%;
+              top: 15%;
+              right: 15%;
+            }
+          }
+
+          /* &:nth-child(3) {
+            padding-left: 5rem;
+          } */
+        }
+      }
+    }
+
+    &.homepage-info-pos {
+      .item {
+        &:nth-child(2) {
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            border-right: 1px solid #e8e9ea;
+            height: 70%;
+            top: 15%;
+            right: 25%;
+          }
+        }
+
+        &:nth-child(4) {
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            border-right: 1px solid #e8e9ea;
+            height: 70%;
+            top: 15%;
+            right: 5%;
+          }
+        }
+      }
+
+      .pos-block-timestamp {
+        font-size: 12px;
+        color: #999999;
+        padding-left: 10px;
       }
     }
   }
@@ -226,17 +387,6 @@ const CardWrapper = styled.div`
       padding: 0;
     }
 
-    & > .item {
-      &:nth-child(2) {
-        border-right: 1px solid #e8e9ea;
-      }
-
-      &:nth-child(3),
-      &:nth-child(6) {
-        padding-left: 5rem;
-      }
-    }
-
     &.stats-container-pow-bottom {
       margin-top: 1px solid #e8e9ea;
     }
@@ -252,9 +402,35 @@ const CardWrapper = styled.div`
         border-right: none !important;
         padding-left: 0 !important;
         border-bottom: 1px solid #e8e9ea;
+        margin-right: 36px;
 
         &:last-child {
           border-bottom: none;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .charts {
+    margin-top: 20px;
+    width: calc(100% - 1px); // fix shaking
+
+    .overview-chart-item {
+      > div {
+        padding: 12px 18px;
+        width: 100%;
+        height: 210px;
+        min-height: inherit;
+        overflow: hidden;
+      }
+
+      ${media.m} {
+        > div {
+          padding: 10px 12px 5px;
         }
       }
     }

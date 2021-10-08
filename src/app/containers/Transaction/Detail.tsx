@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
-import { Card, Spinner } from '@cfxjs/react-ui';
+import { Spinner } from '@cfxjs/react-ui';
+import { Card } from 'app/components/Card/Loadable';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
@@ -633,7 +634,7 @@ export const Detail = () => {
 
   return (
     <StyledCardWrapper>
-      <Card className="sirius-Transactions-card">
+      <Card>
         <Description
           title={
             <Tooltip
@@ -753,7 +754,10 @@ export const Detail = () => {
               '--'
             ) : (
               <>
-                <Security blockHash={blockHash}></Security>
+                <Security
+                  blockHash={blockHash}
+                  epochNumber={epochNumber}
+                ></Security>
                 <StyledEpochConfirmationsWrapper>
                   {t(translations.transaction.epochConfirmations, {
                     count: confirmedEpochCount || '--',
@@ -987,11 +991,6 @@ const StyledCardWrapper = styled.div`
   .inputLine {
     .tooltip-wrapper {
       width: 100% !important;
-    }
-  }
-  .card.sirius-Transactions-card {
-    .content {
-      padding: 0 1.2857rem;
     }
   }
   .card.sirius-Transactions-table-card {

@@ -1,3 +1,7 @@
+/**
+ * 2021.10.25
+ * bak file, should remove after pos release
+ */
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { List } from 'app/components/List/';
@@ -27,8 +31,6 @@ import {
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import { getPosAccountInfo } from 'utils/rpcRequest';
-import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
-import lodash from 'lodash';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -56,16 +58,13 @@ export function AddressMetadata({ address, accountInfo }) {
   const skeletonStyle = { height: '1.5714rem' };
   const [earned, setEarned] = useState(0);
   const [voteList, setVoteList] = useState<any>([]);
-  const [lockedCFX, setLockedCFX] = useState<number | null>(null);
-  const [currentVotingRights, setCurrentVotingRights] = useState<number | null>(
-    null,
-  );
+  const [lockedCFX, setLockedCFX] = useState(0);
+  const [currentVotingRights, setCurrentVotingRights] = useState(0);
   const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
+  const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
   const [modalShown, setModalShown] = useState<boolean>(false);
   const [posAccountInfo, setPosAccountInfo] = useState<any>(null);
   const [posLoading, setPosLoading] = useState(false);
-  const [checkPosLoading, setCheckPosLoading] = useState(false);
-  const [isPoSActived, setIsPoSActived] = useState(false);
 
   const governanceContract = useMemo(() => {
     return CFX.Contract({
@@ -76,82 +75,74 @@ export function AddressMetadata({ address, accountInfo }) {
   }, []);
 
   useEffect(() => {
-    setCheckPosLoading(true);
-    reqHomeDashboardOfPOSSummary()
-      .then(data => {
-        setCheckPosLoading(false);
-
-        if (data.latestVoted && parseInt(data.latestVoted) > 0) {
-          setIsPoSActived(true);
-          setPosLoading(true);
-          getPosAccountInfo(address)
-            .then(data => data && setPosAccountInfo(data))
-            .finally(() => setPosLoading(false));
-        } else {
-          if (
-            accountInfo.address &&
-            [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-              NETWORK_TYPE,
-            )
-          ) {
-            const proArr: any = [];
-            proArr.push(CFX.getDepositList(address));
-            proArr.push(CFX.getAccumulateInterestRate());
-            proArr.push(CFX.getVoteList(address));
-            proArr.push(governanceContract.getBlockNumber());
-            Promise.all(proArr)
+    // get staking info
+    // TODO batch
+    if (
+      accountInfo.address &&
+      [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)
+    ) {
+      const proArr: any = [];
+      proArr.push(CFX.getDepositList(address));
+      proArr.push(CFX.getAccumulateInterestRate());
+      proArr.push(CFX.getVoteList(address));
+      proArr.push(governanceContract.getBlockNumber());
+      Promise.all(proArr)
+        .then(res => {
+          const depositList = res[0];
+          const rate = res[1];
+          const currentBlockN: any = res[3] || 0;
+          setCurrentBlockNumber(currentBlockN.toString());
+          const currentStakingEarned = getCurrentStakingEarned(
+            depositList,
+            rate,
+            new BigNumber(accountInfo.stakingBalance).toFixed(),
+          );
+          setEarned(currentStakingEarned);
+          setVoteList(res[2]);
+          // @ts-ignore
+          if (res[2] && res[2].length > 0) {
+            //get current voting power
+            stakingContract
+              .getVotePower(address, currentBlockN)
               .then(res => {
-                const depositList = res[0];
-                const rate = res[1];
-                const currentBlockN: any = res[3] || 0;
-                setCurrentBlockNumber(currentBlockN.toString());
-                const currentStakingEarned = getCurrentStakingEarned(
-                  depositList,
-                  rate,
-                  new BigNumber(accountInfo.stakingBalance).toFixed(),
-                );
-                setEarned(currentStakingEarned);
-                setVoteList(res[2]);
-                // @ts-ignore
-                if (res[2] && res[2].length > 0) {
-                  //get current voting power
-                  stakingContract
-                    .getVotePower(address, currentBlockN)
-                    .then(res => {
-                      const votePower = res;
-                      setCurrentVotingRights(votePower);
-                    })
-                    .catch(e => {
-                      console.error(e);
-                    });
-
-                  // get locked CFX
-                  CFX.InternalContract('Staking')
-                    .getLockedStakingBalance(address, currentBlockN)
-                    .then(res => {
-                      console.log(888888, res);
-                      setLockedCFX(res || 0);
-                    })
-                    .catch(e => {
-                      console.error(e);
-                    });
-                } else {
-                  setCurrentVotingRights(0);
-                }
+                const votePower = res;
+                setCurrentVotingRights(votePower);
               })
               .catch(e => {
                 console.error(e);
-                setEarned(0);
-                setVoteList([]);
-                setCurrentVotingRights(0);
               });
+
+            // get locked CFX
+            CFX.InternalContract('Staking')
+              .getLockedStakingBalance(address, currentBlockN)
+              .then(res => {
+                setLockedCFX(res || 0);
+              })
+              .catch(e => {
+                console.error(e);
+              });
+          } else {
+            setCurrentVotingRights(0);
           }
-        }
-      })
-      .catch(e => {
-        console.error('get pos homepage summary info error: ', e);
-      });
+        })
+        .catch(e => {
+          console.error(e);
+          setEarned(0);
+          setVoteList([]);
+          setCurrentVotingRights(0);
+        })
+        .finally(() => {
+          setVoteListLoading(false);
+        });
+    }
   }, [address, accountInfo, governanceContract]);
+
+  useEffect(() => {
+    setPosLoading(true);
+    getPosAccountInfo(address)
+      .then(data => data && setPosAccountInfo(data))
+      .finally(() => setPosLoading(false));
+  }, [address]);
 
   const posMetadata = () => {
     return (
@@ -160,19 +151,14 @@ export function AddressMetadata({ address, accountInfo }) {
           {
             title: t(translations.addressDetail.pos.identifier),
             children: (
-              <SkeletonContainer
-                shown={checkPosLoading || posLoading}
-                style={skeletonStyle}
-              >
+              <SkeletonContainer shown={posLoading} style={skeletonStyle}>
                 <CenterLine>
                   <Content>
-                    {isPoSActived && posAccountInfo?.address ? (
-                      <Text hoverValue={posAccountInfo?.address}>
-                        {formatString(posAccountInfo?.address, 'posAddress')}
-                      </Text>
-                    ) : (
-                      '--'
-                    )}
+                    <Text hoverValue={posAccountInfo?.address}>
+                      {posAccountInfo?.address
+                        ? formatString(posAccountInfo?.address, 'posAddress')
+                        : '--'}
+                    </Text>
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
@@ -181,16 +167,14 @@ export function AddressMetadata({ address, accountInfo }) {
           {
             title: t(translations.addressDetail.pos.unlockRights),
             children: (
-              <SkeletonContainer
-                shown={checkPosLoading || posLoading}
-                style={skeletonStyle}
-              >
+              <SkeletonContainer shown={posLoading} style={skeletonStyle}>
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
-                    lodash.isNil(posAccountInfo?.status?.unlocked)
-                      ? '--'
-                      : toThousands(posAccountInfo?.status?.unlocked)}
+                    {posAccountInfo?.status?.unlocked
+                      ? toThousands(
+                          posAccountInfo?.status?.unlocked?.toString(),
+                        )
+                      : 0}
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
@@ -199,16 +183,14 @@ export function AddressMetadata({ address, accountInfo }) {
           {
             title: t(translations.addressDetail.pos.totalStakedRights),
             children: (
-              <SkeletonContainer
-                shown={checkPosLoading || posLoading}
-                style={skeletonStyle}
-              >
+              <SkeletonContainer shown={posLoading} style={skeletonStyle}>
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
-                    lodash.isNil(posAccountInfo?.status?.availableVotes)
-                      ? '--'
-                      : toThousands(posAccountInfo?.status?.availableVotes)}
+                    {posAccountInfo?.status?.availableVotes
+                      ? toThousands(
+                          posAccountInfo?.status?.availableVotes?.toString(),
+                        )
+                      : 0}
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
@@ -217,16 +199,12 @@ export function AddressMetadata({ address, accountInfo }) {
           {
             title: t(translations.addressDetail.pos.lockedRights),
             children: (
-              <SkeletonContainer
-                shown={checkPosLoading || posLoading}
-                style={skeletonStyle}
-              >
+              <SkeletonContainer shown={posLoading} style={skeletonStyle}>
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
-                    lodash.isNil(posAccountInfo?.status?.locked)
-                      ? '--'
-                      : toThousands(posAccountInfo?.status?.locked)}
+                    {posAccountInfo?.status?.locked
+                      ? toThousands(posAccountInfo?.status?.locked?.toString())
+                      : 0}
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
@@ -274,24 +252,17 @@ export function AddressMetadata({ address, accountInfo }) {
                 </Tooltip>
               ),
               children: (
-                <SkeletonContainer
-                  shown={checkPosLoading || loading}
-                  style={skeletonStyle}
-                >
+                <SkeletonContainer shown={loading} style={skeletonStyle}>
                   <CenterLine>
                     <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : (
-                        <Text
-                          hoverValue={`${fromDripToCfx(
-                            accountInfo.stakingBalance || 0,
-                            true,
-                          )} CFX`}
-                        >
-                          {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
-                        </Text>
-                      )}
+                      <Text
+                        hoverValue={`${fromDripToCfx(
+                          accountInfo.stakingBalance || 0,
+                          true,
+                        )} CFX`}
+                      >
+                        {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
+                      </Text>
                     </Content>
                   </CenterLine>
                 </SkeletonContainer>
@@ -329,22 +300,17 @@ export function AddressMetadata({ address, accountInfo }) {
               ),
               children: (
                 <SkeletonContainer
-                  shown={checkPosLoading || loading}
+                  shown={loading || voteListLoading}
                   style={skeletonStyle}
                 >
                   <CenterLine>
                     <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : voteList && voteList.length > 0 ? (
+                      {voteList && voteList.length > 0 ? (
                         <>
                           <Text
-                            hoverValue={`${fromDripToCfx(
-                              lockedCFX || 0,
-                              true,
-                            )} CFX`}
+                            hoverValue={`${fromDripToCfx(lockedCFX, true)} CFX`}
                           >
-                            {fromDripToCfx(lockedCFX || 0)} CFX
+                            {fromDripToCfx(lockedCFX)} CFX
                           </Text>
                           &nbsp;
                           <Text
@@ -380,27 +346,15 @@ export function AddressMetadata({ address, accountInfo }) {
                 </Text>
               ),
               children: (
-                <SkeletonContainer
-                  shown={checkPosLoading || loading}
-                  style={skeletonStyle}
-                >
+                <SkeletonContainer shown={loading} style={skeletonStyle}>
                   <CenterLine>
                     <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : (
-                        <>
-                          <Text
-                            hoverValue={`${fromDripToCfx(
-                              earned || 0,
-                              true,
-                            )} CFX`}
-                          >
-                            {fromDripToCfx(earned || 0)} CFX
-                          </Text>
-                          &nbsp;&nbsp;{t(translations.addressDetail.apy)}
-                        </>
-                      )}
+                      <Text
+                        hoverValue={`${fromDripToCfx(earned || 0, true)} CFX`}
+                      >
+                        {fromDripToCfx(earned || 0)} CFX
+                      </Text>
+                      &nbsp;&nbsp;{t(translations.addressDetail.apy)}
                     </Content>
                   </CenterLine>
                 </SkeletonContainer>
@@ -418,23 +372,19 @@ export function AddressMetadata({ address, accountInfo }) {
               ),
               children: (
                 <SkeletonContainer
-                  shown={checkPosLoading || loading}
+                  shown={loading || voteListLoading}
                   style={skeletonStyle}
                 >
                   <CenterLine>
                     <Content>
-                      {isPoSActived || lodash.isNil(currentVotingRights) ? (
-                        '--'
-                      ) : (
-                        <Text
-                          hoverValue={fromDripToCfx(
-                            currentVotingRights || 0,
-                            true,
-                          )}
-                        >
-                          {fromDripToCfx(currentVotingRights || 0)}
-                        </Text>
-                      )}
+                      <Text
+                        hoverValue={fromDripToCfx(
+                          currentVotingRights || 0,
+                          true,
+                        )}
+                      >
+                        {fromDripToCfx(currentVotingRights || 0)}
+                      </Text>
                     </Content>
                   </CenterLine>
                 </SkeletonContainer>
@@ -520,12 +470,20 @@ export function AddressMetadata({ address, accountInfo }) {
     );
   };
 
-  return (
-    <>
-      <div style={{ marginBottom: '24px' }}>{powMetadata()}</div>
-      {posMetadata()}
-    </>
-  );
+  // @todo, pos only, should remove condition after pos release
+  if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+    return powMetadata();
+  } else if ([NETWORK_TYPES.privatenet].includes(NETWORK_TYPE)) {
+    return posMetadata();
+  } else {
+    return null;
+  }
+
+  // @todo, after pos released, may remove powMetadata, and only mainnet and testnet support posMetadata
+  // if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+  //   return posMetadata();
+  // }
+  // return null;
 }
 
 const CenterLine = styled.div`

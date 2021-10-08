@@ -33,6 +33,7 @@ import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
 
+// pow pages
 import { FCCFX } from './containers/FCCFX';
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -64,7 +65,6 @@ import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
 import Loading from 'app/components/Loading';
-
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
@@ -74,6 +74,17 @@ import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
+
+// pos pages
+import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
+import { Accounts as posAccounts } from './containers/pos/Accounts/Loadable';
+import { Committees as posCommittees } from './containers/pos/Committees/Loadable';
+import { Account as posAccount } from './containers/pos/Account/Loadable';
+import { Blocks as posBlocks } from './containers/pos/Blocks/Loadable';
+import { Block as posBlock } from './containers/pos/Block/Loadable';
+import { Transactions as posTransactions } from './containers/pos/Transactions/Loadable';
+import { IncomingRank as posIncomingRank } from './containers/pos/IncomingRank/Loadable';
+
 import enUS from '@cfxjs/antd/lib/locale/en_US';
 import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
@@ -562,6 +573,44 @@ export function App() {
                             component={ScanBenchmark}
                           />
                           <Route exact path="/fccfx" component={FCCFX} />
+
+                          <Route exact path="/pos" component={posHomePage} />
+                          <Route
+                            exact
+                            path="/pos/accounts"
+                            component={posAccounts}
+                          />
+                          <Route
+                            exact
+                            path="/pos/committees"
+                            component={posCommittees}
+                          />
+                          <Route
+                            exact
+                            path="/pos/blocks"
+                            component={posBlocks}
+                          />
+                          <Route
+                            exact
+                            path="/pos/blocks/:hash"
+                            component={posBlock}
+                          />
+                          <Route
+                            exact
+                            path="/pos/transactions"
+                            component={posTransactions}
+                          />
+                          <Route
+                            exact
+                            path="/pos/incoming-rank"
+                            component={posIncomingRank}
+                          />
+                          <Route
+                            exact
+                            path="/pos/accounts/:address"
+                            component={posAccount}
+                          />
+
                           <Route component={NotFoundPage} />
                         </Switch>
                       </ScrollToTop>

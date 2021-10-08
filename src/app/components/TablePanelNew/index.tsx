@@ -75,6 +75,7 @@ export const TablePanel = ({
   hideShadow,
   className,
   sortKeyMap = {},
+  showSorterTooltip = false,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -182,6 +183,7 @@ export const TablePanel = ({
       columns={columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
+      showSorterTooltip={showSorterTooltip}
       pagination={
         typeof pagination === 'boolean'
           ? pagination

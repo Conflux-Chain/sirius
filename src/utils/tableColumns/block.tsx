@@ -57,8 +57,8 @@ export const hashWithPivot = {
     return (
       <StyledHashWrapper>
         <Link href={`/block/${value}`}>
-          <Text span hoverValue={value}>
-            <SpanWrap>{value}</SpanWrap>
+          <Text span hoverValue={value} maxWidth="100px">
+            {value}
           </Text>
         </Link>
         {pivotTag}
@@ -205,14 +205,6 @@ const StyledHashWrapper = styled.span`
     height: 1.4286rem;
     margin-left: 0.5714rem;
   }
-`;
-
-const SpanWrap = styled.span`
-  display: inline-block;
-  text-overflow: ellipsis;
-  max-width: 100px;
-  overflow: hidden;
-  vertical-align: bottom;
 `;
 
 const StyledGasPercentWrapper = styled.div`

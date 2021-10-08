@@ -557,6 +557,46 @@ exports[`<App /> should render and match the snapshot 1`] = `
                     />
                     <Route
                       component={[Function]}
+                      exact={true}
+                      path="/pos"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/accounts"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/committees"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/blocks"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/blocks/:hash"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/transactions"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/incoming-rank"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
+                      path="/pos/accounts/:address"
+                    />
+                    <Route
+                      component={[Function]}
                     />
                   </Switch>
                 </withRouter(_ScrollToTop)>

@@ -46,7 +46,7 @@ module.exports = app => {
         process.env.REACT_APP_TestNet === 'true'
           ? 'https://testnet-scantest.confluxnetwork.org/rpc'
           : process.env.REACT_APP_PrivateNet === 'true'
-          ? 'http://39.100.97.209:12537/rpc'
+          ? 'https://posrc.confluxscan.net/rpc'
           : 'https://scantest.confluxnetwork.org/rpc',
       changeOrigin: true,
       secure: false,
@@ -59,7 +59,7 @@ module.exports = app => {
         process.env.REACT_APP_TestNet === 'true'
           ? 'https://testnet-scantest.confluxnetwork.org/rpcv2'
           : process.env.REACT_APP_PrivateNet === 'true'
-          ? 'http://39.100.97.209:12537/rpc'
+          ? 'https://posrc.confluxscan.net/rpcv2'
           : 'https://scantest.confluxnetwork.org/rpcv2',
       changeOrigin: true,
       secure: false,
