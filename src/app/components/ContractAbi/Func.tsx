@@ -45,7 +45,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { accounts, confluxJS } = usePortal();
-  const [modalShown, setModalShown] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
   const [outputShown, setOutputShown] = useState(false);
@@ -146,8 +146,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             return;
           }
           //loading
-          setModalType('loading');
-          setModalShown(true);
+          setModalShow(true);
           try {
             const txHash = await confluxJS.sendTransaction(txParams);
             const code = TXN_ACTION.writeContract;
@@ -162,7 +161,6 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
               }),
             });
 
-            setModalType('success');
             setTxHash(txHash);
             setOutputError('');
 
@@ -188,7 +186,10 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     setOutputShown(false);
   };
   const closeHandler = () => {
-    setModalShown(false);
+    // reset tx status modal state
+    setModalShow(false);
+    setModalType('');
+    setTxHash('');
   };
   function getValidator(type: string) {
     const check = (_: any, value) => {
@@ -358,7 +359,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       </Form>
 
       <TxnStatusModal
-        show={modalShown}
+        show={modalShow}
         status={modalType}
         onClose={closeHandler}
         hash={txHash}

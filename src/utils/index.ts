@@ -642,8 +642,9 @@ export function checkUint(value, type) {
   return [isType, num, min.toFixed(), max.toFixed()];
 }
 
-export function isHex(num) {
-  return Boolean(num.match(/^0x[0-9a-f]*$/i));
+export function isHex(num, withPrefix = true) {
+  const reg = withPrefix ? /^0x[0-9a-f]*$/i : /^(0x)?[0-9a-f]*$/i;
+  return Boolean(num.match(reg));
 }
 
 export function isEvenLength(str) {
