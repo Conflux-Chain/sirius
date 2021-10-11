@@ -91,9 +91,9 @@
   "contractDeployment": {
     "title": "合约部署",
     "description": "合约部署",
-    "tip": "构造器参数应具有 ABI-ENCODED 值，此项仅接受含有构造器参数的合同。",
+    "tip": "构造器参数应具有 ABI-ENCODED 值，此项仅接受含有构造器参数的合约。",
     "notice": {
-      "first": "1. 合同部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
+      "first": "1. 合约部署即通过发送交易向 Conflux 网络发布合约代码。在部署合约之前，请确保您的帐户中 CFX 余额充足。",
       "second": "2. 仅支持 ConfluxStudio，cfxtruffle ，remix 编译后的 .json 文件导入；同时支持手动拷贝 bytecode （必填）和 ABI （选填）。",
       "third": "3. 您可以点击页面右上角的账户，在您的账户交易历史中查看合约部署详情。"
     }
