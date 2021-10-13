@@ -131,12 +131,22 @@ export const Header = memo(() => {
     },
   ];
 
-  if (bp !== 's' && bp !== 'm') {
+  // @todo, shoule remove after pos release
+  if (localStorage.getItem('fccfx')) {
+    if (bp !== 's' && bp !== 'm') {
+      ecosystemItems.push({
+        title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+        name: ScanEvent.menu.action.fcCfx,
+        afterClick: menuClick,
+        href: '/fccfx',
+      });
+    }
+  } else {
     ecosystemItems.push({
       title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.fcCfx,
       afterClick: menuClick,
-      href: '/fccfx',
+      href: 'https://fccfx.confluxscan.io/',
     });
   }
 
