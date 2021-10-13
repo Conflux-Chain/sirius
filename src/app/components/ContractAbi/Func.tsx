@@ -105,7 +105,6 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         try {
           setQueryLoading(true);
           const res = await contract[fullNameWithType](...objValues);
-          console.log(1111, res, fullNameWithType, objValues);
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
