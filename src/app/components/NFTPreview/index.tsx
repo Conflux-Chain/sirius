@@ -87,29 +87,15 @@ export const NFTPreview = React.memo(
                 ) : (
                   <>
                     {videoType.includes(imageUri.substr(suffixLen)) ? (
-                      <div
-                        style={{
-                          width: '100%',
-                          height: 0,
-                          paddingTop: '100%',
-                          position: 'relative',
-                          minWidth: '200px',
-                        }}
-                      >
+                      <VideoCard>
                         <video
                           controls
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                          }}
+                          className="ant-video"
                           preload="metadata"
                           // poster={imageUri}
                           src={imageUri}
                         ></video>
-                      </div>
+                      </VideoCard>
                     ) : (
                       <Image
                         width={200}
@@ -155,28 +141,15 @@ export const NFTPreview = React.memo(
               ) : (
                 <>
                   {videoType.includes(imageUri.substr(suffixLen)) ? (
-                    <div
-                      style={{
-                        width: '100%',
-                        height: 0,
-                        paddingTop: '100%',
-                        position: 'relative',
-                      }}
-                    >
+                    <VideoCard>
                       <video
                         controls
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                        }}
+                        className="ant-video"
                         preload="metadata"
                         // poster={imageUri}
                         src={imageUri}
                       ></video>
-                    </div>
+                    </VideoCard>
                   ) : (
                     <Image
                       width={500}
@@ -217,6 +190,21 @@ export const NFTPreview = React.memo(
 
 const PopoverWrapper = styled(Popover)`
   margin-left: 8px;
+`;
+
+const VideoCard = styled.div`
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  position: relative;
+  min-width: 200px;
+  .ant-video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const NFTCard = styled.div`
