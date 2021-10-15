@@ -7,7 +7,7 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
-import { Row, Col } from '@jnoodle/antd';
+import { Row, Col, Spin } from '@jnoodle/antd';
 import { StyledLink } from 'app/components/StyledComponent';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Notice } from './Notice';
@@ -25,6 +25,7 @@ export function FCCFX() {
   const { accounts } = usePortal();
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
+  const [loading, setLoading] = useState(true);
 
   const [isModalVisible, setIsModalVisible] = useState(() => {
     try {
@@ -63,8 +64,13 @@ export function FCCFX() {
 
   useEffect(() => {
     if (accounts.length) {
-      const interval = setInterval(() => {
-        fcExchangeInterestContract.summary(accounts[0]).then(
+      // const interval = setInterval(() => {
+
+      setLoading(true);
+
+      fcExchangeInterestContract
+        .summary(accounts[0])
+        .then(
           data => {
             const [contractSummary, accountSummary] = data;
 
@@ -103,12 +109,15 @@ export function FCCFX() {
             });
           },
           e => console.log(e),
-        );
-      }, 5000);
+        )
+        .finally(() => {
+          setLoading(false);
+        });
+      // }, 5000);
 
-      return () => {
-        clearInterval(interval);
-      };
+      // return () => {
+      //   clearInterval(interval);
+      // };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts]);
@@ -133,25 +142,29 @@ export function FCCFX() {
         >
           {t(translations.fccfx.rulesLink)}
         </StyledLink>
-        <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
-        <div
-          className={clsx('fccfx-mask', {
-            disabled: hasPendingProfitLegacy,
-          })}
-        >
-          <Row gutter={24}>
-            <Col flex="auto">
-              <Row gutter={24}>
-                <Col span={12}>
-                  <StakeAndSignCard info={accountInfo} />
-                </Col>
-                <Col span={12}>
-                  <WithdrawCFXCard info={accountInfo} />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
+        <Spin spinning={loading}>
+          <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
+        </Spin>
+        <Spin spinning={loading}>
+          <div
+            className={clsx('fccfx-mask', {
+              disabled: hasPendingProfitLegacy,
+            })}
+          >
+            <Row gutter={24}>
+              <Col flex="auto">
+                <Row gutter={24}>
+                  <Col span={12}>
+                    <StakeAndSignCard info={accountInfo} />
+                  </Col>
+                  <Col span={12}>
+                    <WithdrawCFXCard info={accountInfo} />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </Spin>
         <Tip hidden={!hasPendingProfitLegacy} size={14}>
           {t(translations.fccfx.tip.legacyProfit)}
         </Tip>
