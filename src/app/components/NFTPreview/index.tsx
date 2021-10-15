@@ -122,13 +122,37 @@ export const NFTPreview = React.memo(
                   <iframe title={imageName} src={imageUri} />
                 </div>
               ) : (
-                <Image
-                  width={500}
-                  src={imageUri}
-                  preview={true}
-                  alt={tokenId + ''}
-                  fallback={tokenIdNotFound}
-                />
+                <>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: 0,
+                      paddingTop: '100%',
+                      position: 'relative',
+                    }}
+                  >
+                    <video
+                      controls
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                      }}
+                      preload="metadata"
+                      // poster={imageUri}
+                      src="https://ipfs.io/ipfs/QmPHDqoATMTU3bq2RFmawxmtQFUm2AyEN5yyS3weJ7sWrH/1.mp4"
+                    ></video>
+                  </div>
+                  {/* <Image
+                    width={500}
+                    src={imageUri}
+                    preview={true}
+                    alt={tokenId + ''}
+                    fallback={tokenIdNotFound}
+                  /> */}
+                </>
               )
             ) : isFirstTime ? (
               <Skeleton.Image />
