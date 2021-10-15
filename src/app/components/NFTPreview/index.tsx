@@ -20,6 +20,9 @@ import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
+const videoType = ['mp4', 'mp3'];
+const suffixLen = -3;
+
 export const NFTPreview = React.memo(
   ({
     contractAddress,
@@ -82,14 +85,42 @@ export const NFTPreview = React.memo(
                     src={imageUri}
                   />
                 ) : (
-                  <Image
-                    width={200}
-                    style={{ minHeight: imageMinHeight }}
-                    src={imageUri}
-                    preview={true}
-                    fallback={tokenIdNotFound}
-                    alt={tokenId + ''}
-                  />
+                  <>
+                    {videoType.includes(imageUri.substr(suffixLen)) ? (
+                      <div
+                        style={{
+                          width: '100%',
+                          height: 0,
+                          paddingTop: '100%',
+                          position: 'relative',
+                          minWidth: '200px',
+                        }}
+                      >
+                        <video
+                          controls
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                          }}
+                          preload="metadata"
+                          // poster={imageUri}
+                          src={imageUri}
+                        ></video>
+                      </div>
+                    ) : (
+                      <Image
+                        width={200}
+                        style={{ minHeight: imageMinHeight }}
+                        src={imageUri}
+                        preview={true}
+                        fallback={tokenIdNotFound}
+                        alt={tokenId + ''}
+                      />
+                    )}
+                  </>
                 )}
                 {imageName ? (
                   <div className="image-preview-name">{imageName}</div>
@@ -123,35 +154,38 @@ export const NFTPreview = React.memo(
                 </div>
               ) : (
                 <>
-                  <div
-                    style={{
-                      width: '100%',
-                      height: 0,
-                      paddingTop: '100%',
-                      position: 'relative',
-                    }}
-                  >
-                    <video
-                      controls
+                  {videoType.includes(imageUri.substr(suffixLen)) ? (
+                    <div
                       style={{
                         width: '100%',
-                        height: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
+                        height: 0,
+                        paddingTop: '100%',
+                        position: 'relative',
                       }}
-                      preload="metadata"
-                      // poster={imageUri}
-                      src="https://ipfs.io/ipfs/QmPHDqoATMTU3bq2RFmawxmtQFUm2AyEN5yyS3weJ7sWrH/1.mp4"
-                    ></video>
-                  </div>
-                  {/* <Image
-                    width={500}
-                    src={imageUri}
-                    preview={true}
-                    alt={tokenId + ''}
-                    fallback={tokenIdNotFound}
-                  /> */}
+                    >
+                      <video
+                        controls
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                        }}
+                        preload="metadata"
+                        // poster={imageUri}
+                        src={imageUri}
+                      ></video>
+                    </div>
+                  ) : (
+                    <Image
+                      width={500}
+                      src={imageUri}
+                      preview={true}
+                      alt={tokenId + ''}
+                      fallback={tokenIdNotFound}
+                    />
+                  )}
                 </>
               )
             ) : isFirstTime ? (
