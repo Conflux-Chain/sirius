@@ -119,6 +119,7 @@
     "writeContractInformation": "写入合约信息",
     "noReadContract": "抱歉，未找到针对该合约的读取功能。",
     "noWriteContract": "抱歉，未找到针对该合约的写入功能。",
+    "notVerifyImplementContract": "在代理合约和执行合约均被<0>验证</0>后可使用代理合约的读写功能。",
     "pattern": "实现执行合约的 ABI 位于 <0>address</0>, 使用 <1>pattern</1> 代理模式.",
     "expandAll": "全部展开",
     "reset": "重置",

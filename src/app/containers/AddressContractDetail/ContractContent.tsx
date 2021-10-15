@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
 import styled from 'styled-components/macro';
@@ -245,9 +245,9 @@ export const ContractContent = ({ contractInfo }) => {
   }
 
   // check if is a proxy contract
-  if (proxy && proxy.proxy && implementation && implementation.address) {
+  if (proxy?.proxy && implementation?.address) {
     // proxy contract
-    if (implementation.verify && implementation.verify.exactMatch) {
+    if (implementation?.verify?.exactMatch) {
       tabs = tabs.concat([
         {
           key: 'readAsProxy',
@@ -298,17 +298,29 @@ export const ContractContent = ({ contractInfo }) => {
   }, [address]);
 
   return (
-    <>
-      <ContractBody>
-        <SubTabs
-          tabs={tabs}
-          activeKey={tabs[activeIndex]?.key}
-          onChange={clickHandler}
-          className="contract-body-subtabs"
-        ></SubTabs>
-        <ContractCard>{tabs[activeIndex]?.content}</ContractCard>
-      </ContractBody>
-    </>
+    <ContractBody>
+      <SubTabs
+        tabs={tabs}
+        activeKey={tabs[activeIndex]?.key}
+        onChange={clickHandler}
+        className="contract-body-subtabs"
+        extra={
+          implementation?.address && !implementation?.verify?.exactMatch ? (
+            <Trans i18nKey="contract.notVerifyImplementContract">
+              <Link
+                href={`/contract-verification?address=${implementation.address}`}
+                style={{ margin: '0 5px' }}
+              >
+                contract verification
+              </Link>
+            </Trans>
+          ) : (
+            ''
+          )
+        }
+      ></SubTabs>
+      <ContractCard>{tabs[activeIndex]?.content}</ContractCard>
+    </ContractBody>
   );
 };
 

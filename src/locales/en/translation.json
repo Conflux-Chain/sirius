@@ -119,6 +119,7 @@
     "writeContractInformation": "Write Contract Information",
     "noReadContract": "Sorry, no public Read functions were found for this contract.",
     "noWriteContract": "Sorry, no public Write functions were found for this contract.",
+    "notVerifyImplementContract": "Read / Write as Proxy function is available after the proxy and implementation <0>contract verification.</0>",
     "pattern": "ABI for the implementation contract at <0>address</0>, using <1>pattern</1> proxy pattern.",
     "expandAll": "Expand All",
     "reset": "Reset",
