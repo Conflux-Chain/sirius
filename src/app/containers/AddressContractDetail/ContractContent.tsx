@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation } from 'react-i18next';
@@ -197,15 +197,29 @@ const StyledContractContentCodeWrapper = styled.div`
   }
 `;
 
+type TabsItemType = {
+  key: string;
+  label: string;
+  abi?: Array<unknown>;
+  content: React.ReactNode;
+};
+
 export const ContractContent = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { abi, address, verify = {} } = contractInfo;
-  const [activeKey, setActiveKey] = useState('code');
+  const {
+    abi,
+    address,
+    verify = {},
+    proxy = {},
+    implementation = {},
+  } = contractInfo;
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  let tabs = [
+  let tabs: Array<TabsItemType> = [
     {
       key: 'code',
       label: t(translations.contract.code),
+      content: <Code contractInfo={contractInfo} />,
     },
   ];
 
@@ -214,47 +228,85 @@ export const ContractContent = ({ contractInfo }) => {
       {
         key: 'read',
         label: t(translations.contract.readContract),
+        abi,
+        content: (
+          <ContractAbi type="read" address={address} abi={abi}></ContractAbi>
+        ),
       },
       {
         key: 'write',
         label: t(translations.contract.writeContract),
+        abi,
+        content: (
+          <ContractAbi type="write" address={address} abi={abi}></ContractAbi>
+        ),
       },
     ]);
   }
 
-  const clickHandler = (btnType: React.SetStateAction<string>) => {
-    setActiveKey(btnType);
-    if (btnType) {
+  // check if is a proxy contract
+  if (proxy && proxy.proxy && implementation && implementation.address) {
+    // proxy contract
+    if (implementation.verify && implementation.verify.exactMatch) {
+      tabs = tabs.concat([
+        {
+          key: 'readAsProxy',
+          label: t(translations.contract.readAsProxyContract),
+          content: (
+            <ContractAbi
+              type="read"
+              address={implementation.address}
+              pattern={proxy.proxyPattern}
+            ></ContractAbi>
+          ),
+        },
+        {
+          key: 'writeAsProxy',
+          label: t(translations.contract.writeAsProxyContract),
+          content: (
+            <ContractAbi
+              type="write"
+              address={implementation.address}
+              pattern={proxy.proxyPattern}
+            ></ContractAbi>
+          ),
+        },
+      ]);
+    }
+  } else {
+    // nomral contract
+  }
+
+  const clickHandler = (key, index) => {
+    setActiveIndex(index);
+    if (key) {
       trackEvent({
         category: ScanEvent.tab.category,
         action:
           ScanEvent.tab.action[
             `contract${
-              (btnType + '').charAt(0).toUpperCase() + (btnType + '').slice(1)
+              (key + '').charAt(0).toUpperCase() + (key + '').slice(1)
             }`
           ],
       });
     }
   };
 
+  useEffect(() => {
+    // reset index
+    setActiveIndex(0);
+  }, [address]);
+
   return (
     <>
       <ContractBody>
         <SubTabs
           tabs={tabs}
-          activeKey={activeKey}
+          activeKey={tabs[activeIndex]?.key}
           onChange={clickHandler}
           className="contract-body-subtabs"
         ></SubTabs>
-        <ContractCard>
-          {activeKey === 'code' && <Code contractInfo={contractInfo} />}
-          {activeKey === 'read' && (
-            <ContractAbi type="read" address={address} abi={abi}></ContractAbi>
-          )}
-          {activeKey === 'write' && (
-            <ContractAbi type="write" address={address} abi={abi}></ContractAbi>
-          )}
-        </ContractCard>
+        <ContractCard>{tabs[activeIndex]?.content}</ContractCard>
       </ContractBody>
     </>
   );

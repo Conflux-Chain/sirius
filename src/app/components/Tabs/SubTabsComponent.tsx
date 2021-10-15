@@ -10,7 +10,7 @@ interface Props {
     key: string;
   }>;
   activeKey: string;
-  onChange: (activeKey: string) => void;
+  onChange: (activeKey?: string, index?: number) => void;
   className?: string;
 }
 
@@ -21,13 +21,13 @@ interface Props {
 export const SubTabs = ({ tabs, activeKey, onChange, className }: Props) => {
   return (
     <StyledSubTabsWrapper className={clsx(className)}>
-      {tabs.map(o => (
+      {tabs.map((o, index) => (
         <Button
           key={o.key}
           className={clsx('subtabs-tabItem', {
             'subtabs-tabItem-active': o.key === activeKey,
           })}
-          onClick={() => onChange(o.key)}
+          onClick={() => onChange(o.key, index)}
         >
           {o.label}
         </Button>
