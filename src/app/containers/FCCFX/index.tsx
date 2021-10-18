@@ -84,7 +84,7 @@ export function FCCFX() {
 
             setAccountInfo({
               ...accountInfo,
-              fcSigned: new BigNumber(accountSummary.stakeInfo.amount),
+              fcSigned: new BigNumber(accountSummary.accountInfo.amount),
               fcUnsigned: unsignedFC.lt(0) ? new BigNumber(0) : unsignedFC,
               cfxWithdrawed: new BigNumber(accountSummary.stakeInfo.accProfit),
               fcSignedHistory: new BigNumber(
