@@ -74,6 +74,8 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
+  const disabled = accounts.length && (balance.eq(0) || buttonDisabled);
+
   return (
     <StyledActionFieldWrapper>
       <StyledTitle160F1327>{title}</StyledTitle160F1327>
@@ -112,9 +114,9 @@ export const ActionField = ({
         <div>
           <ConnectButton>
             <Button
-              type={buttonDisabled ? '' : 'primary'}
+              type={disabled ? '' : 'primary'}
               onClick={onButtonClick}
-              disabled={buttonDisabled}
+              disabled={disabled}
             >
               {buttonText}
             </Button>

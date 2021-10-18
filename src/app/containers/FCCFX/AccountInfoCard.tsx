@@ -40,7 +40,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       key: 'fcSigned',
       title: t(translations.fccfx.titleFCStaked),
       value: info.fcSigned,
-      span: 8,
+      span: 9,
       tip: (
         <InfoIconWithTooltip
           info={t(translations.fccfx.tip.signed)}
@@ -51,7 +51,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       key: 'fcUnsigned',
       title: t(translations.fccfx.titleFCUnsigned),
       value: info.fcUnsigned,
-      span: 8,
+      span: 7,
       tip: (
         <InfoIconWithTooltip
           info={t(translations.fccfx.tip.unsigned)}
@@ -68,7 +68,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       key: 'cfxWithdrawed',
       title: t(translations.fccfx.titleCFXWithdrawed),
       value: info.cfxWithdrawed,
-      span: 8,
+      span: 9,
     },
     {
       key: 'availableProfit',
@@ -78,9 +78,11 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       value: !info.pendingProfitLegacy.eq(0)
         ? info.pendingProfitLegacy
         : info.pendingProfit,
-      span: 8,
+      span: 7,
     },
   ];
+
+  const disabledButton = data[4]?.value.eq(0);
 
   const handleWithdrawProfit = async () => {
     setTxnStatusModal({
@@ -190,10 +192,11 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
             <Col span={8}>
               <ConnectButton>
                 <Button
-                  type="primary"
+                  type={disabledButton ? '' : 'primary'}
                   className="fccfx-accountInfo-withdrawButton"
                   onClick={handleWithdrawProfit}
                   loading={loading}
+                  disabled={disabledButton}
                 >
                   {t(translations.fccfx.buttonWithdrawInterest)}
                 </Button>
