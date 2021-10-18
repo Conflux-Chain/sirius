@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
+import React, { useState, useEffect } from 'react';
+import {
+  isSafeNumberOrNumericStringInput,
+  formatBalance,
+  formatNumber,
+} from 'utils';
 import styled from 'styled-components/macro';
 import { Input, Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +34,13 @@ interface ActionFieldProps {
   onButtonClick: (value) => void;
 }
 
+const isInvalidInput = str => {
+  const fStr = formatNumber(str, {
+    precision: 18,
+  });
+  return fStr === '' || fStr === '0';
+};
+
 export const ActionField = ({
   readonly,
   tokenType,
@@ -44,7 +55,15 @@ export const ActionField = ({
 }: ActionFieldProps) => {
   const { t } = useTranslation();
   const { accounts } = usePortal();
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(isInvalidInput(value));
+
+  useEffect(() => {
+    const disabled = isInvalidInput(value);
+    if (disabled !== buttonDisabled) {
+      setButtonDisabled(isInvalidInput(value));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const b = accounts.length
     ? formatBalance(balance, 18, false, {}, '0.001')
@@ -74,7 +93,10 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
-  const disabled = accounts.length && (balance.eq(0) || buttonDisabled);
+  const disabled =
+    accounts.length &&
+    ((showBalance && balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
+      buttonDisabled);
 
   return (
     <StyledActionFieldWrapper>
