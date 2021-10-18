@@ -33,6 +33,7 @@ export interface InfoItemType {
   key: string;
   title: string;
   value: IBigNumber;
+  unit?: string;
   span: number;
   tip?: React.ReactNode;
 }

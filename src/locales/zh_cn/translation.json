@@ -17,7 +17,7 @@
     "titleFCStaked": "已签约 FC 数量",
     "titleFCUnsigned": "未签约 FC 数量",
     "titleFCStakedHistory": "累计质押的 FC 数量",
-    "titleCFXWithdrawed": "累计提取的 CFX 数量",
+    "titleCFXWithdrawed": "累计提取的利息",
     "titleAvailableProfit": "当前可提取利息",
     "titleRemainingInterests": "遗留利息",
     "titleStakeFCToEarnCFX": "存入 FC 兑换 CFX（不可逆）",
