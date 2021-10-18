@@ -23,6 +23,49 @@ const epiKProtocolKnowledgeBadge =
 const videoType = ['mp4', 'mp3'];
 const suffixLen = -3;
 
+export const NFTCardInfo = React.memo(
+  ({
+    imageUri,
+    tokenId,
+    imageMinHeight,
+    width = 200,
+  }: {
+    imageUri: string;
+    tokenId?: number | string;
+    imageMinHeight?: number;
+    width?: 200 | 500;
+  }) => {
+    const nftType = videoType.includes(imageUri.substr(suffixLen))
+      ? 'video'
+      : 'image';
+
+    return (
+      <>
+        {nftType === 'video' ? (
+          <VideoCard>
+            <video
+              controls
+              className="ant-video"
+              preload="metadata"
+              // poster={imageUri}
+              src={imageUri}
+            ></video>
+          </VideoCard>
+        ) : (
+          <Image
+            width={width}
+            style={{ minHeight: imageMinHeight }}
+            src={imageUri}
+            preview={true}
+            fallback={tokenIdNotFound}
+            alt={tokenId + ''}
+          />
+        )}
+      </>
+    );
+  },
+);
+
 export const NFTPreview = React.memo(
   ({
     contractAddress,
@@ -85,28 +128,10 @@ export const NFTPreview = React.memo(
                     src={imageUri}
                   />
                 ) : (
-                  <>
-                    {videoType.includes(imageUri.substr(suffixLen)) ? (
-                      <VideoCard>
-                        <video
-                          controls
-                          className="ant-video"
-                          preload="metadata"
-                          // poster={imageUri}
-                          src={imageUri}
-                        ></video>
-                      </VideoCard>
-                    ) : (
-                      <Image
-                        width={200}
-                        style={{ minHeight: imageMinHeight }}
-                        src={imageUri}
-                        preview={true}
-                        fallback={tokenIdNotFound}
-                        alt={tokenId + ''}
-                      />
-                    )}
-                  </>
+                  <NFTCardInfo
+                    imageUri={imageUri}
+                    imageMinHeight={imageMinHeight}
+                  />
                 )}
                 {imageName ? (
                   <div className="image-preview-name">{imageName}</div>
@@ -139,27 +164,7 @@ export const NFTPreview = React.memo(
                   <iframe title={imageName} src={imageUri} />
                 </div>
               ) : (
-                <>
-                  {videoType.includes(imageUri.substr(suffixLen)) ? (
-                    <VideoCard>
-                      <video
-                        controls
-                        className="ant-video"
-                        preload="metadata"
-                        // poster={imageUri}
-                        src={imageUri}
-                      ></video>
-                    </VideoCard>
-                  ) : (
-                    <Image
-                      width={500}
-                      src={imageUri}
-                      preview={true}
-                      alt={tokenId + ''}
-                      fallback={tokenIdNotFound}
-                    />
-                  )}
-                </>
+                <NFTCardInfo imageUri={imageUri} width={500} />
               )
             ) : isFirstTime ? (
               <Skeleton.Image />
