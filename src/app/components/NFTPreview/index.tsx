@@ -130,6 +130,7 @@ export const NFTPreview = React.memo(
                 ) : (
                   <NFTCardInfo
                     imageUri={imageUri}
+                    tokenId={tokenId}
                     imageMinHeight={imageMinHeight}
                   />
                 )}
@@ -164,7 +165,11 @@ export const NFTPreview = React.memo(
                   <iframe title={imageName} src={imageUri} />
                 </div>
               ) : (
-                <NFTCardInfo imageUri={imageUri} width={500} />
+                <NFTCardInfo
+                  imageUri={imageUri}
+                  tokenId={tokenId}
+                  width={500}
+                />
               )
             ) : isFirstTime ? (
               <Skeleton.Image />
