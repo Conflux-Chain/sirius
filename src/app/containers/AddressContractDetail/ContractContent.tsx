@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CFX } from 'utils/constants';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
-import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import styled from 'styled-components/macro';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -199,114 +197,29 @@ const StyledContractContentCodeWrapper = styled.div`
   }
 `;
 
+type TabsItemType = {
+  key: string;
+  label: string;
+  abi?: Array<unknown>;
+  content: React.ReactNode;
+};
+
 export const ContractContent = ({ contractInfo }) => {
   const { t } = useTranslation();
-  const { abi, address, verify = {} } = contractInfo;
-  const [dataForRead, setDataForRead] = useState([]);
-  const [dataForWrite, setDataForWrite] = useState([]);
-  const [activeKey, setActiveKey] = useState('code');
-
-  let abiJson = [];
-  try {
-    abiJson = JSON.parse(abi);
-  } catch (error) {}
-  const clickHandler = (btnType: React.SetStateAction<string>) => {
-    setActiveKey(btnType);
-    if (btnType) {
-      trackEvent({
-        category: ScanEvent.tab.category,
-        action:
-          ScanEvent.tab.action[
-            `contract${
-              (btnType + '').charAt(0).toUpperCase() + (btnType + '').slice(1)
-            }`
-          ],
-      });
-    }
-  };
-
-  // init contract object by abi and address
-  const contract = CFX.Contract({
-    abi: abiJson,
+  const {
+    abi,
     address,
-  });
-  useEffect(() => {
-    getReadWriteData(abiJson).then(res => {
-      const [dataForR, dataForW] = res;
-      setDataForRead(dataForR as any);
-      setDataForWrite(dataForW as any);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractInfo]);
+    verify = {},
+    proxy = {},
+    implementation = {},
+  } = contractInfo;
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  async function getReadWriteData(abiJson) {
-    let dataForRead: object[] = [];
-    let dataForWrite: object[] = [];
-    let proArr: object[] = [];
-    if (Array.isArray(abiJson)) {
-      for (let abiItem of abiJson) {
-        if (abiItem.name !== '' && abiItem.type === 'function') {
-          const stateMutability = abiItem.stateMutability;
-          switch (stateMutability) {
-            case 'pure':
-            case 'view':
-              if (abiItem.inputs && abiItem.inputs.length === 0) {
-                const fullNameWithType = formatType({
-                  name: abiItem['name'],
-                  inputs: abiItem['inputs'],
-                });
-                proArr.push(contract[fullNameWithType]());
-              }
-              dataForRead.push(abiItem);
-              break;
-            case 'nonpayable':
-              dataForWrite.push(abiItem);
-              break;
-            case 'payable':
-              const payableObjs = [
-                {
-                  internalType: 'cfx',
-                  name: abiItem['name'],
-                  type: 'cfx',
-                },
-              ];
-              abiItem['inputs'] = payableObjs.concat(abiItem['inputs']);
-              dataForWrite.push(abiItem);
-              break;
-            default:
-              break;
-          }
-        }
-      }
-      const list = await Promise.allSettled(proArr);
-      let i = 0;
-      dataForRead.forEach(function (dValue, dIndex) {
-        if (dValue['inputs'].length === 0) {
-          const listItem = list[i];
-          const status = listItem['status'];
-          if (status === 'fulfilled') {
-            const val = listItem['value'];
-            if (dValue['outputs'].length > 1) {
-              dValue['value'] = val;
-            } else {
-              const arr: any = [];
-              arr.push(val);
-              dValue['value'] = arr;
-            }
-          } else {
-            dValue['error'] = listItem['reason']['message'];
-          }
-          ++i;
-        }
-      });
-    }
-    return [dataForRead, dataForWrite];
-  }
-
-  let tabs = [
+  let tabs: Array<TabsItemType> = [
     {
       key: 'code',
       label: t(translations.contract.code),
+      content: <Code contractInfo={contractInfo} />,
     },
   ];
 
@@ -315,44 +228,99 @@ export const ContractContent = ({ contractInfo }) => {
       {
         key: 'read',
         label: t(translations.contract.readContract),
+        abi,
+        content: (
+          <ContractAbi type="read" address={address} abi={abi}></ContractAbi>
+        ),
       },
       {
         key: 'write',
         label: t(translations.contract.writeContract),
+        abi,
+        content: (
+          <ContractAbi type="write" address={address} abi={abi}></ContractAbi>
+        ),
       },
     ]);
   }
 
-  return (
-    <>
-      <ContractBody>
-        <SubTabs
-          tabs={tabs}
-          activeKey={activeKey}
-          onChange={clickHandler}
-          className="contract-body-subtabs"
-        ></SubTabs>
-        <ContractCard>
-          {activeKey === 'code' && <Code contractInfo={contractInfo} />}
-          {activeKey === 'read' && (
+  // check if is a proxy contract
+  if (proxy?.proxy && implementation?.address) {
+    // proxy contract
+    if (implementation?.verify?.exactMatch) {
+      tabs = tabs.concat([
+        {
+          key: 'readAsProxy',
+          label: t(translations.contract.readAsProxyContract),
+          content: (
             <ContractAbi
               type="read"
-              data={dataForRead}
-              contractAddress={address}
-              contract={contract}
+              address={implementation.address}
+              pattern={proxy.proxyPattern}
             ></ContractAbi>
-          )}
-          {activeKey === 'write' && (
+          ),
+        },
+        {
+          key: 'writeAsProxy',
+          label: t(translations.contract.writeAsProxyContract),
+          content: (
             <ContractAbi
               type="write"
-              data={dataForWrite}
-              contractAddress={address}
-              contract={contract}
+              address={implementation.address}
+              pattern={proxy.proxyPattern}
             ></ContractAbi>
-          )}
-        </ContractCard>
-      </ContractBody>
-    </>
+          ),
+        },
+      ]);
+    }
+  } else {
+    // nomral contract
+  }
+
+  const clickHandler = (key, index) => {
+    setActiveIndex(index);
+    if (key) {
+      trackEvent({
+        category: ScanEvent.tab.category,
+        action:
+          ScanEvent.tab.action[
+            `contract${
+              (key + '').charAt(0).toUpperCase() + (key + '').slice(1)
+            }`
+          ],
+      });
+    }
+  };
+
+  useEffect(() => {
+    // reset index
+    setActiveIndex(0);
+  }, [address]);
+
+  return (
+    <ContractBody>
+      <SubTabs
+        tabs={tabs}
+        activeKey={tabs[activeIndex]?.key}
+        onChange={clickHandler}
+        className="contract-body-subtabs"
+        extra={
+          implementation?.address && !implementation?.verify?.exactMatch ? (
+            <Trans i18nKey="contract.notVerifyImplementContract">
+              <Link
+                href={`/contract-verification?address=${implementation.address}`}
+                style={{ margin: '0 5px' }}
+              >
+                contract verification
+              </Link>
+            </Trans>
+          ) : (
+            ''
+          )
+        }
+      ></SubTabs>
+      <ContractCard>{tabs[activeIndex]?.content}</ContractCard>
+    </ContractBody>
   );
 };
 

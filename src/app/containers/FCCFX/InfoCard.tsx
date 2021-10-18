@@ -14,7 +14,14 @@ export const InfoCard = ({ totalInfo, accountInfo }) => {
             <TotalInfoCard info={totalInfo} />
           </Col>
           <Col span={14}>
-            <AccountInfoCard info={accountInfo} />
+            <Row>
+              <Col span={2}>
+                <StyledSplitWrapper></StyledSplitWrapper>
+              </Col>
+              <Col span={22}>
+                <AccountInfoCard info={accountInfo} />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Card>
@@ -24,4 +31,18 @@ export const InfoCard = ({ totalInfo, accountInfo }) => {
 
 const StyledInfoCardWrapper = styled.div`
   margin-bottom: 24px;
+`;
+
+const StyledSplitWrapper = styled.div`
+  position: relative;
+  height: 100%;
+
+  &::before {
+    position: absolute;
+    border-left: 1px solid #e8e9ea;
+    content: '';
+    top: 10%;
+    bottom: 0%;
+    left: 20%;
+  }
 `;
