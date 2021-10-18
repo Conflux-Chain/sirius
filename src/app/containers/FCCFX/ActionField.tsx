@@ -74,7 +74,7 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
-  const disabled = balance.eq(0) || buttonDisabled;
+  const disabled = accounts.length && (balance.eq(0) || buttonDisabled);
 
   return (
     <StyledActionFieldWrapper>

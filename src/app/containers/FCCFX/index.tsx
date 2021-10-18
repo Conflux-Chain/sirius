@@ -25,7 +25,7 @@ export function FCCFX() {
   const { accounts } = usePortal();
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(() => {
     try {
