@@ -98,6 +98,16 @@ export const ActionField = ({
     ((showBalance && balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
       buttonDisabled);
 
+  const inputValue = readonly
+    ? formatBalance(
+        new BigNumber(value).multipliedBy(MODULE),
+        18,
+        false,
+        {},
+        '0.001',
+      )
+    : value;
+
   return (
     <StyledActionFieldWrapper>
       <StyledTitle160F1327>{title}</StyledTitle160F1327>
@@ -105,7 +115,7 @@ export const ActionField = ({
         <div className="fccfx-actionField-inputContainer">
           <Input
             placeholder="0.0"
-            value={value}
+            value={inputValue}
             size="small"
             onChange={handleInputChange}
             style={{ width: '100%', height: '32px' }}

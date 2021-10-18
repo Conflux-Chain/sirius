@@ -32,7 +32,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     status: '',
   });
 
-  const signedCFX = formatBalance(info.cfxUnsigned);
+  const unsignedCFX = formatBalance(info.cfxUnsigned, 18, false, {}, '0.001');
 
   const handleWithdrawInputChange = async value => {
     setWithdrawCFX(value);
@@ -110,7 +110,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
           code: code,
           description: '',
           hash,
-          value: signedCFX,
+          value: unsignedCFX,
         }),
       });
 
@@ -173,7 +173,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
         <ActionField
           title={t(translations.fccfx.titleSignToSyncInterest)}
           buttonText={t(translations.fccfx.buttonAnnounce)}
-          value={signedCFX}
+          value={info.cfxUnsigned.dividedBy(10 ** 18).toString()}
           tokenType="cfx"
           onButtonClick={handleSignButtonClick}
           readonly

@@ -170,7 +170,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         <ActionField
           title={t(translations.fccfx.titleSignToEarnAPY)}
           buttonText={t(translations.fccfx.buttonSign)}
-          value={unsingedFC}
+          value={info.fcUnsigned.dividedBy(10 ** 18).toString()}
           tokenType="fc"
           onButtonClick={handleSignButtonClick}
           readonly
