@@ -52,8 +52,12 @@
       "exchangeTitle": "若不签约补贴计划则无法获得利息",
       "signed": "可以获得利息的 FC 的数量",
       "unsigned": "无法获得利息的 FC 的数量",
-      "APY": "计算公式为：可产生收益的 CFX 数量 / 当前质押的 FC 数量 * 4%"
-    }
+      "APY": "计算公式为：可产生收益的 CFX 数量 / 当前质押的 FC 数量 * 4%",
+      "beforeWithdrawInModal": "提取本金前请先点击上方“提取利息”的按钮，否则您的利息将会被清零。",
+      "beforeExchangeInModal": "点击该按钮后您的 FC 将会被永久兑换为 CFX，该过程不可逆。"
+    },
+    "buttonCancel": "取消",
+    "buttonOk": "确认并继续"
   },
   "contract": {
     "address": "合约地址",

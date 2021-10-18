@@ -20,6 +20,9 @@ import { StyledTitle200F1327 } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
+import { Modal } from '@jnoodle/antd';
+
+const { confirm } = Modal;
 
 export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -35,11 +38,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
 
   const unsingedFC = formatBalance(info.fcUnsigned, 18, false, {}, '0.001');
 
-  const handleStakeInputChange = value => {
-    setStakedFC(value);
-  };
-
-  const handleStakeButtonClick = async () => {
+  const exchangeHandler = async () => {
     setTxnStatusModal({
       ...txnStatusModal,
       show: true,
@@ -83,6 +82,24 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
 
       return e;
     }
+  };
+
+  const handleStakeInputChange = value => {
+    setStakedFC(value);
+  };
+
+  const handleStakeButtonClick = async () => {
+    confirm({
+      icon: null,
+      content: t(translations.fccfx.tip.beforeExchangeInModal),
+      okText: t(translations.fccfx.buttonOk),
+      cancelText: t(translations.fccfx.buttonCancel),
+      closable: true,
+      onOk() {
+        exchangeHandler();
+      },
+      onCancel() {},
+    });
   };
 
   const handleSignButtonClick = async () => {
