@@ -20,6 +20,9 @@ import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
+const videoType = ['mp4', 'mp3'];
+const suffixLen = -3;
+
 export const NFTPreview = React.memo(
   ({
     contractAddress,
@@ -82,14 +85,28 @@ export const NFTPreview = React.memo(
                     src={imageUri}
                   />
                 ) : (
-                  <Image
-                    width={200}
-                    style={{ minHeight: imageMinHeight }}
-                    src={imageUri}
-                    preview={true}
-                    fallback={tokenIdNotFound}
-                    alt={tokenId + ''}
-                  />
+                  <>
+                    {videoType.includes(imageUri.substr(suffixLen)) ? (
+                      <VideoCard>
+                        <video
+                          controls
+                          className="ant-video"
+                          preload="metadata"
+                          // poster={imageUri}
+                          src={imageUri}
+                        ></video>
+                      </VideoCard>
+                    ) : (
+                      <Image
+                        width={200}
+                        style={{ minHeight: imageMinHeight }}
+                        src={imageUri}
+                        preview={true}
+                        fallback={tokenIdNotFound}
+                        alt={tokenId + ''}
+                      />
+                    )}
+                  </>
                 )}
                 {imageName ? (
                   <div className="image-preview-name">{imageName}</div>
@@ -122,13 +139,27 @@ export const NFTPreview = React.memo(
                   <iframe title={imageName} src={imageUri} />
                 </div>
               ) : (
-                <Image
-                  width={500}
-                  src={imageUri}
-                  preview={true}
-                  alt={tokenId + ''}
-                  fallback={tokenIdNotFound}
-                />
+                <>
+                  {videoType.includes(imageUri.substr(suffixLen)) ? (
+                    <VideoCard>
+                      <video
+                        controls
+                        className="ant-video"
+                        preload="metadata"
+                        // poster={imageUri}
+                        src={imageUri}
+                      ></video>
+                    </VideoCard>
+                  ) : (
+                    <Image
+                      width={500}
+                      src={imageUri}
+                      preview={true}
+                      alt={tokenId + ''}
+                      fallback={tokenIdNotFound}
+                    />
+                  )}
+                </>
               )
             ) : isFirstTime ? (
               <Skeleton.Image />
@@ -159,6 +190,21 @@ export const NFTPreview = React.memo(
 
 const PopoverWrapper = styled(Popover)`
   margin-left: 8px;
+`;
+
+const VideoCard = styled.div`
+  width: 100%;
+  height: 0;
+  padding-top: 100%;
+  position: relative;
+  min-width: 200px;
+  .ant-video {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const NFTCard = styled.div`
