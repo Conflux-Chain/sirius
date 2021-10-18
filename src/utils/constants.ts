@@ -50,6 +50,7 @@ export enum LOCALSTORAGE_KEYS_MAP {
   ageFormat = 'CONFLUX_SCAN_TABLE_AGE_FORMAT',
   cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
   txnRecords = 'CONFLUXSCAN_TXN_RECORDS',
+  fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
 }
 
 export const NETWORK_ID = (() => {
@@ -146,6 +147,11 @@ export enum TXN_ACTION {
   contractDeplpy = 106,
   swapWCFXToCFX = 107,
   swapCFXToWCFX = 108,
+  fccfxWithdrawProfit = 109,
+  fccfxStakeToEarnCFX = 110,
+  fccfxSignToEarnAPY = 111,
+  fccfxSignToSyncInterest = 112,
+  fccfxWithdrawCFX = 113,
 }
 
 export const CURRENCY_SYMBOLS = {
