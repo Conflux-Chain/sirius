@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   isSafeNumberOrNumericStringInput,
   formatBalance,
@@ -55,15 +55,6 @@ export const ActionField = ({
 }: ActionFieldProps) => {
   const { t } = useTranslation();
   const { accounts } = usePortal();
-  const [buttonDisabled, setButtonDisabled] = useState(isInvalidInput(value));
-
-  useEffect(() => {
-    const disabled = isInvalidInput(value);
-    if (disabled !== buttonDisabled) {
-      setButtonDisabled(isInvalidInput(value));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
 
   const b = accounts.length
     ? formatBalance(balance, 18, false, {}, '0.001')
@@ -79,12 +70,6 @@ export const ActionField = ({
         return;
       } else {
         onInputChange(value);
-
-        if (new BigNumber(value).gt(balance.dividedBy(MODULE))) {
-          setButtonDisabled(true);
-        } else {
-          setButtonDisabled(false);
-        }
       }
     }
   };
@@ -96,9 +81,9 @@ export const ActionField = ({
   const disabled =
     accounts.length &&
     ((showBalance && balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
-      buttonDisabled);
+      isInvalidInput(value));
 
-  const inputValue = readonly
+  const iValue = readonly
     ? formatBalance(
         new BigNumber(value).multipliedBy(MODULE),
         18,
@@ -115,7 +100,7 @@ export const ActionField = ({
         <div className="fccfx-actionField-inputContainer">
           <Input
             placeholder="0.0"
-            value={inputValue}
+            value={iValue}
             size="small"
             onChange={handleInputChange}
             style={{ width: '100%', height: '32px' }}
