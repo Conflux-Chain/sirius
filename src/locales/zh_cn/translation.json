@@ -17,7 +17,7 @@
     "titleFCStaked": "已签约 FC 数量",
     "titleFCUnsigned": "未签约 FC 数量",
     "titleFCStakedHistory": "累计质押的 FC 数量",
-    "titleCFXWithdrawed": "累计提取的 CFX 数量",
+    "titleCFXWithdrawed": "累计提取的利息",
     "titleAvailableProfit": "当前可提取利息",
     "titleRemainingInterests": "遗留利息",
     "titleStakeFCToEarnCFX": "存入 FC 兑换 CFX（不可逆）",
@@ -47,13 +47,17 @@
       "myNFT": "累计质押 1000FC 即可获得专属 NFT（每个账户最多可获得1个 NFT）",
       "unsignedFC": "注意：您有 {{ value }} FC 还未享受补贴计划，请及时签约！",
       "legacyProfit": "请先提取遗留利息",
-      "beforeWithdraw": "提取本金前请先提取利息",
+      "beforeWithdraw": "请先提取利息，否则利息会被清零！",
       "withdrawTitle": "为确保用户正常获得利息，提取本金后须手动通知协议。",
       "exchangeTitle": "若不签约补贴计划则无法获得利息",
       "signed": "可以获得利息的 FC 的数量",
       "unsigned": "无法获得利息的 FC 的数量",
-      "APY": "计算公式为：可产生收益的 CFX 数量 / 当前质押的 FC 数量 * 4%"
-    }
+      "APY": "计算公式为：可产生收益的 CFX 数量 / 当前质押的 FC 数量 * 4%",
+      "beforeWithdrawInModal": "提取本金前请先点击上方“提取利息”的按钮，否则您的利息将会被清零。",
+      "beforeExchangeInModal": "点击该按钮后您的 FC 将会被永久兑换为 CFX，该过程不可逆。"
+    },
+    "buttonCancel": "取消",
+    "buttonOk": "确认并继续"
   },
   "contract": {
     "address": "合约地址",

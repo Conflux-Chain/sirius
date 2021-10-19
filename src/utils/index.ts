@@ -516,6 +516,9 @@ export const formatBalance = (
 ) => {
   try {
     const num = new BigNumber(balance).div(new BigNumber(10).pow(decimals));
+    if (num.eq(0)) {
+      return num.toFixed();
+    }
     if (isShowFull) {
       return toThousands(num.toFixed());
     }

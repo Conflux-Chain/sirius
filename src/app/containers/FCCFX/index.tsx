@@ -64,8 +64,6 @@ export function FCCFX() {
 
   useEffect(() => {
     if (accounts.length) {
-      // const interval = setInterval(() => {
-
       setLoading(true);
 
       fcExchangeInterestContract
@@ -84,9 +82,11 @@ export function FCCFX() {
 
             setAccountInfo({
               ...accountInfo,
-              fcSigned: new BigNumber(accountSummary.stakeInfo.amount),
+              fcSigned: new BigNumber(accountSummary.accountInfo.amount),
               fcUnsigned: unsignedFC.lt(0) ? new BigNumber(0) : unsignedFC,
-              cfxWithdrawed: new BigNumber(accountSummary.stakeInfo.accProfit),
+              cfxWithdrawed: new BigNumber(
+                accountSummary.accountInfo.accProfit,
+              ),
               fcSignedHistory: new BigNumber(
                 accountSummary.stakeInfo.accumulateAmount,
               ),
@@ -113,11 +113,6 @@ export function FCCFX() {
         .finally(() => {
           setLoading(false);
         });
-      // }, 5000);
-
-      // return () => {
-      //   clearInterval(interval);
-      // };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts]);

@@ -17,7 +17,7 @@
     "titleFCStaked": "Signed FC",
     "titleFCUnsigned": "Unsigned FC",
     "titleFCStakedHistory": "Cumulatively Staked FC",
-    "titleCFXWithdrawed": "Cumulatively Withdrawal CFX",
+    "titleCFXWithdrawed": "Cumulatively Withdrawal Inertests",
     "titleAvailableProfit": "Extractable Inertests",
     "titleRemainingInterests": "Remaining Interests",
     "titleStakeFCToEarnCFX": "FC to CFX (Non-reversible)",
@@ -47,13 +47,17 @@
       "myNFT": "Users who stake amount reaches 1000FC will receive an NFT as a commemorative badge (Each address can get 1 NFT at most)",
       "unsignedFC": "Attention: You have {{ value }} FC that is not yet eligible for the subsidy program, please sign up in time!",
       "legacyProfit": "Please withdraw remaining interests first!",
-      "beforeWithdraw": "Please withdraw the interest before withdrawing the principal",
+      "beforeWithdraw": "Please withdraw the interest first, otherwise it will be cleared!",
       "withdrawTitle": "To ensure that the user receives interest properly, the agreement must be notified manually after withdrawing the principal.",
       "exchangeTitle": "You won't get interest if you don't sign up for a subsidy plan",
       "signed": "The amount of interest-bearing FC",
       "unsigned": "The amount of non-interest-bearing FC",
-      "APY": "Calculation formula: Interests-bearing CFX / Current Staked FC * 4%"
-    }
+      "APY": "Calculation formula: Interests-bearing CFX / Current Staked FC * 4%",
+      "beforeWithdrawInModal": "Please click the \"Withdraw Interest\" button above before withdrawing your principal, otherwise your interest will be cleared.",
+      "beforeExchangeInModal": "Clicking this button will permanently convert your FC to CFX and the process is irreversible."
+    },
+    "buttonCancel": "Cancel",
+    "buttonOk": "Confirm and next"
   },
   "contract": {
     "address": "Contract Address",

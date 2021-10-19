@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
-import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
+import React from 'react';
+import {
+  isSafeNumberOrNumericStringInput,
+  formatBalance,
+  formatNumber,
+} from 'utils';
 import styled from 'styled-components/macro';
 import { Input, Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +34,13 @@ interface ActionFieldProps {
   onButtonClick: (value) => void;
 }
 
+const isInvalidInput = str => {
+  const fStr = formatNumber(str, {
+    precision: 18,
+  });
+  return fStr === '' || fStr === '0';
+};
+
 export const ActionField = ({
   readonly,
   tokenType,
@@ -44,7 +55,6 @@ export const ActionField = ({
 }: ActionFieldProps) => {
   const { t } = useTranslation();
   const { accounts } = usePortal();
-  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const b = accounts.length
     ? formatBalance(balance, 18, false, {}, '0.001')
@@ -60,12 +70,6 @@ export const ActionField = ({
         return;
       } else {
         onInputChange(value);
-
-        if (new BigNumber(value).gt(balance.dividedBy(MODULE))) {
-          setButtonDisabled(true);
-        } else {
-          setButtonDisabled(false);
-        }
       }
     }
   };
@@ -74,7 +78,20 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
-  const disabled = accounts.length && (balance.eq(0) || buttonDisabled);
+  const disabled =
+    accounts.length &&
+    ((showBalance && balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
+      isInvalidInput(value));
+
+  const iValue = readonly
+    ? formatBalance(
+        new BigNumber(value).multipliedBy(MODULE),
+        18,
+        false,
+        {},
+        '0.001',
+      )
+    : value;
 
   return (
     <StyledActionFieldWrapper>
@@ -83,7 +100,7 @@ export const ActionField = ({
         <div className="fccfx-actionField-inputContainer">
           <Input
             placeholder="0.0"
-            value={value}
+            value={iValue}
             size="small"
             onChange={handleInputChange}
             style={{ width: '100%', height: '32px' }}

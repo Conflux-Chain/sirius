@@ -68,6 +68,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       key: 'cfxWithdrawed',
       title: t(translations.fccfx.titleCFXWithdrawed),
       value: info.cfxWithdrawed,
+      unit: 'CFX',
       span: 9,
     },
     {
@@ -185,7 +186,8 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
                 <span className="fccfx-accountInfo-number">
                   {accounts.length
                     ? formatBalance(c.value, 18, false, {}, '0.001')
-                    : '--'}
+                    : '--'}{' '}
+                  {c.unit}
                 </span>
               </Col>
             ))}

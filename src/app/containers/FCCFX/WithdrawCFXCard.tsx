@@ -19,6 +19,9 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { StyledTitle200F1327 } from 'app/components/StyledComponent';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
+import { Modal } from '@jnoodle/antd';
+
+const { confirm } = Modal;
 
 export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -32,13 +35,13 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     status: '',
   });
 
-  const signedCFX = formatBalance(info.cfxUnsigned);
+  const unsignedCFX = formatBalance(info.cfxUnsigned, 18, false, {}, '0.001');
 
   const handleWithdrawInputChange = async value => {
     setWithdrawCFX(value);
   };
 
-  const handleWithdrawButtonClick = async () => {
+  const withdrawHandler = async () => {
     setTxnStatusModal({
       ...txnStatusModal,
       show: true,
@@ -83,6 +86,20 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     }
   };
 
+  const handleWithdrawButtonClick = async () => {
+    confirm({
+      icon: null,
+      content: t(translations.fccfx.tip.beforeWithdrawInModal),
+      okText: t(translations.fccfx.buttonOk),
+      cancelText: t(translations.fccfx.buttonCancel),
+      closable: true,
+      onOk() {
+        withdrawHandler();
+      },
+      onCancel() {},
+    });
+  };
+
   const handleSignButtonClick = async () => {
     setTxnStatusModal({
       ...txnStatusModal,
@@ -110,7 +127,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
           code: code,
           description: '',
           hash,
-          value: signedCFX,
+          value: unsignedCFX,
         }),
       });
 
@@ -173,7 +190,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
         <ActionField
           title={t(translations.fccfx.titleSignToSyncInterest)}
           buttonText={t(translations.fccfx.buttonAnnounce)}
-          value={signedCFX}
+          value={info.cfxUnsigned.dividedBy(10 ** 18).toString()}
           tokenType="cfx"
           onButtonClick={handleSignButtonClick}
           readonly

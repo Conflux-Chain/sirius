@@ -33,6 +33,7 @@ export interface InfoItemType {
   key: string;
   title: string;
   value: IBigNumber;
+  unit?: string;
   span: number;
   tip?: React.ReactNode;
 }
@@ -108,7 +109,7 @@ const StyledCardInfoWrapper = styled.div<{
 `;
 
 export const FC_EXCHANGE_INTEREST_ADDRESS =
-  'cfxtest:acbg19aknu6g2xwzj1edkyr93xa9afcerpdpx92b3u';
+  'cfxtest:acfwahkb9vxh3w6jm0y97t4ps0zr35m27ehmms9xgv';
 export const FC_EXCHANGE_ADDRESS =
   'cfxtest:aca2g39xbbvwvuky6gt2kah6vcb7k57mgu8bdkgfmn';
 export const FC_ADDRESS = 'cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s';
