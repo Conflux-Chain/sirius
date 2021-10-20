@@ -55,6 +55,7 @@ export function FCCFX() {
     pendingProfitLegacy: new BigNumber(0),
     availableFc: new BigNumber(0),
     cfxUnsigned: new BigNumber(0),
+    availableToWithdraw: new BigNumber(0),
   });
 
   const hasPendingProfitLegacy = !accountInfo.pendingProfitLegacy.eq(0);
@@ -98,6 +99,9 @@ export function FCCFX() {
               ),
               availableFc: new BigNumber(accountSummary.fcBalance),
               cfxUnsigned: unsignedCFX.gt(0) ? unsignedCFX : new BigNumber(0),
+              availableToWithdraw: new BigNumber(
+                accountSummary.stakeInfo.amount,
+              ),
             });
 
             setTotalInfo({

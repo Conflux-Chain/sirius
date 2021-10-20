@@ -20,6 +20,7 @@ export interface AccountInfoType {
   pendingProfitLegacy: IBigNumber;
   availableFc: IBigNumber;
   cfxUnsigned: IBigNumber;
+  availableToWithdraw: IBigNumber;
 }
 
 export interface TotalInfoType {

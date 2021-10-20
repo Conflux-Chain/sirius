@@ -180,7 +180,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
           title={t(translations.fccfx.titleWithdrawCapital)}
           buttonText={t(translations.fccfx.buttonWithdraw)}
           value={withdrawCFX}
-          balance={info.fcSigned}
+          balance={info.availableToWithdraw}
           tokenType="cfx"
           onInputChange={handleWithdrawInputChange}
           onButtonClick={handleWithdrawButtonClick}
