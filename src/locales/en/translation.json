@@ -54,7 +54,8 @@
       "unsigned": "The amount of non-interest-bearing FC",
       "APY": "Calculation formula: Interests-bearing CFX / Current Staked FC * 4%",
       "beforeWithdrawInModal": "Please click the \"Withdraw Interest\" button above before withdrawing your principal, otherwise your interest will be cleared.",
-      "beforeExchangeInModal": "Clicking this button will permanently convert your FC to CFX and the process is irreversible."
+      "beforeExchangeInModal": "Clicking this button will permanently convert your FC to CFX and the process is irreversible.",
+      "required": "Please enter the amount"
     },
     "buttonCancel": "Cancel",
     "buttonOk": "Confirm and next"

@@ -28,7 +28,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
   const { addRecord } = useTxnHistory();
   const { accounts } = usePortal();
   const { t } = useTranslation();
-  const [withdrawCFX, setWithdrawCFX] = useState('0');
+  const [withdrawCFX, setWithdrawCFX] = useState('');
   const [txnStatusModal, setTxnStatusModal] = useState({
     show: false,
     hash: '',
@@ -185,6 +185,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
           onInputChange={handleWithdrawInputChange}
           onButtonClick={handleWithdrawButtonClick}
           tip={t(translations.fccfx.availableBalance)}
+          style={{ marginTop: '10px' }}
         />
 
         <ActionField

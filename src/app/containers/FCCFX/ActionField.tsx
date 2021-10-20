@@ -1,11 +1,7 @@
-import React from 'react';
-import {
-  isSafeNumberOrNumericStringInput,
-  formatBalance,
-  formatNumber,
-} from 'utils';
+import React, { useEffect } from 'react';
+import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
 import styled from 'styled-components/macro';
-import { Input, Image } from '@cfxjs/react-ui';
+import { Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Button } from 'app/components/Button/Loadable';
@@ -13,6 +9,7 @@ import { StyledTitle160F1327 } from 'app/components/StyledComponent';
 import { usePortal } from 'utils/hooks/usePortal';
 import { ConnectButton } from 'app/components/ConnectWallet';
 import BigNumber, { BigNumber as IBigNumber } from 'bignumber.js';
+import { Input, Form } from '@jnoodle/antd';
 
 import iconCFX from 'images/icon/cfx.svg';
 import iconFC from 'images/icon/fc.svg';
@@ -33,17 +30,13 @@ interface ActionFieldProps {
   onInputChange?: (value) => void;
   onButtonClick: (value) => void;
   inactiveButtonDisabled?: boolean;
+  style?: React.CSSProperties;
 }
 
-const isInvalidInput = str => {
-  const fStr = formatNumber(str, {
-    precision: 18,
-  });
-  return fStr === '' || fStr === '0';
-};
+const isZeroInput = str => new BigNumber(str).eq(0);
 
 export const ActionField = ({
-  readonly,
+  readonly = false,
   tokenType,
   title,
   balance = new BigNumber('0'),
@@ -54,13 +47,40 @@ export const ActionField = ({
   onInputChange = () => {},
   onButtonClick = () => {},
   inactiveButtonDisabled,
+  style,
 }: ActionFieldProps) => {
   const { t } = useTranslation();
   const { accounts } = usePortal();
+  const [form] = Form.useForm();
 
   const b = accounts.length
     ? formatBalance(balance, 18, false, {}, '0.001')
     : '--';
+
+  // if inactive is true, not check other condition
+  const disabled =
+    accounts.length && inactiveButtonDisabled
+      ? false
+      : (showBalance &&
+          balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
+        isZeroInput(value);
+
+  useEffect(() => {
+    const iValue = readonly
+      ? formatBalance(
+          new BigNumber(value).multipliedBy(MODULE),
+          18,
+          false,
+          {},
+          '0.001',
+        )
+      : value;
+
+    form.setFieldsValue({
+      input: iValue,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const handleInputChange = e => {
     let value = e.target.value;
@@ -80,64 +100,81 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
-  // if inactive is true, not check other condition
-  const disabled =
-    accounts.length && inactiveButtonDisabled
-      ? false
-      : (showBalance &&
-          balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
-        isInvalidInput(value);
+  const handleButtonClick = () => form.submit();
 
-  const iValue = readonly
-    ? formatBalance(
-        new BigNumber(value).multipliedBy(MODULE),
-        18,
-        false,
-        {},
-        '0.001',
-      )
-    : value;
+  const handleFinish = () => onButtonClick(null);
+
+  const onFinishFailed = (errorInfo: any) => console.log('Failed:', errorInfo);
 
   return (
-    <StyledActionFieldWrapper>
+    <StyledActionFieldWrapper style={style} readonly={readonly}>
       <StyledTitle160F1327>{title}</StyledTitle160F1327>
       <div className="fccfx-actionField-container">
         <div className="fccfx-actionField-inputContainer">
-          <Input
-            placeholder="0.0"
-            value={iValue}
-            size="small"
-            onChange={handleInputChange}
-            style={{ width: '100%', height: '32px' }}
-            className="fccfx-actionField-input"
-            disabled={readonly}
-          ></Input>
-          {showBalance ? (
-            <span className="fccfx-actionField-tip">
-              {tip}
-              {b}
-            </span>
-          ) : null}
-          <div className="fccfx-actionField-assistContainer">
-            {readonly ? null : (
-              <div className="fccfx-actionField-max" onClick={handleMax}>
-                {t(translations.fccfx.max)}
-              </div>
-            )}
-            <div className="fccfx-actionField-tokenIcon">
-              {tokenType === 'fc' ? <Image src={iconFC}></Image> : null}
-              {tokenType === 'cfx' ? <Image src={iconCFX}></Image> : null}
-            </div>
-            <div className="fccfx-actionField-tokenName">
-              {tokenType.toUpperCase()}
-            </div>
-          </div>
+          <Form
+            labelCol={{ span: 0 }}
+            wrapperCol={{ span: 23 }}
+            initialValues={{ remember: true }}
+            onFinish={handleFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+            form={form}
+          >
+            <Form.Item
+              label=""
+              name="input"
+              extra={
+                showBalance ? (
+                  <span className="fccfx-actionField-tip">
+                    {tip}
+                    {b}
+                  </span>
+                ) : null
+              }
+              rules={[
+                { required: true, message: 'Please input your username!' },
+              ]}
+            >
+              <Input
+                placeholder="0.0"
+                size="small"
+                onChange={handleInputChange}
+                className="fccfx-actionField-input"
+                disabled={readonly}
+                suffix={
+                  <>
+                    <div className="fccfx-actionField-assistContainer">
+                      {readonly ? null : (
+                        <div
+                          className="fccfx-actionField-max"
+                          onClick={handleMax}
+                        >
+                          {t(translations.fccfx.max)}
+                        </div>
+                      )}
+                      <div className="fccfx-actionField-tokenIcon">
+                        {tokenType === 'fc' ? (
+                          <Image src={iconFC}></Image>
+                        ) : null}
+                        {tokenType === 'cfx' ? (
+                          <Image src={iconCFX}></Image>
+                        ) : null}
+                      </div>
+                      <div className="fccfx-actionField-tokenName">
+                        {tokenType.toUpperCase()}
+                      </div>
+                    </div>
+                  </>
+                }
+              ></Input>
+            </Form.Item>
+          </Form>
         </div>
         <div>
           <ConnectButton>
             <Button
               type={disabled ? '' : 'primary'}
-              onClick={onButtonClick}
+              onClick={handleButtonClick}
               disabled={disabled}
             >
               {buttonText}
@@ -149,11 +186,26 @@ export const ActionField = ({
   );
 };
 
-const StyledActionFieldWrapper = styled.div`
-  margin-top: 10px;
-
+const StyledActionFieldWrapper = styled.div<{
+  readonly: boolean;
+}>`
   .fccfx-actionField-container {
     display: flex;
+    min-height: ${props => (props.readonly ? '' : '58px')};
+  }
+
+  form.ant-form > .ant-form-item {
+    margin-bottom: 0;
+
+    .ant-form-item-extra {
+      position: absolute;
+      right: 0;
+      top: 30px;
+    }
+
+    .ant-form-item-explain {
+      font-size: 12px;
+    }
   }
 
   .fccfx-actionField-inputContainer {
@@ -166,19 +218,14 @@ const StyledActionFieldWrapper = styled.div`
       background-color: #f5f5f5;
     }
 
-    .fccfx-actionField-input {
-      width: 100%;
+    input.ant-input {
       height: 32px;
-      padding-right: 10px;
     }
 
     .fccfx-actionField-assistContainer {
-      position: absolute;
       display: flex;
-      height: 32px;
       justify-content: center;
       align-items: center;
-      right: 20px;
 
       .fccfx-actionField-max {
         display: inline-flex;
@@ -215,7 +262,6 @@ const StyledActionFieldWrapper = styled.div`
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
-      padding-right: 10px;
       margin-top: 4px;
     }
   }

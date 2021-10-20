@@ -50,7 +50,6 @@ export const TitleTip = ({ tip }) => {
 
 const StyledTitleTipWrapper = styled.span`
   margin-left: 5px;
-  padding-top: 2px;
   height: 18px;
   display: inline-flex;
 `;

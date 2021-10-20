@@ -140,26 +140,28 @@ export function FCCFX() {
         <Spin spinning={loading}>
           <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
         </Spin>
-        <Spin spinning={loading}>
-          <div
-            className={clsx('fccfx-mask', {
-              disabled: hasPendingProfitLegacy,
-            })}
-          >
-            <Row gutter={24}>
-              <Col flex="auto">
-                <Row gutter={24}>
-                  <Col span={12}>
+        <div
+          className={clsx('fccfx-mask', {
+            disabled: hasPendingProfitLegacy,
+          })}
+        >
+          <Row gutter={24}>
+            <Col flex="auto">
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Spin spinning={loading}>
                     <StakeAndSignCard info={accountInfo} />
-                  </Col>
-                  <Col span={12}>
+                  </Spin>
+                </Col>
+                <Col span={12}>
+                  <Spin spinning={loading}>
                     <WithdrawCFXCard info={accountInfo} />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </div>
-        </Spin>
+                  </Spin>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </div>
         <Tip hidden={!hasPendingProfitLegacy} size={14}>
           {t(translations.fccfx.tip.legacyProfit)}
         </Tip>
