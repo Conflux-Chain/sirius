@@ -159,6 +159,7 @@
   },
   "addressDetail": {
     "minedBlocks": "Mined Blocks",
+    "NFTAsset": "NFT Asset",
     "title": "Address Detail",
     "content": "Details of Address",
     "staked": "Staked CFX",

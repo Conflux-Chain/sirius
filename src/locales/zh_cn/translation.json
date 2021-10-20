@@ -159,6 +159,7 @@
   },
   "addressDetail": {
     "minedBlocks": "挖出区块",
+    "NFTAsset": "NFT 资产",
     "title": "地址详情",
     "content": "地址详情",
     "staked": "质押 CFX",

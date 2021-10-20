@@ -25,6 +25,7 @@ import {
   // PendingTxns,
 } from 'app/containers/Transactions/Loadable';
 import { MinedBlocks } from 'app/containers/Blocks/Loadable';
+import { NFTAsset } from 'app/containers/NFTAsset/Loadable';
 import { Card } from '../../components/Card';
 import { LineChart as Chart } from '../../components/Chart/Loadable';
 import styled from 'styled-components/macro';
@@ -160,6 +161,13 @@ export function Table({ address, addressInfo }) {
   }
 
   if (!(isContract || isZeroAddress(address))) {
+    tabs.push({
+      value: 'nft-asset',
+      action: 'NFTAsset',
+      label: t(translations.addressDetail.NFTAsset),
+      content: <NFTAsset />,
+    });
+
     tabs.push({
       value: 'mined-blocks',
       action: 'minedBlocks',
