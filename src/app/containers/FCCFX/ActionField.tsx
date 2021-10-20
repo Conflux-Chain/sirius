@@ -32,6 +32,7 @@ interface ActionFieldProps {
   tip?: string;
   onInputChange?: (value) => void;
   onButtonClick: (value) => void;
+  inactiveButtonDisabled?: boolean;
 }
 
 const isInvalidInput = str => {
@@ -52,6 +53,7 @@ export const ActionField = ({
   tip = '',
   onInputChange = () => {},
   onButtonClick = () => {},
+  inactiveButtonDisabled,
 }: ActionFieldProps) => {
   const { t } = useTranslation();
   const { accounts } = usePortal();
@@ -78,10 +80,13 @@ export const ActionField = ({
     onInputChange(balance.dividedBy(MODULE));
   };
 
+  // if inactive is true, not check other condition
   const disabled =
-    accounts.length &&
-    ((showBalance && balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
-      isInvalidInput(value));
+    accounts.length && inactiveButtonDisabled
+      ? false
+      : (showBalance &&
+          balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
+        isInvalidInput(value);
 
   const iValue = readonly
     ? formatBalance(

@@ -195,6 +195,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
           onButtonClick={handleSignButtonClick}
           readonly
           showBalance={false}
+          inactiveButtonDisabled
         />
       </Card>
 

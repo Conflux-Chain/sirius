@@ -192,6 +192,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
           onButtonClick={handleSignButtonClick}
           readonly
           showBalance={false}
+          inactiveButtonDisabled
         />
       </Card>
 
