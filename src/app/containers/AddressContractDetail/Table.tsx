@@ -161,19 +161,22 @@ export function Table({ address, addressInfo }) {
   }
 
   if (!(isContract || isZeroAddress(address))) {
-    tabs.push({
-      value: 'nft-asset',
-      action: 'NFTAsset',
-      label: t(translations.addressDetail.NFTAsset),
-      content: <NFTAsset />,
-    });
-
-    tabs.push({
-      value: 'mined-blocks',
-      action: 'minedBlocks',
-      label: t(translations.addressDetail.minedBlocks),
-      content: <MinedBlocks address={address} />,
-    });
+    tabs.push(
+      ...[
+        {
+          value: 'nft-asset',
+          action: 'NFTAsset',
+          label: t(translations.addressDetail.NFTAsset),
+          content: <NFTAsset />,
+        },
+        {
+          value: 'mined-blocks',
+          action: 'minedBlocks',
+          label: t(translations.addressDetail.minedBlocks),
+          content: <MinedBlocks address={address} />,
+        },
+      ],
+    );
   }
 
   return <TabsTablePanel key="table" tabs={tabs} />;
