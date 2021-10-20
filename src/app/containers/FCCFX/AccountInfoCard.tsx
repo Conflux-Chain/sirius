@@ -80,6 +80,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
         ? info.pendingProfitLegacy
         : info.pendingProfit,
       span: 7,
+      unit: 'CFX',
     },
   ];
 
