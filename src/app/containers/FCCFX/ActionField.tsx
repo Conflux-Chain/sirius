@@ -58,12 +58,12 @@ export const ActionField = ({
     : '--';
 
   // if inactive is true, not check other condition
-  const disabled =
-    accounts.length && inactiveButtonDisabled
-      ? false
-      : (showBalance &&
-          balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
-        isZeroInput(value);
+  const disabled = inactiveButtonDisabled
+    ? false
+    : (accounts.length &&
+        showBalance &&
+        balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
+      isZeroInput(value);
 
   useEffect(() => {
     const iValue = readonly

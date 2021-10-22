@@ -58,7 +58,8 @@ export function FCCFX() {
     availableToWithdraw: new BigNumber(0),
   });
 
-  const hasPendingProfitLegacy = !accountInfo.pendingProfitLegacy.eq(0);
+  const hasPendingProfitLegacy =
+    accounts.length && !accountInfo.pendingProfitLegacy.eq(0);
   const remarkLink = iszh
     ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4408240776347-FC-%E5%85%91%E6%8D%A2-CFX-%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E'
     : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4408240776347-FC-to-CFX-None-reversible-Rules';
