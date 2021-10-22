@@ -64,7 +64,9 @@ export const NFTCardInfo = React.memo(
         }
       } else {
         // has not suffix
-        fetch(imageUri).then(res => {
+        fetch(imageUri, {
+          method: 'HEAD',
+        }).then(res => {
           for (let pair of res.headers.entries()) {
             if (pair[0] === 'content-type') {
               nftType = pair[1].split('/')[0];
