@@ -404,14 +404,16 @@ export const holders = {
   dataIndex: 'holderCount',
   key: 'holderCount',
   sortable: true,
-  render: value => (
+  render: (value, row) => (
     <ContentWrapper right monospace>
-      {Number.isInteger(value) && Number(value) > 0
-        ? formatNumber(value, {
-            keepDecimal: false,
-            withUnit: false,
-          })
-        : '-'}
+      <Link href={`/token/${formatAddress(row.address)}?tab=holders`}>
+        {Number.isInteger(value) && Number(value) > 0
+          ? formatNumber(value, {
+              keepDecimal: false,
+              withUnit: false,
+            })
+          : '-'}
+      </Link>
     </ContentWrapper>
   ),
 };
