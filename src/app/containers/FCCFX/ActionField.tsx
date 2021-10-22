@@ -132,7 +132,7 @@ export const ActionField = ({
                 ) : null
               }
               rules={[
-                { required: true, message: 'Please input your username!' },
+                { required: true, message: t(translations.fccfx.tip.required) },
               ]}
             >
               <Input
