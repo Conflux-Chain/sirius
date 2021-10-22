@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
+import { toThousands, isCurrentNetworkAddress, isAccountAddress } from 'utils';
 import { Card } from 'app/components/Card';
 import { Col, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { isCurrentNetworkAddress, toThousands } from 'utils';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { Empty } from 'app/components/Empty';
@@ -67,7 +67,9 @@ export function NFTAsset() {
 
   const validateAddress = (address, cb) => {
     if (isCurrentNetworkAddress(address)) {
-      cb && cb();
+      if (isAccountAddress(address)) {
+        cb && cb();
+      }
     }
   };
 
