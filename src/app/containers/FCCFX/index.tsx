@@ -55,12 +55,13 @@ export function FCCFX() {
     pendingProfitLegacy: new BigNumber(0),
     availableFc: new BigNumber(0),
     cfxUnsigned: new BigNumber(0),
+    availableToWithdraw: new BigNumber(0),
   });
 
   const hasPendingProfitLegacy = !accountInfo.pendingProfitLegacy.eq(0);
   const remarkLink = iszh
-    ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4408205351323-2021-9-27-2021-10-11'
-    : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4408205351323-Sep-27-2021-Oct-11-2021';
+    ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4408240776347-FC-%E5%85%91%E6%8D%A2-CFX-%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E'
+    : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4408240776347-FC-to-CFX-None-reversible-Rules';
 
   useEffect(() => {
     if (accounts.length) {
@@ -98,6 +99,9 @@ export function FCCFX() {
               ),
               availableFc: new BigNumber(accountSummary.fcBalance),
               cfxUnsigned: unsignedCFX.gt(0) ? unsignedCFX : new BigNumber(0),
+              availableToWithdraw: new BigNumber(
+                accountSummary.stakeInfo.amount,
+              ),
             });
 
             setTotalInfo({
@@ -140,26 +144,28 @@ export function FCCFX() {
         <Spin spinning={loading}>
           <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
         </Spin>
-        <Spin spinning={loading}>
-          <div
-            className={clsx('fccfx-mask', {
-              disabled: hasPendingProfitLegacy,
-            })}
-          >
-            <Row gutter={24}>
-              <Col flex="auto">
-                <Row gutter={24}>
-                  <Col span={12}>
+        <div
+          className={clsx('fccfx-mask', {
+            disabled: hasPendingProfitLegacy,
+          })}
+        >
+          <Row gutter={24}>
+            <Col flex="auto">
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Spin spinning={loading}>
                     <StakeAndSignCard info={accountInfo} />
-                  </Col>
-                  <Col span={12}>
+                  </Spin>
+                </Col>
+                <Col span={12}>
+                  <Spin spinning={loading}>
                     <WithdrawCFXCard info={accountInfo} />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </div>
-        </Spin>
+                  </Spin>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </div>
         <Tip hidden={!hasPendingProfitLegacy} size={14}>
           {t(translations.fccfx.tip.legacyProfit)}
         </Tip>

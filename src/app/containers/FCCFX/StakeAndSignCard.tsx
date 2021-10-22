@@ -28,7 +28,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
   const { t } = useTranslation();
   const { accounts } = usePortal();
-  const [stakedFC, setStakedFC] = useState('0');
+  const [stakedFC, setStakedFC] = useState('');
   const { addRecord } = useTxnHistory();
   const [txnStatusModal, setTxnStatusModal] = useState({
     show: false,
@@ -182,6 +182,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
           onInputChange={handleStakeInputChange}
           onButtonClick={handleStakeButtonClick}
           tip={t(translations.fccfx.availableBalance)}
+          style={{ marginTop: '10px' }}
         />
 
         <ActionField
@@ -192,6 +193,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
           onButtonClick={handleSignButtonClick}
           readonly
           showBalance={false}
+          inactiveButtonDisabled
         />
       </Card>
 
