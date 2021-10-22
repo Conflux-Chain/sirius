@@ -200,7 +200,7 @@ export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
 
   const clearRecords = function () {
     // @ts-ignore
-    txnHistoryStore.clear();
+    txnHistoryStore.setItem(config.localstorageKey, []);
     initPendingRecords();
   };
 
