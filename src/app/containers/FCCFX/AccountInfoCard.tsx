@@ -84,8 +84,6 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
     },
   ];
 
-  const disabledButton = data[4]?.value.eq(0);
-
   const handleWithdrawProfit = async () => {
     setTxnStatusModal({
       ...txnStatusModal,
@@ -195,11 +193,10 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
             <Col span={8}>
               <ConnectButton>
                 <Button
-                  type={disabledButton ? '' : 'primary'}
+                  type={'primary'}
                   className="fccfx-accountInfo-withdrawButton"
                   onClick={handleWithdrawProfit}
                   loading={loading}
-                  disabled={disabledButton}
                 >
                   {t(translations.fccfx.buttonWithdrawInterest)}
                 </Button>
