@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 const { act } = TestRenderer;
 
 export const sleep = (time: number) => {
+  // console.log('time: ', time);
   return new Promise(resolve => setTimeout(resolve, time));
 };
 
