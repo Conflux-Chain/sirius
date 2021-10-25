@@ -10,33 +10,44 @@ interface Props {
     key: string;
   }>;
   activeKey: string;
-  onChange: (activeKey: string) => void;
+  onChange: (activeKey?: string, index?: number) => void;
   className?: string;
+  extra?: React.ReactNode;
 }
 
 // tabs example: [{
 //   label: '',
 //   key: ''
 // }]
-export const SubTabs = ({ tabs, activeKey, onChange, className }: Props) => {
+export const SubTabs = ({
+  tabs,
+  activeKey,
+  onChange,
+  className,
+  extra,
+}: Props) => {
   return (
     <StyledSubTabsWrapper className={clsx(className)}>
-      {tabs.map(o => (
+      {tabs.map((o, index) => (
         <Button
           key={o.key}
           className={clsx('subtabs-tabItem', {
             'subtabs-tabItem-active': o.key === activeKey,
           })}
-          onClick={() => onChange(o.key)}
+          onClick={() => onChange(o.key, index)}
         >
           {o.label}
         </Button>
       ))}
+      {extra ? <div className="subtabs-tabItem-extra">{extra}</div> : null}
     </StyledSubTabsWrapper>
   );
 };
 
 const StyledSubTabsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
   .btn.subtabs-tabItem {
     border-radius: 1.1429rem;
     padding: 0 1rem;
@@ -65,5 +76,13 @@ const StyledSubTabsWrapper = styled.div`
   .subtabs-tabItem-active.btn {
     color: #ffffff;
     background-color: rgba(0, 84, 254, 0.8);
+  }
+
+  .subtabs-tabItem-extra {
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 `;

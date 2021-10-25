@@ -22,5 +22,6 @@
   },
   "jest.autoEnable": false,
   "jest.runAllTestsFirst": false,
-  "px-to-rem.px-per-rem": 14
+  "px-to-rem.px-per-rem": 14,
+  "cSpell.words": ["antd"]
 }

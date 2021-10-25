@@ -662,9 +662,12 @@ export const Detail = () => {
             {_.isNil(epochNumber) ? (
               '--'
             ) : (
-              <Link href={`/epoch/${epochNumber}`}>
-                {toThousands(epochNumber)}
-              </Link>
+              <>
+                <Link href={`/epoch/${epochNumber}`}>
+                  {toThousands(epochNumber)}
+                </Link>{' '}
+                <CopyButton copyText={epochNumber} />
+              </>
             )}
           </SkeletonContainer>
         </Description>
@@ -681,7 +684,8 @@ export const Detail = () => {
           <SkeletonContainer shown={loading}>
             <Link href={`/epoch/${epochHeight}`}>
               {toThousands(epochHeight)}
-            </Link>
+            </Link>{' '}
+            <CopyButton copyText={epochHeight} />
           </SkeletonContainer>
         </Description>
         <Description
@@ -907,7 +911,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {toThousands(nonce)}
+              {toThousands(nonce)} <CopyButton copyText={nonce} />
             </SkeletonContainer>
           </Description>
           <Description
