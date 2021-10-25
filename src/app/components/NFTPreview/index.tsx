@@ -88,7 +88,7 @@ export const NFTCardInfo = React.memo(
               className="ant-video"
               preload="metadata"
               // poster={imageUri}
-              src={imageUri}
+              src={`${imageUri}?source=video`}
             ></video>
           </VideoCard>
         ) : (
