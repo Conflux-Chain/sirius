@@ -81,7 +81,7 @@ export function DescriptionPanel() {
           }
         >
           <SkeletonContainer shown={loading}>
-            {toThousands(height)}
+            {toThousands(height)} <CopyButton copyText={height} />
           </SkeletonContainer>
         </Description>
         <Description
@@ -92,11 +92,10 @@ export function DescriptionPanel() {
           }
         >
           <SkeletonContainer shown={loading}>
-            {
-              <Link href={`/epoch/${epochNumber}`}>
-                {toThousands(epochNumber)}
-              </Link>
-            }
+            <Link href={`/epoch/${epochNumber}`}>
+              {toThousands(epochNumber)}
+            </Link>{' '}
+            <CopyButton copyText={epochNumber} />
           </SkeletonContainer>
         </Description>
         <Description
@@ -110,7 +109,7 @@ export function DescriptionPanel() {
           }
         >
           <SkeletonContainer shown={loading}>
-            {toThousands(difficulty)}
+            {toThousands(difficulty)} <CopyButton copyText={difficulty} />
           </SkeletonContainer>
         </Description>
         <Description

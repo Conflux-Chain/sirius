@@ -512,18 +512,23 @@ export const formatBalance = (
   decimals = 18,
   isShowFull = false,
   opt = {},
+  ltValue?,
 ) => {
   try {
-    if (isShowFull) {
-      return toThousands(
-        new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toFixed(),
-      );
+    const num = new BigNumber(balance).div(new BigNumber(10).pow(decimals));
+    if (num.eq(0)) {
+      return num.toFixed();
     }
-    return formatNumber(
-      new BigNumber(balance).div(new BigNumber(10).pow(decimals)).toString(),
-      opt,
-    );
-  } catch {}
+    if (isShowFull) {
+      return toThousands(num.toFixed());
+    }
+    if (ltValue && num.lt(ltValue)) {
+      return `<${ltValue}`;
+    }
+    return formatNumber(num.toString(), opt);
+  } catch {
+    return '';
+  }
 };
 
 interface BodyElement extends HTMLBodyElement {
@@ -826,3 +831,18 @@ export const getAddressInputPlaceholder = () => {
     return '';
   }
 };
+
+export function padLeft(n: string, totalLength?: number): string;
+export function padLeft(n: number, totalLength?: number): string;
+export function padLeft(n, totalLength = 1) {
+  const num = parseInt(n);
+  if (window.isNaN(num)) {
+    return String(n);
+  } else {
+    let result = String(num);
+    while (result.length < totalLength) {
+      result = '0' + result;
+    }
+    return result;
+  }
+}
