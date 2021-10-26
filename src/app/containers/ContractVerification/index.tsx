@@ -6,7 +6,7 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Remark } from 'app/components/Remark';
 import styled from 'styled-components/macro';
 import { Card } from 'app/components/Card/Loadable';
-import { Form, Input, Button, Row, Col, Select } from '@jnoodle/antd';
+import { Form, Input, Button, Row, Col, Select } from '@cfxjs/antd';
 import { isContractAddress } from 'utils';
 import {
   reqContractCompiler,

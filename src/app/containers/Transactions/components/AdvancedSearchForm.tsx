@@ -9,16 +9,8 @@ import styled from 'styled-components/macro';
 import qs from 'query-string';
 import lodash from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  Form,
-  Row,
-  Col,
-  Input,
-  Button,
-  Select,
-  DatePicker,
-} from '@jnoodle/antd';
-import { ColProps } from '@jnoodle/antd/es/col';
+import { Form, Row, Col, Input, Button, Select, DatePicker } from '@cfxjs/antd';
+import { ColProps } from '@cfxjs/antd/es/col';
 import {
   DebounceTokenSelect,
   TokenType,

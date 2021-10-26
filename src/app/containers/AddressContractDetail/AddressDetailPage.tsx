@@ -28,7 +28,7 @@ import {
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
-import { Dropdown, Menu } from '@jnoodle/antd';
+import { Dropdown, Menu } from '@cfxjs/antd';
 import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';

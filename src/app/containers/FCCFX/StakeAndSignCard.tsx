@@ -20,7 +20,7 @@ import { StyledTitle200F1327 } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { Modal } from '@jnoodle/antd';
+import { Modal } from '@cfxjs/antd';
 
 const { confirm } = Modal;
 

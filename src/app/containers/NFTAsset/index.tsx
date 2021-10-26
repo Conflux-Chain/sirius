@@ -11,7 +11,7 @@ import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { toThousands, isCurrentNetworkAddress, isAccountAddress } from 'utils';
 import { Card } from 'app/components/Card';
-import { Col, Pagination, Row, Spin, Tag } from '@jnoodle/antd';
+import { Col, Pagination, Row, Spin, Tag } from '@cfxjs/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'app/components/AddressContainer';

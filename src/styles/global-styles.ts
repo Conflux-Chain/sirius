@@ -54,7 +54,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  // override @jnoodle/antd styles
+  // override @cfxjs/antd styles
   .ant-select-item-option-grouped {
     padding-left: 12px;
     margin-left: 12px;

@@ -13,7 +13,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
-import { Row, Col } from '@jnoodle/antd';
+import { Row, Col } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';

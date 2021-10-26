@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Form, Input, Checkbox, Button, Row, Col } from '@jnoodle/antd';
+import { Form, Input, Checkbox, Button, Row, Col } from '@cfxjs/antd';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { isHash, isCurrentNetworkAddress } from 'utils';

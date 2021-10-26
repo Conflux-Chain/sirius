@@ -15,7 +15,7 @@ import {
   DetailIcon,
 } from './icons';
 import { translations } from 'locales/i18n';
-import { Modal, Divider, Image } from '@jnoodle/antd';
+import { Modal, Divider, Image } from '@cfxjs/antd';
 import { Link } from '@cfxjs/react-ui';
 import { sansSerifFont } from 'styles/variable';
 import iconWarning from 'images/warning.png';
