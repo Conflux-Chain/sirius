@@ -10,7 +10,7 @@ import { formatNumber, fromDripToCfx, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
-import { Popover } from '@jnoodle/antd';
+import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';

@@ -7,7 +7,7 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
-import { Row, Col, Spin } from '@jnoodle/antd';
+import { Row, Col, Spin } from '@cfxjs/antd';
 import { StyledLink } from 'app/components/StyledComponent';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Notice } from './Notice';

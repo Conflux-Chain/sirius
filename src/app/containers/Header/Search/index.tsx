@@ -10,7 +10,7 @@ import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
 import { useSearch } from 'utils/hooks/useSearch';
-import { AutoComplete, Input, SelectProps, Image } from '@jnoodle/antd';
+import { AutoComplete, Input, SelectProps, Image } from '@cfxjs/antd';
 import { SearchIcon } from 'app/components/SearchIcon/Loadable';
 import ClearIcon from 'images/clear.png';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';

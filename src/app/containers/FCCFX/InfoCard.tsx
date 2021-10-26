@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from '@jnoodle/antd';
+import { Row, Col } from '@cfxjs/antd';
 import { Card } from 'app/components/Card/Loadable';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';

@@ -38,7 +38,7 @@ import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components/macro';
 import DownIcon from '../../../images/down.png';
-import { Menu } from '@jnoodle/antd';
+import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
 

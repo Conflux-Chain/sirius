@@ -1,7 +1,7 @@
 import React from 'react';
 import imgInfo from 'images/info.svg';
-import { Tooltip } from '@jnoodle/antd';
-import { Image } from '@jnoodle/antd';
+import { Tooltip } from '@cfxjs/antd';
+import { Image } from '@cfxjs/antd';
 
 export const InfoIconWithTooltip = ({
   info,

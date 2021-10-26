@@ -8,7 +8,7 @@ import { formatNumber, getPercent, fromDripToCfx, toThousands } from 'utils/';
 import imgPivot from 'images/pivot.svg';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
-import { Progress } from '@jnoodle/antd';
+import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
 
 export const epoch = {

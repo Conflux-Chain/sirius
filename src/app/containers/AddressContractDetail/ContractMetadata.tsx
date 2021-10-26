@@ -27,7 +27,7 @@ import {
   ICON_DEFAULT_CONTRACT,
 } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
-import { Image } from '@jnoodle/antd';
+import { Image } from '@cfxjs/antd';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
