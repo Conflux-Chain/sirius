@@ -11,7 +11,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { PageHeader } from 'app/components/PageHeader';
-import { Input } from '@jnoodle/antd';
+import { Input } from '@cfxjs/antd';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   isCurrentNetworkAddress,

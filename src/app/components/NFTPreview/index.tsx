@@ -4,7 +4,7 @@
  *
  */
 import React, { useEffect, useState } from 'react';
-import { Image, Popover, Skeleton, Spin } from '@jnoodle/antd';
+import { Image, Popover, Skeleton, Spin } from '@cfxjs/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
 import { Text } from '../Text/Loadable';

@@ -5,7 +5,7 @@ import { LineChart as Chart, PieChart } from '../../components/Chart/Loadable';
 import { media } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { Row, Col } from '@jnoodle/antd';
+import { Row, Col } from '@cfxjs/antd';
 import { Link } from 'react-router-dom';
 
 export function Charts() {

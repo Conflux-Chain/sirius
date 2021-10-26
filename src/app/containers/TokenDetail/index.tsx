@@ -15,7 +15,7 @@ import { formatAddress } from '../../../utils';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
-import { Dropdown, Menu } from '@jnoodle/antd';
+import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';

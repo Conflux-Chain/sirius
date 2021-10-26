@@ -1,5 +1,5 @@
 import { translations } from '../../../locales/i18n';
-import { Card as AntdCard, Avatar, Spin } from '@jnoodle/antd';
+import { Card as AntdCard, Avatar, Spin } from '@cfxjs/antd';
 import DateIcon from '../../../images/balance-checker/date.png';
 import dayjs from 'dayjs';
 import BlockIcon from '../../../images/balance-checker/block.png';

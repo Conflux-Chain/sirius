@@ -1,4 +1,4 @@
-import { Button as AntdButton } from '@jnoodle/antd';
+import { Button as AntdButton } from '@cfxjs/antd';
 import styled from 'styled-components/macro';
 
 export const Button = styled(AntdButton)`

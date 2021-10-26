@@ -9,7 +9,7 @@ import { StyledTitle160F1327 } from 'app/components/StyledComponent';
 import { usePortal } from 'utils/hooks/usePortal';
 import { ConnectButton } from 'app/components/ConnectWallet';
 import BigNumber, { BigNumber as IBigNumber } from 'bignumber.js';
-import { Input, Form } from '@jnoodle/antd';
+import { Input, Form } from '@cfxjs/antd';
 
 import iconCFX from 'images/icon/cfx.svg';
 import iconFC from 'images/icon/fc.svg';

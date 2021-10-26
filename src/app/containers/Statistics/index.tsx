@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Card } from '../../components/Card';
 import { Tabs } from '../../components/Tabs';
-import { Col, Row } from '@jnoodle/antd';
+import { Col, Row } from '@cfxjs/antd';
 import { StatsCard } from '../../components/StatsCard/Loadable';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Collapse } from '@jnoodle/antd';
+import { Collapse } from '@cfxjs/antd';
 import { DownOutlined } from '@ant-design/icons';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';

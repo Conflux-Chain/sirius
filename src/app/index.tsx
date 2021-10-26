@@ -73,10 +73,10 @@ import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
-import enUS from '@jnoodle/antd/lib/locale/en_US';
-import zhCN from '@jnoodle/antd/lib/locale/zh_CN';
+import enUS from '@cfxjs/antd/lib/locale/en_US';
+import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
-import { ConfigProvider } from '@jnoodle/antd';
+import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 
 // WebFontLoader.load({

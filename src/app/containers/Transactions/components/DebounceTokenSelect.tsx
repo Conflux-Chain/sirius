@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Select, Spin, Tag, Image } from '@jnoodle/antd';
-import { SelectProps } from '@jnoodle/antd/es/select';
+import { Select, Spin, Tag, Image } from '@cfxjs/antd';
+import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components/macro';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';

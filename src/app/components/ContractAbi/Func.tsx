@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from '@jnoodle/antd';
+import { Form } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';

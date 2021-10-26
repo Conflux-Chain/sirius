@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Row, Col } from '@jnoodle/antd';
+import { Row, Col } from '@cfxjs/antd';
 import { Button } from 'app/components/Button/Loadable';
 import {
   StyledTitle1474798C,

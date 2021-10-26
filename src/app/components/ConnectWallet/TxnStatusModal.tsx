@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from '@jnoodle/antd';
+import { Modal } from '@cfxjs/antd';
 import styled from 'styled-components/macro';
 import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';

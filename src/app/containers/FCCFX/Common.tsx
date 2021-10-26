@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Tooltip } from '@jnoodle/antd';
+import { Image, Tooltip } from '@cfxjs/antd';
 import imgInfo from 'images/info.svg';
 import styled from 'styled-components/macro';
 import { RPC_SERVER, NETWORK_ID } from 'utils/constants';

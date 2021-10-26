@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Image } from '@jnoodle/antd';
+import { Image } from '@cfxjs/antd';
 import { padLeft } from 'utils';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import NFTIcon from 'images/fccfx/nft.png';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
-import { Tooltip } from '@jnoodle/antd';
+import { Tooltip } from '@cfxjs/antd';
 
 interface PropsType {
   id?: string;
