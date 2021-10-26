@@ -143,6 +143,7 @@ export function NFTAsset() {
   };
 
   const handleNFTAddressChange = address => {
+    setDisplayTokenIds([]);
     history.push(
       qs.stringifyUrl({
         url: pathname,
