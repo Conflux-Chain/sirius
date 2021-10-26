@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { Link } from 'app/components/Link/Loadable';
@@ -360,6 +360,14 @@ export function Footer() {
     ),
   };
 
+  const ICP = useMemo(() => {
+    return window.location.hostname.includes('confluxscan.net') ? (
+      <CopyRight>沪ICP备20007940号-2</CopyRight>
+    ) : (
+      <></>
+    );
+  }, []);
+
   const rightTop = [
     <FooterWrapper key="right-top">
       <FooterContentWrapper>
@@ -441,7 +449,8 @@ export function Footer() {
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
-    <CopyRight key="copyright">{t(translations.footer.copryRight)}</CopyRight>,
+    <CopyRight key="ICP">{t(translations.footer.copryRight)}</CopyRight>,
+    ICP,
   ];
 
   return (
@@ -542,6 +551,7 @@ const FooterContentIconLink = styled.span`
 
 const CopyRight = styled.span`
   opacity: 0.38;
+  display: block;
 
   ${media.s} {
     font-size: 0.71rem;

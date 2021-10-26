@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { TXN_ACTION, CFX, CONTRACTS } from 'utils/constants';
+import { TXN_ACTION, CONTRACTS, RPC_SERVER, NETWORK_ID } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -187,6 +188,11 @@ export function Swap() {
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
 
+  const CFX = new SDK.Conflux({
+    url: RPC_SERVER,
+    networkId: NETWORK_ID,
+  });
+
   // @ts-ignore
   CFX.provider = window.conflux;
 
@@ -235,7 +241,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [installed, accounts, connected, contract]);
+  }, [installed, accounts, connected, contract, CFX]);
 
   const handleInputChange = value => {
     setFromToken({

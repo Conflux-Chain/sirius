@@ -4,7 +4,7 @@
  *
  */
 import React, { useEffect, useState } from 'react';
-import { Image, Popover, Skeleton, Spin } from '@jnoodle/antd';
+import { Image, Popover, Skeleton, Spin } from '@cfxjs/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
 import { Text } from '../Text/Loadable';
@@ -16,12 +16,25 @@ import nftInfo from 'images/info.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/react-ui';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
+import fetch from 'utils/request';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
-const videoType = ['mp4', 'mp3'];
-const suffixLen = -3;
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+const videoType = ['mp4', 'mp3', 'avi', 'mpeg', 'ogv', 'ts', 'webm'];
+const imageType = [
+  'bmp',
+  'gif',
+  'ico',
+  'jpg',
+  'jpeg',
+  'png',
+  'svg',
+  'tif',
+  'tiff',
+  'webp',
+];
 
 export const NFTCardInfo = React.memo(
   ({
@@ -35,9 +48,36 @@ export const NFTCardInfo = React.memo(
     imageMinHeight?: number;
     width?: 200 | 500;
   }) => {
-    const nftType = videoType.includes(imageUri.substr(suffixLen))
-      ? 'video'
-      : 'image';
+    let [nftType, setNftType] = useState('image');
+
+    useEffect(() => {
+      let nftType = 'image';
+      // eslint-disable-next-line no-useless-escape
+      const suffix = /\.[^\.]+$/.exec(imageUri.substr(-5));
+
+      if (suffix) {
+        const sourceType = suffix[0].substr(1);
+        if (videoType.includes(sourceType)) {
+          nftType = 'video';
+        } else if (imageType.includes(sourceType)) {
+          nftType = 'image';
+        }
+      } else {
+        // has not suffix
+        fetch(imageUri, {
+          method: 'HEAD',
+        }).then(res => {
+          for (let pair of res.headers.entries()) {
+            if (pair[0] === 'content-type') {
+              nftType = pair[1].split('/')[0];
+              setNftType(nftType);
+            }
+          }
+        });
+      }
+
+      setNftType(nftType);
+    }, [imageUri]);
 
     return (
       <>
@@ -48,7 +88,7 @@ export const NFTCardInfo = React.memo(
               className="ant-video"
               preload="metadata"
               // poster={imageUri}
-              src={imageUri}
+              src={`${imageUri}?source=video`}
             ></video>
           </VideoCard>
         ) : (

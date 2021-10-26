@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/Card';
-import { Spin, Row, Col, Pagination, Divider } from '@jnoodle/antd';
+import { Spin, Row, Col, Pagination, Divider } from '@cfxjs/antd';
 import { toThousands } from '../../../utils';
 import { Empty } from '../../components/Empty';
 import { translations } from '../../../locales/i18n';

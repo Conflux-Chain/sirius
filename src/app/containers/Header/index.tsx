@@ -100,14 +100,7 @@ export const Header = memo(() => {
     },
   ];
 
-  const ecosystemItems = [
-    {
-      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.fcCfx,
-      afterClick: menuClick,
-      href: 'https://fccfx.confluxscan.io/',
-    },
-  ];
+  const ecosystemItems: any = [];
 
   const contractItems = [
     {
@@ -137,6 +130,25 @@ export const Header = memo(() => {
       href: '/contracts',
     },
   ];
+
+  // @todo, shoule remove after pos release
+  if (localStorage.getItem('fccfx')) {
+    if (bp !== 's' && bp !== 'm') {
+      ecosystemItems.push({
+        title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+        name: ScanEvent.menu.action.fcCfx,
+        afterClick: menuClick,
+        href: '/fccfx',
+      });
+    }
+  } else {
+    ecosystemItems.push({
+      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.fcCfx,
+      afterClick: menuClick,
+      href: 'https://fccfx.confluxscan.io/',
+    });
+  }
 
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
     supportAndHelpMenuItems.unshift({

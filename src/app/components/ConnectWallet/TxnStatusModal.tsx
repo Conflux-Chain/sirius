@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from '@jnoodle/antd';
+import { Modal } from '@cfxjs/antd';
 import styled from 'styled-components/macro';
 import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';
@@ -104,20 +104,28 @@ export const TxnStatusModal = ({
 
   useEffect(() => {
     if (show && !oStatus && hash) {
+      let timeout;
       getTransactionLoop(hash, {
         callback(receipt) {
           const status = receipt?.status;
           if (!lodash.isNil(status)) {
             if (status === 0) {
               setIStatus('success');
-              onTxSuccess && onTxSuccess(receipt);
+              timeout = setTimeout(() => {
+                onTxSuccess && onTxSuccess(receipt);
+              }, 1000);
             } else {
               setIStatus('error');
-              onTxError && onTxError(receipt);
+              timeout = setTimeout(() => {
+                onTxError && onTxError(receipt);
+              }, 1000);
             }
           }
         },
       });
+      return () => {
+        clearTimeout(timeout);
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hash, show, oStatus]);
