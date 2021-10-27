@@ -22,7 +22,18 @@ const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-const videoType = ['mp4', 'mp3', 'avi', 'mpeg', 'ogv', 'ts', 'webm'];
+const videoType = ['mp4', 'avi', 'mpeg', 'ogv', 'ts', 'webm', '3gp', '2gp'];
+const audioType = [
+  'aac',
+  'mid',
+  'midi',
+  'mp3',
+  'oga',
+  'opus',
+  'wav',
+  'weba',
+  'cda',
+];
 const imageType = [
   'bmp',
   'gif',
@@ -61,6 +72,8 @@ export const NFTCardInfo = React.memo(
           nftType = 'video';
         } else if (imageType.includes(sourceType)) {
           nftType = 'image';
+        } else if (audioType.includes(sourceType)) {
+          nftType = 'audio';
         }
       } else {
         // has not suffix
@@ -91,6 +104,8 @@ export const NFTCardInfo = React.memo(
               src={`${imageUri}?source=video`}
             ></video>
           </VideoCard>
+        ) : nftType === 'audio' ? (
+          <div>audio</div>
         ) : (
           <Image
             width={width}
