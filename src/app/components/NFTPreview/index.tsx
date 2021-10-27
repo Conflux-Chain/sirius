@@ -3,7 +3,7 @@
  * NFTPreview
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Image, Popover, Skeleton, Spin } from '@cfxjs/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
@@ -47,6 +47,11 @@ const imageType = [
   'webp',
 ];
 
+// interface audioProps extends EventTarget {
+//   canplay: false;
+//   play: () => void;
+// }
+
 export const NFTCardInfo = React.memo(
   ({
     imageUri,
@@ -60,6 +65,7 @@ export const NFTCardInfo = React.memo(
     width?: 200 | 500;
   }) => {
     let [nftType, setNftType] = useState('image');
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
       let nftType = 'image';
@@ -92,6 +98,21 @@ export const NFTCardInfo = React.memo(
       setNftType(nftType);
     }, [imageUri]);
 
+    const audioControl = useCallback(() => {
+      const audioDom: HTMLAudioElement | null = audioRef.current;
+      if (audioDom) {
+        if (audioDom.paused) {
+          audioDom.play();
+        } else {
+          audioDom.pause();
+        }
+
+        audioDom.onended = ev => {
+          console.log('ev===', ev);
+        };
+      }
+    }, [audioRef]);
+
     return (
       <>
         {nftType === 'video' ? (
@@ -105,7 +126,19 @@ export const NFTCardInfo = React.memo(
             ></video>
           </VideoCard>
         ) : nftType === 'audio' ? (
-          <div>audio</div>
+          <AudioCard>
+            <img
+              src="https://cdn.epikg.com/app_res/nft/gsc_cover/yyjb_lsy.png"
+              alt="1"
+              onClick={audioControl}
+            />
+            <audio
+              ref={audioRef}
+              preload="metadata"
+              src={imageUri}
+              className="audio-style"
+            ></audio>
+          </AudioCard>
         ) : (
           <Image
             width={width}
@@ -151,7 +184,10 @@ export const NFTPreview = React.memo(
             if (data) {
               setImageMinHeight(data.imageMinHeight);
               if (data.imageUri) {
-                setImageUri(data.imageUri);
+                // setImageUri(data.imageUri);
+                setImageUri(
+                  'https://cdn.epikg.com/2bb2a765260a51403cc5c5006c73765578f4d27bdd80f93c38af3ff34bcc8810',
+                );
               }
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
             }
@@ -252,6 +288,19 @@ export const NFTPreview = React.memo(
     ) : null;
   },
 );
+
+const AudioCard = styled.div`
+  position: relative;
+
+  .audio-style {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+`;
 
 const PopoverWrapper = styled(Popover)`
   margin-left: 8px;
