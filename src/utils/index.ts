@@ -814,10 +814,22 @@ export const gotoNetwork = (networkId: number): void => {
       window.location.assign('//scantest.confluxnetwork.org');
     }
   } else {
+    const hostname = window.location.hostname;
+    let newHostname = '';
     if (networkId === 1) {
-      window.location.assign('//testnet.confluxscan.io');
+      if (hostname.includes('.io')) {
+        newHostname = '//testnet.confluxscan.io';
+      } else {
+        newHostname = '//testnet.confluxscan.net';
+      }
+      window.location.assign(newHostname);
     } else if (networkId === 1029) {
-      window.location.assign('//confluxscan.io');
+      if (hostname.includes('.io')) {
+        newHostname = '//confluxscan.io';
+      } else {
+        newHostname = '//confluxscan.net';
+      }
+      window.location.assign(newHostname);
     }
   }
 };
