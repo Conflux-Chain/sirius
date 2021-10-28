@@ -19,6 +19,7 @@ import { Modal, Divider, Image } from '@cfxjs/antd';
 import { Link } from '@cfxjs/react-ui';
 import { sansSerifFont } from 'styles/variable';
 import iconWarning from 'images/warning.png';
+import { useParams } from 'react-router-dom';
 
 interface ProjectInfoProp {
   securityAudit: {
@@ -42,9 +43,16 @@ interface ProjectInfoProp {
   isDetailPage?: boolean;
 }
 
+interface RouteParams {
+  tokenAddress: string;
+}
+
+const CNHCTokenContract = 'cfx:accbh92gw9wzvdxacn7tc3rb7g7tk2uv363s37tr30';
+
 export const ProjectInfo = React.memo(
   ({ securityAudit, tokenName, isDetailPage = false }: ProjectInfoProp) => {
     const { t, i18n } = useTranslation();
+    const { tokenAddress } = useParams<RouteParams>();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
     const { cex, dex, track, verify, zeroAdmin } = securityAudit;
@@ -121,12 +129,20 @@ export const ProjectInfo = React.memo(
         icon: AuditIcon,
         desc: (
           <span>
-            <Trans i18nKey="general.table.token.projectInfo.modal.audit">
+            <Trans
+              i18nKey={
+                tokenAddress === CNHCTokenContract
+                  ? 'general.table.token.projectInfo.modal.audit'
+                  : 'general.table.token.projectInfo.modal.unaudit'
+              }
+            >
               The contract code passes the audit (Have an audit report or
               related link?
               <Link
                 href={
-                  lang === 'en'
+                  tokenAddress === CNHCTokenContract
+                    ? 'https://github.com/nnnggel/cnhc-contracts/tree/master/audit-reports'
+                    : lang === 'en'
                     ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
                     : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
                 }
@@ -319,6 +335,10 @@ export const ProjectInfo = React.memo(
         if (securityAudit[c.name] === 1) {
           isActive = true;
         } else if (securityAudit[c.name] === 0) {
+          // CHNC审计图标点亮
+          if (tokenAddress === CNHCTokenContract && c.name === 'audit') {
+            isActive = true;
+          }
           if (['verify', 'zeroAdmin'].includes(c.name)) {
             isWarning = true;
           }

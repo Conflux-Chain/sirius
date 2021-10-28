@@ -106,7 +106,7 @@ export const NFTCardInfo = React.memo(
           setIsAudioPlay(false);
         }
 
-        audioDom.onended = ev => {
+        audioDom.onended = () => {
           setIsAudioPlay(false);
         };
       }
