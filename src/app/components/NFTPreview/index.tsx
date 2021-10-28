@@ -17,6 +17,7 @@ import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/react-ui';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
+import { AUDIO_PAUSED, AUDIO_PLAY } from 'utils/constants';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -47,11 +48,6 @@ const imageType = [
   'webp',
 ];
 
-// interface audioProps extends EventTarget {
-//   canplay: false;
-//   play: () => void;
-// }
-
 export const NFTCardInfo = React.memo(
   ({
     imageUri,
@@ -65,6 +61,7 @@ export const NFTCardInfo = React.memo(
     width?: 200 | 500;
   }) => {
     let [nftType, setNftType] = useState('image');
+    const [isAudioPlay, setIsAudioPlay] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
@@ -103,12 +100,14 @@ export const NFTCardInfo = React.memo(
       if (audioDom) {
         if (audioDom.paused) {
           audioDom.play();
+          setIsAudioPlay(true);
         } else {
           audioDom.pause();
+          setIsAudioPlay(false);
         }
 
         audioDom.onended = ev => {
-          console.log('ev===', ev);
+          setIsAudioPlay(false);
         };
       }
     }, [audioRef]);
@@ -128,16 +127,21 @@ export const NFTCardInfo = React.memo(
         ) : nftType === 'audio' ? (
           <AudioCard>
             <img
-              src="https://cdn.epikg.com/app_res/nft/gsc_cover/yyjb_lsy.png"
+              src="https://d2kfoba0ei9gzz.cloudfront.net/condragon/8-1.png"
               alt="1"
+            />
+            <img
+              src="https://cdn.epikg.com/app_res/nft/vinyl_record.png"
+              alt="1"
+              className={`audio-disk ${isAudioPlay ? 'play' : 'paused'}`}
+            />
+            <img
+              src={isAudioPlay ? AUDIO_PLAY : AUDIO_PAUSED}
+              alt="btn"
+              className="audio-btn"
               onClick={audioControl}
             />
-            <audio
-              ref={audioRef}
-              preload="metadata"
-              src={imageUri}
-              className="audio-style"
-            ></audio>
+            <audio ref={audioRef} preload="metadata" src={imageUri}></audio>
           </AudioCard>
         ) : (
           <Image
@@ -291,14 +295,41 @@ export const NFTPreview = React.memo(
 
 const AudioCard = styled.div`
   position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  @keyframes rotate-audio-disk {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
-  .audio-style {
-    display: block !important;
-    width: 100%;
-    height: 100%;
+  .audio-disk {
     position: absolute;
-    top: 0;
+    width: 50%;
+    height: 50%;
+    top: 25%;
+    left: 25%;
     z-index: 1;
+    animation: rotate-audio-disk 9.5s linear 0s infinite normal none;
+    &.play {
+      animation-play-state: running;
+    }
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+  .audio-btn {
+    position: absolute;
+    width: 12%;
+    height: 12%;
+    left: 44%;
+    top: 44%;
+    z-index: 3;
+    cursor: pointer;
   }
 `;
 
