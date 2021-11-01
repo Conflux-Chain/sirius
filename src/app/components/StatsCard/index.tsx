@@ -583,6 +583,10 @@ export const StatsCard = ({
   const tableBodyMemo = useMemo(() => tableBody(category, data), [
     category,
     data,
+    action,
+    accounts,
+    totalDifficulty,
+    totalGas,
   ]);
 
   const chartContent = (category, data: any = []) => {
