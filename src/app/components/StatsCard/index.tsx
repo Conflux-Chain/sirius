@@ -16,6 +16,7 @@ import { media } from '../../../styles/media';
 import { monospaceFont } from '../../../styles/variable';
 import { Link } from '../Link';
 import { Description } from '../Description/Loadable';
+import lodash from 'lodash';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -754,14 +755,16 @@ export const StatsCard = ({
                   }
                   key={c['title']}
                 >
-                  <SkelontonContainer shown={!statsData[c['index']]}>
-                    {statsData[c['index']]
-                      ? c['unit'] === 'CFX'
-                        ? cfxValue(statsData[c['index']], { showUnit: true })
-                        : formatNumber(statsData[c['index']], {
-                            withUnit: false,
-                          })
-                      : null}
+                  <SkelontonContainer
+                    shown={lodash.isNil(statsData[c['index']])}
+                  >
+                    {lodash.isNil(statsData[c['index']])
+                      ? '--'
+                      : c['unit'] === 'CFX'
+                      ? cfxValue(statsData[c['index']], { showUnit: true })
+                      : formatNumber(statsData[c['index']], {
+                          withUnit: false,
+                        })}
                   </SkelontonContainer>
                 </Description>
               ))}
