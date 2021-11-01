@@ -679,6 +679,7 @@
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
+    "invalidPosAddress": "Invalid Conflux PoS Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
     "token": "token",
@@ -1421,5 +1422,42 @@
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+  },
+  "pos": {
+    "accounts": {
+      "title": "PoS Account List",
+      "description": "PoS Account List",
+      "address": "PoS Address",
+      "availableVotes": "Available Votes",
+      "currentCommitteeMember": "Current Committee Member",
+      "votesInCommittee": "Votes in Committee",
+      "registerDate": "Register Date"
+    },
+    "account": {
+      "title": "PoS Account",
+      "description": "PoS Account",
+      "overview": {
+        "title": "Overview",
+        "posAddress": "PoS Address",
+        "lockedRights": "Locked Rights",
+        "unlockRights": "Unlock Rights",
+        "retiredRights": "Retired Rights",
+        "availableVotes": "Available Votes",
+        "currentCommitteeMember": "Current Committee Member",
+        "rightsInCommittee ": "Rights in Committee",
+        "unlockedVotes": "Unlocked Votes",
+        "totalIncoming": "Total Incoming",
+        "punishment": "Punishment"
+      },
+      "incominghistory": {
+        "title": "Incoming History"
+      },
+      "votinghistory": {
+        "title": "Voting History"
+      },
+      "votingStatus": {
+        "title": "Voting Status"
+      }
+    }
   }
 }

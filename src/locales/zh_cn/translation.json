@@ -679,6 +679,7 @@
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "invalidPosAddress": "无效的 Conflux PoS 地址",
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
@@ -1420,5 +1421,42 @@
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
+  },
+  "pos": {
+    "accounts": {
+      "title": "PoS 账户列表",
+      "description": "PoS 账户列表",
+      "address": "PoS 地址",
+      "availableVotes": "可用票数",
+      "currentCommitteeMember": "在任委员会成员",
+      "votesInCommittee": "委员会票数",
+      "registerDate": "注册时间"
+    },
+    "account": {
+      "title": "PoS 账户",
+      "description": "PoS 账户",
+      "overview": {
+        "title": "概览",
+        "posAddress": "PoS 地址",
+        "lockedRights": "已锁定票数",
+        "unlockRights": "已解锁票数",
+        "retiredRights": "已退休票数",
+        "availableVotes": "当前可用票数",
+        "currentCommitteeMember": "在任委员会成员",
+        "rightsInCommittee ": "在委员会的票数",
+        "unlockedVotes": "已解锁票数",
+        "totalIncoming": "总收益",
+        "punishment": "是否被惩罚"
+      },
+      "incominghistory": {
+        "title": "收益历史"
+      },
+      "votinghistory": {
+        "title": "投票历史"
+      },
+      "votingStatus": {
+        "title": "票权状态"
+      }
+    }
   }
 }
