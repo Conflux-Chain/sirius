@@ -187,8 +187,6 @@ export function App() {
     });
   }, []);
 
-  console.log('test for ci');
-
   // @todo, add loading for request frontend config info
   return (
     <GlobalProvider>
