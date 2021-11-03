@@ -17,7 +17,10 @@ import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/react-ui';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
-import { AUDIO_PAUSED, AUDIO_PLAY } from 'utils/constants';
+import audioDesign from './audio-design.svg';
+import audioBg from './audio-bg.svg';
+import audioPause from './audio-pause.svg';
+import audioPlay from './audio-play.svg';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -52,16 +55,19 @@ export const NFTCardInfo = React.memo(
   ({
     imageUri,
     tokenId,
+    audioImg,
     imageMinHeight,
     width = 200,
   }: {
     imageUri: string;
     tokenId?: number | string;
+    audioImg?: string;
     imageMinHeight?: number;
     width?: 200 | 500;
   }) => {
     let [nftType, setNftType] = useState('image');
     const [isAudioPlay, setIsAudioPlay] = useState(false);
+    const [percent, setPercent] = useState<string>();
     const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
@@ -106,6 +112,11 @@ export const NFTCardInfo = React.memo(
           setIsAudioPlay(false);
         }
 
+        audioDom.ontimeupdate = () => {
+          const percent = audioDom.currentTime / audioDom.duration;
+          setPercent(`${percent * 100}%`);
+        };
+
         audioDom.onended = () => {
           setIsAudioPlay(false);
         };
@@ -125,22 +136,25 @@ export const NFTCardInfo = React.memo(
             ></video>
           </VideoCard>
         ) : nftType === 'audio' ? (
-          <AudioCard>
+          <AudioCard percent={percent}>
+            {audioImg && (
+              <img src={audioImg} alt="audio-img" className="audio-img" />
+            )}
             <img
-              src="https://d2kfoba0ei9gzz.cloudfront.net/condragon/8-1.png"
-              alt="1"
+              src={audioDesign}
+              alt="audio-design"
+              className="audio audio-design"
             />
+            <img src={audioBg} alt="audio-bg" className="audio audio-bg" />
             <img
-              src="https://cdn.epikg.com/app_res/nft/vinyl_record.png"
-              alt="1"
-              className={`audio-disk ${isAudioPlay ? 'play' : 'paused'}`}
-            />
-            <img
-              src={isAudioPlay ? AUDIO_PLAY : AUDIO_PAUSED}
-              alt="btn"
-              className="audio-btn"
+              src={isAudioPlay ? audioPause : audioPlay}
+              alt="audio-play"
+              className="audio audio-play"
               onClick={audioControl}
             />
+            <div className="audio-control">
+              <div className="audio-percent"></div>
+            </div>
             <audio ref={audioRef} preload="metadata" src={imageUri}></audio>
           </AudioCard>
         ) : (
@@ -188,10 +202,7 @@ export const NFTPreview = React.memo(
             if (data) {
               setImageMinHeight(data.imageMinHeight);
               if (data.imageUri) {
-                // setImageUri(data.imageUri);
-                setImageUri(
-                  'https://cdn.epikg.com/2bb2a765260a51403cc5c5006c73765578f4d27bdd80f93c38af3ff34bcc8810',
-                );
+                setImageUri(data.imageUri);
               }
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
             }
@@ -293,43 +304,51 @@ export const NFTPreview = React.memo(
   },
 );
 
-const AudioCard = styled.div`
+const AudioCard = styled.div<{ percent: any }>`
   position: relative;
   width: 100%;
   height: 100%;
   min-height: 200px;
-  @keyframes rotate-audio-disk {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  background: #81caff;
+  border-radius: 5px;
 
-  .audio-disk {
+  .audio-img {
     position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 25%;
-    left: 25%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
     z-index: 1;
-    animation: rotate-audio-disk 9.5s linear 0s infinite normal none;
-    &.play {
-      animation-play-state: running;
-    }
-    &.paused {
-      animation-play-state: paused;
-    }
   }
-  .audio-btn {
+  .audio {
     position: absolute;
-    width: 12%;
-    height: 12%;
-    left: 44%;
-    top: 44%;
-    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .audio-bg,
+  .audio-play {
     cursor: pointer;
+  }
+  .audio-control {
+    position: absolute;
+    width: 100%;
+    height: 29px;
+    line-height: 29px;
+    left: 0px;
+    bottom: 0px;
+
+    background: rgba(0, 0, 0, 0.1);
+    /* filter: blur(2px); */
+    .audio-percent {
+      position: absolute;
+      height: 2px;
+      left: 0;
+      top: 0;
+      width: ${props => props.percent || 0};
+      background: rgba(234, 234, 234, 0.5);
+    }
   }
 `;
 
@@ -359,6 +378,7 @@ const NFTCard = styled.div`
 
   .ant-image {
     position: relative;
+    display: block;
     width: 100%;
     max-width: 100%;
     padding-top: 100%;
