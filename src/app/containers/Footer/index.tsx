@@ -359,10 +359,11 @@ export function Footer() {
       </Link>
     ),
   };
-
   const ICP = useMemo(() => {
     return window.location.hostname.includes('confluxscan.net') ? (
-      <CopyRight>沪ICP备20007940号-2</CopyRight>
+      <CopyRight>
+        <Link href="https://beian.miit.gov.cn">沪ICP备20007940号-2</Link>
+      </CopyRight>
     ) : (
       <></>
     );
@@ -449,8 +450,8 @@ export function Footer() {
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
-    <CopyRight key="ICP">{t(translations.footer.copryRight)}</CopyRight>,
-    ICP,
+    <CopyRight key="copryRight">{t(translations.footer.copryRight)}</CopyRight>,
+    <span key="ICP">{ICP}</span>,
   ];
 
   return (
@@ -552,6 +553,12 @@ const FooterContentIconLink = styled.span`
 const CopyRight = styled.span`
   opacity: 0.38;
   display: block;
+
+  a.link,
+  a.link:hover,
+  a.link:active {
+    color: #000000;
+  }
 
   ${media.s} {
     font-size: 0.71rem;
