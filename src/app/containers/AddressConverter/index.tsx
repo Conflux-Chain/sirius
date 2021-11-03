@@ -355,6 +355,7 @@ export function AddressConverter() {
                 {t(translations.addressConverter.tip3end)}
               </Link>
             </span>,
+            t(translations.addressConverter.tip5),
             <span className="warning">
               {t(translations.addressConverter.tip4)}
               <Link

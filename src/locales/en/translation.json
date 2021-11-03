@@ -1090,10 +1090,11 @@
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37.",
-    "tip4": "4. To prevent loss of assets, please review ",
+    "tip4": "5. To prevent loss of assets, please review ",
     "tip4Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
     "tip4Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
     "tip4end": " carefully.",
+    "tip5": "4. Contract addresses starting with 0x0 cannot be converted, except for build-in contracts and zero-address.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
       "0x8": "The contract does not exist, please be careful"
