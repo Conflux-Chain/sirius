@@ -679,6 +679,7 @@
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
+    "invalidPosAddress": "Invalid Conflux PoS Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
     "token": "token",
@@ -1094,10 +1095,11 @@
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37.",
-    "tip4": "4. To prevent loss of assets, please review ",
-    "tip4Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
-    "tip4Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
-    "tip4end": " carefully.",
+    "tip5": "5. To prevent loss of assets, please review ",
+    "tip5Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
+    "tip5Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
+    "tip5end": " carefully.",
+    "tip4": "4. Contract addresses starting with 0x0 cannot be converted, except for build-in contracts and zero-address.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
       "0x8": "The contract does not exist, please be careful"
@@ -1424,5 +1426,42 @@
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+  },
+  "pos": {
+    "accounts": {
+      "title": "PoS Account List",
+      "description": "PoS Account List",
+      "address": "PoS Address",
+      "availableVotes": "Available Votes",
+      "currentCommitteeMember": "Current Committee Member",
+      "votesInCommittee": "Votes in Committee",
+      "registerDate": "Register Date"
+    },
+    "account": {
+      "title": "PoS Account",
+      "description": "PoS Account",
+      "overview": {
+        "title": "Overview",
+        "posAddress": "PoS Address",
+        "lockedRights": "Locked Rights",
+        "unlockRights": "Unlock Rights",
+        "retiredRights": "Retired Rights",
+        "availableVotes": "Available Votes",
+        "currentCommitteeMember": "Current Committee Member",
+        "rightsInCommittee ": "Rights in Committee",
+        "unlockedVotes": "Unlocked Votes",
+        "totalIncoming": "Total Incoming",
+        "punishment": "Punishment"
+      },
+      "incominghistory": {
+        "title": "Incoming History"
+      },
+      "votinghistory": {
+        "title": "Voting History"
+      },
+      "votingStatus": {
+        "title": "Voting Status"
+      }
+    }
   }
 }

@@ -679,6 +679,7 @@
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "invalidPosAddress": "无效的 Conflux PoS 地址",
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
@@ -1093,10 +1094,11 @@
     "tip3": "3. Network-id 代表该地址的网络前缀，仅用于私有部署的 Conflux 网络。关于有效网络 ID 的信息请查看 ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37。",
-    "tip4": "4. 为防止资产丢失，请仔细查看",
-    "tip4Link": "https://forum.conflux.fun/t/topic/6720",
-    "tip4Middle": "有关地址格式的资产转账说明",
-    "tip4end": "。",
+    "tip5": "5. 为防止资产丢失，请仔细查看",
+    "tip5Link": "https://forum.conflux.fun/t/topic/6720",
+    "tip5Middle": "有关地址格式的资产转账说明",
+    "tip5end": "。",
+    "tip4": "4. 除内置合约与零地址外，其它以 0x0 开头的地址不能被转换。",
     "errorMessage": {
       "0x0": "该地址为非内置合约或非零地址",
       "0x8": "该合约不存在，请谨慎操作"
@@ -1423,5 +1425,42 @@
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
+  },
+  "pos": {
+    "accounts": {
+      "title": "PoS 账户列表",
+      "description": "PoS 账户列表",
+      "address": "PoS 地址",
+      "availableVotes": "可用票数",
+      "currentCommitteeMember": "在任委员会成员",
+      "votesInCommittee": "委员会票数",
+      "registerDate": "注册时间"
+    },
+    "account": {
+      "title": "PoS 账户",
+      "description": "PoS 账户",
+      "overview": {
+        "title": "概览",
+        "posAddress": "PoS 地址",
+        "lockedRights": "已锁定票数",
+        "unlockRights": "已解锁票数",
+        "retiredRights": "已退休票数",
+        "availableVotes": "当前可用票数",
+        "currentCommitteeMember": "在任委员会成员",
+        "rightsInCommittee ": "在委员会的票数",
+        "unlockedVotes": "已解锁票数",
+        "totalIncoming": "总收益",
+        "punishment": "是否被惩罚"
+      },
+      "incominghistory": {
+        "title": "收益历史"
+      },
+      "votinghistory": {
+        "title": "投票历史"
+      },
+      "votingStatus": {
+        "title": "票权状态"
+      }
+    }
   }
 }

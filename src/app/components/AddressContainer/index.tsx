@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from '../Text/Loadable';
-// import { formatString } from 'utils';
 import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -10,9 +9,11 @@ import {
   isContractAddress,
   isInnerContractAddress,
   isZeroAddress,
-  // isAddress,
+  isAddress,
+  formatString,
+  isPosAddress,
 } from 'utils';
-// import { AlertTriangle } from '@zeit-ui/react-icons';
+import { AlertTriangle } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
@@ -44,6 +45,7 @@ const defaultMobileMaxWidth =
   NETWORK_TYPE === NETWORK_TYPES.mainnet ? 106 : 140;
 const defaultPCSuffixAddressSize =
   NETWORK_TYPE === NETWORK_TYPES.mainnet ? 8 : 4;
+const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
 // ≈ 2.5 ms
@@ -60,7 +62,18 @@ const RenderAddress = ({
   suffixSize = defaultPCSuffixAddressSize,
   prefix = null,
   suffix = null,
+  type = 'pow',
 }: any) => {
+  const href = `/${type === 'pow' ? 'address' : 'pos/accounts'}/${
+    hrefAddress || cfxAddress
+  }`;
+  const aftercontent =
+    type === 'pow'
+      ? cfxAddress && !isFull && !alias
+        ? cfxAddress.substr(-suffixSize)
+        : ''
+      : '';
+
   return (
     <AddressWrapper>
       {prefix}
@@ -68,14 +81,10 @@ const RenderAddress = ({
         {isLink ? (
           <LinkWrapper
             style={style}
-            href={`/address/${hrefAddress || cfxAddress}`}
+            href={href}
             maxwidth={isFull ? 430 : maxWidth}
             alias={alias}
-            aftercontent={
-              cfxAddress && !isFull && !alias
-                ? cfxAddress.substr(-suffixSize)
-                : ''
-            }
+            aftercontent={aftercontent}
           >
             <span>{content || alias || cfxAddress}</span>
           </LinkWrapper>
@@ -84,11 +93,7 @@ const RenderAddress = ({
             style={style}
             maxwidth={isFull ? 430 : maxWidth}
             alias={alias}
-            aftercontent={
-              cfxAddress && !isFull && !alias
-                ? cfxAddress.substr(-suffixSize)
-                : ''
-            }
+            aftercontent={aftercontent}
           >
             <span>{content || alias || cfxAddress}</span>
           </PlainWrapper>
@@ -123,26 +128,15 @@ export const AddressContainer = withTranslation()(
           ? defaultMobileSuffixAddressSize
           : defaultPCSuffixAddressSize);
 
-      const cfxAddress = formatAddress(value);
-
-      // if (!alias) {
-      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
-      // }
-
-      // zero address auto set alias
-      if (!alias && isZeroAddress(cfxAddress)) {
-        alias = t(translations.general.zeroAddress);
-      }
-
-      // contract create txn
+      // check if the address is a contract create address
       if (!value) {
         const txtContractCreation = t(
           translations.transaction.contractCreation,
         );
 
-        if (contractCreated)
+        if (contractCreated) {
           return RenderAddress({
-            cfxAddress,
+            cfxAddress: '',
             alias,
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
@@ -159,9 +153,11 @@ export const AddressContainer = withTranslation()(
               </IconWrapper>
             ),
           });
+        }
 
         // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
         return <>--</>;
+
         // Contract create fail, no link
         // TODO deal with zero address value
         // return (
@@ -176,28 +172,39 @@ export const AddressContainer = withTranslation()(
         // );
       }
 
-      // if (cfxAddress.startsWith('invalid-')) {
-      //   const sourceValue = cfxAddress.replace('invalid-', '');
-      //   const tip = t(translations.general.invalidAddress);
-      //   return RenderAddress({
-      //     cfxAddress,
-      //     alias,
-      //     hoverValue: `${tip}: ${sourceValue}`,
-      //     content: alias ? formatString(alias, 'tag') : sourceValue,
-      //     isLink: false,
-      //     isFull,
-      //     maxWidth,
-      //     suffixSize,
-      //     style: { color: '#e00909' },
-      //     prefix: (
-      //       <IconWrapper className={prefixFloat ? 'float' : ''}>
-      //         <Text span hoverValue={tip}>
-      //           <AlertTriangle size={16} color="#e00909" />
-      //         </Text>
-      //       </IconWrapper>
-      //     ),
-      //   });
+      // check if the address is a valid conflux address
+      if (!isAddress(value)) {
+        const tip = t(translations.general.invalidAddress);
+        return RenderAddress({
+          cfxAddress: value,
+          alias,
+          hoverValue: `${tip}: ${value}`,
+          content: alias ? formatString(alias, 'tag') : value,
+          isLink: false,
+          isFull,
+          maxWidth,
+          suffixSize,
+          style: { color: '#e00909' },
+          prefix: (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <Text span hoverValue={tip}>
+                <AlertTriangle size={16} color="#e00909" />
+              </Text>
+            </IconWrapper>
+          ),
+        });
+      }
+
+      const cfxAddress = formatAddress(value);
+
+      // if (!alias) {
+      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
       // }
+
+      // zero address auto set alias
+      if (!alias && isZeroAddress(cfxAddress)) {
+        alias = t(translations.general.zeroAddress);
+      }
 
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(
@@ -274,6 +281,101 @@ export const AddressContainer = withTranslation()(
         isFull,
         maxWidth,
         suffixSize,
+      });
+    },
+  ),
+);
+
+export const PoSAddressContainer = withTranslation()(
+  React.memo(
+    ({
+      value,
+      alias,
+      maxWidth,
+      isFull = false,
+      isLink = true,
+      isMe = false,
+      suffixAddressSize,
+      prefixFloat = false,
+      t,
+    }: Props & WithTranslation) => {
+      const suffixSize =
+        suffixAddressSize ||
+        (window.innerWidth <= sizes.m
+          ? defaultMobileSuffixAddressSize
+          : defaultPCSuffixPosAddressSize);
+
+      if (!value) {
+        return <>--</>;
+      }
+
+      // first check if the address is a valid conflux address
+      if (!isPosAddress(value)) {
+        const tip = t(translations.general.invalidPosAddress);
+        return RenderAddress({
+          cfxAddress: value,
+          alias,
+          hoverValue: `${tip}: ${value}`,
+          content: alias
+            ? formatString(alias, 'tag')
+            : formatString(value, 'posAddress'),
+          isLink: false,
+          isFull,
+          maxWidth,
+          suffixSize,
+          style: { color: '#e00909' },
+          prefix: (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <Text span hoverValue={tip}>
+                <AlertTriangle size={16} color="#e00909" />
+              </Text>
+            </IconWrapper>
+          ),
+          type: 'pos',
+        });
+      }
+
+      const content = formatString(value, 'posAddress');
+
+      // if (!alias) {
+      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
+      // }
+
+      if (isMe) {
+        return RenderAddress({
+          cfxAddress: value,
+          alias,
+          isLink,
+          isFull,
+          maxWidth,
+          suffixSize,
+          suffix: (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <img
+                src={isMeIcon}
+                alt="is me"
+                style={{
+                  width: 38.5,
+                  marginLeft: 3,
+                  marginBottom: isFull ? 6 : 4,
+                }}
+              />
+            </IconWrapper>
+          ),
+          content: content,
+          type: 'pos',
+        });
+      }
+
+      return RenderAddress({
+        cfxAddress: value,
+        alias,
+        isLink,
+        isFull,
+        maxWidth,
+        suffixSize,
+        type: 'pos',
+        content: content,
       });
     },
   ),

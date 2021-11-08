@@ -355,15 +355,16 @@ export function AddressConverter() {
                 {t(translations.addressConverter.tip3end)}
               </Link>
             </span>,
+            t(translations.addressConverter.tip4),
             <span className="warning">
-              {t(translations.addressConverter.tip4)}
+              {t(translations.addressConverter.tip5)}
               <Link
                 target="_blank"
-                href={t(translations.addressConverter.tip4Link)}
+                href={t(translations.addressConverter.tip5Link)}
               >
-                {t(translations.addressConverter.tip4Middle)}
+                {t(translations.addressConverter.tip5Middle)}
               </Link>
-              {t(translations.addressConverter.tip4end)}
+              {t(translations.addressConverter.tip5end)}
             </span>,
           ]}
         />
