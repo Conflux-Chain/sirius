@@ -3,7 +3,7 @@
  * NFTPreview
  *
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Image, Popover, Skeleton, Spin } from '@cfxjs/antd';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
@@ -17,12 +17,27 @@ import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/react-ui';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
+import audioDesign from './audio-design.svg';
+import audioBg from './audio-bg.svg';
+import audioPause from './audio-pause.svg';
+import audioPlay from './audio-play.svg';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
 
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-const videoType = ['mp4', 'mp3', 'avi', 'mpeg', 'ogv', 'ts', 'webm'];
+const videoType = ['mp4', 'avi', 'mpeg', 'ogv', 'ts', 'webm', '3gp', '2gp'];
+const audioType = [
+  'aac',
+  'mid',
+  'midi',
+  'mp3',
+  'oga',
+  'opus',
+  'wav',
+  'weba',
+  'cda',
+];
 const imageType = [
   'bmp',
   'gif',
@@ -40,15 +55,20 @@ export const NFTCardInfo = React.memo(
   ({
     imageUri,
     tokenId,
+    audioImg,
     imageMinHeight,
     width = 200,
   }: {
     imageUri: string;
     tokenId?: number | string;
+    audioImg?: string;
     imageMinHeight?: number;
     width?: 200 | 500;
   }) => {
     let [nftType, setNftType] = useState('image');
+    const [isAudioPlay, setIsAudioPlay] = useState(false);
+    const [percent, setPercent] = useState<string>();
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
       let nftType = 'image';
@@ -61,6 +81,8 @@ export const NFTCardInfo = React.memo(
           nftType = 'video';
         } else if (imageType.includes(sourceType)) {
           nftType = 'image';
+        } else if (audioType.includes(sourceType)) {
+          nftType = 'audio';
         }
       } else {
         // has not suffix
@@ -79,6 +101,28 @@ export const NFTCardInfo = React.memo(
       setNftType(nftType);
     }, [imageUri]);
 
+    const audioControl = useCallback(() => {
+      const audioDom: HTMLAudioElement | null = audioRef.current;
+      if (audioDom) {
+        if (audioDom.paused) {
+          audioDom.play();
+          setIsAudioPlay(true);
+        } else {
+          audioDom.pause();
+          setIsAudioPlay(false);
+        }
+
+        audioDom.ontimeupdate = () => {
+          const percent = audioDom.currentTime / audioDom.duration;
+          setPercent(`${percent * 100}%`);
+        };
+
+        audioDom.onended = () => {
+          setIsAudioPlay(false);
+        };
+      }
+    }, [audioRef]);
+
     return (
       <>
         {nftType === 'video' ? (
@@ -91,6 +135,28 @@ export const NFTCardInfo = React.memo(
               src={`${imageUri}?source=video`}
             ></video>
           </VideoCard>
+        ) : nftType === 'audio' ? (
+          <AudioCard percent={percent}>
+            {audioImg && (
+              <img src={audioImg} alt="audio-img" className="audio-img" />
+            )}
+            <img
+              src={audioDesign}
+              alt="audio-design"
+              className="audio audio-design"
+            />
+            <img src={audioBg} alt="audio-bg" className="audio audio-bg" />
+            <img
+              src={isAudioPlay ? audioPause : audioPlay}
+              alt="audio-play"
+              className="audio audio-play"
+              onClick={audioControl}
+            />
+            <div className="audio-control">
+              <div className="audio-percent"></div>
+            </div>
+            <audio ref={audioRef} preload="metadata" src={imageUri}></audio>
+          </AudioCard>
         ) : (
           <Image
             width={width}
@@ -238,6 +304,54 @@ export const NFTPreview = React.memo(
   },
 );
 
+const AudioCard = styled.div<{ percent: any }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: #81caff;
+  border-radius: 5px;
+
+  .audio-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .audio {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .audio-bg,
+  .audio-play {
+    cursor: pointer;
+  }
+  .audio-control {
+    position: absolute;
+    width: 100%;
+    height: 29px;
+    line-height: 29px;
+    left: 0px;
+    bottom: 0px;
+
+    background: rgba(0, 0, 0, 0.1);
+    /* filter: blur(2px); */
+    .audio-percent {
+      position: absolute;
+      height: 2px;
+      left: 0;
+      top: 0;
+      width: ${props => props.percent || 0};
+      background: rgba(234, 234, 234, 0.5);
+    }
+  }
+`;
+
 const PopoverWrapper = styled(Popover)`
   margin-left: 8px;
 `;
@@ -264,6 +378,7 @@ const NFTCard = styled.div`
 
   .ant-image {
     position: relative;
+    display: block;
     width: 100%;
     max-width: 100%;
     padding-top: 100%;

@@ -22,11 +22,14 @@ import iconWarning from 'images/warning.png';
 
 interface ProjectInfoProp {
   securityAudit: {
-    audit: number;
+    audit: {
+      result: number;
+      auditUrl: string;
+    };
     cex: {
       binance: string;
       huobi: string;
-      ok: string;
+      okex: string;
     };
     dex: {
       moonswap: string;
@@ -47,7 +50,7 @@ export const ProjectInfo = React.memo(
     const { t, i18n } = useTranslation();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-    const { cex, dex, track, verify, zeroAdmin } = securityAudit;
+    const { cex, dex, track, verify, audit, zeroAdmin } = securityAudit;
     const [list, setList] = useState<any[]>([]);
     const clickDetail = () => {
       setVisible(true);
@@ -61,6 +64,15 @@ export const ProjectInfo = React.memo(
         }
       }
       return sign;
+    };
+
+    const isAllHave = obj => {
+      for (let key in obj) {
+        if (!obj[key]) {
+          return false;
+        }
+      }
+      return true;
     };
 
     const coinsList = [
@@ -121,12 +133,20 @@ export const ProjectInfo = React.memo(
         icon: AuditIcon,
         desc: (
           <span>
-            <Trans i18nKey="general.table.token.projectInfo.modal.audit">
+            <Trans
+              i18nKey={
+                audit.result === 1
+                  ? 'general.table.token.projectInfo.modal.audit'
+                  : 'general.table.token.projectInfo.modal.unaudit'
+              }
+            >
               The contract code passes the audit (Have an audit report or
               related link?
               <Link
                 href={
-                  lang === 'en'
+                  audit.result === 1
+                    ? audit.auditUrl
+                    : lang === 'en'
                     ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
                     : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
                 }
@@ -149,20 +169,26 @@ export const ProjectInfo = React.memo(
         desc: (
           <ModalItems>
             <TransWrapper>
-              <Trans i18nKey="general.table.token.projectInfo.modal.cex">
-                Listed by a centralized exchange（
-                <Link
-                  href={
-                    lang === 'en'
-                      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                  }
-                  target={'_blank'}
-                >
-                  Submit
-                </Link>{' '}
-                proof）
-              </Trans>
+              {!isAllHave(cex) ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.uncex">
+                  Listed by a centralized exchange（
+                  <Link
+                    href={
+                      lang === 'en'
+                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                    }
+                    target={'_blank'}
+                  >
+                    Submit
+                  </Link>{' '}
+                  proof）
+                </Trans>
+              ) : (
+                <Trans i18nKey="general.table.token.projectInfo.modal.cex">
+                  Listed by a centralized exchange
+                </Trans>
+              )}
             </TransWrapper>
             <TransWrapper>
               {cex.binance ? (
@@ -197,10 +223,10 @@ export const ProjectInfo = React.memo(
               )}
             </TransWrapper>
             <TransWrapper>
-              {cex.ok ? (
+              {cex.okex ? (
                 <Trans i18nKey="general.table.token.projectInfo.modal.ok">
                   -
-                  <Link href={cex?.ok} target={'_blank'}>
+                  <Link href={cex?.okex} target={'_blank'}>
                     OK
                   </Link>
                 </Trans>
@@ -225,20 +251,26 @@ export const ProjectInfo = React.memo(
         desc: (
           <ModalItems>
             <TransWrapper>
-              <Trans i18nKey="general.table.token.projectInfo.modal.dex">
-                Listed by a decentralized exchange（
-                <Link
-                  href={
-                    lang === 'en'
-                      ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                      : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                  }
-                  target={'_blank'}
-                >
-                  Submit
-                </Link>{' '}
-                proof）
-              </Trans>
+              {!isAllHave(dex) ? (
+                <Trans i18nKey="general.table.token.projectInfo.modal.undex">
+                  Listed by a decentralized exchange（
+                  <Link
+                    href={
+                      lang === 'en'
+                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                    }
+                    target={'_blank'}
+                  >
+                    Submit
+                  </Link>{' '}
+                  proof）
+                </Trans>
+              ) : (
+                <Trans i18nKey="general.table.token.projectInfo.modal.dex">
+                  Listed by a decentralized exchange
+                </Trans>
+              )}
             </TransWrapper>
             <TransWrapper>
               {dex.moonswap ? (
@@ -273,21 +305,13 @@ export const ProjectInfo = React.memo(
                 i18nKey="general.table.token.projectInfo.modal.cmc"
                 components={[
                   <Link href={track.coinMarketCap} target={'_blank'} />,
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  />,
                 ]}
               >
-                Listed by CoinMarketCap（Submit proof）
+                Listed by CoinMarketCap
               </Trans>
             ) : (
               <Trans
-                i18nKey="general.table.token.projectInfo.modal.cmc"
+                i18nKey="general.table.token.projectInfo.modal.uncmc"
                 components={[
                   null,
                   <Link

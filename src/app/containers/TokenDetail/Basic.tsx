@@ -24,11 +24,14 @@ import { Tag } from '@cfxjs/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
 
 interface SecurityAudit {
-  audit: number;
+  audit: {
+    result: number;
+    auditUrl: string;
+  };
   cex: {
     binance: string;
     huobi: string;
-    ok: string;
+    okex: string;
   };
   dex: {
     moonswap: string;
