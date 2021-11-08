@@ -25,7 +25,14 @@ export const isPosAddress = (address: string): boolean => {
 
 export const isHexAddress = (address: string): boolean => {
   try {
-    if (address.startsWith('0x') && address.length === 42) {
+    // if not start with 0x1 0x8, or not 6 buildin address, or not zero address, treat as invalid hex address
+    // @todo, should replace with SDK after new version release
+    if (
+      address.length === 42 &&
+      (['0x1', '0x8'].includes(address.substr(0, 3)) ||
+        /^0x0888[0]{35}[1-5]{1}$/.test(address) ||
+        address === '0x0000000000000000000000000000000000000000')
+    ) {
       // treat as hex40 address
       return !!SDK.format.hexAddress(address);
     } else {
