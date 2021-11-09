@@ -527,17 +527,17 @@ export function App() {
                             render={(routeProps: any) => {
                               const address = routeProps.match.params.address;
 
-                              if (address && !isSimplyBase32Address(address)) {
-                                return (
-                                  <Redirect
-                                    to={`/nft-checker/${formatAddress(
-                                      address,
-                                    )}`}
-                                  />
-                                );
+                              if (isSimplyBase32Address(address)) {
+                                return <NFTChecker {...routeProps} />;
                               } else {
                                 if (isAddress(address)) {
-                                  return <NFTChecker {...routeProps} />;
+                                  return (
+                                    <Redirect
+                                      to={`/nft-checker/${formatAddress(
+                                        address,
+                                      )}`}
+                                    />
+                                  );
                                 } else {
                                   return (
                                     <Redirect to={`/notfound/${address}`} />
