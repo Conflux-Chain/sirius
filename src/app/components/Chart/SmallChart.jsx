@@ -24,7 +24,7 @@ export const SmallChart = ({
   height = Math.min(height, 124);
 
   if (!plot) {
-    return null; //<Container style={{ width, height }}></Container>;
+    return <>--</>; //<Container style={{ width, height }}></Container>;
   }
   const diff = firstlast && change(...firstlast);
   const trend = diff
