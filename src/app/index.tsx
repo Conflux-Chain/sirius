@@ -31,6 +31,7 @@ import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
+import lodash from 'lodash';
 
 import { FCCFX } from './containers/FCCFX';
 import { Report } from './containers/Report';
@@ -527,7 +528,10 @@ export function App() {
                             render={(routeProps: any) => {
                               const address = routeProps.match.params.address;
 
-                              if (isSimplyBase32Address(address)) {
+                              if (
+                                isSimplyBase32Address(address) ||
+                                lodash.isNil(address)
+                              ) {
                                 return <NFTChecker {...routeProps} />;
                               } else {
                                 if (isAddress(address)) {
