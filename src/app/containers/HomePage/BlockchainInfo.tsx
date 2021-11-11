@@ -10,14 +10,14 @@ import {
   LineChart as Chart,
   SmallChart,
 } from '../../components/Chart/Loadable';
-import { reqHomeDashboard } from '../../../utils/httpRequest';
+import { reqHomeDashboard, reqTransferTPS } from '../../../utils/httpRequest';
 import { Link } from 'react-router-dom';
 
 function Info(title, number: any) {
   return (
     <div className="info">
       <div className="title">{title}</div>
-      <div className="number">{number}</div>
+      <div className="number">{number || '--'}</div>
     </div>
   );
 }
@@ -26,6 +26,7 @@ function Info(title, number: any) {
 export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const { t } = useTranslation();
   const [dashboardData, setDashboardData] = useState<any>({});
+  const [transferData, setTransferData] = useState<any>({});
 
   useEffect(() => {
     reqHomeDashboard()
@@ -33,27 +34,41 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         setDashboardData(res || {});
       })
       .catch(e => {
-        console.error(e);
+        console.log('reqHomeDashboard error: ', e);
+      });
+
+    reqTransferTPS()
+      .then(res => {
+        if (res.code === 0) {
+          setTransferData(res.data);
+        }
+      })
+      .catch(e => {
+        console.log('reqTransferTPS error: ', e);
       });
   }, [timestamp]);
 
   return (
     <CardWrapper>
       <Card>
-        <Grid.Container gap={1} justify="center" className="stats-container">
-          <Grid xs={24} sm={24} md={3}>
+        <Grid.Container
+          gap={1}
+          justify="flex-start"
+          className="stats-container stats-container-pow-top"
+        >
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               t(translations.statistics.home.currentEpoch),
               `${dashboardData.epochNumber ? dashboardData.epochNumber : '--'}`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={3.5}>
+          <Grid xs={24} sm={24} md={4.5}>
             {Info(
               t(translations.statistics.home.currentBlockNumber),
               `${dashboardData.blockNumber ? dashboardData.blockNumber : '--'}`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={3.5}>
+          <Grid xs={24} sm={24} md={5}>
             {Info(
               t(translations.statistics.home.account),
               `${
@@ -66,7 +81,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               }`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={3}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               <Link to={'/chart/dailyTransaction'} className="info-link">
                 {t(translations.statistics.home.transactions)}
@@ -81,7 +96,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               }`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               <Link to={'/chart/contractDeploy'} className="info-link">
                 {t(translations.statistics.home.contract)}
@@ -96,7 +111,14 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               }`,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={3.5}>
+        </Grid.Container>
+        <div className="stats-container stats-container-split"></div>
+        <Grid.Container
+          gap={1}
+          justify="flex-start"
+          className="stats-container stats-container-pow-bottom"
+        >
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               <Link to="/chart/blockTime" className="info-link">
                 {t(translations.charts.blockTime.title)}
@@ -104,7 +126,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <SmallChart plain={true} indicator="blockTime" />,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
+          <Grid xs={24} sm={24} md={4.5}>
             {Info(
               <Link to="/chart/tps" className="info-link">
                 {t(translations.charts.tps.title)}
@@ -112,7 +134,13 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <SmallChart plain={true} indicator="tps" />,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
+          <Grid xs={24} sm={24} md={5}>
+            {Info(
+              t(translations.charts.tokenTransferTps.title),
+              transferData?.tps,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               <Link to="/chart/hashRate" className="info-link">
                 {t(translations.charts.hashRate.title)}
@@ -122,6 +150,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
         </Grid.Container>
       </Card>
+
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
           <Grid xs={24} sm={24} md={12} className="overview-chart-item">
@@ -183,17 +212,27 @@ const CardWrapper = styled.div`
       padding: 0;
     }
 
-    > .item {
-      &:nth-child(2),
-      &:nth-child(5) {
+    &.stats-container-pow-top > .item {
+      &:nth-child(2) {
         border-right: 1px solid #e8e9ea;
       }
 
       &:nth-child(3),
       &:nth-child(6) {
-        padding-left: 3rem;
+        padding-left: 5rem;
       }
+    }
 
+    &.stats-container-pow-bottom {
+      margin-top: 1px solid #e8e9ea;
+    }
+
+    &.stats-container-split {
+      border-top: 1px solid #e8e9ea;
+      padding: 0;
+    }
+
+    & > .item {
       ${media.m} {
         max-width: 100%;
         border-right: none !important;
