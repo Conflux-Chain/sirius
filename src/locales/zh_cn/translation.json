@@ -477,7 +477,7 @@
       "description": "每秒链上的交易数量"
     },
     "tokenTransferTps": {
-      "title": "代币转移吞吐率",
+      "title": "代币转移 TPS",
       "description": "每秒链上的代币转移数量"
     },
     "blockTime": {

@@ -12,6 +12,7 @@ import {
 } from '../../components/Chart/Loadable';
 import { reqHomeDashboard, reqTransferTPS } from '../../../utils/httpRequest';
 import { Link } from 'react-router-dom';
+import lodash from 'lodash';
 
 function Info(title, number: any) {
   return (
@@ -120,24 +121,28 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/blockTime" className="info-link">
-                {t(translations.charts.blockTime.title)}
-              </Link>,
-              <SmallChart plain={true} indicator="blockTime" />,
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4.5}>
-            {Info(
               <Link to="/chart/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               <SmallChart plain={true} indicator="tps" />,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={5}>
+          <Grid xs={24} sm={24} md={4.5}>
             {Info(
               t(translations.charts.tokenTransferTps.title),
-              transferData?.tps,
+              lodash.isNil(transferData?.tps)
+                ? '--'
+                : formatNumber(transferData?.tps, {
+                    withUnit: false,
+                  }),
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={5}>
+            {Info(
+              <Link to="/chart/blockTime" className="info-link">
+                {t(translations.charts.blockTime.title)}
+              </Link>,
+              <SmallChart plain={true} indicator="blockTime" />,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
@@ -212,7 +217,16 @@ const CardWrapper = styled.div`
       padding: 0;
     }
 
-    &.stats-container-pow-top > .item {
+    &.stats-container-pow-bottom {
+      margin-top: 1px solid #e8e9ea;
+    }
+
+    &.stats-container-split {
+      border-top: 1px solid #e8e9ea;
+      padding: 0;
+    }
+
+    & > .item {
       &:nth-child(2) {
         border-right: 1px solid #e8e9ea;
       }
