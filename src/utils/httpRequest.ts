@@ -260,3 +260,10 @@ export const reqTokensOfAccountTransfered = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqTransferTPS = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/transfer/tps`,
+    ...extra,
+  });
+};

@@ -473,8 +473,12 @@
     "subtitle5": "合约",
     "description": "图表",
     "tps": {
-      "title": "吞吐率",
+      "title": "交易 TPS",
       "description": "每秒链上的交易数量"
+    },
+    "tokenTransferTps": {
+      "title": "代币转移吞吐率",
+      "description": "每秒链上的代币转移数量"
     },
     "blockTime": {
       "title": "出块间隔",
