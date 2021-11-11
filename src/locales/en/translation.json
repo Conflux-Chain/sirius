@@ -679,6 +679,7 @@
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
+    "invalidPosAddress": "Invalid Conflux PoS Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
     "token": "token",
@@ -767,19 +768,23 @@
           "blackList": "The Token is blacklisted",
           "modal": {
             "security": "The token may have security issues, please be aware of risks (Refer to the \"Remark\" below)",
-            "verify": "The contract has been verified (<1>Verify the contract</1> now!)",
+            "verify": "The contract has been verified",
             "unverify": "Attention: The contract has not been verified (<1>Verify the contract</1> now!)",
-            "audit": "The contract code passes the audit (Have an audit report or related link? <1>Submit</1> it now!)",
+            "unaudit": "The contract code passes the audit (Have an audit report or related link? <1>Submit</1> it now!)",
+            "audit": "The contract code passes the audit (<1>View the audit report</1>)",
             "sponsor": "Accepted by Conflux’s Global Ecosystem Grants Program (<1>Apply for Grants</1> now!)",
             "zeroAddress": "The contract admin is zero address",
             "notZeroAddress": "Attention: The contract owner is non-zero address",
-            "cex": "Listed by a centralized exchange (<1>Submit</1> proof)",
+            "uncex": "Listed by a centralized exchange (<1>Submit</1> proof)",
+            "cex": "Listed by a centralized exchange",
             "binance": "- <1>Binance</1>",
             "huoBi": "- <1>HuoBi</1>",
             "ok": "- <1>OK</1>",
-            "dex": "Listed by a decentralized exchange (<1>Submit</1> proof)",
+            "undex": "Listed by a decentralized exchange (<1>Submit</1> proof)",
+            "dex": "Listed by a decentralized exchange",
             "moonswap": "- <1>Moonswap</1>",
-            "cmc": "Listed by <0>CoinMarketCap</0> (<1>Submit</1> proof)",
+            "uncmc": "Listed by <0>CoinMarketCap</0> (<1>Submit</1> proof)",
+            "cmc": "Listed by <0>CoinMarketCap</0>",
             "remarkTitle": "Additional Remark:",
             "remarkContent1": "If any one of the following actions occurs, the token will be removed and will never be re-listed again:",
             "remarkContent2": "- Involved in phishing, pyramid scheme, frauds, etc.",
@@ -1090,10 +1095,11 @@
     "tip3": "3. The network- id represents the network prefix of the address and is only used for privately deployed Conflux networks. For information about the valid network-id, please visit ",
     "tip3Link": "https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-37.md",
     "tip3end": "CIP-37.",
-    "tip4": "4. To prevent loss of assets, please review ",
-    "tip4Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
-    "tip4Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
-    "tip4end": " carefully.",
+    "tip5": "5. To prevent loss of assets, please review ",
+    "tip5Link": "https://forum.conflux.fun/t/conflux-address-formats-and-their-implications-of-asset-transfers/6727",
+    "tip5Middle": "Conflux Address-Formats and Their Implications of Asset Transfers",
+    "tip5end": " carefully.",
+    "tip4": "4. Contract addresses starting with 0x0 cannot be converted, except for build-in contracts and zero-address.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
       "0x8": "The contract does not exist, please be careful"
@@ -1420,5 +1426,42 @@
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+  },
+  "pos": {
+    "accounts": {
+      "title": "PoS Account List",
+      "description": "PoS Account List",
+      "address": "PoS Address",
+      "availableVotes": "Available Votes",
+      "currentCommitteeMember": "Current Committee Member",
+      "votesInCommittee": "Votes in Committee",
+      "registerDate": "Register Date"
+    },
+    "account": {
+      "title": "PoS Account",
+      "description": "PoS Account",
+      "overview": {
+        "title": "Overview",
+        "posAddress": "PoS Address",
+        "lockedRights": "Locked Rights",
+        "unlockRights": "Unlock Rights",
+        "retiredRights": "Retired Rights",
+        "availableVotes": "Available Votes",
+        "currentCommitteeMember": "Current Committee Member",
+        "rightsInCommittee ": "Rights in Committee",
+        "unlockedVotes": "Unlocked Votes",
+        "totalIncoming": "Total Incoming",
+        "punishment": "Punishment"
+      },
+      "incominghistory": {
+        "title": "Incoming History"
+      },
+      "votinghistory": {
+        "title": "Voting History"
+      },
+      "votingStatus": {
+        "title": "Voting Status"
+      }
+    }
   }
 }

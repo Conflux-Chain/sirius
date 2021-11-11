@@ -15,9 +15,24 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 dayjs.extend(relativeTime);
 
+export const isPosAddress = (address: string): boolean => {
+  try {
+    return address.startsWith('0x') && address.length === 66;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const isHexAddress = (address: string): boolean => {
   try {
-    if (address.startsWith('0x') && address.length === 42) {
+    // if not start with 0x1 0x8, or not 6 buildin address, or not zero address, treat as invalid hex address
+    // @todo, should replace with SDK after new version release
+    if (
+      address.length === 42 &&
+      (['0x1', '0x8'].includes(address.substr(0, 3)) ||
+        /^0x0888[0]{35}[1-5]{1}$/.test(address) ||
+        address === '0x0000000000000000000000000000000000000000')
+    ) {
       // treat as hex40 address
       return !!SDK.format.hexAddress(address);
     } else {
@@ -61,7 +76,9 @@ export const formatAddress = (
   address: string,
   outputType = 'base32', // base32 or hex
 ): string => {
-  const invalidAddressReturnValue = '';
+  // return input address as default value if it can not convert to conflux chain base32/hex format
+  // if necessary, check for errors at the call site
+  const invalidAddressReturnValue = address;
   try {
     if (isHexAddress(address)) {
       if (outputType === 'hex') {
@@ -356,7 +373,7 @@ export const formatNumber = (num, opt?) => {
  */
 export const formatString = (
   str: string,
-  type?: 'tag' | 'hash' | 'address' | 'tokenTracker' | number,
+  type?: 'tag' | 'hash' | 'address' | 'tokenTracker' | 'posAddress' | number,
 ) => {
   let result: string;
   switch (type) {
@@ -371,6 +388,9 @@ export const formatString = (
       break;
     case 'tokenTracker':
       result = getEllipsStr(str, 24, 0);
+      break;
+    case 'posAddress':
+      result = getEllipsStr(str, 10, 0);
       break;
     default:
       let num = 12;
