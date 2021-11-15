@@ -1570,6 +1570,10 @@
       },
       "transactions": {
         "title": "Transaction"
+      },
+      "votingAddress": {
+        "title": "Voting Address",
+        "votingNumber": "Number of Voting"
       }
     },
     "transactions": {

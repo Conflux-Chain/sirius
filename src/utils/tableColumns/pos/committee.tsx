@@ -63,3 +63,23 @@ export const totalVotes = {
     );
   },
 };
+
+export const votes = {
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.pos.block.votingAddress.votingNumber)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'votes',
+  key: 'votes',
+  width: 1,
+  render: value => {
+    return (
+      <ContentWrapper right>
+        {lodash.isNil(value) ? '--' : value}
+      </ContentWrapper>
+    );
+  },
+};

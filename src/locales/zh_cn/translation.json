@@ -1569,6 +1569,10 @@
       },
       "transactions": {
         "title": "交易"
+      },
+      "votingAddress": {
+        "title": "投票地址",
+        "votingNumber": "投票数"
       }
     },
     "transactions": {

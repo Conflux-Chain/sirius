@@ -156,8 +156,6 @@ export const TablePanel = ({
       limit: pageSize || '10',
     };
 
-    console.log('sorter: ', sorter, sorter.order);
-
     if (sorter) {
       query.orderBy = sortKeyMap[sorter.field] || sorter.field;
       query.reverse = sorter.order === 'ascend' ? 'false' : 'true';

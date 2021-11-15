@@ -4,10 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
-import { Overview } from './Overview';
-import { Transactions } from './Transactions';
 import { useParams } from 'react-router-dom';
 import { getBlockByHash } from 'utils/rpcRequest';
+
+import { Overview } from './Overview';
+import { Transactions } from './Transactions';
+import { VotingAddress } from './VotingAddress';
 
 export function Block() {
   const { t } = useTranslation();
@@ -37,6 +39,11 @@ export function Block() {
       value: 'transactions',
       label: t(translations.pos.block.transactions.title),
       content: <Transactions height={data.blockHeight} loading={loading} />,
+    },
+    {
+      value: 'voting-address',
+      label: t(translations.pos.block.votingAddress.title),
+      content: <VotingAddress data={data.signatures} loading={loading} />,
     },
   ];
 

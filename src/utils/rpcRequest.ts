@@ -136,6 +136,10 @@ interface PoSBlockType {
   hash: string | null;
   status: string | null;
   powBlockHash: string | null;
+  signatures: Array<{
+    account: string;
+    votes: number;
+  }>;
 }
 export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
   try {
@@ -178,6 +182,7 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
         blockInfo.height <= powBlockInfo.latestCommitted
           ? 'committed'
           : 'voted',
+      signatures: blockInfo.signatures || [],
     };
   } catch (e) {
     console.log('getBlockByHash error: ', e);
@@ -190,6 +195,7 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
       hash: null,
       status: null,
       powBlockHash: null,
+      signatures: [],
     };
   }
 };
