@@ -14,6 +14,8 @@ import {
 } from 'utils/httpRequest';
 import { Link } from 'react-router-dom';
 import lodash from 'lodash';
+import iconPos from 'images/homepage/pos.png';
+import iconPow from 'images/homepage/pow.png';
 
 function Info(title, number: any) {
   return (
@@ -171,8 +173,11 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
             )}
           </Grid>
         </Grid.Container>
+
+        <div className="homepage-infoType-container">
+          <img src={iconPow} alt=""></img>
+        </div>
       </Card>
-      <div className="stats-container stats-container-split"></div>
 
       <Card className="homepage-info-pos">
         <Grid.Container
@@ -226,6 +231,10 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
             )}
           </Grid>
         </Grid.Container>
+
+        <div className="homepage-infoType-container pos">
+          <img src={iconPos} alt=""></img>
+        </div>
       </Card>
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
@@ -261,36 +270,15 @@ const CardWrapper = styled.div`
   width: 100%;
 
   .card {
+    position: relative;
+
     &.homepage-info-pos,
     &.homepage-info-pow {
       margin-top: 20px;
       position: relative;
-
-      &:after {
-        content: 'POS';
-        position: absolute;
-        background: #309eee;
-        font-size: 16px;
-        font-weight: bold;
-        color: #ffffff;
-        top: -2px;
-        bottom: -2px;
-        right: -2px;
-        width: 36px;
-        padding: 0 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0px 5px 5px 0px;
-      }
     }
 
     &.homepage-info-pow {
-      &:after {
-        content: 'POW';
-        background: #1e3de4;
-      }
-
       .stats-container-pow-top {
         .item {
           &:nth-child(3) {
@@ -367,6 +355,24 @@ const CardWrapper = styled.div`
         font-size: 12px;
         color: #999999;
         padding-left: 10px;
+      }
+    }
+
+    .homepage-infoType-container {
+      position: absolute;
+      right: -2px;
+      top: -2px;
+      bottom: -2px;
+      z-index: 1;
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e3de4;
+      border-radius: 0px 5px 5px 0px;
+
+      &.pos {
+        background: #309eee;
       }
     }
   }
