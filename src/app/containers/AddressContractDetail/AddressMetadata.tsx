@@ -7,12 +7,7 @@ import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
-import {
-  fromDripToCfx,
-  getTimeByBlockInterval,
-  formatString,
-  toThousands,
-} from 'utils';
+import { fromDripToCfx, getTimeByBlockInterval, toThousands } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
@@ -29,6 +24,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
+import { PoSAddressContainer } from 'app/components/AddressContainer';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -167,9 +163,9 @@ export function AddressMetadata({ address, accountInfo }) {
                 <CenterLine>
                   <Content>
                     {isPoSActived && posAccountInfo?.address ? (
-                      <Text hoverValue={posAccountInfo?.address}>
-                        {formatString(posAccountInfo?.address, 'posAddress')}
-                      </Text>
+                      <PoSAddressContainer
+                        value={posAccountInfo?.address}
+                      ></PoSAddressContainer>
                     ) : (
                       '--'
                     )}
