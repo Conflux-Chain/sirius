@@ -12,6 +12,7 @@ import styled from 'styled-components/macro';
 import { useTranslation, Trans } from 'react-i18next';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 import { translations } from 'locales/i18n';
+import { Spin } from '@cfxjs/antd';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
@@ -38,6 +39,7 @@ export const ContractAbi = ({
     read: [],
     write: [],
   });
+  const [loading, setLoading] = useState(false);
 
   const [contract, setContract] = useState(() =>
     CFX.Contract({
@@ -136,9 +138,14 @@ export const ContractAbi = ({
           };
         };
 
-        getReadWriteData(abiJSON).then(data => {
-          setData(data);
-        });
+        setLoading(true);
+        getReadWriteData(abiJSON)
+          .then(data => {
+            setData(data);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       } catch (error) {}
     };
 
@@ -157,7 +164,9 @@ export const ContractAbi = ({
           </Trans>
         </StyledContractAbiWrapper>
       ) : null}
-      {data[type]?.length ? (
+      {loading ? (
+        <Spin spinning={loading} style={{ marginTop: '20px' }}></Spin>
+      ) : data[type]?.length ? (
         <FuncList
           type={type}
           data={data[type]}
