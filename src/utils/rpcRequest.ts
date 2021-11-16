@@ -39,8 +39,14 @@ interface PoSAccountInfoType {
     availableVotes: number | null;
     locked: number | null;
     unlocked: number | null;
-    // outQueue: any[];
-    // inQueue: any[];
+    outQueue: Array<{
+      endBlockNumber: number;
+      power: number;
+    }>;
+    inQueue: Array<{
+      endBlockNumber: number;
+      power: number;
+    }>;
     // forceRetired: any;
     // exemptFromForfeit: any;
   };
@@ -48,28 +54,30 @@ interface PoSAccountInfoType {
 
 export const getPosAccountInfo = async (
   address: string,
+  type = 'pos',
 ): Promise<PoSAccountInfoType> => {
   try {
-    const data = await posContract.addressToIdentifier(address);
-    let addr = data.toString('hex');
-    // check if has no pos address
-    addr = addr === POS_NULL_ADDRESS ? '' : `0x${addr}`;
+    let addr = address;
+
+    if (type === 'pow') {
+      const data = await posContract.addressToIdentifier(address);
+      addr = data.toString('hex');
+      // check if has no pos address
+      addr = addr === POS_NULL_ADDRESS ? '' : `0x${addr}`;
+    }
 
     if (addr) {
-      const { address, blockNumber, status } = await request(
-        'pos_getAccount',
-        addr,
-      );
+      const { address, blockNumber, status } = await CFX.pos.getAccount(addr);
 
       return {
         address: address,
-        blockNumber: SDK.format.uInt(blockNumber),
+        blockNumber: blockNumber,
         status: {
-          availableVotes: SDK.format.uInt(status.availableVotes),
-          locked: SDK.format.uInt(status.locked),
-          unlocked: SDK.format.uInt(status.unlocked),
-          // outQueue: status.outQueue,
-          // inQueue: status.inQueue,
+          availableVotes: status.availableVotes,
+          locked: status.locked,
+          unlocked: status.unlocked,
+          outQueue: status.outQueue,
+          inQueue: status.inQueue,
           // forceRetired: status.forceRetired,
           // exemptFromForfeit: status.exemptFromForfeit,
         },
@@ -79,6 +87,14 @@ export const getPosAccountInfo = async (
     }
   } catch (e) {
     console.log('getPosAccountInfo: ', e);
+
+    // pubsub.publish('notify', {
+    //   type: 'request',
+    //   option: {
+    //     code: 30001,
+    //   },
+    // });
+
     return {
       address: null,
       blockNumber: null,
@@ -86,6 +102,8 @@ export const getPosAccountInfo = async (
         availableVotes: null,
         locked: null,
         unlocked: null,
+        outQueue: [],
+        inQueue: [],
       },
     };
   }
@@ -125,6 +143,7 @@ export const getConfirmationRiskByHash = async (
     .then(data => data)
     .catch(e => {
       console.log('getConfirmationRiskByHash: ', e);
+
       return null;
     });
 
@@ -154,6 +173,10 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
     // };
 
     const blockInfo = await CFX.pos.getBlockByHash(hash);
+
+    if (lodash.isNil(blockInfo)) {
+      throw new Error(`no block info of ${hash}`);
+    }
 
     const batcher = CFX.BatchRequest();
     batcher.add(CFX.pos.getStatus.request());
@@ -186,6 +209,13 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
     };
   } catch (e) {
     console.log('getBlockByHash error: ', e);
+
+    // pubsub.publish('notify', {
+    //   type: 'request',
+    //   option: {
+    //     code: 30001,
+    //   },
+    // });
 
     return {
       epoch: null,

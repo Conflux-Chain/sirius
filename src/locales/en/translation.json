@@ -1538,11 +1538,11 @@
         "timestamp": "Timestamp"
       },
       "votingStatus": {
-        "title": "Voting Status",
-        "votes": "Votes",
+        "title": "Rights Status",
+        "rights": "Rights",
         "status": "Status",
-        "pendingLocking": "Pending Locking",
-        "pendingUnlocking": "Pending Unlocking",
+        "in": "Pending Locking",
+        "out": "Pending Unlocking",
         "blockNumberDeadline": "Block Number Deadline"
       }
     },

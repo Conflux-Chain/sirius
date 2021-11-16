@@ -80,7 +80,7 @@ export function AddressMetadata({ address, accountInfo }) {
         if (data.latestVoted && parseInt(data.latestVoted) > 0) {
           setIsPoSActived(true);
           setPosLoading(true);
-          getPosAccountInfo(address)
+          getPosAccountInfo(address, 'pow')
             .then(data => data && setPosAccountInfo(data))
             .finally(() => setPosLoading(false));
         } else {

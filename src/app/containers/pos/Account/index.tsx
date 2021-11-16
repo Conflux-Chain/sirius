@@ -7,6 +7,7 @@ import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { Overview } from './Overview';
 import { IncomingHistory } from './IncomingHistory';
 import { VotingHistory } from './VotingHistory';
+import { RightStatus } from './RightStatus';
 
 export function Account() {
   const { t } = useTranslation();
@@ -26,6 +27,11 @@ export function Account() {
       value: 'voting-history',
       label: t(translations.pos.account.votingHistory.title),
       content: <VotingHistory />,
+    },
+    {
+      value: 'right-status',
+      label: t(translations.pos.account.votingStatus.title),
+      content: <RightStatus />,
     },
   ];
 

@@ -1538,10 +1538,10 @@
       },
       "votingStatus": {
         "title": "票权状态",
-        "votes": "票权",
+        "rights": "票权",
         "status": "状态",
-        "pendingLocking": "待锁定",
-        "pendingUnlocking": "待解锁",
+        "in": "待锁定",
+        "out": "待解锁",
         "blockNumberDeadline": "截止区块号"
       }
     },

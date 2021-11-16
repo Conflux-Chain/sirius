@@ -83,3 +83,69 @@ export const votes = {
     );
   },
 };
+
+export const rightStatus = {
+  title: (
+    <ContentWrapper>
+      <Translation>
+        {t => t(translations.pos.account.votingStatus.status)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'type',
+  key: 'type',
+  width: 1,
+  render: value => {
+    return (
+      <ContentWrapper>
+        {lodash.isNil(value) ? (
+          '--'
+        ) : (
+          <Translation>
+            {t => t(translations.pos.account.votingStatus[value])}
+          </Translation>
+        )}
+      </ContentWrapper>
+    );
+  },
+};
+
+export const deadline = {
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.pos.account.votingStatus.blockNumberDeadline)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'endBlockNumber',
+  key: 'endBlockNumber',
+  width: 1,
+  render: value => {
+    return (
+      <ContentWrapper right>
+        {lodash.isNil(value) ? '--' : value}
+      </ContentWrapper>
+    );
+  },
+};
+
+export const right = {
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.pos.account.votingStatus.rights)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'power',
+  key: 'power',
+  width: 1,
+  render: value => {
+    return (
+      <ContentWrapper right>
+        {lodash.isNil(value) ? '--' : value}
+      </ContentWrapper>
+    );
+  },
+};
