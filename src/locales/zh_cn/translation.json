@@ -1603,6 +1603,21 @@
       "numberOfMumbers": "成员数量",
       "totalVotes": "总票数"
     },
+    "committee": {
+      "title": "委员会编号",
+      "description": "委员会编号",
+      "overview": {
+        "title": "概览",
+        "committeeEpoch": "委员会编号",
+        "status": "状态",
+        "totalVotes": "总票数",
+        "consensusVotes": "共识票数"
+      },
+      "votesDistribution": {
+        "title": "票数分布",
+        "votes": "投出票数"
+      }
+    },
     "incomingRank": {
       "title": "收益排行",
       "description": "收益排行",

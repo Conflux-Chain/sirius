@@ -79,6 +79,7 @@ import ScanBenchmark from './containers/_Benchmark';
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
 import { Accounts as posAccounts } from './containers/pos/Accounts/Loadable';
 import { Committees as posCommittees } from './containers/pos/Committees/Loadable';
+import { Committee as posCommittee } from './containers/pos/Committee/Loadable';
 import { Account as posAccount } from './containers/pos/Account/Loadable';
 import { Blocks as posBlocks } from './containers/pos/Blocks/Loadable';
 import { Block as posBlock } from './containers/pos/Block/Loadable';
@@ -584,6 +585,11 @@ export function App() {
                             exact
                             path="/pos/committees"
                             component={posCommittees}
+                          />
+                          <Route
+                            exact
+                            path="/pos/committees/:blockNumber"
+                            component={posCommittee}
                           />
                           <Route
                             exact

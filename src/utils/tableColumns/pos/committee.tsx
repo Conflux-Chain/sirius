@@ -3,6 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContentWrapper } from '../utils';
 import lodash from 'lodash';
+import { Link } from 'app/components/Link/Loadable';
 
 export const epoch = {
   title: (
@@ -15,11 +16,13 @@ export const epoch = {
   dataIndex: 'epochNumber',
   key: 'epochNumber',
   width: 1,
-  render: value => {
+  render: (value, row) => {
     return lodash.isNil(value) ? (
       '--'
     ) : (
-      <ContentWrapper>{value}</ContentWrapper>
+      <ContentWrapper>
+        <Link href={`/pos/committees/${row.blockNumber}`}>{value}</Link>
+      </ContentWrapper>
     );
   },
 };

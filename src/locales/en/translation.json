@@ -1604,6 +1604,21 @@
       "numberOfMumbers": "Number of Mumbers",
       "totalVotes": "Total Votes"
     },
+    "committee": {
+      "title": "Committee",
+      "description": "Committee",
+      "overview": {
+        "title": "Overview",
+        "committeeEpoch": "Committee Epoch",
+        "status": "Status",
+        "totalVotes": "Total Votes",
+        "consensusVotes": "Consensus Votes"
+      },
+      "votesDistribution": {
+        "title": "Votes Distribution",
+        "votes": "Votes for Committee"
+      }
+    },
     "incomingRank": {
       "title": "Incoming Rank",
       "description": "Incoming Rank",

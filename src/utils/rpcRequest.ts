@@ -229,3 +229,49 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
     };
   }
 };
+
+interface CommitteNodeType {
+  address: string;
+  votingPower: number;
+}
+interface PoSCommitteeType {
+  currentCommittee: {
+    epochNumber: number | null;
+    nodes: Array<CommitteNodeType>;
+    quorumVotingPower: number | null;
+    totalVotingPower: number | null;
+  };
+  elections: Array<{
+    isFinalized: boolean | null;
+    startBlockNumber: number | null;
+    topElectingNodes: Array<CommitteNodeType>;
+  }>;
+}
+export const getCommittee = async (
+  blickNumber: number | string,
+): Promise<PoSCommitteeType> =>
+  CFX.pos
+    .getCommittee(blickNumber)
+    .then(data => {
+      return data;
+    })
+    .catch(e => {
+      console.log('getCommittee: ', e);
+
+      // pubsub.publish('notify', {
+      //   type: 'request',
+      //   option: {
+      //     code: 30001,
+      //   },
+      // });
+
+      return {
+        currentCommittee: {
+          epochNumber: null,
+          nodes: [],
+          quorumVotingPower: null,
+          totalVotingPower: null,
+        },
+        elections: [],
+      };
+    });
