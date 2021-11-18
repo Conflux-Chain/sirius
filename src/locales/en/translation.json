@@ -1573,7 +1573,7 @@
       },
       "votingAddress": {
         "title": "Voting Address",
-        "votingNumber": "Number of Voting"
+        "votingNumber": "Votes for Committee"
       }
     },
     "transactions": {
