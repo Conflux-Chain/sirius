@@ -127,6 +127,14 @@ export const getPosStatus = async (): Promise<PoSStatusType> =>
     })
     .catch(e => {
       console.log('getPosStatus: ', e);
+
+      // pubsub.publish('notify', {
+      //   type: 'request',
+      //   option: {
+      //     code: 30001,
+      //   },
+      // });
+
       return {
         epoch: null,
         latestCommitted: null,
@@ -143,6 +151,13 @@ export const getConfirmationRiskByHash = async (
     .then(data => data)
     .catch(e => {
       console.log('getConfirmationRiskByHash: ', e);
+
+      // pubsub.publish('notify', {
+      //   type: 'request',
+      //   option: {
+      //     code: 30001,
+      //   },
+      // });
 
       return null;
     });
@@ -266,3 +281,52 @@ export const getCommittee = async (
         elections: [],
       };
     });
+
+interface PoSTransactionType {
+  blockHash: string | null;
+  blockNumber: number | null;
+  from: string | null;
+  hash: string | null;
+  number: number | null;
+  payload: any | null; // there are 6 different kind of payload, for detail https://github.com/Pana/conflux-doc/blob/master/docs/pos-rpc-zh.md
+  status: string | null;
+  timestamp: number | null;
+  type: string | null;
+}
+export const getTransactionByNumber = async (
+  number: number | string,
+): Promise<PoSTransactionType> => {
+  return CFX.pos
+    .getTransactionByNumber(number)
+    .then(data => {
+      return {
+        ...data,
+        timestamp: Number((data.timestamp / 1000).toFixed()), // blockInfo.timestamp uint is microsecond
+      };
+    })
+    .catch(e => {
+      console.log('getTransactionByNumber: ', e);
+
+      // pubsub.publish('notify', {
+      //   type: 'request',
+      //   option: {
+      //     code: 30001,
+      //   },
+      // });
+
+      return {
+        blockHash: null,
+        blockNumber: null,
+        from: null,
+        hash: null,
+        number: null,
+        payload: {
+          blockHash: null,
+          height: null,
+        },
+        status: null,
+        timestamp: null,
+        type: null,
+      };
+    });
+};

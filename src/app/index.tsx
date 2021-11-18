@@ -84,6 +84,7 @@ import { Account as posAccount } from './containers/pos/Account/Loadable';
 import { Blocks as posBlocks } from './containers/pos/Blocks/Loadable';
 import { Block as posBlock } from './containers/pos/Block/Loadable';
 import { Transactions as posTransactions } from './containers/pos/Transactions/Loadable';
+import { Transaction as posTransaction } from './containers/pos/Transaction/Loadable';
 import { IncomingRank as posIncomingRank } from './containers/pos/IncomingRank/Loadable';
 
 import enUS from '@cfxjs/antd/lib/locale/en_US';
@@ -605,6 +606,11 @@ export function App() {
                             exact
                             path="/pos/transactions"
                             component={posTransactions}
+                          />
+                          <Route
+                            exact
+                            path="/pos/transactions/:number"
+                            component={posTransaction}
                           />
                           <Route
                             exact

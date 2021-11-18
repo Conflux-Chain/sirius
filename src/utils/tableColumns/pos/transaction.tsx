@@ -3,6 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContentWrapper } from '../utils';
 import { Text } from 'app/components/Text/Loadable';
+import { Link } from 'app/components/Link/Loadable';
 import lodash from 'lodash';
 
 export const blockHeight = {
@@ -25,26 +26,20 @@ export const blockHeight = {
 
 export const txHash = {
   title: (
-    <ContentWrapper>
-      <Translation>
-        {t => t(translations.pos.transactions.poSTxnHash)}
-      </Translation>
-    </ContentWrapper>
+    <Translation>
+      {t => t(translations.pos.transactions.poSTxnHash)}
+    </Translation>
   ),
   dataIndex: 'hash',
   key: 'hash',
   width: 1,
-  render: value => {
+  render: (value, row) => {
     return !lodash.isNil(value) ? (
-      // @todo, no tx detail now
-      // <Link href={`/pos/transactions/${value}`}>
-      //   <Text span hoverValue={value} maxWidth="100px">
-      //     {value}
-      //   </Text>
-      // </Link>
-      <Text span hoverValue={value} maxWidth="100px">
-        {value}
-      </Text>
+      <Link href={`/pos/transactions/${row.number}`}>
+        <Text span hoverValue={value} maxWidth="100px">
+          {value}
+        </Text>
+      </Link>
     ) : (
       '--'
     );

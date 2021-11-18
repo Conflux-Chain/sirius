@@ -1480,7 +1480,7 @@
       "txType": {
         "BlockMetadata": "Block Metadata",
         "Election": "Election",
-        "Retire": "Retire",
+        "Retire": "Retire (reduction of individual voting rights)",
         "Dispute": "Dispute",
         "Register": "Register",
         "Other": "Other",
@@ -1595,6 +1595,21 @@
       "blockMatadata": "Block Matadata",
       "other": "Other",
       "timstamp": "Timstamp"
+    },
+    "transaction": {
+      "title": "Transaction",
+      "description": "Transaction",
+      "overview": {
+        "title": "Overview",
+        "hash": "Txn Hash",
+        "status": "Status",
+        "type": "Type",
+        "timestamp": "Timestamp",
+        "number": "Txn Number",
+        "blockHash": "Block Hash",
+        "blockNumber": "Block Number",
+        "payload": "Playload"
+      }
     },
     "committees": {
       "title": "Committee",

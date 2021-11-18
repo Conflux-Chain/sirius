@@ -1479,7 +1479,7 @@
       "txType": {
         "BlockMetadata": "区块元交易",
         "Election": "选举",
-        "Retire": "退休",
+        "Retire": "退休（减少个人票权）",
         "Dispute": "争辩交易",
         "Register": "注册",
         "Other": "其它",
@@ -1594,6 +1594,21 @@
       "blockMatadata": "区块元交易",
       "other": "其它",
       "timstamp": "时间戳"
+    },
+    "transaction": {
+      "title": "交易",
+      "description": "交易",
+      "overview": {
+        "title": "概览",
+        "hash": "交易哈希",
+        "status": "状态",
+        "type": "类型",
+        "timestamp": "时间戳",
+        "number": "交易号",
+        "blockHash": "区块哈希",
+        "blockNumber": "区块号",
+        "payload": "有效信息"
+      }
     },
     "committees": {
       "title": "委员会",

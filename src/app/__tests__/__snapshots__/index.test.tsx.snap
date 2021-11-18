@@ -593,6 +593,11 @@ exports[`<App /> should render and match the snapshot 1`] = `
                     <Route
                       component={[Function]}
                       exact={true}
+                      path="/pos/transactions/:number"
+                    />
+                    <Route
+                      component={[Function]}
+                      exact={true}
                       path="/pos/incoming-rank"
                     />
                     <Route
