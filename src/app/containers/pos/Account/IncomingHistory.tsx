@@ -17,7 +17,9 @@ export function IncomingHistory() {
     {
       ...accountColunms.incoming,
       sorter: true,
-      sortDirections: ['descend', 'ascend'] as Array<'descend' | 'ascend'>,
+      sortDirections: ['descend', 'ascend', 'descend'] as Array<
+        'descend' | 'ascend'
+      >,
       showSorterTooltip: false,
     },
     {

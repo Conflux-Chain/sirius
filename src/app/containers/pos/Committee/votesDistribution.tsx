@@ -15,7 +15,9 @@ export function VotesDistribution({ data, loading }) {
       key: 'votingPower',
       dataIndex: 'votingPower',
       defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'ascend'] as Array<'descend' | 'ascend'>,
+      sortDirections: ['descend', 'ascend', 'descend'] as Array<
+        'descend' | 'ascend'
+      >,
       showSorterTooltip: false,
       sorter: (a, b) => a.votingPower - b.votingPower,
     },

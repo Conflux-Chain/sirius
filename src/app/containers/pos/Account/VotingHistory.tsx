@@ -17,8 +17,6 @@ export function VotingHistory() {
       ...blockColunms.blockHeight,
       key: 'block.height',
       dataIndex: ['block', 'height'],
-      sorter: true,
-      defaultSortOrder: 'descend' as 'descend' | 'ascend',
     },
     {
       ...colunms.posBlockHash,
@@ -28,7 +26,9 @@ export function VotingHistory() {
     {
       ...accountColunms.votes,
       sorter: true,
-      sortDirections: ['descend', 'ascend'] as Array<'descend' | 'ascend'>,
+      sortDirections: ['descend', 'ascend', 'descend'] as Array<
+        'descend' | 'ascend'
+      >,
       showSorterTooltip: false,
     },
     {
