@@ -32,10 +32,7 @@ export function Overview({ data, loading }) {
           {lodash.isNil(data.totalVotingPower) ? (
             '--'
           ) : (
-            <>
-              {toThousands(data.totalVotingPower)}{' '}
-              <CopyButton copyText={data.totalVotingPower} />
-            </>
+            <>{toThousands(data.totalVotingPower)} </>
           )}
         </SkeletonContainer>
       </Description>
@@ -47,10 +44,7 @@ export function Overview({ data, loading }) {
           {lodash.isNil(data.quorumVotingPower) ? (
             '--'
           ) : (
-            <>
-              {toThousands(data.quorumVotingPower)}{' '}
-              <CopyButton copyText={data.quorumVotingPower} />
-            </>
+            <>{toThousands(data.quorumVotingPower)} </>
           )}
         </SkeletonContainer>
       </Description>

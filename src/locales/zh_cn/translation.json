@@ -1619,8 +1619,8 @@
       "totalVotes": "总票数"
     },
     "committee": {
-      "title": "委员会编号",
-      "description": "委员会编号",
+      "title": "委员会",
+      "description": "委员会",
       "overview": {
         "title": "概览",
         "committeeEpoch": "委员会编号",
