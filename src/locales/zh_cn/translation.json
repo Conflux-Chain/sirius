@@ -1486,6 +1486,23 @@
         "UpdateVotingPower": "增加个人票权",
         "PivotDecision": "Pivot 交易"
       },
+      "txPayload": {
+        "vrfPublicKey": "VRF 公钥",
+        "publicKey": "公钥",
+        "targetTerm": "委员会编号",
+        "vrfProof": "VRF 证明",
+        "address": "PoS 地址",
+        "votingPower": "增加的票数",
+        "height": "决定高度",
+        "blockHash": "决定哈希",
+        "blsPublicKey": "BLS 公钥",
+        "conflictingVotes": "争议票信息",
+        "conflictVoteType": "争议类型",
+        "proposal": "提议",
+        "vote": "投票",
+        "first": "第一个投票",
+        "second": "第二个投票"
+      },
       "committeeStatus": {
         "electionInProgress": "正在选举",
         "electionCompleted": "已完成选举",

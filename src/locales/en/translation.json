@@ -1487,6 +1487,23 @@
         "UpdateVotingPower": "Add Individual Voting Rights",
         "PivotDecision": "Pivot Decision"
       },
+      "txPayload": {
+        "vrfPublicKey": "VRF public key",
+        "publicKey": "Public key",
+        "targetTerm": "Committee epoch",
+        "vrfProof": "VRF proof",
+        "address": "PoS address",
+        "votingPower": "Number of votes added",
+        "height": "Block height of decision",
+        "blockHash": "Block hash of decision",
+        "blsPublicKey": "BLS public key",
+        "conflictingVotes": "Disputed voting info",
+        "conflictVoteType": "Dispute type",
+        "proposal": "Proposal",
+        "vote": "Vote",
+        "first": "First vote",
+        "second": "Second vote"
+      },
       "committeeStatus": {
         "electionInProgress": "Election in progress",
         "electionCompleted": "Election completed",
