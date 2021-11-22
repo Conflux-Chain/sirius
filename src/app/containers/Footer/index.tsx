@@ -124,7 +124,7 @@ export function Footer() {
   const privacyPolicy = (
     <Link
       className="footer-link"
-      href="https://confluxnetwork.org/privacy"
+      href="https://confluxnetwork.org/zh/policy"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.privacyPolicy,
