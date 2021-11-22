@@ -211,9 +211,11 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               ) : (
                 <span>
                   <span>{POSSummaryInfo.lastDistributeBlock} </span>
-                  <span className="pos-block-timestamp">
-                    {formatTimeStamp(POSSummaryInfo.lastDistributeBlockTime)}
-                  </span>
+                  {POSSummaryInfo.lastDistributeBlockTime ? (
+                    <span className="pos-block-timestamp">
+                      {formatTimeStamp(POSSummaryInfo.lastDistributeBlockTime)}
+                    </span>
+                  ) : null}
                 </span>
               ),
             )}
@@ -333,7 +335,7 @@ const CardWrapper = styled.div`
             border-right: 1px solid #e8e9ea;
             height: 70%;
             top: 15%;
-            right: 25%;
+            right: 15%;
           }
         }
 

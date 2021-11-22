@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Card } from 'app/components/Card/Loadable';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
-import { formatBalance } from 'utils';
+import { formatBalance, formatTimeStamp } from 'utils';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
+import lodash from 'lodash';
 
 function Info(title, number: any) {
   return (
@@ -60,7 +61,18 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           <Grid xs={24} sm={24} md={iszh ? 3 : 5.2}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),
-              POSSummaryInfo.lastDistributeBlock,
+              lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
+                '--'
+              ) : (
+                <span>
+                  <span>{POSSummaryInfo.lastDistributeBlock} </span>
+                  {POSSummaryInfo.lastDistributeBlockTime ? (
+                    <span className="pos-block-timestamp">
+                      {formatTimeStamp(POSSummaryInfo.lastDistributeBlockTime)}
+                    </span>
+                  ) : null}
+                </span>
+              ),
             )}
           </Grid>
           <Grid xs={24} sm={24} md={iszh ? 2.5 : 2}>
@@ -180,5 +192,11 @@ const CardWrapper = styled.div`
         margin-left: 10px;
       }
     }
+  }
+
+  .pos-block-timestamp {
+    font-size: 12px;
+    color: #999999;
+    padding-left: 10px;
   }
 `;
