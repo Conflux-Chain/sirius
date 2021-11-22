@@ -158,6 +158,7 @@ const HistoryWrapper = styled.span`
   .history-bottom {
     max-height: 16.2857rem;
     overflow: auto;
+    overflow-x: hidden;
 
     .history-item {
       display: flex;
