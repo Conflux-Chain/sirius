@@ -6,7 +6,6 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import SkelontonContainer from 'app/components/SkeletonContainer';
-import { Text } from 'app/components/Text/Loadable';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
 import {
@@ -43,6 +42,37 @@ const errReplaceThird = 'errReplaceThird';
 const errContractNotFound = 'errContractNotFound';
 const errCannotReplaced = 'errCannotReplaced';
 const errUpgraded = 'errUpgraded';
+
+const getCFXAmount = (value: string | number, zeroUnit = '') => {
+  // cfx
+  if (String(value).length > 15) {
+    return {
+      amount: fromDripToCfx(value),
+      unit: 'CFX',
+    };
+  }
+
+  // Gdrip
+  if (String(value).length > 6) {
+    return {
+      amount: fromDripToGdrip(value),
+      unit: 'Gdrip',
+    };
+  }
+
+  if (String(value) === '0') {
+    return {
+      amount: '0',
+      unit: zeroUnit,
+    };
+  }
+
+  // Drip
+  return {
+    amount: value,
+    unit: 'Drip',
+  };
+};
 
 export function Sponsor() {
   const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
@@ -145,26 +175,41 @@ export function Sponsor() {
           setStorageSponsorAddress(sponsorInfoSponsorForCollateral); // should be transform to uppercase address
           setGasFeeAddress(sponsorInfoSponsorForGas); // should be transform to uppercase address
         });
-      setCurrentStorageFee(sponsorInfo.sponsorBalanceForCollateral);
-      setCurrentGasFee(sponsorInfo.sponsorBalanceForGas);
-      setProvidedStorageFee(amountAccumulated.collateral_amount_accumulated);
+      setCurrentStorageFee(
+        new BigNumber(sponsorInfo.sponsorBalanceForCollateral).toFixed(),
+      );
+      setCurrentGasFee(
+        new BigNumber(sponsorInfo.sponsorBalanceForGas).toFixed(),
+      );
+      setProvidedStorageFee(
+        new BigNumber(
+          amountAccumulated.collateral_amount_accumulated,
+        ).toFixed(),
+      );
       // setUpperBound(faucetParams.upper_bound);
+
       setGasBound(faucetParams.gas_bound);
       setStorageBound(faucetParams.collateral_bound);
+
+      const remainStorageFeeBigNumber = new BigNumber(
+        faucetParams.collateral_total_limit,
+      ).minus(amountAccumulated.collateral_amount_accumulated);
+
       setAvialStorageFee(
-        new BigNumber(Number(faucetParams.collateral_total_limit))
-          .minus(
-            new BigNumber(
-              Number(amountAccumulated.collateral_amount_accumulated),
-            ),
-          )
-          .toFixed(),
+        remainStorageFeeBigNumber.gt(0)
+          ? remainStorageFeeBigNumber.toFixed()
+          : '0',
       );
-      setProvidedGasFee(amountAccumulated.gas_amount_accumulated);
+      setProvidedGasFee(
+        new BigNumber(amountAccumulated.gas_amount_accumulated).toFixed(),
+      );
+
+      const remainGasFeeBigNumber = new BigNumber(
+        faucetParams.gas_total_limit,
+      ).minus(amountAccumulated.gas_amount_accumulated);
+
       setAvialGasFee(
-        new BigNumber(Number(faucetParams.gas_total_limit))
-          .minus(Number(amountAccumulated.gas_amount_accumulated))
-          .toFixed(),
+        remainGasFeeBigNumber.gt(0) ? remainGasFeeBigNumber.toFixed() : '0',
       );
     }
   };
@@ -313,6 +358,16 @@ export function Sponsor() {
     }
   };
 
+  const currentStorageFeeAmount = getCFXAmount(currentStorageFee, 'CFX');
+  const providedStorageFeeAmount = getCFXAmount(providedStorageFee, 'CFX');
+  const avialStorageFeeAmount = getCFXAmount(avialStorageFee, 'CFX');
+
+  const currentGasFeeAmount = getCFXAmount(currentGasFee, 'GDrip');
+  const providedGasFeeAmount = getCFXAmount(providedGasFee, 'GDrip');
+  const avialGasFeeAmount = getCFXAmount(avialGasFee, 'GDrip');
+
+  const upperBoundAmount = getCFXAmount(upperBound, 'GDrip');
+
   return (
     <>
       <Helmet>
@@ -362,12 +417,16 @@ export function Sponsor() {
             </div>
             <div className="currentFeeContainer">
               <SkelontonContainer shown={loading}>
-                <span className="fee">
-                  {currentStorageFee !== defaultStr
-                    ? fromDripToCfx(currentStorageFee)
-                    : defaultStr}
-                </span>
-                <span className="unit">CFX</span>
+                {currentStorageFee !== defaultStr ? (
+                  <>
+                    <span className="fee">
+                      {currentStorageFeeAmount.amount}
+                    </span>
+                    <span className="unit">{currentStorageFeeAmount.unit}</span>
+                  </>
+                ) : (
+                  defaultStr
+                )}
               </SkelontonContainer>
             </div>
             <div className="feeContainer storage">
@@ -378,12 +437,16 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span>
-                      {providedStorageFee !== defaultStr
-                        ? fromDripToCfx(providedStorageFee)
-                        : defaultStr}
-                    </span>
-                    <span className="unit">CFX</span>
+                    {providedStorageFee !== defaultStr ? (
+                      <>
+                        <span>{providedStorageFeeAmount.amount}</span>
+                        <span className="unit">
+                          {providedStorageFeeAmount.unit}
+                        </span>
+                      </>
+                    ) : (
+                      defaultStr
+                    )}
                   </SkelontonContainer>
                 </div>
               </div>
@@ -393,12 +456,19 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span className="fee">
-                      {avialStorageFee !== defaultStr
-                        ? fromDripToCfx(avialStorageFee)
-                        : defaultStr}
-                    </span>
-                    <span className="unit">CFX</span>&nbsp;&nbsp;
+                    {avialStorageFee !== defaultStr ? (
+                      <>
+                        <span className="fee">
+                          {avialStorageFeeAmount.amount}
+                        </span>
+                        <span className="unit">
+                          {avialStorageFeeAmount.unit}
+                        </span>
+                      </>
+                    ) : (
+                      defaultStr
+                    )}
+                    &nbsp;&nbsp;
                     <span className="secondFee">
                       {storageBound !== defaultStr
                         ? fromDripToCfx(storageBound)
@@ -437,12 +507,14 @@ export function Sponsor() {
             </div>
             <div className="currentFeeContainer">
               <SkelontonContainer shown={loading}>
-                <span className="fee">
-                  {currentGasFee !== defaultStr
-                    ? fromDripToCfx(currentGasFee)
-                    : defaultStr}
-                </span>
-                <span className="unit">CFX</span>
+                {currentGasFee !== defaultStr ? (
+                  <>
+                    <span className="fee">{currentGasFeeAmount.amount}</span>
+                    <span className="unit">{currentGasFeeAmount.unit}</span>
+                  </>
+                ) : (
+                  defaultStr
+                )}
               </SkelontonContainer>
             </div>
             <div className="upperBoundContainer">
@@ -450,16 +522,17 @@ export function Sponsor() {
                 <span className="label">
                   {t(translations.sponsor.upperBound)}:&nbsp;
                 </span>
-                <Text
-                  className="fee"
-                  hoverValue={fromDripToGdrip(upperBound, true)}
-                >
-                  {upperBound !== defaultStr
-                    ? fromDripToGdrip(upperBound)
-                    : defaultStr}
-                </Text>
+                {upperBound !== defaultStr ? (
+                  // <span className="fee">{fromDripToGdrip(upperBound)}</span>
+                  <span className="fee">{upperBoundAmount.amount}</span>
+                ) : (
+                  defaultStr
+                )}
                 &nbsp;
-                <span className="unit">Gdrip/{t(translations.sponsor.tx)}</span>
+                <span className="unit">
+                  {upperBoundAmount.unit}/{t(translations.sponsor.tx)}
+                </span>
+                {/* <span className="unit">Gdrip/{t(translations.sponsor.tx)}</span> */}
                 {isUpperBoundFromFoundation ? (
                   <span>{t(translations.sponsor.byFoundation)}</span>
                 ) : null}
@@ -473,12 +546,16 @@ export function Sponsor() {
                 </div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span>
-                      {providedGasFee !== defaultStr
-                        ? fromDripToCfx(providedGasFee)
-                        : defaultStr}
-                    </span>
-                    <span className="unit">CFX</span>
+                    {providedGasFee !== defaultStr ? (
+                      <>
+                        <span>{providedGasFeeAmount.amount}</span>
+                        <span className="unit">
+                          {providedGasFeeAmount.unit}
+                        </span>
+                      </>
+                    ) : (
+                      defaultStr
+                    )}
                   </SkelontonContainer>
                 </div>
               </div>
@@ -486,19 +563,24 @@ export function Sponsor() {
                 <div className="label">{t(translations.sponsor.availGas)}</div>
                 <div className="innterItem">
                   <SkelontonContainer shown={loading}>
-                    <span className="fee">
-                      {avialGasFee !== defaultStr
-                        ? fromDripToCfx(avialGasFee)
-                        : defaultStr}
-                    </span>
-                    <span className="unit">CFX</span>&nbsp;&nbsp;
+                    {avialGasFee !== defaultStr ? (
+                      <>
+                        <span className="fee">{avialGasFeeAmount.amount}</span>
+                        <span className="unit">{avialGasFeeAmount.unit}</span>
+                      </>
+                    ) : (
+                      defaultStr
+                    )}
+                    &nbsp;&nbsp;
                     <span className="secondFee">
-                      {gasBound !== defaultStr
-                        ? fromDripToCfx(gasBound)
-                        : defaultStr}
+                      {gasBound !== defaultStr ? (
+                        <span>{fromDripToGdrip(gasBound)}</span>
+                      ) : (
+                        defaultStr
+                      )}
                     </span>
                     <span className="secondUnit">
-                      CFX/{t(translations.sponsor.applicationUnit)}
+                      Gdrip/{t(translations.sponsor.applicationUnit)}
                     </span>
                   </SkelontonContainer>
                 </div>
@@ -550,8 +632,17 @@ export function Sponsor() {
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
-            t(translations.sponsor.noticeFive),
-            t(translations.sponsor.noticeSix),
+            <span>
+              {t(translations.sponsor.notice4)}
+              &nbsp;
+              <a
+                href={t(translations.sponsor.notice4link)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t(translations.sponsor.notice4linkContent)}
+              </a>
+            </span>,
           ]}
         ></Remark>
       </Wrapper>
