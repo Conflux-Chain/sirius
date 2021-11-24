@@ -20,8 +20,7 @@ function Info(title, number: any) {
 
 // TODO redesign
 export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
-  const { t, i18n } = useTranslation();
-  const iszh = i18n.language.includes('zh');
+  const { t } = useTranslation();
   const [POSSummaryInfo, setPOSSummaryInfo] = useState<any>({});
 
   useEffect(() => {
@@ -40,7 +39,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           justify="flex-start"
           className="stats-container"
         >
-          <Grid xs={24} sm={24} md={iszh ? 2.5 : 3.2}>
+          <Grid xs={24} sm={24} md={3.2}>
             {Info(
               t(translations.statistics.pos.currentBlockNumber),
               POSSummaryInfo.latestCommitted,
@@ -52,13 +51,13 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={iszh ? 3.5 : 4}>
+          <Grid xs={24} sm={24} md={4}>
             {Info(
               t(translations.statistics.pos.totalInterest),
               formatBalance(POSSummaryInfo.distributablePosInterest),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={iszh ? 3 : 5.2}>
+          <Grid xs={24} sm={24} md={5.2}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),
               lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
@@ -75,7 +74,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               ),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={iszh ? 2.5 : 2}>
+          <Grid xs={24} sm={24} md={2.5}>
             {Info(
               t(translations.statistics.pos.totalAccountCount),
               POSSummaryInfo.posAccountCount,
