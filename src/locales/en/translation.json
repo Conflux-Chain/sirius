@@ -1530,10 +1530,12 @@
       "overview": {
         "title": "Overview",
         "posAddress": "Address",
+        "lockingRights": "Total Pending Locking Rights",
         "lockedRights": "Locked Rights",
+        "unlockingRights": "Total Pending Unlocking Rights",
         "unlockRights": "Unlocked Rights",
         "retiredRights": "Retired Rights",
-        "availableVotes": "Available Rights",
+        "availableVotes": "Total Rights",
         "currentCommitteeMember": "Current Committee Member",
         "rightsInCommittee": "Rights in Committee",
         "unlockedVotes": "Unlocked Votes",
@@ -1555,7 +1557,7 @@
         "timestamp": "Timestamp"
       },
       "votingStatus": {
-        "title": "Rights Status",
+        "title": "Pending Rights Status",
         "rights": "Rights",
         "status": "Status",
         "in": "Pending Locking",

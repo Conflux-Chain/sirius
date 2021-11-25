@@ -1529,10 +1529,12 @@
       "overview": {
         "title": "概览",
         "posAddress": "地址",
+        "lockingRights": "待锁定总票数",
         "lockedRights": "已锁定票数",
+        "unlockingRights": "待解锁总票数",
         "unlockRights": "已解锁票数",
         "retiredRights": "已退休票数",
-        "availableVotes": "当前可用票数",
+        "availableVotes": "总票数",
         "currentCommitteeMember": "在任委员会成员",
         "rightsInCommittee": "在委员会的票数",
         "unlockedVotes": "已解锁票数",
@@ -1554,7 +1556,7 @@
         "timestamp": "时间戳"
       },
       "votingStatus": {
-        "title": "票权状态",
+        "title": "待处理票权状态",
         "rights": "票权",
         "status": "状态",
         "in": "待锁定",

@@ -28,7 +28,30 @@ export function Overview() {
       },
     })
       .then(data => {
-        setData(data);
+        let inQueuePower = 0;
+        let outQueuePower = 0;
+
+        try {
+          if (Array.isArray(data?.inQueue)) {
+            inQueuePower = data.inQueue.reduce(
+              (prev, curr) => prev + curr.power,
+              0,
+            );
+          }
+
+          if (Array.isArray(data?.outQueue)) {
+            outQueuePower = data.outQueue.reduce(
+              (prev, curr) => prev + curr.power,
+              0,
+            );
+          }
+        } catch (e) {}
+
+        setData({
+          ...data,
+          inQueuePower,
+          outQueuePower,
+        });
       })
       .catch(e => {
         console.log('reqPoSAccount error:', e);
@@ -52,6 +75,18 @@ export function Overview() {
             : formatTimeStamp(data.createdAt, 'timezone')}
         </SkeletonContainer>
       </Description>
+      <Description title={t(translations.pos.account.overview.lockingRights)}>
+        <SkeletonContainer shown={loading}>
+          {lodash.isNil(data.inQueue) ? (
+            '--'
+          ) : (
+            <>
+              {toThousands(data.inQueuePower)}{' '}
+              <CopyButton copyText={data.inQueuePower} />
+            </>
+          )}
+        </SkeletonContainer>
+      </Description>
       <Description title={t(translations.pos.account.overview.lockedRights)}>
         <SkeletonContainer shown={loading}>
           {lodash.isNil(data.locked) ? (
@@ -59,6 +94,18 @@ export function Overview() {
           ) : (
             <>
               {toThousands(data.locked)} <CopyButton copyText={data.locked} />
+            </>
+          )}
+        </SkeletonContainer>
+      </Description>
+      <Description title={t(translations.pos.account.overview.unlockingRights)}>
+        <SkeletonContainer shown={loading}>
+          {lodash.isNil(data.outQueue) ? (
+            '--'
+          ) : (
+            <>
+              {toThousands(data.outQueuePower)}{' '}
+              <CopyButton copyText={data.outQueuePower} />
             </>
           )}
         </SkeletonContainer>
