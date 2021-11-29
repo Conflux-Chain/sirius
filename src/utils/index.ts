@@ -455,7 +455,7 @@ export const fromDripToCfx = (
       result =
         divideBn.toNumber() < 0.001
           ? '< 0.001'
-          : formatNumber(divideBn.toNumber(), opt);
+          : formatNumber(divideBn.toFixed(), opt);
     }
   }
   return result;
@@ -481,7 +481,7 @@ export const fromDripToGdrip = (
       result =
         divideBn.toNumber() < 0.001
           ? '< 0.001'
-          : formatNumber(divideBn.toNumber(), opt);
+          : formatNumber(divideBn.toFixed(), opt);
     }
   }
   return `${result}`;

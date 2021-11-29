@@ -840,7 +840,9 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${gasUsed || '--'}/${gas} (${getPercent(gasUsed, gas)})`}
+              {`${!_.isNil(gasUsed) ? toThousands(gasUsed) : '--'}/${
+                !_.isNil(gas) ? toThousands(gas) : '--'
+              } (${getPercent(gasUsed, gas)})`}
             </SkeletonContainer>
           </Description>
           <Description
@@ -885,8 +887,10 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {_.isNil(storageCollateralized) ? '--' : storageCollateralized}/
-              {toThousands(storageLimit)}
+              {_.isNil(storageCollateralized)
+                ? '--'
+                : toThousands(storageCollateralized)}
+              /{toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
           <Description
@@ -1081,7 +1085,7 @@ const StyledEpochConfirmationsWrapper = styled.span`
 
 const StyledFoldButtonWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 
   .detailResetFoldButton {
     display: flex;
