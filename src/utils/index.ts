@@ -5,7 +5,6 @@ import fetch from './request';
 import { Buffer } from 'buffer';
 import { NetworksType } from './hooks/useGlobal';
 import {
-  CONTRACTS,
   IS_PRE_RELEASE,
   NETWORK_ID,
   NETWORK_TYPE,
@@ -23,30 +22,9 @@ export const isPosAddress = (address: string): boolean => {
   }
 };
 
-export const isHexAddress = (address: string): boolean => {
+export const isCfxHexAddress = (address: string): boolean => {
   try {
-    // if not start with 0x1 0x8, or not 6 buildin address, or not zero address, treat as invalid hex address
-    // @todo, should replace with SDK after new version release
-
-    /*
-      1. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k / 0x0888000000000000000000000000000000000000 - adminControl
-      2. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar / 0x0888000000000000000000000000000000000001 - sponsorWhitelistControl
-      3. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb / 0x0888000000000000000000000000000000000002 - staking
-      4. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaapx8thaezf / 0x0888000000000000000000000000000000000003 - context
-      5. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaayf993ufd7 / 0x0888000000000000000000000000000000000005 - posRegister
-    */
-
-    if (
-      address.length === 42 &&
-      (['0x1', '0x8'].includes(address.substr(0, 3)) ||
-        /^0x0888[0]{35}[0, 1, 2, 3, 5]{1}$/.test(address) ||
-        address === '0x0000000000000000000000000000000000000000')
-    ) {
-      // treat as hex40 address
-      return !!SDK.format.hexAddress(address);
-    } else {
-      return false;
-    }
+    return SDK.address.isValidCfxHexAddress(address);
   } catch (e) {
     return false;
   }
@@ -60,27 +38,6 @@ export const isBase32Address = (address: string): boolean => {
   }
 };
 
-export const isSimplyBase32Address = (address: string): boolean => {
-  try {
-    return isBase32Address(address) && /[a-z0-9]:[a-z0-9]/.test(address);
-  } catch (e) {
-    return false;
-  }
-};
-
-// support hex and base32
-export const isAddress = (address: string): boolean => {
-  try {
-    if (address.startsWith('0x')) {
-      return isHexAddress(address);
-    } else {
-      return isBase32Address(address);
-    }
-  } catch (e) {
-    return false;
-  }
-};
-
 export const formatAddress = (
   address: string,
   outputType = 'base32', // base32 or hex
@@ -89,7 +46,7 @@ export const formatAddress = (
   // if necessary, check for errors at the call site
   const invalidAddressReturnValue = address;
   try {
-    if (isHexAddress(address)) {
+    if (isCfxHexAddress(address)) {
       if (outputType === 'hex') {
         return address;
       } else if (outputType === 'base32') {
@@ -128,7 +85,7 @@ export const getAddressInfo = (
   hexAddress: ArrayBuffer | string;
 } | null => {
   try {
-    if (isHexAddress(address)) {
+    if (isCfxHexAddress(address)) {
       const base32Address = formatAddress(address, 'base32');
       return SDK.address.decodeCfxAddress(base32Address);
     } else if (isBase32Address(address)) {
@@ -141,8 +98,37 @@ export const getAddressInfo = (
   }
 };
 
+export const isSimplyBase32Address = (address: string): boolean => {
+  try {
+    return (
+      SDK.address.isValidCfxAddress(address) &&
+      SDK.address.simplifyCfxAddress(address) === address
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
+// support hex and base32
+export const isAddress = (address: string): boolean => {
+  try {
+    if (address.startsWith('0x')) {
+      return isCfxHexAddress(address);
+    } else {
+      return isBase32Address(address);
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
 export function isZeroAddress(address: string): boolean {
-  return formatAddress(address, 'base32') === CONTRACTS.zero;
+  try {
+    // @todo, wait for sdk upgrade to accept both base32 and hex address
+    return SDK.address.isZeroAddress(formatAddress(address, 'hex'));
+  } catch (e) {
+    return false;
+  }
 }
 
 export function isAccountAddress(address: string): boolean {
@@ -154,13 +140,12 @@ export function isContractAddress(address: string): boolean {
 }
 
 export function isInnerContractAddress(address: string): boolean {
-  return [
-    CONTRACTS.adminControl,
-    CONTRACTS.sponsorWhitelistControl,
-    CONTRACTS.staking,
-    CONTRACTS.context,
-    CONTRACTS.posRegister,
-  ].includes(formatAddress(address, 'base32'));
+  try {
+    // @todo, wait for sdk upgrade to accept both base32 and hex address
+    return SDK.address.isInternalContractAddress(formatAddress(address, 'hex'));
+  } catch (e) {
+    return false;
+  }
 }
 
 // address start with 0x0, not valid internal contract, but fullnode support
