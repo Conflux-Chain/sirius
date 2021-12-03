@@ -27,10 +27,19 @@ export const isHexAddress = (address: string): boolean => {
   try {
     // if not start with 0x1 0x8, or not 6 buildin address, or not zero address, treat as invalid hex address
     // @todo, should replace with SDK after new version release
+
+    /*
+      1. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2mhjju8k / 0x0888000000000000000000000000000000000000 - adminControl
+      2. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar / 0x0888000000000000000000000000000000000001 - sponsorWhitelistControl
+      3. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaajrwuc9jnb / 0x0888000000000000000000000000000000000002 - staking
+      4. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaapx8thaezf / 0x0888000000000000000000000000000000000003 - context
+      5. cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaayf993ufd7 / 0x0888000000000000000000000000000000000005 - posRegister
+    */
+
     if (
       address.length === 42 &&
       (['0x1', '0x8'].includes(address.substr(0, 3)) ||
-        /^0x0888[0]{35}[0-5]{1}$/.test(address) ||
+        /^0x0888[0]{35}[0, 1, 2, 3, 5]{1}$/.test(address) ||
         address === '0x0000000000000000000000000000000000000000')
     ) {
       // treat as hex40 address
@@ -150,7 +159,6 @@ export function isInnerContractAddress(address: string): boolean {
     CONTRACTS.sponsorWhitelistControl,
     CONTRACTS.staking,
     CONTRACTS.context,
-    CONTRACTS.reentrancyConfig,
     CONTRACTS.posRegister,
   ].includes(formatAddress(address, 'base32'));
 }
