@@ -30,7 +30,7 @@ export const isHexAddress = (address: string): boolean => {
     if (
       address.length === 42 &&
       (['0x1', '0x8'].includes(address.substr(0, 3)) ||
-        /^0x0888[0]{35}[1-5]{1}$/.test(address) ||
+        /^0x0888[0]{35}[0-5]{1}$/.test(address) ||
         address === '0x0000000000000000000000000000000000000000')
     ) {
       // treat as hex40 address
@@ -149,6 +149,9 @@ export function isInnerContractAddress(address: string): boolean {
     CONTRACTS.adminControl,
     CONTRACTS.sponsorWhitelistControl,
     CONTRACTS.staking,
+    CONTRACTS.context,
+    CONTRACTS.reentrancyConfig,
+    CONTRACTS.posRegister,
   ].includes(formatAddress(address, 'base32'));
 }
 
@@ -156,11 +159,7 @@ export function isInnerContractAddress(address: string): boolean {
 export function isSpecialAddress(address: string): boolean {
   return (
     getAddressInfo(address)?.type === 'builtin' &&
-    ![
-      CONTRACTS.adminControl,
-      CONTRACTS.sponsorWhitelistControl,
-      CONTRACTS.staking,
-    ].includes(formatAddress(address, 'base32'))
+    !isInnerContractAddress(address)
   );
 }
 
