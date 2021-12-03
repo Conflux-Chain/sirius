@@ -10,6 +10,9 @@ interface ContractsType {
   adminControl: string;
   sponsorWhitelistControl: string;
   staking: string;
+  context: string;
+  reentrancyConfig: string;
+  posRegister: string;
   zero: string;
 }
 
@@ -95,6 +98,9 @@ export const CONTRACTS: ContractsType = (() => {
     adminControl: '',
     sponsorWhitelistControl: '',
     staking: '',
+    context: '',
+    reentrancyConfig: '',
+    posRegister: '',
     zero: '',
   };
 
