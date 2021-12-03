@@ -118,7 +118,7 @@ export const AddressDetailPage = memo(() => {
           </Middle>
         ) : null}
         <Bottom>
-          <Table address={address} addressInfo={accountInfo} />
+          <Table address={address} addressInfo={accountInfo} key={address} />
         </Bottom>
       </Main>
     </>
