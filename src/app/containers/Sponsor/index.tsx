@@ -368,6 +368,9 @@ export function Sponsor() {
 
   const upperBoundAmount = getCFXAmount(upperBound, 'GDrip');
 
+  const storageBoundAmount = getCFXAmount(storageBound, 'CFX');
+  const gasBoundAmount = getCFXAmount(gasBound, 'GDrip');
+
   return (
     <>
       <Helmet>
@@ -471,11 +474,12 @@ export function Sponsor() {
                     &nbsp;&nbsp;
                     <span className="secondFee">
                       {storageBound !== defaultStr
-                        ? fromDripToCfx(storageBound)
+                        ? storageBoundAmount.amount
                         : defaultStr}
                     </span>
                     <span className="secondUnit">
-                      CFX/{t(translations.sponsor.applicationUnit)}
+                      {storageBoundAmount.unit}/
+                      {t(translations.sponsor.applicationUnit)}
                     </span>
                   </SkelontonContainer>
                 </div>
@@ -574,13 +578,14 @@ export function Sponsor() {
                     &nbsp;&nbsp;
                     <span className="secondFee">
                       {gasBound !== defaultStr ? (
-                        <span>{fromDripToGdrip(gasBound)}</span>
+                        <span>{gasBoundAmount.amount}</span>
                       ) : (
                         defaultStr
                       )}
                     </span>
                     <span className="secondUnit">
-                      Gdrip/{t(translations.sponsor.applicationUnit)}
+                      {gasBoundAmount.unit}/
+                      {t(translations.sponsor.applicationUnit)}
                     </span>
                   </SkelontonContainer>
                 </div>

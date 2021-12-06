@@ -457,6 +457,12 @@ export function App() {
                             path="/transaction/:hash"
                             component={Transaction}
                           />
+                          {/* Compatible with Etherscan */}
+                          <Route
+                            exact
+                            path="/tx/:hash"
+                            component={Transaction}
+                          />
                           <Route exact path="/block/:hash" component={Block} />
                           <Route
                             exact
