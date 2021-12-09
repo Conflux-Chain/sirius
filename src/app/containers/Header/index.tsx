@@ -173,10 +173,10 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: iszh
         ? NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://votetest.confluxnetwork.org/zh/'
+          ? 'https://testnet-governance.confluxnetwork.org/zh/'
           : 'https://governance.confluxnetwork.org/zh/'
         : NETWORK_TYPE === NETWORK_TYPES.testnet
-        ? 'https://votetest.confluxnetwork.org/en/'
+        ? 'https://testnet-governance.confluxnetwork.org/en/'
         : 'https://governance.confluxnetwork.org/en/',
     });
 
