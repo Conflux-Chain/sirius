@@ -247,11 +247,11 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.stakedBegin)}
                       {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                         <a
-                          href="https://votetest.confluxnetwork.org/"
+                          href="https://testnet-governance.confluxnetwork.org/"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://votetest.confluxnetwork.org
+                          https://testnet-governance.confluxnetwork.org
                         </a>
                       ) : (
                         <a
@@ -301,11 +301,11 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.lockedBegin)}
                       {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                         <a
-                          href="https://votetest.confluxnetwork.org/"
+                          href="https://testnet-governance.confluxnetwork.org/"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://votetest.confluxnetwork.org
+                          https://testnet-governance.confluxnetwork.org
                         </a>
                       ) : (
                         <a
