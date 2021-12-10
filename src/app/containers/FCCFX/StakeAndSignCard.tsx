@@ -9,11 +9,10 @@ import {
   TitleTip,
   fcExchangeInterestContract,
   fcContract,
-  FC_EXCHANGE_ADDRESS,
   AccountInfoType,
 } from './Common';
 import { usePortal } from 'utils/hooks/usePortal';
-import { TXN_ACTION } from 'utils/constants';
+import { TXN_ACTION, FC_EXCHANGE_ADDRESS } from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { StyledTitle200F1327 } from 'app/components/StyledComponent';
