@@ -200,7 +200,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           <Grid xs={24} sm={24} md={3}>
             {Info(
               t(translations.statistics.pos.totalInterest),
-              formatBalance(POSSummaryInfo.distributablePosInterest),
+              formatBalance(POSSummaryInfo.totalPosRewardDrip),
             )}
           </Grid>
           <Grid xs={24} sm={24} md={5}>
