@@ -1635,7 +1635,7 @@
       "description": "Committee",
       "committeeEpoch": "Committee Epoch",
       "status": "Status",
-      "numberOfMumbers": "Number of Mumbers",
+      "numberOfMembers": "Number of Members",
       "totalVotes": "Total Votes"
     },
     "committee": {

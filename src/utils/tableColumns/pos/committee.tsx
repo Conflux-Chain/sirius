@@ -31,7 +31,7 @@ export const nodesCount = {
   title: (
     <ContentWrapper right>
       <Translation>
-        {t => t(translations.pos.committees.numberOfMumbers)}
+        {t => t(translations.pos.committees.numberOfMembers)}
       </Translation>
     </ContentWrapper>
   ),

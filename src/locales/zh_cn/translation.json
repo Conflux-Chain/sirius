@@ -1634,7 +1634,7 @@
       "description": "委员会",
       "committeeEpoch": "委员会编号",
       "status": "状态",
-      "numberOfMumbers": "成员数量",
+      "numberOfMembers": "成员数量",
       "totalVotes": "总票数"
     },
     "committee": {
