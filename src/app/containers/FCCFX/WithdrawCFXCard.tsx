@@ -35,7 +35,15 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     status: '',
   });
 
-  const unsignedCFX = formatBalance(info.cfxUnsigned, 18, false, {}, '0.001');
+  const unsignedCFX = formatBalance(
+    info.cfxUnsigned,
+    18,
+    false,
+    {
+      withUnit: false,
+    },
+    '0.001',
+  );
 
   const handleWithdrawInputChange = async value => {
     setWithdrawCFX(value);

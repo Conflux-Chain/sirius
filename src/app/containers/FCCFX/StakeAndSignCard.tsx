@@ -35,7 +35,15 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     status: '',
   });
 
-  const unsingedFC = formatBalance(info.fcUnsigned, 18, false, {}, '0.001');
+  const unsingedFC = formatBalance(
+    info.fcUnsigned,
+    18,
+    false,
+    {
+      withUnit: false,
+    },
+    '0.001',
+  );
 
   const exchangeHandler = async () => {
     setTxnStatusModal({

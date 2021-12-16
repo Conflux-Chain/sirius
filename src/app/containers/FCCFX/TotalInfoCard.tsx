@@ -17,7 +17,15 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
     {
       key: 'balanceOfCfx',
       title: t(translations.fccfx.titleGenerate),
-      value: formatBalance(info.balanceOfCfx, 18, false, {}, '0.001'),
+      value: formatBalance(
+        info.balanceOfCfx,
+        18,
+        false,
+        {
+          withUnit: false,
+        },
+        '0.001',
+      ),
       span: 13,
     },
     {
@@ -27,7 +35,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
         info.fcMiningAPY
           .dividedBy(10 ** 18)
           .multipliedBy(100)
-          .toFixed(2) + '%',
+          .toFixed(3) + '%',
       span: 11,
       tip: (
         <InfoIconWithTooltip
@@ -38,13 +46,29 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
     {
       key: 'fcSigned',
       title: t(translations.fccfx.titleStakedFC),
-      value: formatBalance(info.fcSigned, 18, false, {}, '0.001'),
+      value: formatBalance(
+        info.fcSigned,
+        18,
+        false,
+        {
+          withUnit: false,
+        },
+        '0.001',
+      ),
       span: 13,
     },
     {
       key: 'fcSignedHistory',
       title: t(translations.fccfx.titleStakedHistory),
-      value: formatBalance(info.fcSignedHistory, 18, false, {}, '0.001'),
+      value: formatBalance(
+        info.fcSignedHistory,
+        18,
+        false,
+        {
+          withUnit: false,
+        },
+        '0.001',
+      ),
       span: 11,
     },
   ];
@@ -53,7 +77,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
     let rate = 0;
     try {
       rate =
-        Number(info.fcSigned.dividedBy(info.balanceOfCfx).toFixed(4)) * 100 ||
+        Number(info.fcSigned.dividedBy(info.balanceOfCfx).toFixed(5)) * 100 ||
         0;
     } catch (e) {}
     return rate;
@@ -142,5 +166,9 @@ const StyledTotalInfoWrapper = styled.div`
     justify-content: center;
     margin-left: -24px;
     height: 100%;
+
+    .ant-progress-circle .ant-progress-text {
+      font-size: 0.85em;
+    }
   }
 `;

@@ -125,7 +125,15 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
           code: code,
           description: '',
           hash,
-          value: formatBalance(data[4]?.value || 0, 18, false, {}, '0.001'),
+          value: formatBalance(
+            data[4]?.value || 0,
+            18,
+            false,
+            {
+              withUnit: false,
+            },
+            '0.001',
+          ),
         }),
       });
 
@@ -184,7 +192,15 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
                 </StyledTitle1474798C>
                 <span className="fccfx-accountInfo-number">
                   {accounts.length
-                    ? formatBalance(c.value, 18, false, {}, '0.001')
+                    ? formatBalance(
+                        c.value,
+                        18,
+                        false,
+                        {
+                          withUnit: false,
+                        },
+                        '0.001',
+                      )
                     : '--'}{' '}
                   {c.unit}
                 </span>
@@ -239,6 +255,19 @@ const StyledTotalInfoWrapper = styled.div`
     font-size: 16px;
     color: #282d30;
     line-height: 24px;
+  }
+
+  .fccfx-accountInfo-item-1 {
+    .fccfx-accountInfo-number {
+      color: #fa953c;
+    }
+  }
+
+  .fccfx-accountInfo-item-4 {
+    .fccfx-accountInfo-number {
+      color: #1e3de4;
+      font-weight: bold;
+    }
   }
 
   .fccfx-accountInfo-withdrawButton {
