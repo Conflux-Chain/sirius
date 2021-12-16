@@ -133,7 +133,14 @@ export function TokenDetail() {
             })`}</div>
             {isFC ? (
               <div className="basic-link">
-                <Link href="/fccfx" target="_blank">
+                <Link
+                  href={
+                    localStorage.getItem('fccfx')
+                      ? '/fccfx'
+                      : 'https://fccfx.confluxscan.io/'
+                  }
+                  target="_blank"
+                >
                   {t(translations.token.fcMining)}
                 </Link>
               </div>
