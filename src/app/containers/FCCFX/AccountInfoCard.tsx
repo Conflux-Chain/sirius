@@ -21,6 +21,10 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 import { MyNFTCard } from './MyNFTCard';
 
+// token decimal
+const MAX_DECIMALS = 18;
+const MODULE = 10 ** MAX_DECIMALS;
+
 export function AccountInfoCard({ info }: { info: AccountInfoType }) {
   const [globalData, setGlobalData] = useGlobalData();
   const { t } = useTranslation();
@@ -184,7 +188,11 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
             {data.map((c, index) => (
               <Col
                 span={c.span}
-                className={`fccfx-accountInfo-item fccfx-accountInfo-item-${index}`}
+                className={`fccfx-accountInfo-item fccfx-accountInfo-item-${index} ${
+                  index === 1 && c.value.div(MODULE).gte('0.001')
+                    ? 'warning'
+                    : ''
+                }`}
                 key={index}
               >
                 <StyledTitle1474798C className={`fccfx-accountInfo-title`}>
@@ -257,7 +265,7 @@ const StyledTotalInfoWrapper = styled.div`
     line-height: 24px;
   }
 
-  .fccfx-accountInfo-item-1 {
+  .fccfx-accountInfo-item-1.warning {
     .fccfx-accountInfo-number {
       color: #fa953c;
     }
