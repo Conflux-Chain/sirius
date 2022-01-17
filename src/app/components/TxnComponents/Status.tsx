@@ -25,6 +25,10 @@ interface Props {
   popoverProps?: Partial<PopoverProps>;
   showMessage?: boolean;
   showTooltip?: boolean;
+  txExecErrorInfo?: {
+    type: number;
+    message: string;
+  };
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -38,6 +42,7 @@ const StatusComponent = ({
   children,
   showMessage,
   showTooltip,
+  txExecErrorInfo,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
@@ -76,12 +81,30 @@ const StatusComponent = ({
   const typeKeys = useMemo(() => Object.keys(typeMap), [typeMap]);
 
   if (typeKeys.includes(type)) {
+    // default
     let explanation: React.ReactNode = t(
       translations.general.status[typeMap[type].status].explanation,
     );
     // only error message come from outside
-    if ((type === '1' || type === '4') && children) {
-      explanation = children;
+    if (type === '1' || type === '4') {
+      if (children) {
+        explanation = children;
+      } else if (txExecErrorInfo) {
+        if (txExecErrorInfo.type === 1) {
+          explanation = `${t(
+            translations.transaction.statusError[txExecErrorInfo.type],
+          )}${txExecErrorInfo.message}`;
+        } else {
+          explanation = t(
+            translations.transaction.statusError[txExecErrorInfo.type],
+          );
+        }
+
+        // if not match i18n translations, use fullnode error directly by default
+        if (!explanation) {
+          explanation = txExecErrorInfo.message;
+        }
+      }
     }
     const content = (
       <>
