@@ -607,20 +607,6 @@ export const Detail = () => {
     );
   };
 
-  // txn status error detail info
-  let statusErrorMessage = '';
-  if (txExecErrorInfo) {
-    if (txExecErrorInfo?.type === 1) {
-      statusErrorMessage = `${t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      )}${txExecErrorInfo.message}`;
-    } else {
-      statusErrorMessage = t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      );
-    }
-  }
-
   const handleFolded = () => setFolded(folded => !folded);
 
   const storageReleasedTotal = storageReleased
@@ -738,7 +724,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Status type={status}>{statusErrorMessage}</Status>
+            <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
           </SkeletonContainer>
         </Description>
         <Description

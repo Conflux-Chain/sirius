@@ -39,7 +39,6 @@ export const TxnHashRenderComponent = ({
   txExecErrorMsg,
   txExecErrorInfo,
 }: HashProps) => {
-  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [txnDetail, setTxnDetail] = useState<{
     status?: string;
@@ -60,20 +59,6 @@ export const TxnHashRenderComponent = ({
       setLoading(false);
     });
   };
-
-  // txn status error detail info
-  let statusErrorMessage = txExecErrorMsg;
-  if (txExecErrorInfo) {
-    if (txExecErrorInfo?.type === 1) {
-      statusErrorMessage = `${t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      )}${txExecErrorInfo.message}`;
-    } else {
-      statusErrorMessage = t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      );
-    }
-  }
 
   // used for skip status in block transactions list
   // original status is null, manually set to 2
@@ -106,9 +91,11 @@ export const TxnHashRenderComponent = ({
             show: status !== 0,
           })}
         >
-          <Status type={status} variant="dot">
-            {statusErrorMessage}
-          </Status>
+          <Status
+            type={status}
+            variant="dot"
+            txExecErrorInfo={txExecErrorInfo}
+          ></Status>
         </StyledStatusWrapper>
       ) : null}
 
