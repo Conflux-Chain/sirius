@@ -28,20 +28,6 @@ export const Overview = ({ data }) => {
     txExecErrorInfo,
   } = data;
 
-  // txn status error detail info
-  let statusErrorMessage = '';
-  if (txExecErrorInfo) {
-    if (txExecErrorInfo?.type === 1) {
-      statusErrorMessage = `${t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      )}${txExecErrorInfo.message}`;
-    } else {
-      statusErrorMessage = t(
-        translations.transaction.statusError[txExecErrorInfo?.type],
-      );
-    }
-  }
-
   return (
     <StyledWrapper>
       <div className="overview-title">
@@ -53,7 +39,7 @@ export const Overview = ({ data }) => {
         title={t(translations.transaction.status)}
       >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status}>{statusErrorMessage}</Status>
+          <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
         </div>
       </Description>
       {tokenTransfer?.total ? (
