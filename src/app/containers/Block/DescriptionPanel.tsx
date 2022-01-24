@@ -26,7 +26,7 @@ export function DescriptionPanel({ data, loading }) {
     blame,
     totalReward,
     gasUsed,
-    syncTimestamp,
+    timestamp,
     size,
     gasLimit,
     posReference,
@@ -214,7 +214,7 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {formatTimeStamp(syncTimestamp * 1000, 'timezone')}
+          {formatTimeStamp(timestamp * 1000, 'timezone')}
         </SkeletonContainer>
       </Description>
       <Description
