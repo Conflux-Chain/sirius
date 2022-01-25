@@ -48,7 +48,7 @@ export function DescriptionPanel() {
     blame,
     totalReward,
     gasUsed,
-    syncTimestamp,
+    timestamp,
     size,
     gasLimit,
   } = data || {};
@@ -235,7 +235,7 @@ export function DescriptionPanel() {
           }
         >
           <SkeletonContainer shown={loading}>
-            {formatTimeStamp(syncTimestamp * 1000, 'timezone')}
+            {formatTimeStamp(timestamp * 1000, 'timezone')}
           </SkeletonContainer>
         </Description>
         <Description
