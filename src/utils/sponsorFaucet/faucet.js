@@ -25,6 +25,10 @@ function _parseBytecode(data) {
   return r;
 }
 
+const getLowercaseAddress = address => {
+  return SDK.format.address(address, NETWORK_ID, true);
+};
+
 class Faucet {
   /**
    * @dev constructor for faucet
@@ -33,24 +37,18 @@ class Faucet {
    * @param lastAddress The last faucet contract address
    */
   constructor(url, address, lastAddress) {
-    const uppercaseAddress = SDK.format.address(address, NETWORK_ID, true);
-    const uppercaseLastAddress = SDK.format.address(
-      lastAddress,
-      NETWORK_ID,
-      true,
-    );
     this.cfx = CFX;
     this.provider = this.cfx.provider;
-    this.address = uppercaseAddress;
-    this.lastAddress = uppercaseLastAddress;
+    this.address = getLowercaseAddress(address);
+    this.lastAddress = getLowercaseAddress(lastAddress);
     this.faucet = this.cfx.Contract({
       abi: faucetContract.abi,
-      address: uppercaseAddress,
+      address: address,
     });
     //oldFaucet is used to query accumulated details, abi is compatible for this.
     this.oldFaucet = this.cfx.Contract({
       abi: faucetContract.abi,
-      address: uppercaseLastAddress,
+      address: lastAddress,
     });
   }
 
@@ -114,7 +112,10 @@ class Faucet {
       collateralForStorage = new BigNumber(res[2]);
       collateralBound = faucetParams[3];
 
-      if (sponsorInfo.sponsorForCollateral === this.lastAddress) {
+      if (
+        getLowercaseAddress(sponsorInfo.sponsorForCollateral) ===
+        this.lastAddress
+      ) {
         oldDetail = await this.oldFaucet.dapps(dapp).call();
         accumulatedCollateral = new BigNumber(oldDetail[1]);
         if (accumulatedCollateral.gte(collateralBound)) {
@@ -124,7 +125,8 @@ class Faucet {
           };
         }
       } else if (
-        sponsorInfo.sponsorForCollateral !== this.address &&
+        getLowercaseAddress(sponsorInfo.sponsorForCollateral) !==
+          this.address &&
         collateralForStorage.gt(collateralBound)
       ) {
         return {
@@ -290,7 +292,9 @@ class Faucet {
     r.sponsorInfo = sponsorInfo;
 
     let isAppliable;
-    if (sponsorInfo.sponsorForCollateral === this.lastAddress) {
+    if (
+      getLowercaseAddress(sponsorInfo.sponsorForCollateral) === this.lastAddress
+    ) {
       if (accumulatedCollateral.gte(collateralBound)) {
         isAppliable = {
           flag: false,
@@ -298,7 +302,7 @@ class Faucet {
         };
       }
     } else if (
-      sponsorInfo.sponsorForCollateral !== this.address &&
+      getLowercaseAddress(sponsorInfo.sponsorForCollateral) !== this.address &&
       collateralForStorage.gt(collateralBound)
     ) {
       isAppliable = {
