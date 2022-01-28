@@ -551,7 +551,7 @@ export const Header = memo(() => {
           };
         })
         .concat({
-          title: ['Conflux EVM Space'],
+          title: ['EVM Subspace Testnet'],
           isMatchedFn: () => false,
           onClick: () => {
             window.open('https://evmtestnet.confluxscan.net/');
