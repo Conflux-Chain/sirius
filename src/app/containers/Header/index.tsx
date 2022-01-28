@@ -457,37 +457,45 @@ export const Header = memo(() => {
       // switch network
       name: 'switch-network',
       title: getNetwork(networks, networkId).name,
-      children: networks.map(n => {
-        const isMatch = n.id === networkId;
+      children: networks
+        .map(n => {
+          const isMatch = n.id === networkId;
 
-        return {
-          title: [n.name, isMatch && <Check size={18} key="check" />],
+          return {
+            title: [n.name, isMatch && <Check size={18} key="check" />],
+            onClick: () => {
+              trackEvent({
+                category: ScanEvent.preference.category,
+                action: ScanEvent.preference.action.changeNet,
+                label: n.name,
+              });
+
+              menuClick();
+
+              setGlobalData({
+                ...globalData,
+                networkId: n.id,
+              });
+
+              if (n.id === 1) {
+                gotoNetwork(1);
+              } else if (n.id === 1029) {
+                gotoNetwork(1029);
+              } else {
+                // @todo, should jump to custom network hostname
+                // gotoNetwork(1029);
+              }
+            },
+            isMatchedFn: () => isMatch,
+          };
+        })
+        .concat({
+          title: ['Conflux EVM Space'],
+          isMatchedFn: () => false,
           onClick: () => {
-            trackEvent({
-              category: ScanEvent.preference.category,
-              action: ScanEvent.preference.action.changeNet,
-              label: n.name,
-            });
-
-            menuClick();
-
-            setGlobalData({
-              ...globalData,
-              networkId: n.id,
-            });
-
-            if (n.id === 1) {
-              gotoNetwork(1);
-            } else if (n.id === 1029) {
-              gotoNetwork(1029);
-            } else {
-              // @todo, should jump to custom network hostname
-              // gotoNetwork(1029);
-            }
+            window.open('https://evmtestnet.confluxscan.net/');
           },
-          isMatchedFn: () => isMatch,
-        };
-      }),
+        }),
     },
   ];
 
