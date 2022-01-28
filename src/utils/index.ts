@@ -817,31 +817,39 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
 };
 
 // @todo, add private chain domain
-export const gotoNetwork = (networkId: number): void => {
+export const gotoNetwork = (networkId: string): void => {
   if (IS_PRE_RELEASE) {
     // only for confluxscan pre release env
-    if (networkId === 1) {
+    if (networkId === '1') {
       window.location.assign('//testnet-scantest.confluxnetwork.org');
-    } else if (networkId === 1029) {
+    } else if (networkId === '1029') {
       window.location.assign('//scantest.confluxnetwork.org');
+    } else if (networkId === 'evmspacetestnet') {
+      window.open('https://evmtestnet.confluxscan.net/');
     }
   } else {
     const hostname = window.location.hostname;
     let newHostname = '';
-    if (networkId === 1) {
+    if (networkId === '1') {
       if (hostname.includes('.io')) {
         newHostname = '//testnet.confluxscan.io';
       } else {
         newHostname = '//testnet.confluxscan.net';
       }
       window.location.assign(newHostname);
-    } else if (networkId === 1029) {
+    } else if (networkId === '1029') {
       if (hostname.includes('.io')) {
         newHostname = '//confluxscan.io';
       } else {
         newHostname = '//confluxscan.net';
       }
       window.location.assign(newHostname);
+    } else if (networkId === 'evmspacetestnet') {
+      if (hostname.includes('.io')) {
+        window.open('https://evmtestnet.confluxscan.io/');
+      } else {
+        window.open('https://evmtestnet.confluxscan.net/');
+      }
     }
   }
 };
