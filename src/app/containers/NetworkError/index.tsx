@@ -42,8 +42,8 @@ export function NetworkError() {
           onClick={e => {
             e.preventDefault();
             NETWORK_TYPE === NETWORK_TYPES.testnet
-              ? gotoNetwork(1029)
-              : gotoNetwork(1);
+              ? gotoNetwork('1029')
+              : gotoNetwork('1');
           }}
         >
           {t(translations.networkError.btn, { network })}
