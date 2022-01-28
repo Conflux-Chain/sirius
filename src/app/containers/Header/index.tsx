@@ -539,23 +539,22 @@ export const Header = memo(() => {
               });
 
               if (n.id === 1) {
-                gotoNetwork(1);
+                gotoNetwork('1');
               } else if (n.id === 1029) {
-                gotoNetwork(1029);
+                gotoNetwork('1029');
               } else {
                 // @todo, should jump to custom network hostname
-                // gotoNetwork(1029);
+                // gotoNetwork('1029');
               }
             },
             isMatchedFn: () => isMatch,
           };
         })
+        // TODO, temporary hardcode network config, after mainnet release, use /v1/frontend networks config to render evm space network item
         .concat({
           title: ['EVM Subspace Testnet'],
           isMatchedFn: () => false,
-          onClick: () => {
-            window.open('https://evmtestnet.confluxscan.net/');
-          },
+          onClick: () => gotoNetwork('evmspacetestnet'),
         }),
     },
   ];
