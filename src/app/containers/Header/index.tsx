@@ -491,7 +491,7 @@ export const Header = memo(() => {
         })
         // TODO, temporary hardcode network config, after mainnet release, use /v1/frontend networks config to render evm space network item
         .concat({
-          title: ['EVM Subspace Testnet'],
+          title: ['Conflux eSpace (Testnet)'],
           isMatchedFn: () => false,
           onClick: () => gotoNetwork('evmspacetestnet'),
         }),
