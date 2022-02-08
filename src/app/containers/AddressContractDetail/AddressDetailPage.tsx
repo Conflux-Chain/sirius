@@ -18,7 +18,7 @@ import {
 } from './AddressInfoCards';
 import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
-import { isZeroAddress } from '../../../utils';
+import { isZeroAddress, toHex } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import { Link as RouterLink } from 'react-router-dom';
@@ -148,6 +148,7 @@ export const AddressDetailPage = memo(() => {
               </DropdownWrapper>
               {/*<Report address={address} />*/}
             </div>
+            [{toHex(address)}]
           </HeadAddressLine>
         </Head>
         <Top>

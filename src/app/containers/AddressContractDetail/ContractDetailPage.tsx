@@ -32,6 +32,7 @@ import {
   isContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
+  toHex,
 } from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
@@ -253,6 +254,7 @@ export const ContractDetailPage = memo(() => {
                 </WarningInfoWrapper>
               ) : null}
             </div>
+            [{toHex(address)}]
           </HeadAddressLine>
         </Head>
         <Top key="top">

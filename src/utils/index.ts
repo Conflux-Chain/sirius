@@ -78,7 +78,9 @@ export const formatAddress = (
     return invalidAddressReturnValue;
   }
 };
-
+export const toHex = (address: string): string => {
+  return SDK.format.hexAddress(address);
+};
 export const getAddressInfo = (
   address: string,
 ): {
