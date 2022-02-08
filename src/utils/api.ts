@@ -591,25 +591,6 @@ export const fetchRecentDagBlock = async (opts = {}) => {
   return data;
 };
 
-const fetchClientVersion = async () => {
-  const version = await simplePostFetcher(
-    '/rpcv2', // cip-37
-    {
-      jsonrpc: '2.0',
-      id: '0',
-      method: 'cfx_clientVersion',
-      params: [],
-    },
-    false,
-  ).catch(() => {});
-  return version;
-};
-
-export const useClientVersion = () => {
-  const { data: version } = useSWR('client version', fetchClientVersion);
-  return version?.result;
-};
-
 export const useCfxBalance: useApi = params => {
   if (!Array.isArray(params)) {
     params = [params];
