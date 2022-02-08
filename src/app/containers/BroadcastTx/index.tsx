@@ -7,10 +7,10 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader';
 import imgWarning from 'images/warning.png';
 import { Card } from 'app/components/Card/Loadable';
-import { CFX } from 'utils/constants';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { sendRawTransaction } from 'utils/rpcRequest';
 
 export function BroadcastTx() {
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ export function BroadcastTx() {
     setLoading(true);
     setError('');
     try {
-      const txHash = await CFX.sendRawTransaction(value);
+      const txHash = await sendRawTransaction(value);
       setTxHash(txHash);
       setModalShow(true);
       trackEvent({

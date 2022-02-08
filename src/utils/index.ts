@@ -11,6 +11,7 @@ import {
   NETWORK_TYPES,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import pubsub from './pubsub';
 
 dayjs.extend(relativeTime);
 
@@ -878,3 +879,19 @@ export function padLeft(n, totalLength = 1) {
     return result;
   }
 }
+
+export const publishRequestError = (e, type = 'rpc') => {
+  if (type === 'rpc') {
+    const code = (e as ErrorEvent & { code: number }).code;
+    const desc = (e as ErrorEvent).message;
+    pubsub.publish('notify', {
+      type: 'request',
+      option: {
+        code: 30001,
+        detail: `${code ? code + ', ' : ''}${desc}`,
+      },
+    });
+  }
+
+  // others, tbd
+};
