@@ -1,6 +1,5 @@
 import { CFX } from 'utils/constants';
 import { POS_NULL_ADDRESS } from 'utils/constants';
-import { abi } from 'utils/contract/pos.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 
@@ -9,11 +8,7 @@ window.SDK = SDK;
 // @ts-ignore
 window.CFX = CFX;
 
-// @todo, should replace with SDK.pos.InternalContract('posRegister') after SDK release new version
-const posContract = CFX.Contract({
-  address: '0x0888000000000000000000000000000000000005',
-  abi,
-});
+const posContract = CFX.InternalContract('PoSRegister');
 
 const request = async (method, ...args) => {
   try {
