@@ -28,10 +28,11 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
+import { getClientVersion } from 'utils/rpcRequest';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
@@ -196,7 +197,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    CFX.getClientVersion().then(v => {
+    getClientVersion().then(v => {
       console.log('conflux-network-version:', v);
     });
   }, []);

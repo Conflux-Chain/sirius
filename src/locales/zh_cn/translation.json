@@ -898,6 +898,7 @@
     "errorOccurred": "发生错误",
     "error": {
       "title": "系统错误",
+      "detail": "详情",
       "description": {
         "10001": "参数错误",
         "10403": "PermissionsError",

@@ -7,7 +7,12 @@ import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
-import { fromDripToCfx, getTimeByBlockInterval, toThousands } from 'utils';
+import {
+  fromDripToCfx,
+  getTimeByBlockInterval,
+  toThousands,
+  publishRequestError,
+} from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
@@ -25,6 +30,11 @@ import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
 import { PoSAddressContainer } from 'app/components/AddressContainer';
+import {
+  getDepositList,
+  getAccumulateInterestRate,
+  getVoteList,
+} from 'utils/rpcRequest';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -91,9 +101,9 @@ export function AddressMetadata({ address, accountInfo }) {
             )
           ) {
             const proArr: any = [];
-            proArr.push(CFX.getDepositList(address));
-            proArr.push(CFX.getAccumulateInterestRate());
-            proArr.push(CFX.getVoteList(address));
+            proArr.push(getDepositList(address));
+            proArr.push(getAccumulateInterestRate());
+            proArr.push(getVoteList(address));
             proArr.push(governanceContract.getBlockNumber());
             Promise.all(proArr)
               .then(res => {
@@ -125,12 +135,9 @@ export function AddressMetadata({ address, accountInfo }) {
                   CFX.InternalContract('Staking')
                     .getLockedStakingBalance(address, currentBlockN)
                     .then(res => {
-                      console.log(888888, res);
                       setLockedCFX(res || 0);
                     })
-                    .catch(e => {
-                      console.error(e);
-                    });
+                    .catch(publishRequestError);
                 } else {
                   setCurrentVotingRights(0);
                 }

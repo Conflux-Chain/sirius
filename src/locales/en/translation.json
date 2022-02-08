@@ -899,6 +899,7 @@
     "errorOccurred": "Error occurred",
     "error": {
       "title": "System Error",
+      "detail": "Detail info",
       "description": {
         "10001": "ParameterError",
         "10403": "PermissionsError",

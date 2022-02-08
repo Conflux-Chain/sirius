@@ -2,6 +2,7 @@ import { CFX } from 'utils/constants';
 import { POS_NULL_ADDRESS } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
+import pubsub from 'utils/pubsub';
 
 // @ts-ignore
 window.SDK = SDK;
@@ -12,17 +13,18 @@ const posContract = CFX.InternalContract('PoSRegister');
 
 const request = async (method, ...args) => {
   try {
-    return await CFX.provider.call(method, ...args);
+    const [namespace, m] = method.split('_');
+    return await CFX[namespace][m](...args);
   } catch (e) {
-    // @todo, temp disabled notify, enable after PoS release on mainnet
-
-    // pubsub.publish('notify', {
-    //   type: 'request',
-    //   option: {
-    //     code: 30001,
-    //   },
-    // });
-
+    const code = (e as ErrorEvent & { code: number }).code;
+    const desc = (e as ErrorEvent).message;
+    pubsub.publish('notify', {
+      type: 'request',
+      option: {
+        code: 30001,
+        detail: `${code ? code + ', ' : ''}${desc}`,
+      },
+    });
     throw e;
   }
 };
@@ -62,7 +64,10 @@ export const getPosAccountInfo = async (
     }
 
     if (addr) {
-      const { address, blockNumber, status } = await CFX.pos.getAccount(addr);
+      const { address, blockNumber, status } = await request(
+        'pos_getAccount',
+        addr,
+      );
 
       return {
         address: address,
@@ -82,13 +87,6 @@ export const getPosAccountInfo = async (
     }
   } catch (e) {
     console.log('getPosAccountInfo: ', e);
-
-    // pubsub.publish('notify', {
-    //   type: 'request',
-    //   option: {
-    //     code: 30001,
-    //   },
-    // });
 
     return {
       address: null,
@@ -121,15 +119,6 @@ export const getPosStatus = async (): Promise<PoSStatusType> =>
       };
     })
     .catch(e => {
-      console.log('getPosStatus: ', e);
-
-      // pubsub.publish('notify', {
-      //   type: 'request',
-      //   option: {
-      //     code: 30001,
-      //   },
-      // });
-
       return {
         epoch: null,
         latestCommitted: null,
@@ -141,21 +130,13 @@ export const getPosStatus = async (): Promise<PoSStatusType> =>
 type ConfirmationRiskByHashType = string | null;
 export const getConfirmationRiskByHash = async (
   hash: string,
-): Promise<ConfirmationRiskByHashType> =>
-  request('cfx_getConfirmationRiskByHash', hash)
+): Promise<ConfirmationRiskByHashType> => {
+  return request('cfx_getConfirmationRiskByHash', hash)
     .then(data => data)
     .catch(e => {
-      console.log('getConfirmationRiskByHash: ', e);
-
-      // pubsub.publish('notify', {
-      //   type: 'request',
-      //   option: {
-      //     code: 30001,
-      //   },
-      // });
-
       return null;
     });
+};
 
 interface PoSBlockType {
   epoch: number | null;
@@ -172,29 +153,16 @@ interface PoSBlockType {
 }
 export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
   try {
-    // {
-    //   epoch: data.epoch,
-    //   blockHeight: data.height,
-    //   timestamp: data.timestamp, // uint is microsecond
-    //   miner: data.miner,
-    //   hash: data.hash, // pos hash
-    //   status: '', // 调用 pos_getStatus 获取 latestCommitted，和 pos block height 做比较，如果 pos block height 小于这个值是 committed，大于是 voted
-    //   powBlockHash: '', // 是 data.pivotDecision.blockHash
-    // };
-
-    const blockInfo = await CFX.pos.getBlockByHash(hash);
+    const blockInfo = await request('pos_getBlockByHash', hash);
 
     if (lodash.isNil(blockInfo)) {
       throw new Error(`no block info of ${hash}`);
     }
 
-    const batcher = CFX.BatchRequest();
-    batcher.add(CFX.pos.getStatus.request());
-
-    const [status] = await batcher.execute();
+    const status = await request('pos_getStatus');
 
     if (!lodash.isNil(status.code)) {
-      throw new Error(status);
+      throw new Error('no status info');
     }
 
     return {
@@ -205,18 +173,11 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
       timestamp: Number((blockInfo.timestamp / 1000).toFixed()), // blockInfo.timestamp uint is microsecond
       powBlockHash: blockInfo.pivotDecision.blockHash,
       status:
-        blockInfo.height <= status.latestCommitted ? 'committed' : 'voted',
+        blockInfo.height <= status.latestCommitted ? 'committed' : 'voted', // 调用 pos_getStatus 获取 latestCommitted，和 pos block height 做比较，如果 pos block height 小于这个值是 committed，大于是 voted
       signatures: blockInfo.signatures || [],
     };
   } catch (e) {
     console.log('getBlockByHash error: ', e);
-
-    // pubsub.publish('notify', {
-    //   type: 'request',
-    //   option: {
-    //     code: 30001,
-    //   },
-    // });
 
     return {
       epoch: null,
@@ -250,22 +211,12 @@ interface PoSCommitteeType {
 }
 export const getCommittee = async (
   blickNumber: number | string,
-): Promise<PoSCommitteeType> =>
-  CFX.pos
-    .getCommittee(blickNumber)
+): Promise<PoSCommitteeType> => {
+  return request('pos_getCommittee', blickNumber)
     .then(data => {
       return data;
     })
     .catch(e => {
-      console.log('getCommittee: ', e);
-
-      // pubsub.publish('notify', {
-      //   type: 'request',
-      //   option: {
-      //     code: 30001,
-      //   },
-      // });
-
       return {
         currentCommittee: {
           epochNumber: null,
@@ -276,6 +227,7 @@ export const getCommittee = async (
         elections: [],
       };
     });
+};
 
 interface PoSTransactionType {
   blockHash: string | null;
@@ -291,8 +243,7 @@ interface PoSTransactionType {
 export const getTransactionByNumber = async (
   number: number | string,
 ): Promise<PoSTransactionType> => {
-  return CFX.pos
-    .getTransactionByNumber(number)
+  return request('pos_getTransactionByNumber', number)
     .then(data => {
       return {
         ...data,
@@ -300,15 +251,6 @@ export const getTransactionByNumber = async (
       };
     })
     .catch(e => {
-      console.log('getTransactionByNumber: ', e);
-
-      // pubsub.publish('notify', {
-      //   type: 'request',
-      //   option: {
-      //     code: 30001,
-      //   },
-      // });
-
       return {
         blockHash: null,
         blockNumber: null,
@@ -325,3 +267,77 @@ export const getTransactionByNumber = async (
       };
     });
 };
+
+export const getClientVersion = async () => {
+  try {
+    return request('cfx_clientVersion');
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getBalance = async (...args) => {
+  try {
+    return request('cfx_getBalance', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getDepositList = async (...args) => {
+  try {
+    return request('cfx_getDepositList', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getAccumulateInterestRate = async (...args) => {
+  try {
+    return request('cfx_getAccumulateInterestRate', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getVoteList = async (...args) => {
+  try {
+    return request('cfx_getVoteList', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getCode = async (...args) => {
+  try {
+    return request('cfx_getCode', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const sendRawTransaction = async (...args) => {
+  try {
+    return request('cfx_sendRawTransaction', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getSponsorInfo = async (...args) => {
+  try {
+    return request('cfx_getSponsorInfo', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getAccountPendingTransactions = async (...args) => {
+  try {
+    return request('cfx_getAccountPendingTransactions', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
+export default request;
