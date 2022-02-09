@@ -1,8 +1,7 @@
-import { CFX } from 'utils/constants';
-import { POS_NULL_ADDRESS } from 'utils/constants';
+import { CFX, POS_NULL_ADDRESS } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
-import pubsub from 'utils/pubsub';
+import { publishRequestError } from './index';
 
 // @ts-ignore
 window.SDK = SDK;
@@ -16,15 +15,7 @@ const request = async (method, ...args) => {
     const [namespace, m] = method.split('_');
     return await CFX[namespace][m](...args);
   } catch (e) {
-    const code = (e as ErrorEvent & { code: number }).code;
-    const desc = (e as ErrorEvent).message;
-    pubsub.publish('notify', {
-      type: 'request',
-      option: {
-        code: 30001,
-        detail: `${code ? code + ', ' : ''}${desc}`,
-      },
-    });
+    publishRequestError(e as Error, 'rpc');
     throw e;
   }
 };
