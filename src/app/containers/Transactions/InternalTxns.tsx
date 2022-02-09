@@ -8,7 +8,6 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils';
 import styled from 'styled-components/macro';
-import pubsub from 'utils/pubsub';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
@@ -56,7 +55,6 @@ export const InternalTxns = ({ address, from, to }: Props) => {
     error: null,
     loading: false,
   });
-  const url = `/rpc/trace_transaction?address=${address}`;
 
   useEffect(() => {
     if (address) {
@@ -90,18 +88,10 @@ export const InternalTxns = ({ address, from, to }: Props) => {
             ...state,
             error: e,
           });
-
-          pubsub.publish('notify', {
-            type: 'request',
-            option: {
-              code: '30001', // rpc call error
-              message: e.message,
-            },
-          });
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [address]);
 
   const columnsWidth = [3, 4, 4, 2, 4];
   const columns = [
