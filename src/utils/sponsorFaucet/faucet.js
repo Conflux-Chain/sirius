@@ -136,7 +136,7 @@ class Faucet {
         };
       }
     } catch (e) {
-      publishRequestError(e);
+      publishRequestError(e, 'rpc');
       return {
         flag: false,
         message: 'RPC ERROR:' + e.toString(),
@@ -375,7 +375,7 @@ class Faucet {
       return r;
     } catch (e) {
       r.isAppliable = { flag: false, message: 'RPC ERROR:' + e.toString() };
-      publishRequestError(e);
+      publishRequestError(e, 'rpc');
       return r;
     }
   }

@@ -46,13 +46,11 @@ export function GlobalNotify() {
 
           if (type === 'request') {
             icon = <XCircleFill color="#e15c56" />;
-            title = option.title || t(translations.general.error.title);
+            title = t(translations.general.error.title);
             content = (
               <div>
                 <div>
                   {t(translations.general.error.description[option.code]) ||
-                    option.title ||
-                    option.message ||
                     t(translations.general.error.description[20000])}
                 </div>
                 {option.detail && (

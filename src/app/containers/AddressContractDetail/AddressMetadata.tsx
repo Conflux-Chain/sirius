@@ -137,7 +137,7 @@ export function AddressMetadata({ address, accountInfo }) {
                     .then(res => {
                       setLockedCFX(res || 0);
                     })
-                    .catch(publishRequestError);
+                    .catch(e => publishRequestError(e, 'rpc'));
                 } else {
                   setCurrentVotingRights(0);
                 }

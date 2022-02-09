@@ -885,18 +885,23 @@ export function padLeft(n, totalLength = 1) {
   }
 }
 
-export const publishRequestError = (e, type = 'rpc') => {
-  if (type === 'rpc') {
-    const code = (e as ErrorEvent & { code: number }).code;
-    const desc = (e as ErrorEvent).message;
-    pubsub.publish('notify', {
-      type: 'request',
-      option: {
-        code: 30001,
-        detail: `${code ? code + ', ' : ''}${desc}`,
-      },
-    });
-  }
+interface ErrorInfoType {
+  code?: number;
+  message?: string;
+}
 
-  // others, tbd
+export const publishRequestError = (
+  info: (Error & ErrorInfoType) | ErrorInfoType,
+  type?: 'rpc' | 'http' | 'wallet',
+) => {
+  const code = info.code;
+  const desc = info.message;
+  pubsub.publish('notify', {
+    type: 'request',
+    option: {
+      code: type === 'rpc' ? 30001 : code,
+      message: info.message,
+      detail: `${code ? code + ', ' : ''}${desc}`,
+    },
+  });
 };
