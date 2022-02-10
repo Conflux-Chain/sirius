@@ -119,7 +119,9 @@ export function Block() {
         <title>{t(translations.block.title)}</title>
         <meta name="description" content={t(translations.block.description)} />
       </Helmet>
-      <PageHeader>{t(translations.block.title)}</PageHeader>
+      <PageHeader subtitle={hash + ' @ ' + epochNumber}>
+        {t(translations.block.title)}
+      </PageHeader>
       <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );
