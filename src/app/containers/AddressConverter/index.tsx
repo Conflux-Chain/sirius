@@ -23,7 +23,8 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
-import { CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { getCode } from 'utils/rpcRequest';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -68,7 +69,7 @@ export function AddressConverter() {
         }
         resolve('');
       } else if (address.startsWith('0x8')) {
-        CFX.getCode(address)
+        getCode(address)
           .then(code => {
             resolve('');
           })

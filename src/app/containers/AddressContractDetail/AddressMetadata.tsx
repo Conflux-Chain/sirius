@@ -7,7 +7,11 @@ import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
 import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
-import { fromDripToCfx, getTimeByBlockInterval } from 'utils';
+import {
+  fromDripToCfx,
+  getTimeByBlockInterval,
+  publishRequestError,
+} from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from '../../../images/contract-address/viewmore.png';
@@ -21,6 +25,11 @@ import {
 } from '../../../utils/contract/staking.json';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { Link } from '../../components/Link/Loadable';
+import {
+  getDepositList,
+  getAccumulateInterestRate,
+  getVoteList,
+} from 'utils/rpcRequest';
 
 // https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
 function getCurrentStakingEarned(list, rate, stakedCfx) {
@@ -67,9 +76,9 @@ export function AddressMetadata({ address, accountInfo }) {
     // TODO batch
     if (accountInfo.address) {
       const proArr: any = [];
-      proArr.push(CFX.getDepositList(address));
-      proArr.push(CFX.getAccumulateInterestRate());
-      proArr.push(CFX.getVoteList(address));
+      proArr.push(getDepositList(address));
+      proArr.push(getAccumulateInterestRate());
+      proArr.push(getVoteList(address));
       proArr.push(governanceContract.getBlockNumber());
       Promise.all(proArr)
         .then(res => {
@@ -103,9 +112,7 @@ export function AddressMetadata({ address, accountInfo }) {
               .then(res => {
                 setLockedCFX(res || 0);
               })
-              .catch(e => {
-                console.error(e);
-              });
+              .catch(e => publishRequestError(e, 'rpc'));
           } else {
             setCurrentVotingRights(0);
           }

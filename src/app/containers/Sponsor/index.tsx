@@ -22,7 +22,6 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import {
   TXN_ACTION,
   RPC_SERVER,
-  CFX,
   CONTRACTS,
   NETWORK_TYPE,
 } from 'utils/constants';
@@ -30,6 +29,7 @@ import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqTokenList } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
+import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 
 interface RouteParams {
   contractAddress: string;
@@ -109,7 +109,7 @@ export function Sponsor() {
   }, []);
 
   const getSponsorFromSDK = address => {
-    CFX.getSponsorInfo(address).then(
+    rpcGetSponsorInfo(address).then(
       resp => {
         const sponsorGasBound = resp.sponsorGasBound.toString();
         const sponsorForGas = formatAddress(resp.sponsorForGas);
@@ -130,7 +130,7 @@ export function Sponsor() {
     setLoading(true);
     // cip-37 compatible
     const address = formatAddress(_address);
-    const sponsorInfo = await CFX.provider.call('cfx_getSponsorInfo', address);
+    const sponsorInfo = await rpcGetSponsorInfo(address);
 
     const { flag } = await fetchIsAppliable(address);
 

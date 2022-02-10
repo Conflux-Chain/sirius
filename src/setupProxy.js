@@ -18,7 +18,8 @@ if (process.env.REACT_APP_TestNet === 'true') {
   rpcv2 = `${testnet}/rpcv2`;
   confluxDag = `${testnet}`;
 } else if (process.env.REACT_APP_PrivateNet === 'true') {
-  const url = 'https://net8888cfx.confluxscan.net/';
+  // const url = 'https://testnet.confluxscan.net/';
+  const url = 'https://testnet-scantest.confluxnetwork.org/';
   stat = `${url}/`;
   v1 = `${url}/`;
   rpc = `${url}/rpc`;

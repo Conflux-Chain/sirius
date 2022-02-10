@@ -1,6 +1,6 @@
 import { PromiseType } from 'react-use/lib/util';
-import pubsub from 'utils/pubsub';
 import { appendApiPrefix } from './api';
+import { publishRequestError } from './index';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -17,29 +17,18 @@ const windowFetch = window.fetch;
 const TIMEOUT_TIMESTAMP = 60000;
 
 // 只有在此列表内的后端错误需要 Notification 提示，其他的会在业务代码里处理
-const BACKEND_ERROR_CODE_BLACKLIST = [
-  10001,
-  10403,
-  10501,
-  10503,
-  40414,
-  40400,
-  40404,
-  50404,
-  50600,
-  50601,
-];
-
-// 异常消息发布
-const notify = ({ code, message }: NotifyType) => {
-  pubsub.publish('notify', {
-    type: 'request',
-    option: {
-      code,
-      message,
-    },
-  });
-};
+// const BACKEND_ERROR_CODE_BLACKLIST = [
+//   10001,
+//   10403,
+//   10501,
+//   10503,
+//   40414,
+//   40400,
+//   40404,
+//   50404,
+//   50600,
+//   50601,
+// ];
 
 // 检查 http status
 const checkStatus = response => {
@@ -49,10 +38,10 @@ const checkStatus = response => {
   ) {
     return response;
   } else {
-    notify({
-      code: response.status,
-      message: response.statusText,
-    });
+    publishRequestError(
+      { code: response.status, message: response.statusText },
+      'http',
+    );
     const error: Partial<ErrorEvent> & {
       response?: ResponseType;
     } = new Error(response.statusText);
@@ -76,13 +65,11 @@ const parseJSON = async function (response) {
       return { data: response, response };
     }
   } catch (error) {
-    if (error.name === 'AbortError') {
+    if ((error as any).name === 'AbortError') {
       return { data: response, response };
     }
-    notify({
-      code: 20001,
-    });
-    error.response = response;
+    publishRequestError({ code: 20001 }, 'http');
+    (error as any).response = response;
     throw error;
   }
 };
@@ -94,12 +81,10 @@ const checkResponse = ({ data, response }) => {
   } else if (response.status === 600) {
     const code = Number(data?.code);
     // 只过滤黑名单中的，其他的错误透传到业务代码中处理
-    if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
-      notify({
-        code: code,
-        message: data.message,
-      });
-    }
+    // if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
+    //   publishRequestError({ code: code, message: data.message }, 'http');
+    // }
+    publishRequestError({ code: code, message: data.message }, 'http');
     const error: Partial<ErrorEvent> & {
       response?: ResponseType;
     } = new Error(data.message);
@@ -112,9 +97,7 @@ const checkResponse = ({ data, response }) => {
 const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
   return new Promise((resolve, reject) => {
     var timeout = setTimeout(() => {
-      notify({
-        code: 20002,
-      });
+      publishRequestError({ code: 20002 }, 'http');
       reject(new Error('fetch timeout'));
     }, timestamp || TIMEOUT_TIMESTAMP);
     windowFetch(url, opts)
@@ -133,9 +116,7 @@ const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
 const fetchWithAbort = (url, opts) => {
   return new Promise((resolve, reject) => {
     const abortPromise = () => {
-      notify({
-        code: 20003,
-      });
+      publishRequestError({ code: 20003 }, 'http');
       reject(new Error('fetch abort'));
     };
     const p: FetchWithAbortType = fetchWithTimeout(url, opts).then(
@@ -158,9 +139,7 @@ const fetch = (url, opts = {}) => {
       // although this usually means permission issues or similar — a 404 does not constitute a network error, for example.
       // For detail: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
       if (error.name === 'TypeError') {
-        notify({
-          code: 20004,
-        });
+        publishRequestError({ code: 20004 }, 'http');
       }
       throw error;
     });

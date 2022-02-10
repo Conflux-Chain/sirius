@@ -18,6 +18,7 @@ import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { getBalance } from 'utils/rpcRequest';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -232,7 +233,7 @@ export function Swap() {
           setWcfx(data.toString());
         });
 
-        CFX.getBalance(accounts[0]).then(balance => {
+        getBalance(accounts[0]).then(balance => {
           setCfx(balance.toString());
         });
       }, 2000);
