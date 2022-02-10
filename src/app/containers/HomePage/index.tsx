@@ -105,8 +105,8 @@ export function HomePage() {
   );
 }
 
+// max-width: 1368px;
 const Main = styled.div`
-  max-width: 1368px;
   display: flex;
   flex-direction: column;
   align-items: center;
