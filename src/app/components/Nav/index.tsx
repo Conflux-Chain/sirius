@@ -224,7 +224,7 @@ const Container = styled.div`
   margin: 1.5rem auto 0;
   position: relative;
   width: 100%;
-  max-width: 1368px;
+  max-width: 1568px;
 
   &.secondary {
     margin-top: 1.125rem;
