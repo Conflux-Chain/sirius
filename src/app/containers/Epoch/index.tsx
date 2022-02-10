@@ -18,11 +18,12 @@ export const Epoch = () => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = `/block?minEpochNumber=${number}&maxEpochNumber=${number}`;
 
-  const columnsWidth = [2, 4, 2, 4, 3, 4, 4];
+  const columnsWidth = [2, 4, 2, 4, 3, 3, 4, 4];
   const columns = [
     blockColunms.position,
     blockColunms.hashWithPivot,
     blockColunms.txns,
+    blockColunms.executedTransactionCount,
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,

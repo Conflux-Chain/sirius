@@ -1,5 +1,9 @@
 import React from 'react';
-import { tokenColunms, transactionColunms } from 'utils/tableColumns';
+import {
+  blockColunms,
+  tokenColunms,
+  transactionColunms,
+} from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer, TxnSwitcher } from './components';
@@ -15,8 +19,9 @@ export const ExcutedTxns = ({ address }: Props) => {
   const url = `/transaction?accountAddress=${address}`;
   const isAccount = isAccountAddress(address);
 
-  const columnsWidth = [4, 3, 7, 6, 2, 3, 3, 3, 5];
+  const columnsWidth = [3, 4, 3, 7, 6, 2, 3, 3, 3, 5];
   const columns = [
+    blockColunms.epoch,
     transactionColunms.hash,
     transactionColunms.method,
     {

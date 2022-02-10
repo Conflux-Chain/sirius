@@ -42,6 +42,14 @@ export const txns = {
   render: formatNumber,
 };
 
+export const executedTransactionCount = {
+  title: '执行交易',
+  dataIndex: 'executedTransactionCount',
+  key: 'executedTransactionCount',
+  width: 1,
+  render: formatNumber,
+};
+
 export const hashWithPivot = {
   title: (
     <Translation>{t => t(translations.general.table.block.hash)}</Translation>

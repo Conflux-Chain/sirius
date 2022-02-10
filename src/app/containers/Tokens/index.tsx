@@ -26,12 +26,19 @@ export function Tokens() {
   const { tokenType = CFX_TOKEN_TYPES.erc20 } = useParams<RouteParams>();
   const { orderBy } = queryString.parse(location.search);
 
-  let columnsWidth = [1, 7, 4, 3, 3, 3, 2, 4];
+  // ERC20
+  let columnsWidth = [1, 2, 7, 4, 2, 3, 3, 2, 4];
   let columns = [
     {
       ...utils.number,
       render(value, row, index) {
         return utils.number.render(value, row, index, 3);
+      },
+    },
+    {
+      ...utils.number,
+      render(value, row, index) {
+        return row.hex40id;
       },
     },
     tokenColunms.token,
@@ -79,14 +86,26 @@ export function Tokens() {
     tokenType === CFX_TOKEN_TYPES.erc721 ||
     tokenType === CFX_TOKEN_TYPES.crc721
   ) {
-    columnsWidth = [1, 7, 5, 3, 3, 4];
+    columnsWidth = [1, 2, 7, 4, 2, 2, 2, 4];
     columns = [
       utils.number,
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.hex40id;
+        },
+      },
       tokenColunms.token,
       tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,
+      },
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.totalSupply;
+        },
       },
       {
         ...tokenColunms.holders,
@@ -112,14 +131,28 @@ export function Tokens() {
     tokenType === CFX_TOKEN_TYPES.erc1155 ||
     tokenType === CFX_TOKEN_TYPES.crc1155
   ) {
-    columnsWidth = [1, 5, 4, 2, 2, 3];
+    columnsWidth = [0.5, 1.5, 5, 3, 1, 1, 2, 3];
     columns = [
       utils.number,
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.hex40id;
+        },
+      },
       tokenColunms.token,
       tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,
+      },
+      {
+        ...utils.number,
+        // title: 'totalSupply',
+        title: <span>N</span>,
+        render(v, row, i) {
+          return row.totalSupply;
+        },
       },
       {
         ...tokenColunms.holders,

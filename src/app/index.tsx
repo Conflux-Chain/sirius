@@ -585,7 +585,7 @@ export function App() {
 const Main = styled.div`
   box-sizing: border-box;
   position: relative;
-  max-width: 1368px;
+  max-width: 1568px;
   margin: 0 auto;
   padding-top: 106px;
   padding-bottom: 20px;

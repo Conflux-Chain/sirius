@@ -12,6 +12,7 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Detail } from './Detail';
 
 import { InternalTxns } from 'app/containers/Transactions/Loadable';
+import { CopyButton } from '../../components/CopyButton/Loadable';
 
 export function Transaction() {
   const { t } = useTranslation();
@@ -66,7 +67,12 @@ export function Transaction() {
           content={t(translations.transaction.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.transaction.title)}</PageHeader>
+      <PageHeader>
+        {t(translations.transaction.title)}
+        <StyledHash>
+          <span>{hash}</span> <CopyButton copyText={hash} />
+        </StyledHash>
+      </PageHeader>
       <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );
@@ -79,7 +85,11 @@ Transaction.defaultProps = {
   cfxTransferAllCount: 0,
   eventLogCount: 0,
 };
-
+const StyledHash = styled.span`
+  font-size: 14px;
+  front-weight: 40;
+  margin-left: 6px;
+`;
 const StyledPageWrapper = styled.div`
   margin-bottom: 2.2857rem;
 `;
