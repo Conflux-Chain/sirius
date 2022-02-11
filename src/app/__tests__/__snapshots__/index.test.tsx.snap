@@ -332,10 +332,10 @@ exports[`<App /> should render and match the snapshot 1`] = `
                 name="description"
               />
             </Helmet>
-            <React.Fragment>
+            <withRouter(_ScrollToTop)>
               <UNDEFINED />
               <ForwardRef(app__Main)>
-                <withRouter(_ScrollToTop)>
+                <React.Fragment>
                   <Switch>
                     <Route
                       component={[Function]}
@@ -559,7 +559,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
                       component={[Function]}
                     />
                   </Switch>
-                </withRouter(_ScrollToTop)>
+                </React.Fragment>
               </ForwardRef(app__Main)>
               <Unknown />
               <UNDEFINED />
@@ -567,7 +567,7 @@ exports[`<App /> should render and match the snapshot 1`] = `
               <GlobalTip
                 tipKey="addressWarning"
               />
-            </React.Fragment>
+            </withRouter(_ScrollToTop)>
             <GlobalNotify />
           </CfxProvider>
         </BrowserRouter>
