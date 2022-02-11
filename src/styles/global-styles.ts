@@ -1,8 +1,27 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from './media';
-import { sansSerifFont, monospaceFont } from './variable';
+import {
+  sansSerifFont,
+  monospaceFont,
+  blue0,
+  blue1,
+  blue2,
+  gray0,
+  gray1,
+  gray2,
+} from './variable';
 
 export const GlobalStyle = createGlobalStyle`
+
+  body {
+    --theme-color-blue0: ${blue0};
+    --theme-color-blue1: ${blue1};
+    --theme-color-blue2: ${blue2};
+    --theme-color-gray0: ${gray0};
+    --theme-color-gray1: ${gray1};
+    --theme-color-gray2: ${gray2};
+  }
+
   html,
   body {
     font-size: 14px;
@@ -45,7 +64,7 @@ export const GlobalStyle = createGlobalStyle`
   #root {
     min-height: 100%;
     min-width: 100%;
-    background-color: #f5f6fa;
+    background-color: var(--theme-color-gray0);
   }
 
   .qrcode-modal.wrapper {
@@ -280,7 +299,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-btn.ant-btn-primary {
-    background: #1E3DE4;
+    background-color: var(--theme-color-blue0);
     color: #ffffff;
 
     &:hover {
@@ -326,7 +345,7 @@ export const GlobalStyle = createGlobalStyle`
 
     .option.selected {
       color: #fff;
-      background-color: #65709a;
+      background-color: var(--theme-color-blue0);
       border: none;
     }
 

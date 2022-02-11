@@ -58,7 +58,7 @@ const Left = styled.div`
 `;
 const Wrapper = styled.footer`
   box-sizing: border-box;
-  background-color: #e0e3f2;
+  background-color: var(--theme-color-blue1);
   width: 100vw;
   max-width: 100%; // fix horizontal scroll
   display: flex;
