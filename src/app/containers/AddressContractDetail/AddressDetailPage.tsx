@@ -154,7 +154,7 @@ export const MenuWrapper = styled(Menu)`
     }
 
     &:hover {
-      background-color: #65709a;
+      background-color: var(--theme-color-blue0);
 
       a {
         color: #fff;

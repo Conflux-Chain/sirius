@@ -8,7 +8,6 @@ import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { TextLogo } from 'app/components/TextLogo';
 import { Search } from './Search';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
@@ -17,7 +16,6 @@ import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
-import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
 import { useToggle } from 'react-use';
@@ -25,6 +23,9 @@ import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork, gotoNetwork } from 'utils';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
+
+import logo from 'images/logo.svg';
+import logoTest from 'images/logo-test.svg';
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -609,9 +610,8 @@ export const Header = memo(() => {
         <img
           className="confi-logo"
           alt="conflux scan logo"
-          src={imgConfiPlanet}
+          src={NETWORK_TYPE === NETWORK_TYPES.testnet ? logoTest : logo}
         />
-        <TextLogo />
       </RouterLink>
     </LogoWrapper>
   );
@@ -651,8 +651,7 @@ export const Header = memo(() => {
 
 const LogoWrapper = styled.div`
   .confi-logo {
-    margin-right: 0.57rem;
-    width: 3.3571rem;
+    height: 2rem;
   }
 
   a.link {

@@ -63,13 +63,13 @@ export function Language() {
 const StyledWrapper = styled.span`
   position: relative;
   display: inline-flex;
-  color: #000000;
+  color: var(--theme-color-gray0);
 
   &:hover {
-    color: #0f23bd;
+    color: var(--theme-color-blue0);
 
     .select.sirius-select.btnSelectContainer .value .option {
-      color: #0f23bd !important;
+      color: var(--theme-color-blue0) !important;
     }
   }
 
@@ -82,7 +82,7 @@ const StyledWrapper = styled.span`
     .value .option {
       font-weight: normal;
       &:not(:hover) {
-        color: #000000;
+        color: var(--theme-color-gray0);
       }
     }
   }
