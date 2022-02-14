@@ -139,7 +139,7 @@ export function Sponsor() {
       const { data } = await faucet.apply(address);
       setTxData(data);
     }
-    const faucetParams = await faucet.getFaucetParams(address);
+    const faucetParams: any = await faucet.getFaucetParams(address);
     const amountAccumulated = await faucet.getAmountAccumulated(address);
     getSponsorFromSDK(address);
     if (sponsorInfo && faucetParams && amountAccumulated) {
