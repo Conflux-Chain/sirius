@@ -67,6 +67,7 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
+  width: 100%;
 
   ${media.s} {
     height: calc(100% - 116px);

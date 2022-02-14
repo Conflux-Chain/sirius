@@ -2,11 +2,10 @@ import { useEffect, useState, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { getPosStatus, getConfirmationRiskByHash } from 'utils/rpcRequest';
 
-const RISK_DIVIDED = new BigNumber(2).pow(256).minus(1);
 const EPS = new BigNumber(1e-6);
 
 export function transferRisk(riskStr) {
-  const riskNum = new BigNumber(riskStr, 16).dividedBy(RISK_DIVIDED);
+  const riskNum = new BigNumber(riskStr);
 
   if (riskNum.isNaN()) {
     return '';
