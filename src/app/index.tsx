@@ -112,9 +112,24 @@ export function App() {
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
+
     useEffect(() => {
+      // theme switch by change body classname, reflect to css variable defination
+      // const classList = document.body.classList;
+      // let prev = 'pow';
+      // let next = 'pos';
+      // if (pathname === '/') {
+      //   prev = 'pos';
+      //   next = 'pow';
+      // }
+      // if (classList.contains(prev)) {
+      //   classList.replace(prev, next);
+      // } else {
+      //   classList.add(next);
+      // }
       window.scrollTo(0, 0);
     }, [pathname]);
+
     return props.children;
   }
 
@@ -278,10 +293,10 @@ export function App() {
                     <Loading></Loading>
                   </StyledMaskWrapper>
                 ) : (
-                  <>
+                  <ScrollToTop>
                     <Header />
                     <Main key={lang}>
-                      <ScrollToTop>
+                      <>
                         <Switch>
                           <Route exact path="/" component={HomePage} />
                           <Route
@@ -565,13 +580,13 @@ export function App() {
                           <Route exact path="/fccfx" component={FCCFX} />
                           <Route component={NotFoundPage} />
                         </Switch>
-                      </ScrollToTop>
+                      </>
                     </Main>
                     <Footer />
                     <GlobalStyle />
                     <CookieTip />
                     <GlobalTip tipKey="addressWarning" />
-                  </>
+                  </ScrollToTop>
                 )}
                 <GlobalNotify />
               </CfxProvider>

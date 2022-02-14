@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
-import { CFX } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { getConfirmationRiskByHash } from 'utils/rpcRequest';
 
-const RISK_DIVIDED = new BigNumber(2).pow(256).minus(1);
 const EPS = new BigNumber(1e-6);
 
 export function transferRisk(riskStr) {
-  const riskNum = new BigNumber(riskStr, 16).dividedBy(RISK_DIVIDED);
+  const riskNum = new BigNumber(riskStr);
 
   if (riskNum.isNaN()) {
     return '';
@@ -33,8 +32,7 @@ export const useConfirmRisk = (blockHash: string) => {
 
   const getRisk = () => {
     if (blockHash) {
-      CFX.provider
-        .call('cfx_getConfirmationRiskByHash', SDK.format.blockHash(blockHash))
+      getConfirmationRiskByHash(SDK.format.blockHash(blockHash))
         .then(data => {
           // retry if no risk info
           if (!data) {
