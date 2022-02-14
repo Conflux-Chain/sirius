@@ -45,6 +45,7 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
+  width: 100%;
 `;
 
 // img
