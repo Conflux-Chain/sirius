@@ -742,7 +742,9 @@ export const Detail = () => {
                 <Security blockHash={blockHash}></Security>
                 <StyledEpochConfirmationsWrapper>
                   {t(translations.transaction.epochConfirmations, {
-                    count: confirmedEpochCount || '--',
+                    count: _.isNil(confirmedEpochCount)
+                      ? '--'
+                      : confirmedEpochCount,
                   })}
                   {partLoading ? (
                     <Spinner

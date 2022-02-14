@@ -20,6 +20,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   background: #f5f6fa;
+  width: 100%;
 }
 
 .c1 {
