@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
-import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import {
   fromDripToCfx,
@@ -36,20 +35,6 @@ import {
   getVoteList,
 } from 'utils/rpcRequest';
 
-// https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
-function getCurrentStakingEarned(list, rate, stakedCfx) {
-  if (list.length === 0) return 0;
-  let earned = 0;
-  list.forEach(item => {
-    earned =
-      earned +
-      (Number(item.amount) * Number(rate)) /
-        Number(item.accumulatedInterestRate);
-  });
-  earned = new BigNumber(earned).minus(stakedCfx).toNumber();
-  return earned;
-}
-
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
   bytecode: stakingBytecode,
@@ -60,7 +45,6 @@ export function AddressMetadata({ address, accountInfo }) {
   const { t } = useTranslation();
   const loading = accountInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
-  const [earned, setEarned] = useState(0);
   const [voteList, setVoteList] = useState<any>([]);
   const [lockedCFX, setLockedCFX] = useState<number | null>(null);
   const [currentVotingRights, setCurrentVotingRights] = useState<number | null>(
@@ -93,67 +77,56 @@ export function AddressMetadata({ address, accountInfo }) {
           getPosAccountInfo(address, 'pow')
             .then(data => data && setPosAccountInfo(data))
             .finally(() => setPosLoading(false));
-        } else {
-          if (
-            accountInfo.address &&
-            [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-              NETWORK_TYPE,
-            )
-          ) {
-            const proArr: any = [];
-            proArr.push(getDepositList(address));
-            proArr.push(getAccumulateInterestRate());
-            proArr.push(getVoteList(address));
-            proArr.push(governanceContract.getBlockNumber());
-            Promise.all(proArr)
-              .then(res => {
-                const depositList = res[0];
-                const rate = res[1];
-                const currentBlockN: any = res[3] || 0;
-                setCurrentBlockNumber(currentBlockN.toString());
-                const currentStakingEarned = getCurrentStakingEarned(
-                  depositList,
-                  rate,
-                  new BigNumber(accountInfo.stakingBalance).toFixed(),
-                );
-                setEarned(currentStakingEarned);
-                setVoteList(res[2]);
-                // @ts-ignore
-                if (res[2] && res[2].length > 0) {
-                  //get current voting power
-                  stakingContract
-                    .getVotePower(address, currentBlockN)
-                    .then(res => {
-                      const votePower = res;
-                      setCurrentVotingRights(votePower);
-                    })
-                    .catch(e => {
-                      console.error(e);
-                    });
-
-                  // get locked CFX
-                  CFX.InternalContract('Staking')
-                    .getLockedStakingBalance(address, currentBlockN)
-                    .then(res => {
-                      setLockedCFX(res || 0);
-                    })
-                    .catch(e => publishRequestError(e, 'rpc'));
-                } else {
-                  setCurrentVotingRights(0);
-                }
-              })
-              .catch(e => {
-                console.error(e);
-                setEarned(0);
-                setVoteList([]);
-                setCurrentVotingRights(0);
-              });
-          }
         }
       })
       .catch(e => {
         console.error('get pos homepage summary info error: ', e);
       });
+
+    if (
+      accountInfo.address &&
+      [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)
+    ) {
+      const proArr: any = [];
+      proArr.push(getDepositList(address));
+      proArr.push(getAccumulateInterestRate());
+      proArr.push(getVoteList(address));
+      proArr.push(governanceContract.getBlockNumber());
+      Promise.all(proArr)
+        .then(res => {
+          const currentBlockN: any = res[3] || 0;
+          setCurrentBlockNumber(currentBlockN.toString());
+          setVoteList(res[2]);
+          // @ts-ignore
+          if (res[2] && res[2].length > 0) {
+            //get current voting power
+            stakingContract
+              .getVotePower(address, currentBlockN)
+              .then(res => {
+                const votePower = res;
+                setCurrentVotingRights(votePower);
+              })
+              .catch(e => {
+                console.error(e);
+              });
+
+            // get locked CFX
+            CFX.InternalContract('Staking')
+              .getLockedStakingBalance(address, currentBlockN)
+              .then(res => {
+                setLockedCFX(res || 0);
+              })
+              .catch(e => publishRequestError(e, 'rpc'));
+          } else {
+            setCurrentVotingRights(0);
+          }
+        })
+        .catch(e => {
+          console.error(e);
+          setVoteList([]);
+          setCurrentVotingRights(0);
+        });
+    }
   }, [address, accountInfo, governanceContract]);
 
   const posMetadata = () => {
@@ -283,18 +256,14 @@ export function AddressMetadata({ address, accountInfo }) {
                 >
                   <CenterLine>
                     <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : (
-                        <Text
-                          hoverValue={`${fromDripToCfx(
-                            accountInfo.stakingBalance || 0,
-                            true,
-                          )} CFX`}
-                        >
-                          {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
-                        </Text>
-                      )}
+                      <Text
+                        hoverValue={`${fromDripToCfx(
+                          accountInfo.stakingBalance || 0,
+                          true,
+                        )} CFX`}
+                      >
+                        {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
+                      </Text>
                     </Content>
                   </CenterLine>
                 </SkeletonContainer>
@@ -337,9 +306,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 >
                   <CenterLine>
                     <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : voteList && voteList.length > 0 ? (
+                      {voteList && voteList.length > 0 ? (
                         <>
                           <Text
                             hoverValue={`${fromDripToCfx(
@@ -377,41 +344,6 @@ export function AddressMetadata({ address, accountInfo }) {
             {
               title: (
                 <Text
-                  hoverValue={t(translations.toolTip.address.stakingEarned)}
-                >
-                  {t(translations.addressDetail.stakingEarned)}
-                </Text>
-              ),
-              children: (
-                <SkeletonContainer
-                  shown={checkPosLoading || loading}
-                  style={skeletonStyle}
-                >
-                  <CenterLine>
-                    <Content>
-                      {isPoSActived ? (
-                        '--'
-                      ) : (
-                        <>
-                          <Text
-                            hoverValue={`${fromDripToCfx(
-                              earned || 0,
-                              true,
-                            )} CFX`}
-                          >
-                            {fromDripToCfx(earned || 0)} CFX
-                          </Text>
-                          &nbsp;&nbsp;{t(translations.addressDetail.apy)}
-                        </>
-                      )}
-                    </Content>
-                  </CenterLine>
-                </SkeletonContainer>
-              ),
-            },
-            {
-              title: (
-                <Text
                   hoverValue={t(
                     translations.toolTip.address.currentVotingRights,
                   )}
@@ -426,7 +358,7 @@ export function AddressMetadata({ address, accountInfo }) {
                 >
                   <CenterLine>
                     <Content>
-                      {isPoSActived || lodash.isNil(currentVotingRights) ? (
+                      {lodash.isNil(currentVotingRights) ? (
                         '--'
                       ) : (
                         <Text
