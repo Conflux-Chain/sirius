@@ -137,7 +137,7 @@ export function Result({ radioValue, resultVisible, formData }) {
   );
 }
 
-const ResultWrap = styled.div`
+const ResultWrap = styled.div<{ visible: string }>`
   font-family: 'Circular Std', 'PingFang SC', -apple-system, BlinkMacSystemFont,
     'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
