@@ -12,6 +12,7 @@ import {
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
+import lodash from 'lodash';
 
 dayjs.extend(relativeTime);
 
@@ -883,20 +884,29 @@ export function padLeft(n, totalLength = 1) {
 interface ErrorInfoType {
   code?: number;
   message?: string;
+  data?: string;
 }
 
 export const publishRequestError = (
-  info: (Error & ErrorInfoType) | ErrorInfoType,
-  type?: 'rpc' | 'http' | 'wallet',
+  e: (Error & ErrorInfoType) | ErrorInfoType,
+  type: 'rpc' | 'http' | 'wallet',
 ) => {
-  const code = info.code;
-  const desc = info.message;
+  let detail = '';
+
+  if (e.code && e.message) {
+    detail = `${e.code}, ${e.message}`;
+
+    if (type === 'rpc' && !lodash.isNil(e.data)) {
+      detail += `, ${e.data}`;
+    }
+  }
+
   pubsub.publish('notify', {
     type: 'request',
     option: {
-      code: type === 'rpc' ? 30001 : code,
-      message: info.message,
-      detail: `${code ? code + ', ' : ''}${desc}`,
+      code: type === 'rpc' ? 30001 : e.code || 20000, // code is used for title, 20000 means unknown issue
+      message: e.message,
+      detail: detail,
     },
   });
 };
