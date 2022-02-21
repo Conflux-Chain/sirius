@@ -818,41 +818,30 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   return network;
 };
 
-// @todo, add private chain domain
-export const gotoNetwork = (networkId: string): void => {
-  if (IS_PRE_RELEASE) {
-    // only for confluxscan pre release env
-    if (networkId === '1') {
-      window.location.assign('//testnet-scantest.confluxnetwork.org');
-    } else if (networkId === '1029') {
-      window.location.assign('//scantest.confluxnetwork.org');
-    } else if (networkId === 'evmspacetestnet') {
-      window.open('https://evmtestnet.confluxscan.net/');
-    }
+const urls = {
+  stage: {
+    1: '//testnet-scantest.confluxnetwork.org',
+    1029: '//scantest.confluxnetwork.org',
+    71: '//evmtestnet-stage.confluxscan.net',
+    1030: '//evm-stage.confluxscan.net',
+  },
+  online: {
+    1: '//testnet.confluxscan',
+    1029: '//confluxscan',
+    71: '//evmtestnet.confluxscan',
+    1030: '//evm.confluxscan',
+  },
+};
+
+export const gotoNetwork = (networkId: string | number): void => {
+  if (!IS_PRE_RELEASE) {
+    window.location.assign(urls.stage[networkId]);
   } else {
-    const hostname = window.location.hostname;
-    let newHostname = '';
-    if (networkId === '1') {
-      if (hostname.includes('.io')) {
-        newHostname = '//testnet.confluxscan.io';
-      } else {
-        newHostname = '//testnet.confluxscan.net';
-      }
-      window.location.assign(newHostname);
-    } else if (networkId === '1029') {
-      if (hostname.includes('.io')) {
-        newHostname = '//confluxscan.io';
-      } else {
-        newHostname = '//confluxscan.net';
-      }
-      window.location.assign(newHostname);
-    } else if (networkId === 'evmspacetestnet') {
-      if (hostname.includes('.io')) {
-        window.open('https://evmtestnet.confluxscan.io/');
-      } else {
-        window.open('https://evmtestnet.confluxscan.net/');
-      }
-    }
+    window.location.assign(
+      `${urls.online[networkId]}${
+        window.location.hostname.includes('.io') ? '.io' : '.net'
+      }`,
+    );
   }
 };
 
