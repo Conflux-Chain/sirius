@@ -519,44 +519,30 @@ export const Header = memo(() => {
       // switch network
       name: 'switch-network',
       title: getNetwork(networks, networkId).name,
-      children: networks
-        .map(n => {
-          const isMatch = n.id === networkId;
+      children: networks.map(n => {
+        const isMatch = n.id === networkId;
 
-          return {
-            title: [n.name, isMatch && <Check size={18} key="check" />],
-            onClick: () => {
-              trackEvent({
-                category: ScanEvent.preference.category,
-                action: ScanEvent.preference.action.changeNet,
-                label: n.name,
-              });
+        return {
+          title: [n.name, isMatch && <Check size={18} key="check" />],
+          onClick: () => {
+            trackEvent({
+              category: ScanEvent.preference.category,
+              action: ScanEvent.preference.action.changeNet,
+              label: n.name,
+            });
 
-              menuClick();
+            menuClick();
 
-              setGlobalData({
-                ...globalData,
-                networkId: n.id,
-              });
+            setGlobalData({
+              ...globalData,
+              networkId: n.id,
+            });
 
-              if (n.id === 1) {
-                gotoNetwork('1');
-              } else if (n.id === 1029) {
-                gotoNetwork('1029');
-              } else {
-                // @todo, should jump to custom network hostname
-                // gotoNetwork('1029');
-              }
-            },
-            isMatchedFn: () => isMatch,
-          };
-        })
-        // TODO, temporary hardcode network config, after mainnet release, use /v1/frontend networks config to render evm space network item
-        .concat({
-          title: ['Conflux eSpace (Testnet)'],
-          isMatchedFn: () => false,
-          onClick: () => gotoNetwork('evmspacetestnet'),
-        }),
+            gotoNetwork(n.id);
+          },
+          isMatchedFn: () => isMatch,
+        };
+      }),
     },
   ];
 
