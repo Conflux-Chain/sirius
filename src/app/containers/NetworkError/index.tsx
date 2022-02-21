@@ -23,7 +23,9 @@ export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const {
-    network = NETWORK_TYPE === NETWORK_TYPES.testnet ? 'Tethys' : 'Testnet',
+    network = NETWORK_TYPE === NETWORK_TYPES.testnet
+      ? 'Hydra'
+      : 'Core (Testnet)',
   } = useParams<RouteParams>();
 
   return (
