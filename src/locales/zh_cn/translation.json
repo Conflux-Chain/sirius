@@ -142,7 +142,7 @@
       "tupleArray": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）数组",
       "notSupport": "{{type}} 即将支持，敬请期待",
       "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
-      "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"
+      "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Hydra"
     },
     "tupleFormat": "元组类型：<code>{{type}}</code><br />参数名称：<code>{{params}}</code><br />元组参数数组：<code>{{paramsArray}}</code><br />元组参数对象：<code>{{paramsObject}}</code>",
     "tupleTips": "提示：可以参考 <code>元组参数数组</code> 或 <code>元组参数对象</code> 进行元组参数输入。<br />元组输入格式应为合法并符合参数顺序和格式的 <code>JSON 数组或对象</code>，例如：元组声明为 <code>{ uint num; string str; }</code>，则元组输入格式应为：<code>[1, \"text\"]</code> 或 <code>{ \"num\": 1, \"str\": \"text\" }</code>。<br />对于嵌套的元组，输入格式应为合法并符合参数顺序和格式的 <code>嵌套的 JSON 数组或对象</code>，例如：元组声明为 <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>，则元组 B 输入格式应为：<code>[1, [\"Tom\", 28]]</code> 或 <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>。",
@@ -184,8 +184,8 @@
       "required": "请输入",
       "min": "最小值为 0",
       "isNotAddress": "地址格式错误",
-      "isNotMainnet": "请输入 Conflux Tethys 地址",
-      "isNotTestnet": "请输入 Conflux Testnet 地址",
+      "isNotMainnet": "请输入 Conflux Hydra 地址",
+      "isNotTestnet": "请输入 Conflux Core (Testnet) 地址",
       "pleaseSelect": "请选择",
       "pleaseEnter": "请输入",
       "notMatch": "生成的字节码与存储在地址上的字节代码不匹配"
@@ -212,7 +212,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Hydra 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -357,8 +357,8 @@
     "report": "举报",
     "supportCenter": "帮助中心",
     "suggestionBox": "意见箱",
-    "testnet": "Conflux Testnet",
-    "oceanus": "Conflux Tethys",
+    "testnet": "Conflux Core (Testnet)",
+    "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
     "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币/合约名称标签",
     "addressConverter": "地址格式转换",
@@ -1088,7 +1088,7 @@
     "incorrectFormat": "地址格式不正确",
     "lowercase": "全小写地址",
     "checksum": "旧规则地址",
-    "newMainnetAddress": "Conflux Tethys 新地址 (二者皆可)",
+    "newMainnetAddress": "Conflux Hydra 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
     "notice": "注意，不能用任何钱包将 CFX 直接转至 BSC 的地址，需要通过 ",
@@ -1134,12 +1134,12 @@
   },
   "notice": {
     "mainnet": [
-      "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
+      "1. 当前网络为 Conflux 主网第三阶段 Conflux Hydra，Conflux-Rust 版本号：{{version}}。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
-      "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
+      "1. 当前网络为 Conflux Core (Testnet)，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
       "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
@@ -1218,7 +1218,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Hydra 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
@@ -1243,7 +1243,7 @@
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
       "versionNotice": "版本说明",
-      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
+      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Hydra。",
       "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
       "switchToScanNetwork": "请在 ConfluxPortal 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
@@ -1391,8 +1391,8 @@
       "descriptionRequired": "请输入至少 30 个字符的描述",
       "recaptchaRequired": "请进行 reCAPTCHA 验证",
       "txnHashInvalid": "交易哈希格式错误",
-      "isNotMainnet": "请输入 Conflux Tethys 地址",
-      "isNotTestnet": "请输入 Conflux Testnet 地址"
+      "isNotMainnet": "请输入 Conflux Hydra 地址",
+      "isNotTestnet": "请输入 Conflux Core (Testnet) 地址"
     },
     "status": {
       "success": "提交成功",

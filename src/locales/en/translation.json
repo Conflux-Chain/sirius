@@ -142,7 +142,7 @@
       "tupleArray": "Please enter a valid tuple (JSON array or object that conforms to the parameter order and format) array",
       "notSupport": "{{type}} support will be coming soon",
       "testnet": "Please switch network to Conflux Test Network in ConfluxPortal",
-      "mainnet": "Please switch network to Conflux Tethys in ConfluxPortal"
+      "mainnet": "Please switch network to Conflux Hydra in ConfluxPortal"
     },
     "tupleFormat": "Tuple type：<code>{{type}}</code><br />Parameter name：<code>{{params}}</code><br />Tuple parameter array：<code>{{paramsArray}}</code><br />Tuple parameter object：<code>{{paramsObject}}</code>",
     "tupleTips": "Remark: You can refer to <code>Tuple parameter array</code> or <code>Tuple parameter object</code> for tuple input.<br />Tuple input format should be a <code>JSON array or object</code> that is legal and conforms to the order and format of the parameters. For example, tuple is declared as <code>{ uint num; string str; }</code>, then the tuple input format should be: <code>[1, \"text\"]</code> or <code>{ \"num\": 1, \"str\": \"text\" }</code>. <br />For nested tuples, the input format should be <code>nested JSON array or object</code> that are legal and conform to the parameter order and format. For example, tuples declared as <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>, the tuple B input format should be: <code>[1, [\"Tom\", 28]]</code> or <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>.",
@@ -184,8 +184,8 @@
       "required": "Required",
       "min": "The minimum value is 0",
       "isNotAddress": "Invalid address format",
-      "isNotMainnet": "Please enter Conflux Tethys address",
-      "isNotTestnet": "Please enter Conflux Testnet address",
+      "isNotMainnet": "Please enter Conflux Hydra address",
+      "isNotTestnet": "Please enter Conflux Core (Testnet) address",
       "pleaseSelect": "Please Select",
       "pleaseEnter": "Please Enter",
       "notMatch": "The resulting bytecode does NOT match with the bytecode that is stored on the address"
@@ -212,7 +212,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Hydra zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Core (Testnet) zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
@@ -357,8 +357,8 @@
     "report": "Report",
     "supportCenter": "Support Center",
     "suggestionBox": "Suggestion Box",
-    "testnet": "Conflux Testnet",
-    "oceanus": "Conflux Tethys",
+    "testnet": "Conflux Core (Testnet)",
+    "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
     "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
@@ -1089,8 +1089,8 @@
     "incorrectFormat": "Invalid address format",
     "lowercase": "Address in lowercase",
     "checksum": "Old checksummed address",
-    "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
-    "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
+    "newMainnetAddress": "Conflux Hydra new address (both address types are valid)",
+    "newTestnetAddress": "Conflux Core (Testnet) new address (both address types are valid)",
     "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
     "notice": "Attention, CFX cannot be transferred directly to the BSC address with any wallet, and cross-chain transfers are required via ",
     "noticeLinkText": "Shuttleflow",
@@ -1135,7 +1135,7 @@
   },
   "notice": {
     "mainnet": [
-      "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",
+      "1. ConfluxScan is currently on the Mainnet Phase III - Hydra, Conflux-Rust version: {{version}}.",
       "2. ConfluxPortal will be upgraded to v0.6.0 between 11:00 - 13:00 (GMT+8) on March 9th, 2021. After this upgrade, Portal will be fully adapted to CIP-37",
       "3. The new address format is only a conversion of the old format. Users can still log into their Conflux wallet via private keys or secret phrases. User assets will not be affected."
     ],
@@ -1219,7 +1219,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Hydra zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Core (Testnet) zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
@@ -1244,7 +1244,7 @@
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
       "versionNotice": "Version Notice",
-      "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
+      "switchToMainnet": "Please switch the network to Conflux Hydra in ConfluxPortal.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
       "switchToScanNetwork": "Please switch the network to {{networkID}} in ConfluxPortal.",
       "cannotProcess": "Cannot Process",
@@ -1392,8 +1392,8 @@
       "descriptionRequired": "Please enter a discription of at least 30 characters",
       "recaptchaRequired": "Invalid captcha response",
       "txnHashInvalid": "Invalid txn hash format",
-      "isNotMainnet": "Please enter Conflux Tethys address",
-      "isNotTestnet": "Please enter Conflux Testnet address"
+      "isNotMainnet": "Please enter Conflux Hydra address",
+      "isNotTestnet": "Please enter Conflux Core (Testnet) address"
     },
     "status": {
       "success": "Submit Succeed",
