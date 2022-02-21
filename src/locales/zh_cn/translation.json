@@ -314,7 +314,8 @@
       "balance": "余额",
       "percentage": "百分比",
       "count": "交易数"
-    }
+    },
+    "downloadButtonText": "下载 CSV 文件"
   },
   "contracts": {
     "title": "内置合约",
