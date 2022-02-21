@@ -307,7 +307,8 @@
       "balance": "Balance",
       "percentage": "Percentage",
       "count": "Txn Count"
-    }
+    },
+    "downloadButtonText": "Download CSV file"
   },
   "contracts": {
     "title": "Internal Contracts",
