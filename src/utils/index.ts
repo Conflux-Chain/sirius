@@ -839,7 +839,7 @@ const urls = {
 };
 
 export const gotoNetwork = (networkId: string | number): void => {
-  if (!IS_PRE_RELEASE) {
+  if (IS_PRE_RELEASE) {
     window.location.assign(urls.stage[networkId]);
   } else {
     window.location.assign(
