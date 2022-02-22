@@ -103,13 +103,13 @@ export function Footer() {
   const portalLink = (
     <Link
       className="footer-link"
-      href="https://portal.confluxnetwork.org"
+      href="https://fluentwallet.com"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.confluxPortal,
+        action: ScanEvent.menu.action.fluentWallet,
       }}
     >
-      {t(translations.footer.confluxportal)}
+      {t(translations.footer.fluentwallet)}
     </Link>
   );
   const bountyLink = (

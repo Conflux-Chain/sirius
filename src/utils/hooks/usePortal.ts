@@ -5,7 +5,8 @@ import { useEffectOnce } from 'react-use';
 // alias for window
 const globalThis = window as any;
 
-const installed = globalThis?.conflux?.isConfluxPortal;
+const installed =
+  globalThis?.conflux?.isConfluxPortal || globalThis?.conflux?.isFluent;
 
 // chain id hook
 const useChainId = (outerChainId?) => {
