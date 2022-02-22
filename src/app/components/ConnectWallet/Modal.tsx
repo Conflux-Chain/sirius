@@ -83,7 +83,7 @@ export const Modal = ({
 
   let title: string = t(translations.connectWallet.modal.title);
   let portal: React.ReactNode = t(
-    translations.connectWallet.modal.confluxPortal,
+    translations.connectWallet.modal.fluentWallet,
   );
   let logo = (
     <img className="modal-portal-logo" src={iconLogo} alt="logo"></img>
@@ -92,7 +92,7 @@ export const Modal = ({
     <div className="modal-tip">
       <span>{t(translations.connectWallet.modal.newToConflux)}</span>
       <a
-        href="https://portal.confluxnetwork.org/"
+        href="https://fluentwallet.com/"
         target="_blank"
         className="modal-tip-link"
         rel="noopener noreferrer"
@@ -108,7 +108,7 @@ export const Modal = ({
       portal = (
         <>
           <span className="modal-portal-name">
-            {t(translations.connectWallet.modal.confluxPortal)}
+            {t(translations.connectWallet.modal.fluentWallet)}
           </span>
           {logo}
         </>
@@ -119,7 +119,7 @@ export const Modal = ({
         portal = (
           <>
             <span className="modal-portal-connected-title">
-              {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
+              {t(translations.connectWallet.modal.connectedWithFluentWallet)}
             </span>
             <span className="modal-portal-name">
               {accounts[0]}
@@ -174,12 +174,12 @@ export const Modal = ({
   } else {
     portal = (
       <a
-        href="https://portal.confluxnetwork.org/"
+        href="https://fluentwallet.com/"
         target="_blank"
         className="modal-portal-link"
         rel="noopener noreferrer"
       >
-        {t(translations.connectWallet.modal.installConfluxPortal)}
+        {t(translations.connectWallet.modal.installFluentWallet)}
       </a>
     );
   }

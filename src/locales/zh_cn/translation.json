@@ -141,8 +141,8 @@
       "tuple": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）",
       "tupleArray": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）数组",
       "notSupport": "{{type}} 即将支持，敬请期待",
-      "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
-      "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Hydra"
+      "testnet": "请在 Fluent Wallet 钱包中将网络切换至Conflux Test Network",
+      "mainnet": "请在 Fluent Wallet 钱包中将网络切换至Conflux Hydra"
     },
     "tupleFormat": "元组类型：<code>{{type}}</code><br />参数名称：<code>{{params}}</code><br />元组参数数组：<code>{{paramsArray}}</code><br />元组参数对象：<code>{{paramsObject}}</code>",
     "tupleTips": "提示：可以参考 <code>元组参数数组</code> 或 <code>元组参数对象</code> 进行元组参数输入。<br />元组输入格式应为合法并符合参数顺序和格式的 <code>JSON 数组或对象</code>，例如：元组声明为 <code>{ uint num; string str; }</code>，则元组输入格式应为：<code>[1, \"text\"]</code> 或 <code>{ \"num\": 1, \"str\": \"text\" }</code>。<br />对于嵌套的元组，输入格式应为合法并符合参数顺序和格式的 <code>嵌套的 JSON 数组或对象</code>，例如：元组声明为 <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>，则元组 B 输入格式应为：<code>[1, [\"Tom\", 28]]</code> 或 <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>。",
@@ -408,7 +408,7 @@
     "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
-    "confluxportal": "ConfluxPortal",
+    "fluentwallet": "Fluent Wallet",
     "confluxbounty": "ConfluxBounty",
     "copryRight": "© 2022 Conflux. All Rights Reserved.",
     "tool": "工具",
@@ -955,8 +955,8 @@
     "connectToApply": "申请",
     "notice": "说明",
     "noticeFirst": "1. 基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
-    "noticeSecond": "2. 申请前需要链接 ConfluxPortal。",
-    "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
+    "noticeSecond": "2. 申请前需要链接 Fluent Wallet。",
+    "noticeFourthOne": "3. 若您的浏览器中尚未安装 Fluent Wallet，请进入",
     "noticeFourthTwo": "下载。",
     "notice4": "4. 赞助申请详情信息请查看",
     "notice4link": "https://forum.conflux.fun/t/conflux-2021-11-11/12055",
@@ -1157,12 +1157,12 @@
   "notice": {
     "mainnet": [
       "1. 当前网络为 Conflux 主网第三阶段 Conflux Hydra，Conflux-Rust 版本号：{{version}}。",
-      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
+      "2. Fluent Wallet 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Fluent Wallet 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
       "1. 当前网络为 Conflux Core (Testnet)，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
+      "2. Fluent Wallet 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Fluent Wallet 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "link": "https://forum.conflux.fun/t/topic/5386",
@@ -1253,24 +1253,24 @@
     },
     "modal": {
       "title": "请连接您的钱包",
-      "installConfluxPortal": "安装 ConfluxPortal",
-      "confluxPortal": "ConfluxPortal",
+      "installFluentWallet": "安装 Fluent Wallet",
+      "fluentWallet": "Fluent Wallet",
       "initializing": "正在初始化...",
       "errorConnecting": "连接错误...",
       "tryAgain": "重试",
       "newToConflux": "Conflux 的新用户?",
       "learnMore": "进一步了解钱包。",
       "account": "账户",
-      "connectedWithConfluxPortal": "已连接 ConfluxPortal",
+      "connectedWithFluentWallet": "已连接 Fluent Wallet",
       "copyAddress": "复制地址",
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
       "versionNotice": "版本说明",
-      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Hydra。",
-      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
-      "switchToScanNetwork": "请在 ConfluxPortal 中将网络切换为 {{networkID}} 的网络",
+      "switchToMainnet": "请在 Fluent Wallet 中将网络切换至 Conflux Hydra。",
+      "switchToTestnet": "请在 Fluent Wallet 中将网络切换至 Conflux Test Network。",
+      "switchToScanNetwork": "请在 Fluent Wallet 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
-      "upgradeTipVersion": "请升级 ConfluxPortal 至最新版本。"
+      "upgradeTipVersion": "请升级 Fluent Wallet 至最新版本。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",
@@ -1302,7 +1302,7 @@
         "113": "提取本金 {{value}} CFX"
       }
     },
-    "tip": "请先连接 ConfluxPortal 钱包！"
+    "tip": "请先连接 Fluent Wallet 钱包！"
   },
   "statistics": {
     "statistics": "最佳统计",
