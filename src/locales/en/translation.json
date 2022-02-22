@@ -1255,6 +1255,7 @@
     "modal": {
       "title": "Connect to a wallet",
       "installFluentWallet": "Install Fluent Wallet",
+      "confluxportal": "ConfluxPortal",
       "fluentWallet": "Fluent Wallet",
       "initializing": "Initializing...",
       "errorConnecting": "Error connecting...",
