@@ -20,7 +20,7 @@ export const ScanEvent = {
       charts: 'charts',
       statistics: 'statistics',
       confluxNetwork: 'official_website',
-      confluxPortal: 'portal',
+      fluentWallet: 'portal',
       confluxBounty: 'bounty',
       addressConverter: 'address_converter',
       tools: 'tools',

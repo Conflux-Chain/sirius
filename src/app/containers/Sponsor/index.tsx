@@ -629,11 +629,11 @@ export function Sponsor() {
               {t(translations.sponsor.noticeFourthOne)}
               &nbsp;
               <a
-                href="https://portal.confluxnetwork.org/"
+                href="https://fluentwallet.com/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                https://portal.confluxnetwork.org/
+                https://fluentwallet.com/
               </a>
               &nbsp; {t(translations.sponsor.noticeFourthTwo)}
             </span>,
