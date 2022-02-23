@@ -9,9 +9,8 @@ import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
-import { ICON_DEFAULT_TOKEN } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN, FC_ADDRESS } from 'utils/constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
-import { formatAddress } from '../../../utils';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
@@ -74,9 +73,7 @@ export function TokenDetail() {
   //   }
   // }
 
-  const isFC =
-    formatAddress(tokenAddress) ===
-    'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2';
+  const isFC = tokenAddress === FC_ADDRESS;
 
   const menu = (
     <MenuWrapper>
@@ -136,7 +133,14 @@ export function TokenDetail() {
             })`}</div>
             {isFC ? (
               <div className="basic-link">
-                <Link href="https://fccfx.confluxscan.io/" target="_blank">
+                <Link
+                  href={
+                    localStorage.getItem('fccfx')
+                      ? '/fccfx'
+                      : 'https://fccfx.confluxscan.io/'
+                  }
+                  target="_blank"
+                >
                   {t(translations.token.fcMining)}
                 </Link>
               </div>

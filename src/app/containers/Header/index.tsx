@@ -174,10 +174,10 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: iszh
         ? NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://votetest.confluxnetwork.org/zh/'
+          ? 'https://testnet-governance.confluxnetwork.org/zh/'
           : 'https://governance.confluxnetwork.org/zh/'
         : NETWORK_TYPE === NETWORK_TYPES.testnet
-        ? 'https://votetest.confluxnetwork.org/en/'
+        ? 'https://testnet-governance.confluxnetwork.org/en/'
         : 'https://governance.confluxnetwork.org/en/',
     });
 
@@ -451,6 +451,67 @@ export const Header = memo(() => {
         },
       ],
     },
+    // pos
+    {
+      title: t(translations.header.pos.pos),
+      matched: location?.pathname?.startsWith('/pos'),
+      children: [
+        {
+          title: [
+            t(translations.header.pos.overview),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posOverview,
+          afterClick: menuClick,
+          href: '/pos',
+        },
+        {
+          title: [
+            t(translations.header.pos.blocks),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posBlocks,
+          afterClick: menuClick,
+          href: '/pos/blocks',
+        },
+        {
+          title: [
+            t(translations.header.pos.transactions),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posTransactions,
+          afterClick: menuClick,
+          href: '/pos/transactions',
+        },
+        {
+          title: [
+            t(translations.header.pos.accounts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posAccounts,
+          afterClick: menuClick,
+          href: '/pos/accounts',
+        },
+        {
+          title: [
+            t(translations.header.pos.committee),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posCommittee,
+          afterClick: menuClick,
+          href: '/pos/committees',
+        },
+        {
+          title: [
+            t(translations.header.pos.incomingRank),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.incomingRank,
+          afterClick: menuClick,
+          href: '/pos/incoming-rank',
+        },
+      ],
+    },
   ];
 
   const endLinks: HeaderLinks = [
@@ -458,44 +519,30 @@ export const Header = memo(() => {
       // switch network
       name: 'switch-network',
       title: getNetwork(networks, networkId).name,
-      children: networks
-        .map(n => {
-          const isMatch = n.id === networkId;
+      children: networks.map(n => {
+        const isMatch = n.id === networkId;
 
-          return {
-            title: [n.name, isMatch && <Check size={18} key="check" />],
-            onClick: () => {
-              trackEvent({
-                category: ScanEvent.preference.category,
-                action: ScanEvent.preference.action.changeNet,
-                label: n.name,
-              });
+        return {
+          title: [n.name, isMatch && <Check size={18} key="check" />],
+          onClick: () => {
+            trackEvent({
+              category: ScanEvent.preference.category,
+              action: ScanEvent.preference.action.changeNet,
+              label: n.name,
+            });
 
-              menuClick();
+            menuClick();
 
-              setGlobalData({
-                ...globalData,
-                networkId: n.id,
-              });
+            setGlobalData({
+              ...globalData,
+              networkId: n.id,
+            });
 
-              if (n.id === 1) {
-                gotoNetwork('1');
-              } else if (n.id === 1029) {
-                gotoNetwork('1029');
-              } else {
-                // @todo, should jump to custom network hostname
-                // gotoNetwork('1029');
-              }
-            },
-            isMatchedFn: () => isMatch,
-          };
-        })
-        // TODO, temporary hardcode network config, after mainnet release, use /v1/frontend networks config to render evm space network item
-        .concat({
-          title: ['Conflux eSpace (Testnet)'],
-          isMatchedFn: () => false,
-          onClick: () => gotoNetwork('evmspacetestnet'),
-        }),
+            gotoNetwork(n.id);
+          },
+          isMatchedFn: () => isMatch,
+        };
+      }),
     },
   ];
 

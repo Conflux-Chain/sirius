@@ -8,6 +8,7 @@ import down from './down.svg';
 import flat from './flat.svg';
 import { formatNumber } from 'utils';
 import { Tooltip } from '../Tooltip';
+import lodash from 'lodash';
 
 export const SmallChart = ({
   width = document.body.clientWidth,
@@ -24,7 +25,7 @@ export const SmallChart = ({
   height = Math.min(height, 124);
 
   if (!plot) {
-    return <>--</>; //<Container style={{ width, height }}></Container>;
+    return <>--</>;
   }
   const diff = firstlast && change(...firstlast);
   const trend = diff
@@ -35,52 +36,69 @@ export const SmallChart = ({
       : 'up'
     : null;
 
-  return plain ? (
-    <>
-      <div>
-        {firstlast &&
-          formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
-      </div>
-      <Draw
-        small={small}
-        setFirstLast={setFirstLast}
-        indicator={indicator}
-        plot={plot}
-        plain={true}
-        width={small ? width - 100 : width - 130}
-        height={Math.min(
-          small ? (width - 100) * 0.6 : (width - 130) * 0.45,
-          small ? height - 20 : height - 36,
-        )}
-      />
-    </>
-  ) : (
-    <Container style={{ width, height }} small={small}>
-      <Title>
-        <Tooltip text={t(`charts.${indicator}.description`)}>
-          {t(`charts.${indicator}.title`)}
-        </Tooltip>
-      </Title>
-      <Value small={small}>
-        {firstlast &&
-          formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
-      </Value>
-      <Change trend={trend}>{diff}</Change>
+  if (plain) {
+    let data;
 
-      <Draw
-        small={small}
-        setFirstLast={setFirstLast}
-        indicator={indicator}
-        plot={plot}
-        plain={false}
-        width={small ? width - 100 : width - 130}
-        height={Math.min(
-          small ? (width - 100) * 0.6 : (width - 130) * 0.45,
-          small ? height - 20 : height - 36,
-        )}
-      />
-    </Container>
-  );
+    try {
+      data = formatNumber(plot[plot.length - 1][indicator]);
+    } catch (e) {}
+
+    return lodash.isNil(data) ? (
+      <>--</>
+    ) : (
+      <div>{data + (indicator === 'blockTime' ? 's' : '')}</div>
+    );
+
+    // return (
+    //   <>
+    //     <div>
+    //       {firstlast &&
+    //         formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
+    //     </div>
+    //     {/* not use now, set to disabled */}
+    //     <Draw
+    //       small={small}
+    //       setFirstLast={setFirstLast}
+    //       indicator={indicator}
+    //       plot={plot}
+    //       plain={true}
+    //       width={small ? width - 100 : width - 130}
+    //       height={Math.min(
+    //         small ? (width - 100) * 0.6 : (width - 130) * 0.45,
+    //         small ? height - 20 : height - 36,
+    //       )}
+    //     />
+    //   </>
+    // );
+  } else {
+    return (
+      <Container style={{ width, height }} small={small}>
+        <Title>
+          <Tooltip text={t(`charts.${indicator}.description`)}>
+            {t(`charts.${indicator}.title`)}
+          </Tooltip>
+        </Title>
+        <Value small={small}>
+          {firstlast &&
+            formatNumber(firstlast[1]) + (indicator === 'blockTime' ? 's' : '')}
+        </Value>
+        <Change trend={trend}>{diff}</Change>
+
+        <Draw
+          small={small}
+          setFirstLast={setFirstLast}
+          indicator={indicator}
+          plot={plot}
+          plain={false}
+          width={small ? width - 100 : width - 130}
+          height={Math.min(
+            small ? (width - 100) * 0.6 : (width - 130) * 0.45,
+            small ? height - 20 : height - 36,
+          )}
+        />
+      </Container>
+    );
+  }
 };
 
 function Draw({

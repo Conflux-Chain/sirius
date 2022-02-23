@@ -75,6 +75,7 @@ export const TablePanel = ({
   hideShadow,
   className,
   sortKeyMap = {},
+  showSorterTooltip = false,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -155,8 +156,6 @@ export const TablePanel = ({
       limit: pageSize || '10',
     };
 
-    console.log('sorter: ', sorter, sorter.order);
-
     if (sorter) {
       query.orderBy = sortKeyMap[sorter.field] || sorter.field;
       query.reverse = sorter.order === 'ascend' ? 'false' : 'true';
@@ -169,7 +168,9 @@ export const TablePanel = ({
     history.push(url);
   };
 
-  const { data, loading, total, listLimit } = state;
+  const { data, loading, total: stateTotal, listLimit } = state;
+  const total =
+    dataSource && Array.isArray(dataSource) ? dataSource.length : stateTotal;
 
   return (
     <Table
@@ -182,6 +183,7 @@ export const TablePanel = ({
       columns={columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
+      showSorterTooltip={showSorterTooltip}
       pagination={
         typeof pagination === 'boolean'
           ? pagination

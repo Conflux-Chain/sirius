@@ -19,6 +19,7 @@ import { useCheckHook } from './useCheckHook';
 import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 import iconLogo from './assets/logo.png';
+import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
 import iconLoading from './assets/loading.svg';
 
@@ -81,18 +82,25 @@ export const Modal = ({
     login().finally(() => onClose());
   };
 
+  let walletText = t(translations.connectWallet.modal.confluxportal);
+  let walletLogo = iconLogo;
+
+  // @ts-ignore
+  if (window.conflux?.isFluent) {
+    walletText = t(translations.connectWallet.modal.fluentWallet);
+    walletLogo = iconFluent;
+  }
+
   let title: string = t(translations.connectWallet.modal.title);
-  let portal: React.ReactNode = t(
-    translations.connectWallet.modal.confluxPortal,
-  );
+  let portal: React.ReactNode = walletText;
   let logo = (
-    <img className="modal-portal-logo" src={iconLogo} alt="logo"></img>
+    <img className="modal-portal-logo" src={walletLogo} alt="logo"></img>
   );
   let tip: React.ReactNode = (
     <div className="modal-tip">
       <span>{t(translations.connectWallet.modal.newToConflux)}</span>
       <a
-        href="https://portal.confluxnetwork.org/"
+        href="https://fluentwallet.com/"
         target="_blank"
         className="modal-tip-link"
         rel="noopener noreferrer"
@@ -107,9 +115,7 @@ export const Modal = ({
     if (connected === 0) {
       portal = (
         <>
-          <span className="modal-portal-name">
-            {t(translations.connectWallet.modal.confluxPortal)}
-          </span>
+          <span className="modal-portal-name">{walletText}</span>
           {logo}
         </>
       );
@@ -119,7 +125,7 @@ export const Modal = ({
         portal = (
           <>
             <span className="modal-portal-connected-title">
-              {t(translations.connectWallet.modal.connectedWithConfluxPortal)}
+              {t(translations.connectWallet.modal.connectedWithFluentWallet)}
             </span>
             <span className="modal-portal-name">
               {accounts[0]}
@@ -174,12 +180,12 @@ export const Modal = ({
   } else {
     portal = (
       <a
-        href="https://portal.confluxnetwork.org/"
+        href="https://fluentwallet.com/"
         target="_blank"
         className="modal-portal-link"
         rel="noopener noreferrer"
       >
-        {t(translations.connectWallet.modal.installConfluxPortal)}
+        {t(translations.connectWallet.modal.installFluentWallet)}
       </a>
     );
   }

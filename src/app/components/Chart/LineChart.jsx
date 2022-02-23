@@ -27,7 +27,7 @@ const DURATIONS = [
   ['hour', '1H'],
   ['day', '1D'],
   ['month', '1M'],
-  ['all', 'ALL'],
+  // ['all', 'ALL'],
 ];
 
 const LIMIT_YEAR = 365;

@@ -13,34 +13,52 @@ import { DescriptionPanel } from './DescriptionPanel';
 import styled from 'styled-components/macro';
 import { reqBlockDetail } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';
+import { useHistory } from 'react-router-dom';
 
 import { Txns } from './Txns';
 import { ReferenceBlocks } from './ReferenceBlocks';
 
 export function Block() {
+  const history = useHistory();
   const bp = useBreakpoint();
   const { t } = useTranslation();
   const { hash } = useParams<{
     hash: string;
   }>();
-  const [{ transactionCount, refereeHashes }, setBlockDetail] = useState<any>({
+  const [blockDetail, setBlockDetail] = useState<any>({
     transactionCount: 0,
     refereeHashes: [],
+    initial: true, // identify for send request or not
   });
+  const [loading, setLoading] = useState(false);
+
+  const { transactionCount, refereeHashes } = blockDetail;
 
   useEffect(() => {
+    setLoading(true);
     reqBlockDetail({
       hash,
-    }).then(body => {
-      setBlockDetail(body);
-    });
+    })
+      .then(data => {
+        setBlockDetail(data);
+      })
+      .finally(() => setLoading(false));
   }, [hash]);
+
+  useEffect(() => {
+    if (!blockDetail.initial && !blockDetail.hash) {
+      history.push(`/notfound/${hash}`, {
+        type: 'block',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hash, blockDetail]);
 
   const tabs = [
     {
       value: 'overview',
       label: t(translations.block.overview),
-      content: <DescriptionPanel />,
+      content: <DescriptionPanel data={blockDetail} loading={loading} />,
     },
     {
       value: 'transactions',

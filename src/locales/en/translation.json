@@ -112,7 +112,7 @@
     "errorNotAdmin": "You are not the creator or admin of the contract, please disconnect and try again. ",
     "invalidIconSize": "Invalid icon size, please try again.",
     "errorTokenICon": "For the non-CRC20 contract, the token icon cannot be uploaded",
-    "beforeContractSubmitTip": "Before submitting, you need to connect to ConfluxPortal to prove that you are the admin or creator of the contract.",
+    "beforeContractSubmitTip": "Before submitting, you need to connect to Fluent Wallet to prove that you are the admin or creator of the contract.",
     "invalidJsonAbi": "Unable to parse the valid ABI in the JSON file, please try again.",
     "abiNotUploaded": "ABI not uploaded",
     "abiError": "ABI error",
@@ -141,8 +141,8 @@
       "tuple": "Please enter a valid tuple (JSON array or object that conforms to the parameter order and format)",
       "tupleArray": "Please enter a valid tuple (JSON array or object that conforms to the parameter order and format) array",
       "notSupport": "{{type}} support will be coming soon",
-      "testnet": "Please switch network to Conflux Test Network in ConfluxPortal",
-      "mainnet": "Please switch network to Conflux Tethys in ConfluxPortal"
+      "testnet": "Please switch network to Conflux Test Network in Fluent Wallet",
+      "mainnet": "Please switch network to Conflux Hydra in Fluent Wallet"
     },
     "tupleFormat": "Tuple type：<code>{{type}}</code><br />Parameter name：<code>{{params}}</code><br />Tuple parameter array：<code>{{paramsArray}}</code><br />Tuple parameter object：<code>{{paramsObject}}</code>",
     "tupleTips": "Remark: You can refer to <code>Tuple parameter array</code> or <code>Tuple parameter object</code> for tuple input.<br />Tuple input format should be a <code>JSON array or object</code> that is legal and conforms to the order and format of the parameters. For example, tuple is declared as <code>{ uint num; string str; }</code>, then the tuple input format should be: <code>[1, \"text\"]</code> or <code>{ \"num\": 1, \"str\": \"text\" }</code>. <br />For nested tuples, the input format should be <code>nested JSON array or object</code> that are legal and conform to the parameter order and format. For example, tuples declared as <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>, the tuple B input format should be: <code>[1, [\"Tom\", 28]]</code> or <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>.",
@@ -184,8 +184,8 @@
       "required": "Required",
       "min": "The minimum value is 0",
       "isNotAddress": "Invalid address format",
-      "isNotMainnet": "Please enter Conflux Tethys address",
-      "isNotTestnet": "Please enter Conflux Testnet address",
+      "isNotMainnet": "Please enter Conflux Hydra address",
+      "isNotTestnet": "Please enter Conflux Core (Testnet) address",
       "pleaseSelect": "Please Select",
       "pleaseEnter": "Please Enter",
       "notMatch": "The resulting bytecode does NOT match with the bytecode that is stored on the address"
@@ -212,7 +212,7 @@
   "contractDetail": {
     "title": "Contract Detail",
     "content": "Details of contract",
-    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+    "contractAdminWarning": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Hydra zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Core (Testnet) zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
     "at": "at",
     "txOnlyEn": "txn",
     "txOnlyZh": "",
@@ -235,7 +235,14 @@
     "lockedDetailUnlockTime": "Estimated Unlock Time",
     "currentVotingRights": "Current Voting Rights",
     "apy": "(APY 4%)",
-    "viewLockedDetails": "Click to view lock history"
+    "viewLockedDetails": "Click to view lock history",
+    "pos": {
+      "identifier": "PoS Address",
+      "totalStakedRights": "Total Staked Rights",
+      "totalInterests": "Total Interests",
+      "unlockRights": "Unlocked Rights",
+      "lockedRights": "Locked Rights"
+    }
   },
   "blocks": {
     "title": "Blocks",
@@ -307,7 +314,8 @@
       "balance": "Balance",
       "percentage": "Percentage",
       "count": "Txn Count"
-    }
+    },
+    "downloadButtonText": "Download CSV file"
   },
   "contracts": {
     "title": "Internal Contracts",
@@ -356,8 +364,8 @@
     "report": "Report",
     "supportCenter": "Support Center",
     "suggestionBox": "Suggestion Box",
-    "testnet": "Conflux Testnet",
-    "oceanus": "Conflux Tethys",
+    "testnet": "Conflux Core (Testnet)",
+    "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
     "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
@@ -369,6 +377,15 @@
       "tokens": "Tokens",
       "contracts": "Contracts",
       "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
+    },
+    "pos": {
+      "pos": "PoS",
+      "overview": "Overview",
+      "accounts": "Accounts",
+      "blocks": "Blocks",
+      "transactions": "Transactions",
+      "committee": "Committee",
+      "incomingRank": "Incoming Rank"
     }
   },
   "footer": {
@@ -391,7 +408,7 @@
     "cookieAgree": "Got it",
     "product": "Product",
     "confluxnetwork": "Conflux Network",
-    "confluxportal": "ConfluxPortal",
+    "fluentwallet": "Fluent Wallet",
     "confluxbounty": "ConfluxBounty",
     "copryRight": "© 2022 Conflux. All Rights Reserved.",
     "tool": "Tool",
@@ -658,6 +675,8 @@
     "viewAll": "View All",
     "viewAllBlocks": "View All Blocks",
     "viewAllTxns": "View All Transactions",
+    "viewAllPosAccounts": "View All Address",
+    "viewAllPosCommittees": "View All Committee",
     "back": "Back",
     "address": {
       "editContract": "Click to edit contract",
@@ -828,6 +847,7 @@
     "notAvailable": "Not Available",
     "security": {
       "notAvailable": "Not available",
+      "finalized": "Finalized",
       "high": "Great",
       "medium": "Good",
       "low": "Weak",
@@ -919,7 +939,9 @@
       "download": "Download ",
       "csvFile": "CSV file"
     },
-    "preview": "Preview"
+    "preview": "Preview",
+    "yes": "Yes",
+    "no": "No"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -934,8 +956,8 @@
     "connectToApply": "Apply",
     "notice": "Remark",
     "noticeFirst": "1. Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
-    "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to ConfluxPortal.",
-    "noticeFourthOne": "3. If you don't have ConfluxPortal as a browser extension installed yet, please visit",
+    "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to Fluent Wallet.",
+    "noticeFourthOne": "3. If you don't have Fluent Wallet as a browser extension installed yet, please visit",
     "noticeFourthTwo": "for instructions.",
     "notice4": "4. For more information on sponsorship application, please refer to ",
     "notice4link": "https://forum.conflux.fun/t/announcement-usage-adjustment-of-ecosystem-fund-for-the-conflux-sponsorship-mechanism-2022-11-11/12056",
@@ -1046,6 +1068,7 @@
     "security": "Security",
     "blame": "Blame Block Count",
     "blockHash": "Block Hash",
+    "posBlockHash": "PoS Block Hash",
     "parentHash": "Parent Hash",
     "nonce": "Nonce",
     "gasUsed": "Gas Used/Limit",
@@ -1088,8 +1111,8 @@
     "incorrectFormat": "Invalid address format",
     "lowercase": "Address in lowercase",
     "checksum": "Old checksummed address",
-    "newMainnetAddress": "Conflux Tethys new address (both address types are valid)",
-    "newTestnetAddress": "Conflux Testnet new address (both address types are valid)",
+    "newMainnetAddress": "Conflux Hydra new address (both address types are valid)",
+    "newTestnetAddress": "Conflux Core (Testnet) new address (both address types are valid)",
     "newCustomnetAddress": "Conflux new address with customized network-id (both address types are valid)",
     "notice": "Attention, CFX cannot be transferred directly to the BSC address with any wallet, and cross-chain transfers are required via ",
     "noticeLinkText": "Shuttleflow",
@@ -1134,13 +1157,13 @@
   },
   "notice": {
     "mainnet": [
-      "1. ConfluxScan is currently on the Mainnet Phase III - Tethys, Conflux-Rust version: {{version}}.",
-      "2. ConfluxPortal will be upgraded to v0.6.0 between 11:00 - 13:00 (GMT+8) on March 9th, 2021. After this upgrade, Portal will be fully adapted to CIP-37",
+      "1. ConfluxScan is currently on the Mainnet Phase III - Hydra, Conflux-Rust version: {{version}}.",
+      "2. Fluent Wallet will be upgraded to v0.6.0 between 11:00 - 13:00 (GMT+8) on March 9th, 2021. After this upgrade, Fluent Wallet will be fully adapted to CIP-37",
       "3. The new address format is only a conversion of the old format. Users can still log into their Conflux wallet via private keys or secret phrases. User assets will not be affected."
     ],
     "testnet": [
       "1. ConfluxScan is currently on the testnet network, Conflux-Rust version: {{version}}, all data shown are from the testnet.",
-      "2. ConfluxPortal will be upgraded to v0.6.0 between 11:00 - 13:00 (GMT+8) on March 9th, 2021. After this upgrade, Portal will be fully adapted to CIP-37",
+      "2. Fluent Wallet will be upgraded to v0.6.0 between 11:00 - 13:00 (GMT+8) on March 9th, 2021. After this upgrade, Fluent Wallet will be fully adapted to CIP-37",
       "3. The new address format is only a conversion of the old format. Users can still log into their Conflux wallet via private keys or secret phrases. User assets will not be affected."
     ],
     "link": "https://forum.conflux.fun/t/topic/5387",
@@ -1156,6 +1179,7 @@
       "security": "The security of block, higher security requires more block confirmations.",
       "blame": "The number of consecutive ancestor blocks whose state commitments are incorrect and need revision. The state commitments can be realized as digests of transaction execution receipts and account status. An incorrect state commitment may affect the miner's reward, but has nothing to do with the consensus of total order of all blocks.",
       "blockHash": "The hash of the block header of the current block.",
+      "posBlockHash": "The newest committed PoS block the miner saw.",
       "parentHash": "The hash of the block from which this block was generated, also known as its parent block.",
       "nonce": "Block nonce is a value used during mining to demonstrate proof of work for a block.",
       "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
@@ -1218,7 +1242,7 @@
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",
-      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Tethys zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Testnet zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
+      "contractAdmin": "The address which owns the contract administration authority. The admin is able to destroy the contract. (Hydra zero address: cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2; Core (Testnet) zero address: cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw)",
       "storageSponsor": "The sponsor address which pays storage collateral for transactions interacts with such a contract. ",
       "gasFeeSponsor": "The sponsor address which pays gas fee for transactions interacts with such a contract. "
     }
@@ -1230,24 +1254,25 @@
     },
     "modal": {
       "title": "Connect to a wallet",
-      "installConfluxPortal": "Install ConfluxPortal",
-      "confluxPortal": "ConfluxPortal",
+      "installFluentWallet": "Install Fluent Wallet",
+      "confluxportal": "ConfluxPortal",
+      "fluentWallet": "Fluent Wallet",
       "initializing": "Initializing...",
       "errorConnecting": "Error connecting...",
       "tryAgain": "Try again",
       "newToConflux": "New to Conflux?",
       "learnMore": "Learn more about wallets.",
       "account": "Account",
-      "connectedWithConfluxPortal": "Connected with ConfluxPortal",
+      "connectedWithFluentWallet": "Connected with Fluent Wallet",
       "copyAddress": "Copy address",
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
       "versionNotice": "Version Notice",
-      "switchToMainnet": "Please switch the network to Conflux Tethys in ConfluxPortal.",
-      "switchToTestnet": "Please switch the network to Conflux Test Network in ConfluxPortal.",
-      "switchToScanNetwork": "Please switch the network to {{networkID}} in ConfluxPortal.",
+      "switchToMainnet": "Please switch the network to Conflux Hydra in Fluent Wallet.",
+      "switchToTestnet": "Please switch the network to Conflux Test Network in Fluent Wallet.",
+      "switchToScanNetwork": "Please switch the network to {{networkID}} in Fluent Wallet.",
       "cannotProcess": "Cannot Process",
-      "upgradeTipVersion": "Please update ConfluxPortal to the latest version."
+      "upgradeTipVersion": "Please update Fluent Wallet to the latest version."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",
@@ -1279,7 +1304,7 @@
         "113": "Withdraw of principal {{value}} CFX"
       }
     },
-    "tip": "Please connect to ConfluxPortal first!"
+    "tip": "Please connect to Fluent Wallet first!"
   },
   "statistics": {
     "statistics": "Top Statistics",
@@ -1348,6 +1373,16 @@
       "account": "Accounts",
       "transactions": "Transactions",
       "contract": "Contracts"
+    },
+    "pos": {
+      "finalizedEpoch": "Finalized Epoch",
+      "currentBlockNumber": "Current Block Number",
+      "totalLocked": "Total Locked",
+      "totalInterest": "Historical Interest",
+      "lastInterestDistributionDate": "Interest Distribution Date",
+      "lastInterestDistributionEpoch": "Latest Interest Distribution Block",
+      "totalAccountCount": "Nodes",
+      "votingBlock": "Latest Voted Block"
     }
   },
   "swap": {
@@ -1391,8 +1426,8 @@
       "descriptionRequired": "Please enter a discription of at least 30 characters",
       "recaptchaRequired": "Invalid captcha response",
       "txnHashInvalid": "Invalid txn hash format",
-      "isNotMainnet": "Please enter Conflux Tethys address",
-      "isNotTestnet": "Please enter Conflux Testnet address"
+      "isNotMainnet": "Please enter Conflux Hydra address",
+      "isNotTestnet": "Please enter Conflux Core (Testnet) address"
     },
     "status": {
       "success": "Submit Succeed",
@@ -1434,40 +1469,198 @@
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
   },
   "pos": {
+    "common": {
+      "right": "right",
+      "posAddress": "Address",
+      "powAddress": "PoW Address",
+      "powBlockHash": "PoW Block Hash",
+      "posBlockHash": "Block Hash",
+      "txStatus": {
+        "Executed": "Succeed",
+        "Discard": "Discard",
+        "Failed": "Failed"
+      },
+      "txType": {
+        "BlockMetadata": "Block Metadata",
+        "Election": "Election",
+        "Retire": "Retire (reduction of individual voting rights)",
+        "Dispute": "Dispute",
+        "Register": "Register",
+        "Other": "Other",
+        "UpdateVotingPower": "Add Individual Voting Rights",
+        "PivotDecision": "Pivot Decision"
+      },
+      "txPayload": {
+        "vrfPublicKey": "VRF public key",
+        "publicKey": "Public key",
+        "targetTerm": "Committee epoch",
+        "vrfProof": "VRF proof",
+        "address": "PoS address",
+        "votingPower": "Number of votes added",
+        "height": "Block height of decision",
+        "blockHash": "Block hash of decision",
+        "blsPublicKey": "BLS public key",
+        "conflictingVotes": "Disputed voting info",
+        "conflictVoteType": "Dispute type",
+        "proposal": "Proposal",
+        "vote": "Vote",
+        "first": "First vote",
+        "second": "Second vote"
+      },
+      "committeeStatus": {
+        "electionInProgress": "Election in progress",
+        "electionCompleted": "Election completed",
+        "Ongoing": "Ongoing",
+        "termEnd": "Term end"
+      },
+      "votingStatus": {
+        "voted": "Voted",
+        "committed": "Confirmed"
+      }
+    },
     "accounts": {
-      "title": "PoS Account List",
-      "description": "PoS Account List",
-      "address": "PoS Address",
-      "availableVotes": "Available Votes",
+      "title": "Accounts",
+      "description": "Accounts",
+      "address": "Address",
+      "availableVotes": "Available Rights",
       "currentCommitteeMember": "Current Committee Member",
-      "votesInCommittee": "Votes in Committee",
+      "votesInCommittee": "Rights in Committee",
       "registerDate": "Register Date"
     },
     "account": {
-      "title": "PoS Account",
-      "description": "PoS Account",
+      "title": "Account",
+      "description": "Account",
       "overview": {
         "title": "Overview",
-        "posAddress": "PoS Address",
+        "posAddress": "Address",
+        "lockingRights": "Total Pending Locking Rights",
         "lockedRights": "Locked Rights",
-        "unlockRights": "Unlock Rights",
+        "unlockingRights": "Total Pending Unlocking Rights",
+        "unlockRights": "Unlocked Rights",
         "retiredRights": "Retired Rights",
-        "availableVotes": "Available Votes",
+        "availableVotes": "Total Rights",
         "currentCommitteeMember": "Current Committee Member",
-        "rightsInCommittee ": "Rights in Committee",
+        "rightsInCommittee": "Rights in Committee",
         "unlockedVotes": "Unlocked Votes",
         "totalIncoming": "Total Incoming",
-        "punishment": "Punishment"
+        "punishment": "Punishment",
+        "timestamp": "Register Date"
       },
-      "incominghistory": {
-        "title": "Incoming History"
+      "incomingHistory": {
+        "title": "Incoming History",
+        "powBlockHash": "PoW Block Hash",
+        "incoming": "Incoming",
+        "timstamp": "Timstamp"
       },
-      "votinghistory": {
-        "title": "Voting History"
+      "votingHistory": {
+        "title": "Voting History",
+        "blcokHeight": "Blcok Height",
+        "blockHash": "Block Hash",
+        "votes": "Votes",
+        "timestamp": "Timestamp"
       },
       "votingStatus": {
-        "title": "Voting Status"
+        "title": "Pending Rights Status",
+        "rights": "Rights",
+        "status": "Status",
+        "in": "Pending Locking",
+        "out": "Pending Unlocking",
+        "blockNumberDeadline": "Block Number Deadline"
       }
+    },
+    "blocks": {
+      "title": "Blocks",
+      "description": "Blocks",
+      "blockHeight": "Block Height",
+      "blockHash": "Block Hash",
+      "txn": "Txn",
+      "poSMinerAddress": "Miner Address",
+      "timestamp": "Timestamp"
+    },
+    "block": {
+      "title": "Block",
+      "description": "Block",
+      "overview": {
+        "title": "Overview",
+        "blockHash": "Block Hash",
+        "blockNumber": "Block Number",
+        "epoch": "Epoch",
+        "minerAddress": "PoS Miner Address",
+        "timestamp": "Timestamp",
+        "status": "Status",
+        "powBlockHash": "PoW Block Hash"
+      },
+      "transactions": {
+        "title": "Transaction"
+      },
+      "votingAddress": {
+        "title": "Voting Address",
+        "votingNumber": "Votes for Committee"
+      }
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Transactions",
+      "poSTxnHash": "Txn Hash",
+      "poSBlockHash": "Block Hash",
+      "status": "Status",
+      "succeed": "Succeed",
+      "failed": "Failed",
+      "discard": "Discard",
+      "type": "Type",
+      "election": "Election",
+      "retire": "Retire",
+      "committeeJoin": "Committee Join",
+      "register": "Register",
+      "pivotDecision": "Pivot Decision",
+      "dispute": "Dispute",
+      "blockMatadata": "Block Matadata",
+      "other": "Other",
+      "timstamp": "Timstamp"
+    },
+    "transaction": {
+      "title": "Transaction",
+      "description": "Transaction",
+      "overview": {
+        "title": "Overview",
+        "hash": "Txn Hash",
+        "status": "Status",
+        "type": "Type",
+        "timestamp": "Timestamp",
+        "number": "Txn Number",
+        "blockHash": "Block Hash",
+        "blockNumber": "Block Number",
+        "payload": "Playload"
+      }
+    },
+    "committees": {
+      "title": "Committee",
+      "description": "Committee",
+      "committeeEpoch": "Committee Epoch",
+      "status": "Status",
+      "numberOfMembers": "Number of Members",
+      "totalVotes": "Total Votes"
+    },
+    "committee": {
+      "title": "Committee",
+      "description": "Committee",
+      "overview": {
+        "title": "Overview",
+        "committeeEpoch": "Committee Epoch",
+        "status": "Status",
+        "totalVotes": "Total Votes",
+        "consensusVotes": "Consensus Votes"
+      },
+      "votesDistribution": {
+        "title": "Votes Distribution",
+        "votes": "Votes for Committee"
+      }
+    },
+    "incomingRank": {
+      "title": "Incoming Rank",
+      "description": "Incoming Rank",
+      "subTitle": "Top 100 PoS address by total incoming",
+      "totalIncoming": "Total Incoming"
     }
   }
 }

@@ -14,20 +14,27 @@ export default function usePlot(
   limit = 31,
   address = '',
 ) {
-  // 2592000
+  // @todo, more intelligent point config
+  // for now, interval value will fixed to several number from backend specific, not response to client width
+  // - 133 or 514, data granularity is min
+  // - 3200, data granularity is hour
+  // - others, data granularity is day
   const durations = {
     hour: [
-      `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      // `interval=${parseInt(3600 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      `interval=133&limit=${NUM_X_GRID}`,
       ['HH:mm'],
       ['MMM DD, YYYY HH:mm', 'YYYY-MM-DD HH:mm'],
     ],
     day: [
-      `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      // `interval=${parseInt(86400 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      `interval=3200&limit=${NUM_X_GRID}`,
       ['MMM DD\nHH:00', 'MM-DD\nHH:00'],
       ['MMM DD, YYYY HH:00', 'YYYY-MM-DD HH:00'],
     ],
     month: [
-      `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      // `interval=${parseInt(2592000 / NUM_X_GRID)}&limit=${NUM_X_GRID}`,
+      `limit=${NUM_X_GRID}`,
       ['MMM DD', 'MM-DD'],
       ['MMM DD, YYYY', 'YYYY-MM-DD'],
     ],

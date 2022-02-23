@@ -14,7 +14,7 @@ const DURATIONS = [
   ['hour', '1H'],
   ['day', '1D'],
   ['month', '1M'],
-  ['all', 'ALL'],
+  // ['all', 'ALL'],
 ];
 
 export const Chart = ({ width = 500, indicator = 'blockTime' }) => {

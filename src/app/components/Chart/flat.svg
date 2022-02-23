@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="12px" height="8px" viewBox="0 0 12 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="12px" height="8px" viewBox="0 0 12 8" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Nochange</title>
     <g id="Marketcap-statistic-homepage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="address/contract/internal-contract--Testnet" transform="translate(-418.000000, -90.000000)" fill="#74798C">
+        <g id="address/contract/internal-contract--Core (Testnet)" transform="translate(-418.000000, -90.000000)"
+            fill="#74798C">
             <g id="Nochange" transform="translate(418.000000, 90.000000)">
-                <path d="M4.8,3.3 C5.18659932,3.3 5.5,3.61340068 5.5,4 C5.5,4.38659932 5.18659932,4.7 4.8,4.7 L0.7,4.7 C0.313400675,4.7 -6.36775399e-17,4.38659932 0,4 C-4.73447626e-17,3.61340068 0.313400675,3.3 0.7,3.3 L4.8,3.3 Z M11.3,3.3 C11.6865993,3.3 12,3.61340068 12,4 C12,4.38659932 11.6865993,4.7 11.3,4.7 L7.2,4.7 C6.81340068,4.7 6.5,4.38659932 6.5,4 C6.5,3.61340068 6.81340068,3.3 7.2,3.3 L11.3,3.3 Z" id="No-change"></path>
+                <path
+                    d="M4.8,3.3 C5.18659932,3.3 5.5,3.61340068 5.5,4 C5.5,4.38659932 5.18659932,4.7 4.8,4.7 L0.7,4.7 C0.313400675,4.7 -6.36775399e-17,4.38659932 0,4 C-4.73447626e-17,3.61340068 0.313400675,3.3 0.7,3.3 L4.8,3.3 Z M11.3,3.3 C11.6865993,3.3 12,3.61340068 12,4 C12,4.38659932 11.6865993,4.7 11.3,4.7 L7.2,4.7 C6.81340068,4.7 6.5,4.38659932 6.5,4 C6.5,3.61340068 6.81340068,3.3 7.2,3.3 L11.3,3.3 Z"
+                    id="No-change"></path>
             </g>
         </g>
     </g>
