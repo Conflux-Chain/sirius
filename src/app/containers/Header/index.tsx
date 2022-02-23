@@ -174,10 +174,10 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: iszh
         ? NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://votetest.confluxnetwork.org/zh/'
+          ? 'https://testnet-governance.confluxnetwork.org/zh/'
           : 'https://governance.confluxnetwork.org/zh/'
         : NETWORK_TYPE === NETWORK_TYPES.testnet
-        ? 'https://votetest.confluxnetwork.org/en/'
+        ? 'https://testnet-governance.confluxnetwork.org/en/'
         : 'https://governance.confluxnetwork.org/en/',
     });
 
@@ -448,6 +448,67 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.support,
           plain: true,
           children: supportAndHelpMenuItems,
+        },
+      ],
+    },
+    // pos
+    {
+      title: t(translations.header.pos.pos),
+      matched: location?.pathname?.startsWith('/pos'),
+      children: [
+        {
+          title: [
+            t(translations.header.pos.overview),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posOverview,
+          afterClick: menuClick,
+          href: '/pos',
+        },
+        {
+          title: [
+            t(translations.header.pos.blocks),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posBlocks,
+          afterClick: menuClick,
+          href: '/pos/blocks',
+        },
+        {
+          title: [
+            t(translations.header.pos.transactions),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posTransactions,
+          afterClick: menuClick,
+          href: '/pos/transactions',
+        },
+        {
+          title: [
+            t(translations.header.pos.accounts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posAccounts,
+          afterClick: menuClick,
+          href: '/pos/accounts',
+        },
+        {
+          title: [
+            t(translations.header.pos.committee),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posCommittee,
+          afterClick: menuClick,
+          href: '/pos/committees',
+        },
+        {
+          title: [
+            t(translations.header.pos.incomingRank),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.incomingRank,
+          afterClick: menuClick,
+          href: '/pos/incoming-rank',
         },
       ],
     },

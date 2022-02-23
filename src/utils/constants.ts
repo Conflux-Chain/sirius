@@ -187,3 +187,30 @@ export const ICON_DEFAULT_TOKEN =
 
 export const POS_NULL_ADDRESS =
   '0000000000000000000000000000000000000000000000000000000000000000';
+
+// only deploy on testnet and mainnet
+enum FC_ADDRESSES {
+  mainnet = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2',
+  testnet = 'cfxtest:achteu1f777f1j1s8s4tvsx5vk5vcbrn4ykxa0fzg1',
+}
+export const FC_ADDRESS = IS_TESTNET
+  ? FC_ADDRESSES.testnet
+  : FC_ADDRESSES.mainnet;
+
+// only deploy on testnet and mainnet
+enum FC_EXCHANGE_ADDRESSES {
+  mainnet = 'cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m',
+  testnet = 'cfxtest:acf6wwargxpp9ddfe7rnagf2ty9gsxs54uptst589y',
+}
+export const FC_EXCHANGE_ADDRESS = IS_TESTNET
+  ? FC_EXCHANGE_ADDRESSES.testnet
+  : FC_EXCHANGE_ADDRESSES.mainnet;
+
+// only deploy on testnet and mainnet
+enum FC_EXCHANGE_INTEREST_ADDRESSES {
+  mainnet = '',
+  testnet = 'cfxtest:acadrvdd07u69hazg0nkjkpdetvyc5wma6put8949d',
+}
+export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
+  ? FC_EXCHANGE_INTEREST_ADDRESSES.testnet
+  : FC_EXCHANGE_INTEREST_ADDRESSES.mainnet;

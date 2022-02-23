@@ -5,11 +5,12 @@ export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
 
 export const sendRequest = config => {
-  const url = config.url.startsWith('/stat')
-    ? config.url
-    : `${v1Prefix}${
-        config.url.startsWith('/') ? config.url : '/' + config.url
-      }`;
+  const url =
+    config.url.startsWith('/stat') || config.url.startsWith('http')
+      ? config.url
+      : `${v1Prefix}${
+          config.url.startsWith('/') ? config.url : '/' + config.url
+        }`;
   return fetch(qs.stringifyUrl({ url: url, query: config.query }), {
     method: config.type || 'GET',
     body: config.body,
@@ -264,6 +265,27 @@ export const reqTokensOfAccountTransfered = (extra?: object) => {
 export const reqTransferTPS = (extra?: object) => {
   return sendRequest({
     url: `/stat/transfer/tps`,
+    ...extra,
+  });
+};
+
+export const reqHomeDashboardOfPOSSummary = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/pos-info`,
+    ...extra,
+  });
+};
+
+export const reqPoSAccount = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/pos-account-detail`,
+    ...extra,
+  });
+};
+
+export const reqPoSIncomingHistory = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/list-pos-account-reward`,
     ...extra,
   });
 };

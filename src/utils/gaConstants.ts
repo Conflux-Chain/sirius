@@ -56,6 +56,12 @@ export const ScanEvent = {
       stakingAndGovernance: 'staking_governance',
       fcCfx: 'fc_cfx',
       developerAPI: 'developer_API',
+      posOverview: 'posOverview',
+      posAccounts: 'posAccounts',
+      posCommittee: 'posCommittee',
+      incomingRank: 'incomingRank',
+      posBlocks: 'posBlocks',
+      posTransactions: 'posTransactions',
     },
   },
   // global search

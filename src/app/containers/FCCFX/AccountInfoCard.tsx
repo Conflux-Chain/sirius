@@ -21,6 +21,10 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 import { MyNFTCard } from './MyNFTCard';
 
+// token decimal
+const MAX_DECIMALS = 18;
+const MODULE = 10 ** MAX_DECIMALS;
+
 export function AccountInfoCard({ info }: { info: AccountInfoType }) {
   const [globalData, setGlobalData] = useGlobalData();
   const { t } = useTranslation();
@@ -125,7 +129,15 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
           code: code,
           description: '',
           hash,
-          value: formatBalance(data[4]?.value || 0, 18, false, {}, '0.001'),
+          value: formatBalance(
+            data[4]?.value || 0,
+            18,
+            false,
+            {
+              withUnit: false,
+            },
+            '0.001',
+          ),
         }),
       });
 
@@ -176,7 +188,11 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
             {data.map((c, index) => (
               <Col
                 span={c.span}
-                className={`fccfx-accountInfo-item fccfx-accountInfo-item-${index}`}
+                className={`fccfx-accountInfo-item fccfx-accountInfo-item-${index} ${
+                  index === 1 && c.value.div(MODULE).gte('0.001')
+                    ? 'warning'
+                    : ''
+                }`}
                 key={index}
               >
                 <StyledTitle1474798C className={`fccfx-accountInfo-title`}>
@@ -184,7 +200,15 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
                 </StyledTitle1474798C>
                 <span className="fccfx-accountInfo-number">
                   {accounts.length
-                    ? formatBalance(c.value, 18, false, {}, '0.001')
+                    ? formatBalance(
+                        c.value,
+                        18,
+                        false,
+                        {
+                          withUnit: false,
+                        },
+                        '0.001',
+                      )
                     : '--'}{' '}
                   {c.unit}
                 </span>
@@ -239,6 +263,19 @@ const StyledTotalInfoWrapper = styled.div`
     font-size: 16px;
     color: #282d30;
     line-height: 24px;
+  }
+
+  .fccfx-accountInfo-item-1.warning {
+    .fccfx-accountInfo-number {
+      color: #fa953c;
+    }
+  }
+
+  .fccfx-accountInfo-item-4 {
+    .fccfx-accountInfo-number {
+      color: #1e3de4;
+      font-weight: bold;
+    }
   }
 
   .fccfx-accountInfo-withdrawButton {

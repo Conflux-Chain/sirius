@@ -235,7 +235,14 @@
     "lockedDetailLocked": "已锁定 CFX",
     "lockedDetailUnlockBlockNumber": "解锁区块",
     "lockedDetailUnlockTime": "预计解锁时间",
-    "viewLockedDetails": "点击查看锁定历史"
+    "viewLockedDetails": "点击查看锁定历史",
+    "pos": {
+      "identifier": "PoS 地址",
+      "totalStakedRights": "总质押票权",
+      "totalInterests": "总利息",
+      "unlockRights": "已解锁票权",
+      "lockedRights": "已锁定票权"
+    }
   },
   "blocks": {
     "title": "区块",
@@ -370,6 +377,15 @@
       "tokens": "代币",
       "contracts": "合约",
       "contractsTip": "仅显示注册日期最早的 10 个合约"
+    },
+    "pos": {
+      "pos": "PoS",
+      "overview": "首页",
+      "accounts": "账户",
+      "blocks": "区块",
+      "transactions": "交易",
+      "committee": "委员会",
+      "incomingRank": "收益排行"
     }
   },
   "footer": {
@@ -659,6 +675,8 @@
     "viewAll": "查看全部",
     "viewAllBlocks": "查看全部区块",
     "viewAllTxns": "查看全部交易",
+    "viewAllPosAccounts": "查看全部账户",
+    "viewAllPosCommittees": "查看全部委员会",
     "back": "返回",
     "address": {
       "editContract": "点击编辑合约",
@@ -828,6 +846,7 @@
     "notAvailable": "暂无信息",
     "security": {
       "notAvailable": "暂无信息",
+      "finalized": "已确认",
       "high": "高",
       "medium": "中",
       "low": "偏低",
@@ -919,7 +938,9 @@
       "download": "下载 ",
       "csvFile": "CSV 文件"
     },
-    "preview": "预览"
+    "preview": "预览",
+    "yes": "是",
+    "no": "否"
   },
   "sponsor": {
     "title": "赞助合约",
@@ -1046,6 +1067,7 @@
     "security": "安全等级",
     "blame": "修订区块数",
     "blockHash": "区块哈希",
+    "posBlockHash": "PoS 区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",
     "gasUsed": "燃料用量/限制",
@@ -1156,6 +1178,7 @@
       "security": "该区块的安全性，更高的安全性需要得到更多的区块确认。",
       "blame": "表示（该区块认为的）需要修订关于状态的承诺的连续祖先区块的数量。关于状态的承诺可以理解为对于交易执行结果和账户状态的摘要。关于状态的承诺出错会影响矿工的收益，但不影响对于区块排序的共识。",
       "blockHash": "该区块的块头的哈希值。",
+      "posBlockHash": "区块矿工看到的最新的已被委托的 PoS 区块。",
       "parentHash": "该区块的父区块的区块哈希，也称为父区块哈希。",
       "nonce": "区块随机数是在挖矿过程中用来演示区块工作量证明的值。",
       "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
@@ -1349,6 +1372,16 @@
       "account": "账户总数",
       "transactions": "交易总数",
       "contract": "合约总数"
+    },
+    "pos": {
+      "finalizedEpoch": "已确认纪元",
+      "currentBlockNumber": "当前区块编号",
+      "totalLocked": "总锁仓",
+      "totalInterest": "累计利息",
+      "lastInterestDistributionDate": "分发利息时间",
+      "lastInterestDistributionEpoch": "最新分发利息区块",
+      "totalAccountCount": "节点总数",
+      "votingBlock": "最新已投票区块"
     }
   },
   "swap": {
@@ -1435,40 +1468,198 @@
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
   },
   "pos": {
+    "common": {
+      "right": "票",
+      "posAddress": "地址",
+      "powAddress": "PoW 地址",
+      "powBlockHash": "PoW 区块哈希",
+      "posBlockHash": "区块哈希",
+      "txStatus": {
+        "Executed": "成功",
+        "Discard": "跳过",
+        "Failed": "失败"
+      },
+      "txType": {
+        "BlockMetadata": "区块元交易",
+        "Election": "选举",
+        "Retire": "退休（减少个人票权）",
+        "Dispute": "争辩交易",
+        "Register": "注册",
+        "Other": "其它",
+        "UpdateVotingPower": "增加个人票权",
+        "PivotDecision": "Pivot 交易"
+      },
+      "txPayload": {
+        "vrfPublicKey": "VRF 公钥",
+        "publicKey": "公钥",
+        "targetTerm": "委员会编号",
+        "vrfProof": "VRF 证明",
+        "address": "PoS 地址",
+        "votingPower": "增加的票数",
+        "height": "决定高度",
+        "blockHash": "决定哈希",
+        "blsPublicKey": "BLS 公钥",
+        "conflictingVotes": "争议票信息",
+        "conflictVoteType": "争议类型",
+        "proposal": "提议",
+        "vote": "投票",
+        "first": "第一个投票",
+        "second": "第二个投票"
+      },
+      "committeeStatus": {
+        "electionInProgress": "正在选举",
+        "electionCompleted": "已完成选举",
+        "Ongoing": "进行中",
+        "termEnd": "期满结束"
+      },
+      "votingStatus": {
+        "voted": "已投票",
+        "confirmed": "已确认"
+      }
+    },
     "accounts": {
-      "title": "PoS 账户列表",
-      "description": "PoS 账户列表",
-      "address": "PoS 地址",
+      "title": "账户",
+      "description": "账户",
+      "address": "地址",
       "availableVotes": "可用票数",
       "currentCommitteeMember": "在任委员会成员",
-      "votesInCommittee": "委员会票数",
+      "votesInCommittee": "在委员会票数",
       "registerDate": "注册时间"
     },
     "account": {
-      "title": "PoS 账户",
-      "description": "PoS 账户",
+      "title": "账户",
+      "description": "账户",
       "overview": {
         "title": "概览",
-        "posAddress": "PoS 地址",
+        "posAddress": "地址",
+        "lockingRights": "待锁定总票数",
         "lockedRights": "已锁定票数",
+        "unlockingRights": "待解锁总票数",
         "unlockRights": "已解锁票数",
         "retiredRights": "已退休票数",
-        "availableVotes": "当前可用票数",
+        "availableVotes": "总票数",
         "currentCommitteeMember": "在任委员会成员",
-        "rightsInCommittee ": "在委员会的票数",
+        "rightsInCommittee": "在委员会的票数",
         "unlockedVotes": "已解锁票数",
         "totalIncoming": "总收益",
-        "punishment": "是否被惩罚"
+        "punishment": "是否被惩罚",
+        "timestamp": "注册时间"
       },
-      "incominghistory": {
-        "title": "收益历史"
+      "incomingHistory": {
+        "title": "收益历史",
+        "powBlockHash": "PoW 区块哈希",
+        "incoming": "收益",
+        "timstamp": "时间戳"
       },
-      "votinghistory": {
-        "title": "投票历史"
+      "votingHistory": {
+        "title": "投票历史",
+        "blcokHeight": "区块高度",
+        "blockHash": "区块哈希",
+        "votes": "投票票数",
+        "timestamp": "时间戳"
       },
       "votingStatus": {
-        "title": "票权状态"
+        "title": "待处理票权状态",
+        "rights": "票权",
+        "status": "状态",
+        "in": "待锁定",
+        "out": "待解锁",
+        "blockNumberDeadline": "截止区块号"
       }
+    },
+    "blocks": {
+      "title": "区块",
+      "description": "区块",
+      "blockHeight": "区块高度",
+      "blockHash": "区块哈希",
+      "txn": "交易数",
+      "poSMinerAddress": "矿工地址",
+      "timestamp": "Timestamp"
+    },
+    "block": {
+      "title": "区块",
+      "description": "区块",
+      "overview": {
+        "title": "概览",
+        "blockHash": "区块哈希",
+        "blockNumber": "区块号",
+        "epoch": "纪元",
+        "minerAddress": "矿工地址",
+        "timestamp": "时间戳",
+        "status": "状态",
+        "powBlockHash": "PoW 区块哈希"
+      },
+      "transactions": {
+        "title": "交易"
+      },
+      "votingAddress": {
+        "title": "投票地址",
+        "votingNumber": "投票数"
+      }
+    },
+    "transactions": {
+      "title": "交易列表",
+      "description": "交易列表",
+      "poSTxnHash": "交易哈希",
+      "poSBlockHash": "区块哈希",
+      "status": "状态",
+      "succeed": "成功",
+      "failed": "失败",
+      "discard": "跳过",
+      "type": "类型",
+      "election": "选举",
+      "retire": "退休",
+      "committeeJoin": "加入委员会",
+      "register": "注册",
+      "pivotDecision": "Pivot 交易",
+      "dispute": "争辩交易",
+      "blockMatadata": "区块元交易",
+      "other": "其它",
+      "timstamp": "时间戳"
+    },
+    "transaction": {
+      "title": "交易",
+      "description": "交易",
+      "overview": {
+        "title": "概览",
+        "hash": "交易哈希",
+        "status": "状态",
+        "type": "类型",
+        "timestamp": "时间戳",
+        "number": "交易号",
+        "blockHash": "区块哈希",
+        "blockNumber": "区块号",
+        "payload": "有效信息"
+      }
+    },
+    "committees": {
+      "title": "委员会",
+      "description": "委员会",
+      "committeeEpoch": "委员会编号",
+      "status": "状态",
+      "numberOfMembers": "成员数量",
+      "totalVotes": "总票数"
+    },
+    "committee": {
+      "title": "委员会",
+      "description": "委员会",
+      "overview": {
+        "title": "概览",
+        "committeeEpoch": "委员会编号",
+        "status": "状态",
+        "totalVotes": "总票数",
+        "consensusVotes": "共识票数"
+      },
+      "votesDistribution": {
+        "title": "票数分布",
+        "votes": "投出票数"
+      }
+    },
+    "incomingRank": {
+      "title": "收益排行",
+      "description": "收益排行",
+      "subTitle": "总收益排行前 100 的 PoS 地址",
+      "totalIncoming": "总收益"
     }
   }
 }

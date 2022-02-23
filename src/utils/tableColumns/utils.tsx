@@ -65,6 +65,8 @@ export interface ColumnAgeTypes {
   title?: React.ReactNode;
   ageFormat?: string;
   toggleAgeFormat?: any;
+  right?: boolean;
+  sorter?: boolean;
 }
 
 export const ColumnAge = ({
@@ -73,63 +75,82 @@ export const ColumnAge = ({
   title,
   ageFormat = 'age',
   toggleAgeFormat,
+  right = false,
+  sorter = false,
 }: ColumnAgeTypes) => {
   return {
     title: (
-      <AgeTHeader
-        onClick={() =>
-          toggleAgeFormat &&
-          toggleAgeFormat(ageFormat === 'age' ? 'datetime' : 'age')
-        }
-      >
-        <Tooltip
-          text={
-            <Translation>
-              {t =>
-                t(translations.general.table.switchAgeTip, {
-                  format:
-                    ageFormat === 'age'
-                      ? t(translations.general.table.dateTime)
-                      : t(translations.general.table.block.age),
-                })
-              }
-            </Translation>
-          }
-          placement="top"
+      <ContentWrapper right={right}>
+        <AgeTHeader
+          onClick={e => {
+            e.stopPropagation();
+            e.preventDefault();
+
+            return (
+              toggleAgeFormat &&
+              toggleAgeFormat(ageFormat === 'age' ? 'datetime' : 'age')
+            );
+          }}
         >
-          {ageFormat === 'age' ? (
-            title || (
+          <Tooltip
+            text={
               <Translation>
-                {t => t(translations.general.table.block.age)}
+                {t =>
+                  t(translations.general.table.switchAgeTip, {
+                    format:
+                      ageFormat === 'age'
+                        ? t(translations.general.table.dateTime)
+                        : t(translations.general.table.block.age),
+                  })
+                }
               </Translation>
-            )
-          ) : (
-            <Translation>
-              {t => t(translations.general.table.dateTime)}
-            </Translation>
-          )}
-        </Tooltip>
-      </AgeTHeader>
+            }
+            placement="top"
+            key={ageFormat}
+          >
+            {ageFormat === 'age' ? (
+              title || (
+                <Translation>
+                  {t => t(translations.general.table.block.age)}
+                </Translation>
+              )
+            ) : (
+              <Translation>
+                {t => t(translations.general.table.dateTime)}
+              </Translation>
+            )}
+          </Tooltip>
+        </AgeTHeader>
+      </ContentWrapper>
     ),
     dataIndex: dataIndex || 'syncTimestamp',
     key: key || 'syncTimestamp',
     width: 1,
-    render: value =>
-      ageFormat === 'age' ? (
-        <CountDown from={value} />
-      ) : (
-        <div
-          style={{
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {dayjs.unix(value).format('YYYY-MM-DD HH:mm:ss')}
-        </div>
-      ),
+    sorter: sorter,
+    render: value => {
+      const second = /^\d+$/.test(value) ? value : dayjs(value).unix();
+
+      return (
+        <ContentWrapper right={right}>
+          {ageFormat === 'age' ? (
+            <CountDown from={second} />
+          ) : (
+            <div
+              style={{
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {dayjs.unix(second).format('YYYY-MM-DD HH:mm:ss')}
+            </div>
+          )}
+        </ContentWrapper>
+      );
+    },
   };
 };
 
 const AgeTHeader = styled.div`
+  display: inline-block;
   color: #1e3de4;
   cursor: pointer;
 `;

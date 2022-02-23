@@ -235,7 +235,14 @@
     "lockedDetailUnlockTime": "Estimated Unlock Time",
     "currentVotingRights": "Current Voting Rights",
     "apy": "(APY 4%)",
-    "viewLockedDetails": "Click to view lock history"
+    "viewLockedDetails": "Click to view lock history",
+    "pos": {
+      "identifier": "PoS Address",
+      "totalStakedRights": "Total Staked Rights",
+      "totalInterests": "Total Interests",
+      "unlockRights": "Unlocked Rights",
+      "lockedRights": "Locked Rights"
+    }
   },
   "blocks": {
     "title": "Blocks",
@@ -370,6 +377,15 @@
       "tokens": "Tokens",
       "contracts": "Contracts",
       "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
+    },
+    "pos": {
+      "pos": "PoS",
+      "overview": "Overview",
+      "accounts": "Accounts",
+      "blocks": "Blocks",
+      "transactions": "Transactions",
+      "committee": "Committee",
+      "incomingRank": "Incoming Rank"
     }
   },
   "footer": {
@@ -659,6 +675,8 @@
     "viewAll": "View All",
     "viewAllBlocks": "View All Blocks",
     "viewAllTxns": "View All Transactions",
+    "viewAllPosAccounts": "View All Address",
+    "viewAllPosCommittees": "View All Committee",
     "back": "Back",
     "address": {
       "editContract": "Click to edit contract",
@@ -829,6 +847,7 @@
     "notAvailable": "Not Available",
     "security": {
       "notAvailable": "Not available",
+      "finalized": "Finalized",
       "high": "Great",
       "medium": "Good",
       "low": "Weak",
@@ -920,7 +939,9 @@
       "download": "Download ",
       "csvFile": "CSV file"
     },
-    "preview": "Preview"
+    "preview": "Preview",
+    "yes": "Yes",
+    "no": "No"
   },
   "sponsor": {
     "title": "Contract Sponsor",
@@ -1047,6 +1068,7 @@
     "security": "Security",
     "blame": "Blame Block Count",
     "blockHash": "Block Hash",
+    "posBlockHash": "PoS Block Hash",
     "parentHash": "Parent Hash",
     "nonce": "Nonce",
     "gasUsed": "Gas Used/Limit",
@@ -1157,6 +1179,7 @@
       "security": "The security of block, higher security requires more block confirmations.",
       "blame": "The number of consecutive ancestor blocks whose state commitments are incorrect and need revision. The state commitments can be realized as digests of transaction execution receipts and account status. An incorrect state commitment may affect the miner's reward, but has nothing to do with the consensus of total order of all blocks.",
       "blockHash": "The hash of the block header of the current block.",
+      "posBlockHash": "The newest committed PoS block the miner saw.",
       "parentHash": "The hash of the block from which this block was generated, also known as its parent block.",
       "nonce": "Block nonce is a value used during mining to demonstrate proof of work for a block.",
       "gasUsedLimit": "The exact units of gas that was used for the transaction; Maximum amount of gas provided for the transaction.",
@@ -1350,6 +1373,16 @@
       "account": "Accounts",
       "transactions": "Transactions",
       "contract": "Contracts"
+    },
+    "pos": {
+      "finalizedEpoch": "Finalized Epoch",
+      "currentBlockNumber": "Current Block Number",
+      "totalLocked": "Total Locked",
+      "totalInterest": "Historical Interest",
+      "lastInterestDistributionDate": "Interest Distribution Date",
+      "lastInterestDistributionEpoch": "Latest Interest Distribution Block",
+      "totalAccountCount": "Nodes",
+      "votingBlock": "Latest Voted Block"
     }
   },
   "swap": {
@@ -1436,40 +1469,198 @@
     "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
   },
   "pos": {
+    "common": {
+      "right": "right",
+      "posAddress": "Address",
+      "powAddress": "PoW Address",
+      "powBlockHash": "PoW Block Hash",
+      "posBlockHash": "Block Hash",
+      "txStatus": {
+        "Executed": "Succeed",
+        "Discard": "Discard",
+        "Failed": "Failed"
+      },
+      "txType": {
+        "BlockMetadata": "Block Metadata",
+        "Election": "Election",
+        "Retire": "Retire (reduction of individual voting rights)",
+        "Dispute": "Dispute",
+        "Register": "Register",
+        "Other": "Other",
+        "UpdateVotingPower": "Add Individual Voting Rights",
+        "PivotDecision": "Pivot Decision"
+      },
+      "txPayload": {
+        "vrfPublicKey": "VRF public key",
+        "publicKey": "Public key",
+        "targetTerm": "Committee epoch",
+        "vrfProof": "VRF proof",
+        "address": "PoS address",
+        "votingPower": "Number of votes added",
+        "height": "Block height of decision",
+        "blockHash": "Block hash of decision",
+        "blsPublicKey": "BLS public key",
+        "conflictingVotes": "Disputed voting info",
+        "conflictVoteType": "Dispute type",
+        "proposal": "Proposal",
+        "vote": "Vote",
+        "first": "First vote",
+        "second": "Second vote"
+      },
+      "committeeStatus": {
+        "electionInProgress": "Election in progress",
+        "electionCompleted": "Election completed",
+        "Ongoing": "Ongoing",
+        "termEnd": "Term end"
+      },
+      "votingStatus": {
+        "voted": "Voted",
+        "committed": "Confirmed"
+      }
+    },
     "accounts": {
-      "title": "PoS Account List",
-      "description": "PoS Account List",
-      "address": "PoS Address",
-      "availableVotes": "Available Votes",
+      "title": "Accounts",
+      "description": "Accounts",
+      "address": "Address",
+      "availableVotes": "Available Rights",
       "currentCommitteeMember": "Current Committee Member",
-      "votesInCommittee": "Votes in Committee",
+      "votesInCommittee": "Rights in Committee",
       "registerDate": "Register Date"
     },
     "account": {
-      "title": "PoS Account",
-      "description": "PoS Account",
+      "title": "Account",
+      "description": "Account",
       "overview": {
         "title": "Overview",
-        "posAddress": "PoS Address",
+        "posAddress": "Address",
+        "lockingRights": "Total Pending Locking Rights",
         "lockedRights": "Locked Rights",
-        "unlockRights": "Unlock Rights",
+        "unlockingRights": "Total Pending Unlocking Rights",
+        "unlockRights": "Unlocked Rights",
         "retiredRights": "Retired Rights",
-        "availableVotes": "Available Votes",
+        "availableVotes": "Total Rights",
         "currentCommitteeMember": "Current Committee Member",
-        "rightsInCommittee ": "Rights in Committee",
+        "rightsInCommittee": "Rights in Committee",
         "unlockedVotes": "Unlocked Votes",
         "totalIncoming": "Total Incoming",
-        "punishment": "Punishment"
+        "punishment": "Punishment",
+        "timestamp": "Register Date"
       },
-      "incominghistory": {
-        "title": "Incoming History"
+      "incomingHistory": {
+        "title": "Incoming History",
+        "powBlockHash": "PoW Block Hash",
+        "incoming": "Incoming",
+        "timstamp": "Timstamp"
       },
-      "votinghistory": {
-        "title": "Voting History"
+      "votingHistory": {
+        "title": "Voting History",
+        "blcokHeight": "Blcok Height",
+        "blockHash": "Block Hash",
+        "votes": "Votes",
+        "timestamp": "Timestamp"
       },
       "votingStatus": {
-        "title": "Voting Status"
+        "title": "Pending Rights Status",
+        "rights": "Rights",
+        "status": "Status",
+        "in": "Pending Locking",
+        "out": "Pending Unlocking",
+        "blockNumberDeadline": "Block Number Deadline"
       }
+    },
+    "blocks": {
+      "title": "Blocks",
+      "description": "Blocks",
+      "blockHeight": "Block Height",
+      "blockHash": "Block Hash",
+      "txn": "Txn",
+      "poSMinerAddress": "Miner Address",
+      "timestamp": "Timestamp"
+    },
+    "block": {
+      "title": "Block",
+      "description": "Block",
+      "overview": {
+        "title": "Overview",
+        "blockHash": "Block Hash",
+        "blockNumber": "Block Number",
+        "epoch": "Epoch",
+        "minerAddress": "PoS Miner Address",
+        "timestamp": "Timestamp",
+        "status": "Status",
+        "powBlockHash": "PoW Block Hash"
+      },
+      "transactions": {
+        "title": "Transaction"
+      },
+      "votingAddress": {
+        "title": "Voting Address",
+        "votingNumber": "Votes for Committee"
+      }
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Transactions",
+      "poSTxnHash": "Txn Hash",
+      "poSBlockHash": "Block Hash",
+      "status": "Status",
+      "succeed": "Succeed",
+      "failed": "Failed",
+      "discard": "Discard",
+      "type": "Type",
+      "election": "Election",
+      "retire": "Retire",
+      "committeeJoin": "Committee Join",
+      "register": "Register",
+      "pivotDecision": "Pivot Decision",
+      "dispute": "Dispute",
+      "blockMatadata": "Block Matadata",
+      "other": "Other",
+      "timstamp": "Timstamp"
+    },
+    "transaction": {
+      "title": "Transaction",
+      "description": "Transaction",
+      "overview": {
+        "title": "Overview",
+        "hash": "Txn Hash",
+        "status": "Status",
+        "type": "Type",
+        "timestamp": "Timestamp",
+        "number": "Txn Number",
+        "blockHash": "Block Hash",
+        "blockNumber": "Block Number",
+        "payload": "Playload"
+      }
+    },
+    "committees": {
+      "title": "Committee",
+      "description": "Committee",
+      "committeeEpoch": "Committee Epoch",
+      "status": "Status",
+      "numberOfMembers": "Number of Members",
+      "totalVotes": "Total Votes"
+    },
+    "committee": {
+      "title": "Committee",
+      "description": "Committee",
+      "overview": {
+        "title": "Overview",
+        "committeeEpoch": "Committee Epoch",
+        "status": "Status",
+        "totalVotes": "Total Votes",
+        "consensusVotes": "Consensus Votes"
+      },
+      "votesDistribution": {
+        "title": "Votes Distribution",
+        "votes": "Votes for Committee"
+      }
+    },
+    "incomingRank": {
+      "title": "Incoming Rank",
+      "description": "Incoming Rank",
+      "subTitle": "Top 100 PoS address by total incoming",
+      "totalIncoming": "Total Incoming"
     }
   }
 }

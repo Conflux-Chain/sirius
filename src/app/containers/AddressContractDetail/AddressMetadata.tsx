@@ -5,45 +5,35 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
-import BigNumber from 'bignumber.js';
 import { Text } from 'app/components/Text';
 import {
   fromDripToCfx,
   getTimeByBlockInterval,
+  toThousands,
   publishRequestError,
 } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
-import ViewMore from '../../../images/contract-address/viewmore.png';
+import ViewMore from 'images/contract-address/viewmore.png';
 import {
   abi as governanceAbi,
   bytecode as gobernanceBytecode,
-} from '../../../utils/contract/governance.json';
+} from 'utils/contract/governance.json';
 import {
   abi as stakingAbi,
   bytecode as stakingBytecode,
-} from '../../../utils/contract/staking.json';
-import { Tooltip } from '../../components/Tooltip/Loadable';
-import { Link } from '../../components/Link/Loadable';
+} from 'utils/contract/staking.json';
+import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Link } from 'app/components/Link/Loadable';
+import { getPosAccountInfo } from 'utils/rpcRequest';
+import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
+import lodash from 'lodash';
+import { PoSAddressContainer } from 'app/components/AddressContainer';
 import {
   getDepositList,
   getAccumulateInterestRate,
   getVoteList,
 } from 'utils/rpcRequest';
-
-// https://github.com/Conflux-Dev/vote/blob/main/src/pages/staking/index.js
-function getCurrentStakingEarned(list, rate, stakedCfx) {
-  if (list.length === 0) return 0;
-  let earned = 0;
-  list.forEach(item => {
-    earned =
-      earned +
-      (Number(item.amount) * Number(rate)) /
-        Number(item.accumulatedInterestRate);
-  });
-  earned = new BigNumber(earned).minus(stakedCfx).toNumber();
-  return earned;
-}
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
@@ -55,13 +45,17 @@ export function AddressMetadata({ address, accountInfo }) {
   const { t } = useTranslation();
   const loading = accountInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
-  const [earned, setEarned] = useState(0);
   const [voteList, setVoteList] = useState<any>([]);
-  const [lockedCFX, setLockedCFX] = useState(0);
-  const [currentVotingRights, setCurrentVotingRights] = useState(0);
+  const [lockedCFX, setLockedCFX] = useState<number | null>(null);
+  const [currentVotingRights, setCurrentVotingRights] = useState<number | null>(
+    null,
+  );
   const [currentBlockNumber, setCurrentBlockNumber] = useState(0);
-  const [voteListLoading, setVoteListLoading] = useState<boolean>(true);
   const [modalShown, setModalShown] = useState<boolean>(false);
+  const [posAccountInfo, setPosAccountInfo] = useState<any>(null);
+  const [posLoading, setPosLoading] = useState(false);
+  const [checkPosLoading, setCheckPosLoading] = useState(false);
+  const [isPoSActived, setIsPoSActived] = useState(false);
 
   const governanceContract = useMemo(() => {
     return CFX.Contract({
@@ -72,9 +66,27 @@ export function AddressMetadata({ address, accountInfo }) {
   }, []);
 
   useEffect(() => {
-    // get staking info
-    // TODO batch
-    if (accountInfo.address) {
+    setCheckPosLoading(true);
+    reqHomeDashboardOfPOSSummary()
+      .then(data => {
+        setCheckPosLoading(false);
+
+        if (data.latestVoted && parseInt(data.latestVoted) > 0) {
+          setIsPoSActived(true);
+          setPosLoading(true);
+          getPosAccountInfo(address, 'pow')
+            .then(data => data && setPosAccountInfo(data))
+            .finally(() => setPosLoading(false));
+        }
+      })
+      .catch(e => {
+        console.error('get pos homepage summary info error: ', e);
+      });
+
+    if (
+      accountInfo.address &&
+      [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)
+    ) {
       const proArr: any = [];
       proArr.push(getDepositList(address));
       proArr.push(getAccumulateInterestRate());
@@ -82,16 +94,8 @@ export function AddressMetadata({ address, accountInfo }) {
       proArr.push(governanceContract.getBlockNumber());
       Promise.all(proArr)
         .then(res => {
-          const depositList = res[0];
-          const rate = res[1];
           const currentBlockN: any = res[3] || 0;
           setCurrentBlockNumber(currentBlockN.toString());
-          const currentStakingEarned = getCurrentStakingEarned(
-            depositList,
-            rate,
-            new BigNumber(accountInfo.stakingBalance).toFixed(),
-          );
-          setEarned(currentStakingEarned);
           setVoteList(res[2]);
           // @ts-ignore
           if (res[2] && res[2].length > 0) {
@@ -119,133 +123,31 @@ export function AddressMetadata({ address, accountInfo }) {
         })
         .catch(e => {
           console.error(e);
-          setEarned(0);
           setVoteList([]);
           setCurrentVotingRights(0);
-        })
-        .finally(() => {
-          setVoteListLoading(false);
         });
     }
   }, [address, accountInfo, governanceContract]);
 
-  return (
-    <>
+  const posMetadata = () => {
+    return (
       <List
-        className="staking"
         list={[
           {
-            title: (
-              <Tooltip
-                hoverable
-                text={
-                  <>
-                    {t(translations.toolTip.address.stakedBegin)}
-                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
-                      <a
-                        href="https://votetest.confluxnetwork.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        https://votetest.confluxnetwork.org
-                      </a>
-                    ) : (
-                      <a
-                        href="https://governance.confluxnetwork.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        https://governance.confluxnetwork.org
-                      </a>
-                    )}
-                    {t(translations.toolTip.address.stakedEnd)}
-                  </>
-                }
-              >
-                {t(translations.addressDetail.staked)}
-              </Tooltip>
-            ),
-            children: (
-              <SkeletonContainer shown={loading} style={skeletonStyle}>
-                <CenterLine>
-                  <Content>
-                    <Text
-                      hoverValue={`${fromDripToCfx(
-                        accountInfo.stakingBalance || 0,
-                        true,
-                      )} CFX`}
-                    >
-                      {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
-                    </Text>
-                  </Content>
-                </CenterLine>
-              </SkeletonContainer>
-            ),
-          },
-          {
-            title: (
-              <Tooltip
-                hoverable
-                text={
-                  <>
-                    {t(translations.toolTip.address.lockedBegin)}
-                    {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
-                      <a
-                        href="https://votetest.confluxnetwork.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        https://votetest.confluxnetwork.org
-                      </a>
-                    ) : (
-                      <a
-                        href="https://governance.confluxnetwork.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        https://governance.confluxnetwork.org
-                      </a>
-                    )}
-                    {t(translations.toolTip.address.lockedEnd)}
-                  </>
-                }
-              >
-                {t(translations.addressDetail.locked)}
-              </Tooltip>
-            ),
+            title: t(translations.addressDetail.pos.identifier),
             children: (
               <SkeletonContainer
-                shown={loading || voteListLoading}
+                shown={checkPosLoading || posLoading}
                 style={skeletonStyle}
               >
                 <CenterLine>
                   <Content>
-                    {voteList && voteList.length > 0 ? (
-                      <>
-                        <Text
-                          hoverValue={`${fromDripToCfx(lockedCFX, true)} CFX`}
-                        >
-                          {fromDripToCfx(lockedCFX)} CFX
-                        </Text>
-                        &nbsp;
-                        <Text
-                          hoverValue={t(
-                            translations.addressDetail.viewLockedDetails,
-                          )}
-                        >
-                          <ImgWrapper
-                            onClick={() => {
-                              setModalShown(true);
-                            }}
-                            src={ViewMore}
-                            alt={t(
-                              translations.addressDetail.viewLockedDetails,
-                            )}
-                          />
-                        </Text>
-                      </>
+                    {isPoSActived && posAccountInfo?.address ? (
+                      <PoSAddressContainer
+                        value={posAccountInfo?.address}
+                      ></PoSAddressContainer>
                     ) : (
-                      '0 CFX'
+                      '--'
                     )}
                   </Content>
                 </CenterLine>
@@ -253,46 +155,54 @@ export function AddressMetadata({ address, accountInfo }) {
             ),
           },
           {
-            title: (
-              <Text hoverValue={t(translations.toolTip.address.stakingEarned)}>
-                {t(translations.addressDetail.stakingEarned)}
-              </Text>
-            ),
+            title: t(translations.addressDetail.pos.unlockRights),
             children: (
-              <SkeletonContainer shown={loading} style={skeletonStyle}>
+              <SkeletonContainer
+                shown={checkPosLoading || posLoading}
+                style={skeletonStyle}
+              >
                 <CenterLine>
                   <Content>
-                    <Text
-                      hoverValue={`${fromDripToCfx(earned || 0, true)} CFX`}
-                    >
-                      {fromDripToCfx(earned || 0)} CFX
-                    </Text>
-                    &nbsp;&nbsp;{t(translations.addressDetail.apy)}
+                    {!isPoSActived ||
+                    lodash.isNil(posAccountInfo?.status?.unlocked)
+                      ? '--'
+                      : toThousands(posAccountInfo?.status?.unlocked)}
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
             ),
           },
           {
-            title: (
-              <Text
-                hoverValue={t(translations.toolTip.address.currentVotingRights)}
-              >
-                {t(translations.addressDetail.currentVotingRights)}
-              </Text>
-            ),
+            title: t(translations.addressDetail.pos.totalStakedRights),
             children: (
               <SkeletonContainer
-                shown={loading || voteListLoading}
+                shown={checkPosLoading || posLoading}
                 style={skeletonStyle}
               >
                 <CenterLine>
                   <Content>
-                    <Text
-                      hoverValue={fromDripToCfx(currentVotingRights || 0, true)}
-                    >
-                      {fromDripToCfx(currentVotingRights || 0)}
-                    </Text>
+                    {!isPoSActived ||
+                    lodash.isNil(posAccountInfo?.status?.availableVotes)
+                      ? '--'
+                      : toThousands(posAccountInfo?.status?.availableVotes)}
+                  </Content>
+                </CenterLine>
+              </SkeletonContainer>
+            ),
+          },
+          {
+            title: t(translations.addressDetail.pos.lockedRights),
+            children: (
+              <SkeletonContainer
+                shown={checkPosLoading || posLoading}
+                style={skeletonStyle}
+              >
+                <CenterLine>
+                  <Content>
+                    {!isPoSActived ||
+                    lodash.isNil(posAccountInfo?.status?.locked)
+                      ? '--'
+                      : toThousands(posAccountInfo?.status?.locked)}
                   </Content>
                 </CenterLine>
               </SkeletonContainer>
@@ -300,76 +210,255 @@ export function AddressMetadata({ address, accountInfo }) {
           },
         ]}
       />
+    );
+  };
 
-      <Modal
-        closable
-        open={modalShown}
-        onClose={() => {
-          setModalShown(false);
-        }}
-        width="600"
-      >
-        <Modal.Content>
-          <ModalWrapper>
-            <h2>{t(translations.addressDetail.lockedDetailTitle)}</h2>
-            <div className="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>{t(translations.addressDetail.lockedDetailLocked)}</th>
-                    <th>
-                      {t(
-                        translations.addressDetail
-                          .lockedDetailUnlockBlockNumber,
+  const powMetadata = () => {
+    return (
+      <>
+        <List
+          className="staking"
+          list={[
+            {
+              title: (
+                <Tooltip
+                  text={
+                    <>
+                      {t(translations.toolTip.address.stakedBegin)}
+                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                        <a
+                          href="https://testnet-governance.confluxnetwork.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://testnet-governance.confluxnetwork.org
+                        </a>
+                      ) : (
+                        <a
+                          href="https://governance.confluxnetwork.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://governance.confluxnetwork.org
+                        </a>
                       )}
-                    </th>
-                    <th>
-                      {t(translations.addressDetail.lockedDetailUnlockTime)}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {voteList && voteList.length > 0 ? (
-                    voteList.map((v, i) => {
-                      const { days } = getTimeByBlockInterval(
-                        v.unlockBlockNumber,
-                        currentBlockNumber,
-                      );
-                      return (
-                        <tr key={i}>
-                          <td>
-                            <Text
-                              hoverValue={fromDripToCfx(v.amount || 0, true)}
-                            >
-                              {fromDripToCfx(v.amount || 0)}
-                            </Text>
-                          </td>
-                          <td>
-                            <Link
-                              href={`/block-countdown/${v.unlockBlockNumber}`}
-                            >
-                              {v.unlockBlockNumber}
-                            </Link>
-                          </td>
-                          <td>
-                            {t(translations.addressDetail.unlockTime, { days })}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
+                      {t(translations.toolTip.address.stakedEnd)}
+                    </>
+                  }
+                >
+                  {t(translations.addressDetail.staked)}
+                </Tooltip>
+              ),
+              children: (
+                <SkeletonContainer
+                  shown={checkPosLoading || loading}
+                  style={skeletonStyle}
+                >
+                  <CenterLine>
+                    <Content>
+                      <Text
+                        hoverValue={`${fromDripToCfx(
+                          accountInfo.stakingBalance || 0,
+                          true,
+                        )} CFX`}
+                      >
+                        {fromDripToCfx(accountInfo.stakingBalance || 0)} CFX
+                      </Text>
+                    </Content>
+                  </CenterLine>
+                </SkeletonContainer>
+              ),
+            },
+            {
+              title: (
+                <Tooltip
+                  text={
+                    <>
+                      {t(translations.toolTip.address.lockedBegin)}
+                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                        <a
+                          href="https://testnet-governance.confluxnetwork.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://testnet-governance.confluxnetwork.org
+                        </a>
+                      ) : (
+                        <a
+                          href="https://governance.confluxnetwork.org/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          https://governance.confluxnetwork.org
+                        </a>
+                      )}
+                      {t(translations.toolTip.address.lockedEnd)}
+                    </>
+                  }
+                >
+                  {t(translations.addressDetail.locked)}
+                </Tooltip>
+              ),
+              children: (
+                <SkeletonContainer
+                  shown={checkPosLoading || loading}
+                  style={skeletonStyle}
+                >
+                  <CenterLine>
+                    <Content>
+                      {voteList && voteList.length > 0 ? (
+                        <>
+                          <Text
+                            hoverValue={`${fromDripToCfx(
+                              lockedCFX || 0,
+                              true,
+                            )} CFX`}
+                          >
+                            {fromDripToCfx(lockedCFX || 0)} CFX
+                          </Text>
+                          &nbsp;
+                          <Text
+                            hoverValue={t(
+                              translations.addressDetail.viewLockedDetails,
+                            )}
+                          >
+                            <ImgWrapper
+                              onClick={() => {
+                                setModalShown(true);
+                              }}
+                              src={ViewMore}
+                              alt={t(
+                                translations.addressDetail.viewLockedDetails,
+                              )}
+                            />
+                          </Text>
+                        </>
+                      ) : (
+                        '0 CFX'
+                      )}
+                    </Content>
+                  </CenterLine>
+                </SkeletonContainer>
+              ),
+            },
+            {
+              title: (
+                <Text
+                  hoverValue={t(
+                    translations.toolTip.address.currentVotingRights,
                   )}
-                </tbody>
-              </table>
-            </div>
-          </ModalWrapper>
-        </Modal.Content>
-      </Modal>
+                >
+                  {t(translations.addressDetail.currentVotingRights)}
+                </Text>
+              ),
+              children: (
+                <SkeletonContainer
+                  shown={checkPosLoading || loading}
+                  style={skeletonStyle}
+                >
+                  <CenterLine>
+                    <Content>
+                      {lodash.isNil(currentVotingRights) ? (
+                        '--'
+                      ) : (
+                        <Text
+                          hoverValue={fromDripToCfx(
+                            currentVotingRights || 0,
+                            true,
+                          )}
+                        >
+                          {fromDripToCfx(currentVotingRights || 0)}
+                        </Text>
+                      )}
+                    </Content>
+                  </CenterLine>
+                </SkeletonContainer>
+              ),
+            },
+          ]}
+        />
+
+        <Modal
+          closable
+          open={modalShown}
+          onClose={() => {
+            setModalShown(false);
+          }}
+          width="600"
+        >
+          <Modal.Content>
+            <ModalWrapper>
+              <h2>{t(translations.addressDetail.lockedDetailTitle)}</h2>
+              <div className="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        {t(translations.addressDetail.lockedDetailLocked)}
+                      </th>
+                      <th>
+                        {t(
+                          translations.addressDetail
+                            .lockedDetailUnlockBlockNumber,
+                        )}
+                      </th>
+                      <th>
+                        {t(translations.addressDetail.lockedDetailUnlockTime)}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {voteList && voteList.length > 0 ? (
+                      voteList.map((v, i) => {
+                        const { days } = getTimeByBlockInterval(
+                          v.unlockBlockNumber,
+                          currentBlockNumber,
+                        );
+                        return (
+                          <tr key={i}>
+                            <td>
+                              <Text
+                                hoverValue={fromDripToCfx(v.amount || 0, true)}
+                              >
+                                {fromDripToCfx(v.amount || 0)}
+                              </Text>
+                            </td>
+                            <td>
+                              <Link
+                                href={`/block-countdown/${v.unlockBlockNumber}`}
+                              >
+                                {v.unlockBlockNumber}
+                              </Link>
+                            </td>
+                            <td>
+                              {t(translations.addressDetail.unlockTime, {
+                                days,
+                              })}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </ModalWrapper>
+          </Modal.Content>
+        </Modal>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div style={{ marginBottom: '24px' }}>{powMetadata()}</div>
+      {posMetadata()}
     </>
   );
 }
