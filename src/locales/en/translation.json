@@ -35,7 +35,7 @@
     "notice": {
       "title": "Notice",
       "items": {
-        "first": "1. The FC to CFX conversion rules will be updated on September 28: To generate interest, users need to actively sign up for the subsidy plan after depositing their funds.",
+        "first": "1. The FC to CFX conversion rules will be updated after Hydra Hardfork: To generate interest, users need to actively sign up for the subsidy plan after depositing their funds.",
         "second": "2. Under the previous FC exchange CFX rules, interest was generated automatically by depositing funds, whereas the new rules require users to self-notify a new contract (the subsidy plan contract). Interest is generated when users sign up for the subsidy plan but not when they do not.",
         "third": "3. Note: This rule does not force users to sign up for the subsidy plan, and whether or not the subsidy plan is signed does not cause any loss to users.",
         "fourth": "4. If the user has staked CFX and generated interest before the subsidy plan, after the rule update, the user must withdraw all the interest before proceeding with subsequent operations.",

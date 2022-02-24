@@ -133,21 +133,12 @@ export const Header = memo(() => {
   ];
 
   // @todo, shoule remove after pos release
-  if (localStorage.getItem('fccfx')) {
-    if (bp !== 's' && bp !== 'm') {
-      ecosystemItems.push({
-        title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-        name: ScanEvent.menu.action.fcCfx,
-        afterClick: menuClick,
-        href: '/fccfx',
-      });
-    }
-  } else {
+  if (bp !== 's' && bp !== 'm') {
     ecosystemItems.push({
       title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.fcCfx,
       afterClick: menuClick,
-      href: 'https://fccfx.confluxscan.io/',
+      href: '/fccfx',
     });
   }
 
