@@ -208,7 +208,7 @@ export const FC_EXCHANGE_ADDRESS = IS_TESTNET
 
 // only deploy on testnet and mainnet
 enum FC_EXCHANGE_INTEREST_ADDRESSES {
-  mainnet = '',
+  mainnet = 'cfx:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140',
   testnet = 'cfxtest:acadrvdd07u69hazg0nkjkpdetvyc5wma6put8949d',
 }
 export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
