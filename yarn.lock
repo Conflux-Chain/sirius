@@ -1596,9 +1596,9 @@
     jsbi "^3.1.4"
 
 "@conflux-dev/conflux-address-js@^1.3.10":
-  version "1.3.12"
-  resolved "https://registry.yarnpkg.com/@conflux-dev/conflux-address-js/-/conflux-address-js-1.3.12.tgz#e08b390e2359540e688cdc2439ba885e0077655f"
-  integrity sha512-DRG3xiaGVBbW98bUS+ZPULxKnD2OXDvhLRFcVoEZofRvfh6YVjrbycTHFmfMycaTwI5ceO716+0IoCCAkdFb4Q==
+  version "1.3.13"
+  resolved "https://registry.yarnpkg.com/@conflux-dev/conflux-address-js/-/conflux-address-js-1.3.13.tgz#055909fe15e0eaa9ab890061a4845f323923a6ae"
+  integrity sha512-gFmo1goyt3wTauyRSfIooymaJSj+e7Lv4gRXpUQA+DZnJWsdPTuoPTKWLrQ6e661RTSFpcusmDrq6j6FWP9njw==
   dependencies:
     jsbi "^3.1.4"
 
@@ -9741,10 +9741,10 @@ jest@24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
-js-conflux-sdk@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-2.0.0.tgz#5efaebee185c2f47dd9a77223e91d75ba0feef35"
-  integrity sha512-aI/6vMXvV22p2l8D9W5FZ8Y+nVqyivzhHdcXA0+Ql+wELbj5oS1oITEt1L0YEIBaMTduwHW1UsykRCY7FKPHlQ==
+js-conflux-sdk@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-2.0.2.tgz#df1ba5565be559222a23d433171bb1d4795284fd"
+  integrity sha512-ByJ3qjf8/+gtucgNEGlI/B3djQy3/vQbkFSLBKM5DkR2liLaVRaugCRv+rz72i41dbULCND1x6WHt/b3nLbajg==
   dependencies:
     "@conflux-dev/conflux-address-js" "^1.3.10"
     abi-util-lite "^0.1.0"
@@ -16907,9 +16907,9 @@ type@^1.0.1:
   integrity sha512-+5nt5AAniqsCnu2cEQQdpzCAh33kVx8n0VoFidKpB1dVVLAN/F+bgVOqOJqOnEnrhp222clB5p3vUlD+1QAnfg==
 
 type@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/type/-/type-2.5.0.tgz#0a2e78c2e77907b252abe5f298c1b01c63f0db3d"
-  integrity sha512-180WMDQaIMm3+7hGXWf12GtdniDEy7nYcyFMKJn/eZz/6tSLXrUN9V0wKSbMjej0I1WHWbpREDEKHtqPQa9NNw==
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/type/-/type-2.6.0.tgz#3ca6099af5981d36ca86b78442973694278a219f"
+  integrity sha512-eiDBDOmkih5pMbo9OqsqPRGMljLodLcwd5XD5JbtNB0o89xZAwynY9EdCDsJU7LtcVCClu9DvM7/0Ep1hYX3EQ==
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"
