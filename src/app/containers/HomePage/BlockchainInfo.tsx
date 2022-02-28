@@ -194,6 +194,18 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={3}>
             {Info(
+              t(translations.statistics.pos.votingBlock),
+              POSSummaryInfo.latestVoted,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={2}>
+            {Info(
+              t(translations.statistics.pos.totalAccountCount),
+              POSSummaryInfo.posAccountCount,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3}>
+            {Info(
               t(translations.statistics.pos.totalLocked),
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
@@ -208,6 +220,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 : String(POSSummaryInfo.apy).substr(0, 4) + '%',
             )}
           </Grid>
+
           <Grid xs={24} sm={24} md={3}>
             {Info(
               t(translations.statistics.pos.totalInterest),
@@ -229,18 +242,6 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   ) : null}
                 </span>
               ),
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2}>
-            {Info(
-              t(translations.statistics.pos.totalAccountCount),
-              POSSummaryInfo.posAccountCount,
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
-            {Info(
-              t(translations.statistics.pos.votingBlock),
-              POSSummaryInfo.latestVoted,
             )}
           </Grid>
         </Grid.Container>
@@ -337,7 +338,7 @@ const CardWrapper = styled.div`
 
     &.homepage-info-pos {
       .item {
-        &:nth-child(2) {
+        &:nth-child(3) {
           position: relative;
 
           &::after {
@@ -346,11 +347,11 @@ const CardWrapper = styled.div`
             border-right: 1px solid #e8e9ea;
             height: 70%;
             top: 15%;
-            right: 15%;
+            right: 30%;
           }
         }
 
-        &:nth-child(4) {
+        &:nth-child(5) {
           position: relative;
 
           &::after {
@@ -359,7 +360,7 @@ const CardWrapper = styled.div`
             border-right: 1px solid #e8e9ea;
             height: 70%;
             top: 15%;
-            right: 15%;
+            right: 25%;
           }
         }
       }
