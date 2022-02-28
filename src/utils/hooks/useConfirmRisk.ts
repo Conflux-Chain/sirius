@@ -1,9 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import BigNumber from 'bignumber.js';
-import {
-  // getPosStatus,
-  getConfirmationRiskByHash,
-} from 'utils/rpcRequest';
+import { getPosStatus, getConfirmationRiskByHash } from 'utils/rpcRequest';
 
 const EPS = new BigNumber(1e-6);
 
@@ -58,20 +55,20 @@ export const useConfirmRisk = (blockHash: string, epochNumber: number) => {
       }
     } else {
       // is risk is lv0, meaning security is great, then check if finalized by epoch number
-      // getPosStatus()
-      //   .then(data => {
-      //     if (
-      //       data.pivotDecision !== null &&
-      //       epochNumber <= data.pivotDecision
-      //     ) {
-      //       setRisk('lv5');
-      //     } else {
-      //       loop();
-      //     }
-      //   })
-      //   .catch(e => {
-      //     loop();
-      //   });
+      getPosStatus()
+        .then(data => {
+          if (
+            data.pivotDecision !== null &&
+            epochNumber <= data.pivotDecision
+          ) {
+            setRisk('lv5');
+          } else {
+            loop();
+          }
+        })
+        .catch(e => {
+          loop();
+        });
     }
   };
 
