@@ -8,6 +8,7 @@ import { media } from 'styles/media';
 import { formatBalance, formatTimeStamp } from 'utils';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 
 function Info(title, number: any) {
   return (
@@ -45,13 +46,35 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               POSSummaryInfo.latestCommitted,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={2.6}>
+          <Grid xs={24} sm={24} md={3}>
+            {Info(
+              t(translations.statistics.pos.votingBlock),
+              POSSummaryInfo.latestVoted,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={2}>
+            {Info(
+              t(translations.statistics.pos.totalAccountCount),
+              POSSummaryInfo.posAccountCount,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3.5}>
             {Info(
               t(translations.statistics.pos.totalLocked),
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          <Grid xs={24} sm={24} md={2.5}>
+            {Info(
+              <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
+                {t(translations.statistics.pos.apy)}
+              </InfoIconWithTooltip>,
+              lodash.isNil(POSSummaryInfo.apy)
+                ? '--'
+                : String(POSSummaryInfo.apy).substr(0, 4) + '%',
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3.5}>
             {Info(
               t(translations.statistics.pos.totalInterest),
               formatBalance(POSSummaryInfo.totalPosRewardDrip),
@@ -72,18 +95,6 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   ) : null}
                 </span>
               ),
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
-            {Info(
-              t(translations.statistics.pos.totalAccountCount),
-              POSSummaryInfo.posAccountCount,
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
-            {Info(
-              t(translations.statistics.pos.votingBlock),
-              POSSummaryInfo.latestVoted,
             )}
           </Grid>
         </Grid.Container>
@@ -126,12 +137,12 @@ const CardWrapper = styled.div`
     }
 
     > .item {
-      &:nth-child(2),
+      &:nth-child(3),
       &:nth-child(5) {
         border-right: 1px solid #e8e9ea;
       }
 
-      &:nth-child(3),
+      &:nth-child(4),
       &:nth-child(6) {
         padding-left: 3rem;
       }

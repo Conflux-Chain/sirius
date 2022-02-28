@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 
 function Info(title, number: any) {
   return (
@@ -185,13 +186,25 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           justify="flex-start"
           className="stats-container"
         >
-          <Grid xs={24} sm={24} md={4}>
+          <Grid xs={24} sm={24} md={3}>
             {Info(
               t(translations.statistics.pos.currentBlockNumber),
               POSSummaryInfo.latestCommitted,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          <Grid xs={24} sm={24} md={3}>
+            {Info(
+              t(translations.statistics.pos.votingBlock),
+              POSSummaryInfo.latestVoted,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={2}>
+            {Info(
+              t(translations.statistics.pos.totalAccountCount),
+              POSSummaryInfo.posAccountCount,
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3}>
             {Info(
               t(translations.statistics.pos.totalLocked),
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
@@ -199,11 +212,22 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={3}>
             {Info(
+              <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
+                {t(translations.statistics.pos.apy)}
+              </InfoIconWithTooltip>,
+              lodash.isNil(POSSummaryInfo.apy)
+                ? '--'
+                : String(POSSummaryInfo.apy).substr(0, 4) + '%',
+            )}
+          </Grid>
+
+          <Grid xs={24} sm={24} md={3}>
+            {Info(
               t(translations.statistics.pos.totalInterest),
               formatBalance(POSSummaryInfo.totalPosRewardDrip),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={5}>
+          <Grid xs={24} sm={24} md={5.5}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),
               lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
@@ -218,18 +242,6 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   ) : null}
                 </span>
               ),
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
-            {Info(
-              t(translations.statistics.pos.totalAccountCount),
-              POSSummaryInfo.posAccountCount,
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
-            {Info(
-              t(translations.statistics.pos.votingBlock),
-              POSSummaryInfo.latestVoted,
             )}
           </Grid>
         </Grid.Container>
@@ -326,7 +338,7 @@ const CardWrapper = styled.div`
 
     &.homepage-info-pos {
       .item {
-        &:nth-child(2) {
+        &:nth-child(3) {
           position: relative;
 
           &::after {
@@ -335,11 +347,11 @@ const CardWrapper = styled.div`
             border-right: 1px solid #e8e9ea;
             height: 70%;
             top: 15%;
-            right: 15%;
+            right: 30%;
           }
         }
 
-        &:nth-child(4) {
+        &:nth-child(5) {
           position: relative;
 
           &::after {
@@ -348,7 +360,7 @@ const CardWrapper = styled.div`
             border-right: 1px solid #e8e9ea;
             height: 70%;
             top: 15%;
-            right: 5%;
+            right: 25%;
           }
         }
       }
