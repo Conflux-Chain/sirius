@@ -8,6 +8,7 @@ import { media } from 'styles/media';
 import { formatBalance, formatTimeStamp } from 'utils';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 
 function Info(title, number: any) {
   return (
@@ -51,7 +52,17 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          <Grid xs={24} sm={24} md={3.5}>
+            {Info(
+              <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
+                {t(translations.statistics.pos.apy)}
+              </InfoIconWithTooltip>,
+              lodash.isNil(POSSummaryInfo.apy)
+                ? '--'
+                : String(POSSummaryInfo.apy).substr(0, 4) + '%',
+            )}
+          </Grid>
+          <Grid xs={24} sm={24} md={3.5}>
             {Info(
               t(translations.statistics.pos.totalInterest),
               formatBalance(POSSummaryInfo.totalPosRewardDrip),
