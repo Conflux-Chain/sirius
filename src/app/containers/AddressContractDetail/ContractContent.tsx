@@ -230,7 +230,12 @@ export const ContractContent = ({ contractInfo }) => {
         label: t(translations.contract.readContract),
         abi,
         content: (
-          <ContractAbi type="read" address={address} abi={abi}></ContractAbi>
+          <ContractAbi
+            type="read"
+            address={address}
+            abi={abi}
+            key={`contract-read-${address}`}
+          ></ContractAbi>
         ),
       },
       {
@@ -238,7 +243,12 @@ export const ContractContent = ({ contractInfo }) => {
         label: t(translations.contract.writeContract),
         abi,
         content: (
-          <ContractAbi type="write" address={address} abi={abi}></ContractAbi>
+          <ContractAbi
+            type="write"
+            address={address}
+            abi={abi}
+            key={`contract-write-${address}`}
+          ></ContractAbi>
         ),
       },
     ]);
@@ -257,6 +267,8 @@ export const ContractContent = ({ contractInfo }) => {
               type="read"
               address={implementation.address}
               pattern={proxy.proxyPattern}
+              proxyAddress={address}
+              key={`contract-implementation-read-${address}`}
             ></ContractAbi>
           ),
         },
@@ -268,6 +280,8 @@ export const ContractContent = ({ contractInfo }) => {
               type="write"
               address={implementation.address}
               pattern={proxy.proxyPattern}
+              proxyAddress={address}
+              key={`contract-implementation-write-${address}`}
             ></ContractAbi>
           ),
         },
