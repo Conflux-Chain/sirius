@@ -172,7 +172,7 @@ export const ContractAbi = ({
         <FuncList
           type={type}
           data={data[type]}
-          contractAddress={address}
+          contractAddress={proxyAddress || address}
           contract={contract}
         ></FuncList>
       ) : (
