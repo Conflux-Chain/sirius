@@ -19,6 +19,7 @@ interface ContractAbiProps {
   address: string;
   abi?: any;
   pattern?: React.ReactNode;
+  proxyAddress?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ContractAbiProps>;
 export declare type Props = ContractAbiProps & NativeAttrs;
@@ -30,6 +31,7 @@ export const ContractAbi = ({
   address,
   abi,
   pattern,
+  proxyAddress,
 }: Props) => {
   const { t } = useTranslation();
   const [data, setData] = useState<{
@@ -44,7 +46,7 @@ export const ContractAbi = ({
   const [contract, setContract] = useState(() =>
     CFX.Contract({
       abi: [],
-      address,
+      address: proxyAddress || address,
     }),
   );
 
@@ -65,7 +67,7 @@ export const ContractAbi = ({
         const abiJSON = JSON.parse(abiInfo);
         const contract = CFX.Contract({
           abi: abiJSON,
-          address,
+          address: proxyAddress || address,
         });
 
         setContract(contract);
