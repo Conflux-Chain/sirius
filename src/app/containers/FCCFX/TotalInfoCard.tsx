@@ -23,6 +23,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
         false,
         {
           withUnit: false,
+          keepDecimal: false,
         },
         '0.001',
       ),
@@ -35,7 +36,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
         info.fcMiningAPY
           .dividedBy(10 ** 18)
           .multipliedBy(100)
-          .toFixed(3) + '%',
+          .toFixed(2) + '%',
       span: 11,
       tip: (
         <InfoIconWithTooltip
@@ -52,6 +53,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
         false,
         {
           withUnit: false,
+          keepDecimal: false,
         },
         '0.001',
       ),
@@ -66,6 +68,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
         false,
         {
           withUnit: false,
+          keepDecimal: false,
         },
         '0.001',
       ),
@@ -77,8 +80,12 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
     let rate = 0;
     try {
       rate =
-        Number(info.fcSigned.dividedBy(info.balanceOfCfx).toFixed(5)) * 100 ||
-        0;
+        Number(
+          info.fcSigned
+            .dividedBy(info.balanceOfCfx)
+            .multipliedBy(100)
+            .toFixed(2),
+        ) || 0;
     } catch (e) {}
     return rate;
   }, [info.balanceOfCfx, info.fcSigned]);
