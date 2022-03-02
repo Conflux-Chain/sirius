@@ -9,6 +9,7 @@ import {
   gray0,
   gray1,
   gray2,
+  gray3,
 } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
@@ -20,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-gray0: ${gray0};
     --theme-color-gray1: ${gray1};
     --theme-color-gray2: ${gray2};
+    --theme-color-gray3: ${gray3};
   }
 
   html,
@@ -305,6 +307,16 @@ export const GlobalStyle = createGlobalStyle`
     &:hover {
       background: #4665f0;
       color: #ffffff;
+    }
+
+    &[disabled] {
+      background-color: var(--theme-color-gray3);
+      color: var(--theme-color-gray2);
+
+      &:hover {
+        background-color: var(--theme-color-gray0);
+        color: var(--theme-color-gray2);
+      }
     }
   }
 
