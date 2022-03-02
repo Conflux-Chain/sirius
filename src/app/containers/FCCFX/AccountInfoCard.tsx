@@ -39,7 +39,8 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
 
   const hasPendingProfitLegacy = !info.pendingProfitLegacy.eq(0);
   const hasUnsignedFC = info.fcUnsigned.gt(0);
-  const hasInterests = (info.pendingProfitLegacy || info.pendingProfit).gt(0);
+  const hasInterests =
+    info.pendingProfit.gt(0) || info.pendingProfitLegacy.gt(0);
 
   const data: Array<InfoItemType> = [
     {
