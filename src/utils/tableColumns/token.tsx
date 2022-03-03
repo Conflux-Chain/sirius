@@ -103,6 +103,11 @@ export const renderAddress = (
   const filter = (accountAddress as string) || '';
   let alias = '';
 
+  // dummy address, show name only
+  if (row[`${type}ContractInfo`]?.isVirtual) {
+    return row[`${type}ContractInfo`].name;
+  }
+
   if (type === 'from') {
     if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;

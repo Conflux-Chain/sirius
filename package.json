@@ -83,7 +83,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start:testnet": "REACT_APP_TestNet=true react-app-rewired start",
-    "start:privatenet": "REACT_APP_PrivateNet=true react-app-rewired start",
+    "start:8888": "REACT_APP_PrivateNet=true react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired  test --env=jest-environment-jsdom-sixteen",
     "test:u": "react-app-rewired  test --env=jest-environment-jsdom-sixteen --updateSnapshot",
