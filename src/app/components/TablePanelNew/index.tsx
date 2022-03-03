@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
@@ -47,14 +47,16 @@ export const TitleTotal = ({
   const { t } = useTranslation();
 
   const content =
-    listLimit && total > listLimit
-      ? t(translations.general.totalRecordWithLimit, {
-          total: toThousands(total),
-          limit: formatNumber(listLimit),
-        })
-      : t(translations.general.totalRecord, {
-          total: toThousands(total),
-        });
+    listLimit && total > listLimit ? (
+      t(translations.general.totalRecordWithLimit, {
+        total: toThousands(total),
+        limit: formatNumber(listLimit),
+      })
+    ) : (
+      <Trans i18nKey="general.totalRecord" count={total}>
+        You got {{ total }} messages.
+      </Trans>
+    );
 
   return <StyleTableTitleTotalWrapper>{content}</StyleTableTitleTotalWrapper>;
 };
