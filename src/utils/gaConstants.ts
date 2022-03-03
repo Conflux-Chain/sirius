@@ -55,6 +55,7 @@ export const ScanEvent = {
       supportCenter: 'support_center',
       stakingAndGovernance: 'staking_governance',
       fcCfx: 'fc_cfx',
+      crossSpace: 'cross_space',
       developerAPI: 'developer_API',
       posOverview: 'posOverview',
       posAccounts: 'posAccounts',
