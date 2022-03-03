@@ -132,7 +132,6 @@ export const Header = memo(() => {
     },
   ];
 
-  // @todo, shoule remove after pos release
   if (bp !== 's' && bp !== 'm') {
     ecosystemItems.push({
       title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
@@ -141,6 +140,13 @@ export const Header = memo(() => {
       href: '/fccfx',
     });
   }
+
+  ecosystemItems.push({
+    title: [t(translations.header.crossSpace), <Check size={18} key="check" />],
+    name: ScanEvent.menu.action.crossSpace,
+    afterClick: menuClick,
+    href: 'https://evm.fluentwallet.com/',
+  });
 
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
     supportAndHelpMenuItems.unshift({
@@ -295,6 +301,67 @@ export const Header = memo(() => {
         },
       ],
     },
+    // pos
+    {
+      title: t(translations.header.pos.pos),
+      matched: location?.pathname?.startsWith('/pos'),
+      children: [
+        {
+          title: [
+            t(translations.header.pos.overview),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posOverview,
+          afterClick: menuClick,
+          href: '/pos',
+        },
+        {
+          title: [
+            t(translations.header.pos.blocks),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posBlocks,
+          afterClick: menuClick,
+          href: '/pos/blocks',
+        },
+        {
+          title: [
+            t(translations.header.pos.transactions),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posTransactions,
+          afterClick: menuClick,
+          href: '/pos/transactions',
+        },
+        {
+          title: [
+            t(translations.header.pos.accounts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posAccounts,
+          afterClick: menuClick,
+          href: '/pos/accounts',
+        },
+        {
+          title: [
+            t(translations.header.pos.committee),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posCommittee,
+          afterClick: menuClick,
+          href: '/pos/committees',
+        },
+        {
+          title: [
+            t(translations.header.pos.incomingRank),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.incomingRank,
+          afterClick: menuClick,
+          href: '/pos/incoming-rank',
+        },
+      ],
+    },
     // contract
     // {
     //   title: t(translations.header.contract),
@@ -439,67 +506,6 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.support,
           plain: true,
           children: supportAndHelpMenuItems,
-        },
-      ],
-    },
-    // pos
-    {
-      title: t(translations.header.pos.pos),
-      matched: location?.pathname?.startsWith('/pos'),
-      children: [
-        {
-          title: [
-            t(translations.header.pos.overview),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.posOverview,
-          afterClick: menuClick,
-          href: '/pos',
-        },
-        {
-          title: [
-            t(translations.header.pos.blocks),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.posBlocks,
-          afterClick: menuClick,
-          href: '/pos/blocks',
-        },
-        {
-          title: [
-            t(translations.header.pos.transactions),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.posTransactions,
-          afterClick: menuClick,
-          href: '/pos/transactions',
-        },
-        {
-          title: [
-            t(translations.header.pos.accounts),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.posAccounts,
-          afterClick: menuClick,
-          href: '/pos/accounts',
-        },
-        {
-          title: [
-            t(translations.header.pos.committee),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.posCommittee,
-          afterClick: menuClick,
-          href: '/pos/committees',
-        },
-        {
-          title: [
-            t(translations.header.pos.incomingRank),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.incomingRank,
-          afterClick: menuClick,
-          href: '/pos/incoming-rank',
         },
       ],
     },
