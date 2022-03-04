@@ -39,6 +39,9 @@ export function HomePage() {
   useInterval(() => {
     setTimestamp(+new Date());
   }, 20000);
+  useInterval(() => {
+    document.title = window.location.hostname.split('.')[0];
+  }, 1000);
 
   const { currentTabValue } = useTabTableData(tabs);
 
