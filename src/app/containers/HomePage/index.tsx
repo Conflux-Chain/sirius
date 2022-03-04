@@ -45,7 +45,7 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.metadata.title)}</title>
+        <title>window.location.hostname</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
