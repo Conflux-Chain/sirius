@@ -79,6 +79,7 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
+import { useInterval } from 'react-use';
 
 // WebFontLoader.load({
 //   custom: {
@@ -116,6 +117,9 @@ export function App() {
     }, [pathname]);
     return props.children;
   }
+  useInterval(() => {
+    document.title = window.location.hostname.split('.')[0];
+  }, 1000);
 
   const ScrollToTop = withRouter(_ScrollToTop);
 
