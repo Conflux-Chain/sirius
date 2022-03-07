@@ -12,6 +12,7 @@ export const Txns = ({ url }: Props) => {
 
   const columnsWidth = [4, 6, 6, 4, 3, 4, 5, 3];
   const columns = [
+    blockColunms.epoch,
     transactionColunms.hash,
     transactionColunms.from,
     transactionColunms.to,
@@ -19,7 +20,6 @@ export const Txns = ({ url }: Props) => {
     transactionColunms.gasPrice,
     transactionColunms.gasFee,
     transactionColunms.age(ageFormat, toggleAgeFormat),
-    blockColunms.epoch,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (
