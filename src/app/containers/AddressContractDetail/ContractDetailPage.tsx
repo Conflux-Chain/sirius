@@ -6,7 +6,7 @@
 
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Copy, Qrcode } from './HeadLineButtons';
@@ -28,12 +28,7 @@ import {
   Title,
   Top,
 } from './layouts';
-import {
-  isContractAddress,
-  isInnerContractAddress,
-  isSpecialAddress,
-  toHex,
-} from 'utils';
+import { isInnerContractAddress, isSpecialAddress, toHex } from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
