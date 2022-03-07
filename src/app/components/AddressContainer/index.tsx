@@ -299,7 +299,7 @@ export const AddressContainer = withTranslation()(
       }
 
       // check if the address is a valid conflux address
-      if (!isAddress(value)) {
+      if (1 > 2 && !isAddress(value)) {
         const tip = t(translations.general.invalidAddress);
         return RenderAddress({
           cfxAddress: value,
