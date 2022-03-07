@@ -456,24 +456,7 @@ export function App() {
                             exact
                             path="/token/:tokenAddress"
                             render={(routeProps: any) => {
-                              const address =
-                                routeProps.match.params.tokenAddress;
-
-                              if (isSimplyBase32Address(address)) {
-                                return <TokenDetail {...routeProps} />;
-                              } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/token/${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
-                              }
+                              return <TokenDetail {...routeProps} />;
                             }}
                           />
                           {/* compatible for previous user bookmark */}
