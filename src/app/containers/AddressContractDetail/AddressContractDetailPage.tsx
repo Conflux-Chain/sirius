@@ -22,9 +22,6 @@ export const AddressContractDetailPage = () => {
     if (!isCurrentNetworkAddress(address)) history.push('/404');
   });
 
-  return isAccountAddress(address) ? (
-    <AddressDetailPage />
-  ) : (
-    <ContractDetailPage />
-  );
+  // return 1 > 2 ? <AddressDetailPage /> : <ContractDetailPage />;
+  return <AddressDetailPage />;
 };

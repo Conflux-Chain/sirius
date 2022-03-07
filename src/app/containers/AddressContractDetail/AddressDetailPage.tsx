@@ -34,6 +34,7 @@ import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
 import { NETWORK_TYPES, NETWORK_TYPE } from '../../../utils/constants';
+import { Link } from '../../components/Link/Loadable';
 
 interface RouteParams {
   address: string;
@@ -85,6 +86,7 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
+            {' / '} <Link href={'/contract/' + address}>Contract</Link>
           </Title>
           <HeadAddressLine>
             <span className="address">{address}</span>
