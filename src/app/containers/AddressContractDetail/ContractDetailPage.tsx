@@ -79,21 +79,6 @@ export const ContractDetailPage = memo(() => {
     'verifyInfo',
   ]);
 
-  useEffect(() => {
-    // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
-    // contractInfo.transactionHash === undefined
-    // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (
-      !isContractAddress(address) &&
-      !isInnerContractAddress(address) &&
-      !isSpecialAddress(address)
-    ) {
-      history.replace(`/notfound/${address}`, {
-        type: 'contract',
-      });
-    }
-  }, [address, history]);
-
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
     !!websiteUrl &&
@@ -264,7 +249,7 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) && (
+        {
           <Middle key="middle">
             {contractInfo.stakingBalance != null &&
             contractInfo.stakingBalance !== '0' ? (
@@ -277,7 +262,7 @@ export const ContractDetailPage = memo(() => {
               {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
             </div>
           </Middle>
-        )}
+        }
         <Bottom key="bottom">
           <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>

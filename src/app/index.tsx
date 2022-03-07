@@ -62,7 +62,10 @@ import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
-import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
+import {
+  AddressContractDetailPage,
+  ContractDetailPage,
+} from './containers/AddressContractDetail/Loadable';
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
@@ -578,11 +581,18 @@ export function App() {
                             component={Epoch}
                           />
                           <Route
+                            path="/contract/:address"
+                            render={(routeProps: any) => {
+                              console.log(`render contact`);
+                              return <ContractDetailPage {...routeProps} />;
+                            }}
+                          />
+                          <Route
                             path="/address/:address"
                             render={(routeProps: any) => {
                               const address = routeProps.match.params.address;
 
-                              if (isSimplyBase32Address(address)) {
+                              if (2 > 1 || isSimplyBase32Address(address)) {
                                 return (
                                   <AddressContractDetailPage {...routeProps} />
                                 );

@@ -30,6 +30,8 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
+import { NETWORK_TYPES, NETWORK_TYPE } from '../../../utils/constants';
+import { Link } from '../../components/Link/Loadable';
 
 interface RouteParams {
   address: string;
@@ -117,6 +119,7 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
+            {' / '} <Link href={'/contract/' + address}>Contract</Link>
           </Title>
           <HeadAddressLine>
             <span className="address">
