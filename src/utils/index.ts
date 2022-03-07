@@ -113,9 +113,6 @@ export const isSimplyBase32Address = (address: string): boolean => {
 
 // support hex and base32
 export const isAddress = (address: string): boolean => {
-  if (address) {
-    return true;
-  }
   try {
     if (address.startsWith('0x')) {
       return isCfxHexAddress(address);
