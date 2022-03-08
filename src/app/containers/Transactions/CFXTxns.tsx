@@ -55,12 +55,7 @@ export const CFXTxns = ({ address }: Props) => {
           },
         },
       }}
-      filterOptions={[
-        'txTypeAll',
-        'txTypeOutgoing',
-        'txTypeIncoming',
-        'txTypeCreate',
-      ]}
+      filterOptions={['txTypeAll', 'txTypeOutgoing', 'txTypeIncoming']}
     />
   );
 
