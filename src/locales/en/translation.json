@@ -352,6 +352,7 @@
     "stakingAndGovernance": "Staking & Governance",
     "developerAPI": "API Documentation",
     "fcCfx": "FC-CFX Non-reversible Exchange",
+    "crossSpace": "Cross Space",
     "more": "More",
     "tools": "Tools",
     "balanceChecker": "Balance Checker",
@@ -659,7 +660,8 @@
       "blockHash": "Block Hash",
       "epoch": "Epoch"
     },
-    "totalRecord": "A total of {{total}} records",
+    "totalRecord": "A total of {{total}} record",
+    "totalRecord_plural": "A total of {{total}} records",
     "totalRecordWithLimit": "Showing the last {{limit}} records (A total of {{total}} records)",
     "totalRecordWithType": "A total of {{total}} {{type}}",
     "totalRecordWithLimitWithType": "Showing the last {{limit}} {{type}} (A total of {{total}} {{type}})",
