@@ -565,7 +565,7 @@ export const Header = memo(() => {
     {
       // switch network
       name: 'switch-network',
-      title: getNetwork(networks, networkId).name,
+      title: getNetwork(networks, networkId)?.name || networkId,
       children: networks.map(n => {
         const isMatch = n.id === networkId;
 
