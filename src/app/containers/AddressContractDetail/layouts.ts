@@ -115,7 +115,7 @@ export const Top = styled.section`
   }
 `;
 export const Middle = styled.section`
-  margin-bottom: 2.29rem;
+  margin-bottom: 1.7143rem;
 
   ${media.s} {
     margin-bottom: 2rem;
