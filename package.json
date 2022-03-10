@@ -5,6 +5,7 @@
   "dependencies": {
     "@cfxjs/antd": "1.0.6",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
+    "@cfxjs/use-wallet": "0.0.18",
     "@conflux-dev/conflux-address-js": "1.1.7",
     "@testing-library/jest-dom": "5.1.1",
     "@testing-library/react": "10.0.1",

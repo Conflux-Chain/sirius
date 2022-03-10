@@ -44,7 +44,7 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  const { accounts, confluxJS } = usePortal();
+  const { accounts, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -148,7 +148,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           //loading
           setModalShow(true);
           try {
-            const txHash = await confluxJS.sendTransaction(txParams);
+            const txHash = await sendTransaction(txParams);
             const code = TXN_ACTION.writeContract;
 
             // mark txn action to history

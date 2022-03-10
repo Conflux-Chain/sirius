@@ -10,7 +10,7 @@ import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
-import { useAccounts } from '../../../utils/hooks/usePortal';
+import { usePortal } from '../../../utils/hooks/usePortal';
 import ReactECharts from 'echarts-for-react';
 import { media } from '../../../styles/media';
 import { monospaceFont } from '../../../styles/variable';
@@ -98,7 +98,7 @@ export const StatsCard = ({
   );
 
   // get portal selected address
-  const [accounts] = useAccounts();
+  const { accounts } = usePortal();
 
   let columns: any[] = [];
   let action = '';

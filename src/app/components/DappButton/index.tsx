@@ -49,7 +49,7 @@ const DappButton = ({
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // cip-37 compatible
-  const { accounts, confluxJS } = usePortal();
+  const { accounts, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [txHash, setTxHash] = useState('');
@@ -74,8 +74,7 @@ const DappButton = ({
       //loading
       setModalShow(true);
 
-      confluxJS
-        .sendTransaction(txParams)
+      sendTransaction(txParams)
         .then(txHash => {
           addRecord({
             hash: txHash,

@@ -1269,12 +1269,12 @@
       "copyAddress": "Copy address",
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
-      "versionNotice": "Version Notice",
+      "addressNotice": "Address Notice",
       "switchToMainnet": "Please switch the network to Conflux Hydra in Fluent Wallet.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in Fluent Wallet.",
       "switchToScanNetwork": "Please switch the network to {{networkID}} in Fluent Wallet.",
       "cannotProcess": "Cannot Process",
-      "upgradeTipVersion": "Please update Fluent Wallet to the latest version."
+      "upgradeTipAddress": "Please switch Fluent Wallet to correct network."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",

@@ -1267,12 +1267,12 @@
       "copyAddress": "复制地址",
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
-      "versionNotice": "版本说明",
+      "addressNotice": "地址说明",
       "switchToMainnet": "请在 Fluent Wallet 中将网络切换至 Conflux Hydra。",
       "switchToTestnet": "请在 Fluent Wallet 中将网络切换至 Conflux Test Network。",
       "switchToScanNetwork": "请在 Fluent Wallet 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
-      "upgradeTipVersion": "请升级 Fluent Wallet 至最新版本。"
+      "upgradeTipAddress": "请切换 Fluent Wallet 到正确的网络中。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",

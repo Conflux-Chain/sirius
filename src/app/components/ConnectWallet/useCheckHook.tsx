@@ -28,7 +28,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
     }
   };
 
-  const checkVersionValid = () => {
+  const checkAddressValid = () => {
     if (installed && connected === 1) {
       return SDK.address.isValidCfxAddress(accounts[0]);
     }
@@ -59,21 +59,21 @@ export const useCheckHook = function <Props>(showNotification = false) {
   const notifyVersionError = () => {
     setNotifications({
       icon: <XCircleFill color="#e15c56" />,
-      title: t(translations.connectWallet.modal.versionNotice),
-      content: t(translations.connectWallet.modal.upgradeTipVersion),
+      title: t(translations.connectWallet.modal.addressNotice),
+      content: t(translations.connectWallet.modal.upgradeTipAddress),
       delay: 5000,
     });
   };
 
   const [isNetworkValid, setIsNetworkValid] = useState(checkNetworkValid);
-  const [isVersionValid, setIsVersionValid] = useState(checkVersionValid);
+  const [isAddressValid, setIsAddressValid] = useState(checkAddressValid);
 
   useEffect(() => {
     const isNetworkValid = checkNetworkValid();
-    const isVersionValid = checkVersionValid();
+    const isAddressValid = checkAddressValid();
 
     if (showNotification) {
-      if (installed && connected === 1 && !isVersionValid) {
+      if (installed && connected === 1 && !isAddressValid) {
         notifyVersionError();
       }
 
@@ -84,7 +84,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
 
     // prevent unknonw status update
     if (chainId !== '0xNaN') {
-      setIsVersionValid(isVersionValid);
+      setIsAddressValid(isAddressValid);
       setIsNetworkValid(isNetworkValid);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,8 +92,8 @@ export const useCheckHook = function <Props>(showNotification = false) {
 
   return {
     isNetworkValid,
-    isVersionValid,
-    isValid: isNetworkValid && isVersionValid,
+    isAddressValid,
+    isValid: isNetworkValid && isAddressValid,
     notifyVersionError,
     notifyNetworkError,
   };

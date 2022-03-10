@@ -4,7 +4,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import { tranferToLowerCase } from 'utils';
-import 'utils/lazyJSSDK';
 import { Search as SearchComp } from '../Search/Loadable';
 import { CONTRACTS } from 'utils/constants';
 import { ActionButton } from 'app/components/ActionButton';

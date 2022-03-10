@@ -35,7 +35,7 @@ export const Modal = ({
   onClose = () => {},
 }: Modal) => {
   const { t } = useTranslation();
-  const { installed, login, connected, accounts } = usePortal();
+  const { login, connected, accounts, installed } = usePortal();
   const { isNetworkValid, isValid } = useCheckHook();
   let inValidModalTip = '';
 
@@ -53,7 +53,7 @@ export const Modal = ({
       );
     }
   } else {
-    inValidModalTip = t(translations.connectWallet.modal.upgradeTipVersion);
+    inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
   }
 
   useEffect(() => {

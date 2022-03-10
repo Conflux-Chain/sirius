@@ -14,6 +14,7 @@ import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.
 import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
 import { abi as fcABI } from 'utils/contract/FC.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { provider } from '@cfxjs/use-wallet';
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;
@@ -120,8 +121,7 @@ export const CFX = new SDK.Conflux({
   networkId: NETWORK_ID,
 });
 
-// @ts-ignore
-CFX.provider = window.conflux;
+CFX.provider = provider;
 
 export const fcExchangeContract = CFX.Contract({
   address: FC_EXCHANGE_ADDRESS,
