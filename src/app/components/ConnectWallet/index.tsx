@@ -27,21 +27,15 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
     notifyVersionError,
     notifyNetworkError,
     isNetworkValid,
-    isVersionValid,
+    isAddressValid,
   } = useCheckHook();
-
-  // useEffect(() => {
-  //   if (connected === 1) {
-  //     setShowModal(false);
-  //   }
-  // }, [connected]);
 
   const handleClick = e => {
     if (!isValid) {
       // network error or version error
       e.stopPropagation();
       e.preventDefault();
-      if (!isVersionValid) {
+      if (!isAddressValid) {
         notifyVersionError();
       }
       if (!isNetworkValid) {

@@ -120,7 +120,7 @@ export function FCCFX() {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts]);
+  }, [accounts[0]]);
 
   const handleNoticeClose = () => {
     setIsModalVisible(false);

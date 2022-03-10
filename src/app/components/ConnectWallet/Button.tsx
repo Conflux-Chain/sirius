@@ -101,7 +101,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         {buttonStatus}
         <span className="text">{buttonText}</span>
       </span>
-      {accounts.length && showBalance && !hasPendingRecords ? (
+      {isValid && accounts.length && showBalance && !hasPendingRecords ? (
         <span className="balance">{balance} CFX</span>
       ) : null}
     </ButtonWrapper>

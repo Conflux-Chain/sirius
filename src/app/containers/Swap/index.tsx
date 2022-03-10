@@ -187,6 +187,7 @@ const StyledSwapItemWrapper = styled.div`
 
 export function Swap() {
   const { t } = useTranslation();
+  const { installed, accounts, connected, provider } = usePortal();
   const { addRecord } = useTxnHistory();
 
   const CFX = new SDK.Conflux({
@@ -194,8 +195,7 @@ export function Swap() {
     networkId: NETWORK_ID,
   });
 
-  // @ts-ignore
-  CFX.provider = window.conflux;
+  CFX.provider = provider;
 
   const contract = CFX.Contract({
     address: CONTRACTS.wcfx,
@@ -205,7 +205,6 @@ export function Swap() {
   const [cfx, setCfx] = useState('0');
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
-  const { installed, accounts, connected } = usePortal();
   const [showModal, setShowModal] = useState({
     show: false,
     hash: '',

@@ -455,10 +455,14 @@ export function AddressMetadata({ address, accountInfo }) {
     );
   };
 
+  const hasPosInfo = !lodash.isNil(posAccountInfo?.address);
+
   return (
     <>
-      <div style={{ marginBottom: '24px' }}>{powMetadata()}</div>
-      {posMetadata()}
+      <StyledCardWrapper>{powMetadata()}</StyledCardWrapper>
+      {hasPosInfo ? (
+        <StyledCardWrapper>{posMetadata()}</StyledCardWrapper>
+      ) : null}
     </>
   );
 }
@@ -524,4 +528,8 @@ const ModalWrapper = styled.div`
       color: #23304f;
     }
   }
+`;
+
+const StyledCardWrapper = styled.div`
+  margin-bottom: 1.7143rem;
 `;
