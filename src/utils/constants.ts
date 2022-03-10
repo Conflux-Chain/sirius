@@ -24,7 +24,7 @@ export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
 // only for dev and qa, use with caution
 export const IS_PRE_RELEASE =
   process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('scantest');
+  window.location.hostname.includes('stage');
 
 export const IS_TESTNET =
   process.env.REACT_APP_TestNet === 'true' ||
