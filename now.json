@@ -5,15 +5,15 @@
   "routes": [
     {
       "src": "/v1/(?<req>.*)",
-      "dest": "https://scantest.confluxnetwork.org/v1/$req"
+      "dest": "https://www-stage.confluxscan.net/v1/$req"
     },
     {
       "src": "/stat/(?<req>.*)",
-      "dest": "https://scantest.confluxnetwork.org/stat/$req"
+      "dest": "https://www-stage.confluxscan.net/stat/$req"
     },
     {
       "src": "/rpc",
-      "dest": "https://scantest.confluxnetwork.org/rpc"
+      "dest": "https://www-stage.confluxscan.net/rpc"
     }
   ]
 }
