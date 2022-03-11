@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -32,6 +32,7 @@ import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { NETWORK_TYPES, NETWORK_TYPE } from '../../../utils/constants';
 import { Link } from '../../components/Link/Loadable';
+import fetch from 'utils/request';
 
 interface RouteParams {
   address: string;
@@ -104,6 +105,15 @@ export const AddressDetailPage = memo(() => {
     },
   };
 
+  const [hexId, setHexId] = useState(0);
+  const [token, setToken] = useState('?');
+  useEffect(() => {
+    fetch('/stat/devops/hexId?hexId=' + toHex(address)).then(result => {
+      console.log(`result is `, result);
+      setHexId(result.hex?.id || -1);
+      setToken(result.token?.name || '-');
+    });
+  }, [address]);
   return (
     <>
       <Helmet>
@@ -120,6 +130,7 @@ export const AddressDetailPage = memo(() => {
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
             {' / '} <Link href={'/contract/' + address}>Contract</Link>
+            {' / '} <Link href={'/token/' + address}>Token</Link>
           </Title>
           <HeadAddressLine>
             <span className="address">
@@ -151,7 +162,7 @@ export const AddressDetailPage = memo(() => {
               </DropdownWrapper>
               {/*<Report address={address} />*/}
             </div>
-            [{toHex(address)}]
+            [{toHex(address)}] [{hexId}] [{token}]
           </HeadAddressLine>
         </Head>
         <Top>
