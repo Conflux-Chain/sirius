@@ -14,13 +14,14 @@ import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import nftInfo from 'images/info.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
-import { Tooltip } from '@cfxjs/react-ui';
+import { Tooltip } from '@cfxjs/antd';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
 import audioDesign from './audio-design.svg';
 import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
 import audioPlay from './audio-play.svg';
+import Link from '@zeit-ui/react-icons/link';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -241,7 +242,18 @@ export const NFTPreview = React.memo(
                   />
                 )}
                 {imageName ? (
-                  <div className="image-preview-name">{imageName}</div>
+                  <div className="info-name">
+                    <Tooltip title={imageName}>
+                      <div className="name">{imageName}</div>
+                    </Tooltip>
+                    {imageUri ? (
+                      <Tooltip title={imageUri}>
+                        <div className="name">
+                          <Link size={12} />
+                        </div>
+                      </Tooltip>
+                    ) : null}
+                  </div>
                 ) : null}
               </>
             }
@@ -258,7 +270,7 @@ export const NFTPreview = React.memo(
             </Text>
           </PopoverWrapper>
         ) : imageName ? (
-          <Tooltip hoverable text={imageName} placement="top">
+          <Tooltip title={imageName}>
             <img src={nftInfo} alt="?" style={{ marginLeft: 4 }} />
           </Tooltip>
         ) : null
@@ -288,14 +300,23 @@ export const NFTPreview = React.memo(
               />
             )}
             <div className="info">
-              <Tooltip text={imageName} placement={'top-start'} hoverable>
-                <div className="name">{imageName}</div>
-              </Tooltip>
-              <Tooltip text={tokenId} placement={'top-start'} hoverable>
-                <div className="id">
+              <div className="info-name">
+                <Tooltip title={imageName}>
+                  <div className="name">{imageName}</div>
+                </Tooltip>
+                {imageUri ? (
+                  <Tooltip title={imageUri}>
+                    <div className="name">
+                      <Link size={12} />
+                    </div>
+                  </Tooltip>
+                ) : null}
+              </div>
+              <div className="id">
+                <Tooltip title={tokenId}>
                   {t(translations.nftChecker.tokenId)}: {tokenId}
-                </div>
-              </Tooltip>
+                </Tooltip>
+              </div>
             </div>
           </Spin>
         </NFTCard>
@@ -427,15 +448,17 @@ const NFTCard = styled.div`
     font-size: 12px;
     color: #002257;
 
+    .info-name {
+      display: flex;
+      justify-content: space-between;
+    }
+
     .name {
       height: 18px;
+      min-width: 12px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
-      > span {
-        font-size: 10px;
-      }
     }
 
     .tooltip {
