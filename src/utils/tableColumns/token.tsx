@@ -720,6 +720,7 @@ const TraceTypeElement = ({ info }) => {
   const { t } = useTranslation();
 
   const outcome = info?.result?.outcome;
+  const decodedMessage = info?.result?.decodedMessage || '';
 
   const level = (
     <span className="level">
@@ -736,25 +737,35 @@ const TraceTypeElement = ({ info }) => {
   return (
     <StyledTractTypeWrapper className={clsx(outcome)}>
       {level}
-      {outcome && outcome !== 'success' ? (
-        <Popover
-          notSeperateTitle
-          title={t(translations.general.table.token.traceStatusTitle)}
-          content={t(translations.general.table.token.traceStatus[outcome])}
-          placement="top"
-          hoverable={true}
-          trigger={breakpoint === 's' ? 'click' : 'hover'}
-          contentClassName={clsx('siriuse-status-popover')}
-        >
-          <span className="dot"></span>
-        </Popover>
-      ) : null}
       <Text hoverValue={`${info.type}${info.index}`}>
         <div className="type-container">
           {info.type}
           {info.index}
         </div>
       </Text>
+      (
+      <Popover
+        notSeperateTitle
+        title={t(translations.general.table.token.traceStatusTitle)}
+        content={
+          t(translations.general.table.token.traceStatus[outcome]) +
+          decodedMessage
+        }
+        placement="top"
+        hoverable={true}
+        trigger={breakpoint === 's' ? 'click' : 'hover'}
+        contentClassName={clsx('siriuse-status-popover')}
+      >
+        <span
+          style={{
+            color: outcome === 'success' ? 'darkgreen' : 'red',
+            paddingLeft: '2px',
+          }}
+        >
+          {outcome}
+        </span>
+      </Popover>
+      )
     </StyledTractTypeWrapper>
   );
 };

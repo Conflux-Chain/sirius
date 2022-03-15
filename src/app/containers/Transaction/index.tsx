@@ -29,7 +29,7 @@ export function Transaction() {
     });
   }, [hash]);
 
-  const { from, to, eventLogCount } = txnDetail;
+  const { from, to, eventLogCount, status, value } = txnDetail;
 
   let tabs: any[] = [
     {
@@ -41,7 +41,15 @@ export function Transaction() {
       value: 'internal-txns',
       action: 'transactionCfxTransfers',
       label: t(translations.transaction.internalTxns.title),
-      content: <InternalTxns address={hash} from={from} to={to} />,
+      content: (
+        <InternalTxns
+          address={hash}
+          from={from}
+          to={to}
+          status={status}
+          value={value}
+        />
+      ),
       // hidden: cfxTransferAllCount < 2,
     },
     {
