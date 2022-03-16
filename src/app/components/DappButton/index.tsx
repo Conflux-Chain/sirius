@@ -52,6 +52,7 @@ const DappButton = ({
   const { accounts, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [txHash, setTxHash] = useState('');
   const { isValid } = useCheckHook();
 
@@ -92,6 +93,10 @@ const DappButton = ({
           setTxHash(txHash);
         })
         .catch(error => {
+          console.log('DappButton react error: ', error);
+          setErrorMessage(
+            error.code ? `${error.code} - ${error.message}` : error.message,
+          );
           //rejected alert
           failCallback && failCallback(error.message);
           setModalType('error');
@@ -111,6 +116,7 @@ const DappButton = ({
     setModalShow(false);
     setTxHash('');
     setModalType('');
+    setErrorMessage('');
     closeModalCallback && closeModalCallback();
   };
 
@@ -161,6 +167,7 @@ const DappButton = ({
         status={modalType}
         onClose={closeHandler}
         hash={txHash}
+        errorMessage={errorMessage}
       />
     </>
   );

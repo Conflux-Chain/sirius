@@ -209,6 +209,7 @@ export function Swap() {
     show: false,
     hash: '',
     status: '',
+    errorMessage: '',
   });
 
   const [fromToken, setFromToken] = useState({
@@ -314,6 +315,7 @@ export function Swap() {
             ...showModal,
             show: true,
             status: 'error',
+            errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
           });
         })
         .finally(() => {
@@ -364,6 +366,7 @@ export function Swap() {
             ...showModal,
             show: true,
             status: 'error',
+            errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
           });
         })
         .finally(() => {
@@ -440,6 +443,7 @@ export function Swap() {
       show: false,
       hash: '',
       status: '',
+      errorMessage: '',
     });
   };
 
@@ -483,6 +487,7 @@ export function Swap() {
         status={showModal.status}
         onClose={handleClose}
         hash={showModal.hash}
+        errorMessage={showModal.errorMessage}
       />
     </StyledSwapWrapper>
   );

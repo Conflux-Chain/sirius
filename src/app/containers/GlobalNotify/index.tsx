@@ -67,7 +67,7 @@ export function GlobalNotify() {
                       key="1"
                       className="site-collapse-custom-panel"
                     >
-                      {option.detail}
+                      <StyledDetailWrapper>{option.detail}</StyledDetailWrapper>
                     </Panel>
                   </Collapse>
                 )}
@@ -130,4 +130,11 @@ const LinkWrapper = styled.span`
   .link-anchor {
     color: #0e47ef;
   }
+`;
+
+const StyledDetailWrapper = styled.div`
+  max-height: 11.4286rem;
+  overflow: auto;
+  padding: 0.7143rem !important;
+  background-color: var(--theme-color-gray0);
 `;

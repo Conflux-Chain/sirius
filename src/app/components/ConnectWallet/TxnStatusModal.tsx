@@ -29,6 +29,7 @@ interface TxnStatusModalProps {
   loadingText?: React.ReactNode;
   successText?: React.ReactNode;
   errorText?: React.ReactNode;
+  errorMessage?: React.ReactNode;
 }
 
 export const StatusModal = ({
@@ -88,6 +89,7 @@ StatusModal.defaultProps = {
   loadingText: 'loading',
   successText: 'success',
   errorText: 'error',
+  errorMessage: '',
 };
 
 // compatible with outer status and inner tx status, if no outer status, then will loop tx status
@@ -98,6 +100,7 @@ export const TxnStatusModal = ({
   show = false,
   onTxSuccess,
   onTxError,
+  errorMessage,
 }: TxnStatusModalProps) => {
   const { t } = useTranslation();
   const [iStatus, setIStatus] = useState('');
@@ -164,6 +167,7 @@ export const TxnStatusModal = ({
   const errorText = (
     <StyledTxnStatusModalWrapper>
       <div className="submitted">{t(translations.general.txRejected)}</div>
+      <div className="error-message">{errorMessage}</div>
     </StyledTxnStatusModalWrapper>
   );
 
@@ -209,6 +213,18 @@ const StyledStatusModalWrapper = styled.div`
 `;
 
 const StyledTxnStatusModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .error-message {
+    max-height: 11.4286rem;
+    overflow: auto;
+    padding: 0.7143rem;
+    margin-top: 0.7143rem;
+    background-color: var(--theme-color-gray0);
+  }
+
   .submitted {
     margin-top: 0.9286rem;
     font-size: 1rem;
