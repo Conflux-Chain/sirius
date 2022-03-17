@@ -33,6 +33,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     show: false,
     hash: '',
     status: '',
+    errorMessage: '',
   });
 
   const unsingedFC = formatBalance(
@@ -85,6 +86,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -148,6 +150,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -160,6 +163,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
       show: false,
       status: '',
       hash: '',
+      errorMessage: '',
     });
   };
 
@@ -217,6 +221,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         onClose={handleTxnStatusClose}
         hash={txnStatusModal.hash}
         onTxSuccess={handleTxSuccess}
+        errorMessage={txnStatusModal.errorMessage}
       />
     </StyledStakeAndSignWrapper>
   );

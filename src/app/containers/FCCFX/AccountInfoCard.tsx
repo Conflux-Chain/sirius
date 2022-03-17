@@ -35,6 +35,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
     show: false,
     hash: '',
     status: '',
+    errorMessage: '',
   });
 
   const hasPendingProfitLegacy = !info.pendingProfitLegacy.eq(0);
@@ -152,6 +153,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       setLoading(false);
@@ -166,6 +168,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       show: false,
       status: '',
       hash: '',
+      errorMessage: '',
     });
   };
 
@@ -240,6 +243,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
         onClose={handleTxnStatusClose}
         hash={txnStatusModal.hash}
         onTxSuccess={handleTxSuccess}
+        errorMessage={txnStatusModal.errorMessage}
       />
     </StyledTotalInfoWrapper>
   );

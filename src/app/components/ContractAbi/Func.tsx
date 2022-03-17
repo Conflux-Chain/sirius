@@ -47,6 +47,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { accounts, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [txHash, setTxHash] = useState('');
   const [outputShown, setOutputShown] = useState(false);
   const [outputValue, setOutputValue] = useState({});
@@ -172,6 +173,9 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             });
           } catch (error) {
             setModalType('error');
+            setErrorMessage(
+              error.code ? `${error.code} - ${error.message}` : error.message,
+            );
             setOutputError(error.message || '');
           }
         }
@@ -189,6 +193,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     // reset tx status modal state
     setModalShow(false);
     setModalType('');
+    setErrorMessage('');
     setTxHash('');
   };
   function getValidator(type: string) {
@@ -363,6 +368,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         status={modalType}
         onClose={closeHandler}
         hash={txHash}
+        errorMessage={errorMessage}
       />
     </Container>
   );
