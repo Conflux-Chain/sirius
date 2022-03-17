@@ -135,6 +135,4 @@ const LinkWrapper = styled.span`
 const StyledDetailWrapper = styled.div`
   max-height: 11.4286rem;
   overflow: auto;
-  padding: 0.7143rem !important;
-  background-color: var(--theme-color-gray0);
 `;

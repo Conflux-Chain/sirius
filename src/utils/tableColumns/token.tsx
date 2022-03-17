@@ -731,6 +731,20 @@ export const traceType = {
   render: (_, row) => <TraceTypeElement info={row} />,
 };
 
+export const traceOutcome = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceOutcome)}
+    </Translation>
+  ),
+  dataIndex: 'result',
+  key: 'outcome',
+  render: (_, row) => {
+    return row.result?.outcome || '--';
+  },
+};
+
 export const traceResult = {
   width: 1,
   title: (
