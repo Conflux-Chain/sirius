@@ -981,6 +981,7 @@
     "byFoundation": " (by Foundation)"
   },
   "transaction": {
+    "pendingReasonLink": "View Reason",
     "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",
     "inThePosition": "(in the position {{position}})",
