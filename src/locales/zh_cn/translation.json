@@ -979,6 +979,7 @@
     "byFoundation": "（来自基金会）"
   },
   "transaction": {
+    "pendingReasonLink": "查看原因",
     "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",

@@ -725,7 +725,11 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
+            <Status
+              type={status}
+              txExecErrorInfo={txExecErrorInfo}
+              address={from}
+            ></Status>
           </SkeletonContainer>
         </Description>
         <Description

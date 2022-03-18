@@ -42,6 +42,7 @@ export const TxnHashRenderComponent = ({
   const [loading, setLoading] = useState(true);
   const [txnDetail, setTxnDetail] = useState<{
     status?: string;
+    address?: string;
   }>({});
   const bp = useBreakpoint();
 
@@ -95,6 +96,7 @@ export const TxnHashRenderComponent = ({
             type={status}
             variant="dot"
             txExecErrorInfo={txExecErrorInfo}
+            address={txnDetail.address}
           ></Status>
         </StyledStatusWrapper>
       ) : null}
