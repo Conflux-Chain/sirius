@@ -770,6 +770,7 @@
         "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型",
+        "traceOutcome": "执行结果",
         "traceResult": "返回值",
         "traceStatusTitle": "状态",
         "traceStatus": {
@@ -918,6 +919,7 @@
         "20003": "请求中止。",
         "20004": "网络连接错误。",
         "30001": "RPC 请求错误",
+        "60002": "追溯数据解析错误。",
         "400": "错误请求。",
         "401": "未授权。",
         "403": "服务器拒绝请求。",
@@ -977,6 +979,7 @@
     "byFoundation": "（来自基金会）"
   },
   "transaction": {
+    "pendingReasonLink": "查看原因",
     "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",
@@ -1267,12 +1270,12 @@
       "copyAddress": "复制地址",
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
-      "versionNotice": "版本说明",
+      "addressNotice": "地址说明",
       "switchToMainnet": "请在 Fluent Wallet 中将网络切换至 Conflux Hydra。",
       "switchToTestnet": "请在 Fluent Wallet 中将网络切换至 Conflux Test Network。",
       "switchToScanNetwork": "请在 Fluent Wallet 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
-      "upgradeTipVersion": "请升级 Fluent Wallet 至最新版本。"
+      "upgradeTipAddress": "请切换 Fluent Wallet 到正确的网络中。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",

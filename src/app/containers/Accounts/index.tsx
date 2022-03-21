@@ -9,7 +9,7 @@ import styled from 'styled-components/macro';
 import { Select } from 'app/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
-import { useAccounts } from 'utils/hooks/usePortal';
+import { usePortal } from 'utils/hooks/usePortal';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 import { formatAddress } from 'utils';
 import { monospaceFont } from 'styles/variable';
@@ -22,7 +22,7 @@ export function Accounts() {
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.startsWith('en');
   // get portal selected address
-  const [accounts] = useAccounts();
+  const { accounts } = usePortal();
 
   const options = [
     {

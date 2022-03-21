@@ -16,15 +16,7 @@ import {
   StorageStakingCard,
   NonceCard,
 } from './AddressInfoCards';
-import {
-  Main,
-  Title,
-  Bottom,
-  HeadAddressLine,
-  Top,
-  Head,
-  Middle,
-} from './layouts';
+import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
@@ -109,9 +101,9 @@ export const AddressDetailPage = memo(() => {
           <StorageStakingCard accountInfo={accountInfo} />
           <NonceCard accountInfo={accountInfo} />
         </Top>
-        <Middle key="middle">
+        <div key="middle">
           <AddressMetadata address={address} accountInfo={accountInfo} />
-        </Middle>
+        </div>
         <Bottom>
           <Table address={address} addressInfo={accountInfo} key={address} />
         </Bottom>

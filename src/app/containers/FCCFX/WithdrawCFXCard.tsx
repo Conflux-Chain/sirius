@@ -33,6 +33,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     show: false,
     hash: '',
     status: '',
+    errorMessage: '',
   });
 
   const unsignedCFX = formatBalance(
@@ -88,6 +89,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -147,6 +149,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -159,6 +162,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
       show: false,
       status: '',
       hash: '',
+      errorMessage: '',
     });
   };
 
@@ -214,6 +218,7 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
         onClose={handleTxnStatusClose}
         hash={txnStatusModal.hash}
         onTxSuccess={handleTxSuccess}
+        errorMessage={txnStatusModal.errorMessage}
       />
     </StyledWithdrawCFXWrapper>
   );

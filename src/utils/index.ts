@@ -825,8 +825,8 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
 
 const urls = {
   stage: {
-    1: '//testnet-scantest.confluxnetwork.org',
-    1029: '//scantest.confluxnetwork.org',
+    1: '//testnet-stage.confluxscan.net',
+    1029: '//www-stage.confluxscan.net',
     71: '//evmtestnet-stage.confluxscan.net',
     1030: '//evm-stage.confluxscan.net',
   },
@@ -883,12 +883,16 @@ interface ErrorInfoType {
 
 export const publishRequestError = (
   e: (Error & ErrorInfoType) | ErrorInfoType,
-  type: 'rpc' | 'http' | 'wallet',
+  type: 'rpc' | 'http' | 'wallet' | 'code',
 ) => {
   let detail = '';
 
   if (e.code && e.message) {
-    detail = `${e.code}, ${e.message}`;
+    if (type === 'code') {
+      detail = e.message;
+    } else {
+      detail = `${e.code}, ${e.message}`;
+    }
 
     if (type === 'rpc' && !lodash.isNil(e.data)) {
       detail += `, ${e.data}`;

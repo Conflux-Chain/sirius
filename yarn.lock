@@ -1536,6 +1536,11 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
+"@cfxjs/use-wallet@0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@cfxjs/use-wallet/-/use-wallet-0.0.18.tgz#6fa1dc3e6628621674dbe734bf6427a154a56299"
+  integrity sha512-DwHIjTpZGo2ntJO+MYJv1d2nIuXYB9AEk63PYZgSKZARWwcRkLSrc/MmVbhHLPOckoHVpVymdssiU50hw87TqA==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@cnakazawa/watch/-/watch-1.0.4.tgz"

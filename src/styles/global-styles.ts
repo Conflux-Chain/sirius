@@ -266,13 +266,17 @@ export const GlobalStyle = createGlobalStyle`
       padding: 16px;
     }
 
-    .image-preview-name {
-      margin-top: 10px;
-      text-align: center;
-      max-width: 200px;
-      word-break: break-word;
-      white-space: normal;
-      line-height: 1.4;
+    .info-name {
+      display: flex;
+      justify-content: space-between;
+
+      .name {
+        height: 18px;
+        min-width: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 

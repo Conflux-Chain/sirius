@@ -27,6 +27,7 @@ export const Overview = ({ data }) => {
     tokenTransferTokenInfo,
     tokenTransfer,
     txExecErrorInfo,
+    from,
   } = data;
 
   return (
@@ -40,7 +41,11 @@ export const Overview = ({ data }) => {
         title={t(translations.transaction.status)}
       >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
+          <Status
+            type={status}
+            txExecErrorInfo={txExecErrorInfo}
+            address={from}
+          ></Status>
         </div>
       </Description>
       {tokenTransfer?.total ? (

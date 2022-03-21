@@ -771,6 +771,7 @@
         "erc1155QuantityTip": "The quantity of CRC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",
         "traceType": "Trace Type",
+        "traceOutcome": "Outcome",
         "traceResult": "Result",
         "traceStatusTitle": "Status",
         "traceStatus": {
@@ -920,6 +921,7 @@
         "20003": "Request abort.",
         "20004": "Network error.",
         "30001": "RPC call error.",
+        "60002": "Trace parsing error.",
         "400": "Bad request.",
         "401": "Unauthorized.",
         "403": "Forbidden.",
@@ -979,6 +981,7 @@
     "byFoundation": " (by Foundation)"
   },
   "transaction": {
+    "pendingReasonLink": "View Reason",
     "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",
     "inThePosition": "(in the position {{position}})",
@@ -1269,12 +1272,12 @@
       "copyAddress": "Copy address",
       "viewOnConfluxScan": "View on ConfluxScan",
       "networkNotice": "Network Notice",
-      "versionNotice": "Version Notice",
+      "addressNotice": "Address Notice",
       "switchToMainnet": "Please switch the network to Conflux Hydra in Fluent Wallet.",
       "switchToTestnet": "Please switch the network to Conflux Test Network in Fluent Wallet.",
       "switchToScanNetwork": "Please switch the network to {{networkID}} in Fluent Wallet.",
       "cannotProcess": "Cannot Process",
-      "upgradeTipVersion": "Please update Fluent Wallet to the latest version."
+      "upgradeTipAddress": "Please switch Fluent Wallet to correct network."
     },
     "history": {
       "emptyRecordsTip": "Your transactions will appear here...",
