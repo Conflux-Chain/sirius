@@ -67,7 +67,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
       });
       fetchWithPrefix(`/transferTree/${address}`)
         .then(resp => {
-          if (resp) {
+          if (resp?.traceTree) {
             try {
               const list = treeToFlat(resp.traceTree).map(l => {
                 const contractInfo = resp.contractMap || {};
@@ -81,7 +81,6 @@ export const InternalTxns = ({ address, from, to }: Props) => {
                 ...state,
                 data: list,
                 total: list.length,
-                loading: false,
               });
             } catch (e) {
               console.log('trace parse error: ', e);
@@ -94,6 +93,12 @@ export const InternalTxns = ({ address, from, to }: Props) => {
             ...state,
             error: e,
           });
+        })
+        .finally(() => {
+          setState(state => ({
+            ...state,
+            loading: false,
+          }));
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
