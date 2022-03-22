@@ -580,12 +580,13 @@ export const StatsCard = ({
         return null;
     }
   };
+  const account = accounts[0];
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tableBodyMemo = useMemo(() => tableBody(category, data), [
     category,
     data,
     action,
-    accounts,
+    account,
     totalDifficulty,
     totalGas,
   ]);
