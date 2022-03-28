@@ -79,15 +79,34 @@ export const InputData = ({
             ];
 
             const resp = await reqContract({ address: toHash, fields });
-            abi = resp['abi'];
+            const { proxy, implementation } = resp;
+
+            if (proxy?.proxy && implementation?.address) {
+              const implementationResp = await reqContract({
+                address: implementation.address,
+                fields,
+              });
+              abi = implementationResp['abi'];
+            } else {
+              abi = resp.abi;
+            }
 
             try {
-              const contract = CFX.Contract({
+              let contract = CFX.Contract({
                 abi: JSON.parse(abi),
                 address: toHash,
                 decodeByteToHex: true,
               });
-              const decodedBytecode = contract.abi.decodeData(originalData);
+              let decodedBytecode = contract.abi.decodeData(originalData);
+
+              if (!decodedBytecode) {
+                contract = CFX.Contract({
+                  abi: JSON.parse(resp.abi),
+                  address: toHash,
+                  decodeByteToHex: true,
+                });
+                decodedBytecode = contract.abi.decodeData(originalData);
+              }
 
               setData({
                 ...data,
