@@ -27,6 +27,7 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 
 const fromTypeInfo = {
   arrow: {
@@ -214,42 +215,52 @@ const Token2 = ({ row }) => {
               src={row?.transferTokenInfo?.iconUrl || ICON_DEFAULT_TOKEN}
               alt="token icon"
             />,
-            <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
-              {row?.transferTokenInfo?.name ? (
-                <Text
-                  span
-                  hoverValue={
-                    row?.transferTokenInfo?.name
-                      ? `${row?.transferTokenInfo?.name} (${
-                          row?.transferTokenInfo?.symbol || '--'
-                        })`
-                      : formatAddress(row?.transferTokenInfo?.address)
-                  }
-                  maxWidth="180px"
-                >
-                  {formatString(
-                    `${row?.transferTokenInfo?.name} (${
-                      row?.transferTokenInfo?.symbol || '--'
-                    })`,
-                    36,
-                  )}
-                </Text>
-              ) : (
+            row?.transferTokenInfo?.name && row?.transferTokenInfo?.symbol ? (
+              <Link
+                key="link"
+                href={`/token/${row?.transferTokenInfo?.address}`}
+              >
+                {
+                  <Text
+                    span
+                    hoverValue={
+                      row?.transferTokenInfo?.name
+                        ? `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`
+                        : formatAddress(row?.transferTokenInfo?.address)
+                    }
+                    maxWidth="180px"
+                  >
+                    {formatString(
+                      `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`,
+                      36,
+                    )}
+                  </Text>
+                }
+              </Link>
+            ) : (
+              <StyledToken2NotAvailableWrapper>
                 <AddressContainer
                   value={row?.transferTokenInfo?.address}
-                  alias={
-                    row?.transferTokenInfo?.name ||
-                    t(translations.general.notAvailable)
-                  }
+                  alias={t(translations.general.notAvailable)}
                   showIcon={false}
                 />
-              )}
-            </Link>,
+                &nbsp;
+                <InfoIconWithTooltip
+                  info={t(translations.general.abnormalToken)}
+                />
+              </StyledToken2NotAvailableWrapper>
+            ),
           ]
         : '--'}
     </StyledIconWrapper>
   );
 };
+const StyledToken2NotAvailableWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const token2 = {
   ...token,
   render: row => <Token2 row={row} />,

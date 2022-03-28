@@ -708,6 +708,7 @@
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
     "token": "token",
+    "abnormalToken": "Abnormal token, no name or symbol was obtained",
     "storageStaking": "Storage Collateral",
     "nonce": "nonce",
     "transaction": "transaction",

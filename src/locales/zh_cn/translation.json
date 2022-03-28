@@ -707,6 +707,7 @@
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
+    "abnormalToken": "非正常代币，未获取到其名称和符号",
     "storageStaking": "抵押存储",
     "nonce": "随机数",
     "transaction": "交易",
