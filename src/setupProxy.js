@@ -3,8 +3,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // cra doc https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
 // http-proxy-middleware doc https://www.npmjs.com/package/http-proxy-middleware#example
 
-const url = 'https://www-stage.confluxscan.net';
-// const url = 'https://confluxscan.net/';
+// const url = 'https://www-stage.confluxscan.net';
+const url = 'https://confluxscan.net/';
 let stat = `${url}`;
 let v1 = `${url}`;
 let rpc = `${url}/rpc`;
@@ -12,8 +12,8 @@ let rpcv2 = `${url}/rpcv2`;
 let confluxDag = `${url}`;
 
 if (process.env.REACT_APP_TestNet === 'true') {
-  const testnet = 'https://testnet-stage.confluxscan.net';
-  // const testnet = 'https://testnet.confluxscan.net/';
+  // const testnet = 'https://testnet-stage.confluxscan.net';
+  const testnet = 'https://testnet.confluxscan.net/';
   stat = `${testnet}`;
   v1 = `${testnet}`;
   rpc = `${testnet}/rpc`;
