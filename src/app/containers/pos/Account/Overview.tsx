@@ -122,7 +122,9 @@ export function Overview() {
           )}
         </SkeletonContainer>
       </Description>
-      <Description title={t(translations.pos.account.overview.retiredRights)}>
+      <Description
+        title={t(translations.pos.account.overview.retiredBlocknumber)}
+      >
         <SkeletonContainer shown={loading}>
           {lodash.isNil(data.forceRetired) ? (
             '--'

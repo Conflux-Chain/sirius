@@ -1545,7 +1545,7 @@
         "lockedRights": "Locked Rights",
         "unlockingRights": "Total Pending Unlocking Rights",
         "unlockRights": "Unlocked Rights",
-        "retiredRights": "Retired Rights",
+        "retiredBlocknumber": "Retired Block Number",
         "availableVotes": "Total Rights",
         "currentCommitteeMember": "Current Committee Member",
         "rightsInCommittee": "Rights in Committee",

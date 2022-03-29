@@ -1543,7 +1543,7 @@
         "lockedRights": "已锁定票数",
         "unlockingRights": "待解锁总票数",
         "unlockRights": "已解锁票数",
-        "retiredRights": "已退休票数",
+        "retiredBlocknumber": "已退休区块号",
         "availableVotes": "总票数",
         "currentCommitteeMember": "在任委员会成员",
         "rightsInCommittee": "在委员会的票数",
