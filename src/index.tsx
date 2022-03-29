@@ -61,7 +61,7 @@ Promise.all([completeDetect()]).then(() => {
   render(App);
 });
 
-const currentVersion = 'V2.7.0';
+const currentVersion = 'V2.8.0';
 
 const brand = `
 ┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ ${currentVersion}
