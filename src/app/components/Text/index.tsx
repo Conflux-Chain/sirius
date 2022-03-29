@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text as UIText } from '@cfxjs/react-ui';
-import { Tooltip } from '../Tooltip';
-import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
+import { Tooltip } from '@cfxjs/antd';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components/macro';
 import { selectText } from './../../../utils';
@@ -14,7 +13,6 @@ type TextProps = {
   maxCount?: number;
   hoverValue?: React.ReactNode;
   hoverValueMaxCount?: number;
-  tooltipProps?: Partial<TooltipProps>;
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
@@ -32,17 +30,15 @@ export const Text = React.memo(
     maxCount,
     hoverValue,
     hoverValueMaxCount: outerHoverValueMaxCount,
-    tooltipProps,
     ...props
   }: Props) => {
     const bp = useBreakpoint();
-    const { text, ...others } = tooltipProps || {};
     let child: React.ReactNode = children;
     if (maxWidth === undefined && maxCount && typeof children === 'string') {
       child = String.prototype.substr.call(children, 0, maxCount) + '...';
     }
 
-    let textContent = text || hoverValue || children;
+    let textContent = hoverValue || children;
     // 控制移动端字符串类型 tooltip 的长度
     // 这里有个问题，就是截断的位置可能是一个完整的单词，暂时没有办法处理，如果为了避免这种情况，需要由外面传入前对内容进行处理，比如设置固定宽度小于 24rem
     // @todo 后续可以试下读取文本长度，动态设置容器宽度值的方式，可以避免截断位置的问题
@@ -81,7 +77,7 @@ export const Text = React.memo(
     );
 
     return (
-      <Tooltip hoverable text={tooltipText} {...others}>
+      <Tooltip title={tooltipText}>
         <StyledTextWrapper maxWidth={maxWidth}>
           <UIText className={clsx('sirius-text', className)} {...props}>
             {child}
