@@ -270,7 +270,7 @@ export function Report() {
           ]}
         >
           <ReCAPTCHA
-            sitekey="6Ldmm8gaAAAAABt8eZ-CvVw7nKKYg7gD1T1J5Pl6"
+            sitekey="6LeSnTofAAAAAML11Df2KzLagoDb59fhVWb8ENSc"
             onChange={onChange}
             hl={lang}
           />
