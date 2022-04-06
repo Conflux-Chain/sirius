@@ -1521,7 +1521,7 @@
       },
       "votingStatus": {
         "voted": "已投票",
-        "confirmed": "已确认"
+        "committed": "已确认"
       }
     },
     "accounts": {

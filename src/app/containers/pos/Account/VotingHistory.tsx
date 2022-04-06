@@ -32,7 +32,8 @@ export function VotingHistory() {
       showSorterTooltip: false,
     },
     {
-      ...colunms.age(ageFormat, toggleAgeFormat),
+      // @ts-ignore
+      ...colunms.age(ageFormat, toggleAgeFormat, ['block', 'createdAt']),
       sorter: true,
       defaultSortOrder: 'descend' as 'descend',
       sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
@@ -43,5 +44,13 @@ export function VotingHistory() {
     width: columnsWidth[i],
   }));
 
-  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+  return (
+    <TablePanelNew
+      url={url}
+      columns={columns}
+      sortKeyMap={{
+        [String(['block', 'createdAt'])]: 'createdAt',
+      }}
+    ></TablePanelNew>
+  );
 }
