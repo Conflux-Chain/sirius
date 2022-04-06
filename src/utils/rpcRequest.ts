@@ -2,6 +2,7 @@ import { CFX, POS_NULL_ADDRESS } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 import { publishRequestError } from './index';
+import BigNumber from 'bignumber.js';
 
 // @ts-ignore
 window.SDK = SDK;
@@ -165,7 +166,11 @@ export const getBlockByHash = async (hash: string): Promise<PoSBlockType> => {
       powBlockHash: blockInfo.pivotDecision.blockHash,
       status:
         blockInfo.height <= status.latestCommitted ? 'committed' : 'voted', // 调用 pos_getStatus 获取 latestCommitted，和 pos block height 做比较，如果 pos block height 小于这个值是 committed，大于是 voted
-      signatures: blockInfo.signatures || [],
+      signatures:
+        blockInfo.signatures.map(i => ({
+          votes: new BigNumber(i.Votes || i.votes).toString(),
+          account: i.Account || i.account,
+        })) || [],
     };
   } catch (e) {
     console.log('getBlockByHash error: ', e);
