@@ -44,5 +44,13 @@ export function VotingHistory() {
     width: columnsWidth[i],
   }));
 
-  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+  return (
+    <TablePanelNew
+      url={url}
+      columns={columns}
+      sortKeyMap={{
+        [String(['block', 'createdAt'])]: 'createdAt',
+      }}
+    ></TablePanelNew>
+  );
 }
