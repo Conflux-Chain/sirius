@@ -61,7 +61,7 @@ const StyledTdWrapper = styled.div`
 
 export interface ColumnAgeTypes {
   key?: string;
-  dataIndex?: string;
+  dataIndex?: string | string[];
   title?: React.ReactNode;
   ageFormat?: string;
   toggleAgeFormat?: any;
