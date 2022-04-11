@@ -142,14 +142,17 @@ export const renderAddress = (
     verify = info.verify.result !== 0;
   } catch (e) {}
 
+  const isEspaceAddress = !!row[`${type}ESpaceInfo`]?.address;
+
   return (
     <>
       <AddressContainer
         value={value}
         alias={alias}
-        isLink={formatAddress(filter) !== formatAddress(value)}
+        link={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
         verify={verify}
+        isEspaceAddress={isEspaceAddress}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />

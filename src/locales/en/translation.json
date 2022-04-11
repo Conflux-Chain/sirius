@@ -704,6 +704,7 @@
     "specialAddress": "invalid address",
     "zeroAddress": "Zero Address",
     "invalidAddress": "Invalid Conflux Address",
+    "eSpaceAddress": "Conflux eSpace address",
     "invalidPosAddress": "Invalid Conflux PoS Address",
     "invalidAddressWarning": "This address is illegal, please be careful.",
     "balance": "balance",
