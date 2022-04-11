@@ -416,7 +416,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -426,7 +425,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
@@ -465,7 +463,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -475,7 +472,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
@@ -523,7 +519,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -533,7 +528,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>

@@ -127,14 +127,7 @@ export const Modal = ({
             <span className="modal-portal-connected-title">
               {t(translations.connectWallet.modal.connectedWithFluentWallet)}
             </span>
-            <span className="modal-portal-name">
-              {accounts[0]}
-              {/* <AddressContainer
-                value={accounts[0]}
-                isLink={false}
-                maxWidth={350}
-              /> */}
-            </span>
+            <span className="modal-portal-name">{accounts[0]}</span>
             <span className="modal-portal-connected-tip">
               <span className="modal-portal-connected-copy">
                 {t(translations.connectWallet.modal.copyAddress)}{' '}

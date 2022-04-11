@@ -9,6 +9,7 @@ import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils';
 import styled from 'styled-components/macro';
 import { publishRequestError } from 'utils';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
@@ -19,14 +20,35 @@ const treeToFlat = tree => {
         t.map((item, index) => fn(item, index, parentLevel));
       } else {
         const index = `${parentLevel}_${level}`;
-        list.push({
+
+        let l = {
           index,
           type: `${t.action.callType || t.type}`,
           from: t.action.from,
           to: t.action.to,
           value: t.action.value,
           result: t.result,
-        });
+          toESpaceInfo: {
+            address: null,
+          },
+          fromESpaceInfo: {
+            address: null,
+          },
+        };
+
+        if (t.action.toSpace === 'evm') {
+          l.toESpaceInfo = {
+            address: SDK.format.hexAddress(t.action.to),
+          };
+        }
+
+        if (t.action.fromSpace === 'evm') {
+          l.fromESpaceInfo = {
+            address: SDK.format.hexAddress(t.action.from),
+          };
+        }
+
+        list.push(l);
         t.calls && fn(t.calls, level + 1, `${parentLevel}_${level}`);
       }
     };
