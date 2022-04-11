@@ -372,7 +372,14 @@ export const formatNumber = (num, opt?) => {
  */
 export const formatString = (
   str: string,
-  type?: 'tag' | 'hash' | 'address' | 'tokenTracker' | 'posAddress' | number,
+  type?:
+    | 'tag'
+    | 'hash'
+    | 'address'
+    | 'tokenTracker'
+    | 'posAddress'
+    | 'hexAddress'
+    | number,
 ) => {
   let result: string;
   switch (type) {
@@ -390,6 +397,9 @@ export const formatString = (
       break;
     case 'posAddress':
       result = getEllipsStr(str, 10, 0);
+      break;
+    case 'hexAddress':
+      result = getEllipsStr(str, 6, 4);
       break;
     default:
       let num = 12;

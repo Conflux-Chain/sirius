@@ -13,7 +13,7 @@ import {
   formatString,
   isPosAddress,
 } from 'utils';
-import { AlertTriangle } from '@zeit-ui/react-icons';
+import { AlertTriangle, File } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
@@ -25,6 +25,7 @@ import {
   // CONTRACTS_NAME_LABEL,
 } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 interface Props {
   value: string; // address value
@@ -32,12 +33,13 @@ interface Props {
   contractCreated?: string; // contract creation address
   maxWidth?: number; // address max width for view, default 200/170 for default, 400 for full
   isFull?: boolean; // show full address, default false
-  isLink?: boolean; // add link to address, default true
+  link?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
   suffixAddressSize?: number; // suffix address size, default is 8
   prefixFloat?: boolean; // prefix icon float or take up space, default false
   showIcon?: boolean; // whether show contract icon, default true
   verify?: boolean; // show verified contract icon or unverified contract icon
+  isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
 }
 
 const defaultPCMaxWidth = 138;
@@ -55,7 +57,7 @@ const RenderAddress = ({
   hoverValue,
   hrefAddress,
   content,
-  isLink = true,
+  link = true,
   isFull = false,
   style = {},
   maxWidth,
@@ -64,9 +66,6 @@ const RenderAddress = ({
   suffix = null,
   type = 'pow',
 }: any) => {
-  const href = `/${type === 'pow' ? 'address' : 'pos/accounts'}/${
-    hrefAddress || cfxAddress
-  }`;
   const aftercontent =
     type === 'pow'
       ? cfxAddress && !isFull && !alias
@@ -74,30 +73,55 @@ const RenderAddress = ({
         : ''
       : '';
 
+  let text: React.ReactNode = null;
+
+  if (link) {
+    if (typeof link === 'string') {
+      text = (
+        <LinkWrapper
+          style={style}
+          href={link}
+          maxwidth={isFull ? 430 : maxWidth}
+          alias={alias}
+          aftercontent={aftercontent}
+        >
+          <span>{content || alias || cfxAddress}</span>
+        </LinkWrapper>
+      );
+    } else {
+      const href = `/${type === 'pow' ? 'address' : 'pos/accounts'}/${
+        hrefAddress || cfxAddress
+      }`;
+      text = (
+        <LinkWrapper
+          style={style}
+          href={href}
+          maxwidth={isFull ? 430 : maxWidth}
+          alias={alias}
+          aftercontent={aftercontent}
+        >
+          <span>{content || alias || cfxAddress}</span>
+        </LinkWrapper>
+      );
+    }
+  } else {
+    text = (
+      <PlainWrapper
+        style={style}
+        maxwidth={isFull ? 430 : maxWidth}
+        alias={alias}
+        aftercontent={aftercontent}
+      >
+        <span>{content || alias || cfxAddress}</span>
+      </PlainWrapper>
+    );
+  }
+
   return (
     <AddressWrapper>
       {prefix}
       <Text span hoverValue={hoverValue || cfxAddress}>
-        {isLink ? (
-          <LinkWrapper
-            style={style}
-            href={href}
-            maxwidth={isFull ? 430 : maxWidth}
-            alias={alias}
-            aftercontent={aftercontent}
-          >
-            <span>{content || alias || cfxAddress}</span>
-          </LinkWrapper>
-        ) : (
-          <PlainWrapper
-            style={style}
-            maxwidth={isFull ? 430 : maxWidth}
-            alias={alias}
-            aftercontent={aftercontent}
-          >
-            <span>{content || alias || cfxAddress}</span>
-          </PlainWrapper>
-        )}
+        {text}
       </Text>
       {suffix}
     </AddressWrapper>
@@ -114,13 +138,14 @@ export const AddressContainer = withTranslation()(
       contractCreated,
       maxWidth,
       isFull = false,
-      isLink = true,
+      link = true,
       isMe = false,
       suffixAddressSize,
       prefixFloat = false,
       showIcon = true,
       t,
       verify = false,
+      isEspaceAddress,
     }: Props & WithTranslation) => {
       const suffixSize =
         suffixAddressSize ||
@@ -141,7 +166,7 @@ export const AddressContainer = withTranslation()(
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
             content: txtContractCreation,
-            isLink,
+            link,
             isFull,
             maxWidth: 160,
             suffixSize,
@@ -172,6 +197,27 @@ export const AddressContainer = withTranslation()(
         // );
       }
 
+      if (isEspaceAddress) {
+        const tip = t(translations.general.eSpaceAddress);
+        const hexAddress = SDK.format.hexAddress(value);
+        return RenderAddress({
+          cfxAddress: hexAddress,
+          alias: formatString(hexAddress, 'hexAddress'),
+          hoverValue: hexAddress,
+          link: `https://evm.confluxscan.net/address/${hexAddress}`,
+          isFull,
+          maxWidth,
+          suffixSize: 0,
+          prefix: (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <Text span hoverValue={tip}>
+                <File size={16} color="#17B38A" />
+              </Text>
+            </IconWrapper>
+          ),
+        });
+      }
+
       // check if the address is a valid conflux address
       if (!isAddress(value)) {
         const tip = t(translations.general.invalidAddress);
@@ -180,7 +226,7 @@ export const AddressContainer = withTranslation()(
           alias,
           hoverValue: `${tip}: ${value}`,
           content: alias ? formatString(alias, 'tag') : value,
-          isLink: false,
+          link: false,
           isFull,
           maxWidth,
           suffixSize,
@@ -217,7 +263,7 @@ export const AddressContainer = withTranslation()(
         return RenderAddress({
           cfxAddress,
           alias,
-          isLink,
+          link,
           isFull,
           maxWidth,
           suffixSize,
@@ -254,7 +300,7 @@ export const AddressContainer = withTranslation()(
         return RenderAddress({
           cfxAddress,
           alias,
-          isLink,
+          link,
           isFull,
           maxWidth,
           suffixSize,
@@ -277,7 +323,7 @@ export const AddressContainer = withTranslation()(
       return RenderAddress({
         cfxAddress,
         alias,
-        isLink,
+        link,
         isFull,
         maxWidth,
         suffixSize,
@@ -293,7 +339,7 @@ export const PoSAddressContainer = withTranslation()(
       alias,
       maxWidth,
       isFull = false,
-      isLink = true,
+      link = true,
       isMe = false,
       suffixAddressSize,
       prefixFloat = false,
@@ -319,7 +365,7 @@ export const PoSAddressContainer = withTranslation()(
           content: alias
             ? formatString(alias, 'tag')
             : formatString(value, 'posAddress'),
-          isLink: false,
+          link: false,
           isFull,
           maxWidth,
           suffixSize,
@@ -345,7 +391,7 @@ export const PoSAddressContainer = withTranslation()(
         return RenderAddress({
           cfxAddress: value,
           alias,
-          isLink,
+          link,
           isFull,
           maxWidth,
           suffixSize,
@@ -370,7 +416,7 @@ export const PoSAddressContainer = withTranslation()(
       return RenderAddress({
         cfxAddress: value,
         alias,
-        isLink,
+        link,
         isFull,
         maxWidth,
         suffixSize,
