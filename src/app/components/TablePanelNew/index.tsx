@@ -159,7 +159,7 @@ export const TablePanel = ({
     };
 
     if (sorter) {
-      query.orderBy = sortKeyMap[sorter.field] || sorter.field;
+      query.orderBy = sortKeyMap[String(sorter.field)] || sorter.field;
       query.reverse = sorter.order === 'ascend' ? 'false' : 'true';
     }
 
