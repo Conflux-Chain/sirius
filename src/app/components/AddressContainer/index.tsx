@@ -12,6 +12,7 @@ import {
   isAddress,
   formatString,
   isPosAddress,
+  getUrl,
 } from 'utils';
 import { AlertTriangle, File } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
@@ -200,11 +201,17 @@ export const AddressContainer = withTranslation()(
       if (isEspaceAddress) {
         const tip = t(translations.general.eSpaceAddress);
         const hexAddress = SDK.format.hexAddress(value);
+        const netowrkId =
+          NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1030' : '71';
+        const url = `${window.location.protocol}${getUrl(
+          netowrkId,
+        )}/address/${hexAddress}`;
+
         return RenderAddress({
           cfxAddress: hexAddress,
           alias: formatString(hexAddress, 'hexAddress'),
           hoverValue: hexAddress,
-          link: `https://evm.confluxscan.net/address/${hexAddress}`,
+          link: url,
           isFull,
           maxWidth,
           suffixSize: 0,

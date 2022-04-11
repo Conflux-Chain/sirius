@@ -848,16 +848,22 @@ const urls = {
   },
 };
 
-export const gotoNetwork = (networkId: string | number): void => {
-  if (IS_PRE_RELEASE) {
-    window.location.assign(urls.stage[networkId]);
-  } else {
-    window.location.assign(
-      `${urls.online[networkId]}${
-        window.location.hostname.includes('.io') ? '.io' : '.net'
-      }`,
-    );
+export const getUrl = (_networkId?: string | number): string => {
+  const networkId =
+    _networkId || (NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1029' : '1');
+  let url = urls.stage[networkId];
+
+  if (!IS_PRE_RELEASE) {
+    url = `${urls.online[networkId]}${
+      window.location.hostname.includes('.io') ? '.io' : '.net'
+    }`;
   }
+  return url;
+};
+
+export const gotoNetwork = (networkId: string | number): void => {
+  const url = getUrl(networkId);
+  window.location.assign(url);
 };
 
 export const getAddressInputPlaceholder = () => {
