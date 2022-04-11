@@ -24,7 +24,7 @@ export const MinedBlocks = ({ address }: Props) => {
     blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
-      render: value => <AddressContainer isLink={false} value={value} />,
+      render: value => <AddressContainer link={false} value={value} />,
     },
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercentWithProgress,

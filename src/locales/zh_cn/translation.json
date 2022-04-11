@@ -703,6 +703,7 @@
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "eSpaceAddress": "Conflux eSpace 地址",
     "invalidPosAddress": "无效的 Conflux PoS 地址",
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
@@ -1521,7 +1522,7 @@
       },
       "votingStatus": {
         "voted": "已投票",
-        "confirmed": "已确认"
+        "committed": "已确认"
       }
     },
     "accounts": {
