@@ -117,7 +117,10 @@ export const ContractOrTokenInfo = ({
 
   useEffect(() => {
     setTokenImgSrc(contractDetail?.token?.iconUrl);
-    if (updateInfoType === 'contract') {
+    if (updateInfoType 
+        
+        
+        'contract') {
       setContractName(contractDetail.name || '');
     }
     setSite(contractDetail.website || '');
