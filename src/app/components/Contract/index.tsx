@@ -290,13 +290,13 @@ export const ContractOrTokenInfo = ({
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
-      if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
+        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
         return;
       }
 
-      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
-        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+      if (byteToKb(file.size) > MAXSIZEFORICON) {
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
         return;
       }
 
@@ -312,13 +312,13 @@ export const ContractOrTokenInfo = ({
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
-      if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
+        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
         return;
       }
 
-      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
-        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+      if (byteToKb(file.size) > MAXSIZEFORICON) {
+        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
         return;
       }
 
