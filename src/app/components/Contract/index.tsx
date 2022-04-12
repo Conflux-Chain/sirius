@@ -290,14 +290,20 @@ export const ContractOrTokenInfo = ({
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
+      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
+        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+        return;
+      }
+
       if (byteToKb(file.size) > MAXSIZEFORICON) {
         setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
-      } else {
-        reader.onloadend = () => {
-          setContractImgSrc(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+        return;
       }
+
+      reader.onloadend = () => {
+        setContractImgSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
     e.target.value = '';
   };
@@ -306,15 +312,21 @@ export const ContractOrTokenInfo = ({
     let reader = new FileReader();
     let file = e.target.files[0];
     if (file) {
+      if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
+        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+        return;
+      }
+
       if (byteToKb(file.size) > MAXSIZEFORICON) {
         setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
-      } else {
-        reader.onloadend = () => {
-          setTokenImgSrc(reader.result as string);
-          checkAdminThenToken(reader.result);
-        };
-        reader.readAsDataURL(file);
+        return;
       }
+
+      reader.onloadend = () => {
+        setTokenImgSrc(reader.result as string);
+        checkAdminThenToken(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
     e.target.value = '';
   };
@@ -523,7 +535,7 @@ export const ContractOrTokenInfo = ({
                     type="file"
                     name="File"
                     style={displayNone}
-                    accept="image/*"
+                    accept="image/gif, image/jpg, image/jpeg, image/png, image/svg+xml"
                     ref={fileContractInputRef}
                     onChange={handleContractIconChange}
                   />
@@ -539,6 +551,9 @@ export const ContractOrTokenInfo = ({
                   </div>
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
+                  </div>
+                  <div className="iconTips">
+                    {t(translations.contract.supportType)}
                   </div>
                   {/* <div className="secondItem" onClick={removeContractIcon}>
                     <img
@@ -571,7 +586,7 @@ export const ContractOrTokenInfo = ({
                     type="file"
                     name="File"
                     style={displayNone}
-                    accept="image/*"
+                    accept="image/gif, image/jpg, image/jpeg, image/png, image/svg+xml"
                     ref={fileTokenInputRef}
                     onChange={handleTokenIconChange}
                   />
@@ -587,6 +602,9 @@ export const ContractOrTokenInfo = ({
                   </div>
                   <div className="iconTips">
                     {t(translations.contract.maxSize)}
+                  </div>
+                  <div className="iconTips">
+                    {t(translations.contract.supportType)}
                   </div>
                 </div>
                 <div className="item right">
@@ -861,9 +879,9 @@ const TopContainer = styled.div`
 
       .iconTips {
         color: #97a3b4;
-        line-height: 1.5714rem;
+        line-height: 1.2;
         font-size: 0.8571rem;
-        margin-left: 1.4286rem;
+        margin: 0.5rem 1.25rem;
       }
     }
 
