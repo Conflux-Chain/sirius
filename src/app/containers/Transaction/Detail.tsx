@@ -167,7 +167,7 @@ export const Detail = () => {
                 transactionHash: txnhash,
                 fields: 'token',
                 limit: 100,
-                reverse: true,
+                reverse: false,
               }),
             );
             Promise.all(proArr)
