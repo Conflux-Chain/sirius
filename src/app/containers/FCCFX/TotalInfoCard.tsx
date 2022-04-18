@@ -6,13 +6,11 @@ import { Row, Col, Progress } from '@cfxjs/antd';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import { TotalInfoType } from './Common';
-import { usePortal } from 'utils/hooks/usePortal';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 import { useBreakpoint, media } from 'styles/media';
 
 export function TotalInfoCard({ info }: { info: TotalInfoType }) {
   const { t } = useTranslation();
-  const { accounts } = usePortal();
   const bp = useBreakpoint();
 
   const data: Array<any> = [
@@ -92,6 +90,9 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
     return rate;
   }, [info.balanceOfCfx, info.fcSigned]);
 
+  // cfx balance should not be zero, use to mark as init state
+  const initial = info.balanceOfCfx.eq(0);
+
   return (
     <StyledTotalInfoWrapper>
       <Row gutter={24}>
@@ -119,7 +120,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
                   <span>{c.title}</span> {c.tip}
                 </StyledTitle1474798C>
                 <span className="fccfx-totalInfo-number">
-                  {accounts.length ? c.value : '--'}
+                  {initial ? '--' : c.value}
                 </span>
               </Col>
             ))}
