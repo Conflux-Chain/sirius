@@ -10,7 +10,7 @@ import createBreakpoint from './createBreakpoint';
 
 // Update your breakpoints if you want
 export const sizes = {
-  s: 600,
+  s: 768,
   m: 1024,
   l: 1280,
   xl: 1440,

@@ -8,10 +8,12 @@ import { formatBalance } from 'utils';
 import { TotalInfoType } from './Common';
 import { usePortal } from 'utils/hooks/usePortal';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { useBreakpoint, media } from 'styles/media';
 
 export function TotalInfoCard({ info }: { info: TotalInfoType }) {
   const { t } = useTranslation();
   const { accounts } = usePortal();
+  const bp = useBreakpoint();
 
   const data: Array<any> = [
     {
@@ -93,7 +95,7 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
   return (
     <StyledTotalInfoWrapper>
       <Row gutter={24}>
-        <Col span={7}>
+        <Col span={7} className="col-progress">
           <div className="fccfx-totalInfo-progressContainer">
             <Progress
               type="circle"
@@ -103,10 +105,14 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
             />
           </div>
         </Col>
-        <Col span={17}>
+        <Col md={17} sm={24} className="col-info">
           <Row>
             {data.map((c, index) => (
-              <Col span={c.span} className="fccfx-totalInfo-item" key={index}>
+              <Col
+                span={bp === 's' ? 24 : c.span}
+                className="fccfx-totalInfo-item"
+                key={index}
+              >
                 <StyledTitle1474798C
                   className={`fccfx-totalInfo-title fccfx-totalInfo-title-${index}`}
                 >
@@ -125,13 +131,37 @@ export function TotalInfoCard({ info }: { info: TotalInfoType }) {
 }
 
 const StyledTotalInfoWrapper = styled.div`
+  ${media.s} {
+    margin-left: 2.8571rem;
+  }
+
+  .col-progress {
+    ${media.s} {
+      margin-left: 2.8571rem;
+    }
+  }
+
+  .col-info {
+    ${media.s} {
+      margin-top: 2rem;
+    }
+  }
+
   .fccfx-totalInfo-item {
     display: flex;
     flex-direction: column;
     position: relative;
 
+    ${media.s} {
+      margin-bottom: 0.7143rem;
+    }
+
     &:first-child {
-      margin-bottom: 40px;
+      margin-bottom: 2.8571rem;
+
+      ${media.s} {
+        margin-bottom: 0.7143rem;
+      }
     }
   }
 
@@ -139,16 +169,20 @@ const StyledTotalInfoWrapper = styled.div`
   .fccfx-totalInfo-title-2::before {
     position: absolute;
     content: '';
-    width: 12px;
-    height: 12px;
+    width: 0.8571rem;
+    height: 0.8571rem;
     border-radius: 50%;
-    left: -29px;
-    top: 6px;
+    left: -2.0714rem;
+    top: 0.4286rem;
   }
 
   .fccfx-totalInfo-title {
     & > span {
-      margin-right: 5px;
+      margin-right: 0.3571rem;
+
+      ${media.s} {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -161,17 +195,22 @@ const StyledTotalInfoWrapper = styled.div`
   }
 
   .fccfx-totalInfo-number {
-    font-size: 24px;
+    font-size: 1.7143rem;
     font-weight: bold;
     color: #0f1327;
-    line-height: 36px;
+    line-height: 2.5714rem;
+
+    ${media.s} {
+      font-size: 1.2857rem;
+      line-height: 1.5;
+    }
   }
 
   .fccfx-totalInfo-progressContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: -24px;
+    margin-left: -1.7143rem;
     height: 100%;
 
     .ant-progress-circle .ant-progress-text {

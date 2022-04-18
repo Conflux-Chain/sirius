@@ -132,14 +132,12 @@ export const Header = memo(() => {
     },
   ];
 
-  if (bp !== 's' && bp !== 'm') {
-    ecosystemItems.push({
-      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.fcCfx,
-      afterClick: menuClick,
-      href: '/fccfx',
-    });
-  }
+  ecosystemItems.push({
+    title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+    name: ScanEvent.menu.action.fcCfx,
+    afterClick: menuClick,
+    href: '/fccfx',
+  });
 
   ecosystemItems.push({
     title: [t(translations.header.crossSpace), <Check size={18} key="check" />],

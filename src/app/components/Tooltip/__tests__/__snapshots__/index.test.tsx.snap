@@ -22,7 +22,7 @@ exports[`<Tooltip  /> should match snapshot 1`] = `
   color: #3dc0ff;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 .tooltip-content.sirius-tooltip {
     max-width: 24rem;
     white-space: normal;

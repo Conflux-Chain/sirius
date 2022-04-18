@@ -20,12 +20,14 @@ import {
   TotalInfoType,
   Tip,
 } from './Common';
+import { useBreakpoint, media } from 'styles/media';
 
 export function FCCFX() {
   const { accounts } = usePortal();
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
   const [loading, setLoading] = useState(false);
+  const bp = useBreakpoint();
 
   const [isModalVisible, setIsModalVisible] = useState(() => {
     try {
@@ -145,31 +147,36 @@ export function FCCFX() {
         <Spin spinning={loading}>
           <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
         </Spin>
-        <div
-          className={clsx('fccfx-mask', {
-            disabled: hasPendingProfitLegacy,
-          })}
-        >
-          <Row gutter={24}>
-            <Col flex="auto">
+
+        {bp !== 's' && (
+          <>
+            <div
+              className={clsx('fccfx-mask', {
+                disabled: hasPendingProfitLegacy,
+              })}
+            >
               <Row gutter={24}>
-                <Col span={12}>
-                  <Spin spinning={loading}>
-                    <StakeAndSignCard info={accountInfo} />
-                  </Spin>
-                </Col>
-                <Col span={12}>
-                  <Spin spinning={loading}>
-                    <WithdrawCFXCard info={accountInfo} />
-                  </Spin>
+                <Col flex="auto">
+                  <Row gutter={24}>
+                    <Col md={12} sm={24}>
+                      <Spin spinning={loading}>
+                        <StakeAndSignCard info={accountInfo} />
+                      </Spin>
+                    </Col>
+                    <Col md={12} sm={24}>
+                      <Spin spinning={loading}>
+                        <WithdrawCFXCard info={accountInfo} />
+                      </Spin>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
-            </Col>
-          </Row>
-        </div>
-        <Tip hidden={!hasPendingProfitLegacy} size={14}>
-          {t(translations.fccfx.tip.legacyProfit)}
-        </Tip>
+            </div>
+            <Tip hidden={!hasPendingProfitLegacy} size={14}>
+              {t(translations.fccfx.tip.legacyProfit)}
+            </Tip>
+          </>
+        )}
       </div>
 
       <Notice show={isModalVisible} onClose={handleNoticeClose} />
@@ -180,6 +187,11 @@ export function FCCFX() {
 const StyledFCCFXWrapper = styled.div`
   padding-bottom: 20px;
   overflow: hidden;
+
+  ${media.s} {
+    padding-bottom: 0px;
+    margin-bottom: -30px;
+  }
 
   .fccfx-mask.disabled {
     filter: blur(5px);
