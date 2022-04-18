@@ -22,6 +22,7 @@ import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
 import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
+import { Link as ALink } from 'app/components/Link/Loadable';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -263,7 +264,10 @@ export const NFTPreview = React.memo(
                 <div className="id">
                   <Tooltip title={tokenId}>
                     {t(translations.nftChecker.tokenId)}: {tokenId}
-                  </Tooltip>
+                  </Tooltip>{' '}
+                  <ALink href={`/nft/${contractAddress}/${tokenId}`}>
+                    {t(translations.general.table.token.view)}
+                  </ALink>
                 </div>
               </div>
             </Spin>
