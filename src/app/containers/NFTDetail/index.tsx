@@ -86,7 +86,7 @@ export function NFTDetail(props) {
       <PageHeader>{t(translations.nftDetail.title)}</PageHeader>
 
       <Row gutter={[24, 24]}>
-        <Col sm={24} md={8}>
+        <Col sm={24} md={8} style={{ width: '100%' }}>
           <Card style={{ padding: 0 }}>
             <NFTPreview contractAddress={address} tokenId={id} type="primary" />
           </Card>
