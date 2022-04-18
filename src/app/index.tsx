@@ -74,6 +74,7 @@ import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
+import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
 
 // pos pages
@@ -637,6 +638,11 @@ export function App() {
                             exact
                             path="/pos/accounts/:address"
                             component={posAccount}
+                          />
+                          <Route
+                            exact
+                            path="/nft/:address/:id"
+                            component={NFTDetail}
                           />
 
                           <Route component={NotFoundPage} />

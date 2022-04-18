@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { Tag } from '@cfxjs/antd';
 
 const fromTypeInfo = {
   arrow: {
@@ -684,6 +685,28 @@ export const tokenId = (contractAddress?: string) => ({
     </>
   ),
 });
+
+export const details = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.details)}
+    </Translation>
+  ),
+  dataIndex: 'tokenId',
+  key: 'tokenId',
+  render: (value, row) => {
+    return (
+      <Link href={`/nft/${row.transferTokenInfo?.address}/${value}`}>
+        <Tag color="default">
+          <Translation>
+            {t => t(translations.general.table.token.view)}
+          </Translation>
+        </Tag>
+      </Link>
+    );
+  },
+};
 
 const TraceTypeElement = ({ info }) => {
   const breakpoint = useBreakpoint();
