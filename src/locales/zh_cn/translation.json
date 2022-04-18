@@ -3,6 +3,26 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "nftDetail": {
+    "title": "NFT 详情",
+    "details": "详情",
+    "metadata": "元数据",
+    "description": "描述",
+    "id": "ID",
+    "name": "名称",
+    "type": "代币标准",
+    "address": "合约地址",
+    "owner": "所有者",
+    "url": "链接",
+    "creator": "创作者",
+    "mintedTime": "发行时间",
+    "transfer": "转发",
+    "error": {
+      "fromAddress": "请输入 from 地址",
+      "toAddress": "请输入 to 地址",
+      "invalidAddress": "请输入合法地址"
+    }
+  },
   "fccfx": {
     "title": "FC-CFX 不可逆兑换",
     "titleAccountInfo": "地址质押信息",
@@ -375,6 +395,7 @@
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
     "nftChecker": "NFT 查看器",
+    "nftDetail": "NFT 详情",
     "notice": "通知中心",
     "search": {
       "tokens": "代币",
@@ -770,6 +791,8 @@
         "to": "接收方",
         "accountAddress": "地址",
         "tokenId": "代币 ID",
+        "details": "详情",
+        "view": "查看 NFT",
         "quantity": "数量",
         "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",

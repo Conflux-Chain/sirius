@@ -60,13 +60,13 @@ exports[`<Description  /> should match snapshot 1`] = `
   width: 10rem;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 .right {
     padding-top: 0;
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;

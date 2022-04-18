@@ -3,6 +3,26 @@
     "title": "Conflux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "nftDetail": {
+    "title": "NFT Detail",
+    "details": "Details",
+    "metadata": "Metadata",
+    "description": "Description",
+    "id": "ID",
+    "name": "Name",
+    "type": "Token Standard",
+    "address": "Contract Address",
+    "owner": "Owner",
+    "url": "Original Content URL",
+    "creator": "Creator",
+    "mintedTime": "Minted Time",
+    "transfer": "Transfer",
+    "error": {
+      "fromAddress": "Please input from address",
+      "toAddress": "Please input to address",
+      "invalidAddress": "Please input valid base32 address"
+    }
+  },
   "fccfx": {
     "title": "FC-CFX Non-reversible Exchange",
     "titleAccountInfo": "Address Staking Info",
@@ -375,6 +395,7 @@
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "nftChecker": "NFT Checker",
+    "nftDetail": "NFT Detail",
     "notice": "Notice Center",
     "search": {
       "tokens": "Tokens",
@@ -771,6 +792,8 @@
         "to": "To",
         "accountAddress": "Address",
         "tokenId": "TokenID",
+        "details": "Details",
+        "view": "View NFT",
         "quantity": "Quantity",
         "erc1155QuantityTip": "The quantity of CRC-1155 tokens in an address is equal to the total number of categories with TokenIDs it owns.",
         "percentage": "Percentage",

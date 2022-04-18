@@ -269,6 +269,7 @@ export const GlobalStyle = createGlobalStyle`
     .info-name {
       display: flex;
       justify-content: space-between;
+      margin-top: 0.8571rem;
 
       .name {
         height: 18px;

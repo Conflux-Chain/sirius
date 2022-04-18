@@ -38,7 +38,7 @@ exports[`<Tabs  /> should match snapshot 1`] = `
   padding-top: 0;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 .tabs.sirius-tabs header {
     max-width: 100vw;
     overflow-x: auto;

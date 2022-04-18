@@ -59,12 +59,14 @@ export const NFTCardInfo = React.memo(
     audioImg,
     imageMinHeight,
     width = 200,
+    preview = true,
   }: {
     imageUri: string;
     tokenId?: number | string;
     audioImg?: string;
     imageMinHeight?: number;
     width?: 200 | 500;
+    preview?: boolean;
   }) => {
     let [nftType, setNftType] = useState('image');
     const [isAudioPlay, setIsAudioPlay] = useState(false);
@@ -163,7 +165,7 @@ export const NFTCardInfo = React.memo(
             width={width}
             style={{ minHeight: imageMinHeight }}
             src={imageUri}
-            preview={true}
+            preview={preview}
             fallback={tokenIdNotFound}
             alt={tokenId + ''}
           />
@@ -181,7 +183,7 @@ export const NFTPreview = React.memo(
   }: {
     contractAddress?: string;
     tokenId?: number | string;
-    type?: 'preview' | 'card';
+    type?: 'preview' | 'card' | 'primary';
   }) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -218,9 +220,57 @@ export const NFTPreview = React.memo(
       }
     }, [contractAddress, tokenId, lang]);
 
-    return contractAddress && tokenId ? (
-      type === 'preview' ? (
-        imageUri ? (
+    if (contractAddress && tokenId) {
+      if (type === 'card') {
+        return (
+          <NFTCard>
+            <Spin spinning={loading}>
+              {imageUri ? (
+                contractAddress === epiKProtocolKnowledgeBadge ? (
+                  <div className="ant-image">
+                    <iframe title={imageName} src={imageUri} />
+                  </div>
+                ) : (
+                  <NFTCardInfo
+                    imageUri={imageUri}
+                    tokenId={tokenId}
+                    width={500}
+                  />
+                )
+              ) : isFirstTime ? (
+                <Skeleton.Image />
+              ) : (
+                <Image
+                  width={500}
+                  src={NotFoundIcon}
+                  alt={'not found'}
+                  fallback={tokenIdNotFound}
+                />
+              )}
+              <div className="info">
+                <div className="info-name">
+                  <Tooltip title={imageName}>
+                    <div className="name">{imageName}</div>
+                  </Tooltip>
+                  {imageUri ? (
+                    <Tooltip title={imageUri}>
+                      <div className="name">
+                        <Link size={12} />
+                      </div>
+                    </Tooltip>
+                  ) : null}
+                </div>
+                <div className="id">
+                  <Tooltip title={tokenId}>
+                    {t(translations.nftChecker.tokenId)}: {tokenId}
+                  </Tooltip>
+                </div>
+              </div>
+            </Spin>
+          </NFTCard>
+        );
+      } else if (type === 'preview') {
+        return imageUri ? (
           <PopoverWrapper
             placement="right"
             trigger="click"
@@ -273,55 +323,41 @@ export const NFTPreview = React.memo(
           <Tooltip title={imageName}>
             <img src={nftInfo} alt="?" style={{ marginLeft: 4 }} />
           </Tooltip>
-        ) : null
-      ) : (
-        <NFTCard>
-          <Spin spinning={loading}>
-            {imageUri ? (
-              contractAddress === epiKProtocolKnowledgeBadge ? (
-                <div className="ant-image">
-                  <iframe title={imageName} src={imageUri} />
-                </div>
+        ) : null;
+      } else {
+        return (
+          <NFTCard>
+            <Spin spinning={loading}>
+              {imageUri ? (
+                contractAddress === epiKProtocolKnowledgeBadge ? (
+                  <div className="ant-image">
+                    <iframe title={imageName} src={imageUri} />
+                  </div>
+                ) : (
+                  <NFTCardInfo
+                    imageUri={imageUri}
+                    tokenId={tokenId}
+                    width={500}
+                    preview={false}
+                  />
+                )
+              ) : isFirstTime ? (
+                <Skeleton.Image />
               ) : (
-                <NFTCardInfo
-                  imageUri={imageUri}
-                  tokenId={tokenId}
+                <Image
                   width={500}
+                  src={NotFoundIcon}
+                  alt={'not found'}
+                  fallback={tokenIdNotFound}
                 />
-              )
-            ) : isFirstTime ? (
-              <Skeleton.Image />
-            ) : (
-              <Image
-                width={500}
-                src={NotFoundIcon}
-                alt={'not found'}
-                fallback={tokenIdNotFound}
-              />
-            )}
-            <div className="info">
-              <div className="info-name">
-                <Tooltip title={imageName}>
-                  <div className="name">{imageName}</div>
-                </Tooltip>
-                {imageUri ? (
-                  <Tooltip title={imageUri}>
-                    <div className="name">
-                      <Link size={12} />
-                    </div>
-                  </Tooltip>
-                ) : null}
-              </div>
-              <div className="id">
-                <Tooltip title={tokenId}>
-                  {t(translations.nftChecker.tokenId)}: {tokenId}
-                </Tooltip>
-              </div>
-            </div>
-          </Spin>
-        </NFTCard>
-      )
-    ) : null;
+              )}
+            </Spin>
+          </NFTCard>
+        );
+      }
+    } else {
+      return null;
+    }
   },
 );
 
