@@ -8,7 +8,7 @@ import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
-import { Row, Col, Collapse } from '@cfxjs/antd';
+import { Row, Col, Collapse, Tooltip } from '@cfxjs/antd';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { reqNFTDetail } from 'utils/httpRequest';
@@ -112,8 +112,14 @@ export function NFTDetail(props) {
                 </Description>
                 <Description title={t(translations.nftDetail.url)}>
                   <SkeletonContainer shown={loading}>
-                    <Link href={data.imageUri}>{data.imageUri}</Link>
-                    <CopyButton copyText={data.imageUri} />
+                    <div className="image-uri-container">
+                      <Tooltip title={data.imageUri}>
+                        <Link href={data.imageUri} className="image-uri">
+                          {data.imageUri}
+                        </Link>
+                      </Tooltip>
+                      <CopyButton copyText={data.imageUri} />
+                    </div>
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.owner)}>
@@ -124,7 +130,7 @@ export function NFTDetail(props) {
                 </Description>
                 <Description title={t(translations.nftDetail.type)}>
                   <SkeletonContainer shown={loading}>
-                    {data.type}
+                    {data.type?.replace('ERC', 'CRC')}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.address)}>
@@ -203,13 +209,17 @@ const StyledWrapper = styled.div`
     margin-top: 16px;
   }
 
-  .content-url {
-    a {
-      max-width: calc(100% - 50px);
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
+  .image-uri-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .link.image-uri {
+    max-width: 350px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
   }
 `;
 
