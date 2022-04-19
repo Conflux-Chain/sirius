@@ -121,7 +121,9 @@ export const CFX = new SDK.Conflux({
   networkId: NETWORK_ID,
 });
 
-CFX.provider = provider;
+if (provider) {
+  CFX.provider = provider;
+}
 
 export const fcExchangeContract = CFX.Contract({
   address: FC_EXCHANGE_ADDRESS,

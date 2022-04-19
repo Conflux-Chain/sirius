@@ -248,6 +248,13 @@ export const reqNFTInfo = (extra?: object) => {
   });
 };
 
+export const reqNFTDetail = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/checker/detail`,
+    ...extra,
+  });
+};
+
 export const reqProjectConfig = (extra?: object) => {
   return sendRequest({
     url: '/frontend',

@@ -264,7 +264,7 @@ exports[`<Nav  /> should match snapshot 1`] = `
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c1.secondary {
     display: none;
   }
@@ -623,7 +623,7 @@ exports[`<Nav  /> should match snapshot on mobile 1`] = `
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c1.secondary {
     display: none;
   }

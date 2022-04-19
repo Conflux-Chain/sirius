@@ -4,25 +4,30 @@ import { Card } from 'app/components/Card/Loadable';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';
 import styled from 'styled-components/macro';
+import { useBreakpoint } from 'styles/media';
 
 export const InfoCard = ({ totalInfo, accountInfo }) => {
+  const bp = useBreakpoint();
+
   return (
     <StyledInfoCardWrapper>
       <Card className="fccfx-card">
         <Row gutter={24}>
-          <Col span={10}>
+          <Col md={10} sm={24}>
             <TotalInfoCard info={totalInfo} />
           </Col>
-          <Col span={14}>
-            <Row>
-              <Col span={2}>
-                <StyledSplitWrapper></StyledSplitWrapper>
-              </Col>
-              <Col span={22}>
-                <AccountInfoCard info={accountInfo} />
-              </Col>
-            </Row>
-          </Col>
+          {bp !== 's' && (
+            <Col md={14} sm={24}>
+              <Row>
+                <Col span={2}>
+                  <StyledSplitWrapper></StyledSplitWrapper>
+                </Col>
+                <Col span={22}>
+                  <AccountInfoCard info={accountInfo} />
+                </Col>
+              </Row>
+            </Col>
+          )}
         </Row>
       </Card>
     </StyledInfoCardWrapper>

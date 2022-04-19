@@ -78,7 +78,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   margin-top: 2rem;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 {
     height: calc(100% - 116px);
     width: calc(100% - 32px);
@@ -92,7 +92,7 @@ exports[`<NotFoundPage /> should match the snapshot 1`] = `
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c1 {
     margin-right: 0;
     max-width: 80%;

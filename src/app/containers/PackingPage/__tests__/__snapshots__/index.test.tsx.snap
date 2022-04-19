@@ -89,7 +89,7 @@ exports[`<PackingPage /> should match the snapshot 1`] = `
   font-size: 1.1429rem;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c1 {
     margin-right: 0;
   }
