@@ -15,14 +15,8 @@ import {
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
-import {
-  abi as governanceAbi,
-  bytecode as gobernanceBytecode,
-} from 'utils/contract/governance.json';
-import {
-  abi as stakingAbi,
-  bytecode as stakingBytecode,
-} from 'utils/contract/staking.json';
+import { abi as governanceAbi } from 'utils/contract/governance.json';
+import { abi as stakingAbi } from 'utils/contract/staking.json';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import { getPosAccountInfo } from 'utils/rpcRequest';
@@ -37,7 +31,6 @@ import {
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
-  bytecode: stakingBytecode,
   address: CONTRACTS.staking,
 });
 
@@ -60,7 +53,6 @@ export function AddressMetadata({ address, accountInfo }) {
   const governanceContract = useMemo(() => {
     return CFX.Contract({
       abi: governanceAbi,
-      bytecode: gobernanceBytecode,
       address: CONTRACTS.governance,
     });
   }, []);
