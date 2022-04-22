@@ -5,7 +5,6 @@ import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
 import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
-import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
 import ParamTitle from './ParamTitle';
@@ -30,6 +29,7 @@ import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 interface FuncProps {
   type?: string;
@@ -132,9 +132,9 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           };
           if (data['stateMutability'] === 'payable') {
             objParams = objValues.slice(1);
-            txParams['value'] = new BigNumber(objValues[0])
-              .multipliedBy(10 ** 18)
-              .toFixed();
+            txParams['value'] = SDK.format.bigUIntHex(
+              SDK.Drip.fromCFX(objValues[0]),
+            );
           } else {
             objParams = objValues;
           }

@@ -138,8 +138,9 @@ export function Table({ address, addressInfo }) {
     // trick by frontend, the better way is api always return 'verify' info
     let checkIcon: React.ReactNode = '';
     if (
-      !lodash.isNil(addressInfo.isRegistered) ||
-      !lodash.isNil(addressInfo.cfxTransferCount)
+      (!lodash.isNil(addressInfo.isRegistered) ||
+        !lodash.isNil(addressInfo.cfxTransferCount)) &&
+      addressInfo.codeHash
     ) {
       if (addressInfo.verify?.exactMatch === true) {
         checkIcon = <CheckCircleIcon />;
