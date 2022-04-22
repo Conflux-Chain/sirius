@@ -17,9 +17,12 @@
     "creator": "Creator",
     "mintedTime": "Minted Time",
     "transfer": "Transfer",
+    "from": "From",
+    "to": "To",
     "error": {
       "fromAddress": "Please input from address",
       "toAddress": "Please input to address",
+      "id": "Please input token ID",
       "invalidAddress": "Please input valid base32 address"
     }
   },
@@ -1333,7 +1336,8 @@
         "110": "Non-reversible exchanged {{value}} FC",
         "111": "{{value}} FC sign up for subsidy",
         "112": "Announce Agreement",
-        "113": "Withdraw of principal {{value}} CFX"
+        "113": "Withdraw of principal {{value}} CFX",
+        "114": "Transfer {{type}} NFT (Token ID: {{id}})"
       }
     },
     "tip": "Please connect to Fluent Wallet first!"

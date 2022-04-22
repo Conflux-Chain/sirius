@@ -244,6 +244,14 @@ export function App() {
                         value: data.value,
                       },
                     );
+                  } else if (data.code === 114) {
+                    return t(
+                      translations.connectWallet.notify.action[data.code],
+                      {
+                        id: data.id,
+                        type: data.type,
+                      },
+                    );
                   } else {
                     return t(
                       translations.connectWallet.notify.action[data.code],
