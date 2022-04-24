@@ -17,9 +17,12 @@
     "creator": "创作者",
     "mintedTime": "发行时间",
     "transfer": "转发",
+    "from": "发送方",
+    "to": "接收方",
     "error": {
-      "fromAddress": "请输入 from 地址",
-      "toAddress": "请输入 to 地址",
+      "fromAddress": "请输入发送方地址",
+      "toAddress": "请输入接收方地址",
+      "id": "请输入代币 ID",
       "invalidAddress": "请输入合法地址"
     }
   },
@@ -1331,7 +1334,8 @@
         "110": "兑换 {{value}} 个 FC（不可逆）",
         "111": "{{value}} 个 FC 签约补贴计划",
         "112": "通知协议",
-        "113": "提取本金 {{value}} CFX"
+        "113": "提取本金 {{value}} CFX",
+        "114": "转移 {{type}} NFT（代币 ID：{{id}}）"
       }
     },
     "tip": "请先连接 Fluent Wallet 钱包！"

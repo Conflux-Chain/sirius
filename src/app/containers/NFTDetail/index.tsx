@@ -13,6 +13,7 @@ import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { reqNFTDetail } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { useBreakpoint } from 'styles/media';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -22,7 +23,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { formatTimeStamp } from 'utils';
 
 import { TransferList } from './TransferList';
-// import { TransferModal } from './TransferModal';
+import { TransferModal } from './TransferModal';
 
 import lodash from 'lodash';
 // @ts-ignore
@@ -48,6 +49,7 @@ interface Query {
 }
 
 export function NFTDetail(props) {
+  const bp = useBreakpoint();
   const { t, i18n } = useTranslation();
   const { id, address } = useParams<{
     id: string;
@@ -74,6 +76,8 @@ export function NFTDetail(props) {
       });
   }, [address, id]);
 
+  const tokenType = data.type?.replace('ERC', 'CRC');
+
   return (
     <StyledWrapper>
       <Helmet>
@@ -91,7 +95,14 @@ export function NFTDetail(props) {
             <NFTPreview contractAddress={address} tokenId={id} type="primary" />
           </Card>
 
-          {/* <TransferModal owner={data.owner} id={id}></TransferModal> */}
+          {bp !== 's' && (
+            <TransferModal
+              owner={data.owner}
+              id={id}
+              contractAddress={address}
+              contractType={tokenType}
+            ></TransferModal>
+          )}
         </Col>
         <Col sm={24} md={16} style={{ width: '100%' }}>
           <Card style={{ padding: 0 }}>
@@ -130,7 +141,7 @@ export function NFTDetail(props) {
                 </Description>
                 <Description title={t(translations.nftDetail.type)}>
                   <SkeletonContainer shown={loading}>
-                    {data.type?.replace('ERC', 'CRC')}
+                    {tokenType}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.address)}>

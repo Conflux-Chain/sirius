@@ -86,6 +86,7 @@
     "start:testnet": "REACT_APP_TestNet=true react-app-rewired start",
     "start:8888": "REACT_APP_PrivateNet=true react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:MEASURE": "MEASURE=true react-app-rewired build",
     "test": "react-app-rewired  test --env=jest-environment-jsdom-sixteen",
     "test:u": "react-app-rewired  test --env=jest-environment-jsdom-sixteen --updateSnapshot",
     "eject": "react-scripts eject",
@@ -169,7 +170,8 @@
     "jest-environment-jsdom-sixteen": "1.0.3",
     "jest-fetch-mock": "3.0.3",
     "react-app-rewired": "2.1.6",
-    "semantic-release": "17.2.3"
+    "semantic-release": "17.2.3",
+    "speed-measure-webpack-plugin": "1.5.0"
   },
   "config": {
     "commitizen": {
