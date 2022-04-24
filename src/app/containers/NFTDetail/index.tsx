@@ -65,11 +65,10 @@ export function NFTDetail(props) {
       query: { contractAddress: address, tokenId: id },
     })
       .then(({ data }) => {
-        console.log('data: ', data);
         setData(data);
       })
       .catch(e => {
-        console.log(e);
+        setData(e.response?.data);
       })
       .finally(() => {
         setLoading(false);
@@ -77,6 +76,8 @@ export function NFTDetail(props) {
   }, [address, id]);
 
   const tokenType = data.type?.replace('ERC', 'CRC');
+  const name =
+    i18n.language === 'zh-CN' ? data.imageName?.zh : data.imageName?.en;
 
   return (
     <StyledWrapper>
@@ -112,50 +113,74 @@ export function NFTDetail(props) {
                 key="details"
               >
                 <Description title={t(translations.nftDetail.id)}>
-                  <SkeletonContainer shown={loading}>{id}</SkeletonContainer>
+                  <SkeletonContainer shown={loading}>
+                    {id ? id : '--'}
+                  </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.name)}>
                   <SkeletonContainer shown={loading}>
-                    {i18n.language === 'zh-CN'
-                      ? data.imageName?.zh
-                      : data.imageName?.en}
+                    {name ? name : '--'}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.url)}>
                   <SkeletonContainer shown={loading}>
-                    <div className="image-uri-container">
-                      <Tooltip title={data.imageUri}>
-                        <Link href={data.imageUri} className="image-uri">
-                          {data.imageUri}
-                        </Link>
-                      </Tooltip>
-                      <CopyButton copyText={data.imageUri} />
-                    </div>
+                    {data.imageUri ? (
+                      <div className="image-uri-container">
+                        <Tooltip title={data.imageUri}>
+                          <Link href={data.imageUri} className="image-uri">
+                            {data.imageUri}
+                          </Link>
+                        </Tooltip>
+                        <CopyButton copyText={data.imageUri} />
+                      </div>
+                    ) : (
+                      '--'
+                    )}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.owner)}>
                   <SkeletonContainer shown={loading}>
-                    <Link href={`/address/${data.owner}`}>{data.owner}</Link>{' '}
-                    <CopyButton copyText={data.owner} />
+                    {data.owner ? (
+                      <>
+                        <Link href={`/address/${data.owner}`}>
+                          {data.owner}
+                        </Link>{' '}
+                        <CopyButton copyText={data.owner} />
+                      </>
+                    ) : (
+                      '--'
+                    )}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.type)}>
                   <SkeletonContainer shown={loading}>
-                    {tokenType}
+                    {tokenType ? tokenType : '--'}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.address)}>
                   <SkeletonContainer shown={loading}>
-                    <Link href={`/address/${address}`}>{address}</Link>{' '}
-                    <CopyButton copyText={address} />
+                    {address ? (
+                      <>
+                        <Link href={`/address/${address}`}>{address}</Link>{' '}
+                        <CopyButton copyText={address} />
+                      </>
+                    ) : (
+                      '--'
+                    )}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.creator)}>
                   <SkeletonContainer shown={loading}>
-                    <Link href={`/address/${data.creator}`}>
-                      {data.creator}
-                    </Link>{' '}
-                    <CopyButton copyText={data.creator} />
+                    {data.creator ? (
+                      <>
+                        <Link href={`/address/${data.creator}`}>
+                          {data.creator}
+                        </Link>{' '}
+                        <CopyButton copyText={data.creator} />
+                      </>
+                    ) : (
+                      '--'
+                    )}
                   </SkeletonContainer>
                 </Description>
                 <Description
@@ -163,7 +188,9 @@ export function NFTDetail(props) {
                   noBorder
                 >
                   <SkeletonContainer shown={loading}>
-                    {formatTimeStamp(data.mintTime, 'timezone')}
+                    {data.mintTime
+                      ? formatTimeStamp(data.mintTime, 'timezone')
+                      : '--'}
                   </SkeletonContainer>
                 </Description>
               </Collapse.Panel>
@@ -204,7 +231,12 @@ export function NFTDetail(props) {
       </Row>
 
       <StyledBottomWrapper>
-        <TransferList type={data.type} address={address} id={id}></TransferList>
+        <TransferList
+          type={data.type}
+          address={address}
+          id={id}
+          loading={loading}
+        ></TransferList>
       </StyledBottomWrapper>
     </StyledWrapper>
   );
