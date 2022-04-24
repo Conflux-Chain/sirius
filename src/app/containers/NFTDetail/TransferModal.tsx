@@ -173,10 +173,6 @@ export const TransferModal = ({
     });
   };
 
-  if (!isOwner) {
-    return null;
-  }
-
   return (
     <StyledWrapper>
       <Button
@@ -184,6 +180,7 @@ export const TransferModal = ({
         onClick={showTransferModal}
         className="button-transfer"
         loading={submitLoading}
+        disabled={!isOwner}
       >
         {t(translations.nftDetail.transfer)}
       </Button>
