@@ -23,7 +23,8 @@
       "fromAddress": "Please input from address",
       "toAddress": "Please input to address",
       "id": "Please input token ID",
-      "invalidAddress": "Please input valid base32 address"
+      "invalidAddress": "Please input valid base32 address",
+      "invalidNetwork": "Please input {{network}} address"
     }
   },
   "fccfx": {

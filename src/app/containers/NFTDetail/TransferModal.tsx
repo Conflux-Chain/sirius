@@ -3,11 +3,16 @@ import { Form, Input, Button, Modal } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { isBase32Address } from 'utils';
+import { isBase32Address, isCurrentNetworkAddress } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
 import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
-import { TXN_ACTION, RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import {
+  TXN_ACTION,
+  RPC_SERVER,
+  NETWORK_ID,
+  NETWORK_TYPE,
+} from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
@@ -85,7 +90,21 @@ export const TransferModal = ({
     return {
       validator(_, value) {
         if (isBase32Address(value)) {
-          return Promise.resolve();
+          if (isCurrentNetworkAddress(value)) {
+            return Promise.resolve();
+          } else {
+            return Promise.reject(
+              new Error(
+                t(translations.nftDetail.error.invalidNetwork, {
+                  network: t(
+                    translations.general.networks[
+                      String(NETWORK_TYPE).toLowerCase()
+                    ],
+                  ),
+                }),
+              ),
+            );
+          }
         }
         return Promise.reject(
           new Error(t(translations.nftDetail.error.invalidAddress)),
