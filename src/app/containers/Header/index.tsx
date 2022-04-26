@@ -143,7 +143,10 @@ export const Header = memo(() => {
     title: [t(translations.header.crossSpace), <Check size={18} key="check" />],
     name: ScanEvent.menu.action.crossSpace,
     afterClick: menuClick,
-    href: 'https://evm.fluentwallet.com/',
+    href:
+      NETWORK_TYPE === NETWORK_TYPES.testnet
+        ? 'https://test.confluxhub.io/'
+        : 'https://confluxhub.io/',
   });
 
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
