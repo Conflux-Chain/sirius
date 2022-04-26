@@ -239,6 +239,8 @@ export const HeaderLink: React.FC<{
           )}
         >
           <UILink
+            // eslint-disable-next-line no-script-url
+            href="javascript:void(0)"
             className={clsx(
               className,
               expanded && 'expanded',
@@ -277,7 +279,11 @@ export const HeaderLink: React.FC<{
           ])}
         >
           <WrappLink>
-            <UILink className={clsx(className, matched && 'matched')}>
+            <UILink
+              // eslint-disable-next-line no-script-url
+              href="javascript:void(0)"
+              className={clsx(className, matched && 'matched')}
+            >
               {(bp === 'm' || bp === 's') && isMenu && (
                 <ChevronDown size={18} />
               )}
