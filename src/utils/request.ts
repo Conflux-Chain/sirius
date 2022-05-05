@@ -1,6 +1,7 @@
 import { PromiseType } from 'react-use/lib/util';
 import { appendApiPrefix } from './api';
 import { publishRequestError } from './index';
+import lodash from 'lodash';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -76,14 +77,13 @@ const parseJSON = async function (response) {
 
 // 检查返回值中是否包含错误
 const checkResponse = ({ data, response }) => {
-  if (response.status === 200) {
+  // compatible with open api request
+  if (response.status === 200 && lodash.isNil(data.code)) {
     return data;
-  } else if (response.status === 600) {
+  } else if (data.code === 0) {
+    return data.data;
+  } else {
     const code = Number(data?.code);
-    // 只过滤黑名单中的，其他的错误透传到业务代码中处理
-    // if (BACKEND_ERROR_CODE_BLACKLIST.includes(code)) {
-    //   publishRequestError({ code: code, message: data.message }, 'http');
-    // }
     publishRequestError({ code: code, message: data.message }, 'http');
     const error: Partial<ErrorEvent> & {
       response?: ResponseType;

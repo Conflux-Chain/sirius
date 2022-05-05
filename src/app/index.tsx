@@ -76,6 +76,7 @@ import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
+import { NewCharts } from './containers/NewCharts';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -627,6 +628,12 @@ export function App() {
                             exact
                             path="/nft/:address/:id"
                             component={NFTDetail}
+                          />
+
+                          <Route
+                            exact
+                            path="/new-charts"
+                            component={NewCharts}
                           />
 
                           <Route component={NotFoundPage} />

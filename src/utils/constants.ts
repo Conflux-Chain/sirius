@@ -215,3 +215,15 @@ enum FC_EXCHANGE_INTEREST_ADDRESSES {
 export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
   ? FC_EXCHANGE_INTEREST_ADDRESSES.testnet
   : FC_EXCHANGE_INTEREST_ADDRESSES.mainnet;
+
+export const OPEN_API_HOST = IS_TESTNET
+  ? 'api-testnet.confluxscan.net'
+  : 'api.confluxscan.net';
+
+export const OPEN_API_URLS = Object.entries({
+  mining: '/statistics/mining',
+})
+  .map(item => ({
+    [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,
+  }))
+  .reduce((prev, curr) => ({ ...prev, ...curr }), {});
