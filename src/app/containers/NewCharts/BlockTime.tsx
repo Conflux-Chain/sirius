@@ -1,19 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import HighchartsExporting from 'highcharts/modules/exporting';
+import React, { useEffect, useState } from 'react';
 import { reqChartDataOfMining } from 'utils/httpRequest';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
-
-if (typeof Highcharts === 'object') {
-  HighchartsExporting(Highcharts);
-}
-
-// @ts-ignore
-window.dayjs = dayjs;
+import { ChartTemplate } from './ChartTemplate';
 
 export function BlockTime() {
   const { t } = useTranslation();
@@ -30,86 +20,64 @@ export function BlockTime() {
       setData(data);
     }
 
-    fn().catch(e => {
-      console.log('BlockTime request error: ', e);
-    });
+    fn();
   }, []);
 
-  const options = useMemo(
-    () => ({
-      chart: {
-        zoomType: 'x',
-      },
-      title: {
-        text: 'ConfluxScan Average Block Time Chart',
-      },
-      subtitle: {
-        text:
-          'Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in',
-      },
-      legend: {
-        enabled: false,
-      },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-        valueDecimals: 2,
-      },
-      xAxis: {
-        type: 'datetime',
-      },
-      yAxis: {
-        // min: 0,
+  return (
+    <ChartTemplate
+      title={t(translations.highcharts.averageBlockTime.title)}
+      subtitle={t(translations.highcharts.averageBlockTime.subtitle)}
+      options={{
+        chart: {
+          zoomType: 'x',
+        },
         title: {
-          text: 'Block Time in Secs',
+          text: t(translations.highcharts.averageBlockTime.title),
         },
-      },
-      series: [
-        {
-          type: 'column',
-          data: data.list?.map(s => [
-            // @ts-ignore
-            dayjs(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.blockTime),
-          ]),
-          name:
-            '[ <span style="color:rgb(124, 181, 236);">Block Time (Secs)</span> ]',
+        subtitle: {
+          text: t(translations.highcharts.subtitle),
         },
-      ],
-      exporting: {
-        enabled: true,
-        buttons: {
-          contextButton: {
-            menuItems: [
-              'printChart',
-              'separator',
-              'downloadPNG',
-              'downloadJPEG',
-              'downloadPDF',
-              'downloadSVG',
-            ],
+        legend: {
+          enabled: false,
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+          valueDecimals: 2,
+        },
+        xAxis: {
+          type: 'datetime',
+        },
+        yAxis: {
+          title: {
+            text: t(translations.highcharts.averageBlockTime.yAxisTitle),
           },
         },
-      },
-    }),
-    [data],
-  );
-
-  console.log(
-    data.list?.map(s => [
-      // @ts-ignore
-      dayjs(s.statTime).valueOf(),
-      // @ts-ignore
-      Number(s.blockTime),
-    ]),
-  );
-
-  return (
-    <div>
-      <PageHeader subtitle="The ConfluxScan Average Block Time Chart shows the historical average time taken in seconds for a block to be included in the ConfluxScan blockchain.">
-        {t(translations.charts.subtitle2)}
-      </PageHeader>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
+        series: [
+          {
+            type: 'column',
+            data: data.list?.map(s => [
+              // @ts-ignore
+              dayjs(s.statTime).valueOf(),
+              // @ts-ignore
+              Number(s.blockTime),
+            ]),
+            name: `[ <span style="color:rgb(124, 181, 236);">${t(
+              translations.highcharts.averageBlockTime.seriesName,
+            )}</span> ]`,
+          },
+        ],
+        // exporting: {
+        //   csv: {
+        //     columnHeaderFormatter: (item, key, keyLength) => {
+        //       if (key === 'y') {
+        //         return 'Value';
+        //       } else {
+        //         return 'Date(UTC)';
+        //       }
+        //     },
+        //   },
+        // },
+      }}
+    ></ChartTemplate>
   );
 }

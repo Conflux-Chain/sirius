@@ -509,6 +509,15 @@
     "newest": "Newest",
     "oldest": "Oldest"
   },
+  "highcharts": {
+    "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
+    "averageBlockTime": {
+      "title": "Conflux Average Block Time Chart",
+      "subtitle": "The Conflux Average Block Time Chart shows the historical average time taken in seconds for a block to be included in the Conflux blockchain.",
+      "yAxisTitle": "Block Time in Secs",
+      "seriesName": "Block Time (Secs)"
+    }
+  },
   "charts": {
     "title": "Charts",
     "subtitle1": "Market Data",
