@@ -516,6 +516,12 @@
       "subtitle": "The Conflux Average Block Time Chart shows the historical average time taken in seconds for a block to be included in the Conflux blockchain.",
       "yAxisTitle": "Block Time in Secs",
       "seriesName": "Block Time (Secs)"
+    },
+    "hashRate": {
+      "title": "Conflux Network Hash Rate Chart",
+      "subtitle": "The Conflux Network Hash Rate Chart shows the historical measure of the processing power of the Conflux network.",
+      "yAxisTitle": "Hash Rate (GH/s)",
+      "seriesName": "Avg Daily Hash Rate"
     }
   },
   "charts": {
