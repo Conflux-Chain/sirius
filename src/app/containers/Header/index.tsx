@@ -412,6 +412,11 @@ export const Header = memo(() => {
       matched: statisticsMatched,
       children: [
         {
+          title: ['New Chart', <Check size={18} key="check" />],
+          afterClick: menuClick,
+          href: '/new-chart',
+        },
+        {
           title: [
             t(translations.header.charts),
             <Check size={18} key="check" />,

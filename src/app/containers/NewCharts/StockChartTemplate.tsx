@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from 'highcharts/modules/exporting';
-// import HighchartsExportData from 'highcharts/modules/export-data';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
@@ -11,7 +10,6 @@ import { reqChartData } from 'utils/httpRequest';
 
 if (typeof Highcharts === 'object') {
   HighchartsExporting(Highcharts);
-  // HighchartsExportData(Highcharts);
 }
 
 // @ts-ignore
@@ -28,7 +26,12 @@ interface Props {
   };
 }
 
-export function ChartTemplate({ title, subtitle, options, request }: Props) {
+export function StockChartTemplate({
+  title,
+  subtitle,
+  options,
+  request,
+}: Props) {
   const chart = useRef(null);
   const [data, setData] = useState({
     list: [],
@@ -56,7 +59,7 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
   const opts = lodash.merge(
     {
       chart: {
-        animation: false,
+        alignTicks: false,
         height: 600,
       },
       plotOptions: {
@@ -91,9 +94,32 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
           },
           threshold: null,
         },
+        line: {
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1,
+            },
+          },
+        },
+      },
+      tooltip: {
+        split: false,
+      },
+      yAxis: {
+        opposite: false,
       },
       series: [
         {
+          dataGrouping: {
+            units: [
+              [
+                'week', // unit name
+                [1], // allowed multiples
+              ],
+              ['month', [1, 2, 3, 4, 6]],
+            ],
+          },
           data: request.formatter(data),
         },
       ],
@@ -102,32 +128,20 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
         buttons: {
           contextButton: {
             menuItems: [
+              'viewFullscreen',
               'printChart',
               'separator',
               'downloadPNG',
               'downloadJPEG',
               'downloadPDF',
               'downloadSVG',
-              // 'separator',
-              // 'downloadCSV',
             ],
           },
         },
-        //   csv: {
-        //     columnHeaderFormatter: (item, key, keyLength) => {
-        //       if (key === 'y') {
-        //         return 'Value';
-        //       } else {
-        //         return 'Date(UTC)';
-        //       }
-        //     },
-        //   },
       },
     },
     options,
   );
-
-  // TODO, add export CSV
 
   return (
     <div>
@@ -137,7 +151,12 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
           padding: '1.2857rem',
         }}
       >
-        <HighchartsReact highcharts={Highcharts} options={opts} ref={chart} />
+        <HighchartsReact
+          constructorType={'stockChart'}
+          highcharts={Highcharts}
+          options={opts}
+          ref={chart}
+        />
       </Card>
     </div>
   );
