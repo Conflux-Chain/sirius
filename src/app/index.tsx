@@ -76,7 +76,12 @@ import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
-import { NewChart, BlockTime, HashRate } from './containers/NewCharts/Loadable';
+import {
+  NewChart,
+  BlockTime,
+  HashRate,
+  Difficulty,
+} from './containers/NewCharts/Loadable';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -642,6 +647,12 @@ export function App() {
                             exact
                             path="/new-chart/hashrate"
                             component={HashRate}
+                          />
+
+                          <Route
+                            exact
+                            path="/new-chart/difficulty"
+                            component={Difficulty}
                           />
 
                           <Route component={NotFoundPage} />

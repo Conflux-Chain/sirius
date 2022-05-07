@@ -522,6 +522,12 @@
       "subtitle": "The Conflux Network Hash Rate Chart shows the historical measure of the processing power of the Conflux network.",
       "yAxisTitle": "Hash Rate (GH/s)",
       "seriesName": "Avg Daily Hash Rate"
+    },
+    "difficulty": {
+      "title": "Conflux Network Difficulty Chart",
+      "subtitle": "The Conflux Network Difficulty Chart displays the mining difficulty and the historical value of the Conflux network.",
+      "yAxisTitle": "Difficulty (TH)",
+      "seriesName": "Avg Difficulty (TH)"
     }
   },
   "charts": {

@@ -14,3 +14,8 @@ export const HashRate = lazyLoad(
   () => import('./HashRate'),
   module => module.HashRate,
 );
+
+export const Difficulty = lazyLoad(
+  () => import('./Difficulty'),
+  module => module.Difficulty,
+);
