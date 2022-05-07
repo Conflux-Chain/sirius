@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HighchartsExporting from 'highcharts/modules/exporting';
@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
 import lodash from 'lodash';
+import { reqChartData } from 'utils/httpRequest';
 
 if (typeof Highcharts === 'object') {
   HighchartsExporting(Highcharts);
@@ -16,7 +17,42 @@ if (typeof Highcharts === 'object') {
 // @ts-ignore
 window.dayjs = dayjs;
 
-export function ChartTemplate({ title, subtitle, options }) {
+interface Props {
+  title: string;
+  subtitle: string;
+  options: any;
+  request: {
+    url: string;
+    query: any;
+    formatter: (data) => {};
+  };
+}
+
+export function ChartTemplate({ title, subtitle, options, request }: Props) {
+  const chart = useRef(null);
+  const [data, setData] = useState({
+    list: [],
+  });
+
+  useEffect(() => {
+    async function fn() {
+      // @ts-ignore
+      chart.current?.chart.showLoading();
+
+      const data = await reqChartData({
+        url: request.url,
+        query: request.query || { limit: 60, intervalType: 'day', sort: 'ASC' },
+      });
+
+      setData(data);
+
+      // @ts-ignore
+      chart.current?.chart.hideLoading();
+    }
+
+    fn();
+  }, [request.query, request.url]);
+
   const opts = lodash.merge(
     {
       chart: {
@@ -55,6 +91,11 @@ export function ChartTemplate({ title, subtitle, options }) {
           threshold: null,
         },
       },
+      series: [
+        {
+          data: request.formatter(data),
+        },
+      ],
       exporting: {
         enabled: true,
         buttons: {
@@ -71,6 +112,15 @@ export function ChartTemplate({ title, subtitle, options }) {
             ],
           },
         },
+        //   csv: {
+        //     columnHeaderFormatter: (item, key, keyLength) => {
+        //       if (key === 'y') {
+        //         return 'Value';
+        //       } else {
+        //         return 'Date(UTC)';
+        //       }
+        //     },
+        //   },
       },
     },
     options,
@@ -86,7 +136,7 @@ export function ChartTemplate({ title, subtitle, options }) {
           padding: '1.2857rem',
         }}
       >
-        <HighchartsReact highcharts={Highcharts} options={opts} />
+        <HighchartsReact highcharts={Highcharts} options={opts} ref={chart} />
       </Card>
     </div>
   );

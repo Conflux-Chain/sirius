@@ -307,4 +307,11 @@ export const reqChartDataOfMining = (extra?: object) => {
   });
 };
 
+export const reqChartData = ({ url, query }) => {
+  return sendRequest({
+    url,
+    query,
+  });
+};
+
 /** charts, end */
