@@ -510,28 +510,34 @@
     "oldest": "Oldest"
   },
   "highcharts": {
+    "preview": {
+      "title": "Charts",
+      "subtitle": " A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
+      "viewDetail": "View Details",
+      "tip": "Showing the last 30 days"
+    },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
       "title": "Conflux Average Block Time Chart",
-      "subtitle": "The Conflux Average Block Time Chart shows the historical average time taken in seconds for a block to be included in the Conflux blockchain.",
+      "subtitle": "The time required to generate a block.",
       "yAxisTitle": "Block Time in Secs",
       "seriesName": "Block Time (Secs)"
     },
     "hashRate": {
       "title": "Conflux Network Hash Rate Chart",
-      "subtitle": "The Conflux Network Hash Rate Chart shows the historical measure of the processing power of the Conflux network.",
+      "subtitle": "The number of times a miner calculates hashes per second.",
       "yAxisTitle": "Hash Rate (GH/s)",
       "seriesName": "Avg Daily Hash Rate"
     },
     "difficulty": {
       "title": "Conflux Network Difficulty Chart",
-      "subtitle": "The Conflux Network Difficulty Chart displays the mining difficulty and the historical value of the Conflux network.",
+      "subtitle": "Calculation difficulty of all blocks currently generated.",
       "yAxisTitle": "Difficulty (TH)",
       "seriesName": "Avg Difficulty (TH)"
     },
     "totalSupply": {
       "title": "CFX Total Supply",
-      "subtitle": "The pie chart shows the amount of CFX that are created in the market.",
+      "subtitle": "The amount of CFX that are created in the market.",
       "fourYearUnlock": "Four Year Unlock",
       "twoYearUnlock": "Two Year Unlock",
       "circulatingUnlock": "Circulating Unlock"

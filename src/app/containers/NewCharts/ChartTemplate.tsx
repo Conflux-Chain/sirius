@@ -18,6 +18,7 @@ if (typeof Highcharts === 'object') {
 window.dayjs = dayjs;
 
 interface Props {
+  preview?: boolean;
   title: string;
   subtitle: string;
   options: any;
@@ -28,7 +29,17 @@ interface Props {
   };
 }
 
-export function ChartTemplate({ title, subtitle, options, request }: Props) {
+export interface ChildProps {
+  preview?: boolean;
+}
+
+export function ChartTemplate({
+  preview,
+  title,
+  subtitle,
+  options,
+  request,
+}: Props) {
   const chart = useRef(null);
   const [data, setData] = useState(null);
 
@@ -37,9 +48,15 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
       // @ts-ignore
       chart.current?.chart.showLoading();
 
+      const limit = preview ? 30 : 100;
+
       const data = await reqChartData({
         url: request.url,
-        query: request.query || { limit: 60, intervalType: 'day', sort: 'ASC' },
+        query: request.query || {
+          limit: limit,
+          intervalType: 'day',
+          sort: 'ASC',
+        },
       });
 
       setData(data);
@@ -49,7 +66,7 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
     }
 
     fn();
-  }, [request.query, request.url]);
+  }, [preview, request.query, request.url]);
 
   const opts = lodash.merge(
     {
@@ -107,6 +124,9 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
           colorByPoint: true,
         },
       },
+      tooltip: {
+        shape: 'square',
+      },
       series: [
         {
           data: request.formatter(data),
@@ -142,11 +162,22 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
     options,
   );
 
+  if (preview) {
+    opts.chart.height = 240;
+    opts.chart.zoomType = undefined;
+    opts.title = '';
+    opts.subtitle = '';
+    opts.exporting.enabled = false;
+    // opts.navigator.enabled = false;
+    // opts.rangeSelector.enabled = false;
+    // opts.scrollbar.enabled = false;
+  }
+
   // TODO, add export CSV
 
   return (
     <div>
-      <PageHeader subtitle={subtitle}>{title}</PageHeader>
+      {preview ? null : <PageHeader subtitle={subtitle}>{title}</PageHeader>}
       <Card
         style={{
           padding: '1.2857rem',

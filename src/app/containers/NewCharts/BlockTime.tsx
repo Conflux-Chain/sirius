@@ -3,19 +3,20 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ChartTemplate } from './ChartTemplate';
-import { StockChartTemplate } from './StockChartTemplate';
+import { StockChartTemplate, ChildProps } from './StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Space } from '@cfxjs/antd';
+import { Wrapper } from './Wrapper';
 
-export function BlockTime() {
+export function BlockTime({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
+    preview: preview,
+    name: 'blocktime',
     title: t(translations.highcharts.averageBlockTime.title),
     subtitle: t(translations.highcharts.averageBlockTime.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
-      query: { limit: 100, intervalType: 'day', sort: 'ASC' },
       formatter: data =>
         data?.list?.map(s => [
           // @ts-ignore
@@ -57,9 +58,12 @@ export function BlockTime() {
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-      <ChartTemplate {...props}></ChartTemplate>
-    </Space>
+    <Wrapper {...props}>
+      {localStorage.getItem('USE-STOCK') === 'true' ? (
+        <StockChartTemplate {...props}></StockChartTemplate>
+      ) : (
+        <ChartTemplate {...props}></ChartTemplate>
+      )}
+    </Wrapper>
   );
 }

@@ -16,6 +16,7 @@ if (typeof Highcharts === 'object') {
 window.dayjs = dayjs;
 
 interface Props {
+  preview?: boolean;
   title: string;
   subtitle: string;
   options: any;
@@ -26,7 +27,12 @@ interface Props {
   };
 }
 
+export interface ChildProps {
+  preview?: boolean;
+}
+
 export function StockChartTemplate({
+  preview,
   title,
   subtitle,
   options,
@@ -42,10 +48,15 @@ export function StockChartTemplate({
       // @ts-ignore
       chart.current?.chart.showLoading();
 
+      const limit = preview ? 30 : 100;
       const data = await reqChartData({
         url: request.url,
-        query: request.query || { limit: 60, intervalType: 'day', sort: 'ASC' },
+        query: request.query || {
+          limit: limit,
+          intervalType: 'day',
+        },
       });
+      data.list = data.list.reverse(); // use latest data sort by asc
 
       setData(data);
 
@@ -54,13 +65,22 @@ export function StockChartTemplate({
     }
 
     fn();
-  }, [request.query, request.url]);
+  }, [preview, request.query, request.url]);
 
   const opts = lodash.merge(
     {
       chart: {
         alignTicks: false,
         height: 600,
+      },
+      navigator: {
+        enabled: true,
+      },
+      rangeSelector: {
+        enabled: true,
+      },
+      scrollbar: {
+        enabled: true,
       },
       plotOptions: {
         area: {
@@ -123,6 +143,7 @@ export function StockChartTemplate({
           </tr>`,
         footerFormat: '</table>',
         valueDecimals: 2,
+        shape: 'square',
       },
       yAxis: {
         opposite: false,
@@ -161,9 +182,20 @@ export function StockChartTemplate({
     options,
   );
 
+  if (preview) {
+    opts.chart.height = 240;
+    opts.chart.zoomType = undefined;
+    opts.title = '';
+    opts.subtitle = '';
+    opts.exporting.enabled = false;
+    opts.navigator.enabled = false;
+    opts.rangeSelector.enabled = false;
+    opts.scrollbar.enabled = false;
+  }
+
   return (
-    <div>
-      <PageHeader subtitle={subtitle}>{title}</PageHeader>
+    <>
+      {preview ? null : <PageHeader subtitle={subtitle}>{title}</PageHeader>}
       <Card
         style={{
           padding: '1.2857rem',
@@ -176,6 +208,6 @@ export function StockChartTemplate({
           ref={chart}
         />
       </Card>
-    </div>
+    </>
   );
 }

@@ -1,15 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ChartTemplate } from './ChartTemplate';
+import { ChartTemplate, ChildProps } from './ChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Space } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk';
+import { Wrapper } from './Wrapper';
 
-export function TotalSupply() {
+export function TotalSupply({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
+    name: 'supply',
+    preview,
     title: t(translations.highcharts.totalSupply.title),
     subtitle: t(translations.highcharts.totalSupply.subtitle),
     request: {
@@ -52,8 +54,8 @@ export function TotalSupply() {
   };
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <Wrapper {...props}>
       <ChartTemplate {...props}></ChartTemplate>
-    </Space>
+    </Wrapper>
   );
 }
