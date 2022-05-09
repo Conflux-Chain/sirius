@@ -19,3 +19,8 @@ export const Difficulty = lazyLoad(
   () => import('./Difficulty'),
   module => module.Difficulty,
 );
+
+export const TotalSupply = lazyLoad(
+  () => import('./TotalSupply'),
+  module => module.TotalSupply,
+);

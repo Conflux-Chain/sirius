@@ -414,7 +414,7 @@ export const Header = memo(() => {
         {
           title: ['New Chart', <Check size={18} key="check" />],
           afterClick: menuClick,
-          href: '/new-chart',
+          href: '/new-charts',
         },
         {
           title: [

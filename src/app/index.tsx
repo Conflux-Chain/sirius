@@ -81,6 +81,7 @@ import {
   BlockTime,
   HashRate,
   Difficulty,
+  TotalSupply,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -635,24 +636,34 @@ export function App() {
                             component={NFTDetail}
                           />
 
-                          <Route exact path="/new-chart" component={NewChart} />
+                          <Route
+                            exact
+                            path="/new-charts"
+                            component={NewChart}
+                          />
 
                           <Route
                             exact
-                            path="/new-chart/blocktime"
+                            path="/new-charts/blocktime"
                             component={BlockTime}
                           />
 
                           <Route
                             exact
-                            path="/new-chart/hashrate"
+                            path="/new-charts/hashrate"
                             component={HashRate}
                           />
 
                           <Route
                             exact
-                            path="/new-chart/difficulty"
+                            path="/new-charts/difficulty"
                             component={Difficulty}
+                          />
+
+                          <Route
+                            exact
+                            path="/stat/supply"
+                            component={TotalSupply}
                           />
 
                           <Route component={NotFoundPage} />

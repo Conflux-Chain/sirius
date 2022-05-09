@@ -23,16 +23,14 @@ interface Props {
   options: any;
   request: {
     url: string;
-    query: any;
+    query?: any;
     formatter: (data) => {};
   };
 }
 
 export function ChartTemplate({ title, subtitle, options, request }: Props) {
   const chart = useRef(null);
-  const [data, setData] = useState({
-    list: [],
-  });
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fn() {
@@ -90,6 +88,23 @@ export function ChartTemplate({ title, subtitle, options, request }: Props) {
             },
           },
           threshold: null,
+        },
+        line: {
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 1,
+            },
+          },
+        },
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: false,
+          },
+          showInLegend: true,
+          colorByPoint: true,
         },
       },
       series: [

@@ -222,6 +222,7 @@ export const OPEN_API_HOST = IS_TESTNET
 
 export const OPEN_API_URLS = Object.entries({
   mining: '/statistics/mining',
+  supply: '/statistics/supply',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,

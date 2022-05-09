@@ -21,7 +21,7 @@ interface Props {
   options: any;
   request: {
     url: string;
-    query: any;
+    query?: any;
     formatter: (data) => {};
   };
 }
@@ -105,6 +105,24 @@ export function StockChartTemplate({
       },
       tooltip: {
         split: false,
+        useHTML: true,
+        xDateFormat: '%a %e, %b %Y (UTC)',
+        headerFormat: `<table>
+            <tr>
+              <th colspan="2" style="font-weight: normal;">{point.key}</th>
+            </tr>
+            <tr style="border-bottom: 1px solid #ccc;">
+              <th style="padding-bottom: 5px;"></th>
+            </tr>
+            `,
+        pointFormat: `
+          <tr><td style="padding-top: 5px;"></td></tr>
+          <tr>
+            <td style="color: {series.color}; padding-right: 10px;">{series.name}</td>
+            <td style="text-align: right"><b>{point.y}</b></td>  
+          </tr>`,
+        footerFormat: '</table>',
+        valueDecimals: 2,
       },
       yAxis: {
         opposite: false,

@@ -528,6 +528,13 @@
       "subtitle": "The Conflux Network Difficulty Chart displays the mining difficulty and the historical value of the Conflux network.",
       "yAxisTitle": "Difficulty (TH)",
       "seriesName": "Avg Difficulty (TH)"
+    },
+    "totalSupply": {
+      "title": "CFX Total Supply",
+      "subtitle": "The pie chart shows the amount of CFX that are created in the market.",
+      "fourYearUnlock": "Four Year Unlock",
+      "twoYearUnlock": "Two Year Unlock",
+      "circulatingUnlock": "Circulating Unlock"
     }
   },
   "charts": {

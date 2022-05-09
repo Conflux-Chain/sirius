@@ -37,10 +37,10 @@ export function HashRate() {
       legend: {
         enabled: false,
       },
-      tooltip: {
-        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-        valueDecimals: 2,
-      },
+      // tooltip: {
+      //   pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+      //   valueDecimals: 2,
+      // },
       xAxis: {
         type: 'datetime',
       },
