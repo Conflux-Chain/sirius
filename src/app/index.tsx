@@ -82,6 +82,7 @@ import {
   HashRate,
   Difficulty,
   TotalSupply,
+  CirculatingSupply,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -664,6 +665,12 @@ export function App() {
                             exact
                             path="/stat/supply"
                             component={TotalSupply}
+                          />
+
+                          <Route
+                            exact
+                            path="/stat/circulating"
+                            component={CirculatingSupply}
                           />
 
                           <Route component={NotFoundPage} />

@@ -24,3 +24,8 @@ export const TotalSupply = lazyLoad(
   () => import('./TotalSupply'),
   module => module.TotalSupply,
 );
+
+export const CirculatingSupply = lazyLoad(
+  () => import('./CirculatingSupply'),
+  module => module.CirculatingSupply,
+);

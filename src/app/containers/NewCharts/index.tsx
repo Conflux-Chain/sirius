@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import { BlockTime } from './BlockTime';
 import { HashRate } from './HashRate';
 import { TotalSupply } from './TotalSupply';
+import { CirculatingSupply } from './CirculatingSupply';
 import { Difficulty } from './Difficulty';
 
 export function NewChart() {
@@ -36,6 +37,9 @@ export function NewChart() {
       <Row gutter={[20, 20]}>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <TotalSupply preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <CirculatingSupply preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <BlockTime preview={true} />
