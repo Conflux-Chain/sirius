@@ -526,19 +526,19 @@
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
-      "title": "Conflux Average Block Time Chart",
+      "title": "Average Block Time Chart",
       "subtitle": "The time required to generate a block.",
       "yAxisTitle": "Block Time in Secs",
       "seriesName": "Block Time (Secs)"
     },
     "hashRate": {
-      "title": "Conflux Network Hash Rate Chart",
+      "title": "Network Hash Rate Chart",
       "subtitle": "The number of times a miner calculates hashes per second.",
       "yAxisTitle": "Hash Rate (GH/s)",
       "seriesName": "Avg Daily Hash Rate"
     },
     "difficulty": {
-      "title": "Conflux Network Difficulty Chart",
+      "title": "Network Difficulty Chart",
       "subtitle": "Calculation difficulty of all blocks currently generated.",
       "yAxisTitle": "Difficulty (TH)",
       "seriesName": "Avg Difficulty (TH)"

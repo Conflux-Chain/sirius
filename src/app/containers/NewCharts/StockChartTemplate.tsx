@@ -7,6 +7,7 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
 import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
+import { useBreakpoint } from 'styles/media';
 
 if (typeof Highcharts === 'object') {
   HighchartsExporting(Highcharts);
@@ -38,6 +39,7 @@ export function StockChartTemplate({
   options,
   request,
 }: Props) {
+  const bp = useBreakpoint();
   const chart = useRef(null);
   const [data, setData] = useState({
     list: [],
@@ -191,6 +193,10 @@ export function StockChartTemplate({
     opts.navigator.enabled = false;
     opts.rangeSelector.enabled = false;
     opts.scrollbar.enabled = false;
+  }
+
+  if (bp === 's') {
+    opts.chart.height = 360;
   }
 
   return (
