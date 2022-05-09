@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { Link } from 'app/components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
+import { Breadcrumb } from '@cfxjs/antd';
 
 export const Wrapper = ({
   children,
@@ -13,29 +14,45 @@ export const Wrapper = ({
   ...others
 }) => {
   const { t } = useTranslation();
-  const path = ['supply'].includes(name) ? 'stat' : 'new-charts';
+  const url = `/${['supply'].includes(name) ? 'stat' : 'new-charts'}/${name}`;
 
   if (preview) {
     return (
-      <StyledChartTemplateWrapper>
+      <StyledPreviewWrapper>
         <div className="header">
           <div className="title">
             {title.replace('Conflux ', '')}
             <div className="subtitle">{subtitle}</div>
           </div>
-          <Link href={`/${path}/${name}`}>
+          <Link href={url} className="view-detail">
             {t(translations.highcharts.preview.viewDetail)}
           </Link>
         </div>
         {children}
-      </StyledChartTemplateWrapper>
+      </StyledPreviewWrapper>
     );
   } else {
-    return <>{children}</>;
+    return (
+      <StyledPageWrapper>
+        <Breadcrumb className="breadcrumb">
+          <Breadcrumb.Item>
+            <Link href="/new-charts">
+              {t(translations.highcharts.breadcrumb.charts)}
+            </Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link href={url}>
+              {t(translations.highcharts.breadcrumb[name])}
+            </Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+        {children}
+      </StyledPageWrapper>
+    );
   }
 };
 
-const StyledChartTemplateWrapper = styled.div`
+const StyledPreviewWrapper = styled.div`
   background-color: #ffffff;
   border: 1px solid var(--theme-color-gray3);
   border-radius: 4px;
@@ -60,5 +77,18 @@ const StyledChartTemplateWrapper = styled.div`
       font-size: 14px;
       color: var(--theme-color-gray4);
     }
+  }
+
+  .view-detail {
+    flex-shrink: 0;
+  }
+`;
+
+const StyledPageWrapper = styled.div`
+  position: relative;
+
+  .breadcrumb {
+    position: absolute;
+    right: 0;
   }
 `;
