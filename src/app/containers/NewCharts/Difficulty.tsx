@@ -17,13 +17,14 @@ export function Difficulty({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.difficulty.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
-      formatter: data =>
+      formatter: data => [
         data?.list?.map(s => [
           // @ts-ignore
           dayjs(s.statTime).valueOf(),
           // @ts-ignore
           Number(s.difficulty) / 1000000000000, // format to TH
         ]),
+      ],
     },
     options: {
       chart: {

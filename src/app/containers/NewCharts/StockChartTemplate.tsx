@@ -146,24 +146,14 @@ export function StockChartTemplate({
         footerFormat: '</table>',
         valueDecimals: 2,
         shape: 'square',
+        shared: true,
       },
       yAxis: {
         opposite: false,
       },
-      series: [
-        {
-          dataGrouping: {
-            units: [
-              [
-                'week', // unit name
-                [1], // allowed multiples
-              ],
-              ['month', [1, 2, 3, 4, 6]],
-            ],
-          },
-          data: request.formatter(data),
-        },
-      ],
+      series: options.series.map((s, i) => ({
+        data: request.formatter(data)[i],
+      })),
       exporting: {
         enabled: true,
         buttons: {

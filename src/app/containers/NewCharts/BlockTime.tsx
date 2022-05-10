@@ -17,13 +17,14 @@ export function BlockTime({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.averageBlockTime.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
-      formatter: data =>
+      formatter: data => [
         data?.list?.map(s => [
           // @ts-ignore
           dayjs(s.statTime).valueOf(),
           // @ts-ignore
           Number(s.blockTime),
         ]),
+      ],
     },
     options: {
       chart: {

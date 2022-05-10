@@ -18,12 +18,16 @@ export function TokenTransfer({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.tokenTransfer,
       formatter: data => {
-        return data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.transferCount),
-        ]);
+        const data1: any = [];
+        const data2: any = [];
+
+        data?.list?.map((d, i) => {
+          const t = dayjs.utc(d.statTime).valueOf();
+          data1.push([t, Number(d.transferCount)]);
+          data2.push([t, Number(d.userCount)]);
+        });
+
+        return [data1, data2];
       },
     },
     options: {
@@ -47,11 +51,20 @@ export function TokenTransfer({ preview = false }: ChildProps) {
           text: t(translations.highcharts.tokenTransfer.yAxisTitle),
         },
       },
+      tooltip: {
+        shared: true,
+      },
       series: [
         {
           type: 'line',
           name: `[ <span style="color:rgb(124, 181, 236);">${t(
             translations.highcharts.tokenTransfer.seriesName,
+          )}</span> ]`,
+        },
+        {
+          type: 'line',
+          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+            translations.highcharts.tokenTransfer.seriesName2,
           )}</span> ]`,
         },
       ],

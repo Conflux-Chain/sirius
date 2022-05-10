@@ -6,6 +6,7 @@ import { ChartTemplate } from './ChartTemplate';
 import { StockChartTemplate, ChildProps } from './StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
 export function CFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -18,12 +19,18 @@ export function CFXTransfer({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.cfxTransfer,
       formatter: data => {
-        return data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.transferCount),
-        ]);
+        const data1: any = [];
+        const data2: any = [];
+        const data3: any = [];
+
+        data?.list?.map((d, i) => {
+          const t = dayjs.utc(d.statTime).valueOf();
+          data1.push([t, Number(d.transferCount)]);
+          data2.push([t, Number(d.userCount)]);
+          data3.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
+        });
+
+        return [data1, data2, data3];
       },
     },
     options: {
@@ -42,17 +49,44 @@ export function CFXTransfer({ preview = false }: ChildProps) {
       xAxis: {
         type: 'datetime',
       },
-      yAxis: {
-        title: {
-          text: t(translations.highcharts.cfxTransfer.yAxisTitle),
+      yAxis: [
+        {
+          title: {
+            text: t(translations.highcharts.cfxTransfer.yAxisTitle),
+          },
+          height: '50%',
+          opposite: false,
         },
-      },
+        {
+          title: {
+            text: t(translations.highcharts.cfxTransfer.yAxisTitle3),
+          },
+          height: '50%',
+          top: '50%',
+          offset: 0,
+          opposite: false,
+        },
+      ],
       series: [
         {
           type: 'line',
           name: `[ <span style="color:rgb(124, 181, 236);">${t(
             translations.highcharts.cfxTransfer.seriesName,
           )}</span> ]`,
+        },
+        {
+          type: 'line',
+          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+            translations.highcharts.cfxTransfer.seriesName2,
+          )}</span> ]`,
+        },
+        {
+          type: 'column',
+          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+            translations.highcharts.cfxTransfer.seriesName3,
+          )}</span> ]`,
+          color: '#7cb5ec',
+          yAxis: 1,
         },
       ],
     },

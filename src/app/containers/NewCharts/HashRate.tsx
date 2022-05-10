@@ -17,13 +17,14 @@ export function HashRate({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.hashRate.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
-      formatter: data =>
+      formatter: data => [
         data?.list?.map(s => [
           // @ts-ignore
           dayjs(s.statTime).valueOf(),
           // @ts-ignore
           Number(s.hashRate) / 1000000000, // format to GH/s
         ]),
+      ],
     },
     options: {
       chart: {

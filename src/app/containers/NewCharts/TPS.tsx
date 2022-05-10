@@ -18,12 +18,14 @@ export function TPS({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.tps,
       formatter: data => {
-        return data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.tps),
-        ]);
+        return [
+          data?.list?.map(s => [
+            // @ts-ignore
+            dayjs.utc(s.statTime).valueOf(),
+            // @ts-ignore
+            Number(s.tps),
+          ]),
+        ];
       },
     },
     options: {

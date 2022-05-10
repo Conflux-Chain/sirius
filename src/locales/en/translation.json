@@ -526,7 +526,7 @@
       "circulating": "Circulating Supply",
       "tx": "Daily Transactions",
       "token-transfer": "Daily Token Transfer",
-      "cfx-transfer": "Daily CFX Transfer"
+      "cfx-transfer": "Daily CFX Transfer Statistics"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
@@ -573,17 +573,21 @@
       "seriesName": "Total Transactions (Day)"
     },
     "cfxTransfer": {
-      "title": "Daily CFX Transfer Count",
+      "title": "Daily CFX Transfer Statistics",
       "subtitle": "Daily transfer statistics for CFX on the Conflux network.",
-      "yAxisTitle": "CFX Transfer per Day",
-      "seriesName": "Total CFX Transfer (Day)"
+      "yAxisTitle": "CFX Transfer",
+      "seriesName": "Total CFX Transfer Count (Day)",
+      "yAxisTitle2": "CFX Transfer Accounts",
+      "seriesName2": "Total CFX Transfer Accounts (Day)",
+      "yAxisTitle3": "Transfer Volume",
+      "seriesName3": "Total CFX Transfer Volume (Day)"
     },
     "tokenTransfer": {
       "title": "Daily Token Transfer Count",
       "subtitle": "Daily transfer statistics for all tokens on the Conflux network.",
       "yAxisTitle": "Token Transfer per Day",
+      "seriesName": "Total Token Transfer Count (Day)",
       "yAxisTitle2": "Token Transfer Accounts per Day",
-      "seriesName": "Total Token Transfer (Day)",
       "seriesName2": "Total Token Transfer Accounts (Day)"
     }
   },
