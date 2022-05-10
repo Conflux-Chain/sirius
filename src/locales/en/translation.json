@@ -519,6 +519,7 @@
     "breadcrumb": {
       "charts": "Charts",
       "blocktime": "Block Time",
+      "tps": "TPS",
       "hashrate": "Hash Rate",
       "difficulty": "Difficulty",
       "supply": "Total Supply",
@@ -530,6 +531,12 @@
       "subtitle": "The time required to generate a block.",
       "yAxisTitle": "Block Time in Secs",
       "seriesName": "Block Time (Secs)"
+    },
+    "tps": {
+      "title": "Transaction TPS",
+      "subtitle": "Number of transactions on the chain per second",
+      "yAxisTitle": "Transaction Number in Secs",
+      "seriesName": "Transaction Number (Secs)"
     },
     "hashRate": {
       "title": "Network Hash Rate Chart",
@@ -544,7 +551,7 @@
       "seriesName": "Avg Difficulty (TH)"
     },
     "totalSupply": {
-      "title": "CFX Total Supply",
+      "title": "Total Supply",
       "subtitle": "The amount of CFX that are created in the market.",
       "fourYearUnlock": "Four Year Unlock",
       "twoYearUnlock": "Two Year Unlock",

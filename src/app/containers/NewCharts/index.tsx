@@ -7,6 +7,7 @@ import styled from 'styled-components/macro';
 import dayjs from 'dayjs';
 
 import { BlockTime } from './BlockTime';
+import { TPS } from './TPS';
 import { HashRate } from './HashRate';
 import { TotalSupply } from './TotalSupply';
 import { CirculatingSupply } from './CirculatingSupply';
@@ -43,6 +44,9 @@ export function NewChart() {
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <BlockTime preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <TPS preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <HashRate preview={true} />

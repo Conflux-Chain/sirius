@@ -33,6 +33,8 @@ import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
 import { getClientVersion } from 'utils/rpcRequest';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
@@ -79,6 +81,7 @@ import ScanBenchmark from './containers/_Benchmark';
 import {
   NewChart,
   BlockTime,
+  TPS,
   HashRate,
   Difficulty,
   TotalSupply,
@@ -109,6 +112,8 @@ import 'moment/locale/zh-cn';
 //     urls: ['/font.css'],
 //   },
 // });
+
+dayjs.extend(utc);
 
 WebFontLoader.load({
   custom: {
@@ -648,6 +653,8 @@ export function App() {
                             path="/new-charts/blocktime"
                             component={BlockTime}
                           />
+
+                          <Route exact path="/new-charts/tps" component={TPS} />
 
                           <Route
                             exact

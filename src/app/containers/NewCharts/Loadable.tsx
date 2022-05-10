@@ -10,6 +10,11 @@ export const BlockTime = lazyLoad(
   module => module.BlockTime,
 );
 
+export const TPS = lazyLoad(
+  () => import('./TPS'),
+  module => module.TPS,
+);
+
 export const HashRate = lazyLoad(
   () => import('./HashRate'),
   module => module.HashRate,
