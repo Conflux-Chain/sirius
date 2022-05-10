@@ -87,6 +87,8 @@ import {
   TotalSupply,
   CirculatingSupply,
   Tx,
+  CFXTransfer,
+  TokenTransfer,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -682,6 +684,18 @@ export function App() {
                           />
 
                           <Route exact path="/new-charts/tx" component={Tx} />
+
+                          <Route
+                            exact
+                            path="/new-charts/token-transfer"
+                            component={TokenTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/new-charts/cfx-transfer"
+                            component={CFXTransfer}
+                          />
 
                           <Route component={NotFoundPage} />
                         </Switch>

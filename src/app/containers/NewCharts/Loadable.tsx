@@ -39,3 +39,13 @@ export const Tx = lazyLoad(
   () => import('./Tx'),
   module => module.Tx,
 );
+
+export const TokenTransfer = lazyLoad(
+  () => import('./TokenTransfer'),
+  module => module.TokenTransfer,
+);
+
+export const CFXTransfer = lazyLoad(
+  () => import('./CFXTransfer'),
+  module => module.CFXTransfer,
+);

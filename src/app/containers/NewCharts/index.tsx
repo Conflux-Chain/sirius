@@ -13,6 +13,8 @@ import { TotalSupply } from './TotalSupply';
 import { CirculatingSupply } from './CirculatingSupply';
 import { Difficulty } from './Difficulty';
 import { Tx } from './Tx';
+import { CFXTransfer } from './CFXTransfer';
+import { TokenTransfer } from './TokenTransfer';
 
 export function NewChart() {
   const { t } = useTranslation();
@@ -60,6 +62,12 @@ export function NewChart() {
         <Divider orientation="left">Transaction</Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Tx preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <TokenTransfer preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <CFXTransfer preview={true} />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>

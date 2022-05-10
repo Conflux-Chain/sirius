@@ -524,11 +524,13 @@
       "difficulty": "Difficulty",
       "supply": "Total Supply",
       "circulating": "Circulating Supply",
-      "tx": "Daily Transactions"
+      "tx": "Daily Transactions",
+      "token-transfer": "Daily Token Transfer",
+      "cfx-transfer": "Daily CFX Transfer"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
-      "title": "Average Block Time Chart",
+      "title": "Average Block Time",
       "subtitle": "The time required to generate a block.",
       "yAxisTitle": "Block Time in Secs",
       "seriesName": "Block Time (Secs)"
@@ -540,13 +542,13 @@
       "seriesName": "Transaction Number (Secs)"
     },
     "hashRate": {
-      "title": "Network Hash Rate Chart",
+      "title": "Network Hash Rate",
       "subtitle": "The number of times a miner calculates hashes per second.",
       "yAxisTitle": "Hash Rate (GH/s)",
       "seriesName": "Avg Daily Hash Rate"
     },
     "difficulty": {
-      "title": "Network Difficulty Chart",
+      "title": "Network Difficulty",
       "subtitle": "Calculation difficulty of all blocks currently generated.",
       "yAxisTitle": "Difficulty (TH)",
       "seriesName": "Avg Difficulty (TH)"
@@ -569,6 +571,20 @@
       "subtitle": "The total number of transactions per day on the Conflux network.",
       "yAxisTitle": "Transactions per Day",
       "seriesName": "Total Transactions (Day)"
+    },
+    "cfxTransfer": {
+      "title": "Daily CFX Transfer Count",
+      "subtitle": "Daily transfer statistics for CFX on the Conflux network.",
+      "yAxisTitle": "CFX Transfer per Day",
+      "seriesName": "Total CFX Transfer (Day)"
+    },
+    "tokenTransfer": {
+      "title": "Daily Token Transfer Count",
+      "subtitle": "Daily transfer statistics for all tokens on the Conflux network.",
+      "yAxisTitle": "Token Transfer per Day",
+      "yAxisTitle2": "Token Transfer Accounts per Day",
+      "seriesName": "Total Token Transfer (Day)",
+      "seriesName2": "Total Token Transfer Accounts (Day)"
     }
   },
   "charts": {

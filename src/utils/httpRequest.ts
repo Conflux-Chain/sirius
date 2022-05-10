@@ -1,6 +1,5 @@
 import qs from 'query-string';
 import fetch from './request';
-import { OPEN_API_URLS } from './constants';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -299,13 +298,6 @@ export const reqPoSIncomingHistory = (extra?: object) => {
 };
 
 /** charts, start */
-
-export const reqChartDataOfMining = (extra?: object) => {
-  return sendRequest({
-    url: OPEN_API_URLS.mining,
-    ...extra,
-  });
-};
 
 export const reqChartData = ({ url, query }) => {
   return sendRequest({

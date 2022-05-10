@@ -225,6 +225,8 @@ export const OPEN_API_URLS = Object.entries({
   supply: '/statistics/supply',
   tps: '/statistics/tps',
   tx: '/statistics/transaction',
+  tokenTransfer: '/statistics/token/transfer',
+  cfxTransfer: '/statistics/cfx/transfer',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,
