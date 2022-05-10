@@ -224,6 +224,7 @@ export const OPEN_API_URLS = Object.entries({
   mining: '/statistics/mining',
   supply: '/statistics/supply',
   tps: '/statistics/tps',
+  tx: '/statistics/transaction',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,

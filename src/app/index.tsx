@@ -86,6 +86,7 @@ import {
   Difficulty,
   TotalSupply,
   CirculatingSupply,
+  Tx,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -679,6 +680,8 @@ export function App() {
                             path="/stat/circulating"
                             component={CirculatingSupply}
                           />
+
+                          <Route exact path="/new-charts/tx" component={Tx} />
 
                           <Route component={NotFoundPage} />
                         </Switch>

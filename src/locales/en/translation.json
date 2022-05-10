@@ -523,7 +523,8 @@
       "hashrate": "Hash Rate",
       "difficulty": "Difficulty",
       "supply": "Total Supply",
-      "circulating": "Circulating Supply"
+      "circulating": "Circulating Supply",
+      "tx": "Daily Transactions"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
@@ -534,7 +535,7 @@
     },
     "tps": {
       "title": "Transaction TPS",
-      "subtitle": "Number of transactions on the chain per second",
+      "subtitle": "Number of transactions on the chain per second.",
       "yAxisTitle": "Transaction Number in Secs",
       "seriesName": "Transaction Number (Secs)"
     },
@@ -562,6 +563,12 @@
       "subtitle": "Circulating supply contains the CFX in the Zero Address.",
       "zeroAddress": "Zero Address",
       "others": "Others"
+    },
+    "tx": {
+      "title": "Daily Txn Count",
+      "subtitle": "The total number of transactions per day on the Conflux network.",
+      "yAxisTitle": "Transactions per Day",
+      "seriesName": "Total Transactions (Day)"
     }
   },
   "charts": {

@@ -34,3 +34,8 @@ export const CirculatingSupply = lazyLoad(
   () => import('./CirculatingSupply'),
   module => module.CirculatingSupply,
 );
+
+export const Tx = lazyLoad(
+  () => import('./Tx'),
+  module => module.Tx,
+);
