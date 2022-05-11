@@ -36,9 +36,6 @@ export function BlockTime({ preview = false }: ChildProps) {
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      legend: {
-        enabled: false,
-      },
       xAxis: {
         type: 'datetime',
       },

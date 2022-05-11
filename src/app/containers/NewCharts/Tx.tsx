@@ -38,9 +38,6 @@ export function Tx({ preview = false }: ChildProps) {
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      legend: {
-        enabled: false,
-      },
       xAxis: {
         type: 'datetime',
       },

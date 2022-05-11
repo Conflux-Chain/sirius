@@ -43,9 +43,9 @@ export function CFXTransfer({ preview = false }: ChildProps) {
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: false,
-      // },
+      legend: {
+        enabled: !preview,
+      },
       xAxis: {
         type: 'datetime',
       },

@@ -36,13 +36,6 @@ export function Difficulty({ preview = false }: ChildProps) {
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      legend: {
-        enabled: false,
-      },
-      // tooltip: {
-      //   pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-      //   valueDecimals: 2,
-      // },
       xAxis: {
         type: 'datetime',
       },
