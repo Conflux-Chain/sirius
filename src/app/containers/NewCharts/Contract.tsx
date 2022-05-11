@@ -6,18 +6,24 @@ import { ChartTemplate } from './ChartTemplate';
 import { StockChartTemplate, ChildProps } from './StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
-import BigNumber from 'bignumber.js';
 
-export function CFXTransfer({ preview = false }: ChildProps) {
+export function Contract({
+  preview = false,
+  address,
+}: ChildProps & { address: string }) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'cfx-transfer',
-    title: t(translations.highcharts.cfxTransfer.title),
-    subtitle: t(translations.highcharts.cfxTransfer.subtitle),
+    name: '',
+    title: t(translations.highcharts.contract.title),
+    subtitle: t(translations.highcharts.contract.subtitle),
     request: {
-      url: OPEN_API_URLS.cfxTransfer,
+      url: OPEN_API_URLS.contract,
+      query: {
+        address,
+        limit: 100,
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
@@ -25,9 +31,9 @@ export function CFXTransfer({ preview = false }: ChildProps) {
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
-          data2.push([t, Number(d.userCount)]);
-          data3.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
+          data1.push([t, Number(d.tx)]);
+          data2.push([t, Number(d.cfxTransfer)]);
+          data3.push([t, Number(d.tokenTransfer)]);
         });
 
         return [data1, data2, data3];
@@ -36,57 +42,37 @@ export function CFXTransfer({ preview = false }: ChildProps) {
     options: {
       chart: {
         zoomType: 'x',
+        type: 'line',
       },
       title: {
-        text: t(translations.highcharts.cfxTransfer.title),
+        text: t(translations.highcharts.contract.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: false,
-      // },
       xAxis: {
         type: 'datetime',
       },
-      yAxis: [
-        {
-          title: {
-            text: t(translations.highcharts.cfxTransfer.yAxisTitle),
-          },
-          height: '50%',
-          opposite: false,
+      yAxis: {
+        title: {
+          text: t(translations.highcharts.contract.yAxisTitle),
         },
-        {
-          title: {
-            text: t(translations.highcharts.cfxTransfer.yAxisTitle3),
-          },
-          height: '50%',
-          top: '50%',
-          offset: 0,
-          opposite: false,
-        },
-      ],
+      },
       series: [
         {
-          type: 'line',
           name: `[ <span style="color:rgb(124, 181, 236);">${t(
-            translations.highcharts.cfxTransfer.seriesName,
+            translations.highcharts.contract.seriesName,
           )}</span> ]`,
         },
         {
-          type: 'line',
           name: `[ <span style="color:rgb(124, 181, 236);">${t(
-            translations.highcharts.cfxTransfer.seriesName2,
+            translations.highcharts.contract.seriesName2,
           )}</span> ]`,
         },
         {
-          type: 'column',
           name: `[ <span style="color:rgb(124, 181, 236);">${t(
-            translations.highcharts.cfxTransfer.seriesName3,
+            translations.highcharts.contract.seriesName3,
           )}</span> ]`,
-          color: '#7cb5ec',
-          yAxis: 1,
         },
       ],
     },

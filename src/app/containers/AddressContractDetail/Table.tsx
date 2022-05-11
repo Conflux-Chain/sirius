@@ -15,6 +15,7 @@ import { ContractContent, CheckCircleIcon } from './ContractContent';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
 import lodash from 'lodash';
+import { Contract } from '../NewCharts/Loadable';
 
 import {
   // ExcutedTxns,
@@ -26,8 +27,6 @@ import {
 } from 'app/containers/Transactions/Loadable';
 import { MinedBlocks } from 'app/containers/Blocks/Loadable';
 import { NFTAsset } from 'app/containers/NFTAsset/Loadable';
-import { Card } from '../../components/Card';
-import { LineChart as Chart } from '../../components/Chart/Loadable';
 import styled from 'styled-components/macro';
 
 export function Table({ address, addressInfo }) {
@@ -116,13 +115,14 @@ export function Table({ address, addressInfo }) {
   if (chartWidth < 365) chartWidth = 365;
   const analysisPanel = () => (
     <StyledTabWrapper>
-      <Card>
+      <Contract address={address} />
+      {/* <Card>
         <Chart
           width={chartWidth}
           indicator="contractAnalysis"
           contractAddress={address}
         />
-      </Card>
+      </Card> */}
     </StyledTabWrapper>
   );
   if (isContract) {

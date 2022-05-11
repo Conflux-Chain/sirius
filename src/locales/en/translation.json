@@ -624,6 +624,16 @@
       "seriesName": "Contract Count (Day)",
       "yAxisTitle2": "Contract Growth Count per Day",
       "seriesName2": "Total Contract Growth Count (Day)"
+    },
+    "contract": {
+      "title": "Contract Statistics",
+      "subtitle": "Daily contract statistics.",
+      "yAxisTitle": "Count",
+      "seriesName": "Transactions Count (Day)",
+      "yAxisTitle2": "Count",
+      "seriesName2": "CFX Transfer Count (Day)",
+      "yAxisTitle3": "Count",
+      "seriesName3": "Token Transfer Count (Day)"
     }
   },
   "charts": {

@@ -125,6 +125,9 @@ export function StockChartTemplate({
           },
         },
       },
+      legend: {
+        enabled: options.series.length > 1,
+      },
       tooltip: {
         split: false,
         useHTML: true,

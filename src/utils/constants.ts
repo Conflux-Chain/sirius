@@ -236,3 +236,6 @@ export const OPEN_API_URLS = Object.entries({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,
   }))
   .reduce((prev, curr) => ({ ...prev, ...curr }), {});
+
+// not open abi, use backend api temp
+OPEN_API_URLS.contract = '/stat/contract/stat/list';
