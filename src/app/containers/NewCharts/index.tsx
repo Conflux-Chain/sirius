@@ -16,6 +16,7 @@ import { Tx } from './Tx';
 import { CFXTransfer } from './CFXTransfer';
 import { TokenTransfer } from './TokenTransfer';
 import { CFXHolderAccounts } from './CFXHolderAccounts';
+import { AccountGrowth } from './AccountGrowth';
 
 export function NewChart() {
   const { t } = useTranslation();
@@ -81,6 +82,9 @@ export function NewChart() {
         </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <CFXHolderAccounts preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <AccountGrowth preview={true} />
         </Col>
         <Divider orientation="left">
           {t(translations.highcharts.preview.contract)}

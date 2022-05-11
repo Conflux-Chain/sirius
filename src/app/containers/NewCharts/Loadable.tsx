@@ -54,3 +54,8 @@ export const CFXHolderAccounts = lazyLoad(
   () => import('./CFXHolderAccounts'),
   module => module.CFXHolderAccounts,
 );
+
+export const AccountGrowth = lazyLoad(
+  () => import('./AccountGrowth'),
+  module => module.AccountGrowth,
+);

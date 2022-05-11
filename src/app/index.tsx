@@ -90,6 +90,7 @@ import {
   CFXTransfer,
   TokenTransfer,
   CFXHolderAccounts,
+  AccountGrowth,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -702,6 +703,12 @@ export function App() {
                             exact
                             path="/new-charts/cfx-holder-accounts"
                             component={CFXHolderAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/new-charts/account-growth"
+                            component={AccountGrowth}
                           />
 
                           <Route component={NotFoundPage} />
