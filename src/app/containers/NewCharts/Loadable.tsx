@@ -59,3 +59,8 @@ export const AccountGrowth = lazyLoad(
   () => import('./AccountGrowth'),
   module => module.AccountGrowth,
 );
+
+export const ActiveAccounts = lazyLoad(
+  () => import('./ActiveAccounts'),
+  module => module.ActiveAccounts,
+);

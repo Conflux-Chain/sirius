@@ -533,7 +533,8 @@
       "token-transfer": "Daily Token Transfer",
       "cfx-transfer": "Daily CFX Transfer Statistics",
       "cfx-holder-accounts": "CFX Transfer Statistics",
-      "account-growth": "Account Growth"
+      "account-growth": "Account Growth",
+      "active-accounts": "Active Accounts"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
@@ -608,6 +609,12 @@
       "subtitle": "The number of new accounts added per day on the Conflux network.",
       "yAxisTitle": "Total New Accounts",
       "seriesName": "Total New Accounts (Day)"
+    },
+    "activeAccounts": {
+      "title": "Active Accounts",
+      "subtitle": "The number of active accounts per day on the Conflux network.",
+      "yAxisTitle": "Total Active Accounts",
+      "seriesName": "Total Active Accounts (Day)"
     }
   },
   "charts": {
