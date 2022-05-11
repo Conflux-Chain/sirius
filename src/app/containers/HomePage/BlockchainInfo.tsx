@@ -53,8 +53,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
 
     reqTransferTPS()
       .then(res => {
-        if (res.code === 0) {
-          setTransferData(res.data);
+        if (Object.keys(res)) {
+          setTransferData(res);
         }
       })
       .catch(e => {

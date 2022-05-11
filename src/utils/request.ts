@@ -81,7 +81,8 @@ const checkResponse = ({ data, response }) => {
   if (response.status === 200 && lodash.isNil(data.code)) {
     return data;
   } else if (data.code === 0) {
-    return data.data;
+    // compatible with /stat backend api
+    return data.data || data;
   } else {
     const code = Number(data?.code);
     publishRequestError({ code: code, message: data.message }, 'http');

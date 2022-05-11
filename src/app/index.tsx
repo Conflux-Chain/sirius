@@ -677,13 +677,13 @@ export function App() {
 
                           <Route
                             exact
-                            path="/stat/supply"
+                            path="/new-charts/supply"
                             component={TotalSupply}
                           />
 
                           <Route
                             exact
-                            path="/stat/circulating"
+                            path="/new-charts/circulating"
                             component={CirculatingSupply}
                           />
 

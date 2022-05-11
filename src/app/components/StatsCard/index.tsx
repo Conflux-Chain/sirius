@@ -272,8 +272,8 @@ export const StatsCard = ({
         span,
         action,
       })
-        .then(res => {
-          if (res.code === 0) {
+        .then((res = {}) => {
+          if (Object.keys(res)) {
             if (category === 'token') {
               // inject token info
               let tokenAddress;

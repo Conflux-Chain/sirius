@@ -14,9 +14,7 @@ export const Wrapper = ({
   ...others
 }) => {
   const { t } = useTranslation();
-  const url = `/${
-    ['supply', 'circulating'].includes(name) ? 'stat' : 'new-charts'
-  }/${name}`;
+  const url = `/new-charts/${name}`;
 
   if (preview) {
     return (
