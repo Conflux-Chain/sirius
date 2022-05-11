@@ -634,6 +634,18 @@
       "seriesName2": "CFX Transfer Count (Day)",
       "yAxisTitle3": "Count",
       "seriesName3": "Token Transfer Count (Day)"
+    },
+    "token": {
+      "title": "Token Statistics",
+      "subtitle": "Daily token statistics.",
+      "yAxisTitle": "Count",
+      "seriesName": "Transfer Amount (Day)",
+      "yAxisTitle2": "Count",
+      "seriesName2": "Transfer Count (Day)",
+      "yAxisTitle3": "Count",
+      "seriesName3": "Unique Receivers Count (Day)",
+      "yAxisTitle4": "Count",
+      "seriesName4": "Unique Senders Count (Day)"
     }
   },
   "charts": {

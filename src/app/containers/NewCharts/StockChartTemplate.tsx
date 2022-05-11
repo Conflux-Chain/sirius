@@ -17,6 +17,7 @@ if (typeof Highcharts === 'object') {
 window.dayjs = dayjs;
 
 interface Props {
+  plain?: boolean;
   preview?: boolean;
   title: string;
   subtitle: string;
@@ -33,6 +34,7 @@ export interface ChildProps {
 }
 
 export function StockChartTemplate({
+  plain,
   preview,
   title,
   subtitle,
@@ -194,7 +196,9 @@ export function StockChartTemplate({
 
   return (
     <>
-      {preview ? null : <PageHeader subtitle={subtitle}>{title}</PageHeader>}
+      {preview || plain ? null : (
+        <PageHeader subtitle={subtitle}>{title}</PageHeader>
+      )}
       <Card
         style={{
           padding: '1.2857rem',

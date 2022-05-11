@@ -11,6 +11,7 @@ export const Wrapper = ({
   title,
   subtitle,
   name,
+  plain = false,
   ...others
 }) => {
   const { t } = useTranslation();
@@ -34,18 +35,20 @@ export const Wrapper = ({
   } else {
     return (
       <StyledPageWrapper>
-        <Breadcrumb className="breadcrumb">
-          <Breadcrumb.Item>
-            <Link href="/new-charts">
-              {t(translations.highcharts.breadcrumb.charts)}
-            </Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link href={url}>
-              {t(translations.highcharts.breadcrumb[name])}
-            </Link>
-          </Breadcrumb.Item>
-        </Breadcrumb>
+        {!plain && (
+          <Breadcrumb className="breadcrumb">
+            <Breadcrumb.Item>
+              <Link href="/new-charts">
+                {t(translations.highcharts.breadcrumb.charts)}
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link href={url}>
+                {t(translations.highcharts.breadcrumb[name])}
+              </Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        )}
         {children}
       </StyledPageWrapper>
     );

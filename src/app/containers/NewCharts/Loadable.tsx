@@ -74,3 +74,8 @@ export const Contract = lazyLoad(
   () => import('./Contract'),
   module => module.Contract,
 );
+
+export const Token = lazyLoad(
+  () => import('./Token'),
+  module => module.Token,
+);
