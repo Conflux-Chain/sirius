@@ -15,6 +15,7 @@ import { Difficulty } from './Difficulty';
 import { Tx } from './Tx';
 import { CFXTransfer } from './CFXTransfer';
 import { TokenTransfer } from './TokenTransfer';
+import { CFXHolderAccounts } from './CFXHolderAccounts';
 
 export function NewChart() {
   const { t } = useTranslation();
@@ -39,14 +40,18 @@ export function NewChart() {
         </Col>
       </Row>
       <Row gutter={[20, 20]}>
-        <Divider orientation="left">Market Data</Divider>
+        <Divider orientation="left">
+          {t(translations.highcharts.preview.marketData)}
+        </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <TotalSupply preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <CirculatingSupply preview={true} />
         </Col>
-        <Divider orientation="left">Blockchain Data</Divider>
+        <Divider orientation="left">
+          {t(translations.highcharts.preview.blockchainData)}
+        </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <BlockTime preview={true} />
         </Col>
@@ -59,7 +64,9 @@ export function NewChart() {
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Difficulty preview={true} />
         </Col>
-        <Divider orientation="left">Transaction</Divider>
+        <Divider orientation="left">
+          {t(translations.highcharts.preview.transaction)}
+        </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Tx preview={true} />
         </Col>
@@ -69,6 +76,15 @@ export function NewChart() {
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <CFXTransfer preview={true} />
         </Col>
+        <Divider orientation="left">
+          {t(translations.highcharts.preview.account)}
+        </Divider>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <CFXHolderAccounts preview={true} />
+        </Col>
+        <Divider orientation="left">
+          {t(translations.highcharts.preview.contract)}
+        </Divider>
       </Row>
     </StyledChartPreviewWrapper>
   );

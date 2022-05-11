@@ -49,3 +49,8 @@ export const CFXTransfer = lazyLoad(
   () => import('./CFXTransfer'),
   module => module.CFXTransfer,
 );
+
+export const CFXHolderAccounts = lazyLoad(
+  () => import('./CFXHolderAccounts'),
+  module => module.CFXHolderAccounts,
+);

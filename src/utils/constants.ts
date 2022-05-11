@@ -227,6 +227,10 @@ export const OPEN_API_URLS = Object.entries({
   tx: '/statistics/transaction',
   tokenTransfer: '/statistics/token/transfer',
   cfxTransfer: '/statistics/cfx/transfer',
+  cfxHolderAccounts: '/statistics/account/cfx/holder',
+  accountGrowth: '/statistics/account/growth',
+  activeAccount: '/statistics/account/active',
+  contract: '/statistics/contract',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,

@@ -514,7 +514,12 @@
       "title": "Charts",
       "subtitle": " A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
       "viewDetail": "View Details",
-      "tip": "Showing the last 30 days"
+      "tip": "Showing the last 30 days",
+      "marketData": "Market Data",
+      "blockchainData": "Blockchain Data",
+      "transaction": "Transaction",
+      "account": "Account",
+      "contract": "Contract"
     },
     "breadcrumb": {
       "charts": "Charts",
@@ -526,7 +531,8 @@
       "circulating": "Circulating Supply",
       "tx": "Daily Transactions",
       "token-transfer": "Daily Token Transfer",
-      "cfx-transfer": "Daily CFX Transfer Statistics"
+      "cfx-transfer": "Daily CFX Transfer Statistics",
+      "cfx-holder-accounts": "Daily CFX Transfer Statistics"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
@@ -589,6 +595,12 @@
       "seriesName": "Total Token Transfer Count (Day)",
       "yAxisTitle2": "Token Transfer Accounts per Day",
       "seriesName2": "Total Token Transfer Accounts (Day)"
+    },
+    "CFXHolderAccounts": {
+      "title": "CFX Holding Accounts",
+      "subtitle": "The total number of CFX accounts held on the Conflux network.",
+      "yAxisTitle": "Total Accounts",
+      "seriesName": "Total Accounts (Day)"
     }
   },
   "charts": {
