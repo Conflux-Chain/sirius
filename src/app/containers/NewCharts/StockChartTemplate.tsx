@@ -145,7 +145,7 @@ export function StockChartTemplate({
         pointFormat: `
           <tr><td style="padding-top: 5px;"></td></tr>
           <tr>
-            <td style="color: {series.color}; padding-right: 10px;">{series.name}</td>
+            <td style="color: {series.color}; padding-right: 10px;">[ {series.name} ]</td>
             <td style="text-align: right"><b>{point.y}</b></td>  
           </tr>`,
         footerFormat: '</table>',

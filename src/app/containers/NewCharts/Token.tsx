@@ -64,22 +64,20 @@ export function Token({
       },
       series: [
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
-            translations.highcharts.token.seriesName,
-          )}</span> ]`,
+          name: `<span>${t(translations.highcharts.token.seriesName)}</span> ]`,
         },
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.token.seriesName2,
           )}</span> ]`,
         },
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.token.seriesName3,
           )}</span> ]`,
         },
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.token.seriesName4,
           )}</span> ]`,
         },

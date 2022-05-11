@@ -70,19 +70,19 @@ export function CFXTransfer({ preview = false }: ChildProps) {
       series: [
         {
           type: 'line',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName,
           )}</span> ]`,
         },
         {
           type: 'line',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName2,
           )}</span> ]`,
         },
         {
           type: 'column',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName3,
           )}</span> ]`,
           color: '#7cb5ec',

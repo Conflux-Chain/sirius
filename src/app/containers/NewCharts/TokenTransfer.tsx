@@ -57,13 +57,13 @@ export function TokenTransfer({ preview = false }: ChildProps) {
       series: [
         {
           type: 'line',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.tokenTransfer.seriesName,
           )}</span> ]`,
         },
         {
           type: 'line',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.tokenTransfer.seriesName2,
           )}</span> ]`,
         },

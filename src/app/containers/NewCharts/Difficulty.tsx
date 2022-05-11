@@ -47,7 +47,7 @@ export function Difficulty({ preview = false }: ChildProps) {
       series: [
         {
           type: 'area',
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.difficulty.seriesName,
           )}</span> ]`,
         },

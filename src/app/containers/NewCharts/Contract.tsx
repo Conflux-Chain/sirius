@@ -61,17 +61,17 @@ export function Contract({
       },
       series: [
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.contract.seriesName,
           )}</span> ]`,
         },
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.contract.seriesName2,
           )}</span> ]`,
         },
         {
-          name: `[ <span style="color:rgb(124, 181, 236);">${t(
+          name: `<span>${t(
             translations.highcharts.contract.seriesName3,
           )}</span> ]`,
         },
