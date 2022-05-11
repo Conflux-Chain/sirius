@@ -92,6 +92,7 @@ import {
   CFXHolderAccounts,
   AccountGrowth,
   ActiveAccounts,
+  Contracts as ContractsCharts,
 } from './containers/NewCharts/Loadable';
 
 // pos pages
@@ -716,6 +717,12 @@ export function App() {
                             exact
                             path="/new-charts/active-accounts"
                             component={ActiveAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/new-charts/contracts"
+                            component={ContractsCharts}
                           />
 
                           <Route component={NotFoundPage} />

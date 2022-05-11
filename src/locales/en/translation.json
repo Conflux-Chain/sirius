@@ -519,7 +519,7 @@
       "blockchainData": "Blockchain Data",
       "transaction": "Transaction",
       "account": "Account",
-      "contract": "Contract"
+      "contracts": "Contracts"
     },
     "breadcrumb": {
       "charts": "Charts",
@@ -534,7 +534,8 @@
       "cfx-transfer": "Daily CFX Transfer Statistics",
       "cfx-holder-accounts": "CFX Transfer Statistics",
       "account-growth": "Account Growth",
-      "active-accounts": "Active Accounts"
+      "active-accounts": "Active Accounts",
+      "contracts": "Contracts Statistics"
     },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
     "averageBlockTime": {
@@ -615,6 +616,14 @@
       "subtitle": "The number of active accounts per day on the Conflux network.",
       "yAxisTitle": "Total Active Accounts",
       "seriesName": "Total Active Accounts (Day)"
+    },
+    "contracts": {
+      "title": "Contracts Statistics",
+      "subtitle": "The statistics of contracts on the Conflux network.",
+      "yAxisTitle": "Contract Count/Growth Count",
+      "seriesName": "Contract Count (Day)",
+      "yAxisTitle2": "Contract Growth Count per Day",
+      "seriesName2": "Total Contract Growth Count (Day)"
     }
   },
   "charts": {

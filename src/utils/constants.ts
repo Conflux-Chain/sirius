@@ -230,7 +230,7 @@ export const OPEN_API_URLS = Object.entries({
   cfxHolderAccounts: '/statistics/account/cfx/holder',
   accountGrowth: '/statistics/account/growth',
   activeAccounts: '/statistics/account/active',
-  contract: '/statistics/contract',
+  contracts: '/statistics/contract',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,

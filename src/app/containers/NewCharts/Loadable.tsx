@@ -64,3 +64,8 @@ export const ActiveAccounts = lazyLoad(
   () => import('./ActiveAccounts'),
   module => module.ActiveAccounts,
 );
+
+export const Contracts = lazyLoad(
+  () => import('./Contracts'),
+  module => module.Contracts,
+);
