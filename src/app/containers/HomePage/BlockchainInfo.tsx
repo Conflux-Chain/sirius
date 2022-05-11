@@ -6,7 +6,7 @@ import { Card } from 'app/components/Card/Loadable';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { formatNumber, formatBalance, formatTimeStamp } from 'utils';
-import { LineChart as Chart, SmallChart } from 'app/components/Chart/Loadable';
+import { SmallChart } from 'app/components/Chart/Loadable';
 import {
   reqHomeDashboard,
   reqHomeDashboardOfPOSSummary,
@@ -17,6 +17,7 @@ import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { Tx, AccountGrowth } from '../NewCharts/Loadable';
 
 function Info(title, number: any) {
   return (
@@ -252,25 +253,11 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       </Card>
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
-          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
-            <Chart
-              indicator="dailyTransaction"
-              widthRatio="100%"
-              minHeight={180}
-              withDetailLink={true}
-              hideRoom={true}
-              limit={33}
-            />
+          <Grid xs={24} sm={24} md={12}>
+            <Tx preview={true} />
           </Grid>
-          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
-            <Chart
-              indicator="accountGrowth"
-              widthRatio="100%"
-              minHeight={180}
-              withDetailLink={true}
-              hideRoom={true}
-              limit={33}
-            />
+          <Grid xs={24} sm={24} md={12}>
+            <AccountGrowth preview={true} />
           </Grid>
         </Grid.Container>
       </div>
