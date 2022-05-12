@@ -112,7 +112,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   const analysisPanel = () => (
     <StyledTabWrapper>
-      <Token address={tokenAddress} />
+      <Token address={tokenAddress} type={transferType} />
     </StyledTabWrapper>
   );
 

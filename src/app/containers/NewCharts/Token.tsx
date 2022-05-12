@@ -11,7 +11,8 @@ import BigNumber from 'bignumber.js';
 export function Token({
   preview = false,
   address,
-}: ChildProps & { address: string }) {
+  type,
+}: ChildProps & { address: string; type: string }) {
   const { t } = useTranslation();
 
   const props = {
@@ -40,7 +41,11 @@ export function Token({
           data4.push([t, Number(d.uniqueSender)]);
         });
 
-        return [data1, data2, data3, data4];
+        if (type.indexOf('20') > -1) {
+          return [data1, data2, data3, data4];
+        } else {
+          return [data2, data3, data4];
+        }
       },
     },
     options: {
@@ -64,9 +69,6 @@ export function Token({
       },
       series: [
         {
-          name: `<span>${t(translations.highcharts.token.seriesName)}</span> ]`,
-        },
-        {
           name: `<span>${t(
             translations.highcharts.token.seriesName2,
           )}</span> ]`,
@@ -84,6 +86,12 @@ export function Token({
       ],
     },
   };
+
+  if (type.indexOf('20') > -1) {
+    props.options.series.unshift({
+      name: `<span>${t(translations.highcharts.token.seriesName)}</span> ]`,
+    });
+  }
 
   return (
     <Wrapper {...props}>
