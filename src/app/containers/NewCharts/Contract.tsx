@@ -66,17 +66,17 @@ export function Contract({
         {
           name: `<span>${t(
             translations.highcharts.contract.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           name: `<span>${t(
             translations.highcharts.contract.seriesName2,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           name: `<span>${t(
             translations.highcharts.contract.seriesName3,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

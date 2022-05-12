@@ -54,7 +54,7 @@ export function ActiveAccounts({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.activeAccounts.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

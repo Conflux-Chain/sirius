@@ -62,13 +62,13 @@ export function Contracts({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.contracts.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.contracts.seriesName2,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

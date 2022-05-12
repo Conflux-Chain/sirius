@@ -52,7 +52,7 @@ export function BlockTime({ preview = false }: ChildProps) {
           type: 'column',
           name: `<span>${t(
             translations.highcharts.averageBlockTime.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

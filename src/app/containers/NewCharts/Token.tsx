@@ -72,19 +72,13 @@ export function Token({
       },
       series: [
         {
-          name: `<span>${t(
-            translations.highcharts.token.seriesName2,
-          )}</span> ]`,
+          name: `<span>${t(translations.highcharts.token.seriesName2)}</span>`,
         },
         {
-          name: `<span>${t(
-            translations.highcharts.token.seriesName3,
-          )}</span> ]`,
+          name: `<span>${t(translations.highcharts.token.seriesName3)}</span>`,
         },
         {
-          name: `<span>${t(
-            translations.highcharts.token.seriesName4,
-          )}</span> ]`,
+          name: `<span>${t(translations.highcharts.token.seriesName4)}</span>`,
         },
       ],
     },
@@ -92,7 +86,7 @@ export function Token({
 
   if (type.indexOf('20') > -1) {
     props.options.series.unshift({
-      name: `<span>${t(translations.highcharts.token.seriesName)}</span> ]`,
+      name: `<span>${t(translations.highcharts.token.seriesName)}</span>`,
     });
   }
 

@@ -509,6 +509,145 @@
     "newest": "最新",
     "oldest": "最旧"
   },
+  "highcharts": {
+    "preview": {
+      "title": "图表",
+      "subtitle": "Conflux 链上的图表 （点击查看详情）",
+      "viewDetail": "查看详情",
+      "tip": "显示最近 30 天",
+      "marketData": "市场数据",
+      "blockchainData": "区块链数据",
+      "transaction": "交易",
+      "account": "账户",
+      "contracts": "合约"
+    },
+    "breadcrumb": {
+      "charts": "图表",
+      "blocktime": "出块间隔",
+      "tps": "交易 TPS",
+      "hashrate": "哈希算力",
+      "difficulty": "难度",
+      "supply": "总发行量",
+      "circulating": "流通量",
+      "tx": "每日交易次数",
+      "token-transfer": "每日交易-代币",
+      "cfx-transfer": "每日交易-CFX",
+      "cfx-holder-accounts": "CFX 持有账户数",
+      "account-growth": "账户增长",
+      "active-accounts": "活跃账户数",
+      "contracts": "全部合约"
+    },
+    "subtitle": "资源：ConfluxScan.io<br/>点击并拖动绘图区域以放大图表",
+    "averageBlockTime": {
+      "title": "出块间隔",
+      "subtitle": "生成一个区块所需花费时间",
+      "yAxisTitle": "出块间隔",
+      "seriesName": "出块间隔"
+    },
+    "tps": {
+      "title": "交易 TPS",
+      "subtitle": "每秒链上的交易数量",
+      "yAxisTitle": "交易数量",
+      "seriesName": "交易数量"
+    },
+    "hashRate": {
+      "title": "哈希算力",
+      "subtitle": "矿工每秒计算哈希值的次数",
+      "yAxisTitle": "哈希算力（GH/s）",
+      "seriesName": "哈希算力（GH/s）"
+    },
+    "difficulty": {
+      "title": "难度",
+      "subtitle": "当前生成所有区块的计算难度",
+      "yAxisTitle": "难度 (TH)",
+      "seriesName": "难度 (TH)"
+    },
+    "totalSupply": {
+      "title": "总发行量",
+      "subtitle": "市场上已被创造的 CFX 总量",
+      "fourYearUnlock": "4 年解锁",
+      "twoYearUnlock": "2 年解锁",
+      "circulatingUnlock": "流通量"
+    },
+    "circulatingSupply": {
+      "title": "流通量",
+      "subtitle": "流通量包含零地址中的 CFX",
+      "zeroAddress": "零地址",
+      "others": "其他"
+    },
+    "tx": {
+      "title": "每日交易次数",
+      "subtitle": "Conflux 网络每日的交易总次数",
+      "yAxisTitle": "每日交易次数",
+      "seriesName": "每日交易次数"
+    },
+    "cfxTransfer": {
+      "title": "每日交易 CFX",
+      "subtitle": "Conflux 网络上 CFX 的每日交易数据统计",
+      "yAxisTitle": "CFX 日交易次数",
+      "seriesName": "CFX 日交易次数",
+      "yAxisTitle2": "CFX 日交易账户数",
+      "seriesName2": "CFX 日交易账户数",
+      "yAxisTitle3": "CFX 日交易量",
+      "seriesName3": "CFX 日交易量"
+    },
+    "tokenTransfer": {
+      "title": "每日交易代币",
+      "subtitle": "Conflux 网络上全部代币的每日转移数据统计",
+      "yAxisTitle": "每日转移次数",
+      "seriesName": "每日转移次数",
+      "yAxisTitle2": "每日转移账户数",
+      "seriesName2": "每日转移账户数"
+    },
+    "CFXHolderAccounts": {
+      "title": "CFX 持有账户数",
+      "subtitle": "Conflux 网络上持有 CFX 的账户的总数",
+      "yAxisTitle": "持有账户数",
+      "seriesName": "持有账户数"
+    },
+    "accountGrowth": {
+      "title": "账户增长",
+      "subtitle": "Conflux 网络上每日新增的账户数量",
+      "yAxisTitle": "每日增长账户数",
+      "seriesName": "每日增长账户数"
+    },
+    "activeAccounts": {
+      "title": "活跃账户数",
+      "subtitle": "Conflux 网络上每日活跃的账户数量",
+      "yAxisTitle": "每日活跃账户数",
+      "seriesName": "每日活跃账户数"
+    },
+    "contracts": {
+      "title": "合约增长",
+      "subtitle": "Conflux 网络上每日新增的合约数量",
+      "yAxisTitle": "合约数/增长账户数",
+      "seriesName": "合约数",
+      "yAxisTitle2": "每日增长合约数",
+      "seriesName2": "每日增长合约数"
+    },
+    "contract": {
+      "title": "合约分析",
+      "subtitle": "每日转账统计",
+      "yAxisTitle": "数量",
+      "seriesName": "每日交易数",
+      "yAxisTitle2": "数量",
+      "seriesName2": "每日 CFX 转移数",
+      "yAxisTitle3": "数量",
+      "seriesName3": "每日代币转移数"
+    },
+    "token": {
+      "title": "代币分析",
+      "subtitle": "转账统计",
+      "yAxisTitle": "数量",
+      "seriesName": "每日转账数额",
+      "yAxisTitle2": "数量",
+      "seriesName2": "每日转账次数",
+      "yAxisTitle3": "数量",
+      "seriesName3": "每日接收账户数",
+      "yAxisTitle4": "数量",
+      "seriesName4": "每日发送账户数"
+    }
+  },
   "charts": {
     "title": "图表",
     "subtitle1": "市场数据",

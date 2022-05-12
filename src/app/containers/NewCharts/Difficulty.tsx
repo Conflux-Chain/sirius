@@ -52,7 +52,7 @@ export function Difficulty({ preview = false }: ChildProps) {
           type: 'area',
           name: `<span>${t(
             translations.highcharts.difficulty.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

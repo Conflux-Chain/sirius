@@ -52,7 +52,7 @@ export function TPS({ preview = false }: ChildProps) {
       series: [
         {
           type: 'line',
-          name: `<span>${t(translations.highcharts.tps.seriesName)}</span> ]`,
+          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
         },
       ],
     },

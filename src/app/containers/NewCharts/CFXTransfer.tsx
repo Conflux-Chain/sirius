@@ -75,19 +75,19 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName2,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           type: 'column',
           name: `<span>${t(
             translations.highcharts.cfxTransfer.seriesName3,
-          )}</span> ]`,
+          )}</span>`,
           color: '#7cb5ec',
           yAxis: 1,
         },

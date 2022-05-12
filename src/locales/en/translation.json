@@ -532,7 +532,7 @@
       "tx": "Daily Transactions",
       "token-transfer": "Daily Token Transfer",
       "cfx-transfer": "Daily CFX Transfer Statistics",
-      "cfx-holder-accounts": "CFX Transfer Statistics",
+      "cfx-holder-accounts": "CFX Holders Statistics",
       "account-growth": "Account Growth",
       "active-accounts": "Active Accounts",
       "contracts": "Contracts Statistics"
@@ -554,13 +554,13 @@
       "title": "Network Hash Rate",
       "subtitle": "The number of times a miner calculates hashes per second.",
       "yAxisTitle": "Hash Rate (GH/s)",
-      "seriesName": "Avg Daily Hash Rate"
+      "seriesName": "Hash Rate (GH/s)"
     },
     "difficulty": {
       "title": "Network Difficulty",
       "subtitle": "Calculation difficulty of all blocks currently generated.",
       "yAxisTitle": "Difficulty (TH)",
-      "seriesName": "Avg Difficulty (TH)"
+      "seriesName": "Difficulty (TH)"
     },
     "totalSupply": {
       "title": "Total Supply",

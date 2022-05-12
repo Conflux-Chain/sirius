@@ -62,13 +62,13 @@ export function TokenTransfer({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.tokenTransfer.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.tokenTransfer.seriesName2,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

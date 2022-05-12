@@ -54,7 +54,7 @@ export function CFXHolderAccounts({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.CFXHolderAccounts.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

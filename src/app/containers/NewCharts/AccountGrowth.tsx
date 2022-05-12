@@ -54,7 +54,7 @@ export function AccountGrowth({ preview = false }: ChildProps) {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.accountGrowth.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },

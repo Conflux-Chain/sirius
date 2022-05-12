@@ -52,7 +52,7 @@ export function HashRate({ preview = false }: ChildProps) {
           type: 'area',
           name: `<span>${t(
             translations.highcharts.hashRate.seriesName,
-          )}</span> ]`,
+          )}</span>`,
         },
       ],
     },
