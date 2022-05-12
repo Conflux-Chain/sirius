@@ -72,7 +72,6 @@ import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
-import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
@@ -469,11 +468,6 @@ export function App() {
                             }}
                           />
                           <Route path="/charts" component={Chart} />
-                          <Route
-                            exact
-                            path="/chart/:indicator"
-                            component={ChartDetail}
-                          />
                           <Route
                             exact
                             path="/statistics"

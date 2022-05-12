@@ -103,7 +103,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/chart/dailyTransaction'} className="info-link">
+              <Link to={'/new-charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
               </Link>,
               `${
@@ -118,7 +118,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/chart/contractDeploy'} className="info-link">
+              <Link to={'/new-charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
               </Link>,
               `${
@@ -142,7 +142,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/tps" className="info-link">
+              <Link to="/new-charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               <SmallChart plain={true} indicator="tps" />,
@@ -160,7 +160,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/blockTime" className="info-link">
+              <Link to="/new-charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
               <SmallChart plain={true} indicator="blockTime" />,
@@ -168,7 +168,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/hashRate" className="info-link">
+              <Link to="/new-charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
               <SmallChart plain={true} indicator="hashRate" />,
