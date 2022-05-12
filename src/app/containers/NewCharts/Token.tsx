@@ -2,8 +2,11 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ChartTemplate } from './ChartTemplate';
-import { StockChartTemplate, ChildProps } from './StockChartTemplate';
+import { ChartTemplate } from 'app/components/Charts/ChartTemplate';
+import {
+  StockChartTemplate,
+  ChildProps,
+} from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 import BigNumber from 'bignumber.js';
