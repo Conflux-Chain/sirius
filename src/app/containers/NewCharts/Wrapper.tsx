@@ -15,7 +15,7 @@ export const Wrapper = ({
   ...others
 }) => {
   const { t } = useTranslation();
-  const url = `/new-charts/${name}`;
+  const url = `/charts/${name}`;
 
   if (preview) {
     return (
@@ -38,7 +38,7 @@ export const Wrapper = ({
         {!plain && (
           <Breadcrumb className="breadcrumb">
             <Breadcrumb.Item>
-              <Link href="/new-charts">
+              <Link href="/charts">
                 {t(translations.highcharts.breadcrumb.charts)}
               </Link>
             </Breadcrumb.Item>

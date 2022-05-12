@@ -6,7 +6,6 @@ import { Card } from 'app/components/Card/Loadable';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { formatNumber, formatBalance, formatTimeStamp } from 'utils';
-import { SmallChart } from 'app/components/Chart/Loadable';
 import {
   reqHomeDashboard,
   reqHomeDashboardOfPOSSummary,
@@ -69,6 +68,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           setPlotData({
             tps: formatNumber(res.list[6].tps),
             blockTime: formatNumber(res.list[6].blockTime),
+            hashRate: formatNumber(res.list[6].hashRate),
           });
         }
       })
@@ -118,7 +118,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/new-charts/tx'} className="info-link">
+              <Link to={'/charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
               </Link>,
               `${
@@ -133,7 +133,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/new-charts/contracts'} className="info-link">
+              <Link to={'/charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
               </Link>,
               `${
@@ -157,7 +157,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/new-charts/tps" className="info-link">
+              <Link to="/charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               plotData.tps,
@@ -175,7 +175,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/new-charts/blocktime" className="info-link">
+              <Link to="/charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
               plotData.blockTime + 's',
@@ -183,10 +183,10 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/new-charts/hashrate" className="info-link">
+              <Link to="/charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
-              <SmallChart plain={true} indicator="hashRate" />,
+              plotData.hashRate,
             )}
           </Grid>
         </Grid.Container>

@@ -58,7 +58,6 @@ import { Contracts } from './containers/Contracts/Loadable';
 import { RegisteredContracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
-import { Chart } from './containers/Charts/Loadable';
 import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
@@ -467,7 +466,6 @@ export function App() {
                               }
                             }}
                           />
-                          <Route path="/charts" component={Chart} />
                           <Route
                             exact
                             path="/statistics"
@@ -643,79 +641,75 @@ export function App() {
                             component={NFTDetail}
                           />
 
-                          <Route
-                            exact
-                            path="/new-charts"
-                            component={NewChart}
-                          />
+                          <Route exact path="/charts" component={NewChart} />
 
                           <Route
                             exact
-                            path="/new-charts/blocktime"
+                            path="/charts/blocktime"
                             component={BlockTime}
                           />
 
-                          <Route exact path="/new-charts/tps" component={TPS} />
+                          <Route exact path="/charts/tps" component={TPS} />
 
                           <Route
                             exact
-                            path="/new-charts/hashrate"
+                            path="/charts/hashrate"
                             component={HashRate}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/difficulty"
+                            path="/charts/difficulty"
                             component={Difficulty}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/supply"
+                            path="/charts/supply"
                             component={TotalSupply}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/circulating"
+                            path="/charts/circulating"
                             component={CirculatingSupply}
                           />
 
-                          <Route exact path="/new-charts/tx" component={Tx} />
+                          <Route exact path="/charts/tx" component={Tx} />
 
                           <Route
                             exact
-                            path="/new-charts/token-transfer"
+                            path="/charts/token-transfer"
                             component={TokenTransfer}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/cfx-transfer"
+                            path="/charts/cfx-transfer"
                             component={CFXTransfer}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/cfx-holder-accounts"
+                            path="/charts/cfx-holder-accounts"
                             component={CFXHolderAccounts}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/account-growth"
+                            path="/charts/account-growth"
                             component={AccountGrowth}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/active-accounts"
+                            path="/charts/active-accounts"
                             component={ActiveAccounts}
                           />
 
                           <Route
                             exact
-                            path="/new-charts/contracts"
+                            path="/charts/contracts"
                             component={ContractsCharts}
                           />
 
