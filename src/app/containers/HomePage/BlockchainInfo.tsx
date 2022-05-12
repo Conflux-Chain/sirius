@@ -11,6 +11,7 @@ import {
   reqHomeDashboard,
   reqHomeDashboardOfPOSSummary,
   reqTransferTPS,
+  reqTransferPlot,
 } from 'utils/httpRequest';
 import { Link } from 'react-router-dom';
 import lodash from 'lodash';
@@ -35,6 +36,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const [dashboardData, setDashboardData] = useState<any>({});
   const [POSSummaryInfo, setPOSSummaryInfo] = useState<any>({});
   const [transferData, setTransferData] = useState<any>({});
+  const [plotData, setPlotData] = useState<any>({});
 
   useEffect(() => {
     reqHomeDashboard()
@@ -59,6 +61,19 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       })
       .catch(e => {
         console.log('reqTransferTPS error: ', e);
+      });
+
+    reqTransferPlot()
+      .then(res => {
+        if (res.list?.length) {
+          setPlotData({
+            tps: formatNumber(res.list[6].tps),
+            blockTime: formatNumber(res.list[6].blockTime),
+          });
+        }
+      })
+      .catch(e => {
+        console.log('reqTransferPlot error: ', e);
       });
   }, [timestamp]);
 
@@ -145,7 +160,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <Link to="/new-charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
-              <SmallChart plain={true} indicator="tps" />,
+              plotData.tps,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
@@ -163,7 +178,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <Link to="/new-charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
-              <SmallChart plain={true} indicator="blockTime" />,
+              plotData.blockTime + 's',
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
