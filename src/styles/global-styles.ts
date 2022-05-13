@@ -497,4 +497,13 @@ export const GlobalStyle = createGlobalStyle`
       margin-left: -2px;
     }
   }
+
+
+  ul.highcharts-menu {
+    padding: 0 !important;
+
+    li.highcharts-menu-item {
+      margin-bottom: 0;
+    }
+  }
 `;

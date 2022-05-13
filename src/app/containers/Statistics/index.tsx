@@ -108,7 +108,7 @@ export function Statistics() {
         action: 'overview',
       })
         .then(res => {
-          setStatsData(res.stat || {});
+          setStatsData(res?.stat || {});
         })
         .catch(e => {
           console.error(e);

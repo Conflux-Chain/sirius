@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { Card } from 'app/components/Card';
-import { LineChart as Chart } from 'app/components/Chart/Loadable';
 import {
   ContractContent,
   CheckCircleIcon,
 } from '../AddressContractDetail/ContractContent';
 import { useContract } from 'utils/api';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
+import { Token } from '../NewCharts/Loadable';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
@@ -38,7 +37,6 @@ interface Query {
 
 export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   const {
-    tokenName,
     address: tokenAddress,
     decimals,
     totalSupply,
@@ -114,17 +112,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   const analysisPanel = () => (
     <StyledTabWrapper>
-      <Card>
-        <Chart
-          width={chartWidth}
-          indicator="tokenAnalysis"
-          tokenInfo={{
-            name: tokenName,
-            address: tokenAddress,
-            type: transferType,
-          }}
-        />
-      </Card>
+      <Token address={tokenAddress} type={transferType} />
     </StyledTabWrapper>
   );
 
