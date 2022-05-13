@@ -57,7 +57,6 @@ export function ChartTemplate({
         query: request.query || {
           limit: limit,
           intervalType: 'day',
-          sort: 'ASC',
         },
       });
 
