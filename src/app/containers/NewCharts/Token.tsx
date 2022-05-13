@@ -2,7 +2,6 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ChartTemplate } from 'app/components/Charts/ChartTemplate';
 import {
   StockChartTemplate,
   ChildProps,
@@ -92,11 +91,7 @@ export function Token({
 
   return (
     <Wrapper {...props}>
-      {localStorage.getItem('USE-STOCK') === 'true' ? (
-        <StockChartTemplate {...props}></StockChartTemplate>
-      ) : (
-        <ChartTemplate {...props}></ChartTemplate>
-      )}
+      <StockChartTemplate {...props}></StockChartTemplate>
     </Wrapper>
   );
 }

@@ -92,7 +92,6 @@ import {
   ActiveAccounts,
   Contracts as ContractsCharts,
 } from './containers/NewCharts/Loadable';
-import { TxTest } from './containers/NewCharts/TxTest';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -677,11 +676,6 @@ export function App() {
                           />
 
                           <Route exact path="/charts/tx" component={Tx} />
-                          <Route
-                            exact
-                            path="/charts/txtest"
-                            component={TxTest}
-                          />
 
                           <Route
                             exact
