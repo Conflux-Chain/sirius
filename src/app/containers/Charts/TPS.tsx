@@ -48,6 +48,9 @@ export function TPS({ preview = false }: ChildProps) {
           text: t(translations.highcharts.tps.yAxisTitle),
         },
       },
+      tooltip: {
+        valueDecimals: 2,
+      },
       series: [
         {
           type: 'line',

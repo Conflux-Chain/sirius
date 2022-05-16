@@ -46,6 +46,9 @@ export function HashRate({ preview = false }: ChildProps) {
           text: t(translations.highcharts.hashRate.yAxisTitle),
         },
       },
+      tooltip: {
+        valueDecimals: 2,
+      },
       series: [
         {
           type: 'area',

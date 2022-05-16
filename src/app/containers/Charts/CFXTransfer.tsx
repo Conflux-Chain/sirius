@@ -89,6 +89,10 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           )}</span>`,
           color: '#7cb5ec',
           yAxis: 1,
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
         },
       ],
     },

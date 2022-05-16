@@ -46,6 +46,9 @@ export function BlockTime({ preview = false }: ChildProps) {
           text: t(translations.highcharts.averageBlockTime.yAxisTitle),
         },
       },
+      tooltip: {
+        valueDecimals: 2,
+      },
       series: [
         {
           type: 'column',

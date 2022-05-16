@@ -161,7 +161,6 @@ export function StockChartTemplate({
             <td style="text-align: right"><b>{point.y}</b></td>  
           </tr>`,
         footerFormat: '</table>',
-        valueDecimals: 2,
         shape: 'square',
         shared: true,
       },

@@ -46,6 +46,9 @@ export function Difficulty({ preview = false }: ChildProps) {
           text: t(translations.highcharts.difficulty.yAxisTitle),
         },
       },
+      tooltip: {
+        valueDecimals: 2,
+      },
       series: [
         {
           type: 'area',
