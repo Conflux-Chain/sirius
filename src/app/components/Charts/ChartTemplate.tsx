@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import HighchartsExporting from 'highcharts/modules/exporting';
-// import HighchartsExportData from 'highcharts/modules/export-data';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
 import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';
-
-if (typeof Highcharts === 'object') {
-  HighchartsExporting(Highcharts);
-  // HighchartsExportData(Highcharts);
-}
+import { useHighcharts } from 'utils/hooks/useHighcharts';
 
 // @ts-ignore
 window.dayjs = dayjs;
@@ -44,6 +38,8 @@ export function ChartTemplate({
   const bp = useBreakpoint();
   const chart = useRef(null);
   const [data, setData] = useState(null);
+
+  useHighcharts();
 
   useEffect(() => {
     async function fn() {
