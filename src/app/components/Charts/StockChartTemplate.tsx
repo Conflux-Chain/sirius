@@ -52,7 +52,7 @@ export function StockChartTemplate({
       // @ts-ignore
       chart.current?.chart.showLoading();
 
-      const limit = preview ? 30 : 100;
+      const limit = preview ? 30 : 10000;
       const data = await reqChartData({
         url: request.url,
         query: request.query || {
