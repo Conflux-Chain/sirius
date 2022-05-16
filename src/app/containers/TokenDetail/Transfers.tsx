@@ -10,7 +10,7 @@ import {
 } from '../AddressContractDetail/ContractContent';
 import { useContract } from 'utils/api';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
-import { Token } from '../NewCharts/Loadable';
+import { Token } from '../Charts/Loadable';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';

@@ -9,22 +9,22 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function BlockTime({ preview = false }: ChildProps) {
+export function Difficulty({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'blocktime',
-    title: t(translations.highcharts.averageBlockTime.title),
-    subtitle: t(translations.highcharts.averageBlockTime.subtitle),
+    name: 'difficulty',
+    preview,
+    title: t(translations.highcharts.difficulty.title),
+    subtitle: t(translations.highcharts.difficulty.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
       formatter: data => [
         data?.list?.map(s => [
           // @ts-ignore
-          dayjs(s.statTime).valueOf(),
+          dayjs.utc(s.statTime).valueOf(),
           // @ts-ignore
-          Number(s.blockTime),
+          Number(s.difficulty) / 1000000000000, // format to TH
         ]),
       ],
     },
@@ -33,7 +33,7 @@ export function BlockTime({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.averageBlockTime.title),
+        text: t(translations.highcharts.difficulty.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,14 +43,17 @@ export function BlockTime({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.averageBlockTime.yAxisTitle),
+          text: t(translations.highcharts.difficulty.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'column',
+          type: 'area',
           name: `<span>${t(
-            translations.highcharts.averageBlockTime.seriesName,
+            translations.highcharts.difficulty.seriesName,
           )}</span>`,
         },
       ],

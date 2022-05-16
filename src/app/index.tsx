@@ -91,7 +91,7 @@ import {
   AccountGrowth,
   ActiveAccounts,
   Contracts as ContractsCharts,
-} from './containers/NewCharts/Loadable';
+} from './containers/Charts/Loadable';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -159,7 +159,9 @@ export function App() {
       // } else {
       //   classList.add(next);
       // }
-      window.scrollTo(0, 0);
+      if (pathname !== '/charts') {
+        window.scrollTo(0, 0);
+      }
     }, [pathname]);
 
     return props.children;

@@ -86,7 +86,7 @@ export function NFTAsset() {
         setLoading(true);
         setHasSearched(true);
 
-        const { data } = await reqNFTBalances({
+        const data = await reqNFTBalances({
           query: {
             ownerAddress: address,
           },
@@ -105,7 +105,7 @@ export function NFTAsset() {
             )[0];
           }
 
-          const resp = await reqNFTTokenIds({
+          const nfts = await reqNFTTokenIds({
             query: {
               ownerAddress: address,
               contractAddress: selectedNFT.address, // default NFT
@@ -116,7 +116,7 @@ export function NFTAsset() {
 
           setNFTBalances(NFTBalances);
           setSelectedNFT(selectedNFT);
-          setDisplayTokenIds(resp.data[1]);
+          setDisplayTokenIds(nfts[1]);
         } else {
           setNFTBalances([]);
           setSelectedNFT(defaultSelectedNFT);

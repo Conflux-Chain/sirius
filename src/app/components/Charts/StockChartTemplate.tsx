@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
-import HighchartsExporting from 'highcharts/modules/exporting';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
 import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';
-
-if (typeof Highcharts === 'object') {
-  HighchartsExporting(Highcharts);
-}
+import { useHighcharts } from 'utils/hooks/useHighcharts';
 
 // @ts-ignore
 window.dayjs = dayjs;
@@ -47,12 +43,14 @@ export function StockChartTemplate({
     list: [],
   });
 
+  useHighcharts();
+
   useEffect(() => {
     async function fn() {
       // @ts-ignore
       chart.current?.chart.showLoading();
 
-      const limit = preview ? 30 : 100;
+      const limit = preview ? 30 : 10000;
       const data = await reqChartData({
         url: request.url,
         query: request.query || {
@@ -99,6 +97,13 @@ export function StockChartTemplate({
         enabled: true,
       },
       plotOptions: {
+        series: {
+          dataGrouping: {
+            dateTimeLabelFormats: {
+              week: ['%A, %b %e, %Y'],
+            },
+          },
+        },
         area: {
           fillColor: {
             linearGradient: {
@@ -161,7 +166,6 @@ export function StockChartTemplate({
             <td style="text-align: right"><b>{point.y}</b></td>  
           </tr>`,
         footerFormat: '</table>',
-        valueDecimals: 2,
         shape: 'square',
         shared: true,
       },

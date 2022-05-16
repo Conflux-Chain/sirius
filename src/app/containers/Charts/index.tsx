@@ -21,9 +21,10 @@ import { ActiveAccounts } from './ActiveAccounts';
 import { Contracts } from './Contracts';
 
 export function NewChart() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const iszh = i18n.language.includes('zh');
 
-  const format = 'DD MMM YYYY';
+  const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
   const current = dayjs().subtract(1, 'day');
   const oneMonthBefore = current.subtract(30, 'day');
 

@@ -9,33 +9,31 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function TPS({ preview = false }: ChildProps) {
+export function HashRate({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
+    name: 'hashrate',
     preview: preview,
-    name: 'tps',
-    title: t(translations.highcharts.tps.title),
-    subtitle: t(translations.highcharts.tps.subtitle),
+    title: t(translations.highcharts.hashRate.title),
+    subtitle: t(translations.highcharts.hashRate.subtitle),
     request: {
-      url: OPEN_API_URLS.tps,
-      formatter: data => {
-        return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.tps),
-          ]),
-        ];
-      },
+      url: OPEN_API_URLS.mining,
+      formatter: data => [
+        data?.list?.map(s => [
+          // @ts-ignore
+          dayjs.utc(s.statTime).valueOf(),
+          // @ts-ignore
+          Number(s.hashRate) / 1000000000, // format to GH/s
+        ]),
+      ],
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tps.title),
+        text: t(translations.highcharts.hashRate.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,13 +43,18 @@ export function TPS({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tps.yAxisTitle),
+          text: t(translations.highcharts.hashRate.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'line',
-          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
+          type: 'area',
+          name: `<span>${t(
+            translations.highcharts.hashRate.seriesName,
+          )}</span>`,
         },
       ],
     },

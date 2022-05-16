@@ -9,31 +9,33 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Difficulty({ preview = false }: ChildProps) {
+export function TPS({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'difficulty',
-    preview,
-    title: t(translations.highcharts.difficulty.title),
-    subtitle: t(translations.highcharts.difficulty.subtitle),
+    preview: preview,
+    name: 'tps',
+    title: t(translations.highcharts.tps.title),
+    subtitle: t(translations.highcharts.tps.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.difficulty) / 1000000000000, // format to TH
-        ]),
-      ],
+      url: OPEN_API_URLS.tps,
+      formatter: data => {
+        return [
+          data?.list?.map(s => [
+            // @ts-ignore
+            dayjs.utc(s.statTime).valueOf(),
+            // @ts-ignore
+            Number(s.tps),
+          ]),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.difficulty.title),
+        text: t(translations.highcharts.tps.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,15 +45,16 @@ export function Difficulty({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.difficulty.yAxisTitle),
+          text: t(translations.highcharts.tps.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'area',
-          name: `<span>${t(
-            translations.highcharts.difficulty.seriesName,
-          )}</span>`,
+          type: 'line',
+          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
         },
       ],
     },

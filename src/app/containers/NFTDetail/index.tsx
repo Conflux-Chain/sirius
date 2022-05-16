@@ -64,11 +64,11 @@ export function NFTDetail(props) {
     reqNFTDetail({
       query: { contractAddress: address, tokenId: id },
     })
-      .then(({ data }) => {
+      .then(data => {
         setData(data);
       })
       .catch(e => {
-        setData(e.response?.data);
+        setData(e.response?.data || {});
       })
       .finally(() => {
         setLoading(false);

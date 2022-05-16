@@ -15,7 +15,7 @@ import { ContractContent, CheckCircleIcon } from './ContractContent';
 import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
 import lodash from 'lodash';
-import { Contract } from '../NewCharts/Loadable';
+import { Contract } from '../Charts/Loadable';
 
 import {
   // ExcutedTxns,

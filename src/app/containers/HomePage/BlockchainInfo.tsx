@@ -17,7 +17,7 @@ import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
-import { Tx, AccountGrowth } from '../NewCharts/Loadable';
+import { Tx, AccountGrowth } from '../Charts/Loadable';
 
 function Info(title, number: any) {
   return (
