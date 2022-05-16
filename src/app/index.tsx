@@ -159,7 +159,9 @@ export function App() {
       // } else {
       //   classList.add(next);
       // }
-      window.scrollTo(0, 0);
+      if (pathname !== '/charts') {
+        window.scrollTo(0, 0);
+      }
     }, [pathname]);
 
     return props.children;

@@ -4,6 +4,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Breadcrumb } from '@cfxjs/antd';
+import { useHistory } from 'react-router-dom';
 
 export const Wrapper = ({
   children,
@@ -16,6 +17,19 @@ export const Wrapper = ({
 }) => {
   const { t } = useTranslation();
   const url = `/charts/${name}`;
+  const history = useHistory();
+
+  const handleClick = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    // @ts-ignore
+    const from = history.location.state?.from;
+    if (from === '/charts') {
+      history.goBack();
+    } else {
+      history.push('/charts');
+    }
+  };
 
   if (preview) {
     return (
@@ -25,7 +39,13 @@ export const Wrapper = ({
             {title.replace('Conflux ', '')}
             <div className="subtitle">{subtitle}</div>
           </div>
-          <Link href={url} className="view-detail">
+          <Link
+            href={url}
+            state={{
+              from: '/charts',
+            }}
+            className="view-detail"
+          >
             {t(translations.highcharts.preview.viewDetail)}
           </Link>
         </div>
@@ -38,7 +58,7 @@ export const Wrapper = ({
         {!plain && (
           <Breadcrumb className="breadcrumb">
             <Breadcrumb.Item>
-              <Link href="/charts">
+              <Link onClick={handleClick}>
                 {t(translations.highcharts.breadcrumb.charts)}
               </Link>
             </Breadcrumb.Item>
