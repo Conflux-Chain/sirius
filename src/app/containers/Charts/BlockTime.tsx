@@ -52,6 +52,9 @@ export function BlockTime({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.averageBlockTime.seriesName,
           )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
         },
       ],
     },

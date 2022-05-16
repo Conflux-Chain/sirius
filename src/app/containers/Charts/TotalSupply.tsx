@@ -44,6 +44,7 @@ export function TotalSupply({ preview = false }: ChildProps) {
       },
       tooltip: {
         pointFormat: `Amount: <b>{point.y}</b><br>Percentage: <b>{point.percentage:.2f}%</b>`,
+        valueSuffix: ' CFX',
       },
       series: [
         {
