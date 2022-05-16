@@ -22,7 +22,7 @@ export function BlockTime({ preview = false }: ChildProps) {
       formatter: data => [
         data?.list?.map(s => [
           // @ts-ignore
-          dayjs(s.statTime).valueOf(),
+          dayjs.utc(s.statTime).valueOf(),
           // @ts-ignore
           Number(s.blockTime),
         ]),
