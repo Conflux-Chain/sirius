@@ -99,9 +99,10 @@ export function StockChartTemplate({
       plotOptions: {
         series: {
           dataGrouping: {
-            dateTimeLabelFormats: {
-              week: ['%A, %b %e, %Y'],
-            },
+            enabled: false,
+            // dateTimeLabelFormats: {
+            //   week: ['%A, %b %e, %Y'],
+            // },
           },
         },
         area: {
