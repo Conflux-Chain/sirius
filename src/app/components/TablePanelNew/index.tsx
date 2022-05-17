@@ -54,7 +54,7 @@ export const TitleTotal = ({
       })
     ) : (
       <Trans i18nKey="general.totalRecord" count={total}>
-        You got {{ total }} messages.
+        You got {{ total: toThousands(total) }} messages.
       </Trans>
     );
 
