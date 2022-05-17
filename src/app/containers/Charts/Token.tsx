@@ -36,7 +36,7 @@ export function Token({
         const data4: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.createdAt).valueOf();
+          const t = dayjs.utc(d.day).valueOf();
           data1.push([t, new BigNumber(d.transferAmount).div(1e18).toNumber()]);
           data2.push([t, Number(d.transferCount)]);
           data3.push([t, Number(d.uniqueReceiver)]);
@@ -86,6 +86,10 @@ export function Token({
   if (type.indexOf('20') > -1) {
     props.options.series.unshift({
       name: `<span>${t(translations.highcharts.token.seriesName)}</span>`,
+      // @ts-ignore
+      tooltip: {
+        valueDecimals: 2,
+      },
     });
   }
 
