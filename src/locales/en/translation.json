@@ -90,6 +90,7 @@
     "registered": "Registered",
     "site": "Official Site",
     "tokenSite": "Official Site",
+    "gateway": "IPFS Gateway",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
     "tokenTracker": "Token Tracker",
