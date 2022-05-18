@@ -141,6 +141,7 @@ export function App() {
   const [loading, setLoading] = useState(false);
 
   moment.locale(lang);
+  dayjs.locale(lang);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
