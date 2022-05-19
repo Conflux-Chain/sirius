@@ -558,37 +558,39 @@ export const ContractOrTokenInfo = ({
                   <span className="errorSpan">{t(errorMsgForTokenSite)}</span>
                 </div>
               </div>
-              <div className="lineContainer">
-                <div className="firstLine">
-                  <LabelWithIcon>
-                    <InfoIconWithTooltip
-                      info={
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: t(translations.contract.gatewayListTip),
-                          }}
-                        />
-                      }
-                    >
-                      {t(translations.contract.gateway)}
-                    </InfoIconWithTooltip>
-                  </LabelWithIcon>
-                  <SkelontonContainer shown={loading}>
-                    <Input
-                      className="inputComp"
-                      defaultValue={gateway}
-                      style={inputStyle}
-                      onChange={gatewayInputChanger}
-                      placeholder={t(translations.contract.sitePlaceholder)}
-                      onBlur={gatewayOnBlur}
-                    />
-                  </SkelontonContainer>
+              {/(1155)|(721)/.test(contractDetail?.token?.transferType) && (
+                <div className="lineContainer">
+                  <div className="firstLine">
+                    <LabelWithIcon>
+                      <InfoIconWithTooltip
+                        info={
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: t(translations.contract.gatewayListTip),
+                            }}
+                          />
+                        }
+                      >
+                        {t(translations.contract.gateway)}
+                      </InfoIconWithTooltip>
+                    </LabelWithIcon>
+                    <SkelontonContainer shown={loading}>
+                      <Input
+                        className="inputComp"
+                        defaultValue={gateway}
+                        style={inputStyle}
+                        onChange={gatewayInputChanger}
+                        placeholder={t(translations.contract.sitePlaceholder)}
+                        onBlur={gatewayOnBlur}
+                      />
+                    </SkelontonContainer>
+                  </div>
+                  <div>
+                    <span className="blankSpan"></span>
+                    <span className="errorSpan">{t(errorMsgForGateway)}</span>
+                  </div>
                 </div>
-                <div>
-                  <span className="blankSpan"></span>
-                  <span className="errorSpan">{t(errorMsgForGateway)}</span>
-                </div>
-              </div>
+              )}
             </>
           )}
         </div>
