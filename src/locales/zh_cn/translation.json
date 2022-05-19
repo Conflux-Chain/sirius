@@ -91,6 +91,7 @@
     "site": "官方网站",
     "tokenSite": "官方网站",
     "gateway": "IPFS 网关",
+    "gatewayListTip": "仅支持下面网站中列出来的 IPFS 网关：<a href='https://ipfs.github.io/public-gateway-checker/'>https://ipfs.github.io/public-gateway-checker/</a>",
     "contractIcon": "合约图标",
     "remove": "移除",
     "tokenTracker": "代币搜索器",

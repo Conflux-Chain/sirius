@@ -34,6 +34,7 @@ import { TXN_ACTION } from 'utils/constants';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 
 interface Props {
   contractDetail: any;
@@ -560,7 +561,17 @@ export const ContractOrTokenInfo = ({
               <div className="lineContainer">
                 <div className="firstLine">
                   <LabelWithIcon>
-                    {t(translations.contract.gateway)}
+                    <InfoIconWithTooltip
+                      info={
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: t(translations.contract.gatewayListTip),
+                          }}
+                        />
+                      }
+                    >
+                      {t(translations.contract.gateway)}
+                    </InfoIconWithTooltip>
                   </LabelWithIcon>
                   <SkelontonContainer shown={loading}>
                     <Input
@@ -787,6 +798,7 @@ const LabelWithIcon = styled.div`
   font-size: 1rem;
   line-height: 1.5714rem;
   width: 11rem;
+
   &.init {
     width: auto;
   }
