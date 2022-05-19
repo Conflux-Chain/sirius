@@ -71,6 +71,9 @@ export function ChartTemplate({
         animation: false,
         height: 600,
       },
+      credits: {
+        enabled: false,
+      },
       plotOptions: {
         area: {
           fillColor: {

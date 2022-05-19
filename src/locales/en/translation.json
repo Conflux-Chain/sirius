@@ -91,6 +91,7 @@
     "site": "Official Site",
     "tokenSite": "Official Site",
     "gateway": "IPFS Gateway",
+    "gatewayListTip": "Only support ipfs gateway listed on website: <a href='https://ipfs.github.io/public-gateway-checker/' target='_blank'>https://ipfs.github.io/public-gateway-checker/</a>",
     "contractIcon": "Contract Icon",
     "remove": "Remove",
     "tokenTracker": "Token Tracker",
