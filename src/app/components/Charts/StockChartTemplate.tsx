@@ -75,6 +75,9 @@ export function StockChartTemplate({
         alignTicks: false,
         height: 600,
       },
+      credits: {
+        enabled: false,
+      },
       colors: [
         '#7cb5ec',
         '#434348',
