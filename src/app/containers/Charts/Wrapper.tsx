@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Breadcrumb } from '@cfxjs/antd';
 import { useHistory } from 'react-router-dom';
+import { media } from 'styles/media';
 
 export const Wrapper = ({
   children,
@@ -113,5 +114,9 @@ const StyledPageWrapper = styled.div`
   .breadcrumb {
     position: absolute;
     right: 0;
+
+    ${media.s} {
+      top: -1.7143rem;
+    }
   }
 `;

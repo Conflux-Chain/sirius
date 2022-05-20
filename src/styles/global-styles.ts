@@ -344,6 +344,16 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-tooltip {
+    a {
+      color: var(--theme-color-blue0);
+
+      &:hover {
+        color: var(--theme-color-blue2);
+      }
+    }
+  }
+
   /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {
