@@ -28,14 +28,14 @@ const localeData = {
     weekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     loading: 'Loading...',
     rangeSelectorZoom: 'Zoom',
-    // viewFullscreen: 'View in full screen',
-    // exitFullscreen: 'Exit from full screen',
-    // printChart: 'Print chart',
-    // exportButtonTitle: 'Export',
-    // downloadPNG: 'Download imagem PNG',
-    // downloadJPEG: 'Download imagem JPEG',
-    // downloadPDF: 'Download documento PDF',
-    // downloadSVG: 'Download imagem SVG',
+    viewFullscreen: 'View in full screen',
+    exitFullscreen: 'Exit from full screen',
+    printChart: 'Print chart',
+    exportButtonTitle: 'Export',
+    downloadPNG: 'Download imagem PNG',
+    downloadJPEG: 'Download imagem JPEG',
+    downloadPDF: 'Download documento PDF',
+    downloadSVG: 'Download imagem SVG',
   },
   zh: {
     shortMonths: [
@@ -55,18 +55,18 @@ const localeData = {
     weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     loading: '加载中...',
     rangeSelectorZoom: '缩放',
-    // viewFullscreen: '全屏展示',
-    // exitFullscreen: '退出全屏',
-    // printChart: '打印图表',
-    // exportButtonTitle: '导出',
-    // downloadPNG: '下载 PNG',
-    // downloadJPEG: '下载 JPEG',
-    // downloadPDF: '下载 PDF',
-    // downloadSVG: '下载 SVG',
+    viewFullscreen: '全屏展示',
+    exitFullscreen: '退出全屏',
+    printChart: '打印图表',
+    exportButtonTitle: '导出',
+    downloadPNG: '下载 PNG',
+    downloadJPEG: '下载 JPEG',
+    downloadPDF: '下载 PDF',
+    downloadSVG: '下载 SVG',
   },
 };
 
-export const useHighcharts = () => {
+export const useHighcharts = (chart?) => {
   const { i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
 
@@ -78,7 +78,15 @@ export const useHighcharts = () => {
     Highcharts.setOptions({
       lang: localeData[lang],
     });
-  }, [lang]);
+
+    const c = chart.current?.chart;
+    if (c) {
+      c.options.lang = {
+        ...chart.current.chart.options.lang,
+        ...localeData[lang],
+      };
+    }
+  }, [lang, chart]);
 
   return { lang };
 };

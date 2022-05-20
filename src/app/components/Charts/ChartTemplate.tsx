@@ -39,7 +39,7 @@ export function ChartTemplate({
   const chart = useRef(null);
   const [data, setData] = useState(null);
 
-  useHighcharts();
+  useHighcharts(chart);
 
   useEffect(() => {
     async function fn() {

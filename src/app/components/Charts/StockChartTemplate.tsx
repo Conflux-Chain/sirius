@@ -43,7 +43,7 @@ export function StockChartTemplate({
     list: [],
   });
 
-  useHighcharts();
+  useHighcharts(chart);
 
   useEffect(() => {
     async function fn() {
