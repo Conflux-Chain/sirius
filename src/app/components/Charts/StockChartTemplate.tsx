@@ -211,7 +211,11 @@ export function StockChartTemplate({
   }
 
   if (bp === 's') {
-    opts.chart.height = 360;
+    opts.chart.height = 500;
+
+    if (preview) {
+      opts.chart.height = 360;
+    }
   }
 
   return (

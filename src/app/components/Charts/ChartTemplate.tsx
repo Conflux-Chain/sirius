@@ -143,20 +143,9 @@ export function ChartTemplate({
               'downloadJPEG',
               'downloadPDF',
               'downloadSVG',
-              // 'separator',
-              // 'downloadCSV',
             ],
           },
         },
-        //   csv: {
-        //     columnHeaderFormatter: (item, key, keyLength) => {
-        //       if (key === 'y') {
-        //         return 'Value';
-        //       } else {
-        //         return 'Date(UTC)';
-        //       }
-        //     },
-        //   },
       },
     },
     options,
@@ -171,10 +160,12 @@ export function ChartTemplate({
   }
 
   if (bp === 's') {
-    opts.chart.height = 360;
-  }
+    opts.chart.height = 500;
 
-  // TODO, add export CSV
+    if (preview) {
+      opts.chart.height = 360;
+    }
+  }
 
   return (
     <div>
