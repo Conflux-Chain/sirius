@@ -1644,7 +1644,9 @@
     "incorrectAddressType": "地址类型错误，仅支持查询个人账户地址",
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
-    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
+    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT",
+    "owner": "所有人",
+    "amount": "NFT 数量"
   },
   "pos": {
     "common": {

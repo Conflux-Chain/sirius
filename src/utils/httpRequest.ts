@@ -1,5 +1,6 @@
 import qs from 'query-string';
 import fetch from './request';
+import { OPEN_API_URLS } from './constants';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -221,25 +222,6 @@ export const reqTransactions = (extra?: object) => {
   });
 };
 
-export const reqNFTBalances = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/checker/balance`,
-    ...extra,
-  });
-};
-
-export const reqNFTTokenIds = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/checker/token`,
-    ...extra,
-  });
-};
-export const reqNFTTokenIdsInTokenPage = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/active-token-ids`,
-    ...extra,
-  });
-};
 export const reqNFTInfo = (extra?: object) => {
   // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
   return sendRequest({
@@ -304,6 +286,15 @@ export const reqPoSIncomingHistory = (extra?: object) => {
   });
 };
 
+export const reqNFT1155Tokens = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/list1155inventory`,
+    ...extra,
+  });
+};
+
+/** open api, start */
+
 /** charts, start */
 
 export const reqChartData = ({ url, query }) => {
@@ -314,3 +305,19 @@ export const reqChartData = ({ url, query }) => {
 };
 
 /** charts, end */
+
+export const reqNFTTokens = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.NFTTokens,
+    ...extra,
+  });
+};
+
+export const reqNFTBalance = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.NFTBalance,
+    ...extra,
+  });
+};
+
+/** open api, end */

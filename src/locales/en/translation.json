@@ -1646,7 +1646,9 @@
     "incorrectAddressType": "Invalid address type, only support for account address",
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
-    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned",
+    "owner": "Owner",
+    "amount": "NFT Quantity"
   },
   "pos": {
     "common": {
