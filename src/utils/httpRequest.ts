@@ -276,6 +276,13 @@ export const reqTransferTPS = (extra?: object) => {
   });
 };
 
+export const reqTransferPlot = (extra?: object) => {
+  return sendRequest({
+    url: `/plot?interval=133&limit=7`,
+    ...extra,
+  });
+};
+
 export const reqHomeDashboardOfPOSSummary = (extra?: object) => {
   return sendRequest({
     url: `/stat/pos-info`,
@@ -296,3 +303,14 @@ export const reqPoSIncomingHistory = (extra?: object) => {
     ...extra,
   });
 };
+
+/** charts, start */
+
+export const reqChartData = ({ url, query }) => {
+  return sendRequest({
+    url,
+    query,
+  });
+};
+
+/** charts, end */

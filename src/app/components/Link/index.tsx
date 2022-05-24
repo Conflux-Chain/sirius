@@ -14,8 +14,12 @@ export const Link = React.memo(
     href,
     ga = null,
     children,
+    state,
     ...others
-  }: Partial<React.PropsWithChildren<LinkProps>> & { ga?: any }) => {
+  }: Partial<React.PropsWithChildren<LinkProps>> & {
+    ga?: any;
+    state?: any;
+  }) => {
     const history = useHistory();
     return (
       <UILink
@@ -32,7 +36,7 @@ export const Link = React.memo(
           } else if (e.metaKey) {
             window.open(`${window.location.origin}${href}`);
           } else {
-            history.push(href);
+            history.push(href, state);
           }
         }}
         {...others}

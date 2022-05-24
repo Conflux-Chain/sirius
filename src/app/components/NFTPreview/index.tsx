@@ -202,7 +202,7 @@ export const NFTPreview = React.memo(
         reqNFTInfo({
           query: { contractAddress, tokenId },
         })
-          .then(({ data }) => {
+          .then(data => {
             if (data) {
               setImageMinHeight(data.imageMinHeight);
               if (data.imageUri) {

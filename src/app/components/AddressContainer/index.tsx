@@ -479,15 +479,6 @@ const AddressWrapper = styled.div`
   display: inline-flex;
   /* display: inline-block; */
   font-family: ${monospaceFont};
-
-  // TODO icon position
-  //position: relative;
-
-  //.icon {
-  //  position: absolute;
-  //  left: -18px;
-  //  top: -2px;
-  //}
 `;
 
 const addressStyle = (props: any) => ` 

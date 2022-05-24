@@ -344,6 +344,16 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-tooltip {
+    a {
+      color: var(--theme-color-blue0);
+
+      &:hover {
+        color: var(--theme-color-blue2);
+      }
+    }
+  }
+
   /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {
@@ -495,6 +505,15 @@ export const GlobalStyle = createGlobalStyle`
 
     .ant-collapse-header {
       margin-left: -2px;
+    }
+  }
+
+
+  ul.highcharts-menu {
+    padding: 0 !important;
+
+    li.highcharts-menu-item {
+      margin-bottom: 0;
     }
   }
 `;

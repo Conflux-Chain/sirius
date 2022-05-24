@@ -6,17 +6,18 @@ import { Card } from 'app/components/Card/Loadable';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { formatNumber, formatBalance, formatTimeStamp } from 'utils';
-import { LineChart as Chart, SmallChart } from 'app/components/Chart/Loadable';
 import {
   reqHomeDashboard,
   reqHomeDashboardOfPOSSummary,
   reqTransferTPS,
+  reqTransferPlot,
 } from 'utils/httpRequest';
 import { Link } from 'react-router-dom';
 import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { Tx, AccountGrowth } from '../Charts/Loadable';
 
 function Info(title, number: any) {
   return (
@@ -34,6 +35,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const [dashboardData, setDashboardData] = useState<any>({});
   const [POSSummaryInfo, setPOSSummaryInfo] = useState<any>({});
   const [transferData, setTransferData] = useState<any>({});
+  const [plotData, setPlotData] = useState<any>({});
 
   useEffect(() => {
     reqHomeDashboard()
@@ -52,12 +54,26 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
 
     reqTransferTPS()
       .then(res => {
-        if (res.code === 0) {
-          setTransferData(res.data);
+        if (Object.keys(res)) {
+          setTransferData(res);
         }
       })
       .catch(e => {
         console.log('reqTransferTPS error: ', e);
+      });
+
+    reqTransferPlot()
+      .then(res => {
+        if (res.list?.length) {
+          setPlotData({
+            tps: formatNumber(res.list[6].tps),
+            blockTime: formatNumber(res.list[6].blockTime),
+            hashRate: formatNumber(res.list[6].hashRate),
+          });
+        }
+      })
+      .catch(e => {
+        console.log('reqTransferPlot error: ', e);
       });
   }, [timestamp]);
 
@@ -102,7 +118,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/chart/dailyTransaction'} className="info-link">
+              <Link to={'/charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
               </Link>,
               `${
@@ -117,7 +133,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/chart/contractDeploy'} className="info-link">
+              <Link to={'/charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
               </Link>,
               `${
@@ -141,10 +157,10 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/tps" className="info-link">
+              <Link to="/charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
-              <SmallChart plain={true} indicator="tps" />,
+              plotData.tps,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
@@ -159,18 +175,18 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/blockTime" className="info-link">
+              <Link to="/charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
-              <SmallChart plain={true} indicator="blockTime" />,
+              plotData.blockTime + 's',
             )}
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/chart/hashRate" className="info-link">
+              <Link to="/charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
-              <SmallChart plain={true} indicator="hashRate" />,
+              plotData.hashRate,
             )}
           </Grid>
         </Grid.Container>
@@ -252,25 +268,11 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       </Card>
       <div className="charts">
         <Grid.Container gap={2.7} justify="center">
-          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
-            <Chart
-              indicator="dailyTransaction"
-              widthRatio="100%"
-              minHeight={180}
-              withDetailLink={true}
-              hideRoom={true}
-              limit={33}
-            />
+          <Grid xs={24} sm={24} md={12}>
+            <Tx preview={true} />
           </Grid>
-          <Grid xs={24} sm={24} md={12} className="overview-chart-item">
-            <Chart
-              indicator="accountGrowth"
-              widthRatio="100%"
-              minHeight={180}
-              withDetailLink={true}
-              hideRoom={true}
-              limit={33}
-            />
+          <Grid xs={24} sm={24} md={12}>
+            <AccountGrowth preview={true} />
           </Grid>
         </Grid.Container>
       </div>

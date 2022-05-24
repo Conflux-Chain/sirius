@@ -11,12 +11,12 @@ import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
 import { usePortal } from '../../../utils/hooks/usePortal';
-import ReactECharts from 'echarts-for-react';
 import { media } from '../../../styles/media';
 import { monospaceFont } from '../../../styles/variable';
 import { Link } from '../Link';
 import { Description } from '../Description/Loadable';
 import lodash from 'lodash';
+import { NetworkPie } from './NetworkPie';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -109,12 +109,12 @@ export const StatsCard = ({
         {
           title: t(translations.statistics.overviewColumns.totalCFXSent),
           index: 'cfxAmount',
-          more: '/chart/dailyTransactionCFX',
+          more: '/charts/cfx-transfer',
           unit: 'CFX',
         },
         {
           title: t(translations.statistics.overviewColumns.totalTxnCount),
-          more: '/chart/dailyTransaction',
+          more: '/charts/tx',
           index: 'cfxTxn',
         },
       ];
@@ -127,7 +127,7 @@ export const StatsCard = ({
           title: t(
             translations.statistics.overviewColumns.totalTokenTransfersCount,
           ),
-          more: '/chart/dailyTransactionTokens',
+          more: '/charts/token-transfer',
           index: 'tokenTransfer',
         },
         {
@@ -135,7 +135,7 @@ export const StatsCard = ({
             translations.statistics.overviewColumns
               .totalTokenTransfersAccountsCount,
           ),
-          more: '/chart/dailyTransactionTokens',
+          more: '/charts/token-transfer',
           index: 'tokenAccount',
         },
       ];
@@ -272,8 +272,8 @@ export const StatsCard = ({
         span,
         action,
       })
-        .then(res => {
-          if (res.code === 0) {
+        .then((res = {}) => {
+          if (Object.keys(res)) {
             if (category === 'token') {
               // inject token info
               let tokenAddress;
@@ -597,78 +597,11 @@ export const StatsCard = ({
         const chartData = data
           .sort((a, b) => b.gas - a.gas >= 0)
           .map((d, i) => ({
-            name: '#' + (i + 1),
+            name: i + 1,
             address: formatAddress(d.base32),
             value: +d.gas,
           }));
-        const CustomTooltip = ({ data }: any) => {
-          if (data) {
-            return `<div class="tooltip gasused-tooltip">
-                <div>
-                  <span>${t(
-                    translations.statistics.column.address,
-                  )}: &nbsp;&nbsp;</span>
-                  <span>${data.address.replace(
-                    /(.*:.{6}).*(.{6})/,
-                    '$1...$2',
-                  )}</span>
-                </div>
-                <div>
-                  <span>${t(
-                    translations.statistics.column.gasUsed,
-                  )}: &nbsp;&nbsp;</span>
-                  <span>
-                    ${formatNumber(data.value, {
-                      withUnit: false,
-                      keepDecimal: false,
-                    })}
-                  </span>
-                </div>
-              </div>`;
-          }
-          return '';
-        };
-        return (
-          <ReactECharts
-            style={{ height: 450, width: '95%', minWidth: 350 }}
-            option={{
-              legend: {
-                show: false,
-              },
-              toolbox: {
-                show: false,
-              },
-              tooltip: {
-                show: true,
-                // position: ['50%', '50%'],
-                formatter: CustomTooltip,
-                confine: true,
-              },
-              series: [
-                {
-                  color: [
-                    '#5470c6',
-                    '#91cc75',
-                    '#fac858',
-                    '#ee6666',
-                    '#73c0de',
-                    '#3ba272',
-                    '#fc8452',
-                    '#9a60b4',
-                    '#ea7ccc',
-                  ],
-                  type: 'pie',
-                  radius: [50, 100],
-                  itemStyle: {
-                    borderColor: '#fff',
-                    borderWidth: 1,
-                  },
-                  data: chartData,
-                },
-              ],
-            }}
-          />
-        );
+        return <NetworkPie data={chartData} />;
       }
       default:
         return null;
@@ -863,9 +796,9 @@ const CardWrapper = styled.div`
 
   .chart-wrapper {
     width: 100%;
-    min-width: 350px;
-    min-height: 450px;
-    padding-bottom: 16px;
+    min-width: 300px;
+    min-height: 400px;
+    padding: 16px;
     overflow-x: auto;
 
     ${media.m} {

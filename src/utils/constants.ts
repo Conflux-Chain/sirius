@@ -215,3 +215,28 @@ enum FC_EXCHANGE_INTEREST_ADDRESSES {
 export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
   ? FC_EXCHANGE_INTEREST_ADDRESSES.testnet
   : FC_EXCHANGE_INTEREST_ADDRESSES.mainnet;
+
+export const OPEN_API_HOST = IS_TESTNET
+  ? 'api-testnet.confluxscan.net'
+  : 'api.confluxscan.net';
+
+export const OPEN_API_URLS = Object.entries({
+  mining: '/statistics/mining',
+  supply: '/statistics/supply',
+  tps: '/statistics/tps',
+  tx: '/statistics/transaction',
+  tokenTransfer: '/statistics/token/transfer',
+  cfxTransfer: '/statistics/cfx/transfer',
+  cfxHolderAccounts: '/statistics/account/cfx/holder',
+  accountGrowth: '/statistics/account/growth',
+  activeAccounts: '/statistics/account/active',
+  contracts: '/statistics/contract',
+})
+  .map(item => ({
+    [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,
+  }))
+  .reduce((prev, curr) => ({ ...prev, ...curr }), {});
+
+// not open abi, use backend api temp
+OPEN_API_URLS.contract = '/stat/contract/stat/list';
+OPEN_API_URLS.token = '/stat/daily-token-stat';

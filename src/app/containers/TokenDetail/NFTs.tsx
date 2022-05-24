@@ -81,7 +81,7 @@ export const NFTs = ({ address }) => {
   const getTokenIds = async () => {
     setLoading(true);
     setDisplayTokenIds([]);
-    const { data } = await reqNFTTokenIdsInTokenPage({
+    const data = await reqNFTTokenIdsInTokenPage({
       query: {
         contractAddress: address,
         limit,

@@ -33,6 +33,8 @@ import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
 import { getClientVersion } from 'utils/rpcRequest';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
@@ -56,7 +58,6 @@ import { Contracts } from './containers/Contracts/Loadable';
 import { RegisteredContracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
-import { Chart } from './containers/Charts/Loadable';
 import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
@@ -70,12 +71,27 @@ import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
-import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
+import {
+  NewChart,
+  BlockTime,
+  TPS,
+  HashRate,
+  Difficulty,
+  TotalSupply,
+  CirculatingSupply,
+  Tx,
+  CFXTransfer,
+  TokenTransfer,
+  CFXHolderAccounts,
+  AccountGrowth,
+  ActiveAccounts,
+  Contracts as ContractsCharts,
+} from './containers/Charts/Loadable';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -102,6 +118,8 @@ import 'moment/locale/zh-cn';
 //   },
 // });
 
+dayjs.extend(utc);
+
 WebFontLoader.load({
   custom: {
     families: ['Roboto Mono:n1,n2,n3,n4,n5,n6,n7'],
@@ -123,6 +141,7 @@ export function App() {
   const [loading, setLoading] = useState(false);
 
   moment.locale(lang);
+  dayjs.locale(lang);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
@@ -141,7 +160,9 @@ export function App() {
       // } else {
       //   classList.add(next);
       // }
-      window.scrollTo(0, 0);
+      if (pathname !== '/charts') {
+        window.scrollTo(0, 0);
+      }
     }, [pathname]);
 
     return props.children;
@@ -448,12 +469,6 @@ export function App() {
                               }
                             }}
                           />
-                          <Route path="/charts" component={Chart} />
-                          <Route
-                            exact
-                            path="/chart/:indicator"
-                            component={ChartDetail}
-                          />
                           <Route
                             exact
                             path="/statistics"
@@ -627,6 +642,78 @@ export function App() {
                             exact
                             path="/nft/:address/:id"
                             component={NFTDetail}
+                          />
+
+                          <Route exact path="/charts" component={NewChart} />
+
+                          <Route
+                            exact
+                            path="/charts/blocktime"
+                            component={BlockTime}
+                          />
+
+                          <Route exact path="/charts/tps" component={TPS} />
+
+                          <Route
+                            exact
+                            path="/charts/hashrate"
+                            component={HashRate}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/difficulty"
+                            component={Difficulty}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/supply"
+                            component={TotalSupply}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/circulating"
+                            component={CirculatingSupply}
+                          />
+
+                          <Route exact path="/charts/tx" component={Tx} />
+
+                          <Route
+                            exact
+                            path="/charts/token-transfer"
+                            component={TokenTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/cfx-transfer"
+                            component={CFXTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/cfx-holder-accounts"
+                            component={CFXHolderAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/account-growth"
+                            component={AccountGrowth}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/active-accounts"
+                            component={ActiveAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/contracts"
+                            component={ContractsCharts}
                           />
 
                           <Route component={NotFoundPage} />

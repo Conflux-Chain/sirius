@@ -33,13 +33,14 @@ export function Contract(props) {
   useEffect(() => {
     if (isContractAddress(contractAddress)) {
       setLoading(true);
-      if (data && data.name) {
+      if (data && data.nonce) {
         setContractDetail(data);
         setType('edit');
       }
       setLoading(false);
     }
   }, [data, contractAddress]);
+
   return (
     <>
       <Helmet>
