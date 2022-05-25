@@ -19,12 +19,16 @@
     "transfer": "Transfer",
     "from": "From",
     "to": "To",
+    "amount": "Amount",
+    "amountTip": "Owned amount is {{amount}}",
     "error": {
       "fromAddress": "Please input from address",
       "toAddress": "Please input to address",
+      "amount": "Please input amount",
       "id": "Please input token ID",
       "invalidAddress": "Please input valid base32 address",
-      "invalidNetwork": "Please input {{network}} address"
+      "invalidNetwork": "Please input {{network}} address",
+      "invalidAmount": "Please input 1 - {{amount}}"
     }
   },
   "fccfx": {
@@ -1479,7 +1483,8 @@
         "111": "{{value}} FC sign up for subsidy",
         "112": "Announce Agreement",
         "113": "Withdraw of principal {{value}} CFX",
-        "114": "Transfer {{type}} NFT (Token ID: {{id}})"
+        "114": "Transfer {{type}} NFT (Token ID: {{id}})",
+        "115": "Transfer {{type}} NFT (Token ID: {{id}}, Amount: {{amount}})"
       }
     },
     "tip": "Please connect to Fluent Wallet first!"
@@ -1646,7 +1651,9 @@
     "incorrectAddressType": "Invalid address type, only support for account address",
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
-    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned",
+    "owner": "Owner",
+    "amount": "NFT Quantity"
   },
   "pos": {
     "common": {

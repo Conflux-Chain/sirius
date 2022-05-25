@@ -157,6 +157,7 @@ export enum TXN_ACTION {
   fccfxSignToSyncInterest = 112,
   fccfxWithdrawCFX = 113,
   tranferNFT = 114,
+  tranferNFT1155 = 115,
 }
 
 export const CURRENCY_SYMBOLS = {
@@ -221,6 +222,7 @@ export const OPEN_API_HOST = IS_TESTNET
   : 'api.confluxscan.net';
 
 export const OPEN_API_URLS = Object.entries({
+  // charts
   mining: '/statistics/mining',
   supply: '/statistics/supply',
   tps: '/statistics/tps',
@@ -231,6 +233,10 @@ export const OPEN_API_URLS = Object.entries({
   accountGrowth: '/statistics/account/growth',
   activeAccounts: '/statistics/account/active',
   contracts: '/statistics/contract',
+
+  // NFT
+  NFTTokens: '/nft/tokens',
+  NFTBalance: '/nft/balances',
 })
   .map(item => ({
     [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,

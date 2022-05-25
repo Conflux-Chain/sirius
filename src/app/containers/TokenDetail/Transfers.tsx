@@ -14,8 +14,8 @@ import { Token } from '../Charts/Loadable';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
-import { NFTs } from './NFTs';
 import lodash from 'lodash';
+import { NFTAsset } from 'app/containers/NFTAsset';
 
 interface TransferProps {
   tokenName: string;
@@ -148,7 +148,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       value: 'NFT',
       action: 'tokenNFT',
       label: t(translations.token.NFT),
-      content: <NFTs address={tokenAddress} />,
+      content: <NFTAsset contract={tokenAddress} type={transferType} />,
     });
   }
 

@@ -853,6 +853,45 @@ export const projectInfo = {
   },
 };
 
+export const NFTOwner = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.accountAddress)}
+    </Translation>
+  ),
+  dataIndex: 'owner',
+  key: 'owner',
+  render: (value, row) => (
+    <AccountWrapper>
+      <AddressContainer
+        value={value}
+        alias={
+          value.name ||
+          (row.ownerTokenInfo && row.ownerTokenInfo.name
+            ? row.ownerTokenInfo.name
+            : null)
+        }
+        isFull={true}
+      />
+    </AccountWrapper>
+  ),
+};
+
+export const NFTQuantity = {
+  width: 1,
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.quantity)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'amount',
+  key: 'amount',
+  render: value => <ContentWrapper right>{value}</ContentWrapper>,
+};
+
 export const StyledIconWrapper = styled.div`
   display: flex;
   align-items: center;
