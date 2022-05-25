@@ -66,6 +66,24 @@ const localeData = {
   },
 };
 
+const tooltipData = {
+  en: {
+    xDateFormat: '%a %e, %b %Y (UTC)',
+  },
+  zh: {
+    xDateFormat: '%a, %b %e, %Y (UTC)',
+  },
+};
+
+const xAxisData = {
+  en: {
+    labels: { format: `{value:%e '%b}` },
+  },
+  zh: {
+    labels: { format: `{value:%b '%e}` },
+  },
+};
+
 export const useHighcharts = (chart?) => {
   const { i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -73,10 +91,14 @@ export const useHighcharts = (chart?) => {
   useEffect(() => {
     Highstock.setOptions({
       lang: localeData[lang],
+      tooltip: tooltipData[lang],
+      xAxis: xAxisData[lang],
     });
 
     Highcharts.setOptions({
       lang: localeData[lang],
+      tooltip: tooltipData[lang],
+      xAxis: xAxisData[lang],
     });
 
     const c = chart.current?.chart;
