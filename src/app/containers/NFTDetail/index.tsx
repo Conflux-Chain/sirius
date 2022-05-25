@@ -22,7 +22,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 
 import { formatTimeStamp } from 'utils';
 
-import { TransferList } from './TransferList';
+import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
 import lodash from 'lodash';
@@ -98,7 +98,6 @@ export function NFTDetail(props) {
 
           {bp !== 's' && (
             <TransferModal
-              owner={data.owner}
               id={id}
               contractAddress={address}
               contractType={tokenType}
@@ -133,20 +132,6 @@ export function NFTDetail(props) {
                         </Tooltip>
                         <CopyButton copyText={data.imageUri} />
                       </div>
-                    ) : (
-                      '--'
-                    )}
-                  </SkeletonContainer>
-                </Description>
-                <Description title={t(translations.nftDetail.owner)}>
-                  <SkeletonContainer shown={loading}>
-                    {data.owner ? (
-                      <>
-                        <Link href={`/address/${data.owner}`}>
-                          {data.owner}
-                        </Link>{' '}
-                        <CopyButton copyText={data.owner} />
-                      </>
                     ) : (
                       '--'
                     )}
@@ -231,12 +216,13 @@ export function NFTDetail(props) {
       </Row>
 
       <StyledBottomWrapper>
-        <TransferList
+        <TransferAndHolders
           type={data.type}
           address={address}
           id={id}
           loading={loading}
-        ></TransferList>
+          key={data.type}
+        />
       </StyledBottomWrapper>
     </StyledWrapper>
   );

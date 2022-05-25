@@ -19,12 +19,16 @@
     "transfer": "转发",
     "from": "发送方",
     "to": "接收方",
+    "amount": "数量",
+    "amountTip": "持有 {{amount}} 个",
     "error": {
       "fromAddress": "请输入发送方地址",
       "toAddress": "请输入接收方地址",
+      "amount": "请输入数量",
       "id": "请输入代币 ID",
       "invalidAddress": "请输入合法地址",
-      "invalidNetwork": "请输入{{network}}地址"
+      "invalidNetwork": "请输入{{network}}地址",
+      "invalidAmount": "请输入 1 - {{amount}} 个"
     }
   },
   "fccfx": {
@@ -1477,7 +1481,8 @@
         "111": "{{value}} 个 FC 签约补贴计划",
         "112": "通知协议",
         "113": "提取本金 {{value}} CFX",
-        "114": "转移 {{type}} NFT（代币 ID：{{id}}）"
+        "114": "转移 {{type}} NFT（代币 ID：{{id}}）",
+        "115": "转移 {{type}} NFT（代币 ID：{{id}}，数量：{{amount}}）"
       }
     },
     "tip": "请先连接 Fluent Wallet 钱包！"
