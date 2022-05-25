@@ -13,6 +13,9 @@ export function NetworkPie({ data }) {
     title: {
       text: '',
     },
+    credits: {
+      enabled: false,
+    },
     height: 9 / 21 / 100 + '%',
     tooltip: {
       outside: true,
