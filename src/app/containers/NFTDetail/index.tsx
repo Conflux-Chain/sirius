@@ -137,6 +137,22 @@ export function NFTDetail(props) {
                     )}
                   </SkeletonContainer>
                 </Description>
+                {tokenType?.includes('721') && (
+                  <Description title={t(translations.nftDetail.owner)}>
+                    <SkeletonContainer shown={loading}>
+                      {data.owner ? (
+                        <>
+                          <Link href={`/address/${data.owner}`}>
+                            {data.owner}
+                          </Link>{' '}
+                          <CopyButton copyText={data.owner} />
+                        </>
+                      ) : (
+                        '--'
+                      )}
+                    </SkeletonContainer>
+                  </Description>
+                )}
                 <Description title={t(translations.nftDetail.type)}>
                   <SkeletonContainer shown={loading}>
                     {tokenType ? tokenType : '--'}
