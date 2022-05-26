@@ -1650,7 +1650,7 @@
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
     "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT",
-    "owner": "所有人",
+    "owner": "持有人",
     "amount": "NFT 数量"
   },
   "pos": {

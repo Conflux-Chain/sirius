@@ -23,11 +23,15 @@ import { Contracts } from './Contracts';
 export function NewChart() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
-  dayjs.locale(i18n.language.toLowerCase() as 'zh-cn' | 'en');
 
   const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
   const current = dayjs().subtract(1, 'day');
   const oneMonthBefore = current.subtract(30, 'day');
+
+  if (localStorage.getItem('test')) {
+    console.log(iszh, format);
+    console.log(oneMonthBefore.format(format), current.format(format));
+  }
 
   return (
     <StyledChartPreviewWrapper>
