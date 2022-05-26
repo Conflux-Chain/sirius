@@ -23,7 +23,6 @@ import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork, gotoNetwork } from 'utils';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
-import dayjs from 'dayjs';
 
 import logo from 'images/logo.svg';
 import logoTest from 'images/logo-test.svg';
@@ -566,7 +565,6 @@ export const Header = memo(() => {
             menuClick();
             if (iszh) {
               i18n.changeLanguage('en');
-              dayjs.locale('en');
             }
           },
           isMatchedFn: () => !iszh,
@@ -583,7 +581,6 @@ export const Header = memo(() => {
             menuClick();
             if (!iszh) {
               i18n.changeLanguage('zh-CN');
-              dayjs.locale('zh-cn');
             }
           },
           isMatchedFn: () => iszh,
