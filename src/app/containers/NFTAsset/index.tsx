@@ -85,7 +85,10 @@ export function NFTAsset({
       contract,
       type,
     };
-    let NFTs: any = {};
+    let NFTs: any = {
+      list: [],
+      total: 0,
+    };
     let total = 0;
 
     setLoading(true);
@@ -223,16 +226,6 @@ export function NFTAsset({
           ) : null}
 
           <NFTWrapper>
-            <div className="total">
-              {t(translations.blocks.tipCountBefore)} {toThousands(total)}{' '}
-              {lang === 'zh' ? '个 ' : ''}
-              {selectedNFT.name || ''} NFT{' '}
-              <span>
-                {t(translations.contract.address)}:{' '}
-                <AddressContainer value={selectedNFT.contract} />
-              </span>
-            </div>
-
             {!loading && !NFTs.length ? (
               <div className="nodata">
                 <Empty
@@ -250,19 +243,31 @@ export function NFTAsset({
                 />
               </div>
             ) : (
-              <Row gutter={20}>
-                {NFTs.map(({ tokenId, amount, owner }) => (
-                  <Col xs={24} sm={12} lg={6} xl={4} key={tokenId}>
-                    <NFTPreview
-                      contractAddress={selectedNFT?.contract}
-                      tokenId={tokenId}
-                      type="card"
-                      amount={amount}
-                      owner={owner}
-                    />
-                  </Col>
-                ))}
-              </Row>
+              <>
+                <div className="total">
+                  {t(translations.blocks.tipCountBefore)} {toThousands(total)}{' '}
+                  {lang === 'zh' ? '个 ' : ''}
+                  {selectedNFT.name || ''} NFT{' '}
+                  <span>
+                    {t(translations.contract.address)}:{' '}
+                    <AddressContainer value={selectedNFT.contract} />
+                  </span>
+                </div>
+
+                <Row gutter={20}>
+                  {NFTs.map(({ tokenId, amount, owner }) => (
+                    <Col xs={24} sm={12} lg={6} xl={4} key={tokenId}>
+                      <NFTPreview
+                        contractAddress={selectedNFT?.contract}
+                        tokenId={tokenId}
+                        type="card"
+                        amount={amount}
+                        owner={owner}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              </>
             )}
 
             <Pagination
