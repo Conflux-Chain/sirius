@@ -4,7 +4,7 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
-import dayjs from 'dayjs';
+import moment from 'moment';
 
 import { BlockTime } from './BlockTime';
 import { TPS } from './TPS';
@@ -25,7 +25,7 @@ export function NewChart() {
   const iszh = i18n.language.includes('zh');
 
   const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
-  const current = dayjs().subtract(1, 'day');
+  const current = moment().subtract(1, 'day');
   const oneMonthBefore = current.subtract(30, 'day');
 
   return (

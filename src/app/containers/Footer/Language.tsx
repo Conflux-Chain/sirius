@@ -5,7 +5,6 @@ import styled from 'styled-components/macro';
 import Globe from '@zeit-ui/react-icons/globe';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
-import dayjs from 'dayjs';
 
 export function Language() {
   const { i18n } = useTranslation();
@@ -19,7 +18,6 @@ export function Language() {
         label: 'en',
       });
       i18n.changeLanguage('en');
-      dayjs.locale('en');
     } else {
       trackEvent({
         category: ScanEvent.preference.category,
@@ -27,7 +25,6 @@ export function Language() {
         label: 'zh-CN',
       });
       i18n.changeLanguage('zh-CN');
-      dayjs.locale('zh-cn');
     }
   };
   const options = [

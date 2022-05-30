@@ -154,7 +154,6 @@ export function StockChartTemplate({
       tooltip: {
         split: false,
         useHTML: true,
-        xDateFormat: '%a %e, %b %Y (UTC)',
         headerFormat: `<table>
             <tr>
               <th colspan="2" style="font-weight: normal;">{point.key}</th>

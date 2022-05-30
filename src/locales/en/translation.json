@@ -19,12 +19,16 @@
     "transfer": "Transfer",
     "from": "From",
     "to": "To",
+    "amount": "Amount",
+    "amountTip": "Owned amount is {{amount}}",
     "error": {
       "fromAddress": "Please input from address",
       "toAddress": "Please input to address",
+      "amount": "Please input amount",
       "id": "Please input token ID",
       "invalidAddress": "Please input valid base32 address",
-      "invalidNetwork": "Please input {{network}} address"
+      "invalidNetwork": "Please input {{network}} address",
+      "invalidAmount": "Please input 1 - {{amount}}"
     }
   },
   "fccfx": {
@@ -1087,23 +1091,28 @@
         "50404": "ContractNotFoundError",
         "50600": "CompilerError",
         "50601": "ContractDecompileError",
-        "20000": "Unknow error.",
-        "20001": "Response data parsing error.",
-        "20002": "Request timeout.",
-        "20003": "Request abort.",
-        "20004": "Network error.",
-        "30001": "RPC call error.",
-        "60002": "Trace parsing error.",
-        "400": "Bad request.",
-        "401": "Unauthorized.",
-        "403": "Forbidden.",
-        "404": "Not Found.",
-        "405": "Method Not Allowed.",
-        "500": "Internal Server Error.",
-        "501": "Not Implemented.",
-        "502": "Bad Gateway.",
-        "503": "Service Unavailable.",
-        "504": "Gateway Timeout."
+        "20000": "Unknow error",
+        "20001": "Response data parsing error",
+        "20002": "Request timeout",
+        "20003": "Request abort",
+        "20004": "Network error",
+        "30001": "RPC call error",
+        "60002": "Trace parsing error",
+        "50100": "Biz Error",
+        "50301": "Failed to call NFT contract",
+        "50302": "Failed to query NFT metadata",
+        "50303": "Failed to parse NFT metadata",
+        "50304": "Failed to query NFT local name",
+        "400": "Bad request",
+        "401": "Unauthorized",
+        "403": "Forbidden",
+        "404": "Not Found",
+        "405": "Method Not Allowed",
+        "500": "Internal Server Error",
+        "501": "Not Implemented",
+        "502": "Bad Gateway",
+        "503": "Service Unavailable",
+        "504": "Gateway Timeout"
       }
     },
     "connnectWalletSubmit": "Submit",
@@ -1479,7 +1488,8 @@
         "111": "{{value}} FC sign up for subsidy",
         "112": "Announce Agreement",
         "113": "Withdraw of principal {{value}} CFX",
-        "114": "Transfer {{type}} NFT (Token ID: {{id}})"
+        "114": "Transfer {{type}} NFT (Token ID: {{id}})",
+        "115": "Transfer {{type}} NFT (Token ID: {{id}}, Amount: {{amount}})"
       }
     },
     "tip": "Please connect to Fluent Wallet first!"
@@ -1646,7 +1656,9 @@
     "incorrectAddressType": "Invalid address type, only support for account address",
     "tokenId": "TokenID",
     "plzSearch": "Plz Search",
-    "plzSearchDesc": "Please enter an address above to load the NFTs it owned"
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned",
+    "owner": "Owner",
+    "amount": "NFT Quantity"
   },
   "pos": {
     "common": {
