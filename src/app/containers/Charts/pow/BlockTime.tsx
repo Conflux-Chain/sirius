@@ -9,33 +9,31 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function TPS({ preview = false }: ChildProps) {
+export function BlockTime({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'tps',
-    title: t(translations.highcharts.tps.title),
-    subtitle: t(translations.highcharts.tps.subtitle),
+    name: 'blocktime',
+    title: t(translations.highcharts.pow.averageBlockTime.title),
+    subtitle: t(translations.highcharts.pow.averageBlockTime.subtitle),
     request: {
-      url: OPEN_API_URLS.tps,
-      formatter: data => {
-        return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.tps),
-          ]),
-        ];
-      },
+      url: OPEN_API_URLS.mining,
+      formatter: data => [
+        data?.list?.map(s => [
+          // @ts-ignore
+          dayjs.utc(s.statTime).valueOf(),
+          // @ts-ignore
+          Number(s.blockTime),
+        ]),
+      ],
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tps.title),
+        text: t(translations.highcharts.pow.averageBlockTime.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,7 +43,7 @@ export function TPS({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tps.yAxisTitle),
+          text: t(translations.highcharts.pow.averageBlockTime.yAxisTitle),
         },
       },
       tooltip: {
@@ -53,8 +51,13 @@ export function TPS({ preview = false }: ChildProps) {
       },
       series: [
         {
-          type: 'line',
-          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
+          type: 'column',
+          name: `<span>${t(
+            translations.highcharts.pow.averageBlockTime.seriesName,
+          )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
         },
       ],
     },

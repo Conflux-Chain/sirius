@@ -9,31 +9,33 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function BlockTime({ preview = false }: ChildProps) {
+export function CFXHolderAccounts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'blocktime',
-    title: t(translations.highcharts.averageBlockTime.title),
-    subtitle: t(translations.highcharts.averageBlockTime.subtitle),
+    name: 'cfx-holder-accounts',
+    title: t(translations.highcharts.pow.CFXHolderAccounts.title),
+    subtitle: t(translations.highcharts.pow.CFXHolderAccounts.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.blockTime),
-        ]),
-      ],
+      url: OPEN_API_URLS.cfxHolderAccounts,
+      formatter: data => {
+        return [
+          data?.list?.map(s => [
+            // @ts-ignore
+            dayjs.utc(s.statTime).valueOf(),
+            // @ts-ignore
+            Number(s.count),
+          ]),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.averageBlockTime.title),
+        text: t(translations.highcharts.pow.CFXHolderAccounts.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,21 +45,15 @@ export function BlockTime({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.averageBlockTime.yAxisTitle),
+          text: t(translations.highcharts.pow.CFXHolderAccounts.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
-          type: 'column',
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.averageBlockTime.seriesName,
+            translations.highcharts.pow.CFXHolderAccounts.seriesName,
           )}</span>`,
-          tooltip: {
-            valueSuffix: 's',
-          },
         },
       ],
     },

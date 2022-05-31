@@ -5,36 +5,35 @@ import { ChartTemplate, ChildProps } from 'app/components/Charts/ChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import SDK from 'js-conflux-sdk';
 import { Wrapper } from './Wrapper';
-import BigNumber from 'bignumber.js';
 
-export function CirculatingSupply({ preview = false }: ChildProps) {
+export function TotalSupply({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'circulating',
+    name: 'supply',
     preview,
-    title: t(translations.highcharts.circulatingSupply.title),
-    subtitle: t(translations.highcharts.circulatingSupply.subtitle),
+    title: t(translations.highcharts.pow.totalSupply.title),
+    subtitle: t(translations.highcharts.pow.totalSupply.subtitle),
     request: {
       url: OPEN_API_URLS.supply,
       formatter: data => {
         if (data) {
           return [
             {
-              name: t(translations.highcharts.circulatingSupply.others),
-              y: parseInt(
-                new SDK.Drip(
-                  new BigNumber(data?.totalCirculating)
-                    .minus(data?.nullAddressBalance)
-                    .toNumber(),
-                ).toCFX(),
-              ),
+              name: t(translations.highcharts.pow.totalSupply.fourYearUnlock),
+              y: parseInt(new SDK.Drip(data?.fourYearUnlockBalance).toCFX()),
+            },
+            {
+              name: t(translations.highcharts.pow.totalSupply.twoYearUnlock),
+              y: parseInt(new SDK.Drip(data?.twoYearUnlockBalance).toCFX()),
             },
             {
               sliced: true,
               selected: true,
-              name: t(translations.highcharts.circulatingSupply.zeroAddress),
-              y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
+              name: t(
+                translations.highcharts.pow.totalSupply.circulatingUnlock,
+              ),
+              y: parseInt(new SDK.Drip(data?.totalCirculating).toCFX()),
             },
           ];
         }
@@ -43,7 +42,7 @@ export function CirculatingSupply({ preview = false }: ChildProps) {
     },
     options: {
       title: {
-        text: t(translations.highcharts.circulatingSupply.title),
+        text: t(translations.highcharts.pow.totalSupply.title),
       },
       tooltip: {
         pointFormat: `Amount: <b>{point.y}</b><br>Percentage: <b>{point.percentage:.2f}%</b>`,

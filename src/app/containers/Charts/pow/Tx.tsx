@@ -9,31 +9,33 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Difficulty({ preview = false }: ChildProps) {
+export function Tx({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'difficulty',
-    preview,
-    title: t(translations.highcharts.difficulty.title),
-    subtitle: t(translations.highcharts.difficulty.subtitle),
+    preview: preview,
+    name: 'tx',
+    title: t(translations.highcharts.pow.tx.title),
+    subtitle: t(translations.highcharts.pow.tx.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.difficulty) / 1000000000000, // format to TH
-        ]),
-      ],
+      url: OPEN_API_URLS.tx,
+      formatter: data => {
+        return [
+          data?.list?.map(s => [
+            // @ts-ignore
+            dayjs.utc(s.statTime).valueOf(),
+            // @ts-ignore
+            Number(s.count),
+          ]),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.difficulty.title),
+        text: t(translations.highcharts.pow.tx.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,18 +45,13 @@ export function Difficulty({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.difficulty.yAxisTitle),
+          text: t(translations.highcharts.pow.tx.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
-          type: 'area',
-          name: `<span>${t(
-            translations.highcharts.difficulty.seriesName,
-          )}</span>`,
+          type: 'line',
+          name: `<span>${t(translations.highcharts.pow.tx.seriesName)}</span>`,
         },
       ],
     },

@@ -9,23 +9,23 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function AccountGrowth({ preview = false }: ChildProps) {
+export function TPS({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'account-growth',
-    title: t(translations.highcharts.accountGrowth.title),
-    subtitle: t(translations.highcharts.accountGrowth.subtitle),
+    name: 'tps',
+    title: t(translations.highcharts.pow.tps.title),
+    subtitle: t(translations.highcharts.pow.tps.subtitle),
     request: {
-      url: OPEN_API_URLS.accountGrowth,
+      url: OPEN_API_URLS.tps,
       formatter: data => {
         return [
           data?.list?.map(s => [
             // @ts-ignore
             dayjs.utc(s.statTime).valueOf(),
             // @ts-ignore
-            Number(s.count),
+            Number(s.tps),
           ]),
         ];
       },
@@ -35,7 +35,7 @@ export function AccountGrowth({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.accountGrowth.title),
+        text: t(translations.highcharts.pow.tps.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,15 +45,16 @@ export function AccountGrowth({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.accountGrowth.yAxisTitle),
+          text: t(translations.highcharts.pow.tps.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
           type: 'line',
-          name: `<span>${t(
-            translations.highcharts.accountGrowth.seriesName,
-          )}</span>`,
+          name: `<span>${t(translations.highcharts.pow.tps.seriesName)}</span>`,
         },
       ],
     },

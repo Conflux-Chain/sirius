@@ -14,10 +14,12 @@ export const Wrapper = ({
   subtitle,
   name,
   plain = false,
+  path = 'charts',
+  type = 'pow',
   ...others
 }) => {
   const { t } = useTranslation();
-  const url = `/charts/${name}`;
+  const url = `/${path}/${name}`;
   const history = useHistory();
 
   const handleClick = e => {
@@ -25,10 +27,10 @@ export const Wrapper = ({
     e.stopPropagation();
     // @ts-ignore
     const from = history.location.state?.from;
-    if (from === '/charts') {
+    if (from === `/${path}`) {
       history.goBack();
     } else {
-      history.push('/charts');
+      history.push(`/${path}`);
     }
   };
 
@@ -43,11 +45,11 @@ export const Wrapper = ({
           <Link
             href={url}
             state={{
-              from: '/charts',
+              from: `/${path}`,
             }}
             className="view-detail"
           >
-            {t(translations.highcharts.preview.viewDetail)}
+            {t(translations.highcharts[type].preview.viewDetail)}
           </Link>
         </div>
         {children}
@@ -60,12 +62,12 @@ export const Wrapper = ({
           <Breadcrumb className="breadcrumb">
             <Breadcrumb.Item>
               <Link onClick={handleClick}>
-                {t(translations.highcharts.breadcrumb.charts)}
+                {t(translations.highcharts[type].breadcrumb.charts)}
               </Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               <Link href={url}>
-                {t(translations.highcharts.breadcrumb[name])}
+                {t(translations.highcharts[type].breadcrumb[name])}
               </Link>
             </Breadcrumb.Item>
           </Breadcrumb>

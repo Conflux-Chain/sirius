@@ -9,31 +9,33 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function HashRate({ preview = false }: ChildProps) {
+export function AccountGrowth({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'hashrate',
     preview: preview,
-    title: t(translations.highcharts.hashRate.title),
-    subtitle: t(translations.highcharts.hashRate.subtitle),
+    name: 'account-growth',
+    title: t(translations.highcharts.pow.accountGrowth.title),
+    subtitle: t(translations.highcharts.pow.accountGrowth.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.hashRate) / 1000000000, // format to GH/s
-        ]),
-      ],
+      url: OPEN_API_URLS.accountGrowth,
+      formatter: data => {
+        return [
+          data?.list?.map(s => [
+            // @ts-ignore
+            dayjs.utc(s.statTime).valueOf(),
+            // @ts-ignore
+            Number(s.count),
+          ]),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.hashRate.title),
+        text: t(translations.highcharts.pow.accountGrowth.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,17 +45,14 @@ export function HashRate({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.hashRate.yAxisTitle),
+          text: t(translations.highcharts.pow.accountGrowth.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
-          type: 'area',
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.hashRate.seriesName,
+            translations.highcharts.pow.accountGrowth.seriesName,
           )}</span>`,
         },
       ],

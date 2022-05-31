@@ -12,25 +12,27 @@ export function TotalSupply({ preview = false }: ChildProps) {
   const props = {
     name: 'supply',
     preview,
-    title: t(translations.highcharts.totalSupply.title),
-    subtitle: t(translations.highcharts.totalSupply.subtitle),
+    title: t(translations.highcharts.pos.totalSupply.title),
+    subtitle: t(translations.highcharts.pos.totalSupply.subtitle),
     request: {
       url: OPEN_API_URLS.supply,
       formatter: data => {
         if (data) {
           return [
             {
-              name: t(translations.highcharts.totalSupply.fourYearUnlock),
+              name: t(translations.highcharts.pos.totalSupply.fourYearUnlock),
               y: parseInt(new SDK.Drip(data?.fourYearUnlockBalance).toCFX()),
             },
             {
-              name: t(translations.highcharts.totalSupply.twoYearUnlock),
+              name: t(translations.highcharts.pos.totalSupply.twoYearUnlock),
               y: parseInt(new SDK.Drip(data?.twoYearUnlockBalance).toCFX()),
             },
             {
               sliced: true,
               selected: true,
-              name: t(translations.highcharts.totalSupply.circulatingUnlock),
+              name: t(
+                translations.highcharts.pos.totalSupply.circulatingUnlock,
+              ),
               y: parseInt(new SDK.Drip(data?.totalCirculating).toCFX()),
             },
           ];
@@ -40,7 +42,7 @@ export function TotalSupply({ preview = false }: ChildProps) {
     },
     options: {
       title: {
-        text: t(translations.highcharts.totalSupply.title),
+        text: t(translations.highcharts.pos.totalSupply.title),
       },
       tooltip: {
         pointFormat: `Amount: <b>{point.y}</b><br>Percentage: <b>{point.percentage:.2f}%</b>`,
