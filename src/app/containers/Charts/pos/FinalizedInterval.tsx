@@ -9,27 +9,22 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Contracts({ preview = false }: ChildProps) {
+export function FinalizedInterval({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.pos.contracts.title),
-    subtitle: t(translations.highcharts.pos.contracts.subtitle),
+    name: 'finalized-interval',
+    title: t(translations.highcharts.pos.finalizedInterval.title),
+    subtitle: t(translations.highcharts.pos.finalizedInterval.subtitle),
     request: {
-      url: OPEN_API_URLS.contracts,
+      url: OPEN_API_URLS.finalizedInterval,
       formatter: data => {
-        const data1: any = [];
-        const data2: any = [];
-
-        data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.total)]);
-          data2.push([t, Number(d.count)]);
-        });
-
-        return [data1, data2];
+        return [
+          data?.list?.map((d, i) => {
+            return [dayjs.utc(d.createdAt).valueOf(), Number(d.v)];
+          }),
+        ];
       },
     },
     options: {
@@ -37,36 +32,27 @@ export function Contracts({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.pos.contracts.title),
+        text: t(translations.highcharts.pos.finalizedInterval.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.pos.contracts.yAxisTitle),
+          text: t(translations.highcharts.pos.finalizedInterval.yAxisTitle),
         },
       },
       tooltip: {
-        shared: true,
+        valueSuffix: 's',
       },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pos.contracts.seriesName,
-          )}</span>`,
-        },
-        {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pos.contracts.seriesName2,
+            translations.highcharts.pos.finalizedInterval.seriesName,
           )}</span>`,
         },
       ],

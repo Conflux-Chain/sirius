@@ -95,8 +95,8 @@ import {
 
 import {
   Chart as PoSChart,
-  TotalSupply as PoSTotalSupply,
-  Contracts as PoSContracts,
+  FinalizedInterval as PoSFinalizedInterval,
+  DailyAccounts as PoSDailyAccounts,
 } from './containers/Charts/pos/Loadable';
 
 // pos pages
@@ -662,14 +662,14 @@ export function App() {
 
                           <Route
                             exact
-                            path="/pos-charts/supply"
-                            component={PoSTotalSupply}
+                            path="/pos-charts/finalized-interval"
+                            component={PoSFinalizedInterval}
                           />
 
                           <Route
                             exact
-                            path="/pos-charts/contracts"
-                            component={PoSContracts}
+                            path="/pos-charts/daily-accounts"
+                            component={PoSDailyAccounts}
                           />
 
                           <Route exact path="/pow-charts" component={Chart} />

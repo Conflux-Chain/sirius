@@ -6,8 +6,8 @@ import { translations } from 'locales/i18n';
 import moment from 'moment';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
-import { TotalSupply } from './TotalSupply';
-import { Contracts } from './Contracts';
+import { FinalizedInterval } from './FinalizedInterval';
+import { DailyAccounts } from './DailyAccounts';
 
 export function Chart() {
   const { t, i18n } = useTranslation();
@@ -35,17 +35,14 @@ export function Chart() {
         </Col>
       </Row>
       <Row gutter={[20, 20]}>
-        <Divider orientation="left">
-          {t(translations.highcharts.pos.preview.marketData)}
-        </Divider>
+        {/* <Divider orientation="left">
+          {t(translations.highcharts.pos.preview.finalizedInterval)}
+        </Divider> */}
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <TotalSupply preview={true} />
+          <FinalizedInterval preview={true} />
         </Col>
-        <Divider orientation="left">
-          {t(translations.highcharts.pos.preview.contracts)}
-        </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <Contracts preview={true} />
+          <DailyAccounts preview={true} />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>

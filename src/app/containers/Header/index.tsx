@@ -431,15 +431,15 @@ export const Header = memo(() => {
           afterClick: menuClick,
           href: '/pos-charts',
         },
-        {
-          title: [
-            t(translations.header.crossSpaceCharts),
-            <Check size={18} key="check" />,
-          ],
-          name: ScanEvent.menu.action.crossSpaceCharts,
-          afterClick: menuClick,
-          href: '/cross-space-charts',
-        },
+        // {
+        //   title: [
+        //     t(translations.header.crossSpaceCharts),
+        //     <Check size={18} key="check" />,
+        //   ],
+        //   name: ScanEvent.menu.action.crossSpaceCharts,
+        //   afterClick: menuClick,
+        //   href: '/cross-space-charts',
+        // },
         {
           title: [
             t(translations.header.statistics),

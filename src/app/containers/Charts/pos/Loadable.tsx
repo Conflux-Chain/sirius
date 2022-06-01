@@ -5,12 +5,12 @@ export const Chart = lazyLoad(
   module => module.Chart,
 );
 
-export const TotalSupply = lazyLoad(
-  () => import('./TotalSupply'),
-  module => module.TotalSupply,
+export const FinalizedInterval = lazyLoad(
+  () => import('./FinalizedInterval'),
+  module => module.FinalizedInterval,
 );
 
-export const Contracts = lazyLoad(
-  () => import('./Contracts'),
-  module => module.Contracts,
+export const DailyAccounts = lazyLoad(
+  () => import('./DailyAccounts'),
+  module => module.DailyAccounts,
 );

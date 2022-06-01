@@ -527,29 +527,26 @@
         "title": "PoS Charts",
         "subtitle": " A collection of PoS charts on the Conflux Chain (click on View Details for a zoomed view)",
         "viewDetail": "View Details",
-        "tip": "Showing the last 30 days",
-        "marketData": "Market Data",
-        "contracts": "Contracts"
+        "tip": "Showing the last 30 days"
       },
       "breadcrumb": {
         "charts": "PoS Charts",
         "supply": "Total Supply",
-        "contracts": "Contracts Statistics"
+        "contracts": "Contracts Statistics",
+        "finalized-interval": "Finalized Interval",
+        "daily-accounts": "Daily Accounts"
       },
-      "totalSupply": {
-        "title": "PoS Total Supply",
-        "subtitle": "The amount of CFX that are created in the market.",
-        "fourYearUnlock": "Four Year Unlock",
-        "twoYearUnlock": "Two Year Unlock",
-        "circulatingUnlock": "Circulating Unlock"
+      "finalizedInterval": {
+        "title": "Finalized Interval",
+        "subtitle": "The interval between last state to PoS finalized.",
+        "yAxisTitle": "Interval",
+        "seriesName": "Interval"
       },
-      "contracts": {
-        "title": "PoS Contracts Statistics",
-        "subtitle": "The statistics of contracts on the Conflux network.",
-        "yAxisTitle": "Contract Count/Growth Count",
-        "seriesName": "Contract Count (Day)",
-        "yAxisTitle2": "Contract Growth Count per Day",
-        "seriesName2": "Total Contract Growth Count (Day)"
+      "dailyAccounts": {
+        "title": "Daily Accounts",
+        "subtitle": "The number of accounts per day on the Conflux network.",
+        "yAxisTitle": "Total Accounts",
+        "seriesName": "Total Accounts (Day)"
       }
     },
     "pow": {
