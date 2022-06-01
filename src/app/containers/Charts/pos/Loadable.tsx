@@ -24,3 +24,8 @@ export const DailyAPY = lazyLoad(
   () => import('./DailyAPY'),
   module => module.DailyAPY,
 );
+
+export const TotalReward = lazyLoad(
+  () => import('./TotalReward'),
+  module => module.TotalReward,
+);

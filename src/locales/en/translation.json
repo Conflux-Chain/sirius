@@ -521,7 +521,6 @@
   },
   "highcharts": {
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
-
     "pos": {
       "preview": {
         "title": "PoS Charts",
@@ -536,7 +535,8 @@
         "finalized-interval": "Finalized Interval",
         "daily-accounts": "Daily Accounts",
         "daily-staking": "Daily Staking",
-        "daily-apy": "Daily APY"
+        "daily-apy": "Daily APY",
+        "total-reward": "Total Reward"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -561,6 +561,12 @@
         "subtitle": "The annual percentage yield per day on the Conflux PoS network.",
         "yAxisTitle": "APY",
         "seriesName": "APY (Day)"
+      },
+      "totalReward": {
+        "title": "Total Reward",
+        "subtitle": "The total reward per day on the Conflux PoS network.",
+        "yAxisTitle": "Total Reward",
+        "seriesName": "Total Reward (Day)"
       }
     },
     "pow": {
