@@ -19,3 +19,8 @@ export const DailyStaking = lazyLoad(
   () => import('./DailyStaking'),
   module => module.DailyStaking,
 );
+
+export const DailyAPY = lazyLoad(
+  () => import('./DailyAPY'),
+  module => module.DailyAPY,
+);

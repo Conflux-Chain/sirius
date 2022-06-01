@@ -535,7 +535,8 @@
         "contracts": "Contracts Statistics",
         "finalized-interval": "Finalized Interval",
         "daily-accounts": "Daily Accounts",
-        "daily-staking": "Daily Staking"
+        "daily-staking": "Daily Staking",
+        "daily-apy": "Daily APY"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -551,9 +552,15 @@
       },
       "dailyStaking": {
         "title": "Daily Staking",
-        "subtitle": "The number of Staking CFX per day on the Conflux network.",
+        "subtitle": "The amount of Staking CFX per day on the Conflux network.",
         "yAxisTitle": "Total Staking CFX",
         "seriesName": "Total Staking CFX (Day)"
+      },
+      "apy": {
+        "title": "Daily Annual Percentage Yield",
+        "subtitle": "The annual percentage yield per day on the Conflux PoS network.",
+        "yAxisTitle": "APY",
+        "seriesName": "APY (Day)"
       }
     },
     "pow": {

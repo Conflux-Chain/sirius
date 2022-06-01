@@ -249,3 +249,4 @@ OPEN_API_URLS.token = '/stat/daily-token-stat';
 OPEN_API_URLS.PoSFinalizedInterval = '/stat/pos-daily-finalize-second-gap';
 OPEN_API_URLS.PoSDailyAccounts = '/stat/pos-daily-account';
 OPEN_API_URLS.PoSDailyStaking = '/stat/pos-daily-staking';
+OPEN_API_URLS.PoSDailyAPY = '/stat/pos-daily-apy';
