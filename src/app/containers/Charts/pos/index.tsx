@@ -8,6 +8,7 @@ import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
 import { FinalizedInterval } from './FinalizedInterval';
 import { DailyAccounts } from './DailyAccounts';
+import { DailyStaking } from './DailyStaking';
 
 export function Chart() {
   const { t, i18n } = useTranslation();
@@ -43,6 +44,9 @@ export function Chart() {
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyAccounts preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <DailyStaking preview={true} />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>

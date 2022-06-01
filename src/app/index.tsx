@@ -97,6 +97,7 @@ import {
   Chart as PoSChart,
   FinalizedInterval as PoSFinalizedInterval,
   DailyAccounts as PoSDailyAccounts,
+  DailyStaking as PoSDailyStaking,
 } from './containers/Charts/pos/Loadable';
 
 // pos pages
@@ -670,6 +671,12 @@ export function App() {
                             exact
                             path="/pos-charts/daily-accounts"
                             component={PoSDailyAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-staking"
+                            component={PoSDailyStaking}
                           />
 
                           <Route exact path="/pow-charts" component={Chart} />

@@ -534,7 +534,8 @@
         "supply": "Total Supply",
         "contracts": "Contracts Statistics",
         "finalized-interval": "Finalized Interval",
-        "daily-accounts": "Daily Accounts"
+        "daily-accounts": "Daily Accounts",
+        "daily-staking": "Daily Staking"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -547,6 +548,12 @@
         "subtitle": "The number of accounts per day on the Conflux network.",
         "yAxisTitle": "Total Accounts",
         "seriesName": "Total Accounts (Day)"
+      },
+      "dailyStaking": {
+        "title": "Daily Staking",
+        "subtitle": "The number of Staking CFX per day on the Conflux network.",
+        "yAxisTitle": "Total Staking CFX",
+        "seriesName": "Total Staking CFX (Day)"
       }
     },
     "pow": {

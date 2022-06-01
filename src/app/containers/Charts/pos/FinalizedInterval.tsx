@@ -18,11 +18,11 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
     title: t(translations.highcharts.pos.finalizedInterval.title),
     subtitle: t(translations.highcharts.pos.finalizedInterval.subtitle),
     request: {
-      url: OPEN_API_URLS.finalizedInterval,
+      url: OPEN_API_URLS.PoSFinalizedInterval,
       formatter: data => {
         return [
           data?.list?.map((d, i) => {
-            return [dayjs.utc(d.createdAt).valueOf(), Number(d.v)];
+            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
           }),
         ];
       },

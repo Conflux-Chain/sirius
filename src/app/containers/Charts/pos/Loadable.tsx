@@ -14,3 +14,8 @@ export const DailyAccounts = lazyLoad(
   () => import('./DailyAccounts'),
   module => module.DailyAccounts,
 );
+
+export const DailyStaking = lazyLoad(
+  () => import('./DailyStaking'),
+  module => module.DailyStaking,
+);

@@ -246,5 +246,6 @@ export const OPEN_API_URLS = Object.entries({
 // not open abi, use backend api temp
 OPEN_API_URLS.contract = '/stat/contract/stat/list';
 OPEN_API_URLS.token = '/stat/daily-token-stat';
-OPEN_API_URLS.finalizedInterval = '/stat/pos-daily-finalize-second-gap';
-OPEN_API_URLS.dailyAccounts = '/stat/pos-daily-account';
+OPEN_API_URLS.PoSFinalizedInterval = '/stat/pos-daily-finalize-second-gap';
+OPEN_API_URLS.PoSDailyAccounts = '/stat/pos-daily-account';
+OPEN_API_URLS.PoSDailyStaking = '/stat/pos-daily-staking';

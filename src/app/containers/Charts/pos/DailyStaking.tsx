@@ -9,20 +9,20 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function DailyAccounts({ preview = false }: ChildProps) {
+export function DailyStaking({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'daily-accounts',
-    title: t(translations.highcharts.pos.dailyAccounts.title),
-    subtitle: t(translations.highcharts.pos.dailyAccounts.subtitle),
+    name: 'daily-staking',
+    title: t(translations.highcharts.pos.dailyStaking.title),
+    subtitle: t(translations.highcharts.pos.dailyStaking.subtitle),
     request: {
-      url: OPEN_API_URLS.PoSDailyAccounts,
+      url: OPEN_API_URLS.PoSDailyStaking,
       formatter: data => {
         return [
           data?.list?.map((d, i) => {
-            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
+            return [dayjs.utc(d.statDay).valueOf(), Number(d.v)];
           }),
         ];
       },
@@ -32,7 +32,7 @@ export function DailyAccounts({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.pos.dailyAccounts.title),
+        text: t(translations.highcharts.pos.dailyStaking.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -42,14 +42,14 @@ export function DailyAccounts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.pos.dailyAccounts.yAxisTitle),
+          text: t(translations.highcharts.pos.dailyStaking.yAxisTitle),
         },
       },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pos.dailyAccounts.seriesName,
+            translations.highcharts.pos.dailyStaking.seriesName,
           )}</span>`,
         },
       ],
