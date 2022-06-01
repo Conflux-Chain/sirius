@@ -29,3 +29,8 @@ export const TotalReward = lazyLoad(
   () => import('./TotalReward'),
   module => module.TotalReward,
 );
+
+export const DailyRewardRank = lazyLoad(
+  () => import('./DailyRewardRank'),
+  module => module.DailyRewardRank,
+);

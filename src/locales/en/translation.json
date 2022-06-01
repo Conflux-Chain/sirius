@@ -536,7 +536,8 @@
         "daily-accounts": "Daily Accounts",
         "daily-staking": "Daily Staking",
         "daily-apy": "Daily APY",
-        "total-reward": "Total Reward"
+        "total-reward": "Total Reward",
+        "daily-reward-rank": "Daily Reward Rank"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -567,6 +568,15 @@
         "subtitle": "The total reward per day on the Conflux PoS network.",
         "yAxisTitle": "Total Reward",
         "seriesName": "Total Reward (Day)"
+      },
+      "dailyRewardRank": {
+        "title": "Daily Reward Rank",
+        "subtitle": "The reward rank per day on the Conflux PoS network.",
+        "yAxisTitle": "Reward Rank",
+        "seriesName": "Reward Rank (Day)",
+        "PoSAddress": "PoS Address",
+        "PoWAddress": "PoW Address",
+        "reward": "Reward"
       }
     },
     "pow": {
