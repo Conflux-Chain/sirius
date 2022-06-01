@@ -101,6 +101,7 @@ import {
   DailyAPY as PoSDailyAPY,
   TotalReward as PoSTotalReward,
   DailyRewardRank as PoSDailyRewardRank,
+  DailyDeposit as PoSDailyDeposit,
 } from './containers/Charts/pos/Loadable';
 
 // pos pages
@@ -698,6 +699,12 @@ export function App() {
                             exact
                             path="/pos-charts/daily-reward-rank"
                             component={PoSDailyRewardRank}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-deposit"
+                            component={PoSDailyDeposit}
                           />
 
                           <Route exact path="/pow-charts" component={Chart} />

@@ -34,3 +34,8 @@ export const DailyRewardRank = lazyLoad(
   () => import('./DailyRewardRank'),
   module => module.DailyRewardRank,
 );
+
+export const DailyDeposit = lazyLoad(
+  () => import('./DailyDeposit'),
+  module => module.DailyDeposit,
+);

@@ -537,7 +537,8 @@
         "daily-staking": "Daily Staking",
         "daily-apy": "Daily APY",
         "total-reward": "Total Reward",
-        "daily-reward-rank": "Daily Reward Rank"
+        "daily-reward-rank": "Daily Reward Rank",
+        "daily-deposit": "Daily Deposit"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -577,6 +578,12 @@
         "PoSAddress": "PoS Address",
         "PoWAddress": "PoW Address",
         "reward": "Reward"
+      },
+      "dailyDeposit": {
+        "title": "Daily Deposit",
+        "subtitle": "The amount of Deposit CFX per day on the Conflux PoS network.",
+        "yAxisTitle": "Total Deposit CFX",
+        "seriesName": "Total Deposit CFX (Day)"
       }
     },
     "pow": {

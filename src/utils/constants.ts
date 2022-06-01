@@ -252,3 +252,4 @@ OPEN_API_URLS.PoSDailyStaking = '/stat/pos-daily-staking';
 OPEN_API_URLS.PoSDailyAPY = '/stat/pos-daily-apy';
 OPEN_API_URLS.PoSTotalReward = '/stat/pos-daily-total-reward';
 OPEN_API_URLS.PoSDailyRewardRank = '/stat/pos-recent-reward-rank';
+OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit';
