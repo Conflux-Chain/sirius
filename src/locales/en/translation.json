@@ -12,6 +12,8 @@
     "name": "Token Name",
     "type": "Token Standard",
     "address": "Contract Address",
+    "contractInfo": "Contract Info",
+    "contractInfoTip": "Token name and symbol initialized by deployed the contract.",
     "owner": "Owner",
     "url": "Original Content URL",
     "creator": "Creator",

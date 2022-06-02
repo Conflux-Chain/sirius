@@ -275,8 +275,9 @@ export function NFTAsset({
               current={page}
               defaultPageSize={pageSize}
               total={total}
-              showSizeChanger={false}
-              showQuickJumper={false}
+              // showSizeChanger={false}
+              // showQuickJumper={false}
+              pageSizeOptions={['12', '24', '60', '120']}
               onChange={handlePaginationChange}
             />
           </NFTWrapper>

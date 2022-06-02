@@ -11,9 +11,10 @@ import styled from 'styled-components';
 import { Row, Col, Collapse, Tooltip } from '@cfxjs/antd';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
-import { reqNFTDetail } from 'utils/httpRequest';
+import { reqNFTDetail, reqToken } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -57,6 +58,10 @@ export function NFTDetail(props) {
   }>();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>({});
+  const [tokenInfo, setTokenInfo] = useState({
+    name: '',
+    symbol: '',
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -73,6 +78,13 @@ export function NFTDetail(props) {
       .finally(() => {
         setLoading(false);
       });
+
+    reqToken({ address }).then(({ name, symbol }) => {
+      setTokenInfo({
+        name,
+        symbol,
+      });
+    });
   }, [address, id]);
 
   const tokenType = data.type?.replace('ERC', 'CRC');
@@ -168,6 +180,21 @@ export function NFTDetail(props) {
                     ) : (
                       '--'
                     )}
+                  </SkeletonContainer>
+                </Description>
+                <Description
+                  title={
+                    <InfoIconWithTooltip
+                      info={t(translations.nftDetail.contractInfoTip)}
+                    >
+                      {t(translations.nftDetail.contractInfo)}
+                    </InfoIconWithTooltip>
+                  }
+                >
+                  <SkeletonContainer shown={loading}>
+                    {`${tokenInfo.name ? tokenInfo.name : '--'} (${
+                      tokenInfo.symbol ? tokenInfo.symbol : '--'
+                    })`}
                   </SkeletonContainer>
                 </Description>
                 <Description title={t(translations.nftDetail.creator)}>
