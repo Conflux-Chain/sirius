@@ -12,6 +12,8 @@
     "name": "代币名称",
     "type": "代币标准",
     "address": "合约地址",
+    "contractInfo": "合约信息",
+    "contractInfoTip": "合约部署时设置的代币的名称和符号",
     "owner": "所有者",
     "url": "内容链接",
     "creator": "创作者",
