@@ -104,6 +104,12 @@ import {
   DailyDeposit as PoSDailyDeposit,
 } from './containers/Charts/pos/Loadable';
 
+import {
+  Chart as CrossSpaceChart,
+  DailyAccounts as CrossSpaceDailyAccounts,
+  Contract as CrossSpaceContract,
+} from './containers/Charts/crossSpace/Loadable';
+
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
 import { Accounts as posAccounts } from './containers/pos/Accounts/Loadable';
@@ -657,6 +663,24 @@ export function App() {
                             exact
                             path="/nft/:address/:id"
                             component={NFTDetail}
+                          />
+
+                          <Route
+                            exact
+                            path="/cross-space-charts"
+                            component={CrossSpaceChart}
+                          />
+
+                          <Route
+                            exact
+                            path="/cross-space-charts/daily-accounts"
+                            component={CrossSpaceDailyAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/cross-space-charts/contract"
+                            component={CrossSpaceContract}
                           />
 
                           <Route

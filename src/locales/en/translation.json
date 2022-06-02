@@ -521,6 +521,35 @@
   },
   "highcharts": {
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
+    "crossSpace": {
+      "preview": {
+        "title": "Cross Space Charts",
+        "subtitle": " A collection of cross space charts between PoW and PoS on the Conflux Chain (click on View Details for a zoomed view)",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 days"
+      },
+      "breadcrumb": {
+        "charts": "Cross Space Charts",
+        "daily-accounts": "Cross Space Daily Accounts",
+        "contract": "Contract"
+      },
+      "dailyAccounts": {
+        "title": "Cross Space Daily Accounts",
+        "subtitle": "The number of accounts per day on the Conflux network.",
+        "yAxisTitle": "Total Accounts",
+        "seriesName": "Total Accounts (Day)"
+      },
+      "contract": {
+        "title": "Contract Statistics",
+        "subtitle": "Daily contract statistics.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transactions Count (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "CFX Transfer Count (Day)",
+        "yAxisTitle3": "Count",
+        "seriesName3": "Token Transfer Count (Day)"
+      }
+    },
     "pos": {
       "preview": {
         "title": "PoS Charts",
@@ -530,8 +559,6 @@
       },
       "breadcrumb": {
         "charts": "PoS Charts",
-        "supply": "Total Supply",
-        "contracts": "Contracts Statistics",
         "finalized-interval": "Finalized Interval",
         "daily-accounts": "Daily Accounts",
         "daily-staking": "Daily Staking",
