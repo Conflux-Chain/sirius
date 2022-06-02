@@ -70,6 +70,7 @@ export const Text = React.memo(
         onClick: e => {
           e.preventDefault();
           e.stopPropagation();
+
           selectText(e.currentTarget);
         },
       },
@@ -77,7 +78,10 @@ export const Text = React.memo(
     );
 
     return (
-      <Tooltip title={tooltipText}>
+      <Tooltip
+        title={tooltipText}
+        getPopupContainer={triggerNode => triggerNode}
+      >
         <StyledTextWrapper maxWidth={maxWidth}>
           <UIText className={clsx('sirius-text', className)} {...props}>
             {child}
