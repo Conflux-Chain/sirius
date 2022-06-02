@@ -266,3 +266,4 @@ OPEN_API_URLS.PoSDailyRewardRank = '/stat/pos-recent-reward-rank';
 OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit';
 
 // Cross Space
+OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx-to-evm';

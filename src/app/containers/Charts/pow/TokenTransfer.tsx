@@ -42,9 +42,6 @@ export function TokenTransfer({ preview = false }: ChildProps) {
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },

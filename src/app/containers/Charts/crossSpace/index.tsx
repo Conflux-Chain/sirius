@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import moment from 'moment';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
-import { DailyAccounts } from './DailyAccounts';
+import { DailyCFXTransfer } from './DailyCFXTransfer';
 import { Contract } from './Contract';
 
 export function Chart() {
@@ -41,7 +41,7 @@ export function Chart() {
           {t(translations.highcharts.crossSpace.preview.finalizedInterval)}
         </Divider> */}
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyAccounts preview={true} />
+          <DailyCFXTransfer preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Contract preview={true} />

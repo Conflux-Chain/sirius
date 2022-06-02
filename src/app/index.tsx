@@ -106,7 +106,7 @@ import {
 
 import {
   Chart as CrossSpaceChart,
-  DailyAccounts as CrossSpaceDailyAccounts,
+  DailyCFXTransfer as CrossSpaceDailyCFXTransfer,
   Contract as CrossSpaceContract,
 } from './containers/Charts/crossSpace/Loadable';
 
@@ -673,8 +673,8 @@ export function App() {
 
                           <Route
                             exact
-                            path="/cross-space-charts/daily-accounts"
-                            component={CrossSpaceDailyAccounts}
+                            path="/cross-space-charts/daily-cfx-transfer"
+                            component={CrossSpaceDailyCFXTransfer}
                           />
 
                           <Route

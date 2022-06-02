@@ -9,24 +9,24 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Contracts({ preview = false }: ChildProps) {
+export function DailyCFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.pow.contracts.title),
-    subtitle: t(translations.highcharts.pow.contracts.subtitle),
+    name: 'daily-cfx-transfer',
+    title: t(translations.highcharts.crossSpace.dailyCFXTransfer.title),
+    subtitle: t(translations.highcharts.crossSpace.dailyCFXTransfer.subtitle),
     request: {
-      url: OPEN_API_URLS.contracts,
+      url: OPEN_API_URLS.CrossSpaceDailyCFXTransfer,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.total)]);
-          data2.push([t, Number(d.count)]);
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(d.v)]);
+          data2.push([t, Number(d.v)]);
         });
 
         return [data1, data2];
@@ -37,7 +37,7 @@ export function Contracts({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.pow.contracts.title),
+        text: t(translations.highcharts.crossSpace.dailyCFXTransfer.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -47,23 +47,26 @@ export function Contracts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.pow.contracts.yAxisTitle),
+          text: t(
+            translations.highcharts.crossSpace.dailyCFXTransfer.yAxisTitle,
+          ),
         },
       },
       tooltip: {
         shared: true,
+        valueDecimals: 2,
       },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName,
+            translations.highcharts.crossSpace.dailyCFXTransfer.seriesName,
           )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName2,
+            translations.highcharts.crossSpace.dailyCFXTransfer.seriesName2,
           )}</span>`,
         },
       ],

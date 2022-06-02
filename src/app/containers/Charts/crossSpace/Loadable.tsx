@@ -5,9 +5,9 @@ export const Chart = lazyLoad(
   module => module.Chart,
 );
 
-export const DailyAccounts = lazyLoad(
-  () => import('./DailyAccounts'),
-  module => module.DailyAccounts,
+export const DailyCFXTransfer = lazyLoad(
+  () => import('./DailyCFXTransfer'),
+  module => module.DailyCFXTransfer,
 );
 
 export const Contract = lazyLoad(

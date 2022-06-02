@@ -530,14 +530,16 @@
       },
       "breadcrumb": {
         "charts": "Cross Space Charts",
-        "daily-accounts": "Cross Space Daily Accounts",
+        "daily-cfx-transfer": "Daily CFX Transfer",
         "contract": "Contract"
       },
-      "dailyAccounts": {
-        "title": "Cross Space Daily Accounts",
-        "subtitle": "The number of accounts per day on the Conflux network.",
-        "yAxisTitle": "Total Accounts",
-        "seriesName": "Total Accounts (Day)"
+      "dailyCFXTransfer": {
+        "title": "Daily CFX Transfer",
+        "subtitle": "The CFX transfer in and out per day between PoW and PoS.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transfer In Count (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "Transfer Out Count (Day)"
       },
       "contract": {
         "title": "Contract Statistics",
