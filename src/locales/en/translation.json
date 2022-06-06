@@ -524,7 +524,7 @@
     "crossSpace": {
       "preview": {
         "title": "Cross Space Charts",
-        "subtitle": " A collection of cross space charts between PoW and PoS on the Conflux Chain (click on View Details for a zoomed view)",
+        "subtitle": "A collection of cross space charts between PoW and PoS on the Conflux Chain (click on View Details for a zoomed view)",
         "viewDetail": "View Details",
         "tip": "Showing the last 30 days"
       },
@@ -555,53 +555,55 @@
     "pos": {
       "preview": {
         "title": "PoS Charts",
-        "subtitle": " A collection of PoS charts on the Conflux Chain (click on View Details for a zoomed view)",
+        "subtitle": "A collection of charts on the PoS of Conflux Chain (click on View Details for a zoomed view)",
         "viewDetail": "View Details",
         "tip": "Showing the last 30 days"
       },
       "breadcrumb": {
         "charts": "PoS Charts",
         "finalized-interval": "Finalized Interval",
-        "daily-accounts": "Daily Accounts",
-        "daily-staking": "Daily Staking",
-        "daily-apy": "Daily APY",
+        "daily-accounts": "Accounts",
+        "daily-staking": "Staking",
+        "daily-apy": "APY",
         "total-reward": "Total Reward",
-        "daily-reward-rank": "Daily Reward Rank",
-        "daily-deposit": "Daily Deposit"
+        "daily-reward-rank": "Reward Rank",
+        "daily-deposit": "Deposit"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
-        "subtitle": "The interval between last state to PoS finalized.",
-        "yAxisTitle": "Interval",
-        "seriesName": "Interval"
+        "subtitle": "The interval between lastest state to PoS finalized.",
+        "yAxisTitle": "Interval (Secs)",
+        "seriesName": "Interval (Secs)",
+        "yAxisTitle2": "Interval (Blocks)",
+        "seriesName2": "Interval (Blocks)"
       },
       "dailyAccounts": {
-        "title": "Daily Accounts",
-        "subtitle": "The number of accounts per day on the Conflux network.",
+        "title": "Accounts",
+        "subtitle": "The number of accounts per day on the PoS of Conflux network.",
         "yAxisTitle": "Total Accounts",
         "seriesName": "Total Accounts (Day)"
       },
       "dailyStaking": {
-        "title": "Daily Staking",
-        "subtitle": "The amount of Staking CFX per day on the Conflux network.",
+        "title": "Staking",
+        "subtitle": "The amount of Staking CFX per day on the PoS of Conflux network.",
         "yAxisTitle": "Total Staking CFX",
         "seriesName": "Total Staking CFX (Day)"
       },
       "apy": {
-        "title": "Daily Annual Percentage Yield",
-        "subtitle": "The annual percentage yield per day on the Conflux PoS network.",
+        "title": "Annual Percentage Yield",
+        "subtitle": "The annual percentage yield per day on the PoS of Conflux network.",
         "yAxisTitle": "APY",
         "seriesName": "APY (Day)"
       },
       "totalReward": {
         "title": "Total Reward",
-        "subtitle": "The total reward per day on the Conflux PoS network.",
+        "subtitle": "The total reward per day on the PoS of Conflux network.",
         "yAxisTitle": "Total Reward",
         "seriesName": "Total Reward (Day)"
       },
       "dailyRewardRank": {
-        "title": "Daily Reward Rank",
-        "subtitle": "The reward rank per day on the Conflux PoS network.",
+        "title": "Reward Rank",
+        "subtitle": "The reward rank per day on the PoS of Conflux network.",
         "yAxisTitle": "Reward Rank",
         "seriesName": "Reward Rank (Day)",
         "PoSAddress": "PoS Address",
@@ -609,16 +611,18 @@
         "reward": "Reward"
       },
       "dailyDeposit": {
-        "title": "Daily Deposit",
-        "subtitle": "The amount of Deposit CFX per day on the Conflux PoS network.",
+        "title": "Deposit & Withdraw",
+        "subtitle": "The amount of Deposit and Withdraw CFX per day on the PoS of Conflux network.",
         "yAxisTitle": "Total Deposit CFX",
-        "seriesName": "Total Deposit CFX (Day)"
+        "seriesName": "Total Deposit CFX (Day)",
+        "yAxisTitle2": "Total Withdraw CFX",
+        "seriesName2": "Total Withdraw CFX (Day)"
       }
     },
     "pow": {
       "preview": {
         "title": "PoW Charts",
-        "subtitle": " A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
+        "subtitle": "A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
         "viewDetail": "View Details",
         "tip": "Showing the last 30 days",
         "marketData": "Market Data",
