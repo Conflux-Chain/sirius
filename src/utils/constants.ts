@@ -267,4 +267,4 @@ OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit-withdraw';
 OPEN_API_URLS.PoSDailyParticipationRate = '/stat/pos-daily-participation-rate';
 
 // Cross Space
-OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx-to-evm';
+OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';

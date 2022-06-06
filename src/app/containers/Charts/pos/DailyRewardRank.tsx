@@ -64,10 +64,9 @@ export function DailyRewardRank({ preview = false }: ChildProps) {
         headerFormat: '',
         pointFormat: `${t(
           translations.highcharts.pos.dailyRewardRank.PoSAddress,
-        )}: <b>{point.info.PoSAddress}</b>
-          <br/>${t(
-            translations.highcharts.pos.dailyRewardRank.PoWAddress,
-          )}: <b>{point.info.PoWAddress}</b>
+        )}: <b>{point.info.PoSAddress}</b><br/>${t(
+          translations.highcharts.pos.dailyRewardRank.PoWAddress,
+        )}: <b>{point.info.PoWAddress}</b>
           <br/>${t(
             translations.highcharts.pos.dailyRewardRank.reward,
           )}: <b>{point.y:.2f}</b>

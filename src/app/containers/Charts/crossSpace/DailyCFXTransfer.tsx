@@ -8,6 +8,7 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
 export function DailyCFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -25,8 +26,8 @@ export function DailyCFXTransfer({ preview = false }: ChildProps) {
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.day).valueOf();
-          data1.push([t, Number(d.v)]);
-          data2.push([t, Number(d.v)]);
+          data1.push([t, Number(new BigNumber(d.DailyCfxToEVM).toFixed(2))]);
+          data2.push([t, Number(new BigNumber(d.DailyCfxFromEVM).toFixed(2))]);
         });
 
         return [data1, data2];
@@ -54,7 +55,6 @@ export function DailyCFXTransfer({ preview = false }: ChildProps) {
       },
       tooltip: {
         shared: true,
-        valueDecimals: 2,
       },
       series: [
         {
