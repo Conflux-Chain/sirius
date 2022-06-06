@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
-import { Card, Spinner } from '@cfxjs/react-ui';
+import { Spinner } from '@cfxjs/react-ui';
+import { Card } from 'app/components/Card/Loadable';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';
@@ -166,7 +167,7 @@ export const Detail = () => {
                 transactionHash: txnhash,
                 fields: 'token',
                 limit: 100,
-                reverse: true,
+                reverse: false,
               }),
             );
             Promise.all(proArr)
@@ -415,7 +416,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -425,7 +425,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
@@ -464,7 +463,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -474,7 +472,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
@@ -522,7 +519,6 @@ export const Detail = () => {
             >
               <span className="index">{index++}. </span>
               <span className="from">{t(translations.transaction.from)}</span>
-              {/*<AddressContainer value={transferItem['from']} />*/}
               <InlineWrapper>
                 {renderAddress(
                   transferItem['from'],
@@ -532,7 +528,6 @@ export const Detail = () => {
                 )}
               </InlineWrapper>
               <span className="to">{t(translations.transaction.to)}</span>
-              {/*<AddressContainer value={transferItem['to']} />*/}
               <InlineWrapper>
                 {renderAddress(transferItem['to'], transferItem, 'to', false)}
               </InlineWrapper>
@@ -619,7 +614,7 @@ export const Detail = () => {
 
   return (
     <StyledCardWrapper>
-      <Card className="sirius-Transactions-card">
+      <Card>
         <Description
           title={
             <Tooltip
@@ -724,7 +719,11 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
+            <Status
+              type={status}
+              txExecErrorInfo={txExecErrorInfo}
+              address={from}
+            ></Status>
           </SkeletonContainer>
         </Description>
         <Description
@@ -739,10 +738,15 @@ export const Detail = () => {
               '--'
             ) : (
               <>
-                <Security blockHash={blockHash}></Security>
+                <Security
+                  blockHash={blockHash}
+                  epochNumber={epochNumber}
+                ></Security>
                 <StyledEpochConfirmationsWrapper>
                   {t(translations.transaction.epochConfirmations, {
-                    count: confirmedEpochCount || '--',
+                    count: _.isNil(confirmedEpochCount)
+                      ? '--'
+                      : confirmedEpochCount,
                   })}
                   {partLoading ? (
                     <Spinner
@@ -973,11 +977,6 @@ const StyledCardWrapper = styled.div`
   .inputLine {
     .tooltip-wrapper {
       width: 100% !important;
-    }
-  }
-  .card.sirius-Transactions-card {
-    .content {
-      padding: 0 1.2857rem;
     }
   }
   .card.sirius-Transactions-table-card {

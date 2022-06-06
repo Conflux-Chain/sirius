@@ -9,6 +9,19 @@ exports[`<Search  /> should match snapshot 1`] = `
   padding: 0 1.5rem;
 }
 
+.c0 .autocomplete-search-input .ant-input-affix-wrapper,
+.c0 .autocomplete-search-input input {
+  background-color: var(--theme-color-gray1);
+}
+
+.c0 .autocomplete-search-input .ant-input-search-button {
+  background-color: var(--theme-color-blue0);
+}
+
+.c0 .autocomplete-search-input .ant-input-search-button:hover {
+  background-color: var(--theme-color-blue2);
+}
+
 .c0 .ant-input-search .ant-input-group .ant-input-affix-wrapper:not(:last-child) {
   border-radius: 16px;
 }
@@ -130,7 +143,7 @@ exports[`<Search  /> should match snapshot 1`] = `
         class="ant-select-selection-search"
       >
         <span
-          class="ant-input-group-wrapper ant-input-search ant-input-search-with-button ant-select-selection-search-input"
+          class="ant-input-group-wrapper ant-input-search ant-input-search-with-button ant-select-selection-search-input autocomplete-search-input"
         >
           <span
             class="ant-input-wrapper ant-input-group"

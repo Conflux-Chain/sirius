@@ -20,12 +20,18 @@ import {
   TotalInfoType,
   Tip,
 } from './Common';
+import { useBreakpoint, media } from 'styles/media';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 export function FCCFX() {
   const { accounts } = usePortal();
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
   const [loading, setLoading] = useState(false);
+  const bp = useBreakpoint();
+
+  // if no account login, use zero address to get summary info
+  const account = accounts[0] || SDK.CONST.ZERO_ADDRESS_HEX;
 
   const [isModalVisible, setIsModalVisible] = useState(() => {
     try {
@@ -65,62 +71,56 @@ export function FCCFX() {
     : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4408240776347-FC-to-CFX-None-reversible-Rules';
 
   useEffect(() => {
-    if (accounts.length) {
-      setLoading(true);
+    setLoading(true);
 
-      fcExchangeInterestContract
-        .summary(accounts[0])
-        .then(
-          data => {
-            const [contractSummary, accountSummary] = data;
+    fcExchangeInterestContract
+      .summary(account)
+      .then(
+        data => {
+          const [contractSummary, accountSummary] = data;
 
-            const unsignedFC = new BigNumber(
-              accountSummary.stakeInfo.amount,
-            ).minus(accountSummary.accountInfo.amount);
+          const unsignedFC = new BigNumber(
+            accountSummary.stakeInfo.amount,
+          ).minus(accountSummary.accountInfo.amount);
 
-            const unsignedCFX = new BigNumber(
-              accountSummary.accountInfo.amount,
-            ).minus(accountSummary.stakeInfo.amount);
+          const unsignedCFX = new BigNumber(
+            accountSummary.accountInfo.amount,
+          ).minus(accountSummary.stakeInfo.amount);
 
-            setAccountInfo({
-              ...accountInfo,
-              fcSigned: new BigNumber(accountSummary.accountInfo.amount),
-              fcUnsigned: unsignedFC.lt(0) ? new BigNumber(0) : unsignedFC,
-              cfxWithdrawed: new BigNumber(
-                accountSummary.accountInfo.accProfit,
-              ),
-              fcSignedHistory: new BigNumber(
-                accountSummary.stakeInfo.accumulateAmount,
-              ),
-              isNFTActive: accountSummary.stakeInfo.nftGranted,
-              NFTId: accountSummary.stakeInfo.grantedTokenId.toString(),
-              pendingProfit: new BigNumber(accountSummary.pendingProfit),
-              pendingProfitLegacy: new BigNumber(
-                accountSummary.pendingProfitLegacy,
-              ),
-              availableFc: new BigNumber(accountSummary.fcBalance),
-              cfxUnsigned: unsignedCFX.gt(0) ? unsignedCFX : new BigNumber(0),
-              availableToWithdraw: new BigNumber(
-                accountSummary.stakeInfo.amount,
-              ),
-            });
+          setAccountInfo({
+            ...accountInfo,
+            fcSigned: new BigNumber(accountSummary.accountInfo.amount),
+            fcUnsigned: unsignedFC.lt(0) ? new BigNumber(0) : unsignedFC,
+            cfxWithdrawed: new BigNumber(accountSummary.accountInfo.accProfit),
+            fcSignedHistory: new BigNumber(
+              accountSummary.stakeInfo.accumulateAmount,
+            ),
+            isNFTActive: accountSummary.stakeInfo.nftGranted,
+            NFTId: accountSummary.stakeInfo.grantedTokenId.toString(),
+            pendingProfit: new BigNumber(accountSummary.pendingProfit),
+            pendingProfitLegacy: new BigNumber(
+              accountSummary.pendingProfitLegacy,
+            ),
+            availableFc: new BigNumber(accountSummary.fcBalance),
+            cfxUnsigned: unsignedCFX.gt(0) ? unsignedCFX : new BigNumber(0),
+            availableToWithdraw: new BigNumber(accountSummary.stakeInfo.amount),
+          });
 
-            setTotalInfo({
-              ...totalInfo,
-              balanceOfCfx: new BigNumber(contractSummary.stakedCfx),
-              fcMiningAPY: new BigNumber(contractSummary.apy),
-              fcSigned: new BigNumber(contractSummary.stakedFc),
-              fcSignedHistory: new BigNumber(contractSummary.fcBalance),
-            });
-          },
-          e => console.log(e),
-        )
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+          setTotalInfo({
+            ...totalInfo,
+            balanceOfCfx: new BigNumber(contractSummary.stakedCfx),
+            fcMiningAPY: new BigNumber(contractSummary.apy),
+            fcSigned: new BigNumber(contractSummary.stakedFc),
+            fcSignedHistory: new BigNumber(contractSummary.fcBalance),
+          });
+        },
+        e => console.log(e),
+      )
+      .finally(() => {
+        setLoading(false);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts]);
+  }, [account]);
 
   const handleNoticeClose = () => {
     setIsModalVisible(false);
@@ -145,31 +145,36 @@ export function FCCFX() {
         <Spin spinning={loading}>
           <InfoCard totalInfo={totalInfo} accountInfo={accountInfo}></InfoCard>
         </Spin>
-        <div
-          className={clsx('fccfx-mask', {
-            disabled: hasPendingProfitLegacy,
-          })}
-        >
-          <Row gutter={24}>
-            <Col flex="auto">
+
+        {bp !== 's' && (
+          <>
+            <div
+              className={clsx('fccfx-mask', {
+                disabled: hasPendingProfitLegacy,
+              })}
+            >
               <Row gutter={24}>
-                <Col span={12}>
-                  <Spin spinning={loading}>
-                    <StakeAndSignCard info={accountInfo} />
-                  </Spin>
-                </Col>
-                <Col span={12}>
-                  <Spin spinning={loading}>
-                    <WithdrawCFXCard info={accountInfo} />
-                  </Spin>
+                <Col flex="auto">
+                  <Row gutter={24}>
+                    <Col md={12} sm={24}>
+                      <Spin spinning={loading}>
+                        <StakeAndSignCard info={accountInfo} />
+                      </Spin>
+                    </Col>
+                    <Col md={12} sm={24}>
+                      <Spin spinning={loading}>
+                        <WithdrawCFXCard info={accountInfo} />
+                      </Spin>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
-            </Col>
-          </Row>
-        </div>
-        <Tip hidden={!hasPendingProfitLegacy} size={14}>
-          {t(translations.fccfx.tip.legacyProfit)}
-        </Tip>
+            </div>
+            <Tip hidden={!hasPendingProfitLegacy} size={14}>
+              {t(translations.fccfx.tip.legacyProfit)}
+            </Tip>
+          </>
+        )}
       </div>
 
       <Notice show={isModalVisible} onClose={handleNoticeClose} />
@@ -180,6 +185,11 @@ export function FCCFX() {
 const StyledFCCFXWrapper = styled.div`
   padding-bottom: 20px;
   overflow: hidden;
+
+  ${media.s} {
+    padding-bottom: 0px;
+    margin-bottom: -30px;
+  }
 
   .fccfx-mask.disabled {
     filter: blur(5px);

@@ -16,15 +16,7 @@ import {
   StorageStakingCard,
   NonceCard,
 } from './AddressInfoCards';
-import {
-  Main,
-  Title,
-  Bottom,
-  HeadAddressLine,
-  Top,
-  Head,
-  Middle,
-} from './layouts';
+import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress, toHex } from '../../../utils';
 import { useAccount } from '../../../utils/api';
@@ -33,7 +25,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
-import { NETWORK_TYPES, NETWORK_TYPE } from '../../../utils/constants';
 import { Link } from '../../components/Link/Loadable';
 import fetch from 'utils/request';
 
@@ -123,13 +114,9 @@ export const AddressDetailPage = memo(() => {
           <StorageStakingCard accountInfo={accountInfo} />
           <NonceCard accountInfo={accountInfo} />
         </Top>
-        {[NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-          NETWORK_TYPE,
-        ) ? (
-          <Middle key="middle">
-            <AddressMetadata address={address} accountInfo={accountInfo} />
-          </Middle>
-        ) : null}
+        <div key="middle">
+          <AddressMetadata address={address} accountInfo={accountInfo} />
+        </div>
         <Bottom>
           <Table address={address} addressInfo={accountInfo} key={address} />
         </Bottom>
@@ -172,7 +159,7 @@ export const MenuWrapper = styled(Menu)`
     }
 
     &:hover {
-      background-color: #65709a;
+      background-color: var(--theme-color-blue0);
 
       a {
         color: #fff;

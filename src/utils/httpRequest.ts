@@ -1,15 +1,17 @@
 import qs from 'query-string';
 import fetch from './request';
+import { OPEN_API_URLS } from './constants';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
 
 export const sendRequest = config => {
-  const url = config.url.startsWith('/stat')
-    ? config.url
-    : `${v1Prefix}${
-        config.url.startsWith('/') ? config.url : '/' + config.url
-      }`;
+  const url =
+    config.url.startsWith('/stat') || config.url.startsWith('http')
+      ? config.url
+      : `${v1Prefix}${
+          config.url.startsWith('/') ? config.url : '/' + config.url
+        }`;
   return fetch(qs.stringifyUrl({ url: url, query: config.query }), {
     method: config.type || 'GET',
     body: config.body,
@@ -220,29 +222,17 @@ export const reqTransactions = (extra?: object) => {
   });
 };
 
-export const reqNFTBalances = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/checker/balance`,
-    ...extra,
-  });
-};
-
-export const reqNFTTokenIds = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/checker/token`,
-    ...extra,
-  });
-};
-export const reqNFTTokenIdsInTokenPage = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/active-token-ids`,
-    ...extra,
-  });
-};
 export const reqNFTInfo = (extra?: object) => {
   // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
   return sendRequest({
     url: `/stat/nft/checker/preview`,
+    ...extra,
+  });
+};
+
+export const reqNFTDetail = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/checker/detail`,
     ...extra,
   });
 };
@@ -267,3 +257,67 @@ export const reqTransferTPS = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqTransferPlot = (extra?: object) => {
+  return sendRequest({
+    url: `/plot?interval=133&limit=7`,
+    ...extra,
+  });
+};
+
+export const reqHomeDashboardOfPOSSummary = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/pos-info`,
+    ...extra,
+  });
+};
+
+export const reqPoSAccount = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/pos-account-detail`,
+    ...extra,
+  });
+};
+
+export const reqPoSIncomingHistory = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/list-pos-account-reward`,
+    ...extra,
+  });
+};
+
+export const reqNFT1155Tokens = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/list1155inventory`,
+    ...extra,
+  });
+};
+
+/** open api, start */
+
+/** charts, start */
+
+export const reqChartData = ({ url, query }) => {
+  return sendRequest({
+    url,
+    query,
+  });
+};
+
+/** charts, end */
+
+export const reqNFTTokens = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.NFTTokens,
+    ...extra,
+  });
+};
+
+export const reqNFTBalance = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.NFTBalance,
+    ...extra,
+  });
+};
+
+/** open api, end */

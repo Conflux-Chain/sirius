@@ -67,11 +67,11 @@ export interface GlobalDataType {
 export const useGlobalData = createGlobalState<object>({
   networks: [
     {
-      name: 'Conflux Tethys',
+      name: 'Conflux Hydra',
       id: 1029,
     },
     {
-      name: 'Conflux Testnet',
+      name: 'Conflux Core (Testnet)',
       id: 1,
     },
   ],

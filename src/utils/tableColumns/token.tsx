@@ -27,6 +27,8 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { Tag } from '@cfxjs/antd';
 
 const fromTypeInfo = {
   arrow: {
@@ -103,6 +105,11 @@ export const renderAddress = (
   const filter = (accountAddress as string) || '';
   let alias = '';
 
+  // dummy address, show name only
+  if (row[`${type}ContractInfo`]?.isVirtual) {
+    return row[`${type}ContractInfo`].name;
+  }
+
   if (type === 'from') {
     if (row.fromContractInfo && row.fromContractInfo.name)
       alias = row.fromContractInfo.name;
@@ -136,14 +143,17 @@ export const renderAddress = (
     verify = info.verify.result !== 0;
   } catch (e) {}
 
+  const isEspaceAddress = !!row[`${type}ESpaceInfo`]?.address;
+
   return (
     <>
       <AddressContainer
         value={value}
         alias={alias}
-        isLink={formatAddress(filter) !== formatAddress(value)}
+        link={formatAddress(filter) !== formatAddress(value)}
         contractCreated={row.contractCreated}
         verify={verify}
+        isEspaceAddress={isEspaceAddress}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
@@ -209,42 +219,52 @@ const Token2 = ({ row }) => {
               src={row?.transferTokenInfo?.iconUrl || ICON_DEFAULT_TOKEN}
               alt="token icon"
             />,
-            <Link key="link" href={`/token/${row?.transferTokenInfo?.address}`}>
-              {row?.transferTokenInfo?.name ? (
-                <Text
-                  span
-                  hoverValue={
-                    row?.transferTokenInfo?.name
-                      ? `${row?.transferTokenInfo?.name} (${
-                          row?.transferTokenInfo?.symbol || '--'
-                        })`
-                      : formatAddress(row?.transferTokenInfo?.address)
-                  }
-                  maxWidth="180px"
-                >
-                  {formatString(
-                    `${row?.transferTokenInfo?.name} (${
-                      row?.transferTokenInfo?.symbol || '--'
-                    })`,
-                    36,
-                  )}
-                </Text>
-              ) : (
+            row?.transferTokenInfo?.name && row?.transferTokenInfo?.symbol ? (
+              <Link
+                key="link"
+                href={`/token/${row?.transferTokenInfo?.address}`}
+              >
+                {
+                  <Text
+                    span
+                    hoverValue={
+                      row?.transferTokenInfo?.name
+                        ? `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`
+                        : formatAddress(row?.transferTokenInfo?.address)
+                    }
+                    maxWidth="180px"
+                  >
+                    {formatString(
+                      `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`,
+                      36,
+                    )}
+                  </Text>
+                }
+              </Link>
+            ) : (
+              <StyledToken2NotAvailableWrapper>
                 <AddressContainer
                   value={row?.transferTokenInfo?.address}
-                  alias={
-                    row?.transferTokenInfo?.name ||
-                    t(translations.general.notAvailable)
-                  }
+                  alias={t(translations.general.notAvailable)}
                   showIcon={false}
                 />
-              )}
-            </Link>,
+                &nbsp;
+                <InfoIconWithTooltip
+                  info={t(translations.general.abnormalToken)}
+                />
+              </StyledToken2NotAvailableWrapper>
+            ),
           ]
         : '--'}
     </StyledIconWrapper>
   );
 };
+const StyledToken2NotAvailableWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const token2 = {
   ...token,
   render: row => <Token2 row={row} />,
@@ -666,6 +686,28 @@ export const tokenId = (contractAddress?: string) => ({
   ),
 });
 
+export const details = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.details)}
+    </Translation>
+  ),
+  dataIndex: 'tokenId',
+  key: 'tokenId',
+  render: (value, row) => {
+    return (
+      <Link href={`/nft/${row.transferTokenInfo?.address}/${value}`}>
+        <Tag color="default">
+          <Translation>
+            {t => t(translations.general.table.token.view)}
+          </Translation>
+        </Tag>
+      </Link>
+    );
+  },
+};
+
 const TraceTypeElement = ({ info }) => {
   const breakpoint = useBreakpoint();
   const { t } = useTranslation();
@@ -737,6 +779,20 @@ export const traceType = {
   render: (_, row) => <TraceTypeElement info={row} />,
 };
 
+export const traceOutcome = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.traceOutcome)}
+    </Translation>
+  ),
+  dataIndex: 'result',
+  key: 'outcome',
+  render: (_, row) => {
+    return row.result?.outcome || '--';
+  },
+};
+
 export const traceResult = {
   width: 1,
   title: (
@@ -806,6 +862,45 @@ export const projectInfo = {
       </ContentWrapper>
     );
   },
+};
+
+export const NFTOwner = {
+  width: 1,
+  title: (
+    <Translation>
+      {t => t(translations.general.table.token.accountAddress)}
+    </Translation>
+  ),
+  dataIndex: 'owner',
+  key: 'owner',
+  render: (value, row) => (
+    <AccountWrapper>
+      <AddressContainer
+        value={value}
+        alias={
+          value.name ||
+          (row.ownerTokenInfo && row.ownerTokenInfo.name
+            ? row.ownerTokenInfo.name
+            : null)
+        }
+        isFull={true}
+      />
+    </AccountWrapper>
+  ),
+};
+
+export const NFTQuantity = {
+  width: 1,
+  title: (
+    <ContentWrapper right>
+      <Translation>
+        {t => t(translations.general.table.token.quantity)}
+      </Translation>
+    </ContentWrapper>
+  ),
+  dataIndex: 'amount',
+  key: 'amount',
+  render: value => <ContentWrapper right>{value}</ContentWrapper>,
 };
 
 export const StyledIconWrapper = styled.div`

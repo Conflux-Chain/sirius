@@ -14,6 +14,7 @@ import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
+import { completeDetect } from '@cfxjs/use-wallet';
 
 // Import root app
 import { App } from 'app';
@@ -48,17 +49,22 @@ if (module.hot) {
   // have to be constants at compile-time
   module.hot.accept(['./app', './locales/i18n'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    const App = require('./app').App;
-    render(App);
+    Promise.all([completeDetect()]).then(() => {
+      const App = require('./app').App;
+      render(App);
+    });
   });
 }
 
-render(App);
+Promise.all([completeDetect()]).then(() => {
+  const App = require('./app').App;
+  render(App);
+});
 
-const currentVersion = '2.4.0';
+const currentVersion = 'V2.12.1';
 
 const brand = `
-┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ V${currentVersion}
+┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ ${currentVersion}
 │  │ ││││├┤ │  │ │┌┴┬┘  └─┐│  ├─┤│││
 └─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
  `;

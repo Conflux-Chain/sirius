@@ -23,7 +23,9 @@ export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const {
-    network = NETWORK_TYPE === NETWORK_TYPES.testnet ? 'Tethys' : 'Testnet',
+    network = NETWORK_TYPE === NETWORK_TYPES.testnet
+      ? 'Hydra'
+      : 'Core (Testnet)',
   } = useParams<RouteParams>();
 
   return (
@@ -62,6 +64,7 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
+  width: 100%;
 
   ${media.s} {
     height: calc(100% - 116px);

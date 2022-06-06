@@ -8,7 +8,6 @@ import React, { memo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { TextLogo } from 'app/components/TextLogo';
 import { Search } from './Search';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
@@ -17,7 +16,6 @@ import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
-import imgConfiPlanet from 'images/confi-planet.png';
 import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
 import { useToggle } from 'react-use';
@@ -25,6 +23,9 @@ import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork, gotoNetwork } from 'utils';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
+
+import logo from 'images/logo.svg';
+import logoTest from 'images/logo-test.svg';
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -131,24 +132,22 @@ export const Header = memo(() => {
     },
   ];
 
-  // @todo, shoule remove after pos release
-  if (localStorage.getItem('fccfx')) {
-    if (bp !== 's' && bp !== 'm') {
-      ecosystemItems.push({
-        title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-        name: ScanEvent.menu.action.fcCfx,
-        afterClick: menuClick,
-        href: '/fccfx',
-      });
-    }
-  } else {
-    ecosystemItems.push({
-      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.fcCfx,
-      afterClick: menuClick,
-      href: 'https://fccfx.confluxscan.io/',
-    });
-  }
+  ecosystemItems.push({
+    title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+    name: ScanEvent.menu.action.fcCfx,
+    afterClick: menuClick,
+    href: '/fccfx',
+  });
+
+  ecosystemItems.push({
+    title: [t(translations.header.crossSpace), <Check size={18} key="check" />],
+    name: ScanEvent.menu.action.crossSpace,
+    afterClick: menuClick,
+    href:
+      NETWORK_TYPE === NETWORK_TYPES.testnet
+        ? 'https://test.confluxhub.io/'
+        : 'https://confluxhub.io/',
+  });
 
   if ([NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
     supportAndHelpMenuItems.unshift({
@@ -173,10 +172,10 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: iszh
         ? NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://votetest.confluxnetwork.org/zh/'
+          ? 'https://testnet-governance.confluxnetwork.org/zh/'
           : 'https://governance.confluxnetwork.org/zh/'
         : NETWORK_TYPE === NETWORK_TYPES.testnet
-        ? 'https://votetest.confluxnetwork.org/en/'
+        ? 'https://testnet-governance.confluxnetwork.org/en/'
         : 'https://governance.confluxnetwork.org/en/',
     });
 
@@ -300,6 +299,67 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.tokens1155,
           afterClick: menuClick,
           href: '/tokens/crc1155',
+        },
+      ],
+    },
+    // pos
+    {
+      title: t(translations.header.pos.pos),
+      matched: location?.pathname?.startsWith('/pos'),
+      children: [
+        {
+          title: [
+            t(translations.header.pos.overview),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posOverview,
+          afterClick: menuClick,
+          href: '/pos',
+        },
+        {
+          title: [
+            t(translations.header.pos.blocks),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posBlocks,
+          afterClick: menuClick,
+          href: '/pos/blocks',
+        },
+        {
+          title: [
+            t(translations.header.pos.transactions),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posTransactions,
+          afterClick: menuClick,
+          href: '/pos/transactions',
+        },
+        {
+          title: [
+            t(translations.header.pos.accounts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posAccounts,
+          afterClick: menuClick,
+          href: '/pos/accounts',
+        },
+        {
+          title: [
+            t(translations.header.pos.committee),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posCommittee,
+          afterClick: menuClick,
+          href: '/pos/committees',
+        },
+        {
+          title: [
+            t(translations.header.pos.incomingRank),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.incomingRank,
+          afterClick: menuClick,
+          href: '/pos/incoming-rank',
         },
       ],
     },
@@ -457,44 +517,30 @@ export const Header = memo(() => {
       // switch network
       name: 'switch-network',
       title: getNetwork(networks, networkId)?.name || networkId,
-      children: networks
-        .map(n => {
-          const isMatch = n.id === networkId;
+      children: networks.map(n => {
+        const isMatch = n.id === networkId;
 
-          return {
-            title: [n.name, isMatch && <Check size={18} key="check" />],
-            onClick: () => {
-              trackEvent({
-                category: ScanEvent.preference.category,
-                action: ScanEvent.preference.action.changeNet,
-                label: n.name,
-              });
+        return {
+          title: [n.name, isMatch && <Check size={18} key="check" />],
+          onClick: () => {
+            trackEvent({
+              category: ScanEvent.preference.category,
+              action: ScanEvent.preference.action.changeNet,
+              label: n.name,
+            });
 
-              menuClick();
+            menuClick();
 
-              setGlobalData({
-                ...globalData,
-                networkId: n.id,
-              });
+            setGlobalData({
+              ...globalData,
+              networkId: n.id,
+            });
 
-              if (n.id === 1) {
-                gotoNetwork('1');
-              } else if (n.id === 1029) {
-                gotoNetwork('1029');
-              } else {
-                // @todo, should jump to custom network hostname
-                // gotoNetwork('1029');
-              }
-            },
-            isMatchedFn: () => isMatch,
-          };
-        })
-        // TODO, temporary hardcode network config, after mainnet release, use /v1/frontend networks config to render evm space network item
-        .concat({
-          title: ['Conflux eSpace (Testnet)'],
-          isMatchedFn: () => false,
-          onClick: () => gotoNetwork('evmspacetestnet'),
-        }),
+            gotoNetwork(n.id);
+          },
+          isMatchedFn: () => isMatch,
+        };
+      }),
     },
   ];
 
@@ -517,7 +563,9 @@ export const Header = memo(() => {
               label: 'en',
             });
             menuClick();
-            return iszh && i18n.changeLanguage('en');
+            if (iszh) {
+              i18n.changeLanguage('en');
+            }
           },
           isMatchedFn: () => !iszh,
         },
@@ -531,7 +579,9 @@ export const Header = memo(() => {
               label: 'zh-CN',
             });
             menuClick();
-            return !iszh && i18n.changeLanguage('zh-CN');
+            if (!iszh) {
+              i18n.changeLanguage('zh-CN');
+            }
           },
           isMatchedFn: () => iszh,
         },
@@ -548,9 +598,8 @@ export const Header = memo(() => {
         <img
           className="confi-logo"
           alt="conflux scan logo"
-          src={imgConfiPlanet}
+          src={NETWORK_TYPE === NETWORK_TYPES.testnet ? logoTest : logo}
         />
-        <TextLogo />
       </RouterLink>
     </LogoWrapper>
   );
@@ -590,8 +639,7 @@ export const Header = memo(() => {
 
 const LogoWrapper = styled.div`
   .confi-logo {
-    margin-right: 0.57rem;
-    width: 3.3571rem;
+    height: 2rem;
   }
 
   a.link {

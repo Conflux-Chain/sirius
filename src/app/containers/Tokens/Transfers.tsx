@@ -44,7 +44,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   if (type === CFX_TOKEN_TYPES.erc721) {
-    columnsWidth = [3, 3, 6, 6, 4, 3];
+    columnsWidth = [4, 3, 6, 6, 4, 4, 3];
     columns = [
       blockColunms.epoch,
       tokenColunms.txnHash,
@@ -52,10 +52,11 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       tokenColunms.to,
       tokenColunms.tokenId(),
       tokenColunms.age(ageFormat, toggleAgeFormat),
+      tokenColunms.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
   if (type === CFX_TOKEN_TYPES.erc1155) {
-    columnsWidth = [3, 3, 7, 7, 3, 4, 4];
+    columnsWidth = [3, 3, 7, 7, 3, 4, 4, 3];
     columns = [
       blockColunms.epoch,
       tokenColunms.txnHash,
@@ -64,6 +65,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       tokenColunms.quantity,
       tokenColunms.tokenId(address),
       tokenColunms.age(ageFormat, toggleAgeFormat),
+      tokenColunms.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 

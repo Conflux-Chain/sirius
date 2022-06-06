@@ -3,6 +3,36 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "nftDetail": {
+    "title": "NFT 详情",
+    "details": "详情",
+    "metadata": "元数据",
+    "description": "描述",
+    "id": "代币 ID",
+    "name": "代币名称",
+    "type": "代币标准",
+    "address": "合约地址",
+    "contractInfo": "合约信息",
+    "contractInfoTip": "合约部署时设置的代币的名称和符号",
+    "owner": "所有者",
+    "url": "内容链接",
+    "creator": "创作者",
+    "mintedTime": "发行时间",
+    "transfer": "转发",
+    "from": "发送方",
+    "to": "接收方",
+    "amount": "数量",
+    "amountTip": "持有 {{amount}} 个",
+    "error": {
+      "fromAddress": "请输入发送方地址",
+      "toAddress": "请输入接收方地址",
+      "amount": "请输入数量",
+      "id": "请输入代币 ID",
+      "invalidAddress": "请输入合法地址",
+      "invalidNetwork": "请输入{{network}}地址",
+      "invalidAmount": "请输入 1 - {{amount}} 个"
+    }
+  },
   "fccfx": {
     "title": "FC-CFX 不可逆兑换",
     "titleAccountInfo": "地址质押信息",
@@ -35,10 +65,10 @@
     "notice": {
       "title": "提示",
       "items": {
-        "first": "1. 最新的FC兑换CFX规则预计于9月28号更新以下内容：用户将资金存入后需要主动去签约补贴计划才可以产生利息。",
+        "first": "1. 最新的FC兑换CFX规则将于主网升级为Hydra后更新以下内容：用户将资金存入后需要主动去签约补贴计划才可以产生利息。",
         "second": "2. 更新之前的FC兑换CFX规则中，用户只需要将资金存入便可自动生成利息，而更新之后的规则需要用户自行通知一个新的合约（也就是签约补贴计划）。用户在签约了补贴计划之后才会生成利息，而不签约则没有利息生成。",
         "third": "3. 注：该规则不会强迫用户签约补贴计划，补贴计划的签约与否都不会对用户造成损失。",
-        "fourth": "4. 如果用户在补贴计划之前就已经质押过CFX并已经生成过利息，在规则更新之后，用户需要将利息全部提取出来才能进行后续操作。",
+        "fourth": "4. 如果用户在补贴计划之前就已经质押过FC并已经生成过利息，在规则更新之后，用户需要将利息全部提取出来才能进行后续操作。",
         "fifth": "5. 如果用户想在新规则上线之后将本金提取出来，需要先将新规则上线后产生的利息提取出来才能进行提取本金的操作。"
       },
       "confirm": "我知道了"
@@ -66,6 +96,8 @@
     "registered": "已注册",
     "site": "官方网站",
     "tokenSite": "官方网站",
+    "gateway": "IPFS 网关",
+    "gatewayListTip": "仅支持下面网站中列出来的 IPFS 网关：<a href='https://ipfs.github.io/public-gateway-checker/'>https://ipfs.github.io/public-gateway-checker/</a>",
     "contractIcon": "合约图标",
     "remove": "移除",
     "tokenTracker": "代币搜索器",
@@ -101,6 +133,7 @@
     "sourceCodeShort": "源码",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
+    "supportType": "支持的图片格式为 gif、jpg、jpeg、png、svg",
     "namePlaceholder": "支持输入最长 35 个字符",
     "requiredAddress": "请输入一个合法的 Conflux 地址",
     "requiredNameTag": "请输入一个合法的合约名称标签",
@@ -111,6 +144,7 @@
     "invalidUrl": "URL 格式错误",
     "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
     "invalidIconSize": "图片过大，请重试",
+    "invalidIconType": "图片格式仅支持 gif、jpg、jpeg、png、svg，请重试",
     "errorTokenICon": "非 CRC20 合约，代币图标不可上传",
     "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
     "invalidJsonAbi": "无法解析 JSON 文件中的有效 ABI，请重试",
@@ -141,8 +175,8 @@
       "tuple": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）",
       "tupleArray": "请输入有效的元组（符合参数顺序和格式的 json 数组或对象）数组",
       "notSupport": "{{type}} 即将支持，敬请期待",
-      "testnet": "请在Conflux Portal钱包中将网络切换至Conflux Test Network",
-      "mainnet": "请在Conflux Portal钱包中将网络切换至Conflux Tethys"
+      "testnet": "请在 Fluent Wallet 钱包中将网络切换至Conflux Test Network",
+      "mainnet": "请在 Fluent Wallet 钱包中将网络切换至Conflux Hydra"
     },
     "tupleFormat": "元组类型：<code>{{type}}</code><br />参数名称：<code>{{params}}</code><br />元组参数数组：<code>{{paramsArray}}</code><br />元组参数对象：<code>{{paramsObject}}</code>",
     "tupleTips": "提示：可以参考 <code>元组参数数组</code> 或 <code>元组参数对象</code> 进行元组参数输入。<br />元组输入格式应为合法并符合参数顺序和格式的 <code>JSON 数组或对象</code>，例如：元组声明为 <code>{ uint num; string str; }</code>，则元组输入格式应为：<code>[1, \"text\"]</code> 或 <code>{ \"num\": 1, \"str\": \"text\" }</code>。<br />对于嵌套的元组，输入格式应为合法并符合参数顺序和格式的 <code>嵌套的 JSON 数组或对象</code>，例如：元组声明为 <code>struct A { string name; uint age; } struct B { uint id; A a; }</code>，则元组 B 输入格式应为：<code>[1, [\"Tom\", 28]]</code> 或 <code>{ \"id\": 1, \"a\": {\"name\": \"Tom\", \"age\": 28 }}</code>。",
@@ -184,8 +218,8 @@
       "required": "请输入",
       "min": "最小值为 0",
       "isNotAddress": "地址格式错误",
-      "isNotMainnet": "请输入 Conflux Tethys 地址",
-      "isNotTestnet": "请输入 Conflux Testnet 地址",
+      "isNotMainnet": "请输入 Conflux Hydra 地址",
+      "isNotTestnet": "请输入 Conflux Core (Testnet) 地址",
       "pleaseSelect": "请选择",
       "pleaseEnter": "请输入",
       "notMatch": "生成的字节码与存储在地址上的字节代码不匹配"
@@ -212,7 +246,7 @@
   "contractDetail": {
     "title": "合约详情",
     "content": "合约详情",
-    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+    "contractAdminWarning": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Hydra 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
     "at": "在",
     "txOnlyEn": "",
     "txOnlyZh": "交易",
@@ -235,7 +269,14 @@
     "lockedDetailLocked": "已锁定 CFX",
     "lockedDetailUnlockBlockNumber": "解锁区块",
     "lockedDetailUnlockTime": "预计解锁时间",
-    "viewLockedDetails": "点击查看锁定历史"
+    "viewLockedDetails": "点击查看锁定历史",
+    "pos": {
+      "identifier": "PoS 地址",
+      "totalStakedRights": "总质押票权",
+      "totalInterests": "总利息",
+      "unlockRights": "已解锁票权",
+      "lockedRights": "已锁定票权"
+    }
   },
   "blocks": {
     "title": "区块",
@@ -307,7 +348,8 @@
       "balance": "余额",
       "percentage": "百分比",
       "count": "交易数"
-    }
+    },
+    "downloadButtonText": "下载 CSV 文件"
   },
   "contracts": {
     "title": "内置合约",
@@ -344,6 +386,7 @@
     "stakingAndGovernance": "质押 & 治理",
     "developerAPI": "API 文档",
     "fcCfx": "FC-CFX 不可逆兑换",
+    "crossSpace": "Conflux Hub",
     "more": "更多",
     "tools": "工具",
     "balanceChecker": "余额检索器",
@@ -356,19 +399,29 @@
     "report": "举报",
     "supportCenter": "帮助中心",
     "suggestionBox": "意见箱",
-    "testnet": "Conflux Testnet",
-    "oceanus": "Conflux Tethys",
+    "testnet": "Conflux Core (Testnet)",
+    "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
     "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币/合约名称标签",
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
     "nftChecker": "NFT 查看器",
+    "nftDetail": "NFT 详情",
     "notice": "通知中心",
     "search": {
       "tokens": "代币",
       "contracts": "合约",
       "contractsTip": "仅显示注册日期最早的 10 个合约"
+    },
+    "pos": {
+      "pos": "PoS",
+      "overview": "首页",
+      "accounts": "账户",
+      "blocks": "区块",
+      "transactions": "交易",
+      "committee": "委员会",
+      "incomingRank": "收益排行"
     }
   },
   "footer": {
@@ -391,7 +444,7 @@
     "cookieAgree": "知道了",
     "product": "产品",
     "confluxnetwork": "Conflux Network",
-    "confluxportal": "ConfluxPortal",
+    "fluentwallet": "Fluent Wallet",
     "confluxbounty": "ConfluxBounty",
     "copryRight": "© 2022 Conflux. All Rights Reserved.",
     "tool": "工具",
@@ -463,6 +516,145 @@
     "recentlyActive": "最近活跃",
     "newest": "最新",
     "oldest": "最旧"
+  },
+  "highcharts": {
+    "preview": {
+      "title": "图表",
+      "subtitle": "Conflux 链上的图表 （点击查看详情）",
+      "viewDetail": "查看详情",
+      "tip": "显示最近 30 天",
+      "marketData": "市场数据",
+      "blockchainData": "区块链数据",
+      "transaction": "交易",
+      "account": "账户",
+      "contracts": "合约"
+    },
+    "breadcrumb": {
+      "charts": "图表",
+      "blocktime": "出块间隔",
+      "tps": "交易 TPS",
+      "hashrate": "哈希算力",
+      "difficulty": "难度",
+      "supply": "总发行量",
+      "circulating": "流通量",
+      "tx": "每日交易次数",
+      "token-transfer": "每日交易-代币",
+      "cfx-transfer": "每日交易-CFX",
+      "cfx-holder-accounts": "CFX 持有账户数",
+      "account-growth": "账户增长",
+      "active-accounts": "活跃账户数",
+      "contracts": "全部合约"
+    },
+    "subtitle": "资源：ConfluxScan.io<br/>点击并拖动绘图区域以放大图表",
+    "averageBlockTime": {
+      "title": "出块间隔",
+      "subtitle": "生成一个区块所需花费时间",
+      "yAxisTitle": "出块间隔",
+      "seriesName": "出块间隔"
+    },
+    "tps": {
+      "title": "交易 TPS",
+      "subtitle": "每秒链上的交易数量",
+      "yAxisTitle": "交易数量",
+      "seriesName": "交易数量"
+    },
+    "hashRate": {
+      "title": "哈希算力",
+      "subtitle": "矿工每秒计算哈希值的次数",
+      "yAxisTitle": "哈希算力（GH/s）",
+      "seriesName": "哈希算力（GH/s）"
+    },
+    "difficulty": {
+      "title": "难度",
+      "subtitle": "当前生成所有区块的计算难度",
+      "yAxisTitle": "难度 (TH)",
+      "seriesName": "难度 (TH)"
+    },
+    "totalSupply": {
+      "title": "总发行量",
+      "subtitle": "市场上已被创造的 CFX 总量",
+      "fourYearUnlock": "4 年解锁",
+      "twoYearUnlock": "2 年解锁",
+      "circulatingUnlock": "流通量"
+    },
+    "circulatingSupply": {
+      "title": "流通量",
+      "subtitle": "流通量包含零地址中的 CFX",
+      "zeroAddress": "零地址",
+      "others": "其他"
+    },
+    "tx": {
+      "title": "每日交易次数",
+      "subtitle": "Conflux 网络每日的交易总次数",
+      "yAxisTitle": "每日交易次数",
+      "seriesName": "每日交易次数"
+    },
+    "cfxTransfer": {
+      "title": "每日交易 CFX",
+      "subtitle": "Conflux 网络上 CFX 的每日交易数据统计",
+      "yAxisTitle": "CFX 日交易次数",
+      "seriesName": "CFX 日交易次数",
+      "yAxisTitle2": "CFX 日交易账户数",
+      "seriesName2": "CFX 日交易账户数",
+      "yAxisTitle3": "CFX 日交易量",
+      "seriesName3": "CFX 日交易量"
+    },
+    "tokenTransfer": {
+      "title": "每日交易代币",
+      "subtitle": "Conflux 网络上全部代币的每日转移数据统计",
+      "yAxisTitle": "每日转移次数",
+      "seriesName": "每日转移次数",
+      "yAxisTitle2": "每日转移账户数",
+      "seriesName2": "每日转移账户数"
+    },
+    "CFXHolderAccounts": {
+      "title": "CFX 持有账户数",
+      "subtitle": "Conflux 网络上持有 CFX 的账户的总数",
+      "yAxisTitle": "持有账户数",
+      "seriesName": "持有账户数"
+    },
+    "accountGrowth": {
+      "title": "账户增长",
+      "subtitle": "Conflux 网络上每日新增的账户数量",
+      "yAxisTitle": "每日增长账户数",
+      "seriesName": "每日增长账户数"
+    },
+    "activeAccounts": {
+      "title": "活跃账户数",
+      "subtitle": "Conflux 网络上每日活跃的账户数量",
+      "yAxisTitle": "每日活跃账户数",
+      "seriesName": "每日活跃账户数"
+    },
+    "contracts": {
+      "title": "合约增长",
+      "subtitle": "Conflux 网络上每日新增的合约数量",
+      "yAxisTitle": "合约数/增长账户数",
+      "seriesName": "合约数",
+      "yAxisTitle2": "每日增长合约数",
+      "seriesName2": "每日增长合约数"
+    },
+    "contract": {
+      "title": "合约分析",
+      "subtitle": "每日转账统计",
+      "yAxisTitle": "数量",
+      "seriesName": "每日交易数",
+      "yAxisTitle2": "数量",
+      "seriesName2": "每日 CFX 转移数",
+      "yAxisTitle3": "数量",
+      "seriesName3": "每日代币转移数"
+    },
+    "token": {
+      "title": "代币分析",
+      "subtitle": "转账统计",
+      "yAxisTitle": "数量",
+      "seriesName": "每日转账数额",
+      "yAxisTitle2": "数量",
+      "seriesName2": "每日转账次数",
+      "yAxisTitle3": "数量",
+      "seriesName3": "每日接收账户数",
+      "yAxisTitle4": "数量",
+      "seriesName4": "每日发送账户数"
+    }
   },
   "charts": {
     "title": "图表",
@@ -658,6 +850,8 @@
     "viewAll": "查看全部",
     "viewAllBlocks": "查看全部区块",
     "viewAllTxns": "查看全部交易",
+    "viewAllPosAccounts": "查看全部账户",
+    "viewAllPosCommittees": "查看全部委员会",
     "back": "返回",
     "address": {
       "editContract": "点击编辑合约",
@@ -683,10 +877,12 @@
     "specialAddress": "无效地址",
     "zeroAddress": "零地址",
     "invalidAddress": "无效的 Conflux 地址",
+    "eSpaceAddress": "Conflux eSpace 地址",
     "invalidPosAddress": "无效的 Conflux PoS 地址",
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
     "token": "代币",
+    "abnormalToken": "非正常代币，未获取到其名称和符号",
     "storageStaking": "抵押存储",
     "nonce": "随机数",
     "transaction": "交易",
@@ -746,10 +942,13 @@
         "to": "接收方",
         "accountAddress": "地址",
         "tokenId": "代币 ID",
+        "details": "详情",
+        "view": "查看 NFT",
         "quantity": "数量",
         "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型",
+        "traceOutcome": "执行结果",
         "traceResult": "返回值",
         "traceStatusTitle": "状态",
         "traceStatus": {
@@ -827,6 +1026,7 @@
     "notAvailable": "暂无信息",
     "security": {
       "notAvailable": "暂无信息",
+      "finalized": "已确认",
       "high": "高",
       "medium": "中",
       "low": "偏低",
@@ -879,6 +1079,7 @@
     "errorOccurred": "发生错误",
     "error": {
       "title": "系统错误",
+      "detail": "详情",
       "description": {
         "10001": "参数错误",
         "10403": "PermissionsError",
@@ -890,22 +1091,28 @@
         "50404": "ContractNotFoundError",
         "50600": "CompilerError",
         "50601": "ContractDecompileError",
-        "20000": "未知错误。",
-        "20001": "响应数据解析错误。",
-        "20002": "请求超时。",
-        "20003": "请求中止。",
-        "20004": "网络连接错误。",
+        "20000": "未知错误",
+        "20001": "响应数据解析错误",
+        "20002": "请求超时",
+        "20003": "请求中止",
+        "20004": "网络连接错误",
         "30001": "RPC 请求错误",
-        "400": "错误请求。",
-        "401": "未授权。",
-        "403": "服务器拒绝请求。",
-        "404": "未找到资源。",
-        "405": "方法禁用。",
-        "500": "服务器内部错误。",
-        "501": "服务器不支持请求的功能。",
-        "502": "网关错误。",
-        "503": "服务不可用。",
-        "504": "网关超时。"
+        "60002": "追溯数据解析错误",
+        "50100": "业务异常",
+        "50301": "调用 NFT 合约失败",
+        "50302": "查询 NFT 元数据失败",
+        "50303": "解析 NFT 元数据失败",
+        "50304": "查询 NFT name 失败",
+        "400": "错误请求",
+        "401": "未授权",
+        "403": "服务器拒绝请求",
+        "404": "未找到资源",
+        "405": "方法禁用",
+        "500": "服务器内部错误",
+        "501": "服务器不支持请求的功能",
+        "502": "网关错误",
+        "503": "服务不可用",
+        "504": "网关超时"
       }
     },
     "connnectWalletSubmit": "提交",
@@ -917,7 +1124,9 @@
       "download": "下载 ",
       "csvFile": "CSV 文件"
     },
-    "preview": "预览"
+    "preview": "预览",
+    "yes": "是",
+    "no": "否"
   },
   "sponsor": {
     "title": "赞助合约",
@@ -932,8 +1141,8 @@
     "connectToApply": "申请",
     "notice": "说明",
     "noticeFirst": "1. 基金会赞助合约每次会提供一定的可用存储费或燃气费，存储费和燃气费的可提供总额度以及单次申请额度可能会有所变化。",
-    "noticeSecond": "2. 申请前需要链接 ConfluxPortal。",
-    "noticeFourthOne": "3. 若您的浏览器中尚未安装 ConfluxPortal，请进入",
+    "noticeSecond": "2. 申请前需要链接 Fluent Wallet。",
+    "noticeFourthOne": "3. 若您的浏览器中尚未安装 Fluent Wallet，请进入",
     "noticeFourthTwo": "下载。",
     "notice4": "4. 赞助申请详情信息请查看",
     "notice4link": "https://forum.conflux.fun/t/conflux-2021-11-11/12055",
@@ -953,6 +1162,7 @@
     "byFoundation": "（来自基金会）"
   },
   "transaction": {
+    "pendingReasonLink": "查看原因",
     "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",
     "inThePosition": "（处于位置 {{position}}）",
@@ -1044,6 +1254,7 @@
     "security": "安全等级",
     "blame": "修订区块数",
     "blockHash": "区块哈希",
+    "posBlockHash": "PoS 区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",
     "gasUsed": "燃料用量/限制",
@@ -1086,7 +1297,7 @@
     "incorrectFormat": "地址格式不正确",
     "lowercase": "全小写地址",
     "checksum": "旧规则地址",
-    "newMainnetAddress": "Conflux Tethys 新地址 (二者皆可)",
+    "newMainnetAddress": "Conflux Hydra 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
     "notice": "注意，不能用任何钱包将 CFX 直接转至 BSC 的地址，需要通过 ",
@@ -1132,13 +1343,13 @@
   },
   "notice": {
     "mainnet": [
-      "1. 当前网络为 Conflux 主网第三阶段 Conflux Tethys，Conflux-Rust 版本号：{{version}}。",
-      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
+      "1. 当前网络为 Conflux 主网第三阶段 Conflux Hydra，Conflux-Rust 版本号：{{version}}。",
+      "2. Fluent Wallet 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Fluent Wallet 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "testnet": [
-      "1. 当前网络为 Conflux Testnet，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
-      "2. ConfluxPortal 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Portal 升级为全面适配 CIP-37",
+      "1. 当前网络为 Conflux Core (Testnet)，Conflux-Rust 版本号：{{version}}，所有数据均为 Conflux 测试网数据。",
+      "2. Fluent Wallet 将于 2021 年 3 月 9 日 11:00 - 13:00 (GMT+8) 之间发布 0.6.0 版本，本次 Fluent Wallet 升级为全面适配 CIP-37",
       "3. 新旧地址格式只是做了一次编码转换，原有的私钥和助记词可以正常登录 Conflux 钱包账户，不会对个人资产有任何影响。"
     ],
     "link": "https://forum.conflux.fun/t/topic/5386",
@@ -1154,6 +1365,7 @@
       "security": "该区块的安全性，更高的安全性需要得到更多的区块确认。",
       "blame": "表示（该区块认为的）需要修订关于状态的承诺的连续祖先区块的数量。关于状态的承诺可以理解为对于交易执行结果和账户状态的摘要。关于状态的承诺出错会影响矿工的收益，但不影响对于区块排序的共识。",
       "blockHash": "该区块的块头的哈希值。",
+      "posBlockHash": "区块矿工看到的最新的已被委托的 PoS 区块。",
       "parentHash": "该区块的父区块的区块哈希，也称为父区块哈希。",
       "nonce": "区块随机数是在挖矿过程中用来演示区块工作量证明的值。",
       "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
@@ -1216,7 +1428,7 @@
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的代币。",
       "contractCreator": "创建该合约的地址。",
-      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Tethys 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
+      "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Hydra 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
       "gasFeeSponsor": "为调用这个合约的交易支付交易费的赞助商地址。"
     }
@@ -1228,24 +1440,25 @@
     },
     "modal": {
       "title": "请连接您的钱包",
-      "installConfluxPortal": "安装 ConfluxPortal",
-      "confluxPortal": "ConfluxPortal",
+      "installFluentWallet": "安装 Fluent Wallet",
+      "confluxportal": "ConfluxPortal",
+      "fluentWallet": "Fluent Wallet",
       "initializing": "正在初始化...",
       "errorConnecting": "连接错误...",
       "tryAgain": "重试",
       "newToConflux": "Conflux 的新用户?",
       "learnMore": "进一步了解钱包。",
       "account": "账户",
-      "connectedWithConfluxPortal": "已连接 ConfluxPortal",
+      "connectedWithFluentWallet": "已连接 Fluent Wallet",
       "copyAddress": "复制地址",
       "viewOnConfluxScan": "在 ConfluxScan 上查看",
       "networkNotice": "网络说明",
-      "versionNotice": "版本说明",
-      "switchToMainnet": "请在 ConfluxPortal 中将网络切换至 Conflux Tethys。",
-      "switchToTestnet": "请在 ConfluxPortal 中将网络切换至 Conflux Test Network。",
-      "switchToScanNetwork": "请在 ConfluxPortal 中将网络切换为 {{networkID}} 的网络",
+      "addressNotice": "地址说明",
+      "switchToMainnet": "请在 Fluent Wallet 中将网络切换至 Conflux Hydra。",
+      "switchToTestnet": "请在 Fluent Wallet 中将网络切换至 Conflux Test Network。",
+      "switchToScanNetwork": "请在 Fluent Wallet 中将网络切换为 {{networkID}} 的网络",
       "cannotProcess": "无法处理",
-      "upgradeTipVersion": "请升级 ConfluxPortal 至最新版本。"
+      "upgradeTipAddress": "请切换 Fluent Wallet 到正确的网络中。"
     },
     "history": {
       "emptyRecordsTip": "您的交易记录会显示在这里...",
@@ -1274,10 +1487,12 @@
         "110": "兑换 {{value}} 个 FC（不可逆）",
         "111": "{{value}} 个 FC 签约补贴计划",
         "112": "通知协议",
-        "113": "提取本金 {{value}} CFX"
+        "113": "提取本金 {{value}} CFX",
+        "114": "转移 {{type}} NFT（代币 ID：{{id}}）",
+        "115": "转移 {{type}} NFT（代币 ID：{{id}}，数量：{{amount}}）"
       }
     },
-    "tip": "请先连接 ConfluxPortal 钱包！"
+    "tip": "请先连接 Fluent Wallet 钱包！"
   },
   "statistics": {
     "statistics": "最佳统计",
@@ -1346,6 +1561,18 @@
       "account": "账户总数",
       "transactions": "交易总数",
       "contract": "合约总数"
+    },
+    "pos": {
+      "finalizedEpoch": "已确认纪元",
+      "currentBlockNumber": "当前区块编号",
+      "totalLocked": "总锁仓",
+      "totalInterest": "累计利息",
+      "lastInterestDistributionDate": "分发利息时间",
+      "lastInterestDistributionEpoch": "最新分发利息区块",
+      "totalAccountCount": "节点总数",
+      "votingBlock": "最新已投票区块",
+      "apy": "年利率",
+      "apyTip": "现有基础质押利率为 4%，而 PoS 质押奖励在此基础上添加加成系数。设 x=CFX总流通量 /CFX总质押量，加成系数为 √x。\n当质押量为流通量的 1/4 时，利率为 8%；当质押量为流通量 1/9 时，利率为 12%；以此类推。当参与投票的总数相对较低时，参与投票的人将获得更多的利益。"
     }
   },
   "swap": {
@@ -1389,8 +1616,8 @@
       "descriptionRequired": "请输入至少 30 个字符的描述",
       "recaptchaRequired": "请进行 reCAPTCHA 验证",
       "txnHashInvalid": "交易哈希格式错误",
-      "isNotMainnet": "请输入 Conflux Tethys 地址",
-      "isNotTestnet": "请输入 Conflux Testnet 地址"
+      "isNotMainnet": "请输入 Conflux Hydra 地址",
+      "isNotTestnet": "请输入 Conflux Core (Testnet) 地址"
     },
     "status": {
       "success": "提交成功",
@@ -1429,43 +1656,203 @@
     "incorrectAddressType": "地址类型错误，仅支持查询个人账户地址",
     "tokenId": "代币 ID",
     "plzSearch": "请搜索",
-    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT"
+    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT",
+    "owner": "持有人",
+    "amount": "NFT 数量"
   },
   "pos": {
+    "common": {
+      "right": "票",
+      "posAddress": "地址",
+      "powAddress": "PoW 地址",
+      "powBlockHash": "PoW 区块哈希",
+      "posBlockHash": "区块哈希",
+      "txStatus": {
+        "Executed": "成功",
+        "Discard": "跳过",
+        "Failed": "失败"
+      },
+      "txType": {
+        "BlockMetadata": "区块元交易",
+        "Election": "选举",
+        "Retire": "退休（减少个人票权）",
+        "Dispute": "争辩交易",
+        "Register": "注册",
+        "Other": "其它",
+        "UpdateVotingPower": "增加个人票权",
+        "PivotDecision": "Pivot 交易"
+      },
+      "txPayload": {
+        "vrfPublicKey": "VRF 公钥",
+        "publicKey": "公钥",
+        "targetTerm": "委员会编号",
+        "vrfProof": "VRF 证明",
+        "address": "PoS 地址",
+        "votingPower": "增加的票数",
+        "height": "决定高度",
+        "blockHash": "决定哈希",
+        "blsPublicKey": "BLS 公钥",
+        "conflictingVotes": "争议票信息",
+        "conflictVoteType": "争议类型",
+        "proposal": "提议",
+        "vote": "投票",
+        "first": "第一个投票",
+        "second": "第二个投票"
+      },
+      "committeeStatus": {
+        "electionInProgress": "正在选举",
+        "electionCompleted": "已完成选举",
+        "Ongoing": "进行中",
+        "termEnd": "期满结束"
+      },
+      "votingStatus": {
+        "voted": "已投票",
+        "committed": "已确认"
+      }
+    },
     "accounts": {
-      "title": "PoS 账户列表",
-      "description": "PoS 账户列表",
-      "address": "PoS 地址",
+      "title": "账户",
+      "description": "账户",
+      "address": "地址",
       "availableVotes": "可用票数",
       "currentCommitteeMember": "在任委员会成员",
-      "votesInCommittee": "委员会票数",
+      "votesInCommittee": "在委员会票数",
       "registerDate": "注册时间"
     },
     "account": {
-      "title": "PoS 账户",
-      "description": "PoS 账户",
+      "title": "账户",
+      "description": "账户",
       "overview": {
         "title": "概览",
-        "posAddress": "PoS 地址",
+        "posAddress": "地址",
+        "lockingRights": "待锁定总票数",
         "lockedRights": "已锁定票数",
+        "unlockingRights": "待解锁总票数",
         "unlockRights": "已解锁票数",
-        "retiredRights": "已退休票数",
-        "availableVotes": "当前可用票数",
+        "retiredBlocknumber": "已退休区块号",
+        "availableVotes": "总票数",
         "currentCommitteeMember": "在任委员会成员",
-        "rightsInCommittee ": "在委员会的票数",
+        "rightsInCommittee": "在委员会的票数",
         "unlockedVotes": "已解锁票数",
         "totalIncoming": "总收益",
-        "punishment": "是否被惩罚"
+        "punishment": "是否被惩罚",
+        "timestamp": "注册时间"
       },
-      "incominghistory": {
-        "title": "收益历史"
+      "incomingHistory": {
+        "title": "收益历史",
+        "powBlockHash": "PoW 区块哈希",
+        "incoming": "收益",
+        "timstamp": "时间戳"
       },
-      "votinghistory": {
-        "title": "投票历史"
+      "votingHistory": {
+        "title": "投票历史",
+        "blcokHeight": "区块高度",
+        "blockHash": "区块哈希",
+        "votes": "投票票数",
+        "timestamp": "时间戳"
       },
       "votingStatus": {
-        "title": "票权状态"
+        "title": "待处理票权状态",
+        "rights": "票权",
+        "status": "状态",
+        "in": "待锁定",
+        "out": "待解锁",
+        "blockNumberDeadline": "截止区块号"
       }
+    },
+    "blocks": {
+      "title": "区块",
+      "description": "区块",
+      "blockHeight": "区块高度",
+      "blockHash": "区块哈希",
+      "txn": "交易数",
+      "poSMinerAddress": "矿工地址",
+      "timestamp": "Timestamp"
+    },
+    "block": {
+      "title": "区块",
+      "description": "区块",
+      "overview": {
+        "title": "概览",
+        "blockHash": "区块哈希",
+        "blockNumber": "区块号",
+        "epoch": "纪元",
+        "minerAddress": "矿工地址",
+        "timestamp": "时间戳",
+        "status": "状态",
+        "powBlockHash": "PoW 区块哈希"
+      },
+      "transactions": {
+        "title": "交易"
+      },
+      "votingAddress": {
+        "title": "投票地址",
+        "votingNumber": "投票数"
+      }
+    },
+    "transactions": {
+      "title": "交易列表",
+      "description": "交易列表",
+      "poSTxnHash": "交易哈希",
+      "poSBlockHash": "区块哈希",
+      "status": "状态",
+      "succeed": "成功",
+      "failed": "失败",
+      "discard": "跳过",
+      "type": "类型",
+      "election": "选举",
+      "retire": "退休",
+      "committeeJoin": "加入委员会",
+      "register": "注册",
+      "pivotDecision": "Pivot 交易",
+      "dispute": "争辩交易",
+      "blockMatadata": "区块元交易",
+      "other": "其它",
+      "timstamp": "时间戳"
+    },
+    "transaction": {
+      "title": "交易",
+      "description": "交易",
+      "overview": {
+        "title": "概览",
+        "hash": "交易哈希",
+        "status": "状态",
+        "type": "类型",
+        "timestamp": "时间戳",
+        "number": "交易号",
+        "blockHash": "区块哈希",
+        "blockNumber": "区块号",
+        "payload": "有效信息"
+      }
+    },
+    "committees": {
+      "title": "委员会",
+      "description": "委员会",
+      "committeeEpoch": "委员会编号",
+      "status": "状态",
+      "numberOfMembers": "成员数量",
+      "totalVotes": "总票数"
+    },
+    "committee": {
+      "title": "委员会",
+      "description": "委员会",
+      "overview": {
+        "title": "概览",
+        "committeeEpoch": "委员会编号",
+        "status": "状态",
+        "totalVotes": "总票数",
+        "consensusVotes": "共识票数"
+      },
+      "votesDistribution": {
+        "title": "票数分布",
+        "votes": "投出票数"
+      }
+    },
+    "incomingRank": {
+      "title": "收益排行",
+      "description": "收益排行",
+      "subTitle": "总收益排行前 100 的 PoS 地址",
+      "totalIncoming": "总收益"
     }
   }
 }

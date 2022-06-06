@@ -17,25 +17,28 @@ import { Language } from './Language';
 import { ScanEvent } from 'utils/gaConstants';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
-import iconTwitter from 'images/footer/twitter.svg';
-import iconTelegram from 'images/footer/telegram.svg';
-import iconDiscord from 'images/footer/discord.svg';
-import iconMedium from 'images/footer/medium.svg';
-import iconGit from 'images/footer/git.svg';
-import iconWeibo from 'images/footer/weibo.svg';
-import iconKakao from 'images/footer/kakao-talk.svg';
-import iconYoutube from 'images/footer/youtube.svg';
-import iconNaver from 'images/footer/naver.svg';
-import iconConflux from 'images/footer/conflux.svg';
-import iconReddit from 'images/footer/reddit.svg';
-import iconWechat from 'images/footer/wechat.svg';
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
+
+import {
+  Conflux,
+  Discord,
+  Git,
+  KakaoTalk,
+  Medium,
+  Naver,
+  Reddit,
+  Telegram,
+  Twitter,
+  Wechat,
+  Weibo,
+  Youtube,
+} from './Icon';
 
 export function Footer() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
 
-  const left = [<TextLogo key="logo" />];
+  const left = [<TextLogo key="logo" color="var(--theme-color-gray0)" />];
 
   const reportLink = (
     <Link
@@ -100,13 +103,13 @@ export function Footer() {
   const portalLink = (
     <Link
       className="footer-link"
-      href="https://portal.confluxnetwork.org"
+      href="https://fluentwallet.com"
       ga={{
         category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.confluxPortal,
+        action: ScanEvent.menu.action.fluentWallet,
       }}
     >
-      {t(translations.footer.confluxportal)}
+      {t(translations.footer.fluentwallet)}
     </Link>
   );
   const bountyLink = (
@@ -179,7 +182,7 @@ export function Footer() {
             action: ScanEvent.menu.action.twitter,
           }}
         >
-          <img alt="twitter icon" src={iconTwitter} />
+          <Twitter></Twitter>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -190,7 +193,7 @@ export function Footer() {
             action: ScanEvent.menu.action.tme,
           }}
         >
-          <img alt="t.me icon" src={iconTelegram} />
+          <Telegram></Telegram>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -201,7 +204,7 @@ export function Footer() {
             action: ScanEvent.menu.action.discord,
           }}
         >
-          <img alt="discord icon" src={iconDiscord} />
+          <Discord></Discord>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -212,7 +215,7 @@ export function Footer() {
             action: ScanEvent.menu.action.medium,
           }}
         >
-          <img alt="medium icon" src={iconMedium} />
+          <Medium></Medium>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -223,7 +226,7 @@ export function Footer() {
             action: ScanEvent.menu.action.github,
           }}
         >
-          <img alt="github icon" src={iconGit} />
+          <Git></Git>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -234,7 +237,7 @@ export function Footer() {
             action: ScanEvent.menu.action.weibo,
           }}
         >
-          <img alt="weibo icon" src={iconWeibo} />
+          <Weibo></Weibo>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -245,7 +248,7 @@ export function Footer() {
             action: ScanEvent.menu.action.kakao,
           }}
         >
-          <img alt="kakao icon" src={iconKakao} />
+          <KakaoTalk></KakaoTalk>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -255,7 +258,7 @@ export function Footer() {
             src={iconWechatQrcode}
             className="footer-qrcode"
           />
-          <img alt="wechat icon" src={iconWechat} />
+          <Wechat></Wechat>
         </StyledIconWechatWrapper>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -266,7 +269,7 @@ export function Footer() {
             action: ScanEvent.menu.action.youtube,
           }}
         >
-          <img alt="youtube icon" src={iconYoutube} />
+          <Youtube></Youtube>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -277,7 +280,7 @@ export function Footer() {
             action: ScanEvent.menu.action.naver,
           }}
         >
-          <img alt="naver icon" src={iconNaver} />
+          <Naver></Naver>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -288,7 +291,7 @@ export function Footer() {
             action: ScanEvent.menu.action.forum,
           }}
         >
-          <img alt="forum icon" src={iconConflux} />
+          <Conflux></Conflux>
         </Link>
       </FooterContentIconLink>
       <FooterContentIconLink>
@@ -299,7 +302,7 @@ export function Footer() {
             action: ScanEvent.menu.action.reddit,
           }}
         >
-          <img alt="reddit icon" src={iconReddit} />
+          <Reddit></Reddit>
         </Link>
       </FooterContentIconLink>
     </FooterContentIconWrapper>
@@ -483,7 +486,7 @@ const FooterContentWrapper = styled.div`
 const FooterContentTitle = styled.span`
   margin-bottom: 1.07rem;
   font-weight: 600;
-  color: #000558;
+  color: var(--theme-color-blue0);
   margin-right: 6rem;
   /* margin-right: 8.5714rem;
   width: 5.7143rem;
@@ -521,9 +524,13 @@ const FooterContentLink = styled.span`
   margin-bottom: 0.5rem;
 
   .link.footer-link {
-    color: black;
+    color: var(--theme-color-gray0);
     font-size: 0.86rem;
     margin-right: 5.1429rem;
+
+    &:hover {
+      color: var(--theme-color-blue0);
+    }
 
     ${media.m} {
       margin-right: inherit;
@@ -541,8 +548,14 @@ const FooterContentIconWrapper = styled.div`
 `;
 const FooterContentIconLink = styled.span`
   margin-right: 0.57rem;
-  img {
+  svg {
     width: 1.2rem;
+    height: 1.2rem;
+    color: var(--theme-color-gray2);
+
+    &:hover {
+      color: var(--theme-color-blue0);
+    }
   }
 
   ${media.m} {
@@ -551,13 +564,13 @@ const FooterContentIconLink = styled.span`
 `;
 
 const CopyRight = styled.span`
-  opacity: 0.38;
   display: block;
+  color: var(--theme-color-gray0);
 
   a.link,
   a.link:hover,
   a.link:active {
-    color: #000000;
+    color: var(--theme-color-gray0);
   }
 
   ${media.s} {

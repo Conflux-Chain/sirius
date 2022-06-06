@@ -20,7 +20,9 @@ interface LocationState {
 export function NotFoundAddressPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
-  const { contractAddress: keywords = '' } = useParams();
+  const { contractAddress: keywords = '' } = useParams<{
+    contractAddress: string;
+  }>();
   const [, setSearch] = useSearch();
 
   window.onbeforeunload = () => {
@@ -67,6 +69,7 @@ const PageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: #f5f6fa;
+  width: 100%;
 
   ${media.s} {
     height: calc(100% - 116px);

@@ -9,8 +9,11 @@ import {
   NETWORK_ID,
   NETWORK_TYPE,
   NETWORK_TYPES,
+  CFX,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import pubsub from './pubsub';
+import lodash from 'lodash';
 
 dayjs.extend(relativeTime);
 
@@ -144,7 +147,11 @@ export function isContractAddress(address: string): boolean {
 export function isInnerContractAddress(address: string): boolean {
   try {
     // @todo, wait for sdk upgrade to accept both base32 and hex address
-    return SDK.address.isInternalContractAddress(formatAddress(address, 'hex'));
+    return (
+      SDK.address.isInternalContractAddress(formatAddress(address, 'hex')) ||
+      formatAddress(address, 'hex') ===
+        CFX.InternalContract('CrossSpaceCall').address
+    );
   } catch (e) {
     return false;
   }
@@ -367,7 +374,14 @@ export const formatNumber = (num, opt?) => {
  */
 export const formatString = (
   str: string,
-  type?: 'tag' | 'hash' | 'address' | 'tokenTracker' | 'posAddress' | number,
+  type?:
+    | 'tag'
+    | 'hash'
+    | 'address'
+    | 'tokenTracker'
+    | 'posAddress'
+    | 'hexAddress'
+    | number,
 ) => {
   let result: string;
   switch (type) {
@@ -385,6 +399,9 @@ export const formatString = (
       break;
     case 'posAddress':
       result = getEllipsStr(str, 10, 0);
+      break;
+    case 'hexAddress':
+      result = getEllipsStr(str, 6, 4);
       break;
     default:
       let num = 12;
@@ -818,42 +835,37 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   return network;
 };
 
-// @todo, add private chain domain
-export const gotoNetwork = (networkId: string): void => {
-  if (IS_PRE_RELEASE) {
-    // only for confluxscan pre release env
-    if (networkId === '1') {
-      window.location.assign('//testnet-scantest.confluxnetwork.org');
-    } else if (networkId === '1029') {
-      window.location.assign('//scantest.confluxnetwork.org');
-    } else if (networkId === 'evmspacetestnet') {
-      window.open('https://evmtestnet.confluxscan.net/');
-    }
-  } else {
-    const hostname = window.location.hostname;
-    let newHostname = '';
-    if (networkId === '1') {
-      if (hostname.includes('.io')) {
-        newHostname = '//testnet.confluxscan.io';
-      } else {
-        newHostname = '//testnet.confluxscan.net';
-      }
-      window.location.assign(newHostname);
-    } else if (networkId === '1029') {
-      if (hostname.includes('.io')) {
-        newHostname = '//confluxscan.io';
-      } else {
-        newHostname = '//confluxscan.net';
-      }
-      window.location.assign(newHostname);
-    } else if (networkId === 'evmspacetestnet') {
-      if (hostname.includes('.io')) {
-        window.open('https://evmtestnet.confluxscan.io/');
-      } else {
-        window.open('https://evmtestnet.confluxscan.net/');
-      }
-    }
+const urls = {
+  stage: {
+    1: '//testnet-stage.confluxscan.net',
+    1029: '//www-stage.confluxscan.net',
+    71: '//evmtestnet-stage.confluxscan.net',
+    1030: '//evm-stage.confluxscan.net',
+  },
+  online: {
+    1: '//testnet.confluxscan',
+    1029: '//confluxscan',
+    71: '//evmtestnet.confluxscan',
+    1030: '//evm.confluxscan',
+  },
+};
+
+export const getUrl = (_networkId?: string | number): string => {
+  const networkId =
+    _networkId || (NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1029' : '1');
+  let url = urls.stage[networkId];
+
+  if (!IS_PRE_RELEASE) {
+    url = `${urls.online[networkId]}${
+      window.location.hostname.includes('.io') ? '.io' : '.net'
+    }`;
   }
+  return url;
+};
+
+export const gotoNetwork = (networkId: string | number): void => {
+  const url = getUrl(networkId);
+  window.location.assign(url);
 };
 
 export const getAddressInputPlaceholder = () => {
@@ -880,3 +892,37 @@ export function padLeft(n, totalLength = 1) {
     return result;
   }
 }
+
+interface ErrorInfoType {
+  code?: number;
+  message?: string;
+  data?: string;
+}
+
+export const publishRequestError = (
+  e: (Error & ErrorInfoType) | ErrorInfoType,
+  type: 'rpc' | 'http' | 'wallet' | 'code',
+) => {
+  let detail = '';
+
+  if (e.code && e.message) {
+    if (type === 'code') {
+      detail = e.message;
+    } else {
+      detail = `${e.code}, ${e.message}`;
+    }
+
+    if (type === 'rpc' && !lodash.isNil(e.data)) {
+      detail += `, ${e.data}`;
+    }
+  }
+
+  pubsub.publish('notify', {
+    type: 'request',
+    option: {
+      code: type === 'rpc' ? 30001 : e.code || 20000, // code is used for title, 20000 means unknown issue
+      message: e.message,
+      detail: detail,
+    },
+  });
+};

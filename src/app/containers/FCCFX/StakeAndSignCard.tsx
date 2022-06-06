@@ -9,11 +9,10 @@ import {
   TitleTip,
   fcExchangeInterestContract,
   fcContract,
-  FC_EXCHANGE_ADDRESS,
   AccountInfoType,
 } from './Common';
 import { usePortal } from 'utils/hooks/usePortal';
-import { TXN_ACTION } from 'utils/constants';
+import { TXN_ACTION, FC_EXCHANGE_ADDRESS } from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { StyledTitle200F1327 } from 'app/components/StyledComponent';
@@ -34,9 +33,18 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     show: false,
     hash: '',
     status: '',
+    errorMessage: '',
   });
 
-  const unsingedFC = formatBalance(info.fcUnsigned, 18, false, {}, '0.001');
+  const unsingedFC = formatBalance(
+    info.fcUnsigned,
+    18,
+    false,
+    {
+      withUnit: false,
+    },
+    '0.001',
+  );
 
   const exchangeHandler = async () => {
     setTxnStatusModal({
@@ -78,6 +86,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -141,6 +150,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         ...txnStatusModal,
         show: true,
         status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
       });
 
       return e;
@@ -153,6 +163,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
       show: false,
       status: '',
       hash: '',
+      errorMessage: '',
     });
   };
 
@@ -210,6 +221,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
         onClose={handleTxnStatusClose}
         hash={txnStatusModal.hash}
         onTxSuccess={handleTxSuccess}
+        errorMessage={txnStatusModal.errorMessage}
       />
     </StyledStakeAndSignWrapper>
   );

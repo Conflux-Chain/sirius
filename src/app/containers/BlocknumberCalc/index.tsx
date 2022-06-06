@@ -10,10 +10,7 @@ import { Card } from '../../components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { useParams } from 'react-router-dom';
 import { CFX, CONTRACTS } from '../../../utils/constants';
-import {
-  abi as governanceAbi,
-  bytecode as gobernanceBytecode,
-} from '../../../utils/contract/governance.json';
+import { abi as governanceAbi } from '../../../utils/contract/governance.json';
 import { getTimeByBlockInterval } from '../../../utils';
 import { Countdown } from './Countdown';
 import { trackEvent } from '../../../utils/ga';
@@ -23,7 +20,6 @@ export function BlocknumberCalc() {
   const governanceContract = useMemo(() => {
     return CFX.Contract({
       abi: governanceAbi,
-      bytecode: gobernanceBytecode,
       address: CONTRACTS.governance,
     });
   }, []);

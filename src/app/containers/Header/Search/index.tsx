@@ -254,6 +254,7 @@ export const Search = () => {
               : t(translations.header.searchPlaceHolder)
           }
           enterButton={<SearchIcon color="#fff" />}
+          className="autocomplete-search-input"
         />
       </AutoComplete>
     </Container>
@@ -270,6 +271,22 @@ const LabelWrapper = styled.div`
 const Container = styled.div`
   flex-grow: 1;
   padding: 0 1.5rem;
+
+  .autocomplete-search-input {
+    .ant-input-affix-wrapper,
+    input {
+      background-color: var(--theme-color-gray1);
+    }
+
+    .ant-input-search-button {
+      background-color: var(--theme-color-blue0);
+
+      &:hover {
+        background-color: var(--theme-color-blue2);
+        /* opacity: 0.85; */
+      }
+    }
+  }
 
   // override antd style
   .ant-input-search .ant-input-group .ant-input-affix-wrapper:not(:last-child) {

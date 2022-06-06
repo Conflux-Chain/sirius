@@ -16,8 +16,8 @@ import { useCheckHook } from './useCheckHook';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
-import { CFX } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { getBalance } from 'utils/rpcRequest';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -64,7 +64,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
 
   useEffect(() => {
     if (accounts.length && isValid) {
-      CFX.getBalance(accounts[0]).then(balance => {
+      getBalance(accounts[0]).then(balance => {
         setBalance(
           formatNumber(SDK.Drip(balance).toCFX(), {
             precision: 6,
@@ -101,7 +101,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         {buttonStatus}
         <span className="text">{buttonText}</span>
       </span>
-      {accounts.length && showBalance && !hasPendingRecords ? (
+      {isValid && accounts.length && showBalance && !hasPendingRecords ? (
         <span className="balance">{balance} CFX</span>
       ) : null}
     </ButtonWrapper>

@@ -11,6 +11,9 @@ import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 import CheckInCircleFill from '@zeit-ui/react-icons/checkInCircleFill';
 import InfoFill from '@zeit-ui/react-icons/infoFill';
 import styled from 'styled-components/macro';
+import { Collapse } from '@cfxjs/antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+const { Panel } = Collapse;
 
 enum Status {
   success,
@@ -44,10 +47,32 @@ export function GlobalNotify() {
           if (type === 'request') {
             icon = <XCircleFill color="#e15c56" />;
             title = t(translations.general.error.title);
-            content =
-              t(translations.general.error.description[option.code]) ||
-              option.message ||
-              t(translations.general.error.description[20000]);
+            content = (
+              <div>
+                <div>
+                  {t(translations.general.error.description[option.code]) ||
+                    t(translations.general.error.description[20000])}
+                </div>
+                {option.detail && (
+                  <Collapse
+                    bordered={false}
+                    expandIcon={({ isActive }) => (
+                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    )}
+                    className="site-collapse-custom-collapse"
+                    ghost
+                  >
+                    <Panel
+                      header={t(translations.general.error.detail)}
+                      key="1"
+                      className="site-collapse-custom-panel"
+                    >
+                      <StyledDetailWrapper>{option.detail}</StyledDetailWrapper>
+                    </Panel>
+                  </Collapse>
+                )}
+              </div>
+            );
             code = option.code;
           } else if (type === 'wallet') {
             let info: any = {};
@@ -61,6 +86,7 @@ export function GlobalNotify() {
             }
             title = t(
               translations.connectWallet.notify.action[info.code || '100'],
+              info,
             );
             content = (
               <LinkWrapper>
@@ -105,4 +131,9 @@ const LinkWrapper = styled.span`
   .link-anchor {
     color: #0e47ef;
   }
+`;
+
+const StyledDetailWrapper = styled.div`
+  max-height: 11.4286rem;
+  overflow: auto;
 `;

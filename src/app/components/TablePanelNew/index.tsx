@@ -4,7 +4,7 @@ import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
@@ -47,14 +47,16 @@ export const TitleTotal = ({
   const { t } = useTranslation();
 
   const content =
-    listLimit && total > listLimit
-      ? t(translations.general.totalRecordWithLimit, {
-          total: toThousands(total),
-          limit: formatNumber(listLimit),
-        })
-      : t(translations.general.totalRecord, {
-          total: toThousands(total),
-        });
+    listLimit && total > listLimit ? (
+      t(translations.general.totalRecordWithLimit, {
+        total: toThousands(total),
+        limit: formatNumber(listLimit),
+      })
+    ) : (
+      <Trans i18nKey="general.totalRecord" count={total}>
+        You got {{ total: toThousands(total) }} messages.
+      </Trans>
+    );
 
   return <StyleTableTitleTotalWrapper>{content}</StyleTableTitleTotalWrapper>;
 };
@@ -75,6 +77,7 @@ export const TablePanel = ({
   hideShadow,
   className,
   sortKeyMap = {},
+  showSorterTooltip = false,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -155,10 +158,8 @@ export const TablePanel = ({
       limit: pageSize || '10',
     };
 
-    console.log('sorter: ', sorter, sorter.order);
-
     if (sorter) {
-      query.orderBy = sortKeyMap[sorter.field] || sorter.field;
+      query.orderBy = sortKeyMap[String(sorter.field)] || sorter.field;
       query.reverse = sorter.order === 'ascend' ? 'false' : 'true';
     }
 
@@ -169,7 +170,9 @@ export const TablePanel = ({
     history.push(url);
   };
 
-  const { data, loading, total, listLimit } = state;
+  const { data, loading, total: stateTotal, listLimit } = state;
+  const total =
+    dataSource && Array.isArray(dataSource) ? dataSource.length : stateTotal;
 
   return (
     <Table
@@ -182,6 +185,7 @@ export const TablePanel = ({
       columns={columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
+      showSorterTooltip={showSorterTooltip}
       pagination={
         typeof pagination === 'boolean'
           ? pagination

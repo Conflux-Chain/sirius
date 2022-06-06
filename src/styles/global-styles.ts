@@ -1,8 +1,29 @@
 import { createGlobalStyle } from 'styled-components';
 import { media } from './media';
-import { sansSerifFont, monospaceFont } from './variable';
+import {
+  sansSerifFont,
+  monospaceFont,
+  blue0,
+  blue1,
+  blue2,
+  gray0,
+  gray1,
+  gray2,
+  gray3,
+} from './variable';
 
 export const GlobalStyle = createGlobalStyle`
+
+  body {
+    --theme-color-blue0: ${blue0};
+    --theme-color-blue1: ${blue1};
+    --theme-color-blue2: ${blue2};
+    --theme-color-gray0: ${gray0};
+    --theme-color-gray1: ${gray1};
+    --theme-color-gray2: ${gray2};
+    --theme-color-gray3: ${gray3};
+  }
+
   html,
   body {
     font-size: 14px;
@@ -45,7 +66,7 @@ export const GlobalStyle = createGlobalStyle`
   #root {
     min-height: 100%;
     min-width: 100%;
-    background-color: #f5f6fa;
+    background-color: var(--theme-color-gray0);
   }
 
   .qrcode-modal.wrapper {
@@ -245,13 +266,18 @@ export const GlobalStyle = createGlobalStyle`
       padding: 16px;
     }
 
-    .image-preview-name {
-      margin-top: 10px;
-      text-align: center;
-      max-width: 200px;
-      word-break: break-word;
-      white-space: normal;
-      line-height: 1.4;
+    .info-name {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.8571rem;
+
+      .name {
+        height: 18px;
+        min-width: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 
@@ -280,12 +306,22 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-btn.ant-btn-primary {
-    background: #1E3DE4;
+    background-color: var(--theme-color-blue0);
     color: #ffffff;
 
     &:hover {
       background: #4665f0;
       color: #ffffff;
+    }
+
+    &[disabled] {
+      background-color: var(--theme-color-gray3);
+      color: var(--theme-color-gray2);
+
+      &:hover {
+        background-color: var(--theme-color-gray0);
+        color: var(--theme-color-gray2);
+      }
     }
   }
 
@@ -308,6 +344,16 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-tooltip {
+    a {
+      color: var(--theme-color-blue0);
+
+      &:hover {
+        color: var(--theme-color-blue2);
+      }
+    }
+  }
+
   /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {
@@ -326,12 +372,18 @@ export const GlobalStyle = createGlobalStyle`
 
     .option.selected {
       color: #fff;
-      background-color: #65709a;
+      background-color: var(--theme-color-blue0);
       border: none;
     }
 
     &.currency-select {
       max-height: 7.1429rem;
+    }
+
+    &.dropdown {
+      .option.selected {
+        display: none;
+      }
     }
   }
 
@@ -441,5 +493,27 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  }
+
+  #cfx-ui-notification {
+    .ant-collapse-header, .ant-collapse-content-box {
+      padding: 2px 2px 0 0px !important;
+      color: #999;
+      display: flex;
+      align-items: center;
+    }
+
+    .ant-collapse-header {
+      margin-left: -2px;
+    }
+  }
+
+
+  ul.highcharts-menu {
+    padding: 0 !important;
+
+    li.highcharts-menu-item {
+      margin-bottom: 0;
+    }
   }
 `;

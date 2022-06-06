@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { Description } from 'app/components/Description/Loadable';
+import _ from 'lodash';
 
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
@@ -26,6 +27,7 @@ export const Overview = ({ data }) => {
     tokenTransferTokenInfo,
     tokenTransfer,
     txExecErrorInfo,
+    from,
   } = data;
 
   return (
@@ -39,7 +41,11 @@ export const Overview = ({ data }) => {
         title={t(translations.transaction.status)}
       >
         <div className="overview-status-and-confirmedEpochCount">
-          <Status type={status} txExecErrorInfo={txExecErrorInfo}></Status>
+          <Status
+            type={status}
+            txExecErrorInfo={txExecErrorInfo}
+            address={from}
+          ></Status>
         </div>
       </Description>
       {tokenTransfer?.total ? (
@@ -64,7 +70,7 @@ export const Overview = ({ data }) => {
       >
         <span className="overview-confirmedEpochCount">
           {t(translations.transaction.epochConfirmations, {
-            count: confirmedEpochCount || '--',
+            count: _.isNil(confirmedEpochCount) ? '--' : confirmedEpochCount,
           })}
         </span>
       </Description>

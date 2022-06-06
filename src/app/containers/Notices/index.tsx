@@ -17,9 +17,9 @@ export const noticeInfo = {
   },
   link: {
     en:
-      'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4412074333595-Nov-22-2021-Dec-5-2021',
+      'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/6257231619099-May-23-2022-May-30-2022',
     zh:
-      'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4412074333595-2021-11-22-2021-12-5',
+      'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/6257231619099-2022-5-24-2022-5-30',
   },
 };
 

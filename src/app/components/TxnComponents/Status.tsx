@@ -12,6 +12,8 @@ import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';
 import _ from 'lodash';
+import { Link } from 'app/components/Link/Loadable';
+import { formatAddress } from 'utils';
 
 import imgSuccess from 'images/status/success.svg';
 import imgError from 'images/status/error.svg';
@@ -29,6 +31,7 @@ interface Props {
     type: number;
     message: string;
   };
+  address?: string;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -43,6 +46,7 @@ const StatusComponent = ({
   showMessage,
   showTooltip,
   txExecErrorInfo,
+  address,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
@@ -106,11 +110,31 @@ const StatusComponent = ({
         }
       }
     }
+    let icon = typeMap[type].icon;
+    let name = typeMap[type].name;
+
+    if (type === '4') {
+      name = (
+        <>
+          {name}{' '}
+          {address ? (
+            <Link
+              href={`/address/${formatAddress(
+                address,
+              )}?transactionType=pending`}
+            >
+              {t(translations.transaction.pendingReasonLink)}
+            </Link>
+          ) : null}
+        </>
+      );
+    }
+
     const content = (
       <>
         <span className="icon-and-text">
-          <img className="icon" src={typeMap[type].icon} alt={type} />
-          <span className="text">{typeMap[type].name}</span>
+          <img className="icon" src={icon} alt={type} />
+          <span className="text">{name}</span>
         </span>
         {!showMessage || variant === 'dot' || type === '4' ? null : (
           <span className="description">{explanation}</span>

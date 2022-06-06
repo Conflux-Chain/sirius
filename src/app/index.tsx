@@ -28,11 +28,15 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID, CFX } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
+import { getClientVersion } from 'utils/rpcRequest';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
+// pow pages
 import { FCCFX } from './containers/FCCFX';
 import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
@@ -54,7 +58,6 @@ import { Contracts } from './containers/Contracts/Loadable';
 import { RegisteredContracts } from './containers/Contracts/Loadable';
 import { TokenDetail } from './containers/TokenDetail/Loadable';
 import { Sponsor } from './containers/Sponsor/Loadable';
-import { Chart } from './containers/Charts/Loadable';
 import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
@@ -67,16 +70,44 @@ import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
 import Loading from 'app/components/Loading';
-
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 import { CookieTip } from './components/CookieTip';
 import { GlobalTip } from './components/GlobalTip';
-import { ChartDetail } from './containers/ChartDetail/Loadable';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
+import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
+import {
+  NewChart,
+  BlockTime,
+  TPS,
+  HashRate,
+  Difficulty,
+  TotalSupply,
+  CirculatingSupply,
+  Tx,
+  CFXTransfer,
+  TokenTransfer,
+  CFXHolderAccounts,
+  AccountGrowth,
+  ActiveAccounts,
+  Contracts as ContractsCharts,
+} from './containers/Charts/Loadable';
+
+// pos pages
+import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
+import { Accounts as posAccounts } from './containers/pos/Accounts/Loadable';
+import { Committees as posCommittees } from './containers/pos/Committees/Loadable';
+import { Committee as posCommittee } from './containers/pos/Committee/Loadable';
+import { Account as posAccount } from './containers/pos/Account/Loadable';
+import { Blocks as posBlocks } from './containers/pos/Blocks/Loadable';
+import { Block as posBlock } from './containers/pos/Block/Loadable';
+import { Transactions as posTransactions } from './containers/pos/Transactions/Loadable';
+import { Transaction as posTransaction } from './containers/pos/Transaction/Loadable';
+import { IncomingRank as posIncomingRank } from './containers/pos/IncomingRank/Loadable';
+
 import enUS from '@cfxjs/antd/lib/locale/en_US';
 import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
@@ -90,6 +121,8 @@ import { useInterval } from 'react-use';
 //     urls: ['/font.css'],
 //   },
 // });
+
+dayjs.extend(utc);
 
 WebFontLoader.load({
   custom: {
@@ -112,12 +145,30 @@ export function App() {
   const [loading, setLoading] = useState(false);
 
   moment.locale(lang);
+  dayjs.locale(lang);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
+
     useEffect(() => {
-      window.scrollTo(0, 0);
+      // theme switch by change body classname, reflect to css variable defination
+      // const classList = document.body.classList;
+      // let prev = 'pow';
+      // let next = 'pos';
+      // if (pathname === '/') {
+      //   prev = 'pos';
+      //   next = 'pow';
+      // }
+      // if (classList.contains(prev)) {
+      //   classList.replace(prev, next);
+      // } else {
+      //   classList.add(next);
+      // }
+      if (pathname !== '/charts') {
+        window.scrollTo(0, 0);
+      }
     }, [pathname]);
+
     return props.children;
   }
   useInterval(() => {
@@ -190,7 +241,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    CFX.getClientVersion().then(v => {
+    getClientVersion().then(v => {
       console.log('conflux-network-version:', v);
     });
   }, []);
@@ -206,26 +257,10 @@ export function App() {
               convert: info => {
                 try {
                   let data = JSON.parse(info);
-                  if ([107, 108].includes(data.code)) {
-                    return t(
-                      translations.connectWallet.notify.action[data.code],
-                      {
-                        cfxValue: data.cfxValue,
-                        wcfxValue: data.wcfxValue,
-                      },
-                    );
-                  } else if ([109, 110, 111, 113].includes(data.code)) {
-                    return t(
-                      translations.connectWallet.notify.action[data.code],
-                      {
-                        value: data.value,
-                      },
-                    );
-                  } else {
-                    return t(
-                      translations.connectWallet.notify.action[data.code],
-                    );
-                  }
+                  return t(
+                    translations.connectWallet.notify.action[data.code],
+                    data,
+                  );
                 } catch (e) {}
               },
             },
@@ -284,10 +319,10 @@ export function App() {
                     <Loading></Loading>
                   </StyledMaskWrapper>
                 ) : (
-                  <>
+                  <ScrollToTop>
                     <Header />
                     <Main key={lang}>
-                      <ScrollToTop>
+                      <>
                         <Switch>
                           <Route exact path="/" component={HomePage} />
                           <Route
@@ -424,12 +459,6 @@ export function App() {
                               }
                             }}
                           />
-                          <Route path="/charts" component={Chart} />
-                          <Route
-                            exact
-                            path="/chart/:indicator"
-                            component={ChartDetail}
-                          />
                           <Route
                             exact
                             path="/statistics"
@@ -559,15 +588,140 @@ export function App() {
                             component={ScanBenchmark}
                           />
                           <Route exact path="/fccfx" component={FCCFX} />
+
+                          <Route exact path="/pos" component={posHomePage} />
+                          <Route
+                            exact
+                            path="/pos/accounts"
+                            component={posAccounts}
+                          />
+                          <Route
+                            exact
+                            path="/pos/committees"
+                            component={posCommittees}
+                          />
+                          <Route
+                            exact
+                            path="/pos/committees/:blockNumber"
+                            component={posCommittee}
+                          />
+                          <Route
+                            exact
+                            path="/pos/blocks"
+                            component={posBlocks}
+                          />
+                          <Route
+                            exact
+                            path="/pos/blocks/:hash"
+                            component={posBlock}
+                          />
+                          <Route
+                            exact
+                            path="/pos/transactions"
+                            component={posTransactions}
+                          />
+                          <Route
+                            exact
+                            path="/pos/transactions/:number"
+                            component={posTransaction}
+                          />
+                          <Route
+                            exact
+                            path="/pos/incoming-rank"
+                            component={posIncomingRank}
+                          />
+                          <Route
+                            exact
+                            path="/pos/accounts/:address"
+                            component={posAccount}
+                          />
+                          <Route
+                            exact
+                            path="/nft/:address/:id"
+                            component={NFTDetail}
+                          />
+
+                          <Route exact path="/charts" component={NewChart} />
+
+                          <Route
+                            exact
+                            path="/charts/blocktime"
+                            component={BlockTime}
+                          />
+
+                          <Route exact path="/charts/tps" component={TPS} />
+
+                          <Route
+                            exact
+                            path="/charts/hashrate"
+                            component={HashRate}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/difficulty"
+                            component={Difficulty}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/supply"
+                            component={TotalSupply}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/circulating"
+                            component={CirculatingSupply}
+                          />
+
+                          <Route exact path="/charts/tx" component={Tx} />
+
+                          <Route
+                            exact
+                            path="/charts/token-transfer"
+                            component={TokenTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/cfx-transfer"
+                            component={CFXTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/cfx-holder-accounts"
+                            component={CFXHolderAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/account-growth"
+                            component={AccountGrowth}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/active-accounts"
+                            component={ActiveAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/charts/contracts"
+                            component={ContractsCharts}
+                          />
+
                           <Route component={NotFoundPage} />
                         </Switch>
-                      </ScrollToTop>
+                      </>
                     </Main>
                     <Footer />
                     <GlobalStyle />
                     <CookieTip />
                     <GlobalTip tipKey="addressWarning" />
-                  </>
+                  </ScrollToTop>
                 )}
                 <GlobalNotify />
               </CfxProvider>

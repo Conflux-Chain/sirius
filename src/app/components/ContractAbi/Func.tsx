@@ -5,7 +5,6 @@ import { Buffer } from 'buffer';
 import styled from 'styled-components/macro';
 import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
-import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
 import ParamTitle from './ParamTitle';
@@ -30,6 +29,7 @@ import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 interface FuncProps {
   type?: string;
@@ -44,9 +44,10 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  const { accounts, confluxJS } = usePortal();
+  const { accounts, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [txHash, setTxHash] = useState('');
   const [outputShown, setOutputShown] = useState(false);
   const [outputValue, setOutputValue] = useState({});
@@ -131,9 +132,9 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           };
           if (data['stateMutability'] === 'payable') {
             objParams = objValues.slice(1);
-            txParams['value'] = new BigNumber(objValues[0])
-              .multipliedBy(10 ** 18)
-              .toFixed();
+            txParams['value'] = SDK.format.bigUIntHex(
+              SDK.Drip.fromCFX(objValues[0]),
+            );
           } else {
             objParams = objValues;
           }
@@ -148,7 +149,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           //loading
           setModalShow(true);
           try {
-            const txHash = await confluxJS.sendTransaction(txParams);
+            const txHash = await sendTransaction(txParams);
             const code = TXN_ACTION.writeContract;
 
             // mark txn action to history
@@ -172,6 +173,9 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             });
           } catch (error) {
             setModalType('error');
+            setErrorMessage(
+              error.code ? `${error.code} - ${error.message}` : error.message,
+            );
             setOutputError(error.message || '');
           }
         }
@@ -189,6 +193,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     // reset tx status modal state
     setModalShow(false);
     setModalType('');
+    setErrorMessage('');
     setTxHash('');
   };
   function getValidator(type: string) {
@@ -363,6 +368,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         status={modalType}
         onClose={closeHandler}
         hash={txHash}
+        errorMessage={errorMessage}
       />
     </Container>
   );

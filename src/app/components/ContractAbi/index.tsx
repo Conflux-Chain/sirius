@@ -13,12 +13,14 @@ import { useTranslation, Trans } from 'react-i18next';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 import { translations } from 'locales/i18n';
 import { Spin } from '@cfxjs/antd';
+import { publishRequestError } from 'utils';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
   address: string;
   abi?: any;
   pattern?: React.ReactNode;
+  proxyAddress?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ContractAbiProps>;
 export declare type Props = ContractAbiProps & NativeAttrs;
@@ -30,6 +32,7 @@ export const ContractAbi = ({
   address,
   abi,
   pattern,
+  proxyAddress,
 }: Props) => {
   const { t } = useTranslation();
   const [data, setData] = useState<{
@@ -40,16 +43,19 @@ export const ContractAbi = ({
     write: [],
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const [contract, setContract] = useState(() =>
     CFX.Contract({
       abi: [],
-      address,
+      address: proxyAddress || address,
     }),
   );
 
   useEffect(() => {
     const fn = async () => {
+      setLoading(true);
+      setError('');
       try {
         let abiInfo = abi;
 
@@ -65,15 +71,14 @@ export const ContractAbi = ({
         const abiJSON = JSON.parse(abiInfo);
         const contract = CFX.Contract({
           abi: abiJSON,
-          address,
+          address: proxyAddress || address,
         });
-
         setContract(contract);
 
+        const batcher = CFX.BatchRequest();
         const getReadWriteData = async abi => {
           let dataForRead: DataType = [];
           let dataForWrite: DataType = [];
-          let proArr: DataType = [];
           if (Array.isArray(abi)) {
             for (let abiItem of abi) {
               if (abiItem.name !== '' && abiItem.type === 'function') {
@@ -86,7 +91,7 @@ export const ContractAbi = ({
                         name: abiItem['name'],
                         inputs: abiItem['inputs'],
                       });
-                      proArr.push(contract[fullNameWithType]());
+                      batcher.add(contract[fullNameWithType]().request());
                     }
                     dataForRead.push(abiItem);
                     break;
@@ -109,14 +114,17 @@ export const ContractAbi = ({
                 }
               }
             }
-            const list = await Promise.allSettled(proArr);
+
+            const batchResult = await batcher.execute();
             let i = 0;
-            dataForRead.forEach(function (dValue, dIndex) {
+
+            dataForRead.forEach(function (dValue) {
               if (dValue['inputs'].length === 0) {
-                const listItem = list[i];
-                const status = listItem['status'];
-                if (status === 'fulfilled') {
-                  const val = listItem['value'];
+                const r = batchResult[i];
+                if (r['code']) {
+                  dValue['error'] = r['message'];
+                } else {
+                  const val = r;
                   if (dValue['outputs'].length > 1) {
                     dValue['value'] = val;
                   } else {
@@ -124,8 +132,6 @@ export const ContractAbi = ({
                     arr.push(val);
                     dValue['value'] = arr;
                   }
-                } else {
-                  dValue['error'] = listItem['reason']['message'];
                 }
                 ++i;
               }
@@ -138,15 +144,13 @@ export const ContractAbi = ({
           };
         };
 
-        setLoading(true);
-        getReadWriteData(abiJSON)
-          .then(data => {
-            setData(data);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      } catch (error) {}
+        const data = await getReadWriteData(abiJSON);
+        setData(data);
+      } catch (error) {
+        setError(error.message);
+        publishRequestError(error, 'code');
+      }
+      setLoading(false);
     };
 
     fn();
@@ -159,18 +163,20 @@ export const ContractAbi = ({
       {pattern ? (
         <StyledContractAbiWrapper>
           <Trans i18nKey="contract.pattern">
-            <AddressContainer isLink={true} value={address} />
+            <AddressContainer link={true} value={address} />
             {pattern}
           </Trans>
         </StyledContractAbiWrapper>
       ) : null}
       {loading ? (
         <Spin spinning={loading} style={{ marginTop: '20px' }}></Spin>
+      ) : error ? (
+        <StyledTipWrapper>Error: {error}</StyledTipWrapper>
       ) : data[type]?.length ? (
         <FuncList
           type={type}
           data={data[type]}
-          contractAddress={address}
+          contractAddress={proxyAddress || address}
           contract={contract}
         ></FuncList>
       ) : (

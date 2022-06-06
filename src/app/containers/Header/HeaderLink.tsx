@@ -107,7 +107,7 @@ const Menu = styled.div<{ name?: string }>`
     &.level-1.matched,
     &.level-2.matched {
       color: white;
-      background-color: #65709a;
+      background-color: var(--theme-color-blue0);
       :hover {
         color: white;
       }
@@ -239,6 +239,8 @@ export const HeaderLink: React.FC<{
           )}
         >
           <UILink
+            // eslint-disable-next-line no-script-url
+            href="javascript:void(0)"
             className={clsx(
               className,
               expanded && 'expanded',
@@ -277,7 +279,11 @@ export const HeaderLink: React.FC<{
           ])}
         >
           <WrappLink>
-            <UILink className={clsx(className, matched && 'matched')}>
+            <UILink
+              // eslint-disable-next-line no-script-url
+              href="javascript:void(0)"
+              className={clsx(className, matched && 'matched')}
+            >
               {(bp === 'm' || bp === 's') && isMenu && (
                 <ChevronDown size={18} />
               )}
@@ -308,10 +314,8 @@ const WrappLink = styled.span`
     }
     &.matched {
       color: #1e3de4 !important;
-      //background-color: #fede1b;
       &:hover {
         color: #1e3de4 !important;
-        //background-color: #fede1b;
       }
     }
     * {
@@ -322,16 +326,16 @@ const WrappLink = styled.span`
   ${media.m} {
     .navbar-link {
       &:hover {
-        color: #65709a !important;
+        color: var(--theme-color-blue0) !important;
       }
       &.level-0:hover:not(.matched) {
         background-color: #f1f4f6 !important;
       }
       &.matched {
-        color: #65709a !important;
+        color: var(--theme-color-blue0) !important;
         background-color: #fede1b;
         &:hover {
-          color: #65709a !important;
+          color: var(--theme-color-blue0) !important;
           background-color: #fede1b;
         }
       }
@@ -379,11 +383,11 @@ const WrappLink = styled.span`
       padding-bottom: 0.43rem;
       &.matched {
         color: #fff !important;
-        background-color: #65709a;
+        background-color: var(--theme-color-blue0);
       }
       :hover:not(.matched) {
         color: #fff !important;
-        background-color: #65709a;
+        background-color: var(--theme-color-blue0);
       }
     }
 

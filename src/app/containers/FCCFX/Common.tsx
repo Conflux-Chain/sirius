@@ -2,12 +2,19 @@ import React from 'react';
 import { Image, Tooltip } from '@cfxjs/antd';
 import imgInfo from 'images/info.svg';
 import styled from 'styled-components/macro';
-import { RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import {
+  RPC_SERVER,
+  NETWORK_ID,
+  FC_ADDRESS,
+  FC_EXCHANGE_ADDRESS,
+  FC_EXCHANGE_INTEREST_ADDRESS,
+} from 'utils/constants';
 import { BigNumber as IBigNumber } from 'bignumber.js';
 import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.json';
 import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
 import { abi as fcABI } from 'utils/contract/FC.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { provider } from '@cfxjs/use-wallet';
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;
@@ -109,19 +116,14 @@ const StyledCardInfoWrapper = styled.div<{
   padding: 10px 16px;
 `;
 
-export const FC_EXCHANGE_INTEREST_ADDRESS =
-  'cfxtest:acfwahkb9vxh3w6jm0y97t4ps0zr35m27ehmms9xgv';
-export const FC_EXCHANGE_ADDRESS =
-  'cfxtest:aca2g39xbbvwvuky6gt2kah6vcb7k57mgu8bdkgfmn';
-export const FC_ADDRESS = 'cfxtest:achkx35n7vngfxgrm7akemk3ftzy47t61yk5nn270s';
-
 export const CFX = new SDK.Conflux({
   url: RPC_SERVER,
   networkId: NETWORK_ID,
 });
 
-// @ts-ignore
-CFX.provider = window.conflux;
+if (provider) {
+  CFX.provider = provider;
+}
 
 export const fcExchangeContract = CFX.Contract({
   address: FC_EXCHANGE_ADDRESS,

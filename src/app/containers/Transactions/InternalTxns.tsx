@@ -8,7 +8,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress, fromDripToCfx } from 'utils';
 import styled from 'styled-components/macro';
-import pubsub from 'utils/pubsub';
+import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const treeToFlat = tree => {
@@ -20,20 +20,43 @@ const treeToFlat = tree => {
         t.map((item, index) => fn(item, index, parentLevel));
       } else {
         const index = `${parentLevel}_${level}`;
-        list.push({
+
+        let l = {
           index,
           type: `${t.action.callType || t.type}`,
           from: t.action.from,
           to: t.action.to,
           value: t.action.value,
           result: t.result,
-        });
-        fn(t.calls, level + 1, `${parentLevel}_${level}`);
+          toESpaceInfo: {
+            address: null,
+          },
+          fromESpaceInfo: {
+            address: null,
+          },
+        };
+
+        if (t.action.toSpace === 'evm') {
+          l.toESpaceInfo = {
+            address: SDK.format.hexAddress(t.action.to),
+          };
+        }
+
+        if (t.action.fromSpace === 'evm') {
+          l.fromESpaceInfo = {
+            address: SDK.format.hexAddress(t.action.from),
+          };
+        }
+
+        list.push(l);
+        t.calls && fn(t.calls, level + 1, `${parentLevel}_${level}`);
       }
     };
 
     fn(tree, 0, '');
-  } catch (e) {}
+  } catch (e) {
+    throw new Error(e);
+  }
 
   return list;
 };
@@ -59,7 +82,6 @@ export const InternalTxns = ({ address, from, to, status, value }: Props) => {
     error: null,
     loading: false,
   });
-  const url = `/rpc/trace_transaction?address=${address}`;
   const simpleAddr = SDK.address.simplifyCfxAddress;
   useEffect(() => {
     if (address) {
@@ -69,9 +91,9 @@ export const InternalTxns = ({ address, from, to, status, value }: Props) => {
       });
       fetchWithPrefix(`/transferTree/${address}`)
         .then(resp => {
-          if (resp) {
+          if (resp?.traceTree) {
             try {
-              const list = treeToFlat(resp.calls).map(l => {
+              const list = treeToFlat(resp.traceTree).map(l => {
                 const contractInfo = resp.contractMap || {};
                 return {
                   ...l,
@@ -83,9 +105,11 @@ export const InternalTxns = ({ address, from, to, status, value }: Props) => {
                 ...state,
                 data: list,
                 total: list.length,
-                loading: false,
               });
-            } catch (e) {}
+            } catch (e) {
+              console.log('trace parse error: ', e);
+              publishRequestError({ code: 60002, message: e.message }, 'code');
+            }
           }
         })
         .catch(e => {
@@ -93,25 +117,28 @@ export const InternalTxns = ({ address, from, to, status, value }: Props) => {
             ...state,
             error: e,
           });
-
-          pubsub.publish('notify', {
-            type: 'request',
-            option: {
-              code: '30001', // rpc call error
-              message: e.message,
-            },
-          });
+        })
+        .finally(() => {
+          setState(state => ({
+            ...state,
+            loading: false,
+          }));
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
+  }, [address]);
 
-  const columnsWidth = [3, 4, 4, 2, 4];
+  const columnsWidth = [3, 4, 4, 3, 3, 5];
   const columns = [
     tokenColunms.traceType,
-    tokenColunms.from,
+    {
+      ...tokenColunms.from,
+      render: (value, row, index) =>
+        tokenColunms.from.render(value, row, undefined, false),
+    },
     tokenColunms.to,
     transactionColunms.value,
+    tokenColunms.traceOutcome,
     tokenColunms.traceResult,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 

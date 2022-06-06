@@ -21,7 +21,7 @@ exports[`<Footer  /> should match snapshot 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  background-color: #e0e3f2;
+  background-color: var(--theme-color-blue1);
   width: 100vw;
   max-width: 100%;
   display: -webkit-box;
@@ -62,19 +62,19 @@ exports[`<Footer  /> should match snapshot 1`] = `
   max-width: 1368px;
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c3 {
     padding: 0;
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c4 {
     padding: 0 0.21rem;
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c5 {
     padding: 0 0.21rem;
   }
@@ -86,7 +86,7 @@ exports[`<Footer  /> should match snapshot 1`] = `
   }
 }
 
-@media (max-width:600px) {
+@media (max-width:768px) {
   .c0 {
     padding: 1.14rem 0.93rem;
   }

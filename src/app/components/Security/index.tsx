@@ -8,6 +8,7 @@ import clsx from 'clsx';
 
 interface Props {
   blockHash: string;
+  epochNumber: number;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -15,9 +16,10 @@ export declare type SecurityProps = React.PropsWithChildren<
   Props & NativeAttrs
 >;
 
-export const Security = React.memo(({ blockHash }: Props) => {
-  const type = useConfirmRisk(blockHash);
+export const Security = React.memo(({ blockHash, epochNumber }: Props) => {
+  const type = useConfirmRisk(blockHash, epochNumber);
   const { t } = useTranslation();
+
   const levelMap = {
     lv0: {
       level: 'high',
@@ -35,6 +37,10 @@ export const Security = React.memo(({ blockHash }: Props) => {
       level: 'veryLow',
       name: t(translations.general.security.veryLow),
     },
+    lv5: {
+      level: 'finalized',
+      name: t(translations.general.security.finalized),
+    },
   };
   const text =
     levelMap[type]?.name || t(translations.general.security.notAvailable);
@@ -42,20 +48,21 @@ export const Security = React.memo(({ blockHash }: Props) => {
 
   return (
     <StyledSecurityWrapper className={clsx('sirius-security', level)}>
-      <svg viewBox="0 0 50 10" className={`img`}>
+      <svg viewBox="0 0 62 10" className={`img`}>
         <defs>
           <mask id="mask" x="0" y="0">
-            <rect x="-5" y="-5" width="55" height="15" fill="#fff" />
+            <rect x="-5" y="-5" width="67" height="15" fill="#fff" />
             <circle cx="5" cy="5" r="5" />
             <circle cx="18" cy="5" r="5" />
             <circle cx="31" cy="5" r="5" />
-            <circle cx="43" cy="5" r="5" className="last-circle" />
+            <circle cx="44" cy="5" r="5" />
+            <circle cx="57" cy="5" r="5" className="last-circle" />
           </mask>
         </defs>
         <rect
           x="0"
           y="0"
-          width="50"
+          width="67"
           height="10"
           mask="url(#mask)"
           fill="#fff"
@@ -93,13 +100,21 @@ const StyledSecurityWrapper = styled.span`
     fill: black;
   }
 
-  &.high {
+  &.finalized {
     .img {
-      background: linear-gradient(270deg, #7cd77b 0%, #e5f456 100%);
+      background: linear-gradient(270deg, #267b54 0%, #7cd77b 100%);
 
       .last-circle {
         animation: none;
       }
+    }
+    .text {
+      color: #267b54;
+    }
+  }
+  &.high {
+    .img {
+      background: linear-gradient(270deg, #7cd77b 0%, #e5f456 100%);
     }
     .text {
       color: #59bf9c;

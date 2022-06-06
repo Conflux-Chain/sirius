@@ -32,6 +32,14 @@ const Code = ({ contractInfo }) => {
   const { sourceCode, abi, address, verify = {} } = contractInfo;
   const { exactMatch, license, name, optimization, runs, version } = verify;
 
+  if (!contractInfo.codeHash) {
+    return (
+      <StyledContractContentCodeWrapper>
+        <StyledNullWrapper>0x</StyledNullWrapper>
+      </StyledContractContentCodeWrapper>
+    );
+  }
+
   return (
     <StyledContractContentCodeWrapper>
       {exactMatch ? (
@@ -230,7 +238,12 @@ export const ContractContent = ({ contractInfo }) => {
         label: t(translations.contract.readContract),
         abi,
         content: (
-          <ContractAbi type="read" address={address} abi={abi}></ContractAbi>
+          <ContractAbi
+            type="read"
+            address={address}
+            abi={abi}
+            key={`contract-read-${address}`}
+          ></ContractAbi>
         ),
       },
       {
@@ -238,7 +251,12 @@ export const ContractContent = ({ contractInfo }) => {
         label: t(translations.contract.writeContract),
         abi,
         content: (
-          <ContractAbi type="write" address={address} abi={abi}></ContractAbi>
+          <ContractAbi
+            type="write"
+            address={address}
+            abi={abi}
+            key={`contract-write-${address}`}
+          ></ContractAbi>
         ),
       },
     ]);
@@ -257,6 +275,8 @@ export const ContractContent = ({ contractInfo }) => {
               type="read"
               address={implementation.address}
               pattern={proxy.proxyPattern}
+              proxyAddress={address}
+              key={`contract-implementation-read-${address}`}
             ></ContractAbi>
           ),
         },
@@ -268,6 +288,8 @@ export const ContractContent = ({ contractInfo }) => {
               type="write"
               address={implementation.address}
               pattern={proxy.proxyPattern}
+              proxyAddress={address}
+              key={`contract-implementation-write-${address}`}
             ></ContractAbi>
           ),
         },
@@ -336,4 +358,10 @@ const ContractBody = styled.div`
 
 const ContractCard = styled(Card)`
   padding-bottom: 1.2857rem !important;
+`;
+
+const StyledNullWrapper = styled.div`
+  background-color: var(--theme-color-gray0);
+  margin-top: 1.4286rem;
+  padding: 0.4286rem;
 `;

@@ -1,13 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
+import { CFX } from 'utils/constants';
 
 interface TxnLoopOptsType {
   callback?: (data?) => void;
   timeout?: number;
   method?: string;
 }
-
-// alias for window
-const globalThis = window as any;
 
 export const getTransactionLoop = function (
   hash: string,
@@ -22,7 +20,7 @@ export const getTransactionLoop = function (
   return new Promise((resolve, reject) => {
     const loop = function () {
       const t = options.timeout;
-      globalThis?.confluxJS[options.method](hash)
+      CFX.cfx[options.method](hash)
         .then(resp => {
           try {
             if (resp) {

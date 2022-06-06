@@ -54,7 +54,15 @@ export const ActionField = ({
   const [form] = Form.useForm();
 
   const b = accounts.length
-    ? formatBalance(balance, 18, false, {}, '0.001')
+    ? formatBalance(
+        balance,
+        18,
+        false,
+        {
+          withUnit: false,
+        },
+        '0.001',
+      )
     : '--';
 
   // if inactive is true, not check other condition
@@ -71,7 +79,9 @@ export const ActionField = ({
           new BigNumber(value).multipliedBy(MODULE),
           18,
           false,
-          {},
+          {
+            withUnit: false,
+          },
           '0.001',
         )
       : value;
