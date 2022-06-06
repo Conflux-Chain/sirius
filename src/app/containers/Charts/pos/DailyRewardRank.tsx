@@ -32,7 +32,6 @@ export function DailyRewardRank({ preview = false }: ChildProps) {
               },
             };
           })
-          .sort((x, y) => y.y - x.y)
           .map((d, i) => ({
             ...d,
             name: String(i + 1),

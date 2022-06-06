@@ -391,6 +391,8 @@
     "tools": "工具",
     "balanceChecker": "余额检索器",
     "charts": "图表",
+    "posCharts": "PoS 图表",
+    "crossSpaceCharts": "跨空间图表",
     "statistics": "最佳统计数据",
     "support": "支持与帮助",
     "faq": "常见问题",
@@ -570,9 +572,9 @@
       "finalizedInterval": {
         "title": "确认间隔",
         "subtitle": "最新状态到 PoS 最终确定的时间间隔",
-        "yAxisTitle": "间隔（秒）",
+        "yAxisTitle": "间隔",
         "seriesName": "间隔（秒）",
-        "yAxisTitle2": "间隔（区块）",
+        "yAxisTitle2": "间隔",
         "seriesName2": "间隔（区块）"
       },
       "dailyAccounts": {

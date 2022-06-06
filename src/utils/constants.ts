@@ -257,13 +257,13 @@ OPEN_API_URLS.contract = '/stat/contract/stat/list';
 OPEN_API_URLS.token = '/stat/daily-token-stat';
 
 // PoS
-OPEN_API_URLS.PoSFinalizedInterval = '/stat/pos-daily-finalize-second-gap';
+OPEN_API_URLS.PoSFinalizedInterval = '/stat/pos-daily-finalize-gap';
 OPEN_API_URLS.PoSDailyAccounts = '/stat/pos-daily-account';
 OPEN_API_URLS.PoSDailyStaking = '/stat/pos-daily-staking';
 OPEN_API_URLS.PoSDailyAPY = '/stat/pos-daily-apy';
 OPEN_API_URLS.PoSTotalReward = '/stat/pos-daily-total-reward';
 OPEN_API_URLS.PoSDailyRewardRank = '/stat/pos-recent-reward-rank';
-OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit';
+OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit-withdraw';
 
 // Cross Space
 OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx-to-evm';

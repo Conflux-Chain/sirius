@@ -20,11 +20,16 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.PoSFinalizedInterval,
       formatter: data => {
-        return [
-          data?.list?.map((d, i) => {
-            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
-          }),
-        ];
+        const data1: any = [];
+        const data2: any = [];
+
+        data?.list?.map((d, i) => {
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(d.finalize_second_gap)]);
+          data2.push([t, Number(d.finalize_epoch_gap)]);
+        });
+
+        return [data1, data2];
       },
     },
     options: {
@@ -45,14 +50,20 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
           text: t(translations.highcharts.pos.finalizedInterval.yAxisTitle),
         },
       },
-      tooltip: {
-        valueSuffix: 's',
-      },
       series: [
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.pos.finalizedInterval.seriesName,
+          )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pos.finalizedInterval.seriesName2,
           )}</span>`,
         },
       ],

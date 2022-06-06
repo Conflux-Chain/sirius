@@ -572,9 +572,9 @@
       "finalizedInterval": {
         "title": "Finalized Interval",
         "subtitle": "The interval between lastest state to PoS finalized.",
-        "yAxisTitle": "Interval (Secs)",
+        "yAxisTitle": "Interval",
         "seriesName": "Interval (Secs)",
-        "yAxisTitle2": "Interval (Blocks)",
+        "yAxisTitle2": "Interval",
         "seriesName2": "Interval (Blocks)"
       },
       "dailyAccounts": {

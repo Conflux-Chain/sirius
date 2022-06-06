@@ -8,6 +8,7 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
 export function DailyDeposit({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -20,11 +21,16 @@ export function DailyDeposit({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.PoSDailyDeposit,
       formatter: data => {
-        return [
-          data?.list?.map((d, i) => {
-            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
-          }),
-        ];
+        const data1: any = [];
+        const data2: any = [];
+
+        data?.list?.map((d, i) => {
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(new BigNumber(d.staking_deposit).toFixed(2))]);
+          data2.push([t, Number(new BigNumber(d.staking_withdraw).toFixed(2))]);
+        });
+
+        return [data1, data2];
       },
     },
     options: {
@@ -40,13 +46,26 @@ export function DailyDeposit({ preview = false }: ChildProps) {
       xAxis: {
         type: 'datetime',
       },
-      yAxis: {
-        title: {
-          text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle),
+      yAxis: [
+        {
+          title: {
+            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle),
+          },
+          offset: 0,
+          height: '50%',
+          opposite: false,
         },
-      },
+        {
+          title: {
+            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle2),
+          },
+          height: '50%',
+          top: '50%',
+          offset: 0,
+          opposite: false,
+        },
+      ],
       tooltip: {
-        valueDecimals: 2,
         valueSuffix: ' CFX',
       },
       series: [
@@ -55,6 +74,13 @@ export function DailyDeposit({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.pos.dailyDeposit.seriesName,
           )}</span>`,
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pos.dailyDeposit.seriesName2,
+          )}</span>`,
+          yAxis: 1,
         },
       ],
     },
