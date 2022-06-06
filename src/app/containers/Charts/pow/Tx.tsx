@@ -9,23 +9,23 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function TPS({ preview = false }: ChildProps) {
+export function Tx({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'tps',
-    title: t(translations.highcharts.tps.title),
-    subtitle: t(translations.highcharts.tps.subtitle),
+    name: 'tx',
+    title: t(translations.highcharts.pow.tx.title),
+    subtitle: t(translations.highcharts.pow.tx.subtitle),
     request: {
-      url: OPEN_API_URLS.tps,
+      url: OPEN_API_URLS.tx,
       formatter: data => {
         return [
           data?.list?.map(s => [
             // @ts-ignore
             dayjs.utc(s.statTime).valueOf(),
             // @ts-ignore
-            Number(s.tps),
+            Number(s.count),
           ]),
         ];
       },
@@ -35,7 +35,7 @@ export function TPS({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tps.title),
+        text: t(translations.highcharts.pow.tx.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,16 +45,13 @@ export function TPS({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tps.yAxisTitle),
+          text: t(translations.highcharts.pow.tx.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
           type: 'line',
-          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
+          name: `<span>${t(translations.highcharts.pow.tx.seriesName)}</span>`,
         },
       ],
     },

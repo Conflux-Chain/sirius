@@ -217,6 +217,14 @@ export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
   ? FC_EXCHANGE_INTEREST_ADDRESSES.testnet
   : FC_EXCHANGE_INTEREST_ADDRESSES.mainnet;
 
+enum CROSS_SPACE_ADDRESSES {
+  mainnet = 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv',
+  testnet = 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2eaeg85p5',
+}
+export const CROSS_SPACE_ADDRESS = IS_TESTNET
+  ? CROSS_SPACE_ADDRESSES.testnet
+  : CROSS_SPACE_ADDRESSES.mainnet;
+
 export const OPEN_API_HOST = IS_TESTNET
   ? 'api-testnet.confluxscan.net'
   : 'api.confluxscan.net';
@@ -244,5 +252,19 @@ export const OPEN_API_URLS = Object.entries({
   .reduce((prev, curr) => ({ ...prev, ...curr }), {});
 
 // not open abi, use backend api temp
+// PoW
 OPEN_API_URLS.contract = '/stat/contract/stat/list';
 OPEN_API_URLS.token = '/stat/daily-token-stat';
+
+// PoS
+OPEN_API_URLS.PoSFinalizedInterval = '/stat/pos-daily-finalize-gap';
+OPEN_API_URLS.PoSDailyAccounts = '/stat/pos-daily-account';
+OPEN_API_URLS.PoSDailyStaking = '/stat/pos-daily-staking';
+OPEN_API_URLS.PoSDailyAPY = '/stat/pos-daily-apy';
+OPEN_API_URLS.PoSTotalReward = '/stat/pos-daily-total-reward';
+OPEN_API_URLS.PoSDailyRewardRank = '/stat/pos-recent-reward-rank';
+OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit-withdraw';
+OPEN_API_URLS.PoSDailyParticipationRate = '/stat/pos-daily-participation-rate';
+
+// Cross Space
+OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx-to-evm';

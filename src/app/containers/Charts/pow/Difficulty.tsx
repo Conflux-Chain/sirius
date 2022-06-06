@@ -9,33 +9,31 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function ActiveAccounts({ preview = false }: ChildProps) {
+export function Difficulty({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'active-accounts',
-    title: t(translations.highcharts.activeAccounts.title),
-    subtitle: t(translations.highcharts.activeAccounts.subtitle),
+    name: 'difficulty',
+    preview,
+    title: t(translations.highcharts.pow.difficulty.title),
+    subtitle: t(translations.highcharts.pow.difficulty.subtitle),
     request: {
-      url: OPEN_API_URLS.activeAccounts,
-      formatter: data => {
-        return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
-        ];
-      },
+      url: OPEN_API_URLS.mining,
+      formatter: data => [
+        data?.list?.map(s => [
+          // @ts-ignore
+          dayjs.utc(s.statTime).valueOf(),
+          // @ts-ignore
+          Number(s.difficulty) / 1000000000000, // format to TH
+        ]),
+      ],
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.activeAccounts.title),
+        text: t(translations.highcharts.pow.difficulty.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,14 +43,17 @@ export function ActiveAccounts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.activeAccounts.yAxisTitle),
+          text: t(translations.highcharts.pow.difficulty.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'line',
+          type: 'area',
           name: `<span>${t(
-            translations.highcharts.activeAccounts.seriesName,
+            translations.highcharts.pow.difficulty.seriesName,
           )}</span>`,
         },
       ],

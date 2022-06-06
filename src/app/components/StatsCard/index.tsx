@@ -109,12 +109,12 @@ export const StatsCard = ({
         {
           title: t(translations.statistics.overviewColumns.totalCFXSent),
           index: 'cfxAmount',
-          more: '/charts/cfx-transfer',
+          more: '/pow-charts/cfx-transfer',
           unit: 'CFX',
         },
         {
           title: t(translations.statistics.overviewColumns.totalTxnCount),
-          more: '/charts/tx',
+          more: '/pow-charts/tx',
           index: 'cfxTxn',
         },
       ];
@@ -127,7 +127,7 @@ export const StatsCard = ({
           title: t(
             translations.statistics.overviewColumns.totalTokenTransfersCount,
           ),
-          more: '/charts/token-transfer',
+          more: '/pow-charts/token-transfer',
           index: 'tokenTransfer',
         },
         {
@@ -135,7 +135,7 @@ export const StatsCard = ({
             translations.statistics.overviewColumns
               .totalTokenTransfersAccountsCount,
           ),
-          more: '/charts/token-transfer',
+          more: '/pow-charts/token-transfer',
           index: 'tokenAccount',
         },
       ];

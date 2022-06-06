@@ -9,24 +9,24 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function TokenTransfer({ preview = false }: ChildProps) {
+export function FinalizedInterval({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'token-transfer',
-    title: t(translations.highcharts.tokenTransfer.title),
-    subtitle: t(translations.highcharts.tokenTransfer.subtitle),
+    name: 'finalized-interval',
+    title: t(translations.highcharts.pos.finalizedInterval.title),
+    subtitle: t(translations.highcharts.pos.finalizedInterval.subtitle),
     request: {
-      url: OPEN_API_URLS.tokenTransfer,
+      url: OPEN_API_URLS.PoSFinalizedInterval,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
-          data2.push([t, Number(d.userCount)]);
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(d.finalize_second_gap)]);
+          data2.push([t, Number(d.finalize_epoch_gap)]);
         });
 
         return [data1, data2];
@@ -37,36 +37,33 @@ export function TokenTransfer({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tokenTransfer.title),
+        text: t(translations.highcharts.pos.finalizedInterval.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tokenTransfer.yAxisTitle),
+          text: t(translations.highcharts.pos.finalizedInterval.yAxisTitle),
         },
-      },
-      tooltip: {
-        shared: true,
       },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.tokenTransfer.seriesName,
+            translations.highcharts.pos.finalizedInterval.seriesName,
           )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.tokenTransfer.seriesName2,
+            translations.highcharts.pos.finalizedInterval.seriesName2,
           )}</span>`,
         },
       ],

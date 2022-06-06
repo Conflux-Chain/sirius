@@ -19,8 +19,8 @@ export function Contract({
     plain: true,
     preview: preview,
     name: '',
-    title: t(translations.highcharts.contract.title),
-    subtitle: t(translations.highcharts.contract.subtitle),
+    title: t(translations.highcharts.pow.contract.title),
+    subtitle: t(translations.highcharts.pow.contract.subtitle),
     request: {
       url: OPEN_API_URLS.contract,
       query: {
@@ -48,7 +48,7 @@ export function Contract({
         type: 'line',
       },
       title: {
-        text: t(translations.highcharts.contract.title),
+        text: t(translations.highcharts.pow.contract.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -58,23 +58,23 @@ export function Contract({
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.contract.yAxisTitle),
+          text: t(translations.highcharts.pow.contract.yAxisTitle),
         },
       },
       series: [
         {
           name: `<span>${t(
-            translations.highcharts.contract.seriesName,
+            translations.highcharts.pow.contract.seriesName,
           )}</span>`,
         },
         {
           name: `<span>${t(
-            translations.highcharts.contract.seriesName2,
+            translations.highcharts.pow.contract.seriesName2,
           )}</span>`,
         },
         {
           name: `<span>${t(
-            translations.highcharts.contract.seriesName3,
+            translations.highcharts.pow.contract.seriesName3,
           )}</span>`,
         },
       ],

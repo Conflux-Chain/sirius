@@ -10,29 +10,27 @@ import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 import BigNumber from 'bignumber.js';
 
-export function CFXTransfer({ preview = false }: ChildProps) {
+export function DailyDeposit({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'cfx-transfer',
-    title: t(translations.highcharts.cfxTransfer.title),
-    subtitle: t(translations.highcharts.cfxTransfer.subtitle),
+    name: 'daily-deposit',
+    title: t(translations.highcharts.pos.dailyDeposit.title),
+    subtitle: t(translations.highcharts.pos.dailyDeposit.subtitle),
     request: {
-      url: OPEN_API_URLS.cfxTransfer,
+      url: OPEN_API_URLS.PoSDailyDeposit,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
-        const data3: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
-          data2.push([t, Number(d.userCount)]);
-          data3.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(new BigNumber(d.staking_deposit).toFixed(2))]);
+          data2.push([t, Number(new BigNumber(d.staking_withdraw).toFixed(2))]);
         });
 
-        return [data1, data2, data3];
+        return [data1, data2];
       },
     },
     options: {
@@ -40,28 +38,26 @@ export function CFXTransfer({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.cfxTransfer.title),
+        text: t(translations.highcharts.pos.dailyDeposit.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },
       yAxis: [
         {
           title: {
-            text: t(translations.highcharts.cfxTransfer.yAxisTitle),
+            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle),
           },
+          offset: 0,
           height: '50%',
           opposite: false,
         },
         {
           title: {
-            text: t(translations.highcharts.cfxTransfer.yAxisTitle3),
+            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle2),
           },
           height: '50%',
           top: '50%',
@@ -69,30 +65,22 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           opposite: false,
         },
       ],
+      tooltip: {
+        valueSuffix: ' CFX',
+      },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.cfxTransfer.seriesName,
+            translations.highcharts.pos.dailyDeposit.seriesName,
           )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.cfxTransfer.seriesName2,
+            translations.highcharts.pos.dailyDeposit.seriesName2,
           )}</span>`,
-        },
-        {
-          type: 'column',
-          name: `<span>${t(
-            translations.highcharts.cfxTransfer.seriesName3,
-          )}</span>`,
-          color: '#7cb5ec',
           yAxis: 1,
-          tooltip: {
-            valueDecimals: 2,
-            valueSuffix: ' CFX',
-          },
         },
       ],
     },

@@ -9,24 +9,21 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function CFXHolderAccounts({ preview = false }: ChildProps) {
+export function TotalReward({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'cfx-holder-accounts',
-    title: t(translations.highcharts.CFXHolderAccounts.title),
-    subtitle: t(translations.highcharts.CFXHolderAccounts.subtitle),
+    name: 'total-reward',
+    title: t(translations.highcharts.pos.totalReward.title),
+    subtitle: t(translations.highcharts.pos.totalReward.subtitle),
     request: {
-      url: OPEN_API_URLS.cfxHolderAccounts,
+      url: OPEN_API_URLS.PoSTotalReward,
       formatter: data => {
         return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
+          data?.list?.map((d, i) => {
+            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
+          }),
         ];
       },
     },
@@ -35,7 +32,7 @@ export function CFXHolderAccounts({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.CFXHolderAccounts.title),
+        text: t(translations.highcharts.pos.totalReward.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,14 +42,18 @@ export function CFXHolderAccounts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.CFXHolderAccounts.yAxisTitle),
+          text: t(translations.highcharts.pos.totalReward.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
+        valueSuffix: ' CFX',
       },
       series: [
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.CFXHolderAccounts.seriesName,
+            translations.highcharts.pos.totalReward.seriesName,
           )}</span>`,
         },
       ],

@@ -8,25 +8,26 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
-export function Tx({ preview = false }: ChildProps) {
+export function DailyParticipation({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'tx',
-    title: t(translations.highcharts.tx.title),
-    subtitle: t(translations.highcharts.tx.subtitle),
+    name: 'participation-rate',
+    title: t(translations.highcharts.pos.participation.title),
+    subtitle: t(translations.highcharts.pos.participation.subtitle),
     request: {
-      url: OPEN_API_URLS.tx,
+      url: OPEN_API_URLS.PoSDailyParticipationRate,
       formatter: data => {
         return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
+          data?.list?.map((d, i) => {
+            return [
+              dayjs.utc(d.day).valueOf(),
+              Number(new BigNumber(d.v).toFixed(2)),
+            ];
+          }),
         ];
       },
     },
@@ -35,7 +36,7 @@ export function Tx({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tx.title),
+        text: t(translations.highcharts.pos.participation.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,13 +46,18 @@ export function Tx({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tx.yAxisTitle),
+          text: t(translations.highcharts.pos.participation.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueSuffix: '%',
       },
       series: [
         {
           type: 'line',
-          name: `<span>${t(translations.highcharts.tx.seriesName)}</span>`,
+          name: `<span>${t(
+            translations.highcharts.pos.participation.seriesName,
+          )}</span>`,
         },
       ],
     },

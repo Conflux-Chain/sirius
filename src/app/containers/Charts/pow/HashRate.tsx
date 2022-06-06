@@ -9,14 +9,14 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Difficulty({ preview = false }: ChildProps) {
+export function HashRate({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'difficulty',
-    preview,
-    title: t(translations.highcharts.difficulty.title),
-    subtitle: t(translations.highcharts.difficulty.subtitle),
+    name: 'hashrate',
+    preview: preview,
+    title: t(translations.highcharts.pow.hashRate.title),
+    subtitle: t(translations.highcharts.pow.hashRate.subtitle),
     request: {
       url: OPEN_API_URLS.mining,
       formatter: data => [
@@ -24,7 +24,7 @@ export function Difficulty({ preview = false }: ChildProps) {
           // @ts-ignore
           dayjs.utc(s.statTime).valueOf(),
           // @ts-ignore
-          Number(s.difficulty) / 1000000000000, // format to TH
+          Number(s.hashRate) / 1000000000, // format to GH/s
         ]),
       ],
     },
@@ -33,7 +33,7 @@ export function Difficulty({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.difficulty.title),
+        text: t(translations.highcharts.pow.hashRate.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,7 +43,7 @@ export function Difficulty({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.difficulty.yAxisTitle),
+          text: t(translations.highcharts.pow.hashRate.yAxisTitle),
         },
       },
       tooltip: {
@@ -53,7 +53,7 @@ export function Difficulty({ preview = false }: ChildProps) {
         {
           type: 'area',
           name: `<span>${t(
-            translations.highcharts.difficulty.seriesName,
+            translations.highcharts.pow.hashRate.seriesName,
           )}</span>`,
         },
       ],

@@ -390,7 +390,9 @@
     "more": "More",
     "tools": "Tools",
     "balanceChecker": "Balance Checker",
-    "charts": "Charts",
+    "charts": "PoW Charts",
+    "posCharts": "PoS Charts",
+    "crossSpaceCharts": "Cross Space Charts",
     "statistics": "Top Statistics",
     "support": "Support & Help",
     "faq": "FAQ",
@@ -518,142 +520,249 @@
     "oldest": "Oldest"
   },
   "highcharts": {
-    "preview": {
-      "title": "Charts",
-      "subtitle": " A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
-      "viewDetail": "View Details",
-      "tip": "Showing the last 30 days",
-      "marketData": "Market Data",
-      "blockchainData": "Blockchain Data",
-      "transaction": "Transaction",
-      "account": "Account",
-      "contracts": "Contracts"
-    },
-    "breadcrumb": {
-      "charts": "Charts",
-      "blocktime": "Block Time",
-      "tps": "TPS",
-      "hashrate": "Hash Rate",
-      "difficulty": "Difficulty",
-      "supply": "Total Supply",
-      "circulating": "Circulating Supply",
-      "tx": "Daily Transactions",
-      "token-transfer": "Daily Token Transfer",
-      "cfx-transfer": "Daily CFX Transfer Statistics",
-      "cfx-holder-accounts": "CFX Holders Statistics",
-      "account-growth": "Account Growth",
-      "active-accounts": "Active Accounts",
-      "contracts": "Contracts Statistics"
-    },
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
-    "averageBlockTime": {
-      "title": "Average Block Time",
-      "subtitle": "The time required to generate a block.",
-      "yAxisTitle": "Block Time in Secs",
-      "seriesName": "Block Time (Secs)"
+    "crossSpace": {
+      "preview": {
+        "title": "Cross Space Charts",
+        "subtitle": "A collection of cross space charts between PoW and PoS on the Conflux Chain (click on View Details for a zoomed view)",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 days"
+      },
+      "breadcrumb": {
+        "charts": "Cross Space Charts",
+        "daily-cfx-transfer": "Daily CFX Transfer",
+        "contract": "Contract"
+      },
+      "dailyCFXTransfer": {
+        "title": "Daily CFX Transfer",
+        "subtitle": "The CFX transfer in and out per day between PoW and PoS.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transfer In Count (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "Transfer Out Count (Day)"
+      },
+      "contract": {
+        "title": "Contract Statistics",
+        "subtitle": "Daily contract statistics.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transactions Count (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "CFX Transfer Count (Day)",
+        "yAxisTitle3": "Count",
+        "seriesName3": "Token Transfer Count (Day)"
+      }
     },
-    "tps": {
-      "title": "Transaction TPS",
-      "subtitle": "Number of transactions on the chain per second.",
-      "yAxisTitle": "Transaction Number in Secs",
-      "seriesName": "Transaction Number (Secs)"
+    "pos": {
+      "preview": {
+        "title": "PoS Charts",
+        "subtitle": "A collection of charts on the PoS of Conflux Chain (click on View Details for a zoomed view)",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 days"
+      },
+      "breadcrumb": {
+        "charts": "PoS Charts",
+        "finalized-interval": "Finalized Interval",
+        "daily-accounts": "Accounts",
+        "daily-staking": "Staking",
+        "daily-apy": "APY",
+        "total-reward": "Total Reward",
+        "daily-reward-rank": "Reward Rank",
+        "daily-deposit": "Deposit",
+        "participation-rate": "Participation Rate"
+      },
+      "finalizedInterval": {
+        "title": "Finalized Interval",
+        "subtitle": "The interval between lastest state to PoS finalized.",
+        "yAxisTitle": "Interval",
+        "seriesName": "Interval (Secs)",
+        "yAxisTitle2": "Interval",
+        "seriesName2": "Interval (Blocks)"
+      },
+      "dailyAccounts": {
+        "title": "Accounts",
+        "subtitle": "The number of accounts per day on the PoS of Conflux network.",
+        "yAxisTitle": "Total Accounts",
+        "seriesName": "Total Accounts (Day)"
+      },
+      "dailyStaking": {
+        "title": "Staking",
+        "subtitle": "The amount of Staking CFX per day on the PoS of Conflux network.",
+        "yAxisTitle": "Total Staking CFX",
+        "seriesName": "Total Staking CFX (Day)"
+      },
+      "apy": {
+        "title": "Annual Percentage Yield",
+        "subtitle": "The annual percentage yield per day on the PoS of Conflux network.",
+        "yAxisTitle": "APY",
+        "seriesName": "APY (Day)"
+      },
+      "totalReward": {
+        "title": "Total Reward",
+        "subtitle": "The total reward per day on the PoS of Conflux network.",
+        "yAxisTitle": "Total Reward",
+        "seriesName": "Total Reward (Day)"
+      },
+      "dailyRewardRank": {
+        "title": "Reward Rank",
+        "subtitle": "The reward rank per day on the PoS of Conflux network.",
+        "yAxisTitle": "Reward Rank",
+        "seriesName": "Reward Rank (Day)",
+        "PoSAddress": "PoS Address",
+        "PoWAddress": "PoW Address",
+        "reward": "Reward"
+      },
+      "dailyDeposit": {
+        "title": "Deposit & Withdraw",
+        "subtitle": "The amount of Deposit and Withdraw CFX per day on the PoS of Conflux network.",
+        "yAxisTitle": "Total Deposit CFX",
+        "seriesName": "Total Deposit CFX (Day)",
+        "yAxisTitle2": "Total Withdraw CFX",
+        "seriesName2": "Total Withdraw CFX (Day)"
+      },
+      "participation": {
+        "title": "Participation Rate",
+        "subtitle": "The participation rate per day on the PoS of Conflux network.",
+        "yAxisTitle": "Participation Rate",
+        "seriesName": "Participation Rate (Day)"
+      }
     },
-    "hashRate": {
-      "title": "Network Hash Rate",
-      "subtitle": "The number of times a miner calculates hashes per second.",
-      "yAxisTitle": "Hash Rate (GH/s)",
-      "seriesName": "Hash Rate (GH/s)"
-    },
-    "difficulty": {
-      "title": "Network Difficulty",
-      "subtitle": "Calculation difficulty of all blocks currently generated.",
-      "yAxisTitle": "Difficulty (TH)",
-      "seriesName": "Difficulty (TH)"
-    },
-    "totalSupply": {
-      "title": "Total Supply",
-      "subtitle": "The amount of CFX that are created in the market.",
-      "fourYearUnlock": "Four Year Unlock",
-      "twoYearUnlock": "Two Year Unlock",
-      "circulatingUnlock": "Circulating Unlock"
-    },
-    "circulatingSupply": {
-      "title": "Circulating Supply",
-      "subtitle": "Circulating supply contains the CFX in the Zero Address.",
-      "zeroAddress": "Zero Address",
-      "others": "Others"
-    },
-    "tx": {
-      "title": "Txn Count",
-      "subtitle": "The total number of transactions per day on the Conflux network.",
-      "yAxisTitle": "Transactions per Day",
-      "seriesName": "Total Transactions (Day)"
-    },
-    "cfxTransfer": {
-      "title": "CFX Transfer Statistics",
-      "subtitle": "Daily transfer statistics for CFX on the Conflux network.",
-      "yAxisTitle": "CFX Transfer",
-      "seriesName": "Total CFX Transfer Count (Day)",
-      "yAxisTitle2": "CFX Transfer Accounts",
-      "seriesName2": "Total CFX Transfer Accounts (Day)",
-      "yAxisTitle3": "Transfer Volume",
-      "seriesName3": "Total CFX Transfer Volume (Day)"
-    },
-    "tokenTransfer": {
-      "title": "Token Transfer Count",
-      "subtitle": "Daily transfer statistics for all tokens on the Conflux network.",
-      "yAxisTitle": "Token Transfer per Day",
-      "seriesName": "Total Token Transfer Count (Day)",
-      "yAxisTitle2": "Token Transfer Accounts per Day",
-      "seriesName2": "Total Token Transfer Accounts (Day)"
-    },
-    "CFXHolderAccounts": {
-      "title": "CFX Holding Accounts",
-      "subtitle": "The total number of CFX accounts held on the Conflux network.",
-      "yAxisTitle": "Total Accounts",
-      "seriesName": "Total Accounts (Day)"
-    },
-    "accountGrowth": {
-      "title": "Account Growth",
-      "subtitle": "The number of new accounts added per day on the Conflux network.",
-      "yAxisTitle": "Total New Accounts",
-      "seriesName": "Total New Accounts (Day)"
-    },
-    "activeAccounts": {
-      "title": "Active Accounts",
-      "subtitle": "The number of active accounts per day on the Conflux network.",
-      "yAxisTitle": "Total Active Accounts",
-      "seriesName": "Total Active Accounts (Day)"
-    },
-    "contracts": {
-      "title": "Contracts Statistics",
-      "subtitle": "The statistics of contracts on the Conflux network.",
-      "yAxisTitle": "Contract Count/Growth Count",
-      "seriesName": "Contract Count (Day)",
-      "yAxisTitle2": "Contract Growth Count per Day",
-      "seriesName2": "Total Contract Growth Count (Day)"
-    },
-    "contract": {
-      "title": "Contract Statistics",
-      "subtitle": "Daily contract statistics.",
-      "yAxisTitle": "Count",
-      "seriesName": "Transactions Count (Day)",
-      "yAxisTitle2": "Count",
-      "seriesName2": "CFX Transfer Count (Day)",
-      "yAxisTitle3": "Count",
-      "seriesName3": "Token Transfer Count (Day)"
-    },
-    "token": {
-      "title": "Token Statistics",
-      "subtitle": "Daily token statistics.",
-      "yAxisTitle": "Count",
-      "seriesName": "Transfer Amount (Day)",
-      "yAxisTitle2": "Count",
-      "seriesName2": "Transfer Count (Day)",
-      "yAxisTitle3": "Count",
-      "seriesName3": "Unique Receivers Count (Day)",
-      "yAxisTitle4": "Count",
-      "seriesName4": "Unique Senders Count (Day)"
+    "pow": {
+      "preview": {
+        "title": "PoW Charts",
+        "subtitle": "A collection of charts on the Conflux Chain (click on View Details for a zoomed view)",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 days",
+        "marketData": "Market Data",
+        "blockchainData": "Blockchain Data",
+        "transaction": "Transaction",
+        "account": "Account",
+        "contracts": "Contracts"
+      },
+      "breadcrumb": {
+        "charts": "PoW Charts",
+        "blocktime": "Block Time",
+        "tps": "TPS",
+        "hashrate": "Hash Rate",
+        "difficulty": "Difficulty",
+        "supply": "Total Supply",
+        "circulating": "Circulating Supply",
+        "tx": "Daily Transactions",
+        "token-transfer": "Daily Token Transfer",
+        "cfx-transfer": "Daily CFX Transfer Statistics",
+        "cfx-holder-accounts": "CFX Holders Statistics",
+        "account-growth": "Account Growth",
+        "active-accounts": "Active Accounts",
+        "contracts": "Contracts Statistics"
+      },
+      "averageBlockTime": {
+        "title": "Average Block Time",
+        "subtitle": "The time required to generate a block.",
+        "yAxisTitle": "Block Time in Secs",
+        "seriesName": "Block Time (Secs)"
+      },
+      "tps": {
+        "title": "Transaction TPS",
+        "subtitle": "Number of transactions on the chain per second.",
+        "yAxisTitle": "Transaction Number in Secs",
+        "seriesName": "Transaction Number (Secs)"
+      },
+      "hashRate": {
+        "title": "Network Hash Rate",
+        "subtitle": "The number of times a miner calculates hashes per second.",
+        "yAxisTitle": "Hash Rate (GH/s)",
+        "seriesName": "Hash Rate (GH/s)"
+      },
+      "difficulty": {
+        "title": "Network Difficulty",
+        "subtitle": "Calculation difficulty of all blocks currently generated.",
+        "yAxisTitle": "Difficulty (TH)",
+        "seriesName": "Difficulty (TH)"
+      },
+      "totalSupply": {
+        "title": "Total Supply",
+        "subtitle": "The amount of CFX that are created in the market.",
+        "fourYearUnlock": "Four Year Unlock",
+        "twoYearUnlock": "Two Year Unlock",
+        "circulatingUnlock": "Circulating Unlock"
+      },
+      "circulatingSupply": {
+        "title": "Circulating Supply",
+        "subtitle": "Circulating supply contains the CFX in the Zero Address.",
+        "zeroAddress": "Zero Address",
+        "others": "Others"
+      },
+      "tx": {
+        "title": "Txn Count",
+        "subtitle": "The total number of transactions per day on the Conflux network.",
+        "yAxisTitle": "Transactions per Day",
+        "seriesName": "Total Transactions (Day)"
+      },
+      "cfxTransfer": {
+        "title": "CFX Transfer Statistics",
+        "subtitle": "Daily transfer statistics for CFX on the Conflux network.",
+        "yAxisTitle": "CFX Transfer",
+        "seriesName": "Total CFX Transfer Count (Day)",
+        "yAxisTitle2": "CFX Transfer Accounts",
+        "seriesName2": "Total CFX Transfer Accounts (Day)",
+        "yAxisTitle3": "Transfer Volume",
+        "seriesName3": "Total CFX Transfer Volume (Day)"
+      },
+      "tokenTransfer": {
+        "title": "Token Transfer Count",
+        "subtitle": "Daily transfer statistics for all tokens on the Conflux network.",
+        "yAxisTitle": "Token Transfer per Day",
+        "seriesName": "Total Token Transfer Count (Day)",
+        "yAxisTitle2": "Token Transfer Accounts per Day",
+        "seriesName2": "Total Token Transfer Accounts (Day)"
+      },
+      "CFXHolderAccounts": {
+        "title": "CFX Holding Accounts",
+        "subtitle": "The total number of CFX accounts held on the Conflux network.",
+        "yAxisTitle": "Total Accounts",
+        "seriesName": "Total Accounts (Day)"
+      },
+      "accountGrowth": {
+        "title": "Account Growth",
+        "subtitle": "The number of new accounts added per day on the Conflux network.",
+        "yAxisTitle": "Total New Accounts",
+        "seriesName": "Total New Accounts (Day)"
+      },
+      "activeAccounts": {
+        "title": "Active Accounts",
+        "subtitle": "The number of active accounts per day on the Conflux network.",
+        "yAxisTitle": "Total Active Accounts",
+        "seriesName": "Total Active Accounts (Day)"
+      },
+      "contracts": {
+        "title": "Contracts Statistics",
+        "subtitle": "The statistics of contracts on the Conflux network.",
+        "yAxisTitle": "Contract Count/Growth Count",
+        "seriesName": "Contract Count (Day)",
+        "yAxisTitle2": "Contract Growth Count per Day",
+        "seriesName2": "Total Contract Growth Count (Day)"
+      },
+      "contract": {
+        "title": "Contract Statistics",
+        "subtitle": "Daily contract statistics.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transactions Count (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "CFX Transfer Count (Day)",
+        "yAxisTitle3": "Count",
+        "seriesName3": "Token Transfer Count (Day)"
+      },
+      "token": {
+        "title": "Token Statistics",
+        "subtitle": "Daily token statistics.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transfer Amount (Day)",
+        "yAxisTitle2": "Count",
+        "seriesName2": "Transfer Count (Day)",
+        "yAxisTitle3": "Count",
+        "seriesName3": "Unique Receivers Count (Day)",
+        "yAxisTitle4": "Count",
+        "seriesName4": "Unique Senders Count (Day)"
+      }
     }
   },
   "charts": {

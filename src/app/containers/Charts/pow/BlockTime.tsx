@@ -9,33 +9,31 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function AccountGrowth({ preview = false }: ChildProps) {
+export function BlockTime({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'account-growth',
-    title: t(translations.highcharts.accountGrowth.title),
-    subtitle: t(translations.highcharts.accountGrowth.subtitle),
+    name: 'blocktime',
+    title: t(translations.highcharts.pow.averageBlockTime.title),
+    subtitle: t(translations.highcharts.pow.averageBlockTime.subtitle),
     request: {
-      url: OPEN_API_URLS.accountGrowth,
-      formatter: data => {
-        return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
-        ];
-      },
+      url: OPEN_API_URLS.mining,
+      formatter: data => [
+        data?.list?.map(s => [
+          // @ts-ignore
+          dayjs.utc(s.statTime).valueOf(),
+          // @ts-ignore
+          Number(s.blockTime),
+        ]),
+      ],
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.accountGrowth.title),
+        text: t(translations.highcharts.pow.averageBlockTime.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,15 +43,21 @@ export function AccountGrowth({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.accountGrowth.yAxisTitle),
+          text: t(translations.highcharts.pow.averageBlockTime.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'line',
+          type: 'column',
           name: `<span>${t(
-            translations.highcharts.accountGrowth.seriesName,
+            translations.highcharts.pow.averageBlockTime.seriesName,
           )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
         },
       ],
     },

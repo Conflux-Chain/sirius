@@ -9,31 +9,30 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function HashRate({ preview = false }: ChildProps) {
+export function DailyAccounts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'hashrate',
     preview: preview,
-    title: t(translations.highcharts.hashRate.title),
-    subtitle: t(translations.highcharts.hashRate.subtitle),
+    name: 'daily-accounts',
+    title: t(translations.highcharts.pos.dailyAccounts.title),
+    subtitle: t(translations.highcharts.pos.dailyAccounts.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.hashRate) / 1000000000, // format to GH/s
-        ]),
-      ],
+      url: OPEN_API_URLS.PoSDailyAccounts,
+      formatter: data => {
+        return [
+          data?.list?.map((d, i) => {
+            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
+          }),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.hashRate.title),
+        text: t(translations.highcharts.pos.dailyAccounts.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,17 +42,14 @@ export function HashRate({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.hashRate.yAxisTitle),
+          text: t(translations.highcharts.pos.dailyAccounts.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
-          type: 'area',
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.hashRate.seriesName,
+            translations.highcharts.pos.dailyAccounts.seriesName,
           )}</span>`,
         },
       ],
