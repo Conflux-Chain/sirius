@@ -307,7 +307,9 @@ export const Header = memo(() => {
     // pos
     {
       title: t(translations.header.pos.pos),
-      matched: location?.pathname?.startsWith('/pos'),
+      matched:
+        location?.pathname?.startsWith('/pos/') ||
+        location?.pathname === '/pos',
       children: [
         {
           title: [
