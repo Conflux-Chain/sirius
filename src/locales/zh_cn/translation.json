@@ -567,7 +567,8 @@
         "daily-apy": "年利率",
         "total-reward": "总奖励",
         "daily-reward-rank": "每日奖励排名",
-        "daily-deposit": "存入和提取"
+        "daily-deposit": "存入和提取",
+        "participation-rate": "节点参与度"
       },
       "finalizedInterval": {
         "title": "确认间隔",
@@ -617,6 +618,12 @@
         "seriesName": "存入 CFX 数量",
         "yAxisTitle2": "提取 CFX 数量",
         "seriesName2": "提取 CFX 数量"
+      },
+      "participation": {
+        "title": "节点参与度",
+        "subtitle": "Conflux 网络上 PoS 的每日节点参与度",
+        "yAxisTitle": "节点参与度",
+        "seriesName": "节点参与度"
       }
     },
     "pow": {

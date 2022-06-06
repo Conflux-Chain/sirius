@@ -567,7 +567,8 @@
         "daily-apy": "APY",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
-        "daily-deposit": "Deposit"
+        "daily-deposit": "Deposit",
+        "participation-rate": "Participation Rate"
       },
       "finalizedInterval": {
         "title": "Finalized Interval",
@@ -617,6 +618,12 @@
         "seriesName": "Total Deposit CFX (Day)",
         "yAxisTitle2": "Total Withdraw CFX",
         "seriesName2": "Total Withdraw CFX (Day)"
+      },
+      "participation": {
+        "title": "Participation Rate",
+        "subtitle": "The participation rate per day on the PoS of Conflux network.",
+        "yAxisTitle": "Participation Rate",
+        "seriesName": "Participation Rate (Day)"
       }
     },
     "pow": {

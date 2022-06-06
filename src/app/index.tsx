@@ -102,6 +102,7 @@ import {
   TotalReward as PoSTotalReward,
   DailyRewardRank as PoSDailyRewardRank,
   DailyDeposit as PoSDailyDeposit,
+  DailyParticipation as PoSDailyParticipation,
 } from './containers/Charts/pos/Loadable';
 
 import {
@@ -729,6 +730,12 @@ export function App() {
                             exact
                             path="/pos-charts/daily-deposit"
                             component={PoSDailyDeposit}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/participation-rate"
+                            component={PoSDailyParticipation}
                           />
 
                           <Route exact path="/pow-charts" component={Chart} />
