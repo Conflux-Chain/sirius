@@ -524,7 +524,7 @@
     "crossSpace": {
       "preview": {
         "title": "跨空间图表",
-        "subtitle": "Conflux 链上跨 PoW 和 PoS 的图表 （点击查看详情）",
+        "subtitle": "Conflux 链上跨 Core 和 eSpace 的图表 （点击查看详情）",
         "viewDetail": "查看详情",
         "tip": "显示最近 30 天"
       },
@@ -535,7 +535,7 @@
       },
       "dailyCFXTransfer": {
         "title": "每日交易-CFX",
-        "subtitle": "每日在 PoW 和 PoS 间转入，转出的 CFX 统计数据",
+        "subtitle": "每日在 Core 和 eSpace 间转入，转出的 CFX 统计数据",
         "yAxisTitle": "数量",
         "seriesName": "每天转入的 CFX 数量",
         "yAxisTitle2": "数量",
