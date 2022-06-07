@@ -537,9 +537,9 @@
         "title": "每日交易-CFX",
         "subtitle": "每日在 Core 和 eSpace 间转入，转出的 CFX 统计数据",
         "yAxisTitle": "数量",
-        "seriesName": "每天转入的 CFX 数量",
+        "seriesName": "每天转出的 CFX 数量",
         "yAxisTitle2": "数量",
-        "seriesName2": "每天转出的 CFX 数量"
+        "seriesName2": "每天转入的 CFX 数量"
       },
       "contract": {
         "title": "合约分析",

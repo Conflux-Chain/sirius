@@ -537,9 +537,9 @@
         "title": "Daily CFX Transfer",
         "subtitle": "The CFX transfer in and out per day between Core and eSpace.",
         "yAxisTitle": "Count",
-        "seriesName": "Transfer In Count (Day)",
+        "seriesName": "Transfer Out Count (Day)",
         "yAxisTitle2": "Count",
-        "seriesName2": "Transfer Out Count (Day)"
+        "seriesName2": "Transfer In Count (Day)"
       },
       "contract": {
         "title": "Contract Statistics",
