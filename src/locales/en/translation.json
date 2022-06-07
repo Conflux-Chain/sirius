@@ -567,7 +567,7 @@
         "daily-apy": "APY",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
-        "daily-deposit": "Deposit",
+        "daily-deposit": "Deposit & Withdraw",
         "participation-rate": "Participation Rate"
       },
       "finalizedInterval": {
