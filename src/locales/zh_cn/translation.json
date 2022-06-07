@@ -628,8 +628,8 @@
     },
     "pow": {
       "preview": {
-        "title": "图表",
-        "subtitle": "Conflux 链上的图表 （点击查看详情）",
+        "title": "PoW 图表",
+        "subtitle": "Conflux 链上的 PoW 图表 （点击查看详情）",
         "viewDetail": "查看详情",
         "tip": "显示最近 30 天",
         "marketData": "市场数据",
@@ -639,7 +639,7 @@
         "contracts": "合约"
       },
       "breadcrumb": {
-        "charts": "图表",
+        "charts": "PoW 图表",
         "blocktime": "出块间隔",
         "tps": "交易 TPS",
         "hashrate": "哈希算力",

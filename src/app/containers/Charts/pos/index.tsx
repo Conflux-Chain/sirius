@@ -20,8 +20,8 @@ export function Chart() {
   const iszh = i18n.language.includes('zh');
 
   const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
-  const current = moment().subtract(1, 'day');
-  const oneMonthBefore = current.subtract(30, 'day');
+  const current = moment();
+  const oneMonthBefore = moment().subtract(29, 'day');
 
   return (
     <StyledChartPreviewWrapper>
