@@ -48,13 +48,10 @@ export function Chart() {
           <FinalizedInterval preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyAccounts preview={true} />
+          <DailyAPY preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyStaking preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyAPY preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <TotalReward preview={true} />
@@ -64,6 +61,9 @@ export function Chart() {
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyDeposit preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <DailyAccounts preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyParticipation preview={true} />

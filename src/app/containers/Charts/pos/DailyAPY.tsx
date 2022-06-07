@@ -51,7 +51,7 @@ export function DailyAPY({ preview = false }: ChildProps) {
       },
       series: [
         {
-          type: 'line',
+          type: 'area',
           name: `<span>${t(translations.highcharts.pos.apy.seriesName)}</span>`,
         },
       ],

@@ -54,7 +54,7 @@ export function DailyParticipation({ preview = false }: ChildProps) {
       },
       series: [
         {
-          type: 'line',
+          type: 'area',
           name: `<span>${t(
             translations.highcharts.pos.participation.seriesName,
           )}</span>`,
