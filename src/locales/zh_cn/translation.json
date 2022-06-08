@@ -547,9 +547,7 @@
         "yAxisTitle": "数量",
         "seriesName": "每日交易数",
         "yAxisTitle2": "数量",
-        "seriesName2": "每日 CFX 转移数",
-        "yAxisTitle3": "数量",
-        "seriesName3": "每日代币转移数"
+        "seriesName2": "每日 CFX 转移数"
       }
     },
     "pos": {
