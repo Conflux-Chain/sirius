@@ -26,7 +26,7 @@ export function Chart() {
 
   const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
   const current = moment().subtract(1, 'day');
-  const oneMonthBefore = current.subtract(30, 'day');
+  const oneMonthBefore = moment().subtract(30, 'day');
 
   return (
     <StyledChartPreviewWrapper>

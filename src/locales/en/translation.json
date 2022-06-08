@@ -524,7 +524,7 @@
     "crossSpace": {
       "preview": {
         "title": "Cross Space Charts",
-        "subtitle": "A collection of cross space charts between PoW and PoS on the Conflux Chain (click on View Details for a zoomed view)",
+        "subtitle": "A collection of cross space charts between Core and eSpace on the Conflux Chain (click on View Details for a zoomed view)",
         "viewDetail": "View Details",
         "tip": "Showing the last 30 days"
       },
@@ -535,11 +535,11 @@
       },
       "dailyCFXTransfer": {
         "title": "Daily CFX Transfer",
-        "subtitle": "The CFX transfer in and out per day between PoW and PoS.",
+        "subtitle": "The CFX transfer in and out per day between Core and eSpace.",
         "yAxisTitle": "Count",
-        "seriesName": "Transfer In Count (Day)",
+        "seriesName": "Transfer Out Count (Day)",
         "yAxisTitle2": "Count",
-        "seriesName2": "Transfer Out Count (Day)"
+        "seriesName2": "Transfer In Count (Day)"
       },
       "contract": {
         "title": "Contract Statistics",
@@ -567,7 +567,7 @@
         "daily-apy": "APY",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
-        "daily-deposit": "Deposit",
+        "daily-deposit": "Deposit & Withdraw",
         "participation-rate": "Participation Rate"
       },
       "finalizedInterval": {
