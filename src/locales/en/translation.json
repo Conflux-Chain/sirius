@@ -547,9 +547,7 @@
         "yAxisTitle": "Count",
         "seriesName": "Transactions Count (Day)",
         "yAxisTitle2": "Count",
-        "seriesName2": "CFX Transfer Count (Day)",
-        "yAxisTitle3": "Count",
-        "seriesName3": "Token Transfer Count (Day)"
+        "seriesName2": "CFX Transfer Count (Day)"
       }
     },
     "pos": {

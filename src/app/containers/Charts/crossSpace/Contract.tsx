@@ -27,16 +27,14 @@ export function Contract({ preview = false }: ChildProps) {
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
-        const data3: any = [];
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([t, Number(d.tx)]);
           data2.push([t, Number(d.cfxTransfer)]);
-          data3.push([t, Number(d.tokenTransfer)]);
         });
 
-        return [data1, data2, data3];
+        return [data1, data2];
       },
     },
     options: {
@@ -67,11 +65,6 @@ export function Contract({ preview = false }: ChildProps) {
         {
           name: `<span>${t(
             translations.highcharts.crossSpace.contract.seriesName2,
-          )}</span>`,
-        },
-        {
-          name: `<span>${t(
-            translations.highcharts.crossSpace.contract.seriesName3,
           )}</span>`,
         },
       ],
