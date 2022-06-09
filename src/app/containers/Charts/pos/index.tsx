@@ -3,7 +3,6 @@ import { Row, Col /*, Divider */ } from '@cfxjs/antd';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import moment from 'moment';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
 import { FinalizedInterval } from './FinalizedInterval';
@@ -16,12 +15,7 @@ import { DailyDeposit } from './DailyDeposit';
 import { DailyParticipation } from './DailyParticipation';
 
 export function Chart() {
-  const { t, i18n } = useTranslation();
-  const iszh = i18n.language.includes('zh');
-
-  const format = iszh ? 'YYYY MMMDD' : 'DD MMM YYYY';
-  const current = moment();
-  const oneMonthBefore = moment().subtract(29, 'day');
+  const { t } = useTranslation();
 
   return (
     <StyledChartPreviewWrapper>
@@ -32,11 +26,6 @@ export function Chart() {
         <Col>
           <div className="tip">
             {t(translations.highcharts.pos.preview.tip)}
-          </div>
-        </Col>
-        <Col>
-          <div className="duration">
-            {oneMonthBefore.format(format)} - {current.format(format)}
           </div>
         </Col>
       </Row>
