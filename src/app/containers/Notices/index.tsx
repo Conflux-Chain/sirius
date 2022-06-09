@@ -12,14 +12,14 @@ export const noticeInfo = {
   hot: false,
   type: 'Announcement',
   brief: {
-    en: 'ConfluxScan V2.12.1 Released!',
-    zh: 'ConfluxScan V2.12.1 发布喽！',
+    en: 'ConfluxScan V2.13.0 Released!',
+    zh: 'ConfluxScan V2.13.0 发布喽！',
   },
   link: {
     en:
-      'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/6257231619099-May-23-2022-May-30-2022',
+      'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/6480301541531-May-31-2022-Jun-9-2022',
     zh:
-      'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/6257231619099-2022-5-24-2022-5-30',
+      'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/6480301541531-2022-5-31-2022-6-9',
   },
 };
 
