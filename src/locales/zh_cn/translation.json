@@ -530,24 +530,24 @@
       },
       "breadcrumb": {
         "charts": "跨空间图表",
-        "daily-cfx-transfer": "每日交易-CFX",
-        "contract": "合约"
+        "daily-cfx-transfer": "每日转移 CFX 的交易量",
+        "contract": "每日转移 CFX 的交易数"
       },
       "dailyCFXTransfer": {
-        "title": "每日交易-CFX",
-        "subtitle": "每日在 Core 和 eSpace 间转入，转出的 CFX 统计数据",
-        "yAxisTitle": "数量",
-        "seriesName": "每天转出的 CFX 数量",
-        "yAxisTitle2": "数量",
-        "seriesName2": "每天转入的 CFX 数量"
+        "title": "每日转移 CFX 的交易量",
+        "subtitle": "每日在 Core 和 eSpace 间转出，转入 CFX 的交易量",
+        "yAxisTitle": "数量（CFX）",
+        "seriesName": "转出",
+        "yAxisTitle2": "数量（CFX）",
+        "seriesName2": "转入"
       },
       "contract": {
-        "title": "合约分析",
-        "subtitle": "每日转账统计",
-        "yAxisTitle": "数量",
-        "seriesName": "每日交易数",
-        "yAxisTitle2": "数量",
-        "seriesName2": "每日 CFX 转移数"
+        "title": "每日转移 CFX 的交易数",
+        "subtitle": "每日在 Core 和 eSpace 间转出，转入 CFX 的交易数",
+        "yAxisTitle": "交易数",
+        "seriesName": "转出",
+        "yAxisTitle2": "交易数",
+        "seriesName2": "转入"
       }
     },
     "pos": {
@@ -559,7 +559,7 @@
       },
       "breadcrumb": {
         "charts": "PoS 图表",
-        "finalized-interval": "确认间隔",
+        "finalized-interval": "确认间隔统计",
         "daily-accounts": "账户数",
         "daily-staking": "质押",
         "daily-apy": "年利率",
@@ -569,22 +569,22 @@
         "participation-rate": "节点参与度"
       },
       "finalizedInterval": {
-        "title": "确认间隔",
-        "subtitle": "最新状态到 PoS 最终确定的时间间隔",
+        "title": "确认间隔统计",
+        "subtitle": "最新状态到 PoS 最终确认状态的间隔",
         "yAxisTitle": "间隔",
-        "seriesName": "间隔（秒）",
+        "seriesName": "时间间隔（秒）",
         "yAxisTitle2": "间隔",
-        "seriesName2": "间隔（区块）"
+        "seriesName2": "纪元间隔"
       },
       "dailyAccounts": {
         "title": "账户数",
-        "subtitle": "Conflux 网络上每日 PoS 账户总数",
+        "subtitle": "Conflux 网络上 PoS 账户总数",
         "yAxisTitle": "账户总数",
         "seriesName": "账户总数"
       },
       "dailyStaking": {
         "title": "质押",
-        "subtitle": "Conflux 网络上每日质押在 PoS 里的 CFX 数量",
+        "subtitle": "Conflux 网络上质押在 PoS 里的 CFX 数量",
         "yAxisTitle": "质押 CFX 总数",
         "seriesName": "质押 CFX 总数"
       },
@@ -601,7 +601,7 @@
         "seriesName": "总奖励"
       },
       "dailyRewardRank": {
-        "title": "每日奖励排名",
+        "title": "奖励排名",
         "subtitle": "Conflux 网络上质押在 PoS 上 CFX 的奖励排名",
         "yAxisTitle": "奖励排名",
         "seriesName": "奖励排名",
