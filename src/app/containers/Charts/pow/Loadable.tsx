@@ -1,8 +1,8 @@
 import { lazyLoad } from 'utils/loadable';
 
-export const NewChart = lazyLoad(
+export const Chart = lazyLoad(
   () => import('./index'),
-  module => module.NewChart,
+  module => module.Chart,
 );
 
 export const BlockTime = lazyLoad(

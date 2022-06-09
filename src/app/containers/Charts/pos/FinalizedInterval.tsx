@@ -9,46 +9,35 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Contract({
-  preview = false,
-  address,
-}: ChildProps & { address: string }) {
+export function FinalizedInterval({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    plain: true,
     preview: preview,
-    name: '',
-    title: t(translations.highcharts.contract.title),
-    subtitle: t(translations.highcharts.contract.subtitle),
+    name: 'finalized-interval',
+    title: t(translations.highcharts.pos.finalizedInterval.title),
+    subtitle: t(translations.highcharts.pos.finalizedInterval.subtitle),
     request: {
-      url: OPEN_API_URLS.contract,
-      query: {
-        address,
-        limit: 10000,
-      },
+      url: OPEN_API_URLS.PoSFinalizedInterval,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
-        const data3: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.tx)]);
-          data2.push([t, Number(d.cfxTransfer)]);
-          data3.push([t, Number(d.tokenTransfer)]);
+          const t = dayjs.utc(d.day).valueOf();
+          data1.push([t, Number(d.finalize_second_gap)]);
+          data2.push([t, Number(d.finalize_epoch_gap)]);
         });
 
-        return [data1, data2, data3];
+        return [data1, data2];
       },
     },
     options: {
       chart: {
         zoomType: 'x',
-        type: 'line',
       },
       title: {
-        text: t(translations.highcharts.contract.title),
+        text: t(translations.highcharts.pos.finalizedInterval.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -58,23 +47,23 @@ export function Contract({
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.contract.yAxisTitle),
+          text: t(translations.highcharts.pos.finalizedInterval.yAxisTitle),
         },
       },
       series: [
         {
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.contract.seriesName,
+            translations.highcharts.pos.finalizedInterval.seriesName,
           )}</span>`,
+          tooltip: {
+            valueSuffix: 's',
+          },
         },
         {
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.contract.seriesName2,
-          )}</span>`,
-        },
-        {
-          name: `<span>${t(
-            translations.highcharts.contract.seriesName3,
+            translations.highcharts.pos.finalizedInterval.seriesName2,
           )}</span>`,
         },
       ],

@@ -8,25 +8,30 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import { CROSS_SPACE_ADDRESS } from 'utils/constants';
 
-export function TokenTransfer({ preview = false }: ChildProps) {
+export function Contract({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'token-transfer',
-    title: t(translations.highcharts.tokenTransfer.title),
-    subtitle: t(translations.highcharts.tokenTransfer.subtitle),
+    name: 'contract',
+    title: t(translations.highcharts.crossSpace.contract.title),
+    subtitle: t(translations.highcharts.crossSpace.contract.subtitle),
     request: {
-      url: OPEN_API_URLS.tokenTransfer,
+      url: OPEN_API_URLS.contract,
+      query: {
+        address: CROSS_SPACE_ADDRESS,
+        limit: 10000,
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
-          data2.push([t, Number(d.userCount)]);
+          data1.push([t, Number(d.tx)]);
+          data2.push([t, Number(d.cfxTransfer)]);
         });
 
         return [data1, data2];
@@ -35,38 +40,31 @@ export function TokenTransfer({ preview = false }: ChildProps) {
     options: {
       chart: {
         zoomType: 'x',
+        type: 'line',
       },
       title: {
-        text: t(translations.highcharts.tokenTransfer.title),
+        text: t(translations.highcharts.crossSpace.contract.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tokenTransfer.yAxisTitle),
+          text: t(translations.highcharts.crossSpace.contract.yAxisTitle),
         },
-      },
-      tooltip: {
-        shared: true,
       },
       series: [
         {
-          type: 'line',
           name: `<span>${t(
-            translations.highcharts.tokenTransfer.seriesName,
+            translations.highcharts.crossSpace.contract.seriesName,
           )}</span>`,
         },
         {
-          type: 'line',
           name: `<span>${t(
-            translations.highcharts.tokenTransfer.seriesName2,
+            translations.highcharts.crossSpace.contract.seriesName2,
           )}</span>`,
         },
       ],

@@ -9,24 +9,21 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function TPS({ preview = false }: ChildProps) {
+export function DailyAccounts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'tps',
-    title: t(translations.highcharts.tps.title),
-    subtitle: t(translations.highcharts.tps.subtitle),
+    name: 'daily-accounts',
+    title: t(translations.highcharts.pos.dailyAccounts.title),
+    subtitle: t(translations.highcharts.pos.dailyAccounts.subtitle),
     request: {
-      url: OPEN_API_URLS.tps,
+      url: OPEN_API_URLS.PoSDailyAccounts,
       formatter: data => {
         return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.tps),
-          ]),
+          data?.list?.map((d, i) => {
+            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
+          }),
         ];
       },
     },
@@ -35,7 +32,7 @@ export function TPS({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.tps.title),
+        text: t(translations.highcharts.pos.dailyAccounts.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,16 +42,15 @@ export function TPS({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.tps.yAxisTitle),
+          text: t(translations.highcharts.pos.dailyAccounts.yAxisTitle),
         },
-      },
-      tooltip: {
-        valueDecimals: 2,
       },
       series: [
         {
           type: 'line',
-          name: `<span>${t(translations.highcharts.tps.seriesName)}</span>`,
+          name: `<span>${t(
+            translations.highcharts.pos.dailyAccounts.seriesName,
+          )}</span>`,
         },
       ],
     },

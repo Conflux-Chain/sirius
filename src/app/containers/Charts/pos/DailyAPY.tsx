@@ -9,31 +9,30 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function BlockTime({ preview = false }: ChildProps) {
+export function DailyAPY({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'blocktime',
-    title: t(translations.highcharts.averageBlockTime.title),
-    subtitle: t(translations.highcharts.averageBlockTime.subtitle),
+    name: 'daily-apy',
+    title: t(translations.highcharts.pos.apy.title),
+    subtitle: t(translations.highcharts.pos.apy.subtitle),
     request: {
-      url: OPEN_API_URLS.mining,
-      formatter: data => [
-        data?.list?.map(s => [
-          // @ts-ignore
-          dayjs.utc(s.statTime).valueOf(),
-          // @ts-ignore
-          Number(s.blockTime),
-        ]),
-      ],
+      url: OPEN_API_URLS.PoSDailyAPY,
+      formatter: data => {
+        return [
+          data?.list?.map((d, i) => {
+            return [dayjs.utc(d.day).valueOf(), Number(d.v)];
+          }),
+        ];
+      },
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.averageBlockTime.title),
+        text: t(translations.highcharts.pos.apy.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -43,21 +42,17 @@ export function BlockTime({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.averageBlockTime.yAxisTitle),
+          text: t(translations.highcharts.pos.apy.yAxisTitle),
         },
       },
       tooltip: {
         valueDecimals: 2,
+        valueSuffix: '%',
       },
       series: [
         {
-          type: 'column',
-          name: `<span>${t(
-            translations.highcharts.averageBlockTime.seriesName,
-          )}</span>`,
-          tooltip: {
-            valueSuffix: 's',
-          },
+          type: 'area',
+          name: `<span>${t(translations.highcharts.pos.apy.seriesName)}</span>`,
         },
       ],
     },

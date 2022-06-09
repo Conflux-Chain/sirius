@@ -8,25 +8,26 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
-export function AccountGrowth({ preview = false }: ChildProps) {
+export function DailyParticipation({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'account-growth',
-    title: t(translations.highcharts.accountGrowth.title),
-    subtitle: t(translations.highcharts.accountGrowth.subtitle),
+    name: 'participation-rate',
+    title: t(translations.highcharts.pos.participation.title),
+    subtitle: t(translations.highcharts.pos.participation.subtitle),
     request: {
-      url: OPEN_API_URLS.accountGrowth,
+      url: OPEN_API_URLS.PoSDailyParticipationRate,
       formatter: data => {
         return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
+          data?.list?.map((d, i) => {
+            return [
+              dayjs.utc(d.day).valueOf(),
+              Number(new BigNumber(d.v).toFixed(2)),
+            ];
+          }),
         ];
       },
     },
@@ -35,7 +36,7 @@ export function AccountGrowth({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.accountGrowth.title),
+        text: t(translations.highcharts.pos.participation.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,14 +46,17 @@ export function AccountGrowth({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.accountGrowth.yAxisTitle),
+          text: t(translations.highcharts.pos.participation.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueSuffix: '%',
       },
       series: [
         {
-          type: 'line',
+          type: 'area',
           name: `<span>${t(
-            translations.highcharts.accountGrowth.seriesName,
+            translations.highcharts.pos.participation.seriesName,
           )}</span>`,
         },
       ],

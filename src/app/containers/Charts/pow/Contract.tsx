@@ -9,64 +9,72 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Contracts({ preview = false }: ChildProps) {
+export function Contract({
+  preview = false,
+  address,
+}: ChildProps & { address: string }) {
   const { t } = useTranslation();
 
   const props = {
+    plain: true,
     preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.contracts.title),
-    subtitle: t(translations.highcharts.contracts.subtitle),
+    name: '',
+    title: t(translations.highcharts.pow.contract.title),
+    subtitle: t(translations.highcharts.pow.contract.subtitle),
     request: {
-      url: OPEN_API_URLS.contracts,
+      url: OPEN_API_URLS.contract,
+      query: {
+        address,
+        limit: 10000,
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
+        const data3: any = [];
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.total)]);
-          data2.push([t, Number(d.count)]);
+          data1.push([t, Number(d.tx)]);
+          data2.push([t, Number(d.cfxTransfer)]);
+          data3.push([t, Number(d.tokenTransfer)]);
         });
 
-        return [data1, data2];
+        return [data1, data2, data3];
       },
     },
     options: {
       chart: {
         zoomType: 'x',
+        type: 'line',
       },
       title: {
-        text: t(translations.highcharts.contracts.title),
+        text: t(translations.highcharts.pow.contract.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
-      // legend: {
-      //   enabled: !preview,
-      // },
       xAxis: {
         type: 'datetime',
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.contracts.yAxisTitle),
+          text: t(translations.highcharts.pow.contract.yAxisTitle),
         },
-      },
-      tooltip: {
-        shared: true,
       },
       series: [
         {
-          type: 'line',
           name: `<span>${t(
-            translations.highcharts.contracts.seriesName,
+            translations.highcharts.pow.contract.seriesName,
           )}</span>`,
         },
         {
-          type: 'line',
           name: `<span>${t(
-            translations.highcharts.contracts.seriesName2,
+            translations.highcharts.pow.contract.seriesName2,
+          )}</span>`,
+        },
+        {
+          name: `<span>${t(
+            translations.highcharts.pow.contract.seriesName3,
           )}</span>`,
         },
       ],

@@ -77,7 +77,7 @@ import { NFTChecker } from './containers/NFTChecker/Loadable';
 import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
 import {
-  NewChart,
+  Chart,
   BlockTime,
   TPS,
   HashRate,
@@ -91,7 +91,25 @@ import {
   AccountGrowth,
   ActiveAccounts,
   Contracts as ContractsCharts,
-} from './containers/Charts/Loadable';
+} from './containers/Charts/pow/Loadable';
+
+import {
+  Chart as PoSChart,
+  FinalizedInterval as PoSFinalizedInterval,
+  DailyAccounts as PoSDailyAccounts,
+  DailyStaking as PoSDailyStaking,
+  DailyAPY as PoSDailyAPY,
+  TotalReward as PoSTotalReward,
+  DailyRewardRank as PoSDailyRewardRank,
+  DailyDeposit as PoSDailyDeposit,
+  DailyParticipation as PoSDailyParticipation,
+} from './containers/Charts/pos/Loadable';
+
+import {
+  Chart as CrossSpaceChart,
+  DailyCFXTransfer as CrossSpaceDailyCFXTransfer,
+  Contract as CrossSpaceContract,
+} from './containers/Charts/crossSpace/Loadable';
 
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
@@ -160,7 +178,11 @@ export function App() {
       // } else {
       //   classList.add(next);
       // }
-      if (pathname !== '/charts') {
+      if (
+        pathname !== '/pow-charts' &&
+        pathname !== '/pos-charts' &&
+        pathname !== '/cross-space-charts'
+      ) {
         window.scrollTo(0, 0);
       }
     }, [pathname]);
@@ -644,75 +666,147 @@ export function App() {
                             component={NFTDetail}
                           />
 
-                          <Route exact path="/charts" component={NewChart} />
+                          <Route
+                            exact
+                            path="/cross-space-charts"
+                            component={CrossSpaceChart}
+                          />
 
                           <Route
                             exact
-                            path="/charts/blocktime"
+                            path="/cross-space-charts/daily-cfx-transfer"
+                            component={CrossSpaceDailyCFXTransfer}
+                          />
+
+                          <Route
+                            exact
+                            path="/cross-space-charts/contract"
+                            component={CrossSpaceContract}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts"
+                            component={PoSChart}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/finalized-interval"
+                            component={PoSFinalizedInterval}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-accounts"
+                            component={PoSDailyAccounts}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-staking"
+                            component={PoSDailyStaking}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-apy"
+                            component={PoSDailyAPY}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/total-reward"
+                            component={PoSTotalReward}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-reward-rank"
+                            component={PoSDailyRewardRank}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-deposit"
+                            component={PoSDailyDeposit}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/participation-rate"
+                            component={PoSDailyParticipation}
+                          />
+
+                          <Route exact path="/pow-charts" component={Chart} />
+
+                          <Route
+                            exact
+                            path="/pow-charts/blocktime"
                             component={BlockTime}
                           />
 
-                          <Route exact path="/charts/tps" component={TPS} />
+                          <Route exact path="/pow-charts/tps" component={TPS} />
 
                           <Route
                             exact
-                            path="/charts/hashrate"
+                            path="/pow-charts/hashrate"
                             component={HashRate}
                           />
 
                           <Route
                             exact
-                            path="/charts/difficulty"
+                            path="/pow-charts/difficulty"
                             component={Difficulty}
                           />
 
                           <Route
                             exact
-                            path="/charts/supply"
+                            path="/pow-charts/supply"
                             component={TotalSupply}
                           />
 
                           <Route
                             exact
-                            path="/charts/circulating"
+                            path="/pow-charts/circulating"
                             component={CirculatingSupply}
                           />
 
-                          <Route exact path="/charts/tx" component={Tx} />
+                          <Route exact path="/pow-charts/tx" component={Tx} />
 
                           <Route
                             exact
-                            path="/charts/token-transfer"
+                            path="/pow-charts/token-transfer"
                             component={TokenTransfer}
                           />
 
                           <Route
                             exact
-                            path="/charts/cfx-transfer"
+                            path="/pow-charts/cfx-transfer"
                             component={CFXTransfer}
                           />
 
                           <Route
                             exact
-                            path="/charts/cfx-holder-accounts"
+                            path="/pow-charts/cfx-holder-accounts"
                             component={CFXHolderAccounts}
                           />
 
                           <Route
                             exact
-                            path="/charts/account-growth"
+                            path="/pow-charts/account-growth"
                             component={AccountGrowth}
                           />
 
                           <Route
                             exact
-                            path="/charts/active-accounts"
+                            path="/pow-charts/active-accounts"
                             component={ActiveAccounts}
                           />
 
                           <Route
                             exact
-                            path="/charts/contracts"
+                            path="/pow-charts/contracts"
                             component={ContractsCharts}
                           />
 

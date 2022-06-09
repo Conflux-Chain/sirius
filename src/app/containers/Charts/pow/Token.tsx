@@ -21,8 +21,8 @@ export function Token({
     plain: true,
     preview: preview,
     name: '',
-    title: t(translations.highcharts.token.title),
-    subtitle: t(translations.highcharts.token.subtitle),
+    title: t(translations.highcharts.pow.token.title),
+    subtitle: t(translations.highcharts.pow.token.subtitle),
     request: {
       url: OPEN_API_URLS.token,
       query: {
@@ -56,7 +56,7 @@ export function Token({
         type: 'line',
       },
       title: {
-        text: t(translations.highcharts.token.title),
+        text: t(translations.highcharts.pow.token.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -66,18 +66,24 @@ export function Token({
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.token.yAxisTitle),
+          text: t(translations.highcharts.pow.token.yAxisTitle),
         },
       },
       series: [
         {
-          name: `<span>${t(translations.highcharts.token.seriesName2)}</span>`,
+          name: `<span>${t(
+            translations.highcharts.pow.token.seriesName2,
+          )}</span>`,
         },
         {
-          name: `<span>${t(translations.highcharts.token.seriesName3)}</span>`,
+          name: `<span>${t(
+            translations.highcharts.pow.token.seriesName3,
+          )}</span>`,
         },
         {
-          name: `<span>${t(translations.highcharts.token.seriesName4)}</span>`,
+          name: `<span>${t(
+            translations.highcharts.pow.token.seriesName4,
+          )}</span>`,
         },
       ],
     },
@@ -85,7 +91,7 @@ export function Token({
 
   if (type.indexOf('20') > -1) {
     props.options.series.unshift({
-      name: `<span>${t(translations.highcharts.token.seriesName)}</span>`,
+      name: `<span>${t(translations.highcharts.pow.token.seriesName)}</span>`,
       // @ts-ignore
       tooltip: {
         valueDecimals: 2,

@@ -17,7 +17,7 @@ import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
-import { Tx, AccountGrowth } from '../Charts/Loadable';
+import { Tx, AccountGrowth } from '../Charts/pow/Loadable';
 
 function Info(title, number: any) {
   return (
@@ -118,7 +118,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/charts/tx'} className="info-link">
+              <Link to={'/pow-charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
               </Link>,
               `${
@@ -133,7 +133,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/charts/contracts'} className="info-link">
+              <Link to={'/pow-charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
               </Link>,
               `${
@@ -157,7 +157,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/charts/tps" className="info-link">
+              <Link to="/pow-charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               lodash.isNil(plotData.tps) ? '--' : plotData.tps,
@@ -175,7 +175,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/charts/blocktime" className="info-link">
+              <Link to="/pow-charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
               lodash.isNil(plotData.blockTime)
@@ -185,7 +185,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/charts/hashrate" className="info-link">
+              <Link to="/pow-charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
               lodash.isNil(plotData.hashRate) ? '--' : plotData.hashRate,

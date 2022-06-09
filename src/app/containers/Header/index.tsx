@@ -41,7 +41,9 @@ export const Header = memo(() => {
   //   location.pathname.startsWith('/sponsor') ||
   //   location.pathname.startsWith('/contract');
   const statisticsMatched =
-    location.pathname.startsWith('/chart') ||
+    location.pathname.startsWith('/pow-charts') ||
+    location.pathname.startsWith('/pos-charts') ||
+    location.pathname.startsWith('/cross-space-charts') ||
     location.pathname.startsWith('/statistics');
   const moreMatched =
     location.pathname.startsWith('/address-converter') ||
@@ -305,7 +307,9 @@ export const Header = memo(() => {
     // pos
     {
       title: t(translations.header.pos.pos),
-      matched: location?.pathname?.startsWith('/pos'),
+      matched:
+        location?.pathname?.startsWith('/pos/') ||
+        location?.pathname === '/pos',
       children: [
         {
           title: [
@@ -418,7 +422,25 @@ export const Header = memo(() => {
           ],
           name: ScanEvent.menu.action.charts,
           afterClick: menuClick,
-          href: '/charts',
+          href: '/pow-charts',
+        },
+        {
+          title: [
+            t(translations.header.posCharts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.posCharts,
+          afterClick: menuClick,
+          href: '/pos-charts',
+        },
+        {
+          title: [
+            t(translations.header.crossSpaceCharts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.crossSpaceCharts,
+          afterClick: menuClick,
+          href: '/cross-space-charts',
         },
         {
           title: [

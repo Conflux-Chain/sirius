@@ -9,33 +9,31 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function ActiveAccounts({ preview = false }: ChildProps) {
+export function HashRate({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
+    name: 'hashrate',
     preview: preview,
-    name: 'active-accounts',
-    title: t(translations.highcharts.activeAccounts.title),
-    subtitle: t(translations.highcharts.activeAccounts.subtitle),
+    title: t(translations.highcharts.pow.hashRate.title),
+    subtitle: t(translations.highcharts.pow.hashRate.subtitle),
     request: {
-      url: OPEN_API_URLS.activeAccounts,
-      formatter: data => {
-        return [
-          data?.list?.map(s => [
-            // @ts-ignore
-            dayjs.utc(s.statTime).valueOf(),
-            // @ts-ignore
-            Number(s.count),
-          ]),
-        ];
-      },
+      url: OPEN_API_URLS.mining,
+      formatter: data => [
+        data?.list?.map(s => [
+          // @ts-ignore
+          dayjs.utc(s.statTime).valueOf(),
+          // @ts-ignore
+          Number(s.hashRate) / 1000000000, // format to GH/s
+        ]),
+      ],
     },
     options: {
       chart: {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.activeAccounts.title),
+        text: t(translations.highcharts.pow.hashRate.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -45,14 +43,17 @@ export function ActiveAccounts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.activeAccounts.yAxisTitle),
+          text: t(translations.highcharts.pow.hashRate.yAxisTitle),
         },
+      },
+      tooltip: {
+        valueDecimals: 2,
       },
       series: [
         {
-          type: 'line',
+          type: 'area',
           name: `<span>${t(
-            translations.highcharts.activeAccounts.seriesName,
+            translations.highcharts.pow.hashRate.seriesName,
           )}</span>`,
         },
       ],
