@@ -1548,7 +1548,6 @@
     "modal": {
       "title": "请连接您的钱包",
       "installFluentWallet": "安装 Fluent Wallet",
-      "confluxportal": "ConfluxPortal",
       "fluentWallet": "Fluent Wallet",
       "initializing": "正在初始化...",
       "errorConnecting": "连接错误...",
