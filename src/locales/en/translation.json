@@ -3,6 +3,11 @@
     "title": "Conflux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "NFTAsset": {
+    "totalOf721": "Latest {{amount}} active tokens",
+    "totalOf1155": "Latest {{amount}} unique tokens",
+    "listLimit": "(From a total of {{total}} tokens)"
+  },
   "nftDetail": {
     "title": "NFT Detail",
     "details": "Details",

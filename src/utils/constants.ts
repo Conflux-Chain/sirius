@@ -268,3 +268,6 @@ OPEN_API_URLS.PoSDailyParticipationRate = '/stat/pos-daily-participation-rate';
 
 // Cross Space
 OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
+
+// table list list limit, max query items is 10,000, exceed will cause backend error
+export const TABLE_LIST_LIMIT = 10000;

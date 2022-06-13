@@ -3,6 +3,11 @@
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
   },
+  "NFTAsset": {
+    "totalOf721": "最新的 {{amount}} 个活跃代币",
+    "totalOf1155": "最新的 {{amount}} 个代币",
+    "listLimit": "（共计 {{total}} 个代币）"
+  },
   "nftDetail": {
     "title": "NFT 详情",
     "details": "详情",
