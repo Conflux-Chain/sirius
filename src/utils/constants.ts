@@ -225,9 +225,14 @@ export const CROSS_SPACE_ADDRESS = IS_TESTNET
   ? CROSS_SPACE_ADDRESSES.testnet
   : CROSS_SPACE_ADDRESSES.mainnet;
 
-export const OPEN_API_HOST = IS_TESTNET
+let APIHost = IS_TESTNET
   ? 'api-testnet.confluxscan.net'
   : 'api.confluxscan.net';
+if (window.location.host.startsWith('net')) {
+  APIHost = window.location.host.replace(/cfx|eth/, 'api');
+}
+
+export const OPEN_API_HOST = APIHost;
 
 export const OPEN_API_URLS = Object.entries({
   // charts
