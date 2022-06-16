@@ -321,3 +321,10 @@ export const reqNFTBalance = (extra?: object) => {
 };
 
 /** open api, end */
+
+export const reqPendingTxs = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/transaction/pending`,
+    ...extra,
+  });
+};

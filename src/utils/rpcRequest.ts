@@ -328,12 +328,12 @@ export const getSponsorInfo = async (...args) => {
   }
 };
 
-export const getAccountPendingTransactions = async (...args) => {
-  try {
-    return request('cfx_getAccountPendingTransactions', ...args);
-  } catch (e) {
-    throw e;
-  }
-};
+// export const getAccountPendingTransactions = async (...args) => {
+//   try {
+//     return request('cfx_getAccountPendingTransactions', ...args);
+//   } catch (e) {
+//     throw e;
+//   }
+// };
 
 export default request;

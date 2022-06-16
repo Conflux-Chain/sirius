@@ -45,6 +45,7 @@ export const Overview = ({ data }) => {
             type={status}
             txExecErrorInfo={txExecErrorInfo}
             address={from}
+            hash={hash}
           ></Status>
         </div>
       </Description>

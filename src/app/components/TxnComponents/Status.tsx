@@ -12,8 +12,7 @@ import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';
 import _ from 'lodash';
-import { Link } from 'app/components/Link/Loadable';
-import { formatAddress } from 'utils';
+import { PendingReason } from 'utils/tableColumns/PendingReason';
 
 import imgSuccess from 'images/status/success.svg';
 import imgError from 'images/status/error.svg';
@@ -32,6 +31,7 @@ interface Props {
     message: string;
   };
   address?: string;
+  hash?: string;
 }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>;
@@ -47,6 +47,7 @@ const StatusComponent = ({
   showTooltip,
   txExecErrorInfo,
   address,
+  hash,
   ...others
 }: StatusProps) => {
   const breakpoint = useBreakpoint();
@@ -118,13 +119,10 @@ const StatusComponent = ({
         <>
           {name}{' '}
           {address ? (
-            <Link
-              href={`/address/${formatAddress(
-                address,
-              )}?transactionType=pending`}
-            >
-              {t(translations.transaction.pendingReasonLink)}
-            </Link>
+            <>
+              <span className="split"></span>
+              <PendingReason account={address} hash={hash} />
+            </>
           ) : null}
         </>
       );
@@ -250,6 +248,9 @@ const StyledStatusWrapper = styled.span`
   .description {
     color: #97a3b4;
     margin-left: 0.5714rem;
+  }
+  .split {
+    margin-left: 10px;
   }
 `;
 
