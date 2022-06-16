@@ -304,11 +304,6 @@
     "pendingTotalLt10": "共计 {{total}} 条待处理记录",
     "pendingTip": "仅展示确认时间超过 5 分钟的待处理交易。",
     "pendingReasonTip": "；待处理交易原因：",
-    "pendingReason": {
-      "futureNonce": "错误随机数",
-      "notEnoughCash": "余额不足",
-      "ready": "待打包"
-    },
     "viewTxn": "查看{{type}}"
   },
   "cfxTransfers": {
@@ -1352,6 +1347,48 @@
       "hex": "十六进制",
       "text": "文字",
       "number": "数字"
+    },
+    "pending": {
+      "view": "查看详情",
+      "detail": "详情：",
+      "tip": "提示：",
+      "reference": "参考：",
+      "link": "http://wiki.conflux123.xyz/books/faqs/chapter/pending-tx"
+    },
+    "pendingDetails": {
+      "futrueNonce": {
+        "summary": "随机数不连续",
+        "detail": "随机数不连续，发送账户随机数为 {{stateNonce}}，当前交易随机数为 {{txNonce}}。",
+        "tip": "补充缺失的随机数的交易。"
+      },
+      "notEnoughCash": {
+        "summary": "余额不足",
+        "contractCreateAndToEOA": {
+          "detail": "余额不足。完成交易共需要：{{total}} CFX = value ({{value}}) + gas ({{gas}}) * gasPrice ({{gasPrice}}) + storageLimit ({{storageLimit}}) * storagePrice (10^18/1024)。账户余额：{{balance}} CFX。",
+          "tip": "1. 增加账户余额 2. gasPrice 或 storageLimit 可能设置过大，请重新设置燃气费，燃气价格。"
+        },
+        "toContract": {
+          "detail": "余额不足。完成交易共需要：{{total}} CFX = value ({{value}}) + gas ({{gas}}) * gasPrice ({{gasPrice}}) + storageLimit ({{storageLimit}}) * storagePrice (10^18/1024){{gasSponsor}}{{storageSponsor}}{{reason}}。账户余额：{{balance}} CFX。",
+          "tip": "1. 增加账户余额 2. gasPrice 或 storageLimit 可能设置过大，请重新设置燃气费，燃气价格。",
+          "reason": {
+            "notSponsored": "，交易未被代付",
+            "exceedUpperBound": "；燃气费代付失败，超过上限（{{sponsorGasBound}}）",
+            "exceedGasFeeBalance": "；燃气费代付失败，超过余额（{{sponsorBalanceForGas}}）",
+            "exceedStorageFeeBalance": "；存储费代付失败，超过余额（{{sponsorBalanceForCollateral}}）"
+          }
+        }
+      },
+      "readyToPack": {
+        "summary": "交易待打包",
+        "epochExceed": {
+          "detail": "发送交易的纪元和当前纪元跨度大于 100000，交易纪元为 {{proposedEpoch}}，当前纪元为 {{confirmedEpoch}}。",
+          "tip": "重新发送交易，使用最新的纪元。"
+        },
+        "lowGasPrice": {
+          "detail": "燃气价格太低，当前燃气价格为 {{txGasPrice}}。",
+          "tip": "提高燃气价格加速交易。"
+        }
+      }
     }
   },
   "block": {

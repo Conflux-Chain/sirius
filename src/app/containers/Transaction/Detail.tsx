@@ -723,6 +723,7 @@ export const Detail = () => {
               type={status}
               txExecErrorInfo={txExecErrorInfo}
               address={from}
+              hash={routeHash}
             ></Status>
           </SkeletonContainer>
         </Description>
