@@ -18,7 +18,6 @@ import { CopyButton } from './../CopyButton';
 import { useCheckHook } from './useCheckHook';
 import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
-import iconLogo from './assets/logo.png';
 import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
 import iconLoading from './assets/loading.svg';
@@ -82,14 +81,8 @@ export const Modal = ({
     login().finally(() => onClose());
   };
 
-  let walletText = t(translations.connectWallet.modal.confluxportal);
-  let walletLogo = iconLogo;
-
-  // @ts-ignore
-  if (window.conflux?.isFluent) {
-    walletText = t(translations.connectWallet.modal.fluentWallet);
-    walletLogo = iconFluent;
-  }
+  let walletText = t(translations.connectWallet.modal.fluentWallet);
+  let walletLogo = iconFluent;
 
   let title: string = t(translations.connectWallet.modal.title);
   let portal: React.ReactNode = walletText;

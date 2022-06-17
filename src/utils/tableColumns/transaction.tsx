@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Translation, useTranslation } from 'react-i18next';
+import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import clsx from 'clsx';
@@ -14,7 +14,7 @@ import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { PendingReason } from './PendingReason';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
@@ -97,6 +97,7 @@ export const TxnHashRenderComponent = ({
             variant="dot"
             txExecErrorInfo={txExecErrorInfo}
             address={txnDetail.address}
+            hash={hash}
           ></Status>
         </StyledStatusWrapper>
       ) : null}
@@ -276,20 +277,6 @@ export const method = {
   },
 };
 
-export const PendingReasonText = ({ value }) => {
-  const { t } = useTranslation();
-  let reason = value;
-  if (reason === 'ready') {
-    reason = t(translations.transactions.pendingReason.ready);
-  } else if (reason === SDK.CONST.PENDING_TX_STATUS.FUTURE_NONCE) {
-    reason = t(translations.transactions.pendingReason.futureNonce);
-  } else if (reason === SDK.CONST.PENDING_TX_STATUS.NOT_ENOUGH_CASH) {
-    reason = t(translations.transactions.pendingReason.notEnoughCash);
-  } else {
-    reason = <span>--</span>;
-  }
-  return reason;
-};
 export const pendingReason = {
   title: (
     <Translation>
@@ -299,10 +286,8 @@ export const pendingReason = {
   dataIndex: 'reason',
   key: 'reason',
   width: 1,
-  render: value => (
-    <PendingReasonText
-      value={typeof value === 'string' ? value : value?.pending}
-    ></PendingReasonText>
+  render: (_, row) => (
+    <PendingReason detail={row.pendingDetail}></PendingReason>
   ),
 };
 

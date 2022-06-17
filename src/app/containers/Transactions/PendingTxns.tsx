@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { translations } from 'locales/i18n';
 import BigNumber from 'bignumber.js';
-// import { toThousands } from 'utils';
 import { TxnSwitcher, Title } from './components';
 import { isAccountAddress } from 'utils';
-import { getAccountPendingTransactions } from 'utils/rpcRequest';
+import { reqPendingTxs } from 'utils/httpRequest';
 
 interface Props {
   address: string;
@@ -34,19 +32,26 @@ export const PendingTxns = ({ address }: Props) => {
         ...state,
         loading: true,
       });
-      getAccountPendingTransactions(
-        address,
-        undefined,
-        SDK.format.hex(10), // default limit
-      )
+
+      reqPendingTxs({
+        query: {
+          accountAddress: address,
+        },
+      })
         .then(resp => {
           if (resp) {
             try {
-              const { firstTxStatus, pendingCount, pendingTransactions } = resp;
+              const {
+                firstTxStatus,
+                pendingCount,
+                pendingTransactions,
+                pendingDetail,
+              } = resp;
               const list = pendingTransactions.slice(0, 10).map((p, index) => {
                 p.status = '4';
                 if (!index) {
                   p.reason = firstTxStatus;
+                  p.pendingDetail = pendingDetail;
                 }
                 return p;
               });

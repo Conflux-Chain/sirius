@@ -3,6 +3,11 @@
     "title": "Conflux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
   },
+  "NFTAsset": {
+    "totalOf721": "Latest {{amount}} active tokens",
+    "totalOf1155": "Latest {{amount}} unique tokens",
+    "listLimit": "(From a total of {{total}} tokens)"
+  },
   "nftDetail": {
     "title": "NFT Detail",
     "details": "Details",
@@ -299,11 +304,6 @@
     "pendingTotal": "Showing the last 10 pending txns (A total of {{total}} pending txns)",
     "pendingTip": "Only pending transactions with a confirmation time of more than 5 minutes are shown.",
     "pendingReasonTip": "; the reason of pending txn: ",
-    "pendingReason": {
-      "futureNonce": "Wrong nonce",
-      "notEnoughCash": "Insufficient balance",
-      "ready": "Ready to pack"
-    },
     "viewTxn": "View {{type}}"
   },
   "cfxTransfers": {
@@ -1349,6 +1349,48 @@
       "hex": "Hex",
       "text": "Text",
       "number": "Number"
+    },
+    "pending": {
+      "view": "View detail",
+      "detail": "Detail: ",
+      "tip": "Tip: ",
+      "reference": "Reference: ",
+      "link": "https://developer.confluxnetwork.org/sending-tx/en/why_tx_is_pending"
+    },
+    "pendingDetails": {
+      "futrueNonce": {
+        "summary": "Discontinuous nonce",
+        "detail": "Discontinuous nonce, the account nonce is {{stateNonce}}, current transaction config nonce is {{txNonce}}.",
+        "tip": "Supplement transactions with missing nonces."
+      },
+      "notEnoughCash": {
+        "summary": "Insufficient balance",
+        "contractCreateAndToEOA": {
+          "detail": "Insufficient balance. Total needs: {{total}} CFX = value ({{value}}) + gas ({{gas}}) * gasPrice ({{gasPrice}}) + storageLimit ({{storageLimit}}) * storagePrice (10^18/1024). Balance: {{balance}} CFX.",
+          "tip": "1. Increase balance 2. gasPrice or storageLimit is too large, please update gas fee, gas price"
+        },
+        "toContract": {
+          "detail": "Insufficient balance. Total needs: {{total}} CFX = value ({{value}}) + gas ({{gas}}) * gasPrice ({{gasPrice}}) + storageLimit ({{storageLimit}}) * storagePrice (10^18/1024){{gasSponsor}}{{storageSponsor}}{{reason}}. Balance: {{balance}} CFX.",
+          "tip": "1. Increase balance 2. gasPrice or storageLimit is too large, please update gas fee, gas price",
+          "reason": {
+            "notSponsored": ", not sponsored",
+            "exceedUpperBound": "; gas fee sponsored failed, exceed sponsor upperbound ({{sponsorGasBound}})",
+            "exceedGasFeeBalance": "; gas fee sponsored failed, exceed sponsor balance ({{sponsorBalanceForGas}})",
+            "exceedStorageFeeBalance": "; storage fee sponsored failed, exceed sponsor balance ({{sponsorBalanceForCollateral}})"
+          }
+        }
+      },
+      "readyToPack": {
+        "summary": "Ready to pack",
+        "epochExceed": {
+          "detail": "The gap of transaction config epoch and latest epoch is more than 100000. Transaction config epoch is {{proposedEpoch}}，latest epoch is {{confirmedEpoch}}.",
+          "tip": "Resend transaction with latest epoch."
+        },
+        "lowGasPrice": {
+          "detail": "Gas price is too low. Transaction config gas price is {{txGasPrice}}.",
+          "tip": "Increase gas price to speedup transaction."
+        }
+      }
     }
   },
   "block": {
@@ -1550,7 +1592,6 @@
     "modal": {
       "title": "Connect to a wallet",
       "installFluentWallet": "Install Fluent Wallet",
-      "confluxportal": "ConfluxPortal",
       "fluentWallet": "Fluent Wallet",
       "initializing": "Initializing...",
       "errorConnecting": "Error connecting...",

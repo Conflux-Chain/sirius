@@ -22,10 +22,11 @@ import {
   reqNFT1155Tokens,
 } from 'utils/httpRequest';
 import qs from 'query-string';
+import { TABLE_LIST_LIMIT } from 'utils/constants';
 
 type NFTBalancesType = {
-  type: string;
   contract: string;
+  type: string;
   name: any;
   balance: number;
   index: number;
@@ -49,11 +50,10 @@ export function NFTAsset({
   const { address } = useParams<{
     address?: string;
   }>();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const history = useHistory();
   const { pathname, search } = useLocation();
   const { NFTAddress, skip = '0', limit = '12', ...others } = qs.parse(search);
-  const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const [loading, setLoading] = useState<boolean>(false);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [NFTs, setNFTs] = useState<any[]>([]);
@@ -64,6 +64,7 @@ export function NFTAsset({
     type,
   });
   const [total, setTotal] = useState(0);
+  const [listLimit, setListLimit] = useState(TABLE_LIST_LIMIT);
 
   const pageSize = Number(limit);
   const page = Math.floor((Number(skip) || 0) / pageSize) + 1;
@@ -90,6 +91,7 @@ export function NFTAsset({
       total: 0,
     };
     let total = 0;
+    let listLimit = 0;
 
     setLoading(true);
     setHasSearched(true);
@@ -115,6 +117,7 @@ export function NFTAsset({
 
       // @ts-ignore
       total = NFTs.total;
+      listLimit = NFTs.listLimit;
     } else {
       if (await validateAddress(address)) {
         const data = await reqNFTBalance({
@@ -137,6 +140,7 @@ export function NFTAsset({
           }
 
           total = selectedNFT.balance;
+          listLimit = selectedNFT.balance;
 
           if (selectedNFT.type.includes('1155')) {
             NFTs = await reqNFT1155Tokens({
@@ -169,6 +173,10 @@ export function NFTAsset({
     setNFTs(NFTs.list);
     setTotal(total);
     setLoading(false);
+
+    if (listLimit) {
+      setListLimit(listLimit);
+    }
   };
 
   const handlePaginationChange = (page, pageSize) => {
@@ -204,6 +212,27 @@ export function NFTAsset({
     handleNFTSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, NFTAddress, skip, limit, contract, type]);
+
+  // 721 and 1155 show different tip
+  let totalTip = '';
+  let paginationTotal = total;
+  const tip =
+    translations.NFTAsset[
+      (type || selectedNFT.type).includes('721') ? 'totalOf721' : 'totalOf1155'
+    ];
+
+  if (!listLimit || listLimit >= total) {
+    totalTip = t(tip, {
+      amount: toThousands(total),
+    });
+  } else {
+    paginationTotal = listLimit;
+    totalTip = `${t(tip, {
+      amount: toThousands(listLimit),
+    })} ${t(translations.NFTAsset.listLimit, {
+      total: toThousands(total),
+    })}`;
+  }
 
   return (
     <StyledResultWrapper>
@@ -245,9 +274,7 @@ export function NFTAsset({
             ) : (
               <>
                 <div className="total">
-                  {t(translations.blocks.tipCountBefore)} {toThousands(total)}{' '}
-                  {lang === 'zh' ? '个 ' : ''}
-                  {selectedNFT.name || ''} NFT{' '}
+                  {totalTip}
                   <span>
                     {t(translations.contract.address)}:{' '}
                     <AddressContainer value={selectedNFT.contract} />
@@ -274,9 +301,7 @@ export function NFTAsset({
               hideOnSinglePage={true}
               current={page}
               defaultPageSize={pageSize}
-              total={total}
-              // showSizeChanger={false}
-              // showQuickJumper={false}
+              total={paginationTotal}
               pageSizeOptions={['12', '24', '60', '120']}
               onChange={handlePaginationChange}
             />
