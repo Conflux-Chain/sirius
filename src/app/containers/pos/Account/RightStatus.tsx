@@ -34,7 +34,7 @@ export function RightStatus() {
 
       if (resp.status?.outQueue?.length) {
         arr = arr.concat(
-          resp.status.inQueue.map(i => ({
+          resp.status.outQueue.map(i => ({
             ...i,
             type: 'out',
           })),
