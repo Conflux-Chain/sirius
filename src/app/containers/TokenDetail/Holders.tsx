@@ -2,6 +2,8 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, utils } from 'utils/tableColumns';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
+import { useAge } from '../../../utils/hooks/useAge';
+import { ColumnAge } from '../../../utils/tableColumns/utils';
 
 interface Props {
   address: string;
@@ -19,8 +21,9 @@ export const Holders = ({
   totalSupply,
 }: Props) => {
   const url = `/stat/tokens/holder-rank?address=${address}&reverse=true&orderBy=balance`;
+  const [toggleAgeFormat] = useAge();
 
-  let holdersColumnsWidth = [2, 10, 6, 4];
+  let holdersColumnsWidth = [2, 10, 6, 4, 3];
   let holdersColumns = [
     utils.number,
     tokenColunms.account,
@@ -30,6 +33,12 @@ export const Holders = ({
       type,
     ),
     tokenColunms.percentage(totalSupply),
+    ColumnAge({
+      ageFormat: 'datetime',
+      toggleAgeFormat,
+      dataIndex: 'updatedAt',
+      title: 'UpdatedAt',
+    }),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
   let holders1155ColumnsWidth = [2, 10, 10];
