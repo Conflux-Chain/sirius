@@ -41,11 +41,17 @@ export const Holders = ({
     }),
   ].map((item, i) => ({ ...item, width: holdersColumnsWidth[i] }));
 
-  let holders1155ColumnsWidth = [2, 10, 10];
+  let holders1155ColumnsWidth = [2, 10, 10, 3];
   let holders1155Columns = [
     utils.number,
     tokenColunms.account,
     tokenColunms.balance(0, price, type),
+    ColumnAge({
+      ageFormat: 'datetime',
+      toggleAgeFormat,
+      dataIndex: 'updatedAt',
+      title: 'UpdatedAt',
+    }),
   ].map((item, i) => ({ ...item, width: holders1155ColumnsWidth[i] }));
 
   const columns =

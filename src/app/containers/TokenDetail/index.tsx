@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useParams } from 'react-router-dom';
@@ -16,6 +16,8 @@ import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
+import { toHex } from '../../../utils';
+import fetch from '../../../utils/request';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
@@ -94,7 +96,12 @@ export function TokenDetail() {
       </Menu.Item>
     </MenuWrapper>
   );
-
+  const [hexId, setHexId] = useState(0);
+  useEffect(() => {
+    fetch('/stat/devops/hexId?hexId=' + toHex(tokenAddress)).then(result => {
+      setHexId(result.hex?.id || -1);
+    });
+  }, [tokenAddress]);
   return (
     <>
       <Helmet>
@@ -130,7 +137,7 @@ export function TokenDetail() {
             </div>
             <div className="basic-symbol">{`(${
               data.symbol || t(translations.general.notAvailable)
-            })`}</div>
+            }) [${toHex(tokenAddress)}] [${hexId}]`}</div>
             {isFC ? (
               <div className="basic-link">
                 <Link href={'/fccfx'} target="_blank">
