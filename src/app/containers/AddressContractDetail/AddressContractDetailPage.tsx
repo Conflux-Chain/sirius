@@ -8,8 +8,8 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useEffectOnce } from 'react-use';
-import { AddressDetailPage, ContractDetailPage } from './Loadable';
-import { isCurrentNetworkAddress, isAccountAddress } from '../../../utils';
+import { AddressDetailPage } from './Loadable';
+import { isCurrentNetworkAddress } from '../../../utils';
 interface RouteParams {
   address: string;
 }
@@ -22,9 +22,6 @@ export const AddressContractDetailPage = () => {
     if (!isCurrentNetworkAddress(address)) history.push('/404');
   });
 
-  return isAccountAddress(address) ? (
-    <AddressDetailPage />
-  ) : (
-    <ContractDetailPage />
-  );
+  // return 1 > 2 ? <AddressDetailPage /> : <ContractDetailPage />;
+  return <AddressDetailPage />;
 };

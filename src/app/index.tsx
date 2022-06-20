@@ -62,7 +62,10 @@ import { Statistics } from './containers/Statistics/Loadable';
 import { Transaction } from './containers/Transaction/Loadable';
 import { Block } from './containers/Block/Loadable';
 import { Epoch } from './containers/Epoch/Loadable';
-import { AddressContractDetailPage } from './containers/AddressContractDetail/Loadable';
+import {
+  AddressContractDetailPage,
+  ContractDetailPage,
+} from './containers/AddressContractDetail/Loadable';
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
@@ -128,6 +131,7 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
+import { useInterval } from 'react-use';
 
 // WebFontLoader.load({
 //   custom: {
@@ -189,6 +193,9 @@ export function App() {
 
     return props.children;
   }
+  useInterval(() => {
+    document.title = window.location.hostname.split('.')[0];
+  }, 1000);
 
   const ScrollToTop = withRouter(_ScrollToTop);
 
@@ -396,24 +403,7 @@ export function App() {
                             exact
                             path="/token/:tokenAddress"
                             render={(routeProps: any) => {
-                              const address =
-                                routeProps.match.params.tokenAddress;
-
-                              if (isSimplyBase32Address(address)) {
-                                return <TokenDetail {...routeProps} />;
-                              } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/token/${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
-                              }
+                              return <TokenDetail {...routeProps} />;
                             }}
                           />
                           {/* compatible for previous user bookmark */}
@@ -521,11 +511,18 @@ export function App() {
                             component={Epoch}
                           />
                           <Route
+                            path="/contract/:address"
+                            render={(routeProps: any) => {
+                              console.log(`render contact`);
+                              return <ContractDetailPage {...routeProps} />;
+                            }}
+                          />
+                          <Route
                             path="/address/:address"
                             render={(routeProps: any) => {
                               const address = routeProps.match.params.address;
 
-                              if (isSimplyBase32Address(address)) {
+                              if (2 > 1 || isSimplyBase32Address(address)) {
                                 return (
                                   <AddressContractDetailPage {...routeProps} />
                                 );
@@ -833,7 +830,7 @@ export function App() {
 const Main = styled.div`
   box-sizing: border-box;
   position: relative;
-  max-width: 1368px;
+  max-width: 1568px;
   margin: 0 auto;
   padding-top: 106px;
   padding-bottom: 20px;

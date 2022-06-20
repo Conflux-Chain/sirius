@@ -45,7 +45,7 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.metadata.title)}</title>
+        <title>{window.location.hostname}</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
@@ -105,8 +105,8 @@ export function HomePage() {
   );
 }
 
+// max-width: 1368px;
 const Main = styled.div`
-  max-width: 1368px;
   display: flex;
   flex-direction: column;
   align-items: center;

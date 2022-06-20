@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
-import { formatAddress } from 'utils';
+import { formatAddress, fromDripToCfx } from 'utils';
 import styled from 'styled-components/macro';
 import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
@@ -65,9 +65,11 @@ interface Props {
   address: string;
   from: string;
   to: string;
+  status: string;
+  value: string;
 }
 
-export const InternalTxns = ({ address, from, to }: Props) => {
+export const InternalTxns = ({ address, from, to, status, value }: Props) => {
   const { t } = useTranslation();
   const [state, setState] = useState<{
     total: number;
@@ -80,7 +82,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
     error: null,
     loading: false,
   });
-
+  const simpleAddr = SDK.address.simplifyCfxAddress;
   useEffect(() => {
     if (address) {
       setState({
@@ -95,8 +97,8 @@ export const InternalTxns = ({ address, from, to }: Props) => {
                 const contractInfo = resp.contractMap || {};
                 return {
                   ...l,
-                  fromContractInfo: contractInfo[l.from] || {},
-                  toContractInfo: contractInfo[l.to] || {},
+                  fromContractInfo: contractInfo[simpleAddr(l.from)] || {},
+                  toContractInfo: contractInfo[simpleAddr(l.to)] || {},
                 };
               });
               setState({
@@ -164,6 +166,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
           {t(translations.transaction.internalTxnsTip.produced)}{' '}
           <StyledCountWrapper>{total}</StyledCountWrapper>{' '}
           {t(translations.transaction.internalTxnsTip.txns)}
+          status: {status}, value: {value} = {fromDripToCfx(value, true)} CFX
         </div>
       </StyledTipWrapper>
     );

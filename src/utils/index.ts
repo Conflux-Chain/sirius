@@ -79,7 +79,9 @@ export const formatAddress = (
     return invalidAddressReturnValue;
   }
 };
-
+export const toHex = (address: string): string => {
+  return SDK.format.hexAddress(address);
+};
 export const getAddressInfo = (
   address: string,
 ): {
@@ -164,7 +166,7 @@ export function isSpecialAddress(address: string): boolean {
 }
 
 export function isCurrentNetworkAddress(address: string): boolean {
-  return getAddressInfo(address)?.netId === NETWORK_ID;
+  return true;
 }
 
 /**

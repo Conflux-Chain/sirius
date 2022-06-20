@@ -4,9 +4,9 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Copy, Qrcode } from './HeadLineButtons';
@@ -28,11 +28,7 @@ import {
   Title,
   Top,
 } from './layouts';
-import {
-  isContractAddress,
-  isInnerContractAddress,
-  isSpecialAddress,
-} from 'utils';
+import { isInnerContractAddress, isSpecialAddress, toHex } from 'utils';
 import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
@@ -49,7 +45,6 @@ interface RouteParams {
 export const ContractDetailPage = memo(() => {
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
-  const history = useHistory();
 
   const { data: contractInfo } = useContract(address, [
     'name',
@@ -70,21 +65,6 @@ export const ContractDetailPage = memo(() => {
     'isRegistered',
     'verifyInfo',
   ]);
-
-  useEffect(() => {
-    // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
-    // contractInfo.transactionHash === undefined
-    // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (
-      !isContractAddress(address) &&
-      !isInnerContractAddress(address) &&
-      !isSpecialAddress(address)
-    ) {
-      history.replace(`/notfound/${address}`, {
-        type: 'contract',
-      });
-    }
-  }, [address, history]);
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
@@ -201,6 +181,7 @@ export const ContractDetailPage = memo(() => {
                 </WarningInfoWrapper>
               ) : null}
             </div>
+            [{toHex(address)}]
           </HeadAddressLine>
         </Head>
         <Top key="top">
@@ -210,7 +191,7 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) && (
+        {
           <Middle key="middle">
             {contractInfo.stakingBalance != null &&
             contractInfo.stakingBalance !== '0' ? (
@@ -223,7 +204,7 @@ export const ContractDetailPage = memo(() => {
               {contractInfo.isRegistered && tokenTypeTag(t, 'registered')}
             </div>
           </Middle>
-        )}
+        }
         <Bottom key="bottom">
           <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>

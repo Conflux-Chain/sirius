@@ -1,6 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { transactionColunms } from 'utils/tableColumns';
+import { blockColunms, transactionColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 
 interface Props {
@@ -10,8 +10,9 @@ interface Props {
 export const Txns = ({ url }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsWidth = [4, 6, 6, 4, 3, 4, 5];
+  const columnsWidth = [4, 6, 6, 4, 3, 4, 5, 3];
   const columns = [
+    blockColunms.epoch,
     transactionColunms.hash,
     transactionColunms.from,
     transactionColunms.to,

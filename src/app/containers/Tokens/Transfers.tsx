@@ -1,6 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { tokenColunms } from 'utils/tableColumns';
+import { blockColunms, tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
@@ -27,8 +27,9 @@ export const Transfers = ({ type, address, decimals }: Props) => {
 
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  let columnsWidth = [3, 6, 6, 4, 4];
+  let columnsWidth = [3, 3, 6, 6, 4, 4];
   let columns = [
+    blockColunms.epoch,
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
@@ -43,8 +44,9 @@ export const Transfers = ({ type, address, decimals }: Props) => {
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   if (type === CFX_TOKEN_TYPES.erc721) {
-    columnsWidth = [4, 6, 6, 4, 4, 3];
+    columnsWidth = [4, 3, 6, 6, 4, 4, 3];
     columns = [
+      blockColunms.epoch,
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
@@ -54,8 +56,9 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
   if (type === CFX_TOKEN_TYPES.erc1155) {
-    columnsWidth = [3, 7, 7, 3, 4, 4, 3];
+    columnsWidth = [3, 3, 7, 7, 3, 4, 4, 3];
     columns = [
+      blockColunms.epoch,
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,

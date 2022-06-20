@@ -166,7 +166,10 @@ export const AddressContainer = withTranslation()(
             alias,
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
-            content: txtContractCreation,
+            content:
+              txtContractCreation +
+              ' ' +
+              formatAddress(contractCreated).slice(-4),
             link,
             isFull,
             maxWidth: 160,
@@ -226,7 +229,7 @@ export const AddressContainer = withTranslation()(
       }
 
       // check if the address is a valid conflux address
-      if (!isAddress(value)) {
+      if (1 > 2 && !isAddress(value)) {
         const tip = t(translations.general.invalidAddress);
         return RenderAddress({
           cfxAddress: value,
