@@ -218,20 +218,26 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={2}>
             {Info(
-              t(translations.statistics.pos.totalAccountCount),
+              <Link to="/pos-charts/daily-accounts" className="info-link">
+                {t(translations.statistics.pos.totalAccountCount)}
+              </Link>,
               POSSummaryInfo.posAccountCount,
             )}
           </Grid>
           <Grid xs={24} sm={24} md={3}>
             {Info(
-              t(translations.statistics.pos.totalLocked),
+              <Link to="/pos-charts/daily-staking" className="info-link">
+                {t(translations.statistics.pos.totalLocked)}
+              </Link>,
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
           </Grid>
           <Grid xs={24} sm={24} md={3}>
             {Info(
               <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
-                {t(translations.statistics.pos.apy)}
+                <Link to="/pos-charts/daily-apy" className="info-link">
+                  {t(translations.statistics.pos.apy)}
+                </Link>
               </InfoIconWithTooltip>,
               lodash.isNil(POSSummaryInfo.apy)
                 ? '--'
@@ -241,7 +247,9 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
 
           <Grid xs={24} sm={24} md={3}>
             {Info(
-              t(translations.statistics.pos.totalInterest),
+              <Link to="/pos-charts/total-reward" className="info-link">
+                {t(translations.statistics.pos.totalInterest)}
+              </Link>,
               formatBalance(POSSummaryInfo.totalPosRewardDrip),
             )}
           </Grid>
