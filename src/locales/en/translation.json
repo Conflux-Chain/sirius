@@ -727,7 +727,7 @@
       },
       "activeAccounts": {
         "title": "Active Accounts",
-        "subtitle": "The number of active accounts per day on the Conflux network.",
+        "subtitle": "The daily number of unique addresses that were active on the network as a sender or receiver of CFX or Token.",
         "yAxisTitle": "Total Active Accounts",
         "seriesName": "Total Active Accounts (Day)"
       },
@@ -1715,11 +1715,11 @@
     "pos": {
       "finalizedEpoch": "Finalized Epoch",
       "currentBlockNumber": "Current Block Number",
-      "totalLocked": "Total Locked",
-      "totalInterest": "Historical Interest",
+      "totalLocked": "Total Staked",
+      "totalInterest": "Total Reward",
       "lastInterestDistributionDate": "Interest Distribution Date",
       "lastInterestDistributionEpoch": "Latest Interest Distribution Block",
-      "totalAccountCount": "Nodes",
+      "totalAccountCount": "Accounts",
       "votingBlock": "Latest Voted Block",
       "apy": "APY",
       "apyTip": "The existing base staking rate is 4%, and the PoS staking reward is added to this with a plus factor. Let x=CFX total circulation / CFX total staking, and the additional coefficient be √x.\nWhen the amount of staking is 1/4 of the circulation, the reward rate is 8%; When the amount of staking is 1/9 of the circulation, the reward rate is 12%; And so on. When the total number of votes cast is relatively low, those who vote will benefit more."
