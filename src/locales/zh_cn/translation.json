@@ -727,7 +727,7 @@
       },
       "activeAccounts": {
         "title": "活跃账户数",
-        "subtitle": "Conflux 网络上每日活跃的账户数量",
+        "subtitle": "Conflux 网络上每日 CFX 或代币交易的发送方或接收方的去重地址",
         "yAxisTitle": "每日活跃账户数",
         "seriesName": "每日活跃账户数"
       },
@@ -1714,10 +1714,10 @@
       "finalizedEpoch": "已确认纪元",
       "currentBlockNumber": "当前区块编号",
       "totalLocked": "总锁仓",
-      "totalInterest": "累计利息",
+      "totalInterest": "总奖励",
       "lastInterestDistributionDate": "分发利息时间",
       "lastInterestDistributionEpoch": "最新分发利息区块",
-      "totalAccountCount": "节点总数",
+      "totalAccountCount": "账户总数",
       "votingBlock": "最新已投票区块",
       "apy": "年利率",
       "apyTip": "现有基础质押利率为 4%，而 PoS 质押奖励在此基础上添加加成系数。设 x=CFX总流通量 /CFX总质押量，加成系数为 √x。\n当质押量为流通量的 1/4 时，利率为 8%；当质押量为流通量 1/9 时，利率为 12%；以此类推。当参与投票的总数相对较低时，参与投票的人将获得更多的利益。"
