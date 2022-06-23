@@ -13,6 +13,7 @@ type TextProps = {
   maxCount?: number;
   hoverValue?: React.ReactNode;
   hoverValueMaxCount?: number;
+  getPopupContainer?: (elem: React.ReactNode) => React.ReactNode;
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
@@ -30,6 +31,7 @@ export const Text = React.memo(
     maxCount,
     hoverValue,
     hoverValueMaxCount: outerHoverValueMaxCount,
+    getPopupContainer,
     ...props
   }: Props) => {
     const bp = useBreakpoint();
@@ -77,18 +79,18 @@ export const Text = React.memo(
       textContent,
     );
 
-    return (
-      <Tooltip
-        title={tooltipText}
-        getPopupContainer={triggerNode => triggerNode}
-      >
-        <StyledTextWrapper maxWidth={maxWidth}>
-          <UIText className={clsx('sirius-text', className)} {...props}>
-            {child}
-          </UIText>
-        </StyledTextWrapper>
-      </Tooltip>
-    );
+    const p = { title: tooltipText };
+    if (getPopupContainer) {
+      // @ts-ignore
+      p.getPopupContainer = getPopupContainer;
+    }
+    return React.createElement(Tooltip, p, [
+      <StyledTextWrapper maxWidth={maxWidth}>
+        <UIText className={clsx('sirius-text', className)} {...props}>
+          {child}
+        </UIText>
+      </StyledTextWrapper>,
+    ]);
   },
 );
 
