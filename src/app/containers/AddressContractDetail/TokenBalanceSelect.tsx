@@ -119,7 +119,10 @@ function SelectItem({
   const content = (
     <SelectItemContent key="content">
       <SelectItemContentBalance key="balance">
-        <Text hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}>
+        <Text
+          hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}
+          getPopupContainer={triggerNode => triggerNode}
+        >
           {formatBalance(balance, decimal) + ' ' + symbol}
         </Text>
       </SelectItemContentBalance>
@@ -135,6 +138,7 @@ function SelectItem({
                   })
                 : '--'
             }`}
+            getPopupContainer={triggerNode => triggerNode}
           >
             {`${currencyUnit}${
               price
