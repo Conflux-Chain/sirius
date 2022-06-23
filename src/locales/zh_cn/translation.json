@@ -4,21 +4,21 @@
     "description": "树图区块链浏览器"
   },
   "NFTAsset": {
-    "totalOf721": "最新的 {{amount}} 个活跃代币",
-    "totalOf1155": "最新的 {{amount}} 个代币",
-    "listLimit": "（共计 {{total}} 个代币）"
+    "totalOf721": "最新的 {{amount}} 个活跃通证",
+    "totalOf1155": "最新的 {{amount}} 个通证",
+    "listLimit": "（共计 {{total}} 个通证）"
   },
   "nftDetail": {
-    "title": "NFT 详情",
+    "title": "数字藏品详情",
     "details": "详情",
     "metadata": "元数据",
     "description": "描述",
-    "id": "代币 ID",
-    "name": "代币名称",
-    "type": "代币标准",
+    "id": "通证 ID",
+    "name": "通证名称",
+    "type": "通证标准",
     "address": "合约地址",
     "contractInfo": "合约信息",
-    "contractInfoTip": "合约部署时设置的代币的名称和符号",
+    "contractInfoTip": "合约部署时设置的通证的名称和符号",
     "owner": "所有者",
     "url": "内容链接",
     "creator": "创作者",
@@ -32,7 +32,7 @@
       "fromAddress": "请输入发送方地址",
       "toAddress": "请输入接收方地址",
       "amount": "请输入数量",
-      "id": "请输入代币 ID",
+      "id": "请输入通证 ID",
       "invalidAddress": "请输入合法地址",
       "invalidNetwork": "请输入{{network}}地址",
       "invalidAmount": "请输入 1 - {{amount}} 个"
@@ -43,7 +43,7 @@
     "titleAccountInfo": "地址质押信息",
     "titleStakeAndSign": "兑换 FC",
     "titleWithdrawCFX": "提取本金",
-    "titleMyNFT": "我的 NFT",
+    "titleMyNFT": "我的数字藏品",
     "rulesLink": "FC-CFX 规则说明",
     "titleGenerate": "可产生收益的 CFX 数量",
     "titleAPY": "FC 挖矿年收益率",
@@ -79,7 +79,7 @@
       "confirm": "我知道了"
     },
     "tip": {
-      "myNFT": "累计质押 1000FC 即可获得专属 NFT（每个账户最多可获得1个 NFT）",
+      "myNFT": "累计质押 1000FC 即可获得专属数字藏品（每个账户最多可获得1个数字藏品）",
       "unsignedFC": "注意：您有 {{ value }} FC 还未享受补贴计划，请及时签约！",
       "legacyProfit": "请先提取遗留利息",
       "beforeWithdraw": "请先提取利息，否则利息会被清零！",
@@ -105,8 +105,8 @@
     "gatewayListTip": "仅支持下面网站中列出来的 IPFS 网关：<a href='https://ipfs.github.io/public-gateway-checker/'>https://ipfs.github.io/public-gateway-checker/</a>",
     "contractIcon": "合约图标",
     "remove": "移除",
-    "tokenTracker": "代币搜索器",
-    "tokenIcon": "代币图标",
+    "tokenTracker": "通证搜索器",
+    "tokenIcon": "通证图标",
     "sourceCode": "源码",
     "abi": "合约ABI",
     "enterPassword": "请输入管理员口令",
@@ -121,7 +121,7 @@
       "title": "更新合约信息"
     },
     "updateContract": "更新合约信息",
-    "updateToken": "更新代币信息",
+    "updateToken": "更新通证信息",
     "verify": {
       "contractCodeVerified": "合约源码已验证",
       "contractName": "合约名：",
@@ -150,7 +150,7 @@
     "errorNotAdmin": "您不是该合约的管理者或拥有者，请断开连接后再次尝试。",
     "invalidIconSize": "图片过大，请重试",
     "invalidIconType": "图片格式仅支持 gif、jpg、jpeg、png、svg，请重试",
-    "errorTokenICon": "非 CRC20 合约，代币图标不可上传",
+    "errorTokenICon": "非 CRC20 合约，通证图标不可上传",
     "beforeContractSubmitTip": "提交合约信息前，您需连接钱包以确认您是该合约的管理者或拥有者。",
     "invalidJsonAbi": "无法解析 JSON 文件中的有效 ABI，请重试",
     "abiNotUploaded": "没有上传 ABI",
@@ -261,7 +261,7 @@
   },
   "addressDetail": {
     "minedBlocks": "挖出区块",
-    "NFTAsset": "NFT 资产",
+    "NFTAsset": "数字藏品资产",
     "title": "地址详情",
     "content": "地址详情",
     "staked": "质押 CFX",
@@ -313,15 +313,15 @@
     "tipCountAfter": "个 CFX 转移"
   },
   "tokens": {
-    "title": "代币",
-    "description": "代币",
+    "title": "通证",
+    "description": "通证",
     "tipCountBefore": "共展示",
-    "tipCountAfter": "个代币（该列表仅展示一部分代币，其他未展示在列表中的代币可以通过搜索合约地址查看）",
+    "tipCountAfter": "个通证（该列表仅展示一部分通证，其他未展示在列表中的通证可以通过搜索合约地址查看）",
     "dataSource": "市场数据来源：<a href='https://coinmarketcap.com/zh/' target='_blank'>CoinMarketCap</a> 支持",
     "crcTip": "{{crc}} 是发布在 Conflux 网络上，采用 {{erc}} 标准的数字资产。",
     "table": {
       "number": "#",
-      "token": "代币",
+      "token": "通证",
       "transfer": "转移",
       "totalSupply": "总供应量",
       "holders": "持有人",
@@ -371,10 +371,10 @@
     "cfxTransfers": "CFX 转移",
     "blockchain": "区块链",
     "accounts": "账户",
-    "tokens": "代币",
-    "tokens20": "CRC-20 代币",
-    "tokens721": "CRC-721 代币",
-    "tokens1155": "CRC-1155 代币",
+    "tokens": "通证",
+    "tokens20": "CRC-20 通证",
+    "tokens721": "CRC-721 通证",
+    "tokens1155": "CRC-1155 通证",
     "contract": "合约",
     "contractCreation": "合约注册",
     "contractSponsor": "赞助合约",
@@ -403,16 +403,16 @@
     "suggestionBox": "意见箱",
     "testnet": "Conflux Core (Testnet)",
     "oceanus": "Conflux Hydra",
-    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 代币 / 合约名称标签",
-    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/代币/合约名称标签",
+    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签",
+    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签",
     "addressConverter": "地址格式转换",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
-    "nftChecker": "NFT 查看器",
-    "nftDetail": "NFT 详情",
+    "nftChecker": "数字藏品查看器",
+    "nftDetail": "数字藏品详情",
     "notice": "通知中心",
     "search": {
-      "tokens": "代币",
+      "tokens": "通证",
       "contracts": "合约",
       "contractsTip": "仅显示注册日期最早的 10 个合约"
     },
@@ -492,7 +492,7 @@
   },
   "token": {
     "website": "官方网站",
-    "token": "代币",
+    "token": "通证",
     "totalSupplay": "总供应量",
     "contract": "合约",
     "holders": "持有人",
@@ -505,7 +505,7 @@
     "marketCap": "市值",
     "shuttleflow": "该token由 BTC/Ethereum 网络跨链至 Conflux 网络",
     "fcMining": "FC-CFX 不可逆兑换",
-    "notRegistered": "该代币尚未被注册，",
+    "notRegistered": "该通证尚未被注册，",
     "tokenRegistration": "立即注册",
     "transferList": {
       "searchError": "抱歉！您搜索的字符串无效。",
@@ -513,7 +513,7 @@
     },
     "NFT": "库存",
     "total": "共计",
-    "tokens": "代币",
+    "tokens": "通证",
     "sortBy": "排序",
     "recentlyActive": "最近活跃",
     "newest": "最新",
@@ -645,7 +645,7 @@
         "supply": "总发行量",
         "circulating": "流通量",
         "tx": "每日交易次数",
-        "token-transfer": "每日交易-代币",
+        "token-transfer": "每日交易-通证",
         "cfx-transfer": "每日交易-CFX",
         "cfx-holder-accounts": "CFX 持有账户数",
         "account-growth": "账户增长",
@@ -706,8 +706,8 @@
         "seriesName3": "CFX 日交易量"
       },
       "tokenTransfer": {
-        "title": "每日交易代币",
-        "subtitle": "Conflux 网络上全部代币的每日转移数据统计",
+        "title": "每日交易通证",
+        "subtitle": "Conflux 网络上全部通证的每日转移数据统计",
         "yAxisTitle": "每日转移次数",
         "seriesName": "每日转移次数",
         "yAxisTitle2": "每日转移账户数",
@@ -727,7 +727,7 @@
       },
       "activeAccounts": {
         "title": "活跃账户数",
-        "subtitle": "Conflux 网络上每日 CFX 或代币交易的发送方或接收方的去重地址",
+        "subtitle": "Conflux 网络上每日 CFX 或通证交易的发送方或接收方的去重地址",
         "yAxisTitle": "每日活跃账户数",
         "seriesName": "每日活跃账户数"
       },
@@ -747,10 +747,10 @@
         "yAxisTitle2": "数量",
         "seriesName2": "每日 CFX 转移数",
         "yAxisTitle3": "数量",
-        "seriesName3": "每日代币转移数"
+        "seriesName3": "每日通证转移数"
       },
       "token": {
-        "title": "代币分析",
+        "title": "通证分析",
         "subtitle": "转账统计",
         "yAxisTitle": "数量",
         "seriesName": "每日转账数额",
@@ -776,8 +776,8 @@
       "description": "每秒链上的交易数量"
     },
     "tokenTransferTps": {
-      "title": "代币转移 TPS",
-      "description": "每秒链上的代币转移数量"
+      "title": "通证转移 TPS",
+      "description": "每秒链上的通证转移数量"
     },
     "blockTime": {
       "title": "出块间隔",
@@ -832,8 +832,8 @@
       "userCount": "CFX 日交易账户数"
     },
     "dailyTransactionTokens": {
-      "title": "日交易 -- 代币",
-      "description": "Conflux 网络上全部代币的每日转移数据统计",
+      "title": "日交易 -- 通证",
+      "description": "Conflux 网络上全部通证的每日转移数据统计",
       "txnCount": "日转移次数",
       "userCount": "日转移账户数"
     },
@@ -864,7 +864,7 @@
       "contractTotalCount": "合约量"
     },
     "tokenAnalysis": {
-      "title": "代币分析",
+      "title": "通证分析",
       "description": "{{token}} 每日转账统计",
       "transferAmount": "转账数额",
       "transferCount": "转账次数",
@@ -876,7 +876,7 @@
       "description": "每日转账统计",
       "tx": "交易",
       "cfxTransfer": "CFX转移",
-      "tokenTransfer": "代币转移"
+      "tokenTransfer": "通证转移"
     }
   },
   "general": {
@@ -896,10 +896,10 @@
         "address": "地址",
         "from": "发送方",
         "to": "接收方",
-        "tokenId": "代币 ID",
+        "tokenId": "通证 ID",
         "nonce": "随机数",
-        "token": "代币",
-        "tokenSubTitle": "（最多支持选择 3 种代币）",
+        "token": "通证",
+        "tokenSubTitle": "（最多支持选择 3 种通证）",
         "rangePicker": "日期",
         "epochNumber": "纪元",
         "minEpochNumber": "最小纪元",
@@ -910,7 +910,7 @@
         "invalidAddress": "地址格式错误"
       },
       "placeholder": {
-        "pleaseSelect": "请输入代币",
+        "pleaseSelect": "请输入通证",
         "pleaseEnter": "请输入",
         "pleaseEnterTxnHash": "0x...",
         "pleaseEnterBlockHash": "0x...",
@@ -924,20 +924,20 @@
         "reset": "重置"
       },
       "others": {
-        "recommend": "活跃代币",
-        "recommendTip": "仅展示表格中记录的所有代币",
+        "recommend": "活跃通证",
+        "recommendTip": "仅展示表格中记录的所有通证",
         "searchResult": "搜索结果",
         "noData": "无数据"
       }
     },
     "tokenTypeTag": {
-      "token": "代币"
+      "token": "通证"
     },
     "searchInputPlaceholder": {
       "txnHash": "交易哈希",
       "address": "地址",
       "holderAddress": "持有人地址",
-      "tokenID": "代币 ID",
+      "tokenID": "通证 ID",
       "blockHash": "区块哈希",
       "epoch": "纪元"
     },
@@ -968,12 +968,12 @@
         "title": "更多",
         "report": "举报",
         "editContract": "更新合约信息",
-        "editToken": "更新代币信息",
+        "editToken": "更新通证信息",
         "sponsor": "申请赞助",
         "website": "官方网站",
         "balanceChecker": "余额检索器",
         "verifyContract": "验证合约",
-        "NFTChecker": "NFT 查看器"
+        "NFTChecker": "数字藏品查看器"
       }
     },
     "loading": "加载中...",
@@ -988,13 +988,13 @@
     "invalidPosAddress": "无效的 Conflux PoS 地址",
     "invalidAddressWarning": "该地址为不合法地址，请谨慎操作。",
     "balance": "余额",
-    "token": "代币",
-    "abnormalToken": "非正常代币，未获取到其名称和符号",
+    "token": "通证",
+    "abnormalToken": "非正常通证，未获取到其名称和符号",
     "storageStaking": "抵押存储",
     "nonce": "随机数",
     "transaction": "交易",
     "transactions": "交易",
-    "tokenTxns": "代币交易",
+    "tokenTxns": "通证交易",
     "cfxTransfer": "CFX 交易",
     "tokenTxnsErc20": "CRC20 交易",
     "tokenTxnsErc721": "CRC721 交易",
@@ -1030,7 +1030,7 @@
       },
       "token": {
         "number": "#",
-        "token": "代币",
+        "token": "通证",
         "price": "价格",
         "change": "涨跌幅（%）",
         "volume": "24小时交易量",
@@ -1048,11 +1048,11 @@
         "fromTypeArrow": "发送",
         "to": "接收方",
         "accountAddress": "地址",
-        "tokenId": "代币 ID",
+        "tokenId": "通证 ID",
         "details": "详情",
-        "view": "查看 NFT",
+        "view": "查看数字藏品",
         "quantity": "数量",
-        "erc1155QuantityTip": "一个账户的 CRC-1155 代币数量等于其拥有的代币 ID 的类别总数。",
+        "erc1155QuantityTip": "一个账户的 CRC-1155 通证数量等于其拥有的通证 ID 的类别总数。",
         "percentage": "百分比",
         "traceType": "追溯类型",
         "traceOutcome": "执行结果",
@@ -1065,7 +1065,7 @@
         },
         "projectInfo": {
           "projectInfo": "项目信息",
-          "security": "该代币可能出现安全性问题，请防范风险",
+          "security": "该通证可能出现安全性问题，请防范风险",
           "verify": "合约已通过验证",
           "unverify": "注意：该合约尚未验证",
           "audit": "合约代码已通过审计",
@@ -1075,9 +1075,9 @@
           "listedByCentralized": "被中心化交易所收录",
           "listedByDecentralized": "被去中心化交易所收录",
           "listedByCMC": "被 CoinMarketCap 收录",
-          "blackList": "该代币已被列入黑名单",
+          "blackList": "该通证已被列入黑名单",
           "modal": {
-            "security": "该代币可能出现安全性问题，请防范风险（详情请查看下方“附加说明”）",
+            "security": "该通证可能出现安全性问题，请防范风险（详情请查看下方“附加说明”）",
             "verify": "合约已通过验证",
             "unverify": "注意：该合约尚未验证（立刻<1>前往验证合约</1>）",
             "unaudit": "合约代码已通过审计（已有审计报告或相关链接？立刻前往<1>提交</1>）",
@@ -1095,10 +1095,10 @@
             "uncmc": "被 <0>CoinMarketCap</0> 收录（前往<1>提交凭证</1>）",
             "cmc": "被 <0>CoinMarketCap</0> 收录",
             "remarkTitle": "附加说明：",
-            "remarkContent1": "如果出现下列情况之一，代币将被列入黑名单：",
+            "remarkContent1": "如果出现下列情况之一，通证将被列入黑名单：",
             "remarkContent2": "- 涉及钓鱼、传销、诈骗等行为的",
             "remarkContent3": "- 提交申请时使用虚假信息的",
-            "remarkContent4": "- 代币名称和符号涉及政治、暴恐、诈骗、色情、低俗、赌博、侵权、谣言等不良关键字",
+            "remarkContent4": "- 通证名称和符号涉及政治、暴恐、诈骗、色情、低俗、赌博、侵权、谣言等不良关键字",
             "disclaimer": "点击查看<1>免责声明</1>"
           }
         }
@@ -1206,10 +1206,10 @@
         "30001": "RPC 请求错误",
         "60002": "追溯数据解析错误",
         "50100": "业务异常",
-        "50301": "调用 NFT 合约失败",
-        "50302": "查询 NFT 元数据失败",
-        "50303": "解析 NFT 元数据失败",
-        "50304": "查询 NFT name 失败",
+        "50301": "调用数字藏品合约失败",
+        "50302": "查询数字藏品元数据失败",
+        "50303": "解析数字藏品元数据失败",
+        "50304": "查询数字藏品name 失败",
         "400": "错误请求",
         "401": "未授权",
         "403": "服务器拒绝请求",
@@ -1287,7 +1287,7 @@
     "status": "状态",
     "from": "发送方",
     "to": "接收方",
-    "tokenTransferred": "代币转移",
+    "tokenTransferred": "通证转移",
     "value": "价值",
     "gasUsed": "燃料用量/限制",
     "gasPrice": "燃料价格",
@@ -1313,7 +1313,7 @@
     "created": "已创建",
     "contractCreation": "合约创建",
     "for": "转移",
-    "tokenId": "代币ID",
+    "tokenId": "通证ID",
     "inputTips": "构成交易输入数据的二进制数据，如果是消息调用，则为输入数据；如果是合约创建，则为合约初始化",
     "epochConfirmations": "{{count}} 个纪元已确认",
     "statusError": {
@@ -1532,7 +1532,7 @@
       "security": "该笔交易的安全性，交易需要更多的确认区块提高安全性。",
       "from": "交易的发送方（可能来自合约地址）。",
       "to": "交易的接收方（可以是合约地址）。",
-      "tokenTransferred": "交易中代币转让的列表。",
+      "tokenTransferred": "交易中通证转让的列表。",
       "value": "该交易金额是以CFX显示。 ",
       "gasUsedLimit": "燃料使用指交易所使用的燃料数量; 燃料限制代表用于愿意为交易花费的最大燃料量。",
       "gasPrice": "交易指定的每单位燃料成本，GDrip为支付单位。燃料费用越高，被写入区块的机会就越大。",
@@ -1549,7 +1549,7 @@
     },
     "address": {
       "balance": "该地址的资产余额。",
-      "token": "该地址持有的代币。",
+      "token": "该地址持有的通证。",
       "storageCollateral": "该地址支付的存储押金总量，其单位为CFX。",
       "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
       "stakedBegin": "质押的 CFX 总额，访问 ",
@@ -1557,25 +1557,25 @@
       "stakingEarned": "质押 CFX 产生的利息收益 (年化收益 4%)，未包含已提取的利息。质押的利息将在每次提取时，自动发送至钱包地址。",
       "lockedBegin": "锁定的 CFX 总额，访问",
       "lockedEnd": "以锁定 CFX 获取投票权。",
-      "currentVotingRights": "投票权将按以下公式授予：季度数×代币数×0.25。"
+      "currentVotingRights": "投票权将按以下公式授予：季度数×通证数×0.25。"
     },
     "token": {
-      "price": "代币价格。",
+      "price": "通证价格。",
       "volume": "过去24小时内该加密货币所有交易的总美元价值。",
       "marketCap": "加密货币总供应量的价值：市值 = 价格 x 总供应量。",
       "fullyDilutedMarketCap": "最大供应量流通时的市值：全面摊薄市值 = 价格 x 最大供应量。",
-      "totalSupply": "该代币的总发行量。",
-      "holders": "持有该代币的所有地址数量。",
-      "transfers": "该合约地址发生的代币交易总数",
-      "contract": "部署该代币的合约。",
-      "decimals": "该代币的小数精度位数。"
+      "totalSupply": "该通证的总发行量。",
+      "holders": "持有该通证的所有地址数量。",
+      "transfers": "该合约地址发生的通证交易总数",
+      "contract": "部署该通证的合约。",
+      "decimals": "该通证的小数精度位数。"
     },
     "contract": {
       "balance": "该合约地址的资产余额。",
-      "token": "该合约地址持有的代币。",
+      "token": "该合约地址持有的通证。",
       "storageCollateral": "该合约赞助者支付的存储押金总量，其单位为CFX。",
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
-      "tokenTracker": "该合约上部署的代币。",
+      "tokenTracker": "该合约上部署的通证。",
       "contractCreator": "创建该合约的地址。",
       "contractAdmin": "管理员地址，有能力销毁合约。如果管理员地址不是零地址，则表示该合约处于调试阶段（Hydra 零地址为：cfx:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0sfbnjm2；Testnet 零地址为：cfxtest:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa6f0vrcsw）。",
       "storageSponsor": "为调用这个合约的交易支付存储押金的赞助地址。",
@@ -1636,8 +1636,8 @@
         "111": "{{value}} 个 FC 签约补贴计划",
         "112": "通知协议",
         "113": "提取本金 {{value}} CFX",
-        "114": "转移 {{type}} NFT（代币 ID：{{id}}）",
-        "115": "转移 {{type}} NFT（代币 ID：{{id}}，数量：{{amount}}）"
+        "114": "转移 {{type}}数字藏品（通证 ID：{{id}}）",
+        "115": "转移 {{type}}数字藏品（通证 ID：{{id}}，数量：{{amount}}）"
       }
     },
     "tip": "请先连接 Fluent Wallet 钱包！"
@@ -1646,11 +1646,11 @@
     "statistics": "最佳统计",
     "overview": "概览",
     "transactions": "交易",
-    "tokens": "代币",
+    "tokens": "通证",
     "miners": "矿工",
     "network": "网络",
     "overviewTransactions": "交易",
-    "overviewTokens": "代币",
+    "overviewTokens": "通证",
     "overviewMiners": "矿工",
     "overviewNetwork": "网络",
     "overviewMore": "查看图表",
@@ -1658,10 +1658,10 @@
     "topTxnCountReceived": "最佳地址--接收交易数",
     "topCFXSend": "最佳地址--CFX 发送量",
     "topCFXReceived": "最佳地址--CFX 接收量",
-    "topTokensBySenders": "最佳代币--发送账户数",
-    "topTokensByReceivers": "最佳代币--接收账户数",
-    "topTokensByTxnCount": "最佳代币--交易数",
-    "topTokensByTxnAccountsCount": "最佳代币--交易账户数",
+    "topTokensBySenders": "最佳通证--发送账户数",
+    "topTokensByReceivers": "最佳通证--接收账户数",
+    "topTokensByTxnCount": "最佳通证--交易数",
+    "topTokensByTxnAccountsCount": "最佳通证--交易账户数",
     "topMinersByBlocksMined": "最佳矿工--挖出区块",
     "topAccountsByGasUsed": "最佳账户--燃料用量",
     "topAccountsByTxnCount": "最佳账户--交易数",
@@ -1678,10 +1678,10 @@
       "totalTxnCount": "交易总数",
       "totalTxnCountSent": "发送交易总数",
       "totalTxnCountReceived": "接收交易总数",
-      "totalTokenSent": "代币发送总数",
-      "totalTokenReceived": "代币接收总数",
-      "totalTokenTransfersCount": "代币交易总数",
-      "totalTokenTransfersAccountsCount": "代币交易账户总数",
+      "totalTokenSent": "通证发送总数",
+      "totalTokenReceived": "通证接收总数",
+      "totalTokenTransfersCount": "通证交易总数",
+      "totalTokenTransfersAccountsCount": "通证交易账户总数",
       "totalMiners": "矿工总数",
       "totalBlocksMined": "挖出总区块",
       "totalGasUsed": "燃气使用总量",
@@ -1694,7 +1694,7 @@
       "txnValue": "交易值",
       "txnAccounts": "交易账户数",
       "percentage": "百分比",
-      "token": "代币",
+      "token": "通证",
       "senders": "发送账户数",
       "receivers": "接收账户数",
       "totalBlocksMined": "挖出总区块",
@@ -1734,7 +1734,7 @@
     "enterAmount": "请输入数值",
     "insufficientBalance": "{{type}} 余额不足",
     "max": "最大",
-    "selectAToken": "选择代币",
+    "selectAToken": "选择通证",
     "cfx": "CFX",
     "wcfx": "WCFX",
     "swapNCFXToNWCFX": "将 {{cfxValue}} CFX 兑换为 {{wcfxValue}} WCFX",
@@ -1773,11 +1773,11 @@
     }
   },
   "balanceChecker": {
-    "tokenBalanceChecker": "代币余额检索器",
+    "tokenBalanceChecker": "通证余额检索器",
     "balanceChecker": "余额检索器",
     "subtitle": "您可以在特定的纪元号或日期查找 Conflux 网络上的账户历史余额",
-    "tokenQuantity": "代币数量",
-    "tokenSupply": "代币供应",
+    "tokenQuantity": "通证数量",
+    "tokenSupply": "通证供应",
     "cfxBalance": "CFX 余额",
     "address": "地址",
     "contractAddress": "合约地址",
@@ -1789,24 +1789,24 @@
     "error": "不能为空",
     "lookUp": "搜索",
     "reset": "重置",
-    "tokenQuantityForAccountAddress": "账户地址代币总数量",
-    "totalSupplyForContractAddress": "合约地址代币总供应量",
+    "tokenQuantityForAccountAddress": "账户地址通证总数量",
+    "totalSupplyForContractAddress": "合约地址通证总供应量",
     "cfxBalanceForAddress": "地址 CFX 总余额",
     "snapshotDate": "截止日期",
     "epoch": "纪元",
     "epochNo": "纪元号"
   },
   "nftChecker": {
-    "title": "NFT 查看器",
-    "subtitle": "通过搜索地址查看某一账户拥有的 NFT（仅支持当前代币列表中的 NFT）",
+    "title": "数字藏品查看器",
+    "subtitle": "通过搜索地址查看某一账户拥有的数字藏品（仅支持当前通证列表中的数字藏品）",
     "inputPlaceholder": "请输入地址",
     "incorrectFormat": "地址格式错误",
     "incorrectAddressType": "地址类型错误，仅支持查询个人账户地址",
-    "tokenId": "代币 ID",
+    "tokenId": "通证 ID",
     "plzSearch": "请搜索",
-    "plzSearchDesc": "请在上方输入地址以查看其拥有的 NFT",
+    "plzSearchDesc": "请在上方输入地址以查看其拥有的数字藏品",
     "owner": "持有人",
-    "amount": "NFT 数量"
+    "amount": "数字藏品数量"
   },
   "pos": {
     "common": {
