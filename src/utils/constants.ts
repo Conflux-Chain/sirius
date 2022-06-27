@@ -234,7 +234,7 @@ let APIHost = IS_TESTNET
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 } else if (window.location.host.startsWith('8888')) {
-  APIHost = 'https://net8888api.confluxscan.net';
+  APIHost = 'net8888api.confluxscan.net';
 }
 
 export const OPEN_API_HOST = APIHost;
