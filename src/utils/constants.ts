@@ -233,8 +233,6 @@ let APIHost = IS_TESTNET
   : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
-} else if (window.location.host.startsWith('net8889')) {
-  APIHost = 'https://net8889api.confluxscan.net';
 } else if (window.location.host.startsWith('8888')) {
   APIHost = 'https://net8888api.confluxscan.net';
 }
