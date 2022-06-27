@@ -1,7 +1,7 @@
 import Wallet from '@cfxjs/use-wallet';
 export { Unit } from '@cfxjs/use-wallet';
 // @ts-ignore
-const FluentWallet = new Wallet('conflux', { mustBeFluent: true });
+const FluentWallet = new Wallet('conflux', { mustBeFluent: false });
 
 export const store = FluentWallet.store;
 export const provider = FluentWallet.provider;
