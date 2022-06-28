@@ -207,7 +207,7 @@ export function CreateAddressLabel({
       <Form
         form={form}
         name="basic"
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 5 }}
         autoComplete="off"
         initialValues={d}
       >
