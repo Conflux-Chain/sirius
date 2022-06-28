@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -25,12 +25,18 @@ import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
+import { useGlobalData } from 'utils/hooks/useGlobal';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import { Bookmark } from '@zeit-ui/react-icons';
+import { Text } from 'app/components/Text/Loadable';
+import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 
 interface RouteParams {
   address: string;
 }
 
 export const AddressDetailPage = memo(() => {
+  const [globalData = {}] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const { data: accountInfo } = useAccount(address, [
@@ -40,6 +46,10 @@ export const AddressDetailPage = memo(() => {
     'erc1155TransferCount',
     'stakingBalance',
   ]);
+  const [visible, setVisible] = useState(false);
+
+  const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
+  const addressLabel = addressLabelMap[address];
 
   const menu = (
     <MenuWrapper>
@@ -54,12 +64,43 @@ export const AddressDetailPage = memo(() => {
         </RouterLink>
       </Menu.Item>
       <Menu.Item>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVisible(true);
+          }}
+          href=""
+        >
+          {t(
+            translations.general.address.more[
+              addressLabel ? 'updateLabel' : 'addLabel'
+            ],
+          )}
+        </a>
+      </Menu.Item>
+      <Menu.Item>
         <RouterLink to={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
         </RouterLink>
       </Menu.Item>
     </MenuWrapper>
   );
+
+  const props = {
+    stage: addressLabel ? 'edit' : 'create',
+    visible,
+    data: {
+      address,
+    },
+    onOk: () => {
+      setVisible(false);
+    },
+    onCancel: () => {
+      setVisible(false);
+    },
+  };
 
   return (
     <>
@@ -78,11 +119,25 @@ export const AddressDetailPage = memo(() => {
               : t(translations.general.address.address)}
           </Title>
           <HeadAddressLine>
-            <span className="address">{address}</span>
+            <span className="address">
+              {address}
+              {addressLabel ? (
+                <>
+                  {' '}
+                  (
+                  <Text span hoverValue={t(translations.profile.tip.label)}>
+                    <Bookmark color="var(--theme-color-gray2)" size={16} />
+                  </Text>
+                  {addressLabel})
+                </>
+              ) : (
+                ''
+              )}
+            </span>
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['click']}>
+              <DropdownWrapper overlay={menu} trigger={['hover']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img
@@ -107,6 +162,7 @@ export const AddressDetailPage = memo(() => {
         <Bottom>
           <Table address={address} addressInfo={accountInfo} key={address} />
         </Bottom>
+        <CreateAddressLabel {...props}></CreateAddressLabel>
       </Main>
     </>
   );

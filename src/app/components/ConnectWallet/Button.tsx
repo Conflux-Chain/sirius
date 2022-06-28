@@ -31,7 +31,6 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
   const { t } = useTranslation();
   const [balance, setBalance] = useState('0');
   const { installed, connected, accounts } = usePortal();
-
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook(true);
 

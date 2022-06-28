@@ -1,4 +1,41 @@
 {
+  "profile": {
+    "title": "用户",
+    "subtitle": "私人信息，例如地址标签，交易备注等。去中心化存储，保存在浏览器本地存储中。",
+    "tip": {
+      "label": "地址标签",
+      "note": "交易备注用于记录您写入的信息"
+    },
+    "tx": {
+      "title": "交易备注",
+      "hash": "交易哈希",
+      "note": "备注",
+      "search": "请输入交易哈希或备注",
+      "error": {
+        "invalidHash": "请输入合法的交易哈希",
+        "invalidNote": "请输入合法的备注",
+        "invalidNoteRange": "请输入 1-{{amount}} 个字符",
+        "hash": "请输入交易哈希",
+        "note": "请输入备注",
+        "duplicated": "重复的交易哈希，已经存在于记录中"
+      }
+    },
+    "address": {
+      "title": "地址标签",
+      "address": "地址",
+      "label": "标签",
+      "search": "请输入地址或标签",
+      "error": {
+        "invalidAddress": "请输入合法地址",
+        "invalidNetwork": "请输入{{network}}地址",
+        "invalidLabel": "请输入合法的标签",
+        "invalidLabelRange": "请输入 1-{{amount}} 个字符",
+        "address": "请输入地址",
+        "label": "请输入标签",
+        "duplicated": "重复的地址，已经存在于记录中"
+      }
+    }
+  },
   "metadata": {
     "title": "树图区块链浏览器",
     "description": "树图区块链浏览器"
@@ -424,7 +461,8 @@
       "transactions": "交易",
       "committee": "委员会",
       "incomingRank": "收益排行"
-    }
+    },
+    "profile": "用户信息"
   },
   "footer": {
     "currency": {
@@ -880,6 +918,15 @@
     }
   },
   "general": {
+    "timestamp": "时间戳",
+    "create": "创建",
+    "edit": "编辑",
+    "delete": "删除",
+    "buttonCancel": "取消",
+    "buttonOk": "确认",
+    "warning": "提示",
+    "deleteTip": "你确定要删除这些记录吗？",
+    "exceedTip": "最大存储记录条数是 1000，请先删除部分记录。",
     "networks": {
       "mainnet": "主网",
       "testnet": "测试网",
@@ -973,7 +1020,9 @@
         "website": "官方网站",
         "balanceChecker": "余额检索器",
         "verifyContract": "验证合约",
-        "NFTChecker": "数字藏品查看器"
+        "NFTChecker": "数字藏品查看器",
+        "addLabel": "添加标签",
+        "updateLabel": "更新标签"
       }
     },
     "loading": "加载中...",
@@ -1269,6 +1318,9 @@
     "byFoundation": "（来自基金会）"
   },
   "transaction": {
+    "note": "交易备注",
+    "addNote": "添加交易备注",
+    "updateNote": "更新交易备注",
     "pendingReasonLink": "查看原因",
     "tipOfTokenTransferCount": "最多展示 100 条记录",
     "gotoDetail": "查看更多",

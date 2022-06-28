@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -41,15 +41,22 @@ import DownIcon from '../../../images/down.png';
 import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
+import { useGlobalData } from 'utils/hooks/useGlobal';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import { Bookmark } from '@zeit-ui/react-icons';
+import { Text } from 'app/components/Text/Loadable';
+import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 
 interface RouteParams {
   address: string;
 }
 
 export const ContractDetailPage = memo(() => {
+  const [globalData = {}] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const history = useHistory();
+  const [visible, setVisible] = useState(false);
 
   const { data: contractInfo } = useContract(address, [
     'name',
@@ -92,6 +99,8 @@ export const ContractDetailPage = memo(() => {
     websiteUrl !== 'https://' &&
     websiteUrl !== 'http://' &&
     websiteUrl !== t(translations.general.loading);
+  const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
+  const addressLabel = addressLabelMap[address];
 
   const menu = (
     <MenuWrapper>
@@ -111,6 +120,23 @@ export const ContractDetailPage = memo(() => {
         <RouterLink to={`/contract-info/${address}`}>
           {t(translations.general.address.more.editContract)}
         </RouterLink>
+      </Menu.Item>
+      <Menu.Item>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVisible(true);
+          }}
+          href=""
+        >
+          {t(
+            translations.general.address.more[
+              addressLabel ? 'updateLabel' : 'addLabel'
+            ],
+          )}
+        </a>
       </Menu.Item>
       {[NETWORK_TYPES.testnet, NETWORK_TYPES.mainnet].includes(NETWORK_TYPE) ? (
         <Menu.Item>
@@ -145,6 +171,20 @@ export const ContractDetailPage = memo(() => {
       )}
     </MenuWrapper>
   );
+
+  const props = {
+    stage: addressLabel ? 'edit' : 'create',
+    visible,
+    data: {
+      address,
+    },
+    onOk: () => {
+      setVisible(false);
+    },
+    onCancel: () => {
+      setVisible(false);
+    },
+  };
 
   return (
     <>
@@ -181,6 +221,18 @@ export const ContractDetailPage = memo(() => {
               )}
               &nbsp;
               <span>{address}</span>
+              {addressLabel ? (
+                <>
+                  {' '}
+                  (
+                  <Text span hoverValue={t(translations.profile.tip.label)}>
+                    <Bookmark color="var(--theme-color-gray2)" size={16} />
+                  </Text>
+                  {addressLabel})
+                </>
+              ) : (
+                ''
+              )}
             </IconWrapper>
             <div className="icons">
               <Copy address={address} />
@@ -227,6 +279,7 @@ export const ContractDetailPage = memo(() => {
         <Bottom key="bottom">
           <Table key="table" address={address} addressInfo={contractInfo} />
         </Bottom>
+        <CreateAddressLabel {...props}></CreateAddressLabel>
       </Main>
     </>
   );
