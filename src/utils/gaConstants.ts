@@ -65,6 +65,7 @@ export const ScanEvent = {
       incomingRank: 'incomingRank',
       posBlocks: 'posBlocks',
       posTransactions: 'posTransactions',
+      profile: 'profile',
     },
   },
   // global search

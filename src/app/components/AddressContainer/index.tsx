@@ -14,7 +14,7 @@ import {
   isPosAddress,
   getUrl,
 } from 'utils';
-import { AlertTriangle, File } from '@zeit-ui/react-icons';
+import { AlertTriangle, File, Bookmark } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
@@ -27,6 +27,8 @@ import {
 } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { useGlobalData } from 'utils/hooks/useGlobal';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 
 interface Props {
   value: string; // address value
@@ -41,6 +43,7 @@ interface Props {
   showIcon?: boolean; // whether show contract icon, default true
   verify?: boolean; // show verified contract icon or unverified contract icon
   isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
+  showLabeled?: boolean;
 }
 
 const defaultPCMaxWidth = 138;
@@ -147,7 +150,10 @@ export const AddressContainer = withTranslation()(
       t,
       verify = false,
       isEspaceAddress,
+      showLabeled = true,
     }: Props & WithTranslation) => {
+      const [globalData = {}] = useGlobalData();
+
       const suffixSize =
         suffixAddressSize ||
         (window.innerWidth <= sizes.m
@@ -259,6 +265,21 @@ export const AddressContainer = withTranslation()(
         alias = t(translations.general.zeroAddress);
       }
 
+      let labelIcon: React.ReactNode = null;
+      if (showLabeled) {
+        const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
+        if (addressLabelMap[cfxAddress]) {
+          alias = `${addressLabelMap[cfxAddress]}${alias ? ` (${alias})` : ''}`;
+          labelIcon = (
+            <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <Text span hoverValue={t(translations.profile.tip.label)}>
+                <Bookmark color="var(--theme-color-gray2)" size={16} />
+              </Text>
+            </IconWrapper>
+          );
+        }
+      }
+
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(
           isInnerContractAddress(cfxAddress)
@@ -280,6 +301,7 @@ export const AddressContainer = withTranslation()(
                 prefixFloat ? 'float' : ''
               }`}
             >
+              {labelIcon}
               <Text span hoverValue={typeText}>
                 <ImgWrapper>
                   {isInnerContractAddress(cfxAddress) ? (
@@ -334,6 +356,7 @@ export const AddressContainer = withTranslation()(
         isFull,
         maxWidth,
         suffixSize,
+        prefix: labelIcon,
       });
     },
   ),

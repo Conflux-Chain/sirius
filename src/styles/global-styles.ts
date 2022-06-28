@@ -309,6 +309,10 @@ export const GlobalStyle = createGlobalStyle`
     background-color: var(--theme-color-blue0);
     color: #ffffff;
 
+
+  }
+
+  .ant-btn {
     &:hover {
       background: #4665f0;
       color: #ffffff;
