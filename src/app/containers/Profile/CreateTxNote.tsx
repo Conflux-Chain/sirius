@@ -61,69 +61,66 @@ export function CreateTxNote({
   }, [outerList]);
 
   const handleOk = () => {
-    form
-      .validateFields()
-      .then(async function ({ hash, note }) {
-        try {
-          let newList: Array<Type> = list;
-          const timestamp = Math.floor(+new Date() / 1000);
+    form.validateFields().then(async function ({ hash, note }) {
+      try {
+        let newList: Array<Type> = list;
+        const timestamp = Math.floor(+new Date() / 1000);
 
-          if (stage === 'create') {
-            if (list.some(l => l.h === hash)) {
-              message.error(t(translations.profile.tx.error.duplicated));
-              return;
-            }
-
-            const item: Type = {
-              h: hash as string, // hash
-              n: note as string, // note
-              t: timestamp, // create timestamp
-              u: timestamp, // update timestamp
-            };
-
-            newList = [item].concat(list);
-          } else if (stage === 'edit') {
-            const i = list.findIndex(l => l.h === hash);
-            const old = list[i];
-
-            newList.splice(i, 1);
-            newList = [
-              {
-                ...old,
-                u: timestamp,
-                n: note as string,
-              },
-            ].concat(newList);
+        if (stage === 'create') {
+          if (list.some(l => l.h === hash)) {
+            message.error(t(translations.profile.tx.error.duplicated));
+            return;
           }
 
-          setLoading(true);
-
-          localStorage.setItem(
-            LOCALSTORAGE_KEYS_MAP.txPrivateNote,
-            JSON.stringify(newList),
-          );
-
-          const d = {
-            ...globalData,
-            [LOCALSTORAGE_KEYS_MAP.txPrivateNote]: newList.reduce(
-              (prev, curr) => {
-                return {
-                  ...prev,
-                  [curr.h]: curr.n,
-                };
-              },
-              {},
-            ),
+          const item: Type = {
+            h: hash as string, // hash
+            n: note as string, // note
+            t: timestamp, // create timestamp
+            u: timestamp, // update timestamp
           };
 
-          setGlobalData(d);
-          setLoading(false);
-          onOk();
-        } catch (e) {
-          publishRequestError(e, 'code');
+          newList = [item].concat(list);
+        } else if (stage === 'edit') {
+          const i = list.findIndex(l => l.h === hash);
+          const old = list[i];
+
+          newList.splice(i, 1);
+          newList = [
+            {
+              ...old,
+              u: timestamp,
+              n: note as string,
+            },
+          ].concat(newList);
         }
-      })
-      .catch(e => publishRequestError(e, 'code'));
+
+        setLoading(true);
+
+        localStorage.setItem(
+          LOCALSTORAGE_KEYS_MAP.txPrivateNote,
+          JSON.stringify(newList),
+        );
+
+        const d = {
+          ...globalData,
+          [LOCALSTORAGE_KEYS_MAP.txPrivateNote]: newList.reduce(
+            (prev, curr) => {
+              return {
+                ...prev,
+                [curr.h]: curr.n,
+              };
+            },
+            {},
+          ),
+        };
+
+        setGlobalData(d);
+        setLoading(false);
+        onOk();
+      } catch (e) {
+        publishRequestError(e, 'code');
+      }
+    });
   };
 
   const handleCancel = () => {
