@@ -68,7 +68,6 @@ export function CreateAddressLabel({
 
   const handleOk = () => {
     form.validateFields().then(async function ({ address, label }) {
-      console.log(1, address, label);
       try {
         let newList: Array<Type> = list;
         const timestamp = Math.floor(+new Date() / 1000);
@@ -127,7 +126,7 @@ export function CreateAddressLabel({
   };
 
   const handleCancel = () => {
-    form.resetFields([]);
+    form.resetFields();
     setLoading(false);
     onCancel();
   };

@@ -115,10 +115,8 @@ export function CreateTxNote({
               {},
             ),
           };
+
           setGlobalData(d);
-
-          console.log(19999, LOCALSTORAGE_KEYS_MAP.txPrivateNote, d);
-
           setLoading(false);
           onOk();
         } catch (e) {
@@ -129,7 +127,7 @@ export function CreateTxNote({
   };
 
   const handleCancel = () => {
-    form.resetFields([]);
+    form.resetFields();
     setLoading(false);
     onCancel();
   };
