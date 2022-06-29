@@ -32,7 +32,8 @@
         "invalidLabelRange": "Please input 1-{{amount}} characters",
         "address": "Please input address",
         "label": "Please input name tags",
-        "duplicated": "Duplicated address, already in the name tags list"
+        "duplicated": "Duplicated address, already in the name tags list",
+        "duplicatedNameTag": "Duplicated name tag, already in the name tags list"
       }
     }
   },

@@ -73,9 +73,17 @@ export function CreateAddressLabel({
         const timestamp = Math.floor(+new Date() / 1000);
 
         if (stage === 'create') {
-          if (list.some(l => l.a === address)) {
-            message.error(t(translations.profile.address.error.duplicated));
-            return;
+          for (let i = 0, len = list.length; i < len; i++) {
+            const { a, l } = list[i];
+            if (a === address) {
+              message.error(t(translations.profile.address.error.duplicated));
+              return;
+            } else if (l === label) {
+              message.error(
+                t(translations.profile.address.error.duplicatedNameTag),
+              );
+              return;
+            }
           }
 
           const item: Type = {
