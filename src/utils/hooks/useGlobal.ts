@@ -77,6 +77,6 @@ export const useGlobalData = createGlobalState<object>({
   ],
   networkId: DEFAULT_NETWORK_IDS.mainnet,
   contracts: {},
-  CONFLUX_SCAN_ADDRESS_LABEL: {},
-  CONFLUX_SCAN_TX_PRIVATE_NOTE: {},
+  // CONFLUX_SCAN_ADDRESS_LABEL: {},
+  // CONFLUX_SCAN_TX_PRIVATE_NOTE: {},
 });
