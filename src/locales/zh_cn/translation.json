@@ -34,7 +34,9 @@
         "label": "请输入标签",
         "duplicated": "重复的地址，已经存在于记录中",
         "duplicatedNameTag": "重复的标签，已经存在于记录中"
-      }
+      },
+      "publicNameTag": "公共标签：",
+      "myNameTag": "我的标签："
     }
   },
   "metadata": {

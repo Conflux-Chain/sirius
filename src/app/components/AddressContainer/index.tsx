@@ -53,10 +53,10 @@ const defaultPCSuffixAddressSize =
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
-const getAddressLabelInfo = (label, alias) => {
+const getAddressLabelInfo = label => {
   if (label) {
     return {
-      label: `${label}${alias ? ` (${alias})` : ''}`,
+      label,
       icon: (
         <IconWrapper>
           <Text
@@ -74,7 +74,7 @@ const getAddressLabelInfo = (label, alias) => {
     };
   }
   return {
-    label: alias,
+    label: '',
     icon: null,
   };
 };
@@ -94,10 +94,11 @@ const RenderAddress = ({
   prefix = null,
   suffix = null,
   type = 'pow',
+  addressLabel = '',
 }: any) => {
   const aftercontent =
     type === 'pow'
-      ? cfxAddress && !isFull && !alias
+      ? cfxAddress && !isFull && !addressLabel && !alias
         ? cfxAddress.substr(-suffixSize)
         : ''
       : '';
@@ -129,7 +130,7 @@ const RenderAddress = ({
           alias={alias}
           aftercontent={aftercontent}
         >
-          <span>{content || alias || cfxAddress}</span>
+          <span>{content || addressLabel || alias || cfxAddress}</span>
         </LinkWrapper>
       );
     }
@@ -141,7 +142,7 @@ const RenderAddress = ({
         alias={alias}
         aftercontent={aftercontent}
       >
-        <span>{content || alias || cfxAddress}</span>
+        <span>{content || addressLabel || alias || cfxAddress}</span>
       </PlainWrapper>
     );
   }
@@ -149,7 +150,34 @@ const RenderAddress = ({
   return (
     <AddressWrapper>
       {prefix}
-      <Text span hoverValue={hoverValue || cfxAddress}>
+      <Text
+        span
+        hoverValue={
+          <>
+            {addressLabel ? (
+              <>
+                <span>
+                  <Translation>
+                    {t => t(translations.profile.address.myNameTag)}
+                  </Translation>
+                </span>
+                {addressLabel}
+              </>
+            ) : null}
+            <div>{hoverValue || cfxAddress}</div>
+            {addressLabel && alias ? (
+              <>
+                <span>
+                  <Translation>
+                    {t => t(translations.profile.address.publicNameTag)}
+                  </Translation>
+                </span>
+                {alias}
+              </>
+            ) : null}
+          </>
+        }
+      >
         {text}
       </Text>
       {suffix}
@@ -199,7 +227,6 @@ export const AddressContainer = withTranslation()(
               globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
                 formatAddress(contractCreated)
               ],
-              alias || txtContractCreation,
             );
 
             addressLabel = label;
@@ -208,7 +235,8 @@ export const AddressContainer = withTranslation()(
 
           return RenderAddress({
             cfxAddress: '',
-            alias: addressLabel,
+            alias: alias || txtContractCreation,
+            addressLabel,
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
             link,
@@ -311,7 +339,6 @@ export const AddressContainer = withTranslation()(
           globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
             formatAddress(cfxAddress)
           ],
-          alias,
         );
 
         addressLabel = label;
@@ -328,7 +355,8 @@ export const AddressContainer = withTranslation()(
         );
         return RenderAddress({
           cfxAddress,
-          alias: addressLabel,
+          alias,
+          addressLabel,
           link,
           isFull,
           maxWidth,
@@ -362,7 +390,8 @@ export const AddressContainer = withTranslation()(
       if (isMe) {
         return RenderAddress({
           cfxAddress,
-          alias: addressLabel,
+          alias,
+          addressLabel,
           link,
           isFull,
           maxWidth,
@@ -385,7 +414,8 @@ export const AddressContainer = withTranslation()(
 
       return RenderAddress({
         cfxAddress,
-        alias: addressLabel,
+        alias,
+        addressLabel,
         link,
         isFull,
         maxWidth,
@@ -539,7 +569,7 @@ const addressStyle = (props: any) => `
   display: inline-flex !important;
   flex-wrap: nowrap;
   max-width: ${
-    props.maxwidth || (props.alias ? 180 : defaultPCMaxWidth)
+    props.maxwidth || (props.alias ? 160 : defaultPCMaxWidth)
   }px !important;
   outline: none;
   
@@ -552,7 +582,7 @@ const addressStyle = (props: any) => `
 
   ${media.m} {
     max-width: ${
-      props.maxwidth || (props.alias ? 160 : defaultMobileMaxWidth)
+      props.maxwidth || (props.alias ? 140 : defaultMobileMaxWidth)
     }px !important;
   }
 
