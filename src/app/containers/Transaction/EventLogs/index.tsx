@@ -22,6 +22,7 @@ import { Data } from './Data';
 import { Event } from 'app/components/TxnComponents/Event';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
 import { media } from 'styles/media';
+import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
 interface Props {
   hash: string;
@@ -193,6 +194,7 @@ const EventLog = ({ log }) => {
                 address={address}
                 contract={contractAndTokenInfo[formatAddress(address)]}
               ></Address>
+              <AddressLabel address={address} />
             </Description>
             {fnName ? (
               <Description
