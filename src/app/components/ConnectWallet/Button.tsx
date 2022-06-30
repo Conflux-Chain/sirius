@@ -194,4 +194,5 @@ const ButtonWrapper = styled.div`
 const StyledAddressLabelWrapper = styled.span`
   display: inline-flex;
   vertical-align: middle;
+  line-height: 2;
 `;
