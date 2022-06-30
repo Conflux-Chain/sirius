@@ -34,7 +34,9 @@
         "label": "Please input name tags",
         "duplicated": "Duplicated address, already in the name tags list",
         "duplicatedNameTag": "Duplicated name tag, already in the name tags list"
-      }
+      },
+      "publicNameTag": "Public Tag: ",
+      "myNameTag": "My Name Tag: "
     }
   },
   "metadata": {
