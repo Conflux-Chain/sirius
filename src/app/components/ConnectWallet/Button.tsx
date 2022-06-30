@@ -58,7 +58,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         });
       } else {
         const addressLabel =
-          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][accounts[0]];
+          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[accounts[0]];
         const addressLabelIcon = (
           <Text span hoverValue={t(translations.profile.tip.label)}>
             <Bookmark color="var(--theme-color-gray2)" size={16} />
