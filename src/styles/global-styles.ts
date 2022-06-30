@@ -358,6 +358,15 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  div.ant-message-custom-content {
+    display: flex;
+    align-items: center;
+
+    .anticon {
+      top: 0;
+    }
+  }
+
   /* ---------- ant design form, end ---------- */
 
   .sirius-select-dropdown.select-dropdown {

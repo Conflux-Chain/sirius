@@ -27,6 +27,7 @@ import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
 import lodash from 'lodash';
+import { AddressContainer } from 'app/components/AddressContainer';
 // @ts-ignore
 window.lodash = lodash;
 
@@ -154,9 +155,10 @@ export function NFTDetail(props) {
                     <SkeletonContainer shown={loading}>
                       {data.owner ? (
                         <>
-                          <Link href={`/address/${data.owner}`}>
-                            {data.owner}
-                          </Link>{' '}
+                          <AddressContainer
+                            value={data.owner}
+                            isFull={true}
+                          ></AddressContainer>{' '}
                           <CopyButton copyText={data.owner} />
                         </>
                       ) : (
@@ -174,7 +176,10 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {address ? (
                       <>
-                        <Link href={`/address/${address}`}>{address}</Link>{' '}
+                        <AddressContainer
+                          value={address}
+                          isFull={true}
+                        ></AddressContainer>{' '}
                         <CopyButton copyText={address} />
                       </>
                     ) : (
@@ -201,9 +206,10 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {data.creator ? (
                       <>
-                        <Link href={`/address/${data.creator}`}>
-                          {data.creator}
-                        </Link>{' '}
+                        <AddressContainer
+                          value={data.creator}
+                          isFull={true}
+                        ></AddressContainer>{' '}
                         <CopyButton copyText={data.creator} />
                       </>
                     ) : (

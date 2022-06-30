@@ -591,9 +591,9 @@ export const fetchRecentDagBlock = async (opts = {}) => {
   return data;
 };
 
-export const useCfxBalance: useApi = params => {
-  if (!Array.isArray(params)) {
-    params = [params];
-  }
-  return useSWR(['/stat/get-cfx-balance-at', ...params], simpleGetFetcher);
+export const useCfxBalance: useApi = (params = {}) => {
+  return useSWR(
+    Object.keys(params).length ? ['/stat/get-cfx-balance-at', params] : null,
+    simpleGetFetcher,
+  );
 };

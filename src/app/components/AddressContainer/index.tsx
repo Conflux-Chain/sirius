@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from '../Text/Loadable';
 import { Link } from '../Link/Loadable';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import { WithTranslation, withTranslation, Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import {
@@ -39,7 +39,6 @@ interface Props {
   link?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
   suffixAddressSize?: number; // suffix address size, default is 8
-  prefixFloat?: boolean; // prefix icon float or take up space, default false
   showIcon?: boolean; // whether show contract icon, default true
   verify?: boolean; // show verified contract icon or unverified contract icon
   isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
@@ -53,6 +52,32 @@ const defaultPCSuffixAddressSize =
   NETWORK_TYPE === NETWORK_TYPES.mainnet ? 8 : 4;
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
+
+const getAddressLabelInfo = (label, alias) => {
+  if (label) {
+    return {
+      label: `${label}${alias ? ` (${alias})` : ''}`,
+      icon: (
+        <IconWrapper>
+          <Text
+            span
+            hoverValue={
+              <Translation>
+                {t => t(translations.profile.tip.label)}
+              </Translation>
+            }
+          >
+            <Bookmark color="var(--theme-color-gray2)" size={16} />
+          </Text>
+        </IconWrapper>
+      ),
+    };
+  }
+  return {
+    label: alias,
+    icon: null,
+  };
+};
 
 // ≈ 2.5 ms
 const RenderAddress = ({
@@ -145,7 +170,6 @@ export const AddressContainer = withTranslation()(
       link = true,
       isMe = false,
       suffixAddressSize,
-      prefixFloat = false,
       showIcon = true,
       t,
       verify = false,
@@ -167,18 +191,33 @@ export const AddressContainer = withTranslation()(
         );
 
         if (contractCreated) {
+          let addressLabel: React.ReactNode = null,
+            addressLabelIcon: React.ReactNode = null;
+
+          if (showLabeled) {
+            const { label, icon } = getAddressLabelInfo(
+              globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
+                formatAddress(contractCreated)
+              ],
+              alias || txtContractCreation,
+            );
+
+            addressLabel = label;
+            addressLabelIcon = icon;
+          }
+
           return RenderAddress({
             cfxAddress: '',
-            alias,
+            alias: addressLabel,
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
-            content: txtContractCreation,
             link,
             isFull,
             maxWidth: 160,
             suffixSize,
             prefix: (
-              <IconWrapper className={prefixFloat ? 'float' : ''}>
+              <IconWrapper>
+                {addressLabelIcon}
                 <Text span hoverValue={txtContractCreation}>
                   <img src={ContractIcon} alt={txtContractCreation} />
                 </Text>
@@ -222,7 +261,7 @@ export const AddressContainer = withTranslation()(
           maxWidth,
           suffixSize: 0,
           prefix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <IconWrapper>
               <Text span hoverValue={tip}>
                 <File size={16} color="#17B38A" />
               </Text>
@@ -245,7 +284,7 @@ export const AddressContainer = withTranslation()(
           suffixSize,
           style: { color: '#e00909' },
           prefix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <IconWrapper>
               <Text span hoverValue={tip}>
                 <AlertTriangle size={16} color="#e00909" />
               </Text>
@@ -265,19 +304,18 @@ export const AddressContainer = withTranslation()(
         alias = t(translations.general.zeroAddress);
       }
 
-      let labelIcon: React.ReactNode = null;
+      let addressLabel: React.ReactNode = null,
+        addressLabelIcon: React.ReactNode = null;
       if (showLabeled) {
-        const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
-        if (addressLabelMap[cfxAddress]) {
-          alias = `${addressLabelMap[cfxAddress]}${alias ? ` (${alias})` : ''}`;
-          labelIcon = (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
-              <Text span hoverValue={t(translations.profile.tip.label)}>
-                <Bookmark color="var(--theme-color-gray2)" size={16} />
-              </Text>
-            </IconWrapper>
-          );
-        }
+        const { label, icon } = getAddressLabelInfo(
+          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
+            formatAddress(cfxAddress)
+          ],
+          alias,
+        );
+
+        addressLabel = label;
+        addressLabelIcon = icon;
       }
 
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
@@ -290,18 +328,14 @@ export const AddressContainer = withTranslation()(
         );
         return RenderAddress({
           cfxAddress,
-          alias,
+          alias: addressLabel,
           link,
           isFull,
           maxWidth,
           suffixSize,
           prefix: showIcon ? (
-            <IconWrapper
-              className={`${isFull ? 'icon' : ''} ${
-                prefixFloat ? 'float' : ''
-              }`}
-            >
-              {labelIcon}
+            <IconWrapper className={`${isFull ? 'icon' : ''}`}>
+              {addressLabelIcon}
               <Text span hoverValue={typeText}>
                 <ImgWrapper>
                   {isInnerContractAddress(cfxAddress) ? (
@@ -328,13 +362,13 @@ export const AddressContainer = withTranslation()(
       if (isMe) {
         return RenderAddress({
           cfxAddress,
-          alias,
+          alias: addressLabel,
           link,
           isFull,
           maxWidth,
           suffixSize,
           suffix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <IconWrapper>
               <img
                 src={isMeIcon}
                 alt="is me"
@@ -351,12 +385,12 @@ export const AddressContainer = withTranslation()(
 
       return RenderAddress({
         cfxAddress,
-        alias,
+        alias: addressLabel,
         link,
         isFull,
         maxWidth,
         suffixSize,
-        prefix: labelIcon,
+        prefix: addressLabelIcon,
       });
     },
   ),
@@ -372,7 +406,6 @@ export const PoSAddressContainer = withTranslation()(
       link = true,
       isMe = false,
       suffixAddressSize,
-      prefixFloat = false,
       t,
     }: Props & WithTranslation) => {
       const suffixSize =
@@ -401,7 +434,7 @@ export const PoSAddressContainer = withTranslation()(
           suffixSize,
           style: { color: '#e00909' },
           prefix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <IconWrapper>
               <Text span hoverValue={tip}>
                 <AlertTriangle size={16} color="#e00909" />
               </Text>
@@ -426,7 +459,7 @@ export const PoSAddressContainer = withTranslation()(
           maxWidth,
           suffixSize,
           suffix: (
-            <IconWrapper className={prefixFloat ? 'float' : ''}>
+            <IconWrapper>
               <img
                 src={isMeIcon}
                 alt="is me"
@@ -480,10 +513,6 @@ const ImgWrapper = styled.span`
 const IconWrapper = styled.span`
   margin-right: 2px;
   flex-shrink: 0;
-
-  &.float {
-    margin-left: -18px;
-  }
 
   svg {
     vertical-align: bottom;

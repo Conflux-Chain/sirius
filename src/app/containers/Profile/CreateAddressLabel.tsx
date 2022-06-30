@@ -67,72 +67,74 @@ export function CreateAddressLabel({
   }, [outerList]);
 
   const handleOk = () => {
-    form
-      .validateFields()
-      .then(async function ({ address, label }) {
-        try {
-          let newList: Array<Type> = list;
-          const timestamp = Math.floor(+new Date() / 1000);
+    form.validateFields().then(async function ({ address, label }) {
+      try {
+        let newList: Array<Type> = list;
+        const timestamp = Math.floor(+new Date() / 1000);
 
-          if (stage === 'create') {
-            if (list.some(l => l.a === address)) {
+        if (stage === 'create') {
+          for (let i = 0, len = list.length; i < len; i++) {
+            const { a, l } = list[i];
+            if (a === address) {
               message.error(t(translations.profile.address.error.duplicated));
               return;
+            } else if (l === label) {
+              message.error(
+                t(translations.profile.address.error.duplicatedNameTag),
+              );
+              return;
             }
-
-            const item: Type = {
-              a: address as string, // address
-              l: label as string, // label
-              t: timestamp, // create timestamp
-              u: timestamp, // update timestamp
-            };
-
-            newList = [item].concat(list);
-          } else if (stage === 'edit') {
-            const i = list.findIndex(l => l.a === address);
-            const old = list[i];
-
-            newList.splice(i, 1);
-            newList = [
-              {
-                ...old,
-                u: timestamp,
-                l: label as string,
-              },
-            ].concat(newList);
           }
 
-          setLoading(true);
+          const item: Type = {
+            a: address as string, // address
+            l: label as string, // label
+            t: timestamp, // create timestamp
+            u: timestamp, // update timestamp
+          };
 
-          localStorage.setItem(
-            LOCALSTORAGE_KEYS_MAP.addressLabel,
-            JSON.stringify(newList),
-          );
+          newList = [item].concat(list);
+        } else if (stage === 'edit') {
+          const i = list.findIndex(l => l.a === address);
+          const old = list[i];
 
-          setGlobalData({
-            ...globalData,
-            [LOCALSTORAGE_KEYS_MAP.addressLabel]: newList.reduce(
-              (prev, curr) => {
-                return {
-                  ...prev,
-                  [curr.a]: curr.l,
-                };
-              },
-              {},
-            ),
-          });
-
-          setLoading(false);
-          onOk();
-        } catch (e) {
-          publishRequestError(e, 'code');
+          newList.splice(i, 1);
+          newList = [
+            {
+              ...old,
+              u: timestamp,
+              l: label as string,
+            },
+          ].concat(newList);
         }
-      })
-      .catch(e => publishRequestError(e, 'code'));
+
+        setLoading(true);
+
+        localStorage.setItem(
+          LOCALSTORAGE_KEYS_MAP.addressLabel,
+          JSON.stringify(newList),
+        );
+
+        setGlobalData({
+          ...globalData,
+          [LOCALSTORAGE_KEYS_MAP.addressLabel]: newList.reduce((prev, curr) => {
+            return {
+              ...prev,
+              [curr.a]: curr.l,
+            };
+          }, {}),
+        });
+
+        setLoading(false);
+        onOk();
+      } catch (e) {
+        publishRequestError(e, 'code');
+      }
+    });
   };
 
   const handleCancel = () => {
-    form.resetFields([]);
+    form.resetFields();
     setLoading(false);
     onCancel();
   };
@@ -207,7 +209,7 @@ export function CreateAddressLabel({
       <Form
         form={form}
         name="basic"
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 5 }}
         autoComplete="off"
         initialValues={d}
       >
