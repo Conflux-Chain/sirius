@@ -131,7 +131,7 @@ const Container = styled.div`
   padding-left: 7px;
   margin: 8px 0;
   flex-wrap: wrap;
-  .icon {
+  img.icon {
     display: inline-block;
     width: 10px;
     margin-right: 3px;

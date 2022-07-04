@@ -1,4 +1,44 @@
 {
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Private info, like private name tag and transaction private note. Decentralized storage in browser's localstorage.",
+    "tip": {
+      "label": "Private name tag",
+      "note": "Private note to keep track of the transaction."
+    },
+    "tx": {
+      "title": "Transaction Private Notes",
+      "hash": "Tx Hash",
+      "note": "Note",
+      "search": "Please input tx hash or note",
+      "error": {
+        "invalidHash": "Please input valid tx hash",
+        "invalidNote": "Please input valid note",
+        "invalidNoteRange": "Please input 1-{{amount}} characters",
+        "hash": "Please input tx hash",
+        "note": "Please input note",
+        "duplicated": "Duplicated hash, already in the note list"
+      }
+    },
+    "address": {
+      "title": "Private Name Tags",
+      "address": "Address",
+      "label": "Name Tags",
+      "search": "Please input address or name tags",
+      "error": {
+        "invalidAddress": "Please input valid base32 address",
+        "invalidNetwork": "Please input {{network}} address",
+        "invalidLabel": "Please input valid name tags",
+        "invalidLabelRange": "Please input 1-{{amount}} characters",
+        "address": "Please input address",
+        "label": "Please input name tags",
+        "duplicated": "Duplicated address, already in the name tags list",
+        "duplicatedNameTag": "Duplicated name tag, already in the name tags list"
+      },
+      "publicNameTag": "Public Tag: ",
+      "myNameTag": "My Name Tag: "
+    }
+  },
   "metadata": {
     "title": "Conflux BlockChain Explorer",
     "description": "BlockChain Explorer for Conflux Network"
@@ -424,7 +464,8 @@
       "transactions": "Transactions",
       "committee": "Committee",
       "incomingRank": "Incoming Rank"
-    }
+    },
+    "profile": "My Profile"
   },
   "footer": {
     "currency": {
@@ -880,6 +921,15 @@
     }
   },
   "general": {
+    "timestamp": "Timestamp",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "buttonCancel": "Cancel",
+    "buttonOk": "Confirm",
+    "warning": "Warning",
+    "deleteTip": "Do you Want to delete these records?",
+    "exceedTip": "The max records is limited to 1000, please delete some of them first.",
     "networks": {
       "mainnet": "mainnet",
       "testnet": "testnet",
@@ -974,7 +1024,9 @@
         "website": "Official Website",
         "balanceChecker": "Balance Checker",
         "verifyContract": "Verify Contract",
-        "NFTChecker": "NFT Checker"
+        "NFTChecker": "NFT Checker",
+        "addLabel": "Add Name Tag",
+        "updateLabel": "Update Name Tag"
       }
     },
     "loading": "loading...",
@@ -1271,6 +1323,9 @@
     "byFoundation": " (by Foundation)"
   },
   "transaction": {
+    "note": "Private Note",
+    "addNote": "Add Private Note",
+    "updateNote": "Update Private Note",
     "pendingReasonLink": "View Reason",
     "tipOfTokenTransferCount": "Show up to 100 records",
     "gotoDetail": "Click to view details",

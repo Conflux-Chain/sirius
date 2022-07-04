@@ -10,6 +10,7 @@ import { media } from '../../../../styles/media';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { formatAddress } from 'utils';
 import { DecodedParams } from 'app/components/TxnComponents/util';
+import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
 const isPossibleAddress = data => {
   try {
@@ -78,7 +79,12 @@ const decodeData = (value, type) => {
     switch (type) {
       case 'address':
         const address = SDK.format.address(`0x${value.substr(24)}`, NETWORK_ID);
-        result = <Link href={`/address/${address}`}>{address}</Link>;
+        result = (
+          <>
+            <Link href={`/address/${address}`}>{address}</Link>
+            <AddressLabel address={address} />
+          </>
+        );
         break;
       case 'number':
         result = SDK.format.bigInt(v).toString();
@@ -168,6 +174,7 @@ export const Data = ({
               <>
                 <Link href={`/address/${d.value}`}>{d.value} </Link>
                 <ContractDetail info={contractInfo}></ContractDetail>
+                <AddressLabel address={d.value} />
               </>
             );
           }

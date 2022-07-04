@@ -123,6 +123,8 @@ import { Transactions as posTransactions } from './containers/pos/Transactions/L
 import { Transaction as posTransaction } from './containers/pos/Transaction/Loadable';
 import { IncomingRank as posIncomingRank } from './containers/pos/IncomingRank/Loadable';
 
+import { Profile } from './containers/Profile/Loadable';
+
 import enUS from '@cfxjs/antd/lib/locale/en_US';
 import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
@@ -189,6 +191,53 @@ export function App() {
 
     return props.children;
   }
+
+  useEffect(() => {
+    const key = LOCALSTORAGE_KEYS_MAP.addressLabel;
+    const keyTx = LOCALSTORAGE_KEYS_MAP.txPrivateNote;
+    const data = globalData || {};
+
+    // address label
+    if (!data[key]) {
+      let dStr = localStorage.getItem(key);
+      let d = {};
+
+      if (dStr) {
+        d = JSON.parse(dStr).reduce((prev, curr) => {
+          return {
+            ...prev,
+            [curr.a]: curr.l,
+          };
+        }, {});
+      }
+
+      setGlobalData({
+        ...globalData,
+        [key]: d,
+      });
+    }
+
+    // private tx note
+    if (!data[keyTx]) {
+      let dStrTx = localStorage.getItem(keyTx);
+      let dTx = {};
+
+      if (dStrTx) {
+        dTx = JSON.parse(dStrTx).reduce((prev, curr) => {
+          return {
+            ...prev,
+            [curr.h]: curr.n,
+          };
+        }, {});
+      }
+
+      setGlobalData({
+        ...globalData,
+        [keyTx]: dTx,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalData]);
 
   const ScrollToTop = withRouter(_ScrollToTop);
 
@@ -809,6 +858,8 @@ export function App() {
                             path="/pow-charts/contracts"
                             component={ContractsCharts}
                           />
+
+                          <Route exact path="/Profile" component={Profile} />
 
                           <Route component={NotFoundPage} />
                         </Switch>

@@ -309,6 +309,10 @@ export const GlobalStyle = createGlobalStyle`
     background-color: var(--theme-color-blue0);
     color: #ffffff;
 
+
+  }
+
+  .ant-btn {
     &:hover {
       background: #4665f0;
       color: #ffffff;
@@ -351,6 +355,15 @@ export const GlobalStyle = createGlobalStyle`
       &:hover {
         color: var(--theme-color-blue2);
       }
+    }
+  }
+
+  div.ant-message-custom-content {
+    display: flex;
+    align-items: center;
+
+    .anticon {
+      top: 0;
     }
   }
 

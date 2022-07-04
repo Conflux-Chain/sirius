@@ -519,6 +519,17 @@ export const Header = memo(() => {
               afterClick: menuClick,
               href: '/balance-checker',
             },
+            {
+              // profile
+              title: [
+                t(translations.header.profile),
+                <Check size={18} key="check" />,
+              ],
+              name: ScanEvent.menu.action.home,
+              afterClick: menuClick,
+              href: '/profile',
+              className: 'profile',
+            },
           ],
         },
         {
@@ -535,6 +546,14 @@ export const Header = memo(() => {
   ];
 
   const endLinks: HeaderLinks = [
+    // {
+    //   // profile
+    //   title: t(translations.header.profile),
+    //   name: ScanEvent.menu.action.home,
+    //   afterClick: menuClick,
+    //   href: '/profile',
+    //   className: 'profile',
+    // },
     {
       // switch network
       name: 'switch-network',

@@ -454,7 +454,14 @@ export const contract = (isFull = false) => ({
     } else if (row.verified === true) {
       verify = true;
     }
-    return <AddressContainer value={value} isFull={isFull} verify={verify} />;
+    return (
+      <AddressContainer
+        value={value}
+        isFull={isFull}
+        verify={verify}
+        showLabeled={false}
+      />
+    );
   },
 });
 
