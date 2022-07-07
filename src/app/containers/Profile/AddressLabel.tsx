@@ -242,6 +242,7 @@ export function AddressLabel() {
         loading={loading}
         rowKey="a"
         key={Math.random()}
+        scroll={{ x: 800 }}
       />
       <CreateAddressLabel
         stage={stage}
