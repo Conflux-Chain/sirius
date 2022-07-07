@@ -4,7 +4,8 @@
     "subtitle": "Private info, like private name tag and transaction private note. Decentralized storage in browser's localstorage.",
     "tip": {
       "label": "Private name tag",
-      "note": "Private note to keep track of the transaction."
+      "note": "Private note to keep track of the transaction",
+      "exceed": "The {{type}} exceeds {{amount}} records, please delete some and try again"
     },
     "tx": {
       "title": "Transaction Private Notes",
