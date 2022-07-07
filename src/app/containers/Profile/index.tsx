@@ -1,5 +1,4 @@
-import React from 'react';
-import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
@@ -7,9 +6,17 @@ import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { AddressLabel } from './AddressLabel';
 import { TxNote } from './TxNote';
+import { File } from './File';
+import { Row, Col } from '@cfxjs/antd';
+import { Card } from 'app/components/Card/Loadable';
+import { useLocation, useHistory } from 'react-router-dom';
+import qs from 'query-string';
 
 export function Profile() {
+  const { search } = useLocation();
+  const history = useHistory();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
   const tabs = [
     {
       value: 'address-label',
@@ -22,6 +29,17 @@ export function Profile() {
       content: <TxNote />,
     },
   ];
+  const { tab = 'address-label' } = qs.parse(search);
+  const activeTab = tabs.filter(t => t.value === tab)?.[0] || tabs[0];
+
+  const handleClick = (_, key) => {
+    history.push(`/profile?tab=${key}`);
+  };
+
+  const handleLoading = loading => {
+    setLoading(loading);
+  };
+
   return (
     <StyledWrapper>
       <Helmet>
@@ -31,7 +49,30 @@ export function Profile() {
       <PageHeader subtitle={t(translations.profile.subtitle)}>
         {t(translations.profile.title)}
       </PageHeader>
-      <TabsTablePanel tabs={tabs} />
+      <Row gutter={32}>
+        <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+          <StyledNavWrapper>
+            <Card>
+              {tabs.map(t => (
+                <div
+                  className={`nav ${t.value === tab ? 'active' : ''}`}
+                  key={t.value}
+                  onClick={e => handleClick(e, t.value)}
+                >
+                  {t.label}
+                </div>
+              ))}
+
+              <File onLoading={handleLoading}></File>
+            </Card>
+          </StyledNavWrapper>
+        </Col>
+        <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
+          <Card loading={loading}>
+            <StyledContentWrapper>{activeTab.content}</StyledContentWrapper>
+          </Card>
+        </Col>
+      </Row>
     </StyledWrapper>
   );
 }
@@ -41,5 +82,50 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .card.sirius-card {
+    padding: 1rem;
+  }
+`;
+
+const StyledNavWrapper = styled.div`
+  margin-bottom: 24px;
+  .nav {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    margin: 8px 0;
+    border-radius: 4px;
+    background: #fff;
+    transition: background 0.25s;
+    padding: 12px;
+
+    .card.sirius-card {
+      padding: 0;
+    }
+
+    &:hover {
+      background: #eee;
+      cursor: pointer;
+    }
+
+    &.active {
+      background: #eee;
+    }
+
+    &:last-child {
+      margin-bottom: 8px;
+    }
+  }
+`;
+const StyledContentWrapper = styled.div`
+  .ant-table-wrapper.shadowed div.ant-table {
+    padding: 0;
+    box-shadow: none;
+  }
+
+  ul.ant-table-pagination.ant-pagination {
+    margin-bottom: 0;
   }
 `;
