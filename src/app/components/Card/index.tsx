@@ -3,18 +3,22 @@ import { Card as UICard } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { CardProps } from '@cfxjs/react-ui/dist/card/card';
 import clsx from 'clsx';
+import { Spin } from '@cfxjs/antd';
 
 export const Card = ({
   children,
   className,
+  loading = false,
   ...others
-}: Partial<CardProps>) => {
+}: Partial<CardProps> & { loading?: boolean }) => {
   return (
-    <CardWrapper>
-      <UICard className={clsx('sirius-card', className)} {...others}>
-        {children}
-      </UICard>
-    </CardWrapper>
+    <Spin spinning={loading}>
+      <CardWrapper>
+        <UICard className={clsx('sirius-card', className)} {...others}>
+          {children}
+        </UICard>
+      </CardWrapper>
+    </Spin>
   );
 };
 

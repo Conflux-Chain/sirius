@@ -59,7 +59,7 @@ export function TxNote() {
       title: t(translations.profile.tx.hash),
       dataIndex: 'h',
       key: 'h',
-      width: 8,
+      width: 9,
       render(v) {
         return (
           <ContentWrapper monospace>

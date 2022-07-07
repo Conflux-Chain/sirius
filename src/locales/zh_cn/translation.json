@@ -37,6 +37,25 @@
       },
       "publicNameTag": "公共标签：",
       "myNameTag": "我的标签："
+    },
+    "file": {
+      "error": {
+        "invalid": "无效文件"
+      },
+      "export": {
+        "button": "导出",
+        "tip": "导出所有用户个人资料配置数据，包括地址标签和交易备注",
+        "complete": "导出完成",
+        "failed": "导出失败"
+      },
+      "import": {
+        "button": "导入",
+        "tip": "导入所有用户个人资料配置数据，包括地址标签和交易备注, 如果存在配置数据冲突，则导入数据覆盖已有数据",
+        "complete": "导入完成",
+        "failed": "导入失败",
+        "address": "导入 {{amount}} 条地址标签",
+        "tx": "导入 {{amount}} 条交易备注"
+      }
     }
   },
   "metadata": {

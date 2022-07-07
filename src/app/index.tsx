@@ -131,6 +131,9 @@ import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 
+// @ts-ignore
+window.lodash = lodash;
+
 // WebFontLoader.load({
 //   custom: {
 //     families: ['Circular Std:n4,i4,n7,i7,n8,i8'],
