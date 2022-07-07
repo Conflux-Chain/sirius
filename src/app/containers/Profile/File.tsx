@@ -38,25 +38,35 @@ export const File = ({ onLoading = () => {} }: Props) => {
           .unionBy(addressNameTags, oldList, 'a')
           .sort((a, b) => b.u - a.u);
 
-        localStorage.setItem(
-          LOCALSTORAGE_KEYS_MAP.addressLabel,
-          JSON.stringify(tags),
-        );
-        setGlobalData({
-          ...globalData,
-          [LOCALSTORAGE_KEYS_MAP.addressLabel]: tags.reduce((prev, curr) => {
-            return {
-              ...prev,
-              [curr.a]: curr.l,
-            };
-          }, {}),
-        });
+        if (tags.length > 1000) {
+          message.error(
+            t(translations.profile.tip.exceed, {
+              type: t(translations.profile.address.label),
+              amount: 1000,
+            }),
+          );
+        } else {
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.addressLabel,
+            JSON.stringify(tags),
+          );
 
-        message.info(
-          t(translations.profile.file.import.address, {
-            amount: tags.length - oldList.length,
-          }),
-        );
+          setGlobalData({
+            ...globalData,
+            [LOCALSTORAGE_KEYS_MAP.addressLabel]: tags.reduce((prev, curr) => {
+              return {
+                ...prev,
+                [curr.a]: curr.l,
+              };
+            }, {}),
+          });
+
+          message.info(
+            t(translations.profile.file.import.address, {
+              amount: tags.length - oldList.length,
+            }),
+          );
+        }
       }
 
       if (txPrivateNotes !== null && txPrivateNotes.length > 0) {
@@ -69,25 +79,37 @@ export const File = ({ onLoading = () => {} }: Props) => {
           .unionBy(txPrivateNotes, oldList, 'h')
           .sort((a, b) => b.u - a.u);
 
-        localStorage.setItem(
-          LOCALSTORAGE_KEYS_MAP.txPrivateNote,
-          JSON.stringify(notes),
-        );
-        setGlobalData({
-          ...globalData,
-          [LOCALSTORAGE_KEYS_MAP.txPrivateNote]: notes.reduce((prev, curr) => {
-            return {
-              ...prev,
-              [curr.h]: curr.n,
-            };
-          }, {}),
-        });
+        if (notes.length > 1000) {
+          message.error(
+            t(translations.profile.tip.exceed, {
+              type: t(translations.profile.tx.hash),
+              amount: 1000,
+            }),
+          );
+        } else {
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.txPrivateNote,
+            JSON.stringify(notes),
+          );
+          setGlobalData({
+            ...globalData,
+            [LOCALSTORAGE_KEYS_MAP.txPrivateNote]: notes.reduce(
+              (prev, curr) => {
+                return {
+                  ...prev,
+                  [curr.h]: curr.n,
+                };
+              },
+              {},
+            ),
+          });
 
-        message.info(
-          t(translations.profile.file.import.tx, {
-            amount: notes.length - oldList.length,
-          }),
-        );
+          message.info(
+            t(translations.profile.file.import.tx, {
+              amount: notes.length - oldList.length,
+            }),
+          );
+        }
       }
     } catch (e) {
       console.log(e);
