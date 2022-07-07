@@ -44,13 +44,13 @@
       },
       "export": {
         "button": "Export",
-        "tip": "Export all user profile config data, include address name tags and transaction private notes",
+        "tip": "Export all user profile info, include address name tags and transaction private notes",
         "complete": "Export completed",
         "failed": "Export Failed"
       },
       "import": {
         "button": "Import",
-        "tip": "Import all user profile config data, include address name tags and transaction private notes. If there is a configuration data conflict, the imported data overwrites the existing data",
+        "tip": "Import all user profile info, include address name tags and transaction private notes. If there is a configuration data conflict, the imported data overwrites the existing data",
         "complete": "Import completed",
         "failed": "Import failed",
         "address": "Import {{amount}} address name tags",
