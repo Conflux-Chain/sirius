@@ -44,3 +44,8 @@ export const DailyParticipation = lazyLoad(
   () => import('./DailyParticipation'),
   module => module.DailyParticipation,
 );
+
+export const DailyRewardInfo = lazyLoad(
+  () => import('./DailyRewardInfo'),
+  module => module.DailyRewardInfo,
+);

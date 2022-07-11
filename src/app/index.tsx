@@ -103,6 +103,7 @@ import {
   DailyRewardRank as PoSDailyRewardRank,
   DailyDeposit as PoSDailyDeposit,
   DailyParticipation as PoSDailyParticipation,
+  DailyRewardInfo as PoSDailyRewardInfo,
 } from './containers/Charts/pos/Loadable';
 
 import {
@@ -776,6 +777,12 @@ export function App() {
                             exact
                             path="/pos-charts/daily-reward-rank"
                             component={PoSDailyRewardRank}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-reward-info"
+                            component={PoSDailyRewardInfo}
                           />
 
                           <Route

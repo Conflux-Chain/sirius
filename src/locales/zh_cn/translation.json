@@ -627,6 +627,7 @@
         "daily-apy": "年利率",
         "total-reward": "总奖励",
         "daily-reward-rank": "每日奖励排名",
+        "daily-reward-info": "每日奖励详情",
         "daily-deposit": "存入和提取",
         "participation-rate": "节点参与度"
       },
@@ -670,6 +671,16 @@
         "PoSAddress": "PoS 地址",
         "PoWAddress": "PoW 地址",
         "reward": "奖励 CFX"
+      },
+      "dailyRewardInfo": {
+        "title": "奖励详情",
+        "subtitle": "Conflux 网络上质押在 PoS 上 CFX 的奖励详情",
+        "yAxisTitle": "奖励",
+        "seriesName": "奖励",
+        "yAxisTitle2": "人均奖励",
+        "seriesName2": "人均奖励",
+        "yAxisTitle3": "账户数",
+        "seriesName3": "账户数"
       },
       "dailyDeposit": {
         "title": "每日存入和提取",

@@ -628,6 +628,7 @@
         "daily-apy": "APY",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
+        "daily-reward-info": "Reward Detail",
         "daily-deposit": "Deposit & Withdraw",
         "participation-rate": "Participation Rate"
       },
@@ -671,6 +672,16 @@
         "PoSAddress": "PoS Address",
         "PoWAddress": "PoW Address",
         "reward": "Reward"
+      },
+      "dailyRewardInfo": {
+        "title": "Reward Detail",
+        "subtitle": "The reward detail info per day on the PoS of Conflux network.",
+        "yAxisTitle": "Reward",
+        "seriesName": "Reward (Day)",
+        "yAxisTitle2": "Per capita reward",
+        "seriesName2": "Per capita reward (Day)",
+        "yAxisTitle3": "Acounts",
+        "seriesName3": "Acounts (Day)"
       },
       "dailyDeposit": {
         "title": "Deposit & Withdraw",
