@@ -593,6 +593,7 @@
       "breadcrumb": {
         "charts": "跨空间图表",
         "daily-cfx-transfer": "每日转移 CFX 的交易量",
+        "daily-cfx-transfer-count": "每日转移 CFX 的交易数",
         "contract": "每日转移 CFX 的交易数"
       },
       "dailyCFXTransfer": {
@@ -603,12 +604,12 @@
         "yAxisTitle2": "数量（CFX）",
         "seriesName2": "转入"
       },
-      "contract": {
+      "dailyCFXTransferCount": {
         "title": "每日转移 CFX 的交易数",
         "subtitle": "每日在 Core 和 eSpace 间转出，转入 CFX 的交易数",
-        "yAxisTitle": "交易数",
+        "yAxisTitle": "次数",
         "seriesName": "转出",
-        "yAxisTitle2": "交易数",
+        "yAxisTitle2": "次数",
         "seriesName2": "转入"
       }
     },

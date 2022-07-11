@@ -109,7 +109,7 @@ import {
 import {
   Chart as CrossSpaceChart,
   DailyCFXTransfer as CrossSpaceDailyCFXTransfer,
-  Contract as CrossSpaceContract,
+  DailyCFXTransferCount as CrossSpaceDailyCFXTransferCount,
 } from './containers/Charts/crossSpace/Loadable';
 
 // pos pages
@@ -733,8 +733,8 @@ export function App() {
 
                           <Route
                             exact
-                            path="/cross-space-charts/contract"
-                            component={CrossSpaceContract}
+                            path="/cross-space-charts/daily-cfx-transfer-count"
+                            component={CrossSpaceDailyCFXTransferCount}
                           />
 
                           <Route

@@ -10,7 +10,7 @@ export const DailyCFXTransfer = lazyLoad(
   module => module.DailyCFXTransfer,
 );
 
-export const Contract = lazyLoad(
-  () => import('./Contract'),
-  module => module.Contract,
+export const DailyCFXTransferCount = lazyLoad(
+  () => import('./DailyCFXTransferCount'),
+  module => module.DailyCFXTransferCount,
 );

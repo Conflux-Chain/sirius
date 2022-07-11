@@ -594,6 +594,7 @@
       "breadcrumb": {
         "charts": "Cross Space Charts",
         "daily-cfx-transfer": "Daily CFX Transfer Amount",
+        "daily-cfx-transfer-count": "Daily CFX Transfer Count",
         "contract": "Daily CFX Transfer Count"
       },
       "dailyCFXTransfer": {
@@ -604,9 +605,9 @@
         "yAxisTitle2": "Amount in CFX",
         "seriesName2": "Transfer In"
       },
-      "contract": {
+      "dailyCFXTransferCount": {
         "title": "Daily CFX Transfer Count",
-        "subtitle": "The total number of transactions to transfer CFX per day between Core and eSpace.",
+        "subtitle": "The total count of CFX transfers per day between Core and eSpace.",
         "yAxisTitle": "Count",
         "seriesName": "Transfer Out",
         "yAxisTitle2": "Count",
