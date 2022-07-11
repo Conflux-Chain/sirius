@@ -53,8 +53,8 @@
         "tip": "导入所有用户私人信息，包括地址标签和交易备注, 如果存在配置数据冲突，则导入数据覆盖已有数据",
         "complete": "导入完成",
         "failed": "导入失败",
-        "address": "导入 {{amount}} 条地址标签",
-        "tx": "导入 {{amount}} 条交易备注"
+        "address": "导入 {{amount}} 条地址标签，更新 {{updateAmount}} 条地址标签",
+        "tx": "导入 {{amount}} 条交易备注，更新 {{updateAmount}} 条交易备注"
       }
     }
   },

@@ -54,8 +54,8 @@
         "tip": "Import all user profile info, include address name tags and transaction private notes. If there is a configuration data conflict, the imported data overwrites the existing data",
         "complete": "Import completed",
         "failed": "Import failed",
-        "address": "Import {{amount}} address name tags",
-        "tx": "Import {{amount}} transaction private notes"
+        "address": "Import {{amount}} address name tags, update {{updateAmount}} address name tags",
+        "tx": "Import {{amount}} transaction private notes, update {{updateAmount}} transaction private notes"
       }
     }
   },
