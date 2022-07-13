@@ -77,7 +77,8 @@ export const ContractInfo = ({ onChange }) => {
   const handleFileChange = file => {
     try {
       let data = JSON.parse(file);
-      let bytecode = data.bytecode || data.data?.bytecode?.object;
+      let bytecode =
+        data.bytecode?.object || data.bytecode || data.data?.bytecode?.object;
 
       if (checkBytecode(bytecode)) {
         setBytecode(addOx(bytecode));

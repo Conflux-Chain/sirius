@@ -41,7 +41,8 @@
     },
     "file": {
       "error": {
-        "invalid": "Invalid file"
+        "invalid": "Invalid file",
+        "fileChanged": "The file has been changed, please upload the unchanged file"
       },
       "export": {
         "button": "Export",

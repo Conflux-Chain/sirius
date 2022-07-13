@@ -8,6 +8,7 @@ import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { message } from '@cfxjs/antd';
+import MD5 from 'md5.js';
 
 interface Props {
   onLoading?: (loading: boolean) => void;
@@ -25,7 +26,15 @@ export const File = ({ onLoading = () => {} }: Props) => {
     try {
       onLoading(true);
 
-      let { txPrivateNotes, addressNameTags } = JSON.parse(file);
+      const { data, key } = JSON.parse(file);
+
+      if (new MD5().update(JSON.stringify(data)).digest('hex') !== key) {
+        message.error(t(translations.profile.file.error.fileChanged));
+        onLoading(false);
+        return;
+      }
+
+      const { txPrivateNotes, addressNameTags } = data;
 
       if (addressNameTags !== null && addressNameTags.length > 0) {
         const oldTags = localStorage.getItem(
@@ -156,8 +165,16 @@ export const File = ({ onLoading = () => {} }: Props) => {
         txPrivateNotes: notes ? JSON.parse(notes) : null,
         addressNameTags: tags ? JSON.parse(tags) : null,
       };
+      const dataStr = JSON.stringify(data);
+      const key = new MD5().update(dataStr).digest('hex');
+
+      const file = {
+        data,
+        key,
+      };
+
       const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-        JSON.stringify(data),
+        JSON.stringify(file),
       )}`;
 
       const link = document.createElement('a');
