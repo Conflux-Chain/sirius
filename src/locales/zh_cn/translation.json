@@ -40,7 +40,8 @@
     },
     "file": {
       "error": {
-        "invalid": "无效文件"
+        "invalid": "无效文件",
+        "fileChanged": "文件已更改，请上传未更改文件"
       },
       "export": {
         "button": "导出",
