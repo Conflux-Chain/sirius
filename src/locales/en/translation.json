@@ -42,7 +42,8 @@
     "file": {
       "error": {
         "invalid": "Invalid file",
-        "fileChanged": "The file has been changed, please upload the unchanged file"
+        "fileChanged": "Invalid file, the file has been changed, please upload the unchanged file",
+        "chainIdError": "Invaild file, Chaid ID is incorrect, please use file with Chaid ID is {{chainId}}"
       },
       "export": {
         "button": "Export",
