@@ -53,8 +53,8 @@ export enum LOCALSTORAGE_KEYS_MAP {
   cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
   txnRecords = 'CONFLUXSCAN_TXN_RECORDS',
   fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
-  addressLabel = 'CONFLUX_SCAN_ADDRESS_LABEL',
-  txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTE',
+  addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
+  txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
 }
 
 export const NETWORK_ID = (() => {

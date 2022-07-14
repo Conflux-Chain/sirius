@@ -41,7 +41,8 @@
     "file": {
       "error": {
         "invalid": "无效文件",
-        "fileChanged": "文件已更改，请上传未更改文件"
+        "fileChanged": "无效文件，文件已更改，请上传未更改文件",
+        "chainIdError": "无效文件，Chain ID 错误，更使用 Chain ID 是 {{chainId}} 的导出文件"
       },
       "export": {
         "button": "导出",

@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { FileUpload } from 'app/components/FileUpload';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
@@ -28,13 +28,26 @@ export const File = ({ onLoading = () => {} }: Props) => {
 
       const { data, key } = JSON.parse(file);
 
-      if (new MD5().update(JSON.stringify(data)).digest('hex') !== key) {
+      if (
+        new MD5().update(NETWORK_ID + JSON.stringify(data)).digest('hex') !==
+        key
+      ) {
         message.error(t(translations.profile.file.error.fileChanged));
         onLoading(false);
         return;
       }
 
-      const { txPrivateNotes, addressNameTags } = data;
+      const { chainId, txPrivateNotes, addressNameTags } = data;
+
+      if (chainId && chainId !== NETWORK_ID) {
+        message.error(
+          t(translations.profile.file.error.chainIdError, {
+            chainId: NETWORK_ID,
+          }),
+        );
+        onLoading(false);
+        return;
+      }
 
       if (addressNameTags !== null && addressNameTags.length > 0) {
         const oldTags = localStorage.getItem(
@@ -164,8 +177,10 @@ export const File = ({ onLoading = () => {} }: Props) => {
       const data = {
         txPrivateNotes: notes ? JSON.parse(notes) : null,
         addressNameTags: tags ? JSON.parse(tags) : null,
+        chainId: NETWORK_ID,
+        version: '1.0.0',
       };
-      const dataStr = JSON.stringify(data);
+      const dataStr = NETWORK_ID + JSON.stringify(data);
       const key = new MD5().update(dataStr).digest('hex');
 
       const file = {
@@ -179,7 +194,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
 
       const link = document.createElement('a');
       link.href = jsonString;
-      link.download = 'confluxscan-user-profile.json';
+      link.download = `confluxscan-${NETWORK_ID}-user-profile.json`;
       link.click();
     } catch (e) {
       message.error(t(translations.profile.file.export.failed));
