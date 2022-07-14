@@ -28,10 +28,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
 
       const { data, key } = JSON.parse(file);
 
-      if (
-        new MD5().update(NETWORK_ID + JSON.stringify(data)).digest('hex') !==
-        key
-      ) {
+      if (new MD5().update(JSON.stringify(data)).digest('hex') !== key) {
         message.error(t(translations.profile.file.error.fileChanged));
         onLoading(false);
         return;
@@ -180,7 +177,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
         chainId: NETWORK_ID,
         version: '1.0.0',
       };
-      const dataStr = NETWORK_ID + JSON.stringify(data);
+      const dataStr = JSON.stringify(data);
       const key = new MD5().update(dataStr).digest('hex');
 
       const file = {
