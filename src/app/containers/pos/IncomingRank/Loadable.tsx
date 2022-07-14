@@ -10,6 +10,6 @@ export const IncomingRank = lazyLoad(
 );
 
 export const IncomingRankList = lazyLoad(
-  () => import('./index'),
-  module => module.List,
+  () => import('./IncomingRankList'),
+  module => module.IncomingRankList,
 );

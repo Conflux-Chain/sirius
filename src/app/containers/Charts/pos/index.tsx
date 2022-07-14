@@ -13,6 +13,7 @@ import { TotalReward } from './TotalReward';
 import { DailyRewardRank } from './DailyRewardRank';
 import { DailyDeposit } from './DailyDeposit';
 import { DailyParticipation } from './DailyParticipation';
+import { DailyRewardInfo } from './DailyRewardInfo';
 
 export function Chart() {
   const { t } = useTranslation();
@@ -47,6 +48,9 @@ export function Chart() {
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyRewardRank preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <DailyRewardInfo preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyDeposit preview={true} />
