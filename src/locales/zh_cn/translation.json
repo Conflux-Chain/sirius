@@ -2088,7 +2088,15 @@
       "title": "收益排行",
       "description": "收益排行",
       "subTitle": "总收益排行前 100 的 PoS 地址",
-      "totalIncoming": "总收益"
+      "totalIncoming": "总收益",
+      "top100": "前 100 名",
+      "last30days": "更多",
+      "rewardRank": {
+        "id": "账户 ID",
+        "day": "{{number}} 天",
+        "day_plural": "{{number}} 天",
+        "all": "总收入"
+      }
     }
   }
 }

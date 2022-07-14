@@ -2091,7 +2091,15 @@
       "title": "Incoming Rank",
       "description": "Incoming Rank",
       "subTitle": "Top 100 PoS address by total incoming",
-      "totalIncoming": "Total Incoming"
+      "totalIncoming": "Total Incoming",
+      "top100": "Top 100",
+      "last30days": "More",
+      "rewardRank": {
+        "id": "Account ID",
+        "day": "{{number}} Day",
+        "day_plural": "{{number}} Days",
+        "all": "Overall Income"
+      }
     }
   }
 }
