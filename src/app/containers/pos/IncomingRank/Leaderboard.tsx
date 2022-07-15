@@ -10,7 +10,7 @@ const sortConfig = {
 };
 
 export const Leaderboard = () => {
-  const url = '/stat/pos-reward-rank?rankField=all&reverse=true&orderBy=all';
+  const url = '/stat/pos-reward-rank?reverse=true&orderBy=all';
 
   const columnsWidth = [0.5, 1, 1, 1, 1, 1, 1];
   const columns = [
