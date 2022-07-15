@@ -10,7 +10,7 @@ const sortConfig = {
 };
 
 export const Leaderboard = () => {
-  const url = '/stat/pos-reward-rank?rankField=all';
+  const url = '/stat/pos-reward-rank?rankField=all&reverse=true&orderBy=all';
 
   const columnsWidth = [0.5, 1, 1, 1, 1, 1, 1];
   const columns = [
@@ -41,6 +41,7 @@ export const Leaderboard = () => {
     },
     {
       ...incomingRankColunms.day('all'),
+      defaultSortOrder: 'descend' as 'descend',
       sorter: true,
       ...sortConfig,
     },
