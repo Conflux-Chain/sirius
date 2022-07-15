@@ -148,13 +148,14 @@ export const TablePanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outerUrl, search]);
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    const { current, pageSize } = pagination;
+  const handleTableChange = (pagination, _, sorter, extra) => {
+    const { current = 1, pageSize = 10 } = pagination;
     const { skip, limit, ...others } = qs.parse(search);
+    const { action } = extra;
 
     let query: Query = {
       ...others,
-      skip: String((current - 1) * pageSize) || '0',
+      skip: action === 'sort' ? '0' : String((current - 1) * pageSize) || '0',
       limit: pageSize || '10',
     };
 

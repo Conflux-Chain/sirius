@@ -3,6 +3,12 @@ import { colunms, incomingRankColunms } from 'utils/tableColumns/pos';
 import { utils } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
+const sortConfig = {
+  sortDirections: ['descend', 'ascend', 'descend'] as Array<
+    'descend' | 'ascend'
+  >,
+};
+
 export const Leaderboard = () => {
   const url = '/stat/pos-reward-rank?rankField=all';
 
@@ -13,22 +19,37 @@ export const Leaderboard = () => {
       ...colunms.posAddress,
       dataIndex: ['accountInfo', 'hex'],
     },
-    incomingRankColunms.day(1),
-    incomingRankColunms.day(7),
-    incomingRankColunms.day(14),
-    incomingRankColunms.day(30),
-    incomingRankColunms.day('all'),
+    {
+      ...incomingRankColunms.day(1),
+      sorter: true,
+      ...sortConfig,
+    },
+    {
+      ...incomingRankColunms.day(7),
+      sorter: true,
+      ...sortConfig,
+    },
+    {
+      ...incomingRankColunms.day(14),
+      sorter: true,
+      ...sortConfig,
+    },
+    {
+      ...incomingRankColunms.day(30),
+      sorter: true,
+      ...sortConfig,
+    },
+    {
+      ...incomingRankColunms.day('all'),
+      sorter: true,
+      ...sortConfig,
+    },
   ].map((item, i) => ({
     ...item,
     width: columnsWidth[i],
   }));
 
   return (
-    <TablePanelNew
-      url={url}
-      columns={columns}
-      pagination={false}
-      hideDefaultTitle
-    ></TablePanelNew>
+    <TablePanelNew url={url} columns={columns} hideDefaultTitle></TablePanelNew>
   );
 };

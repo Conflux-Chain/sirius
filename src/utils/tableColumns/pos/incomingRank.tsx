@@ -49,6 +49,7 @@ export const accountId = {
 };
 
 export const day = (number: number | 'all') => {
+  const dataIndex = number === 'all' ? 'all' : `day${number}`;
   return {
     title: (
       <ContentWrapper>
@@ -63,13 +64,13 @@ export const day = (number: number | 'all') => {
         )}
       </ContentWrapper>
     ),
-    dataIndex: 'accountId',
-    key: 'accountId',
+    dataIndex: dataIndex,
+    key: dataIndex,
     width: 1,
     render: (_, row) => {
       const cfx = fromDripToCfx(
         number === 'all' ? row.accountInfo?.totalReward : row[`day${number}`],
-      ); // new BigNumber(row[`day${number}`]).div(1e18).toFixed(2);
+      );
       return <ContentWrapper>{cfx}</ContentWrapper>;
     },
   };
