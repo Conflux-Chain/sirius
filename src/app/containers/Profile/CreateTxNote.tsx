@@ -60,6 +60,11 @@ export function CreateTxNote({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outerList]);
 
+  useEffect(() => {
+    form.setFieldsValue(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const handleOk = () => {
     form.validateFields().then(async function ({ hash, note }) {
       try {
@@ -166,11 +171,6 @@ export function CreateTxNote({
     delete: t(translations.general.delete),
   };
 
-  const d = {
-    ...data,
-    note: list.filter(l => l.h === data.hash)[0]?.n,
-  };
-
   return (
     <Modal
       title={text[stage]}
@@ -180,15 +180,8 @@ export function CreateTxNote({
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={loading}
-      destroyOnClose
     >
-      <Form
-        form={form}
-        name="basic"
-        labelCol={{ span: 4 }}
-        autoComplete="off"
-        initialValues={d}
-      >
+      <Form form={form} name="basic" labelCol={{ span: 4 }} autoComplete="off">
         <Form.Item
           label={t(translations.profile.tx.hash)}
           name="hash"
