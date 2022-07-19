@@ -115,7 +115,7 @@ export function Footer() {
   const bountyLink = (
     <Link
       className="footer-link"
-      href="https://bounty.conflux-chain.org"
+      href="https://bounty.confluxnetwork.org"
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.confluxBounty,
