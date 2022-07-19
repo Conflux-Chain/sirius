@@ -10,7 +10,7 @@ Hi! We are really excited that you are interested in contributing to Conflux. Be
 
 ## Issue Reporting Guidelines
 
-- Please check the existing issues and the [Conflux Bounty Site](https://bounty.conflux-chain.org) to avoid submitting duplicate issues.
+- Please check the existing issues and the [Conflux Bounty Site](https://bounty.confluxnetwork.org) to avoid submitting duplicate issues.
 
 ## Pull Request Guidelines
 
