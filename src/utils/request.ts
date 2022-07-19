@@ -1,6 +1,7 @@
 import { PromiseType } from 'react-use/lib/util';
 import { appendApiPrefix } from './api';
 import { publishRequestError } from './index';
+import lodash from 'lodash';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -76,10 +77,14 @@ const parseJSON = async function (response) {
 
 // 检查返回值中是否包含错误
 const checkResponse = ({ data, response }) => {
-  if (response.status === 200 && data.code === 0) {
-    return data.data;
+  // compatible with open api request
+  if (response.status === 200 && lodash.isNil(data.code)) {
+    return data;
+  } else if (data.code === 0) {
+    // compatible with /stat backend api
+    return data.data || data;
   } else {
-    const code = Number(data.code);
+    const code = Number(data?.code);
     publishRequestError({ code: code, message: data.message }, 'http');
     const error: Partial<ErrorEvent> & {
       response?: ResponseType;
