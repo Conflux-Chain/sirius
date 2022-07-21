@@ -45,37 +45,47 @@ export function Result({ radioValue, resultVisible, formData }) {
   };
   useEffect(() => {
     initResult();
-    if (data?.code === 501) {
-      setResultData({
-        epoch_dt: '--',
-        epoch: '--',
-        balance: 0,
-      });
-      setLoading(false);
-    } else if (data?.code === 0) {
-      const { cfxByEpoch, cfxByDt } = data;
-      if (cfxByEpoch) {
-        setResultData({
-          ...cfxByEpoch,
-          epoch_dt: formData.dt === '' ? cfxByEpoch.epoch_dt : formData.dt,
-        });
-      } else if (cfxByDt) {
-        setResultData({
-          ...cfxByDt,
-          // @ts-ignore
-          epoch_dt: dayjs(formData.dt).isToday()
-            ? formData.dt
-            : dayjs(formData.dt).add(1, 'day').toString(),
-        });
+    try {
+      const { cfxByEpoch, cfxByDt } = data || {};
+      if (cfxByEpoch || cfxByDt) {
+        if (cfxByEpoch) {
+          setResultData({
+            ...cfxByEpoch,
+            epoch_dt: formData.dt === '' ? cfxByEpoch.epoch_dt : formData.dt,
+          });
+        } else if (cfxByDt) {
+          setResultData({
+            ...cfxByDt,
+            // @ts-ignore
+            epoch_dt: dayjs(formData.dt).isToday()
+              ? formData.dt
+              : dayjs(formData.dt).add(1, 'day').toString(),
+          });
+        } else {
+          setResultData({
+            epoch_dt: '--',
+            epoch: '--',
+            balance: 0,
+          });
+        }
+        setLoading(false);
       } else {
         setResultData({
           epoch_dt: '--',
           epoch: '--',
           balance: 0,
         });
-      }
+        setLoading(false);
+      } // eslint-disable-next-line react-hooks/exhaustive-deps
+    } catch (e) {
+      setResultData({
+        epoch_dt: '--',
+        epoch: '--',
+        balance: 0,
+      });
       setLoading(false);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const TokenQuantityCard = (
