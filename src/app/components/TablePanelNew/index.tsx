@@ -92,6 +92,8 @@ export const TablePanel = ({
     error: null,
   });
 
+  const { orderBy, reverse } = useMemo(() => qs.parse(search), [search]);
+
   const getQuery = useMemo(() => {
     let defaultPagination = !pagination
       ? {
@@ -175,6 +177,17 @@ export const TablePanel = ({
   const total =
     dataSource && Array.isArray(dataSource) ? dataSource.length : stateTotal;
 
+  let _columns: any = columns;
+  if (orderBy !== undefined) {
+    _columns = columns?.map(c => {
+      delete c.defaultSortOrder;
+      if (c.key === orderBy) {
+        c.defaultSortOrder = reverse === 'true' ? 'descend' : 'ascend';
+      }
+      return c;
+    });
+  }
+
   return (
     <Table
       sortDirections={['descend', 'ascend']}
@@ -183,7 +196,7 @@ export const TablePanel = ({
       })}
       tableLayout={tableLayout}
       scroll={scroll}
-      columns={columns}
+      columns={_columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
       showSorterTooltip={showSorterTooltip}
