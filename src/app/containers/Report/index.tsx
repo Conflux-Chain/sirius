@@ -34,8 +34,8 @@ export function Report() {
   const onFinish = (values: any) => {
     setLoading(true);
     reqReport(values)
-      .then(resp => {
-        if (resp.code !== 0) {
+      .then(({ report }) => {
+        if (report !== 'ok') {
           throw new Error(t(translations.report.status.fail));
         } else {
           setMessage({
