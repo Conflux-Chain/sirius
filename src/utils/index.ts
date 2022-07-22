@@ -9,7 +9,6 @@ import {
   NETWORK_ID,
   NETWORK_TYPE,
   NETWORK_TYPES,
-  CFX,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -144,12 +143,7 @@ export function isContractAddress(address: string): boolean {
 
 export function isInnerContractAddress(address: string): boolean {
   try {
-    // @todo, wait for sdk upgrade to accept both base32 and hex address
-    return (
-      SDK.address.isInternalContractAddress(formatAddress(address, 'hex')) ||
-      formatAddress(address, 'hex') ===
-        CFX.InternalContract('CrossSpaceCall').address
-    );
+    return SDK.address.isInternalContractAddress(formatAddress(address, 'hex'));
   } catch (e) {
     return false;
   }
