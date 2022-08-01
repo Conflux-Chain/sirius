@@ -92,6 +92,8 @@ export const TablePanel = ({
     error: null,
   });
 
+  const { orderBy, reverse } = useMemo(() => qs.parse(search), [search]);
+
   const getQuery = useMemo(() => {
     let defaultPagination = !pagination
       ? {
@@ -148,13 +150,14 @@ export const TablePanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outerUrl, search]);
 
-  const handleTableChange = (pagination, filters, sorter) => {
-    const { current, pageSize } = pagination;
+  const handleTableChange = (pagination, _, sorter, extra) => {
+    const { current = 1, pageSize = 10 } = pagination;
     const { skip, limit, ...others } = qs.parse(search);
+    const { action } = extra;
 
     let query: Query = {
       ...others,
-      skip: String((current - 1) * pageSize) || '0',
+      skip: action === 'sort' ? '0' : String((current - 1) * pageSize) || '0',
       limit: pageSize || '10',
     };
 
@@ -174,6 +177,17 @@ export const TablePanel = ({
   const total =
     dataSource && Array.isArray(dataSource) ? dataSource.length : stateTotal;
 
+  let _columns: any = columns;
+  if (orderBy !== undefined) {
+    _columns = columns?.map(c => {
+      delete c.defaultSortOrder;
+      if (c.key === orderBy) {
+        c.defaultSortOrder = reverse === 'true' ? 'descend' : 'ascend';
+      }
+      return c;
+    });
+  }
+
   return (
     <Table
       sortDirections={['descend', 'ascend']}
@@ -182,7 +196,7 @@ export const TablePanel = ({
       })}
       tableLayout={tableLayout}
       scroll={scroll}
-      columns={columns}
+      columns={_columns}
       rowKey={rowKey}
       dataSource={dataSource || data}
       showSorterTooltip={showSorterTooltip}

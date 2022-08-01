@@ -37,6 +37,27 @@
       },
       "publicNameTag": "公共标签：",
       "myNameTag": "我的标签："
+    },
+    "file": {
+      "error": {
+        "invalid": "无效文件",
+        "fileChanged": "无效文件，文件已更改，请上传未更改文件",
+        "chainIdError": "无效文件，Chain ID 错误，请使用 Chain ID 是 {{chainId}} 的导出文件"
+      },
+      "export": {
+        "button": "导出",
+        "tip": "导出所有用户私人信息，包括地址标签和交易备注",
+        "complete": "导出完成",
+        "failed": "导出失败"
+      },
+      "import": {
+        "button": "导入",
+        "tip": "导入所有用户私人信息，包括地址标签和交易备注, 如果存在配置数据冲突，则导入数据覆盖已有数据",
+        "complete": "导入完成",
+        "failed": "导入失败",
+        "address": "导入 {{amount}} 条地址标签，更新 {{updateAmount}} 条地址标签",
+        "tx": "导入 {{amount}} 条交易备注，更新 {{updateAmount}} 条交易备注"
+      }
     }
   },
   "metadata": {
@@ -446,6 +467,7 @@
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签",
     "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签",
     "addressConverter": "地址格式转换",
+    "faucet": "测试水管",
     "broadcastTx": "广播交易",
     "blocknumberCalc": "区块计算器",
     "nftChecker": "数字藏品查看器",
@@ -572,6 +594,7 @@
       "breadcrumb": {
         "charts": "跨空间图表",
         "daily-cfx-transfer": "每日转移 CFX 的交易量",
+        "daily-cfx-transfer-count": "每日转移 CFX 的交易数",
         "contract": "每日转移 CFX 的交易数"
       },
       "dailyCFXTransfer": {
@@ -582,12 +605,12 @@
         "yAxisTitle2": "数量（CFX）",
         "seriesName2": "转入"
       },
-      "contract": {
+      "dailyCFXTransferCount": {
         "title": "每日转移 CFX 的交易数",
         "subtitle": "每日在 Core 和 eSpace 间转出，转入 CFX 的交易数",
-        "yAxisTitle": "交易数",
+        "yAxisTitle": "次数",
         "seriesName": "转出",
-        "yAxisTitle2": "交易数",
+        "yAxisTitle2": "次数",
         "seriesName2": "转入"
       }
     },
@@ -606,6 +629,7 @@
         "daily-apy": "年利率",
         "total-reward": "总奖励",
         "daily-reward-rank": "每日奖励排名",
+        "daily-reward-info": "每日奖励详情",
         "daily-deposit": "存入和提取",
         "participation-rate": "节点参与度"
       },
@@ -649,6 +673,16 @@
         "PoSAddress": "PoS 地址",
         "PoWAddress": "PoW 地址",
         "reward": "奖励 CFX"
+      },
+      "dailyRewardInfo": {
+        "title": "奖励详情",
+        "subtitle": "Conflux 网络上质押在 PoS 上 CFX 的奖励详情",
+        "yAxisTitle": "奖励",
+        "seriesName": "奖励",
+        "yAxisTitle2": "人均奖励",
+        "seriesName2": "人均奖励",
+        "yAxisTitle3": "账户数",
+        "seriesName3": "账户数"
       },
       "dailyDeposit": {
         "title": "每日存入和提取",
@@ -2055,7 +2089,15 @@
       "title": "收益排行",
       "description": "收益排行",
       "subTitle": "总收益排行前 100 的 PoS 地址",
-      "totalIncoming": "总收益"
+      "totalIncoming": "总收益",
+      "top100": "前 100 名",
+      "last30days": "更多",
+      "rewardRank": {
+        "id": "账户 ID",
+        "day": "{{number}} 天",
+        "day_plural": "{{number}} 天",
+        "all": "总收入"
+      }
     }
   }
 }

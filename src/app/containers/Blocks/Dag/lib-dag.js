@@ -111,40 +111,42 @@ function subscribe(height, cb) {
       sendNextRequest = false;
       fetch('/v1/dag')
         .then(e => e.json())
-        .then(({ list }) => {
-          const _epochs = list.map(epoch => {
-            const _epoch = {};
-            let [pivot, ...rest] = epoch;
-            const { epochNumber, ...pivotInfo } = pivot;
-            //data from server can be wrong
-            rest = rest.filter(d => d.epochNumber === epochNumber);
-            _epoch.epochNumber = epochNumber;
-            _epoch.colors = getEpochColor(epochNumber);
-            _epoch.points = [];
-            const { points, width } = layout({
-              n: rest.length,
-              d: 30,
-              h: height,
-            });
-
-            //pivot
-            _epoch.points.push({
-              offsetX: width,
-              y: height / 2,
-              ...pivotInfo,
-            });
-            rest.forEach((block, i) => {
-              const p = points[i];
-              _epoch.points.push({
-                offsetX: p[0],
-                y: p[1],
-                ...block,
+        .then(({ data, code, message }) => {
+          if (code === 0) {
+            const _epochs = data.list.map(epoch => {
+              const _epoch = {};
+              let [pivot, ...rest] = epoch;
+              const { epochNumber, ...pivotInfo } = pivot;
+              //data from server can be wrong
+              rest = rest.filter(d => d.epochNumber === epochNumber);
+              _epoch.epochNumber = epochNumber;
+              _epoch.colors = getEpochColor(epochNumber);
+              _epoch.points = [];
+              const { points, width } = layout({
+                n: rest.length,
+                d: 30,
+                h: height,
               });
+
+              //pivot
+              _epoch.points.push({
+                offsetX: width,
+                y: height / 2,
+                ...pivotInfo,
+              });
+              rest.forEach((block, i) => {
+                const p = points[i];
+                _epoch.points.push({
+                  offsetX: p[0],
+                  y: p[1],
+                  ...block,
+                });
+              });
+              return _epoch;
             });
-            return _epoch;
-          });
-          sendNextRequest = true;
-          cb((epochs = concat(_epochs, epochs)));
+            sendNextRequest = true;
+            cb((epochs = concat(_epochs, epochs)));
+          }
         })
         .catch(() => {
           sendNextRequest = true;

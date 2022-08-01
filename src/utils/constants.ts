@@ -53,8 +53,8 @@ export enum LOCALSTORAGE_KEYS_MAP {
   cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
   txnRecords = 'CONFLUXSCAN_TXN_RECORDS',
   fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
-  addressLabel = 'CONFLUX_SCAN_ADDRESS_LABEL',
-  txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTE',
+  addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
+  txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
 }
 
 export const NETWORK_ID = (() => {
@@ -272,6 +272,7 @@ OPEN_API_URLS.PoSTotalReward = '/stat/pos-daily-total-reward';
 OPEN_API_URLS.PoSDailyRewardRank = '/stat/pos-recent-reward-rank';
 OPEN_API_URLS.PoSDailyDeposit = '/stat/pos-daily-deposit-withdraw';
 OPEN_API_URLS.PoSDailyParticipationRate = '/stat/pos-daily-participation-rate';
+OPEN_API_URLS.PoSDailyRewardInfo = '/stat/pos-daily-reward';
 
 // Cross Space
 OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';

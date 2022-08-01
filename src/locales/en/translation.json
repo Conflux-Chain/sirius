@@ -4,7 +4,8 @@
     "subtitle": "Private info, like private name tag and transaction private note. Decentralized storage in browser's localstorage.",
     "tip": {
       "label": "Private name tag",
-      "note": "Private note to keep track of the transaction."
+      "note": "Private note to keep track of the transaction",
+      "exceed": "The {{type}} exceeds {{amount}} records, please delete some and try again"
     },
     "tx": {
       "title": "Transaction Private Notes",
@@ -37,6 +38,27 @@
       },
       "publicNameTag": "Public Tag: ",
       "myNameTag": "My Name Tag: "
+    },
+    "file": {
+      "error": {
+        "invalid": "Invalid file",
+        "fileChanged": "Invalid file, the file has been changed, please upload the unchanged file",
+        "chainIdError": "Invaild file, Chaid ID is incorrect, please use file with Chaid ID is {{chainId}}"
+      },
+      "export": {
+        "button": "Export",
+        "tip": "Export all user profile info, include address name tags and transaction private notes",
+        "complete": "Export completed",
+        "failed": "Export Failed"
+      },
+      "import": {
+        "button": "Import",
+        "tip": "Import all user profile info, include address name tags and transaction private notes. If there is a configuration data conflict, the imported data overwrites the existing data",
+        "complete": "Import completed",
+        "failed": "Import failed",
+        "address": "Import {{amount}} address name tags, update {{updateAmount}} address name tags",
+        "tx": "Import {{amount}} transaction private notes, update {{updateAmount}} transaction private notes"
+      }
     }
   },
   "metadata": {
@@ -446,6 +468,7 @@
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
     "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
     "addressConverter": "Address Format Conversion",
+    "faucet": "Test Faucet",
     "broadcastTx": "Broadcast Transaction",
     "blocknumberCalc": "Blocknumber Calculator",
     "nftChecker": "NFT Checker",
@@ -572,6 +595,7 @@
       "breadcrumb": {
         "charts": "Cross Space Charts",
         "daily-cfx-transfer": "Daily CFX Transfer Amount",
+        "daily-cfx-transfer-count": "Daily CFX Transfer Count",
         "contract": "Daily CFX Transfer Count"
       },
       "dailyCFXTransfer": {
@@ -582,9 +606,9 @@
         "yAxisTitle2": "Amount in CFX",
         "seriesName2": "Transfer In"
       },
-      "contract": {
+      "dailyCFXTransferCount": {
         "title": "Daily CFX Transfer Count",
-        "subtitle": "The total number of transactions to transfer CFX per day between Core and eSpace.",
+        "subtitle": "The total count of CFX transfers per day between Core and eSpace.",
         "yAxisTitle": "Count",
         "seriesName": "Transfer Out",
         "yAxisTitle2": "Count",
@@ -606,6 +630,7 @@
         "daily-apy": "APY",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
+        "daily-reward-info": "Reward Detail",
         "daily-deposit": "Deposit & Withdraw",
         "participation-rate": "Participation Rate"
       },
@@ -649,6 +674,16 @@
         "PoSAddress": "PoS Address",
         "PoWAddress": "PoW Address",
         "reward": "Reward"
+      },
+      "dailyRewardInfo": {
+        "title": "Reward Detail",
+        "subtitle": "The reward detail info per day on the PoS of Conflux network.",
+        "yAxisTitle": "Reward",
+        "seriesName": "Reward (Day)",
+        "yAxisTitle2": "Per capita reward",
+        "seriesName2": "Per capita reward (Day)",
+        "yAxisTitle3": "Acounts",
+        "seriesName3": "Acounts (Day)"
       },
       "dailyDeposit": {
         "title": "Deposit & Withdraw",
@@ -2057,7 +2092,15 @@
       "title": "Incoming Rank",
       "description": "Incoming Rank",
       "subTitle": "Top 100 PoS address by total incoming",
-      "totalIncoming": "Total Incoming"
+      "totalIncoming": "Total Incoming",
+      "top100": "Top 100",
+      "last30days": "More",
+      "rewardRank": {
+        "id": "Account ID",
+        "day": "{{number}} Day",
+        "day_plural": "{{number}} Days",
+        "all": "Overall Income"
+      }
     }
   }
 }

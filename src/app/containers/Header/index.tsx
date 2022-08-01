@@ -134,6 +134,62 @@ export const Header = memo(() => {
     },
   ];
 
+  const toolItems = [
+    {
+      title: [
+        t(translations.header.addressConverter),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.addressConverter,
+      afterClick: menuClick,
+      href: '/address-converter',
+    },
+    {
+      title: [
+        t(translations.header.broadcastTx),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.broadcastTx,
+      afterClick: menuClick,
+      href: '/push-tx',
+    },
+    {
+      title: [
+        t(translations.header.blocknumberCalc),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.blocknumberCalc,
+      afterClick: menuClick,
+      href: '/block-countdown',
+    },
+    {
+      title: [
+        t(translations.header.nftChecker),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.nftChecker,
+      afterClick: menuClick,
+      href: '/nft-checker',
+    },
+    {
+      title: [
+        t(translations.header.balanceChecker),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.balanceChecker,
+      afterClick: menuClick,
+      href: '/balance-checker',
+    },
+    {
+      // profile
+      title: [t(translations.header.profile), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.home,
+      afterClick: menuClick,
+      href: '/profile',
+      className: 'profile',
+    },
+  ];
+
   ecosystemItems.push({
     title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
     name: ScanEvent.menu.action.fcCfx,
@@ -190,6 +246,15 @@ export const Header = memo(() => {
       name: ScanEvent.menu.action.sponsor,
       afterClick: menuClick,
       href: '/sponsor',
+    });
+  }
+
+  if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+    toolItems.unshift({
+      title: [t(translations.header.faucet), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.faucet,
+      afterClick: menuClick,
+      href: 'https://faucet.confluxnetwork.org/',
     });
   }
 
@@ -473,64 +538,7 @@ export const Header = memo(() => {
           ],
           name: ScanEvent.menu.action.tools,
           plain: true,
-          children: [
-            {
-              title: [
-                t(translations.header.addressConverter),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.addressConverter,
-              afterClick: menuClick,
-              href: '/address-converter',
-            },
-            {
-              title: [
-                t(translations.header.broadcastTx),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.broadcastTx,
-              afterClick: menuClick,
-              href: '/push-tx',
-            },
-            {
-              title: [
-                t(translations.header.blocknumberCalc),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.blocknumberCalc,
-              afterClick: menuClick,
-              href: '/block-countdown',
-            },
-            {
-              title: [
-                t(translations.header.nftChecker),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.nftChecker,
-              afterClick: menuClick,
-              href: '/nft-checker',
-            },
-            {
-              title: [
-                t(translations.header.balanceChecker),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.balanceChecker,
-              afterClick: menuClick,
-              href: '/balance-checker',
-            },
-            {
-              // profile
-              title: [
-                t(translations.header.profile),
-                <Check size={18} key="check" />,
-              ],
-              name: ScanEvent.menu.action.home,
-              afterClick: menuClick,
-              href: '/profile',
-              className: 'profile',
-            },
-          ],
+          children: toolItems,
         },
         {
           title: [

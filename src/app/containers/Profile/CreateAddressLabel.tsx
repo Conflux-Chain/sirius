@@ -66,6 +66,11 @@ export function CreateAddressLabel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outerList]);
 
+  useEffect(() => {
+    form.setFieldsValue(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const handleOk = () => {
     form.validateFields().then(async function ({ address, label }) {
       try {
@@ -190,11 +195,6 @@ export function CreateAddressLabel({
     delete: t(translations.general.delete),
   };
 
-  const d = {
-    ...data,
-    label: list.filter(l => l.a === data.address)[0]?.l,
-  };
-
   return (
     <Modal
       title={text[stage]}
@@ -204,15 +204,8 @@ export function CreateAddressLabel({
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={loading}
-      destroyOnClose
     >
-      <Form
-        form={form}
-        name="basic"
-        labelCol={{ span: 5 }}
-        autoComplete="off"
-        initialValues={d}
-      >
+      <Form form={form} name="basic" labelCol={{ span: 5 }} autoComplete="off">
         <Form.Item
           label={t(translations.profile.address.address)}
           name="address"

@@ -25,6 +25,7 @@ export const ScanEvent = {
       fluentWallet: 'portal',
       confluxBounty: 'bounty',
       addressConverter: 'address_converter',
+      faucet: 'faucet',
       tools: 'tools',
       balanceChecker: 'balance_checker',
       more: 'more',

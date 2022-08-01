@@ -43,36 +43,31 @@ export async function getRecommendTokenList(
       accountAddress: account,
       transferType: transferType,
     },
-  }).then(resp => {
+  }).then(data => {
     let result: Array<TokenType> = [];
 
-    try {
-      if (!resp.code) {
-        result = resp.list.map(l => ({
-          iconUrl: l.iconUrl,
-          name: l.name,
-          address: formatAddress(l.address),
-        }));
-      }
-    } catch (e) {}
-
-    return result;
-  });
-}
-
-const formatTokenList = resp => {
-  let result: Array<TokenType> = [];
-
-  try {
-    // no 'code' from response data, use total for temp
-    if (resp.total) {
-      result = resp.list.map(l => ({
+    if (data?.list) {
+      result = data.list.map(l => ({
         iconUrl: l.iconUrl,
         name: l.name,
         address: formatAddress(l.address),
       }));
     }
-  } catch (e) {}
+
+    return result;
+  });
+}
+
+const formatTokenList = data => {
+  let result: Array<TokenType> = [];
+
+  if (data?.total) {
+    result = data.list.map(l => ({
+      iconUrl: l.iconUrl,
+      name: l.name,
+      address: formatAddress(l.address),
+    }));
+  }
 
   return result;
 };

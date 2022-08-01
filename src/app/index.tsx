@@ -103,12 +103,13 @@ import {
   DailyRewardRank as PoSDailyRewardRank,
   DailyDeposit as PoSDailyDeposit,
   DailyParticipation as PoSDailyParticipation,
+  DailyRewardInfo as PoSDailyRewardInfo,
 } from './containers/Charts/pos/Loadable';
 
 import {
   Chart as CrossSpaceChart,
   DailyCFXTransfer as CrossSpaceDailyCFXTransfer,
-  Contract as CrossSpaceContract,
+  DailyCFXTransferCount as CrossSpaceDailyCFXTransferCount,
 } from './containers/Charts/crossSpace/Loadable';
 
 // pos pages
@@ -130,6 +131,9 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
+
+// @ts-ignore
+window.lodash = lodash;
 
 // WebFontLoader.load({
 //   custom: {
@@ -729,8 +733,8 @@ export function App() {
 
                           <Route
                             exact
-                            path="/cross-space-charts/contract"
-                            component={CrossSpaceContract}
+                            path="/cross-space-charts/daily-cfx-transfer-count"
+                            component={CrossSpaceDailyCFXTransferCount}
                           />
 
                           <Route
@@ -773,6 +777,12 @@ export function App() {
                             exact
                             path="/pos-charts/daily-reward-rank"
                             component={PoSDailyRewardRank}
+                          />
+
+                          <Route
+                            exact
+                            path="/pos-charts/daily-reward-info"
+                            component={PoSDailyRewardInfo}
                           />
 
                           <Route

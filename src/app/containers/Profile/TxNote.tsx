@@ -59,7 +59,7 @@ export function TxNote() {
       title: t(translations.profile.tx.hash),
       dataIndex: 'h',
       key: 'h',
-      width: 8,
+      width: 9,
       render(v) {
         return (
           <ContentWrapper monospace>
@@ -245,6 +245,7 @@ export function TxNote() {
         loading={loading}
         rowKey="h"
         key={Math.random()}
+        scroll={{ x: 800 }}
       />
       <CreateTxNote
         stage={stage}
