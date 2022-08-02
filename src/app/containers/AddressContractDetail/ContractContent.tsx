@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation, Trans } from 'react-i18next';
@@ -15,7 +15,10 @@ import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
 import { Row, Col } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-
+import { CFX } from 'utils/constants';
+import lodash from 'lodash';
+import { formatData } from 'app/components/TxnComponents/util';
+import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 
 import { SubTabs } from 'app/components/Tabs/Loadable';
@@ -30,7 +33,68 @@ export const CheckCircleIcon = () => <CheckCircle size={16} color="#7cd77b" />;
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
   const { sourceCode, abi, address, verify = {} } = contractInfo;
-  const { exactMatch, license, name, optimization, runs, version } = verify;
+  const {
+    exactMatch,
+    license,
+    name,
+    optimization,
+    runs,
+    version,
+    constructorArgs,
+  } = verify;
+
+  const constructor = useMemo(() => {
+    if (constructorArgs && abi && address) {
+      const contract = CFX.Contract({
+        abi,
+        address,
+      });
+
+      const data = contract.abi.decodeData(constructorArgs);
+
+      if (data === '0x' || !data) {
+        return null;
+      } else {
+        const encodeArgs = lodash.words(constructorArgs.substr(2), /.{64}/g);
+
+        const { object, fullName } = data;
+
+        try {
+          if (fullName === 'constructor()') {
+            return {
+              fullArgs: constructorArgs,
+              encodeArgs,
+              decodeArgs: [],
+            };
+          } else {
+            let types = (/constructor\((.*)\)/.exec(fullName) as string[])[1]
+              .split(',')
+              .map(t => {
+                return t.trim().split(' ');
+              })
+              .map(i => {
+                return i.concat(
+                  formatData(object[i[1]], i[0], {
+                    space: null,
+                  }),
+                );
+              });
+            return {
+              fullArgs: constructorArgs,
+              encodeArgs,
+              decodeArgs: types,
+            };
+          }
+        } catch (error) {
+          return {
+            fullArgs: constructorArgs,
+            encodeArgs,
+            decodeArgs: [],
+          };
+        }
+      }
+    }
+  }, [abi, address, constructorArgs]);
 
   if (!contractInfo.codeHash) {
     return (
@@ -98,7 +162,7 @@ const Code = ({ contractInfo }) => {
         </div>
       )}
       <div className="contract-sourcecode-and-abi">
-        <div className="contract-sourcecode">
+        <div>
           {sourceCode && exactMatch ? (
             <>
               <div className="contract-sourcecode-and-abi-title">
@@ -123,7 +187,7 @@ const Code = ({ contractInfo }) => {
             </>
           ) : null}
         </div>
-        <div className="contract-abi">
+        <div>
           {abi && exactMatch ? (
             <>
               <div className="contract-sourcecode-and-abi-title">
@@ -145,6 +209,46 @@ const Code = ({ contractInfo }) => {
                 showGutter={false}
                 showPrintMargin={false}
               />
+            </>
+          ) : null}
+        </div>
+        <div>
+          {constructor && exactMatch ? (
+            <>
+              <div className="contract-sourcecode-and-abi-title">
+                {t(translations.contract.constructorArgs)}
+
+                {/* <div className="subtitle">
+                  {t(translations.contract.constructorArgsTips)}
+                </div> */}
+              </div>
+              <div className="pre">
+                <div>{constructor.fullArgs}</div>
+                <div>
+                  <div className="split-line">
+                    -----{t(translations.contract.decodedView)}---------------
+                  </div>
+                  {constructor.decodeArgs.map((a, i) => (
+                    <div>
+                      Arg[{i}] : {a[1]} ({a[0]}): {a[2]}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="split-line">
+                    -----{t(translations.contract.encodedView)}---------------
+                  </div>
+                  <div>
+                    {constructor.encodeArgs.length} Constructor Arguments found
+                    :
+                  </div>
+                  {constructor.encodeArgs.map((a, i) => (
+                    <div>
+                      Arg[{i}] : {a}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </>
           ) : null}
         </div>
@@ -197,11 +301,28 @@ const StyledContractContentCodeWrapper = styled.div`
     margin: 12px 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     .contract-sourcecode-fullscreen {
       cursor: pointer;
     }
+
+    .subtitle {
+      color: var(--theme-color-gray2);
+      font-size: 0.875rem;
+    }
+  }
+
+  .split-line {
+    margin-top: 1.5rem;
+  }
+
+  .pre {
+    font-size: 1rem;
+    background-color: rgb(248, 249, 251);
+    padding: 5px 10px;
+    max-height: 28rem;
+    overflow: auto;
+    font-family: ${monospaceFont};
   }
 `;
 
