@@ -4,17 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import {
-  ContractContent,
-  CheckCircleIcon,
-} from '../AddressContractDetail/ContractContent';
+import { ContractContent } from '../AddressContractDetail/ContractContent';
+import { ContractStatus } from '../AddressContractDetail/ContractStatus';
 import { useContract } from 'utils/api';
-import AlertCircle from '@zeit-ui/react-icons/alertCircle';
 import { Token } from '../Charts/pow/Loadable';
 
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
-import lodash from 'lodash';
 import { NFTAsset } from 'app/containers/NFTAsset';
 
 interface TransferProps {
@@ -27,12 +23,6 @@ interface TransferProps {
   holderCount: number;
   transferType: string;
   isRegistered: boolean;
-}
-
-interface Query {
-  accountAddress?: string;
-  transactionHash?: string;
-  tokenId?: string;
 }
 
 export function Transfers({ tokenData }: { tokenData: TransferProps }) {
@@ -127,19 +117,6 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     tabs.push(analysisTab);
   }
 
-  // trick by frontend, the better way is api always return 'verify' info
-  let checkIcon: React.ReactNode = '';
-  if (
-    !lodash.isNil(contractInfo.isRegistered) ||
-    !lodash.isNil(contractInfo.cfxTransferCount)
-  ) {
-    if (contractInfo.verify?.exactMatch === true) {
-      checkIcon = <CheckCircleIcon />;
-    } else {
-      checkIcon = <AlertCircle size={16} color="#e36057" />;
-    }
-  }
-
   if (
     transferType === CFX_TOKEN_TYPES.erc721 ||
     transferType === CFX_TOKEN_TYPES.erc1155
@@ -158,7 +135,8 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     action: 'contractViewer',
     label: (
       <div>
-        {t(translations.token.contract)} {checkIcon}
+        {t(translations.token.contract)}
+        <ContractStatus contract={contractInfo} />
       </div>
     ),
     content: <ContractContent contractInfo={contractInfo} />,

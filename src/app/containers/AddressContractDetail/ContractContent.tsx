@@ -28,7 +28,9 @@ const AceEditorStyle = {
   backgroundColor: '#F8F9FB',
 };
 
-export const CheckCircleIcon = () => <CheckCircle size={16} color="#7cd77b" />;
+export const CheckCircleIcon = (size?) => (
+  <CheckCircle size={typeof size === 'number' ? size : 16} color="#7cd77b" />
+);
 
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();

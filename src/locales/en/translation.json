@@ -158,6 +158,13 @@
     "buttonOk": "Confirm and next"
   },
   "contract": {
+    "status": {
+      "0": "Deployed",
+      "1": "Not Deployed",
+      "2": "Admin Destruct",
+      "3": "Self Destruct"
+    },
+    "thisContract": "This contract is ",
     "address": "Contract Address",
     "nameTag": "Contract Name Tag",
     "registered": "Registered",

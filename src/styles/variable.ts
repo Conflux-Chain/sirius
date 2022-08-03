@@ -11,3 +11,4 @@ export const gray0 = '#F1F3F9';
 export const gray1 = '#FDFDFE';
 export const gray2 = '#8A8C95';
 export const gray3 = '#EBECED';
+export const orange0 = '#F8963E';
