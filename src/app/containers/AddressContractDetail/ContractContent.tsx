@@ -343,6 +343,7 @@ export const ContractContent = ({ contractInfo }) => {
     verify = {},
     proxy = {},
     implementation = {},
+    destroy = {},
   } = contractInfo;
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -354,7 +355,7 @@ export const ContractContent = ({ contractInfo }) => {
     },
   ];
 
-  if (abi && Object.keys(verify).length) {
+  if (abi && destroy.status === 0 && Object.keys(verify).length) {
     tabs = tabs.concat([
       {
         key: 'read',
