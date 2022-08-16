@@ -63,7 +63,7 @@
     "react-json-pretty": "2.2.0",
     "react-json-view": "1.19.1",
     "react-router-dom": "5.1.2",
-    "react-scripts": "3.4.3",
+    "react-scripts": "5.0.1",
     "react-test-renderer": "16.13.0",
     "react-use": "15.3.4",
     "recoil": "0.0.10",
