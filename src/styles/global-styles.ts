@@ -10,6 +10,7 @@ import {
   gray1,
   gray2,
   gray3,
+  orange0,
 } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
@@ -22,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-gray1: ${gray1};
     --theme-color-gray2: ${gray2};
     --theme-color-gray3: ${gray3};
+    --theme-color-orange0: ${orange0};
   }
 
   html,

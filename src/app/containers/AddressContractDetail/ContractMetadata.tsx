@@ -129,8 +129,7 @@ export function ContractMetadata({ address, contractInfo }) {
   const { data: tokenInfo } = useToken(address, ['name', 'iconUrl']);
   const loading = contractInfo.name === t(translations.general.loading);
   const skeletonStyle = { height: '1.5714rem' };
-
-  const isNotDeployed = !contractInfo.codeHash && contractInfo.nonce === '0';
+  const isNotDeployed = [1, 2, 3].includes(contractInfo.destroy?.status);
 
   let list = [
     {
@@ -293,7 +292,10 @@ export function ContractMetadata({ address, contractInfo }) {
             {isNotDeployed ? (
               <Content className="not-available">
                 <Text type="error">
-                  {t(translations.contractDetail.notDeployed)}
+                  {t(translations.contract.thisContract)}
+                  {t(
+                    translations.contract.status[contractInfo.destroy?.status],
+                  )}
                 </Text>
               </Content>
             ) : (
