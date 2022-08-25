@@ -25,6 +25,7 @@ import { isZeroAddress, isInnerContractAddress } from 'utils';
 import imgWarning from 'images/warning.png';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { getCode } from 'utils/rpcRequest';
+import fetch from '../../../utils/request';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -83,7 +84,11 @@ export function AddressConverter() {
       }
     });
   };
-
+  const [hex, setHex] = useState('');
+  const [transfer20, setTransfer20] = useState('-');
+  const [transfer721, setTransfer721] = useState('-');
+  const [transfer1155, setTransfer1155] = useState('-');
+  const [transferType, setTransferType] = useState('');
   const handleConvert = () => {
     let hexAddress,
       hexChecksumAddress,
@@ -95,6 +100,35 @@ export function AddressConverter() {
       bytes32NetAddressWithType;
 
     try {
+      if (address.match(/^[\d]+$/)) {
+        setError('fetching...');
+        fetch('/stat/devops/hexId?hexId=' + address).then(result => {
+          if (result.hex) {
+            result.hex.hex = `0x${result.hex.hex}`;
+            setHex(result.hex.hex);
+          }
+          if (result.token) {
+            const { name, symbol, base32, createdAt } = result.token;
+            result.token = { name, symbol, base32, createdAt };
+          }
+          setError(JSON.stringify(result));
+          [
+            { t: 'ERC20', set: setTransfer20 },
+            { t: 'ERC721', set: setTransfer721 },
+            { t: 'ERC1155', set: setTransfer1155 },
+          ].forEach(type => {
+            fetch(
+              `/v1/transfer?address=${result.hex.hex}&limit=1&transferType=${type.t}`,
+            ).then(res => {
+              type.set(res.list.length ? 'Yes' : '0');
+              if (res.list.length) {
+                setTransferType(type.t);
+              }
+            });
+          });
+        });
+        return;
+      }
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
@@ -255,7 +289,6 @@ export function AddressConverter() {
               ></Input>
             </>
           )}
-          <div className="convert-address-error">{errorMessage}</div>
         </div>
         <Button
           variant="solid"
@@ -267,6 +300,23 @@ export function AddressConverter() {
           {t(translations.addressConverter.button)}
         </Button>
       </StyledInputWrapper>
+      {hex && <Link href={`/address/${hex}`}>{hex}</Link>}
+      {hex && (
+        <span>
+          {' '}
+          transfer: 20:{transfer20}, 721:{transfer721}, 1155:{transfer1155}
+        </span>
+      )}
+      {transferType && (
+        <a
+          target={'_blank'}
+          href={`/v1/transfer?address=${hex}&transferType=${transferType}&limit=1`}
+        >
+          {' '}
+          view
+        </a>
+      )}
+      <div className="convert-address-error">{errorMessage}</div>
       <StyledResultWrapper>
         <Card>
           <List title={t(translations.addressConverter.lowercase)}>

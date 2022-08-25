@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import announcementNotification from 'images/notice/announcementNotification.png';
 import FAQNotification from 'images/notice/FAQNotification.png';
 import updateNotification from 'images/notice/updateNotification.png';
@@ -7,6 +7,7 @@ import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link/Loadable';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
+import fetch from '../../../utils/request';
 
 export const noticeInfo = {
   hot: false,
@@ -37,16 +38,29 @@ const ImgNotice = () => {
 export const Notices = React.memo(() => {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
-
+  const [apiInfo, setApiInfo] = useState('api-back');
+  const [statInfo, setStatInfo] = useState('stat-back');
+  useEffect(() => {
+    fetch('/stat/server-info').then(result => {
+      console.log(`result is `, result);
+      setStatInfo(
+        result.serverInfo.replace('Conflux-Stat 2021.04.08 04.13.', ''),
+      );
+    });
+    fetch('/v1/').then(result => {
+      // console.log(`result is `, result);
+      setApiInfo(result.message);
+    });
+  }, []);
   return (
     <NoticeWrapper className="notice">
-      <ImgNotice />
+      [{apiInfo}] <a href={'/stat/d/'}>[{statInfo}]</a>
       <div className={`content ${noticeInfo.hot ? 'hot' : ''}`}>
         {noticeInfo.brief[iszh ? 'zh' : 'en']}
       </div>
-      <Link href={noticeInfo.link[iszh ? 'zh' : 'en']} className="more">
-        {t(translations.header.more)}
-      </Link>
+      {/*<Link href={noticeInfo.link[iszh ? 'zh' : 'en']} className="more">*/}
+      {/*  {t(translations.header.more)}*/}
+      {/*</Link>*/}
     </NoticeWrapper>
   );
 });
