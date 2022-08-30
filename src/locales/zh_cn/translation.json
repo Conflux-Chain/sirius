@@ -1505,7 +1505,7 @@
           "tip": "重新发送交易，使用最新的纪元。"
         },
         "lowGasPrice": {
-          "detail": "燃气价格太低，当前燃气价格为 {{txGasPrice}}。",
+          "detail": "燃气价格 {{gasPrice}} 太低。",
           "tip": "提高燃气价格加速交易。"
         }
       }
