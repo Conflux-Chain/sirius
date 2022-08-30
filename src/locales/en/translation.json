@@ -1508,7 +1508,7 @@
           "tip": "Resend transaction with latest epoch."
         },
         "lowGasPrice": {
-          "detail": "Gas price is too low. Transaction config gas price is {{txGasPrice}}.",
+          "detail": "Gas price {{gasPrice}} is too low.",
           "tip": "Increase gas price to speedup transaction."
         }
       }
