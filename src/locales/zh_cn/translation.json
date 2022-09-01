@@ -97,7 +97,8 @@
       "invalidAddress": "请输入合法地址",
       "invalidNetwork": "请输入{{network}}地址",
       "invalidAmount": "请输入 1 - {{amount}} 个"
-    }
+    },
+    "refreshTip": "请求已提交，请稍等..."
   },
   "fccfx": {
     "title": "FC-CFX 不可逆兑换",
@@ -966,6 +967,7 @@
     }
   },
   "general": {
+    "refresh": "刷新",
     "timestamp": "时间戳",
     "create": "创建",
     "edit": "编辑",
