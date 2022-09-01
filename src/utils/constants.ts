@@ -24,7 +24,8 @@ export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
 // only for dev and qa, use with caution
 export const IS_PRE_RELEASE =
   process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('stage');
+  window.location.hostname.includes('stage') ||
+  window.location.hostname.startsWith('localhost');
 
 export const IS_TESTNET =
   process.env.REACT_APP_TestNet === 'true' ||
@@ -228,8 +229,8 @@ export const CROSS_SPACE_ADDRESS = IS_TESTNET
   : CROSS_SPACE_ADDRESSES.mainnet;
 
 let APIHost = IS_TESTNET
-  ? 'api-testnet.confluxscan.net'
-  : 'api.confluxscan.net';
+  ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
+  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 }
