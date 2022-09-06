@@ -328,3 +328,11 @@ export const reqPendingTxs = (extra?: object) => {
     ...extra,
   });
 };
+
+export const reqRefreshMetadata = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `/stat/nft/checker/refresh`,
+    query: param,
+    ...extra,
+  });
+};

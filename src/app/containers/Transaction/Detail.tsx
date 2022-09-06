@@ -867,7 +867,9 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {gasUsed && gas ? Math.max(+gasUsed, (+gas * 3) / 4) : '--'}
+              {gasUsed && gas
+                ? toThousands(Math.max(+gasUsed, (+gas * 3) / 4))
+                : '--'}
             </SkeletonContainer>
           </Description>
           <Description
