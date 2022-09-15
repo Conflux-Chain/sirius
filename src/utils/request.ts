@@ -75,9 +75,12 @@ const parseJSON = async function (response) {
 };
 
 // 检查返回值中是否包含错误
-const checkResponse = ({ data, response }) => {
+const checkResponse = function ({ data, response }, opts) {
   if (response.status === 200 && data.code === 0) {
     return data.data;
+  } else if (/HEAD/i.test(opts?.method)) {
+    // handle of HEAD method
+    return response;
   } else {
     const code = Number(data.code);
     publishRequestError({ code: code, message: data.message }, 'http');
@@ -127,8 +130,12 @@ const fetch = (url, opts = {}) => {
   return fetchWithAbort(url, opts)
     .then(checkStatus)
     .then(parseJSON)
-    .then(checkResponse)
+    .then((...args) => checkResponse(...args, opts))
     .catch(error => {
+      // @ts-ignore
+      if (/HEAD/i.test(opts?.method)) {
+        return {};
+      }
       // 添加错误请求日志输出，或者收集统计信息
 
       // A fetch() promise will reject with a TypeError when a network error is encountered or CORS is misconfigured on the server-side,
