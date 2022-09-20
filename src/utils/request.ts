@@ -16,20 +16,6 @@ const windowFetch = window.fetch;
 // 默认的请求超时时间 60s
 const TIMEOUT_TIMESTAMP = 60000;
 
-// 只有在此列表内的后端错误需要 Notification 提示，其他的会在业务代码里处理
-// const BACKEND_ERROR_CODE_BLACKLIST = [
-//   10001,
-//   10403,
-//   10501,
-//   10503,
-//   40414,
-//   40400,
-//   40404,
-//   50404,
-//   50600,
-//   50601,
-// ];
-
 // 检查 http status
 const checkStatus = response => {
   if (
