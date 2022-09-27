@@ -901,7 +901,7 @@ export const publishRequestError = (
     if (type === 'code') {
       detail = e.message;
     } else {
-      detail = `${e.code}, ${e.message}`;
+      detail = `Error Code: ${e.code}, ${e.message}`;
     }
 
     if (type === 'rpc' && !lodash.isNil(e.data)) {
