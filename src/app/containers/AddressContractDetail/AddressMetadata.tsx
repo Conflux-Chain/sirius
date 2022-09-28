@@ -219,11 +219,11 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.stakedBegin)}
                       {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                         <a
-                          href="https://testnet-governance.confluxnetwork.org/"
+                          href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://testnet-governance.confluxnetwork.org
+                          https://test.confluxhub.io/governance/dashboard
                         </a>
                       ) : (
                         <a
@@ -269,11 +269,11 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.lockedBegin)}
                       {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
                         <a
-                          href="https://testnet-governance.confluxnetwork.org/"
+                          href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://testnet-governance.confluxnetwork.org
+                          https://test.confluxhub.io/governance/dashboard
                         </a>
                       ) : (
                         <a
