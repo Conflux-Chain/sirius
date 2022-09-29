@@ -1764,7 +1764,7 @@
     "network": "网络",
     "overviewTransactions": "交易",
     "overviewTokens": "通证",
-    "overviewMiners": "矿工",
+    "overviewMiners": "节点",
     "overviewNetwork": "网络",
     "overviewMore": "查看图表",
     "topTxnCountSent": "最佳地址--发送交易数",
@@ -1795,7 +1795,7 @@
       "totalTokenReceived": "通证接收总数",
       "totalTokenTransfersCount": "通证交易总数",
       "totalTokenTransfersAccountsCount": "通证交易账户总数",
-      "totalMiners": "矿工总数",
+      "totalMiners": "PoW 节点数",
       "totalBlocksMined": "挖出总区块",
       "totalGasUsed": "燃气使用总量",
       "top10": "查看十佳"
