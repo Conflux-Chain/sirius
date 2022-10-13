@@ -15,7 +15,7 @@ import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { NETWORK_TYPE, NETWORK_TYPES, IS_FOREIGN_HOST } from 'utils/constants';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
@@ -382,7 +382,9 @@ export function Footer() {
           <FooterContentRow>
             <FooterContentLink>{websiteLink}</FooterContentLink>
             <FooterContentLink>{portalLink}</FooterContentLink>
-            <FooterContentLink>{bountyLink}</FooterContentLink>
+            {IS_FOREIGN_HOST && (
+              <FooterContentLink>{bountyLink}</FooterContentLink>
+            )}
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -428,8 +430,10 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            <FooterContentLink>{privacyPolicy}</FooterContentLink>
-            <FooterContentLink>{terms}</FooterContentLink>
+            {IS_FOREIGN_HOST && (
+              <FooterContentLink>{privacyPolicy}</FooterContentLink>
+            )}
+            {IS_FOREIGN_HOST && <FooterContentLink>{terms}</FooterContentLink>}
             <FooterContentLink>{supportCenter}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>
