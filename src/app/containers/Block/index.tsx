@@ -119,7 +119,7 @@ export function Block() {
         <title>{t(translations.block.title)}</title>
         <meta name="description" content={t(translations.block.description)} />
       </Helmet>
-      <PageHeader subtitle={hash + ' @ ' + epochNumber}>
+      <PageHeader subtitle={hash + ' @ ' + blockDetail.epochNumber}>
         {t(translations.block.title)}
       </PageHeader>
       <TabsTablePanel tabs={tabs} />

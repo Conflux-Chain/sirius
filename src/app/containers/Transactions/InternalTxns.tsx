@@ -10,7 +10,6 @@ import { formatAddress, fromDripToCfx } from 'utils';
 import styled from 'styled-components/macro';
 import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];

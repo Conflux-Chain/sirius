@@ -6,7 +6,7 @@
 
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Copy, Qrcode } from './HeadLineButtons';
