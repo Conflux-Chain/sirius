@@ -200,7 +200,7 @@ export function App() {
     return props.children;
   }
   useInterval(() => {
-    document.title = window.location.hostname.split('.')[0];
+    document.title = window.location.port;
   }, 1000);
 
   useEffect(() => {
