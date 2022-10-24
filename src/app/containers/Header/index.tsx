@@ -230,11 +230,11 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: iszh
         ? NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://test.confluxhub.io/governance/dashboard'
-          : 'https://governance.confluxnetwork.org/zh/'
+          ? 'https://test.confluxhub.io/governance/'
+          : 'https://confluxhub.io/governance/'
         : NETWORK_TYPE === NETWORK_TYPES.testnet
-        ? 'https://test.confluxhub.io/governance/dashboard'
-        : 'https://governance.confluxnetwork.org/en/',
+        ? 'https://test.confluxhub.io/governance/'
+        : 'https://confluxhub.io/governance/',
     });
 
     contractItems.splice(2, 0, {
