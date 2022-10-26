@@ -24,6 +24,7 @@ export const ScanEvent = {
       confluxNetwork: 'official_website',
       fluentWallet: 'portal',
       confluxBounty: 'bounty',
+      hub: 'confluxhub',
       addressConverter: 'address_converter',
       faucet: 'faucet',
       tools: 'tools',
