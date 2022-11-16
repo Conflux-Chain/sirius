@@ -1,4 +1,8 @@
 {
+  "ens": {
+    "label": "CNS Name",
+    "tip": "CNS Name: "
+  },
   "profile": {
     "title": "Profile",
     "subtitle": "Private info, like private name tag and transaction private note. Decentralized storage in browser's localstorage.",

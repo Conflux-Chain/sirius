@@ -17,20 +17,16 @@ import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
 
-// import { useGlobal } from 'utils/hooks/useGlobal';
-
 interface RouteParams {
   tokenAddress: string;
 }
 
 export function TokenDetail() {
   const { t } = useTranslation();
-  // const { data: globalData } = useGlobal();
   const { tokenAddress } = useParams<RouteParams>();
   const params = {
     address: tokenAddress,
     fields: ['iconUrl', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
-    // currency: globalData.currency, // @todo wait for new api handler
   };
   let { data } = useTokenQuery(params, !!tokenAddress);
 
