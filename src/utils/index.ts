@@ -918,3 +918,29 @@ export const publishRequestError = (
     },
   });
 };
+
+export const processENSInfo = response => {
+  try {
+    let map = {};
+
+    // check response data is valid
+    if (response.code === 0 && response.data) {
+      // process table list data
+      if (Array.isArray(response.data.list)) {
+        response.data.list.forEach(l => {
+          if (l.fromENSInfo) {
+            map[l.from] = l.fromENSInfo.name;
+          }
+
+          if (l.toENSInfo) {
+            map[l.to] = l.toENSInfo.name;
+          }
+        });
+      }
+    }
+
+    pubsub.publish('storage::ens', map);
+  } catch (e) {
+    console.log('processENSInfo error: ', e);
+  }
+};

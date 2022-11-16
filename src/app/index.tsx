@@ -35,6 +35,7 @@ import lodash from 'lodash';
 import { getClientVersion } from 'utils/rpcRequest';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import pubsubLib from 'utils/pubsub';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
@@ -131,7 +132,6 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
-
 // @ts-ignore
 window.lodash = lodash;
 
@@ -166,6 +166,28 @@ export function App() {
 
   moment.locale(lang);
   dayjs.locale(lang);
+
+  useEffect(() => {
+    const unsubscribe = pubsubLib.subscribe('storage::ens', data => {
+      const pENS = Object.keys(globalData.ens);
+      const nENS = Object.keys(data);
+
+      if (nENS.some(nENS => !pENS.includes(nENS))) {
+        setGlobalData({
+          ...globalData,
+          ens: {
+            ...globalData.ens,
+            ...data,
+          },
+        });
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalData]);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();

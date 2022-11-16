@@ -459,7 +459,8 @@ export const contract = (isFull = false) => ({
         value={value}
         isFull={isFull}
         verify={verify}
-        showLabeled={false}
+        showAddressLabel={false}
+        showENSLabel={false}
       />
     );
   },

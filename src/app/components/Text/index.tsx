@@ -103,7 +103,7 @@ const StyledTextWrapper = styled.span<any>`
     max-width: ${props => props.maxWidth};
     display: ${props =>
       props.maxWidth === undefined ? 'inherit' : 'inline-block'};
-    cursor: pointer;
+    /* cursor: pointer; */
     a {
       text-overflow: ellipsis;
       overflow: hidden;

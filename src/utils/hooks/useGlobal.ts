@@ -21,6 +21,9 @@ export interface GlobalDataType {
   networkId: number;
   contracts: ContractsType;
   currency?: Object;
+  ens: {
+    [index: string]: Object;
+  };
 }
 
 // @todo, if no default global data, homepage should loading until getProjectConfig return resp
@@ -38,4 +41,5 @@ export const useGlobalData = createGlobalState<any>({
   networkId: DEFAULT_NETWORK_IDS.mainnet,
   contracts: {},
   currency: getCurrency(),
+  ens: {},
 });
