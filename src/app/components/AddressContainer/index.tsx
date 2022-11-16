@@ -23,13 +23,13 @@ import { media, sizes } from 'styles/media';
 import {
   NETWORK_TYPE,
   NETWORK_TYPES,
-  ICON_ENS,
   // CONTRACTS_NAME_LABEL,
 } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import ICON_ENS from 'images/logo-cns.svg';
 
 interface Props {
   value: string; // address value
@@ -69,9 +69,7 @@ const getLabelInfo = (label, type) => {
         <img
           src={ICON_ENS}
           style={{
-            color: 'var(--theme-color-gray2)',
-            width: '14px',
-            height: '14px',
+            marginBottom: '2px',
             marginRight: '2px',
           }}
           alt=""
