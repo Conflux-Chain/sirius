@@ -168,16 +168,21 @@ export function App() {
   dayjs.locale(lang);
 
   useEffect(() => {
-    const unsubscribe = pubsubLib.subscribe('storage::ens', data => {
+    const unsubscribe = pubsubLib.subscribe('storage::ens', ens => {
       const pENS = Object.keys(globalData.ens);
-      const nENS = Object.keys(data);
+      const nENS = Object.keys(ens);
 
-      if (nENS.some(nENS => !pENS.includes(nENS))) {
+      if (
+        nENS.some(key => {
+          // new address or the same address with different ens name, will refresh global ens data
+          return !pENS.includes(key) || ens[key] !== globalData.ens[key];
+        })
+      ) {
         setGlobalData({
           ...globalData,
           ens: {
             ...globalData.ens,
-            ...data,
+            ...ens,
           },
         });
       }
