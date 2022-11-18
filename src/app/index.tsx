@@ -175,7 +175,9 @@ export function App() {
       if (
         nENS.some(key => {
           // new address or the same address with different ens name, will refresh global ens data
-          return !pENS.includes(key) || ens[key] !== globalData.ens[key];
+          return (
+            !pENS.includes(key) || ens[key]?.name !== globalData.ens[key]?.name
+          );
         })
       ) {
         setGlobalData({

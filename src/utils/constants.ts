@@ -282,3 +282,8 @@ OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
 export const TABLE_LIST_LIMIT = 10000;
 
 export const IS_FOREIGN_HOST = /.io$/.test(window.location.host);
+
+// ens request
+export const ENS_REQUEST_DELAYED_PERIOD = 100;
+export const ENS_REQUEST_EXPIRED_PERIOD = 5000;
+export const ENS_REQUEST_MIN_BUNDLE_SIZE = 10;

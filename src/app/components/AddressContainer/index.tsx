@@ -30,6 +30,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import ICON_ENS from 'images/logo-cns.svg';
+import { useENS } from 'utils/hooks/useENS';
 
 interface Props {
   value: string; // address value
@@ -239,6 +240,11 @@ export const AddressContainer = withTranslation()(
     }: Props & WithTranslation) => {
       const [globalData = {}] = useGlobalData();
 
+      // try to get ens name
+      const [ENSMap] = useENS({
+        address: contractCreated || value ? [contractCreated || value] : [],
+      });
+
       const suffixSize =
         suffixAddressSize ||
         (window.innerWidth <= sizes.m
@@ -258,7 +264,7 @@ export const AddressContainer = withTranslation()(
           // ens name tag
           let ENSLabel: React.ReactNode = null;
           // global ens name tag
-          const gENSLabel = globalData.ens[contractCreated];
+          const gENSLabel = ENSMap[contractCreated]?.name;
           // global private name tag
           const gAddressLabel =
             globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
@@ -373,7 +379,7 @@ export const AddressContainer = withTranslation()(
       // ens name tag
       let ENSLabel: React.ReactNode = null;
       // global ens name tag
-      const gENSLabel = globalData.ens[cfxAddress];
+      const gENSLabel = ENSMap[cfxAddress]?.name;
       // global private name tag
       const gAddressLabel =
         globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
