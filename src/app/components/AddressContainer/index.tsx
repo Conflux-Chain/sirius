@@ -56,7 +56,7 @@ const defaultPCSuffixAddressSize =
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
-const getLabelInfo = (label, type) => {
+export const getLabelInfo = (label, type) => {
   if (label) {
     let trans: string = '';
     let icon: React.ReactNode = null;

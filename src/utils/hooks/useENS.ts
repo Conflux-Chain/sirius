@@ -62,5 +62,5 @@ export const useENS = ({
     return prev;
   }, {});
 
-  return [map, list];
+  return [map, list, setENS];
 };
