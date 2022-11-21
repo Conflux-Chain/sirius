@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +27,7 @@ import {
   Middle,
   Title,
   Top,
+  StyledENSName,
 } from './layouts';
 import {
   isContractAddress,
@@ -46,6 +47,8 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
+import { getLabelInfo } from 'app/components/AddressContainer';
+import { useENS } from 'utils/hooks/useENS';
 
 interface RouteParams {
   address: string;
@@ -92,6 +95,9 @@ export const ContractDetailPage = memo(() => {
       });
     }
   }, [address, history]);
+  const [ensMap] = useENS({
+    address: [address],
+  });
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
@@ -101,6 +107,11 @@ export const ContractDetailPage = memo(() => {
     websiteUrl !== t(translations.general.loading);
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
   const addressLabel = addressLabelMap[address];
+
+  const { label, icon } = useMemo(
+    () => getLabelInfo(ensMap[address]?.name, 'ens'),
+    [address, ensMap],
+  );
 
   const menu = (
     <MenuWrapper>
@@ -205,6 +216,11 @@ export const ContractDetailPage = memo(() => {
               : isSpecialAddress(address)
               ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
+
+            <StyledENSName show={!!label}>
+              {icon}
+              {label}
+            </StyledENSName>
           </Title>
           <HeadAddressLine>
             <IconWrapper className="address">

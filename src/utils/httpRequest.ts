@@ -7,6 +7,7 @@ import {
   ENS_REQUEST_MIN_BUNDLE_SIZE,
 } from './constants';
 import lodash from 'lodash';
+import { isAddress } from './index';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -437,6 +438,7 @@ export const reqENSInfo = (() => {
 
   return (address: string[], extra?: object) => {
     const toRequestAddress = address
+      .filter(a => a && isAddress(a))
       .map(a => a.toLowerCase())
       .filter(a => {
         const cA = cache[a];

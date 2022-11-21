@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,15 @@ import {
   StorageStakingCard,
   NonceCard,
 } from './AddressInfoCards';
-import { Main, Title, Bottom, HeadAddressLine, Top, Head } from './layouts';
+import {
+  Main,
+  Title,
+  Bottom,
+  HeadAddressLine,
+  Top,
+  Head,
+  StyledENSName,
+} from './layouts';
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
@@ -30,6 +38,8 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
+import { getLabelInfo } from 'app/components/AddressContainer';
+import { useENS } from 'utils/hooks/useENS';
 
 interface RouteParams {
   address: string;
@@ -47,9 +57,17 @@ export const AddressDetailPage = memo(() => {
     'stakingBalance',
   ]);
   const [visible, setVisible] = useState(false);
+  const [ensMap] = useENS({
+    address: [address],
+  });
 
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
   const addressLabel = addressLabelMap[address];
+
+  const { label, icon } = useMemo(
+    () => getLabelInfo(ensMap[address]?.name, 'ens'),
+    [address, ensMap],
+  );
 
   const menu = (
     <MenuWrapper>
@@ -117,6 +135,11 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
+
+            <StyledENSName show={!!label}>
+              {icon}
+              {label}
+            </StyledENSName>
           </Title>
           <HeadAddressLine>
             <span className="address">

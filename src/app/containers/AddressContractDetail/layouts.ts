@@ -28,6 +28,8 @@ export const Title = styled.div`
   width: 100%;
   margin-bottom: 0.86rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
 
   ${media.s} {
     margin-bottom: 1rem;
@@ -124,4 +126,18 @@ export const Middle = styled.section`
 export const Bottom = styled.section`
   position: relative;
   width: 100%;
+`;
+
+export const StyledENSName = styled.span<{
+  show: boolean;
+}>`
+  background-color: #ffffff;
+  border-radius: 16px;
+  font-size: 14px;
+  padding: 4px 12px;
+  margin-left: 12px;
+  height: 32px;
+  display: ${props => (props.show ? 'inline-flex' : 'none')};
+  align-items: center;
+  color: var(--theme-color-gray4);
 `;

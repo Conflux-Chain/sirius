@@ -27,21 +27,22 @@ export const AddressLabel = ({ address }) => {
     [address, ensMap],
   );
 
-  if (addressLabel) {
-    return (
-      <span>
-        {' '}
-        {label && (
-          <>
-            ({icon}
-            {label}){' '}
-          </>
-        )}
-        ({addressLabelIcon}
-        {addressLabel})
-      </span>
-    );
-  }
-
-  return null;
+  return (
+    <>
+      {label && (
+        <>
+          {' '}
+          ({icon}
+          {label})
+        </>
+      )}
+      {addressLabel && (
+        <>
+          {' '}
+          ({addressLabelIcon}
+          {addressLabel})
+        </>
+      )}
+    </>
+  );
 };
