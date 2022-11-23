@@ -49,5 +49,3 @@ export const useGlobalData = createGlobalState<any>({
   currency: getCurrency(),
   ens: {},
 });
-
-export const useGlobalENS = createGlobalState<any>({});

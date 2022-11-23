@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useGlobalENS } from 'utils/hooks/useGlobal';
+import { useENSStore } from 'utils/store';
 import { reqENSInfo } from 'utils/httpRequest';
 import { formatAddress } from '../index';
 
@@ -19,7 +19,13 @@ export const useENS = ({
   },
 }: props) => {
   const fAddress = address.map(a => a && formatAddress(a));
-  const [ens = {}, setENS] = useGlobalENS();
+
+  const { ens, setENS } = useENSStore(state => ({
+    // @ts-ignore
+    ens: state.ens,
+    // @ts-ignore
+    setENS: state.setENS,
+  }));
 
   useEffect(() => {
     let controller = new AbortController();
@@ -31,14 +37,13 @@ export const useENS = ({
       .then(data => {
         // @ts-ignore
         if (data.length) {
-          setENS({
-            ...ens,
+          setENS(
             // @ts-ignore
-            ...data.reduce((prev, curr) => {
+            data.reduce((prev, curr) => {
               prev[curr.address] = curr;
               return prev;
             }, {}),
-          });
+          );
         }
       })
       .catch(e => console.log('useENS query error: ', e));
@@ -46,7 +51,7 @@ export const useENS = ({
     return () => {
       config.abortable && controller.abort();
     };
-  }, [fAddress, config.abortable, config.immediately, setENS, ens]);
+  }, [fAddress, config.abortable, config.immediately, setENS]);
 
   const list = fAddress.map(
     a =>
