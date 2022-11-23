@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useGlobalENS } from 'utils/hooks/useGlobal';
 import { reqENSInfo } from 'utils/httpRequest';
+import { formatAddress } from '../index';
 
 interface props {
   address: string[];
@@ -17,12 +18,13 @@ export const useENS = ({
     immediately: false,
   },
 }: props) => {
+  const fAddress = address.map(a => a && formatAddress(a));
   const [ens = {}, setENS] = useGlobalENS();
 
   useEffect(() => {
     let controller = new AbortController();
 
-    reqENSInfo(address, {
+    reqENSInfo(fAddress, {
       signal: controller.signal,
       immediately: config.immediately,
     })
@@ -46,9 +48,9 @@ export const useENS = ({
     return () => {
       config.abortable && controller.abort();
     };
-  }, [address, config.abortable, config.immediately, setENS]);
+  }, [fAddress, config.abortable, config.immediately, setENS]);
 
-  const list = address.map(
+  const list = fAddress.map(
     a =>
       ens[a] || {
         address: a,

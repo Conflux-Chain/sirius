@@ -258,18 +258,17 @@ export const AddressContainer = withTranslation()(
         );
 
         if (contractCreated) {
+          const fContractCreated = formatAddress(contractCreated);
           let prefixIcon: React.ReactNode = null;
           // private name tag
           let addressLabel: React.ReactNode = null;
           // ens name tag
           let ENSLabel: React.ReactNode = null;
           // global ens name tag
-          const gENSLabel = ENSMap[contractCreated]?.name;
+          const gENSLabel = ENSMap[fContractCreated]?.name;
           // global private name tag
           const gAddressLabel =
-            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-              formatAddress(contractCreated)
-            ];
+            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
 
           if (showAddressLabel && gAddressLabel) {
             const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
@@ -290,8 +289,8 @@ export const AddressContainer = withTranslation()(
             alias: alias || txtContractCreation,
             addressLabel,
             ENSLabel,
-            hoverValue: formatAddress(contractCreated),
-            hrefAddress: formatAddress(contractCreated),
+            hoverValue: fContractCreated,
+            hrefAddress: fContractCreated,
             link,
             isFull,
             maxWidth: 160,
@@ -382,9 +381,7 @@ export const AddressContainer = withTranslation()(
       const gENSLabel = ENSMap[cfxAddress]?.name;
       // global private name tag
       const gAddressLabel =
-        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-          formatAddress(cfxAddress)
-        ];
+        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
 
       if (showAddressLabel && gAddressLabel) {
         const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
