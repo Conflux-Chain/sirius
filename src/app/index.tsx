@@ -35,7 +35,7 @@ import lodash from 'lodash';
 import { getClientVersion } from 'utils/rpcRequest';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import pubsubLib from 'utils/pubsub';
+// import pubsubLib from 'utils/pubsub';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
@@ -167,34 +167,34 @@ export function App() {
   moment.locale(lang);
   dayjs.locale(lang);
 
-  useEffect(() => {
-    const unsubscribe = pubsubLib.subscribe('storage::ens', ens => {
-      const pENS = Object.keys(globalData.ens);
-      const nENS = Object.keys(ens);
+  // useEffect(() => {
+  //   const unsubscribe = pubsubLib.subscribe('storage::ens', ens => {
+  //     const pENS = Object.keys(globalData.ens);
+  //     const nENS = Object.keys(ens);
 
-      if (
-        nENS.some(key => {
-          // new address or the same address with different ens name, will refresh global ens data
-          return (
-            !pENS.includes(key) || ens[key]?.name !== globalData.ens[key]?.name
-          );
-        })
-      ) {
-        setGlobalData({
-          ...globalData,
-          ens: {
-            ...globalData.ens,
-            ...ens,
-          },
-        });
-      }
-    });
+  //     if (
+  //       nENS.some(key => {
+  //         // new address or the same address with different ens name, will refresh global ens data
+  //         return (
+  //           !pENS.includes(key) || ens[key]?.name !== globalData.ens[key]?.name
+  //         );
+  //       })
+  //     ) {
+  //       setGlobalData({
+  //         ...globalData,
+  //         ens: {
+  //           ...globalData.ens,
+  //           ...ens,
+  //         },
+  //       });
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalData]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [globalData]);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();

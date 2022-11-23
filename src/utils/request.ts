@@ -1,6 +1,6 @@
 import { PromiseType } from 'react-use/lib/util';
 import { appendApiPrefix } from './api';
-import { publishRequestError, processENSInfo } from './index';
+import { publishRequestError /*, processENSInfo */ } from './index';
 
 type FetchWithAbortType = Partial<PromiseType<any>> & {
   abort?: () => void;
@@ -44,7 +44,7 @@ const parseJSON = async function (response) {
       const data = await response.json();
 
       // process ens info and store into global data
-      processENSInfo(data);
+      // processENSInfo(data);
 
       return { data, response };
     } else if (contentType.includes('text/html')) {

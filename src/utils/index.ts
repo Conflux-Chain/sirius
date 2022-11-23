@@ -932,6 +932,7 @@ export const processENSInfo = response => {
         response.data.list.forEach(l => {
           if (l.fromENSInfo) {
             map[l.from] = {
+              address: l.from,
               name: l.fromENSInfo.name,
               expired,
             };
@@ -939,6 +940,7 @@ export const processENSInfo = response => {
 
           if (l.toENSInfo) {
             map[l.to] = {
+              address: l.to,
               name: l.toENSInfo.name,
               expired,
             };
@@ -947,7 +949,9 @@ export const processENSInfo = response => {
       }
     }
 
-    pubsub.publish('storage::ens', map);
+    if (Object.keys(map).length) {
+      pubsub.publish('storage::ens', map);
+    }
   } catch (e) {
     console.log('processENSInfo error: ', e);
   }
