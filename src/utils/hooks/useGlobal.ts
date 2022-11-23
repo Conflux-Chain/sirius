@@ -50,4 +50,4 @@ export const useGlobalData = createGlobalState<any>({
   ens: {},
 });
 
-export const useGlobalENS = createGlobalState<any>(() => ({}));
+export const useGlobalENS = createGlobalState<any>({});

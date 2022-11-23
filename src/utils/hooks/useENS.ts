@@ -31,15 +31,13 @@ export const useENS = ({
       .then(data => {
         // @ts-ignore
         if (data.length) {
-          setENS(pENS => {
-            return {
-              ...pENS,
-              // @ts-ignore
-              ...data.reduce((prev, curr) => {
-                prev[curr.address] = curr;
-                return prev;
-              }, {}),
-            };
+          setENS({
+            ...ens,
+            // @ts-ignore
+            ...data.reduce((prev, curr) => {
+              prev[curr.address] = curr;
+              return prev;
+            }, {}),
           });
         }
       })
@@ -48,7 +46,7 @@ export const useENS = ({
     return () => {
       config.abortable && controller.abort();
     };
-  }, [fAddress, config.abortable, config.immediately, setENS]);
+  }, [fAddress, config.abortable, config.immediately, setENS, ens]);
 
   const list = fAddress.map(
     a =>

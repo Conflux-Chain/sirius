@@ -454,21 +454,26 @@ export const reqENSInfo = (() => {
 
     if (toRequestAddress.length) {
       pendingAddress = lodash.uniq(pendingAddress.concat(toRequestAddress));
+
       if (
         pendingAddress.length >= ENS_REQUEST_MIN_BUNDLE_SIZE ||
         // @ts-ignore
         extra?.immediately
       ) {
-        const r = call(pendingAddress, extra);
-        pendingAddress = [];
-        return r;
+        const toPendingAddress = pendingAddress.slice(
+          0,
+          ENS_REQUEST_MIN_BUNDLE_SIZE,
+        );
+        pendingAddress = pendingAddress.slice(ENS_REQUEST_MIN_BUNDLE_SIZE);
+        return call(toPendingAddress, extra);
       } else {
         clearTimeout(timeout);
         return new Promise((resolve, reject) => {
-          timeout = setTimeout(
-            () => resolve(call(pendingAddress, extra)),
-            ENS_REQUEST_DELAYED_PERIOD,
-          );
+          timeout = setTimeout(() => {
+            const toPendingAddress = pendingAddress;
+            pendingAddress = [];
+            resolve(call(toPendingAddress, extra));
+          }, ENS_REQUEST_DELAYED_PERIOD);
         });
       }
     } else {
