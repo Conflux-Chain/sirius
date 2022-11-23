@@ -555,6 +555,7 @@ const NFTCard = styled.div`
 
       .title {
         margin-right: 4px;
+        white-space: nowrap;
       }
     }
   }

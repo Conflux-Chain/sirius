@@ -30,6 +30,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import ICON_ENS from 'images/logo-cns.svg';
+import { useENS } from 'utils/hooks/useENS';
 
 interface Props {
   value: string; // address value
@@ -55,7 +56,7 @@ const defaultPCSuffixAddressSize =
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
-const getLabelInfo = (label, type) => {
+export const getLabelInfo = (label, type) => {
   if (label) {
     let trans: string = '';
     let icon: React.ReactNode = null;
@@ -239,6 +240,11 @@ export const AddressContainer = withTranslation()(
     }: Props & WithTranslation) => {
       const [globalData = {}] = useGlobalData();
 
+      // try to get ens name
+      const [ENSMap] = useENS({
+        address: contractCreated || value ? [contractCreated || value] : [],
+      });
+
       const suffixSize =
         suffixAddressSize ||
         (window.innerWidth <= sizes.m
@@ -252,18 +258,17 @@ export const AddressContainer = withTranslation()(
         );
 
         if (contractCreated) {
+          const fContractCreated = formatAddress(contractCreated);
           let prefixIcon: React.ReactNode = null;
           // private name tag
           let addressLabel: React.ReactNode = null;
           // ens name tag
           let ENSLabel: React.ReactNode = null;
           // global ens name tag
-          const gENSLabel = globalData.ens[contractCreated];
+          const gENSLabel = ENSMap[fContractCreated]?.name;
           // global private name tag
           const gAddressLabel =
-            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-              formatAddress(contractCreated)
-            ];
+            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
 
           if (showAddressLabel && gAddressLabel) {
             const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
@@ -284,8 +289,8 @@ export const AddressContainer = withTranslation()(
             alias: alias || txtContractCreation,
             addressLabel,
             ENSLabel,
-            hoverValue: formatAddress(contractCreated),
-            hrefAddress: formatAddress(contractCreated),
+            hoverValue: fContractCreated,
+            hrefAddress: fContractCreated,
             link,
             isFull,
             maxWidth: 160,
@@ -373,12 +378,10 @@ export const AddressContainer = withTranslation()(
       // ens name tag
       let ENSLabel: React.ReactNode = null;
       // global ens name tag
-      const gENSLabel = globalData.ens[cfxAddress];
+      const gENSLabel = ENSMap[cfxAddress]?.name;
       // global private name tag
       const gAddressLabel =
-        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-          formatAddress(cfxAddress)
-        ];
+        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
 
       if (showAddressLabel && gAddressLabel) {
         const { label, icon } = getLabelInfo(gAddressLabel, 'tag');

@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Text } from '../Text/Loadable';
+import { getLabelInfo } from '../AddressContainer';
+import { useENS } from 'utils/hooks/useENS';
 
 export const AddressLabel = ({ address }) => {
-  const [globalData = {}] = useGlobalData();
   const { t } = useTranslation();
+  const [globalData = {}] = useGlobalData();
+  const [ensMap] = useENS({
+    address: [address],
+  });
 
   const addressLabel = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][address];
   const addressLabelIcon = (
@@ -17,15 +22,27 @@ export const AddressLabel = ({ address }) => {
     </Text>
   );
 
-  if (addressLabel) {
-    return (
-      <span>
-        {' '}
-        ({addressLabelIcon}
-        {addressLabel})
-      </span>
-    );
-  }
+  const { label, icon } = useMemo(
+    () => getLabelInfo(ensMap[address]?.name, 'ens'),
+    [address, ensMap],
+  );
 
-  return null;
+  return (
+    <>
+      {label && (
+        <>
+          {' '}
+          ({icon}
+          {label})
+        </>
+      )}
+      {addressLabel && (
+        <>
+          {' '}
+          ({addressLabelIcon}
+          {addressLabel})
+        </>
+      )}
+    </>
+  );
 };

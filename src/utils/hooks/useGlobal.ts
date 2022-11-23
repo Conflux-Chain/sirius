@@ -16,14 +16,20 @@ export interface NetworksType {
   id: number;
 }
 
+export interface ENSType {
+  [index: string]: {
+    name: string;
+    expired: number;
+    delayed: number;
+  };
+}
+
 export interface GlobalDataType {
   networks: Array<NetworksType>;
   networkId: number;
   contracts: ContractsType;
   currency?: Object;
-  ens: {
-    [index: string]: Object;
-  };
+  ens: ENSType;
 }
 
 // @todo, if no default global data, homepage should loading until getProjectConfig return resp
@@ -43,3 +49,5 @@ export const useGlobalData = createGlobalState<any>({
   currency: getCurrency(),
   ens: {},
 });
+
+export const useGlobalENS = createGlobalState<any>({});
