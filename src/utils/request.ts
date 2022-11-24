@@ -43,9 +43,6 @@ const parseJSON = async function (response) {
     if (contentType.includes('application/json')) {
       const data = await response.json();
 
-      // process ens info and store into global data
-      // processENSInfo(data);
-
       return { data, response };
     } else if (contentType.includes('text/html')) {
       return { data: await response.text(), response };

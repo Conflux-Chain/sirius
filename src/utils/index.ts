@@ -9,7 +9,6 @@ import {
   NETWORK_ID,
   NETWORK_TYPE,
   NETWORK_TYPES,
-  ENS_REQUEST_EXPIRED_PERIOD,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -918,41 +917,4 @@ export const publishRequestError = (
       detail: detail,
     },
   });
-};
-
-export const processENSInfo = response => {
-  try {
-    let map = {};
-    const expired = +new Date() + ENS_REQUEST_EXPIRED_PERIOD;
-
-    // check response data is valid
-    if (response.code === 0 && response.data) {
-      // process table list data
-      if (Array.isArray(response.data.list)) {
-        response.data.list.forEach(l => {
-          if (l.fromENSInfo) {
-            map[l.from] = {
-              address: l.from,
-              name: l.fromENSInfo.name,
-              expired,
-            };
-          }
-
-          if (l.toENSInfo) {
-            map[l.to] = {
-              address: l.to,
-              name: l.toENSInfo.name,
-              expired,
-            };
-          }
-        });
-      }
-    }
-
-    if (Object.keys(map).length) {
-      pubsub.publish('storage::ens', map);
-    }
-  } catch (e) {
-    console.log('processENSInfo error: ', e);
-  }
 };
