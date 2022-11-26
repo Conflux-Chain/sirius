@@ -369,6 +369,10 @@ const WrappLink = styled.span`
     &.level-1,
     &.level-2 {
       color: #65709a;
+
+      ${media.m} {
+        color: #eeeeee;
+      }
     }
 
     &.home {
