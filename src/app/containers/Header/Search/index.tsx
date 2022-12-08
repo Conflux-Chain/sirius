@@ -24,6 +24,7 @@ import {
   isSpecialAddress,
 } from 'utils';
 import { appendApiPrefix } from 'utils/api';
+import { getAddress, isValidENS, LogoENS } from 'utils/ens';
 
 const { Search: SearchInput } = Input;
 
@@ -72,68 +73,107 @@ const TokenItemWrapper = styled.div`
   }
 `;
 
-const searchResult = (list: any[], notAvailable = '-', type = 'token') =>
-  list.map(l => {
-    const token = {
-      ...l,
-      icon: l.iconUrl || ICON_DEFAULT_TOKEN,
-      name: l.name || notAvailable,
-    };
-
-    return {
-      key: `${type}-${token.address}`,
-      // add type prefix for duplicate value with different type
-      value: `${type}-${token.address}`,
+// type is one of: token, contract, ens
+const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
+  if (type === 'ens') {
+    return list.map(l => ({
+      key: `ens-${l.address}`,
+      value: `ens-${l.address}`,
       type,
-      label: (
+      label: l.address ? (
         <TokenItemWrapper
           onClick={() => {
-            window.location.href = `/${
-              type === 'token' ? 'token' : 'address'
-            }/${token.address}`;
+            window.location.href = `/address/${l.address}`;
           }}
         >
-          {type === 'token' && (
-            <Image
-              preview={false}
-              src={token?.iconUrl || ICON_DEFAULT_TOKEN}
-              fallback={ICON_DEFAULT_TOKEN}
-              alt="token icon"
-            />
-          )}
+          <Image
+            preview={false}
+            src={LogoENS}
+            fallback={ICON_DEFAULT_TOKEN}
+            alt="ens icon"
+          />
           <span>
-            <Translation>
-              {t => (
-                <>
-                  <div className="title">
-                    {token?.name}
-                    {token?.symbol ? ` (${token.symbol}) ` : ' '}
-                    {token?.transferType && (
-                      <span className="tag">
-                        {token?.transferType.replace('ERC', 'CRC')}
-                      </span>
-                    )}
-                  </div>
-                  {token?.address ? (
-                    <div className="address">{token?.address}</div>
-                  ) : null}
-                  {/*{token?.website ? (*/}
-                  {/*  <div className="website">{token?.website}</div>*/}
-                  {/*) : null}*/}
-                  {token?.holderCount ? (
-                    <div className="holders">
-                      {token?.holderCount}{' '}
-                      {t(translations.tokens.table.holders)}
-                    </div>
-                  ) : null}
-                </>
-              )}
-            </Translation>
+            <div className="title">
+              {l.name}{' '}
+              <span className="tag">
+                <Translation>
+                  {t => t(translations.header.search.ens)}
+                </Translation>
+              </span>
+            </div>
+            <div className="address">{l.address}</div>
           </span>
         </TokenItemWrapper>
+      ) : (
+        <span>
+          <Translation>{t => t(translations.general.noResult)}</Translation>
+        </span>
       ),
-    };
-  });
+    }));
+  } else {
+    return list.map(l => {
+      const token = {
+        ...l,
+        icon: l.iconUrl || ICON_DEFAULT_TOKEN,
+        name: l.name || notAvailable,
+      };
+
+      return {
+        key: `${type}-${token.address}`,
+        // add type prefix for duplicate value with different type
+        value: `${type}-${token.address}`,
+        type,
+        label: (
+          <TokenItemWrapper
+            onClick={() => {
+              window.location.href = `/${
+                type === 'token' ? 'token' : 'address'
+              }/${token.address}`;
+            }}
+          >
+            {type === 'token' && (
+              <Image
+                preview={false}
+                src={token?.iconUrl || ICON_DEFAULT_TOKEN}
+                fallback={ICON_DEFAULT_TOKEN}
+                alt="token icon"
+              />
+            )}
+            <span>
+              <Translation>
+                {t => (
+                  <>
+                    <div className="title">
+                      {token?.name}
+                      {token?.symbol ? ` (${token.symbol}) ` : ' '}
+                      {token?.transferType && (
+                        <span className="tag">
+                          {token?.transferType.replace('ERC', 'CRC')}
+                        </span>
+                      )}
+                    </div>
+                    {token?.address ? (
+                      <div className="address">{token?.address}</div>
+                    ) : null}
+                    {/*{token?.website ? (*/}
+                    {/*  <div className="website">{token?.website}</div>*/}
+                    {/*) : null}*/}
+                    {token?.holderCount ? (
+                      <div className="holders">
+                        {token?.holderCount}{' '}
+                        {t(translations.tokens.table.holders)}
+                      </div>
+                    ) : null}
+                  </>
+                )}
+              </Translation>
+            </span>
+          </TokenItemWrapper>
+        ),
+      };
+    });
+  }
+};
 
 let controller = new AbortController();
 
@@ -160,54 +200,80 @@ export const Search = () => {
         isHash(value)
       )
     ) {
-      // abort pre search
-      controller.abort();
-
-      controller = new AbortController();
-
-      fetch(appendApiPrefix('/stat/tokens/name?name=' + value), {
-        signal: controller.signal,
-      })
-        .then(res => {
-          if (res) {
-            const options: any = [];
-            if (res.list && res.list.length > 0)
-              options.push({
+      if (isValidENS(value)) {
+        // demo Oahu11250001.Web3
+        getAddress(value)
+          .then(address => {
+            setOptions([
+              {
                 label: (
                   <LabelWrapper>
-                    {t(translations.header.search.tokens)}
-                  </LabelWrapper>
-                ),
-                options: searchResult(res.list, notAvailable, 'token'),
-              });
-            if (res.contractList && res.contractList.length > 0)
-              options.push({
-                label: (
-                  <LabelWrapper>
-                    {t(translations.header.search.contracts)}
-                    {res.contractList.length > 10
-                      ? ` (${t(translations.header.search.contractsTip)})`
-                      : null}
+                    {t(translations.header.search.ens)}
                   </LabelWrapper>
                 ),
                 options: searchResult(
-                  res.contractList.length > 10
-                    ? res.contractList.slice(0, 10)
-                    : res.contractList,
+                  [
+                    {
+                      address,
+                      name: value,
+                    },
+                  ],
                   notAvailable,
-                  'contract',
+                  'ens',
                 ),
-              });
-            setOptions(options);
-          } else {
-            setOptions([]);
-          }
+              },
+            ]);
+          })
+          .catch(e => console.log(e));
+      } else {
+        // abort pre search
+        controller.abort();
+        controller = new AbortController();
+
+        fetch(appendApiPrefix('/stat/tokens/name?name=' + value), {
+          signal: controller.signal,
         })
-        .catch(e => {
-          if (e.name !== 'AbortError') {
-            console.error(e);
-          }
-        });
+          .then(res => {
+            if (res) {
+              const options: any = [];
+              if (res.list && res.list.length > 0)
+                options.push({
+                  label: (
+                    <LabelWrapper>
+                      {t(translations.header.search.tokens)}
+                    </LabelWrapper>
+                  ),
+                  options: searchResult(res.list, notAvailable, 'token'),
+                });
+              if (res.contractList && res.contractList.length > 0)
+                options.push({
+                  label: (
+                    <LabelWrapper>
+                      {t(translations.header.search.contracts)}
+                      {res.contractList.length > 10
+                        ? ` (${t(translations.header.search.contractsTip)})`
+                        : null}
+                    </LabelWrapper>
+                  ),
+                  options: searchResult(
+                    res.contractList.length > 10
+                      ? res.contractList.slice(0, 10)
+                      : res.contractList,
+                    notAvailable,
+                    'contract',
+                  ),
+                });
+              setOptions(options);
+            } else {
+              setOptions([]);
+            }
+          })
+          .catch(e => {
+            if (e.name !== 'AbortError') {
+              console.error(e);
+            }
+          });
+      }
     } else {
       setOptions([]);
     }

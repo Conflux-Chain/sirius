@@ -481,8 +481,8 @@
     "suggestionBox": "Suggestion Box",
     "testnet": "Conflux Core (Testnet)",
     "oceanus": "Conflux Hydra",
-    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
-    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
+    "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag / .web3 Username",
+    "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag/.web3 Username",
     "addressConverter": "Address Format Conversion",
     "faucet": "Test Faucet",
     "broadcastTx": "Broadcast Transaction",
@@ -491,6 +491,7 @@
     "nftDetail": "NFT Detail",
     "notice": "Notice Center",
     "search": {
+      "ens": ".web3 Username",
       "tokens": "Tokens",
       "contracts": "Contracts",
       "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
@@ -1238,6 +1239,7 @@
       "scanQRCode": "Scan QR Code"
     },
     "notAvailable": "Not Available",
+    "noResult": "No Result",
     "security": {
       "notAvailable": "Not available",
       "finalized": "Finalized",
