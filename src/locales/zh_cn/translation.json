@@ -480,8 +480,8 @@
     "suggestionBox": "意见箱",
     "testnet": "Conflux Core (Testnet)",
     "oceanus": "Conflux Hydra",
-    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签",
-    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签",
+    "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签 / .web3 用户名",
+    "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签/.web3 用户名",
     "addressConverter": "地址格式转换",
     "faucet": "测试水管",
     "broadcastTx": "广播交易",
@@ -490,6 +490,7 @@
     "nftDetail": "数字藏品详情",
     "notice": "通知中心",
     "search": {
+      "ens": ".web3 用户名",
       "tokens": "通证",
       "contracts": "合约",
       "contractsTip": "仅显示注册日期最早的 10 个合约"
@@ -1235,6 +1236,7 @@
       "scanQRCode": "扫描二维码"
     },
     "notAvailable": "暂无信息",
+    "noResult": "暂无结果",
     "security": {
       "notAvailable": "暂无信息",
       "finalized": "已确认",
