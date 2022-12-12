@@ -6,8 +6,8 @@ import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Remark } from 'app/components/Remark';
 import styled from 'styled-components/macro';
 import { Card } from 'app/components/Card/Loadable';
-import { Form, Input, Button, Row, Col, Select } from '@cfxjs/antd';
-import { isContractAddress } from 'utils';
+import { Form, Input, Button, Row, Col, Select, Collapse } from '@cfxjs/antd';
+import { isContractAddress, isCurrentNetworkAddress } from 'utils';
 import {
   reqContractCompiler,
   reqContractLicense,
@@ -25,12 +25,47 @@ import { useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
+const { Panel } = Collapse;
 const { Option } = Select;
 const AceEditorStyle = {
   width: '100%',
   backgroundColor: '#F8F9FB',
   minHeight: '28.5714rem',
 };
+const EMV_VERSIONS = [
+  {
+    value: ' ',
+    key: 'default (compiler defauls)',
+  },
+  {
+    value: 'homestead',
+    key: 'homestead (oldest version)',
+  },
+  {
+    value: 'tangerineWhistle',
+    key: 'tangerineWhistle',
+  },
+  {
+    value: 'spuriousDragon',
+    key: 'spuriousDragon',
+  },
+  {
+    value: 'byzantium',
+    key: 'byzantium (default for <= v0.5.4)',
+  },
+  {
+    value: 'constantinople',
+    key: 'constantinople',
+  },
+  {
+    value: 'petersburg',
+    key: 'petersburg (default for <= v0.5.5)',
+  },
+  {
+    value: 'istanbul',
+    key: 'istanbul (default for <= v0.5.14)',
+  },
+];
 
 export const ContractVerification = () => {
   const { t } = useTranslation();
@@ -46,6 +81,15 @@ export const ContractVerification = () => {
   const [modalStatus, setModalStatus] = useState('loading');
   const [modalShow, setModalShow] = useState(false);
   const [respErrors, setRespErrors] = useState<Array<string>>([]);
+
+  const isAddress = (_, value) => {
+    if (!value || isCurrentNetworkAddress(value)) {
+      return Promise.resolve();
+    }
+    return Promise.reject(
+      new Error(t(translations.general.advancedSearch.error.invalidAddress)),
+    );
+  };
 
   useEffect(() => {
     reqContractCompiler().then(resp => {
@@ -75,6 +119,7 @@ export const ContractVerification = () => {
       compiler: string;
       license: string;
       optimizeRuns?: number;
+      evmversion?: string;
     } = {
       address: data.contractAddress,
       name: data.contractName,
@@ -86,6 +131,17 @@ export const ContractVerification = () => {
     if (data.optimization === 'yes') {
       payload.optimizeRuns = Number(data.runs);
     }
+
+    if (data.evmVersion.trim()) {
+      payload.evmversion = data.evmVersion;
+    }
+
+    data.library.forEach(l => {
+      if (l.name && l.address) {
+        payload[`libraryname${l.key}`] = l.name;
+        payload[`libraryaddress${l.key}`] = l.address;
+      }
+    });
 
     setModalStatus('loading');
     setModalShow(true);
@@ -372,6 +428,33 @@ export const ContractVerification = () => {
                 />
               </Form.Item>
             </Col>
+            <Col span={8}>
+              <Form.Item
+                name="evmVersion"
+                label={t(translations.contractVerification.evmVersion)}
+                rules={[
+                  {
+                    required: true,
+                    message: t(
+                      translations.contractVerification.error.pleaseSelect,
+                    ),
+                  },
+                ]}
+                validateFirst
+              >
+                <Select
+                  placeholder={t(
+                    translations.contractVerification.placeholder.license,
+                  )}
+                >
+                  {EMV_VERSIONS.map((l, index) => (
+                    <Option value={l.value} key={l.key}>
+                      {index + 1}) {l.key}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
           </Row>
           <Form.Item
             name="contractSourceCode"
@@ -408,9 +491,90 @@ export const ContractVerification = () => {
               onChange={handleSourceCodeChange}
             />
           </Form.Item>
+          <Collapse
+            defaultActiveKey={['1']}
+            bordered={false}
+            expandIcon={props => {
+              return <span>{props.isActive ? '折叠' : '展开'}</span>;
+            }}
+          >
+            <Panel
+              header={
+                <span>
+                  {t(translations.contractVerification.contractLibraryAddress)}{' '}
+                  <small>
+                    {t(
+                      translations.contractVerification
+                        .contractLibraryAddressTip,
+                    )}
+                  </small>
+                </span>
+              }
+              key="1"
+              className="collapse-body"
+            >
+              <Form.List
+                name="library"
+                initialValue={Array.from(Array(10), (k, i) => ({
+                  key: i + 1,
+                  name: '',
+                  address: '',
+                }))}
+              >
+                {fields => (
+                  <>
+                    {fields.map(({ key, name, ...restField }) => {
+                      return (
+                        <Row key={key}>
+                          <Col span={8}>
+                            <Form.Item
+                              {...restField}
+                              name={[name, 'name']}
+                              label={t(
+                                translations.contractVerification.libraryName,
+                                {
+                                  index: key + 1,
+                                },
+                              )}
+                            >
+                              <Input placeholder="" />
+                            </Form.Item>
+                          </Col>
+                          <Col span={1} style={{ textAlign: 'center' }}>
+                            <Form.Item label=" ">&rarr;</Form.Item>
+                          </Col>
+                          <Col span={8}>
+                            <Form.Item
+                              {...restField}
+                              name={[name, 'address']}
+                              label={t(
+                                translations.contractVerification
+                                  .libraryContractAddress,
+                                {
+                                  index: key + 1,
+                                },
+                              )}
+                              rules={[
+                                () => ({
+                                  validator: isAddress,
+                                }),
+                              ]}
+                            >
+                              <Input placeholder="" />
+                            </Form.Item>
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                  </>
+                )}
+              </Form.List>
+            </Panel>
+          </Collapse>
           <Form.Item
             style={{
               marginBottom: 0,
+              marginTop: '1rem',
             }}
           >
             {respErrors.length ? (
@@ -483,6 +647,29 @@ const StyledContractVerificationWrapper = styled.div`
     .error-item {
       font-size: 12px;
       line-height: 1.2;
+    }
+  }
+
+  .collapse-body {
+    border-bottom: none !important;
+    margin-top: -12px;
+
+    .ant-collapse-header {
+      background-color: #ffffff;
+
+      & > span {
+        margin-left: -1rem !important;
+      }
+    }
+
+    .ant-collapse-content-box {
+      padding-top: 16px !important;
+    }
+
+    .ant-collapse-arrow {
+      float: right;
+      margin-right: -1rem !important;
+      color: var(--theme-color-blue2);
     }
   }
 `;

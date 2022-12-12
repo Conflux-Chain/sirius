@@ -296,6 +296,11 @@
     "compiler": "Compiler",
     "optimization": "Optimization",
     "license": "License",
+    "evmVersion": "EVM Version to target",
+    "contractLibraryAddress": "Contract Library Address",
+    "contractLibraryAddressTip": "(for contracts that use libraries, supports up to 10 libraries)",
+    "libraryName": "Library_{{index}} Name",
+    "libraryContractAddress": "Library_{{index}} Contract Address",
     "contractSourceCode": "Contract Source Code",
     "error": {
       "required": "Required",
