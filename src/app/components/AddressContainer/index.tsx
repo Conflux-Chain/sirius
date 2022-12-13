@@ -242,7 +242,8 @@ export const AddressContainer = withTranslation()(
 
       // try to get ens name
       const [ENSMap] = useENS({
-        address: contractCreated || value ? [contractCreated || value] : [],
+        // @ts-ignore
+        address: value || contractCreated ? [value || contractCreated] : [],
       });
 
       const suffixSize =
@@ -259,6 +260,7 @@ export const AddressContainer = withTranslation()(
 
         if (contractCreated) {
           const fContractCreated = formatAddress(contractCreated);
+
           let prefixIcon: React.ReactNode = null;
           // private name tag
           let addressLabel: React.ReactNode = null;
