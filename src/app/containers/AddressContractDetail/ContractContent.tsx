@@ -13,13 +13,14 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col, Tag } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { CFX } from 'utils/constants';
 import lodash from 'lodash';
 import { formatData } from 'app/components/TxnComponents/util';
 import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
+import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
@@ -43,6 +44,7 @@ const Code = ({ contractInfo }) => {
     runs,
     version,
     constructorArgs,
+    libraries = [],
   } = verify;
 
   const constructor = useMemo(() => {
@@ -254,6 +256,38 @@ const Code = ({ contractInfo }) => {
             </>
           ) : null}
         </div>
+        {!!libraries?.length && (
+          <div>
+            <div className="contract-sourcecode-and-abi-title">
+              {t(translations.contract.libraryContracts)}
+            </div>
+            <div className="contract-library-body">
+              {libraries.map(l => (
+                <div>
+                  <span>{l.name}: </span>
+                  <span>
+                    <AddressContainer
+                      value={l.address}
+                      isFull={true}
+                      showIcon={false}
+                    ></AddressContainer>
+                  </span>{' '}
+                  <span>
+                    {l.exactMatch ? (
+                      <Tag color="green">
+                        {t(translations.general.verifiedContract)}
+                      </Tag>
+                    ) : (
+                      <Tag color="red">
+                        {t(translations.general.unverifiedContract)}
+                      </Tag>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </StyledContractContentCodeWrapper>
   );
@@ -325,6 +359,12 @@ const StyledContractContentCodeWrapper = styled.div`
     max-height: 28rem;
     overflow: auto;
     font-family: ${monospaceFont};
+  }
+
+  .contract-library-body {
+    font-size: 1rem;
+    background-color: rgb(248, 249, 251);
+    padding: 5px 10px;
   }
 `;
 

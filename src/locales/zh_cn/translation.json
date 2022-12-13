@@ -184,6 +184,7 @@
     "abi": "合约ABI",
     "constructorArgs": "构造器参数",
     "constructorArgsTips": "（ABI-Encoded and is the last bytes of the Contract Creation Code above）",
+    "libraryContracts": "使用的库合约",
     "encodedView": "编码视图",
     "decodedView": "解码视图",
     "enterPassword": "请输入管理员口令",

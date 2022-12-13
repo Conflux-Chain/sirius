@@ -185,6 +185,7 @@
     "abi": "Contract ABI",
     "constructorArgs": "Constructor Arguments",
     "constructorArgsTips": " (ABI-Encoded and is the last bytes of the Contract Creation Code above)",
+    "libraryContracts": "Library Contracts",
     "encodedView": "Encoded View",
     "decodedView": "Decoded View",
     "enterPassword": "Please enter your password",

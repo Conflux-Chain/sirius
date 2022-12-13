@@ -11,6 +11,7 @@ import { isContractAddress, isCurrentNetworkAddress } from 'utils';
 import {
   reqContractCompiler,
   reqContractLicense,
+  reqEVMVersion,
   reqContractVerification,
 } from 'utils/httpRequest';
 import AceEditor from 'react-ace';
@@ -32,40 +33,6 @@ const AceEditorStyle = {
   backgroundColor: '#F8F9FB',
   minHeight: '28.5714rem',
 };
-const EMV_VERSIONS = [
-  {
-    value: ' ',
-    key: 'default (compiler defauls)',
-  },
-  {
-    value: 'homestead',
-    key: 'homestead (oldest version)',
-  },
-  {
-    value: 'tangerineWhistle',
-    key: 'tangerineWhistle',
-  },
-  {
-    value: 'spuriousDragon',
-    key: 'spuriousDragon',
-  },
-  {
-    value: 'byzantium',
-    key: 'byzantium (default for <= v0.5.4)',
-  },
-  {
-    value: 'constantinople',
-    key: 'constantinople',
-  },
-  {
-    value: 'petersburg',
-    key: 'petersburg (default for <= v0.5.5)',
-  },
-  {
-    value: 'istanbul',
-    key: 'istanbul (default for <= v0.5.14)',
-  },
-];
 
 export const ContractVerification = () => {
   const { t } = useTranslation();
@@ -75,6 +42,7 @@ export const ContractVerification = () => {
   const [loading, setLoading] = useState(false);
   const [license, setLicense] = useState<Array<any>>([]);
   const [compilers, setCompilers] = useState<Array<any>>([]);
+  const [versions, setVersions] = useState<Array<any>>([]);
   const [optimizationValue, setOptimizationValue] = useState<string>('no');
   const inputRef = createRef<any>();
   const [sourceCode, setSourceCode] = useState('');
@@ -109,6 +77,22 @@ export const ContractVerification = () => {
         })),
       );
     });
+
+    reqEVMVersion().then(resp => {
+      setVersions(
+        [
+          {
+            key: 'default',
+            value: ' ',
+          },
+        ].concat(
+          resp.map(r => ({
+            key: r,
+            value: r,
+          })),
+        ),
+      );
+    });
   }, []);
 
   const onFinish = (data: any) => {
@@ -119,7 +103,7 @@ export const ContractVerification = () => {
       compiler: string;
       license: string;
       optimizeRuns?: number;
-      evmversion?: string;
+      evmVersion?: string;
     } = {
       address: data.contractAddress,
       name: data.contractName,
@@ -132,14 +116,12 @@ export const ContractVerification = () => {
       payload.optimizeRuns = Number(data.runs);
     }
 
-    if (data.evmVersion.trim()) {
-      payload.evmversion = data.evmVersion;
-    }
+    payload.evmVersion = data.evmVersion.trim();
 
     data.library.forEach(l => {
       if (l.name && l.address) {
-        payload[`libraryname${l.key}`] = l.name;
-        payload[`libraryaddress${l.key}`] = l.address;
+        payload[`libraryName${l.key}`] = l.name;
+        payload[`libraryAddress${l.key}`] = l.address;
       }
     });
 
@@ -447,7 +429,7 @@ export const ContractVerification = () => {
                     translations.contractVerification.placeholder.license,
                   )}
                 >
-                  {EMV_VERSIONS.map((l, index) => (
+                  {versions.map((l, index) => (
                     <Option value={l.value} key={l.key}>
                       {index + 1}) {l.key}
                     </Option>
@@ -630,7 +612,7 @@ const StyledContractVerificationWrapper = styled.div`
     justify-content: center;
 
     .link {
-      color: #1e3de4;
+      color: var(--theme-color-blue2);
       font-weight: 500;
       line-height: 1.2857rem;
       text-align: right;
@@ -670,6 +652,8 @@ const StyledContractVerificationWrapper = styled.div`
       float: right;
       margin-right: -1rem !important;
       color: var(--theme-color-blue2);
+      text-decoration: underline;
+      font-weight: 500;
     }
   }
 `;
