@@ -205,6 +205,8 @@
       "contractName": "合约名：",
       "optimizationEnabled": "是否优化：",
       "otherSettings": "其他设置：",
+      "evmVersion": "{{version}} evmVersion",
+      "license": "{{license}} license",
       "compilerVersion": "编译版本：",
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "立刻前往",
