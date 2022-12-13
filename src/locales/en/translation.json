@@ -206,6 +206,8 @@
       "contractName": "Contract Name: ",
       "optimizationEnabled": "Optimization Enabled: ",
       "otherSettings": "Other Settings: ",
+      "evmVersion": "{{version}} evmVersion",
+      "license": "{{license}} license",
       "compilerVersion": "Compiler Version: ",
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "You can ",

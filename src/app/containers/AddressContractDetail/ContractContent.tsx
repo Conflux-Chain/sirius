@@ -45,6 +45,7 @@ const Code = ({ contractInfo }) => {
     version,
     constructorArgs,
     libraries = [],
+    evmVersion,
   } = verify;
 
   const constructor = useMemo(() => {
@@ -144,7 +145,17 @@ const Code = ({ contractInfo }) => {
               <span className="verify-info-title">
                 {t(translations.contract.verify.otherSettings)}
               </span>
-              <span className="verify-info-content">{license}</span>
+              <span className="verify-info-content">
+                {t(translations.contract.verify.evmVersion, {
+                  version: evmVersion || 'default',
+                })}
+              </span>
+              {', '}
+              <span className="verify-info-content">
+                {t(translations.contract.verify.license, {
+                  license,
+                })}
+              </span>
             </Col>
           </Row>
         </>
