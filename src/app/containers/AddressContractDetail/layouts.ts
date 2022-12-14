@@ -140,4 +140,5 @@ export const StyledENSName = styled.span<{
   display: ${props => (props.show ? 'inline-flex' : 'none')};
   align-items: center;
   color: var(--theme-color-gray4);
+  text-transform: none;
 `;
