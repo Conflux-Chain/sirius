@@ -423,6 +423,7 @@ export const ContractVerification = () => {
                   },
                 ]}
                 validateFirst
+                initialValue={' '}
               >
                 <Select
                   placeholder={t(
@@ -474,7 +475,6 @@ export const ContractVerification = () => {
             />
           </Form.Item>
           <Collapse
-            defaultActiveKey={['1']}
             bordered={false}
             expandIcon={props => {
               return <span>{props.isActive ? '折叠' : '展开'}</span>;
