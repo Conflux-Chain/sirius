@@ -423,12 +423,12 @@ export const ContractVerification = () => {
                   },
                 ]}
                 validateFirst
+                initialValue={' '}
               >
                 <Select
                   placeholder={t(
                     translations.contractVerification.placeholder.license,
                   )}
-                  defaultValue=" "
                 >
                   {versions.map((l, index) => (
                     <Option value={l.value} key={l.key}>
@@ -475,7 +475,6 @@ export const ContractVerification = () => {
             />
           </Form.Item>
           <Collapse
-            defaultActiveKey={[]}
             bordered={false}
             expandIcon={props => {
               return <span>{props.isActive ? '折叠' : '展开'}</span>;
