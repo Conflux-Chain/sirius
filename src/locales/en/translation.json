@@ -452,6 +452,7 @@
     "tipCountAfter": "registered contracts"
   },
   "header": {
+    "coreId": "CoreID",
     "home": "Home",
     "bnt": "Blocks & Transactions",
     "block": "Blocks",
@@ -1937,6 +1938,19 @@
     "snapshotDate": "Snapshot Date",
     "epoch": "Epoch",
     "epochNo": "Epoch No"
+  },
+  "coreId": {
+    "title": "Conflux CoreID Search",
+    "subtitle": "The Conflux CoreID service is a distributed and extensible name system based on the Conflux regional chain, It can be used to resolve various resource information, such as the address of the Conflux Core.",
+    "inputPlaceholder": "Please search CoreID or address",
+
+    "incorrectFormat": "Invalid address format",
+    "incorrectAddressType": "Invalid address type, only support for account address",
+    "tokenId": "TokenID",
+    "plzSearch": "Plz Search",
+    "plzSearchDesc": "Please enter an address above to load the NFTs it owned",
+    "owner": "Owner",
+    "amount": "NFT Quantity"
   },
   "nftChecker": {
     "title": "NFT Checker",

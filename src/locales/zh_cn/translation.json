@@ -451,6 +451,7 @@
     "tipCountAfter": "个已注册合约"
   },
   "header": {
+    "coreId": "CoreID",
     "home": "首页",
     "bnt": "区块&交易",
     "block": "区块",

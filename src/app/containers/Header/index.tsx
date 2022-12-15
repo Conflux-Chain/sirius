@@ -188,6 +188,12 @@ export const Header = memo(() => {
       href: '/profile',
       className: 'profile',
     },
+    {
+      title: [t(translations.header.coreId), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.coreId,
+      afterClick: menuClick,
+      href: '/cnslookup-search',
+    },
   ];
 
   ecosystemItems.push({
