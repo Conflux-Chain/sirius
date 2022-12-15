@@ -428,7 +428,7 @@ export const ContractVerification = () => {
                   placeholder={t(
                     translations.contractVerification.placeholder.license,
                   )}
-                  defaultValue="default"
+                  defaultValue=" "
                 >
                   {versions.map((l, index) => (
                     <Option value={l.value} key={l.key}>
