@@ -70,7 +70,7 @@ export const getLabelInfo = (label, type) => {
         <img
           src={ICON_ENS}
           style={{
-            marginBottom: '2px',
+            marginBottom: '3px',
             marginRight: '2px',
           }}
           alt=""
