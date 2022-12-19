@@ -70,7 +70,7 @@ export const getLabelInfo = (label, type) => {
         <img
           src={ICON_ENS}
           style={{
-            marginBottom: '2px',
+            marginBottom: '3px',
             marginRight: '2px',
           }}
           alt=""
@@ -261,7 +261,6 @@ export const AddressContainer = withTranslation()(
         if (contractCreated) {
           const fContractCreated = formatAddress(contractCreated);
 
-          let prefixIcon: React.ReactNode = null;
           // private name tag
           let addressLabel: React.ReactNode = null;
           // ens name tag
@@ -273,22 +272,21 @@ export const AddressContainer = withTranslation()(
             globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
 
           if (showAddressLabel && gAddressLabel) {
-            const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
+            const { label } = getLabelInfo(gAddressLabel, 'tag');
 
             addressLabel = label;
-            prefixIcon = icon;
           }
 
           if (showENSLabel && gENSLabel) {
-            const { label, icon } = getLabelInfo(gENSLabel, 'ens');
+            const { label } = getLabelInfo(gENSLabel, 'ens');
 
             ENSLabel = label;
-            prefixIcon = icon;
           }
 
           return RenderAddress({
+            content: txtContractCreation,
             cfxAddress: '',
-            alias: alias || txtContractCreation,
+            alias: alias,
             addressLabel,
             ENSLabel,
             hoverValue: fContractCreated,
@@ -299,7 +297,6 @@ export const AddressContainer = withTranslation()(
             suffixSize,
             prefix: (
               <IconWrapper>
-                {prefixIcon}
                 <Text span hoverValue={txtContractCreation}>
                   <img src={ContractIcon} alt={txtContractCreation} />
                 </Text>
