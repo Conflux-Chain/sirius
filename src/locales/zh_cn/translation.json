@@ -981,6 +981,8 @@
     }
   },
   "general": {
+    "fold": "折叠",
+    "expand": "展开",
     "refresh": "刷新",
     "timestamp": "时间戳",
     "create": "创建",
