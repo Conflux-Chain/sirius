@@ -118,7 +118,7 @@ export const ContractVerification = () => {
 
     payload.evmVersion = data.evmVersion.trim();
 
-    data.library.forEach(l => {
+    data.library?.forEach(l => {
       if (l.name && l.address) {
         payload[`libraryName${l.key}`] = l.name;
         payload[`libraryAddress${l.key}`] = l.address;
