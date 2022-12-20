@@ -477,7 +477,13 @@ export const ContractVerification = () => {
           <Collapse
             bordered={false}
             expandIcon={props => {
-              return <span>{props.isActive ? '折叠' : '展开'}</span>;
+              return (
+                <span>
+                  {props.isActive
+                    ? t(translations.general.fold)
+                    : t(translations.general.expand)}
+                </span>
+              );
             }}
           >
             <Panel
