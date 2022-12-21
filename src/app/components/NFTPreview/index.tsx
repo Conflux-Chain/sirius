@@ -135,18 +135,7 @@ export const NFTCardInfo = React.memo(
       }
     }, [audioRef]);
 
-    if (nftType === 'image') {
-      return (
-        <Image
-          width={width}
-          style={{ minHeight: imageMinHeight }}
-          src={imageUri}
-          preview={preview}
-          fallback={tokenIdNotFound}
-          alt={tokenId + ''}
-        />
-      );
-    } else if (nftType === 'video') {
+    if (nftType === 'video') {
       return (
         <VideoCard>
           <video
@@ -189,7 +178,16 @@ export const NFTCardInfo = React.memo(
         </ThreeDCard>
       );
     } else {
-      return null;
+      return (
+        <Image
+          width={width}
+          style={{ minHeight: imageMinHeight }}
+          src={imageUri}
+          preview={preview}
+          fallback={tokenIdNotFound}
+          alt={tokenId + ''}
+        />
+      );
     }
   },
 );
