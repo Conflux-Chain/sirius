@@ -103,7 +103,9 @@
       "invalidNetwork": "Please input {{network}} address",
       "invalidAmount": "Please input 1 - {{amount}}"
     },
-    "refreshTip": "Request has been submitted, wait a few minute..."
+    "refreshTip": "Request has been submitted, wait a few minute...",
+    "trait": "Trait ({{amount}})",
+    "datetime": "Datetime"
   },
   "fccfx": {
     "title": "FC-CFX Non-reversible Exchange",
