@@ -406,14 +406,6 @@ export function NFTDetail(props) {
                   />
                 </Collapse.Panel>
               )}
-              {data.detail?.metadata?.description && (
-                <Collapse.Panel
-                  header={t(translations.nftDetail.description)}
-                  key="description"
-                >
-                  {data.detail?.metadata?.description}
-                </Collapse.Panel>
-              )}
             </Collapse>
           </Card>
         </Col>
