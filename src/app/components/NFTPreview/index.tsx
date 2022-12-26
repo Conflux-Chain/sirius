@@ -199,12 +199,14 @@ export const NFTPreview = React.memo(
     type = 'preview',
     amount = 0,
     owner = '',
+    enable3D = false,
   }: {
     contractAddress?: string;
     tokenId?: number | string;
     type?: 'preview' | 'card' | 'primary';
     amount?: number;
     owner?: string;
+    enable3D?: boolean;
   }) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -225,9 +227,18 @@ export const NFTPreview = React.memo(
           .then(data => {
             if (data) {
               setImageMinHeight(data.imageMinHeight);
-              if (data.imageUri) {
-                setImageUri(data.imageUri);
+
+              // support display 3d resource
+              const { image = NotFoundIcon, animation_url } =
+                data.detail?.metadata || {};
+
+              let img = image;
+
+              if (enable3D && animation_url) {
+                img = animation_url;
               }
+
+              setImageUri(img);
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
             }
           })
@@ -239,7 +250,7 @@ export const NFTPreview = React.memo(
             setIsFirstTime(false);
           });
       }
-    }, [contractAddress, tokenId, lang]);
+    }, [contractAddress, tokenId, lang, enable3D]);
 
     if (contractAddress && tokenId) {
       if (type === 'card') {
