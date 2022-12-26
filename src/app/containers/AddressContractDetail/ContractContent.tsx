@@ -50,53 +50,57 @@ const Code = ({ contractInfo }) => {
 
   const constructor = useMemo(() => {
     if (constructorArgs && abi && address) {
-      const contract = CFX.Contract({
-        abi,
-        address,
-      });
+      try {
+        const contract = CFX.Contract({
+          abi,
+          address,
+        });
 
-      const data = contract.abi.decodeData(constructorArgs);
+        const data = contract.abi.decodeData(constructorArgs);
 
-      if (data === '0x' || !data) {
-        return null;
-      } else {
-        const encodeArgs = lodash.words(constructorArgs.substr(2), /.{64}/g);
+        if (data === '0x' || !data) {
+          return null;
+        } else {
+          const encodeArgs = lodash.words(constructorArgs.substr(2), /.{64}/g);
 
-        const { object, fullName } = data;
+          const { object, fullName } = data;
 
-        try {
-          if (fullName === 'constructor()') {
+          try {
+            if (fullName === 'constructor()') {
+              return {
+                fullArgs: constructorArgs,
+                encodeArgs,
+                decodeArgs: [],
+              };
+            } else {
+              let types = (/constructor\((.*)\)/.exec(fullName) as string[])[1]
+                .split(',')
+                .map(t => {
+                  return t.trim().split(' ');
+                })
+                .map(i => {
+                  return i.concat(
+                    formatData(object[i[1]], i[0], {
+                      space: null,
+                    }),
+                  );
+                });
+              return {
+                fullArgs: constructorArgs,
+                encodeArgs,
+                decodeArgs: types,
+              };
+            }
+          } catch (error) {
             return {
               fullArgs: constructorArgs,
               encodeArgs,
               decodeArgs: [],
             };
-          } else {
-            let types = (/constructor\((.*)\)/.exec(fullName) as string[])[1]
-              .split(',')
-              .map(t => {
-                return t.trim().split(' ');
-              })
-              .map(i => {
-                return i.concat(
-                  formatData(object[i[1]], i[0], {
-                    space: null,
-                  }),
-                );
-              });
-            return {
-              fullArgs: constructorArgs,
-              encodeArgs,
-              decodeArgs: types,
-            };
           }
-        } catch (error) {
-          return {
-            fullArgs: constructorArgs,
-            encodeArgs,
-            decodeArgs: [],
-          };
         }
+      } catch (error) {
+        return null;
       }
     }
   }, [abi, address, constructorArgs]);
@@ -397,6 +401,19 @@ export const ContractContent = ({ contractInfo }) => {
     destroy = {},
   } = contractInfo;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [initError, setInitError] = useState(false);
+
+  // some contract init will trigger SDK error, need SDK to solve it
+  useEffect(() => {
+    try {
+      CFX.Contract({
+        abi,
+        address,
+      });
+    } catch (error) {
+      setInitError(true);
+    }
+  }, [abi, address]);
 
   let tabs: Array<TabsItemType> = [
     {
@@ -406,7 +423,7 @@ export const ContractContent = ({ contractInfo }) => {
     },
   ];
 
-  if (abi && destroy.status === 0 && Object.keys(verify).length) {
+  if (!initError && abi && destroy.status === 0 && Object.keys(verify).length) {
     tabs = tabs.concat([
       {
         key: 'read',
@@ -438,7 +455,7 @@ export const ContractContent = ({ contractInfo }) => {
   }
 
   // check if is a proxy contract
-  if (proxy?.proxy && implementation?.address) {
+  if (!initError && proxy?.proxy && implementation?.address) {
     // proxy contract
     if (implementation?.verify?.exactMatch) {
       tabs = tabs.concat([
