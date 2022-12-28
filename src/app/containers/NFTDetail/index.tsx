@@ -58,6 +58,7 @@ interface StringAttributes {
 interface NumberAttributes {
   trait_type: string;
   value: number;
+  display_type: string;
 }
 
 const TraitPanel = ({ data = [] }: { data: Array<StringAttributes> }) => {
@@ -104,29 +105,49 @@ const DescriptionPanel = ({ data = '' }) => {
 
 const StyledTraitPanelWrapper = styled.div`
   .container {
-    border: 1px solid var(--theme-color-blue2);
+    border: 1px solid var(--theme-color-blue4);
     border-radius: 4px;
     padding: 1rem;
     text-align: center;
-    background-color: rgba(70, 101, 240, 0.05);
+    background-color: var(--theme-color-blue3);
     height: 100%;
   }
 
   .type {
-    color: var(--theme-color-blue2);
-    text-transform: uppercase;
+    color: var(--theme-color-gray4);
     font-weight: 500;
     font-size: 12px;
+    margin-bottom: 12px;
   }
 
   .value {
+    font-size: 16px;
     font-weight: 500;
+    line-height: 20px;
   }
 `;
 const StyledDatePanelWrapper = styled.div`
   .container {
     display: flex;
     justify-content: space-between;
+
+    &:not(:last-child) {
+      padding-bottom: 12px;
+    }
+
+    &:not(:first-child) {
+      padding-top: 12px;
+      border-top: 1px solid var(--theme-color-gray0);
+    }
+  }
+
+  .type {
+    font-size: 14px;
+    color: var(--theme-color-gray4);
+  }
+  .value {
+    font-size: 14px;
+    font-weight: 450;
   }
 `;
 
