@@ -215,7 +215,7 @@ export function NFTDetail(props) {
     let dateTypeAttributes: any = [],
       stringTypeAttributes: any = [];
 
-    attributes.forEach(a => {
+    attributes?.forEach(a => {
       if (a.display_type === 'date') {
         dateTypeAttributes.push(a);
       } else if (a.display_type === undefined) {
