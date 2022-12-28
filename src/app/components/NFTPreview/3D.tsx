@@ -2,7 +2,7 @@ import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useLoader } from '@react-three/fiber';
 // @ts-ignore
-import { Environment, OrbitControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Suspense } from 'react';
 import styled from 'styled-components';
@@ -20,12 +20,13 @@ export const ThreeD = ({ url = '' }) => {
         style={{
           position: 'absolute',
           top: '0',
+          background: '#FFFFFF',
         }}
       >
         <Suspense fallback={null}>
-          <primitive object={gltf.scene} scale={0.4} />
+          <primitive object={gltf.scene} scale={1} />
           <OrbitControls />
-          <Environment preset="sunset" background />
+          {/* <Environment preset="studio" background /> */}
         </Suspense>
       </Canvas>
     </Container>

@@ -81,7 +81,8 @@ export const NFTCardInfo = React.memo(
     useEffect(() => {
       let nftType = 'image';
       // eslint-disable-next-line no-useless-escape
-      const suffix = /\.[^\.]+$/.exec(imageUri.substr(-5));
+      const url = /[^?#]+/.exec(imageUri)?.[0] || '';
+      const suffix = /\.[^.]+$/.exec(url);
 
       if (suffix) {
         const sourceType = suffix[0].substr(1);
