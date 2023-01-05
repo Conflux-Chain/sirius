@@ -1,34 +1,46 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useLoader } from '@react-three/fiber';
 // @ts-ignore
 import { OrbitControls } from '@react-three/drei';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { Suspense } from 'react';
 import styled from 'styled-components';
-import { Skeleton } from '@cfxjs/antd';
+import { Skeleton, Image } from '@cfxjs/antd';
+import ErrorBoundary from '../ErrorBoundary';
+import Scene from './scene';
+import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 
-export const ThreeD = ({ url = '' }) => {
-  const gltf = useLoader(GLTFLoader, url);
+const NotFound = () => {
+  return (
+    <Image
+      width={500}
+      height={'auto'}
+      src={NotFoundIcon}
+      alt={'not found'}
+      preview={false}
+    />
+  );
+};
 
+export const ThreeD = ({ url = '', type }) => {
   return (
     <Container>
-      <Skeleton.Image />
-      <Canvas
-        frameloop="demand"
-        className="3d-canvas"
-        style={{
-          position: 'absolute',
-          top: '0',
-          background: '#FFFFFF',
-        }}
-      >
-        <Suspense fallback={null}>
-          <primitive object={gltf.scene} scale={1} />
+      {/* @ts-ignore */}
+      <ErrorBoundary message={<NotFound />}>
+        <Skeleton.Image />
+        <Canvas
+          frameloop="demand"
+          className="3d-canvas"
+          style={{
+            position: 'absolute',
+            top: '0',
+            background: '#FFFFFF',
+          }}
+        >
+          <Scene url={url} type={type}></Scene>
           <OrbitControls />
-          {/* <Environment preset="studio" background /> */}
-        </Suspense>
-      </Canvas>
+          <ambientLight intensity={0.1} />
+          <directionalLight color="#FFFFFF" position={[0, 0, 5]} />
+        </Canvas>
+      </ErrorBoundary>
     </Container>
   );
 };
