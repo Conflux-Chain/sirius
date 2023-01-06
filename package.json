@@ -8,8 +8,7 @@
     "@cfxjs/use-wallet": "0.0.18",
     "@conflux-dev/conflux-address-js": "1.3.16",
     "@ensdomains/eth-ens-namehash": "2.0.15",
-    "@react-three/drei": "9.47.1",
-    "@react-three/fiber": "8.9.1",
+    "@google/model-viewer": "2.1.1",
     "@testing-library/jest-dom": "5.1.1",
     "@testing-library/react": "10.0.1",
     "@types/fontfaceobserver": "0.0.6",
@@ -66,7 +65,7 @@
     "react-json-pretty": "2.2.0",
     "react-json-view": "1.19.1",
     "react-router-dom": "5.1.2",
-    "react-scripts": "3.4.3",
+    "react-scripts": "3.4.1",
     "react-test-renderer": "16.13.0",
     "react-use": "15.3.4",
     "recoil": "0.0.10",
@@ -79,7 +78,6 @@
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
     "swr": "0.3.2",
-    "three": "0.147.0",
     "ts-node": "8.8.2",
     "typescript": "4.5.4",
     "webfontloader": "1.6.28",
@@ -104,19 +102,11 @@
     "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
     "prettify": "prettier --write"
   },
-  "browserslist": {
-    "production": [
-      ">1%",
-      "not IE 11",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "engines": {
     "npm": "^6.14.15",
     "node": "^14.17.0"
@@ -185,6 +175,6 @@
   "resolutions": {
     "@types/react": "16.9.25",
     "@types/react-dom": "16.9.3",
-    "lodash": "4.17.20"
+    "lodash": "4.17.21"
   }
 }
