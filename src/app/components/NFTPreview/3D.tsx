@@ -1,46 +1,29 @@
 import React from 'react';
-import { Canvas } from '@react-three/fiber';
-// @ts-ignore
-import { OrbitControls } from '@react-three/drei';
 import styled from 'styled-components';
-import { Skeleton, Image } from '@cfxjs/antd';
-import ErrorBoundary from '../ErrorBoundary';
-import Scene from './scene';
-import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 
-const NotFound = () => {
-  return (
-    <Image
-      width={500}
-      height={'auto'}
-      src={NotFoundIcon}
-      alt={'not found'}
-      preview={false}
-    />
-  );
-};
+import '@google/model-viewer';
 
 export const ThreeD = ({ url = '', type }) => {
   return (
     <Container>
       {/* @ts-ignore */}
-      <ErrorBoundary message={<NotFound />}>
-        <Skeleton.Image />
-        <Canvas
-          frameloop="demand"
-          className="3d-canvas"
-          style={{
-            position: 'absolute',
-            top: '0',
-            background: '#FFFFFF',
-          }}
-        >
-          <Scene url={url} type={type}></Scene>
-          <OrbitControls />
-          <ambientLight intensity={0.1} />
-          <directionalLight color="#FFFFFF" position={[0, 0, 5]} />
-        </Canvas>
-      </ErrorBoundary>
+      <model-viewer
+        alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+        src={url}
+        // poster="https://vbs-staging.oss-cn-beijing.aliyuncs.com/pattern/thumbnail1024/prop_mask_004_ue_1024.png?versionid=CAEQKRiBgMCc0Jf.oxgiIDU2MGY0Nzc3ZjBjYjRkYmQ4MjdhNzFlMDk5ZWQ3ZjQ1"
+        shadow-intensity="1"
+        camera-controls
+        touch-action="pan-y"
+        // @ts-ignore
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: '0',
+        }}
+        // @ts-ignore
+      ></model-viewer>
+      {/* @ts-ignore */}
     </Container>
   );
 };
@@ -49,5 +32,5 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
+  padding-top: 100%;
 `;
