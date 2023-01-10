@@ -55,7 +55,7 @@ const imageType = [
   'tiff',
   'webp',
 ];
-const threeDType = ['gltf', 'glb', 'obj', 'fbx'];
+const threeDType = ['gltf', 'glb'];
 
 export const NFTCardInfo = React.memo(
   ({
@@ -74,7 +74,6 @@ export const NFTCardInfo = React.memo(
     preview?: boolean;
   }) => {
     let [nftType, setNftType] = useState('image');
-    let [sourceType, setSourceType] = useState('');
     const [isAudioPlay, setIsAudioPlay] = useState(false);
     const [percent, setPercent] = useState<string>();
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -87,7 +86,6 @@ export const NFTCardInfo = React.memo(
 
       if (suffix) {
         const sourceType = suffix[0].substr(1);
-        setSourceType(sourceType);
         if (videoType.includes(sourceType)) {
           nftType = 'video';
         } else if (imageType.includes(sourceType)) {
@@ -178,7 +176,7 @@ export const NFTCardInfo = React.memo(
     } else if (nftType === '3d') {
       return (
         <ThreeDCard>
-          <ThreeD url={`${imageUri}`} type={sourceType} />
+          <ThreeD url={`${imageUri}`} />
         </ThreeDCard>
       );
     } else {
