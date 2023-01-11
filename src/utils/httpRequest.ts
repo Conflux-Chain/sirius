@@ -1,6 +1,13 @@
 import qs from 'query-string';
 import fetch from './request';
 import { OPEN_API_URLS } from './constants';
+import {
+  ENS_REQUEST_EXPIRED_PERIOD,
+  ENS_REQUEST_DELAYED_PERIOD,
+  ENS_REQUEST_MIN_BUNDLE_SIZE,
+} from './constants';
+import lodash from 'lodash';
+import { isAddress } from './index';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -16,6 +23,7 @@ export const sendRequest = config => {
     method: config.type || 'GET',
     body: config.body,
     headers: config.headers,
+    signal: config.signal,
   });
 };
 
@@ -204,6 +212,12 @@ export const reqContractCompiler = () => {
   });
 };
 
+export const reqEVMVersion = () => {
+  return sendRequest({
+    url: `/contract/evm-version`,
+  });
+};
+
 export const reqContractVerification = param => {
   return sendRequest({
     url: `/contract/verify`,
@@ -336,3 +350,140 @@ export const reqRefreshMetadata = (param?: object, extra?: object) => {
     ...extra,
   });
 };
+
+export const reqENSInfoWithNoCache = (address: string[], extra?: object) => {
+  const query = address.reduce((prev, curr, index) => {
+    return !index ? `address=${curr}` : `${prev}&address=${curr}`;
+  }, '');
+  return sendRequest({
+    url: `/ens/reverse/match?${query}`,
+    ...extra,
+  });
+};
+
+export const reqENSInfoWithCache = (() => {
+  // address request status cache
+  const cache = {};
+
+  // TODO add call debounce
+  return (address: string[], extra?: object) => {
+    const toRequestAddress = address.filter(a => {
+      const cA = cache[a];
+      if (!cA || (!cA.requesting && +new Date() > cA.expired)) {
+        cache[a] = {
+          ...cA,
+          requesting: true,
+        };
+        return true;
+      }
+      return false;
+    });
+
+    if (toRequestAddress.length) {
+      const query = toRequestAddress.reduce((prev, curr, index) => {
+        return !index ? `address=${curr}` : `${prev}&address=${curr}`;
+      }, '');
+
+      return sendRequest({
+        url: `/ens/reverse/match?${query}`,
+        ...extra,
+      }).then(data => {
+        const expired = +new Date() + ENS_REQUEST_EXPIRED_PERIOD;
+
+        return toRequestAddress.map(a => {
+          cache[a] = {
+            expired,
+            requesting: false,
+          };
+
+          return {
+            address: a,
+            name: data.map[a].name,
+            expired,
+          };
+        });
+      });
+    } else {
+      return Promise.resolve([]);
+    }
+  };
+})();
+
+export const reqENSInfo = (() => {
+  // request cache
+  const cache = {};
+  // request limit
+  let pendingAddress: string[] = [];
+  let timeout = 0;
+
+  const call = (address, extra) => {
+    const query = address.reduce((prev, curr, index) => {
+      return !index ? `address=${curr}` : `${prev}&address=${curr}`;
+    }, '');
+
+    return sendRequest({
+      url: `/ens/reverse/match?${query}`,
+      ...extra,
+    }).then(data => {
+      const expired = +new Date() + ENS_REQUEST_EXPIRED_PERIOD;
+
+      return address.map(a => {
+        cache[a] = {
+          expired,
+          requesting: false,
+        };
+
+        return {
+          address: a,
+          name: data.map[a]?.name || '',
+          expired,
+        };
+      });
+    });
+  };
+
+  return (address: string[], extra?: object) => {
+    const toRequestAddress = address
+      .filter(a => a && isAddress(a))
+      .map(a => a.toLowerCase())
+      .filter(a => {
+        const cA = cache[a];
+        if (!cA || (!cA.requesting && +new Date() > cA.expired)) {
+          cache[a] = {
+            ...cA,
+            requesting: true,
+          };
+          return true;
+        }
+        return false;
+      });
+
+    if (toRequestAddress.length) {
+      pendingAddress = lodash.uniq(pendingAddress.concat(toRequestAddress));
+
+      if (
+        pendingAddress.length >= ENS_REQUEST_MIN_BUNDLE_SIZE ||
+        // @ts-ignore
+        extra?.immediately
+      ) {
+        const toPendingAddress = pendingAddress.slice(
+          0,
+          ENS_REQUEST_MIN_BUNDLE_SIZE,
+        );
+        pendingAddress = pendingAddress.slice(ENS_REQUEST_MIN_BUNDLE_SIZE);
+        return call(toPendingAddress, extra);
+      } else {
+        clearTimeout(timeout);
+        return new Promise((resolve, reject) => {
+          timeout = setTimeout(() => {
+            const toPendingAddress = pendingAddress;
+            pendingAddress = [];
+            resolve(call(toPendingAddress, extra));
+          }, ENS_REQUEST_DELAYED_PERIOD);
+        });
+      }
+    } else {
+      return Promise.resolve([]);
+    }
+  };
+})();

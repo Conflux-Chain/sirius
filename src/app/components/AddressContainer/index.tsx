@@ -29,6 +29,8 @@ import { monospaceFont } from 'styles/variable';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import ICON_ENS from 'images/logo-cns.svg';
+import { useENS } from 'utils/hooks/useENS';
 
 interface Props {
   value: string; // address value
@@ -42,7 +44,8 @@ interface Props {
   showIcon?: boolean; // whether show contract icon, default true
   verify?: boolean; // show verified contract icon or unverified contract icon
   isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
-  showLabeled?: boolean;
+  showAddressLabel?: boolean;
+  showENSLabel?: boolean;
 }
 
 const defaultPCMaxWidth = 138;
@@ -53,26 +56,43 @@ const defaultPCSuffixAddressSize =
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
-const getAddressLabelInfo = label => {
+export const getLabelInfo = (label, type) => {
   if (label) {
+    let trans: string = '';
+    let icon: React.ReactNode = null;
+
+    if (type === 'tag') {
+      trans = translations.profile.tip.label;
+      icon = <Bookmark color="var(--theme-color-gray2)" size={16} />;
+    } else if (type === 'ens') {
+      trans = translations.ens.label;
+      icon = (
+        <img
+          src={ICON_ENS}
+          style={{
+            marginBottom: '3px',
+            marginRight: '2px',
+          }}
+          alt=""
+        />
+      );
+    }
+
+    // change different label with different style
+    // label = <mark>{label}</mark>
+
     return {
       label,
       icon: (
         <IconWrapper>
-          <Text
-            span
-            hoverValue={
-              <Translation>
-                {t => t(translations.profile.tip.label)}
-              </Translation>
-            }
-          >
-            <Bookmark color="var(--theme-color-gray2)" size={16} />
+          <Text span hoverValue={<Translation>{t => t(trans)}</Translation>}>
+            {icon}
           </Text>
         </IconWrapper>
       ),
     };
   }
+
   return {
     label: '',
     icon: null,
@@ -95,10 +115,11 @@ const RenderAddress = ({
   suffix = null,
   type = 'pow',
   addressLabel = '',
+  ENSLabel = '',
 }: any) => {
   const aftercontent =
     type === 'pow'
-      ? cfxAddress && !isFull && !addressLabel && !alias
+      ? cfxAddress && !isFull && !ENSLabel && !addressLabel && !alias
         ? cfxAddress.substr(-suffixSize)
         : ''
       : '';
@@ -130,7 +151,9 @@ const RenderAddress = ({
           alias={alias}
           aftercontent={aftercontent}
         >
-          <span>{content || addressLabel || alias || cfxAddress}</span>
+          <span>
+            {content || ENSLabel || addressLabel || alias || cfxAddress}
+          </span>
         </LinkWrapper>
       );
     }
@@ -142,7 +165,9 @@ const RenderAddress = ({
         alias={alias}
         aftercontent={aftercontent}
       >
-        <span>{content || addressLabel || alias || cfxAddress}</span>
+        <span>
+          {content || ENSLabel || addressLabel || alias || cfxAddress}
+        </span>
       </PlainWrapper>
     );
   }
@@ -154,18 +179,25 @@ const RenderAddress = ({
         span
         hoverValue={
           <>
+            {ENSLabel ? (
+              <div>
+                <span>
+                  <Translation>{t => t(translations.ens.tip)}</Translation>
+                </span>
+                {ENSLabel}
+              </div>
+            ) : null}
             {addressLabel ? (
-              <>
+              <div>
                 <span>
                   <Translation>
                     {t => t(translations.profile.address.myNameTag)}
                   </Translation>
                 </span>
                 {addressLabel}
-              </>
+              </div>
             ) : null}
-            <div>{hoverValue || cfxAddress}</div>
-            {addressLabel && alias ? (
+            {alias ? (
               <>
                 <span>
                   <Translation>
@@ -175,6 +207,7 @@ const RenderAddress = ({
                 {alias}
               </>
             ) : null}
+            <div>{hoverValue || cfxAddress}</div>
           </>
         }
       >
@@ -202,9 +235,16 @@ export const AddressContainer = withTranslation()(
       t,
       verify = false,
       isEspaceAddress,
-      showLabeled = true,
+      showAddressLabel = true,
+      showENSLabel = true,
     }: Props & WithTranslation) => {
       const [globalData = {}] = useGlobalData();
+
+      // try to get ens name
+      const [ENSMap] = useENS({
+        // @ts-ignore
+        address: value || contractCreated ? [value || contractCreated] : [],
+      });
 
       const suffixSize =
         suffixAddressSize ||
@@ -219,33 +259,44 @@ export const AddressContainer = withTranslation()(
         );
 
         if (contractCreated) {
-          let addressLabel: React.ReactNode = null,
-            addressLabelIcon: React.ReactNode = null;
+          const fContractCreated = formatAddress(contractCreated);
 
-          if (showLabeled) {
-            const { label, icon } = getAddressLabelInfo(
-              globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-                formatAddress(contractCreated)
-              ],
-            );
+          // private name tag
+          let addressLabel: React.ReactNode = null;
+          // ens name tag
+          let ENSLabel: React.ReactNode = null;
+          // global ens name tag
+          const gENSLabel = ENSMap[fContractCreated]?.name;
+          // global private name tag
+          const gAddressLabel =
+            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
+
+          if (showAddressLabel && gAddressLabel) {
+            const { label } = getLabelInfo(gAddressLabel, 'tag');
 
             addressLabel = label;
-            addressLabelIcon = icon;
+          }
+
+          if (showENSLabel && gENSLabel) {
+            const { label } = getLabelInfo(gENSLabel, 'ens');
+
+            ENSLabel = label;
           }
 
           return RenderAddress({
+            content: txtContractCreation,
             cfxAddress: '',
-            alias: alias || txtContractCreation,
+            alias: alias,
             addressLabel,
-            hoverValue: formatAddress(contractCreated),
-            hrefAddress: formatAddress(contractCreated),
+            ENSLabel,
+            hoverValue: fContractCreated,
+            hrefAddress: fContractCreated,
             link,
             isFull,
             maxWidth: 160,
             suffixSize,
             prefix: (
               <IconWrapper>
-                {addressLabelIcon}
                 <Text span hoverValue={txtContractCreation}>
                   <img src={ContractIcon} alt={txtContractCreation} />
                 </Text>
@@ -256,19 +307,6 @@ export const AddressContainer = withTranslation()(
 
         // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
         return <>--</>;
-
-        // Contract create fail, no link
-        // TODO deal with zero address value
-        // return (
-        //   <AddressWrapper>
-        //     <IconWrapper>
-        //       <Text span hoverValue={txtContractCreation}>
-        //         <img src={ContractIcon} alt={txtContractCreation} />
-        //       </Text>
-        //     </IconWrapper>
-        //     <Text span>{txtContractCreation}</Text>
-        //   </AddressWrapper>
-        // );
       }
 
       if (isEspaceAddress) {
@@ -301,6 +339,7 @@ export const AddressContainer = withTranslation()(
       // check if the address is a valid conflux address
       if (!isAddress(value)) {
         const tip = t(translations.general.invalidAddress);
+
         return RenderAddress({
           cfxAddress: value,
           alias,
@@ -332,17 +371,29 @@ export const AddressContainer = withTranslation()(
         alias = t(translations.general.zeroAddress);
       }
 
-      let addressLabel: React.ReactNode = null,
-        addressLabelIcon: React.ReactNode = null;
-      if (showLabeled) {
-        const { label, icon } = getAddressLabelInfo(
-          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][
-            formatAddress(cfxAddress)
-          ],
-        );
+      let prefixIcon: React.ReactNode = null;
+      // private name tag
+      let addressLabel: React.ReactNode = null;
+      // ens name tag
+      let ENSLabel: React.ReactNode = null;
+      // global ens name tag
+      const gENSLabel = ENSMap[cfxAddress]?.name;
+      // global private name tag
+      const gAddressLabel =
+        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
+
+      if (showAddressLabel && gAddressLabel) {
+        const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
 
         addressLabel = label;
-        addressLabelIcon = icon;
+        prefixIcon = icon;
+      }
+
+      if (showENSLabel && gENSLabel) {
+        const { label, icon } = getLabelInfo(gENSLabel, 'ens');
+
+        ENSLabel = label;
+        prefixIcon = icon;
       }
 
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
@@ -353,17 +404,19 @@ export const AddressContainer = withTranslation()(
             ? translations.general.verifiedContract
             : translations.general.unverifiedContract,
         );
+
         return RenderAddress({
           cfxAddress,
           alias,
           addressLabel,
+          ENSLabel,
           link,
           isFull,
           maxWidth,
           suffixSize,
           prefix: showIcon ? (
             <IconWrapper className={`${isFull ? 'icon' : ''}`}>
-              {addressLabelIcon}
+              {prefixIcon}
               <Text span hoverValue={typeText}>
                 <ImgWrapper>
                   {isInnerContractAddress(cfxAddress) ? (
@@ -392,6 +445,7 @@ export const AddressContainer = withTranslation()(
           cfxAddress,
           alias,
           addressLabel,
+          ENSLabel,
           link,
           isFull,
           maxWidth,
@@ -416,11 +470,12 @@ export const AddressContainer = withTranslation()(
         cfxAddress,
         alias,
         addressLabel,
+        ENSLabel,
         link,
         isFull,
         maxWidth,
         suffixSize,
-        prefix: addressLabelIcon,
+        prefix: prefixIcon,
       });
     },
   ),

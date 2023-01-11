@@ -9,7 +9,6 @@ import styled from 'styled-components/macro';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import queryString from 'query-string';
-// import { useGlobal } from 'utils/hooks/useGlobal';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useLocation } from 'react-router-dom';
 
@@ -22,7 +21,6 @@ interface RouteParams {
 export function Tokens() {
   const location = useLocation();
   const { t } = useTranslation();
-  // const { data: globalData } = useGlobal();
   const { tokenType = CFX_TOKEN_TYPES.erc20 } = useParams<RouteParams>();
   const { orderBy } = queryString.parse(location.search);
 
@@ -72,7 +70,6 @@ export function Tokens() {
       'erc20TransferCount',
     ],
   })}`;
-  // let url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc20}&reverse=true&orderBy=totalPrice&fields=transferCount,icon,price,totalPrice,quoteUrl,transactionCount,erc20TransferCount&currency=${globalData.currency}`; // @todo wait for new api handler
   let title = t(translations.header.tokens20);
 
   if (
@@ -104,7 +101,6 @@ export function Tokens() {
     }&reverse=true&orderBy=securityCredits&${queryString.stringify({
       fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
-    // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc721}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens721);
   }
 
@@ -137,7 +133,6 @@ export function Tokens() {
     }&reverse=true&orderBy=securityCredits&${queryString.stringify({
       fields: ['transferCount', 'iconUrl', 'transactionCount'],
     })}`;
-    // url = `/stat/tokens/list?transferType=${CFX_TOKEN_TYPES.erc1155}&reverse=true&orderBy=transferCount&fields=transferCount,icon,transactionCount&currency=${globalData.currency}`; // @todo wait for new api handler
     title = t(translations.header.tokens1155);
   }
 

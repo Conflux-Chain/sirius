@@ -1,4 +1,8 @@
 {
+  "ens": {
+    "label": "CNS Name",
+    "tip": "CNS Name: "
+  },
   "profile": {
     "title": "Profile",
     "subtitle": "Private info, like private name tag and transaction private note. Decentralized storage in browser's localstorage.",
@@ -99,7 +103,9 @@
       "invalidNetwork": "Please input {{network}} address",
       "invalidAmount": "Please input 1 - {{amount}}"
     },
-    "refreshTip": "Request has been submitted, wait a few minute..."
+    "refreshTip": "Request has been submitted, wait a few minute...",
+    "trait": "Trait ({{amount}})",
+    "datetime": "Datetime"
   },
   "fccfx": {
     "title": "FC-CFX Non-reversible Exchange",
@@ -181,6 +187,7 @@
     "abi": "Contract ABI",
     "constructorArgs": "Constructor Arguments",
     "constructorArgsTips": " (ABI-Encoded and is the last bytes of the Contract Creation Code above)",
+    "libraryContracts": "Library Contracts",
     "encodedView": "Encoded View",
     "decodedView": "Decoded View",
     "enterPassword": "Please enter your password",
@@ -201,6 +208,8 @@
       "contractName": "Contract Name: ",
       "optimizationEnabled": "Optimization Enabled: ",
       "otherSettings": "Other Settings: ",
+      "evmVersion": "{{version}} evmVersion",
+      "license": "{{license}} license",
       "compilerVersion": "Compiler Version: ",
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "You can ",
@@ -292,6 +301,11 @@
     "compiler": "Compiler",
     "optimization": "Optimization",
     "license": "License",
+    "evmVersion": "EVM Version to target",
+    "contractLibraryAddress": "Contract Library Address",
+    "contractLibraryAddressTip": "(for contracts that use libraries, supports up to 10 libraries)",
+    "libraryName": "Library_{{index}} Name",
+    "libraryContractAddress": "Library_{{index}} Contract Address",
     "contractSourceCode": "Contract Source Code",
     "error": {
       "required": "Required",
@@ -479,6 +493,8 @@
     "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag",
     "searchPlaceHolderMobile": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag",
+    "searchPlaceHolderWithWeb3": "Search by Epoch / Block Hash / Txn Hash / Address / Token / Contract Name Tag / .web3 Username",
+    "searchPlaceHolderMobileWithWeb3": "Epoch/Block Hash/Txn Hash/Address/Token/Contract Name Tag/.web3 Username",
     "addressConverter": "Address Format Conversion",
     "faucet": "Test Faucet",
     "broadcastTx": "Broadcast Transaction",
@@ -487,6 +503,7 @@
     "nftDetail": "NFT Detail",
     "notice": "Notice Center",
     "search": {
+      "ens": ".web3 Username",
       "tokens": "Tokens",
       "contracts": "Contracts",
       "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
@@ -969,6 +986,8 @@
     }
   },
   "general": {
+    "fold": "Fold",
+    "expand": "Expand",
     "refresh": "Refresh",
     "timestamp": "Timestamp",
     "create": "Create",
@@ -1234,6 +1253,7 @@
       "scanQRCode": "Scan QR Code"
     },
     "notAvailable": "Not Available",
+    "noResult": "No Result",
     "security": {
       "notAvailable": "Not available",
       "finalized": "Finalized",

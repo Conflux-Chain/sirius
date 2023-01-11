@@ -26,7 +26,7 @@ import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
-import { GlobalProvider, useGlobalData } from 'utils/hooks/useGlobal';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
@@ -131,7 +131,6 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
-
 // @ts-ignore
 window.lodash = lodash;
 
@@ -314,580 +313,538 @@ export function App() {
     });
   }, []);
 
-  // @todo, add loading for request frontend config info
   return (
-    <GlobalProvider>
-      <ConfigProvider locale={i18n.language.includes('zh') ? zhCN : enUS}>
-        <TxnHistoryProvider
-          value={{
-            config: {
-              // txn history record i18n handler
-              convert: info => {
-                try {
-                  let data = JSON.parse(info);
-                  return t(
-                    translations.connectWallet.notify.action[data.code],
-                    data,
-                  );
-                } catch (e) {}
-              },
+    <ConfigProvider locale={i18n.language.includes('zh') ? zhCN : enUS}>
+      <TxnHistoryProvider
+        value={{
+          config: {
+            // txn history record i18n handler
+            convert: info => {
+              try {
+                let data = JSON.parse(info);
+                return t(
+                  translations.connectWallet.notify.action[data.code],
+                  data,
+                );
+              } catch (e) {}
             },
+          },
+        }}
+      >
+        <SWRConfig
+          value={{
+            // disable auto polling, reconnect or retry
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+            refreshInterval: 0,
+            shouldRetryOnError: false,
+            errorRetryCount: 0,
           }}
         >
-          <SWRConfig
-            value={{
-              // disable auto polling, reconnect or retry
-              revalidateOnFocus: false,
-              revalidateOnReconnect: false,
-              refreshInterval: 0,
-              shouldRetryOnError: false,
-              errorRetryCount: 0,
-            }}
-          >
-            <BrowserRouter>
-              <CfxProvider
-                theme={{
-                  breakpoints: {
-                    xs: {
-                      min: '0',
-                      max: '600px',
-                    },
-                    sm: {
-                      min: '600px',
-                      max: '1024px',
-                    },
-                    md: {
-                      min: '1024px',
-                      max: '1280px',
-                    },
-                    lg: {
-                      min: '1280px',
-                      max: '1440px',
-                    },
-                    xl: {
-                      min: '1440px',
-                      max: '10000px',
-                    },
+          <BrowserRouter>
+            <CfxProvider
+              theme={{
+                breakpoints: {
+                  xs: {
+                    min: '0',
+                    max: '600px',
                   },
-                }}
+                  sm: {
+                    min: '600px',
+                    max: '1024px',
+                  },
+                  md: {
+                    min: '1024px',
+                    max: '1280px',
+                  },
+                  lg: {
+                    min: '1280px',
+                    max: '1440px',
+                  },
+                  xl: {
+                    min: '1440px',
+                    max: '10000px',
+                  },
+                },
+              }}
+            >
+              <CssBaseline />
+              <Helmet
+                titleTemplate="%s - ConfluxScan"
+                defaultTitle="ConfluxScan"
               >
-                <CssBaseline />
-                <Helmet
-                  titleTemplate="%s - ConfluxScan"
-                  defaultTitle="ConfluxScan"
-                >
-                  <meta
-                    name="description"
-                    content={t(translations.metadata.description)}
-                  />
-                </Helmet>
-                {loading ? (
-                  <StyledMaskWrapper>
-                    {/* <Spin spinning={loading} tip="Welcome to ConfluxScan" /> */}
-                    <Loading></Loading>
-                  </StyledMaskWrapper>
-                ) : (
-                  <ScrollToTop>
-                    <Header />
-                    <Main key={lang}>
-                      <>
-                        <Switch>
-                          <Route exact path="/" component={HomePage} />
-                          <Route
-                            exact
-                            path="/packing/:txHash"
-                            component={PackingPage}
-                          />
-                          <Route
-                            exact
-                            path="/notfound/:contractAddress"
-                            component={NotFoundAddressPage}
-                          />
-                          {/* <Route exact path="/contract" component={Contract} /> */}
-                          <Route
-                            exact
-                            path={[
-                              '/contract-info/:contractAddress',
-                              '/token-info/:contractAddress',
-                            ]}
-                            render={(routeProps: any) => {
-                              const path = routeProps.match.path.match(
-                                /(\/.*\/)/,
-                              )[1];
+                <meta
+                  name="description"
+                  content={t(translations.metadata.description)}
+                />
+              </Helmet>
+              {loading ? (
+                <StyledMaskWrapper>
+                  {/* <Spin spinning={loading} tip="Welcome to ConfluxScan" /> */}
+                  <Loading></Loading>
+                </StyledMaskWrapper>
+              ) : (
+                <ScrollToTop>
+                  <Header />
+                  <Main key={lang}>
+                    <>
+                      <Switch>
+                        <Route exact path="/" component={HomePage} />
+                        <Route
+                          exact
+                          path="/packing/:txHash"
+                          component={PackingPage}
+                        />
+                        <Route
+                          exact
+                          path="/notfound/:contractAddress"
+                          component={NotFoundAddressPage}
+                        />
+                        {/* <Route exact path="/contract" component={Contract} /> */}
+                        <Route
+                          exact
+                          path={[
+                            '/contract-info/:contractAddress',
+                            '/token-info/:contractAddress',
+                          ]}
+                          render={(routeProps: any) => {
+                            const path = routeProps.match.path.match(
+                              /(\/.*\/)/,
+                            )[1];
 
-                              const address =
-                                routeProps.match.params.contractAddress;
+                            const address =
+                              routeProps.match.params.contractAddress;
 
-                              if (isSimplyBase32Address(address)) {
-                                return <Contract {...routeProps} />;
-                              } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`${path}${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
-                              }
-                            }}
-                          />
-                          <Route
-                            exact
-                            path="/contracts"
-                            component={Contracts}
-                          />
-                          <Route
-                            exact
-                            path="/registered-contracts"
-                            component={RegisteredContracts}
-                          />
-                          <Route
-                            exact
-                            path="/token/:tokenAddress"
-                            render={(routeProps: any) => {
-                              const address =
-                                routeProps.match.params.tokenAddress;
-
-                              if (isSimplyBase32Address(address)) {
-                                return <TokenDetail {...routeProps} />;
-                              } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/token/${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
-                              }
-                            }}
-                          />
-                          {/* compatible for previous user bookmark */}
-                          <Route
-                            exact
-                            path={[
-                              '/blocks-and-transactions',
-                              '/blockchain',
-                              '/blockchain/blocks-and-transactions',
-                            ]}
-                            render={() => <Redirect to="/blockchain/blocks" />}
-                          />
-                          <Route
-                            exact
-                            path="/blockchain/blocks"
-                            component={Blocks}
-                          />
-                          <Route
-                            exact
-                            path="/blockchain/transactions"
-                            component={Transactions}
-                          />
-                          <Route
-                            exact
-                            path="/blockchain/cfx-transfers"
-                            component={CFXTransfers}
-                          />
-                          <Route
-                            exact
-                            path="/blockchain/accounts"
-                            component={Accounts}
-                          />
-                          <Route exact path="/tokens" component={Tokens} />
-                          <Route
-                            exact
-                            path="/tokens/:tokenType"
-                            render={(routeProps: any) => {
-                              if (routeProps.match.params.tokenType)
-                                routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
-                              return <Tokens {...routeProps} />;
-                            }}
-                          />
-                          <Route exact path="/sponsor" component={Sponsor} />
-                          <Route
-                            exact
-                            path="/contract-deployment"
-                            component={ContractDeployment}
-                          />
-                          <Route
-                            exact
-                            path="/contract-verification"
-                            component={ContractVerification}
-                          />
-                          <Route
-                            exact
-                            path="/sponsor/:contractAddress"
-                            render={(routeProps: any) => {
-                              const address =
-                                routeProps.match.params.contractAddress;
-
-                              if (isSimplyBase32Address(address)) {
-                                return <Sponsor {...routeProps} />;
-                              } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/sponsor/${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
-                              }
-                            }}
-                          />
-                          <Route
-                            exact
-                            path="/statistics"
-                            render={() => (
-                              <Redirect to="/statistics/overview" />
-                            )}
-                          />
-                          <Route
-                            exact
-                            path="/statistics/:statsType"
-                            component={Statistics}
-                          />
-                          <Route
-                            exact
-                            path="/transaction/:hash"
-                            component={Transaction}
-                          />
-                          {/* Compatible with Etherscan */}
-                          <Route
-                            exact
-                            path="/tx/:hash"
-                            component={Transaction}
-                          />
-                          <Route exact path="/block/:hash" component={Block} />
-                          <Route
-                            exact
-                            path="/epoch/:number"
-                            component={Epoch}
-                          />
-                          <Route
-                            path="/address/:address"
-                            render={(routeProps: any) => {
-                              const address = routeProps.match.params.address;
-
-                              if (isSimplyBase32Address(address)) {
+                            if (isSimplyBase32Address(address)) {
+                              return <Contract {...routeProps} />;
+                            } else {
+                              if (isAddress(address)) {
                                 return (
-                                  <AddressContractDetailPage {...routeProps} />
+                                  <Redirect
+                                    to={`${path}${formatAddress(address)}`}
+                                  />
                                 );
                               } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/address/${formatAddress(address)}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
+                                return <Redirect to={`/notfound/${address}`} />;
                               }
-                            }}
-                          />
-                          <Route path="/search/:text" component={Search} />
-                          {/* Tools */}
-                          <Route
-                            exact
-                            path={[
-                              '/address-converter',
-                              '/address-converter/:address',
-                            ]}
-                            component={AddressConverter}
-                          />
-                          <Route
-                            exact
-                            path="/push-tx"
-                            component={BroadcastTx}
-                          />
-                          <Route
-                            exact
-                            path={[
-                              '/block-countdown',
-                              '/block-countdown/:block',
-                            ]}
-                            component={BlocknumberCalc}
-                          />
-                          <Route exact path="/swap" component={Swap} />
-                          <Route exact path="/report" component={Report} />
-                          <Route
-                            exact
-                            path={['/networkError', '/networkError/:network']}
-                            component={NetworkError}
-                          />
-                          <Route
-                            exact
-                            path="/balance-checker"
-                            component={BalanceChecker}
-                          />
-                          <Route
-                            exact
-                            path={['/nft-checker', '/nft-checker/:address']}
-                            render={(routeProps: any) => {
-                              const address = routeProps.match.params.address;
+                            }
+                          }}
+                        />
+                        <Route exact path="/contracts" component={Contracts} />
+                        <Route
+                          exact
+                          path="/registered-contracts"
+                          component={RegisteredContracts}
+                        />
+                        <Route
+                          exact
+                          path="/token/:tokenAddress"
+                          render={(routeProps: any) => {
+                            const address =
+                              routeProps.match.params.tokenAddress;
 
-                              if (
-                                isSimplyBase32Address(address) ||
-                                lodash.isNil(address)
-                              ) {
-                                return <NFTChecker {...routeProps} />;
+                            if (isSimplyBase32Address(address)) {
+                              return <TokenDetail {...routeProps} />;
+                            } else {
+                              if (isAddress(address)) {
+                                return (
+                                  <Redirect
+                                    to={`/token/${formatAddress(address)}`}
+                                  />
+                                );
                               } else {
-                                if (isAddress(address)) {
-                                  return (
-                                    <Redirect
-                                      to={`/nft-checker/${formatAddress(
-                                        address,
-                                      )}`}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <Redirect to={`/notfound/${address}`} />
-                                  );
-                                }
+                                return <Redirect to={`/notfound/${address}`} />;
                               }
-                            }}
-                          />
-                          <Route
-                            exact
-                            path="/_benchmark"
-                            component={ScanBenchmark}
-                          />
-                          <Route exact path="/fccfx" component={FCCFX} />
+                            }
+                          }}
+                        />
+                        {/* compatible for previous user bookmark */}
+                        <Route
+                          exact
+                          path={[
+                            '/blocks-and-transactions',
+                            '/blockchain',
+                            '/blockchain/blocks-and-transactions',
+                          ]}
+                          render={() => <Redirect to="/blockchain/blocks" />}
+                        />
+                        <Route
+                          exact
+                          path="/blockchain/blocks"
+                          component={Blocks}
+                        />
+                        <Route
+                          exact
+                          path="/blockchain/transactions"
+                          component={Transactions}
+                        />
+                        <Route
+                          exact
+                          path="/blockchain/cfx-transfers"
+                          component={CFXTransfers}
+                        />
+                        <Route
+                          exact
+                          path="/blockchain/accounts"
+                          component={Accounts}
+                        />
+                        <Route exact path="/tokens" component={Tokens} />
+                        <Route
+                          exact
+                          path="/tokens/:tokenType"
+                          render={(routeProps: any) => {
+                            if (routeProps.match.params.tokenType)
+                              routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
+                            return <Tokens {...routeProps} />;
+                          }}
+                        />
+                        <Route exact path="/sponsor" component={Sponsor} />
+                        <Route
+                          exact
+                          path="/contract-deployment"
+                          component={ContractDeployment}
+                        />
+                        <Route
+                          exact
+                          path="/contract-verification"
+                          component={ContractVerification}
+                        />
+                        <Route
+                          exact
+                          path="/sponsor/:contractAddress"
+                          render={(routeProps: any) => {
+                            const address =
+                              routeProps.match.params.contractAddress;
 
-                          <Route exact path="/pos" component={posHomePage} />
-                          <Route
-                            exact
-                            path="/pos/accounts"
-                            component={posAccounts}
-                          />
-                          <Route
-                            exact
-                            path="/pos/committees"
-                            component={posCommittees}
-                          />
-                          <Route
-                            exact
-                            path="/pos/committees/:blockNumber"
-                            component={posCommittee}
-                          />
-                          <Route
-                            exact
-                            path="/pos/blocks"
-                            component={posBlocks}
-                          />
-                          <Route
-                            exact
-                            path="/pos/blocks/:hash"
-                            component={posBlock}
-                          />
-                          <Route
-                            exact
-                            path="/pos/transactions"
-                            component={posTransactions}
-                          />
-                          <Route
-                            exact
-                            path="/pos/transactions/:number"
-                            component={posTransaction}
-                          />
-                          <Route
-                            exact
-                            path="/pos/incoming-rank"
-                            component={posIncomingRank}
-                          />
-                          <Route
-                            exact
-                            path="/pos/accounts/:address"
-                            component={posAccount}
-                          />
-                          <Route
-                            exact
-                            path="/nft/:address/:id"
-                            component={NFTDetail}
-                          />
+                            if (isSimplyBase32Address(address)) {
+                              return <Sponsor {...routeProps} />;
+                            } else {
+                              if (isAddress(address)) {
+                                return (
+                                  <Redirect
+                                    to={`/sponsor/${formatAddress(address)}`}
+                                  />
+                                );
+                              } else {
+                                return <Redirect to={`/notfound/${address}`} />;
+                              }
+                            }
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/statistics"
+                          render={() => <Redirect to="/statistics/overview" />}
+                        />
+                        <Route
+                          exact
+                          path="/statistics/:statsType"
+                          component={Statistics}
+                        />
+                        <Route
+                          exact
+                          path="/transaction/:hash"
+                          component={Transaction}
+                        />
+                        {/* Compatible with Etherscan */}
+                        <Route exact path="/tx/:hash" component={Transaction} />
+                        <Route exact path="/block/:hash" component={Block} />
+                        <Route exact path="/epoch/:number" component={Epoch} />
+                        <Route
+                          path="/address/:address"
+                          render={(routeProps: any) => {
+                            const address = routeProps.match.params.address;
 
-                          <Route
-                            exact
-                            path="/cross-space-charts"
-                            component={CrossSpaceChart}
-                          />
+                            if (isSimplyBase32Address(address)) {
+                              return (
+                                <AddressContractDetailPage {...routeProps} />
+                              );
+                            } else {
+                              if (isAddress(address)) {
+                                return (
+                                  <Redirect
+                                    to={`/address/${formatAddress(address)}`}
+                                  />
+                                );
+                              } else {
+                                return <Redirect to={`/notfound/${address}`} />;
+                              }
+                            }
+                          }}
+                        />
+                        <Route path="/search/:text" component={Search} />
+                        {/* Tools */}
+                        <Route
+                          exact
+                          path={[
+                            '/address-converter',
+                            '/address-converter/:address',
+                          ]}
+                          component={AddressConverter}
+                        />
+                        <Route exact path="/push-tx" component={BroadcastTx} />
+                        <Route
+                          exact
+                          path={['/block-countdown', '/block-countdown/:block']}
+                          component={BlocknumberCalc}
+                        />
+                        <Route exact path="/swap" component={Swap} />
+                        <Route exact path="/report" component={Report} />
+                        <Route
+                          exact
+                          path={['/networkError', '/networkError/:network']}
+                          component={NetworkError}
+                        />
+                        <Route
+                          exact
+                          path="/balance-checker"
+                          component={BalanceChecker}
+                        />
+                        <Route
+                          exact
+                          path={['/nft-checker', '/nft-checker/:address']}
+                          render={(routeProps: any) => {
+                            const address = routeProps.match.params.address;
 
-                          <Route
-                            exact
-                            path="/cross-space-charts/daily-cfx-transfer"
-                            component={CrossSpaceDailyCFXTransfer}
-                          />
+                            if (
+                              isSimplyBase32Address(address) ||
+                              lodash.isNil(address)
+                            ) {
+                              return <NFTChecker {...routeProps} />;
+                            } else {
+                              if (isAddress(address)) {
+                                return (
+                                  <Redirect
+                                    to={`/nft-checker/${formatAddress(
+                                      address,
+                                    )}`}
+                                  />
+                                );
+                              } else {
+                                return <Redirect to={`/notfound/${address}`} />;
+                              }
+                            }
+                          }}
+                        />
+                        <Route
+                          exact
+                          path="/_benchmark"
+                          component={ScanBenchmark}
+                        />
+                        <Route exact path="/fccfx" component={FCCFX} />
 
-                          <Route
-                            exact
-                            path="/cross-space-charts/daily-cfx-transfer-count"
-                            component={CrossSpaceDailyCFXTransferCount}
-                          />
+                        <Route exact path="/pos" component={posHomePage} />
+                        <Route
+                          exact
+                          path="/pos/accounts"
+                          component={posAccounts}
+                        />
+                        <Route
+                          exact
+                          path="/pos/committees"
+                          component={posCommittees}
+                        />
+                        <Route
+                          exact
+                          path="/pos/committees/:blockNumber"
+                          component={posCommittee}
+                        />
+                        <Route exact path="/pos/blocks" component={posBlocks} />
+                        <Route
+                          exact
+                          path="/pos/blocks/:hash"
+                          component={posBlock}
+                        />
+                        <Route
+                          exact
+                          path="/pos/transactions"
+                          component={posTransactions}
+                        />
+                        <Route
+                          exact
+                          path="/pos/transactions/:number"
+                          component={posTransaction}
+                        />
+                        <Route
+                          exact
+                          path="/pos/incoming-rank"
+                          component={posIncomingRank}
+                        />
+                        <Route
+                          exact
+                          path="/pos/accounts/:address"
+                          component={posAccount}
+                        />
+                        <Route
+                          exact
+                          path="/nft/:address/:id"
+                          component={NFTDetail}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts"
-                            component={PoSChart}
-                          />
+                        <Route
+                          exact
+                          path="/cross-space-charts"
+                          component={CrossSpaceChart}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/finalized-interval"
-                            component={PoSFinalizedInterval}
-                          />
+                        <Route
+                          exact
+                          path="/cross-space-charts/daily-cfx-transfer"
+                          component={CrossSpaceDailyCFXTransfer}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-accounts"
-                            component={PoSDailyAccounts}
-                          />
+                        <Route
+                          exact
+                          path="/cross-space-charts/daily-cfx-transfer-count"
+                          component={CrossSpaceDailyCFXTransferCount}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-staking"
-                            component={PoSDailyStaking}
-                          />
+                        <Route exact path="/pos-charts" component={PoSChart} />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-apy"
-                            component={PoSDailyAPY}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/finalized-interval"
+                          component={PoSFinalizedInterval}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/total-reward"
-                            component={PoSTotalReward}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-accounts"
+                          component={PoSDailyAccounts}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-reward-rank"
-                            component={PoSDailyRewardRank}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-staking"
+                          component={PoSDailyStaking}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-reward-info"
-                            component={PoSDailyRewardInfo}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-apy"
+                          component={PoSDailyAPY}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/daily-deposit"
-                            component={PoSDailyDeposit}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/total-reward"
+                          component={PoSTotalReward}
+                        />
 
-                          <Route
-                            exact
-                            path="/pos-charts/participation-rate"
-                            component={PoSDailyParticipation}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-reward-rank"
+                          component={PoSDailyRewardRank}
+                        />
 
-                          <Route exact path="/pow-charts" component={Chart} />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-reward-info"
+                          component={PoSDailyRewardInfo}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/blocktime"
-                            component={BlockTime}
-                          />
+                        <Route
+                          exact
+                          path="/pos-charts/daily-deposit"
+                          component={PoSDailyDeposit}
+                        />
 
-                          <Route exact path="/pow-charts/tps" component={TPS} />
+                        <Route
+                          exact
+                          path="/pos-charts/participation-rate"
+                          component={PoSDailyParticipation}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/hashrate"
-                            component={HashRate}
-                          />
+                        <Route exact path="/pow-charts" component={Chart} />
 
-                          <Route
-                            exact
-                            path="/pow-charts/difficulty"
-                            component={Difficulty}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/blocktime"
+                          component={BlockTime}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/supply"
-                            component={TotalSupply}
-                          />
+                        <Route exact path="/pow-charts/tps" component={TPS} />
 
-                          <Route
-                            exact
-                            path="/pow-charts/circulating"
-                            component={CirculatingSupply}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/hashrate"
+                          component={HashRate}
+                        />
 
-                          <Route exact path="/pow-charts/tx" component={Tx} />
+                        <Route
+                          exact
+                          path="/pow-charts/difficulty"
+                          component={Difficulty}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/token-transfer"
-                            component={TokenTransfer}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/supply"
+                          component={TotalSupply}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/cfx-transfer"
-                            component={CFXTransfer}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/circulating"
+                          component={CirculatingSupply}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/cfx-holder-accounts"
-                            component={CFXHolderAccounts}
-                          />
+                        <Route exact path="/pow-charts/tx" component={Tx} />
 
-                          <Route
-                            exact
-                            path="/pow-charts/account-growth"
-                            component={AccountGrowth}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/token-transfer"
+                          component={TokenTransfer}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/active-accounts"
-                            component={ActiveAccounts}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/cfx-transfer"
+                          component={CFXTransfer}
+                        />
 
-                          <Route
-                            exact
-                            path="/pow-charts/contracts"
-                            component={ContractsCharts}
-                          />
+                        <Route
+                          exact
+                          path="/pow-charts/cfx-holder-accounts"
+                          component={CFXHolderAccounts}
+                        />
 
-                          <Route exact path="/Profile" component={Profile} />
+                        <Route
+                          exact
+                          path="/pow-charts/account-growth"
+                          component={AccountGrowth}
+                        />
 
-                          <Route component={NotFoundPage} />
-                        </Switch>
-                      </>
-                    </Main>
-                    <Footer />
-                    <GlobalStyle />
-                    <CookieTip />
-                    <GlobalTip tipKey="addressWarning" />
-                  </ScrollToTop>
-                )}
-                <GlobalNotify />
-              </CfxProvider>
-            </BrowserRouter>
-          </SWRConfig>
-        </TxnHistoryProvider>
-      </ConfigProvider>
-    </GlobalProvider>
+                        <Route
+                          exact
+                          path="/pow-charts/active-accounts"
+                          component={ActiveAccounts}
+                        />
+
+                        <Route
+                          exact
+                          path="/pow-charts/contracts"
+                          component={ContractsCharts}
+                        />
+
+                        <Route exact path="/Profile" component={Profile} />
+
+                        <Route component={NotFoundPage} />
+                      </Switch>
+                    </>
+                  </Main>
+                  <Footer />
+                  <GlobalStyle />
+                  <CookieTip />
+                  <GlobalTip tipKey="addressWarning" />
+                </ScrollToTop>
+              )}
+              <GlobalNotify />
+            </CfxProvider>
+          </BrowserRouter>
+        </SWRConfig>
+      </TxnHistoryProvider>
+    </ConfigProvider>
   );
 }
 

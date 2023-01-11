@@ -85,7 +85,7 @@ export const Text = React.memo(
       p.getPopupContainer = getPopupContainer;
     }
     return React.createElement(Tooltip, p, [
-      <StyledTextWrapper maxWidth={maxWidth}>
+      <StyledTextWrapper maxWidth={maxWidth} key="text">
         <UIText className={clsx('sirius-text', className)} {...props}>
           {child}
         </UIText>
@@ -103,7 +103,7 @@ const StyledTextWrapper = styled.span<any>`
     max-width: ${props => props.maxWidth};
     display: ${props =>
       props.maxWidth === undefined ? 'inherit' : 'inline-block'};
-    cursor: pointer;
+    /* cursor: pointer; */
     a {
       text-overflow: ellipsis;
       overflow: hidden;

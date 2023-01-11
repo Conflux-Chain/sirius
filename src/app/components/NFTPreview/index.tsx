@@ -25,6 +25,7 @@ import Link from '@zeit-ui/react-icons/link';
 import { Link as ALink } from 'app/components/Link/Loadable';
 import { Tag } from '@cfxjs/antd';
 import { AddressContainer } from '../AddressContainer';
+import { ThreeD } from './3D';
 
 const epiKProtocolKnowledgeBadge =
   'cfx:acev4c2s2ttu3jzxzsd4a2hrzsa4pfc3f6f199y5mk';
@@ -54,6 +55,7 @@ const imageType = [
   'tiff',
   'webp',
 ];
+const threeDType = ['gltf', 'glb'];
 
 export const NFTCardInfo = React.memo(
   ({
@@ -79,7 +81,8 @@ export const NFTCardInfo = React.memo(
     useEffect(() => {
       let nftType = 'image';
       // eslint-disable-next-line no-useless-escape
-      const suffix = /\.[^\.]+$/.exec(imageUri.substr(-5));
+      const url = /[^?#]+/.exec(imageUri)?.[0] || '';
+      const suffix = /\.[^.]+$/.exec(url);
 
       if (suffix) {
         const sourceType = suffix[0].substr(1);
@@ -89,6 +92,8 @@ export const NFTCardInfo = React.memo(
           nftType = 'image';
         } else if (audioType.includes(sourceType)) {
           nftType = 'audio';
+        } else if (threeDType.includes(sourceType)) {
+          nftType = '3d';
         }
       } else {
         // has not suffix
@@ -100,6 +105,7 @@ export const NFTCardInfo = React.memo(
               if (pair[0] === 'content-type') {
                 nftType = pair[1].split('/')[0];
                 setNftType(nftType);
+                // TODO need to detect .glb, .gltf, .obj, .fbx source type
               }
             }
           })
@@ -131,52 +137,60 @@ export const NFTCardInfo = React.memo(
       }
     }, [audioRef]);
 
-    return (
-      <>
-        {nftType === 'video' ? (
-          <VideoCard>
-            <video
-              controls
-              className="ant-video"
-              preload="metadata"
-              // poster={imageUri}
-              src={`${imageUri}?source=video`}
-            ></video>
-          </VideoCard>
-        ) : nftType === 'audio' ? (
-          <AudioCard percent={percent}>
-            {audioImg && (
-              <img src={audioImg} alt="audio-img" className="audio-img" />
-            )}
-            <img
-              src={audioDesign}
-              alt="audio-design"
-              className="audio audio-design"
-            />
-            <img src={audioBg} alt="audio-bg" className="audio audio-bg" />
-            <img
-              src={isAudioPlay ? audioPause : audioPlay}
-              alt="audio-play"
-              className="audio audio-play"
-              onClick={audioControl}
-            />
-            <div className="audio-control">
-              <div className="audio-percent"></div>
-            </div>
-            <audio ref={audioRef} preload="metadata" src={imageUri}></audio>
-          </AudioCard>
-        ) : (
-          <Image
-            width={width}
-            style={{ minHeight: imageMinHeight }}
-            src={imageUri}
-            preview={preview}
-            fallback={tokenIdNotFound}
-            alt={tokenId + ''}
+    if (nftType === 'video') {
+      return (
+        <VideoCard>
+          <video
+            controls
+            className="ant-video"
+            preload="metadata"
+            // poster={imageUri}
+            src={`${imageUri}?source=video`}
+          ></video>
+        </VideoCard>
+      );
+    } else if (nftType === 'audio') {
+      return (
+        <AudioCard percent={percent}>
+          {audioImg && (
+            <img src={audioImg} alt="audio-img" className="audio-img" />
+          )}
+          <img
+            src={audioDesign}
+            alt="audio-design"
+            className="audio audio-design"
           />
-        )}
-      </>
-    );
+          <img src={audioBg} alt="audio-bg" className="audio audio-bg" />
+          <img
+            src={isAudioPlay ? audioPause : audioPlay}
+            alt="audio-play"
+            className="audio audio-play"
+            onClick={audioControl}
+          />
+          <div className="audio-control">
+            <div className="audio-percent"></div>
+          </div>
+          <audio ref={audioRef} preload="metadata" src={imageUri}></audio>
+        </AudioCard>
+      );
+    } else if (nftType === '3d') {
+      return (
+        <ThreeDCard>
+          <ThreeD url={`${imageUri}`} />
+        </ThreeDCard>
+      );
+    } else {
+      return (
+        <Image
+          width={width}
+          style={{ minHeight: imageMinHeight }}
+          src={imageUri}
+          preview={preview}
+          fallback={tokenIdNotFound}
+          alt={tokenId + ''}
+        />
+      );
+    }
   },
 );
 
@@ -187,12 +201,14 @@ export const NFTPreview = React.memo(
     type = 'preview',
     amount = 0,
     owner = '',
+    enable3D = false,
   }: {
     contractAddress?: string;
     tokenId?: number | string;
     type?: 'preview' | 'card' | 'primary';
     amount?: number;
     owner?: string;
+    enable3D?: boolean;
   }) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -213,9 +229,18 @@ export const NFTPreview = React.memo(
           .then(data => {
             if (data) {
               setImageMinHeight(data.imageMinHeight);
-              if (data.imageUri) {
-                setImageUri(data.imageUri);
+
+              // support display 3d resource
+              const { image = NotFoundIcon, animation_url } =
+                data.detail?.metadata || {};
+
+              let img = image;
+
+              if (enable3D && animation_url) {
+                img = animation_url;
               }
+
+              setImageUri(img);
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
             }
           })
@@ -227,7 +252,7 @@ export const NFTPreview = React.memo(
             setIsFirstTime(false);
           });
       }
-    }, [contractAddress, tokenId, lang]);
+    }, [contractAddress, tokenId, lang, enable3D]);
 
     if (contractAddress && tokenId) {
       if (type === 'card') {
@@ -555,7 +580,13 @@ const NFTCard = styled.div`
 
       .title {
         margin-right: 4px;
+        white-space: nowrap;
       }
     }
   }
+`;
+
+const ThreeDCard = styled.div`
+  width: 100%;
+  height: 100%;
 `;

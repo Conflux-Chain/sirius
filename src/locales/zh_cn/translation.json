@@ -1,4 +1,8 @@
 {
+  "ens": {
+    "label": "CNS 名字",
+    "tip": "CNS 名字："
+  },
   "profile": {
     "title": "用户",
     "subtitle": "私人信息，例如地址标签，交易备注等。去中心化存储，保存在浏览器本地存储中。",
@@ -82,7 +86,7 @@
     "contractInfoTip": "合约部署时设置的通证的名称和符号",
     "owner": "所有者",
     "url": "内容链接",
-    "creator": "创作者",
+    "creator": "合约创建者",
     "mintedTime": "发行时间",
     "transfer": "转发",
     "from": "发送方",
@@ -98,7 +102,9 @@
       "invalidNetwork": "请输入{{network}}地址",
       "invalidAmount": "请输入 1 - {{amount}} 个"
     },
-    "refreshTip": "请求已提交，请稍等..."
+    "refreshTip": "请求已提交，请稍等...",
+    "trait": "特征（{{amount}}）",
+    "datetime": "日期"
   },
   "fccfx": {
     "title": "FC-CFX 不可逆兑换",
@@ -180,6 +186,7 @@
     "abi": "合约ABI",
     "constructorArgs": "构造器参数",
     "constructorArgsTips": "（ABI-Encoded and is the last bytes of the Contract Creation Code above）",
+    "libraryContracts": "使用的库合约",
     "encodedView": "编码视图",
     "decodedView": "解码视图",
     "enterPassword": "请输入管理员口令",
@@ -200,6 +207,8 @@
       "contractName": "合约名：",
       "optimizationEnabled": "是否优化：",
       "otherSettings": "其他设置：",
+      "evmVersion": "{{version}} evmVersion",
+      "license": "{{license}} license",
       "compilerVersion": "编译版本：",
       "runs": "{{status}} with {{count}} runs",
       "tipLeft": "立刻前往",
@@ -291,6 +300,11 @@
     "compiler": "编译器",
     "optimization": "优化",
     "license": "许可协议",
+    "evmVersion": "EVM 版本",
+    "contractLibraryAddress": "库合约地址",
+    "contractLibraryAddressTip": "（即合约中使用的库合约。库合约名称与地址必须对应，合约名称区分大小写。暂支持验证10份库合约。）",
+    "libraryName": "Library_{{index}} 合约名称",
+    "libraryContractAddress": "Library_{{index}} 合约地址",
     "contractSourceCode": "合约源码",
     "error": {
       "required": "请输入",
@@ -478,6 +492,8 @@
     "oceanus": "Conflux Hydra",
     "searchPlaceHolder": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签",
     "searchPlaceHolderMobile": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签",
+    "searchPlaceHolderWithWeb3": "请输入纪元 / 区块哈希 / 交易哈希 / 地址 / 通证 / 合约名称标签 / .web3 用户名",
+    "searchPlaceHolderMobileWithWeb3": "纪元/区块哈希/交易哈希/地址/通证/合约名称标签/.web3 用户名",
     "addressConverter": "地址格式转换",
     "faucet": "测试水管",
     "broadcastTx": "广播交易",
@@ -486,6 +502,7 @@
     "nftDetail": "数字藏品详情",
     "notice": "通知中心",
     "search": {
+      "ens": ".web3 用户名",
       "tokens": "通证",
       "contracts": "合约",
       "contractsTip": "仅显示注册日期最早的 10 个合约"
@@ -968,6 +985,8 @@
     }
   },
   "general": {
+    "fold": "折叠",
+    "expand": "展开",
     "refresh": "刷新",
     "timestamp": "时间戳",
     "create": "创建",
@@ -1231,6 +1250,7 @@
       "scanQRCode": "扫描二维码"
     },
     "notAvailable": "暂无信息",
+    "noResult": "暂无结果",
     "security": {
       "notAvailable": "暂无信息",
       "finalized": "已确认",

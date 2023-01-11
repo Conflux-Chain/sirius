@@ -13,13 +13,14 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col, Tag } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { CFX } from 'utils/constants';
 import lodash from 'lodash';
 import { formatData } from 'app/components/TxnComponents/util';
 import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
+import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
@@ -43,57 +44,63 @@ const Code = ({ contractInfo }) => {
     runs,
     version,
     constructorArgs,
+    libraries = [],
+    evmVersion,
   } = verify;
 
   const constructor = useMemo(() => {
     if (constructorArgs && abi && address) {
-      const contract = CFX.Contract({
-        abi,
-        address,
-      });
+      try {
+        const contract = CFX.Contract({
+          abi,
+          address,
+        });
 
-      const data = contract.abi.decodeData(constructorArgs);
+        const data = contract.abi.decodeData(constructorArgs);
 
-      if (data === '0x' || !data) {
-        return null;
-      } else {
-        const encodeArgs = lodash.words(constructorArgs.substr(2), /.{64}/g);
+        if (data === '0x' || !data) {
+          return null;
+        } else {
+          const encodeArgs = lodash.words(constructorArgs.substr(2), /.{64}/g);
 
-        const { object, fullName } = data;
+          const { object, fullName } = data;
 
-        try {
-          if (fullName === 'constructor()') {
+          try {
+            if (fullName === 'constructor()') {
+              return {
+                fullArgs: constructorArgs,
+                encodeArgs,
+                decodeArgs: [],
+              };
+            } else {
+              let types = (/constructor\((.*)\)/.exec(fullName) as string[])[1]
+                .split(',')
+                .map(t => {
+                  return t.trim().split(' ');
+                })
+                .map(i => {
+                  return i.concat(
+                    formatData(object[i[1]], i[0], {
+                      space: null,
+                    }),
+                  );
+                });
+              return {
+                fullArgs: constructorArgs,
+                encodeArgs,
+                decodeArgs: types,
+              };
+            }
+          } catch (error) {
             return {
               fullArgs: constructorArgs,
               encodeArgs,
               decodeArgs: [],
             };
-          } else {
-            let types = (/constructor\((.*)\)/.exec(fullName) as string[])[1]
-              .split(',')
-              .map(t => {
-                return t.trim().split(' ');
-              })
-              .map(i => {
-                return i.concat(
-                  formatData(object[i[1]], i[0], {
-                    space: null,
-                  }),
-                );
-              });
-            return {
-              fullArgs: constructorArgs,
-              encodeArgs,
-              decodeArgs: types,
-            };
           }
-        } catch (error) {
-          return {
-            fullArgs: constructorArgs,
-            encodeArgs,
-            decodeArgs: [],
-          };
         }
+      } catch (error) {
+        return null;
       }
     }
   }, [abi, address, constructorArgs]);
@@ -142,7 +149,17 @@ const Code = ({ contractInfo }) => {
               <span className="verify-info-title">
                 {t(translations.contract.verify.otherSettings)}
               </span>
-              <span className="verify-info-content">{license}</span>
+              <span className="verify-info-content">
+                {t(translations.contract.verify.evmVersion, {
+                  version: evmVersion || 'default',
+                })}
+              </span>
+              {', '}
+              <span className="verify-info-content">
+                {t(translations.contract.verify.license, {
+                  license,
+                })}
+              </span>
             </Col>
           </Row>
         </>
@@ -254,6 +271,38 @@ const Code = ({ contractInfo }) => {
             </>
           ) : null}
         </div>
+        {!!libraries?.length && (
+          <div>
+            <div className="contract-sourcecode-and-abi-title">
+              {t(translations.contract.libraryContracts)}
+            </div>
+            <div className="contract-library-body">
+              {libraries.map(l => (
+                <div>
+                  <span>{l.name}: </span>
+                  <span>
+                    <AddressContainer
+                      value={l.address}
+                      isFull={true}
+                      showIcon={false}
+                    ></AddressContainer>
+                  </span>{' '}
+                  <span>
+                    {l.exactMatch ? (
+                      <Tag color="green">
+                        {t(translations.general.verifiedContract)}
+                      </Tag>
+                    ) : (
+                      <Tag color="red">
+                        {t(translations.general.unverifiedContract)}
+                      </Tag>
+                    )}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </StyledContractContentCodeWrapper>
   );
@@ -326,6 +375,12 @@ const StyledContractContentCodeWrapper = styled.div`
     overflow: auto;
     font-family: ${monospaceFont};
   }
+
+  .contract-library-body {
+    font-size: 1rem;
+    background-color: rgb(248, 249, 251);
+    padding: 5px 10px;
+  }
 `;
 
 type TabsItemType = {
@@ -346,6 +401,19 @@ export const ContractContent = ({ contractInfo }) => {
     destroy = {},
   } = contractInfo;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [initError, setInitError] = useState(false);
+
+  // some contract init will trigger SDK error, need SDK to solve it
+  useEffect(() => {
+    try {
+      CFX.Contract({
+        abi,
+        address,
+      });
+    } catch (error) {
+      setInitError(true);
+    }
+  }, [abi, address]);
 
   let tabs: Array<TabsItemType> = [
     {
@@ -355,7 +423,7 @@ export const ContractContent = ({ contractInfo }) => {
     },
   ];
 
-  if (abi && destroy.status === 0 && Object.keys(verify).length) {
+  if (!initError && abi && destroy.status === 0 && Object.keys(verify).length) {
     tabs = tabs.concat([
       {
         key: 'read',
@@ -387,7 +455,7 @@ export const ContractContent = ({ contractInfo }) => {
   }
 
   // check if is a proxy contract
-  if (proxy?.proxy && implementation?.address) {
+  if (!initError && proxy?.proxy && implementation?.address) {
     // proxy contract
     if (implementation?.verify?.exactMatch) {
       tabs = tabs.concat([

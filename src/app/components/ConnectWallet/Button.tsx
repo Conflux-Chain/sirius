@@ -1,9 +1,4 @@
-/**
- *
- * Button
- *
- */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
@@ -22,6 +17,8 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from '../Text/Loadable';
+import { getLabelInfo } from '../AddressContainer';
+import { useENS } from 'utils/hooks/useENS';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 
@@ -36,8 +33,16 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
   const { t } = useTranslation();
   const [balance, setBalance] = useState('0');
   const { installed, connected, accounts } = usePortal();
+  const account = accounts[0];
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook(true);
+  const [ensMap] = useENS({
+    address: [account],
+  });
+  const { label, icon } = useMemo(
+    () => getLabelInfo(ensMap[account]?.name, 'ens'),
+    [account, ensMap],
+  );
 
   let buttonText: React.ReactNode = t(translations.connectWallet.button.text);
   let buttonStatus: React.ReactNode = '';
@@ -58,23 +63,30 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         });
       } else {
         const addressLabel =
-          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[accounts[0]];
-        const addressLabelIcon = (
-          <Text span hoverValue={t(translations.profile.tip.label)}>
-            <Bookmark color="var(--theme-color-gray2)" size={16} />
-          </Text>
-        );
+          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[account];
 
-        buttonText = addressLabel ? (
-          <StyledAddressLabelWrapper>
-            {addressLabelIcon}
-            {addressLabel}
-          </StyledAddressLabelWrapper>
-        ) : NETWORK_TYPE === NETWORK_TYPES.mainnet ? (
-          accounts[0].replace(/(.*:.{3}).*(.{8})/, '$1...$2')
-        ) : (
-          accounts[0].replace(/(.*:.{3}).*(.{4})/, '$1...$2')
-        );
+        if (label) {
+          buttonText = (
+            <StyledAddressLabelWrapper>
+              {icon}
+              {label}
+            </StyledAddressLabelWrapper>
+          );
+        } else if (addressLabel) {
+          buttonText = (
+            <StyledAddressLabelWrapper>
+              <Text span hoverValue={t(translations.profile.tip.label)}>
+                <Bookmark color="var(--theme-color-gray2)" size={16} />
+              </Text>
+              {addressLabel}
+            </StyledAddressLabelWrapper>
+          );
+        } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+          buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
+        } else {
+          buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');
+        }
+
         buttonStatus = <span className="button-status-online"></span>;
       }
     }
@@ -82,7 +94,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
 
   useEffect(() => {
     if (accounts.length && isValid) {
-      getBalance(accounts[0]).then(balance => {
+      getBalance(account).then(balance => {
         setBalance(
           formatNumber(SDK.Drip(balance).toCFX(), {
             precision: 6,
@@ -90,7 +102,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         );
       });
     }
-  }, [connected, accounts, isValid, installed]);
+  }, [connected, accounts, isValid, installed, account]);
 
   useEffect(() => {
     if (connected === 0) {
@@ -192,7 +204,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const StyledAddressLabelWrapper = styled.span`
-  display: inline-flex;
+  /* display: inline-flex;
   vertical-align: middle;
-  line-height: 2;
+  line-height: 2; */
 `;

@@ -6,11 +6,15 @@ import {
   blue0,
   blue1,
   blue2,
+  blue3,
+  blue4,
   gray0,
   gray1,
   gray2,
   gray3,
+  gray4,
   orange0,
+  black0,
 } from './variable';
 
 export const GlobalStyle = createGlobalStyle`
@@ -19,11 +23,15 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-blue0: ${blue0};
     --theme-color-blue1: ${blue1};
     --theme-color-blue2: ${blue2};
+    --theme-color-blue3: ${blue3};
+    --theme-color-blue4: ${blue4};
     --theme-color-gray0: ${gray0};
     --theme-color-gray1: ${gray1};
     --theme-color-gray2: ${gray2};
     --theme-color-gray3: ${gray3};
+    --theme-color-gray4: ${gray4};
     --theme-color-orange0: ${orange0};
+    --theme-color-black0: ${black0};
   }
 
   html,

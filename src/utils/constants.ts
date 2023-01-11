@@ -228,6 +228,33 @@ export const CROSS_SPACE_ADDRESS = IS_TESTNET
   ? CROSS_SPACE_ADDRESSES.testnet
   : CROSS_SPACE_ADDRESSES.mainnet;
 
+enum ENS_REGISTRY_ADDRESSES {
+  mainnet = '',
+  testnet = 'cfxtest:acd3rm7y183trhpzvz8m3y72kx1abk4d0jh842585a',
+}
+
+export const ENS_REGISTRY_ADDRESS = IS_TESTNET
+  ? ENS_REGISTRY_ADDRESSES.testnet
+  : ENS_REGISTRY_ADDRESSES.mainnet;
+
+enum ENS_PUBLIC_RESOLVER_ADDRESSES {
+  mainnet = '',
+  testnet = 'cfxtest:acfcb2fv6t8xrxyyx3x1atwmdrhh5xvfd21zsje216',
+}
+
+export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
+  ? ENS_PUBLIC_RESOLVER_ADDRESSES.testnet
+  : ENS_PUBLIC_RESOLVER_ADDRESSES.mainnet;
+
+enum ENS_REVERSE_REGISTRAR_ADDRESSES {
+  mainnet = '',
+  testnet = 'cfxtest:acfmezysbf86jy3jnw835bnamxp08dxzd61w5ur8hy',
+}
+
+export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
+  ? ENS_REVERSE_REGISTRAR_ADDRESSES.testnet
+  : ENS_REVERSE_REGISTRAR_ADDRESSES.mainnet;
+
 let APIHost = IS_TESTNET
   ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
   : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
@@ -282,3 +309,10 @@ OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
 export const TABLE_LIST_LIMIT = 10000;
 
 export const IS_FOREIGN_HOST = /.io$/.test(window.location.host);
+
+// ens request
+export const ENS_REQUEST_DELAYED_PERIOD = 100;
+export const ENS_REQUEST_EXPIRED_PERIOD = 5000;
+export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
+
+export const ENS_COINID_CONFLUX = 503;

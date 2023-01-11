@@ -6,21 +6,21 @@ import styled from 'styled-components/macro';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
-import { useGlobal } from 'utils/hooks/useGlobal';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 
 export function Currency() {
   const { t } = useTranslation();
-  const { data, setGlobalData } = useGlobal();
+  const [globalData, setGlobalData] = useGlobalData();
 
   const handleCurrencyChange = currency => {
     localStorage.setItem(LOCALSTORAGE_KEYS_MAP.currency, currency);
     trackEvent({
       category: ScanEvent.preference.category,
       action: ScanEvent.preference.action.changeCurrency,
-      label: data.currency,
+      label: globalData.currency,
     });
     setGlobalData({
-      ...data,
+      ...globalData,
       currency,
     });
   };
@@ -69,7 +69,7 @@ export function Currency() {
         </g>
       </svg>
       <Select
-        value={data.currency}
+        value={globalData.currency}
         onChange={handleCurrencyChange}
         disableMatchWidth
         size="small"
