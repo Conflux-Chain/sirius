@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import '@google/model-viewer';
 
-export const ThreeD = ({ url = '', type }) => {
+export const ThreeD = ({ url = '' }) => {
   return (
     <Container>
       {/* @ts-ignore */}
