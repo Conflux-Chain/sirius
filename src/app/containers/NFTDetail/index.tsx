@@ -8,7 +8,7 @@ import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
-import { Row, Col, Collapse, Tooltip, message } from '@cfxjs/antd';
+import { Row, Col, Collapse, Tooltip, message, Typography } from '@cfxjs/antd';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
@@ -30,6 +30,8 @@ import { TransferModal } from './TransferModal';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
+
+const { Text } = Typography;
 
 const AceEditorStyle = {
   width: 'initial',
@@ -68,8 +70,12 @@ const TraitPanel = ({ data = [] }: { data: Array<StringAttributes> }) => {
         {data.map(d => (
           <Col span={6} key={d.trait_type}>
             <div className="container">
-              <div className="type">{d.trait_type}</div>
-              <div className="value">{d.value}</div>
+              <Text className="type" ellipsis={{ tooltip: d.trait_type }}>
+                {d.trait_type}
+              </Text>
+              <Text className="value" ellipsis={{ tooltip: d.value }}>
+                {d.value}
+              </Text>
             </div>
           </Col>
         ))}
@@ -118,12 +124,14 @@ const StyledTraitPanelWrapper = styled.div`
     font-weight: 500;
     font-size: 12px;
     margin-bottom: 12px;
+    width: 100%;
   }
 
   .value {
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
+    width: 100%;
   }
 `;
 const StyledDatePanelWrapper = styled.div`
