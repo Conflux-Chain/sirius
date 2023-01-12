@@ -277,7 +277,7 @@ export function NFTDetail(props) {
             >
               {t(translations.general.refresh)}
             </Button>
-            <Collapse defaultActiveKey={['details']} ghost>
+            <Collapse defaultActiveKey={['details', 'trait']} ghost>
               <Collapse.Panel
                 header={t(translations.nftDetail.details)}
                 key="details"
