@@ -17,7 +17,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
   const [, setNotifications] = useNotifications();
 
   const checkNetworkValid = () => {
-    if (installed && chainId !== '0xNaN') {
+    if (installed && chainId !== '0xNaN' && chainId !== undefined) {
       if (Number(chainId) === NETWORK_ID) {
         return true;
       } else {
@@ -29,7 +29,7 @@ export const useCheckHook = function <Props>(showNotification = false) {
   };
 
   const checkAddressValid = () => {
-    if (installed && connected === 1) {
+    if (installed && connected === 1 && accounts.length) {
       return SDK.address.isValidCfxAddress(accounts[0]);
     }
     return true;
@@ -72,12 +72,12 @@ export const useCheckHook = function <Props>(showNotification = false) {
     const isNetworkValid = checkNetworkValid();
     const isAddressValid = checkAddressValid();
 
-    if (showNotification) {
-      if (installed && connected === 1 && !isAddressValid) {
+    if (showNotification && installed && connected === 1) {
+      if (!isAddressValid) {
         notifyVersionError();
       }
 
-      if (installed && connected === 1 && !isNetworkValid) {
+      if (!isNetworkValid) {
         notifyNetworkError();
       }
     }

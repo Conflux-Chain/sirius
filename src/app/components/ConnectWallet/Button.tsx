@@ -44,51 +44,57 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
     [account, ensMap],
   );
 
-  let buttonText: React.ReactNode = t(translations.connectWallet.button.text);
+  let buttonText: React.ReactNode = t(
+    translations.connectWallet.button.connectWallet,
+  );
   let buttonStatus: React.ReactNode = '';
   let hasPendingRecords = connected === 1 && !!pendingRecords.length;
 
-  if (installed) {
-    if (accounts.length && isValid) {
-      if (hasPendingRecords) {
-        buttonStatus = (
-          <RotateImg
-            className="button-status-pending"
-            src={iconLoadingWhite}
-            alt="icon-pending"
-          ></RotateImg>
-        );
-        buttonText = t(translations.connectWallet.button.nPending, {
-          count: pendingRecords.length,
-        });
-      } else {
-        const addressLabel =
-          globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[account];
-
-        if (label) {
-          buttonText = (
-            <StyledAddressLabelWrapper>
-              {icon}
-              {label}
-            </StyledAddressLabelWrapper>
+  if (installed && connected) {
+    if (isValid) {
+      if (accounts.length) {
+        if (hasPendingRecords) {
+          buttonStatus = (
+            <RotateImg
+              className="button-status-pending"
+              src={iconLoadingWhite}
+              alt="icon-pending"
+            ></RotateImg>
           );
-        } else if (addressLabel) {
-          buttonText = (
-            <StyledAddressLabelWrapper>
-              <Text span hoverValue={t(translations.profile.tip.label)}>
-                <Bookmark color="var(--theme-color-gray2)" size={16} />
-              </Text>
-              {addressLabel}
-            </StyledAddressLabelWrapper>
-          );
-        } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
-          buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
+          buttonText = t(translations.connectWallet.button.nPending, {
+            count: pendingRecords.length,
+          });
         } else {
-          buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');
-        }
+          const addressLabel =
+            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[account];
 
-        buttonStatus = <span className="button-status-online"></span>;
+          if (label) {
+            buttonText = (
+              <StyledAddressLabelWrapper>
+                {icon}
+                {label}
+              </StyledAddressLabelWrapper>
+            );
+          } else if (addressLabel) {
+            buttonText = (
+              <StyledAddressLabelWrapper>
+                <Text span hoverValue={t(translations.profile.tip.label)}>
+                  <Bookmark color="var(--theme-color-gray2)" size={16} />
+                </Text>
+                {addressLabel}
+              </StyledAddressLabelWrapper>
+            );
+          } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+            buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
+          } else {
+            buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');
+          }
+
+          buttonStatus = <span className="button-status-online"></span>;
+        }
       }
+    } else {
+      buttonText = t(translations.connectWallet.button.wrongNetwork);
     }
   }
 
