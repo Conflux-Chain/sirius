@@ -1718,8 +1718,9 @@
   },
   "connectWallet": {
     "button": {
-      "text": "连接钱包",
-      "nPending": "{{count}} 个交易处理中"
+      "connectWallet": "连接钱包",
+      "nPending": "{{count}} 个交易处理中",
+      "wrongNetwork": "网络错误"
     },
     "modal": {
       "title": "请连接您的钱包",
