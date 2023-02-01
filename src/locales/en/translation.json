@@ -1513,6 +1513,10 @@
             "exceedGasFeeBalance": "; gas fee sponsored failed, exceed sponsor balance ({{sponsorBalanceForGas}})",
             "exceedStorageFeeBalance": "; storage fee sponsored failed, exceed sponsor balance ({{sponsorBalanceForCollateral}})"
           }
+        },
+        "original": {
+          "detail": "{{original}}",
+          "tip": "Please submit a ticket"
         }
       },
       "readyToPack": {

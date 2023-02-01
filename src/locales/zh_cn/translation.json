@@ -1510,6 +1510,10 @@
             "exceedGasFeeBalance": "；燃气费代付失败，超过余额（{{sponsorBalanceForGas}}）",
             "exceedStorageFeeBalance": "；存储费代付失败，超过余额（{{sponsorBalanceForCollateral}}）"
           }
+        },
+        "original": {
+          "detail": "{{original}}",
+          "tip": "请提交工单"
         }
       },
       "readyToPack": {
