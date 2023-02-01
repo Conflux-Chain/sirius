@@ -410,6 +410,7 @@ export const ContractContent = ({ contractInfo }) => {
         abi,
         address,
       });
+      setInitError(false);
     } catch (error) {
       setInitError(true);
     }
