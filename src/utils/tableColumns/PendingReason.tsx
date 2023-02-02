@@ -57,6 +57,11 @@ export const PendingReason = ({
         detail: futrueNonce.detail,
         tip: futrueNonce.tip,
       },
+      '20': {
+        summary: notEnoughCash.summary,
+        detail: notEnoughCash.original.detail,
+        tip: notEnoughCash.original.tip,
+      },
       '21': {
         summary: notEnoughCash.summary,
         detail: notEnoughCash.contractCreateAndToEOA.detail,
@@ -94,6 +99,10 @@ export const PendingReason = ({
 
     if (detail.code === 11 || detail.code === 31 || detail.code === 32) {
       params = detail.params;
+    } else if (detail.code === 20) {
+      params = {
+        original: detail.message,
+      };
     } else if (detail.code === 21 || detail.code === 22) {
       const { value, gas, gasPrice, storageLimit, balance } = detail.params;
 
