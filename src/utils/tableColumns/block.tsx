@@ -4,7 +4,13 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { Text } from 'app/components/Text/Loadable';
 import { Link } from 'app/components/Link/Loadable';
-import { formatNumber, getPercent, fromDripToCfx, toThousands } from 'utils/';
+import {
+  formatNumber,
+  getPercent,
+  fromDripToCfx,
+  toThousands,
+  fromDripToGdrip,
+} from 'utils/';
 import imgPivot from 'images/pivot.svg';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
@@ -88,7 +94,10 @@ export const avgGasPrice = {
   width: 1,
   render: value => (
     <Text span hoverValue={`${toThousands(value)} drip`}>
-      {`${formatNumber(value)} drip`}
+      {`${fromDripToGdrip(value, false, {
+        precision: 6,
+        minNum: 1e-6,
+      })} Gdrip`}
     </Text>
   ),
 };

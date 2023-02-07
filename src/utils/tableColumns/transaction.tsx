@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Status } from 'app/components/TxnComponents';
-import { formatNumber, fromDripToCfx, toThousands } from 'utils';
+import { fromDripToCfx, toThousands, fromDripToGdrip } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
@@ -221,7 +221,10 @@ export const gasPrice = {
   width: 1,
   render: value => (
     <Text span hoverValue={`${toThousands(value)} drip`}>
-      {`${formatNumber(value)} drip`}
+      {`${fromDripToGdrip(value, false, {
+        precision: 6,
+        minNum: 1e-6,
+      })} Gdrip`}
     </Text>
   ),
 };
@@ -237,7 +240,10 @@ export const gasFee = {
   width: 1,
   render: value => (
     <Text span hoverValue={`${toThousands(value)} drip`}>
-      {`${formatNumber(value)} drip`}
+      {`${fromDripToCfx(value, false, {
+        precision: 6,
+        minNum: 1e-6,
+      })} CFX`}
     </Text>
   ),
 };
