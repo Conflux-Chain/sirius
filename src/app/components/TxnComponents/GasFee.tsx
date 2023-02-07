@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import React from 'react';
-import { toThousands } from 'utils';
+import { fromDripToCfx } from 'utils';
 import _ from 'lodash';
 
 import imgSponsoredEn from 'images/sponsored.png';
@@ -15,7 +15,14 @@ export const GasFee = ({ fee, sponsored }) => {
 
   return (
     <StyledFeeWrapper>
-      {`${_.isNil(fee) ? '--' : toThousands(fee)} drip `}
+      {`${
+        _.isNil(fee)
+          ? '--'
+          : fromDripToCfx(fee, false, {
+              precision: 6,
+              minNum: 1e-6,
+            })
+      } CFX`}
       {sponsored && (
         <img src={imgSponsored} alt="sponsored" className="icon-sponsored" />
       )}
