@@ -19,8 +19,8 @@ export const GasFee = ({ fee, sponsored }) => {
         _.isNil(fee)
           ? '--'
           : fromDripToCfx(fee, false, {
-              precision: 6,
-              minNum: 1e-6,
+              precision: 18,
+              minNum: 1e-18,
             })
       } CFX`}
       {sponsored && (
