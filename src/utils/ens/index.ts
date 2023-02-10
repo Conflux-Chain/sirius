@@ -58,13 +58,8 @@ export async function getAddress(name) {
   }
 }
 
-// export function isValidENS(name: string) {
-//   return /.*(\.web3|\.dao)$/i.test(name);
-// }
-
-// TODO Temporarily disable useENS feature
 export function isValidENS(name: string) {
-  return false;
+  return /.*(\.web3|\.dao)$/i.test(name);
 }
 
 export { LogoENS };
