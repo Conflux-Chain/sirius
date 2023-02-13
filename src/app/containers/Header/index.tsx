@@ -192,7 +192,7 @@ export const Header = memo(() => {
       title: [t(translations.header.coreId), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.coreId,
       afterClick: menuClick,
-      href: '/cnslookup-search',
+      href: '/coreid-search',
     },
   ];
 

@@ -1944,13 +1944,18 @@
     "subtitle": "The Conflux CoreID service is a distributed and extensible name system based on the Conflux regional chain, It can be used to resolve various resource information, such as the address of the Conflux Core.",
     "inputPlaceholder": "Please search CoreID or address",
 
-    "incorrectFormat": "Invalid address format",
-    "incorrectAddressType": "Invalid address type, only support for account address",
-    "tokenId": "TokenID",
-    "plzSearch": "Plz Search",
-    "plzSearchDesc": "Please enter an address above to load the NFTs it owned",
+    "coreid": "CoreID",
+    "resolvedAddress": "Resolved Address",
+    "expires": "Expiration date",
+    "registrant": "Registrant",
+    "controller": "Controller",
     "owner": "Owner",
-    "amount": "NFT Quantity"
+    "tokenid": "Token ID",
+
+    "address": "Address",
+    "reverseRecord": "Reverse Record",
+    "ownedCoreids": "Owned Core ID Names",
+    "name": "Name"
   },
   "nftChecker": {
     "title": "NFT Checker",

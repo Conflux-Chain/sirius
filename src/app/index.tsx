@@ -629,7 +629,7 @@ export function App() {
                         />
                         <Route
                           exact
-                          path={['/cnslookup-search']}
+                          path={['/coreid-search']}
                           component={CoreID}
                         />
                         <Route
