@@ -1955,7 +1955,13 @@
     "address": "Address",
     "reverseRecord": "Reverse Record",
     "ownedCoreids": "Owned Core ID Names",
-    "name": "Name"
+    "name": "Name",
+
+    "errors": {
+      "coreid": "The Core ID name entered is either not registered on CNS or not currently supported by Confluxscan.",
+      "address": "This address does not have a supported Core ID name that resolves to it.",
+      "invalidText": "The entered string content is invalid."
+    }
   },
   "nftChecker": {
     "title": "NFT Checker",

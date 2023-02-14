@@ -27,9 +27,11 @@ const StyledWrapper = styled.div`
   .msg {
     font-style: normal;
     font-weight: 450;
-    font-size: 22px;
-    line-height: 28px;
-    color: var(--theme-color-gray2);
-    margin-top: 2rem;
+    font-size: 1.5714rem;
+    line-height: 2rem;
+    color: #424242;
+    margin-top: 4rem;
+    max-width: 650px;
+    text-align: center;
   }
 `;

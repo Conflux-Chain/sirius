@@ -1952,7 +1952,13 @@
     "address": "地址",
     "reverseRecord": "反向记录",
     "ownedCoreids": "持有名称",
-    "name": "名称"
+    "name": "名称",
+
+    "error": {
+      "coreid": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
+      "address": "查询的地址未解析到 Core ID 名称。",
+      "invalidText": "搜索的字符串内容无效。"
+    }
   },
   "nftChecker": {
     "title": "数字藏品查看器",

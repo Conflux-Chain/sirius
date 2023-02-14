@@ -70,6 +70,14 @@ export function CoreID() {
     });
   }, []);
 
+  const errors = useMemo(() => {
+    return {
+      coreid: t(translations.coreId.errors.coreid),
+      address: t(translations.coreId.errors.address),
+      invalid: t(translations.coreId.errors.invalidText),
+    };
+  }, [t]);
+
   const searchHandler = useCallback(
     async value => {
       // console.log('search text: ', value);
@@ -117,7 +125,7 @@ export function CoreID() {
         } else {
           setData({
             type: 'noResult',
-            msg: 'address has no reverse record',
+            msg: errors.address,
           });
         }
       } else if (value.substr(-5) === '.web3' || value.substr(-4) === '.dao') {
@@ -177,26 +185,26 @@ export function CoreID() {
             // not registered
             setData({
               type: 'noResult',
-              msg: 'name is not registered',
+              msg: errors.coreid,
             });
           }
         } else {
           // at present not support subdomain
           setData({
             type: 'noResult',
-            msg: 'name is subdomain',
+            msg: errors.coreid,
           });
         }
       } else {
         setData({
           type: 'noResult',
-          msg: 'name is invalid',
+          msg: errors.invalid,
         });
       }
 
       setLoading(false);
     },
-    [coreid],
+    [coreid, errors],
   );
 
   useEffect(() => {
@@ -213,6 +221,7 @@ export function CoreID() {
     // reset search result
     setData({
       type: '',
+      msg: '',
     });
   };
 
