@@ -1936,6 +1936,24 @@
     "epoch": "纪元",
     "epochNo": "纪元号"
   },
+  "coreId": {
+    "title": "Conflux CoreID 搜索",
+    "subtitle": "Conflux CoreID 服务基于 Conflux 区域链的分布式、可拓展的名称系统，可用于解析各种资源信息，例如 Conflux Core 地址。",
+    "inputPlaceholder": "请输入地址或 CoreID",
+
+    "coreid": "CoreID",
+    "resolvedAddress": "解析地址",
+    "expires": "到期时间",
+    "registrant": "注册商",
+    "controller": "管理员",
+    "owner": "拥有者",
+    "tokenid": "通证 ID",
+
+    "address": "地址",
+    "reverseRecord": "反向记录",
+    "ownedCoreids": "持有名称",
+    "name": "名称"
+  },
   "nftChecker": {
     "title": "数字藏品查看器",
     "subtitle": "通过搜索地址查看某一账户拥有的数字藏品（仅支持当前通证列表中的数字藏品）",

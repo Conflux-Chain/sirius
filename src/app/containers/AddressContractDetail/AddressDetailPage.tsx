@@ -136,10 +136,12 @@ export const AddressDetailPage = memo(() => {
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
 
-            <StyledENSName show={!!label}>
-              {icon}
-              {label}
-            </StyledENSName>
+            <RouterLink to={`/coreid-search?text=${label}`}>
+              <StyledENSName show={!!label}>
+                {icon}
+                {label}
+              </StyledENSName>
+            </RouterLink>
           </Title>
           <HeadAddressLine>
             <span className="address">
