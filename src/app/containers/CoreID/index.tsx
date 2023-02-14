@@ -172,9 +172,7 @@ export function CoreID() {
               expires:
                 expiresTimestamp === 0
                   ? '--'
-                  : dayjs(expiresTimestamp * 1000).format(
-                      'YYYY-MM-DD HH:mm:ss',
-                    ),
+                  : dayjs(expiresTimestamp).format('YYYY-MM-DD HH:mm:ss'),
               registrant: data[2],
               controller: data[3],
               owner: data[4],
@@ -255,6 +253,7 @@ export function CoreID() {
               <AddressContainer
                 value={data.resolvedAddress || ''}
                 showENSLabel={false}
+                showAddressLabel={false}
               ></AddressContainer>
             </Description>
           )}
@@ -265,12 +264,14 @@ export function CoreID() {
             <AddressContainer
               value={data.registrant || ''}
               showENSLabel={false}
+              showAddressLabel={false}
             ></AddressContainer>
           </Description>
           <Description title={t(translations.coreId.controller)}>
             <AddressContainer
               value={data.controller || ''}
               showENSLabel={false}
+              showAddressLabel={false}
             ></AddressContainer>
           </Description>
           <Description title={t(translations.coreId.tokenid)} noBorder>
@@ -307,6 +308,7 @@ export function CoreID() {
               <AddressContainer
                 value={data.address || ''}
                 showENSLabel={false}
+                showAddressLabel={false}
               ></AddressContainer>
             </Description>
             <Description title={t(translations.coreId.reverseRecord)}>
@@ -321,6 +323,7 @@ export function CoreID() {
               <AddressContainer
                 value={data.registrant || ''}
                 showENSLabel={false}
+                showAddressLabel={false}
               ></AddressContainer>
             </Description>
           </Card>
