@@ -80,13 +80,9 @@ export function CoreID() {
 
   const searchHandler = useCallback(
     async value => {
-      // console.log('search text: ', value);
-      // console.log('domains: ', await coreid.address(`${value}.web3`));
-
       const { namehash } = CoreidUtil.utils;
 
       if (isCurrentNetworkAddress(value)) {
-        // cfxtest:aargwwstcp4axhxgkxfuy9pent1vtmaskjwr12xfsj
         let address = value;
 
         setLoading(true);
@@ -131,7 +127,6 @@ export function CoreID() {
       } else if (value.substr(-5) === '.web3' || value.substr(-4) === '.dao') {
         if (value.split('.').length === 2) {
           let name = value;
-          // 88888888.web3
 
           setLoading(true);
 
@@ -284,14 +279,16 @@ export function CoreID() {
         {
           title: t(translations.coreId.name),
           dataIndex: 'name',
-          width: 1,
           key: 'name',
+          width: 1,
           render(value, row) {
             if (row.address) {
               return (
                 <AddressContainer
                   value={row.address}
                   alias={value}
+                  showENSLabel={false}
+                  showAddressLabel={false}
                 ></AddressContainer>
               );
             } else {
