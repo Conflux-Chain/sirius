@@ -14,7 +14,7 @@ import { PageHeader } from 'app/components/PageHeader';
 import { Input } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, isZeroAddress } from 'utils';
-import CoreidUtil from '@cubed/coreid-util';
+import CNSUtil from '@web3identity/cns-util';
 import { NETWORK_ID } from 'utils/constants';
 import qs from 'query-string';
 import dayjs from 'dayjs';
@@ -64,8 +64,8 @@ export function CoreID() {
     type: '',
   });
 
-  const coreid = useMemo(() => {
-    return new CoreidUtil({
+  const cnsutil = useMemo(() => {
+    return new CNSUtil({
       networkId: NETWORK_ID,
     });
   }, []);
@@ -80,17 +80,17 @@ export function CoreID() {
 
   const searchHandler = useCallback(
     async value => {
-      const { namehash } = CoreidUtil.utils;
+      const { namehash } = CNSUtil.utils;
 
       if (isCurrentNetworkAddress(value)) {
         let address = value;
 
         setLoading(true);
 
-        const name = await coreid.name(address);
+        const name = await cnsutil.name(address);
 
         if (name) {
-          const data = await coreid.multicall([
+          const data = await cnsutil.multicall([
             {
               method: 'userDomains',
               args: [address],
@@ -101,7 +101,7 @@ export function CoreID() {
             },
           ]);
 
-          const userDomainsAddress = await coreid.multicall(
+          const userDomainsAddress = await cnsutil.multicall(
             data[0].map((d: string) => ({
               method: 'address',
               args: [d],
@@ -130,7 +130,7 @@ export function CoreID() {
 
           setLoading(true);
 
-          const data = await coreid.multicall([
+          const data = await cnsutil.multicall([
             {
               method: 'address',
               args: [name],
@@ -197,7 +197,7 @@ export function CoreID() {
 
       setLoading(false);
     },
-    [coreid, errors],
+    [cnsutil, errors],
   );
 
   useEffect(() => {
@@ -238,6 +238,7 @@ export function CoreID() {
               data.name
             ) : (
               <AddressContainer
+                isFull={true}
                 value={data.resolvedAddress || ''}
                 alias={data.name}
               ></AddressContainer>
@@ -246,6 +247,7 @@ export function CoreID() {
           {isZeroAddress(data.resolvedAddress || '') ? null : (
             <Description title={t(translations.coreId.resolvedAddress)}>
               <AddressContainer
+                isFull={true}
                 value={data.resolvedAddress || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
@@ -257,6 +259,7 @@ export function CoreID() {
           </Description>
           <Description title={t(translations.coreId.registrant)}>
             <AddressContainer
+              isFull={true}
               value={data.registrant || ''}
               showENSLabel={false}
               showAddressLabel={false}
@@ -264,6 +267,7 @@ export function CoreID() {
           </Description>
           <Description title={t(translations.coreId.controller)}>
             <AddressContainer
+              isFull={true}
               value={data.controller || ''}
               showENSLabel={false}
               showAddressLabel={false}
@@ -285,6 +289,7 @@ export function CoreID() {
             if (row.address) {
               return (
                 <AddressContainer
+                  isFull={true}
                   value={row.address}
                   alias={value}
                   showENSLabel={false}
@@ -303,6 +308,7 @@ export function CoreID() {
           <Card style={{ marginBottom: '1rem' }}>
             <Description title={t(translations.coreId.address)}>
               <AddressContainer
+                isFull={true}
                 value={data.address || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
@@ -311,6 +317,7 @@ export function CoreID() {
             <Description title={t(translations.coreId.reverseRecord)}>
               {
                 <AddressContainer
+                  isFull={true}
                   value={data.address || ''}
                   alias={data.reverseRecord}
                 ></AddressContainer>
@@ -318,6 +325,7 @@ export function CoreID() {
             </Description>
             <Description title={t(translations.coreId.registrant)} noBorder>
               <AddressContainer
+                isFull={true}
                 value={data.registrant || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
