@@ -219,6 +219,7 @@
     },
     "code": "Code",
     "sourceCodeShort": "Source Code",
+    "sourceCodeFilename": "File {{index}} of {{total}}: {{filename}}",
     "abiShort": "ABI",
     "maxSize": "Max size of 30KB",
     "supportType": "The supported image formats are gif, jpg, jpeg, png, svg",

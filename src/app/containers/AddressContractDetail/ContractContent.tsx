@@ -105,6 +105,84 @@ const Code = ({ contractInfo }) => {
     }
   }, [abi, address, constructorArgs]);
 
+  const sourceCodeContent = useMemo(() => {
+    let fSourceCode = sourceCode;
+
+    try {
+      const jSourceCode = JSON.parse(sourceCode);
+
+      // contains multiple sourcecode file
+      if (jSourceCode.sources) {
+        fSourceCode = Object.keys(jSourceCode.sources).map(k => {
+          const filenameMatch = /([^/]*)$/.exec(k);
+          let key = k;
+
+          if (filenameMatch) {
+            key = filenameMatch[0];
+          }
+
+          return {
+            key,
+            content: jSourceCode.sources[k].content,
+          };
+        });
+      }
+    } catch (error) {
+      // single sourcecode file
+    }
+
+    if (typeof fSourceCode === 'string') {
+      return (
+        <AceEditor
+          readOnly
+          style={AceEditorStyle}
+          mode="solidity"
+          theme="tomorrow"
+          name="UNIQUE_ID_OF_DIV"
+          setOptions={{
+            showLineNumbers: true,
+          }}
+          value={sourceCode}
+          wrapEnabled={true}
+          height="28rem"
+          fontSize="1rem"
+          showGutter={false}
+          showPrintMargin={false}
+        />
+      );
+    } else {
+      const len = fSourceCode.length;
+
+      return fSourceCode.map((s, i) => (
+        <>
+          <div className={`multiple-sourcecode-title ${i === 0 && 'first'}`}>
+            {t(translations.contract.sourceCodeFilename, {
+              index: i + 1,
+              total: len,
+              filename: s.key,
+            })}
+          </div>
+          <AceEditor
+            readOnly
+            style={AceEditorStyle}
+            mode="solidity"
+            theme="tomorrow"
+            name="UNIQUE_ID_OF_DIV"
+            setOptions={{
+              showLineNumbers: true,
+            }}
+            value={s.content}
+            wrapEnabled={true}
+            height="20rem"
+            fontSize="1rem"
+            showGutter={false}
+            showPrintMargin={false}
+          />
+        </>
+      ));
+    }
+  }, [t, sourceCode]);
+
   if (!contractInfo.codeHash) {
     return (
       <StyledContractContentCodeWrapper>
@@ -187,22 +265,7 @@ const Code = ({ contractInfo }) => {
               <div className="contract-sourcecode-and-abi-title">
                 {t(translations.contract.sourceCodeShort)}
               </div>
-              <AceEditor
-                readOnly
-                style={AceEditorStyle}
-                mode="solidity"
-                theme="tomorrow"
-                name="UNIQUE_ID_OF_DIV"
-                setOptions={{
-                  showLineNumbers: true,
-                }}
-                value={sourceCode}
-                wrapEnabled={true}
-                height="28rem"
-                fontSize="1rem"
-                showGutter={false}
-                showPrintMargin={false}
-              />{' '}
+              {sourceCodeContent}
             </>
           ) : null}
         </div>
@@ -380,6 +443,16 @@ const StyledContractContentCodeWrapper = styled.div`
     font-size: 1rem;
     background-color: rgb(248, 249, 251);
     padding: 5px 10px;
+  }
+
+  .multiple-sourcecode-title {
+    margin: 30px 0 10px;
+    color: var(--theme-color-gray2);
+    font-weight: bold;
+
+    &.first {
+      margin-top: 10px;
+    }
   }
 `;
 
