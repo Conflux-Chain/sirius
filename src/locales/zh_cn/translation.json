@@ -218,6 +218,7 @@
     },
     "code": "合约",
     "sourceCodeShort": "源码",
+    "sourceCodeFilename": "文件 {{index}} / {{total}}：{{filename}}",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
     "supportType": "支持的图片格式为 gif、jpg、jpeg、png、svg",
