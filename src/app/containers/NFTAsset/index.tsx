@@ -123,7 +123,7 @@ export function NFTAsset({
         const data = await reqNFTBalance({
           query: {
             owner: address,
-            limit: 10000,
+            limit: 100,
           },
         });
 

@@ -25,7 +25,7 @@ export function Contract({
       url: OPEN_API_URLS.contract,
       query: {
         address,
-        limit: 10000,
+        limit: 2000,
       },
       formatter: data => {
         const data1: any = [];
