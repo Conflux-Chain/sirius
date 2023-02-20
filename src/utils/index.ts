@@ -924,3 +924,18 @@ export const publishRequestError = (
     },
   });
 };
+
+export const addIPFSGateway = (
+  imgURL: string,
+  IPFSGatewayURL: string,
+): string => {
+  if (
+    typeof imgURL === 'string' &&
+    typeof IPFSGatewayURL === 'string' &&
+    imgURL.startsWith('ipfs://')
+  ) {
+    imgURL = `${IPFSGatewayURL}/${imgURL.replace('ipfs://', 'ipfs/')}`;
+  }
+
+  return imgURL;
+};

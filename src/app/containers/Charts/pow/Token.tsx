@@ -27,7 +27,7 @@ export function Token({
       url: OPEN_API_URLS.token,
       query: {
         base32: address,
-        limit: 10000,
+        limit: 2000,
       },
       formatter: data => {
         const data1: any = [];
