@@ -17,6 +17,7 @@ import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/antd';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
+import { addIPFSGateway } from 'utils';
 import audioDesign from './audio-design.svg';
 import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
@@ -239,6 +240,9 @@ export const NFTPreview = React.memo(
               if (enable3D && animation_url) {
                 img = animation_url;
               }
+
+              // add ipfs gateway prefix
+              img = addIPFSGateway(img, data.imageGateway);
 
               setImageUri(img);
               setImageName(data.imageName ? data.imageName[lang] || '' : '');
