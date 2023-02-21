@@ -482,6 +482,7 @@
     "balanceChecker": "Balance Checker",
     "charts": "PoW Charts",
     "posCharts": "PoS Charts",
+    "nftCharts": "NFT Charts",
     "crossSpaceCharts": "Cross Space Charts",
     "statistics": "Top Statistics",
     "support": "Support & Help",
@@ -617,6 +618,47 @@
   },
   "highcharts": {
     "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
+    "nft": {
+      "preview": {
+        "title": "NFT Charts",
+        "subtitle": "A collection of cross space charts between Core and eSpace on the Conflux Chain (click on View Details for a zoomed view).",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 days"
+      },
+      "breadcrumb": {
+        "charts": "NFT Charts",
+        "assets": "Assets",
+
+        "daily-cfx-transfer": "Daily CFX Transfer Amount",
+        "daily-cfx-transfer-count": "Daily CFX Transfer Count",
+        "contract": "Daily CFX Transfer Count"
+      },
+      "assets": {
+        "title": "NFT Assets",
+        "subtitle": "The daily amount and total amount of NFT everyday.",
+        "yAxisTitle": "Daily Count",
+        "seriesName": "Daily Amount",
+        "yAxisTitle2": "Total Count",
+        "seriesName2": "Total Amount"
+      },
+
+      "dailyCFXTransfer": {
+        "title": "Daily CFX Transfer Amount",
+        "subtitle": "The total amount of CFX transfers per day between Core and eSpace.",
+        "yAxisTitle": "Amount in CFX",
+        "seriesName": "Transfer Out",
+        "yAxisTitle2": "Amount in CFX",
+        "seriesName2": "Transfer In"
+      },
+      "dailyCFXTransferCount": {
+        "title": "Daily CFX Transfer Count",
+        "subtitle": "The total count of CFX transfers per day between Core and eSpace.",
+        "yAxisTitle": "Count",
+        "seriesName": "Transfer Out",
+        "yAxisTitle2": "Count",
+        "seriesName2": "Transfer In"
+      }
+    },
     "crossSpace": {
       "preview": {
         "title": "Cross Space Charts",

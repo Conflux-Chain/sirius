@@ -257,7 +257,7 @@ export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
 
 let APIHost = IS_TESTNET
   ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
+  : `api${!IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 }
@@ -276,6 +276,10 @@ export const OPEN_API_URLS = Object.entries({
   accountGrowth: '/statistics/account/growth',
   activeAccounts: '/statistics/account/active',
   contracts: '/statistics/contract',
+  nftAssets: '/statistics/nft/asset',
+  nftHolders: '/statistics/nft/holder',
+  nftContracts: '/statistics/nft/contract',
+  nftTransfers: '/statistics/nft/transfer',
 
   // NFT
   NFTTokens: '/nft/tokens',
@@ -304,6 +308,9 @@ OPEN_API_URLS.PoSDailyRewardInfo = '/stat/pos-daily-reward';
 
 // Cross Space
 OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
+
+// Cross Space
+OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 
 // table list list limit, max query items is 10,000, exceed will cause backend error
 export const TABLE_LIST_LIMIT = 100;
