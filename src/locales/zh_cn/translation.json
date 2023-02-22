@@ -616,6 +616,51 @@
   },
   "highcharts": {
     "subtitle": "资源：ConfluxScan.io<br/>点击并拖动绘图区域以放大图表",
+    "nft": {
+      "preview": {
+        "title": "数字藏品图表",
+        "subtitle": "Conflux 链上数字藏品的统计图表 （点击查看详情）",
+        "viewDetail": "查看详情",
+        "tip": "显示最近 30 个月"
+      },
+      "breadcrumb": {
+        "charts": "数字藏品图表",
+        "assets": "资产",
+        "holders": "持有人",
+        "contracts": "合约",
+        "transfers": "交易"
+      },
+      "assets": {
+        "title": "数字藏品资产",
+        "subtitle": "数字藏品资产的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      },
+      "holders": {
+        "title": "数字藏品持有人",
+        "subtitle": "数字藏品持有人的总数",
+        "yAxisTitle": "总数",
+        "seriesName": "持有人"
+      },
+      "contracts": {
+        "title": "数字藏品合约",
+        "subtitle": "数字藏品合约的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      },
+      "transfers": {
+        "title": "数字藏品交易",
+        "subtitle": "数字藏品交易的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      }
+    },
     "crossSpace": {
       "preview": {
         "title": "跨空间图表",

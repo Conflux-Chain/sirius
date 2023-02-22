@@ -941,7 +941,7 @@ export const addIPFSGateway = (
 };
 
 export const getChartsSubTitle = (title: string): string => {
-  const suffix = window.location.host.substr(-3);
+  const suffix = window.location.host.substr(-4);
   if (suffix === '.net') {
     return title.replace('.io', '.net');
   } else {

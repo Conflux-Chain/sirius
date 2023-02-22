@@ -21,7 +21,7 @@ export function Transfers({ preview = false }: ChildProps) {
       url: OPEN_API_URLS.nftTransfers,
       query: {
         limit: preview ? 30 : 2000,
-        intervalType: preview ? 'month' : 'day',
+        intervalType: 'month',
       },
       formatter: data => {
         const data1: any = [];

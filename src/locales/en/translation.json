@@ -634,9 +634,9 @@
       },
       "assets": {
         "title": "NFT Assets",
-        "subtitle": "The daily amount and total amount of NFT assets.",
-        "yAxisTitle": "Daily Amount",
-        "seriesName": "Daily Amount",
+        "subtitle": "The monthly amount and total amount of NFT assets.",
+        "yAxisTitle": "Monthly Amount",
+        "seriesName": "Monthly Amount",
         "yAxisTitle2": "Total Amount",
         "seriesName2": "Total Amount"
       },
@@ -648,17 +648,17 @@
       },
       "contracts": {
         "title": "NFT Contracts",
-        "subtitle": "The daily amount and total amount of NFT contracts.",
-        "yAxisTitle": "Daily Amount",
-        "seriesName": "Daily Amount",
+        "subtitle": "The monthly amount and total amount of NFT contracts.",
+        "yAxisTitle": "Monthly Amount",
+        "seriesName": "Monthly Amount",
         "yAxisTitle2": "Total Amount",
         "seriesName2": "Total Amount"
       },
       "transfers": {
         "title": "NFT Transfers",
-        "subtitle": "The daily count and total count of NFT transfers.",
-        "yAxisTitle": "Daily Count",
-        "seriesName": "Daily Count",
+        "subtitle": "The monthly count and total count of NFT transfers.",
+        "yAxisTitle": "Monthly Count",
+        "seriesName": "Monthly Count",
         "yAxisTitle2": "Total Count",
         "seriesName2": "Total Count"
       }
