@@ -34,9 +34,6 @@ export function DailyAPY({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.apy.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

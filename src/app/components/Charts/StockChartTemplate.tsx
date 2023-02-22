@@ -8,6 +8,9 @@ import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';
 import { useHighcharts } from 'utils/hooks/useHighcharts';
+import { useTranslation } from 'react-i18next';
+import { translations } from 'locales/i18n';
+import { getChartsSubTitle } from 'utils';
 
 // @ts-ignore
 window.dayjs = dayjs;
@@ -37,6 +40,7 @@ export function StockChartTemplate({
   options,
   request,
 }: Props) {
+  const { t } = useTranslation();
   const bp = useBreakpoint();
   const chart = useRef(null);
   const [data, setData] = useState({
@@ -193,6 +197,9 @@ export function StockChartTemplate({
             ],
           },
         },
+      },
+      subtitle: {
+        text: getChartsSubTitle(t(translations.highcharts.subtitle)),
       },
     },
     options,

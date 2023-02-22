@@ -6,7 +6,9 @@ import { translations } from 'locales/i18n';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
 import { Assets } from './Assets';
-import { DailyCFXTransferCount } from './DailyCFXTransferCount';
+import { Holders } from './Holders';
+import { Contracts } from './Contracts';
+import { Transfers } from './Transfers';
 
 export function Chart() {
   const { t } = useTranslation();
@@ -31,7 +33,13 @@ export function Chart() {
           <Assets preview={true} />
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyCFXTransferCount preview={true} />
+          <Holders preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <Contracts preview={true} />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <Transfers preview={true} />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>

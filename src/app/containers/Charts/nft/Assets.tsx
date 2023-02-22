@@ -43,9 +43,6 @@ export function Assets({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.nft.assets.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },
@@ -85,6 +82,12 @@ export function Assets({ preview = false }: ChildProps) {
           yAxis: 1,
         },
       ],
+      navigator: {
+        baseSeries: 1,
+        series: {
+          color: '#7cb5ec',
+        },
+      },
     },
   };
 

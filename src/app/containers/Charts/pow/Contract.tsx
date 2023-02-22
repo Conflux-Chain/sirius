@@ -50,9 +50,6 @@ export function Contract({
       title: {
         text: t(translations.highcharts.pow.contract.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

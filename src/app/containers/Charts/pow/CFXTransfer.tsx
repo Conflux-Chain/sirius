@@ -42,9 +42,6 @@ export function CFXTransfer({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.cfxTransfer.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

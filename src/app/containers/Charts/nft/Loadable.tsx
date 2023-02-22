@@ -10,7 +10,17 @@ export const Assets = lazyLoad(
   module => module.Assets,
 );
 
-export const DailyCFXTransferCount = lazyLoad(
-  () => import('./DailyCFXTransferCount'),
-  module => module.DailyCFXTransferCount,
+export const Holders = lazyLoad(
+  () => import('./Holders'),
+  module => module.Holders,
+);
+
+export const Contracts = lazyLoad(
+  () => import('./Contracts'),
+  module => module.Contracts,
+);
+
+export const Transfers = lazyLoad(
+  () => import('./Transfers'),
+  module => module.Transfers,
 );

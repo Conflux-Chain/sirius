@@ -8,26 +8,29 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
-import BigNumber from 'bignumber.js';
 
-export function DailyDeposit({ preview = false }: ChildProps) {
+export function Transfers({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'daily-deposit',
-    title: t(translations.highcharts.pos.dailyDeposit.title),
-    subtitle: t(translations.highcharts.pos.dailyDeposit.subtitle),
+    name: 'transfers',
+    title: t(translations.highcharts.nft.transfers.title),
+    subtitle: t(translations.highcharts.nft.transfers.subtitle),
     request: {
-      url: OPEN_API_URLS.PoSDailyDeposit,
+      url: OPEN_API_URLS.nftTransfers,
+      query: {
+        limit: preview ? 30 : 2000,
+        intervalType: preview ? 'month' : 'day',
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.day).valueOf();
-          data1.push([t, Number(new BigNumber(d.staking_deposit).toFixed(2))]);
-          data2.push([t, Number(new BigNumber(d.staking_withdraw).toFixed(2))]);
+          const t = dayjs.utc(d.statTime).valueOf();
+          data1.push([t, Number(d.count)]);
+          data2.push([t, Number(d.total)]);
         });
 
         return [data1, data2];
@@ -38,7 +41,7 @@ export function DailyDeposit({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.pos.dailyDeposit.title),
+        text: t(translations.highcharts.nft.transfers.title),
       },
       xAxis: {
         type: 'datetime',
@@ -46,15 +49,14 @@ export function DailyDeposit({ preview = false }: ChildProps) {
       yAxis: [
         {
           title: {
-            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle),
+            text: t(translations.highcharts.nft.transfers.yAxisTitle),
           },
-          offset: 0,
           height: '50%',
           opposite: false,
         },
         {
           title: {
-            text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle2),
+            text: t(translations.highcharts.nft.transfers.yAxisTitle2),
           },
           height: '50%',
           top: '50%',
@@ -63,23 +65,29 @@ export function DailyDeposit({ preview = false }: ChildProps) {
         },
       ],
       tooltip: {
-        valueSuffix: ' CFX',
+        shared: true,
       },
       series: [
         {
-          type: 'line',
+          type: 'column',
           name: `<span>${t(
-            translations.highcharts.pos.dailyDeposit.seriesName,
+            translations.highcharts.nft.transfers.seriesName,
           )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pos.dailyDeposit.seriesName2,
+            translations.highcharts.nft.transfers.seriesName2,
           )}</span>`,
           yAxis: 1,
         },
       ],
+      navigator: {
+        baseSeries: 1,
+        series: {
+          color: '#7cb5ec',
+        },
+      },
     },
   };
 

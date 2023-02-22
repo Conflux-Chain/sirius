@@ -116,7 +116,9 @@ import {
 import {
   Chart as NFTChart,
   Assets as NFTAssets,
-  DailyCFXTransferCount as NFTDailyCFXTransferCount,
+  Holders as NFTHolders,
+  Contracts as NFTContracts,
+  Transfers as NFTTransfers,
 } from './containers/Charts/nft/Loadable';
 
 // pos pages
@@ -721,8 +723,20 @@ export function App() {
 
                         <Route
                           exact
-                          path="/nft-charts/daily-cfx-transfer-count"
-                          component={NFTDailyCFXTransferCount}
+                          path="/nft-charts/holders"
+                          component={NFTHolders}
+                        />
+
+                        <Route
+                          exact
+                          path="/nft-charts/contracts"
+                          component={NFTContracts}
+                        />
+
+                        <Route
+                          exact
+                          path="/nft-charts/transfers"
+                          component={NFTTransfers}
                         />
 
                         <Route exact path="/pos-charts" component={PoSChart} />

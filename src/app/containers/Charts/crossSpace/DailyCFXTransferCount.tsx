@@ -48,9 +48,6 @@ export function DailyCFXTransferCount({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.crossSpace.dailyCFXTransferCount.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },
