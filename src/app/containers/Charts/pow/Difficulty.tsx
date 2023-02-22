@@ -35,9 +35,6 @@ export function Difficulty({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.difficulty.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

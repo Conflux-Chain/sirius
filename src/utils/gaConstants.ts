@@ -19,6 +19,7 @@ export const ScanEvent = {
       contractsList: 'contracts_list',
       charts: 'PoW Charts',
       posCharts: 'PoS Charts',
+      nftCharts: 'NFT Charts',
       crossSpaceCharts: 'Cross Space Charts',
       statistics: 'statistics',
       confluxNetwork: 'official_website',

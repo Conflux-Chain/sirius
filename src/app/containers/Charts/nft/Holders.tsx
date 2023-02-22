@@ -9,27 +9,29 @@ import {
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
 
-export function Contracts({ preview = false }: ChildProps) {
+export function Holders({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.pow.contracts.title),
-    subtitle: t(translations.highcharts.pow.contracts.subtitle),
+    name: 'holders',
+    title: t(translations.highcharts.nft.holders.title),
+    subtitle: t(translations.highcharts.nft.holders.subtitle),
     request: {
-      url: OPEN_API_URLS.contracts,
+      url: OPEN_API_URLS.nftHolders,
+      query: {
+        limit: preview ? 30 : 2000,
+        intervalType: preview ? 'month' : 'day',
+      },
       formatter: data => {
         const data1: any = [];
-        const data2: any = [];
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([t, Number(d.total)]);
-          data2.push([t, Number(d.count)]);
         });
 
-        return [data1, data2];
+        return [data1];
       },
     },
     options: {
@@ -37,14 +39,14 @@ export function Contracts({ preview = false }: ChildProps) {
         zoomType: 'x',
       },
       title: {
-        text: t(translations.highcharts.pow.contracts.title),
+        text: t(translations.highcharts.nft.holders.title),
       },
       xAxis: {
         type: 'datetime',
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.pow.contracts.yAxisTitle),
+          text: t(translations.highcharts.nft.holders.yAxisTitle),
         },
       },
       tooltip: {
@@ -54,13 +56,7 @@ export function Contracts({ preview = false }: ChildProps) {
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName,
-          )}</span>`,
-        },
-        {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName2,
+            translations.highcharts.nft.holders.seriesName,
           )}</span>`,
         },
       ],

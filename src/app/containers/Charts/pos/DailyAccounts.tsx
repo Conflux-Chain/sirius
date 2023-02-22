@@ -34,9 +34,6 @@ export function DailyAccounts({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.dailyAccounts.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

@@ -49,9 +49,6 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.dailyRewardInfo.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

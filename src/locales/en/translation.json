@@ -482,6 +482,7 @@
     "balanceChecker": "Balance Checker",
     "charts": "PoW Charts",
     "posCharts": "PoS Charts",
+    "nftCharts": "NFT Charts",
     "crossSpaceCharts": "Cross Space Charts",
     "statistics": "Top Statistics",
     "support": "Support & Help",
@@ -616,7 +617,52 @@
     "oldest": "Oldest"
   },
   "highcharts": {
-    "subtitle": "Source: ConfluxScan.io<br/>Click and drag in the plot area to zoom in",
+    "subtitle": "Source: confluxscan.io<br/>Click and drag in the plot area to zoom in",
+    "nft": {
+      "preview": {
+        "title": "NFT Charts",
+        "subtitle": "A collection of NFT statistical charts on the Conflux Chain (click on View Details for a zoomed view).",
+        "viewDetail": "View Details",
+        "tip": "Showing the last 30 Months"
+      },
+      "breadcrumb": {
+        "charts": "NFT Charts",
+        "assets": "Assets",
+        "holders": "Holders",
+        "contracts": "Contracts",
+        "transfers": "Transfers"
+      },
+      "assets": {
+        "title": "NFT Assets",
+        "subtitle": "The daily amount and total amount of NFT assets.",
+        "yAxisTitle": "Daily Amount",
+        "seriesName": "Daily Amount",
+        "yAxisTitle2": "Total Amount",
+        "seriesName2": "Total Amount"
+      },
+      "holders": {
+        "title": "NFT Holders",
+        "subtitle": "The amount of NFT holders.",
+        "yAxisTitle": "Amount",
+        "seriesName": "Holders"
+      },
+      "contracts": {
+        "title": "NFT Contracts",
+        "subtitle": "The daily amount and total amount of NFT contracts.",
+        "yAxisTitle": "Daily Amount",
+        "seriesName": "Daily Amount",
+        "yAxisTitle2": "Total Amount",
+        "seriesName2": "Total Amount"
+      },
+      "transfers": {
+        "title": "NFT Transfers",
+        "subtitle": "The daily count and total count of NFT transfers.",
+        "yAxisTitle": "Daily Count",
+        "seriesName": "Daily Count",
+        "yAxisTitle2": "Total Count",
+        "seriesName2": "Total Count"
+      }
+    },
     "crossSpace": {
       "preview": {
         "title": "Cross Space Charts",

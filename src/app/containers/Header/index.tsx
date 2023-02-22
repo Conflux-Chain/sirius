@@ -506,6 +506,15 @@ export const Header = memo(() => {
         },
         {
           title: [
+            t(translations.header.nftCharts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.nftCharts,
+          afterClick: menuClick,
+          href: '/nft-charts',
+        },
+        {
+          title: [
             t(translations.header.crossSpaceCharts),
             <Check size={18} key="check" />,
           ],

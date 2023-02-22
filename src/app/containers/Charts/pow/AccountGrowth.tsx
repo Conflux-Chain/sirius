@@ -37,9 +37,6 @@ export function AccountGrowth({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.accountGrowth.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

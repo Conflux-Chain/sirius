@@ -113,6 +113,14 @@ import {
   DailyCFXTransferCount as CrossSpaceDailyCFXTransferCount,
 } from './containers/Charts/crossSpace/Loadable';
 
+import {
+  Chart as NFTChart,
+  Assets as NFTAssets,
+  Holders as NFTHolders,
+  Contracts as NFTContracts,
+  Transfers as NFTTransfers,
+} from './containers/Charts/nft/Loadable';
+
 // pos pages
 import { HomePage as posHomePage } from './containers/pos/HomePage/Loadable';
 import { Accounts as posAccounts } from './containers/pos/Accounts/Loadable';
@@ -703,6 +711,32 @@ export function App() {
                           exact
                           path="/cross-space-charts/daily-cfx-transfer-count"
                           component={CrossSpaceDailyCFXTransferCount}
+                        />
+
+                        <Route exact path="/nft-charts" component={NFTChart} />
+
+                        <Route
+                          exact
+                          path="/nft-charts/assets"
+                          component={NFTAssets}
+                        />
+
+                        <Route
+                          exact
+                          path="/nft-charts/holders"
+                          component={NFTHolders}
+                        />
+
+                        <Route
+                          exact
+                          path="/nft-charts/contracts"
+                          component={NFTContracts}
+                        />
+
+                        <Route
+                          exact
+                          path="/nft-charts/transfers"
+                          component={NFTTransfers}
                         />
 
                         <Route exact path="/pos-charts" component={PoSChart} />
