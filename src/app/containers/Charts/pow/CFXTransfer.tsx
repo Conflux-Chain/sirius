@@ -63,7 +63,7 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           tickAmount,
         },
       ],
-      series: series: [
+      series: [
         {
           type: 'column',
           name: `<span>${t(
