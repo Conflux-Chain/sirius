@@ -30,15 +30,15 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
         // TODO, data order issue, need to change by open api
         data?.list.reverse().map((d, i) => {
           const t = dayjs.utc(d.statDay).valueOf();
-          data1.push([
-            t,
-            Number(new BigNumber(d.totalReward).div(1e18).toFixed(2)),
-          ]);
+          data1.push([t, Number(d.rewardAccounts)]);
           data2.push([
             t,
             Number(new BigNumber(d.avgReward).div(1e18).toFixed(2)),
           ]);
-          data3.push([t, Number(d.rewardAccounts)]);
+          data3.push([
+            t,
+            Number(new BigNumber(d.totalReward).div(1e18).toFixed(2)),
+          ]);
         });
 
         return [data1, data2, data3];
@@ -72,20 +72,6 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
       ],
       series: [
         {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pos.dailyRewardInfo.seriesName,
-          )}</span>`,
-          color: '#90ed7d',
-        },
-        {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pos.dailyRewardInfo.seriesName2,
-          )}</span>`,
-          color: '#434348',
-        },
-        {
           type: 'column',
           name: `<span>${t(
             translations.highcharts.pos.dailyRewardInfo.seriesName3,
@@ -96,6 +82,20 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
           //   // valueDecimals: 2,
           //   // valueSuffix: ' CFX',
           // },
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pos.dailyRewardInfo.seriesName2,
+          )}</span>`,
+          color: '#434348',
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pos.dailyRewardInfo.seriesName,
+          )}</span>`,
+          color: '#90ed7d',
         },
       ],
     },
