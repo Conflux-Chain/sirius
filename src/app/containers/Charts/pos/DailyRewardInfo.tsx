@@ -13,6 +13,8 @@ import BigNumber from 'bignumber.js';
 export function DailyRewardInfo({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
+  const tickAmount = preview ? 4 : 6;
+
   const props = {
     preview: preview,
     name: 'daily-reward-info',
@@ -57,17 +59,15 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
           title: {
             text: t(translations.highcharts.pos.dailyRewardInfo.yAxisTitle),
           },
-          height: '50%',
           opposite: false,
+          tickAmount,
         },
         {
           title: {
             text: t(translations.highcharts.pos.dailyRewardInfo.yAxisTitle3),
           },
-          height: '50%',
-          top: '50%',
-          offset: 0,
-          opposite: false,
+          opposite: true,
+          tickAmount,
         },
       ],
       series: [
@@ -76,12 +76,14 @@ export function DailyRewardInfo({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.pos.dailyRewardInfo.seriesName,
           )}</span>`,
+          color: '#90ed7d',
         },
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.pos.dailyRewardInfo.seriesName2,
           )}</span>`,
+          color: '#434348',
         },
         {
           type: 'column',
