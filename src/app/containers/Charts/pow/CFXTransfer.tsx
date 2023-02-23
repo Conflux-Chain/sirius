@@ -13,6 +13,8 @@ import BigNumber from 'bignumber.js';
 export function CFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
+  const tickAmount = preview ? 4 : 6;
+
   const props = {
     preview: preview,
     name: 'cfx-transfer',
@@ -27,9 +29,9 @@ export function CFXTransfer({ preview = false }: ChildProps) {
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
+          data1.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
           data2.push([t, Number(d.userCount)]);
-          data3.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
+          data3.push([t, Number(d.transferCount)]);
         });
 
         return [data1, data2, data3];
@@ -50,43 +52,43 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           title: {
             text: t(translations.highcharts.pow.cfxTransfer.yAxisTitle),
           },
-          height: '50%',
           opposite: false,
+          tickAmount,
         },
         {
           title: {
             text: t(translations.highcharts.pow.cfxTransfer.yAxisTitle3),
           },
-          height: '50%',
-          top: '50%',
-          offset: 0,
-          opposite: false,
+          opposite: true,
+          tickAmount,
         },
       ],
       series: [
         {
-          type: 'line',
+          type: 'column',
           name: `<span>${t(
-            translations.highcharts.pow.cfxTransfer.seriesName,
+            translations.highcharts.pow.cfxTransfer.seriesName3,
           )}</span>`,
+          yAxis: 1,
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
+          color: '#7cb5ec',
         },
         {
           type: 'line',
           name: `<span>${t(
             translations.highcharts.pow.cfxTransfer.seriesName2,
           )}</span>`,
+          color: '#90ed7d',
         },
         {
-          type: 'column',
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.cfxTransfer.seriesName3,
+            translations.highcharts.pow.cfxTransfer.seriesName,
           )}</span>`,
-          color: '#7cb5ec',
-          yAxis: 1,
-          tooltip: {
-            valueDecimals: 2,
-            valueSuffix: ' CFX',
-          },
+          color: '#434348',
         },
       ],
     },

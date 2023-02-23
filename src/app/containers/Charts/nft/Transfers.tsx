@@ -12,6 +12,8 @@ import { Wrapper } from './Wrapper';
 export function Transfers({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
+  const tickAmount = preview ? 4 : 6;
+
   const props = {
     preview: preview,
     name: 'transfers',
@@ -51,17 +53,15 @@ export function Transfers({ preview = false }: ChildProps) {
           title: {
             text: t(translations.highcharts.nft.transfers.yAxisTitle),
           },
-          height: '50%',
           opposite: false,
+          tickAmount,
         },
         {
           title: {
             text: t(translations.highcharts.nft.transfers.yAxisTitle2),
           },
-          height: '50%',
-          top: '50%',
-          offset: 0,
-          opposite: false,
+          opposite: true,
+          tickAmount,
         },
       ],
       tooltip: {

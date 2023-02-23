@@ -13,6 +13,8 @@ import BigNumber from 'bignumber.js';
 export function DailyDeposit({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
+  const tickAmount = preview ? 5 : 7;
+
   const props = {
     preview: preview,
     name: 'daily-deposit',
@@ -48,18 +50,15 @@ export function DailyDeposit({ preview = false }: ChildProps) {
           title: {
             text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle),
           },
-          offset: 0,
-          height: '50%',
           opposite: false,
+          tickAmount,
         },
         {
           title: {
             text: t(translations.highcharts.pos.dailyDeposit.yAxisTitle2),
           },
-          height: '50%',
-          top: '50%',
-          offset: 0,
-          opposite: false,
+          opposite: true,
+          tickAmount,
         },
       ],
       tooltip: {
