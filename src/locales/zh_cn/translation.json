@@ -452,7 +452,7 @@
     "tipCountAfter": "个已注册合约"
   },
   "header": {
-    "coreId": "CoreID",
+    "cns": "CNS",
     "home": "首页",
     "bnt": "区块&交易",
     "block": "区块",
@@ -1982,12 +1982,12 @@
     "epoch": "纪元",
     "epochNo": "纪元号"
   },
-  "coreId": {
-    "title": "Conflux CoreID 搜索",
-    "subtitle": "Conflux CoreID 服务基于 Conflux 区域链的分布式、可拓展的名称系统，可用于解析各种资源信息，例如 Conflux Core 地址。",
-    "inputPlaceholder": "请输入地址或 CoreID",
+  "cns": {
+    "title": "Conflux CNS 搜索",
+    "subtitle": "Conflux CNS 服务基于 Conflux 区块链的分布式、可拓展的名称系统，可用于解析各种资源信息，例如 Conflux Core 地址。",
+    "inputPlaceholder": "请输入地址或 CNS",
 
-    "coreid": "CoreID",
+    "cns": "CNS",
     "resolvedAddress": "解析地址",
     "expires": "到期时间",
     "registrant": "注册商",
@@ -2001,7 +2001,7 @@
     "name": "名称",
 
     "error": {
-      "coreid": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
+      "cns": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
       "address": "查询的地址未解析到 Core ID 名称。",
       "invalidText": "搜索的字符串内容无效。"
     }

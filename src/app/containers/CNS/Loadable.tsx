@@ -4,7 +4,7 @@
 
 import { lazyLoad } from 'utils/loadable';
 
-export const CoreID = lazyLoad(
+export const CNS = lazyLoad(
   () => import('./index'),
-  module => module.CoreID,
+  module => module.CNS,
 );

@@ -6,7 +6,7 @@ export const NotFound = ({ children = 'reason' }) => {
   return (
     <StyledWrapper>
       <div>
-        <img src={imgNotFound} alt="coreid search result not found"></img>
+        <img src={imgNotFound} alt="cns search result not found"></img>
       </div>
       <div className="msg">{children}</div>
     </StyledWrapper>
