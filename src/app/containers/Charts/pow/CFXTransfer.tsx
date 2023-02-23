@@ -29,9 +29,9 @@ export function CFXTransfer({ preview = false }: ChildProps) {
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([t, Number(d.transferCount)]);
+          data1.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
           data2.push([t, Number(d.userCount)]);
-          data3.push([t, new BigNumber(d.amount).div(1e18).toNumber()]);
+          data3.push([t, Number(d.transferCount)]);
         });
 
         return [data1, data2, data3];
@@ -63,21 +63,7 @@ export function CFXTransfer({ preview = false }: ChildProps) {
           tickAmount,
         },
       ],
-      series: [
-        {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pow.cfxTransfer.seriesName,
-          )}</span>`,
-          color: '#434348',
-        },
-        {
-          type: 'line',
-          name: `<span>${t(
-            translations.highcharts.pow.cfxTransfer.seriesName2,
-          )}</span>`,
-          color: '#90ed7d',
-        },
+      series: series: [
         {
           type: 'column',
           name: `<span>${t(
@@ -89,6 +75,20 @@ export function CFXTransfer({ preview = false }: ChildProps) {
             valueSuffix: ' CFX',
           },
           color: '#7cb5ec',
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pow.cfxTransfer.seriesName2,
+          )}</span>`,
+          color: '#90ed7d',
+        },
+        {
+          type: 'line',
+          name: `<span>${t(
+            translations.highcharts.pow.cfxTransfer.seriesName,
+          )}</span>`,
+          color: '#434348',
         },
       ],
     },
