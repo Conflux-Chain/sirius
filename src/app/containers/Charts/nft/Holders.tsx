@@ -12,6 +12,8 @@ import { Wrapper } from './Wrapper';
 export function Holders({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
+  const tickAmount = preview ? 4 : 6;
+
   const props = {
     preview: preview,
     name: 'holders',
@@ -48,6 +50,7 @@ export function Holders({ preview = false }: ChildProps) {
         title: {
           text: t(translations.highcharts.nft.holders.yAxisTitle),
         },
+        tickAmount,
       },
       tooltip: {
         shared: true,
