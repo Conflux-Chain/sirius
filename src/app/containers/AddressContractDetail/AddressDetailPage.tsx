@@ -136,7 +136,7 @@ export const AddressDetailPage = memo(() => {
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
 
-            <RouterLink to={`/coreid-search?text=${label}`}>
+            <RouterLink to={`/cns-search?text=${label}`}>
               <StyledENSName show={!!label}>
                 {icon}
                 {label}

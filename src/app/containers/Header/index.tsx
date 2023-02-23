@@ -189,10 +189,10 @@ export const Header = memo(() => {
       className: 'profile',
     },
     {
-      title: [t(translations.header.coreId), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.coreId,
+      title: [t(translations.header.cns), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.cns,
       afterClick: menuClick,
-      href: '/coreid-search',
+      href: '/cns-search',
     },
   ];
 

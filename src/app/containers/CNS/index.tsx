@@ -24,10 +24,11 @@ import { Card } from 'app/components/Card/Loadable';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
+import BigNumber from 'bignumber.js';
 
 const { Search } = Input;
 
-export function CoreID() {
+export function CNS() {
   const { t } = useTranslation();
   const { search = '', pathname } = useLocation();
   const history = useHistory();
@@ -35,7 +36,7 @@ export function CoreID() {
   const [inputValue, setInputValue] = useState<string>(text as string);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<{
-    type: '' | 'coreid' | 'address' | 'noResult';
+    type: '' | 'cns' | 'address' | 'noResult';
     msg?: string;
     status?:
       | 'Valid'
@@ -45,8 +46,8 @@ export function CoreID() {
       | 'Locked'
       | 'Registered'
       | 'SoldOut';
-    // search coreid
-    name?: string; // coreid
+    // search cns
+    name?: string; // cns
     resolvedAddress?: string;
     expires?: string;
     registrant?: string;
@@ -72,9 +73,9 @@ export function CoreID() {
 
   const errors = useMemo(() => {
     return {
-      coreid: t(translations.coreId.errors.coreid),
-      address: t(translations.coreId.errors.address),
-      invalid: t(translations.coreId.errors.invalidText),
+      cns: t(translations.cns.errors.cns),
+      address: t(translations.cns.errors.address),
+      invalid: t(translations.cns.errors.invalidText),
     };
   }, [t]);
 
@@ -161,7 +162,7 @@ export function CoreID() {
             const expiresTimestamp = data[1].toNumber();
 
             setData({
-              type: 'coreid',
+              type: 'cns',
               name,
               resolvedAddress: data[0],
               expires:
@@ -178,14 +179,14 @@ export function CoreID() {
             // not registered
             setData({
               type: 'noResult',
-              msg: errors.coreid,
+              msg: errors.cns,
             });
           }
         } else {
           // at present not support subdomain
           setData({
             type: 'noResult',
-            msg: errors.coreid,
+            msg: errors.cns,
           });
         }
       } else {
@@ -230,10 +231,10 @@ export function CoreID() {
 
     if (data.type === 'noResult') {
       card = <NotFound>{data.msg}</NotFound>;
-    } else if (data.type === 'coreid') {
+    } else if (data.type === 'cns') {
       card = (
         <Card>
-          <Description title={t(translations.coreId.coreid)}>
+          <Description title={t(translations.cns.cns)}>
             {isZeroAddress(data.resolvedAddress || '') ? (
               data.name
             ) : (
@@ -245,7 +246,7 @@ export function CoreID() {
             )}
           </Description>
           {isZeroAddress(data.resolvedAddress || '') ? null : (
-            <Description title={t(translations.coreId.resolvedAddress)}>
+            <Description title={t(translations.cns.resolvedAddress)}>
               <AddressContainer
                 isFull={true}
                 value={data.resolvedAddress || ''}
@@ -254,10 +255,10 @@ export function CoreID() {
               ></AddressContainer>
             </Description>
           )}
-          <Description title={t(translations.coreId.expires)}>
+          <Description title={t(translations.cns.expires)}>
             {data.expires}
           </Description>
-          <Description title={t(translations.coreId.registrant)}>
+          <Description title={t(translations.cns.registrant)}>
             <AddressContainer
               isFull={true}
               value={data.registrant || ''}
@@ -265,7 +266,7 @@ export function CoreID() {
               showAddressLabel={false}
             ></AddressContainer>
           </Description>
-          <Description title={t(translations.coreId.controller)}>
+          <Description title={t(translations.cns.controller)}>
             <AddressContainer
               isFull={true}
               value={data.controller || ''}
@@ -273,15 +274,17 @@ export function CoreID() {
               showAddressLabel={false}
             ></AddressContainer>
           </Description>
-          <Description title={t(translations.coreId.tokenid)} noBorder>
-            {data.namehash}
+          <Description title={t(translations.cns.tokenid)} noBorder>
+            {data.namehash
+              ? new BigNumber(data.namehash as string).toFixed()
+              : '--'}
           </Description>
         </Card>
       );
     } else if (data.type === 'address') {
       const columns = [
         {
-          title: t(translations.coreId.name),
+          title: t(translations.cns.name),
           dataIndex: 'name',
           key: 'name',
           width: 1,
@@ -306,7 +309,7 @@ export function CoreID() {
       card = (
         <>
           <Card style={{ marginBottom: '1rem' }}>
-            <Description title={t(translations.coreId.address)}>
+            <Description title={t(translations.cns.address)}>
               <AddressContainer
                 isFull={true}
                 value={data.address || ''}
@@ -314,7 +317,7 @@ export function CoreID() {
                 showAddressLabel={false}
               ></AddressContainer>
             </Description>
-            <Description title={t(translations.coreId.reverseRecord)}>
+            <Description title={t(translations.cns.reverseRecord)}>
               {
                 <AddressContainer
                   isFull={true}
@@ -323,7 +326,7 @@ export function CoreID() {
                 ></AddressContainer>
               }
             </Description>
-            <Description title={t(translations.coreId.registrant)} noBorder>
+            <Description title={t(translations.cns.registrant)} noBorder>
               <AddressContainer
                 isFull={true}
                 value={data.registrant || ''}
@@ -337,7 +340,7 @@ export function CoreID() {
               tabs={[
                 {
                   value: 'ownedCoreids',
-                  label: t(translations.coreId.ownedCoreids),
+                  label: t(translations.cns.ownedCoreids),
                   content: (
                     <TablePanelNew
                       columns={columns}
@@ -360,22 +363,22 @@ export function CoreID() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.header.coreId)}</title>
+        <title>{t(translations.header.cns)}</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.coreId.title)}</PageHeader>
+      <PageHeader>{t(translations.cns.title)}</PageHeader>
       <StyledSubtitleWrapper>
-        {t(translations.coreId.subtitle)}
+        {t(translations.cns.subtitle)}
       </StyledSubtitleWrapper>
       <SearchWrapper>
         <Search
           value={inputValue}
           onChange={handleChange}
           onSearch={handleSearch}
-          placeholder={t(translations.coreId.inputPlaceholder)}
+          placeholder={t(translations.cns.inputPlaceholder)}
           loading={loading}
         />
       </SearchWrapper>
