@@ -293,13 +293,9 @@ export function CNS() {
           render(value, row) {
             if (row.address) {
               return (
-                <AddressContainer
-                  isFull={true}
-                  value={row.address}
-                  alias={value}
-                  showENSLabel={false}
-                  showAddressLabel={false}
-                ></AddressContainer>
+                <Text hoverValue={row.address}>
+                  <Link href={`/address/${row.address}`}>{value}</Link>
+                </Text>
               );
             } else {
               return <>{value}</>;
@@ -321,11 +317,11 @@ export function CNS() {
             </Description>
             <Description title={t(translations.cns.reverseRecord)}>
               {
-                <AddressContainer
-                  isFull={true}
-                  value={data.address || ''}
-                  alias={data.reverseRecord}
-                ></AddressContainer>
+                <Text hoverValue={data.address}>
+                  <Link href={`/address/${data.address}`}>
+                    {data.reverseRecord}
+                  </Link>
+                </Text>
               }
             </Description>
             <Description title={t(translations.cns.registrant)} noBorder>
