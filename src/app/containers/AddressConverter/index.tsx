@@ -22,7 +22,6 @@ import { List } from './List';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
-import imgWarning from 'images/warning.png';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { getCode } from 'utils/rpcRequest';
 
@@ -188,6 +187,13 @@ export function AddressConverter() {
       }`
     : '';
 
+  const WARNINGS = [
+    t(translations.addressConverter.warnings.one),
+    t(translations.addressConverter.warnings.two),
+    t(translations.addressConverter.warnings.three),
+    t(translations.addressConverter.warnings.four),
+  ];
+
   return (
     <>
       <Helmet>
@@ -201,17 +207,17 @@ export function AddressConverter() {
       <StyledSubtitleWrapper>
         {t(translations.addressConverter.subtitle)}
         <StyledColoredWrapper>
-          <img src={imgWarning} alt="warning-icon" className="img"></img>
-          <span>
-            {t(translations.addressConverter.notice)}
-            <Link
-              target="_blank"
-              href={t(translations.addressConverter.noticeLink)}
-            >
-              {t(translations.addressConverter.noticeLinkText)}
-            </Link>
-            {t(translations.addressConverter.noticeend)}
+          <span className="title">
+            {t(translations.addressConverter.warning)}
           </span>
+          {WARNINGS.map((w, i) => (
+            <span
+              key={i}
+              dangerouslySetInnerHTML={{
+                __html: w,
+              }}
+            ></span>
+          ))}
         </StyledColoredWrapper>
       </StyledSubtitleWrapper>
       <StyledInputWrapper>
@@ -483,11 +489,10 @@ const StyledColoredWrapper = styled.div`
   line-height: 18px;
   margin-top: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 
-  .img {
-    width: 14px;
-    height: 14px;
-    margin-right: 5px;
+  .title {
+    margin-top: 1rem;
   }
 `;

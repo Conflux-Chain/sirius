@@ -25,6 +25,8 @@ import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
 import BigNumber from 'bignumber.js';
+import { Link } from 'app/components/Link/Loadable';
+import { Text } from 'app/components/Text/Loadable';
 
 const { Search } = Input;
 
@@ -238,11 +240,11 @@ export function CNS() {
             {isZeroAddress(data.resolvedAddress || '') ? (
               data.name
             ) : (
-              <AddressContainer
-                isFull={true}
-                value={data.resolvedAddress || ''}
-                alias={data.name}
-              ></AddressContainer>
+              <Text hoverValue={data.resolvedAddress}>
+                <Link href={`/address/${data.resolvedAddress}`}>
+                  {data.name}
+                </Link>
+              </Text>
             )}
           </Description>
           {isZeroAddress(data.resolvedAddress || '') ? null : (
