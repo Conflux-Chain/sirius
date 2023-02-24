@@ -230,7 +230,7 @@ export const CROSS_SPACE_ADDRESS = IS_TESTNET
 
 enum ENS_REGISTRY_ADDRESSES {
   mainnet = '',
-  testnet = 'cfxtest:acd3rm7y183trhpzvz8m3y72kx1abk4d0jh842585a',
+  testnet = 'cfxtest:acemru7fu1u8brtyn3hrtae17kbcd4pd9u2m761bta',
 }
 
 export const ENS_REGISTRY_ADDRESS = IS_TESTNET
@@ -239,7 +239,7 @@ export const ENS_REGISTRY_ADDRESS = IS_TESTNET
 
 enum ENS_PUBLIC_RESOLVER_ADDRESSES {
   mainnet = '',
-  testnet = 'cfxtest:acfcb2fv6t8xrxyyx3x1atwmdrhh5xvfd21zsje216',
+  testnet = 'cfxtest:acbfyf69zaxau5a23w10dgyrmb0hrz4p9pewn6sejp',
 }
 
 export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
@@ -248,7 +248,7 @@ export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
 
 enum ENS_REVERSE_REGISTRAR_ADDRESSES {
   mainnet = '',
-  testnet = 'cfxtest:acfmezysbf86jy3jnw835bnamxp08dxzd61w5ur8hy',
+  testnet = 'cfxtest:acfarpzehntpre0thg8x7dp0ajw4ms328pe1mm17vd',
 }
 
 export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET

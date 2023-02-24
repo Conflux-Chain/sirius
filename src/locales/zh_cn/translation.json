@@ -1624,7 +1624,7 @@
   },
   "addressConverter": {
     "title": "地址格式转换",
-    "subtitle": "通过使用最新的 Checksum 规则，Conflux 的旧地址会被转换为全新的地址。",
+    "subtitle": "使用此工具帮助你将 Conflux hex（0x1...）旧地址转化为 Conflux-base32（cfx:...） 新地址格式，同时也可以使用此工具校验 Conflux hex 地址。",
     "button": "转换",
     "inputPlaceholder": "输入地址",
     "networkId": "network id (可选)",
@@ -1634,10 +1634,6 @@
     "newMainnetAddress": "Conflux Hydra 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
-    "notice": "注意，不能用任何钱包将 CFX 直接转至 BSC 的地址，需要通过 ",
-    "noticeLinkText": "Shuttleflow",
-    "noticeend": " 完成跨链转账。",
-    "noticeLink": "https://shuttleflow.io/",
     "remark": "说明：",
     "tip1": "1. 新地址的最后八位为校验和，其由原始地址通过校验算法生成，让地址拥有自校验的能力。",
     "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 Checksum 校验规则。",
@@ -1652,6 +1648,13 @@
     "errorMessage": {
       "0x0": "该地址为非内置合约或非零地址",
       "0x8": "该合约不存在，请谨慎操作"
+    },
+    "warning": "注意：",
+    "warnings": {
+      "one": "1. 如果你试图使用钱包将资产从 ConfluxCore 直接发送到其他网络/链，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/shuttle-flow/?fromChain=cfx&fromTokenAddress=cfx&toChain=eth' target='_blank'>ShuttleFlow</a> 跨链桥进行转账。",
+      "two": "2. Conflux hex 地址与 Conflux eSpace 地址不能相互转账，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/espace-bridge/cross-space' target='_blank'>Space Bridge</a> 进行转账。",
+      "three": "3. 如果你试图给 Conflux hex 格式地址进行转账，请先使用此工具校验地址是否能转化为 Conflux-base32 地址，建议先进行小额资产转账，避免资产损失。",
+      "four": "4. 如果你试图给 Conflux hex 格式的合约地址进行转账，请先使用此工具验证是否能转化为 Conflux-base32 合约地址，并在 ConfluxScan 上验证合约是否存在，避免资产损失。"
     }
   },
   "broadcastTx": {
