@@ -16,6 +16,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 import { Button } from 'app/components/Button/Loadable';
+import { usePlatform } from 'utils/hooks/usePlatform';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -160,6 +161,7 @@ const StyledDatePanelWrapper = styled.div`
 `;
 
 export function NFTDetail(props) {
+  const { isDapp } = usePlatform();
   const bp = useBreakpoint();
   const { t, i18n } = useTranslation();
   const { id, address } = useParams<{
@@ -265,7 +267,7 @@ export function NFTDetail(props) {
             />
           </Card>
 
-          {bp !== 's' && (
+          {((bp !== 's' && bp !== 'm') || isDapp) && (
             <TransferModal
               id={id}
               contractAddress={address}
@@ -486,6 +488,10 @@ const StyledWrapper = styled.div`
     right: 10px;
     top: 10px;
     z-index: 2;
+  }
+
+  .right {
+    overflow: auto;
   }
 `;
 
