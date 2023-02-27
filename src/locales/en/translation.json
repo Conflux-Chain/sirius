@@ -835,13 +835,15 @@
         "subtitle": "The amount of CFX that are created in the market.",
         "fourYearUnlock": "Four Year Unlock",
         "twoYearUnlock": "Two Year Unlock",
-        "circulatingUnlock": "Circulating Unlock"
+        "circulatingSupply": "Circulating Supply",
+        "zeroAddress": "Zero Address"
       },
       "circulatingSupply": {
         "title": "Circulating Supply",
         "subtitle": "Circulating supply contains the CFX in the Zero Address.",
-        "zeroAddress": "Zero Address",
-        "others": "Others"
+        "others": "Genesis & Rewards",
+        "totalCollateral": "Collateral",
+        "totalStaking": "Staking"
       },
       "tx": {
         "title": "Txn Count",

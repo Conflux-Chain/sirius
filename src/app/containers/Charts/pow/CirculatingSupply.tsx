@@ -21,22 +21,30 @@ export function CirculatingSupply({ preview = false }: ChildProps) {
         if (data) {
           return [
             {
+              sliced: true,
+              selected: true,
               name: t(translations.highcharts.pow.circulatingSupply.others),
               y: parseInt(
                 new SDK.Drip(
                   new BigNumber(data?.totalCirculating)
                     .minus(data?.nullAddressBalance)
+                    .minus(data?.totalStaking)
+                    .minus(data?.totalCollateral)
                     .toNumber(),
                 ).toCFX(),
               ),
             },
             {
-              sliced: true,
-              selected: true,
               name: t(
-                translations.highcharts.pow.circulatingSupply.zeroAddress,
+                translations.highcharts.pow.circulatingSupply.totalCollateral,
               ),
-              y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
+              y: parseInt(new SDK.Drip(data?.totalCollateral).toCFX()),
+            },
+            {
+              name: t(
+                translations.highcharts.pow.circulatingSupply.totalStaking,
+              ),
+              y: parseInt(new SDK.Drip(data?.totalStaking).toCFX()),
             },
           ];
         }

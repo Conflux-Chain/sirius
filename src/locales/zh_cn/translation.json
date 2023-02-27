@@ -833,13 +833,15 @@
         "subtitle": "市场上已被创造的 CFX 总量",
         "fourYearUnlock": "4 年解锁",
         "twoYearUnlock": "2 年解锁",
-        "circulatingUnlock": "流通量"
+        "circulatingSupply": "流通量",
+        "zeroAddress": "零地址"
       },
       "circulatingSupply": {
         "title": "流通量",
         "subtitle": "流通量包含零地址中的 CFX",
-        "zeroAddress": "零地址",
-        "others": "其他"
+        "others": "创世 & 奖励",
+        "totalCollateral": "存储押金",
+        "totalStaking": "质押"
       },
       "tx": {
         "title": "每日交易次数",
