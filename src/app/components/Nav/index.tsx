@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import styled from 'styled-components/macro';
 import { media, useBreakpoint } from 'styles/media';
+import { usePlatform } from 'utils/hooks/usePlatform';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
@@ -46,6 +47,7 @@ export const Nav = memo(
     topMenu = toWrappedArray(topMenu);
     const sourceSubMenu = subMenu;
     subMenu = subMenu ? toWrappedArray(subMenu) : null;
+    const { isDapp } = usePlatform();
 
     return (
       <Outer {...props}>
@@ -60,6 +62,9 @@ export const Nav = memo(
               aria-expanded={'true'}
               data-target="navbar"
               onClick={toggleMenu}
+              style={{
+                visibility: isDapp ? 'hidden' : 'inherit',
+              }}
             >
               <span aria-hidden="true" />
               <span aria-hidden="true" />
