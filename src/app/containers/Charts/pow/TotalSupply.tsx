@@ -31,8 +31,6 @@ export function TotalSupply({ preview = false }: ChildProps) {
               y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
             },
             {
-              sliced: true,
-              selected: true,
               name: t(
                 translations.highcharts.pow.totalSupply.circulatingSupply,
               ),

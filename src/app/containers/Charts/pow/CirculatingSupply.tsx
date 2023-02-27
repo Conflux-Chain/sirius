@@ -21,8 +21,6 @@ export function CirculatingSupply({ preview = false }: ChildProps) {
         if (data) {
           return [
             {
-              sliced: true,
-              selected: true,
               name: t(translations.highcharts.pow.circulatingSupply.others),
               y: parseInt(
                 new SDK.Drip(
