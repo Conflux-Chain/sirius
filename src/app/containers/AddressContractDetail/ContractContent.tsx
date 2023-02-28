@@ -150,7 +150,7 @@ const Code = ({ contractInfo }) => {
           showPrintMargin={false}
         />
       );
-    } else {
+    } else if (fSourceCode) {
       const len = fSourceCode.length;
 
       return fSourceCode.map((s, i) => (
@@ -180,6 +180,8 @@ const Code = ({ contractInfo }) => {
           />
         </>
       ));
+    } else {
+      return null;
     }
   }, [t, sourceCode]);
 
