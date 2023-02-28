@@ -5,6 +5,7 @@ import { ChartTemplate, ChildProps } from 'app/components/Charts/ChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import SDK from 'js-conflux-sdk';
 import { Wrapper } from './Wrapper';
+import BigNumber from 'bignumber.js';
 
 export function TotalSupply({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -17,27 +18,41 @@ export function TotalSupply({ preview = false }: ChildProps) {
     request: {
       url: OPEN_API_URLS.supply,
       formatter: data => {
+        let result: any = [];
+
         if (data) {
-          return [
+          result = [
             {
               name: t(translations.highcharts.pow.totalSupply.fourYearUnlock),
               y: parseInt(new SDK.Drip(data?.fourYearUnlockBalance).toCFX()),
             },
             {
-              name: t(translations.highcharts.pow.totalSupply.twoYearUnlock),
-              y: parseInt(new SDK.Drip(data?.twoYearUnlockBalance).toCFX()),
+              name: t(translations.highcharts.pow.totalSupply.zeroAddress),
+              y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
             },
             {
-              sliced: true,
-              selected: true,
               name: t(
-                translations.highcharts.pow.totalSupply.circulatingUnlock,
+                translations.highcharts.pow.totalSupply.circulatingSupply,
               ),
-              y: parseInt(new SDK.Drip(data?.totalCirculating).toCFX()),
+              y: parseInt(
+                new SDK.Drip(
+                  new BigNumber(data?.totalCirculating)
+                    .minus(data?.nullAddressBalance)
+                    .toNumber(),
+                ).toCFX(),
+              ),
             },
           ];
+
+          if (new BigNumber(data?.twoYearUnlockBalance).gt(0)) {
+            result.push({
+              name: t(translations.highcharts.pow.totalSupply.twoYearUnlock),
+              y: parseInt(new SDK.Drip(data?.twoYearUnlockBalance).toCFX()),
+            });
+          }
         }
-        return [];
+
+        return result;
       },
     },
     options: {

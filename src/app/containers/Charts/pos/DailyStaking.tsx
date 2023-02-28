@@ -34,9 +34,6 @@ export function DailyStaking({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.dailyStaking.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

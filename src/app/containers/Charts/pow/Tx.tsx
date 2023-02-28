@@ -37,9 +37,6 @@ export function Tx({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.tx.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

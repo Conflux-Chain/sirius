@@ -39,9 +39,6 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.finalizedInterval.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

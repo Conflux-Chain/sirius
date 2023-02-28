@@ -39,9 +39,6 @@ export function TokenTransfer({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.tokenTransfer.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

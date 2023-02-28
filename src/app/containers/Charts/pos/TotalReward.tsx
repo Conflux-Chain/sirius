@@ -34,9 +34,6 @@ export function TotalReward({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.totalReward.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

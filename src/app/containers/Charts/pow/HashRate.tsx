@@ -35,9 +35,6 @@ export function HashRate({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pow.hashRate.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

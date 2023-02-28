@@ -229,8 +229,8 @@ export const CROSS_SPACE_ADDRESS = IS_TESTNET
   : CROSS_SPACE_ADDRESSES.mainnet;
 
 enum ENS_REGISTRY_ADDRESSES {
-  mainnet = '',
-  testnet = 'cfxtest:acd3rm7y183trhpzvz8m3y72kx1abk4d0jh842585a',
+  mainnet = 'cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm',
+  testnet = 'cfxtest:acemru7fu1u8brtyn3hrtae17kbcd4pd9u2m761bta',
 }
 
 export const ENS_REGISTRY_ADDRESS = IS_TESTNET
@@ -238,8 +238,8 @@ export const ENS_REGISTRY_ADDRESS = IS_TESTNET
   : ENS_REGISTRY_ADDRESSES.mainnet;
 
 enum ENS_PUBLIC_RESOLVER_ADDRESSES {
-  mainnet = '',
-  testnet = 'cfxtest:acfcb2fv6t8xrxyyx3x1atwmdrhh5xvfd21zsje216',
+  mainnet = 'cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up',
+  testnet = 'cfxtest:acbfyf69zaxau5a23w10dgyrmb0hrz4p9pewn6sejp',
 }
 
 export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
@@ -247,8 +247,8 @@ export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
   : ENS_PUBLIC_RESOLVER_ADDRESSES.mainnet;
 
 enum ENS_REVERSE_REGISTRAR_ADDRESSES {
-  mainnet = '',
-  testnet = 'cfxtest:acfmezysbf86jy3jnw835bnamxp08dxzd61w5ur8hy',
+  mainnet = 'cfx:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk',
+  testnet = 'cfxtest:acfarpzehntpre0thg8x7dp0ajw4ms328pe1mm17vd',
 }
 
 export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
@@ -257,7 +257,7 @@ export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
 
 let APIHost = IS_TESTNET
   ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
+  : `api${!IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 }
@@ -276,6 +276,10 @@ export const OPEN_API_URLS = Object.entries({
   accountGrowth: '/statistics/account/growth',
   activeAccounts: '/statistics/account/active',
   contracts: '/statistics/contract',
+  nftAssets: '/statistics/nft/asset',
+  nftHolders: '/statistics/nft/holder',
+  nftContracts: '/statistics/nft/contract',
+  nftTransfers: '/statistics/nft/transfer',
 
   // NFT
   NFTTokens: '/nft/tokens',
@@ -304,6 +308,9 @@ OPEN_API_URLS.PoSDailyRewardInfo = '/stat/pos-daily-reward';
 
 // Cross Space
 OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
+
+// Cross Space
+OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 
 // table list list limit, max query items is 10,000, exceed will cause backend error
 export const TABLE_LIST_LIMIT = 100;

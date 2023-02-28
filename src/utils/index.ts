@@ -939,3 +939,12 @@ export const addIPFSGateway = (
 
   return imgURL;
 };
+
+export const getChartsSubTitle = (title: string): string => {
+  const suffix = window.location.host.substr(-4);
+  if (suffix === '.net') {
+    return title.replace('.io', '.net');
+  } else {
+    return title;
+  }
+};

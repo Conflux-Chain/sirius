@@ -58,9 +58,6 @@ export function Token({
       title: {
         text: t(translations.highcharts.pow.token.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },

@@ -218,6 +218,7 @@
     },
     "code": "合约",
     "sourceCodeShort": "源码",
+    "sourceCodeFilename": "文件 {{index}} / {{total}}：{{filename}}",
     "abiShort": "ABI",
     "maxSize": "大小不能超过 30KB",
     "supportType": "支持的图片格式为 gif、jpg、jpeg、png、svg",
@@ -451,6 +452,7 @@
     "tipCountAfter": "个已注册合约"
   },
   "header": {
+    "cns": "CNS",
     "home": "首页",
     "bnt": "区块&交易",
     "block": "区块",
@@ -614,6 +616,51 @@
   },
   "highcharts": {
     "subtitle": "资源：ConfluxScan.io<br/>点击并拖动绘图区域以放大图表",
+    "nft": {
+      "preview": {
+        "title": "数字藏品图表",
+        "subtitle": "Conflux 链上数字藏品的统计图表 （点击查看详情）",
+        "viewDetail": "查看详情",
+        "tip": "显示最近 30 个月"
+      },
+      "breadcrumb": {
+        "charts": "数字藏品图表",
+        "assets": "资产",
+        "holders": "持有人",
+        "contracts": "合约",
+        "transfers": "交易"
+      },
+      "assets": {
+        "title": "数字藏品资产",
+        "subtitle": "数字藏品资产的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      },
+      "holders": {
+        "title": "数字藏品持有人",
+        "subtitle": "数字藏品持有人的总数",
+        "yAxisTitle": "总数",
+        "seriesName": "持有人"
+      },
+      "contracts": {
+        "title": "数字藏品合约",
+        "subtitle": "数字藏品合约的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      },
+      "transfers": {
+        "title": "数字藏品交易",
+        "subtitle": "数字藏品交易的每月增长数和总数",
+        "yAxisTitle": "增长数",
+        "seriesName": "每月增长数",
+        "yAxisTitle2": "总数",
+        "seriesName2": "总数"
+      }
+    },
     "crossSpace": {
       "preview": {
         "title": "跨空间图表",
@@ -786,13 +833,15 @@
         "subtitle": "市场上已被创造的 CFX 总量",
         "fourYearUnlock": "4 年解锁",
         "twoYearUnlock": "2 年解锁",
-        "circulatingUnlock": "流通量"
+        "circulatingSupply": "流通量",
+        "zeroAddress": "零地址"
       },
       "circulatingSupply": {
         "title": "流通量",
         "subtitle": "流通量包含零地址中的 CFX",
-        "zeroAddress": "零地址",
-        "others": "其他"
+        "others": "创世 & 奖励",
+        "totalCollateral": "存储押金",
+        "totalStaking": "质押"
       },
       "tx": {
         "title": "每日交易次数",
@@ -1577,7 +1626,7 @@
   },
   "addressConverter": {
     "title": "地址格式转换",
-    "subtitle": "通过使用最新的 Checksum 规则，Conflux 的旧地址会被转换为全新的地址。",
+    "subtitle": "使用此工具帮助你将 Conflux hex（0x1...）旧地址转化为 Conflux-base32（cfx:...） 新地址格式，同时也可以使用此工具校验 Conflux hex 地址。",
     "button": "转换",
     "inputPlaceholder": "输入地址",
     "networkId": "network id (可选)",
@@ -1587,10 +1636,6 @@
     "newMainnetAddress": "Conflux Hydra 新地址 (二者皆可)",
     "newTestnetAddress": "Conflux 测试网新地址 (二者皆可)",
     "newCustomnetAddress": "Conflux 自定义 network id 新地址 (二者皆可)",
-    "notice": "注意，不能用任何钱包将 CFX 直接转至 BSC 的地址，需要通过 ",
-    "noticeLinkText": "Shuttleflow",
-    "noticeend": " 完成跨链转账。",
-    "noticeLink": "https://shuttleflow.io/",
     "remark": "说明：",
     "tip1": "1. 新地址的最后八位为校验和，其由原始地址通过校验算法生成，让地址拥有自校验的能力。",
     "tip2": "2. Conflux 采用了不同于 EIP55 规则的新 Checksum 校验规则。",
@@ -1605,6 +1650,13 @@
     "errorMessage": {
       "0x0": "该地址为非内置合约或非零地址",
       "0x8": "该合约不存在，请谨慎操作"
+    },
+    "warning": "注意：",
+    "warnings": {
+      "one": "1. 如果你试图使用钱包将资产从 ConfluxCore 直接发送到其他网络/链，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/shuttle-flow/?fromChain=cfx&fromTokenAddress=cfx&toChain=eth' target='_blank'>ShuttleFlow</a> 跨链桥进行转账。",
+      "two": "2. Conflux hex 地址与 Conflux eSpace 地址不能相互转账，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/espace-bridge/cross-space' target='_blank'>Space Bridge</a> 进行转账。",
+      "three": "3. 如果你试图给 Conflux hex 格式地址进行转账，请先使用此工具校验地址是否能转化为 Conflux-base32 地址，建议先进行小额资产转账，避免资产损失。",
+      "four": "4. 如果你试图给 Conflux hex 格式的合约地址进行转账，请先使用此工具验证是否能转化为 Conflux-base32 合约地址，并在 ConfluxScan 上验证合约是否存在，避免资产损失。"
     }
   },
   "broadcastTx": {
@@ -1934,6 +1986,30 @@
     "snapshotDate": "截止日期",
     "epoch": "纪元",
     "epochNo": "纪元号"
+  },
+  "cns": {
+    "title": "Conflux CNS 搜索",
+    "subtitle": "Conflux CNS 服务基于 Conflux 区块链的分布式、可拓展的名称系统，可用于解析各种资源信息，例如 Conflux Core 地址。",
+    "inputPlaceholder": "请输入地址或 CNS",
+
+    "cns": "CNS",
+    "resolvedAddress": "解析地址",
+    "expires": "到期时间",
+    "registrant": "注册商",
+    "controller": "管理员",
+    "owner": "拥有者",
+    "tokenid": "通证 ID",
+
+    "address": "地址",
+    "reverseRecord": "反向记录",
+    "ownedCoreids": "持有名称",
+    "name": "名称",
+
+    "error": {
+      "cns": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
+      "address": "查询的地址未解析到 Core ID 名称。",
+      "invalidText": "搜索的字符串内容无效。"
+    }
   },
   "nftChecker": {
     "title": "数字藏品查看器",

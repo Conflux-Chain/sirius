@@ -46,9 +46,6 @@ export function DailyRewardRank({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.dailyRewardRank.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       legend: {
         enabled: false,
       },

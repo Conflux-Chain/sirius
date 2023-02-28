@@ -188,6 +188,12 @@ export const Header = memo(() => {
       href: '/profile',
       className: 'profile',
     },
+    {
+      title: [t(translations.header.cns), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.cns,
+      afterClick: menuClick,
+      href: '/cns-search',
+    },
   ];
 
   ecosystemItems.push({
@@ -497,6 +503,15 @@ export const Header = memo(() => {
           name: ScanEvent.menu.action.posCharts,
           afterClick: menuClick,
           href: '/pos-charts',
+        },
+        {
+          title: [
+            t(translations.header.nftCharts),
+            <Check size={18} key="check" />,
+          ],
+          name: ScanEvent.menu.action.nftCharts,
+          afterClick: menuClick,
+          href: '/nft-charts',
         },
         {
           title: [

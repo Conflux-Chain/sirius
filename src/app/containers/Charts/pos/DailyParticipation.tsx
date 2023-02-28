@@ -38,9 +38,6 @@ export function DailyParticipation({ preview = false }: ChildProps) {
       title: {
         text: t(translations.highcharts.pos.participation.title),
       },
-      subtitle: {
-        text: t(translations.highcharts.subtitle),
-      },
       xAxis: {
         type: 'datetime',
       },
