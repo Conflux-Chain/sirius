@@ -6,20 +6,24 @@ import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
-import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { formatBalance, formatNumber, formatString } from 'utils';
+import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
+import {
+  formatBalance,
+  formatNumber,
+  formatString,
+  getENSInfo,
+  formatAddress,
+} from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
-import { formatAddress } from 'utils';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
-import { getCurrencySymbol } from 'utils/constants';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
@@ -154,6 +158,7 @@ export const renderAddress = (
         contractCreated={row.contractCreated}
         verify={verify}
         isEspaceAddress={isEspaceAddress}
+        ensInfo={getENSInfo(row)}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
@@ -197,6 +202,7 @@ export const token = {
                     value={row?.address}
                     alias={row?.contractName || null}
                     showIcon={false}
+                    ensInfo={getENSInfo(row)}
                   />
                 )}
               </Text>
@@ -247,6 +253,7 @@ const Token2 = ({ row }) => {
                   value={row?.transferTokenInfo?.address}
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
+                  ensInfo={getENSInfo(row)}
                 />
                 &nbsp;
                 <InfoIconWithTooltip
@@ -559,6 +566,7 @@ export const account = {
           (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
         }
         isFull={true}
+        ensInfo={getENSInfo(row)}
       />
     </AccountWrapper>
   ),
@@ -881,6 +889,7 @@ export const NFTOwner = {
             : null)
         }
         isFull={true}
+        ensInfo={getENSInfo(row)}
       />
     </AccountWrapper>
   ),

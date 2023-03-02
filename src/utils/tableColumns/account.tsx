@@ -1,7 +1,7 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
-import { toThousands, formatNumber } from '../../utils/';
+import { toThousands, formatNumber, getENSInfo } from '../../utils/';
 import { ContentWrapper } from './utils';
 import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
 
@@ -20,7 +20,12 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   render: (value, row: any) => (
-    <AddressContainer value={value} alias={row.name} isFull={true} />
+    <AddressContainer
+      value={value}
+      alias={row.name}
+      isFull={true}
+      ensInfo={getENSInfo(row)}
+    />
   ),
 };
 

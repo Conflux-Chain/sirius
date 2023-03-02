@@ -11,6 +11,12 @@ interface props {
   };
 }
 
+export interface ENSInfoItemType {
+  address: string;
+  name: string;
+  expired?: number;
+}
+
 export const useENS = ({
   address = [],
   config = {
