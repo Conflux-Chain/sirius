@@ -10,8 +10,8 @@ import {
   isInnerContractAddress,
   isZeroAddress,
   isAddress,
-  formatString,
   isPosAddress,
+  formatString,
   getUrl,
 } from 'utils';
 import { AlertTriangle, File, Bookmark } from '@zeit-ui/react-icons';
@@ -23,14 +23,13 @@ import { media, sizes } from 'styles/media';
 import {
   NETWORK_TYPE,
   NETWORK_TYPES,
-  // CONTRACTS_NAME_LABEL,
+  LOCALSTORAGE_KEYS_MAP,
 } from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import ICON_ENS from 'images/logo-cns.svg';
-import { useENS } from 'utils/hooks/useENS';
+import { useENS, ENSInfoItemType } from 'utils/hooks/useENS';
 
 interface Props {
   value: string; // address value
@@ -46,6 +45,9 @@ interface Props {
   isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
   showAddressLabel?: boolean;
   showENSLabel?: boolean;
+  ensInfo?: {
+    [k: string]: ENSInfoItemType;
+  };
 }
 
 const defaultPCMaxWidth = 138;
@@ -218,8 +220,6 @@ const RenderAddress = ({
   );
 };
 
-// TODO code simplify
-// TODO new address display format
 export const AddressContainer = withTranslation()(
   React.memo(
     ({
@@ -237,14 +237,23 @@ export const AddressContainer = withTranslation()(
       isEspaceAddress,
       showAddressLabel = true,
       showENSLabel = true,
+      ensInfo,
     }: Props & WithTranslation) => {
       const [globalData = {}] = useGlobalData();
 
-      // try to get ens name
-      const [ENSMap] = useENS({
-        // @ts-ignore
-        address: value || contractCreated ? [value || contractCreated] : [],
-      });
+      let ENSMap = {};
+
+      if (ensInfo) {
+        ENSMap = ensInfo;
+      } else {
+        // try to get ens name
+        const [m] = useENS({
+          // @ts-ignore
+          address: value || contractCreated ? [value || contractCreated] : [],
+        });
+
+        ENSMap = m;
+      }
 
       const suffixSize =
         suffixAddressSize ||
@@ -361,10 +370,6 @@ export const AddressContainer = withTranslation()(
       }
 
       const cfxAddress = formatAddress(value);
-
-      // if (!alias) {
-      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
-      // }
 
       // zero address auto set alias
       if (!alias && isZeroAddress(cfxAddress)) {

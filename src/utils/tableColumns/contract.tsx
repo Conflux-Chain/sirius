@@ -3,7 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
 import styled from 'styled-components/macro';
 import { Text } from '../../app/components/Text/Loadable';
-import { formatNumber, formatString } from '..';
+import { formatNumber, formatString, getENSInfo } from '..';
 import { AddressContainer } from '../../app/components/AddressContainer';
 import { ContentWrapper } from './utils';
 
@@ -52,7 +52,9 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: value => <AddressContainer value={value} />,
+  render: (value, row) => (
+    <AddressContainer value={value} ensInfo={getENSInfo(row)} />
+  ),
 };
 
 export const transactionCount = {

@@ -13,6 +13,7 @@ import {
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
 import lodash from 'lodash';
+import { ENSInfoItemType } from 'utils/hooks/useENS';
 
 dayjs.extend(relativeTime);
 
@@ -1026,4 +1027,61 @@ export const getChartsSubTitle = (title: string): string => {
   } else {
     return title;
   }
+};
+
+interface ENSInfoType {
+  [k: string]: ENSInfoItemType;
+}
+type ResponseENSInfo = Pick<ENSInfoItemType, 'name'>;
+export const getENSInfo = (row: {
+  from?: string;
+  fromENSInfo?: ResponseENSInfo;
+  to?: string;
+  toENSInfo?: ResponseENSInfo;
+  address?: string;
+  ensInfo?: ResponseENSInfo;
+  miner?: string;
+  minerENSInfo?: ResponseENSInfo;
+  base32address?: string;
+}): ENSInfoType => {
+  let result = {};
+
+  try {
+    if (row.from) {
+      result[row.from] = {
+        address: row.from,
+        name: row.fromENSInfo?.name,
+      };
+    }
+
+    if (row.to) {
+      result[row.to] = {
+        address: row.to,
+        name: row.toENSInfo?.name,
+      };
+    }
+
+    if (row.address) {
+      result[row.address] = {
+        address: row.address,
+        name: row.ensInfo?.name,
+      };
+    }
+
+    if (row.base32address) {
+      result[row.base32address] = {
+        address: row.base32address,
+        name: row.ensInfo?.name,
+      };
+    }
+
+    if (row.miner) {
+      result[row.miner] = {
+        address: row.miner,
+        name: row.minerENSInfo?.name,
+      };
+    }
+  } catch (e) {}
+
+  return result;
 };
