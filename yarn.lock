@@ -2946,10 +2946,10 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@web3identity/cns-util@0.1.25":
-  version "0.1.25"
-  resolved "https://registry.npmjs.org/@web3identity/cns-util/-/cns-util-0.1.25.tgz#c9ac30b71279c40d36f0f536f7f39faf4e854ab5"
-  integrity sha512-6s/4bqm1+GLMXDKskAFQZWvtItcb55qO9e9xAmHAsCFBtNwTNzhDk+LoW0O7o2vKO8BgVWvp5D1zTHHAeEP4nw==
+"@web3identity/cns-util@0.1.23":
+  version "0.1.23"
+  resolved "https://registry.npmjs.org/@web3identity/cns-util/-/cns-util-0.1.23.tgz#fdabaea654c7c9e1b0f5b5b37a7360ad8bed9536"
+  integrity sha512-IXlWNs3cgNt8rNTfVa2KRY28Zw5xYWf3kpu4iNJhP7LUmaKonfddYI/vLtk1qoE6XgBoFT74mWiSS4zDEoEiSA==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
