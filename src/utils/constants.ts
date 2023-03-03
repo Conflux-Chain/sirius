@@ -313,7 +313,7 @@ OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
 OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 
 // table list list limit, max query items is 10,000, exceed will cause backend error
-export const TABLE_LIST_LIMIT = 100;
+export const TABLE_LIST_LIMIT = 10000;
 
 export const IS_FOREIGN_HOST = /.io$/.test(window.location.host);
 
