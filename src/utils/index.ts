@@ -27,16 +27,11 @@ dayjs.extend(relativeTime);
 const ADDRESS_FUNC_CACHE = {};
 
 export const isPosAddress = (address: string): boolean => {
-  const CACHE_KEY = `isPosAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
   try {
-    result = address.startsWith('0x') && address.length === 66;
-  } catch (e) {}
-
-  return result;
+    return address.startsWith('0x') && address.length === 66;
+  } catch (e) {
+    return false;
+  }
 };
 
 export const isCfxHexAddress = (address: string): boolean => {
@@ -48,6 +43,8 @@ export const isCfxHexAddress = (address: string): boolean => {
   try {
     result = SDK.address.isValidCfxHexAddress(address);
   } catch (e) {}
+
+  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
 
   return result;
 };
@@ -61,6 +58,8 @@ export const isBase32Address = (address: string): boolean => {
   try {
     result = SDK.address.isValidCfxAddress(address);
   } catch (e) {}
+
+  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
 
   return result;
 };
@@ -142,22 +141,15 @@ export const isSimplyBase32Address = (address: string): boolean => {
 
 // support hex and base32
 export const isAddress = (address: string): boolean => {
-  const CACHE_KEY = `isAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
   try {
     if (address.startsWith('0x')) {
-      result = isCfxHexAddress(address);
+      return isCfxHexAddress(address);
     } else {
-      result = isBase32Address(address);
+      return isBase32Address(address);
     }
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
+  } catch (e) {
+    return false;
+  }
 };
 
 export function isZeroAddress(address: string): boolean {
@@ -177,26 +169,11 @@ export function isZeroAddress(address: string): boolean {
 }
 
 export function isAccountAddress(address: string): boolean {
-  const CACHE_KEY = `isAccountAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result =
-    getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
+  return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
 }
 
 export function isContractAddress(address: string): boolean {
-  const CACHE_KEY = `isContractAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = getAddressInfo(address)?.type === 'contract';
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
+  return getAddressInfo(address)?.type === 'contract';
 }
 
 export function isInnerContractAddress(address: string): boolean {
@@ -231,14 +208,7 @@ export function isSpecialAddress(address: string): boolean {
 }
 
 export function isCurrentNetworkAddress(address: string): boolean {
-  const CACHE_KEY = `isCurrentNetworkAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = getAddressInfo(address)?.netId === NETWORK_ID;
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
+  return getAddressInfo(address)?.netId === NETWORK_ID;
 }
 
 /**
