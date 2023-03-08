@@ -257,7 +257,7 @@ export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
 
 let APIHost = IS_TESTNET
   ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-  : `api${!IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
+  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 }
