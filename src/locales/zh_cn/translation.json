@@ -838,7 +838,7 @@
       },
       "circulatingSupply": {
         "title": "流通量",
-        "subtitle": "流通量包含零地址中的 CFX",
+        "subtitle": "市场上流通的（可交易的）CFX 数量",
         "others": "创世 & 奖励",
         "totalCollateral": "存储押金",
         "totalStaking": "质押"
@@ -952,16 +952,6 @@
     "cfxMarketCap": {
       "title": "市值",
       "description": "市值 = 当前价格 x 流通量"
-    },
-    "cfxCirculatingSupply": {
-      "title": "流通量",
-      "description": "流通量包含零地址中的 CFX"
-    },
-    "circulating": {
-      "title": "流通量",
-      "description": "流通量包含零地址中的 CFX",
-      "labelZeroAddress": "零地址",
-      "labelOthers": "其他"
     },
     "issued": {
       "title": "总发行量",
