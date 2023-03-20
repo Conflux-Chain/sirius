@@ -1643,7 +1643,8 @@
     "tip4": "4. Contract addresses starting with 0x0 cannot be converted, except for build-in contracts and zero-address.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
-      "0x8": "The contract does not exist, please be careful"
+      "0x8": "The contract does not exist or self distructed, please be careful",
+      "notSupport": "The address does not start with 0x0, 0x1 or 0x8, cannot be converted"
     },
     "warning": "Attention:",
     "warnings": {
