@@ -1565,6 +1565,16 @@
           "detail": "燃气价格 {{gasPrice}} 太低。",
           "tip": "提高燃气价格加速交易。"
         }
+      },
+      "tooOldEpoch": {
+        "summary": "纪元太旧",
+        "detail": "第一笔交易的纪元太旧，无法打包。",
+        "tip": "提交新的交易来更新交易池。"
+      },
+      "fullnodeInnerError": {
+        "summary": "节点内部错误",
+        "detail": "节点内部错误。",
+        "tip": "提交新的交易来更新交易池。"
       }
     }
   },
