@@ -1569,6 +1569,16 @@
           "detail": "Gas price {{gasPrice}} is too low.",
           "tip": "Increase gas price to speedup transaction."
         }
+      },
+      "tooOldEpoch": {
+        "summary": "Too old epoch",
+        "detail": "The epoch height of the first tx is too old to be packed.",
+        "tip": "Submit a new transaction to update the tx pool."
+      },
+      "fullnodeInnerError": {
+        "summary": "Full node error",
+        "detail": "The full node internal error.",
+        "tip": "Submit a new transaction to update the tx pool."
       }
     }
   },
