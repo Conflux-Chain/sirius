@@ -77,11 +77,6 @@ export const AddressDetailPage = memo(() => {
         </RouterLink>
       </Menu.Item>
       <Menu.Item>
-        <RouterLink to={`/nft-checker/${address}`}>
-          {t(translations.general.address.more.NFTChecker)}
-        </RouterLink>
-      </Menu.Item>
-      <Menu.Item>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
           onClick={e => {
