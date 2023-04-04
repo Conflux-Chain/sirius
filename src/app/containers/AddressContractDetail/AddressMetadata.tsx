@@ -449,7 +449,9 @@ export function AddressMetadata({ address, accountInfo }) {
 
   const hasPosInfo = !lodash.isNil(posAccountInfo?.address);
   const hasPowInfo =
-    (accountInfo.stakingBalance && accountInfo.stakingBalance !== '0') ||
+    (accountInfo.stakingBalance &&
+      accountInfo.stakingBalance !== '0' &&
+      accountInfo.stakingBalance !== 'loading...') ||
     lockedCFX;
 
   return (
