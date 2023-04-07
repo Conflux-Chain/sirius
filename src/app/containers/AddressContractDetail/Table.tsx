@@ -58,55 +58,45 @@ export function Table({ address, addressInfo }) {
       label: t(translations.general.transactions),
       content: <ExcutedAndPendingTxns address={address} />,
     },
-    // {
-    //   value: 'transaction',
-    //   action: 'accountTransactions',
-    //   label: isAccountAddress(address)
-    //     ? t(translations.transactions.executed)
-    //     : t(translations.general.transactions),
-    //   content: <ExcutedTxns address={address} />,
-    // },
+    {
+      hidden: !addressInfo.cfxTransferTab,
+      value: `transfers-${CFX_TOKEN_TYPES.cfx}`,
+      action: 'cfxTransfers',
+      label: t(translations.general.cfxTransfer),
+      content: <CFXTxns address={address} />,
+    },
+    {
+      hidden: !addressInfo.erc20TransferTab,
+      value: `transfers-${CFX_TOKEN_TYPES.crc20}`,
+      action: 'transfersCrc20',
+      label: t(translations.general.tokenTxnsErc20),
+      content: <CRC20Txns address={address} />,
+    },
+    {
+      hidden: !addressInfo.erc721TransferTab,
+      value: `transfers-${CFX_TOKEN_TYPES.crc721}`,
+      action: 'transfersCrc721',
+      label: t(translations.general.tokenTxnsErc721),
+      content: <CRC721Txns address={address} />,
+    },
+    {
+      hidden: !addressInfo.erc1155TransferTab,
+      value: `transfers-${CFX_TOKEN_TYPES.crc1155}`,
+      action: 'transfersCrc1155',
+      label: t(translations.general.tokenTxnsErc1155),
+      content: <CRC1155Txns address={address} />,
+    },
   ];
 
-  // if (isAccountAddress(address)) {
-  //   tabs.push({
-  //     value: 'transaction-pending',
-  //     action: 'accountTransactions-pending',
-  //     label: t(translations.transactions.pending),
-  //     content: <PendingTxns address={address} />,
-  //   });
-  // }
-
-  tabs.push({
-    value: `transfers-${CFX_TOKEN_TYPES.cfx}`,
-    action: 'cfxTransfers',
-    label: t(translations.general.cfxTransfer),
-    content: <CFXTxns address={address} />,
-  });
-
-  tabs.push({
-    hidden: !addressInfo.erc20TransferCount,
-    value: `transfers-${CFX_TOKEN_TYPES.crc20}`,
-    action: 'transfersCrc20',
-    label: t(translations.general.tokenTxnsErc20),
-    content: <CRC20Txns address={address} />,
-  });
-
-  tabs.push({
-    hidden: !addressInfo.erc721TransferCount,
-    value: `transfers-${CFX_TOKEN_TYPES.crc721}`,
-    action: 'transfersCrc721',
-    label: t(translations.general.tokenTxnsErc721),
-    content: <CRC721Txns address={address} />,
-  });
-
-  tabs.push({
-    hidden: !addressInfo.erc1155TransferCount,
-    value: `transfers-${CFX_TOKEN_TYPES.crc1155}`,
-    action: 'transfersCrc1155',
-    label: t(translations.general.tokenTxnsErc1155),
-    content: <CRC1155Txns address={address} />,
-  });
+  if (!isZeroAddress(address)) {
+    tabs.push({
+      hidden: !addressInfo.nftAssetTab,
+      value: 'nft-asset',
+      action: 'NFTAsset',
+      label: t(translations.addressDetail.NFTAsset),
+      content: <NFTAsset />,
+    });
+  }
 
   const clientWidth = document.body.clientWidth;
   let chartWidth = clientWidth - 36;
@@ -115,48 +105,35 @@ export function Table({ address, addressInfo }) {
   const analysisPanel = () => (
     <StyledTabWrapper>
       <Contract address={address} />
-      {/* <Card>
-        <Chart
-          width={chartWidth}
-          indicator="contractAnalysis"
-          contractAddress={address}
-        />
-      </Card> */}
     </StyledTabWrapper>
   );
   if (isContract) {
-    tabs.push({
-      value: 'analysis',
-      action: 'contractAnalysis',
-      label: t(translations.token.analysis),
-      content: analysisPanel(),
-    });
-  }
-
-  if (isContract) {
-    tabs.push({
-      value: 'contract-viewer',
-      action: 'contractViewer',
-      label: (
-        <div>
-          {t(translations.token.contract)}
-          <ContractStatus contract={addressInfo} />
-        </div>
-      ),
-      content: <ContractContent contractInfo={addressInfo} />,
-    });
+    tabs.push(
+      {
+        value: 'analysis',
+        action: 'contractAnalysis',
+        label: t(translations.token.analysis),
+        content: analysisPanel(),
+      },
+      {
+        value: 'contract-viewer',
+        action: 'contractViewer',
+        label: (
+          <div>
+            {t(translations.token.contract)}
+            <ContractStatus contract={addressInfo} />
+          </div>
+        ),
+        content: <ContractContent contractInfo={addressInfo} />,
+      },
+    );
   }
 
   if (!(isContract || isZeroAddress(address))) {
     tabs.push(
       ...[
         {
-          value: 'nft-asset',
-          action: 'NFTAsset',
-          label: t(translations.addressDetail.NFTAsset),
-          content: <NFTAsset />,
-        },
-        {
+          hidden: !addressInfo.minedBlockTab,
           value: 'mined-blocks',
           action: 'minedBlocks',
           label: t(translations.addressDetail.minedBlocks),

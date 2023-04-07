@@ -448,10 +448,17 @@ export function AddressMetadata({ address, accountInfo }) {
   };
 
   const hasPosInfo = !lodash.isNil(posAccountInfo?.address);
+  const hasPowInfo =
+    (accountInfo.stakingBalance &&
+      accountInfo.stakingBalance !== '0' &&
+      accountInfo.stakingBalance !== 'loading...') ||
+    lockedCFX;
 
   return (
     <>
-      <StyledCardWrapper>{powMetadata()}</StyledCardWrapper>
+      {hasPowInfo ? (
+        <StyledCardWrapper>{powMetadata()}</StyledCardWrapper>
+      ) : null}
       {hasPosInfo ? (
         <StyledCardWrapper>{posMetadata()}</StyledCardWrapper>
       ) : null}
