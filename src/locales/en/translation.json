@@ -1530,7 +1530,7 @@
       "detail": "Detail: ",
       "tip": "Tip: ",
       "reference": "Reference: ",
-      "link": "https://developer.confluxnetwork.org/sending-tx/en/why_tx_is_pending"
+      "link": "https://doc.confluxnetwork.org/docs/general/faq/core-space-transactions/why-transaction-is-pending"
     },
     "pendingDetails": {
       "futrueNonce": {

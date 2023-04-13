@@ -332,7 +332,7 @@ export function Footer() {
     developerDocuments: (
       <Link
         className="footer-link"
-        href="https://developer.confluxnetwork.org/"
+        href="https://doc.confluxnetwork.org/"
         ga={{
           category: ScanEvent.menu.category,
           action: ScanEvent.menu.action.developerDocuments,
