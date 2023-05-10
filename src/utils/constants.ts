@@ -274,7 +274,7 @@ export const OPEN_API_URLS = Object.entries({
   cfxTransfer: '/statistics/cfx/transfer',
   cfxHolderAccounts: '/statistics/account/cfx/holder',
   accountGrowth: '/statistics/account/growth',
-  activeAccounts: '/statistics/account/active',
+  activeAccounts: '/statistics/account/active/overall',
   contracts: '/statistics/contract',
   nftAssets: '/statistics/nft/asset',
   nftHolders: '/statistics/nft/holder',
