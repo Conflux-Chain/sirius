@@ -6,7 +6,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
-import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
   formatBalance,
   formatNumber,
@@ -33,6 +33,7 @@ import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 import { Tag } from '@cfxjs/antd';
+import { Price } from '../../app/components/Price/Loadable';
 
 const fromTypeInfo = {
   arrow: {
@@ -312,28 +313,16 @@ export const price = {
   key: 'price',
   sortable: true,
   render: (value, row) => {
-    const count = (
-      <>
-        {getCurrencySymbol()}
-        {formatNumber(value || 0, {
-          withUnit: false,
-          precision: 2,
-          keepZero: true,
-        })}
-      </>
-    );
+    const count = <Price>{value}</Price>;
+
     return (
       <ContentWrapper right monospace>
-        {value != null ? (
-          row.quoteUrl ? (
-            <LinkA href={row.quoteUrl} target="_blank">
-              {count}
-            </LinkA>
-          ) : (
-            count
-          )
+        {row.quoteUrl ? (
+          <LinkA href={row.quoteUrl} target="_blank">
+            {count}
+          </LinkA>
         ) : (
-          '-'
+          count
         )}
       </ContentWrapper>
     );
@@ -373,16 +362,13 @@ export const marketCap = {
   dataIndex: 'totalPrice',
   key: 'totalPrice',
   sortable: true,
-  render: value => (
-    <ContentWrapper right monospace>
-      {value != null && value > 0
-        ? `${getCurrencySymbol()}${formatNumber(value || 0, {
-            keepDecimal: false,
-            withUnit: false,
-          })}`
-        : '-'}
-    </ContentWrapper>
-  ),
+  render: value => {
+    return (
+      <ContentWrapper right monospace>
+        <Price>{value}</Price>
+      </ContentWrapper>
+    );
+  },
 };
 export const transfer = {
   width: 1,

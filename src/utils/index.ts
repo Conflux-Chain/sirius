@@ -9,6 +9,7 @@ import {
   NETWORK_ID,
   NETWORK_TYPE,
   NETWORK_TYPES,
+  getCurrencySymbol,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -1054,4 +1055,41 @@ export const getENSInfo = (row: {
   } catch (e) {}
 
   return result;
+};
+
+const cSymbol = getCurrencySymbol();
+
+export const formatPrice = (
+  price: string | number,
+  symbol: string = cSymbol,
+): string[] => {
+  const p = new BigNumber(price);
+  let precision = 2;
+
+  if (p.lt(0.0001)) {
+    return [
+      '<0.0001',
+      formatNumber(price || 0, {
+        withUnit: false,
+        precision: 18,
+        keepZero: false,
+      }),
+    ];
+  } else if (p.lt(1)) {
+    precision = 4;
+  } else if (p.lt(10)) {
+    precision = 3;
+  } else {
+    precision = 2;
+  }
+
+  return [
+    symbol +
+      formatNumber(price || 0, {
+        withUnit: false,
+        keepZero: false,
+        precision,
+      }),
+    '',
+  ];
 };
