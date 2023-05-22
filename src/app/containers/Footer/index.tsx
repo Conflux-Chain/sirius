@@ -341,30 +341,30 @@ export function Footer() {
         {t(translations.footer.developResource.developerDocuments)}
       </Link>
     ),
-    confluxStudio: (
-      <Link
-        className="footer-link"
-        href="https://github.com/ObsidianLabs/ConfluxStudio/"
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.confluxStudio,
-        }}
-      >
-        {t(translations.footer.developResource.confluxStudio)}
-      </Link>
-    ),
-    confluxTruffle: (
-      <Link
-        className="footer-link"
-        href="https://github.com/Conflux-Chain/conflux-truffle/"
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.confluxTruffle,
-        }}
-      >
-        {t(translations.footer.developResource.confluxTruffle)}
-      </Link>
-    ),
+    // confluxStudio: (
+    //   <Link
+    //     className="footer-link"
+    //     href="https://github.com/ObsidianLabs/ConfluxStudio/"
+    //     ga={{
+    //       category: ScanEvent.menu.category,
+    //       action: ScanEvent.menu.action.confluxStudio,
+    //     }}
+    //   >
+    //     {t(translations.footer.developResource.confluxStudio)}
+    //   </Link>
+    // ),
+    // confluxTruffle: (
+    //   <Link
+    //     className="footer-link"
+    //     href="https://github.com/Conflux-Chain/conflux-truffle/"
+    //     ga={{
+    //       category: ScanEvent.menu.category,
+    //       action: ScanEvent.menu.action.confluxTruffle,
+    //     }}
+    //   >
+    //     {t(translations.footer.developResource.confluxTruffle)}
+    //   </Link>
+    // ),
   };
   const ICP = useMemo(() => {
     return window.location.hostname.includes('confluxscan.net') ? (
@@ -405,12 +405,12 @@ export function Footer() {
             <FooterContentLink>
               {developResourceLinks.developerDocuments}
             </FooterContentLink>
-            <FooterContentLink>
+            {/* <FooterContentLink>
               {developResourceLinks.confluxStudio}
             </FooterContentLink>
             <FooterContentLink>
               {developResourceLinks.confluxTruffle}
-            </FooterContentLink>
+            </FooterContentLink> */}
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
