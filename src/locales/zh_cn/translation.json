@@ -1875,6 +1875,7 @@
       "totalTokenTransfersCount": "通证交易总数",
       "totalTokenTransfersAccountsCount": "通证交易账户总数",
       "totalMiners": "PoW 节点数",
+      "highestNodes": "历史最高 PoW 节点数",
       "totalBlocksMined": "挖出总区块",
       "totalGasUsed": "燃气使用总量",
       "top10": "查看十佳"

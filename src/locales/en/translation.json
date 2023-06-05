@@ -1879,6 +1879,7 @@
       "totalTokenTransfersCount": "Total Token Transfers Count",
       "totalTokenTransfersAccountsCount": "Total Token Transfers Accounts Count",
       "totalMiners": "Total Miners",
+      "highestNodes": "The all-time highest PoW nodes",
       "totalBlocksMined": "Total Blocks Mined",
       "totalGasUsed": "Total Gas Used",
       "top10": "View Top 10"

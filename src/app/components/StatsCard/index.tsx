@@ -17,6 +17,7 @@ import { Link } from '../Link';
 import { Description } from '../Description/Loadable';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
+import { IS_TESTNET } from '../../../utils/constants';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -34,6 +35,7 @@ export enum StatsType {
   topMinersByBlocksMined = 'topMinersByBlocksMined',
   topAccountsByGasUsed = 'topAccountsByGasUsed',
   topAccountsByTxnCount = 'topAccountsByTxnCount',
+  highestNodes = 'highestNodes',
 }
 
 interface Props {
@@ -149,6 +151,15 @@ export const StatsCard = ({
           index: 'minerCount',
         },
       ];
+
+      // only show in coreSpace testnet
+      if (IS_TESTNET) {
+        columns.unshift({
+          title: t(translations.statistics.overviewColumns.highestNodes),
+          index: 'highestNodes',
+        });
+      }
+
       action = 'miners';
       category = 'overview';
       break;
