@@ -108,7 +108,12 @@ export function Statistics() {
         action: 'overview',
       })
         .then(res => {
-          setStatsData(res?.stat || {});
+          setStatsData(
+            {
+              ...res?.stat,
+              highestNodes: 5733, // hardcode value
+            } || {},
+          );
         })
         .catch(e => {
           console.error(e);
