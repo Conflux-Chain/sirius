@@ -280,6 +280,7 @@ export const OPEN_API_URLS = Object.entries({
   nftHolders: '/statistics/nft/holder',
   nftContracts: '/statistics/nft/contract',
   nftTransfers: '/statistics/nft/transfer',
+  approvals: '/account/approvals',
 
   // NFT
   NFTTokens: '/nft/tokens',
