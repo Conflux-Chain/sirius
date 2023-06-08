@@ -1,24 +1,16 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { PageHeader } from 'app/components/PageHeader';
-import { Input, Row, Button, Switch } from '@cfxjs/antd';
+import { Input, Button, Switch, message } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import { isCurrentNetworkAddress, isZeroAddress } from 'utils';
-import CNSUtil from '@web3identity/cns-util';
-import { NETWORK_ID } from 'utils/constants';
+import { isCurrentNetworkAddress } from 'utils';
 import qs from 'query-string';
-import { Description } from 'app/components/Description/Loadable';
-import { AddressContainer } from 'app/components/AddressContainer';
-import { Card } from 'app/components/Card/Loadable';
 import { NotFound } from './NotFound';
-import { Link } from 'app/components/Link/Loadable';
-import { Text } from 'app/components/Text/Loadable';
 import { reqApprovals } from 'utils/httpRequest';
-import { useENSOrAddressSearch } from 'utils/hooks/useENSOrAddressSearch';
 import { isValidCfxAddress } from '@conflux-dev/conflux-address-js';
 import { transactionColunms, tokenColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -26,10 +18,17 @@ import { useAge } from 'utils/hooks/useAge';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 import { Select } from 'app/components/Select';
 import queryString from 'query-string';
+import { usePortal } from 'utils/hooks/usePortal';
+import { abi as ERC20ABI } from 'utils/contract/ERC20.json';
+import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
+import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
+import { RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 const { Search } = Input;
 
 export function Approval() {
+  const { accounts, provider } = usePortal();
   const { t } = useTranslation();
   const { search = '', pathname } = useLocation();
   const history = useHistory();
@@ -38,6 +37,29 @@ export function Approval() {
   const [msg, setMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [ageFormat, toggleAgeFormat] = useAge();
+
+  const getContract = useCallback(
+    (address: string, type: string) => {
+      const CFX = new SDK.Conflux({
+        url: RPC_SERVER,
+        networkId: NETWORK_ID,
+      });
+
+      CFX.provider = provider;
+
+      const typeMap = {
+        ERC20: ERC20ABI,
+        ERC721: ERC721ABI,
+        ERC1155: ERC1155ABI,
+      };
+
+      return CFX.Contract({
+        abi: typeMap[type],
+        address,
+      });
+    },
+    [provider],
+  );
 
   const [list, setList] = useState<
     Array<{
@@ -59,11 +81,11 @@ export function Approval() {
   >([]);
 
   const options = [
-    {
-      key: 'all',
-      name: t(translations.approval.select.all),
-      rowKey: 'all',
-    },
+    // {
+    //   key: 'all',
+    //   name: t(translations.approval.select.all),
+    //   rowKey: 'all',
+    // },
     {
       key: 'ERC20',
       name: t(translations.approval.select.ERC20),
@@ -108,15 +130,23 @@ export function Approval() {
         isCurrentNetworkAddress(text as string)
       ) {
         setLoading(true);
+        // query approval list
         reqApprovals({
           query: {
             account: text,
-            // tokenType: 'ERC20',
             tokenType: options[number].key,
           },
         })
           .then(d => {
-            setList(d.list);
+            setList(
+              d.list.map(l => ({
+                ...l,
+                tokenInfo: {
+                  ...l.tokenInfo,
+                  address: l.tokenInfo.base32,
+                },
+              })),
+            );
           })
           .catch(e => {
             console.log('request approvals error: ', e);
@@ -128,7 +158,8 @@ export function Approval() {
         setMsg(t(translations.approval.errors.invalidAddress));
       }
     }
-  }, [text, number, options, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, number]);
 
   const handleTypeChange = number => {
     history.push(
@@ -161,16 +192,54 @@ export function Approval() {
     setInputValue(value);
   };
 
-  const handleSearch = useCallback(
-    value => {
-      history.push(`${pathname}?text=${value}`);
-    },
-    [history, pathname],
-  );
+  const handleSearch = value => {
+    history.push(`${pathname}?text=${value}`);
+  };
 
   const handleRevoke = data => {
     console.log('handle revoke: ', data);
+    const contract = getContract(data.contract, data.tokenInfo.type);
+
+    let tx;
+
+    if (data.tokenInfo.type === 'ERC20') {
+      tx = contract
+        .approve(data.spender, 0)
+        .sendTransaction({ from: accounts[0] });
+    } else if (data.tokenInfo.type === 'ERC721') {
+      // revoke all
+      tx = contract
+        .setApprovalForAll(data.spender, false)
+        .sendTransaction({ from: accounts[0] });
+
+      // revoke single tokenId
+      // tx = contract
+      //   // .approve(SDK.format.address(SDK.CONST.ZERO_ADDRESS_HEX, NETWORK_ID), data.value)
+      //   .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
+      //   .sendTransaction({ from: accounts[0] });
+    } else if (data.tokenInfo.type === 'ERC1155') {
+      tx = contract
+        .setApprovalForAll(data.spender, false)
+        .sendTransaction({ from: accounts[0] });
+    }
+
+    tx.then(res => {
+      console.log('revoke success: ', res);
+      message.info(t(translations.approval.tips.success));
+    }).catch(e => {
+      console.log('revoke error: ', e);
+      message.info(t(translations.approval.tips.failed));
+    });
   };
+
+  useEffect(() => {
+    // initial search
+    if (!text && accounts.length) {
+      handleSearch(accounts[0]);
+      setInputValue(accounts[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accounts, text]);
 
   console.log('list: ', list);
 
@@ -195,7 +264,7 @@ export function Approval() {
           key: 'tokenInfo',
           width: 1,
           render: data => {
-            return data.type;
+            return data.type.replace('ERC', 'CRC');
           },
         },
         {
@@ -225,7 +294,11 @@ export function Approval() {
           width: 1,
           render: (_, row) => {
             return (
-              <Button size="small" onClick={() => handleRevoke(row)}>
+              <Button
+                size="small"
+                onClick={() => handleRevoke(row)}
+                disabled={accounts[0] !== text}
+              >
                 {t(translations.approval.revoke)}
               </Button>
             );
@@ -271,6 +344,7 @@ export function Approval() {
             dataSource={list}
             loading={loading}
             pagination={false}
+            scroll={{ x: 1300 }}
           ></TablePanelNew>
         </StyledContentWrapper>
       );

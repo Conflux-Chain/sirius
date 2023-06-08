@@ -2034,7 +2034,9 @@
     "view": "View all licenses",
     "tips": {
       "support": "Only support the Tokens in the current token list.",
-      "view": "所有授权记录包含地址持有通证余额是 0 的。"
+      "view": "所有授权记录包含地址持有通证余额是 0 的。",
+      "success": "Revoke success",
+      "failed": "Revoke failed"
     },
     "select": {
       "all": "All",
