@@ -5,10 +5,9 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components/macro';
 import { media } from 'styles/media';
 import { PageHeader } from 'app/components/PageHeader';
-import { Input, Button, Switch, message } from '@cfxjs/antd';
+import { Input, Button, Switch } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import { isCurrentNetworkAddress } from 'utils';
-import qs from 'query-string';
+import { isCurrentNetworkAddress, formatBalance } from 'utils';
 import { NotFound } from './NotFound';
 import { reqApprovals } from 'utils/httpRequest';
 import { isValidCfxAddress } from '@conflux-dev/conflux-address-js';
@@ -24,19 +23,31 @@ import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
 import { RPC_SERVER, NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import BigNumber from 'bignumber.js';
+import { NFTPreview } from 'app/components/NFTPreview/Loadable';
+import { Link } from 'app/components/Link/Loadable';
+import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 
 const { Search } = Input;
 
 export function Approval() {
   const { accounts, provider } = usePortal();
   const { t } = useTranslation();
-  const { search = '', pathname } = useLocation();
+  const [globalData, setGlobalData] = useGlobalData();
   const history = useHistory();
-  const { text } = qs.parse(search);
+  const location = useLocation();
+  const { type: queryType, viewAll, text } = queryString.parse(location.search);
   const [inputValue, setInputValue] = useState<string>(text as string);
   const [msg, setMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [ageFormat, toggleAgeFormat] = useAge();
+  const [txnStatusModal, setTxnStatusModal] = useState({
+    show: false,
+    hash: '',
+    status: '',
+    errorMessage: '',
+  });
 
   const getContract = useCallback(
     (address: string, type: string) => {
@@ -77,15 +88,16 @@ export function Approval() {
       };
       updatedAt: string;
       value: string;
+      balance: string;
     }>
   >([]);
 
   const options = [
-    // {
-    //   key: 'all',
-    //   name: t(translations.approval.select.all),
-    //   rowKey: 'all',
-    // },
+    {
+      key: 'all',
+      name: t(translations.approval.select.all),
+      rowKey: 'all',
+    },
     {
       key: 'ERC20',
       name: t(translations.approval.select.ERC20),
@@ -102,10 +114,8 @@ export function Approval() {
       rowKey: 'ERC1155',
     },
   ];
-  const location = useLocation();
-  const { type: queryType } = queryString.parse(location.search);
 
-  let queryNumber = '1';
+  let queryNumber = '0';
   if (queryType) {
     const index = options.findIndex(o => o.key === queryType);
     if (index > -1) {
@@ -130,12 +140,19 @@ export function Approval() {
         isCurrentNetworkAddress(text as string)
       ) {
         setLoading(true);
+
+        const query: { account: string; tokenType?: string } = {
+          account: text as string,
+        };
+
+        // protect invalid query string
+        if (['1', '2', '3'].includes(number)) {
+          query.tokenType = options[number].key;
+        }
+
         // query approval list
         reqApprovals({
-          query: {
-            account: text,
-            tokenType: options[number].key,
-          },
+          query,
         })
           .then(d => {
             setList(
@@ -174,7 +191,6 @@ export function Approval() {
   };
 
   const handleSwitchChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
     history.push(
       queryString.stringifyUrl({
         url: location.pathname,
@@ -193,13 +209,16 @@ export function Approval() {
   };
 
   const handleSearch = value => {
-    history.push(`${pathname}?text=${value}`);
+    history.push(`${location.pathname}?text=${value}`);
   };
 
   const handleRevoke = data => {
-    console.log('handle revoke: ', data);
-    const contract = getContract(data.contract, data.tokenInfo.type);
+    setTxnStatusModal({
+      ...txnStatusModal,
+      show: true,
+    });
 
+    const contract = getContract(data.contract, data.tokenInfo.type);
     let tx;
 
     if (data.tokenInfo.type === 'ERC20') {
@@ -207,28 +226,55 @@ export function Approval() {
         .approve(data.spender, 0)
         .sendTransaction({ from: accounts[0] });
     } else if (data.tokenInfo.type === 'ERC721') {
-      // revoke all
-      tx = contract
-        .setApprovalForAll(data.spender, false)
-        .sendTransaction({ from: accounts[0] });
-
-      // revoke single tokenId
-      // tx = contract
-      //   // .approve(SDK.format.address(SDK.CONST.ZERO_ADDRESS_HEX, NETWORK_ID), data.value)
-      //   .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
-      //   .sendTransaction({ from: accounts[0] });
+      if (data.approvalType === 'ApprovalForAll') {
+        // revoke all
+        tx = contract.setApprovalForAll(data.spender, false).sendTransaction({
+          from: accounts[0],
+        });
+      } else {
+        // revoke single tokenId
+        tx = contract
+          // .approve(SDK.format.address(SDK.CONST.ZERO_ADDRESS_HEX, NETWORK_ID), data.value)
+          .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
+          .sendTransaction({ from: accounts[0] });
+      }
     } else if (data.tokenInfo.type === 'ERC1155') {
       tx = contract
         .setApprovalForAll(data.spender, false)
         .sendTransaction({ from: accounts[0] });
     }
 
-    tx.then(res => {
-      console.log('revoke success: ', res);
-      message.info(t(translations.approval.tips.success));
+    tx.then(hash => {
+      setTxnStatusModal({
+        ...txnStatusModal,
+        show: true,
+        hash,
+      });
     }).catch(e => {
-      console.log('revoke error: ', e);
-      message.info(t(translations.approval.tips.failed));
+      setTxnStatusModal({
+        ...txnStatusModal,
+        show: true,
+        status: 'error',
+        errorMessage: e.code ? `${e.code} - ${e.message}` : e.message,
+      });
+    });
+  };
+
+  const handleTxnStatusClose = () => {
+    // reset tx status modal state
+    setTxnStatusModal({
+      show: false,
+      status: '',
+      hash: '',
+      errorMessage: '',
+    });
+  };
+
+  const handleTxSuccess = () => {
+    // force to refresh project
+    setGlobalData({
+      ...globalData,
+      random: Math.random(),
     });
   };
 
@@ -240,8 +286,6 @@ export function Approval() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts, text]);
-
-  console.log('list: ', list);
 
   const getContent = () => {
     if (msg) {
@@ -257,6 +301,25 @@ export function Approval() {
           ...tokenColunms.token,
           dataIndex: 'tokenInfo',
           key: 'tokenInfo',
+          render: (value, row) => {
+            let decimals = value.decimals;
+
+            // default decimals
+            if (!decimals) {
+              if (row.tokenInfo.type === 'ERC20') {
+                decimals = 18;
+              } else {
+                decimals = 0;
+              }
+            }
+
+            return (
+              <div>
+                {tokenColunms.token.render(value)}
+                {formatBalance(row.balance, decimals)} {value.symbol}
+              </div>
+            );
+          },
         },
         {
           title: t(translations.approval.tokenType),
@@ -272,14 +335,56 @@ export function Approval() {
           dataIndex: 'value',
           key: 'value',
           width: 1,
-          render: data => {
-            return data;
+          render: (value, row) => {
+            const type = row.tokenInfo.type;
+            let text: React.ReactNode = '';
+
+            if (type === 'ERC20') {
+              if (new BigNumber(2 ** 256 - 1).div(10).lt(value)) {
+                return t(translations.approval.unlimited);
+              } else {
+                return value;
+              }
+            } else if (type === 'ERC1155') {
+              text = t(translations.approval.unlimited);
+            } else {
+              if (row.approvalType === 'ApprovalForAll') {
+                text = t(translations.approval.unlimited);
+              } else {
+                text = (
+                  <>
+                    <Link href={`/nft/${row.tokenInfo.address}/${row.value}`}>
+                      #{row.value}
+                    </Link>
+                    <NFTPreview
+                      contractAddress={row.tokenInfo.address}
+                      tokenId={row.value}
+                    ></NFTPreview>
+                  </>
+                );
+              }
+            }
+
+            return text;
           },
         },
         {
-          ...tokenColunms.contract(false),
+          title: t(translations.approval.contract),
           dataIndex: 'contract',
           key: 'contract',
+          width: 1,
+          render: (_, row) => {
+            return transactionColunms.to.render(
+              row.spenderInfo?.contract?.address || row.spender,
+              {
+                contractInfo: {
+                  verify: { result: 0 },
+                  ...row.spenderInfo.contract,
+                },
+                tokenInfo: row.spenderInfo.token,
+              },
+            );
+          },
         },
         {
           ...transactionColunms.age(ageFormat, toggleAgeFormat),
@@ -309,6 +414,12 @@ export function Approval() {
         width: [3, 5, 3, 3, 3, 3, 3][i],
       }));
 
+      let l = list;
+      if (viewAll === '0') {
+        // filter out balance > 0
+        l = list.filter(item => item.balance !== '0');
+      }
+
       return (
         <StyledContentWrapper>
           <div className="menuContainer">
@@ -316,7 +427,7 @@ export function Approval() {
               {t(translations.approval.view)}
             </InfoIconWithTooltip>
             <Switch
-              defaultChecked
+              checked={viewAll !== '0'}
               onChange={handleSwitchChange}
               size="small"
               className="switch"
@@ -341,7 +452,7 @@ export function Approval() {
           <TablePanelNew
             columns={columns}
             rowKey="hash"
-            dataSource={list}
+            dataSource={l}
             loading={loading}
             pagination={false}
             scroll={{ x: 1300 }}
@@ -377,6 +488,15 @@ export function Approval() {
         />
       </SearchWrapper>
       {getContent()}
+
+      <TxnStatusModal
+        show={txnStatusModal.show}
+        status={txnStatusModal.status}
+        onClose={handleTxnStatusClose}
+        hash={txnStatusModal.hash}
+        onTxSuccess={handleTxSuccess}
+        errorMessage={txnStatusModal.errorMessage}
+      />
     </>
   );
 }

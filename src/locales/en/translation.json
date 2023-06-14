@@ -2032,17 +2032,18 @@
     "timestamp": "Timestamp",
     "revoke": "Revoke authorization",
     "view": "View all licenses",
+    "unlimited": "Unlimited",
     "tips": {
       "support": "Only support the Tokens in the current token list.",
-      "view": "所有授权记录包含地址持有通证余额是 0 的。",
+      "view": "All addresses contained in the authorization record have a token balance of 0.",
       "success": "Revoke success",
       "failed": "Revoke failed"
     },
     "select": {
       "all": "All",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC1155": "ERC1155"
+      "ERC20": "CRC20",
+      "ERC721": "CRC721",
+      "ERC1155": "CRC1155"
     },
 
     "cns": "CNS",

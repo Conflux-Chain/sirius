@@ -2004,17 +2004,18 @@
     "timestamp": "上次更新（本地时间）",
     "revoke": "撤销授权",
     "view": "查看所有授权",
+    "unlimited": "无限制",
     "tips": {
       "support": "仅支持展示当前通证列表中的通证记录。",
       "view": "所有授权记录包含地址持有通证余额是 0 的。",
-      "success": "Revoke success",
-      "failed": "Revoke failed"
+      "success": "撤销授权成功",
+      "failed": "撤销授权失败"
     },
     "select": {
-      "all": "All",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC1155": "ERC1155"
+      "all": "全部",
+      "ERC20": "CRC20",
+      "ERC721": "CRC721",
+      "ERC1155": "CRC1155"
     },
 
     "cns": "CNS",
