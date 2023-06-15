@@ -465,7 +465,7 @@ export function Approval() {
   return (
     <>
       <Helmet>
-        <title>{t(translations.header.cns)}</title>
+        <title>{t(translations.header.approval)}</title>
         <meta
           name="description"
           content={t(translations.metadata.description)}
