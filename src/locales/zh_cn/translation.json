@@ -453,6 +453,7 @@
   },
   "header": {
     "cns": "CNS",
+    "approval": "通证授权查询",
     "home": "首页",
     "bnt": "区块&交易",
     "block": "区块",
@@ -1988,6 +1989,53 @@
     "snapshotDate": "截止日期",
     "epoch": "纪元",
     "epochNo": "纪元号"
+  },
+  "approval": {
+    "title": "通证授权查询",
+    "subtitle": "使用此工具将帮助你查询地址授权的合约项目记录，并支持撤销地址对项目的通证授权批准。",
+    "inputPlaceholder": "输入地址或CNS域名进行查询",
+
+    "txHash": "交易哈希",
+    "token": "通证",
+    "tokenType": "通证类型",
+    "amount": "授权额度",
+    "contract": "授权合约",
+    "operation": "操作",
+    "timestamp": "上次更新（本地时间）",
+    "revoke": "撤销授权",
+    "view": "查看所有授权",
+    "unlimited": "无限制",
+    "tips": {
+      "support": "仅支持展示当前通证列表中的通证记录。",
+      "view": "所有授权记录包含地址持有通证余额是 0 的。",
+      "success": "撤销授权成功",
+      "failed": "撤销授权失败"
+    },
+    "select": {
+      "all": "全部",
+      "ERC20": "CRC20",
+      "ERC721": "CRC721",
+      "ERC1155": "CRC1155"
+    },
+
+    "cns": "CNS",
+    "resolvedAddress": "解析地址",
+    "expires": "到期时间",
+    "registrant": "注册商",
+    "controller": "管理员",
+    "owner": "拥有者",
+    "tokenid": "通证 ID",
+
+    "address": "地址",
+    "reverseRecord": "反向记录",
+    "ownedCoreids": "持有名称",
+    "name": "名称",
+
+    "error": {
+      "cns": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
+      "address": "查询的地址未解析到 Core ID 名称。",
+      "invalidText": "搜索的字符串内容无效。"
+    }
   },
   "cns": {
     "title": "Conflux CNS 搜索",

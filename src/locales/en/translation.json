@@ -453,6 +453,7 @@
     "tipCountAfter": "registered contracts"
   },
   "header": {
+    "approval": "Token Approval",
     "cns": "CNS",
     "home": "Home",
     "bnt": "Blocks & Transactions",
@@ -2012,6 +2013,55 @@
     "name": "Name",
 
     "errors": {
+      "cns": "The Core ID name entered is either not registered on CNS or not currently supported by Confluxscan.",
+      "address": "This address does not have a supported Core ID name that resolves to it.",
+      "invalidText": "The entered string content is invalid."
+    }
+  },
+  "approval": {
+    "title": "Token Approval",
+    "subtitle": "The tool to help you review and revoke your token approvals for any dApp.",
+    "inputPlaceholder": "Search by Address or CNS name",
+
+    "txHash": "Transaction Hash",
+    "token": "Token",
+    "tokenType": "Token Type",
+    "amount": "Authorization amount",
+    "contract": "Licensing contract",
+    "operation": "Operation content",
+    "timestamp": "Timestamp",
+    "revoke": "Revoke authorization",
+    "view": "View all licenses",
+    "unlimited": "Unlimited",
+    "tips": {
+      "support": "Only support the Tokens in the current token list.",
+      "view": "All addresses contained in the authorization record have a token balance of 0.",
+      "success": "Revoke success",
+      "failed": "Revoke failed"
+    },
+    "select": {
+      "all": "All",
+      "ERC20": "CRC20",
+      "ERC721": "CRC721",
+      "ERC1155": "CRC1155"
+    },
+
+    "cns": "CNS",
+    "address": "Address",
+
+    "resolvedAddress": "Resolved Address",
+    "expires": "Expiration date",
+    "registrant": "Registrant",
+    "controller": "Controller",
+    "owner": "Owner",
+    "tokenid": "Token ID",
+
+    "reverseRecord": "Reverse Record",
+    "ownedCoreids": "Owned Core ID Names",
+    "name": "Name",
+
+    "errors": {
+      "invalidAddress": "Invalid address",
       "cns": "The Core ID name entered is either not registered on CNS or not currently supported by Confluxscan.",
       "address": "This address does not have a supported Core ID name that resolves to it.",
       "invalidText": "The entered string content is invalid."

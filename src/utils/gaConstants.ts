@@ -3,6 +3,7 @@ export const ScanEvent = {
   menu: {
     category: 'menu',
     action: {
+      approval: 'approval',
       home: 'home',
       bnt: 'bnt',
       blocks: 'blocks',

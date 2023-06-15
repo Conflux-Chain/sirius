@@ -215,7 +215,7 @@ export const token = {
   },
 };
 
-const Token2 = ({ row }) => {
+export const Token2 = ({ row }) => {
   const { t } = useTranslation();
   return (
     <StyledIconWrapper>

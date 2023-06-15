@@ -334,6 +334,13 @@ export const reqNFTBalance = (extra?: object) => {
   });
 };
 
+export const reqApprovals = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.approvals,
+    ...extra,
+  });
+};
+
 /** open api, end */
 
 export const reqPendingTxs = (extra?: object) => {
