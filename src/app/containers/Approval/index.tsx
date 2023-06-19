@@ -398,11 +398,15 @@ export function Approval() {
           key: 'operation',
           width: 1,
           render: (_, row) => {
+            const disabled =
+              !accounts.length ||
+              accounts[0].toLowerCase() !== String(text).toLowerCase();
+
             return (
               <Button
                 size="small"
                 onClick={() => handleRevoke(row)}
-                disabled={accounts[0] !== text}
+                disabled={disabled}
               >
                 {t(translations.approval.revoke)}
               </Button>
