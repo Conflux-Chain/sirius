@@ -194,6 +194,12 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: '/cns-search',
     },
+    {
+      title: [t(translations.header.approval), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.approval,
+      afterClick: menuClick,
+      href: '/approval',
+    },
   ];
 
   ecosystemItems.push({
