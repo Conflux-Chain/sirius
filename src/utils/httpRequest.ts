@@ -92,6 +92,14 @@ export const reqTokenList = (param?: object, extra?: object) => {
   });
 };
 
+export const reqContractList = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `/contract`,
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqTokenListByName = (param?: object, extra?: object) => {
   return sendRequest({
     url: '/stat/tokens/name',
