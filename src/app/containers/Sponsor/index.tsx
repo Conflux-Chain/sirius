@@ -27,7 +27,7 @@ import {
 } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { reqTokenList } from 'utils/httpRequest';
+import { reqContractList } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 
@@ -149,7 +149,7 @@ export function Sponsor() {
         sponsorInfo.sponsorForCollateral,
       );
       // get address name
-      reqTokenList({
+      reqContractList({
         addressArray: [
           sponsorInfoSponsorForCollateral, // note, this is an uppercase address with verbose
           sponsorInfoSponsorForGas, // note, this is an uppercase address with verbose
@@ -160,11 +160,11 @@ export function Sponsor() {
           if (res && res.list) {
             if (res.list.length === 1) {
               // compatibility for /v1/token?addressArray=[] two address key with one address info issue
-              setStorageSponsorAddressAlias(res.list[0].contractName || '');
-              setGasFeeAddressAlias(res.list[0].contractName || '');
+              setStorageSponsorAddressAlias(res.list[0].name || '');
+              setGasFeeAddressAlias(res.list[0].name || '');
             } else {
-              setStorageSponsorAddressAlias(res.list[0].contractName || '');
-              setGasFeeAddressAlias(res.list[1].contractName || '');
+              setStorageSponsorAddressAlias(res.list[0].name || '');
+              setGasFeeAddressAlias(res.list[1].name || '');
             }
           }
         })
