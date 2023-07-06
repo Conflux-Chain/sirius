@@ -10,7 +10,7 @@ import {
   isZeroAddress,
   // isAccountAddress,
 } from 'utils';
-import { CFX_TOKEN_TYPES } from 'utils/constants';
+import { CFX_TOKEN_TYPES, HIDE_IN_DOT_NET } from 'utils/constants';
 import { ContractContent } from './ContractContent';
 import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
 import { Contract } from '../Charts/pow/Loadable';
@@ -59,20 +59,6 @@ export function Table({ address, addressInfo }) {
       content: <ExcutedAndPendingTxns address={address} />,
     },
     {
-      hidden: !addressInfo.cfxTransferTab,
-      value: `transfers-${CFX_TOKEN_TYPES.cfx}`,
-      action: 'cfxTransfers',
-      label: t(translations.general.cfxTransfer),
-      content: <CFXTxns address={address} />,
-    },
-    {
-      hidden: !addressInfo.erc20TransferTab,
-      value: `transfers-${CFX_TOKEN_TYPES.crc20}`,
-      action: 'transfersCrc20',
-      label: t(translations.general.tokenTxnsErc20),
-      content: <CRC20Txns address={address} />,
-    },
-    {
       hidden: !addressInfo.erc721TransferTab,
       value: `transfers-${CFX_TOKEN_TYPES.crc721}`,
       action: 'transfersCrc721',
@@ -87,6 +73,27 @@ export function Table({ address, addressInfo }) {
       content: <CRC1155Txns address={address} />,
     },
   ];
+
+  if (!HIDE_IN_DOT_NET) {
+    tabs.splice(
+      1,
+      2,
+      {
+        hidden: !addressInfo.cfxTransferTab,
+        value: `transfers-${CFX_TOKEN_TYPES.cfx}`,
+        action: 'cfxTransfers',
+        label: t(translations.general.cfxTransfer),
+        content: <CFXTxns address={address} />,
+      },
+      {
+        hidden: !addressInfo.erc20TransferTab,
+        value: `transfers-${CFX_TOKEN_TYPES.crc20}`,
+        action: 'transfersCrc20',
+        label: t(translations.general.tokenTxnsErc20),
+        content: <CRC20Txns address={address} />,
+      },
+    );
+  }
 
   if (!isZeroAddress(address)) {
     tabs.push({

@@ -16,6 +16,7 @@ import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
 import { NETWORK_TYPE, NETWORK_TYPES, IS_FOREIGN_HOST } from 'utils/constants';
+import { hideInDotNet } from 'utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
@@ -426,20 +427,24 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
-      <FooterContentWrapper>
-        <FooterContentTitle className="footer-tool">
-          {t(translations.footer.aboutUs.title)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            {IS_FOREIGN_HOST && (
-              <FooterContentLink>{privacyPolicy}</FooterContentLink>
-            )}
-            {IS_FOREIGN_HOST && <FooterContentLink>{terms}</FooterContentLink>}
-            <FooterContentLink>{supportCenter}</FooterContentLink>
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
+      {hideInDotNet(
+        <FooterContentWrapper>
+          <FooterContentTitle className="footer-tool">
+            {t(translations.footer.aboutUs.title)}
+          </FooterContentTitle>
+          <FooterContent>
+            <FooterContentRow>
+              {IS_FOREIGN_HOST && (
+                <FooterContentLink>{privacyPolicy}</FooterContentLink>
+              )}
+              {IS_FOREIGN_HOST && (
+                <FooterContentLink>{terms}</FooterContentLink>
+              )}
+              <FooterContentLink>{supportCenter}</FooterContentLink>
+            </FooterContentRow>
+          </FooterContent>
+        </FooterContentWrapper>,
+      )}
       <FooterContentWrapper>
         <FooterContentTitle className="preference">
           {t(translations.footer.preference)}

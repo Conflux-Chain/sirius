@@ -10,6 +10,7 @@ import {
   NETWORK_TYPE,
   NETWORK_TYPES,
   getCurrencySymbol,
+  HIDE_IN_DOT_NET,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -1094,4 +1095,12 @@ export const formatPrice = (
       }),
     '',
   ];
+};
+
+export const hideInDotNet = <T>(content: T): T | null => {
+  if (HIDE_IN_DOT_NET) {
+    return null;
+  } else {
+    return content;
+  }
 };
