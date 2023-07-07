@@ -341,10 +341,12 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {address ? (
                       <>
-                        <AddressContainer
-                          value={address}
-                          isFull={true}
-                        ></AddressContainer>{' '}
+                        <Link href={`/token/${address}?tab=NFT`}>
+                          <AddressContainer
+                            value={address}
+                            isFull={true}
+                          ></AddressContainer>
+                        </Link>{' '}
                         <CopyButton copyText={address} />
                       </>
                     ) : (

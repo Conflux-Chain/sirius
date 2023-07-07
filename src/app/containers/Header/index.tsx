@@ -126,6 +126,21 @@ export const Header = memo(() => {
   const toolItems = [
     {
       title: [
+        t(translations.header.nftChecker),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.nftChecker,
+      afterClick: menuClick,
+      href: '/nft-checker',
+    },
+    {
+      title: [t(translations.header.cns), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.cns,
+      afterClick: menuClick,
+      href: '/cns-search',
+    },
+    {
+      title: [
         t(translations.header.addressConverter),
         <Check size={18} key="check" />,
       ],
@@ -152,27 +167,12 @@ export const Header = memo(() => {
       href: '/block-countdown',
     },
     {
-      title: [
-        t(translations.header.nftChecker),
-        <Check size={18} key="check" />,
-      ],
-      name: ScanEvent.menu.action.nftChecker,
-      afterClick: menuClick,
-      href: '/nft-checker',
-    },
-    {
       // profile
       title: [t(translations.header.profile), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.home,
       afterClick: menuClick,
       href: '/profile',
       className: 'profile',
-    },
-    {
-      title: [t(translations.header.cns), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.cns,
-      afterClick: menuClick,
-      href: '/cns-search',
     },
     {
       title: [t(translations.header.approval), <Check size={18} key="check" />],
@@ -374,7 +374,7 @@ export const Header = memo(() => {
   }
 
   if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
-    toolItems.unshift({
+    toolItems.push({
       title: [t(translations.header.faucet), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.faucet,
       afterClick: menuClick,

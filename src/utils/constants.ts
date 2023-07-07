@@ -73,10 +73,9 @@ export const NETWORK_ID = (() => {
   return networkId;
 })();
 
-// export const HIDE_IN_DOT_NET =
-//   /.net$/.test(window.location.host) &&
-//   localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
-export const HIDE_IN_DOT_NET = true;
+export const HIDE_IN_DOT_NET =
+  /.net$/.test(window.location.host) &&
+  localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
 
 // network type is come from backend network id, now there are three state, can be extended with special case
 export enum NETWORK_TYPES {
