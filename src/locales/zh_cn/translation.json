@@ -2017,6 +2017,8 @@
     },
 
     "cns": "CNS",
+    "address": "地址",
+
     "resolvedAddress": "解析地址",
     "expires": "到期时间",
     "registrant": "注册商",
@@ -2024,12 +2026,12 @@
     "owner": "拥有者",
     "tokenid": "通证 ID",
 
-    "address": "地址",
     "reverseRecord": "反向记录",
     "ownedCoreids": "持有名称",
     "name": "名称",
 
-    "error": {
+    "errors": {
+      "invalidAddress": "查询的地址无效。",
       "cns": "查询的 Core ID 名称未在 CNS 上注册或当前不被 Confluxscan 支持。",
       "address": "查询的地址未解析到 Core ID 名称。",
       "invalidText": "搜索的字符串内容无效。"
