@@ -4,14 +4,24 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from './en/translation.json';
+import en_net from './en/translationForDotNet.json';
 import zh_cn from './zh_cn/translation.json';
+import zh_cn_net from './zh_cn/translationForDotNet.json';
 import { ConvertedToObjectType } from './types';
 
+import { HIDE_IN_DOT_NET } from 'utils/constants';
+
 const translationsJson = {
+  'en-US': {
+    translation: HIDE_IN_DOT_NET ? en_net : en,
+  },
   en: {
     translation: en,
   },
   'zh-CN': {
+    translation: HIDE_IN_DOT_NET ? zh_cn_net : zh_cn,
+  },
+  zh: {
     translation: zh_cn,
   },
 };
@@ -50,7 +60,11 @@ export const i18n = i18next
     {
       resources: translationsJson,
 
-      fallbackLng: 'en',
+      fallbackLng: {
+        'en-US': ['en'],
+        'zh-CN': ['zh'],
+        default: ['en'],
+      },
       debug:
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',

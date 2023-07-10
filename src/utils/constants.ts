@@ -56,6 +56,7 @@ export enum LOCALSTORAGE_KEYS_MAP {
   fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
   addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
   txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
+  hideInDotNet = 'CONFLUX_SCAN_HIDE_IN_DOT_NET',
 }
 
 export const NETWORK_ID = (() => {
@@ -71,6 +72,10 @@ export const NETWORK_ID = (() => {
   }
   return networkId;
 })();
+
+export const HIDE_IN_DOT_NET =
+  /.net$/.test(window.location.host) &&
+  localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
 
 // network type is come from backend network id, now there are three state, can be extended with special case
 export enum NETWORK_TYPES {

@@ -14,6 +14,7 @@ import { DailyRewardRank } from './DailyRewardRank';
 import { DailyDeposit } from './DailyDeposit';
 import { DailyParticipation } from './DailyParticipation';
 import { DailyRewardInfo } from './DailyRewardInfo';
+import { hideInDotNet } from 'utils';
 
 export function Chart() {
   const { t } = useTranslation();
@@ -37,24 +38,28 @@ export function Chart() {
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <FinalizedInterval preview={true} />
         </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyAPY preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyStaking preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <TotalReward preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyRewardRank preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyRewardInfo preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <DailyDeposit preview={true} />
-        </Col>
+        {hideInDotNet(
+          <>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <DailyAPY preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <DailyStaking preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <TotalReward preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <DailyRewardRank preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <DailyRewardInfo preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <DailyDeposit preview={true} />
+            </Col>
+          </>,
+        )}
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <DailyAccounts preview={true} />
         </Col>

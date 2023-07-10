@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { Card } from 'app/components/Card/Loadable';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
-import { formatNumber, formatBalance, formatTimeStamp } from 'utils';
+import {
+  formatNumber,
+  formatBalance,
+  formatTimeStamp,
+  hideInDotNet,
+} from 'utils';
 import {
   reqHomeDashboard,
   reqHomeDashboardOfPOSSummary,
@@ -224,35 +229,40 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               POSSummaryInfo.posAccountCount,
             )}
           </Grid>
-          <Grid xs={24} sm={24} md={3}>
-            {Info(
-              <Link to="/pos-charts/daily-staking" className="info-link">
-                {t(translations.statistics.pos.totalLocked)}
-              </Link>,
-              formatBalance(POSSummaryInfo.totalPosStakingTokens),
-            )}
-          </Grid>
-          <Grid xs={24} sm={24} md={3}>
-            {Info(
-              <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
-                <Link to="/pos-charts/daily-apy" className="info-link">
-                  {t(translations.statistics.pos.apy)}
-                </Link>
-              </InfoIconWithTooltip>,
-              lodash.isNil(POSSummaryInfo.apy)
-                ? '--'
-                : String(POSSummaryInfo.apy).substr(0, 4) + '%',
-            )}
-          </Grid>
-
-          <Grid xs={24} sm={24} md={3}>
-            {Info(
-              <Link to="/pos-charts/total-reward" className="info-link">
-                {t(translations.statistics.pos.totalInterest)}
-              </Link>,
-              formatBalance(POSSummaryInfo.totalPosRewardDrip),
-            )}
-          </Grid>
+          {hideInDotNet(
+            <>
+              <Grid xs={24} sm={24} md={3}>
+                {Info(
+                  <Link to="/pos-charts/daily-staking" className="info-link">
+                    {t(translations.statistics.pos.totalLocked)}
+                  </Link>,
+                  formatBalance(POSSummaryInfo.totalPosStakingTokens),
+                )}
+              </Grid>
+              <Grid xs={24} sm={24} md={3}>
+                {Info(
+                  <InfoIconWithTooltip
+                    info={t(translations.statistics.pos.apyTip)}
+                  >
+                    <Link to="/pos-charts/daily-apy" className="info-link">
+                      {t(translations.statistics.pos.apy)}
+                    </Link>
+                  </InfoIconWithTooltip>,
+                  lodash.isNil(POSSummaryInfo.apy)
+                    ? '--'
+                    : String(POSSummaryInfo.apy).substr(0, 4) + '%',
+                )}
+              </Grid>
+              <Grid xs={24} sm={24} md={3}>
+                {Info(
+                  <Link to="/pos-charts/total-reward" className="info-link">
+                    {t(translations.statistics.pos.totalInterest)}
+                  </Link>,
+                  formatBalance(POSSummaryInfo.totalPosRewardDrip),
+                )}
+              </Grid>
+            </>,
+          )}
           <Grid xs={24} sm={24} md={5.5}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),

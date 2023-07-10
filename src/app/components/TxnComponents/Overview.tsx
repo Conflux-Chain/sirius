@@ -5,6 +5,7 @@ import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { Description } from 'app/components/Description/Loadable';
 import _ from 'lodash';
+import { hideInDotNet } from 'utils';
 
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
@@ -75,23 +76,27 @@ export const Overview = ({ data }) => {
           })}
         </span>
       </Description>
-      <Description
-        verticle
-        size="tiny"
-        title={t(translations.transaction.storageCollateralized)}
-      >
-        <StorageFee
-          fee={storageCollateralized}
-          sponsored={storageCoveredBySponsor}
-        />
-      </Description>
-      <Description
-        verticle
-        size="tiny"
-        title={t(translations.transaction.gasFee)}
-      >
-        <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
-      </Description>
+      {hideInDotNet(
+        <>
+          <Description
+            verticle
+            size="tiny"
+            title={t(translations.transaction.storageCollateralized)}
+          >
+            <StorageFee
+              fee={storageCollateralized}
+              sponsored={storageCoveredBySponsor}
+            />
+          </Description>
+          <Description
+            verticle
+            size="tiny"
+            title={t(translations.transaction.gasFee)}
+          >
+            <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
+          </Description>
+        </>,
+      )}
       <Description
         verticle
         size="tiny"
