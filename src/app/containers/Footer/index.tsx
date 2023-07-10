@@ -187,7 +187,7 @@ export function Footer() {
       className="footer-link"
       href={`${window.location.protocol}${getUrl(NETWORK_ID)
         .replace('-stage', '')
-        .replace('net', 'io')}`}
+        .replace('.net', '.io')}`}
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.global,
