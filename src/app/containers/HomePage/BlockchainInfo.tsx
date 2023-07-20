@@ -16,6 +16,7 @@ import {
   reqHomeDashboardOfPOSSummary,
   reqTransferTPS,
   reqTransferPlot,
+  reqTopStatistics,
 } from 'utils/httpRequest';
 import { Link } from 'react-router-dom';
 import lodash from 'lodash';
@@ -41,6 +42,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   const [POSSummaryInfo, setPOSSummaryInfo] = useState<any>({});
   const [transferData, setTransferData] = useState<any>({});
   const [plotData, setPlotData] = useState<any>({});
+  const [topStatisticsData, setTopStatisticsData] = useState<any>({});
 
   useEffect(() => {
     reqHomeDashboard()
@@ -79,6 +81,17 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       })
       .catch(e => {
         console.log('reqTransferPlot error: ', e);
+      });
+
+    reqTopStatistics({
+      action: 'overview',
+      span: '24h',
+    })
+      .then(res => {
+        setTopStatisticsData(res?.stat);
+      })
+      .catch(e => {
+        console.log('reqTopStatistics error: ', e);
       });
   }, [timestamp]);
 
@@ -194,6 +207,17 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 {t(translations.charts.hashRate.title)}
               </Link>,
               lodash.isNil(plotData.hashRate) ? '--' : plotData.hashRate,
+            )}
+          </Grid>
+
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.home.minerCount),
+              `${
+                topStatisticsData.minerCount
+                  ? topStatisticsData.minerCount
+                  : '--'
+              }`,
             )}
           </Grid>
         </Grid.Container>

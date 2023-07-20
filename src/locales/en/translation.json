@@ -513,6 +513,7 @@
       "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
     },
     "pos": {
+      "posNickname": "Validator",
       "pos": "PoS",
       "overview": "Overview",
       "accounts": "Accounts",
@@ -1903,7 +1904,8 @@
       "currentEpoch": "Current Epoch",
       "account": "Accounts",
       "transactions": "Transactions",
-      "contract": "Contracts"
+      "contract": "Contracts",
+      "minerCount": "PoW Nodes within 24 Hours"
     },
     "pos": {
       "finalizedEpoch": "Finalized Epoch",

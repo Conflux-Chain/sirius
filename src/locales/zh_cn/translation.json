@@ -512,6 +512,7 @@
       "contractsTip": "仅显示注册日期最早的 10 个合约"
     },
     "pos": {
+      "posNickname": "PoS",
       "pos": "PoS",
       "overview": "首页",
       "accounts": "账户",
@@ -1421,7 +1422,7 @@
     "connectToApply": "申请",
     "notice": "说明",
     "noticeFirst": "1. Conflux 实现了代付机制，这一机制能够允许项目方或合约运营者为用户垫付交易费，进而降低项目的使用门槛。",
-    "noticeSecond": "2. 内置合约[<a target='__blank' href='https://confluxscan.net/address/cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar?tab=contract-viewer'>SponsorWhiteLIstControl</a>]负责代付信息的管理。详细文档参考 <a href='https://doc.confluxnetwork.org/zh-CN/docs/core/learn/core-space-basics/internal-contracts/sponsor-whitelist-control' target='__blank'>https://doc.confluxnetwork.org/zh-CN/docs/core/learn/core-space-basics/internal-contracts/sponsor-whitelist-control</a>",
+    "noticeSecond": "2. 内置合约 [<a target='__blank' href='https://confluxscan.net/address/cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar?tab=contract-viewer'>SponsorWhiteLIstControl</a>] 负责代付信息的管理。<a href='https://doc.confluxnetwork.org/zh-CN/docs/core/learn/core-space-basics/internal-contracts/sponsor-whitelist-control' target='__blank'>详细文档参考</a>",
     "noticeThird": "3. 希望同基金会沟通代付相关问题请发送邮件至：bd@confluxnetwork.org。",
     "errReachToMax": "当前存储费或燃气费余额已达到或超过最大值。",
     "errInsufficientFee": "可提供存储费赞助或燃气费赞助不足。",
@@ -1900,7 +1901,8 @@
       "currentEpoch": "当前纪元",
       "account": "账户总数",
       "transactions": "交易总数",
-      "contract": "合约总数"
+      "contract": "合约总数",
+      "minerCount": "24h 内 PoW 节点数"
     },
     "pos": {
       "finalizedEpoch": "已确认纪元",

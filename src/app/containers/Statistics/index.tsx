@@ -155,7 +155,7 @@ export function Statistics() {
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
-                  type={StatsType.overviewMiners}
+                  type={StatsType.overviewNetwork}
                   tabsChange={tabsChange}
                   statsData={statsData}
                 />
@@ -163,7 +163,7 @@ export function Statistics() {
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
-                  type={StatsType.overviewNetwork}
+                  type={StatsType.overviewMiners}
                   tabsChange={tabsChange}
                   statsData={statsData}
                 />

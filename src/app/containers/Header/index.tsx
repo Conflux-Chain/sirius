@@ -486,7 +486,9 @@ export const Header = memo(() => {
     },
     // pos
     {
-      title: t(translations.header.pos.pos),
+      title: HIDE_IN_DOT_NET
+        ? t(translations.header.pos.posNickname)
+        : t(translations.header.pos.pos),
       matched:
         location?.pathname?.startsWith('/pos/') ||
         location?.pathname === '/pos',
