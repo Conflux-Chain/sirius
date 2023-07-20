@@ -78,9 +78,9 @@
     "details": "详情",
     "metadata": "元数据",
     "description": "描述",
-    "id": "数字资产 ID",
-    "name": "数字资产名称",
-    "type": "数字资产标准",
+    "id": "ID",
+    "name": "名称",
+    "type": "标准",
     "address": "合约地址",
     "contractInfo": "合约信息",
     "contractInfoTip": "合约部署时设置的数字资产的名称和符号",
@@ -512,7 +512,8 @@
       "contractsTip": "仅显示注册日期最早的 10 个合约"
     },
     "pos": {
-      "pos": "PoS",
+      "posNickname": "验证者",
+      "pos": "验证者",
       "overview": "首页",
       "accounts": "账户",
       "blocks": "区块",
@@ -932,7 +933,7 @@
       "description": "每秒链上的交易数量"
     },
     "tokenTransferTps": {
-      "title": "数字资产转移 TPS",
+      "title": "转移 TPS",
       "description": "每秒链上的数字资产转移数量"
     },
     "blockTime": {
@@ -1554,7 +1555,7 @@
     "blockHeight": "区块高度",
     "epoch": "纪元",
     "difficulty": "难度",
-    "miner": "矿工",
+    "miner": "PoW 节点",
     "reward": "奖励",
     "security": "安全等级",
     "blame": "修订区块数",
@@ -1587,7 +1588,7 @@
       "position": "位置",
       "hash": "哈希",
       "txns": "交易数",
-      "miner": "矿工",
+      "miner": "PoW 节点",
       "difficulty": "难度",
       "gasUsedPercent": "燃料用量/限制",
       "age": "块龄"
@@ -1808,7 +1809,7 @@
     "overview": "概览",
     "transactions": "交易",
     "tokens": "数字资产",
-    "miners": "矿工",
+    "miners": "PoW 节点",
     "network": "网络",
     "overviewTransactions": "交易",
     "overviewTokens": "数字资产",
@@ -1823,7 +1824,7 @@
     "topTokensByReceivers": "最佳数字资产--接收账户数",
     "topTokensByTxnCount": "最佳数字资产--交易数",
     "topTokensByTxnAccountsCount": "最佳数字资产--交易账户数",
-    "topMinersByBlocksMined": "最佳矿工--挖出区块",
+    "topMinersByBlocksMined": "最佳 PoW 节点--挖出区块",
     "topAccountsByGasUsed": "最佳账户--燃料用量",
     "topAccountsByTxnCount": "最佳账户--交易数",
     "valueInTotal": "交易值共计",
