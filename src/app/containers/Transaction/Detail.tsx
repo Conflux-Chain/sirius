@@ -27,6 +27,7 @@ import {
   isInnerContractAddress,
   fromDripToGdrip,
   isZeroAddress,
+  hideInDotNet,
 } from 'utils';
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
@@ -804,29 +805,38 @@ export const Detail = () => {
           <TokenTransfer tokenList={tokenList} transferList={transferList} />
         ) : null} */}
         {getTransferListDiv()}
-
-        <Description
-          title={
-            <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
-              {t(translations.transaction.value)}
-            </Tooltip>
-          }
-        >
-          <SkeletonContainer shown={loading}>
-            {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
-          </SkeletonContainer>
-        </Description>
-        <Description
-          title={
-            <Tooltip text={t(translations.toolTip.tx.gasFee)} placement="top">
-              {t(translations.transaction.gasFee)}
-            </Tooltip>
-          }
-        >
-          <SkeletonContainer shown={loading}>
-            <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
-          </SkeletonContainer>
-        </Description>
+        {hideInDotNet(
+          <>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.value)}
+                  placement="top"
+                >
+                  {t(translations.transaction.value)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.gasFee)}
+                  placement="top"
+                >
+                  {t(translations.transaction.gasFee)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
+              </SkeletonContainer>
+            </Description>
+          </>,
+        )}
         <div
           className={clsx('detailResetWrapper', {
             folded: folded,
@@ -881,23 +891,25 @@ export const Detail = () => {
                 : '--'}
             </SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageCollateralized)}
-                placement="top"
-              >
-                {t(translations.transaction.storageCollateralized)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              <StorageFee
-                fee={storageCollateralized}
-                sponsored={storageCoveredBySponsor}
-              />
-            </SkeletonContainer>
-          </Description>
+          {hideInDotNet(
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageCollateralized)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageCollateralized)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                <StorageFee
+                  fee={storageCollateralized}
+                  sponsored={storageCoveredBySponsor}
+                />
+              </SkeletonContainer>
+            </Description>,
+          )}
           <Description
             title={
               <Tooltip
@@ -915,20 +927,22 @@ export const Detail = () => {
               /{toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageReleased)}
-                placement="top"
-              >
-                {t(translations.transaction.storageReleased)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {storageReleasedTotal} CFX
-            </SkeletonContainer>
-          </Description>
+          {hideInDotNet(
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageReleased)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageReleased)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {storageReleasedTotal} CFX
+              </SkeletonContainer>
+            </Description>,
+          )}
           <Description
             title={
               <Tooltip text={t(translations.toolTip.tx.nonce)} placement="top">

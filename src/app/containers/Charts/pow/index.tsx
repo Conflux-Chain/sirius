@@ -18,6 +18,7 @@ import { CFXHolderAccounts } from './CFXHolderAccounts';
 import { AccountGrowth } from './AccountGrowth';
 import { ActiveAccounts } from './ActiveAccounts';
 import { Contracts } from './Contracts';
+import { hideInDotNet } from 'utils';
 
 export function Chart() {
   const { t } = useTranslation();
@@ -35,15 +36,19 @@ export function Chart() {
         </Col>
       </Row>
       <Row gutter={[20, 20]}>
-        <Divider orientation="left">
-          {t(translations.highcharts.pow.preview.marketData)}
-        </Divider>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <TotalSupply preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <CirculatingSupply preview={true} />
-        </Col>
+        {hideInDotNet(
+          <>
+            <Divider orientation="left">
+              {t(translations.highcharts.pow.preview.marketData)}
+            </Divider>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <TotalSupply preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <CirculatingSupply preview={true} />
+            </Col>
+          </>,
+        )}
         <Divider orientation="left">
           {t(translations.highcharts.pow.preview.blockchainData)}
         </Divider>
@@ -59,29 +64,37 @@ export function Chart() {
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Difficulty preview={true} />
         </Col>
-        <Divider orientation="left">
-          {t(translations.highcharts.pow.preview.transaction)}
-        </Divider>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <Tx preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <TokenTransfer preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <CFXTransfer preview={true} />
-        </Col>
+        {hideInDotNet(
+          <>
+            <Divider orientation="left">
+              {t(translations.highcharts.pow.preview.transaction)}
+            </Divider>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <Tx preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <TokenTransfer preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <CFXTransfer preview={true} />
+            </Col>
+          </>,
+        )}
         <Divider orientation="left">
           {t(translations.highcharts.pow.preview.account)}
         </Divider>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <CFXHolderAccounts preview={true} />
-        </Col>
+        {hideInDotNet(
+          <>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <CFXHolderAccounts preview={true} />
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <ActiveAccounts preview={true} />
+            </Col>
+          </>,
+        )}
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <AccountGrowth preview={true} />
-        </Col>
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-          <ActiveAccounts preview={true} />
         </Col>
         <Divider orientation="left">
           {t(translations.highcharts.pow.preview.contracts)}

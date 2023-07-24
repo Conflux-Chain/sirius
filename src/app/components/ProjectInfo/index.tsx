@@ -19,6 +19,7 @@ import { Modal, Divider, Image } from '@cfxjs/antd';
 import { Link } from '@cfxjs/react-ui';
 import { sansSerifFont } from 'styles/variable';
 import iconWarning from 'images/warning.png';
+import { HIDE_IN_DOT_NET } from 'utils/constants';
 
 interface ProjectInfoProp {
   securityAudit: {
@@ -163,178 +164,183 @@ export const ProjectInfo = React.memo(
         isWarning: false,
         onClick: clickDetail,
       },
-      {
-        name: 'cex',
-        icon: CexIcon,
-        desc: (
-          <ModalItems>
-            <TransWrapper>
-              {!isAllHave(cex) ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.uncex">
-                  Listed by a centralized exchange（
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  >
-                    Submit
-                  </Link>{' '}
-                  proof）
-                </Trans>
-              ) : (
-                <Trans i18nKey="general.table.token.projectInfo.modal.cex">
-                  Listed by a centralized exchange
-                </Trans>
-              )}
-            </TransWrapper>
-            <TransWrapper>
-              {cex.binance ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.binance">
-                  -
-                  <Link href={cex?.binance} target={'_blank'}>
-                    Binance
-                  </Link>
-                </Trans>
-              ) : (
-                <span className={'inactive'}>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.binance">
-                    - Binance
-                  </Trans>
-                </span>
-              )}
-            </TransWrapper>
-            <TransWrapper>
-              {cex.huobi ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
-                  -
-                  <Link href={cex?.huobi} target={'_blank'}>
-                    HuoBi
-                  </Link>
-                </Trans>
-              ) : (
-                <span className={'inactive'}>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
-                    - HuoBi
-                  </Trans>
-                </span>
-              )}
-            </TransWrapper>
-            <TransWrapper>
-              {cex.okex ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.ok">
-                  -
-                  <Link href={cex?.okex} target={'_blank'}>
-                    OK
-                  </Link>
-                </Trans>
-              ) : (
-                <span className={'inactive'}>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.ok">
-                    - OK
-                  </Trans>
-                </span>
-              )}
-            </TransWrapper>
-          </ModalItems>
-        ),
-        isActive: false,
-        hoverable: false,
-        isWarning: false,
-        onClick: clickDetail,
-      },
-      {
-        name: 'dex',
-        icon: DexIcon,
-        desc: (
-          <ModalItems>
-            <TransWrapper>
-              {!isAllHave(dex) ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.undex">
-                  Listed by a decentralized exchange（
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  >
-                    Submit
-                  </Link>{' '}
-                  proof）
-                </Trans>
-              ) : (
-                <Trans i18nKey="general.table.token.projectInfo.modal.dex">
-                  Listed by a decentralized exchange
-                </Trans>
-              )}
-            </TransWrapper>
-            <TransWrapper>
-              {dex.moonswap ? (
-                <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
-                  -
-                  <Link href={dex.moonswap} target={'_blank'}>
-                    Moonswap
-                  </Link>
-                </Trans>
-              ) : (
-                <span className={'inactive'}>
-                  <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
-                    - Moonswap
-                  </Trans>
-                </span>
-              )}
-            </TransWrapper>
-          </ModalItems>
-        ),
-        isActive: false,
-        hoverable: false,
-        isWarning: false,
-        onClick: clickDetail,
-      },
-      {
-        name: 'track',
-        icon: CoinMarketIcon,
-        desc: (
-          <span>
-            {!isAllNull(track) ? (
-              <Trans
-                i18nKey="general.table.token.projectInfo.modal.cmc"
-                components={[
-                  <Link href={track.coinMarketCap} target={'_blank'} />,
-                ]}
-              >
-                Listed by CoinMarketCap
-              </Trans>
-            ) : (
-              <Trans
-                i18nKey="general.table.token.projectInfo.modal.uncmc"
-                components={[
-                  null,
-                  <Link
-                    href={
-                      lang === 'en'
-                        ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
-                        : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
-                    }
-                    target={'_blank'}
-                  />,
-                ]}
-              >
-                Listed by CoinMarketCap（Submit proof）
-              </Trans>
-            )}
-          </span>
-        ),
-        isActive: false,
-        hoverable: false,
-        isWarning: false,
-        onClick: clickDetail,
-      },
     ];
+
+    if (!HIDE_IN_DOT_NET) {
+      coinsList.push(
+        {
+          name: 'cex',
+          icon: CexIcon,
+          desc: (
+            <ModalItems>
+              <TransWrapper>
+                {!isAllHave(cex) ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.uncex">
+                    Listed by a centralized exchange（
+                    <Link
+                      href={
+                        lang === 'en'
+                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                      }
+                      target={'_blank'}
+                    >
+                      Submit
+                    </Link>{' '}
+                    proof）
+                  </Trans>
+                ) : (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.cex">
+                    Listed by a centralized exchange
+                  </Trans>
+                )}
+              </TransWrapper>
+              <TransWrapper>
+                {cex.binance ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.binance">
+                    -
+                    <Link href={cex?.binance} target={'_blank'}>
+                      Binance
+                    </Link>
+                  </Trans>
+                ) : (
+                  <span className={'inactive'}>
+                    <Trans i18nKey="general.table.token.projectInfo.modal.binance">
+                      - Binance
+                    </Trans>
+                  </span>
+                )}
+              </TransWrapper>
+              <TransWrapper>
+                {cex.huobi ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
+                    -
+                    <Link href={cex?.huobi} target={'_blank'}>
+                      HuoBi
+                    </Link>
+                  </Trans>
+                ) : (
+                  <span className={'inactive'}>
+                    <Trans i18nKey="general.table.token.projectInfo.modal.huoBi">
+                      - HuoBi
+                    </Trans>
+                  </span>
+                )}
+              </TransWrapper>
+              <TransWrapper>
+                {cex.okex ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.ok">
+                    -
+                    <Link href={cex?.okex} target={'_blank'}>
+                      OK
+                    </Link>
+                  </Trans>
+                ) : (
+                  <span className={'inactive'}>
+                    <Trans i18nKey="general.table.token.projectInfo.modal.ok">
+                      - OK
+                    </Trans>
+                  </span>
+                )}
+              </TransWrapper>
+            </ModalItems>
+          ),
+          isActive: false,
+          hoverable: false,
+          isWarning: false,
+          onClick: clickDetail,
+        },
+        {
+          name: 'dex',
+          icon: DexIcon,
+          desc: (
+            <ModalItems>
+              <TransWrapper>
+                {!isAllHave(dex) ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.undex">
+                    Listed by a decentralized exchange（
+                    <Link
+                      href={
+                        lang === 'en'
+                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                      }
+                      target={'_blank'}
+                    >
+                      Submit
+                    </Link>{' '}
+                    proof）
+                  </Trans>
+                ) : (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.dex">
+                    Listed by a decentralized exchange
+                  </Trans>
+                )}
+              </TransWrapper>
+              <TransWrapper>
+                {dex.moonswap ? (
+                  <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
+                    -
+                    <Link href={dex.moonswap} target={'_blank'}>
+                      Moonswap
+                    </Link>
+                  </Trans>
+                ) : (
+                  <span className={'inactive'}>
+                    <Trans i18nKey="general.table.token.projectInfo.modal.moonswap">
+                      - Moonswap
+                    </Trans>
+                  </span>
+                )}
+              </TransWrapper>
+            </ModalItems>
+          ),
+          isActive: false,
+          hoverable: false,
+          isWarning: false,
+          onClick: clickDetail,
+        },
+        {
+          name: 'track',
+          icon: CoinMarketIcon,
+          desc: (
+            <span>
+              {!isAllNull(track) ? (
+                <Trans
+                  i18nKey="general.table.token.projectInfo.modal.cmc"
+                  components={[
+                    <Link href={track.coinMarketCap} target={'_blank'} />,
+                  ]}
+                >
+                  Listed by CoinMarketCap
+                </Trans>
+              ) : (
+                <Trans
+                  i18nKey="general.table.token.projectInfo.modal.uncmc"
+                  components={[
+                    null,
+                    <Link
+                      href={
+                        lang === 'en'
+                          ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new'
+                          : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new'
+                      }
+                      target={'_blank'}
+                    />,
+                  ]}
+                >
+                  Listed by CoinMarketCap（Submit proof）
+                </Trans>
+              )}
+            </span>
+          ),
+          isActive: false,
+          hoverable: false,
+          isWarning: false,
+          onClick: clickDetail,
+        },
+      );
+    }
 
     useEffect(() => {
       const list = coinsList.map(c => {

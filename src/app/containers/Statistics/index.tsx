@@ -17,6 +17,7 @@ import { media } from '../../../styles/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { reqTopStatistics } from '../../../utils/httpRequest';
+import { hideInDotNet } from 'utils';
 
 interface RouteParams {
   statsType: string;
@@ -141,10 +142,20 @@ export function Statistics() {
                   statsData={statsData}
                 />
               </Col>
+              {hideInDotNet(
+                <Col span={24} lg={12}>
+                  <StatsCard
+                    span={span as string}
+                    type={StatsType.overviewTokens}
+                    tabsChange={tabsChange}
+                    statsData={statsData}
+                  />
+                </Col>,
+              )}
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
-                  type={StatsType.overviewTokens}
+                  type={StatsType.overviewNetwork}
                   tabsChange={tabsChange}
                   statsData={statsData}
                 />
@@ -153,14 +164,6 @@ export function Statistics() {
                 <StatsCard
                   span={span as string}
                   type={StatsType.overviewMiners}
-                  tabsChange={tabsChange}
-                  statsData={statsData}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.overviewNetwork}
                   tabsChange={tabsChange}
                   statsData={statsData}
                 />
@@ -175,15 +178,22 @@ export function Statistics() {
           <CardWrapper>
             {spanButtons(span)}
             <Row gutter={[24, 24]}>
-              <Col span={24} lg={12}>
-                <StatsCard span={span as string} type={StatsType.topCFXSend} />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topCFXReceived}
-                />
-              </Col>
+              {hideInDotNet(
+                <>
+                  <Col span={24} lg={12}>
+                    <StatsCard
+                      span={span as string}
+                      type={StatsType.topCFXSend}
+                    />
+                  </Col>
+                  <Col span={24} lg={12}>
+                    <StatsCard
+                      span={span as string}
+                      type={StatsType.topCFXReceived}
+                    />
+                  </Col>
+                </>,
+              )}
               <Col span={24} lg={12}>
                 <StatsCard
                   span={span as string}
@@ -199,37 +209,39 @@ export function Statistics() {
             </Row>
           </CardWrapper>
         </Tabs.Item>
-        <Tabs.Item label={t(translations.statistics.tokens)} value="tokens">
-          <CardWrapper>
-            {spanButtons(span)}
-            <Row gutter={[24, 24]}>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensBySenders}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByReceivers}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByTxnCount}
-                />
-              </Col>
-              <Col span={24} lg={12}>
-                <StatsCard
-                  span={span as string}
-                  type={StatsType.topTokensByTxnAccountsCount}
-                />
-              </Col>
-            </Row>
-          </CardWrapper>
-        </Tabs.Item>
+        {hideInDotNet(
+          <Tabs.Item label={t(translations.statistics.tokens)} value="tokens">
+            <CardWrapper>
+              {spanButtons(span)}
+              <Row gutter={[24, 24]}>
+                <Col span={24} lg={12}>
+                  <StatsCard
+                    span={span as string}
+                    type={StatsType.topTokensBySenders}
+                  />
+                </Col>
+                <Col span={24} lg={12}>
+                  <StatsCard
+                    span={span as string}
+                    type={StatsType.topTokensByReceivers}
+                  />
+                </Col>
+                <Col span={24} lg={12}>
+                  <StatsCard
+                    span={span as string}
+                    type={StatsType.topTokensByTxnCount}
+                  />
+                </Col>
+                <Col span={24} lg={12}>
+                  <StatsCard
+                    span={span as string}
+                    type={StatsType.topTokensByTxnAccountsCount}
+                  />
+                </Col>
+              </Row>
+            </CardWrapper>
+          </Tabs.Item>,
+        )}
         <Tabs.Item label={t(translations.statistics.miners)} value="miners">
           <CardWrapper>
             {spanButtons(span)}

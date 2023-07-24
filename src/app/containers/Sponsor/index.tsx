@@ -624,30 +624,12 @@ export function Sponsor() {
         <Remark
           items={[
             t(translations.sponsor.noticeFirst),
-            t(translations.sponsor.noticeSecond),
-            <span>
-              {t(translations.sponsor.noticeFourthOne)}
-              &nbsp;
-              <a
-                href="https://fluentwallet.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://fluentwallet.com/
-              </a>
-              &nbsp; {t(translations.sponsor.noticeFourthTwo)}
-            </span>,
-            <span>
-              {t(translations.sponsor.notice4)}
-              &nbsp;
-              <a
-                href={t(translations.sponsor.notice4link)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t(translations.sponsor.notice4linkContent)}
-              </a>
-            </span>,
+            <span
+              dangerouslySetInnerHTML={{
+                __html: t(translations.sponsor.noticeSecond),
+              }}
+            ></span>,
+            t(translations.sponsor.noticeThird),
           ]}
         ></Remark>
       </Wrapper>
