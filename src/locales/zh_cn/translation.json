@@ -741,7 +741,7 @@
       },
       "apy": {
         "title": "年利率",
-        "subtitle": "Conflux 网络上质押在 PoS 上 CFX 的每日年利率",
+        "subtitle": "质押在 Conflux PoS 中的 CFX 一年的利率（CFX）",
         "yAxisTitle": "年利率",
         "seriesName": "年利率"
       },
