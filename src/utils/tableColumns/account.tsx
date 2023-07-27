@@ -1,7 +1,12 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from '../../locales/i18n';
-import { toThousands, formatNumber, getENSInfo } from '../../utils/';
+import {
+  toThousands,
+  formatNumber,
+  getENSInfo,
+  getNametagInfo,
+} from '../../utils/';
 import { ContentWrapper } from './utils';
 import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
 
@@ -25,6 +30,7 @@ export const address = {
       alias={row.name}
       isFull={true}
       ensInfo={getENSInfo(row)}
+      nametagInfo={getNametagInfo(row)}
     />
   ),
 };

@@ -1,4 +1,8 @@
 {
+  "nametag": {
+    "label": "公共标签",
+    "tip": "公共标签："
+  },
   "ens": {
     "label": "CNS 名字",
     "tip": "CNS 名字："
@@ -509,7 +513,8 @@
       "ens": ".web3 用户名",
       "tokens": "通证",
       "contracts": "合约",
-      "contractsTip": "仅显示注册日期最早的 10 个合约"
+      "contractsTip": "仅显示注册日期最早的 10 个合约",
+      "nametag": "公共标签"
     },
     "pos": {
       "posNickname": "PoS",

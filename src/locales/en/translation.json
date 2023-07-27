@@ -1,4 +1,8 @@
 {
+  "nametag": {
+    "label": "Public Name Tag",
+    "tip": "Public Name Tag: "
+  },
   "ens": {
     "label": "CNS Name",
     "tip": "CNS Name: "
@@ -510,7 +514,8 @@
       "ens": ".web3 Username",
       "tokens": "Tokens",
       "contracts": "Contracts",
-      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
+      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed",
+      "nametag": "Public Name Tag"
     },
     "pos": {
       "posNickname": "Validator",

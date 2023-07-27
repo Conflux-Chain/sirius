@@ -50,7 +50,7 @@ import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { CreateTxNote } from '../Profile/CreateTxNote';
-
+import { useNametag } from 'utils/hooks/useNametag';
 import iconInfo from 'images/info.svg';
 
 const getStorageFee = byteSize =>
@@ -101,6 +101,7 @@ export const Detail = () => {
     storageCollateralized,
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
+  const nametags = useNametag([from, to]);
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -227,17 +228,18 @@ export const Detail = () => {
     };
   }, [intervalToClear]);
 
-  const fromContent = (isFull = false) => (
-    <span>
-      <AddressContainer value={from} isFull={isFull} />{' '}
-      <CopyButton copyText={formatAddress(from)} />
-    </span>
-  );
-  const toContent = (isFull = false) => (
-    <span>
-      <AddressContainer value={to} isFull={isFull} />{' '}
-      <CopyButton copyText={formatAddress(to)} />
-    </span>
+  const addressContent = useCallback(
+    (isFull = false, address) => {
+      const addr = formatAddress(address);
+      return (
+        <span>
+          <AddressContainer value={addr} isFull={isFull} />{' '}
+          {nametags[addr]?.nameTag ? `(${nametags[addr]?.nameTag})` : null}{' '}
+          <CopyButton copyText={addr} />
+        </span>
+      );
+    },
+    [nametags],
   );
 
   const generatedDiv = () => {
@@ -273,7 +275,7 @@ export const Detail = () => {
                   </Link>{' '}
                 </>
               )}
-              {toContent(true)}
+              {addressContent(true, to)}
             </SkeletonContainer>
           </Description>
         );
@@ -287,7 +289,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {toContent(true)}
+              {addressContent(true, to)}
             </SkeletonContainer>
           </Description>
         );
@@ -795,7 +797,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {fromContent(true)}
+            {addressContent(true, from)}
           </SkeletonContainer>
         </Description>
         {generatedDiv()}
