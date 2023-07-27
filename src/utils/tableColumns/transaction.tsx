@@ -6,7 +6,13 @@ import clsx from 'clsx';
 import { Link } from 'app/components/Link/Loadable';
 import { Text } from 'app/components/Text/Loadable';
 import { Status } from 'app/components/TxnComponents';
-import { fromDripToCfx, toThousands, fromDripToGdrip, getENSInfo } from 'utils';
+import {
+  fromDripToCfx,
+  toThousands,
+  fromDripToGdrip,
+  getENSInfo,
+  getNametagInfo,
+} from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
@@ -151,6 +157,7 @@ export const from = {
       alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
       contractCreated={row.contractCreated}
       ensInfo={getENSInfo(row)}
+      nametagInfo={getNametagInfo(row)}
     />
   ),
 };
@@ -188,6 +195,7 @@ export const to = {
         contractCreated={row.contractCreated}
         verify={verify}
         ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
     );
   },

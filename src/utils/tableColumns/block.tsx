@@ -11,6 +11,7 @@ import {
   toThousands,
   fromDripToGdrip,
   getENSInfo,
+  getNametagInfo,
 } from 'utils/';
 import imgPivot from 'images/pivot.svg';
 import { AddressContainer } from 'app/components/AddressContainer';
@@ -82,7 +83,11 @@ export const miner = {
   key: 'miner',
   width: 1,
   render: (value, row) => (
-    <AddressContainer value={value} ensInfo={getENSInfo(row)} />
+    <AddressContainer
+      value={value}
+      ensInfo={getENSInfo(row)}
+      nametagInfo={getNametagInfo(row)}
+    />
   ),
 };
 

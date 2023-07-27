@@ -128,17 +128,21 @@ export const Bottom = styled.section`
   width: 100%;
 `;
 
-export const StyledENSName = styled.span<{
+export const StyledLabelWrapper = styled.span<{
   show: boolean;
+  backgroundColor?: string;
+  color?: string;
+  bordered?: boolean;
 }>`
-  background-color: #ffffff;
+  background-color: ${props => props.backgroundColor || '#ffffff'};
   border-radius: 16px;
   font-size: 14px;
   padding: 4px 12px;
   margin-left: 12px;
   height: 32px;
-  display: ${props => (props.show ? 'inline-flex' : 'none')};
+  display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
-  color: var(--theme-color-gray4);
+  color: ${props => props.color || 'var(--theme-color-gray4);'};
   text-transform: none;
+  border: ${props => (props.bordered ? '1px solid' : 'none')};
 `;

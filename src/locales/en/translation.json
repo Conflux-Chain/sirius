@@ -1,4 +1,8 @@
 {
+  "nametag": {
+    "label": "Public Name Tag",
+    "tip": "Public Name Tag: "
+  },
   "ens": {
     "label": "CNS Name",
     "tip": "CNS Name: "
@@ -362,7 +366,7 @@
     "lockedDetailUnlockBlockNumber": "Unlock Blocknumber",
     "lockedDetailUnlockTime": "Estimated Unlock Time",
     "currentVotingRights": "Current Voting Rights",
-    "apy": "(APY 4%)",
+    "apy": "(APR 4%)",
     "viewLockedDetails": "Click to view lock history",
     "pos": {
       "identifier": "PoS Address",
@@ -510,7 +514,8 @@
       "ens": ".web3 Username",
       "tokens": "Tokens",
       "contracts": "Contracts",
-      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
+      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed",
+      "nametag": "Public Name Tag"
     },
     "pos": {
       "posNickname": "Validator",
@@ -708,7 +713,7 @@
         "finalized-interval": "Finality Intervals",
         "daily-accounts": "Accounts",
         "daily-staking": "Staking",
-        "daily-apy": "APY",
+        "daily-apy": "APR",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
         "daily-reward-info": "Reward Detail",
@@ -736,10 +741,10 @@
         "seriesName": "Total Staking CFX (Day)"
       },
       "apy": {
-        "title": "Annual Percentage Yield",
-        "subtitle": "The average annual percentage yield per day on the PoS of Conflux network.",
-        "yAxisTitle": "APY",
-        "seriesName": "APY (Day)"
+        "title": "Annual Percentage Rate",
+        "subtitle": "Annual percentage rate, the yearly interest paid to Conflux PoS stakers (in CFX).",
+        "yAxisTitle": "APR",
+        "seriesName": "APR"
       },
       "totalReward": {
         "title": "Total Reward",
@@ -1748,7 +1753,7 @@
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
       "stakedBegin": "Total CFX staked. Access ",
       "stakedEnd": " to stake CFX for interest.",
-      "stakingEarned": "Staking CFX Earned (APY 4%) does not contain withdrawn interest. Staked interest will be automatically sent to your wallet address each time it is withdrawn.",
+      "stakingEarned": "Staking CFX Earned (APR 4%) does not contain withdrawn interest. Staked interest will be automatically sent to your wallet address each time it is withdrawn.",
       "lockedBegin": "Total CFX locked. Access ",
       "lockedEnd": " to lock CFX for voting rights.",
       "currentVotingRights": "The voting rights will be awarded according to: number of quarters × number of tokens × 0.25."

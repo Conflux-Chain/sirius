@@ -16,6 +16,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
 import lodash from 'lodash';
 import { ENSInfoItemType } from 'utils/hooks/useENS';
+import { Nametag } from 'utils/hooks/useNametag';
 
 dayjs.extend(relativeTime);
 
@@ -1051,6 +1052,61 @@ export const getENSInfo = (row: {
       result[row.miner] = {
         address: row.miner,
         name: row.minerENSInfo?.name,
+      };
+    }
+  } catch (e) {}
+
+  return result;
+};
+
+export const getNametagInfo = (row: {
+  from?: string;
+  fromNameTagInfo?: Nametag;
+  to?: string;
+  toNameTagInfo?: Nametag;
+  address?: string;
+  nameTagInfo?: Nametag;
+  miner?: string;
+  minerNameTagInfo?: Nametag;
+  base32address?: string;
+}): {
+  [k: string]: { address: string; nametag: string };
+} => {
+  let result = {};
+
+  try {
+    if (row.from) {
+      result[row.from] = {
+        address: row.from,
+        nametag: row.fromNameTagInfo?.nameTag,
+      };
+    }
+
+    if (row.to) {
+      result[row.to] = {
+        address: row.to,
+        nametag: row.toNameTagInfo?.nameTag,
+      };
+    }
+
+    if (row.address) {
+      result[row.address] = {
+        address: row.address,
+        nametag: row.nameTagInfo?.nameTag,
+      };
+    }
+
+    if (row.base32address) {
+      result[row.base32address] = {
+        address: row.base32address,
+        nametag: row.nameTagInfo?.nameTag,
+      };
+    }
+
+    if (row.miner) {
+      result[row.miner] = {
+        address: row.miner,
+        nametag: row.minerNameTagInfo?.nameTag,
       };
     }
   } catch (e) {}

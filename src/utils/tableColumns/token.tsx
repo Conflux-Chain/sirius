@@ -14,6 +14,7 @@ import {
   getENSInfo,
   formatAddress,
   isZeroAddress,
+  getNametagInfo,
 } from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
@@ -161,6 +162,7 @@ export const renderAddress = (
         verify={verify}
         isEspaceAddress={isEspaceAddress}
         ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
@@ -205,6 +207,7 @@ export const token = {
                     alias={row?.contractName || null}
                     showIcon={false}
                     ensInfo={getENSInfo(row)}
+                    nametagInfo={getNametagInfo(row)}
                   />
                 )}
               </Text>
@@ -256,6 +259,7 @@ export const Token2 = ({ row }) => {
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
                   ensInfo={getENSInfo(row)}
+                  nametagInfo={getNametagInfo(row)}
                 />
                 &nbsp;
                 <InfoIconWithTooltip
@@ -554,6 +558,7 @@ export const account = {
         }
         isFull={true}
         ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
     </AccountWrapper>
   ),
@@ -881,6 +886,7 @@ export const NFTOwner = {
         }
         isFull={true}
         ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
     </AccountWrapper>
   ),

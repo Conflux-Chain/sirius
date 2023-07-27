@@ -14,7 +14,7 @@ import {
   formatString,
   getUrl,
 } from 'utils';
-import { AlertTriangle, File, Bookmark } from '@zeit-ui/react-icons';
+import { AlertTriangle, File, Bookmark, Hash } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
 import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
@@ -48,6 +48,14 @@ interface Props {
   ensInfo?: {
     [k: string]: ENSInfoItemType;
   };
+  showNametag?: boolean;
+  nametag?: string;
+  nametagInfo?: {
+    [k: string]: {
+      address: string;
+      nametag: string;
+    };
+  };
 }
 
 const defaultPCMaxWidth = 138;
@@ -78,6 +86,10 @@ export const getLabelInfo = (label, type) => {
           alt=""
         />
       );
+      // nametag from official operational staff
+    } else if (type === 'nametag') {
+      trans = translations.nametag.label;
+      icon = <Hash color="var(--theme-color-gray2)" size={16} />;
     }
 
     // change different label with different style
@@ -118,10 +130,16 @@ const RenderAddress = ({
   type = 'pow',
   addressLabel = '',
   ENSLabel = '',
+  nametag = '',
 }: any) => {
   const aftercontent =
     type === 'pow'
-      ? cfxAddress && !isFull && !ENSLabel && !addressLabel && !alias
+      ? cfxAddress &&
+        !isFull &&
+        !ENSLabel &&
+        !nametag &&
+        !addressLabel &&
+        !alias
         ? cfxAddress.substr(-suffixSize)
         : ''
       : '';
@@ -154,7 +172,12 @@ const RenderAddress = ({
           aftercontent={aftercontent}
         >
           <span>
-            {content || ENSLabel || addressLabel || alias || cfxAddress}
+            {content ||
+              ENSLabel ||
+              nametag ||
+              addressLabel ||
+              alias ||
+              cfxAddress}
           </span>
         </LinkWrapper>
       );
@@ -168,7 +191,12 @@ const RenderAddress = ({
         aftercontent={aftercontent}
       >
         <span>
-          {content || ENSLabel || addressLabel || alias || cfxAddress}
+          {content ||
+            ENSLabel ||
+            nametag ||
+            addressLabel ||
+            alias ||
+            cfxAddress}
         </span>
       </PlainWrapper>
     );
@@ -187,6 +215,14 @@ const RenderAddress = ({
                   <Translation>{t => t(translations.ens.tip)}</Translation>
                 </span>
                 {ENSLabel}
+              </div>
+            ) : null}
+            {nametag ? (
+              <div>
+                <span>
+                  <Translation>{t => t(translations.nametag.tip)}</Translation>
+                </span>
+                {nametag}
               </div>
             ) : null}
             {addressLabel ? (
@@ -237,7 +273,10 @@ export const AddressContainer = withTranslation()(
       isEspaceAddress,
       showAddressLabel = true,
       showENSLabel = true,
+      showNametag = true,
       ensInfo,
+      nametag,
+      nametagInfo,
     }: Props & WithTranslation) => {
       const [globalData = {}] = useGlobalData();
 
@@ -270,6 +309,8 @@ export const AddressContainer = withTranslation()(
         if (contractCreated) {
           const fContractCreated = formatAddress(contractCreated);
 
+          // official name tag
+          let officalNametag: React.ReactNode = null;
           // private name tag
           let addressLabel: React.ReactNode = null;
           // ens name tag
@@ -286,6 +327,15 @@ export const AddressContainer = withTranslation()(
             addressLabel = label;
           }
 
+          if (showNametag && nametagInfo?.[fContractCreated]?.nametag) {
+            const { label } = getLabelInfo(
+              nametagInfo[fContractCreated].nametag,
+              'nametag',
+            );
+
+            officalNametag = label;
+          }
+
           if (showENSLabel && gENSLabel) {
             const { label } = getLabelInfo(gENSLabel, 'ens');
 
@@ -297,6 +347,7 @@ export const AddressContainer = withTranslation()(
             cfxAddress: '',
             alias: alias,
             addressLabel,
+            nametag: officalNametag,
             ENSLabel,
             hoverValue: fContractCreated,
             hrefAddress: fContractCreated,
@@ -377,6 +428,8 @@ export const AddressContainer = withTranslation()(
       }
 
       let prefixIcon: React.ReactNode = null;
+      // official name tag
+      let officalNametag: React.ReactNode = null;
       // private name tag
       let addressLabel: React.ReactNode = null;
       // ens name tag
@@ -401,6 +454,16 @@ export const AddressContainer = withTranslation()(
         prefixIcon = icon;
       }
 
+      if (showNametag && nametagInfo?.[cfxAddress]?.nametag) {
+        const { label, icon } = getLabelInfo(
+          nametagInfo[cfxAddress].nametag,
+          'nametag',
+        );
+
+        officalNametag = label;
+        prefixIcon = icon;
+      }
+
       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
         const typeText = t(
           isInnerContractAddress(cfxAddress)
@@ -415,6 +478,7 @@ export const AddressContainer = withTranslation()(
           alias,
           addressLabel,
           ENSLabel,
+          nametag: officalNametag,
           link,
           isFull,
           maxWidth,
@@ -451,6 +515,7 @@ export const AddressContainer = withTranslation()(
           alias,
           addressLabel,
           ENSLabel,
+          nametag: officalNametag,
           link,
           isFull,
           maxWidth,
@@ -476,6 +541,7 @@ export const AddressContainer = withTranslation()(
         alias,
         addressLabel,
         ENSLabel,
+        nametag: officalNametag,
         link,
         isFull,
         maxWidth,
