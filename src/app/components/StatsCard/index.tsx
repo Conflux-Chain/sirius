@@ -505,20 +505,6 @@ export const StatsCard = ({
               />
             </td>
             <td className="text-right">{intValue(d.blockCount)}</td>
-            {hideInDotNet(
-              <>
-                <td className="text-right">
-                  {cfxValue(d.totalReward, { showUnit: true })}
-                </td>
-                <td className="text-right">
-                  {cfxValue(d.txFee, {
-                    keepDecimal: true,
-                    keepZero: true,
-                    showUnit: true,
-                  })}
-                </td>
-              </>,
-            )}
             <td className="text-right">
               <Text
                 hoverValue={
@@ -558,6 +544,20 @@ export const StatsCard = ({
                 %)
               </Text>
             </td>
+            {hideInDotNet(
+              <>
+                <td className="text-right">
+                  {cfxValue(d.totalReward, { showUnit: true })}
+                </td>
+                <td className="text-right">
+                  {cfxValue(d.txFee, {
+                    keepDecimal: true,
+                    keepZero: true,
+                    showUnit: true,
+                  })}
+                </td>
+              </>,
+            )}
           </tr>
         ));
       case 'network':
