@@ -13,7 +13,10 @@ import { StyledLabelWrapper } from './layouts';
 const Nametag = ({ address }) => {
   const { t } = useTranslation();
   const nametags = useNametag([address]);
-  const nametag = nametags[address];
+  const nametag = {
+    ...nametags[address],
+    labels: nametags[address]?.labels || [],
+  };
 
   const { label: labelOfNametag /* icon: iconOfNametag */ } = useMemo(
     () =>
