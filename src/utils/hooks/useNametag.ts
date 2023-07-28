@@ -14,6 +14,8 @@ export const useNametag = (address: string[]) => {
     [key: string]: Nametag;
   }>({});
 
+  const dep = JSON.stringify(address);
+
   useEffect(() => {
     const fetchNametag = async () => {
       const addr = address.filter(a => !!a);
@@ -24,7 +26,8 @@ export const useNametag = (address: string[]) => {
     };
 
     fetchNametag().catch(console.log);
-  }, [address]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dep]);
 
   return nametag;
 };
