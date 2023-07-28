@@ -447,13 +447,6 @@ export const AddressContainer = withTranslation()(
         prefixIcon = icon;
       }
 
-      if (showENSLabel && gENSLabel) {
-        const { label, icon } = getLabelInfo(gENSLabel, 'ens');
-
-        ENSLabel = label;
-        prefixIcon = icon;
-      }
-
       if (showNametag && nametagInfo?.[cfxAddress]?.nametag) {
         const { label, icon } = getLabelInfo(
           nametagInfo[cfxAddress].nametag,
@@ -461,6 +454,13 @@ export const AddressContainer = withTranslation()(
         );
 
         officalNametag = label;
+        prefixIcon = icon;
+      }
+
+      if (showENSLabel && gENSLabel) {
+        const { label, icon } = getLabelInfo(gENSLabel, 'ens');
+
+        ENSLabel = label;
         prefixIcon = icon;
       }
 
