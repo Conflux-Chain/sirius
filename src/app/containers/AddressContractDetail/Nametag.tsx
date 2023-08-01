@@ -26,6 +26,34 @@ const Nametag = ({ address }) => {
     [nametag],
   );
 
+  let tag = (
+    <StyledLabelWrapper show={!!labelOfNametag}>
+      # {labelOfNametag}
+    </StyledLabelWrapper>
+  );
+
+  if (nametag?.website) {
+    tag = (
+      <ComponentLink
+        href={
+          nametag?.website.startsWith('http')
+            ? nametag?.website
+            : `https://${nametag?.website}`
+        }
+        target="__blank"
+      >
+        <StyledLabelWrapper show={!!labelOfNametag}>
+          # {labelOfNametag}{' '}
+          <img
+            src={externallinkIcon}
+            style={{ marginLeft: '4px' }}
+            alt="external-link-icon"
+          ></img>
+        </StyledLabelWrapper>
+      </ComponentLink>
+    );
+  }
+
   return labelOfNametag ? (
     <>
       <Tooltip
@@ -38,23 +66,7 @@ const Nametag = ({ address }) => {
           </>
         }
       >
-        <ComponentLink
-          href={
-            nametag?.website.startsWith('http')
-              ? nametag?.website
-              : `https://${nametag?.website}`
-          }
-          target="__blank"
-        >
-          <StyledLabelWrapper show={!!labelOfNametag}>
-            {/* {iconOfNametag} */}# {labelOfNametag}{' '}
-            <img
-              src={externallinkIcon}
-              style={{ marginLeft: '4px' }}
-              alt="external-link-icon"
-            ></img>
-          </StyledLabelWrapper>
-        </ComponentLink>
+        {tag}
       </Tooltip>
 
       {nametag?.labels.map(label => (

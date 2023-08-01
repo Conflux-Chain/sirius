@@ -120,13 +120,13 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
     }));
   } else if (type === 'nametag') {
     return list.map(l => ({
-      key: `nametag-${l.base32}`,
-      value: `nametag-${l.base32}`,
+      key: `nametag-${l.address}`,
+      value: `nametag-${l.address}`,
       type,
-      label: l.base32 ? (
+      label: l.address ? (
         <TokenItemWrapper
           onClick={() => {
-            window.location.href = `/address/${l.base32}`;
+            window.location.href = `/address/${l.address}`;
           }}
         >
           <span>
@@ -138,7 +138,7 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
                 alt="status-icon"
               ></img>
             </div>
-            <div className="address">{l.base32}</div>
+            <div className="address">{l.address}</div>
           </span>
         </TokenItemWrapper>
       ) : (
