@@ -54,20 +54,22 @@ const Nametag = ({ address }) => {
     );
   }
 
-  return labelOfNametag ? (
+  return (
     <>
-      <Tooltip
-        title={
-          <>
-            <div>
-              {t(translations.nametag.tip)} {nametag?.nameTag}
-            </div>
-            {nametag?.desc}
-          </>
-        }
-      >
-        {tag}
-      </Tooltip>
+      {labelOfNametag && (
+        <Tooltip
+          title={
+            <>
+              <div>
+                {t(translations.nametag.tip)} {nametag?.nameTag}
+              </div>
+              {nametag?.desc}
+            </>
+          }
+        >
+          {tag}
+        </Tooltip>
+      )}
 
       {nametag?.labels.map(label => (
         <StyledLabelWrapper
@@ -85,7 +87,7 @@ const Nametag = ({ address }) => {
         </StyledLabelWrapper>
       ))}
     </>
-  ) : null;
+  );
 };
 
 export default Nametag;
