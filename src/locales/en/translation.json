@@ -44,7 +44,7 @@
         "duplicated": "Duplicated address, already in the name tags list",
         "duplicatedNameTag": "Duplicated name tag, already in the name tags list"
       },
-      "publicNameTag": "Public Tag: ",
+      "publicNameTag": "Contract Tag: ",
       "myNameTag": "My Name Tag: "
     },
     "file": {

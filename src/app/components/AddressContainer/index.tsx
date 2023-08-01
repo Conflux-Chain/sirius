@@ -441,20 +441,18 @@ export const AddressContainer = withTranslation()(
         globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
 
       if (showAddressLabel && gAddressLabel) {
-        const { label, icon } = getLabelInfo(gAddressLabel, 'tag');
+        const { label } = getLabelInfo(gAddressLabel, 'tag');
 
         addressLabel = label;
-        prefixIcon = icon;
       }
 
       if (showNametag && nametagInfo?.[cfxAddress]?.nametag) {
-        const { label, icon } = getLabelInfo(
+        const { label } = getLabelInfo(
           nametagInfo[cfxAddress].nametag,
           'nametag',
         );
 
         officalNametag = label;
-        prefixIcon = icon;
       }
 
       if (showENSLabel && gENSLabel) {
