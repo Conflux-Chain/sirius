@@ -1,4 +1,8 @@
 {
+  "nametag": {
+    "label": "公共标签",
+    "tip": "公共标签："
+  },
   "ens": {
     "label": "CNS 名字",
     "tip": "CNS 名字："
@@ -39,7 +43,7 @@
         "duplicated": "重复的地址，已经存在于记录中",
         "duplicatedNameTag": "重复的标签，已经存在于记录中"
       },
-      "publicNameTag": "公共标签：",
+      "publicNameTag": "合约标签：",
       "myNameTag": "我的标签："
     },
     "file": {
@@ -509,7 +513,8 @@
       "ens": ".web3 用户名",
       "tokens": "通证",
       "contracts": "合约",
-      "contractsTip": "仅显示注册日期最早的 10 个合约"
+      "contractsTip": "仅显示注册日期最早的 10 个合约",
+      "nametag": "公共标签"
     },
     "pos": {
       "posNickname": "PoS",
@@ -736,7 +741,7 @@
       },
       "apy": {
         "title": "年利率",
-        "subtitle": "Conflux 网络上质押在 PoS 上 CFX 的每日年利率",
+        "subtitle": "质押在 Conflux PoS 中的 CFX 一年的利率（CFX）",
         "yAxisTitle": "年利率",
         "seriesName": "年利率"
       },

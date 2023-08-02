@@ -27,7 +27,7 @@ import {
   Middle,
   Title,
   Top,
-  StyledENSName,
+  StyledLabelWrapper,
 } from './layouts';
 import {
   isContractAddress,
@@ -49,6 +49,7 @@ import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'app/components/AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
+import Nametag from './Nametag';
 
 interface RouteParams {
   address: string;
@@ -216,11 +217,13 @@ export const ContractDetailPage = memo(() => {
               : isSpecialAddress(address)
               ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
-
-            <StyledENSName show={!!label}>
-              {icon}
-              {label}
-            </StyledENSName>
+            <RouterLink to={`/cns-search?text=${label}`}>
+              <StyledLabelWrapper show={!!label}>
+                {icon}
+                {label}
+              </StyledLabelWrapper>
+            </RouterLink>{' '}
+            <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>
             <IconWrapper className="address">

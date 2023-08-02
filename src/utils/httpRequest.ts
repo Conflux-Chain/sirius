@@ -366,6 +366,19 @@ export const reqRefreshMetadata = (param?: object, extra?: object) => {
   });
 };
 
+// different from ens
+// maybe send one request, to get all info is better (ens info, nametag info, contract info, token info)
+export const reqNametag = (address: string[], extra?: object) => {
+  const query = address.reduce((prev, curr, index) => {
+    return !index ? `address=${curr}` : `${prev}&address=${curr}`;
+  }, '');
+
+  return sendRequest({
+    url: `/nametag?${query}`,
+    ...extra,
+  });
+};
+
 export const reqENSInfoWithNoCache = (address: string[], extra?: object) => {
   const query = address.reduce((prev, curr, index) => {
     return !index ? `address=${curr}` : `${prev}&address=${curr}`;
