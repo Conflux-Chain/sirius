@@ -69,8 +69,8 @@ import { AddressConverter } from './containers/AddressConverter';
 import Loading from 'app/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
-import { CookieTip } from './components/CookieTip';
-import { GlobalTip } from './components/GlobalTip';
+// import { CookieTip } from './components/CookieTip';
+// import { GlobalTip } from './components/GlobalTip';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
@@ -877,8 +877,8 @@ export function App() {
                   </Main>
                   <Footer />
                   <GlobalStyle />
-                  <CookieTip />
-                  <GlobalTip tipKey="addressWarning" />
+                  {/* <CookieTip />
+                  <GlobalTip tipKey="addressWarning" /> */}
                 </ScrollToTop>
               )}
               <GlobalNotify />

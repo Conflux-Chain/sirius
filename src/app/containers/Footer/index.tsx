@@ -318,29 +318,31 @@ export function Footer() {
           </FooterContentIconLink>
         </>,
       )}
-      <FooterContentIconLink>
-        <Link
-          href="https://forum.conflux.fun/"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.forum,
-          }}
-        >
-          <Conflux></Conflux>
-        </Link>
-      </FooterContentIconLink>
       {hideInDotNet(
-        <FooterContentIconLink>
-          <Link
-            href="https://www.reddit.com/r/Conflux_Network/"
-            ga={{
-              category: ScanEvent.menu.category,
-              action: ScanEvent.menu.action.reddit,
-            }}
-          >
-            <Reddit></Reddit>
-          </Link>
-        </FooterContentIconLink>,
+        <>
+          <FooterContentIconLink>
+            <Link
+              href="https://forum.conflux.fun/"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.forum,
+              }}
+            >
+              <Conflux></Conflux>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://www.reddit.com/r/Conflux_Network/"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.reddit,
+              }}
+            >
+              <Reddit></Reddit>
+            </Link>
+          </FooterContentIconLink>
+        </>,
       )}
     </FooterContentIconWrapper>
   );
@@ -418,7 +420,7 @@ export function Footer() {
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink>{websiteLink}</FooterContentLink>
-            <FooterContentLink>{portalLink}</FooterContentLink>
+            {hideInDotNet(<FooterContentLink>{portalLink}</FooterContentLink>)}
             {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
             {HIDE_IN_DOT_NET ? (
               <FooterContentLink>{globalLink}</FooterContentLink>
