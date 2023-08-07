@@ -26,6 +26,8 @@ import {
   isContractAddress,
   isInnerContractAddress,
   fromDripToGdrip,
+  isZeroAddress,
+  hideInDotNet,
 } from 'utils';
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
@@ -48,7 +50,7 @@ import { renderAddress } from 'utils/tableColumns/token';
 import { NFTPreview } from '../../components/NFTPreview/Loadable';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { CreateTxNote } from '../Profile/CreateTxNote';
-
+import { useNametag } from 'utils/hooks/useNametag';
 import iconInfo from 'images/info.svg';
 
 const getStorageFee = byteSize =>
@@ -99,6 +101,7 @@ export const Detail = () => {
     storageCollateralized,
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
+  const nametags = useNametag([from, to]);
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -225,17 +228,18 @@ export const Detail = () => {
     };
   }, [intervalToClear]);
 
-  const fromContent = (isFull = false) => (
-    <span>
-      <AddressContainer value={from} isFull={isFull} />{' '}
-      <CopyButton copyText={formatAddress(from)} />
-    </span>
-  );
-  const toContent = (isFull = false) => (
-    <span>
-      <AddressContainer value={to} isFull={isFull} />{' '}
-      <CopyButton copyText={formatAddress(to)} />
-    </span>
+  const addressContent = useCallback(
+    (isFull = false, address) => {
+      const addr = formatAddress(address);
+      return (
+        <span>
+          <AddressContainer value={addr} isFull={isFull} />{' '}
+          {nametags[addr]?.nameTag ? `(${nametags[addr]?.nameTag})` : null}{' '}
+          <CopyButton copyText={addr} />
+        </span>
+      );
+    },
+    [nametags],
   );
 
   const generatedDiv = () => {
@@ -271,7 +275,7 @@ export const Detail = () => {
                   </Link>{' '}
                 </>
               )}
-              {toContent(true)}
+              {addressContent(true, to)}
             </SkeletonContainer>
           </Description>
         );
@@ -285,7 +289,7 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {toContent(true)}
+              {addressContent(true, to)}
             </SkeletonContainer>
           </Description>
         );
@@ -450,10 +454,12 @@ export const Detail = () => {
                 {t(translations.transaction.tokenId)}:
                 <span className="tokenId">
                   {transferItem['tokenId']}
-                  <NFTPreview
-                    contractAddress={transferItem['address']}
-                    tokenId={transferItem['tokenId']}
-                  />
+                  {!isZeroAddress(formatAddress(transferItem['to'])) && (
+                    <NFTPreview
+                      contractAddress={transferItem['address']}
+                      tokenId={transferItem['tokenId']}
+                    />
+                  )}
                 </span>
               </span>
             </div>,
@@ -503,10 +509,12 @@ export const Detail = () => {
                       &nbsp;&nbsp;{t(translations.transaction.tokenId)}:{' '}
                       <span className="tokenId">
                         {item['tokenId']}
-                        <NFTPreview
-                          contractAddress={transferItem['address']}
-                          tokenId={item['tokenId']}
-                        />
+                        {!isZeroAddress(formatAddress(transferItem['to'])) && (
+                          <NFTPreview
+                            contractAddress={transferItem['address']}
+                            tokenId={item['tokenId']}
+                          />
+                        )}
                       </span>
                     </span>
                   </span>
@@ -789,7 +797,7 @@ export const Detail = () => {
           }
         >
           <SkeletonContainer shown={loading}>
-            {fromContent(true)}
+            {addressContent(true, from)}
           </SkeletonContainer>
         </Description>
         {generatedDiv()}
@@ -799,29 +807,38 @@ export const Detail = () => {
           <TokenTransfer tokenList={tokenList} transferList={transferList} />
         ) : null} */}
         {getTransferListDiv()}
-
-        <Description
-          title={
-            <Tooltip text={t(translations.toolTip.tx.value)} placement="top">
-              {t(translations.transaction.value)}
-            </Tooltip>
-          }
-        >
-          <SkeletonContainer shown={loading}>
-            {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
-          </SkeletonContainer>
-        </Description>
-        <Description
-          title={
-            <Tooltip text={t(translations.toolTip.tx.gasFee)} placement="top">
-              {t(translations.transaction.gasFee)}
-            </Tooltip>
-          }
-        >
-          <SkeletonContainer shown={loading}>
-            <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
-          </SkeletonContainer>
-        </Description>
+        {hideInDotNet(
+          <>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.value)}
+                  placement="top"
+                >
+                  {t(translations.transaction.value)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {value ? `${fromDripToCfx(value, true)} CFX` : '--'}
+              </SkeletonContainer>
+            </Description>
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.gasFee)}
+                  placement="top"
+                >
+                  {t(translations.transaction.gasFee)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
+              </SkeletonContainer>
+            </Description>
+          </>,
+        )}
         <div
           className={clsx('detailResetWrapper', {
             folded: folded,
@@ -876,23 +893,25 @@ export const Detail = () => {
                 : '--'}
             </SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageCollateralized)}
-                placement="top"
-              >
-                {t(translations.transaction.storageCollateralized)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              <StorageFee
-                fee={storageCollateralized}
-                sponsored={storageCoveredBySponsor}
-              />
-            </SkeletonContainer>
-          </Description>
+          {hideInDotNet(
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageCollateralized)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageCollateralized)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                <StorageFee
+                  fee={storageCollateralized}
+                  sponsored={storageCoveredBySponsor}
+                />
+              </SkeletonContainer>
+            </Description>,
+          )}
           <Description
             title={
               <Tooltip
@@ -910,20 +929,22 @@ export const Detail = () => {
               /{toThousands(storageLimit)}
             </SkeletonContainer>
           </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.storageReleased)}
-                placement="top"
-              >
-                {t(translations.transaction.storageReleased)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {storageReleasedTotal} CFX
-            </SkeletonContainer>
-          </Description>
+          {hideInDotNet(
+            <Description
+              title={
+                <Tooltip
+                  text={t(translations.toolTip.tx.storageReleased)}
+                  placement="top"
+                >
+                  {t(translations.transaction.storageReleased)}
+                </Tooltip>
+              }
+            >
+              <SkeletonContainer shown={loading}>
+                {storageReleasedTotal} CFX
+              </SkeletonContainer>
+            </Description>,
+          )}
           <Description
             title={
               <Tooltip text={t(translations.toolTip.tx.nonce)} placement="top">

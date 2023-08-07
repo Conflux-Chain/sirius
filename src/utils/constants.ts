@@ -56,6 +56,7 @@ export enum LOCALSTORAGE_KEYS_MAP {
   fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
   addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
   txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
+  hideInDotNet = 'CONFLUX_SCAN_HIDE_IN_DOT_NET',
 }
 
 export const NETWORK_ID = (() => {
@@ -71,6 +72,10 @@ export const NETWORK_ID = (() => {
   }
   return networkId;
 })();
+
+export const HIDE_IN_DOT_NET =
+  /.net$/.test(window.location.host) &&
+  localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
 
 // network type is come from backend network id, now there are three state, can be extended with special case
 export enum NETWORK_TYPES {
@@ -257,7 +262,7 @@ export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
 
 let APIHost = IS_TESTNET
   ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-  : `api${!IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
+  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
 if (window.location.host.startsWith('net')) {
   APIHost = window.location.host.replace(/cfx|eth/, 'api');
 }
@@ -274,12 +279,13 @@ export const OPEN_API_URLS = Object.entries({
   cfxTransfer: '/statistics/cfx/transfer',
   cfxHolderAccounts: '/statistics/account/cfx/holder',
   accountGrowth: '/statistics/account/growth',
-  activeAccounts: '/statistics/account/active',
+  activeAccounts: '/statistics/account/active/overall',
   contracts: '/statistics/contract',
   nftAssets: '/statistics/nft/asset',
   nftHolders: '/statistics/nft/holder',
   nftContracts: '/statistics/nft/contract',
   nftTransfers: '/statistics/nft/transfer',
+  approvals: '/account/approvals',
 
   // NFT
   NFTTokens: '/nft/tokens',
@@ -313,7 +319,7 @@ OPEN_API_URLS.CrossSpaceDailyCFXTransfer = '/stat/cross-space-cfx';
 OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 
 // table list list limit, max query items is 10,000, exceed will cause backend error
-export const TABLE_LIST_LIMIT = 100;
+export const TABLE_LIST_LIMIT = 10000;
 
 export const IS_FOREIGN_HOST = /.io$/.test(window.location.host);
 

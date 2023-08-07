@@ -70,13 +70,23 @@ export function AddressConverter() {
       } else if (address.startsWith('0x8')) {
         getCode(address)
           .then(code => {
-            resolve('');
+            if (code && code !== '0x') {
+              resolve('');
+            } else {
+              reject(
+                new Error(translations.addressConverter.errorMessage['0x8']),
+              );
+            }
           })
           .catch(() => {
             reject(
               new Error(translations.addressConverter.errorMessage['0x8']),
             );
           });
+      } else if (!address.startsWith('0x1')) {
+        throw new Error(
+          t(translations.addressConverter.errorMessage.notSupport),
+        );
       } else {
         resolve('');
       }

@@ -69,12 +69,13 @@ import { AddressConverter } from './containers/AddressConverter';
 import Loading from 'app/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
-import { CookieTip } from './components/CookieTip';
-import { GlobalTip } from './components/GlobalTip';
+// import { CookieTip } from './components/CookieTip';
+// import { GlobalTip } from './components/GlobalTip';
 import { NetworkError } from './containers/NetworkError/Loadable';
 import { BalanceChecker } from './containers/BalanceChecker/Loadable';
 import { NFTChecker } from './containers/NFTChecker/Loadable';
 import { CNS } from './containers/CNS/Loadable';
+import { Approval } from './containers/Approval/Loadable';
 import { NFTDetail } from './containers/NFTDetail/Loadable';
 import ScanBenchmark from './containers/_Benchmark';
 import {
@@ -638,6 +639,11 @@ export function App() {
                         <Route exact path={['/cns-search']} component={CNS} />
                         <Route
                           exact
+                          path={['/approval']}
+                          component={Approval}
+                        />
+                        <Route
+                          exact
                           path="/_benchmark"
                           component={ScanBenchmark}
                         />
@@ -871,8 +877,8 @@ export function App() {
                   </Main>
                   <Footer />
                   <GlobalStyle />
-                  <CookieTip />
-                  <GlobalTip tipKey="addressWarning" />
+                  {/* <CookieTip />
+                  <GlobalTip tipKey="addressWarning" /> */}
                 </ScrollToTop>
               )}
               <GlobalNotify />

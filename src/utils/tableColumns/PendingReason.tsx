@@ -50,6 +50,8 @@ export const PendingReason = ({
       futrueNonce,
       notEnoughCash,
       readyToPack,
+      tooOldEpoch,
+      fullnodeInnerError,
     } = translations.transaction.pendingDetails;
     return {
       '11': {
@@ -87,6 +89,16 @@ export const PendingReason = ({
         summary: readyToPack.summary,
         detail: readyToPack.lowGasPrice.detail,
         tip: readyToPack.lowGasPrice.tip,
+      },
+      '41': {
+        summary: tooOldEpoch.summary,
+        detail: tooOldEpoch.detail,
+        tip: tooOldEpoch.tip,
+      },
+      '51': {
+        summary: fullnodeInnerError.summary,
+        detail: fullnodeInnerError.detail,
+        tip: fullnodeInnerError.tip,
       },
     };
   }, []);

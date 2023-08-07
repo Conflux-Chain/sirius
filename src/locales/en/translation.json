@@ -1,4 +1,8 @@
 {
+  "nametag": {
+    "label": "Public Name Tag",
+    "tip": "Public Name Tag: "
+  },
   "ens": {
     "label": "CNS Name",
     "tip": "CNS Name: "
@@ -40,7 +44,7 @@
         "duplicated": "Duplicated address, already in the name tags list",
         "duplicatedNameTag": "Duplicated name tag, already in the name tags list"
       },
-      "publicNameTag": "Public Tag: ",
+      "publicNameTag": "Contract Tag: ",
       "myNameTag": "My Name Tag: "
     },
     "file": {
@@ -362,7 +366,7 @@
     "lockedDetailUnlockBlockNumber": "Unlock Blocknumber",
     "lockedDetailUnlockTime": "Estimated Unlock Time",
     "currentVotingRights": "Current Voting Rights",
-    "apy": "(APY 4%)",
+    "apy": "(APR 4%)",
     "viewLockedDetails": "Click to view lock history",
     "pos": {
       "identifier": "PoS Address",
@@ -453,6 +457,7 @@
     "tipCountAfter": "registered contracts"
   },
   "header": {
+    "approval": "Token Approval",
     "cns": "CNS",
     "home": "Home",
     "bnt": "Blocks & Transactions",
@@ -509,9 +514,11 @@
       "ens": ".web3 Username",
       "tokens": "Tokens",
       "contracts": "Contracts",
-      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed"
+      "contractsTip": "Only the 10 contracts with the earliest registration date are displayed",
+      "nametag": "Public Name Tag"
     },
     "pos": {
+      "posNickname": "Validator",
       "pos": "PoS",
       "overview": "Overview",
       "accounts": "Accounts",
@@ -545,6 +552,7 @@
     "fluentwallet": "Fluent Wallet",
     "confluxbounty": "ConfluxBounty",
     "hub": "ConfluxHub",
+    "global": "ConfluxScan Global",
     "copryRight": "© 2023 Conflux. All Rights Reserved.",
     "tool": "Tool",
     "addressFormatConversion": "Address Format Conversion",
@@ -705,7 +713,7 @@
         "finalized-interval": "Finality Intervals",
         "daily-accounts": "Accounts",
         "daily-staking": "Staking",
-        "daily-apy": "APY",
+        "daily-apy": "APR",
         "total-reward": "Total Reward",
         "daily-reward-rank": "Reward Rank",
         "daily-reward-info": "Reward Detail",
@@ -733,10 +741,10 @@
         "seriesName": "Total Staking CFX (Day)"
       },
       "apy": {
-        "title": "Annual Percentage Yield",
-        "subtitle": "The average annual percentage yield per day on the PoS of Conflux network.",
-        "yAxisTitle": "APY",
-        "seriesName": "APY (Day)"
+        "title": "Annual Percentage Rate",
+        "subtitle": "Annual percentage rate, the yearly interest paid to Conflux PoS stakers (in CFX).",
+        "yAxisTitle": "APR",
+        "seriesName": "APR"
       },
       "totalReward": {
         "title": "Total Reward",
@@ -840,7 +848,7 @@
       },
       "circulatingSupply": {
         "title": "Circulating Supply",
-        "subtitle": "Circulating supply contains the CFX in the Zero Address.",
+        "subtitle": "The number of CFX that is available and circulating on the market.",
         "others": "Genesis & Rewards",
         "totalCollateral": "Collateral",
         "totalStaking": "Staking"
@@ -954,16 +962,6 @@
     "cfxMarketCap": {
       "title": "Market Cap",
       "description": "Market Cap = Current Price x Circulating Supply"
-    },
-    "cfxCirculatingSupply": {
-      "title": "Circulating Supply",
-      "description": "Circulating supply contains the CFX in the Zero Address."
-    },
-    "circulating": {
-      "title": "Circulating Supply",
-      "description": "Circulating supply contains the CFX in the Zero Address.",
-      "labelZeroAddress": "Zero Address",
-      "labelOthers": "Others"
     },
     "issued": {
       "title": "Total Supply",
@@ -1425,21 +1423,17 @@
     "gasFeeSponsor": "GAS FEE SPONSOR",
     "currentAvialStorageFee": "Available Storage Fee Balance",
     "currentAvialGasFee": "Available Gas Fee Balance",
-    "providedStorage": "Storage Fees Provided By Conflux Foundation",
-    "providedGas": "Gas Fees Provided By Conflux Foundation",
-    "availStorage": "Remaining Storage Fees By Conflux Foundation",
-    "availGas": "Remaining Gas Fees By Conflux Foundation",
+    "providedStorage": "Storage Fees Provided",
+    "providedGas": "Gas Fees Provided",
+    "availStorage": "Remaining Storage Fees",
+    "availGas": "Remaining Gas Fees",
     "connectToApply": "Apply",
     "notice": "Remark",
-    "noticeFirst": "1. Conflux Foundation will sponsor Storage and Gas Fees. The amount of the sponsored funds and the application amount may vary.",
-    "noticeSecond": "2. To request the Smart Contract Sponsorship, you need to connect to Fluent Wallet.",
-    "noticeFourthOne": "3. If you don't have Fluent Wallet as a browser extension installed yet, please visit",
-    "noticeFourthTwo": "for instructions.",
-    "notice4": "4. For more information on sponsorship application, please refer to ",
-    "notice4link": "https://forum.conflux.fun/t/announcement-usage-adjustment-of-ecosystem-fund-for-the-conflux-sponsorship-mechanism-2022-11-11/12056",
-    "notice4linkContent": "Ecosystem Funds for the Sponsorship Mechanism.",
+    "noticeFirst": "1. Conflux implements the Sponsorship Mechanism,  a system that allows project owners or contract operators to cover transaction fees (gas fee) for users, thereby reducing the entry barrier of their projects.",
+    "noticeSecond": "2. The internal contract [<a target='__blank' href='https://confluxscan.net/address/cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaaegg2r16ar?tab=contract-viewer'>SponsorWhiteListControl</a>] is responsible for managing sponsorship information. For more detailed documentation, please refer to: <a target='__blank' href='https://doc.confluxnetwork.org/docs/core/learn/core-space-basics/internal-contracts/sponsor-whitelist-control'>https://doc.confluxnetwork.org/docs/core/learn/core-space-basics/internal-contracts/sponsor-whitelist-control</a>.",
+    "noticeThird": "3. If you wish to discuss sponsorship-related issues with the Conflux Foundation, please send an email to: bd@confluxnetwork.org.",
     "errReachToMax": "The available balance storage fees or gas fees has reached or exceeded the maximum value",
-    "errInsufficientFee": "Insufficient storage fees or gas fees by Conflux Foundation",
+    "errInsufficientFee": "Insufficient storage fees or gas fees",
     "errReplaceThird": "Unable to replace the third-party sponsors of storage or gas fees",
     "errContractNotFound": "The contract cannot be found",
     "errCannotReplaced": "Third party sponsors cannot be replaced",
@@ -1450,7 +1444,7 @@
     "searchAddress": "Search contract address",
     "applicationUnit": "application",
     "tx": "tx",
-    "byFoundation": " (by Foundation)"
+    "byFoundation": ""
   },
   "transaction": {
     "note": "Private Note",
@@ -1540,7 +1534,7 @@
       "detail": "Detail: ",
       "tip": "Tip: ",
       "reference": "Reference: ",
-      "link": "https://developer.confluxnetwork.org/sending-tx/en/why_tx_is_pending"
+      "link": "https://doc.confluxnetwork.org/docs/general/faq/core-space-transactions/why-transaction-is-pending"
     },
     "pendingDetails": {
       "futrueNonce": {
@@ -1579,6 +1573,16 @@
           "detail": "Gas price {{gasPrice}} is too low.",
           "tip": "Increase gas price to speedup transaction."
         }
+      },
+      "tooOldEpoch": {
+        "summary": "Too old epoch",
+        "detail": "The epoch height of the first tx is too old to be packed.",
+        "tip": "Submit a new transaction to update the tx pool."
+      },
+      "fullnodeInnerError": {
+        "summary": "Full node error",
+        "detail": "The full node internal error.",
+        "tip": "Submit a new transaction to update the tx pool."
       }
     }
   },
@@ -1653,7 +1657,8 @@
     "tip4": "4. Contract addresses starting with 0x0 cannot be converted, except for build-in contracts and zero-address.",
     "errorMessage": {
       "0x0": "The address is a non-built-in contract or a non-zero address",
-      "0x8": "The contract does not exist, please be careful"
+      "0x8": "The contract does not exist or self distructed, please be careful",
+      "notSupport": "The address does not start with 0x0, 0x1 or 0x8, cannot be converted"
     },
     "warning": "Attention:",
     "warnings": {
@@ -1748,7 +1753,7 @@
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
       "stakedBegin": "Total CFX staked. Access ",
       "stakedEnd": " to stake CFX for interest.",
-      "stakingEarned": "Staking CFX Earned (APY 4%) does not contain withdrawn interest. Staked interest will be automatically sent to your wallet address each time it is withdrawn.",
+      "stakingEarned": "Staking CFX Earned (APR 4%) does not contain withdrawn interest. Staked interest will be automatically sent to your wallet address each time it is withdrawn.",
       "lockedBegin": "Total CFX locked. Access ",
       "lockedEnd": " to lock CFX for voting rights.",
       "currentVotingRights": "The voting rights will be awarded according to: number of quarters × number of tokens × 0.25."
@@ -1878,6 +1883,7 @@
       "totalTokenTransfersCount": "Total Token Transfers Count",
       "totalTokenTransfersAccountsCount": "Total Token Transfers Accounts Count",
       "totalMiners": "Total Miners",
+      "highestNodes": "The all-time highest PoW nodes",
       "totalBlocksMined": "Total Blocks Mined",
       "totalGasUsed": "Total Gas Used",
       "top10": "View Top 10"
@@ -1903,7 +1909,8 @@
       "currentEpoch": "Current Epoch",
       "account": "Accounts",
       "transactions": "Transactions",
-      "contract": "Contracts"
+      "contract": "Contracts",
+      "minerCount": "PoW Nodes within 24 Hours"
     },
     "pos": {
       "finalizedEpoch": "Finalized Epoch",
@@ -1914,7 +1921,7 @@
       "lastInterestDistributionEpoch": "Latest Interest Distribution Block",
       "totalAccountCount": "Accounts",
       "votingBlock": "Latest Voted Block",
-      "apy": "APY",
+      "apy": "APR",
       "apyTip": "The existing base staking rate is 4%, and the PoS staking reward is added to this with a plus factor. Let x=CFX total circulation / CFX total staking, and the additional coefficient be √x.\nWhen the amount of staking is 1/4 of the circulation, the reward rate is 8%; When the amount of staking is 1/9 of the circulation, the reward rate is 12%; And so on. When the total number of votes cast is relatively low, those who vote will benefit more."
     }
   },
@@ -2010,6 +2017,55 @@
     "name": "Name",
 
     "errors": {
+      "cns": "The Core ID name entered is either not registered on CNS or not currently supported by Confluxscan.",
+      "address": "This address does not have a supported Core ID name that resolves to it.",
+      "invalidText": "The entered string content is invalid."
+    }
+  },
+  "approval": {
+    "title": "Token Approval",
+    "subtitle": "The tool to help you review and revoke your token approvals for any dApp.",
+    "inputPlaceholder": "Search by Address or CNS name",
+
+    "txHash": "Transaction Hash",
+    "token": "Token",
+    "tokenType": "Token Type",
+    "amount": "Authorization amount",
+    "contract": "Licensing contract",
+    "operation": "Operation content",
+    "timestamp": "Timestamp",
+    "revoke": "Revoke authorization",
+    "view": "View all licenses",
+    "unlimited": "Unlimited",
+    "tips": {
+      "support": "Only support the Tokens in the current token list.",
+      "view": "All addresses contained in the authorization record have a token balance of 0.",
+      "success": "Revoke success",
+      "failed": "Revoke failed"
+    },
+    "select": {
+      "all": "All",
+      "ERC20": "CRC20",
+      "ERC721": "CRC721",
+      "ERC1155": "CRC1155"
+    },
+
+    "cns": "CNS",
+    "address": "Address",
+
+    "resolvedAddress": "Resolved Address",
+    "expires": "Expiration date",
+    "registrant": "Registrant",
+    "controller": "Controller",
+    "owner": "Owner",
+    "tokenid": "Token ID",
+
+    "reverseRecord": "Reverse Record",
+    "ownedCoreids": "Owned Core ID Names",
+    "name": "Name",
+
+    "errors": {
+      "invalidAddress": "Invalid address",
       "cns": "The Core ID name entered is either not registered on CNS or not currently supported by Confluxscan.",
       "address": "This address does not have a supported Core ID name that resolves to it.",
       "invalidText": "The entered string content is invalid."

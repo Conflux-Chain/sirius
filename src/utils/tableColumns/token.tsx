@@ -7,19 +7,25 @@ import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
 import { media } from 'styles/media';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { formatBalance, formatNumber, formatString } from 'utils';
+import {
+  formatBalance,
+  formatNumber,
+  formatString,
+  getENSInfo,
+  formatAddress,
+  isZeroAddress,
+  getNametagInfo,
+} from 'utils';
 import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
 import { AddressContainer } from '../../app/components/AddressContainer';
-import { formatAddress } from 'utils';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
 import { Tooltip } from '../../app/components/Tooltip/Loadable';
 import { TxnHashRenderComponent } from './transaction';
-import { getCurrencySymbol } from 'utils/constants';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
@@ -29,6 +35,7 @@ import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
 import { Tag } from '@cfxjs/antd';
+import { Price } from '../../app/components/Price/Loadable';
 
 const fromTypeInfo = {
   arrow: {
@@ -154,6 +161,8 @@ export const renderAddress = (
         contractCreated={row.contractCreated}
         verify={verify}
         isEspaceAddress={isEspaceAddress}
+        ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
@@ -197,6 +206,8 @@ export const token = {
                     value={row?.address}
                     alias={row?.contractName || null}
                     showIcon={false}
+                    ensInfo={getENSInfo(row)}
+                    nametagInfo={getNametagInfo(row)}
                   />
                 )}
               </Text>
@@ -208,7 +219,7 @@ export const token = {
   },
 };
 
-const Token2 = ({ row }) => {
+export const Token2 = ({ row }) => {
   const { t } = useTranslation();
   return (
     <StyledIconWrapper>
@@ -247,6 +258,8 @@ const Token2 = ({ row }) => {
                   value={row?.transferTokenInfo?.address}
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
+                  ensInfo={getENSInfo(row)}
+                  nametagInfo={getNametagInfo(row)}
                 />
                 &nbsp;
                 <InfoIconWithTooltip
@@ -305,28 +318,16 @@ export const price = {
   key: 'price',
   sortable: true,
   render: (value, row) => {
-    const count = (
-      <>
-        {getCurrencySymbol()}
-        {formatNumber(value || 0, {
-          withUnit: false,
-          precision: 2,
-          keepZero: true,
-        })}
-      </>
-    );
+    const count = <Price>{value}</Price>;
+
     return (
       <ContentWrapper right monospace>
-        {value != null ? (
-          row.quoteUrl ? (
-            <LinkA href={row.quoteUrl} target="_blank">
-              {count}
-            </LinkA>
-          ) : (
-            count
-          )
+        {row.quoteUrl ? (
+          <LinkA href={row.quoteUrl} target="_blank">
+            {count}
+          </LinkA>
         ) : (
-          '-'
+          count
         )}
       </ContentWrapper>
     );
@@ -366,16 +367,13 @@ export const marketCap = {
   dataIndex: 'totalPrice',
   key: 'totalPrice',
   sortable: true,
-  render: value => (
-    <ContentWrapper right monospace>
-      {value != null && value > 0
-        ? `${getCurrencySymbol()}${formatNumber(value || 0, {
-            keepDecimal: false,
-            withUnit: false,
-          })}`
-        : '-'}
-    </ContentWrapper>
-  ),
+  render: value => {
+    return (
+      <ContentWrapper right monospace>
+        <Price>{value}</Price>
+      </ContentWrapper>
+    );
+  },
 };
 export const transfer = {
   width: 1,
@@ -559,6 +557,8 @@ export const account = {
           (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
         }
         isFull={true}
+        ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
     </AccountWrapper>
   ),
@@ -681,17 +681,21 @@ export const tokenId = (contractAddress?: string) => ({
   ),
   dataIndex: 'tokenId',
   key: 'tokenId',
-  render: (value, row) => (
-    <>
-      <Text span hoverValue={value}>
-        <SpanWrap>{value || '-'}</SpanWrap>
-      </Text>
-      <NFTPreview
-        contractAddress={contractAddress || row?.transferTokenInfo?.address}
-        tokenId={value}
-      />
-    </>
-  ),
+  render: (value, row) => {
+    return (
+      <>
+        <Text span hoverValue={value}>
+          <SpanWrap>{value || '-'}</SpanWrap>
+        </Text>
+        {!isZeroAddress(formatAddress(row.to)) && (
+          <NFTPreview
+            contractAddress={contractAddress || row?.transferTokenInfo?.address}
+            tokenId={value}
+          />
+        )}
+      </>
+    );
+  },
 });
 
 export const details = {
@@ -881,6 +885,8 @@ export const NFTOwner = {
             : null)
         }
         isFull={true}
+        ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
       />
     </AccountWrapper>
   ),

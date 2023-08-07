@@ -25,6 +25,8 @@ import {
 } from 'utils';
 import { appendApiPrefix } from 'utils/api';
 import { getAddress, isValidENS, LogoENS } from 'utils/ens';
+import verifiedIcon from 'images/nametag/verified.svg';
+import warningIcon from 'images/nametag/warning.svg';
 
 const { Search: SearchInput } = Input;
 
@@ -48,6 +50,12 @@ const TokenItemWrapper = styled.div`
 
     .title {
       font-size: 14px;
+    }
+
+    .nametag-status-icon {
+      width: 16px;
+      height: 16px;
+      margin-top: -2px;
     }
 
     .address,
@@ -100,6 +108,35 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
                   {t => t(translations.header.search.ens)}
                 </Translation>
               </span>
+            </div>
+            <div className="address">{l.address}</div>
+          </span>
+        </TokenItemWrapper>
+      ) : (
+        <span>
+          <Translation>{t => t(translations.general.noResult)}</Translation>
+        </span>
+      ),
+    }));
+  } else if (type === 'nametag') {
+    return list.map(l => ({
+      key: `nametag-${l.address}`,
+      value: `nametag-${l.address}`,
+      type,
+      label: l.address ? (
+        <TokenItemWrapper
+          onClick={() => {
+            window.location.href = `/address/${l.address}`;
+          }}
+        >
+          <span>
+            <div className="title">
+              {l.nameTag}{' '}
+              <img
+                className="nametag-status-icon"
+                src={l.caution ? warningIcon : verifiedIcon}
+                alt="status-icon"
+              ></img>
             </div>
             <div className="address">{l.address}</div>
           </span>
@@ -261,6 +298,21 @@ export const Search = () => {
                       : res.contractList,
                     notAvailable,
                     'contract',
+                  ),
+                });
+              if (res.eoaList && res.eoaList.length > 0)
+                options.push({
+                  label: (
+                    <LabelWrapper>
+                      {t(translations.header.search.nametag)}
+                    </LabelWrapper>
+                  ),
+                  options: searchResult(
+                    res.eoaList.length > 10
+                      ? res.eoaList.slice(0, 10)
+                      : res.eoaList,
+                    notAvailable,
+                    'nametag',
                   ),
                 });
               setOptions(options);

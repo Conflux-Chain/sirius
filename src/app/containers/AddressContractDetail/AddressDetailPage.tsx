@@ -23,7 +23,7 @@ import {
   HeadAddressLine,
   Top,
   Head,
-  StyledENSName,
+  StyledLabelWrapper,
 } from './layouts';
 import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
@@ -40,6 +40,7 @@ import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'app/components/AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
+import Nametag from './Nametag';
 
 interface RouteParams {
   address: string;
@@ -74,11 +75,6 @@ export const AddressDetailPage = memo(() => {
       <Menu.Item>
         <RouterLink to={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
-      </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/nft-checker/${address}`}>
-          {t(translations.general.address.more.NFTChecker)}
         </RouterLink>
       </Menu.Item>
       <Menu.Item>
@@ -135,13 +131,13 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
-
             <RouterLink to={`/cns-search?text=${label}`}>
-              <StyledENSName show={!!label}>
+              <StyledLabelWrapper show={!!label}>
                 {icon}
                 {label}
-              </StyledENSName>
-            </RouterLink>
+              </StyledLabelWrapper>
+            </RouterLink>{' '}
+            <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>
             <span className="address">

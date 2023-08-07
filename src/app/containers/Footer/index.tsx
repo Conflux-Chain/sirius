@@ -15,7 +15,14 @@ import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
-import { NETWORK_TYPE, NETWORK_TYPES, IS_FOREIGN_HOST } from 'utils/constants';
+import {
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+  IS_FOREIGN_HOST,
+  NETWORK_ID,
+  HIDE_IN_DOT_NET,
+} from 'utils/constants';
+import { hideInDotNet, getUrl } from 'utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
@@ -175,53 +182,71 @@ export function Footer() {
       {t(translations.footer.aboutUs.supportCenter)}
     </Link>
   );
+  const globalLink = (
+    <Link
+      className="footer-link"
+      href={`${window.location.protocol}${getUrl(NETWORK_ID)
+        .replace('-stage', '')
+        .replace('.net', '.io')}`}
+      ga={{
+        category: ScanEvent.menu.category,
+        action: ScanEvent.menu.action.global,
+      }}
+    >
+      {t(translations.footer.global)}
+    </Link>
+  );
 
   const icons = (
     <FooterContentIconWrapper>
-      <FooterContentIconLink>
-        <Link
-          href="https://twitter.com/Conflux_Network"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.twitter,
-          }}
-        >
-          <Twitter></Twitter>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://t.me/Conflux_English"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.tme,
-          }}
-        >
-          <Telegram></Telegram>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://discord.com/invite/aCZkf2C"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.discord,
-          }}
-        >
-          <Discord></Discord>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://medium.com/@ConfluxNetwork"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.medium,
-          }}
-        >
-          <Medium></Medium>
-        </Link>
-      </FooterContentIconLink>
+      {hideInDotNet(
+        <>
+          <FooterContentIconLink>
+            <Link
+              href="https://twitter.com/Conflux_Network"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.twitter,
+              }}
+            >
+              <Twitter></Twitter>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://t.me/Conflux_English"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.tme,
+              }}
+            >
+              <Telegram></Telegram>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://discord.com/invite/aCZkf2C"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.discord,
+              }}
+            >
+              <Discord></Discord>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://medium.com/@ConfluxNetwork"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.medium,
+              }}
+            >
+              <Medium></Medium>
+            </Link>
+          </FooterContentIconLink>
+        </>,
+      )}
       <FooterContentIconLink>
         <Link
           href="https://github.com/conflux-chain"
@@ -244,17 +269,19 @@ export function Footer() {
           <Weibo></Weibo>
         </Link>
       </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://open.kakao.com/o/gmyEjl2b"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.kakao,
-          }}
-        >
-          <KakaoTalk></KakaoTalk>
-        </Link>
-      </FooterContentIconLink>
+      {hideInDotNet(
+        <FooterContentIconLink>
+          <Link
+            href="https://open.kakao.com/o/gmyEjl2b"
+            ga={{
+              category: ScanEvent.menu.category,
+              action: ScanEvent.menu.action.kakao,
+            }}
+          >
+            <KakaoTalk></KakaoTalk>
+          </Link>
+        </FooterContentIconLink>,
+      )}
       <FooterContentIconLink>
         <StyledIconWechatWrapper>
           <img
@@ -265,50 +292,58 @@ export function Footer() {
           <Wechat></Wechat>
         </StyledIconWechatWrapper>
       </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://www.youtube.com/channel/UCFSTmjoSU8jn6DE_4V2TIzA"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.youtube,
-          }}
-        >
-          <Youtube></Youtube>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://blog.naver.com/conflux-chain"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.naver,
-          }}
-        >
-          <Naver></Naver>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://forum.conflux.fun/"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.forum,
-          }}
-        >
-          <Conflux></Conflux>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://www.reddit.com/r/Conflux_Network/"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.reddit,
-          }}
-        >
-          <Reddit></Reddit>
-        </Link>
-      </FooterContentIconLink>
+      {hideInDotNet(
+        <>
+          <FooterContentIconLink>
+            <Link
+              href="https://www.youtube.com/channel/UCFSTmjoSU8jn6DE_4V2TIzA"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.youtube,
+              }}
+            >
+              <Youtube></Youtube>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://blog.naver.com/conflux-chain"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.naver,
+              }}
+            >
+              <Naver></Naver>
+            </Link>
+          </FooterContentIconLink>
+        </>,
+      )}
+      {hideInDotNet(
+        <>
+          <FooterContentIconLink>
+            <Link
+              href="https://forum.conflux.fun/"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.forum,
+              }}
+            >
+              <Conflux></Conflux>
+            </Link>
+          </FooterContentIconLink>
+          <FooterContentIconLink>
+            <Link
+              href="https://www.reddit.com/r/Conflux_Network/"
+              ga={{
+                category: ScanEvent.menu.category,
+                action: ScanEvent.menu.action.reddit,
+              }}
+            >
+              <Reddit></Reddit>
+            </Link>
+          </FooterContentIconLink>
+        </>,
+      )}
     </FooterContentIconWrapper>
   );
 
@@ -332,7 +367,7 @@ export function Footer() {
     developerDocuments: (
       <Link
         className="footer-link"
-        href="https://developer.confluxnetwork.org/"
+        href="https://doc.confluxnetwork.org/"
         ga={{
           category: ScanEvent.menu.category,
           action: ScanEvent.menu.action.developerDocuments,
@@ -341,30 +376,30 @@ export function Footer() {
         {t(translations.footer.developResource.developerDocuments)}
       </Link>
     ),
-    confluxStudio: (
-      <Link
-        className="footer-link"
-        href="https://github.com/ObsidianLabs/ConfluxStudio/"
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.confluxStudio,
-        }}
-      >
-        {t(translations.footer.developResource.confluxStudio)}
-      </Link>
-    ),
-    confluxTruffle: (
-      <Link
-        className="footer-link"
-        href="https://github.com/Conflux-Chain/conflux-truffle/"
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.confluxTruffle,
-        }}
-      >
-        {t(translations.footer.developResource.confluxTruffle)}
-      </Link>
-    ),
+    // confluxStudio: (
+    //   <Link
+    //     className="footer-link"
+    //     href="https://github.com/ObsidianLabs/ConfluxStudio/"
+    //     ga={{
+    //       category: ScanEvent.menu.category,
+    //       action: ScanEvent.menu.action.confluxStudio,
+    //     }}
+    //   >
+    //     {t(translations.footer.developResource.confluxStudio)}
+    //   </Link>
+    // ),
+    // confluxTruffle: (
+    //   <Link
+    //     className="footer-link"
+    //     href="https://github.com/Conflux-Chain/conflux-truffle/"
+    //     ga={{
+    //       category: ScanEvent.menu.category,
+    //       action: ScanEvent.menu.action.confluxTruffle,
+    //     }}
+    //   >
+    //     {t(translations.footer.developResource.confluxTruffle)}
+    //   </Link>
+    // ),
   };
   const ICP = useMemo(() => {
     return window.location.hostname.includes('confluxscan.net') ? (
@@ -385,8 +420,11 @@ export function Footer() {
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink>{websiteLink}</FooterContentLink>
-            <FooterContentLink>{portalLink}</FooterContentLink>
-            <FooterContentLink>{hubLink}</FooterContentLink>
+            {hideInDotNet(<FooterContentLink>{portalLink}</FooterContentLink>)}
+            {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
+            {HIDE_IN_DOT_NET ? (
+              <FooterContentLink>{globalLink}</FooterContentLink>
+            ) : null}
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -405,12 +443,12 @@ export function Footer() {
             <FooterContentLink>
               {developResourceLinks.developerDocuments}
             </FooterContentLink>
-            <FooterContentLink>
+            {/* <FooterContentLink>
               {developResourceLinks.confluxStudio}
             </FooterContentLink>
             <FooterContentLink>
               {developResourceLinks.confluxTruffle}
-            </FooterContentLink>
+            </FooterContentLink> */}
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
@@ -426,20 +464,24 @@ export function Footer() {
           </FooterContentRow>
         </FooterContent>
       </FooterContentWrapper>
-      <FooterContentWrapper>
-        <FooterContentTitle className="footer-tool">
-          {t(translations.footer.aboutUs.title)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            {IS_FOREIGN_HOST && (
-              <FooterContentLink>{privacyPolicy}</FooterContentLink>
-            )}
-            {IS_FOREIGN_HOST && <FooterContentLink>{terms}</FooterContentLink>}
-            <FooterContentLink>{supportCenter}</FooterContentLink>
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
+      {hideInDotNet(
+        <FooterContentWrapper>
+          <FooterContentTitle className="footer-tool">
+            {t(translations.footer.aboutUs.title)}
+          </FooterContentTitle>
+          <FooterContent>
+            <FooterContentRow>
+              {IS_FOREIGN_HOST && (
+                <FooterContentLink>{privacyPolicy}</FooterContentLink>
+              )}
+              {IS_FOREIGN_HOST && (
+                <FooterContentLink>{terms}</FooterContentLink>
+              )}
+              <FooterContentLink>{supportCenter}</FooterContentLink>
+            </FooterContentRow>
+          </FooterContent>
+        </FooterContentWrapper>,
+      )}
       <FooterContentWrapper>
         <FooterContentTitle className="preference">
           {t(translations.footer.preference)}

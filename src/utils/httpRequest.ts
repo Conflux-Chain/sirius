@@ -92,6 +92,14 @@ export const reqTokenList = (param?: object, extra?: object) => {
   });
 };
 
+export const reqContractList = (param?: object, extra?: object) => {
+  return sendRequest({
+    url: `/contract`,
+    query: param,
+    ...extra,
+  });
+};
+
 export const reqTokenListByName = (param?: object, extra?: object) => {
   return sendRequest({
     url: '/stat/tokens/name',
@@ -334,6 +342,13 @@ export const reqNFTBalance = (extra?: object) => {
   });
 };
 
+export const reqApprovals = (extra?: object) => {
+  return sendRequest({
+    url: OPEN_API_URLS.approvals,
+    ...extra,
+  });
+};
+
 /** open api, end */
 
 export const reqPendingTxs = (extra?: object) => {
@@ -347,6 +362,19 @@ export const reqRefreshMetadata = (param?: object, extra?: object) => {
   return sendRequest({
     url: `/stat/nft/checker/refresh`,
     query: param,
+    ...extra,
+  });
+};
+
+// different from ens
+// maybe send one request, to get all info is better (ens info, nametag info, contract info, token info)
+export const reqNametag = (address: string[], extra?: object) => {
+  const query = address.reduce((prev, curr, index) => {
+    return !index ? `address=${curr}` : `${prev}&address=${curr}`;
+  }, '');
+
+  return sendRequest({
+    url: `/nametag?${query}`,
     ...extra,
   });
 };

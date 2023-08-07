@@ -4,7 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
 import SkelontonContainer from '../SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
-import { formatNumber, fromDripToCfx, toThousands } from '../../../utils';
+import {
+  formatNumber,
+  fromDripToCfx,
+  hideInDotNet,
+  toThousands,
+} from '../../../utils';
 import { AddressContainer } from '../AddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
@@ -17,6 +22,7 @@ import { Link } from '../Link';
 import { Description } from '../Description/Loadable';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
+import { IS_TESTNET, HIDE_IN_DOT_NET } from '../../../utils/constants';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -34,6 +40,7 @@ export enum StatsType {
   topMinersByBlocksMined = 'topMinersByBlocksMined',
   topAccountsByGasUsed = 'topAccountsByGasUsed',
   topAccountsByTxnCount = 'topAccountsByTxnCount',
+  highestNodes = 'highestNodes',
 }
 
 interface Props {
@@ -107,17 +114,21 @@ export const StatsCard = ({
     case StatsType.overviewTransactions:
       columns = [
         {
-          title: t(translations.statistics.overviewColumns.totalCFXSent),
-          index: 'cfxAmount',
-          more: '/pow-charts/cfx-transfer',
-          unit: 'CFX',
-        },
-        {
           title: t(translations.statistics.overviewColumns.totalTxnCount),
           more: '/pow-charts/tx',
           index: 'cfxTxn',
         },
       ];
+
+      if (!HIDE_IN_DOT_NET) {
+        columns.unshift({
+          title: t(translations.statistics.overviewColumns.totalCFXSent),
+          index: 'cfxAmount',
+          more: '/pow-charts/cfx-transfer',
+          unit: 'CFX',
+        });
+      }
+
       action = 'transactions';
       category = 'overview';
       break;
@@ -149,6 +160,15 @@ export const StatsCard = ({
           index: 'minerCount',
         },
       ];
+
+      // only show in coreSpace testnet
+      if (IS_TESTNET) {
+        columns.unshift({
+          title: t(translations.statistics.overviewColumns.highestNodes),
+          index: 'highestNodes',
+        });
+      }
+
       action = 'miners';
       category = 'overview';
       break;
@@ -234,10 +254,18 @@ export const StatsCard = ({
       columns = [
         t(translations.statistics.column.address),
         t(translations.statistics.column.totalBlocksMined),
-        t(translations.statistics.column.totalRewards),
-        t(translations.statistics.column.totalTxnFees),
         t(translations.statistics.column.hashRate),
       ];
+
+      if (!HIDE_IN_DOT_NET) {
+        columns.splice(
+          3,
+          2,
+          t(translations.statistics.column.totalRewards),
+          t(translations.statistics.column.totalTxnFees),
+        );
+      }
+
       action = 'topMiner';
       category = 'miner';
       break;
@@ -478,16 +506,6 @@ export const StatsCard = ({
             </td>
             <td className="text-right">{intValue(d.blockCount)}</td>
             <td className="text-right">
-              {cfxValue(d.totalReward, { showUnit: true })}
-            </td>
-            <td className="text-right">
-              {cfxValue(d.txFee, {
-                keepDecimal: true,
-                keepZero: true,
-                showUnit: true,
-              })}
-            </td>
-            <td className="text-right">
               <Text
                 hoverValue={
                   formatNumber(d.hashRate, {
@@ -526,6 +544,20 @@ export const StatsCard = ({
                 %)
               </Text>
             </td>
+            {hideInDotNet(
+              <>
+                <td className="text-right">
+                  {cfxValue(d.totalReward, { showUnit: true })}
+                </td>
+                <td className="text-right">
+                  {cfxValue(d.txFee, {
+                    keepDecimal: true,
+                    keepZero: true,
+                    showUnit: true,
+                  })}
+                </td>
+              </>,
+            )}
           </tr>
         ));
       case 'network':

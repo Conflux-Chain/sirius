@@ -68,7 +68,6 @@ export const useGetTxnStatus = (
   method?, // getTransactionByHash or getTransactionReceipt,
 ) => {
   // 0 for success, 1 for error occured, null when the transaction is skipped or not packed.
-  // ref to: https://developer.confluxnetwork.org/docs/js-conflux-sdk/docs/javascript_sdk#Conflux.js/Conflux/getTransactionByHash
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [status, setStatus] = useState({});
   const markedHashs = useRef({});
