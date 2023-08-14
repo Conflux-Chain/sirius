@@ -372,6 +372,16 @@ export const useAccount = (
             accumulatedInterestReturn: notAvaiableText,
             collateralForStorage: notAvaiableText,
             transactionCount: notAvaiableText,
+            collateralForStorageInfo: {
+              storageQuota: {
+                storageCollateral: '0',
+                storagePoint: '0',
+              },
+              storageUsed: {
+                storageCollateral: '0',
+                storagePoint: '0',
+              },
+            },
           };
         }),
     {
@@ -382,6 +392,16 @@ export const useAccount = (
         accumulatedInterestReturn: loadingText,
         collateralForStorage: loadingText,
         transactionCount: loadingText,
+        collateralForStorageInfo: {
+          storageQuota: {
+            storageCollateral: '0',
+            storagePoint: '0',
+          },
+          storageUsed: {
+            storageCollateral: '0',
+            storagePoint: '0',
+          },
+        },
       },
       ...opts,
       revalidateOnMount: true,
@@ -449,6 +469,16 @@ export const useContract = (
             abi: null,
             sourceCode: null,
             icon: undefined,
+            collateralForStorageInfo: {
+              storageQuota: {
+                storageCollateral: '0',
+                storagePoint: '0',
+              },
+              storageUsed: {
+                storageCollateral: '0',
+                storagePoint: '0',
+              },
+            },
           };
         }),
     {
@@ -471,6 +501,16 @@ export const useContract = (
         abi: loadingText,
         sourceCode: loadingText,
         icon: undefined,
+        collateralForStorageInfo: {
+          storageQuota: {
+            storageCollateral: '0',
+            storagePoint: '0',
+          },
+          storageUsed: {
+            storageCollateral: '0',
+            storagePoint: '0',
+          },
+        },
       },
       ...opts,
       revalidateOnMount: true,

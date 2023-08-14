@@ -1160,3 +1160,21 @@ export const hideInDotNet = <T>(content: T): T | null => {
     return content;
   }
 };
+
+export const processSponsorStorage = (p = '0', c = '0') => {
+  let point = '0';
+  let collateral = '0';
+  let total = '0';
+
+  point = new BigNumber(p).div(1024).toString();
+  collateral = c.toString();
+  total = new BigNumber(point).plus(collateral).toString();
+
+  return {
+    point: p,
+    collateral: c,
+    fPoint: point,
+    fCollateral: collateral,
+    total,
+  };
+};
