@@ -390,7 +390,9 @@ export function Sponsor() {
     () =>
       processSponsorStorage(
         storageSponsorInfo?.storageQuota?.storagePoint,
-        fromDripToCfx(storageSponsorInfo?.storageQuota?.storageCollateral),
+        new BigNumber(storageSponsorInfo?.storageQuota?.storageCollateral)
+          .div(1e18)
+          .toString(),
       ).total,
     [storageSponsorInfo],
   );
@@ -448,9 +450,11 @@ export function Sponsor() {
                   <SponsorStorage
                     storageQuota={{
                       point: storageSponsorInfo.storageQuota.storagePoint,
-                      collateral: fromDripToCfx(
-                        storageSponsorInfo.storageQuota.storageCollateral,
-                      ),
+                      collateral: new BigNumber(
+                        storageSponsorInfo?.storageQuota?.storageCollateral,
+                      )
+                        .div(1e18)
+                        .toString(),
                     }}
                   >
                     <span className="fee">
