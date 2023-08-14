@@ -14,6 +14,7 @@ import imgToken from 'images/contract-address/token.svg';
 import imgStorage from 'images/contract-address/storage.svg';
 import imgNonce from 'images/contract-address/nonce.svg';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
+import BigNumber from 'bignumber.js';
 
 // todo, need to refactor the request, and rewrite skeleton style
 const skeletonStyle = { width: '7rem', height: '2.4rem' };
@@ -75,12 +76,13 @@ export function StorageStakingCard({ accountInfo }) {
   const bp = useBreakpoint();
   const loading = accountInfo.balance === t(translations.general.loading);
 
-  const { storageQuota, storageUsed } = accountInfo.collateralForStorageInfo;
+  const { storageQuota, storageUsed } =
+    accountInfo.collateralForStorageInfo || {};
   const total = useMemo(
     () =>
       processSponsorStorage(
         storageUsed?.storagePoint,
-        fromDripToCfx(storageUsed?.storageCollateral),
+        new BigNumber(storageUsed?.storageCollateral || 0).div(1e18).toString(),
       ).total,
     [storageUsed],
   );
@@ -99,14 +101,20 @@ export function StorageStakingCard({ accountInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <SponsorStorage
             storageUsed={{
-              point: storageUsed.storagePoint,
-              collateral: fromDripToCfx(storageUsed.storageCollateral),
+              point: storageUsed?.storagePoint,
+              collateral: new BigNumber(storageUsed?.storageCollateral || 0)
+                .div(1e18)
+                .toString(),
             }}
             storageQuota={
               accountInfo.sourceCode !== undefined
                 ? {
-                    point: storageQuota.storagePoint,
-                    collateral: fromDripToCfx(storageQuota.storageCollateral),
+                    point: storageQuota?.storagePoint,
+                    collateral: new BigNumber(
+                      storageQuota?.storageCollateral || 0,
+                    )
+                      .div(1e18)
+                      .toString(),
                   }
                 : null
             }

@@ -101,7 +101,7 @@ SponsorStorage.propTypes = {
 };
 
 const StyledSponsorStorageContentWrapper = styled.div`
-  max-width: 400px;
+  max-width: 420px;
   color: #282d30;
   font-size: 14px;
   line-height: 22px;
