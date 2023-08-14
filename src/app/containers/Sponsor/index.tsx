@@ -14,6 +14,8 @@ import {
   fromDripToCfx,
   getAddressInputPlaceholder,
   formatAddress,
+  processSponsorStorage,
+  formatNumber,
 } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
@@ -27,9 +29,10 @@ import {
 } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { reqContractList } from 'utils/httpRequest';
+import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
+import SponsorStorage from 'app/components/SponsorStorage/Loadable';
 
 interface RouteParams {
   contractAddress: string;
@@ -103,6 +106,16 @@ export function Sponsor() {
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
   const { accounts } = usePortal();
+  const [storageSponsorInfo, setStorageSponsorInfo] = useState({
+    storageQuota: {
+      storageCollateral: '0',
+      storagePoint: '0',
+    },
+    storageUsed: {
+      storageCollateral: '0',
+      storagePoint: '0',
+    },
+  });
 
   const addressInputPlaceholder = useMemo(() => {
     return getAddressInputPlaceholder();
@@ -131,7 +144,9 @@ export function Sponsor() {
     // cip-37 compatible
     const address = formatAddress(_address);
     const sponsorInfo = await rpcGetSponsorInfo(address);
-
+    reqContract({ address }).then(data => {
+      setStorageSponsorInfo(data.collateralForStorageInfo);
+    });
     const { flag } = await fetchIsAppliable(address);
 
     setIsFlag(flag);
@@ -358,7 +373,7 @@ export function Sponsor() {
     }
   };
 
-  const currentStorageFeeAmount = getCFXAmount(currentStorageFee, 'CFX');
+  // const currentStorageFeeAmount = getCFXAmount(currentStorageFee, 'CFX');
   const providedStorageFeeAmount = getCFXAmount(providedStorageFee, 'CFX');
   const avialStorageFeeAmount = getCFXAmount(avialStorageFee, 'CFX');
 
@@ -370,6 +385,15 @@ export function Sponsor() {
 
   const storageBoundAmount = getCFXAmount(storageBound, 'CFX');
   const gasBoundAmount = getCFXAmount(gasBound, 'GDrip');
+
+  const total = useMemo(
+    () =>
+      processSponsorStorage(
+        storageSponsorInfo?.storageQuota?.storagePoint,
+        fromDripToCfx(storageSponsorInfo?.storageQuota?.storageCollateral),
+      ).total,
+    [storageSponsorInfo],
+  );
 
   return (
     <>
@@ -416,17 +440,26 @@ export function Sponsor() {
               </SkelontonContainer>
             </div>
             <div className="currentLabel">
-              {t(translations.sponsor.currentAvialStorageFee)}
+              {t(translations.sponsor.currentAvialStorageQuota)}
             </div>
             <div className="currentFeeContainer">
               <SkelontonContainer shown={loading}>
                 {currentStorageFee !== defaultStr ? (
-                  <>
+                  <SponsorStorage
+                    storageQuota={{
+                      point: storageSponsorInfo.storageQuota.storagePoint,
+                      collateral: fromDripToCfx(
+                        storageSponsorInfo.storageQuota.storageCollateral,
+                      ),
+                    }}
+                  >
                     <span className="fee">
-                      {currentStorageFeeAmount.amount}
+                      {formatNumber(total, {
+                        withUnit: false,
+                      })}
                     </span>
-                    <span className="unit">{currentStorageFeeAmount.unit}</span>
-                  </>
+                    <span className="unit">KB</span>
+                  </SponsorStorage>
                 ) : (
                   defaultStr
                 )}
