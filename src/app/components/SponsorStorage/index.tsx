@@ -74,7 +74,7 @@ const SponsorStorage = ({ children, storageUsed, storageQuota }: Props) => {
                 </div>
               </div>
             )}
-            <div className="mt10">
+            <div className="tip mt10">
               {t(translations.sponsor.storage.example)}
             </div>
             <div
