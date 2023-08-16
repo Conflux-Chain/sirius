@@ -1151,7 +1151,6 @@
     "balance": "余额",
     "token": "数字资产",
     "abnormalToken": "非正常数字资产，未获取到其名称和符号",
-    "storageStaking": "抵押存储",
     "nonce": "随机数",
     "transaction": "交易",
     "transactions": "交易",
