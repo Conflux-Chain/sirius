@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from 'styles/media';
 import { translations } from 'locales/i18n';
@@ -7,12 +7,14 @@ import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from 'app/components/Text/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { fromDripToCfx } from 'utils';
+import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import imgBalance from 'images/contract-address/balance.svg';
 import imgToken from 'images/contract-address/token.svg';
 import imgStorage from 'images/contract-address/storage.svg';
 import imgNonce from 'images/contract-address/nonce.svg';
+import SponsorStorage from 'app/components/SponsorStorage/Loadable';
+import BigNumber from 'bignumber.js';
 
 // todo, need to refactor the request, and rewrite skeleton style
 const skeletonStyle = { width: '7rem', height: '2.4rem' };
@@ -72,8 +74,18 @@ export function TokensCard({ address }) {
 export function StorageStakingCard({ accountInfo }) {
   const { t } = useTranslation();
   const bp = useBreakpoint();
-  // const { data: accountInfo } = useAccount(address);
   const loading = accountInfo.balance === t(translations.general.loading);
+
+  const { storageQuota, storageUsed } =
+    accountInfo.collateralForStorageInfo || {};
+  const total = useMemo(
+    () =>
+      processSponsorStorage(
+        storageUsed?.storagePoint,
+        new BigNumber(storageUsed?.storageCollateral || 0).div(1e18).toString(),
+      ).total,
+    [storageUsed],
+  );
 
   return (
     <DetailPageCard
@@ -87,14 +99,33 @@ export function StorageStakingCard({ accountInfo }) {
       }
       content={
         <SkeletonContainer shown={loading} style={skeletonStyle}>
-          <Text
-            hoverValue={`${fromDripToCfx(
-              accountInfo.collateralForStorage,
-              true,
-            )} CFX`}
+          <SponsorStorage
+            storageUsed={{
+              point: storageUsed?.storagePoint,
+              collateral: new BigNumber(storageUsed?.storageCollateral || 0)
+                .div(1e18)
+                .toString(),
+            }}
+            storageQuota={
+              accountInfo.sourceCode !== undefined
+                ? {
+                    point: storageQuota?.storagePoint,
+                    collateral: new BigNumber(
+                      storageQuota?.storageCollateral || 0,
+                    )
+                      .div(1e18)
+                      .toString(),
+                  }
+                : null
+            }
           >
-            {fromDripToCfx(accountInfo.collateralForStorage)}
-          </Text>
+            <span className="used">
+              {formatNumber(total, {
+                withUnit: false,
+              })}{' '}
+              KB
+            </span>
+          </SponsorStorage>
         </SkeletonContainer>
       }
       icon={

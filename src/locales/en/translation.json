@@ -1159,7 +1159,7 @@
     "balance": "balance",
     "token": "token",
     "abnormalToken": "Abnormal token, no name or symbol was obtained",
-    "storageStaking": "Storage Collateral",
+    "storageStaking": "Storage Used",
     "nonce": "nonce",
     "transaction": "transaction",
     "transactions": "transactions",
@@ -1422,6 +1422,7 @@
     "storageSponsor": "STORAGE SPONSOR",
     "gasFeeSponsor": "GAS FEE SPONSOR",
     "currentAvialStorageFee": "Available Storage Fee Balance",
+    "currentAvialStorageQuota": "Available Storage Quota",
     "currentAvialGasFee": "Available Gas Fee Balance",
     "providedStorage": "Storage Fees Provided",
     "providedGas": "Gas Fees Provided",
@@ -1444,7 +1445,16 @@
     "searchAddress": "Search contract address",
     "applicationUnit": "application",
     "tx": "tx",
-    "byFoundation": ""
+    "byFoundation": "",
+
+    "storage": {
+      "used": "Storage Used: ",
+      "quota": "Storage Quota: ",
+      "point": "Storage Point: ",
+      "collateral": "Storage Collateral: ",
+      "example": "Minting storage cost per NFT: 0.3 ~ 0.6 KB",
+      "desc": "According to CIP107, the \"Storage Point\" is introduced to improve the tokenomics of Conflux. A fraction of the sponsor balance for storage will be burned and converted into \"storage points\". <a target='__blank' href='https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-107.md'>Learn More></a> "
+    }
   },
   "transaction": {
     "note": "Private Note",
@@ -1749,7 +1759,7 @@
     "address": {
       "balance": "The amout of assets which belong to the address.",
       "token": "The amout of tokens which belong to the address.",
-      "storageCollateral": "The amount of storage collaterals paid by the current address, the unit is the CFX. ",
+      "storageCollateral": "The amount of storage used by the current address, the unit is the KB.",
       "nonce": "Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address.",
       "stakedBegin": "Total CFX staked. Access ",
       "stakedEnd": " to stake CFX for interest.",
@@ -1772,7 +1782,7 @@
     "contract": {
       "balance": "The amount of assets which belongs to the address.",
       "token": "The amount of tokens which belongs to the address.",
-      "storageCollateral": "The amount of storage collaterals paid by the contract sponsor, the unit is the CFX.",
+      "storageCollateral": "The amount of storage used by the current address, the unit is the KB.",
       "nameTag": "Name tags can be attached to an address for identifying addresses of interest.",
       "tokenTracker": "The token which was deployed by the contract.",
       "contractCreator": "The address which deploys the contract.",

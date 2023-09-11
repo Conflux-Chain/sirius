@@ -1157,7 +1157,7 @@
     "balance": "余额",
     "token": "通证",
     "abnormalToken": "非正常通证，未获取到其名称和符号",
-    "storageStaking": "抵押存储",
+    "storageStaking": "存储用量",
     "nonce": "随机数",
     "transaction": "交易",
     "transactions": "交易",
@@ -1419,6 +1419,7 @@
     "storageSponsor": "存储费赞助",
     "gasFeeSponsor": "燃气费赞助",
     "currentAvialStorageFee": "存储费当前可用余额",
+    "currentAvialStorageQuota": "当前可用存储配额",
     "currentAvialGasFee": "燃气费当前可用余额",
     "providedStorage": "已累计提供存储费",
     "providedGas": "已累计提供燃气费",
@@ -1441,7 +1442,16 @@
     "searchAddress": "搜索合约地址",
     "applicationUnit": "次",
     "tx": "交易",
-    "byFoundation": ""
+    "byFoundation": "",
+
+    "storage": {
+      "used": "存储用量：",
+      "quota": "存储配额：",
+      "point": "存储点：",
+      "collateral": "存储抵押：",
+      "example": "每个 NFT 铸造所需存储：0.3 ~ 0.6 KB",
+      "desc": "根据 CIP107，为了改善 Conflux 的经济模型，引入了 “存储点” 的概念。一部分的存储代付将被销毁并兑换成 “存储点”。<a target='__blank' href='https://github.com/Conflux-Chain/CIPs/blob/master/CIPs/cip-107.md'>了解更多></a> "
+    }
   },
   "transaction": {
     "note": "交易备注",
@@ -1746,7 +1756,7 @@
     "address": {
       "balance": "该地址的资产余额。",
       "token": "该地址持有的通证。",
-      "storageCollateral": "该地址支付的存储押金总量，其单位为CFX。",
+      "storageCollateral": "该地址使用的存储空间用量，其单位是 KB。",
       "nonce": "发送方地址发送的交易顺序运行编号，以0为第一宗交易。如果交易的 Nonce 为10，那么它将是该发送方的第11个交易。",
       "stakedBegin": "质押的 CFX 总额，访问 ",
       "stakedEnd": " 以质押 CFX 获取利息。",
@@ -1769,7 +1779,7 @@
     "contract": {
       "balance": "该合约地址的资产余额。",
       "token": "该合约地址持有的通证。",
-      "storageCollateral": "该合约赞助者支付的存储押金总量，其单位为CFX。",
+      "storageCollateral": "该地址使用的存储空间用量，其单位是 KB。",
       "nameTag": "姓名标签可以附加到地址，以识别感兴趣的地址。",
       "tokenTracker": "该合约上部署的通证。",
       "contractCreator": "创建该合约的地址。",
