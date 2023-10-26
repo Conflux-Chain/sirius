@@ -133,7 +133,7 @@ export function Table({ address, addressInfo }) {
     );
   }
 
-  if (!(isContract || isZeroAddress(address))) {
+  if (!(isContract || isZeroAddress(address)) && !HIDE_IN_DOT_NET) {
     tabs.push(
       ...[
         {
