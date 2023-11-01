@@ -56,6 +56,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const inputs = (data && data['inputs']) || [];
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
+
   useEffect(() => {
     if (data['value']) {
       setOutputValue(data['value']);
@@ -70,10 +71,15 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     }
   }, [data]);
   const onFinish = async values => {
-    const newValues = JSON.parse(JSON.stringify(values));
+    // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
+    const newValues = JSON.parse(
+      JSON.stringify(values, (key, value) =>
+        value === undefined ? { type: 'string', val: '' } : value,
+      ),
+    );
+
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
-
     // Special convert for various types before call sdk
     items.forEach(function (value, index) {
       let val = value['val'];
