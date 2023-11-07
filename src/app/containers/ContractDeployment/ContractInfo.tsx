@@ -2,7 +2,7 @@ import React, { useState, createRef, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
-import { useMessages } from '@cfxjs/react-ui';
+import { Link, useMessages } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from 'app/components/FileUpload';
@@ -169,9 +169,9 @@ export const ContractInfo = ({ onChange }) => {
               </Tooltip>
             </div>
             <div>
-              <a href="https://abi.hashex.org" target="_blank">
+              <Link href="https://abi.hashex.org" target={'_blank'}>
                 ABI Encoder Tool
-              </a>
+              </Link>
             </div>
           </StyledLabelWrapper>
           <AceEditor
