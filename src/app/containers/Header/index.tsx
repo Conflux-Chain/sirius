@@ -21,7 +21,12 @@ import { trackEvent } from 'utils/ga';
 import { useToggle } from 'react-use';
 import { useGlobalData, GlobalDataType } from 'utils/hooks/useGlobal';
 import { getNetwork, gotoNetwork } from 'utils';
-import { HIDE_IN_DOT_NET, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import {
+  HIDE_IN_DOT_NET,
+  NETWORK_TYPE,
+  NETWORK_TYPES,
+  IS_FOREIGN_HOST,
+} from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
 
 import logo from 'images/logo.svg';
@@ -341,7 +346,11 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href:
         NETWORK_TYPE === NETWORK_TYPES.testnet
-          ? 'https://api-testnet.confluxscan.net/doc'
+          ? IS_FOREIGN_HOST
+            ? 'https://api-testnet.confluxscan.io/doc'
+            : 'https://api-testnet.confluxscan.net/doc'
+          : IS_FOREIGN_HOST
+          ? 'https://api.confluxscan.io/doc'
           : 'https://api.confluxscan.net/doc',
     });
 

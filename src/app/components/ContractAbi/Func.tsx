@@ -21,6 +21,7 @@ import {
   checkBytes,
   checkCfxType,
   isCurrentNetworkAddress,
+  convertBigNumbersToStrings,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -30,6 +31,7 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import JSONBigint from 'json-bigint';
 
 interface FuncProps {
   type?: string;
@@ -56,6 +58,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const inputs = (data && data['inputs']) || [];
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
+
   useEffect(() => {
     if (data['value']) {
       setOutputValue(data['value']);
@@ -70,10 +73,19 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     }
   }, [data]);
   const onFinish = async values => {
-    const newValues = JSON.parse(JSON.stringify(values));
+    // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
+    const newValues = JSONBigint.parse(
+      JSONBigint.stringify(values, (key, value) =>
+        value === undefined
+          ? { type: 'string', val: '' }
+          : value['type'] === 'tuple'
+          ? { type: 'string', val: JSONBigint.parse(value['val']) }
+          : value,
+      ),
+    );
+
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
-
     // Special convert for various types before call sdk
     items.forEach(function (value, index) {
       let val = value['val'];
@@ -101,11 +113,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
     });
 
+    const objValuesNew = convertBigNumbersToStrings(objValues);
+
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[fullNameWithType](...objValues);
+          const res = await contract[fullNameWithType](...objValuesNew);
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {

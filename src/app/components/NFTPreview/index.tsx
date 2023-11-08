@@ -202,6 +202,7 @@ export const NFTPreview = React.memo(
     amount = 0,
     owner = '',
     enable3D = false,
+    metadata,
   }: {
     contractAddress?: string;
     tokenId?: number | string;
@@ -209,6 +210,7 @@ export const NFTPreview = React.memo(
     amount?: number;
     owner?: string;
     enable3D?: boolean;
+    metadata?: any;
   }) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language.includes('zh') ? 'zh' : 'en';
@@ -256,6 +258,17 @@ export const NFTPreview = React.memo(
           });
       }
     }, [contractAddress, tokenId, lang, enable3D]);
+
+    useEffect(() => {
+      if (metadata) {
+        if (metadata.image) {
+          setImageUri(metadata.image);
+        }
+        if (metadata.name) {
+          setImageName(metadata.name);
+        }
+      }
+    }, [metadata]);
 
     if (contractAddress && tokenId) {
       if (type === 'card') {
