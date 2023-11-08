@@ -3,6 +3,8 @@ import { sendRequest } from 'utils/httpRequest';
 import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@cfxjs/antd';
+import { Select } from 'app/components/Select';
+import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -40,11 +42,23 @@ interface Query {
 export const TitleTotal = ({
   total,
   listLimit,
+  outerUrl,
 }: {
   total: number;
   listLimit: number;
+  outerUrl?: string;
 }) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const history = useHistory();
+
+  const { url, query } = useMemo(() => {
+    if (outerUrl) {
+      const { url, query } = qs.parseUrl(outerUrl);
+      return { url, query };
+    }
+    return { url: null, query: null };
+  }, [outerUrl]);
 
   const content =
     listLimit && total > listLimit ? (
@@ -58,7 +72,68 @@ export const TitleTotal = ({
       </Trans>
     );
 
-  return <StyleTableTitleTotalWrapper>{content}</StyleTableTitleTotalWrapper>;
+  const handleTypeChange = () => {
+    history.push(
+      queryString.stringifyUrl({
+        url: location.pathname,
+        query: {},
+      }),
+    );
+  };
+
+  const handleDownloadItemClick = (e, index, count) => {
+    if (index !== 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (query && query.address) {
+        const address = query.address;
+        window.open(
+          `/stat/top-token-holder-csv?address=${address}&limit=${count}`,
+          '_blank',
+        );
+      }
+    }
+  };
+
+  const csv = (
+    <StyledSelectWrapper isEn={false} className="download">
+      <Select
+        value={'0'}
+        onChange={handleTypeChange}
+        disableMatchWidth
+        size="small"
+        className="btnSelectContainer"
+        variant="text"
+        dropdownClassName="dropdown"
+      >
+        {[
+          t(translations.accounts.downloadButtonText),
+          '100',
+          '500',
+          '1000',
+          '3000',
+          '5000',
+        ].map((o, index) => {
+          return (
+            <Select.Option
+              key={o}
+              value={String(index)}
+              onClick={e => handleDownloadItemClick(e, index, o)}
+            >
+              {o}
+            </Select.Option>
+          );
+        })}
+      </Select>
+    </StyledSelectWrapper>
+  );
+
+  return (
+    <StyleTableTitleTotalWrapper>
+      {content}
+      {url && url === '/stat/tokens/holder-rank' && csv}
+    </StyleTableTitleTotalWrapper>
+  );
 };
 
 export const TablePanel = ({
@@ -244,7 +319,13 @@ export const TablePanel = ({
             : () => title
           : hideDefaultTitle
           ? undefined
-          : () => <TitleTotal total={total} listLimit={listLimit || total} /> // default show total records in title
+          : () => (
+              <TitleTotal
+                total={total}
+                listLimit={listLimit || total}
+                outerUrl={outerUrl}
+              />
+            ) // default show total records in title
       }
       footer={
         footer
@@ -276,4 +357,52 @@ TablePanel.defaultProps = {
 
 const StyleTableTitleTotalWrapper = styled.div`
   margin-right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const StyledSelectWrapper = styled.div<{
+  isEn: boolean;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.4286rem;
+    right: 1.4286rem;
+  }
+
+  .selectLabel {
+    &:first-child {
+      margin-right: 0.4286rem;
+    }
+
+    &:last-child {
+      margin-left: ${props => (props.isEn ? '0' : '0.4286rem')};
+    }
+  }
+
+  .select.btnSelectContainer .option.selected,
+  .selectLabel {
+    color: #8890a4;
+    font-size: 0.8571rem;
+    font-weight: normal;
+  }
+
+  .select.btnSelectContainer {
+    background: rgba(30, 61, 228, 0.04);
+    &:hover {
+      background: rgba(30, 61, 228, 0.08);
+    }
+  }
+
+  /* download button */
+  &.download {
+    margin-left: 0.7143rem;
+  }
 `;
