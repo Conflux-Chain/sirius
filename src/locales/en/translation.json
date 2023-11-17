@@ -925,6 +925,10 @@
         "yAxisTitle4": "Count",
         "seriesName4": "Unique Senders Count (Day)"
       }
+    },
+    "options": {
+      "time": "Time Granularity",
+      "range": "Date Range"
     }
   },
   "charts": {
