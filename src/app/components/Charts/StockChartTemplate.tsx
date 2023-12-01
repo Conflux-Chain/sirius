@@ -29,79 +29,90 @@ interface Props {
   };
 }
 
+interface ScopeItem {
+  label: string;
+  limit: number;
+}
+
+interface ScopeType {
+  min?: ScopeItem[];
+  hour?: ScopeItem[];
+  day: ScopeItem[];
+}
+
 export interface ChildProps {
   preview?: boolean;
 }
 const defaultIntervalType: string = 'day';
 const defaultLimit: number = 365;
-const scope = {
+const scope: ScopeType = {
   min: [
     {
-      lable: '1h',
+      label: '1h',
       limit: 60,
     },
     {
-      lable: '2h',
+      label: '2h',
       limit: 120,
     },
     {
-      lable: '4h',
+      label: '4h',
       limit: 240,
     },
     {
-      lable: '6h',
+      label: '6h',
       limit: 360,
     },
     {
-      lable: '12h',
+      label: '12h',
       limit: 720,
     },
     {
-      lable: '24h',
+      label: '24h',
       limit: 1440,
     },
   ],
   hour: [
     {
-      lable: '1d',
+      label: '1d',
       limit: 24,
     },
     {
-      lable: '3d',
+      label: '3d',
       limit: 72,
     },
     {
-      lable: '7d',
+      label: '7d',
       limit: 168,
     },
     {
-      lable: '14d',
+      label: '14d',
       limit: 336,
     },
   ],
   day: [
     {
-      lable: '1w',
+      label: '1w',
       limit: 7,
     },
     {
-      lable: '1m',
+      label: '1m',
       limit: 30,
     },
     {
-      lable: '3m',
+      label: '3m',
       limit: 91,
     },
     {
-      lable: '6m',
+      label: '6m',
       limit: 182,
     },
     {
-      lable: '1y',
+      label: '1y',
       limit: 365,
     },
     {
-      lable: 'All',
+      label: 'All',
       limit: 2000,
     },
   ],
@@ -120,6 +131,7 @@ export function StockChartTemplate({
   const [data, setData] = useState({
     list: [],
   });
+  const [intervalScope, setIntervalScope] = useState<ScopeType>();
   const [intervalType, setIntervalType] = useState<string>(defaultIntervalType);
   const [limit, setLimit] = useState(defaultLimit);
 
@@ -157,6 +169,15 @@ export function StockChartTemplate({
 
   useEffect(() => {
     getChartData(defaultIntervalType, defaultLimit);
+    if (
+      ['/statistics/mining', '/statistics/tps'].some(str =>
+        request.url.includes(str),
+      )
+    ) {
+      setIntervalScope(scope);
+    } else {
+      setIntervalScope({ day: scope.day });
+    }
   }, [preview, request.query, request.url, getChartData]);
 
   const opts = lodash.merge(
@@ -291,6 +312,9 @@ export function StockChartTemplate({
     },
     options,
   );
+  if (intervalType === 'min' || intervalType === 'hour') {
+    opts.rangeSelector.enabled = false;
+  }
 
   if (preview) {
     opts.chart.height = 240;
@@ -325,47 +349,51 @@ export function StockChartTemplate({
           <StyledFilterItems>
             <StyledBtnWrap>
               <div>{t(translations.highcharts.options.time)}:</div>
-              {Object.keys(scope).map((e, i) => {
-                return (
-                  <StyledBtn
-                    key={'scopeKey' + i}
-                    onClick={() =>
-                      combination({
-                        type: e,
-                        limit: scope[e][scope[e].length - 1].limit,
-                      })
-                    }
-                    style={{
-                      background:
-                        intervalType === e ? 'rgb(230, 235, 245)' : '',
-                    }}
-                  >
-                    {e}
-                  </StyledBtn>
-                );
-              })}
+              {intervalScope &&
+                Object.keys(intervalScope).map((e, i) => {
+                  return (
+                    <StyledBtn
+                      key={'scopeKey' + i}
+                      onClick={() =>
+                        combination({
+                          type: e,
+                          limit:
+                            intervalScope[e][intervalScope[e].length - 1].limit,
+                        })
+                      }
+                      style={{
+                        background:
+                          intervalType === e ? 'rgb(230, 235, 245)' : '',
+                      }}
+                    >
+                      {e}
+                    </StyledBtn>
+                  );
+                })}
             </StyledBtnWrap>
 
             <StyledBtnWrap>
               <div>{t(translations.highcharts.options.range)}:</div>
-              {scope[intervalType].map((e, i) => {
-                return (
-                  <StyledBtn
-                    key={'scopeLimit' + i}
-                    onClick={() =>
-                      combination({
-                        type: intervalType,
-                        limit: e.limit,
-                      })
-                    }
-                    style={{
-                      background: limit === e.limit ? 'rgb(230, 235, 245)' : '',
-                    }}
-                  >
-                    {e.lable}
-                  </StyledBtn>
-                );
-              })}
+              {intervalScope &&
+                intervalScope[intervalType].map((e, i) => {
+                  return (
+                    <StyledBtn
+                      key={'scopeLimit' + i}
+                      onClick={() =>
+                        combination({
+                          type: intervalType,
+                          limit: e.limit,
+                        })
+                      }
+                      style={{
+                        background:
+                          limit === e.limit ? 'rgb(230, 235, 245)' : '',
+                      }}
+                    >
+                      {e.label}
+                    </StyledBtn>
+                  );
+                })}
             </StyledBtnWrap>
           </StyledFilterItems>
         )}
