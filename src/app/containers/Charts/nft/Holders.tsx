@@ -21,10 +21,6 @@ export function Holders({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.nft.holders.subtitle),
     request: {
       url: OPEN_API_URLS.nftHolders,
-      query: {
-        limit: preview ? 30 : 2000,
-        intervalType: 'month',
-      },
       formatter: data => {
         const data1: any = [];
 

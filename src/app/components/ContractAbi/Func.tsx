@@ -261,13 +261,17 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         if (isInt) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.int, { num }));
+        return Promise.reject(
+          t(translations.contract.error.int, { num: Number(num) - 1 }),
+        );
       } else if (type.startsWith('uint')) {
         const [isUint, num] = checkUint(val, type);
         if (isUint) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.uint, { num }));
+        return Promise.reject(
+          t(translations.contract.error.uint, { num: Number(num) - 1 }),
+        );
       } else if (type.startsWith('byte')) {
         const [isBytes, num] = checkBytes(val, type);
         if (isBytes) {
