@@ -1209,6 +1209,9 @@ export const convertBigNumbersToStrings = (input: NestedArray) => {
 };
 export const convertObjBigNumbersToStrings = input => {
   const newObj: NestedObject = {};
+  if (Array.isArray(input)) {
+    return convertBigNumbersToStrings(input);
+  }
   for (let key in input) {
     if (isLikeBigNumber(input[key])) {
       newObj[key] = input[key].toString(10);
@@ -1221,4 +1224,21 @@ export const convertObjBigNumbersToStrings = input => {
     }
   }
   return newObj;
+};
+type ResultArrayElement = string | number | boolean | Uint8Array;
+export const constprocessResultArray = (
+  resultArray: ResultArrayElement[],
+): (string | number | boolean)[] => {
+  return resultArray.map(element => {
+    if (element instanceof Uint8Array) {
+      return (
+        '0x' +
+        Array.prototype.map
+          .call(element, x => ('00' + x.toString(16)).slice(-2))
+          .join('')
+      );
+    } else {
+      return element;
+    }
+  });
 };

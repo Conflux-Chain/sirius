@@ -22,6 +22,8 @@ import {
   checkCfxType,
   isCurrentNetworkAddress,
   convertBigNumbersToStrings,
+  convertObjBigNumbersToStrings,
+  constprocessResultArray,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -79,7 +81,12 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         value === undefined
           ? { type: 'string', val: '' }
           : value['type'] === 'tuple'
-          ? { type: 'string', val: JSONBigint.parse(value['val']) }
+          ? {
+              type: 'string',
+              val: convertObjBigNumbersToStrings(
+                JSONBigint.parse(value['val']),
+              ),
+            }
           : value,
       ),
     );
@@ -124,10 +131,10 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
             let arr: any[] = [];
-            arr.push(res);
+            arr.push(constprocessResultArray(res));
             setOutputValue(arr);
           } else {
-            setOutputValue(Object.values(res));
+            setOutputValue(Object.values(constprocessResultArray(res)));
           }
           // setOutputValue(res)
           setOutputShown(true);
