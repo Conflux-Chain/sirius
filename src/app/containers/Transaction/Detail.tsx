@@ -753,7 +753,7 @@ export const Detail = () => {
             <Status
               type={status}
               txExecErrorInfo={txExecErrorInfo}
-              address={formatAddress(from)}
+              address={from}
               hash={routeHash}
             ></Status>
           )}
