@@ -138,7 +138,6 @@ export function StockChartTemplate({
   useHighcharts(chart);
 
   const combination = ({ type, limit }: { type: string; limit: number }) => {
-    console.log(type, limit);
     if (type) setIntervalType(type);
     if (limit) setLimit(limit);
     getChartData(type, limit);
@@ -149,7 +148,6 @@ export function StockChartTemplate({
       setIntervalType(intervalType);
       // @ts-ignore
       chart.current?.chart.showLoading();
-
       const data = await reqChartData({
         url: request.url,
         query: request.query || {
