@@ -139,6 +139,11 @@ export function StockChartTemplate({
   useHighcharts(chart);
 
   const combination = ({ type, limit }: { type: string; limit: number }) => {
+    if (customLimit) {
+      // @ts-ignore
+      chart.current?.chart.xAxis[0].setExtremes(null, null);
+      setCustomLimit(false);
+    }
     if (type) setIntervalType(type);
     if (limit) setLimit(limit);
     getChartData(type, limit);
@@ -147,9 +152,6 @@ export function StockChartTemplate({
   const getChartData = useCallback(
     async (intervalType, limit) => {
       setIntervalType(intervalType);
-      setCustomLimit(false);
-      // @ts-ignore
-      chart.current?.chart.xAxis[0].setExtremes(null, null);
       // @ts-ignore
       chart.current?.chart.showLoading();
       const data = await reqChartData({
