@@ -131,10 +131,20 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
             let arr: any[] = [];
-            arr.push(constprocessResultArray(res));
+            arr.push(
+              constprocessResultArray(
+                JSONBigint.parse(JSONBigint.stringify(res)),
+              ),
+            );
             setOutputValue(arr);
           } else {
-            setOutputValue(Object.values(constprocessResultArray(res)));
+            setOutputValue(
+              Object.values(
+                constprocessResultArray(
+                  JSONBigint.parse(JSONBigint.stringify(res)),
+                ),
+              ),
+            );
           }
           // setOutputValue(res)
           setOutputShown(true);
@@ -270,7 +280,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           return Promise.resolve();
         }
         return Promise.reject(
-          t(translations.contract.error.uint, { num: Number(num) - 1 }),
+          t(translations.contract.error.uint, { num: num }),
         );
       } else if (type.startsWith('byte')) {
         const [isBytes, num] = checkBytes(val, type);
