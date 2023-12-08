@@ -59,9 +59,9 @@ export function Approval() {
       CFX.provider = provider;
 
       const typeMap = {
-        ERC20: ERC20ABI,
-        ERC721: ERC721ABI,
-        ERC1155: ERC1155ABI,
+        CRC20: ERC20ABI,
+        CRC721: ERC721ABI,
+        CRC1155: ERC1155ABI,
       };
 
       return CFX.Contract({
@@ -217,15 +217,14 @@ export function Approval() {
       ...txnStatusModal,
       show: true,
     });
-
     const contract = getContract(data.contract, data.tokenInfo.type);
     let tx;
 
-    if (data.tokenInfo.type === 'ERC20') {
+    if (data.tokenInfo.type === 'CRC20') {
       tx = contract
         .approve(data.spender, 0)
         .sendTransaction({ from: accounts[0] });
-    } else if (data.tokenInfo.type === 'ERC721') {
+    } else if (data.tokenInfo.type === 'CRC721') {
       if (data.approvalType === 'ApprovalForAll') {
         // revoke all
         tx = contract.setApprovalForAll(data.spender, false).sendTransaction({
@@ -238,7 +237,7 @@ export function Approval() {
           .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
           .sendTransaction({ from: accounts[0] });
       }
-    } else if (data.tokenInfo.type === 'ERC1155') {
+    } else if (data.tokenInfo.type === 'CRC1155') {
       tx = contract
         .setApprovalForAll(data.spender, false)
         .sendTransaction({ from: accounts[0] });

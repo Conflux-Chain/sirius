@@ -1225,20 +1225,22 @@ export const convertObjBigNumbersToStrings = input => {
   }
   return newObj;
 };
-type ResultArrayElement = string | number | boolean | Uint8Array;
-export const constprocessResultArray = (
-  resultArray: ResultArrayElement[],
-): (string | number | boolean)[] => {
-  return resultArray.map(element => {
-    if (element instanceof Uint8Array) {
+export const constprocessResultArray = resultArray => {
+  const processElement = element => {
+    if (Array.isArray(element)) {
+      return element.map(processElement);
+    } else if (element.type && element.type === 'Buffer') {
       return (
         '0x' +
-        Array.prototype.map
-          .call(element, x => ('00' + x.toString(16)).slice(-2))
+        Array.from(element)
+          .map(x => ('00' + (x as number).toString(16)).slice(-2))
           .join('')
       );
     } else {
       return element;
     }
-  });
+  };
+
+  const inputArray = Array.isArray(resultArray) ? resultArray : [resultArray];
+  return inputArray.map(processElement);
 };

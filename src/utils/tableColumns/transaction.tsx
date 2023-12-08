@@ -82,9 +82,16 @@ export const TxnHashRenderComponent = ({
             placement="right"
             trigger="click"
             content={
-              <SkeletonContainer shown={loading} style={{ maxHeight: '566px' }}>
-                <Overview data={{ ...txnDetail, status: innerStatus }} />
-              </SkeletonContainer>
+              <>
+                {loading ? (
+                  <SkeletonContainer
+                    shown={loading}
+                    style={{ width: '25rem', height: '20rem' }}
+                  ></SkeletonContainer>
+                ) : (
+                  <Overview data={{ ...txnDetail, status: innerStatus }} />
+                )}
+              </>
             }
           >
             <button className="icon-view-txn-container" onClick={handleClick} />
