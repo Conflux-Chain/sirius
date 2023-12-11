@@ -687,8 +687,8 @@ export function isObject(o) {
 
 export function checkInt(value, type) {
   const num = Number(type.substr(3));
-  const min = new BigNumber(-Math.pow(2, num - 1));
-  const max = new BigNumber(Math.pow(2, num - 1)).minus(1);
+  const min = new BigNumber(2).pow(num - 1).multipliedBy(-1);
+  const max = new BigNumber(2).pow(num - 1).minus(1);
   let isType = false;
   if (!isNaN(value)) {
     const valNum = new BigNumber(value);
