@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import dayjs from 'dayjs';
@@ -11,6 +11,7 @@ import { useHighcharts } from 'utils/hooks/useHighcharts';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getChartsSubTitle } from 'utils';
+import styled from 'styled-components/macro';
 
 // @ts-ignore
 window.dayjs = dayjs;
@@ -28,10 +29,94 @@ interface Props {
   };
 }
 
+interface ScopeItem {
+  label: string;
+  limit: number;
+}
+
+interface ScopeType {
+  min?: ScopeItem[];
+  hour?: ScopeItem[];
+  day: ScopeItem[];
+}
+
 export interface ChildProps {
   preview?: boolean;
 }
-
+const defaultIntervalType: string = 'day';
+const defaultLimit: number = 365;
+const scope: ScopeType = {
+  min: [
+    {
+      label: '1h',
+      limit: 60,
+    },
+    {
+      label: '2h',
+      limit: 120,
+    },
+    {
+      label: '4h',
+      limit: 240,
+    },
+    {
+      label: '6h',
+      limit: 360,
+    },
+    {
+      label: '12h',
+      limit: 720,
+    },
+    {
+      label: '24h',
+      limit: 1440,
+    },
+  ],
+  hour: [
+    {
+      label: '1d',
+      limit: 24,
+    },
+    {
+      label: '3d',
+      limit: 72,
+    },
+    {
+      label: '7d',
+      limit: 168,
+    },
+    {
+      label: '14d',
+      limit: 336,
+    },
+  ],
+  day: [
+    {
+      label: '1w',
+      limit: 7,
+    },
+    {
+      label: '1m',
+      limit: 30,
+    },
+    {
+      label: '3m',
+      limit: 91,
+    },
+    {
+      label: '6m',
+      limit: 182,
+    },
+    {
+      label: '1y',
+      limit: 365,
+    },
+    {
+      label: 'All',
+      limit: 2000,
+    },
+  ],
+};
 export function StockChartTemplate({
   plain,
   preview,
@@ -46,38 +131,65 @@ export function StockChartTemplate({
   const [data, setData] = useState({
     list: [],
   });
+  const [intervalScope, setIntervalScope] = useState<ScopeType>();
+  const [intervalType, setIntervalType] = useState<string>(defaultIntervalType);
+  const [limit, setLimit] = useState(defaultLimit);
+  const [customLimit, setCustomLimit] = useState<boolean>(false);
 
   useHighcharts(chart);
 
-  useEffect(() => {
-    async function fn() {
+  const combination = ({ type, limit }: { type: string; limit: number }) => {
+    if (customLimit) {
+      // @ts-ignore
+      chart.current?.chart.xAxis[0].setExtremes(null, null);
+      setCustomLimit(false);
+    }
+    if (type) setIntervalType(type);
+    if (limit) setLimit(limit);
+    getChartData(type, limit);
+  };
+
+  const getChartData = useCallback(
+    async (intervalType, limit) => {
+      setIntervalType(intervalType);
       // @ts-ignore
       chart.current?.chart.showLoading();
-
-      const limit = preview ? 30 : 2000;
       const data = await reqChartData({
         url: request.url,
         query: request.query || {
-          limit: limit,
-          intervalType: 'day',
+          limit: preview ? 30 : limit,
+          intervalType: intervalType,
         },
       });
-      data.list = data.list.reverse(); // use latest data sort by asc
+      data.list = data.list.reverse();
 
       setData(data);
 
       // @ts-ignore
       chart.current?.chart.hideLoading();
-    }
+    },
+    [request.url, request.query, preview],
+  );
 
-    fn();
-  }, [preview, request.query, request.url]);
+  useEffect(() => {
+    getChartData(defaultIntervalType, defaultLimit);
+    if (
+      ['/statistics/mining', '/statistics/tps'].some(str =>
+        request.url.includes(str),
+      )
+    ) {
+      setIntervalScope(scope);
+    } else {
+      setIntervalScope({ day: scope.day });
+    }
+  }, [preview, request.query, request.url, getChartData]);
 
   const opts = lodash.merge(
     {
       chart: {
         alignTicks: false,
         height: 600,
+        animation: false,
       },
       credits: {
         enabled: false,
@@ -99,6 +211,7 @@ export function StockChartTemplate({
       },
       rangeSelector: {
         enabled: true,
+        buttons: [],
       },
       scrollbar: {
         enabled: true,
@@ -179,6 +292,15 @@ export function StockChartTemplate({
       yAxis: {
         opposite: false,
       },
+      xAxis: {
+        events: {
+          setExtremes: function () {
+            if (!customLimit) {
+              setCustomLimit(true);
+            }
+          },
+        },
+      },
       series: options.series.map((s, i) => ({
         data: request.formatter(data)[i],
       })),
@@ -204,6 +326,9 @@ export function StockChartTemplate({
     },
     options,
   );
+  if (intervalType === 'min' || intervalType === 'hour') {
+    opts.rangeSelector.enabled = false;
+  }
 
   if (preview) {
     opts.chart.height = 240;
@@ -215,7 +340,6 @@ export function StockChartTemplate({
     opts.rangeSelector.enabled = false;
     opts.scrollbar.enabled = false;
   }
-
   if (bp === 's') {
     opts.chart.height = 500;
 
@@ -234,13 +358,108 @@ export function StockChartTemplate({
           padding: '1.2857rem',
         }}
       >
-        <HighchartsReact
-          constructorType={'stockChart'}
-          highcharts={Highcharts}
-          options={opts}
-          ref={chart}
-        />
+        {!preview && (
+          <StyledFilterItems>
+            <StyledBtnWrap>
+              <div>{t(translations.highcharts.options.time)}:</div>
+              {intervalScope &&
+                Object.keys(intervalScope).map((e, i) => {
+                  return (
+                    <StyledBtn
+                      key={'scopeKey' + i}
+                      onClick={() =>
+                        combination({
+                          type: e,
+                          limit:
+                            intervalScope[e][intervalScope[e].length - 1].limit,
+                        })
+                      }
+                      style={{
+                        background:
+                          intervalType === e ? 'rgb(230, 235, 245)' : '',
+                      }}
+                    >
+                      {e}
+                    </StyledBtn>
+                  );
+                })}
+            </StyledBtnWrap>
+
+            <StyledBtnWrap>
+              <div>{t(translations.highcharts.options.range)}:</div>
+              {intervalScope &&
+                intervalScope[intervalType].map((e, i) => {
+                  return (
+                    <StyledBtn
+                      key={'scopeLimit' + i}
+                      onClick={() =>
+                        combination({
+                          type: intervalType,
+                          limit: e.limit,
+                        })
+                      }
+                      style={{
+                        background:
+                          limit === e.limit && !customLimit
+                            ? 'rgb(230, 235, 245)'
+                            : '',
+                      }}
+                    >
+                      {e.label}
+                    </StyledBtn>
+                  );
+                })}
+            </StyledBtnWrap>
+          </StyledFilterItems>
+        )}
+        <HighchartsWrapper>
+          <HighchartsReact
+            constructorType={'stockChart'}
+            highcharts={Highcharts}
+            options={opts}
+            ref={chart}
+          />
+        </HighchartsWrapper>
       </Card>
     </>
   );
 }
+const StyledFilterItems = styled.div`
+  display: flex;
+  position: absolute;
+  z-index: 11;
+  top: 62px;
+  left: 40px;
+  @media (max-width: 1240px) {
+    top: 92px;
+  }
+  @media (max-width: 770px) {
+    flex-direction: column;
+    gap: 10px;
+    top: 15px;
+    left: 15px;
+  }
+`;
+
+const StyledBtnWrap = styled.div`
+  display: flex;
+  gap: 3px;
+  margin-right: 20px;
+`;
+
+const StyledBtn = styled.div`
+  background: rgb(247, 247, 247);
+  width: fit-content;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 12px;
+  &:hover {
+    background: #eee;
+  }
+`;
+
+const HighchartsWrapper = styled.div`
+  @media (max-width: 770px) {
+    margin-top: 60px;
+  }
+`;

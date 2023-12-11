@@ -21,10 +21,6 @@ export function Contracts({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.nft.contracts.subtitle),
     request: {
       url: OPEN_API_URLS.nftContracts,
-      query: {
-        limit: preview ? 30 : 2000,
-        intervalType: 'month',
-      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];

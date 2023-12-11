@@ -62,10 +62,10 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
       text = t(translations.contract.error.bool);
     } else if (type.startsWith('int')) {
       const [, num] = checkInt('', type);
-      text = t(translations.contract.error.int, { num });
+      text = t(translations.contract.error.int, { num: Number(num) - 1 });
     } else if (type.startsWith('uint')) {
       const [, num] = checkUint('', type);
-      text = t(translations.contract.error.uint, { num });
+      text = t(translations.contract.error.uint, { num: num });
     } else if (type.startsWith('byte')) {
       const [, num] = checkBytes('', type);
       if (num === 0) {

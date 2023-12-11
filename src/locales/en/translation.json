@@ -259,7 +259,7 @@
     "error": {
       "address": "Please enter a conflux address",
       "bool": "Please enter true/false or 0/1",
-      "int": "Please enter an integer in the range -(2^{{num}}-1) ~ 2^{{num}}-1",
+      "int": "Please enter an integer in the range -(2^{{num}}) ~ 2^{{num}}-1",
       "uint": "Please enter a non-negative integer in the range of 0 ~ 2^{{num}}-1",
       "bytes": "Please enter an hexadecimal byte array starting with 0x",
       "bytesM": "Please enter an hexadecimal {{length}} byte array starting with 0x",
@@ -925,6 +925,10 @@
         "yAxisTitle4": "Count",
         "seriesName4": "Unique Senders Count (Day)"
       }
+    },
+    "options": {
+      "time": "Time Granularity",
+      "range": "Date Range"
     }
   },
   "charts": {

@@ -747,14 +747,16 @@ export const Detail = () => {
             </Tooltip>
           }
         >
-          <SkeletonContainer shown={loading}>
+          {loading ? (
+            <SkeletonContainer shown={loading}></SkeletonContainer>
+          ) : (
             <Status
               type={status}
               txExecErrorInfo={txExecErrorInfo}
               address={from}
               hash={routeHash}
             ></Status>
-          </SkeletonContainer>
+          )}
         </Description>
         <Description
           title={

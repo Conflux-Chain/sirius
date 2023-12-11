@@ -21,6 +21,9 @@ import {
   checkBytes,
   checkCfxType,
   isCurrentNetworkAddress,
+  convertBigNumbersToStrings,
+  convertObjBigNumbersToStrings,
+  constprocessResultArray,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -30,6 +33,7 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import JSONBigint from 'json-bigint';
 
 interface FuncProps {
   type?: string;
@@ -56,6 +60,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const inputs = (data && data['inputs']) || [];
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
+
   useEffect(() => {
     if (data['value']) {
       setOutputValue(data['value']);
@@ -70,10 +75,24 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     }
   }, [data]);
   const onFinish = async values => {
-    const newValues = JSON.parse(JSON.stringify(values));
+    // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
+    const newValues = JSONBigint.parse(
+      JSONBigint.stringify(values, (key, value) =>
+        value === undefined
+          ? { type: 'string', val: '' }
+          : value['type'] === 'tuple'
+          ? {
+              type: 'string',
+              val: convertObjBigNumbersToStrings(
+                JSONBigint.parse(value['val']),
+              ),
+            }
+          : value,
+      ),
+    );
+
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
-
     // Special convert for various types before call sdk
     items.forEach(function (value, index) {
       let val = value['val'];
@@ -101,19 +120,31 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
     });
 
+    const objValuesNew = convertBigNumbersToStrings(objValues);
+
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[fullNameWithType](...objValues);
+          const res = await contract[fullNameWithType](...objValuesNew);
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
             let arr: any[] = [];
-            arr.push(res);
+            arr.push(
+              constprocessResultArray(
+                JSONBigint.parse(JSONBigint.stringify(res)),
+              ),
+            );
             setOutputValue(arr);
           } else {
-            setOutputValue(Object.values(res));
+            setOutputValue(
+              Object.values(
+                constprocessResultArray(
+                  JSONBigint.parse(JSONBigint.stringify(res)),
+                ),
+              ),
+            );
           }
           // setOutputValue(res)
           setOutputShown(true);
@@ -240,13 +271,17 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         if (isInt) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.int, { num }));
+        return Promise.reject(
+          t(translations.contract.error.int, { num: Number(num) - 1 }),
+        );
       } else if (type.startsWith('uint')) {
         const [isUint, num] = checkUint(val, type);
         if (isUint) {
           return Promise.resolve();
         }
-        return Promise.reject(t(translations.contract.error.uint, { num }));
+        return Promise.reject(
+          t(translations.contract.error.uint, { num: num }),
+        );
       } else if (type.startsWith('byte')) {
         const [isBytes, num] = checkBytes(val, type);
         if (isBytes) {

@@ -924,6 +924,10 @@
         "yAxisTitle4": "数量",
         "seriesName4": "每日发送账户数"
       }
+    },
+    "options": {
+      "time": "时间粒度",
+      "range": "时间范围"
     }
   },
   "charts": {

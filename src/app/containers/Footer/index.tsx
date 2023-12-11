@@ -353,7 +353,11 @@ export function Footer() {
         className="footer-link"
         href={
           NETWORK_TYPE === NETWORK_TYPES.testnet
-            ? 'https://api-testnet.confluxscan.net/doc'
+            ? IS_FOREIGN_HOST
+              ? 'https://api-testnet.confluxscan.io/doc'
+              : 'https://api-testnet.confluxscan.net/doc'
+            : IS_FOREIGN_HOST
+            ? 'https://api.confluxscan.io/doc'
             : 'https://api.confluxscan.net/doc'
         }
         ga={{

@@ -2,7 +2,7 @@ import React, { useState, createRef, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
-import { useMessages } from '@cfxjs/react-ui';
+import { Link, useMessages } from '@cfxjs/react-ui';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from 'app/components/FileUpload';
@@ -158,14 +158,21 @@ export const ContractInfo = ({ onChange }) => {
           />
 
           <StyledLabelWrapper>
-            constructor arguments{' '}
-            <Tooltip
-              hoverable
-              text={t(translations.contractDeployment.tip)}
-              placement="top"
-            >
-              <img src={imgInfo} alt="?" width="14px" />
-            </Tooltip>
+            <div>
+              constructor arguments{' '}
+              <Tooltip
+                hoverable
+                text={t(translations.contractDeployment.tip)}
+                placement="top"
+              >
+                <img src={imgInfo} alt="?" width="14px" />
+              </Tooltip>
+            </div>
+            <div>
+              <Link href="https://abi.hashex.org" target={'_blank'}>
+                ABI Encoder Tool
+              </Link>
+            </div>
           </StyledLabelWrapper>
           <AceEditor
             mode="text"
@@ -209,6 +216,8 @@ const StyledContentWrapper = styled.div`
 const StyledLabelWrapper = styled.div<{
   required?: boolean;
 }>`
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
   font-weight: 500;
   color: #0b132e;
