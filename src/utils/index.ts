@@ -1230,12 +1230,13 @@ export const constprocessResultArray = resultArray => {
     if (Array.isArray(element)) {
       return element.map(processElement);
     } else if (element.type && element.type === 'Buffer') {
-      return (
-        '0x' +
-        Array.from(element)
-          .map(x => ('00' + (x as number).toString(16)).slice(-2))
-          .join('')
-      );
+      let result = element.data
+        .map(byte => ('00' + byte.toString(16)).slice(-2))
+        .join('');
+      if (!result.startsWith('0x')) {
+        result = '0x' + result;
+      }
+      return result;
     } else {
       return element;
     }

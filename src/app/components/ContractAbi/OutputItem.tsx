@@ -64,9 +64,7 @@ const OutputItem = ({ output, value }: Props) => {
         </span>
       );
     } else if (type.startsWith('byte')) {
-      valueComp = (
-        <span className="value">{`${'0x' + value.toString('hex')}`}</span>
-      );
+      valueComp = <span className="value">{`${value.toString('hex')}`}</span>;
     } else if (type.startsWith('tuple')) {
       // tuple & tuple[]
       try {
