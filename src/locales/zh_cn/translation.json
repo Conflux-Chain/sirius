@@ -1913,7 +1913,7 @@
       "totalRewards": "总奖励",
       "totalTxnFees": "总交易费",
       "hashRate": "哈希算力 (GH/s)",
-      "gasUsed": "燃料用量"
+      "gasUsed": "每秒燃料用量"
     },
     "home": {
       "currentBlockNumber": "当前区块号",

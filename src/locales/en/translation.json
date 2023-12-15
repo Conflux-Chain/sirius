@@ -1916,7 +1916,7 @@
       "totalRewards": "Total Rewards",
       "totalTxnFees": "Total Txn Fees",
       "hashRate": "Est. Hash Rate (GH/s)",
-      "gasUsed": "Gas Used"
+      "gasUsed": "Gas Used Per Second"
     },
     "home": {
       "currentBlockNumber": "Current Block Number",
