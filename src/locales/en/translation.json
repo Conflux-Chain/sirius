@@ -1916,7 +1916,7 @@
       "totalRewards": "Total Rewards",
       "totalTxnFees": "Total Txn Fees",
       "hashRate": "Est. Hash Rate (GH/s)",
-      "gasUsed": "Gas Used"
+      "gasUsed": "Gas Used Per Second"
     },
     "home": {
       "currentBlockNumber": "Current Block Number",
@@ -1924,7 +1924,8 @@
       "account": "Accounts",
       "transactions": "Transactions",
       "contract": "Contracts",
-      "minerCount": "PoW Nodes within 24 Hours"
+      "minerCount": "PoW Nodes within 24 Hours",
+      "gasUsed": "Gas Used"
     },
     "pos": {
       "finalizedEpoch": "Finalized Epoch",
