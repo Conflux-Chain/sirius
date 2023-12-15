@@ -220,6 +220,16 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               }`,
             )}
           </Grid>
+          <Grid xs={24} sm={24} md={4}>
+            {Info(
+              t(translations.statistics.home.gasUsed),
+              `${
+                dashboardData.gasUsedPerSecond
+                  ? dashboardData.gasUsedPerSecond
+                  : '--'
+              }`,
+            )}
+          </Grid>
         </Grid.Container>
 
         <div className="homepage-infoType-container">

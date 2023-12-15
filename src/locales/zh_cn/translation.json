@@ -1921,7 +1921,8 @@
       "account": "账户总数",
       "transactions": "交易总数",
       "contract": "合约总数",
-      "minerCount": "24h 内 PoW 节点数"
+      "minerCount": "24h 内 PoW 节点数",
+      "gasUsed": "燃料用量"
     },
     "pos": {
       "finalizedEpoch": "已确认纪元",
