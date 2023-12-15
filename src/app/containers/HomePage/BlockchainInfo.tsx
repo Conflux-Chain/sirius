@@ -196,7 +196,10 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               t(translations.statistics.home.gasUsed),
               `${
                 dashboardData.gasUsedPerSecond
-                  ? dashboardData.gasUsedPerSecond
+                  ? formatNumber(dashboardData.gasUsedPerSecond, {
+                      withUnit: false,
+                      keepDecimal: false,
+                    })
                   : '--'
               }`,
             )}
