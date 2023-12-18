@@ -396,10 +396,31 @@ export const AddressContainer = withTranslation()(
         });
       }
 
+      const tip = t(translations.general.invalidAddress);
       // check if the address is a valid conflux address
-      if (!isAddress(value)) {
-        const tip = t(translations.general.invalidAddress);
-
+      if (Array.isArray(value)) {
+        const arrayIsAddress = value.every(item => isAddress(item));
+        if (!arrayIsAddress) {
+          RenderAddress({
+            cfxAddress: value,
+            alias,
+            hoverValue: `${tip}: ${value}`,
+            content: alias ? formatString(alias, 'tag') : value,
+            link: false,
+            isFull,
+            maxWidth,
+            suffixSize,
+            style: { color: '#e00909' },
+            prefix: (
+              <IconWrapper>
+                <Text span hoverValue={tip}>
+                  <AlertTriangle size={16} color="#e00909" />
+                </Text>
+              </IconWrapper>
+            ),
+          });
+        }
+      } else if (!Array.isArray(value) && !isAddress(value)) {
         return RenderAddress({
           cfxAddress: value,
           alias,
