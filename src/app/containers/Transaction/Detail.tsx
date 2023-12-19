@@ -16,6 +16,7 @@ import {
   reqTokenList,
   reqTransactionDetail,
   reqTransferList,
+  reqTransactionEventlogs,
 } from 'utils/httpRequest';
 import {
   formatBalance,
@@ -43,6 +44,7 @@ import {
   StorageFee,
   TokenTypeTag,
 } from 'app/components/TxnComponents';
+import TransactionAction from 'app/components/TransactionAction';
 import _ from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import imgChevronDown from 'images/chevronDown.png';
@@ -63,6 +65,7 @@ export const Detail = () => {
   const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
+  const [eventlogs, setEventlogs] = useState<any>([]);
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,7 +105,6 @@ export const Detail = () => {
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
-
   // get txn detail info
   const fetchTxDetail = useCallback(
     txnhash => {
@@ -178,6 +180,13 @@ export const Detail = () => {
                 reverse: false,
               }),
             );
+            proArr.push(
+              reqTransactionEventlogs({
+                transactionHash: txnhash,
+                aggregate: false,
+              }),
+            );
+
             Promise.all(proArr)
               .then(proRes => {
                 const contractResponse = proRes[0];
@@ -187,6 +196,7 @@ export const Detail = () => {
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
+                setEventlogs(proRes[2].list);
                 let addressList = list.map(v => v.address);
                 addressList = Array.from(new Set(addressList));
                 reqTokenList({
@@ -739,6 +749,19 @@ export const Detail = () => {
               </>
             )}
           </SkeletonContainer>
+        </Description>
+        <Description
+          title={
+            <Tooltip text={``} placement="top">
+              {t(translations.transaction.action.title)}
+            </Tooltip>
+          }
+        >
+          <TransactionAction
+            transaction={transactionDetail}
+            event={eventlogs}
+            customInfo={contractInfo}
+          ></TransactionAction>
         </Description>
         <Description
           title={
