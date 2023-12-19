@@ -1226,6 +1226,9 @@ export const convertObjBigNumbersToStrings = input => {
   return newObj;
 };
 export const constprocessResultArray = resultArray => {
+  if (typeof resultArray === 'string') {
+    return resultArray;
+  }
   const processElement = element => {
     if (Array.isArray(element)) {
       return element.map(processElement);
