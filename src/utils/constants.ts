@@ -19,8 +19,6 @@ interface ContractNameTagType {
   [index: string]: string;
 }
 
-export const RPC_SERVER = window.location.origin + '/rpcv2'; // cip-37
-
 // only for dev and qa, use with caution
 export const IS_PRE_RELEASE =
   process.env.REACT_APP_TestNet === 'true' ||
@@ -30,6 +28,12 @@ export const IS_PRE_RELEASE =
 export const IS_TESTNET =
   process.env.REACT_APP_TestNet === 'true' ||
   window.location.hostname.includes('testnet');
+
+const RPC_URL = {
+  mainnet: 'https://main.confluxrpc.com',
+  testnet: 'https://test.confluxrpc.com',
+};
+export const RPC_SERVER = IS_TESTNET ? RPC_URL.testnet : RPC_URL.mainnet;
 
 export enum DEFAULT_NETWORK_IDS {
   mainnet = 1029,
