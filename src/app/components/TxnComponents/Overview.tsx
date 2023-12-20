@@ -6,6 +6,7 @@ import { Link } from 'app/components/Link';
 import { Description } from 'app/components/Description/Loadable';
 import _ from 'lodash';
 import { hideInDotNet } from 'utils';
+import TransactionAction from 'app/components/TransactionAction';
 
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
@@ -25,10 +26,10 @@ export const Overview = ({ data }) => {
     storageCoveredBySponsor,
     nonce,
     transactionIndex,
-    tokenTransferTokenInfo,
-    tokenTransfer,
     txExecErrorInfo,
     from,
+    list,
+    tokenTransferTokenInfo,
   } = data;
 
   return (
@@ -50,7 +51,7 @@ export const Overview = ({ data }) => {
           ></Status>
         </div>
       </Description>
-      {tokenTransfer?.total ? (
+      {/* {tokenTransfer?.total ? (
         <Description
           verticle
           size="tiny"
@@ -64,7 +65,21 @@ export const Overview = ({ data }) => {
             />
           </StyledTokenTransferWrapper>
         </Description>
-      ) : null}
+      ) : null} */}
+      <Description
+        verticle
+        size="tiny"
+        title={t(translations.transaction.action.title)}
+      >
+        <TransactionAction
+          transaction={data}
+          event={list}
+          customInfo={
+            tokenTransferTokenInfo &&
+            tokenTransferTokenInfo[Object.keys(tokenTransferTokenInfo)[0]]
+          }
+        ></TransactionAction>
+      </Description>
       <Description
         verticle
         size="tiny"

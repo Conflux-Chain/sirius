@@ -454,6 +454,16 @@ interface ERC721_Revoked extends Record<string, any> {
 interface ERC721_Approved extends Record<string, any> {
   address: string;
 }
+interface ERC1155_Approved extends Record<string, any> {
+  address: string;
+}
+interface ERC1155_Revoked extends Record<string, any> {
+  address: string;
+}
+interface ERC1155_Mint extends Record<string, any> {
+  address: string;
+  value: string;
+}
 interface ERC1155_SafeTransferFrom extends Record<string, any> {
   value: string;
   address: string;
@@ -490,11 +500,14 @@ export interface MultiAction {
   }: ERC721_SafeTransferFrom) => any;
   ERC721_Revoked: ({ address, ...rest }: ERC721_Revoked) => any;
   ERC721_Approved: ({ address, ...rest }: ERC721_Approved) => any;
+  ERC1155_Approved: ({ address, ...rest }: ERC1155_Approved) => any;
+  ERC1155_Revoked: ({ address, ...rest }: ERC1155_Revoked) => any;
   ERC1155_SafeTransferFrom: ({
     value,
     address,
     ...rest
   }: ERC1155_SafeTransferFrom) => any;
+  ERC1155_Mint: ({ value, address, ...rest }: ERC1155_Mint) => any;
   ERC1155_Burn: ({ value, address, ...rest }: ERC1155_Burn) => any;
   ERC1155_Transfer: ({ value, address, ...rest }: ERC1155_Transfer) => any;
   ERC1155_SafeBatchTransferFrom: ({
@@ -522,7 +535,7 @@ const ActionTranslate: Translation = {
       customInfo: arg,
     };
   },
-  // transferFrom (ERC20,ERC721) x
+  // transferFrom (ERC20,ERC721)
   '0x23b872dd': (arg: TranslationArgs) => {
     const { decimals, data } = arg;
     const parsed = ERC20_INTERFACE.parseTransaction({ data });
@@ -540,7 +553,7 @@ const ActionTranslate: Translation = {
         customInfo: arg,
       };
     }
-    const tokenInfo = arg?.token.transferType;
+    const tokenInfo = arg?.token?.transferType || arg.transferType;
     if (tokenInfo === 'ERC20') {
       return {
         type: 'ERC20_Transfer',
@@ -598,13 +611,33 @@ const ActionTranslate: Translation = {
       customInfo: arg,
     };
   },
-  // setApprovalForAll (ERC721, ERC1155) x
+  // setApprovalForAll (ERC721, ERC1155)
   '0xa22cb465': (arg: TranslationArgs) => {
     const { data } = arg;
     const parsed = ERC721_INTERFACE.parseTransaction({ data });
+    const tokenInfo = arg?.token?.transferType;
+    if (tokenInfo === 'ERC721') {
+      if (parsed.args[1] === false) {
+        return {
+          type: 'ERC721_Revoked',
+          title: 'Revoked',
+          args: parsed.args,
+          address: parsed.args[0],
+          customInfo: arg,
+        };
+      } else {
+        return {
+          type: 'ERC721_Approved',
+          title: 'Approved',
+          args: parsed.args,
+          address: parsed.args[0],
+          customInfo: arg,
+        };
+      }
+    }
     if (parsed.args[1] === false) {
       return {
-        type: 'ERC721_Revoked',
+        type: 'ERC1155_Revoked',
         title: 'Revoked',
         args: parsed.args,
         address: parsed.args[0],
@@ -612,7 +645,7 @@ const ActionTranslate: Translation = {
       };
     } else {
       return {
-        type: 'ERC721_Approved',
+        type: 'ERC1155_Approved',
         title: 'Approved',
         args: parsed.args,
         address: parsed.args[0],
@@ -628,6 +661,7 @@ const ActionTranslate: Translation = {
     const value = parsed.args[3].toString();
     if (parsed.args[1] === Zero) {
       return {
+        ...arg,
         type: 'ERC1155_Burn',
         title: 'Burn',
         args: parsed.args,
@@ -637,6 +671,7 @@ const ActionTranslate: Translation = {
       };
     } else {
       return {
+        ...arg,
         type: 'ERC1155_SafeTransferFrom',
         title: 'Transfer',
         args: parsed.args,
@@ -687,9 +722,10 @@ const EventTranslate: TranslationEvent = {
   ) => {
     const { icon, symbol, decimals, name } = arg;
     const methodId = '0x095ea7b3';
+    console.log(arg);
     const eTransaction: TranslationArgs = {
       ...arg,
-      data: methodId + arg.topics[2].substring(2) + arg.data.substring(2), // spender, value
+      data: methodId + arg.topics[1].substring(2) + arg.topics[2].substring(2), // spender, value
       icon,
       symbol,
       decimals,
@@ -756,9 +792,32 @@ const EventTranslate: TranslationEvent = {
     arg: EventList,
   ) => {
     const parsed = ERC1155_INTERFACE.parseLog(arg);
-    if (parsed.args[2] === false) {
+    const tokenInfo = arg?.token.transferType;
+    if (tokenInfo === 'ERC721') {
+      if (parsed.args[1] === false) {
+        return {
+          ...arg,
+          type: 'ERC721_Revoked',
+          title: 'Revoked',
+          args: parsed.args,
+          address: parsed.args[0],
+          customInfo: arg,
+        };
+      } else {
+        return {
+          ...arg,
+          type: 'ERC721_Approved',
+          title: 'Approved',
+          args: parsed.args,
+          address: parsed.args[0],
+          customInfo: arg,
+        };
+      }
+    }
+    if (parsed.args[1] === false) {
       return {
-        type: 'ERC721_Revoked',
+        ...arg,
+        type: 'ERC1155_Revoked',
         title: 'Revoked',
         args: parsed.args,
         address: parsed.args[0],
@@ -766,7 +825,8 @@ const EventTranslate: TranslationEvent = {
       };
     } else {
       return {
-        type: 'ERC721_Approved',
+        ...arg,
+        type: 'ERC1155_Approved',
         title: 'Approved',
         args: parsed.args,
         address: parsed.args[0],
@@ -786,6 +846,27 @@ const EventTranslate: TranslationEvent = {
         .toString();
     } else {
       value = parsed.args[4].toString();
+    }
+
+    if (parsed.args[1] === Zero && parsed.args[2] !== Zero) {
+      return {
+        type: 'ERC1155_Mint',
+        address: parsed.args[0],
+        title: 'Mint',
+        args: parsed.args,
+        value,
+        customInfo: arg,
+      };
+    }
+    if (parsed.args[2] === Zero && parsed.args[1] !== Zero) {
+      return {
+        type: 'ERC1155_Burn',
+        address: parsed.args[0],
+        title: 'Mint',
+        args: parsed.args,
+        value,
+        customInfo: arg,
+      };
     }
 
     return {
@@ -845,6 +926,7 @@ export const decodeData = (
   customInfo?: CustomInfo,
   customUI?: MultiAction,
 ) => {
+  // try {
   if (!isObjectAndNotEmpty(transaction)) return;
   let result;
   let content;
@@ -852,7 +934,11 @@ export const decodeData = (
   const methodId: string = transaction.data.slice(0, 10);
 
   if (ActionTranslate[methodId]) {
-    result = ActionTranslate[methodId]({ ...customInfo, ...transaction });
+    result = ActionTranslate[methodId]({
+      token: customInfo,
+      ...customInfo,
+      ...transaction,
+    });
     const actionType: string = result.type;
 
     if (actionType && customUI && customUI[actionType]) {
@@ -868,13 +954,15 @@ export const decodeData = (
         const eResult = EventTranslate[evnetHash]({ ...customInfo, ...e });
         const actionType: string = eResult.type;
         if (customUI[actionType]) {
-          // First translate the content of inputdata,unless inputdata cannot be translated
-          if (!(content && i === 0)) {
-            eventContent.push(customUI[actionType](eResult));
-          }
+          eventContent.push(customUI[actionType](eResult));
+          // // First translate the content of inputdata,unless inputdata cannot be translated
+          // if (!(content && i === 0)) {
+          //   eventContent.push(customUI[actionType](eResult));
+          // }
         }
       }
     });
+    if (eventContent.length > 0) content = undefined;
   }
 
   return {
@@ -882,4 +970,5 @@ export const decodeData = (
     content,
     eventContent,
   };
+  // } catch (error) {}
 };
