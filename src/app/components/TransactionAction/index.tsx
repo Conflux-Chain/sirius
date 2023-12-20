@@ -19,6 +19,10 @@ const StyleWrap: CSSProperties = {
 const BalanceStyle = styled.div`
   font-weight: 800;
 `;
+const TransactionActionWrapper = styled.div`
+  max-height: 119px;
+  overflow-y: scroll;
+`;
 
 const TokenName = 'Unknown';
 const TokenIcon =
@@ -99,6 +103,14 @@ const customUI: MultiAction = {
             <AddressContainer value={address} />
           </Link>
         )}
+      </div>
+    );
+  },
+  ERC721_Mint: ({ value, address, customInfo }) => {
+    return (
+      <div style={{ ...StyleWrap }}>
+        Mint <BalanceStyle>1</BalanceStyle> of{' '}
+        {Token(address, customInfo, 'ERC721')}
       </div>
     );
   },
@@ -202,14 +214,14 @@ const TransactionAction = ({ transaction, event, customInfo }: any) => {
   const res = decodeData(transaction, event, customInfo, customUI);
   //   console.log(res);
   return (
-    <>
+    <TransactionActionWrapper>
       <div>{res?.content}</div>
       {res?.eventContent &&
         res?.eventContent.length > 0 &&
         res?.eventContent.map(e => {
           return <div>{e}</div>;
         })}
-    </>
+    </TransactionActionWrapper>
   );
 };
 

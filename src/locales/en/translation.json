@@ -1600,7 +1600,8 @@
       }
     },
     "action": {
-      "title": "Transaction Action"
+      "title": "Transaction Action",
+      "tooltip": "Highlighted events of the transaction."
     }
   },
   "block": {

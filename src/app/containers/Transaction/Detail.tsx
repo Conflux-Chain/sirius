@@ -54,6 +54,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { CreateTxNote } from '../Profile/CreateTxNote';
 import { useNametag } from 'utils/hooks/useNametag';
 import iconInfo from 'images/info.svg';
+import iconQuestion from 'images/icon-question.svg';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -752,16 +753,28 @@ export const Detail = () => {
         </Description>
         <Description
           title={
-            <Tooltip text={``} placement="top">
+            <>
+              <Tooltip
+                text={t(translations.transaction.action.tooltip)}
+                placement="top"
+              >
+                <IconQuestion>
+                  <img src={iconQuestion} alt="warning-icon"></img>
+                </IconQuestion>
+              </Tooltip>
               {t(translations.transaction.action.title)}
-            </Tooltip>
+            </>
           }
         >
-          <TransactionAction
-            transaction={transactionDetail}
-            event={eventlogs}
-            customInfo={contractInfo}
-          ></TransactionAction>
+          {loading ? (
+            <SkeletonContainer shown={true}></SkeletonContainer>
+          ) : (
+            <TransactionAction
+              transaction={transactionDetail}
+              event={eventlogs}
+              customInfo={contractInfo}
+            ></TransactionAction>
+          )}
         </Description>
         <Description
           title={
@@ -1225,4 +1238,10 @@ const IconWrapper = styled.div`
   .download-svg-img {
     margin-left: 0.3571rem;
   }
+`;
+
+const IconQuestion = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
 `;

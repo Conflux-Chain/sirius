@@ -422,117 +422,88 @@ interface ReturnDataType {
   event?: ReturnType[];
 }
 
-interface ERC20_Transfer {
+interface ERC20_Transfer extends Record<string, any> {
   address: string;
   value: string;
 }
-interface ERC20_Approved {
+interface ERC20_Approved extends Record<string, any> {
   address: string;
 }
-interface ERC20_Revoked {
+interface ERC20_Revoked extends Record<string, any> {
   address: string;
 }
-interface ERC721_TransferFrom {
-  address: string;
-  value: string;
-}
-interface ERC721_SafeTransferFrom {
+interface ERC721_Mint extends Record<string, any> {
   address: string;
   value: string;
 }
-interface ERC721_Revoked {
+interface ERC721_Burn extends Record<string, any> {
+  address: string;
+  value: string;
+}
+interface ERC721_TransferFrom extends Record<string, any> {
+  address: string;
+  value: string;
+}
+interface ERC721_SafeTransferFrom extends Record<string, any> {
+  address: string;
+  value: string;
+}
+interface ERC721_Revoked extends Record<string, any> {
   address: string;
 }
-interface ERC721_Approved {
+interface ERC721_Approved extends Record<string, any> {
   address: string;
 }
-interface ERC1155_SafeTransferFrom {
+interface ERC1155_SafeTransferFrom extends Record<string, any> {
   value: string;
   address: string;
 }
-interface ERC1155_Burn {
+interface ERC1155_Burn extends Record<string, any> {
   value: string;
   address: string;
 }
-interface ERC1155_Transfer {
+interface ERC1155_Transfer extends Record<string, any> {
   value: string;
   address: string;
 }
-interface ERC1155_SafeBatchTransferFrom {
+interface ERC1155_SafeBatchTransferFrom extends Record<string, any> {
   value: string;
 }
-interface ERC1155_BatchBurn {
+interface ERC1155_BatchBurn extends Record<string, any> {
   value: string;
 }
-interface ERC1155_BatchMint {
+interface ERC1155_BatchMint extends Record<string, any> {
   value: string;
 }
 export interface MultiAction {
   [key: string]: (result: any) => any;
-  ERC20_Transfer: ({
-    address,
-    value,
-    ...rest
-  }: ERC20_Transfer & Record<string, any>) => any;
-  ERC20_Approved: ({
-    address,
-    ...rest
-  }: ERC20_Approved & Record<string, any>) => any;
-  ERC20_Revoked: ({
-    address,
-    ...rest
-  }: ERC20_Revoked & Record<string, any>) => any;
-  ERC721_Burn: ({
-    value,
-    address,
-    ...rest
-  }: ERC721_TransferFrom & Record<string, any>) => any;
-  ERC721_Transfer: ({
-    value,
-    address,
-    ...rest
-  }: ERC721_TransferFrom & Record<string, any>) => any;
+  ERC20_Transfer: ({ address, value, ...rest }: ERC20_Transfer) => any;
+  ERC20_Approved: ({ address, ...rest }: ERC20_Approved) => any;
+  ERC20_Revoked: ({ address, ...rest }: ERC20_Revoked) => any;
+  ERC721_Mint: ({ value, address, ...rest }: ERC721_Mint) => any;
+  ERC721_Burn: ({ value, address, ...rest }: ERC721_Burn) => any;
+  ERC721_Transfer: ({ value, address, ...rest }: ERC721_TransferFrom) => any;
   ERC721_SafeTransferFrom: ({
     value,
     address,
     ...rest
-  }: ERC721_SafeTransferFrom & Record<string, any>) => any;
-  ERC721_Revoked: ({
-    address,
-    ...rest
-  }: ERC721_Revoked & Record<string, any>) => any;
-  ERC721_Approved: ({
-    address,
-    ...rest
-  }: ERC721_Approved & Record<string, any>) => any;
+  }: ERC721_SafeTransferFrom) => any;
+  ERC721_Revoked: ({ address, ...rest }: ERC721_Revoked) => any;
+  ERC721_Approved: ({ address, ...rest }: ERC721_Approved) => any;
   ERC1155_SafeTransferFrom: ({
     value,
     address,
     ...rest
-  }: ERC1155_SafeTransferFrom & Record<string, any>) => any;
-  ERC1155_Burn: ({
-    value,
-    address,
-    ...rest
-  }: ERC1155_Burn & Record<string, any>) => any;
-  ERC1155_Transfer: ({
-    value,
-    address,
-    ...rest
-  }: ERC1155_Transfer & Record<string, any>) => any;
+  }: ERC1155_SafeTransferFrom) => any;
+  ERC1155_Burn: ({ value, address, ...rest }: ERC1155_Burn) => any;
+  ERC1155_Transfer: ({ value, address, ...rest }: ERC1155_Transfer) => any;
   ERC1155_SafeBatchTransferFrom: ({
     value,
     address,
     ...rest
-  }: ERC1155_SafeBatchTransferFrom & Record<string, any>) => any;
-  ERC1155_BatchBurn: ({
-    value,
-    ...rest
-  }: ERC1155_BatchBurn & Record<string, any>) => any;
-  ERC1155_BatchMint: ({
-    value,
-    ...rest
-  }: ERC1155_BatchMint & Record<string, any>) => any;
+  }: ERC1155_SafeBatchTransferFrom) => any;
+  ERC1155_BatchBurn: ({ value, ...rest }: ERC1155_BatchBurn) => any;
+  ERC1155_BatchMint: ({ value, ...rest }: ERC1155_BatchMint) => any;
 }
 const ActionTranslate: Translation = {
   // transfer (ERC20)
@@ -569,14 +540,26 @@ const ActionTranslate: Translation = {
         customInfo: arg,
       };
     }
-    return {
-      type: 'ERC721_Transfer',
-      title: 'Transfer',
-      args: parsed.args,
-      value,
-      address: parsed.args[0],
-      customInfo: arg,
-    };
+    const tokenInfo = arg?.token.transferType;
+    if (tokenInfo === 'ERC20') {
+      return {
+        type: 'ERC20_Transfer',
+        title: 'Transfer',
+        args: parsed.args,
+        address: parsed.args[1],
+        value,
+        customInfo: arg,
+      };
+    } else {
+      return {
+        type: 'ERC721_Transfer',
+        title: 'Transfer',
+        args: parsed.args,
+        value,
+        address: parsed.args[0],
+        customInfo: arg,
+      };
+    }
   },
   // approve (ERC20)
   '0x095ea7b3': (arg: TranslationArgs) => {
@@ -591,7 +574,6 @@ const ActionTranslate: Translation = {
         customInfo: arg,
       };
     } else {
-      // const value = decimals ? formatUnits(parsed.args[1].toString(), decimals) : parsed.args[1].toString();
       return {
         type: 'ERC20_Approved',
         address: parsed.args[0],
@@ -706,7 +688,8 @@ const EventTranslate: TranslationEvent = {
     const { icon, symbol, decimals, name } = arg;
     const methodId = '0x095ea7b3';
     const eTransaction: TranslationArgs = {
-      data: methodId + arg.topics[1].substring(2) + arg.data.substring(2), // spender, value
+      ...arg,
+      data: methodId + arg.topics[2].substring(2) + arg.data.substring(2), // spender, value
       icon,
       symbol,
       decimals,
@@ -720,7 +703,7 @@ const EventTranslate: TranslationEvent = {
   ) => {
     const methodId = '0x23b872dd';
     let eTransaction: TranslationArgs = {
-      data: '',
+      ...arg,
     };
     // ERC721
     if (arg.data === '0x') {
@@ -878,14 +861,18 @@ export const decodeData = (
     }
   }
 
-  // const eventResult: ReturnType[] = [];
   if (event) {
-    event.forEach((e: EventList) => {
+    event.forEach((e: EventList, i: number) => {
       const evnetHash = e.topics[0];
       if (customUI && EventTranslate[evnetHash]) {
         const eResult = EventTranslate[evnetHash]({ ...customInfo, ...e });
         const actionType: string = eResult.type;
-        eventContent.push(customUI[actionType](eResult));
+        if (customUI[actionType]) {
+          // First translate the content of inputdata,unless inputdata cannot be translated
+          if (!(content && i === 0)) {
+            eventContent.push(customUI[actionType](eResult));
+          }
+        }
       }
     });
   }
@@ -893,7 +880,6 @@ export const decodeData = (
   return {
     args: result && result.args,
     content,
-    // event: eventResult,
     eventContent,
   };
 };
