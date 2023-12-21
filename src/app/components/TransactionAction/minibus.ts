@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { Interface } from '@ethersproject/abi';
 import { formatUnits } from '@ethersproject/units';
+import { stripZeros } from '@ethersproject/bytes';
 import { BigNumber } from '@ethersproject/bignumber';
 const Zero = '0x0000000000000000000000000000000000000000';
 const ERC20_ABI = [
@@ -417,10 +418,6 @@ interface TranslationArgs extends Token, CustomProp, CustomInfo {
 interface TranslationEvent {
   [hash: string]: (args: EventList) => ReturnType;
 }
-interface ReturnDataType {
-  data: ReturnType;
-  event?: ReturnType[];
-}
 
 interface ERC20_Transfer extends Record<string, any> {
   address: string;
@@ -478,12 +475,15 @@ interface ERC1155_Transfer extends Record<string, any> {
 }
 interface ERC1155_SafeBatchTransferFrom extends Record<string, any> {
   value: string;
+  address: string;
 }
 interface ERC1155_BatchBurn extends Record<string, any> {
   value: string;
+  address: string;
 }
 interface ERC1155_BatchMint extends Record<string, any> {
   value: string;
+  address: string;
 }
 export interface MultiAction {
   [key: string]: (result: any) => any;
@@ -515,8 +515,8 @@ export interface MultiAction {
     address,
     ...rest
   }: ERC1155_SafeBatchTransferFrom) => any;
-  ERC1155_BatchBurn: ({ value, ...rest }: ERC1155_BatchBurn) => any;
-  ERC1155_BatchMint: ({ value, ...rest }: ERC1155_BatchMint) => any;
+  ERC1155_BatchBurn: ({ value, address, ...rest }: ERC1155_BatchBurn) => any;
+  ERC1155_BatchMint: ({ value, address, ...rest }: ERC1155_BatchMint) => any;
 }
 const ActionTranslate: Translation = {
   // transfer (ERC20)
@@ -554,16 +554,7 @@ const ActionTranslate: Translation = {
       };
     }
     const tokenInfo = arg?.token?.transferType || arg.transferType;
-    if (tokenInfo === 'ERC20') {
-      return {
-        type: 'ERC20_Transfer',
-        title: 'Transfer',
-        args: parsed.args,
-        address: parsed.args[1],
-        value,
-        customInfo: arg,
-      };
-    } else {
+    if (tokenInfo === 'ERC721') {
       return {
         type: 'ERC721_Transfer',
         title: 'Transfer',
@@ -573,6 +564,14 @@ const ActionTranslate: Translation = {
         customInfo: arg,
       };
     }
+    return {
+      type: 'ERC20_Transfer',
+      title: 'Transfer',
+      args: parsed.args,
+      address: parsed.args[1],
+      value,
+      customInfo: arg,
+    };
   },
   // approve (ERC20)
   '0x095ea7b3': (arg: TranslationArgs) => {
@@ -614,8 +613,10 @@ const ActionTranslate: Translation = {
   // setApprovalForAll (ERC721, ERC1155)
   '0xa22cb465': (arg: TranslationArgs) => {
     const { data } = arg;
+    console.log('data', data);
+    console.log('arg', arg);
     const parsed = ERC721_INTERFACE.parseTransaction({ data });
-    const tokenInfo = arg?.token?.transferType;
+    const tokenInfo = arg?.token?.transferType || arg.transferType;
     if (tokenInfo === 'ERC721') {
       if (parsed.args[1] === false) {
         return {
@@ -702,6 +703,7 @@ const ActionTranslate: Translation = {
         type: 'ERC1155_BatchMint',
         title: 'Mint',
         args: parsed.args,
+        address: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -716,13 +718,19 @@ const ActionTranslate: Translation = {
   },
 };
 const EventTranslate: TranslationEvent = {
-  // Approval (ERC20)
+  // Approval (ERC20,ERC721)
   '0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925': (
     arg: EventList,
   ) => {
     const { icon, symbol, decimals, name } = arg;
-    const methodId = '0x095ea7b3';
-    console.log(arg);
+    let methodId = '0x095ea7b3';
+    if (arg.topics.length > 3) {
+      methodId = '0xa22cb465';
+      if (arg.token) {
+        arg.token.transferType = 'ERC721';
+      }
+      arg.transferType = 'ERC721';
+    }
     const eTransaction: TranslationArgs = {
       ...arg,
       data: methodId + arg.topics[1].substring(2) + arg.topics[2].substring(2), // spender, value
@@ -752,6 +760,9 @@ const EventTranslate: TranslationEvent = {
           type: 'ERC721_Mint',
           title: 'Mint',
           args: [arg.topics[2], arg.topics[3]], // to, tokenId
+          address: `0x${Buffer.from(stripZeros(arg.topics[2])).toString(
+            'hex',
+          )}`,
           value: '1',
           customInfo: arg,
         };
@@ -774,6 +785,10 @@ const EventTranslate: TranslationEvent = {
             arg.topics[1].substring(2) +
             arg.topics[2].substring(2) +
             '0000000000000000000000000000000000000000000000000000000000000001';
+          if (eTransaction.token) {
+            eTransaction.token.transferType = 'ERC721';
+          }
+          eTransaction.transferType = 'ERC721';
         }
       }
     }
@@ -785,6 +800,7 @@ const EventTranslate: TranslationEvent = {
         arg.topics[2].substring(2) +
         arg.data.substring(2); // from, to, value
     }
+
     return ActionTranslate[methodId](eTransaction);
   },
   // ApprovalForAll (ERC721, 1155)
@@ -873,6 +889,7 @@ const EventTranslate: TranslationEvent = {
       type: 'ERC1155_Transfer',
       title: 'TransferSingle',
       args: parsed.args,
+      address: parsed.args[0],
       value,
       customInfo: arg,
     };
@@ -890,6 +907,7 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_BatchBurn',
         title: 'Burn',
         args: parsed.args,
+        address: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -898,6 +916,7 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_BatchMint',
         title: 'Mint',
         args: parsed.args,
+        address: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -906,6 +925,7 @@ const EventTranslate: TranslationEvent = {
       type: 'ERC1155_SafeBatchTransferFrom',
       title: 'Transfer',
       args: parsed.args,
+      address: parsed.args[0],
       value,
       customInfo: arg,
     };
