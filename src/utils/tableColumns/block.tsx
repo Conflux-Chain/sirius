@@ -18,6 +18,7 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
+import imgInfo from 'images/info.svg';
 
 export const epoch = {
   title: (
@@ -200,16 +201,27 @@ export const difficulty = {
   render: formatNumber,
 };
 
+const StyledGasLimit = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  img {
+    margin-top: -3px;
+  }
+`;
+
 export const gasLimit = {
   title: (
-    <Translation>
-      {t => t(translations.general.table.block.gasLimit)}
-    </Translation>
+    <StyledGasLimit>
+      <Translation>
+        {t => t(translations.general.table.block.gasLimit)}
+      </Translation>
+    </StyledGasLimit>
   ),
   dataIndex: 'gasLimit',
   key: 'gasLimit',
   width: 1,
-  render: formatNumber,
+  render: value => <Text span>{toThousands(value)}</Text>,
 };
 
 const StyledHashWrapper = styled.span`

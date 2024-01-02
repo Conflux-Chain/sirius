@@ -866,7 +866,17 @@ export const Detail = () => {
           <Description
             title={
               <Tooltip
-                text={t(translations.toolTip.tx.gasUsedLimit)}
+                text={
+                  <StyleToolTipText>
+                    {t(translations.toolTip.tx.gasLimitTip)}
+                    <br />
+                    <br />
+                    {t(translations.toolTip.tx.gasUsedTip)}
+                    <br />
+                    <br />
+                    {t(translations.toolTip.tx.gasChargedip)}
+                  </StyleToolTipText>
+                }
                 placement="top"
               >
                 {t(translations.transaction.gasUsed)}
@@ -874,25 +884,13 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${!_.isNil(gasUsed) ? toThousands(gasUsed) : '--'}/${
+              {`${!_.isNil(gasUsed) ? toThousands(gasUsed) : '--'} | ${
                 !_.isNil(gas) ? toThousands(gas) : '--'
-              } (${getPercent(gasUsed, gas)})`}
-            </SkeletonContainer>
-          </Description>
-          <Description
-            title={
-              <Tooltip
-                text={t(translations.toolTip.tx.gasCharged)}
-                placement="top"
-              >
-                {t(translations.transaction.gasCharged)}
-              </Tooltip>
-            }
-          >
-            <SkeletonContainer shown={loading}>
-              {gasUsed && gas
-                ? toThousands(Math.max(+gasUsed, (+gas * 3) / 4))
-                : '--'}
+              } (${getPercent(gasUsed, gas)}) | ${
+                gasUsed && gas
+                  ? toThousands(Math.max(+gasUsed, (+gas * 3) / 4))
+                  : '--'
+              }`}
             </SkeletonContainer>
           </Description>
           {hideInDotNet(
@@ -1202,4 +1200,12 @@ const IconWrapper = styled.div`
   .download-svg-img {
     margin-left: 0.3571rem;
   }
+`;
+
+const StyleToolTipText = styled.div`
+  width: 316px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: PingFang SC;
+  color: #ececec;
 `;

@@ -16,7 +16,7 @@ export const MinedBlocks = ({ address }: Props) => {
 
   const url = `/block?miner=${address}`;
 
-  const columnsWidth = [3, 2, 2, 5, 6, 3, 5, 3, 5];
+  const columnsWidth = [3, 2, 2, 5, 6, 3, 5, 3, 3, 5];
   const columns = [
     blockColunms.epoch,
     blockColunms.position,
@@ -28,6 +28,7 @@ export const MinedBlocks = ({ address }: Props) => {
     },
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercentWithProgress,
+    blockColunms.gasLimit,
     blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
