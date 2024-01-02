@@ -18,7 +18,6 @@ import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
-import imgInfo from 'images/info.svg';
 
 export const epoch = {
   title: (
