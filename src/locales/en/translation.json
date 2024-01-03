@@ -1369,10 +1369,13 @@
         "20003": "Request abort，try again later",
         "20004": "Network error，try again later",
         "30001": "RPC call error，try again later",
+        "50001": "System error, please try again later, or submit a ticket",
         "50100": "Unknown error, please try again later, or submit a ticket",
         "50101": "The parameter is wrong, please confirm it is correct",
         "50102": "Permission Error",
-        "50103": "API is Busy, try again later",
+        "50103": "System is busy, try again later",
+        "50104": "RPC service is busy, try again later",
+        "50105": "RPC request error, please try again later, or submit a ticket",
         "50200": "Network exception, try again later",
         "50201": "External data request timeout, try again later",
         "50202": "Data parsing exception, try again later",
@@ -1677,7 +1680,7 @@
     },
     "warning": "Attention:",
     "warnings": {
-      "one": "1. If you’re looking to move assets from ConfluxCore to any other network or blockchain, you need to transfer assets via <a href='https://confluxhub.io/shuttle-flow/?fromChain=cfx&fromTokenAddress=cfx&toChain=eth' target='_blank'>ShuttleFlow</a> or you may lose your assets forever.",
+      "one": "1. If you’re looking to move assets from ConfluxCore to any other network or blockchain, you need to transfer assets via <a href='https://confluxhub.io/bridge' target='_blank'>ConfluxHub</a> or you may lose your assets forever.",
       "two": "2. You can’t use Conflux hex address move assets to Conflux eSpace address directly, or back to Conflux hex address, you need to transfer assets via <a href='https://confluxhub.io/espace-bridge/cross-space' target='_blank'>Space Bridge</a> or you may lose your assets forever.",
       "three": "3. Use the tool to first check your address that matches the Conflux-base32 format address before you’re looking to send assets to Conflux hex addresses. And we recommend that you send a small first to avoid losing your assets.",
       "four": "4. Use the tool to first check contract address that matches the Conflux-base32 format contract address as well as verify the contract on Conflux Scan that has exist already before you’re looking to send assets to Conflux hex contract address."
