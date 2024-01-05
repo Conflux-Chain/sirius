@@ -11,7 +11,6 @@ import TransactionAction from 'app/components/TransactionAction';
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
 import { Nonce } from './Nonce';
-import { TokenTransfer } from './TokenTransfer';
 import { Status } from './Status';
 
 export const Overview = ({ data }) => {
@@ -31,7 +30,6 @@ export const Overview = ({ data }) => {
     list,
     tokenTransferTokenInfo,
   } = data;
-
   return (
     <StyledWrapper>
       <div className="overview-title">

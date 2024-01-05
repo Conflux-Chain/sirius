@@ -421,6 +421,7 @@ interface TranslationEvent {
 
 interface ERC20_Transfer extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC20_Approved extends Record<string, any> {
@@ -438,6 +439,7 @@ interface ERC721_Mint extends Record<string, any> {
 }
 interface ERC721_Burn extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC721_TransferFrom extends Record<string, any> {
@@ -452,6 +454,7 @@ interface ERC721_SafeTransferFrom extends Record<string, any> {
 }
 interface ERC721_Revoked extends Record<string, any> {
   address: string;
+  toAddress: string;
 }
 interface ERC721_Approved extends Record<string, any> {
   address: string;
@@ -477,6 +480,7 @@ interface ERC1155_SafeTransferFrom extends Record<string, any> {
 interface ERC1155_Burn extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 interface ERC1155_Transfer extends Record<string, any> {
   value: string;
@@ -491,6 +495,7 @@ interface ERC1155_SafeBatchTransferFrom extends Record<string, any> {
 interface ERC1155_BatchBurn extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 interface ERC1155_BatchMint extends Record<string, any> {
   value: string;
@@ -541,6 +546,7 @@ export interface MultiAction {
   ERC1155_SafeBatchTransferFrom: ({
     value,
     address,
+    toAddress,
     ...rest
   }: ERC1155_SafeBatchTransferFrom) => any;
   ERC1155_BatchBurn: ({
@@ -657,8 +663,6 @@ const ActionTranslate: Translation = {
   // setApprovalForAll (ERC721, ERC1155)
   '0xa22cb465': (arg: TranslationArgs) => {
     const { data, address } = arg;
-    console.log('data', data);
-    console.log('arg', arg);
     const parsed = ERC721_INTERFACE.parseTransaction({ data });
     const tokenInfo = arg?.token?.transferType || arg.transferType;
     if (tokenInfo === 'ERC721') {
@@ -668,7 +672,7 @@ const ActionTranslate: Translation = {
           title: 'Revoked',
           args: parsed.args,
           address,
-          toAddress: parsed.args[1],
+          toAddress: parsed.args[0],
           customInfo: arg,
         };
       } else {

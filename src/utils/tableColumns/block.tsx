@@ -200,16 +200,27 @@ export const difficulty = {
   render: formatNumber,
 };
 
+const StyledGasLimit = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  img {
+    margin-top: -3px;
+  }
+`;
+
 export const gasLimit = {
   title: (
-    <Translation>
-      {t => t(translations.general.table.block.gasLimit)}
-    </Translation>
+    <StyledGasLimit>
+      <Translation>
+        {t => t(translations.general.table.block.gasLimit)}
+      </Translation>
+    </StyledGasLimit>
   ),
   dataIndex: 'gasLimit',
   key: 'gasLimit',
   width: 1,
-  render: formatNumber,
+  render: value => <Text span>{toThousands(value)}</Text>,
 };
 
 const StyledHashWrapper = styled.span`

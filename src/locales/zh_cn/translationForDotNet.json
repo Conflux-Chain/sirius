@@ -1355,10 +1355,13 @@
         "20003": "请求中止，请稍后再试",
         "20004": "网络连接错误，请稍后再试",
         "30001": "RPC 请求错误，请稍后再试",
+        "50001": "系统错误，请稍后再试，或提交工单",
         "50100": "未知错误，请稍后再试，或提交工单",
         "50101": "参数有误，请确保参数正确",
         "50102": "权限异常",
-        "50103": "服务忙，请稍后再试",
+        "50103": "系统忙，请稍后再试",
+        "50104": "RPC服务忙，请稍后再试",
+        "50105": "RRPC请求错误，请稍后再试，或提交工单",
         "50200": "网络异常，请稍后再试",
         "50201": "请求外部数据超时，请稍后再试",
         "50202": "数据解析异常，请稍后再试",
@@ -1623,7 +1626,7 @@
     },
     "warning": "注意：",
     "warnings": {
-      "one": "1. 如果你试图使用钱包将资产从 ConfluxCore 直接发送到其他网络/链，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/shuttle-flow/?fromChain=cfx&fromTokenAddress=cfx&toChain=eth' target='_blank'>ShuttleFlow</a> 跨链桥进行转账。",
+      "one": "1. 如果你试图使用钱包将资产从 ConfluxCore 直接发送到其他网络/链，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/bridge' target='_blank'>ConfluxHub</a> 跨链桥进行转账。",
       "two": "2. Conflux hex 地址与 Conflux eSpace 地址不能相互转账，这可能会导致永久的资产损失。必须使用 <a href='https://confluxhub.io/espace-bridge/cross-space' target='_blank'>Space Bridge</a> 进行转账。",
       "three": "3. 如果你试图给 Conflux hex 格式地址进行转账，请先使用此工具校验地址是否能转化为 Conflux-base32 地址，建议先进行小额资产转账，避免资产损失。",
       "four": "4. 如果你试图给 Conflux hex 格式的合约地址进行转账，请先使用此工具验证是否能转化为 Conflux-base32 合约地址，并在 ConfluxScan 上验证合约是否存在，避免资产损失。"
