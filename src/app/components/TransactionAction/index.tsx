@@ -35,13 +35,25 @@ function shortenAddress(address: string, digits = 4) {
     address.length - digits,
   )}`;
 }
-
+function filterByTokenAddress(data, address) {
+  let filter: any = Object.values(data).filter(
+    (item: any) => item && item.token && item.token.address === address,
+  );
+  if (filter && filter.length > 0) {
+    return filter[0];
+  }
+}
 const Token = (address, customInfo, token) => {
-  return customInfo ? (
+  const customInfoToken = filterByTokenAddress(
+    customInfo,
+    formatAddress(address),
+  );
+
+  return customInfoToken ? (
     <>
-      {customInfo['token'] && customInfo['token']['iconUrl'] ? (
+      {customInfoToken['token'] && customInfoToken['token']['iconUrl'] ? (
         <LogoStyle
-          src={customInfo['token'] && customInfo['token']['iconUrl']}
+          src={customInfoToken['token'] && customInfoToken['token']['iconUrl']}
           alt="icon"
         />
       ) : (
@@ -50,16 +62,16 @@ const Token = (address, customInfo, token) => {
         </>
       )}
       <Link href={`/address/${formatAddress(address)}`}>
-        {customInfo['name'] ||
-          (customInfo['token'] && customInfo['token']['name'] ? (
-            `${customInfo['token']['name']}`
+        {customInfoToken['name'] ||
+          (customInfoToken['token'] && customInfoToken['token']['name'] ? (
+            `${customInfoToken['token']['name']}`
           ) : (
             <div>{TokenName}</div>
           ))}
         {(token === 'ERC721' || token === 'ERC1155') &&
-          customInfo['token'] &&
-          customInfo['token']['symbol'] &&
-          `(${customInfo['token']['symbol']})`}
+          customInfoToken['token'] &&
+          customInfoToken['token']['symbol'] &&
+          `(${customInfoToken['token']['symbol']})`}
       </Link>{' '}
     </>
   ) : (
@@ -70,7 +82,7 @@ const Token = (address, customInfo, token) => {
   );
 };
 const customUI: MultiAction = {
-  ERC20_Transfer: ({ address, value, customInfo }) => {
+  ERC20_Transfer: ({ address, toAddress, value, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Transfer
@@ -78,33 +90,33 @@ const customUI: MultiAction = {
           {formatBalance(value, customInfo['decimals'] || TokenDecimals, true)}
         </BalanceStyle>{' '}
         {Token(address, customInfo, 'ERC20')} to{' '}
-        <Link href={`/address/${formatAddress(address)}`}>
-          <AddressContainer value={address} />
+        <Link href={`/address/${formatAddress(toAddress)}`}>
+          <AddressContainer value={toAddress} />
         </Link>
       </div>
     );
   },
-  ERC20_Approved: ({ address, customInfo }) => {
+  ERC20_Approved: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Approved
         {Token(address, customInfo, 'ERC20')} for
         {address && (
-          <Link href={`/address/${formatAddress(address)}`}>
-            <AddressContainer value={address} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressContainer value={toAddress} />
           </Link>
         )}
       </div>
     );
   },
-  ERC20_Revoked: ({ address, customInfo }) => {
+  ERC20_Revoked: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Revoked
         {Token(address, customInfo, 'ERC20')} from
         {address && (
-          <Link href={`/address/${formatAddress(address)}`}>
-            <AddressContainer value={address} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressContainer value={toAddress} />
           </Link>
         )}
       </div>
@@ -142,18 +154,18 @@ const customUI: MultiAction = {
       </div>
     );
   },
-  ERC721_Revoked: ({ address, customInfo }) => {
+  ERC721_Revoked: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Revoked{' '}
         {customInfo['token'] && customInfo['token']['symbol']
           ? `${customInfo['token']['symbol']}`
           : TokenName}{' '}
-        from {shortenAddress(address)}
+        from {shortenAddress(toAddress)}
       </div>
     );
   },
-  ERC721_Approved: ({ address, customInfo }) => {
+  ERC721_Approved: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Approved{' '}
@@ -162,14 +174,14 @@ const customUI: MultiAction = {
           : TokenName}{' '}
         for
         {address && (
-          <Link href={`/address/${formatAddress(address)}`}>
-            <AddressContainer value={address} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressContainer value={toAddress} />
           </Link>
         )}
       </div>
     );
   },
-  ERC1155_Approved: ({ address, customInfo }) => {
+  ERC1155_Approved: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Approved{' '}
@@ -178,14 +190,14 @@ const customUI: MultiAction = {
           : TokenName}{' '}
         for
         {address && (
-          <Link href={`/address/${formatAddress(address)}`}>
-            <AddressContainer value={address} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressContainer value={toAddress} />
           </Link>
         )}
       </div>
     );
   },
-  ERC1155_Revoked: ({ address, customInfo }) => {
+  ERC1155_Revoked: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
         Revoked{' '}
@@ -193,9 +205,9 @@ const customUI: MultiAction = {
           ? `${customInfo['token']['symbol']}`
           : TokenName}{' '}
         for
-        {address && (
-          <Link href={`/address/${formatAddress(address)}`}>
-            <AddressContainer value={address} />
+        {toAddress && (
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressContainer value={toAddress} />
           </Link>
         )}
       </div>

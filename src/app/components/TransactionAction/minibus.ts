@@ -425,12 +425,15 @@ interface ERC20_Transfer extends Record<string, any> {
 }
 interface ERC20_Approved extends Record<string, any> {
   address: string;
+  toAddress: string;
 }
 interface ERC20_Revoked extends Record<string, any> {
   address: string;
+  toAddress: string;
 }
 interface ERC721_Mint extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC721_Burn extends Record<string, any> {
@@ -439,10 +442,12 @@ interface ERC721_Burn extends Record<string, any> {
 }
 interface ERC721_TransferFrom extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC721_SafeTransferFrom extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC721_Revoked extends Record<string, any> {
@@ -450,20 +455,24 @@ interface ERC721_Revoked extends Record<string, any> {
 }
 interface ERC721_Approved extends Record<string, any> {
   address: string;
+  toAddress: string;
 }
 interface ERC1155_Approved extends Record<string, any> {
   address: string;
+  toAddress: string;
 }
 interface ERC1155_Revoked extends Record<string, any> {
   address: string;
 }
 interface ERC1155_Mint extends Record<string, any> {
   address: string;
+  toAddress: string;
   value: string;
 }
 interface ERC1155_SafeTransferFrom extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 interface ERC1155_Burn extends Record<string, any> {
   value: string;
@@ -472,10 +481,12 @@ interface ERC1155_Burn extends Record<string, any> {
 interface ERC1155_Transfer extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 interface ERC1155_SafeBatchTransferFrom extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 interface ERC1155_BatchBurn extends Record<string, any> {
   value: string;
@@ -484,44 +495,71 @@ interface ERC1155_BatchBurn extends Record<string, any> {
 interface ERC1155_BatchMint extends Record<string, any> {
   value: string;
   address: string;
+  toAddress: string;
 }
 export interface MultiAction {
   [key: string]: (result: any) => any;
-  ERC20_Transfer: ({ address, value, ...rest }: ERC20_Transfer) => any;
-  ERC20_Approved: ({ address, ...rest }: ERC20_Approved) => any;
-  ERC20_Revoked: ({ address, ...rest }: ERC20_Revoked) => any;
+  ERC20_Transfer: ({
+    address,
+    toAddress,
+    value,
+    ...rest
+  }: ERC20_Transfer) => any;
+  ERC20_Approved: ({ address, toAddress, ...rest }: ERC20_Approved) => any;
+  ERC20_Revoked: ({ address, toAddress, ...rest }: ERC20_Revoked) => any;
   ERC721_Mint: ({ value, address, ...rest }: ERC721_Mint) => any;
   ERC721_Burn: ({ value, address, ...rest }: ERC721_Burn) => any;
-  ERC721_Transfer: ({ value, address, ...rest }: ERC721_TransferFrom) => any;
+  ERC721_Transfer: ({
+    value,
+    toAddress,
+    address,
+    ...rest
+  }: ERC721_TransferFrom) => any;
   ERC721_SafeTransferFrom: ({
     value,
     address,
+    toAddress,
     ...rest
   }: ERC721_SafeTransferFrom) => any;
-  ERC721_Revoked: ({ address, ...rest }: ERC721_Revoked) => any;
-  ERC721_Approved: ({ address, ...rest }: ERC721_Approved) => any;
-  ERC1155_Approved: ({ address, ...rest }: ERC1155_Approved) => any;
+  ERC721_Revoked: ({ address, toAddress, ...rest }: ERC721_Revoked) => any;
+  ERC721_Approved: ({ address, toAddress, ...rest }: ERC721_Approved) => any;
+  ERC1155_Approved: ({ address, toAddress, ...rest }: ERC1155_Approved) => any;
   ERC1155_Revoked: ({ address, ...rest }: ERC1155_Revoked) => any;
   ERC1155_SafeTransferFrom: ({
     value,
     address,
     ...rest
   }: ERC1155_SafeTransferFrom) => any;
-  ERC1155_Mint: ({ value, address, ...rest }: ERC1155_Mint) => any;
+  ERC1155_Mint: ({ value, address, toAddress, ...rest }: ERC1155_Mint) => any;
   ERC1155_Burn: ({ value, address, ...rest }: ERC1155_Burn) => any;
-  ERC1155_Transfer: ({ value, address, ...rest }: ERC1155_Transfer) => any;
+  ERC1155_Transfer: ({
+    value,
+    address,
+    toAddress,
+    ...rest
+  }: ERC1155_Transfer) => any;
   ERC1155_SafeBatchTransferFrom: ({
     value,
     address,
     ...rest
   }: ERC1155_SafeBatchTransferFrom) => any;
-  ERC1155_BatchBurn: ({ value, address, ...rest }: ERC1155_BatchBurn) => any;
-  ERC1155_BatchMint: ({ value, address, ...rest }: ERC1155_BatchMint) => any;
+  ERC1155_BatchBurn: ({
+    value,
+    address,
+    toAddress,
+    ...rest
+  }: ERC1155_BatchBurn) => any;
+  ERC1155_BatchMint: ({
+    value,
+    address,
+    toAddress,
+    ...rest
+  }: ERC1155_BatchMint) => any;
 }
 const ActionTranslate: Translation = {
   // transfer (ERC20)
   '0xa9059cbb': (arg: TranslationArgs) => {
-    const { decimals, data } = arg;
+    const { decimals, data, address } = arg;
     const parsed = ERC20_INTERFACE.parseTransaction({ data });
     const value = decimals
       ? formatUnits(parsed.args[1].toString(), decimals)
@@ -530,14 +568,15 @@ const ActionTranslate: Translation = {
       type: 'ERC20_Transfer',
       title: 'Transfer',
       args: parsed.args,
-      address: parsed.args[0],
+      address,
+      toAddress: parsed.args[1],
       value,
       customInfo: arg,
     };
   },
   // transferFrom (ERC20,ERC721)
   '0x23b872dd': (arg: TranslationArgs) => {
-    const { decimals, data } = arg;
+    const { decimals, data, address } = arg;
     const parsed = ERC20_INTERFACE.parseTransaction({ data });
     const value = decimals
       ? formatUnits(parsed.args[2].toString(), decimals)
@@ -549,7 +588,7 @@ const ActionTranslate: Translation = {
         title: 'Burn',
         args: parsed.args,
         value,
-        address: parsed.args[0],
+        address,
         customInfo: arg,
       };
     }
@@ -560,7 +599,8 @@ const ActionTranslate: Translation = {
         title: 'Transfer',
         args: parsed.args,
         value,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[1],
         customInfo: arg,
       };
     }
@@ -568,19 +608,21 @@ const ActionTranslate: Translation = {
       type: 'ERC20_Transfer',
       title: 'Transfer',
       args: parsed.args,
-      address: parsed.args[1],
+      address,
+      toAddress: parsed.args[1],
       value,
       customInfo: arg,
     };
   },
   // approve (ERC20)
   '0x095ea7b3': (arg: TranslationArgs) => {
-    const { data } = arg;
+    const { data, address } = arg;
     const parsed = ERC20_INTERFACE.parseTransaction({ data });
     if (parsed.args[1].isZero()) {
       return {
         type: 'ERC20_Revoked',
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[1],
         title: 'Revoked',
         args: parsed.args,
         customInfo: arg,
@@ -588,7 +630,8 @@ const ActionTranslate: Translation = {
     } else {
       return {
         type: 'ERC20_Approved',
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[1],
         title: 'Approved',
         args: parsed.args,
         customInfo: arg,
@@ -598,7 +641,7 @@ const ActionTranslate: Translation = {
   // safeTransferFrom (ERC721)
   '0x42842e0e': (arg: TranslationArgs) => {
     // Transfer {amount} of {token image}{contract name}{(token symbol)}
-    const { data } = arg;
+    const { data, address } = arg;
     const parsed = ERC721_INTERFACE.parseTransaction({ data });
     const value = parsed.args[2].toString();
     return {
@@ -606,13 +649,14 @@ const ActionTranslate: Translation = {
       title: 'Transfer',
       args: parsed.args,
       value: value,
-      address: parsed.args[0],
+      address,
+      toAddress: parsed.args[0],
       customInfo: arg,
     };
   },
   // setApprovalForAll (ERC721, ERC1155)
   '0xa22cb465': (arg: TranslationArgs) => {
-    const { data } = arg;
+    const { data, address } = arg;
     console.log('data', data);
     console.log('arg', arg);
     const parsed = ERC721_INTERFACE.parseTransaction({ data });
@@ -623,7 +667,8 @@ const ActionTranslate: Translation = {
           type: 'ERC721_Revoked',
           title: 'Revoked',
           args: parsed.args,
-          address: parsed.args[0],
+          address,
+          toAddress: parsed.args[1],
           customInfo: arg,
         };
       } else {
@@ -631,7 +676,8 @@ const ActionTranslate: Translation = {
           type: 'ERC721_Approved',
           title: 'Approved',
           args: parsed.args,
-          address: parsed.args[0],
+          address,
+          toAddress: parsed.args[1],
           customInfo: arg,
         };
       }
@@ -641,7 +687,8 @@ const ActionTranslate: Translation = {
         type: 'ERC1155_Revoked',
         title: 'Revoked',
         args: parsed.args,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[0],
         customInfo: arg,
       };
     } else {
@@ -649,7 +696,8 @@ const ActionTranslate: Translation = {
         type: 'ERC1155_Approved',
         title: 'Approved',
         args: parsed.args,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[0],
         customInfo: arg,
       };
     }
@@ -657,7 +705,7 @@ const ActionTranslate: Translation = {
   // safeTransferFrom (ERC1155)
   '0xf242432a': (arg: TranslationArgs) => {
     // Transfer {amount} of {token image}{contract name}{(token symbol)}
-    const { data } = arg;
+    const { data, address } = arg;
     const parsed = ERC1155_INTERFACE.parseTransaction({ data });
     const value = parsed.args[3].toString();
     if (parsed.args[1] === Zero) {
@@ -667,7 +715,8 @@ const ActionTranslate: Translation = {
         title: 'Burn',
         args: parsed.args,
         value,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[0],
         customInfo: arg,
       };
     } else {
@@ -677,7 +726,8 @@ const ActionTranslate: Translation = {
         title: 'Transfer',
         args: parsed.args,
         value,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[0],
         customInfo: arg,
       };
     }
@@ -685,7 +735,7 @@ const ActionTranslate: Translation = {
   // safeBatchTransferFrom (ERC1155)
   '0x2eb2c2d6': (arg: TranslationArgs) => {
     // Transfer {amount} of {token image}{contract name}{(token symbol)}
-    const { data } = arg;
+    const { data, address } = arg;
     const parsed = ERC1155_INTERFACE.parseTransaction({ data });
     const value = parsed.args[3]
       .reduce((a: BigNumber, b: BigNumber) => a.add(b), BigNumber.from('0'))
@@ -703,7 +753,8 @@ const ActionTranslate: Translation = {
         type: 'ERC1155_BatchMint',
         title: 'Mint',
         args: parsed.args,
-        address: parsed.args[0],
+        address,
+        toAddress: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -760,9 +811,7 @@ const EventTranslate: TranslationEvent = {
           type: 'ERC721_Mint',
           title: 'Mint',
           args: [arg.topics[2], arg.topics[3]], // to, tokenId
-          address: `0x${Buffer.from(stripZeros(arg.topics[2])).toString(
-            'hex',
-          )}`,
+          address: arg.address, //`0x${Buffer.from(stripZeros(arg.topics[2])).toString('hex',)}`,
           value: '1',
           customInfo: arg,
         };
@@ -816,7 +865,8 @@ const EventTranslate: TranslationEvent = {
           type: 'ERC721_Revoked',
           title: 'Revoked',
           args: parsed.args,
-          address: parsed.args[0],
+          address: arg.address,
+          toAddress: parsed.args[0],
           customInfo: arg,
         };
       } else {
@@ -825,7 +875,8 @@ const EventTranslate: TranslationEvent = {
           type: 'ERC721_Approved',
           title: 'Approved',
           args: parsed.args,
-          address: parsed.args[0],
+          address: arg.address,
+          toAddress: parsed.args[1],
           customInfo: arg,
         };
       }
@@ -836,7 +887,8 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_Revoked',
         title: 'Revoked',
         args: parsed.args,
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[0],
         customInfo: arg,
       };
     } else {
@@ -845,7 +897,8 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_Approved',
         title: 'Approved',
         args: parsed.args,
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[1],
         customInfo: arg,
       };
     }
@@ -867,7 +920,8 @@ const EventTranslate: TranslationEvent = {
     if (parsed.args[1] === Zero && parsed.args[2] !== Zero) {
       return {
         type: 'ERC1155_Mint',
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[0],
         title: 'Mint',
         args: parsed.args,
         value,
@@ -877,7 +931,8 @@ const EventTranslate: TranslationEvent = {
     if (parsed.args[2] === Zero && parsed.args[1] !== Zero) {
       return {
         type: 'ERC1155_Burn',
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[0],
         title: 'Mint',
         args: parsed.args,
         value,
@@ -889,7 +944,8 @@ const EventTranslate: TranslationEvent = {
       type: 'ERC1155_Transfer',
       title: 'TransferSingle',
       args: parsed.args,
-      address: parsed.args[0],
+      address: arg.address,
+      toAddress: parsed.args[0],
       value,
       customInfo: arg,
     };
@@ -907,7 +963,8 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_BatchBurn',
         title: 'Burn',
         args: parsed.args,
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -916,7 +973,8 @@ const EventTranslate: TranslationEvent = {
         type: 'ERC1155_BatchMint',
         title: 'Mint',
         args: parsed.args,
-        address: parsed.args[0],
+        address: arg.address,
+        toAddress: parsed.args[0],
         value,
         customInfo: arg,
       };
@@ -925,7 +983,8 @@ const EventTranslate: TranslationEvent = {
       type: 'ERC1155_SafeBatchTransferFrom',
       title: 'Transfer',
       args: parsed.args,
-      address: parsed.args[0],
+      address: arg.address,
+      toAddress: parsed.args[0],
       value,
       customInfo: arg,
     };
@@ -956,7 +1015,6 @@ export const decodeData = (
   if (ActionTranslate[methodId]) {
     result = ActionTranslate[methodId]({
       token: customInfo,
-      ...customInfo,
       ...transaction,
     });
     const actionType: string = result.type;

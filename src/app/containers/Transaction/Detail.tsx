@@ -353,7 +353,58 @@ export const Detail = () => {
     }
     return {};
   };
+  const transferToken = () => {
+    if (!isContract) {
+      return null;
+    }
+    if (transferList.length <= 0) {
+      return null;
+    }
+    let transferListInfo: Array<any> = [];
 
+    // combine erc1155 batch transfer with batchIndex field
+    let batchCombinedTransferList: any = [];
+
+    transferList.forEach((transfer: any) => {
+      if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
+        // find batch transfers
+        const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
+          trans =>
+            trans.transferType === transfer.transferType &&
+            trans.address === transfer.address &&
+            trans.transactionHash === transfer.transactionHash &&
+            trans.from === transfer.from &&
+            trans.to === transfer.to,
+        );
+        if (batchCombinedTransferListIndex < 0) {
+          batchCombinedTransferList.push({
+            batch: [transfer],
+            ...transfer,
+          });
+        } else {
+          batchCombinedTransferList[batchCombinedTransferListIndex].batch.push(
+            transfer,
+          );
+        }
+      } else {
+        batchCombinedTransferList.push(transfer);
+      }
+    });
+    for (let i = 0; i < batchCombinedTransferList.length; i++) {
+      const transferItem: any = batchCombinedTransferList[i];
+
+      const tokenItem = getItemByKey(
+        'address',
+        tokenList,
+        transferItem['address'],
+      );
+
+      transferListInfo.push({
+        token: tokenItem,
+      });
+    }
+    return transferListInfo;
+  };
   // support erc20/721/1155
   const getTransferListDiv = () => {
     if (!isContract) {
@@ -772,7 +823,7 @@ export const Detail = () => {
             <TransactionAction
               transaction={transactionDetail}
               event={eventlogs}
-              customInfo={contractInfo}
+              customInfo={transferToken()}
             ></TransactionAction>
           )}
         </Description>
