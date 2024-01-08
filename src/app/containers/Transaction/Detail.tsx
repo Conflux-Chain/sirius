@@ -884,13 +884,16 @@ export const Detail = () => {
             }
           >
             <SkeletonContainer shown={loading}>
-              {`${!_.isNil(gasUsed) ? toThousands(gasUsed) : '--'} | ${
-                !_.isNil(gas) ? toThousands(gas) : '--'
-              } (${getPercent(gasUsed, gas)}) | ${
-                gasUsed && gas
-                  ? toThousands(Math.max(+gasUsed, (+gas * 3) / 4))
-                  : '--'
-              }`}
+              {!_.isNil(gasUsed) && gasUsed !== '0' && gas ? (
+                <>
+                  {`${toThousands(gas)} | ${toThousands(gasUsed)} (${getPercent(
+                    gasUsed,
+                    gas,
+                  )}) | ${toThousands(Math.max(+gasUsed, (+gas * 3) / 4))}`}
+                </>
+              ) : (
+                <>--</>
+              )}
             </SkeletonContainer>
           </Description>
           {hideInDotNet(

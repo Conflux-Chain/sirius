@@ -49,3 +49,42 @@ export const useGlobalData = createGlobalState<any>({
   currency: getCurrency(),
   ens: {},
 });
+
+export interface GasPriceBundle {
+  gasPriceInfo: {
+    min: number;
+    tp50: number;
+    max: number;
+  };
+  gasPriceMarket: {
+    min: number;
+    tp25: number;
+    tp50: number;
+    tp75: number;
+    max: number;
+  };
+  maxEpoch: number;
+  minEpoch: number;
+  maxTime: string;
+  minTime: string;
+  blockHeight: number;
+}
+export const useGasPrice = createGlobalState<GasPriceBundle>({
+  gasPriceInfo: {
+    min: 0,
+    tp50: 0,
+    max: 0,
+  },
+  gasPriceMarket: {
+    min: 0,
+    tp25: 0,
+    tp50: 0,
+    tp75: 0,
+    max: 0,
+  },
+  maxEpoch: 0,
+  minEpoch: 0,
+  maxTime: '0',
+  minTime: '0',
+  blockHeight: 0,
+});

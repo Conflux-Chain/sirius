@@ -55,9 +55,11 @@ export const Nav = memo(
         <Container>
           <Brand className="navbar-brand">
             {brand}
-            <div className="navbar-gasprice">
-              <GasPriceDropdown />
-            </div>
+            {(bp === 'm' || bp === 's') && (
+              <div className="navbar-gasprice">
+                <GasPriceDropdown />
+              </div>
+            )}
 
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a

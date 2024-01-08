@@ -1618,7 +1618,7 @@
     "posBlockHash": "PoS Block Hash",
     "parentHash": "Parent Hash",
     "nonce": "Nonce",
-    "gasUsed": "Gas Used",
+    "gasUsed": "Limit | Gas Used",
     "timestamp": "Timestamp",
     "size": "Size",
     "transactions": "Transactions",
@@ -2307,5 +2307,13 @@
         "all": "Overall Income"
       }
     }
+  },
+  "gaspriceDropdown": {
+    "blockHeight": "Block Height",
+    "low": "Low",
+    "median": "Median",
+    "high": "High",
+    "market": "Gas Price Market",
+    "latest60Blocks": "Latest 60 blocks"
   }
 }
