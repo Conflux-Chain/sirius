@@ -3,7 +3,7 @@ import { media } from 'styles/media';
 import styled from 'styled-components/macro';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useGasPrice } from 'utils/hooks/useGlobal';
+import { useGasPrice, defaultGasPriceBundle } from 'utils/hooks/useGlobal';
 import { reqGasPrice } from 'utils/httpRequest';
 import { useInterval } from 'react-use';
 
@@ -39,30 +39,8 @@ const refreshGasPrice = {
 };
 export const GasPriceDropdown = () => {
   const [showModal, setShowModal] = useState(false);
-  const [globalData, setGasPrice] = useGasPrice();
+  const [globalData = defaultGasPriceBundle, setGasPrice] = useGasPrice();
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const gasPriceBundle = globalData
-    ? globalData
-    : {
-        gasPriceInfo: {
-          min: 0,
-          tp50: 0,
-          max: 0,
-        },
-        gasPriceMarket: {
-          min: 0,
-          tp25: 0,
-          tp50: 0,
-          tp75: 0,
-          max: 0,
-        },
-        maxEpoch: 0,
-        minEpoch: 0,
-        maxTime: '0',
-        minTime: '0',
-        blockHeight: 0,
-      };
 
   const handleOutsideClick = useCallback(
     event => {
@@ -106,11 +84,11 @@ export const GasPriceDropdown = () => {
   return (
     <GasDetail>
       <Trigger onClick={() => setShowModal(true)}>
-        <SkeletonContainer shown={gasPriceBundle.gasPriceInfo.tp50 === 0}>
+        <SkeletonContainer shown={globalData.gasPriceInfo.tp50 === 0}>
           <img src={IconGas} alt="" />
           <span className="value">
             {roundNumberWithSuffix(
-              fromDripToGdrip(gasPriceBundle.gasPriceInfo.tp50, false, {
+              fromDripToGdrip(globalData.gasPriceInfo.tp50, false, {
                 precision: 1,
               }),
             )}
@@ -126,8 +104,8 @@ export const GasPriceDropdown = () => {
                 {t => t(translations.gaspriceDropdown.blockHeight)}
               </Translation>
               :
-              <SkeletonContainer shown={gasPriceBundle.blockHeight === 0}>
-                {gasPriceBundle.blockHeight}
+              <SkeletonContainer shown={globalData.blockHeight === 0}>
+                {globalData.blockHeight}
               </SkeletonContainer>
             </div>
             <img
@@ -146,11 +124,9 @@ export const GasPriceDropdown = () => {
                 </Translation>
               </div>
               <div className="gasPrice low">
-                <SkeletonContainer
-                  shown={gasPriceBundle.gasPriceInfo.min === 0}
-                >
+                <SkeletonContainer shown={globalData.gasPriceInfo.min === 0}>
                   {roundNumberWithSuffix(
-                    fromDripToGdrip(gasPriceBundle.gasPriceInfo.min, false, {
+                    fromDripToGdrip(globalData.gasPriceInfo.min, false, {
                       precision: 1,
                     }),
                   )}{' '}
@@ -166,11 +142,9 @@ export const GasPriceDropdown = () => {
                 </Translation>
               </div>
               <div className="gasPrice median">
-                <SkeletonContainer
-                  shown={gasPriceBundle.gasPriceInfo.tp50 === 0}
-                >
+                <SkeletonContainer shown={globalData.gasPriceInfo.tp50 === 0}>
                   {roundNumberWithSuffix(
-                    fromDripToGdrip(gasPriceBundle.gasPriceInfo.tp50, false, {
+                    fromDripToGdrip(globalData.gasPriceInfo.tp50, false, {
                       precision: 1,
                     }),
                   )}{' '}
@@ -186,12 +160,10 @@ export const GasPriceDropdown = () => {
                 </Translation>
               </div>
               <div className="gasPrice high">
-                <SkeletonContainer
-                  shown={gasPriceBundle.gasPriceInfo.max === 0}
-                >
+                <SkeletonContainer shown={globalData.gasPriceInfo.max === 0}>
                   {roundNumberWithSuffix(
                     roundNumberWithSuffix(
-                      fromDripToGdrip(gasPriceBundle.gasPriceInfo.max, false, {
+                      fromDripToGdrip(globalData.gasPriceInfo.max, false, {
                         precision: 1,
                       }),
                     ),
@@ -218,7 +190,7 @@ export const GasPriceDropdown = () => {
             <div className="mark markStart">
               <div>
                 {roundNumberWithSuffix(
-                  fromDripToGdrip(gasPriceBundle.gasPriceMarket.tp25, false, {
+                  fromDripToGdrip(globalData.gasPriceMarket.tp25, false, {
                     precision: 1,
                   }),
                 )}
@@ -228,7 +200,7 @@ export const GasPriceDropdown = () => {
             <div className="mark markEnd">
               <div>
                 {roundNumberWithSuffix(
-                  fromDripToGdrip(gasPriceBundle.gasPriceMarket.tp75, false, {
+                  fromDripToGdrip(globalData.gasPriceMarket.tp75, false, {
                     precision: 1,
                   }),
                 )}
@@ -245,7 +217,7 @@ export const GasPriceDropdown = () => {
                 <div className="title">Min</div>
                 <div className="left value">
                   {roundNumberWithSuffix(
-                    fromDripToGdrip(gasPriceBundle.gasPriceMarket.min, false, {
+                    fromDripToGdrip(globalData.gasPriceMarket.min, false, {
                       precision: 1,
                     }),
                   )}
@@ -256,7 +228,7 @@ export const GasPriceDropdown = () => {
                 <div className="title">Mid</div>
                 <div className="middle value active">
                   {roundNumberWithSuffix(
-                    fromDripToGdrip(gasPriceBundle.gasPriceMarket.tp50, false, {
+                    fromDripToGdrip(globalData.gasPriceMarket.tp50, false, {
                       precision: 1,
                     }),
                   )}
@@ -266,7 +238,7 @@ export const GasPriceDropdown = () => {
                 <div className="title">Max</div>
                 <div className="rigth value">
                   {roundNumberWithSuffix(
-                    fromDripToGdrip(gasPriceBundle.gasPriceMarket.max, false, {
+                    fromDripToGdrip(globalData.gasPriceMarket.max, false, {
                       precision: 1,
                     }),
                   )}
