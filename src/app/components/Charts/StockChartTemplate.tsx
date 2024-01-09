@@ -190,6 +190,7 @@ export function StockChartTemplate({
         alignTicks: false,
         height: 600,
         animation: false,
+        backgroundColor: null,
       },
       credits: {
         enabled: false,
@@ -426,8 +427,7 @@ export function StockChartTemplate({
 }
 const StyledFilterItems = styled.div`
   display: flex;
-  position: absolute;
-  z-index: 11;
+  position: relative;
   top: 62px;
   left: 40px;
   @media (max-width: 1240px) {

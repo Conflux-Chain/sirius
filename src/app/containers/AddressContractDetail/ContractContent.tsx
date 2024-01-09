@@ -21,7 +21,7 @@ import { formatData } from 'app/components/TxnComponents/util';
 import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
-
+import { isInnerContractAddress } from 'utils';
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
 const AceEditorStyle = {
@@ -132,6 +132,7 @@ const Code = ({ contractInfo }) => {
     }
 
     if (typeof fSourceCode === 'string') {
+      console.log(typeof sourceCode);
       return (
         <AceEditor
           readOnly
@@ -185,7 +186,7 @@ const Code = ({ contractInfo }) => {
     }
   }, [t, sourceCode]);
 
-  if (!contractInfo.codeHash) {
+  if (!contractInfo.codeHash && !isInnerContractAddress(address)) {
     return (
       <StyledContractContentCodeWrapper>
         <StyledNullWrapper>0x</StyledNullWrapper>

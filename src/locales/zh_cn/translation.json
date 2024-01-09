@@ -2305,11 +2305,11 @@
     }
   },
   "gaspriceDropdown": {
-    "blockHeight": "区块高度",
+    "blockHeight": "纪元",
     "low": "低",
     "median": "中",
     "high": "高",
     "market": "燃料价格市场",
-    "latest60Blocks": "最新 60 个区块"
+    "latest60Blocks": "最新 60 个纪元"
   }
 }
