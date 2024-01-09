@@ -558,13 +558,51 @@ export const fromCfxToDrip = (num: number | string) =>
 export const getPercent = (
   divisor: number | string,
   dividend: number | string,
+  precision?: number,
 ) => {
   if (Number(dividend) === 0) return 0 + '%';
   const bnDivisor = new BigNumber(divisor);
   const bnDividend = new BigNumber(dividend);
-  return `${formatNumber(
+  const percentageNum = formatNumber(
     bnDivisor.dividedBy(bnDividend).multipliedBy(100).toNumber(),
-  )}%`;
+  );
+  if (precision || precision === 0) {
+    const percentageNumPrecision = roundToFixedPrecision(
+      percentageNum,
+      precision,
+    );
+    if (percentageNumPrecision === '100.00') {
+      return '100%';
+    } else if (percentageNumPrecision === '0.00') {
+      return '0%';
+    }
+    return roundToFixedPrecision(percentageNum, precision) + '%';
+  }
+
+  return `${percentageNum}%`;
+};
+
+export const roundToFixedPrecision = (
+  number: number | string,
+  precision: number,
+  method: string = 'ROUND',
+) => {
+  const numberFormat = typeof number === 'number' ? number : parseFloat(number);
+  const factor = Math.pow(10, precision);
+  let resultNum: number;
+
+  switch (method) {
+    case 'FLOOR':
+      resultNum = Math.floor(numberFormat * factor) / factor;
+      break;
+    case 'CEIL':
+      resultNum = Math.ceil(numberFormat * factor) / factor;
+      break;
+    case 'ROUND':
+    default:
+      resultNum = Math.round((numberFormat + Number.EPSILON) * factor) / factor;
+  }
+  return resultNum.toFixed(precision);
 };
 
 export const formatTimeStamp = (

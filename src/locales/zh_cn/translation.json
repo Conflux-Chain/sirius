@@ -1484,7 +1484,7 @@
     "to": "接收方",
     "tokenTransferred": "通证转移",
     "value": "价值",
-    "gasUsed": "限制 | 燃料用量 | 计费燃气",
+    "gasUsed": "燃料限制 | 燃料用量 | 燃料计费",
     "gasPrice": "燃料价格",
     "gasFee": "燃气费",
     "gasCharged": "计费燃气",
@@ -1615,7 +1615,7 @@
     "posBlockHash": "PoS 区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",
-    "gasUsed": "燃料用量/限制",
+    "gasUsed": "限制｜燃料用量",
     "timestamp": "时间戳",
     "size": "容量",
     "transactions": "交易",
@@ -2303,5 +2303,13 @@
         "all": "总收入"
       }
     }
+  },
+  "gaspriceDropdown": {
+    "blockHeight": "区块高度",
+    "low": "低",
+    "median": "中",
+    "high": "高",
+    "market": "燃料价格市场",
+    "latest60Blocks": "最新 60 个区块"
   }
 }
