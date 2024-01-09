@@ -2309,11 +2309,11 @@
     }
   },
   "gaspriceDropdown": {
-    "blockHeight": "Block Height",
+    "blockHeight": "Epoch",
     "low": "Low",
     "median": "Median",
     "high": "High",
     "market": "Gas Price Market",
-    "latest60Blocks": "Latest 60 blocks"
+    "latest60Blocks": "Latest 60 epochs"
   }
 }
