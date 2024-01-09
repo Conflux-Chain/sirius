@@ -1565,7 +1565,7 @@
     "posBlockHash": "PoS 区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",
-    "gasUsed": "限制/燃料用量",
+    "gasUsed": "限制｜燃料用量",
     "timestamp": "时间戳",
     "size": "容量",
     "transactions": "交易",
