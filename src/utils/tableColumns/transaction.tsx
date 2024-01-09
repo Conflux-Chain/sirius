@@ -12,6 +12,7 @@ import {
   fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
+  roundToFixedPrecision,
 } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
@@ -238,10 +239,14 @@ export const gasPrice = {
   width: 1,
   render: value => (
     <Text span hoverValue={`${toThousands(value)} drip`}>
-      {`${fromDripToGdrip(value, false, {
-        precision: 6,
-        minNum: 1e-6,
-      })} Gdrip`}
+      {`${roundToFixedPrecision(
+        fromDripToGdrip(value, false, {
+          precision: 6,
+          minNum: 1e-6,
+        }),
+        2,
+        'FLOOR',
+      )} Gdrip`}
     </Text>
   ),
 };
