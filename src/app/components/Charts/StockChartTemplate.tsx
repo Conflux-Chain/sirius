@@ -156,7 +156,8 @@ export function StockChartTemplate({
       chart.current?.chart.showLoading();
       const data = await reqChartData({
         url: request.url,
-        query: request.query || {
+        query: {
+          ...request.query,
           limit: preview ? 30 : limit,
           intervalType: intervalType,
         },
