@@ -25,7 +25,11 @@ const checkStatus = response => {
     return response;
   } else {
     publishRequestError(
-      { code: response.status, message: response.statusText },
+      {
+        url: response.url,
+        code: response.status,
+        message: response.statusText,
+      },
       'http',
     );
     const error: Partial<ErrorEvent> & {
@@ -56,14 +60,14 @@ const parseJSON = async function (response) {
     if ((error as any).name === 'AbortError') {
       return { data: response, response };
     }
-    publishRequestError({ code: 20001 }, 'http');
+    publishRequestError({ url: response.url, code: 20001 }, 'http');
     (error as any).response = response;
     throw error;
   }
 };
 
 // 检查返回值中是否包含错误
-const checkResponse = function ({ data, response }, opts) {
+const checkResponse = function (url, { data, response }, opts) {
   if (response.status === 200 && data.code === 0) {
     return data.data;
   } else if (/HEAD/i.test(opts?.method)) {
@@ -71,7 +75,7 @@ const checkResponse = function ({ data, response }, opts) {
     return response;
   } else {
     const code = Number(data.code);
-    publishRequestError({ code: code, message: data.message }, 'http');
+    publishRequestError({ url, code: code, message: data.message }, 'http');
     const error: Partial<ErrorEvent> & {
       response?: ResponseType;
     } = new Error(data.message);
@@ -84,7 +88,7 @@ const checkResponse = function ({ data, response }, opts) {
 const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
   return new Promise((resolve, reject) => {
     var timeout = setTimeout(() => {
-      publishRequestError({ code: 20002 }, 'http');
+      publishRequestError({ url, code: 20002 }, 'http');
       reject(new Error('fetch timeout'));
     }, timestamp || TIMEOUT_TIMESTAMP);
     windowFetch(url, opts)
@@ -103,7 +107,7 @@ const fetchWithTimeout = (url, { timeout: timestamp, ...opts }) => {
 const fetchWithAbort = (url, opts) => {
   return new Promise((resolve, reject) => {
     const abortPromise = () => {
-      publishRequestError({ code: 20003 }, 'http');
+      publishRequestError({ url, code: 20003 }, 'http');
       reject(new Error('fetch abort'));
     };
     const p: FetchWithAbortType = fetchWithTimeout(url, opts).then(
@@ -118,7 +122,7 @@ const fetch = (url, opts = {}) => {
   return fetchWithAbort(url, opts)
     .then(checkStatus)
     .then(parseJSON)
-    .then((...args) => checkResponse(...args, opts))
+    .then((...args) => checkResponse(url, ...args, opts))
     .catch(error => {
       // @ts-ignore
       if (/HEAD/i.test(opts?.method)) {
@@ -130,7 +134,7 @@ const fetch = (url, opts = {}) => {
       // although this usually means permission issues or similar — a 404 does not constitute a network error, for example.
       // For detail: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
       if (error.name === 'TypeError') {
-        publishRequestError({ code: 20004 }, 'http');
+        publishRequestError({ url, code: 20004 }, 'http');
       }
       throw error;
     });
