@@ -415,7 +415,7 @@ const Trigger = styled.div`
   cursor: pointer;
   font-weight: 500;
   .value {
-    color: #17b38a;
+    color: #1e3de4;
   }
 `;
 
