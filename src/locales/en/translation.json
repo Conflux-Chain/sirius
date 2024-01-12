@@ -1368,7 +1368,7 @@
         "20002": "Request timeout, try again later",
         "20003": "Request abort，try again later",
         "20004": "Network error，try again later",
-        "30001": "RPC call error，try again later",
+        "30001": "RPC Call Error, try again later",
         "50001": "System error, please try again later, or submit a ticket",
         "50100": "Unknown error, please try again later, or submit a ticket",
         "50101": "The parameter is wrong, please confirm it is correct",

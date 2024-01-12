@@ -11,6 +11,7 @@ import {
   NETWORK_TYPES,
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
+  RPC_SERVER,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -983,9 +984,11 @@ export function padLeft(n, totalLength = 1) {
 }
 
 interface ErrorInfoType {
+  url?: string;
   code?: number;
   message?: string;
   data?: string;
+  method?: string;
 }
 
 export const publishRequestError = (
@@ -998,11 +1001,23 @@ export const publishRequestError = (
     if (type === 'code') {
       detail = e.message;
     } else {
-      detail = `Error Code: ${e.code}, ${e.message}`;
-    }
-
-    if (type === 'rpc' && !lodash.isNil(e.data)) {
-      detail += `, ${e.data}`;
+      detail = `Error Code: ${e.code} \n`;
+      if (type === 'http') {
+        const origin = window.location.origin;
+        detail += `Rest Api Url: ${
+          e.url?.includes('https://') ? e.url : origin + e.url
+        } \n`;
+      }
+      if (type === 'rpc') {
+        detail += `RPC Url: ${RPC_SERVER} \n`;
+        if (!lodash.isNil(e.method)) {
+          detail += `Method: ${e.method} \n`;
+        }
+        if (!lodash.isNil(e.data)) {
+          detail += `Data: ${e.data}`;
+        }
+      }
+      detail += `Error Message: ${e.message} \n`;
     }
   }
 

@@ -430,13 +430,8 @@ const StyledFilterItems = styled.div`
   display: flex;
   position: relative;
   z-index: 2;
-  top: 28px;
+  top: 10px;
   left: 40px;
-  @media (max-width: 1360px) {
-    top: 50px;
-    flex-direction: column;
-    gap: 10px;
-  }
   @media (max-width: 970px) {
     flex-direction: column;
     gap: 10px;
@@ -463,7 +458,5 @@ const StyledBtn = styled.div`
 `;
 
 const HighchartsWrapper = styled.div`
-  @media (max-width: 800px) {
-    margin-top: 35px;
-  }
+  margin-top: 20px;
 `;
