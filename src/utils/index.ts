@@ -1014,7 +1014,7 @@ export const publishRequestError = (
           detail += `Method: ${e.method} \n`;
         }
         if (!lodash.isNil(e.data)) {
-          detail += `Data: ${e.data}`;
+          detail += `Data: ${e.data} \n`;
         }
       }
       detail += `Error Message: ${e.message} \n`;
