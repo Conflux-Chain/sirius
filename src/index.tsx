@@ -12,6 +12,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
+import { completeDetect } from '@cfxjs/use-wallet-react/conflux';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
 
@@ -48,12 +49,16 @@ if (module.hot) {
   // have to be constants at compile-time
   module.hot.accept(['./app', './locales/i18n'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    const App = require('./app').App;
-    render(App);
+    Promise.all([completeDetect()]).then(() => {
+      const App = require('./app').App;
+      render(App);
+    });
   });
 }
 
-render(App);
+Promise.all([completeDetect()]).then(() => {
+  render(App);
+});
 
 const currentVersion = 'v2.17.0';
 

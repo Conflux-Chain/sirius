@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { translations } from '../../../locales/i18n';
-import { usePortal } from 'utils/hooks/usePortal';
+import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import {
   useTxnHistory,
   Record,
@@ -29,7 +29,7 @@ export const History = ({
   show?: boolean;
 }) => {
   const { t } = useTranslation();
-  const { installed, connected } = usePortal();
+  const { authConnectStatus } = usePortal();
   const [show, setShow] = useState(false);
   const { getRecords, clearRecords } = useTxnHistory();
   const [records, setRecords] = useState<Array<Record>>([]);
@@ -46,14 +46,14 @@ export const History = ({
   };
 
   useEffect(() => {
-    if (connected === 1) {
+    if (authConnectStatus === AuthConnectStatus.Connected) {
       setShow(true);
     } else {
       setShow(false);
     }
     getTxnRecords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, pendingRecords]);
+  }, [authConnectStatus, pendingRecords]);
 
   const handleClear = () => {
     clearRecords();
@@ -61,10 +61,8 @@ export const History = ({
   };
 
   let title = t(translations.connectWallet.history.emptyRecordsTip);
-  if (installed) {
-    if (connected === 1) {
-      title = t(translations.connectWallet.history.recentlyRecordsTip);
-    }
+  if (authConnectStatus === AuthConnectStatus.Connected) {
+    title = t(translations.connectWallet.history.recentlyRecordsTip);
   }
 
   const getContent = () => {

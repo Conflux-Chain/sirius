@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled, { keyframes } from 'styled-components/macro';
 import clsx from 'clsx';
-import { usePortal } from 'utils/hooks/usePortal';
+import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { Link as ScanLink } from './Link';
 import { RotateImg } from './RotateImg';
 import { History } from './History';
@@ -21,6 +21,7 @@ import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
 import iconLoading from './assets/loading.svg';
+import { DEFAULT_WALLET_NAME } from 'utils/accounts';
 
 interface Modal {
   className?: string;
@@ -34,7 +35,7 @@ export const Modal = ({
   onClose = () => {},
 }: Modal) => {
   const { t } = useTranslation();
-  const { login, connected, accounts, installed } = usePortal();
+  const { login, authConnectStatus, accounts, installed } = usePortal();
   const { isNetworkValid, isValid } = useCheckHook();
   let inValidModalTip = '';
 
@@ -78,7 +79,7 @@ export const Modal = ({
   };
 
   const handleLogin = () => {
-    login().finally(() => onClose());
+    login(DEFAULT_WALLET_NAME).finally(() => onClose());
   };
 
   let walletText = t(translations.connectWallet.modal.fluentWallet);
@@ -105,14 +106,14 @@ export const Modal = ({
   );
 
   if (installed) {
-    if (connected === 0) {
+    if (authConnectStatus === AuthConnectStatus.NotConnected) {
       portal = (
         <>
           <span className="modal-portal-name">{walletText}</span>
           {logo}
         </>
       );
-    } else if (connected === 1) {
+    } else if (authConnectStatus === AuthConnectStatus.Connected) {
       if (isValid) {
         title = t(translations.connectWallet.modal.account);
         portal = (
@@ -148,7 +149,7 @@ export const Modal = ({
           </div>
         );
       }
-    } else if (connected === 2) {
+    } else if (authConnectStatus === AuthConnectStatus.Connecting) {
       portal = (
         <>
           <span className="modal-portal-loading">
@@ -180,8 +181,8 @@ export const Modal = ({
     <ModalWrapper
       className={clsx('connect-wallet-modal', className, {
         show: show,
-        connected: connected === 1 && isValid,
-        error: connected === 1 && !isValid,
+        connected: authConnectStatus === AuthConnectStatus.Connected && isValid,
+        error: authConnectStatus === AuthConnectStatus.Connected && !isValid,
       })}
     >
       <div className="modal-and-history-container">

@@ -1806,7 +1806,8 @@
     "button": {
       "connectWallet": "Connect Wallet",
       "nPending": "{{count}} Pending",
-      "wrongNetwork": "Wrong Network"
+      "wrongNetwork": "Wrong Network",
+      "switchNetwork": "Switch Network"
     },
     "modal": {
       "title": "Connect to a wallet",
