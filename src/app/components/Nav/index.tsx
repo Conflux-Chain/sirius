@@ -8,6 +8,7 @@ import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import styled from 'styled-components/macro';
 import { media, useBreakpoint } from 'styles/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
+import { GasPriceDropdown } from 'app/components/GasPriceDropdown';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
@@ -54,6 +55,12 @@ export const Nav = memo(
         <Container>
           <Brand className="navbar-brand">
             {brand}
+            {(bp === 'm' || bp === 's') && (
+              <div className="navbar-gasprice">
+                <GasPriceDropdown />
+              </div>
+            )}
+
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a
               role="button"
@@ -114,7 +121,17 @@ const Brand = styled.div`
     color: #4c4d52;
     display: none;
   }
-
+  .navbar-gasprice {
+    display: none;
+  }
+  ${media.s} {
+    .navbar-gasprice {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: flex-end;
+    }
+  }
   ${media.m} {
     margin-right: 0;
 

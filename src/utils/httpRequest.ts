@@ -27,6 +27,12 @@ export const sendRequest = config => {
   });
 };
 
+export const reqGasPrice = () => {
+  return sendRequest({
+    url: `${statPrefix}/gasprice/tracker`,
+  });
+};
+
 export const reqReport = (param?: object) => {
   return sendRequest({
     url: `${statPrefix}/recaptcha/siteverify`,

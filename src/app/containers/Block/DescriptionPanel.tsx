@@ -197,9 +197,10 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {`${gasUsed || '--'}/${gasLimit || '--'} (${getPercent(
+          {`${gasLimit || '--'} | ${gasUsed || '--'} (${getPercent(
             gasUsed,
             gasLimit,
+            2,
           )})`}
         </SkeletonContainer>
       </Description>
