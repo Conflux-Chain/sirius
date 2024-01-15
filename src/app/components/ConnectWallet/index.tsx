@@ -12,7 +12,7 @@ import { Text } from '../Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
-import { switchChain } from '@cfx-kit/react-utils/dist/AccountManage';
+import { switchChain } from '@cfxjs/use-wallet-react/conflux/Fluent';
 import { NETWORK_ID } from 'utils/constants';
 
 interface Props {
@@ -30,7 +30,7 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
     if (!isValid) {
       e.stopPropagation();
       e.preventDefault();
-      switchChain(String(NETWORK_ID));
+      switchChain('0x' + NETWORK_ID.toString(16));
     } else if (
       profile ||
       authConnectStatus === AuthConnectStatus.NotConnected

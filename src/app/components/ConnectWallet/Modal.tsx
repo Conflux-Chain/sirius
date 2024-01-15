@@ -21,7 +21,6 @@ import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
 import iconLoading from './assets/loading.svg';
-import { DEFAULT_WALLET_NAME } from 'utils/accounts';
 
 interface Modal {
   className?: string;
@@ -79,7 +78,7 @@ export const Modal = ({
   };
 
   const handleLogin = () => {
-    login(DEFAULT_WALLET_NAME).finally(() => onClose());
+    login().finally(() => onClose());
   };
 
   let walletText = t(translations.connectWallet.modal.fluentWallet);

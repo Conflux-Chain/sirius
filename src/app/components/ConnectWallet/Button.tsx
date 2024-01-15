@@ -5,7 +5,6 @@ import styled from 'styled-components/macro';
 import clsx from 'clsx';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';
-import { formatNumber } from 'utils';
 import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
 import { trackEvent } from 'utils/ga';
@@ -19,6 +18,7 @@ import { getLabelInfo } from '../AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
 
 import iconLoadingWhite from './assets/loading-white.svg';
+import { Balance } from './Balance';
 
 interface Button {
   className?: string;
@@ -29,7 +29,7 @@ interface Button {
 export const Button = ({ className, onClick, showBalance }: Button) => {
   const [globalData = {}] = useGlobalData();
   const { t } = useTranslation();
-  const { authConnectStatus, accounts, balance } = usePortal();
+  const { authConnectStatus, accounts } = usePortal();
   const account = accounts[0];
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook();
@@ -127,12 +127,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         <span className="text">{buttonText}</span>
       </span>
       {isValid && accounts.length && showBalance && !hasPendingRecords ? (
-        <span className="balance">
-          {formatNumber(balance?.toDecimalStandardUnit() ?? 0, {
-            precision: 6,
-          })}{' '}
-          CFX
-        </span>
+        <Balance />
       ) : null}
     </ButtonWrapper>
   );

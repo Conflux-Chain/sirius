@@ -186,7 +186,8 @@ const StyledSwapItemWrapper = styled.div`
 
 export function Swap() {
   const { t } = useTranslation();
-  const { accounts, authConnectStatus, provider, balance: cfx } = usePortal();
+  const { accounts, authConnectStatus, provider, useBalance } = usePortal();
+  const cfx = useBalance();
   const { addRecord } = useTxnHistory();
 
   const CFX = new SDK.Conflux({

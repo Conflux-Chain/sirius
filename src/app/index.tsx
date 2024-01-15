@@ -141,11 +141,8 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
-import { initProviders } from 'utils/accounts';
 // @ts-ignore
 window.lodash = lodash;
-
-initProviders();
 
 // WebFontLoader.load({
 //   custom: {

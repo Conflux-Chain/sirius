@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@cfx-kit/react-utils": "0.0.17",
     "@cfxjs/antd": "1.0.6",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
     "@cfxjs/use-wallet-react": "0.0.2-5",
@@ -86,11 +85,11 @@
     "zustand": "4.1.4"
   },
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-app-rewired start",
-    "start:testnet": "cross-env NODE_OPTIONS=--openssl-legacy-provider REACT_APP_TestNet=true react-app-rewired start",
-    "start:8888": "cross-env NODE_OPTIONS=--openssl-legacy-provider REACT_APP_PrivateNet=true react-app-rewired start",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-app-rewired build",
-    "build:MEASURE": "cross-env NODE_OPTIONS=--openssl-legacy-provider MEASURE=true react-app-rewired build",
+    "start": "react-app-rewired start",
+    "start:testnet": "REACT_APP_TestNet=true react-app-rewired start",
+    "start:8888": "REACT_APP_PrivateNet=true react-app-rewired start",
+    "build": "react-app-rewired build",
+    "build:MEASURE": "MEASURE=true react-app-rewired build",
     "test": "react-app-rewired  test --env=jest-environment-jsdom-sixteen",
     "test:u": "react-app-rewired  test --env=jest-environment-jsdom-sixteen --updateSnapshot",
     "eject": "react-scripts eject",
@@ -111,7 +110,7 @@
   ],
   "engines": {
     "npm": "^6.14.15",
-    "node": ">=18.0.0"
+    "node": "^14.7.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

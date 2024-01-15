@@ -12,7 +12,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
-import { completeDetect } from '@cfxjs/use-wallet-react/conflux';
+import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
 
