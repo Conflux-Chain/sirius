@@ -57,7 +57,41 @@ module.exports = function (config, mode) {
           ),
         },
       },
+      module: {
+        ...config.module,
+        rules: [
+          ...config.module.rules,
+          {
+            test: /\.js?$/,
+            include: /(node_modules\/@cfxjs\/use-wallet-react)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                plugins: ['@babel/plugin-transform-class-properties'],
+              },
+            },
+          },
+        ],
+      },
     });
   }
-  return config;
+  return smp.wrap({
+    ...config,
+    module: {
+      ...config.module,
+      rules: [
+        ...config.module.rules,
+        {
+          test: /\.js?$/,
+          include: /(node_modules\/@cfxjs\/use-wallet-react)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: ['@babel/plugin-transform-class-properties'],
+            },
+          },
+        },
+      ],
+    },
+  });
 };
