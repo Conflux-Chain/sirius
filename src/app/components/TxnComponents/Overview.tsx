@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components/macro';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { Description } from 'app/components/Description/Loadable';
-import _ from 'lodash';
 import { hideInDotNet } from 'utils';
-import TransactionAction from 'app/components/TransactionAction';
+import { TransactionAction } from 'app/components/TransactionAction';
+import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { reqContract } from 'utils/httpRequest';
+import _ from 'lodash';
 
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
@@ -18,6 +20,7 @@ export const Overview = ({ data }) => {
   const {
     hash,
     status,
+    to,
     confirmedEpochCount,
     gasFee,
     gasCoveredBySponsor,
@@ -30,6 +33,46 @@ export const Overview = ({ data }) => {
     list,
     tokenTransferTokenInfo,
   } = data;
+
+  const [contractInfo, setContractInfo] = useState({});
+  const [loading, setLoading] = useState(true);
+  const tokenTransferTokenInfoList = useMemo(() => {
+    if (tokenTransferTokenInfo && typeof tokenTransferTokenInfo === 'object') {
+      return Object.keys(tokenTransferTokenInfo).map(key => ({
+        token: tokenTransferTokenInfo[key],
+      }));
+    }
+    return [];
+  }, [tokenTransferTokenInfo]);
+
+  const customInfoList = useMemo(() => {
+    if (tokenTransferTokenInfoList.length > 0) {
+      return [contractInfo, ...tokenTransferTokenInfoList];
+    }
+    return [contractInfo];
+  }, [tokenTransferTokenInfoList, contractInfo]);
+  useEffect(() => {
+    try {
+      if (!to) return;
+      setLoading(true);
+      reqContract({
+        address: to,
+        fields: ['token'],
+      }).then(e => {
+        if (e && _.isObject(e.token) && !_.isEmpty(e.token)) {
+          setContractInfo({ token: { address: e.address, ...e.token } });
+          setLoading(false);
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [to]);
+  const transactionAction = TransactionAction({
+    transaction: data,
+    event: list,
+    customInfo: customInfoList,
+  });
   return (
     <StyledWrapper>
       <div className="overview-title">
@@ -49,35 +92,18 @@ export const Overview = ({ data }) => {
           ></Status>
         </div>
       </Description>
-      {/* {tokenTransfer?.total ? (
+      {transactionAction && transactionAction.show && (
         <Description
           verticle
           size="tiny"
-          title={t(translations.transaction.tokenTransferred)}
+          title={t(translations.transaction.action.title)}
         >
-          <StyledTokenTransferWrapper>
-            <TokenTransfer
-              transferList={tokenTransfer.list}
-              tokenInfoMap={tokenTransferTokenInfo}
-              type="overview"
-            />
-          </StyledTokenTransferWrapper>
+          <SkeletonContainer shown={loading}>
+            {transactionAction.content}
+          </SkeletonContainer>
         </Description>
-      ) : null} */}
-      <Description
-        verticle
-        size="tiny"
-        title={t(translations.transaction.action.title)}
-      >
-        <TransactionAction
-          transaction={data}
-          event={list}
-          customInfo={
-            tokenTransferTokenInfo &&
-            tokenTransferTokenInfo[Object.keys(tokenTransferTokenInfo)[0]]
-          }
-        ></TransactionAction>
-      </Description>
+      )}
+
       <Description
         verticle
         size="tiny"
@@ -167,9 +193,4 @@ const StyledWrapper = styled.div`
       }
     }
   }
-`;
-
-const StyledTokenTransferWrapper = styled.div`
-  max-height: 11.4286rem;
-  overflow: auto;
 `;

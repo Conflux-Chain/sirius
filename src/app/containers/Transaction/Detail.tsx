@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -44,7 +50,7 @@ import {
   StorageFee,
   TokenTypeTag,
 } from 'app/components/TxnComponents';
-import TransactionAction from 'app/components/TransactionAction';
+import { TransactionAction } from 'app/components/TransactionAction';
 import _ from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import imgChevronDown from 'images/chevronDown.png';
@@ -353,43 +359,38 @@ export const Detail = () => {
     }
     return {};
   };
-  const transferToken = () => {
-    if (!isContract) {
-      return null;
-    }
-    if (transferList.length <= 0) {
-      return null;
-    }
+  const transferToken = useMemo(() => {
     let transferListInfo: Array<any> = [];
-
     // combine erc1155 batch transfer with batchIndex field
     let batchCombinedTransferList: any = [];
-
-    transferList.forEach((transfer: any) => {
-      if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
-        // find batch transfers
-        const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
-          trans =>
-            trans.transferType === transfer.transferType &&
-            trans.address === transfer.address &&
-            trans.transactionHash === transfer.transactionHash &&
-            trans.from === transfer.from &&
-            trans.to === transfer.to,
-        );
-        if (batchCombinedTransferListIndex < 0) {
-          batchCombinedTransferList.push({
-            batch: [transfer],
-            ...transfer,
-          });
-        } else {
-          batchCombinedTransferList[batchCombinedTransferListIndex].batch.push(
-            transfer,
+    if (transferList && transferList.length > 0) {
+      transferList.forEach((transfer: any) => {
+        if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
+          // find batch transfers
+          const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
+            trans =>
+              trans.transferType === transfer.transferType &&
+              trans.address === transfer.address &&
+              trans.transactionHash === transfer.transactionHash &&
+              trans.from === transfer.from &&
+              trans.to === transfer.to,
           );
+          if (batchCombinedTransferListIndex < 0) {
+            batchCombinedTransferList.push({
+              batch: [transfer],
+              ...transfer,
+            });
+          } else {
+            batchCombinedTransferList[
+              batchCombinedTransferListIndex
+            ].batch.push(transfer);
+          }
+        } else {
+          batchCombinedTransferList.push(transfer);
         }
-      } else {
-        batchCombinedTransferList.push(transfer);
-      }
-    });
+      });
+    }
+
     for (let i = 0; i < batchCombinedTransferList.length; i++) {
       const transferItem: any = batchCombinedTransferList[i];
 
@@ -403,8 +404,17 @@ export const Detail = () => {
         token: tokenItem,
       });
     }
+
+    if (_.isObject(contractInfo) && !_.isEmpty(contractInfo)) {
+      let contractInfoCopy: any = contractInfo;
+      if (contractInfoCopy.token && contractInfoCopy.address) {
+        contractInfoCopy.token.address = contractInfoCopy.address;
+      }
+
+      transferListInfo.push(contractInfoCopy);
+    }
     return transferListInfo;
-  };
+  }, [contractInfo, tokenList, transferList]);
   // support erc20/721/1155
   const getTransferListDiv = () => {
     if (!isContract) {
@@ -703,6 +713,16 @@ export const Detail = () => {
     },
   };
 
+  const transactionActionElement = useMemo(
+    () =>
+      TransactionAction({
+        transaction: transactionDetail,
+        event: eventlogs,
+        customInfo: transferToken,
+      }),
+    [transactionDetail, eventlogs, transferToken],
+  );
+
   return (
     <StyledCardWrapper>
       <Card>
@@ -802,31 +822,29 @@ export const Detail = () => {
             )}
           </SkeletonContainer>
         </Description>
-        <Description
-          title={
-            <>
-              <Tooltip
-                text={t(translations.transaction.action.tooltip)}
-                placement="top"
-              >
-                <IconQuestion>
-                  <img src={iconQuestion} alt="warning-icon"></img>
-                </IconQuestion>
-              </Tooltip>
-              {t(translations.transaction.action.title)}
-            </>
-          }
-        >
-          {loading ? (
-            <SkeletonContainer shown={true}></SkeletonContainer>
-          ) : (
-            <TransactionAction
-              transaction={transactionDetail}
-              event={eventlogs}
-              customInfo={transferToken()}
-            ></TransactionAction>
-          )}
-        </Description>
+        {transactionActionElement.show && (
+          <Description
+            title={
+              <>
+                <Tooltip
+                  text={t(translations.transaction.action.tooltip)}
+                  placement="top"
+                >
+                  <IconQuestion>
+                    <img src={iconQuestion} alt="warning-icon"></img>
+                  </IconQuestion>
+                </Tooltip>
+                {t(translations.transaction.action.title)}
+              </>
+            }
+          >
+            {loading ? (
+              <SkeletonContainer shown={true}></SkeletonContainer>
+            ) : (
+              transactionActionElement.content
+            )}
+          </Description>
+        )}
         <Description
           title={
             <Tooltip text={t(translations.toolTip.tx.status)} placement="top">
