@@ -2,6 +2,8 @@ import { Interface } from '@ethersproject/abi';
 import { formatUnits } from '@ethersproject/units';
 import { BigNumber } from '@ethersproject/bignumber';
 const Zero = '0x0000000000000000000000000000000000000000';
+const eventZero =
+  '0x0000000000000000000000000000000000000000000000000000000000000000';
 const ERC20_ABI = [
   {
     constant: false,
@@ -647,7 +649,7 @@ const ActionTranslate: Translation = {
       return {
         type: 'ERC20_Revoked',
         address: to || address,
-        toAddress: parsed.args[1],
+        toAddress: parsed.args[0],
         title: 'Revoked',
         args: parsed.args,
         customInfo: arg,
@@ -675,7 +677,7 @@ const ActionTranslate: Translation = {
       args: parsed.args,
       value: '1',
       address: to || address,
-      toAddress: parsed.args[0],
+      toAddress: parsed.args[1],
       customInfo: arg,
     };
   },
@@ -826,9 +828,12 @@ const EventTranslate: TranslationEvent = {
       }
       arg.transferType = 'ERC721';
     }
+    const value =
+      arg.data === '0x' ? eventZero.substring(2) : arg.data.substring(2);
+
     const eTransaction: TranslationArgs = {
       ...arg,
-      data: methodId + arg.topics[1].substring(2) + arg.topics[2].substring(2), // spender, value
+      data: methodId + arg.topics[1].substring(2) + value, // spender, value
       icon,
       symbol,
       decimals,
@@ -847,10 +852,7 @@ const EventTranslate: TranslationEvent = {
     // ERC721
     if (arg.data === '0x') {
       // Mint
-      if (
-        arg.topics[1] ===
-        '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
+      if (arg.topics[1] === eventZero) {
         return {
           type: 'ERC721_Mint',
           title: 'Mint',
@@ -863,10 +865,7 @@ const EventTranslate: TranslationEvent = {
       // transferFrom
       else {
         eTransaction.decimals = 0;
-        if (
-          arg.topics[2] ===
-          '0x0000000000000000000000000000000000000000000000000000000000000000'
-        ) {
+        if (arg.topics[2] === eventZero) {
           eTransaction.data =
             methodId +
             arg.topics[1].substring(2) +
@@ -921,7 +920,7 @@ const EventTranslate: TranslationEvent = {
           title: 'Revoked',
           args: parsed.args,
           address: arg.address,
-          toAddress: parsed.args[0],
+          toAddress: parsed.args[1],
           customInfo: arg,
         };
       } else {
@@ -943,7 +942,7 @@ const EventTranslate: TranslationEvent = {
         title: 'Revoked',
         args: parsed.args,
         address: arg.address,
-        toAddress: parsed.args[0],
+        toAddress: parsed.args[1],
         customInfo: arg,
       };
     } else {
@@ -1145,7 +1144,7 @@ export const decodeData = (
       content: dataContent,
     };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return {
       args: undefined,
       content: undefined,

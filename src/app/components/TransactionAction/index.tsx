@@ -36,9 +36,7 @@ const Token = (
   tokenType: string,
   tokenExhibit: string[], // icon, name, symbol
 ) => {
-  console.log('customInfo', customInfo, address);
   const customInfoToken = filterByTokenAddress(customInfo.token || {}, address);
-  console.log('customInfoToken', customInfoToken);
 
   return customInfoToken && customInfoToken['token'] ? (
     <>
