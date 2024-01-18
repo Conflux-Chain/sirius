@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -16,6 +22,7 @@ import {
   reqTokenList,
   reqTransactionDetail,
   reqTransferList,
+  reqTransactionEventlogs,
 } from 'utils/httpRequest';
 import {
   formatBalance,
@@ -43,6 +50,7 @@ import {
   StorageFee,
   TokenTypeTag,
 } from 'app/components/TxnComponents';
+import { TransactionAction } from 'app/components/TransactionAction';
 import _ from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import imgChevronDown from 'images/chevronDown.png';
@@ -52,6 +60,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { CreateTxNote } from '../Profile/CreateTxNote';
 import { useNametag } from 'utils/hooks/useNametag';
 import iconInfo from 'images/info.svg';
+import iconQuestion from 'images/icon-question.svg';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -63,6 +72,7 @@ export const Detail = () => {
   const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
+  const [eventlogs, setEventlogs] = useState<any>([]);
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,7 +112,6 @@ export const Detail = () => {
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
-
   // get txn detail info
   const fetchTxDetail = useCallback(
     txnhash => {
@@ -178,6 +187,13 @@ export const Detail = () => {
                 reverse: false,
               }),
             );
+            proArr.push(
+              reqTransactionEventlogs({
+                transactionHash: txnhash,
+                aggregate: false,
+              }),
+            );
+
             Promise.all(proArr)
               .then(proRes => {
                 const contractResponse = proRes[0];
@@ -187,6 +203,7 @@ export const Detail = () => {
                 const resultTransferList = transferListReponse;
                 const list = resultTransferList['list'];
                 setTransferList(list);
+                setEventlogs(proRes[2].list);
                 let addressList = list.map(v => v.address);
                 addressList = Array.from(new Set(addressList));
                 reqTokenList({
@@ -342,7 +359,62 @@ export const Detail = () => {
     }
     return {};
   };
+  const transferToken = useMemo(() => {
+    let transferListInfo: Array<any> = [];
+    // combine erc1155 batch transfer with batchIndex field
+    let batchCombinedTransferList: any = [];
+    if (transferList && transferList.length > 0) {
+      transferList.forEach((transfer: any) => {
+        if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
+          // find batch transfers
+          const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
+            trans =>
+              trans.transferType === transfer.transferType &&
+              trans.address === transfer.address &&
+              trans.transactionHash === transfer.transactionHash &&
+              trans.from === transfer.from &&
+              trans.to === transfer.to,
+          );
+          if (batchCombinedTransferListIndex < 0) {
+            batchCombinedTransferList.push({
+              batch: [transfer],
+              ...transfer,
+            });
+          } else {
+            batchCombinedTransferList[
+              batchCombinedTransferListIndex
+            ].batch.push(transfer);
+          }
+        } else {
+          batchCombinedTransferList.push(transfer);
+        }
+      });
+    }
 
+    for (let i = 0; i < batchCombinedTransferList.length; i++) {
+      const transferItem: any = batchCombinedTransferList[i];
+
+      const tokenItem = getItemByKey(
+        'address',
+        tokenList,
+        transferItem['address'],
+      );
+
+      transferListInfo.push({
+        token: tokenItem,
+      });
+    }
+
+    if (_.isObject(contractInfo) && !_.isEmpty(contractInfo)) {
+      let contractInfoCopy: any = contractInfo;
+      if (contractInfoCopy.token && contractInfoCopy.address) {
+        contractInfoCopy.token.address = contractInfoCopy.address;
+      }
+
+      transferListInfo.push(contractInfoCopy);
+    }
+    return transferListInfo;
+  }, [contractInfo, tokenList, transferList]);
   // support erc20/721/1155
   const getTransferListDiv = () => {
     if (!isContract) {
@@ -641,6 +713,16 @@ export const Detail = () => {
     },
   };
 
+  const transactionActionElement = useMemo(
+    () =>
+      TransactionAction({
+        transaction: transactionDetail,
+        event: eventlogs,
+        customInfo: transferToken,
+      }),
+    [transactionDetail, eventlogs, transferToken],
+  );
+
   return (
     <StyledCardWrapper>
       <Card>
@@ -740,6 +822,29 @@ export const Detail = () => {
             )}
           </SkeletonContainer>
         </Description>
+        {transactionActionElement.show && (
+          <Description
+            title={
+              <>
+                <Tooltip
+                  text={t(translations.transaction.action.tooltip)}
+                  placement="top"
+                >
+                  <IconQuestion>
+                    <img src={iconQuestion} alt="warning-icon"></img>
+                  </IconQuestion>
+                </Tooltip>
+                {t(translations.transaction.action.title)}
+              </>
+            }
+          >
+            {loading ? (
+              <SkeletonContainer shown={true}></SkeletonContainer>
+            ) : (
+              transactionActionElement.content
+            )}
+          </Description>
+        )}
         <Description
           title={
             <Tooltip text={t(translations.toolTip.tx.status)} placement="top">
@@ -1205,6 +1310,11 @@ const IconWrapper = styled.div`
   }
 `;
 
+const IconQuestion = styled.div`
+  padding-right: 0.2857rem;
+  width: 1.2857rem;
+  cursor: pointer;
+`;
 const StyleToolTipText = styled.div`
   width: 316px;
   font-size: 12px;
