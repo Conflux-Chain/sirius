@@ -11,6 +11,7 @@ import {
   NETWORK_TYPES,
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
+  RPC_SERVER,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
@@ -558,13 +559,51 @@ export const fromCfxToDrip = (num: number | string) =>
 export const getPercent = (
   divisor: number | string,
   dividend: number | string,
+  precision?: number,
 ) => {
   if (Number(dividend) === 0) return 0 + '%';
   const bnDivisor = new BigNumber(divisor);
   const bnDividend = new BigNumber(dividend);
-  return `${formatNumber(
+  const percentageNum = formatNumber(
     bnDivisor.dividedBy(bnDividend).multipliedBy(100).toNumber(),
-  )}%`;
+  );
+  if (precision || precision === 0) {
+    const percentageNumPrecision = roundToFixedPrecision(
+      percentageNum,
+      precision,
+    );
+    if (percentageNumPrecision === '100.00') {
+      return '100%';
+    } else if (percentageNumPrecision === '0.00') {
+      return '0%';
+    }
+    return roundToFixedPrecision(percentageNum, precision) + '%';
+  }
+
+  return `${percentageNum}%`;
+};
+
+export const roundToFixedPrecision = (
+  number: number | string,
+  precision: number,
+  method: string = 'ROUND',
+) => {
+  const numberFormat = typeof number === 'number' ? number : parseFloat(number);
+  const factor = Math.pow(10, precision);
+  let resultNum: number;
+
+  switch (method) {
+    case 'FLOOR':
+      resultNum = Math.floor(numberFormat * factor) / factor;
+      break;
+    case 'CEIL':
+      resultNum = Math.ceil(numberFormat * factor) / factor;
+      break;
+    case 'ROUND':
+    default:
+      resultNum = Math.round((numberFormat + Number.EPSILON) * factor) / factor;
+  }
+  return resultNum.toFixed(precision);
 };
 
 export const formatTimeStamp = (
@@ -945,9 +984,11 @@ export function padLeft(n, totalLength = 1) {
 }
 
 interface ErrorInfoType {
+  url?: string;
   code?: number;
   message?: string;
   data?: string;
+  method?: string;
 }
 
 export const publishRequestError = (
@@ -960,11 +1001,23 @@ export const publishRequestError = (
     if (type === 'code') {
       detail = e.message;
     } else {
-      detail = `Error Code: ${e.code}, ${e.message}`;
-    }
-
-    if (type === 'rpc' && !lodash.isNil(e.data)) {
-      detail += `, ${e.data}`;
+      detail = `Error Code: ${e.code} \n`;
+      if (type === 'http') {
+        const origin = window.location.origin;
+        detail += `Rest Api Url: ${
+          e.url?.includes('https://') ? e.url : origin + e.url
+        } \n`;
+      }
+      if (type === 'rpc') {
+        detail += `RPC Url: ${RPC_SERVER} \n`;
+        if (!lodash.isNil(e.method)) {
+          detail += `Method: ${e.method} \n`;
+        }
+        if (!lodash.isNil(e.data)) {
+          detail += `Data: ${e.data} \n`;
+        }
+      }
+      detail += `Error Message: ${e.message} \n`;
     }
   }
 

@@ -18,7 +18,6 @@ import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { getBalance } from 'utils/rpcRequest';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
@@ -187,7 +186,8 @@ const StyledSwapItemWrapper = styled.div`
 
 export function Swap() {
   const { t } = useTranslation();
-  const { installed, accounts, connected, provider } = usePortal();
+  const { accounts, authConnectStatus, provider, useBalance } = usePortal();
+  const cfx = useBalance();
   const { addRecord } = useTxnHistory();
 
   const CFX = new SDK.Conflux({
@@ -202,7 +202,6 @@ export function Swap() {
     abi,
   });
 
-  const [cfx, setCfx] = useState('0');
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
   const [showModal, setShowModal] = useState({
@@ -221,20 +220,16 @@ export function Swap() {
     value: '',
   });
   const balances = {
-    cfx,
+    cfx: cfx?.toDecimalMinUnit() ?? '0',
     wcfx,
   };
 
   useEffect(() => {
-    if (installed && accounts.length) {
+    if (accounts.length) {
       // @todo, the interval maybe not good, need to change
       const interval = setInterval(() => {
         contract.balanceOf(accounts[0]).then(data => {
           setWcfx(data.toString());
-        });
-
-        getBalance(accounts[0]).then(balance => {
-          setCfx(balance.toString());
         });
       }, 2000);
 
@@ -242,7 +237,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [installed, accounts, connected, contract, CFX]);
+  }, [accounts, authConnectStatus, contract, CFX]);
 
   const handleInputChange = value => {
     setFromToken({

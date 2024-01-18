@@ -1368,7 +1368,7 @@
         "20002": "Request timeout, try again later",
         "20003": "Request abort，try again later",
         "20004": "Network error，try again later",
-        "30001": "RPC call error，try again later",
+        "30001": "RPC Call Error, try again later",
         "50001": "System error, please try again later, or submit a ticket",
         "50100": "Unknown error, please try again later, or submit a ticket",
         "50101": "The parameter is wrong, please confirm it is correct",
@@ -1622,7 +1622,7 @@
     "posBlockHash": "PoS Block Hash",
     "parentHash": "Parent Hash",
     "nonce": "Nonce",
-    "gasUsed": "Gas Used",
+    "gasUsed": "Limit | Gas Used",
     "timestamp": "Timestamp",
     "size": "Size",
     "transactions": "Transactions",
@@ -1810,7 +1810,8 @@
     "button": {
       "connectWallet": "Connect Wallet",
       "nPending": "{{count}} Pending",
-      "wrongNetwork": "Wrong Network"
+      "wrongNetwork": "Wrong Network",
+      "switchNetwork": "Switch Network"
     },
     "modal": {
       "title": "Connect to a wallet",
@@ -2311,5 +2312,13 @@
         "all": "Overall Income"
       }
     }
+  },
+  "gaspriceDropdown": {
+    "blockHeight": "Epoch",
+    "low": "Low",
+    "median": "Median",
+    "high": "High",
+    "market": "Gas Price Market",
+    "latest60Blocks": "Latest 60 epochs"
   }
 }

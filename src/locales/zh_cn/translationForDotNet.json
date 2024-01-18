@@ -1171,7 +1171,7 @@
         "hash": "区块哈希",
         "miner": "节点地址",
         "avgGasPrice": "平均燃料价格",
-        "gasUsedPercent": "燃料用量/限制",
+        "gasUsedPercent": "燃料用量",
         "reward": "奖励",
         "age": "块龄",
         "difficulty": "难度",
@@ -1361,7 +1361,7 @@
         "50102": "权限异常",
         "50103": "系统忙，请稍后再试",
         "50104": "RPC服务忙，请稍后再试",
-        "50105": "RRPC请求错误，请稍后再试，或提交工单",
+        "50105": "RPC请求错误，请稍后再试，或提交工单",
         "50200": "网络异常，请稍后再试",
         "50201": "请求外部数据超时，请稍后再试",
         "50202": "数据解析异常，请稍后再试",
@@ -1434,7 +1434,7 @@
     "to": "接收方",
     "tokenTransferred": "数字资产转移",
     "value": "价值",
-    "gasUsed": "燃料用量/限制",
+    "gasUsed": "燃料限制 | 燃料用量 | 燃料计费",
     "gasPrice": "燃料价格",
     "gasFee": "燃气费",
     "gasCharged": "计费燃气",
@@ -1565,7 +1565,7 @@
     "posBlockHash": "PoS 区块哈希",
     "parentHash": "父区块哈希",
     "nonce": "随机数",
-    "gasUsed": "燃料用量/限制",
+    "gasUsed": "限制｜燃料用量",
     "timestamp": "时间戳",
     "size": "容量",
     "transactions": "交易",
@@ -1749,7 +1749,8 @@
     "button": {
       "connectWallet": "连接钱包",
       "nPending": "{{count}} 个交易处理中",
-      "wrongNetwork": "网络错误"
+      "wrongNetwork": "网络错误",
+      "switchNetwork": "切换网络"
     },
     "modal": {
       "title": "请连接您的钱包",

@@ -12,6 +12,7 @@ import {
   fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
+  roundToFixedPrecision,
 } from 'utils/';
 import imgPivot from 'images/pivot.svg';
 import { AddressContainer } from 'app/components/AddressContainer';
@@ -102,10 +103,13 @@ export const avgGasPrice = {
   width: 1,
   render: value => (
     <Text span hoverValue={`${toThousands(value)} drip`}>
-      {`${fromDripToGdrip(value, false, {
-        precision: 6,
-        minNum: 1e-6,
-      })} Gdrip`}
+      {`${roundToFixedPrecision(
+        fromDripToGdrip(value, false, {
+          precision: 6,
+          minNum: 1e-6,
+        }),
+        2,
+      )} Gdrip`}
     </Text>
   ),
 };
@@ -121,7 +125,7 @@ export const gasUsedPercent = {
   width: 1,
   render: (value, row: any) => {
     if (value) {
-      return getPercent(row.gasUsed, row.gasLimit);
+      return getPercent(row.gasUsed, row.gasLimit, 2);
     } else {
       return '--';
     }
@@ -149,7 +153,7 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit)})
+              ({getPercent(row.gasUsed, row.gasLimit, 2)})
             </span>
           </div>
           <Progress

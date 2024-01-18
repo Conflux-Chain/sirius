@@ -16,7 +16,8 @@ const request = async (method, ...args) => {
     const [namespace, m] = method.split('_');
     return await CFX[namespace][m](...args);
   } catch (e) {
-    publishRequestError(e as Error, 'rpc');
+    e.method = method;
+    publishRequestError(e, 'rpc');
     throw e;
   }
 };

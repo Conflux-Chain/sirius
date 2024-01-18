@@ -134,6 +134,7 @@ const LinkWrapper = styled.span`
 `;
 
 const StyledDetailWrapper = styled.div`
+  white-space: pre-wrap;
   max-height: 11.4286rem;
   overflow: auto;
 `;
