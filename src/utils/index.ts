@@ -1301,3 +1301,40 @@ export const constprocessResultArray = resultArray => {
   const inputArray = Array.isArray(resultArray) ? resultArray : [resultArray];
   return inputArray.map(processElement);
 };
+
+export const formatLargeNumber = (number: string | number) => {
+  const num = new BigNumber(number);
+
+  if (num.isNaN()) {
+    return { value: null, unit: '' };
+  }
+
+  const T = new BigNumber(10).pow(12);
+  const P = new BigNumber(10).pow(15);
+  const E = new BigNumber(10).pow(18);
+
+  if (num.isGreaterThanOrEqualTo(E)) {
+    const result = num.dividedBy(E);
+    return {
+      value: result.isNaN() ? null : result.toString(),
+      unit: 'E',
+    };
+  } else if (num.isGreaterThanOrEqualTo(P)) {
+    const result = num.dividedBy(P);
+    return {
+      value: result.isNaN() ? null : result.toString(),
+      unit: 'P',
+    };
+  } else if (num.isGreaterThanOrEqualTo(T)) {
+    const result = num.dividedBy(T);
+    return {
+      value: result.isNaN() ? null : result.toString(),
+      unit: 'T',
+    };
+  } else {
+    return {
+      value: num.toString(),
+      unit: '',
+    };
+  }
+};
