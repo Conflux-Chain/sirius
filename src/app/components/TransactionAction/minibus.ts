@@ -833,7 +833,7 @@ const EventTranslate: TranslationEvent = {
 
     const eTransaction: TranslationArgs = {
       ...arg,
-      data: methodId + arg.topics[1].substring(2) + value, // spender, value
+      data: methodId + arg.topics[2].substring(2) + value, // spender, value
       icon,
       symbol,
       decimals,
