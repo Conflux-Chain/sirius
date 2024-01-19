@@ -154,7 +154,7 @@ const customUI: MultiAction = {
     return (
       <div style={{ ...StyleWrap }}>
         Transfer <BalanceStyle>{value}</BalanceStyle> of{' '}
-        {Token(address, customInfo, 'ERC721', ['symbol'])}
+        {Token(address, customInfo, 'ERC721', ['icon', 'name', 'symbol'])}
       </div>
     );
   },
