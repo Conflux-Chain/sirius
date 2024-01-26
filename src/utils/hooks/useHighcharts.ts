@@ -36,6 +36,8 @@ const localeData = {
     downloadJPEG: 'Download imagem JPEG',
     downloadPDF: 'Download documento PDF',
     downloadSVG: 'Download imagem SVG',
+    downloadCSV: 'Download imagem CSV',
+    downloadXLS: 'Download imagem XLS',
   },
   zh: {
     shortMonths: [
@@ -63,6 +65,8 @@ const localeData = {
     downloadJPEG: '下载 JPEG',
     downloadPDF: '下载 PDF',
     downloadSVG: '下载 SVG',
+    downloadCSV: '下载 CSV',
+    downloadXLS: '下载 XLS',
   },
 };
 

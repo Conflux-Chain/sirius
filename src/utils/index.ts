@@ -588,6 +588,9 @@ export const roundToFixedPrecision = (
   precision: number,
   method: string = 'ROUND',
 ) => {
+  if (typeof number === 'string' && number.includes('<')) {
+    return number;
+  }
   const numberFormat = typeof number === 'number' ? number : parseFloat(number);
   const factor = Math.pow(10, precision);
   let resultNum: number;

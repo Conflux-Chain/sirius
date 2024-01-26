@@ -37,7 +37,6 @@ const Token = (
   tokenExhibit: string[], // icon, name, symbol
 ) => {
   const customInfoToken = filterByTokenAddress(customInfo.token || {}, address);
-
   return customInfoToken && customInfoToken['token'] ? (
     <>
       {tokenExhibit.includes('icon') ? (
@@ -129,7 +128,7 @@ const customUI: MultiAction = {
   ERC721_Mint: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Mint <BalanceStyle>1</BalanceStyle> of{' '}
+        Mint <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC721', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -137,7 +136,7 @@ const customUI: MultiAction = {
   ERC721_Transfer: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Transfer <BalanceStyle>1</BalanceStyle> of{' '}
+        Transfer <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC721', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -145,7 +144,7 @@ const customUI: MultiAction = {
   ERC721_Burn: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Burn <BalanceStyle>1</BalanceStyle> of{' '}
+        Burn <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC721', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -221,7 +220,7 @@ const customUI: MultiAction = {
   ERC1155_SafeTransferFrom: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Transfer <BalanceStyle>{value}</BalanceStyle>{' '}
+        Transfer <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC1155', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -229,7 +228,7 @@ const customUI: MultiAction = {
   ERC1155_Burn: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Burn <BalanceStyle>{value}</BalanceStyle>{' '}
+        Burn <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC1155', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -237,7 +236,7 @@ const customUI: MultiAction = {
   ERC1155_Transfer: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Transfer <BalanceStyle>{value}</BalanceStyle>{' '}
+        Transfer <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC1155', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -245,7 +244,7 @@ const customUI: MultiAction = {
   ERC1155_SafeBatchTransferFrom: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Transfer <BalanceStyle>{value}</BalanceStyle>{' '}
+        Transfer <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC1155', ['icon', 'name', 'symbol'])}
       </div>
     );
@@ -253,7 +252,7 @@ const customUI: MultiAction = {
   ERC1155_BatchBurn: ({ value, address, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Burn <BalanceStyle>{value}</BalanceStyle>{' '}
+        Burn <BalanceStyle>{value}</BalanceStyle> of{' '}
         {Token(address, customInfo, 'ERC1155', ['icon', 'name', 'symbol'])}
       </div>
     );

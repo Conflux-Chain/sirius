@@ -822,7 +822,7 @@ export const Detail = () => {
             )}
           </SkeletonContainer>
         </Description>
-        {transactionActionElement.show && (
+        {status === 0 && transactionActionElement.show && (
           <Description
             title={
               <>
