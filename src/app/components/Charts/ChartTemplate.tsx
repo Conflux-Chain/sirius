@@ -143,6 +143,8 @@ export function ChartTemplate({
               'downloadJPEG',
               'downloadPDF',
               'downloadSVG',
+              'downloadCSV',
+              'downloadXLS',
             ],
           },
         },

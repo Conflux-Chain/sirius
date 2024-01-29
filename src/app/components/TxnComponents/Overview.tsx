@@ -7,7 +7,7 @@ import { Description } from 'app/components/Description/Loadable';
 import { hideInDotNet } from 'utils';
 import { TransactionAction } from 'app/components/TransactionAction';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { reqContract } from 'utils/httpRequest';
+import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
 import _ from 'lodash';
 
 import { GasFee } from './GasFee';
@@ -30,12 +30,12 @@ export const Overview = ({ data }) => {
     transactionIndex,
     txExecErrorInfo,
     from,
-    list,
     tokenTransferTokenInfo,
   } = data;
 
   const [contractInfo, setContractInfo] = useState({});
   const [loading, setLoading] = useState(true);
+  const [eventlogs, setEventlogs] = useState<any>([]);
   const tokenTransferTokenInfoList = useMemo(() => {
     if (tokenTransferTokenInfo && typeof tokenTransferTokenInfo === 'object') {
       return Object.keys(tokenTransferTokenInfo).map(key => ({
@@ -44,7 +44,6 @@ export const Overview = ({ data }) => {
     }
     return [];
   }, [tokenTransferTokenInfo]);
-
   const customInfoList = useMemo(() => {
     if (tokenTransferTokenInfoList.length > 0) {
       return [contractInfo, ...tokenTransferTokenInfoList];
@@ -53,24 +52,38 @@ export const Overview = ({ data }) => {
   }, [tokenTransferTokenInfoList, contractInfo]);
   useEffect(() => {
     try {
-      if (!to) return;
+      if (!to || !hash) return;
       setLoading(true);
-      reqContract({
-        address: to,
-        fields: ['token'],
-      }).then(e => {
-        if (e && _.isObject(e.token) && !_.isEmpty(e.token)) {
-          setContractInfo({ token: { address: e.address, ...e.token } });
-          setLoading(false);
+      const reqArr: Array<any> = [];
+      reqArr.push(
+        reqContract({
+          address: to,
+          fields: ['token'],
+        }),
+      );
+      reqArr.push(
+        reqTransactionEventlogs({
+          transactionHash: hash,
+          aggregate: false,
+        }),
+      );
+      Promise.all(reqArr).then(res => {
+        if (res[0] && _.isObject(res[0].token) && !_.isEmpty(res[0].token)) {
+          setContractInfo({
+            token: { address: res[0].address, ...res[0].token },
+          });
         }
+        setEventlogs(res[1].list);
+        setLoading(false);
       });
     } catch (error) {
       setLoading(false);
     }
-  }, [to]);
+  }, [to, hash]);
+
   const transactionAction = TransactionAction({
     transaction: data,
-    event: list,
+    event: eventlogs,
     customInfo: customInfoList,
   });
   return (
@@ -92,7 +105,7 @@ export const Overview = ({ data }) => {
           ></Status>
         </div>
       </Description>
-      {transactionAction && transactionAction.show && (
+      {status === 0 && transactionAction && transactionAction.show && (
         <Description
           verticle
           size="tiny"
