@@ -1651,10 +1651,15 @@ export const decodeData = (
             token: customInfo,
             ...e,
           });
-
           // Special processing for ERC721.safeTransferFrom, event is not translated approve
           if (
-            (methodId === '0x42842e0e' || methodId === '0xb88d4fde') &&
+            [
+              '0x23b872dd',
+              '0x42842e0e',
+              '0xb88d4fde',
+              '0xf242432a',
+              '0x2eb2c2d6',
+            ].includes(methodId) &&
             (eResult.type === 'ERC721_Revoked' ||
               eResult.type === 'ERC721_Approved')
           ) {
@@ -1693,6 +1698,15 @@ export const decodeData = (
         ];
 
         if (EventWihtelist.includes(e.topics[0])) {
+          // 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef maybe ERC20, filter out these transactions.
+          if (
+            [
+              '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+            ].includes(e.topics[0]) &&
+            e.data !== '0x'
+          ) {
+            return;
+          }
           const evnetHash = e.topics[0];
           if (EventTranslate[evnetHash]) {
             const eResult = EventTranslate[evnetHash]({
