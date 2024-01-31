@@ -274,7 +274,7 @@ export const NFTPreview = React.memo(
     }, [contractAddress, tokenId, handleNFTInfo]);
 
     useEffect(() => {
-      nftInfo.detail?.metadata && handleNFTInfo(nftInfo);
+      nftInfo?.detail?.metadata && handleNFTInfo(nftInfo);
     }, [nftInfo, handleNFTInfo]);
 
     if (contractAddress && tokenId) {
