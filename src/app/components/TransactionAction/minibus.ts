@@ -1707,6 +1707,10 @@ export const decodeData = (
           ) {
             return;
           }
+          // Contains only mint, burn.
+          if (!(e.topics[1] === eventZero || e.topics[2] === eventZero)) {
+            return;
+          }
           const evnetHash = e.topics[0];
           if (EventTranslate[evnetHash]) {
             const eResult = EventTranslate[evnetHash]({

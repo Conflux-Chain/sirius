@@ -63,11 +63,9 @@ const Token = (
       )}
       {tokenExhibit.includes('symbol') ? (
         <Link href={`/address/${formatAddress(address)}`}>
-          {`${tokenType === 'ERC20' ? '' : '('}${
-            customInfoToken['token']['symbol']
-              ? customInfoToken['token']['symbol']
-              : TokenSymbol
-          }${tokenType === 'ERC20' ? '' : ')'}`}{' '}
+          {customInfoToken['token']['symbol']
+            ? customInfoToken['token']['symbol']
+            : TokenSymbol}{' '}
         </Link>
       ) : (
         <></>
@@ -94,7 +92,7 @@ const customUI: MultiAction = {
         </BalanceStyle>{' '}
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} to{' '}
         <Link href={`/address/${toAddress}`}>
-          <AddressContainer value={toAddress} />
+          <AddressContainer value={toAddress} isFull={true} />
         </Link>
       </div>
     );
@@ -106,7 +104,7 @@ const customUI: MultiAction = {
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
@@ -119,7 +117,7 @@ const customUI: MultiAction = {
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
@@ -160,11 +158,11 @@ const customUI: MultiAction = {
   ERC721_Revoked: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Revoked {Token(address, customInfo, 'ERC721', ['symbol'])}
+        Revoked {Token(address, customInfo, 'ERC721', ['icon', 'symbol'])}
         from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
@@ -173,11 +171,11 @@ const customUI: MultiAction = {
   ERC721_Approved: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Approved {Token(address, customInfo, 'ERC721', ['symbol'])}
+        Approved {Token(address, customInfo, 'ERC721', ['icon', 'symbol'])}
         for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
@@ -186,11 +184,11 @@ const customUI: MultiAction = {
   ERC1155_Approved: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Approved {Token(address, customInfo, 'ERC1155', ['symbol'])}
+        Approved {Token(address, customInfo, 'ERC1155', ['icon', 'symbol'])}
         for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
@@ -199,11 +197,11 @@ const customUI: MultiAction = {
   ERC1155_Revoked: ({ address, toAddress, customInfo }) => {
     return (
       <div style={{ ...StyleWrap }}>
-        Revoked {Token(address, customInfo, 'ERC1155', ['symbol'])}
-        for
+        Revoked {Token(address, customInfo, 'ERC1155', ['icon', 'symbol'])}
+        from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} />
+            <AddressContainer value={toAddress} isFull={true} />
           </Link>
         )}
       </div>
