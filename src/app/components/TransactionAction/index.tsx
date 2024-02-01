@@ -1,9 +1,11 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect, useState, useCallback } from 'react';
 import { formatAddress, formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { decodeData, filterByTokenAddress, MultiAction } from './minibus';
 import styled from 'styled-components/macro';
 import { AddressContainer } from 'app/components/AddressContainer';
+import { reqContractAndToken, reqNametag } from 'utils/httpRequest';
+import { useNametagCacheStore } from 'utils/store';
 
 const LogoStyle = styled.img`
   width: 16px;
@@ -82,6 +84,86 @@ const Token = (
   );
 };
 
+interface AddressNameTagContainerProps {
+  value: string;
+}
+
+const AddressNameTagContainer: React.FC<AddressNameTagContainerProps> = ({
+  value,
+}) => {
+  const {
+    nametagCache,
+    contractCache,
+    setNametagCache,
+    setContractCache,
+  } = useNametagCacheStore(state => ({
+    // @ts-ignore
+    nametagCache: state.nametagCache,
+    // @ts-ignore
+    contractCache: state.contractCache,
+    // @ts-ignore
+    setNametagCache: state.setNametagCache,
+    // @ts-ignore
+    setContractCache: state.setContractCache,
+  }));
+
+  const fetchContractAndToken = useCallback(
+    async (address: string) => {
+      try {
+        const data = await reqContractAndToken({ address: [address] });
+        if (data && data.total > 0 && data.map[address]) {
+          setContractCache({ [address]: data.map[address] });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [setContractCache],
+  );
+
+  const fetchNameTag = useCallback(
+    async (address: string) => {
+      try {
+        const data = await reqNametag([address]);
+        if (data && data.total > 0 && data.map[address]) {
+          setNametagCache({ [address]: data.map[address] });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [setNametagCache],
+  );
+
+  useEffect(() => {
+    if (value && !contractCache[value]) {
+      fetchContractAndToken(value);
+    }
+
+    if (value && !nametagCache[value]) {
+      fetchNameTag(value);
+    }
+  }, [value, fetchContractAndToken, fetchNameTag, nametagCache, contractCache]);
+
+  const nametagInfo = {
+    [value]: {
+      address: value,
+      nametag: nametagCache[value]?.nameTag || '',
+    },
+  };
+  return (
+    <AddressContainer
+      value={value}
+      alias={
+        contractCache[value]?.contract?.name ||
+        contractCache[value]?.token?.name
+      }
+      isFullNameTag={true}
+      nametagInfo={nametagInfo}
+    />
+  );
+};
+
 const customUI: MultiAction = {
   ERC20_Transfer: ({ address, toAddress, value, customInfo }) => {
     return (
@@ -91,8 +173,8 @@ const customUI: MultiAction = {
           {formatBalance(value, customInfo['decimals'] || TokenDecimals, true)}
         </BalanceStyle>{' '}
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} to{' '}
-        <Link href={`/address/${toAddress}`}>
-          <AddressContainer value={toAddress} isFullNameTag={true} />
+        <Link href={`/address/${formatAddress(toAddress)}`}>
+          <AddressNameTagContainer value={formatAddress(toAddress)} />
         </Link>
       </div>
     );
@@ -103,8 +185,8 @@ const customUI: MultiAction = {
         Approved
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} for
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
@@ -116,8 +198,8 @@ const customUI: MultiAction = {
         Revoked
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} from
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
@@ -161,8 +243,8 @@ const customUI: MultiAction = {
         Revoked {Token(address, customInfo, 'ERC721', ['icon', 'symbol'])}
         from
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
@@ -174,8 +256,8 @@ const customUI: MultiAction = {
         Approved {Token(address, customInfo, 'ERC721', ['icon', 'symbol'])}
         for
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
@@ -187,8 +269,8 @@ const customUI: MultiAction = {
         Approved {Token(address, customInfo, 'ERC1155', ['icon', 'symbol'])}
         for
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
@@ -200,8 +282,8 @@ const customUI: MultiAction = {
         Revoked {Token(address, customInfo, 'ERC1155', ['icon', 'symbol'])}
         from
         {toAddress && (
-          <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFullNameTag={true} />
+          <Link href={`/address/${formatAddress(toAddress)}`}>
+            <AddressNameTagContainer value={formatAddress(toAddress)} />
           </Link>
         )}
       </div>
