@@ -51,34 +51,56 @@ export const Overview = ({ data }) => {
     return [contractInfo];
   }, [tokenTransferTokenInfoList, contractInfo]);
   useEffect(() => {
-    try {
-      if (!to || !hash) return;
-      setLoading(true);
-      const reqArr: Array<any> = [];
-      reqArr.push(
-        reqContract({
-          address: to,
-          fields: ['token'],
-        }),
-      );
-      reqArr.push(
-        reqTransactionEventlogs({
-          transactionHash: hash,
-          aggregate: false,
-        }),
-      );
-      Promise.all(reqArr).then(res => {
-        if (res[0] && _.isObject(res[0].token) && !_.isEmpty(res[0].token)) {
+    const fetchData = async () => {
+      try {
+        if (!hash) return;
+        setLoading(true);
+
+        const reqArr: Promise<any>[] = [];
+        if (to) {
+          reqArr.push(
+            reqContract({
+              address: to,
+              fields: ['token'],
+            }),
+          );
+        }
+
+        reqArr.push(
+          reqTransactionEventlogs({
+            transactionHash: hash,
+            aggregate: false,
+          }),
+        );
+
+        const res = await Promise.all(reqArr);
+
+        if (
+          to &&
+          res[0] &&
+          _.isObject(res[0].token) &&
+          !_.isEmpty(res[0].token)
+        ) {
           setContractInfo({
             token: { address: res[0].address, ...res[0].token },
           });
         }
-        setEventlogs(res[1].list);
+
+        const eventlogsIndex = to ? 1 : 0;
+        if (
+          res[eventlogsIndex] &&
+          res[eventlogsIndex].list &&
+          res[eventlogsIndex].list.length > 0
+        ) {
+          setEventlogs(res[eventlogsIndex].list);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
         setLoading(false);
-      });
-    } catch (error) {
-      setLoading(false);
-    }
+      }
+    };
+    fetchData();
   }, [to, hash]);
 
   const transactionAction = TransactionAction({
