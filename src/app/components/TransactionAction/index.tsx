@@ -92,7 +92,7 @@ const customUI: MultiAction = {
         </BalanceStyle>{' '}
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} to{' '}
         <Link href={`/address/${toAddress}`}>
-          <AddressContainer value={toAddress} isFull={true} />
+          <AddressContainer value={toAddress} isFullNameTag={true} />
         </Link>
       </div>
     );
@@ -104,7 +104,7 @@ const customUI: MultiAction = {
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
@@ -117,7 +117,7 @@ const customUI: MultiAction = {
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
@@ -162,7 +162,7 @@ const customUI: MultiAction = {
         from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
@@ -175,7 +175,7 @@ const customUI: MultiAction = {
         for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
@@ -188,7 +188,7 @@ const customUI: MultiAction = {
         for
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
@@ -201,7 +201,7 @@ const customUI: MultiAction = {
         from
         {toAddress && (
           <Link href={`/address/${toAddress}`}>
-            <AddressContainer value={toAddress} isFull={true} />
+            <AddressContainer value={toAddress} isFullNameTag={true} />
           </Link>
         )}
       </div>
