@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useState, useCallback } from 'react';
+import React, { CSSProperties, useEffect, useCallback } from 'react';
 import { formatAddress, formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { decodeData, filterByTokenAddress, MultiAction } from './minibus';
