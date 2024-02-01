@@ -111,6 +111,89 @@ export const Detail = () => {
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
+
+  const fetchTxTransfer = async (toCheckAddress, txnhash) => {
+    setLoading(true);
+
+    try {
+      const proArr: Promise<any>[] = [];
+      if (
+        isContractAddress(toCheckAddress) ||
+        isInnerContractAddress(toCheckAddress)
+      ) {
+        setIsContract(true);
+
+        const contractFields = [
+          'address',
+          'type',
+          'name',
+          'website',
+          'tokenName',
+          'tokenSymbol',
+          'token',
+          'tokenDecimal',
+          'abi',
+          'bytecode',
+          'iconUrl',
+          'sourceCode',
+          'typeCode',
+        ];
+
+        proArr.push(
+          reqContract({ address: toCheckAddress, fields: contractFields }),
+        );
+      }
+
+      const transferFields = 'token';
+      proArr.push(
+        reqTransferList({
+          transactionHash: txnhash,
+          fields: transferFields,
+          limit: 100,
+          reverse: false,
+        }),
+      );
+
+      proArr.push(
+        reqTransactionEventlogs({
+          transactionHash: txnhash,
+          aggregate: false,
+        }),
+      );
+
+      const proRes = await Promise.all(proArr);
+
+      if (
+        toCheckAddress !== null &&
+        (await isContractAddress(toCheckAddress))
+      ) {
+        const contractResponse = proRes.shift();
+        setContractInfo(contractResponse);
+      }
+
+      const transferListResponse = proRes[0];
+      const list = transferListResponse.list || [];
+      setTransferList(list);
+
+      const eventlogsResponse = proRes[1];
+      console.log(eventlogsResponse.list);
+      setEventlogs(eventlogsResponse.list);
+
+      let addressList = list.map(v => v.address);
+      addressList = Array.from(new Set(addressList));
+      const tokenListResponse = await reqTokenList({
+        addressArray: addressList,
+        fields: ['iconUrl'],
+      });
+
+      setTokenList(tokenListResponse.list || []);
+    } catch (e) {
+      console.error('fetchTxTransfer error: ', e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // get txn detail info
   const fetchTxDetail = useCallback(
     txnhash => {
@@ -153,72 +236,7 @@ export const Detail = () => {
           setDetailsInfoSetHash(txnhash);
 
           let toCheckAddress = txDetailDta.to;
-
-          if (
-            isContractAddress(toCheckAddress) ||
-            isInnerContractAddress(toCheckAddress)
-          ) {
-            setIsContract(true);
-            const fields = [
-              'address',
-              'type',
-              'name',
-              'website',
-              'tokenName',
-              'tokenSymbol',
-              'token',
-              'tokenDecimal',
-              'abi',
-              'bytecode',
-              'iconUrl',
-              'sourceCode',
-              'typeCode',
-            ];
-            const proArr: Array<any> = [];
-            proArr.push(
-              reqContract({ address: toCheckAddress, fields: fields }),
-            );
-            proArr.push(
-              reqTransferList({
-                transactionHash: txnhash,
-                fields: 'token',
-                limit: 100,
-                reverse: false,
-              }),
-            );
-            proArr.push(
-              reqTransactionEventlogs({
-                transactionHash: txnhash,
-                aggregate: false,
-              }),
-            );
-
-            Promise.all(proArr)
-              .then(proRes => {
-                const contractResponse = proRes[0];
-                // update contract info
-                setContractInfo(contractResponse);
-                const transferListReponse = proRes[1];
-                const resultTransferList = transferListReponse;
-                const list = resultTransferList['list'];
-                setTransferList(list);
-                setEventlogs(proRes[2].list);
-                let addressList = list.map(v => v.address);
-                addressList = Array.from(new Set(addressList));
-                reqTokenList({
-                  addressArray: addressList,
-                  fields: ['iconUrl'],
-                })
-                  .then(res => {
-                    setLoading(false);
-                    setTokenList(res.list);
-                  })
-                  .catch(() => {});
-              })
-              .catch(() => {});
-          } else {
-            setLoading(false);
-          }
+          fetchTxTransfer(toCheckAddress, txnhash);
         }
       });
     },
