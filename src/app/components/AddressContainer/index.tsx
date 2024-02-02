@@ -155,11 +155,7 @@ const RenderAddress = ({
           style={style}
           href={link}
           maxwidth={
-            (content || alias) && isFullNameTag
-              ? maxWidth
-              : isFull
-              ? 430
-              : maxWidth
+            (content || alias) && isFullNameTag ? 1000 : isFull ? 430 : maxWidth
           }
           alias={alias}
           aftercontent={aftercontent}
@@ -176,14 +172,9 @@ const RenderAddress = ({
           style={style}
           href={href}
           maxwidth={
-            (content ||
-              ENSLabel ||
-              nametag ||
-              addressLabel ||
-              alias ||
-              alias) &&
+            (content || ENSLabel || nametag || addressLabel || alias) &&
             isFullNameTag
-              ? maxWidth
+              ? 1000
               : isFull
               ? 430
               : maxWidth
@@ -209,7 +200,7 @@ const RenderAddress = ({
         maxwidth={
           (content || ENSLabel || nametag || addressLabel || alias) &&
           isFullNameTag
-            ? maxWidth
+            ? 1000
             : isFull
             ? 430
             : maxWidth
