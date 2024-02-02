@@ -1598,6 +1598,10 @@
         "detail": "节点内部错误。",
         "tip": "提交新的交易来更新交易池。"
       }
+    },
+    "action": {
+      "title": "交易行为",
+      "tooltip": "此交易突出的交易事件。"
     }
   },
   "block": {
@@ -1802,7 +1806,8 @@
     "button": {
       "connectWallet": "连接钱包",
       "nPending": "{{count}} 个交易处理中",
-      "wrongNetwork": "网络错误"
+      "wrongNetwork": "网络错误",
+      "switchNetwork": "切换网络"
     },
     "modal": {
       "title": "请连接您的钱包",

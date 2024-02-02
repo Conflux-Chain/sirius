@@ -11,6 +11,9 @@ import { CFX_TOKEN_TYPES } from 'utils/constants';
 import queryString from 'query-string';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useLocation } from 'react-router-dom';
+import { formatNumber, formatLargeNumber } from 'utils';
+import { Text } from 'app/components/Text/Loadable';
+import { monospaceFont } from 'styles/variable';
 
 import imgInfo from 'images/info.svg';
 
@@ -42,10 +45,58 @@ export function Tokens() {
       ...tokenColunms.marketCap,
       sorter: true,
       defaultSortOrder: 'descend' as 'descend' | 'ascend',
+      render(value, row, index) {
+        const largeShrinkNumber = formatLargeNumber(value);
+        return (
+          <LargeNumber>
+            <Text
+              hoverValue={formatNumber(value, {
+                precision: 2,
+                withUnit: false,
+              })}
+            >
+              <span>
+                {largeShrinkNumber.value
+                  ? '$' +
+                    formatNumber(largeShrinkNumber.value, {
+                      precision: 2,
+                      withUnit: false,
+                      unit: '',
+                    }) +
+                    largeShrinkNumber.unit
+                  : '--'}
+              </span>
+            </Text>
+          </LargeNumber>
+        );
+      },
     },
     {
       ...tokenColunms.transfer,
       sorter: true,
+      render(value, row, index) {
+        const largeShrinkNumber = formatLargeNumber(value);
+        return (
+          <LargeNumber>
+            <Text
+              hoverValue={formatNumber(value, {
+                precision: 2,
+                withUnit: false,
+              })}
+            >
+              <span>
+                {largeShrinkNumber.value
+                  ? formatNumber(largeShrinkNumber.value, {
+                      precision: 2,
+                      withUnit: false,
+                      unit: '',
+                    }) + largeShrinkNumber.unit
+                  : '--'}
+              </span>
+            </Text>
+          </LargeNumber>
+        );
+      },
     },
     {
       ...tokenColunms.holders,
@@ -200,5 +251,13 @@ const TableWrapper = styled.div`
         margin-right: 7px;
       }
     }
+  }
+`;
+
+const LargeNumber = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  span {
+    font-family: ${monospaceFont};
   }
 `;

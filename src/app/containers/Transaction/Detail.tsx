@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -16,6 +22,7 @@ import {
   reqTokenList,
   reqTransactionDetail,
   reqTransferList,
+  reqTransactionEventlogs,
 } from 'utils/httpRequest';
 import {
   formatBalance,
@@ -43,6 +50,7 @@ import {
   StorageFee,
   TokenTypeTag,
 } from 'app/components/TxnComponents';
+import { TransactionAction } from 'app/components/TransactionAction';
 import _ from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import imgChevronDown from 'images/chevronDown.png';
@@ -63,6 +71,7 @@ export const Detail = () => {
   const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
+  const [eventlogs, setEventlogs] = useState<any>([]);
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,6 +111,88 @@ export const Detail = () => {
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
+
+  const fetchTxTransfer = async (toCheckAddress, txnhash) => {
+    setLoading(true);
+
+    try {
+      const proArr: Promise<any>[] = [];
+      if (
+        isContractAddress(toCheckAddress) ||
+        isInnerContractAddress(toCheckAddress)
+      ) {
+        setIsContract(true);
+
+        const contractFields = [
+          'address',
+          'type',
+          'name',
+          'website',
+          'tokenName',
+          'tokenSymbol',
+          'token',
+          'tokenDecimal',
+          'abi',
+          'bytecode',
+          'iconUrl',
+          'sourceCode',
+          'typeCode',
+        ];
+
+        proArr.push(
+          reqContract({ address: toCheckAddress, fields: contractFields }),
+        );
+      }
+
+      const transferFields = 'token';
+      proArr.push(
+        reqTransferList({
+          transactionHash: txnhash,
+          fields: transferFields,
+          limit: 100,
+          reverse: false,
+        }),
+      );
+
+      proArr.push(
+        reqTransactionEventlogs({
+          transactionHash: txnhash,
+          aggregate: false,
+        }),
+      );
+
+      const proRes = await Promise.all(proArr);
+
+      if (
+        toCheckAddress !== null &&
+        (await isContractAddress(toCheckAddress))
+      ) {
+        const contractResponse = proRes.shift();
+        setContractInfo(contractResponse);
+      }
+
+      const transferListResponse = proRes[0];
+      const list = transferListResponse.list || [];
+      setTransferList(list);
+
+      const eventlogsResponse = proRes[1];
+      console.log(eventlogsResponse.list);
+      setEventlogs(eventlogsResponse.list);
+
+      let addressList = list.map(v => v.address);
+      addressList = Array.from(new Set(addressList));
+      const tokenListResponse = await reqTokenList({
+        addressArray: addressList,
+        fields: ['iconUrl'],
+      });
+
+      setTokenList(tokenListResponse.list || []);
+    } catch (e) {
+      console.error('fetchTxTransfer error: ', e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // get txn detail info
   const fetchTxDetail = useCallback(
@@ -145,64 +236,7 @@ export const Detail = () => {
           setDetailsInfoSetHash(txnhash);
 
           let toCheckAddress = txDetailDta.to;
-
-          if (
-            isContractAddress(toCheckAddress) ||
-            isInnerContractAddress(toCheckAddress)
-          ) {
-            setIsContract(true);
-            const fields = [
-              'address',
-              'type',
-              'name',
-              'website',
-              'tokenName',
-              'tokenSymbol',
-              'token',
-              'tokenDecimal',
-              'abi',
-              'bytecode',
-              'iconUrl',
-              'sourceCode',
-              'typeCode',
-            ];
-            const proArr: Array<any> = [];
-            proArr.push(
-              reqContract({ address: toCheckAddress, fields: fields }),
-            );
-            proArr.push(
-              reqTransferList({
-                transactionHash: txnhash,
-                fields: 'token',
-                limit: 100,
-                reverse: false,
-              }),
-            );
-            Promise.all(proArr)
-              .then(proRes => {
-                const contractResponse = proRes[0];
-                // update contract info
-                setContractInfo(contractResponse);
-                const transferListReponse = proRes[1];
-                const resultTransferList = transferListReponse;
-                const list = resultTransferList['list'];
-                setTransferList(list);
-                let addressList = list.map(v => v.address);
-                addressList = Array.from(new Set(addressList));
-                reqTokenList({
-                  addressArray: addressList,
-                  fields: ['iconUrl'],
-                })
-                  .then(res => {
-                    setLoading(false);
-                    setTokenList(res.list);
-                  })
-                  .catch(() => {});
-              })
-              .catch(() => {});
-          } else {
-            setLoading(false);
-          }
+          fetchTxTransfer(toCheckAddress, txnhash);
         }
       });
     },
@@ -342,7 +376,62 @@ export const Detail = () => {
     }
     return {};
   };
+  const transferToken = useMemo(() => {
+    let transferListInfo: Array<any> = [];
+    // combine erc1155 batch transfer with batchIndex field
+    let batchCombinedTransferList: any = [];
+    if (transferList && transferList.length > 0) {
+      transferList.forEach((transfer: any) => {
+        if (transfer.transferType === CFX_TOKEN_TYPES.erc1155) {
+          // find batch transfers
+          const batchCombinedTransferListIndex = batchCombinedTransferList.findIndex(
+            trans =>
+              trans.transferType === transfer.transferType &&
+              trans.address === transfer.address &&
+              trans.transactionHash === transfer.transactionHash &&
+              trans.from === transfer.from &&
+              trans.to === transfer.to,
+          );
+          if (batchCombinedTransferListIndex < 0) {
+            batchCombinedTransferList.push({
+              batch: [transfer],
+              ...transfer,
+            });
+          } else {
+            batchCombinedTransferList[
+              batchCombinedTransferListIndex
+            ].batch.push(transfer);
+          }
+        } else {
+          batchCombinedTransferList.push(transfer);
+        }
+      });
+    }
 
+    for (let i = 0; i < batchCombinedTransferList.length; i++) {
+      const transferItem: any = batchCombinedTransferList[i];
+
+      const tokenItem = getItemByKey(
+        'address',
+        tokenList,
+        transferItem['address'],
+      );
+
+      transferListInfo.push({
+        token: tokenItem,
+      });
+    }
+
+    if (_.isObject(contractInfo) && !_.isEmpty(contractInfo)) {
+      let contractInfoCopy: any = contractInfo;
+      if (contractInfoCopy.token && contractInfoCopy.address) {
+        contractInfoCopy.token.address = contractInfoCopy.address;
+      }
+
+      transferListInfo.push(contractInfoCopy);
+    }
+    return transferListInfo;
+  }, [contractInfo, tokenList, transferList]);
   // support erc20/721/1155
   const getTransferListDiv = () => {
     if (!isContract) {
@@ -641,6 +730,16 @@ export const Detail = () => {
     },
   };
 
+  const transactionActionElement = useMemo(
+    () =>
+      TransactionAction({
+        transaction: transactionDetail,
+        event: eventlogs,
+        customInfo: transferToken,
+      }),
+    [transactionDetail, eventlogs, transferToken],
+  );
+
   return (
     <StyledCardWrapper>
       <Card>
@@ -740,6 +839,26 @@ export const Detail = () => {
             )}
           </SkeletonContainer>
         </Description>
+        {status === 0 && transactionActionElement.show && (
+          <Description
+            title={
+              <>
+                <Tooltip
+                  text={t(translations.transaction.action.tooltip)}
+                  placement="top"
+                >
+                  {t(translations.transaction.action.title)}
+                </Tooltip>
+              </>
+            }
+          >
+            {loading ? (
+              <SkeletonContainer shown={true}></SkeletonContainer>
+            ) : (
+              transactionActionElement.content
+            )}
+          </Description>
+        )}
         <Description
           title={
             <Tooltip text={t(translations.toolTip.tx.status)} placement="top">

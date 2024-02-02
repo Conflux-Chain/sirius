@@ -12,7 +12,6 @@ import { translations } from 'locales/i18n';
 import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
-import nftInfo from 'images/info.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/antd';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
@@ -66,6 +65,7 @@ export const NFTCardInfo = React.memo(
     imageMinHeight,
     width = 200,
     preview = true,
+    on3DError,
   }: {
     imageUri: string;
     tokenId?: number | string;
@@ -73,6 +73,7 @@ export const NFTCardInfo = React.memo(
     imageMinHeight?: number;
     width?: 200 | 500;
     preview?: boolean;
+    on3DError?: VoidFunction;
   }) => {
     let [nftType, setNftType] = useState('image');
     const [isAudioPlay, setIsAudioPlay] = useState(false);
@@ -176,7 +177,7 @@ export const NFTCardInfo = React.memo(
     } else if (nftType === '3d') {
       return (
         <ThreeDCard>
-          <ThreeD url={`${imageUri}`} />
+          <ThreeD url={`${imageUri}`} onError={on3DError} />
         </ThreeDCard>
       );
     } else {
@@ -202,7 +203,7 @@ export const NFTPreview = React.memo(
     amount = 0,
     owner = '',
     enable3D = false,
-    metadata,
+    nftInfo,
   }: {
     contractAddress?: string;
     tokenId?: number | string;
@@ -210,16 +211,47 @@ export const NFTPreview = React.memo(
     amount?: number;
     owner?: string;
     enable3D?: boolean;
-    metadata?: any;
+    nftInfo?: any;
   }) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language.includes('zh') ? 'zh' : 'en';
     const [imageUri, setImageUri] = useState('');
+    const [backupImageUri, setBackupImageUri] = useState('');
     const [loading, setLoading] = useState(false);
     const [imageMinHeight, setImageMinHeight] = useState(200);
     const [previewIcon, setPreviewIcon] = useState(nftPreview);
     const [imageName, setImageName] = useState('');
     const [isFirstTime, setIsFirstTime] = useState(true);
+
+    const handleNFTInfo = useCallback(
+      data => {
+        setImageMinHeight(data.imageMinHeight);
+
+        // support display 3d resource
+        const { image = NotFoundIcon, animation_url } =
+          data.detail?.metadata || {};
+
+        let img = image;
+
+        if (enable3D && animation_url) {
+          img = animation_url;
+          setBackupImageUri(addIPFSGateway(image, data.imageGateway));
+        }
+
+        // add ipfs gateway prefix
+        img = addIPFSGateway(img, data.imageGateway);
+
+        setImageUri(img);
+        setImageName(data.imageName ? data.imageName[lang] || '' : '');
+      },
+      [enable3D, lang],
+    );
+
+    const handle3DError = useCallback(() => {
+      if (enable3D && backupImageUri) {
+        setImageUri(backupImageUri);
+      }
+    }, [backupImageUri, enable3D]);
 
     useEffect(() => {
       if (contractAddress && tokenId) {
@@ -229,25 +261,7 @@ export const NFTPreview = React.memo(
           query: { contractAddress, tokenId },
         })
           .then(data => {
-            if (data) {
-              setImageMinHeight(data.imageMinHeight);
-
-              // support display 3d resource
-              const { image = NotFoundIcon, animation_url } =
-                data.detail?.metadata || {};
-
-              let img = image;
-
-              if (enable3D && animation_url) {
-                img = animation_url;
-              }
-
-              // add ipfs gateway prefix
-              img = addIPFSGateway(img, data.imageGateway);
-
-              setImageUri(img);
-              setImageName(data.imageName ? data.imageName[lang] || '' : '');
-            }
+            data && handleNFTInfo(data);
           })
           .catch(e => {
             console.log(e);
@@ -257,18 +271,11 @@ export const NFTPreview = React.memo(
             setIsFirstTime(false);
           });
       }
-    }, [contractAddress, tokenId, lang, enable3D]);
+    }, [contractAddress, tokenId, handleNFTInfo]);
 
     useEffect(() => {
-      if (metadata) {
-        if (metadata.image) {
-          setImageUri(metadata.image);
-        }
-        if (metadata.name) {
-          setImageName(metadata.name);
-        }
-      }
-    }, [metadata]);
+      nftInfo?.detail?.metadata && handleNFTInfo(nftInfo);
+    }, [nftInfo, handleNFTInfo]);
 
     if (contractAddress && tokenId) {
       if (type === 'card') {
@@ -286,6 +293,7 @@ export const NFTPreview = React.memo(
                       imageUri={imageUri}
                       tokenId={tokenId}
                       width={500}
+                      on3DError={handle3DError}
                     />
                   )
                 ) : isFirstTime ? (
@@ -360,6 +368,7 @@ export const NFTPreview = React.memo(
                     imageUri={imageUri}
                     tokenId={tokenId}
                     imageMinHeight={imageMinHeight}
+                    on3DError={handle3DError}
                   />
                 )}
                 {imageName ? (
@@ -410,6 +419,7 @@ export const NFTPreview = React.memo(
                     tokenId={tokenId}
                     width={500}
                     preview={false}
+                    on3DError={handle3DError}
                   />
                 )
               ) : isFirstTime ? (

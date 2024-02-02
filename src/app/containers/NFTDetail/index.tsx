@@ -310,7 +310,7 @@ export function NFTDetail(props) {
               tokenId={id}
               type="primary"
               enable3D={true}
-              metadata={data.detail?.metadata}
+              nftInfo={data}
             />
           </Card>
 

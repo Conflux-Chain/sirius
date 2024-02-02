@@ -1601,6 +1601,10 @@
         "detail": "The full node internal error.",
         "tip": "Submit a new transaction to update the tx pool."
       }
+    },
+    "action": {
+      "title": "Transaction Action",
+      "tooltip": "Highlighted events of the transaction."
     }
   },
   "block": {
@@ -1806,7 +1810,8 @@
     "button": {
       "connectWallet": "Connect Wallet",
       "nPending": "{{count}} Pending",
-      "wrongNetwork": "Wrong Network"
+      "wrongNetwork": "Wrong Network",
+      "switchNetwork": "Switch Network"
     },
     "modal": {
       "title": "Connect to a wallet",

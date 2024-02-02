@@ -37,6 +37,7 @@ interface Props {
   contractCreated?: string; // contract creation address
   maxWidth?: number; // address max width for view, default 200/170 for default, 400 for full
   isFull?: boolean; // show full address, default false
+  isFullNameTag?: boolean; // show full nametag
   link?: boolean; // add link to address, default true
   isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
   suffixAddressSize?: number; // suffix address size, default is 8
@@ -122,6 +123,7 @@ const RenderAddress = ({
   content,
   link = true,
   isFull = false,
+  isFullNameTag = false,
   style = {},
   maxWidth,
   suffixSize = defaultPCSuffixAddressSize,
@@ -152,7 +154,9 @@ const RenderAddress = ({
         <LinkWrapper
           style={style}
           href={link}
-          maxwidth={isFull ? 430 : maxWidth}
+          maxwidth={
+            (content || alias) && isFullNameTag ? 1000 : isFull ? 430 : maxWidth
+          }
           alias={alias}
           aftercontent={aftercontent}
         >
@@ -167,7 +171,14 @@ const RenderAddress = ({
         <LinkWrapper
           style={style}
           href={href}
-          maxwidth={isFull ? 430 : maxWidth}
+          maxwidth={
+            (content || ENSLabel || nametag || addressLabel || alias) &&
+            isFullNameTag
+              ? 1000
+              : isFull
+              ? 430
+              : maxWidth
+          }
           alias={alias}
           aftercontent={aftercontent}
         >
@@ -186,7 +197,14 @@ const RenderAddress = ({
     text = (
       <PlainWrapper
         style={style}
-        maxwidth={isFull ? 430 : maxWidth}
+        maxwidth={
+          (content || ENSLabel || nametag || addressLabel || alias) &&
+          isFullNameTag
+            ? 1000
+            : isFull
+            ? 430
+            : maxWidth
+        }
         alias={alias}
         aftercontent={aftercontent}
       >
@@ -264,6 +282,7 @@ export const AddressContainer = withTranslation()(
       contractCreated,
       maxWidth,
       isFull = false,
+      isFullNameTag = false,
       link = true,
       isMe = false,
       suffixAddressSize,
@@ -353,6 +372,7 @@ export const AddressContainer = withTranslation()(
             hrefAddress: fContractCreated,
             link,
             isFull,
+            isFullNameTag,
             maxWidth: 160,
             suffixSize,
             prefix: (
@@ -407,6 +427,7 @@ export const AddressContainer = withTranslation()(
           content: alias ? formatString(alias, 'tag') : value,
           link: false,
           isFull,
+          isFullNameTag,
           maxWidth,
           suffixSize,
           style: { color: '#e00909' },
@@ -479,6 +500,7 @@ export const AddressContainer = withTranslation()(
           nametag: officalNametag,
           link,
           isFull,
+          isFullNameTag,
           maxWidth,
           suffixSize,
           prefix: showIcon ? (
@@ -516,6 +538,7 @@ export const AddressContainer = withTranslation()(
           nametag: officalNametag,
           link,
           isFull,
+          isFullNameTag,
           maxWidth,
           suffixSize,
           suffix: (
@@ -542,6 +565,7 @@ export const AddressContainer = withTranslation()(
         nametag: officalNametag,
         link,
         isFull,
+        isFullNameTag,
         maxWidth,
         suffixSize,
         prefix: prefixIcon,
@@ -557,6 +581,7 @@ export const PoSAddressContainer = withTranslation()(
       alias,
       maxWidth,
       isFull = false,
+      isFullNameTag,
       link = true,
       isMe = false,
       suffixAddressSize,
@@ -584,6 +609,7 @@ export const PoSAddressContainer = withTranslation()(
             : formatString(value, 'posAddress'),
           link: false,
           isFull,
+          isFullNameTag,
           maxWidth,
           suffixSize,
           style: { color: '#e00909' },
@@ -610,6 +636,7 @@ export const PoSAddressContainer = withTranslation()(
           alias,
           link,
           isFull,
+          isFullNameTag,
           maxWidth,
           suffixSize,
           suffix: (
@@ -635,6 +662,7 @@ export const PoSAddressContainer = withTranslation()(
         alias,
         link,
         isFull,
+        isFullNameTag,
         maxWidth,
         suffixSize,
         type: 'pos',

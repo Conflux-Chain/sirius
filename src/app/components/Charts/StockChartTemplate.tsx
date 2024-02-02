@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
+import Exporting from 'highcharts/modules/exporting';
+import ExportData from 'highcharts/modules/export-data';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
@@ -15,6 +17,8 @@ import styled from 'styled-components/macro';
 
 // @ts-ignore
 window.dayjs = dayjs;
+Exporting(Highcharts);
+ExportData(Highcharts);
 
 interface Props {
   plain?: boolean;
@@ -318,6 +322,8 @@ export function StockChartTemplate({
               'downloadJPEG',
               'downloadPDF',
               'downloadSVG',
+              'downloadCSV',
+              'downloadXLS',
             ],
           },
         },

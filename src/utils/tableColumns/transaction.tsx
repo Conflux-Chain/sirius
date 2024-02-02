@@ -16,7 +16,10 @@ import {
 } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { ColumnAge } from './utils';
-import { reqTransactionDetail } from 'utils/httpRequest';
+import {
+  reqTransactionDetail,
+  reqTransactionEventlogs,
+} from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
@@ -51,6 +54,7 @@ export const TxnHashRenderComponent = ({
     status?: string;
     address?: string;
   }>({});
+  const [eventlogs, setEventlogs] = useState<any>([]);
   const bp = useBreakpoint();
 
   const handleClick = () => {
@@ -65,6 +69,12 @@ export const TxnHashRenderComponent = ({
     ).then(body => {
       setTxnDetail(body);
       setLoading(false);
+    });
+    reqTransactionEventlogs({
+      transactionHash: hash,
+      aggregate: false,
+    }).then(body => {
+      setEventlogs(body);
     });
   };
 
@@ -90,7 +100,9 @@ export const TxnHashRenderComponent = ({
                     style={{ width: '25rem', height: '20rem' }}
                   ></SkeletonContainer>
                 ) : (
-                  <Overview data={{ ...txnDetail, status: innerStatus }} />
+                  <Overview
+                    data={{ ...txnDetail, ...eventlogs, status: innerStatus }}
+                  />
                 )}
               </>
             }
