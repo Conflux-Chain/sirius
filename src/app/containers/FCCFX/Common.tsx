@@ -14,7 +14,10 @@ import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.
 import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
 import { abi as fcABI } from 'utils/contract/FC.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { provider } from '@cfxjs/use-wallet-react/conflux/Fluent';
+import {
+  completeDetect,
+  provider,
+} from '@cfxjs/use-wallet-react/conflux/Fluent';
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;
@@ -124,6 +127,9 @@ export const CFX = new SDK.Conflux({
 if (provider) {
   CFX.provider = provider;
 }
+completeDetect().then(() => {
+  CFX.provider = provider;
+});
 
 export const fcExchangeContract = CFX.Contract({
   address: FC_EXCHANGE_ADDRESS,
