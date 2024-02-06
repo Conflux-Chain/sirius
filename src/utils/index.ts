@@ -1248,6 +1248,9 @@ type NestedObject = {
 };
 export const convertBigNumbersToStrings = (input: NestedArray) => {
   return input.map(item => {
+    if (item instanceof Uint8Array) {
+      return item;
+    }
     if (Array.isArray(item)) {
       return convertBigNumbersToStrings(item);
     } else if (
