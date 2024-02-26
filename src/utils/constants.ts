@@ -30,7 +30,9 @@ export const IS_TESTNET =
   window.location.hostname.includes('testnet');
 
 export const IS_PRIVATENET =
-  process.env.REACT_APP_PrivateNet === 'true' || IS_TESTNET;
+  process.env.REACT_APP_PrivateNet === 'true' ||
+  window.location.hostname.startsWith('net8888') ||
+  IS_TESTNET;
 
 const RPC_URL = {
   mainnet: 'https://main.confluxrpc.com',
