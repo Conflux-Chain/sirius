@@ -934,12 +934,14 @@ const urls = {
     1029: '//www-stage.confluxscan.net',
     71: '//evmtestnet-stage.confluxscan.net',
     1030: '//evm-stage.confluxscan.net',
+    8888: '//net8888cfx.confluxscan.net',
   },
   online: {
     1: '//testnet.confluxscan',
     1029: '//confluxscan',
     71: '//evmtestnet.confluxscan',
     1030: '//evm.confluxscan',
+    8888: '//net8888cfx.confluxscan',
   },
 };
 
