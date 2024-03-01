@@ -21,6 +21,10 @@ export function Transfers({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.nft.transfers.subtitle),
     request: {
       url: OPEN_API_URLS.nftTransfers,
+      query: {
+        intervalType: 'month',
+        limit: 2000,
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
