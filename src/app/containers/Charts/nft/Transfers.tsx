@@ -8,6 +8,7 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import { xAxisCustomLable } from 'utils/hooks/useHighcharts';
 
 export function Transfers({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -47,6 +48,7 @@ export function Transfers({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        ...xAxisCustomLable,
       },
       yAxis: [
         {
@@ -86,6 +88,9 @@ export function Transfers({ preview = false }: ChildProps) {
         baseSeries: 1,
         series: {
           color: '#7cb5ec',
+        },
+        xAxis: {
+          ...xAxisCustomLable,
         },
       },
     },
