@@ -642,11 +642,11 @@
       },
       "assets": {
         "title": "NFT Assets",
-        "subtitle": "The monthly amount and total amount of NFT assets.",
-        "yAxisTitle": "Monthly Amount",
-        "seriesName": "Monthly Amount",
-        "yAxisTitle2": "Total Amount",
-        "seriesName2": "Total Amount"
+        "subtitle": "The growth and cumulative amount of NFT assets.",
+        "yAxisTitle": "Growth Amount",
+        "seriesName": "Growth Amount",
+        "yAxisTitle2": "Cumulative Amount",
+        "seriesName2": "Cumulative Amount"
       },
       "holders": {
         "title": "NFT Holders",
@@ -656,19 +656,19 @@
       },
       "contracts": {
         "title": "NFT Contracts",
-        "subtitle": "The monthly amount and total amount of NFT contracts.",
-        "yAxisTitle": "Monthly Amount",
-        "seriesName": "Monthly Amount",
-        "yAxisTitle2": "Total Amount",
-        "seriesName2": "Total Amount"
+        "subtitle": "The growth and cumulative amount of NFT contracts.",
+        "yAxisTitle": "Growth Amount",
+        "seriesName": "Growth Amount",
+        "yAxisTitle2": "Cumulative Amount",
+        "seriesName2": "Cumulative Amount"
       },
       "transfers": {
         "title": "NFT Transfers",
-        "subtitle": "The monthly count and total count of NFT transfers.",
-        "yAxisTitle": "Monthly Count",
-        "seriesName": "Monthly Count",
-        "yAxisTitle2": "Total Count",
-        "seriesName2": "Total Count"
+        "subtitle": "The growth and cumulative amount of NFT transfers.",
+        "yAxisTitle": "Growth Amount",
+        "seriesName": "Growth Amount",
+        "yAxisTitle2": "Cumulative Amount",
+        "seriesName2": "Cumulative Amount"
       }
     },
     "crossSpace": {

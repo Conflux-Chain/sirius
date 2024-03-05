@@ -42,6 +42,7 @@ interface ScopeType {
   min?: ScopeItem[];
   hour?: ScopeItem[];
   day: ScopeItem[];
+  month?: ScopeItem[];
 }
 
 export interface ChildProps {
@@ -120,6 +121,20 @@ const scope: ScopeType = {
       limit: 2000,
     },
   ],
+  month: [
+    {
+      label: '6m',
+      limit: 6,
+    },
+    {
+      label: '1y',
+      limit: 12,
+    },
+    {
+      label: 'All',
+      limit: 2000,
+    },
+  ],
 };
 export function StockChartTemplate({
   plain,
@@ -136,8 +151,10 @@ export function StockChartTemplate({
     list: [],
   });
   const [intervalScope, setIntervalScope] = useState<ScopeType>();
-  const [intervalType, setIntervalType] = useState<string>(defaultIntervalType);
-  const [limit, setLimit] = useState(defaultLimit);
+  const [intervalType, setIntervalType] = useState<string>(
+    request?.query?.intervalType || defaultIntervalType,
+  );
+  const [limit, setLimit] = useState(request?.query?.limit || defaultLimit);
   const [customLimit, setCustomLimit] = useState<boolean>(false);
 
   useHighcharts(chart);
@@ -161,7 +178,6 @@ export function StockChartTemplate({
       const data = await reqChartData({
         url: request.url,
         query: {
-          ...request.query,
           limit: preview ? 30 : limit,
           intervalType: intervalType,
         },
@@ -173,21 +189,23 @@ export function StockChartTemplate({
       // @ts-ignore
       chart.current?.chart.hideLoading();
     },
-    [request.url, request.query, preview],
+    [request.url, preview],
   );
 
   useEffect(() => {
-    getChartData(defaultIntervalType, defaultLimit);
+    getChartData(intervalType, limit);
     if (
       ['/statistics/mining', '/statistics/tps'].some(str =>
         request.url.includes(str),
       )
     ) {
       setIntervalScope(scope);
+    } else if (['/statistics/nft'].some(str => request.url.includes(str))) {
+      setIntervalScope({ day: scope.day, month: scope.month });
     } else {
       setIntervalScope({ day: scope.day });
     }
-  }, [preview, request.query, request.url, getChartData]);
+  }, [request.url, getChartData, intervalType, limit]);
 
   const opts = lodash.merge(
     {

@@ -8,6 +8,7 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import { xAxisCustomLable } from 'utils/hooks/useHighcharts';
 
 export function Transfers({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -21,6 +22,10 @@ export function Transfers({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.nft.transfers.subtitle),
     request: {
       url: OPEN_API_URLS.nftTransfers,
+      query: {
+        intervalType: 'month',
+        limit: 2000,
+      },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
@@ -43,6 +48,7 @@ export function Transfers({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        ...xAxisCustomLable,
       },
       yAxis: [
         {
@@ -82,6 +88,9 @@ export function Transfers({ preview = false }: ChildProps) {
         baseSeries: 1,
         series: {
           color: '#7cb5ec',
+        },
+        xAxis: {
+          ...xAxisCustomLable,
         },
       },
     },

@@ -88,6 +88,19 @@ const xAxisData = {
   },
 };
 
+export const xAxisCustomLable = {
+  labels: {
+    formatter: data => {
+      const date = new Date(data.value);
+      if (date.getMonth() === 0) {
+        return Highcharts.dateFormat('%Y', data.value);
+      } else {
+        return Highcharts.dateFormat("%e '%b", data.value);
+      }
+    },
+  },
+};
+
 export const useHighcharts = (chart?) => {
   const { i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
