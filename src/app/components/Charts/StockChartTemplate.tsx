@@ -199,7 +199,7 @@ export function StockChartTemplate({
         request.url.includes(str),
       )
     ) {
-      setIntervalScope(scope);
+      setIntervalScope({ min: scope.min, hour: scope.hour, day: scope.day });
     } else if (['/statistics/nft'].some(str => request.url.includes(str))) {
       setIntervalScope({ day: scope.day, month: scope.month });
     } else {
