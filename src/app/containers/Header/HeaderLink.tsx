@@ -108,7 +108,7 @@ const Menu = styled.div<{ name?: string }>`
     &.level-2.matched {
       color: white;
       background-color: var(--theme-color-blue0);
-      :hover {
+      &:hover {
         color: white;
       }
 

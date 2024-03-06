@@ -155,26 +155,26 @@ const Brand = styled.div`
         transition-timing-function: ease-out;
         width: 18px;
 
-        :nth-child(1) {
+        &:nth-child(1) {
           top: calc(50% - 6px);
         }
-        :nth-child(2) {
+        &:nth-child(2) {
           top: calc(50% - 1px);
         }
-        :nth-child(3) {
+        &:nth-child(3) {
           top: calc(50% + 4px);
         }
       }
     }
     .navbar-burger.is-active {
       span {
-        :nth-child(1) {
+        &:nth-child(1) {
           transform: translateY(5px) rotate(45deg);
         }
-        :nth-child(2) {
+        &:nth-child(2) {
           opacity: 0;
         }
-        :nth-child(3) {
+        &:nth-child(3) {
           transform: translateY(-5px) rotate(-45deg);
         }
       }

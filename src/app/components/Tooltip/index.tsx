@@ -49,7 +49,7 @@ const TooltipWrapper = styled.span`
 
   a {
     color: #00acff;
-    :hover {
+    &:hover {
       color: #3dc0ff;
     }
   }
