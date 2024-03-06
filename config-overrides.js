@@ -71,6 +71,11 @@ module.exports = function (config, mode) {
               },
             },
           },
+          {
+            test: /\.mjs$/,
+            include: /node_modules\/@mosshqqmosi/,
+            type: 'javascript/auto',
+          },
         ],
       },
     });
@@ -90,6 +95,11 @@ module.exports = function (config, mode) {
               plugins: ['@babel/plugin-transform-class-properties'],
             },
           },
+        },
+        {
+          test: /\.mjs$/,
+          include: /node_modules\/@mosshqqmosi/,
+          type: 'javascript/auto',
         },
       ],
     },
