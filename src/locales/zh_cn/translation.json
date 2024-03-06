@@ -641,11 +641,11 @@
       },
       "assets": {
         "title": "数字藏品资产",
-        "subtitle": "数字藏品资产的增长量和累计数量。",
+        "subtitle": "数字藏品资产的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       },
       "holders": {
         "title": "数字藏品持有人",
@@ -655,19 +655,19 @@
       },
       "contracts": {
         "title": "数字藏品合约",
-        "subtitle": "数字藏品合约的增长量和累计数量。",
+        "subtitle": "数字藏品合约的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       },
       "transfers": {
         "title": "数字藏品交易",
-        "subtitle": "数字藏品交易的增长量和累计数量。",
+        "subtitle": "数字藏品交易的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       }
     },
     "crossSpace": {

@@ -8,7 +8,7 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
-import { xAxisCustomLable } from 'utils/hooks/useHighcharts';
+import { xAxisCustomLabelYear } from 'utils/hooks/useHighcharts';
 
 export function Holders({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -46,7 +46,7 @@ export function Holders({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
-        ...xAxisCustomLable,
+        ...xAxisCustomLabelYear,
       },
       yAxis: {
         title: {
@@ -67,7 +67,7 @@ export function Holders({ preview = false }: ChildProps) {
       ],
       navigator: {
         xAxis: {
-          ...xAxisCustomLable,
+          ...xAxisCustomLabelYear,
         },
       },
     },

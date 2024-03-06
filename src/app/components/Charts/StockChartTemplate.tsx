@@ -349,6 +349,7 @@ export function StockChartTemplate({
       subtitle: {
         text: getChartsSubTitle(t(translations.highcharts.subtitle)),
       },
+      intervalType: { value: intervalType },
     },
     options,
   );
