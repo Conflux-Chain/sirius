@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip as UITooltip } from '@cfxjs/react-ui';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { TooltipProps } from '@cfxjs/react-ui/dist/tooltip/tooltip';
 import clsx from 'clsx';
 import { media } from 'styles/media';

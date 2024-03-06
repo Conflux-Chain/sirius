@@ -2,7 +2,7 @@ import React from 'react';
 import imgInfo from 'images/info.svg';
 import { Tooltip } from '@cfxjs/antd';
 import { Image } from '@cfxjs/antd';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const InfoIconWithTooltip = ({
   info,

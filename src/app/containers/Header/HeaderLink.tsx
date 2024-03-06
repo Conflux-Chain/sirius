@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, ReactNode, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
@@ -154,6 +154,7 @@ export const HeaderLink: React.FC<{
   afterClick?: any;
   level: number;
   plain?: boolean;
+  children?: React.ReactNode;
 }> = ({
   className,
   href,

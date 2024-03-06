@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { EventLogs } from './EventLogs/Loadable';
 import { TabLabel } from 'app/components/TabsTablePanel/Label';
 import { reqTransactionDetail } from 'utils/httpRequest';

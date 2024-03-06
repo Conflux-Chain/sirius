@@ -11,7 +11,7 @@ import { JsonDecode } from './JsonDecode';
 import { GeneralDecode } from './GeneralDecode';
 import { OptimizationDecode } from './OptimizationDecode';
 import { UTF8 } from './UTF8';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import imgWarning from 'images/warning.png';
 

@@ -63,7 +63,7 @@ module.exports = function (config, mode) {
           ...config.module.rules,
           {
             test: /\.js?$/,
-            include: /(node_modules\/@cfxjs\/use-wallet-react)/,
+            include: /node_modules\/(@cfxjs\/use-wallet-react)|(react-helmet-async)/,
             use: {
               loader: 'babel-loader',
               options: {
@@ -83,7 +83,7 @@ module.exports = function (config, mode) {
         ...config.module.rules,
         {
           test: /\.js?$/,
-          include: /(node_modules\/@cfxjs\/use-wallet-react)/,
+          include: /node_modules\/(@cfxjs\/use-wallet-react)|(react-helmet-async)/,
           use: {
             loader: 'babel-loader',
             options: {

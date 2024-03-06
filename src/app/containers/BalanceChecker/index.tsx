@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '../../components/Card';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Button, Divider, Form, Input, Radio } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';

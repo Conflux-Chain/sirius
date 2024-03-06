@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useCallback } from 'react';
 import { formatAddress, formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { decodeData, filterByTokenAddress, MultiAction } from './minibus';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { reqContractAndToken, reqNametag } from 'utils/httpRequest';
 import { useNametagCacheStore } from 'utils/store';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { AddressLabel } from './AddressLabel';

@@ -6,7 +6,7 @@
 import React from 'react';
 import { translations } from 'locales/i18n';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import iconWarning from 'images/warning.png';
 import { Image, Tooltip } from '@cfxjs/antd';
 

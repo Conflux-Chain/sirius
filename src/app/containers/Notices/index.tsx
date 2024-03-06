@@ -5,7 +5,7 @@ import updateNotification from 'images/notice/updateNotification.png';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { media } from 'styles/media';
 
 export const noticeInfo = {

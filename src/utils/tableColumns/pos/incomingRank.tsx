@@ -6,7 +6,7 @@ import lodash from 'lodash';
 import { fromDripToCfx } from 'utils';
 import { Text } from 'app/components/Text/Loadable';
 import { PlusOutlined } from '@ant-design/icons';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const totalIncoming = {
   title: (
@@ -60,7 +60,9 @@ export const day = (number: number | 'all') => {
             {t => t(translations.pos.incomingRank.rewardRank.all)}
           </Translation>
         ) : (
+          // @ts-ignore
           <Trans i18nKey="pos.incomingRank.rewardRank.day" count={number}>
+            {/* @ts-ignore */}
             {{ number }} Day
           </Trans>
         )}

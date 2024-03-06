@@ -3,7 +3,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
 import { Link, useMessages } from '@cfxjs/react-ui';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from 'app/components/FileUpload';
 import { translations } from 'locales/i18n';

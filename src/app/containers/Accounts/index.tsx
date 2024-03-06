@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Select } from 'app/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';

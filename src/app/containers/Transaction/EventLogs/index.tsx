@@ -9,7 +9,7 @@ import { Card } from 'app/components/Card/Loadable';
 import { Empty } from 'app/components/Empty/Loadable';
 import { CFX } from 'utils/constants';
 import { Description } from 'app/components/Description/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import _ from 'lodash';
 import SkeletonContainer from 'app/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';

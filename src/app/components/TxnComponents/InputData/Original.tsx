@@ -15,6 +15,7 @@ export const Original = ({ data }: Props) => {
         paddingBottom: 0,
       }}
     >
+      {/* @ts-ignore */}
       <Text>{data}</Text>
     </Wrapper>
   );

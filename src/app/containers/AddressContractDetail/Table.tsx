@@ -25,7 +25,7 @@ import {
 } from 'app/containers/Transactions/Loadable';
 import { MinedBlocks } from 'app/containers/Blocks/Loadable';
 import { NFTAsset } from 'app/containers/NFTAsset/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { ContractStatus } from '../AddressContractDetail/ContractStatus';
 
 export function Table({ address, addressInfo }) {
