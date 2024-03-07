@@ -349,7 +349,7 @@
   },
   "addressDetail": {
     "minedBlocks": "挖出区块",
-    "NFTAsset": "数字资产资产",
+    "NFTAsset": "数字藏品资产",
     "title": "地址详情",
     "content": "地址详情",
     "staked": "质押 CFX",
@@ -634,34 +634,34 @@
         "transfers": "交易"
       },
       "assets": {
-        "title": "数字资产资产",
-        "subtitle": "数字藏品资产的增长量和累计数量。",
+        "title": "数字藏品资产",
+        "subtitle": "数字藏品资产的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       },
       "holders": {
-        "title": "数字资产持有人",
-        "subtitle": "数字资产持有人的总数。",
+        "title": "数字藏品持有人",
+        "subtitle": "数字藏品持有人的总数。",
         "yAxisTitle": "总数",
         "seriesName": "持有人"
       },
       "contracts": {
-        "title": "数字资产合约",
-        "subtitle": "数字藏品合约的增长量和累计数量。",
+        "title": "数字藏品合约",
+        "subtitle": "数字藏品合约的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       },
       "transfers": {
-        "title": "数字资产交易",
-        "subtitle": "数字藏品交易的增长量和累计数量。",
+        "title": "数字藏品交易",
+        "subtitle": "数字藏品交易的增长量和累计总量。",
         "yAxisTitle": "增长量",
         "seriesName": "增长量",
         "yAxisTitle2": "累计总量",
-        "seriesName2": "累计数量"
+        "seriesName2": "累计总量"
       }
     },
     "crossSpace": {

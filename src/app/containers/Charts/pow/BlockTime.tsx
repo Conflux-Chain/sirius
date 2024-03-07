@@ -8,10 +8,13 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import {
+  xAxisCustomLabelHour,
+  tooltipCustomLabel,
+} from 'utils/hooks/useHighcharts';
 
 export function BlockTime({ preview = false }: ChildProps) {
   const { t } = useTranslation();
-
   const props = {
     preview: preview,
     name: 'blocktime',
@@ -37,6 +40,7 @@ export function BlockTime({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        ...xAxisCustomLabelHour,
       },
       yAxis: {
         title: {
@@ -45,6 +49,7 @@ export function BlockTime({ preview = false }: ChildProps) {
       },
       tooltip: {
         valueDecimals: 2,
+        ...tooltipCustomLabel,
       },
       series: [
         {
@@ -57,6 +62,11 @@ export function BlockTime({ preview = false }: ChildProps) {
           },
         },
       ],
+      navigator: {
+        xAxis: {
+          ...xAxisCustomLabelHour,
+        },
+      },
     },
   };
 

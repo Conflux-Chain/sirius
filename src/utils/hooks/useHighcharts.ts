@@ -88,7 +88,7 @@ const xAxisData = {
   },
 };
 
-export const xAxisCustomLable = {
+export const xAxisCustomLabelYear = {
   labels: {
     formatter: data => {
       const date = new Date(data.value);
@@ -99,6 +99,58 @@ export const xAxisCustomLable = {
       }
     },
   },
+};
+export const xAxisCustomLabelHour = {
+  labels: {
+    formatter: data => {
+      const date = new Date(data.value);
+      const intervalType = data.chart.options.intervalType.value;
+      if (intervalType === 'min' || intervalType === 'hour') {
+        if (date.getUTCHours() === 0 && date.getUTCMinutes() === 0) {
+          return Highcharts.dateFormat("%e '%b", data.value);
+        } else {
+          return Highcharts.dateFormat('%H:%M', data.value);
+        }
+      } else {
+        return Highcharts.dateFormat("%e '%b", data.value);
+      }
+    },
+  },
+};
+
+export const tooltipCustomLabel = {
+  split: false,
+  useHTML: true,
+  formatter: data => {
+    const chart = data.chart;
+    const point = chart.hoverPoint;
+    const series = point.series;
+    const intervalType = chart.options.intervalType.value;
+
+    const timeRules =
+      intervalType === 'min' || intervalType === 'hour'
+        ? '%H:%M, %a %d, %b %Y (UTC)'
+        : '%a %e, %b %Y (UTC)';
+    const header = Highcharts.dateFormat(timeRules, point.x);
+    let pointFormat = `<table>
+    <tr>
+      <th colspan="2" style="font-weight: normal;">${header}</th>
+    </tr>
+    <tr style="border-bottom: 1px solid #ccc;">
+      <th style="padding-bottom: 5px;"></th>
+    </tr>
+    <tr><td style="padding-top: 5px;"></td></tr>
+    <tr>
+      <td style="color: ${series.color}; padding-right: 10px;">[ ${series.name} ]</td>
+      <td style="text-align: right"><b>${point.y}</b></td>  
+    </tr>
+    </table>
+   `;
+    return pointFormat;
+  },
+
+  shape: 'square',
+  shared: true,
 };
 
 export const useHighcharts = (chart?) => {
