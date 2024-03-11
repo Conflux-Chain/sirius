@@ -8,6 +8,10 @@ import {
 } from 'app/components/Charts/StockChartTemplate';
 import { OPEN_API_URLS } from 'utils/constants';
 import { Wrapper } from './Wrapper';
+import {
+  xAxisCustomLabelHour,
+  tooltipCustomLabel,
+} from 'utils/hooks/useHighcharts';
 
 export function TPS({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -39,6 +43,7 @@ export function TPS({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        ...xAxisCustomLabelHour,
       },
       yAxis: {
         title: {
@@ -47,6 +52,7 @@ export function TPS({ preview = false }: ChildProps) {
       },
       tooltip: {
         valueDecimals: 2,
+        ...tooltipCustomLabel,
       },
       series: [
         {
@@ -54,6 +60,11 @@ export function TPS({ preview = false }: ChildProps) {
           name: `<span>${t(translations.highcharts.pow.tps.seriesName)}</span>`,
         },
       ],
+      navigator: {
+        xAxis: {
+          ...xAxisCustomLabelHour,
+        },
+      },
     },
   };
 

@@ -47,7 +47,6 @@ export function ChartTemplate({
       chart.current?.chart.showLoading();
 
       const limit = preview ? 30 : 100;
-
       const data = await reqChartData({
         url: request.url,
         query: request.query || {
