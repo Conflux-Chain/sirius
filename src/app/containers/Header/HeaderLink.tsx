@@ -390,7 +390,7 @@ const WrappLink = styled.span`
         color: #fff !important;
         background-color: var(--theme-color-blue0);
       }
-      :hover:not(.matched) {
+      &:hover:not(.matched) {
         color: #fff !important;
         background-color: var(--theme-color-blue0);
       }
@@ -468,7 +468,7 @@ const WrappLink = styled.span`
       color: #aab9eb;
       padding-top: 0.43rem;
       padding-bottom: 0.43rem;
-      :hover {
+      &:hover {
         color: #aab9eb;
       }
       &.level-0 {
