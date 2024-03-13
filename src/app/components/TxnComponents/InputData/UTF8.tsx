@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from '@cfxjs/react-ui';
-import { hex2utf8 } from 'utils';
+import { hex2utf8 } from 'sirius-next/packages/common/dist/utils';
 import { Wrapper } from './Common';
 
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'react-json-pretty/themes/monikai.css';
-import { hex2utf8 } from '../../../utils';
+import { hex2utf8 } from 'sirius-next/packages/common/dist/utils';
 import ReactJson from 'react-json-view';
 import styled from 'styled-components';
 import { Text } from '@cfxjs/react-ui';

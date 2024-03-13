@@ -5,12 +5,12 @@ import {
   isBlockHash,
   isHash,
   isEpochNumber,
-  tranferToLowerCase,
   formatAddress,
   getAddressInfo,
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
+import { tranferToLowerCase } from 'sirius-next/packages/common/dist/utils';
 import { CONTRACTS, DEFAULT_NETWORK_IDS } from '../constants';
 import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { trackEvent } from '../ga';
