@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { monospaceFont } from 'styles/variable';

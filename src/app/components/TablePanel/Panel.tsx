@@ -5,7 +5,7 @@ import { Table, Pagination, Skeleton } from '@cfxjs/react-ui';
 import { PaginationProps } from '@cfxjs/react-ui/dist/pagination/pagination';
 import { Props as TableProps } from '@cfxjs/react-ui/dist/table/table';
 import clsx from 'clsx';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Card } from '../Card';
 import { media, useBreakpoint } from 'styles/media';
 import { useTableData } from '../TabsTablePanel';
@@ -212,7 +212,7 @@ export const TablePanel = ({
   const showPagination =
     pagination !== false && numberCacheTotal > numberPageSize;
 
-  let tableHeader = outerTableHeader;
+  let tableHeader: TablePanelType['tableHeader'] = outerTableHeader;
   if (typeof tableHeader === 'function') {
     // add related params to tableHeader
     tableHeader = tableHeader({
@@ -221,7 +221,7 @@ export const TablePanel = ({
     });
   }
 
-  let tableFooter = outerTableFooter;
+  let tableFooter: TablePanelType['tableFooter'] = outerTableFooter;
   if (typeof tableFooter === 'function') {
     // add related params to tableFooter
     tableFooter = tableFooter({});

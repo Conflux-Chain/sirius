@@ -4,7 +4,7 @@ import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';

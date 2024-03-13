@@ -8,7 +8,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
 import { Link } from 'app/components/Link/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { media } from 'styles/media';
 import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';

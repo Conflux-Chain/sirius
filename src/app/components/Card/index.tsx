@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card as UICard } from '@cfxjs/react-ui';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { CardProps } from '@cfxjs/react-ui/dist/card/card';
 import clsx from 'clsx';
 import { Spin } from '@cfxjs/antd';

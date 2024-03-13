@@ -21,6 +21,7 @@ export const UTF8 = ({ data }: Props) => {
         paddingBottom: 0,
       }}
     >
+      {/* @ts-ignore */}
       <Text>{str}</Text>
     </Wrapper>
   );

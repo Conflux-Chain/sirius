@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { CFX_TOKEN_TYPES } from 'utils/constants';

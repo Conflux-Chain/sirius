@@ -10,7 +10,7 @@ import { Notification } from '@cfxjs/react-ui/dist/use-notifications/use-notific
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 import CheckInCircleFill from '@zeit-ui/react-icons/checkInCircleFill';
 import InfoFill from '@zeit-ui/react-icons/infoFill';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Collapse } from '@cfxjs/antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;

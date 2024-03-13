@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Select } from '../../../components/Select';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';

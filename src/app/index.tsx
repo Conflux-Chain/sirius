@@ -16,7 +16,7 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import BigNumber from 'bignumber.js';
 import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
@@ -358,6 +358,7 @@ export function App() {
             errorRetryCount: 0,
           }}
         >
+          {/* @ts-ignore */}
           <BrowserRouter>
             <CfxProvider
               theme={{

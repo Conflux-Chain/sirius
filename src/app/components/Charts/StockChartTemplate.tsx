@@ -13,7 +13,7 @@ import { useHighcharts } from 'utils/hooks/useHighcharts';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getChartsSubTitle } from 'utils';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 // @ts-ignore
 window.dayjs = dayjs;

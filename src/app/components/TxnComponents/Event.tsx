@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export const Event = ({ fnName, args }) => {
   // TODO how to display when fnName is empty, such as call a non-exist contract function

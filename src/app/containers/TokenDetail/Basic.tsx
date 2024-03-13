@@ -2,7 +2,7 @@
  * TokenDetail
  */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from 'app/components/List/Loadable';

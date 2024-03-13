@@ -8,7 +8,7 @@ import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { Card } from 'app/components/Card/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { ConnectButton } from 'app/components/ConnectWallet';
 import { Select } from 'app/components/Select';
 import { Input, Button } from '@cfxjs/react-ui';

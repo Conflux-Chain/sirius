@@ -5,7 +5,7 @@
  */
 
 import React, { memo } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { Search } from './Search';

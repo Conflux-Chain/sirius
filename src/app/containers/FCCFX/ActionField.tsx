@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -183,7 +183,7 @@ export const ActionField = ({
         <div>
           <ConnectButton>
             <Button
-              type={disabled ? '' : 'primary'}
+              type={disabled ? undefined : 'primary'}
               onClick={handleButtonClick}
               disabled={disabled}
             >

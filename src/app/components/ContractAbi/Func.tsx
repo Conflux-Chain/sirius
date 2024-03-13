@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import lodash from 'lodash';

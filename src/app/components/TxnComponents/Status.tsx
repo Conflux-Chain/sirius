@@ -4,7 +4,7 @@
  *
  */
 import React, { useMemo } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';

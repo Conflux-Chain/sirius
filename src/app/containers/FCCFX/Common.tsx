@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Tooltip } from '@cfxjs/antd';
 import imgInfo from 'images/info.svg';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import {
   RPC_SERVER,
   NETWORK_ID,

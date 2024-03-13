@@ -4,7 +4,7 @@ import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { message } from '@cfxjs/antd';

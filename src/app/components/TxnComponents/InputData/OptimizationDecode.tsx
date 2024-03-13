@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { disassembleEvent } from '../util';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { reqContractAndToken } from 'utils/httpRequest';
 import { formatAddress } from 'utils';
 import _ from 'lodash';
