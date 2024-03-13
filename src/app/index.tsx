@@ -286,6 +286,13 @@ export function App() {
               ),
             ),
           );
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.apis,
+            JSON.stringify({
+              openAPIHost: resp?.OPEN_API_URL,
+              rpcHost: resp?.CONFURA_URL,
+            }),
+          );
           // contract name tag config, hide for temp
           // localStorage.setItem(
           //   LOCALSTORAGE_KEYS_MAP.contractNameTag,
