@@ -84,7 +84,8 @@
     "ts-node": "8.8.2",
     "typescript": "4.5.4",
     "webfontloader": "1.6.28",
-    "zustand": "4.1.4"
+    "zustand": "4.1.4",
+    "sirius-next": "git+https://github.com/Conflux-Chain/sirius-next.git#main"
   },
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider react-app-rewired start",

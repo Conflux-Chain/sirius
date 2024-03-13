@@ -3,7 +3,7 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { tranferToLowerCase } from 'utils';
+import { tranferToLowerCase } from 'sirius-next/packages/common/dist/utils';
 import { Search as SearchComp } from '../Search/Loadable';
 import { CONTRACTS } from 'utils/constants';
 import { ActionButton } from 'app/components/ActionButton';
