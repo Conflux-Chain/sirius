@@ -23,7 +23,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
 import './locales/i18n';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { IS_MAINNET, IS_TESTNET } from 'env';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -71,7 +71,7 @@ const brand = `
 └─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
  `;
 
-if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+if (IS_TESTNET) {
   console.log &&
     console.log(
       `%c 
@@ -82,7 +82,7 @@ ${brand}
 `,
       'color:#e4310c;',
     );
-} else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+} else if (IS_MAINNET) {
   console.log &&
     console.log(
       `%c 

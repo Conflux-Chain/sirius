@@ -22,7 +22,8 @@ import { Link } from '../Link';
 import { Description } from '../Description/Loadable';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
-import { IS_TESTNET, HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { IS_TESTNET } from 'env';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',

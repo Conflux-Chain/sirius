@@ -34,13 +34,13 @@ import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'app/components/AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
 import Nametag from './Nametag';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 interface RouteParams {
   address: string;
