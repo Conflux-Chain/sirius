@@ -16,7 +16,6 @@ import { History } from './History';
 import { CopyButton } from './../CopyButton';
 // import { AddressContainer } from './../../components/AddressContainer';
 import { useCheckHook } from './useCheckHook';
-import { NETWORK_ID, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 
 import iconFluent from './assets/fluent.svg';
 import iconClose from './assets/close.svg';
@@ -35,25 +34,8 @@ export const Modal = ({
 }: Modal) => {
   const { t } = useTranslation();
   const { login, authConnectStatus, accounts, installed } = usePortal();
-  const { isNetworkValid, isValid } = useCheckHook();
-  let inValidModalTip = '';
-
-  if (!isNetworkValid) {
-    if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
-      inValidModalTip = t(translations.connectWallet.modal.switchToTestnet);
-    } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
-      inValidModalTip = t(translations.connectWallet.modal.switchToMainnet);
-    } else {
-      inValidModalTip = t(
-        translations.connectWallet.modal.switchToScanNetwork,
-        {
-          networkID: NETWORK_ID,
-        },
-      );
-    }
-  } else {
-    inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
-  }
+  const { isValid } = useCheckHook();
+  let inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
 
   useEffect(() => {
     if (show) {
