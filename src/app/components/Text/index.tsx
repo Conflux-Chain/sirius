@@ -3,7 +3,7 @@ import { Text as UIText } from '@cfxjs/react-ui';
 import { Tooltip } from '@cfxjs/antd';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components';
-import { selectText } from './../../../utils';
+import { selectText } from 'sirius-next/packages/common/dist/utils';
 import clsx from 'clsx';
 import { useBreakpoint } from 'styles/media';
 
