@@ -95,6 +95,7 @@
     "start:core-devnet": "NODE_OPTIONS=--openssl-legacy-provider REACT_APP_CORE_DEVNET=true react-app-rewired start",
     "build:dev": "NODE_OPTIONS=--openssl-legacy-provider REACT_APP_DEV=true react-app-rewired build",
     "build:prod": "NODE_OPTIONS=--openssl-legacy-provider react-app-rewired build",
+    "build": "yarn build:prod",
     "build:MEASURE": "NODE_OPTIONS=--openssl-legacy-provider MEASURE=true react-app-rewired build",
     "test": "react-app-rewired  test --env=jest-environment-jsdom-sixteen",
     "test:u": "react-app-rewired  test --env=jest-environment-jsdom-sixteen --updateSnapshot",
