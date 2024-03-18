@@ -27,7 +27,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 
 import { formatTimeStamp, addIPFSGateway } from 'utils';
-import { RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import { NETWORK_ID } from 'utils/constants';
 
 import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
@@ -35,6 +35,7 @@ import { TransferModal } from './TransferModal';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
+import ENV_CONFIG from 'env';
 
 const { Text } = Typography;
 
@@ -181,7 +182,7 @@ export function NFTDetail(props) {
 
   const contract721 = useMemo(() => {
     const CFX = new SDK.Conflux({
-      url: RPC_SERVER,
+      url: ENV_CONFIG.ENV_RPC_SERVER,
       networkId: NETWORK_ID,
     });
     return CFX.Contract({
@@ -192,7 +193,7 @@ export function NFTDetail(props) {
 
   const contract1155 = useMemo(() => {
     const CFX = new SDK.Conflux({
-      url: RPC_SERVER,
+      url: ENV_CONFIG.ENV_RPC_SERVER,
       networkId: NETWORK_ID,
     });
     return CFX.Contract({

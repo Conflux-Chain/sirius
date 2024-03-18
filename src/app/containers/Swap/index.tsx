@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { TXN_ACTION, CONTRACTS, RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import { TXN_ACTION, CONTRACTS, NETWORK_ID } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
@@ -21,6 +21,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
+import ENV_CONFIG from 'env';
 
 // token decimal
 const MAX_DECIMALS = 18;
@@ -191,7 +192,7 @@ export function Swap() {
   const { addRecord } = useTxnHistory();
 
   const CFX = new SDK.Conflux({
-    url: RPC_SERVER,
+    url: ENV_CONFIG.ENV_RPC_SERVER,
     networkId: NETWORK_ID,
   });
 

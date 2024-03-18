@@ -1050,9 +1050,9 @@
     "deleteTip": "你确定要删除这些记录吗？",
     "exceedTip": "最大存储记录条数是 1000，请先删除部分记录。",
     "networks": {
-      "mainnet": "主网",
-      "testnet": "测试网",
-      "privatenet": "私有链"
+      "core_mainnet": "主网",
+      "core_testnet": "测试网",
+      "core_devnet": "私有链"
     },
     "errors": {
       "address": "请输入一个合法的{{network}}地址"

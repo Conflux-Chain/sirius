@@ -1051,9 +1051,9 @@
     "deleteTip": "Do you Want to delete these records?",
     "exceedTip": "The max records is limited to 1000, please delete some of them first.",
     "networks": {
-      "mainnet": "mainnet",
-      "testnet": "testnet",
-      "privatenet": "privatenet"
+      "core_mainnet": "mainnet",
+      "core_testnet": "testnet",
+      "core_devnet": "privatenet"
     },
     "errors": {
       "address": "Please enter a valid {{network}} address"

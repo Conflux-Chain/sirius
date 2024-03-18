@@ -28,7 +28,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
+import { NETWORK_ID, NETWORK_OPTIONS } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
@@ -141,6 +141,7 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 // @ts-ignore
 window.lodash = lodash;
 
@@ -258,6 +259,14 @@ export function App() {
     setLoading(true);
     reqProjectConfig()
       .then(resp => {
+        const networks = [...NETWORK_OPTIONS];
+        if (networks.every(n => n.id !== resp?.networkId)) {
+          networks.push({
+            url: '',
+            name: resp?.networkId,
+            id: resp?.networkId,
+          });
+        }
         // @ts-ignore
         const networkId = resp?.networkId;
         // @ts-ignore
@@ -313,6 +322,7 @@ export function App() {
         setGlobalData({
           ...globalData,
           ...(resp as object),
+          networks,
         });
 
         setLoading(false);

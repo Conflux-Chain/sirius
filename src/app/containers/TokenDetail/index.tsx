@@ -9,13 +9,14 @@ import { translations } from '../../../locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
-import { ICON_DEFAULT_TOKEN, FC_ADDRESS } from 'utils/constants';
+import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Tooltip } from '../../components/Tooltip/Loadable';
 import { media } from '../../../styles/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
+import ENV_CONFIG from 'env';
 
 interface RouteParams {
   tokenAddress: string;
@@ -69,7 +70,7 @@ export function TokenDetail() {
   //   }
   // }
 
-  const isFC = tokenAddress === FC_ADDRESS;
+  const isFC = tokenAddress === ENV_CONFIG.ENV_FC_ADDRESS;
 
   const menu = (
     <MenuWrapper>

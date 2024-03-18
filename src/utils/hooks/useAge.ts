@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 export const useAge = (format?: string) => {
   const [ageFormat, toggleAgeFormat] = useState(

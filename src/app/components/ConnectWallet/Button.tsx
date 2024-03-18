@@ -9,16 +9,16 @@ import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from '../Text/Loadable';
 import { getLabelInfo } from '../AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 import { Balance } from './Balance';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface Button {
   className?: string;
@@ -83,7 +83,9 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
                 {addressLabel}
               </StyledAddressLabelWrapper>
             );
-          } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+          } else if (
+            ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
+          ) {
             buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
           } else {
             buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');

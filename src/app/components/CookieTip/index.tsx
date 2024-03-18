@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import CookieIcon from '../../../images/cookie.svg';
 import { translations } from '../../../locales/i18n';
 import docCookies from '../../../utils/cookie';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 export const CookieTip = React.memo(() => {
   const { t } = useTranslation();

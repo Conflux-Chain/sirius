@@ -12,7 +12,7 @@ import {
   isAddress,
   isPosAddress,
   formatString,
-  getUrl,
+  getNetwork,
 } from 'utils';
 import { AlertTriangle, File, Bookmark, Hash } from '@zeit-ui/react-icons';
 import ContractIcon from 'images/contract-icon.png';
@@ -20,16 +20,13 @@ import isMeIcon from 'images/me.png';
 import InternalContractIcon from 'images/internal-contract-icon.png';
 import VerifiedIcon from 'images/verified.png';
 import { media, sizes } from 'styles/media';
-import {
-  NETWORK_TYPE,
-  NETWORK_TYPES,
-  LOCALSTORAGE_KEYS_MAP,
-} from 'utils/constants';
 import { monospaceFont } from 'styles/variable';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import ICON_ENS from 'images/logo-cns.svg';
 import { useENS, ENSInfoItemType } from 'utils/hooks/useENS';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import ENV_CONFIG, { IS_MAINNET, NETWORK_TYPES } from 'env';
 
 interface Props {
   value: string; // address value
@@ -60,10 +57,8 @@ interface Props {
 }
 
 const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth =
-  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 106 : 140;
-const defaultPCSuffixAddressSize =
-  NETWORK_TYPE === NETWORK_TYPES.mainnet ? 8 : 4;
+const defaultMobileMaxWidth = IS_MAINNET ? 106 : 140;
+const defaultPCSuffixAddressSize = IS_MAINNET ? 8 : 4;
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
@@ -392,11 +387,12 @@ export const AddressContainer = withTranslation()(
       if (isEspaceAddress) {
         const tip = t(translations.general.eSpaceAddress);
         const hexAddress = SDK.format.hexAddress(value);
-        const netowrkId =
-          NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1030' : '71';
-        const url = `${window.location.protocol}${getUrl(
-          netowrkId,
-        )}/address/${hexAddress}`;
+        const networkId =
+          ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
+            ? 1030
+            : 71;
+        const network = getNetwork(globalData.networks, networkId);
+        const url = `${window.location.protocol}${network.url}/address/${hexAddress}`;
 
         return RenderAddress({
           cfxAddress: hexAddress,

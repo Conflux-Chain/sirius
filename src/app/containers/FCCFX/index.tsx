@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
@@ -22,6 +21,7 @@ import {
 } from './Common';
 import { useBreakpoint, media } from 'styles/media';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 export function FCCFX() {
   const { accounts } = usePortal();

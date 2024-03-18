@@ -22,8 +22,8 @@ import { List } from './List';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { getCode } from 'utils/rpcRequest';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -235,8 +235,8 @@ export function AddressConverter() {
           <Input
             value={address}
             placeholder={
-              [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-                NETWORK_TYPE,
+              [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+                ENV_CONFIG.ENV_NETWORK_TYPE,
               )
                 ? 'cfx:... / cfxtest:... / hex'
                 : ''

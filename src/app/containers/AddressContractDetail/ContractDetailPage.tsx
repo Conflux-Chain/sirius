@@ -18,7 +18,6 @@ import {
 } from './AddressInfoCards';
 import { AddressMetadata, ContractMetadata, Table } from './Loadable';
 import { useContract } from 'utils/api';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import {
   Bottom,
   Head,
@@ -43,13 +42,14 @@ import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'app/components/AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
 import Nametag from './Nametag';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface RouteParams {
   address: string;
@@ -150,7 +150,9 @@ export const ContractDetailPage = memo(() => {
           )}
         </a>
       </Menu.Item>
-      {[NETWORK_TYPES.testnet, NETWORK_TYPES.mainnet].includes(NETWORK_TYPE) ? (
+      {[NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+        ENV_CONFIG.ENV_NETWORK_TYPE,
+      ) ? (
         <Menu.Item>
           <RouterLink to={`/sponsor/${address}`}>
             {t(translations.general.address.more.sponsor)}

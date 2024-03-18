@@ -13,7 +13,7 @@ import {
   publishRequestError,
 } from 'utils';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';
 import { abi as stakingAbi } from 'utils/contract/staking.json';
@@ -28,6 +28,7 @@ import {
   getAccumulateInterestRate,
   getVoteList,
 } from 'utils/rpcRequest';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
@@ -77,7 +78,9 @@ export function AddressMetadata({ address, accountInfo }) {
 
     if (
       accountInfo.address &&
-      [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)
+      [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+        ENV_CONFIG.ENV_NETWORK_TYPE,
+      )
     ) {
       const proArr: any = [];
       proArr.push(getDepositList(address));
@@ -220,7 +223,8 @@ export function AddressMetadata({ address, accountInfo }) {
                   text={
                     <>
                       {t(translations.toolTip.address.stakedBegin)}
-                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
+                      NETWORK_TYPES.CORE_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
@@ -270,7 +274,8 @@ export function AddressMetadata({ address, accountInfo }) {
                   text={
                     <>
                       {t(translations.toolTip.address.lockedBegin)}
-                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
+                      NETWORK_TYPES.CORE_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
