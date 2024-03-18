@@ -591,7 +591,15 @@ export const roundToFixedPrecision = (
   if (typeof number === 'string' && number.includes('<')) {
     return number;
   }
-  const numberFormat = typeof number === 'number' ? number : parseFloat(number);
+
+  const regex = /^([+-]?[0-9]*\.?[0-9]+)(\D*)$/;
+  let matches = String(number).match(regex);
+  if (!matches) {
+    matches = [String(number), ''];
+  }
+  const suffix = matches[2];
+
+  const numberFormat = parseFloat(matches[1]);
   const factor = Math.pow(10, precision);
   let resultNum: number;
 
@@ -606,7 +614,7 @@ export const roundToFixedPrecision = (
     default:
       resultNum = Math.round((numberFormat + Number.EPSILON) * factor) / factor;
   }
-  return resultNum.toFixed(precision);
+  return resultNum.toFixed(precision) + suffix;
 };
 
 export const formatTimeStamp = (
