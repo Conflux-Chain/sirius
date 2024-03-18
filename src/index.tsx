@@ -9,7 +9,7 @@
 import 'react-app-polyfill/stable';
 
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
 import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
@@ -33,17 +33,21 @@ interface Props {
 const ConnectedApp = ({ Component }: Props) => (
   <HelmetProvider>
     <RecoilRoot>
-      {/* <React.StrictMode> */}
-      <Component />
-      {/* </React.StrictMode> */}
+      <React.StrictMode>
+        <Component />
+      </React.StrictMode>
     </RecoilRoot>
   </HelmetProvider>
 );
 
-const root = ReactDOM.createRoot(MOUNT_NODE);
+// const root = ReactDOM.createRoot(MOUNT_NODE);
+
+// const render = (Component: typeof App) => {
+//   root.render(<ConnectedApp Component={Component} />);
+// };
 
 const render = (Component: typeof App) => {
-  root.render(<ConnectedApp Component={Component} />);
+  ReactDOM.render(<ConnectedApp Component={Component} />, MOUNT_NODE);
 };
 
 if (module.hot) {
@@ -51,7 +55,7 @@ if (module.hot) {
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
   module.hot.accept(['./app', './locales/i18n'], () => {
-    // root.unmount();
+    ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     Promise.all([completeDetect()]).then(() => {
       const App = require('./app').App;
       render(App);
