@@ -144,7 +144,6 @@ export function StockChartTemplate({
   options,
   request,
 }: Props) {
-  console.log(request);
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const chart = useRef(null);
