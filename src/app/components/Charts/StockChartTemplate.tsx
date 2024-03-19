@@ -144,6 +144,7 @@ export function StockChartTemplate({
   options,
   request,
 }: Props) {
+  console.log(request);
   const { t } = useTranslation();
   const bp = useBreakpoint();
   const chart = useRef(null);
@@ -178,6 +179,7 @@ export function StockChartTemplate({
       const data = await reqChartData({
         url: request.url,
         query: {
+          ...request.query,
           limit: preview ? 30 : limit,
           intervalType: intervalType,
         },
@@ -189,7 +191,7 @@ export function StockChartTemplate({
       // @ts-ignore
       chart.current?.chart.hideLoading();
     },
-    [request.url, preview],
+    [request.url, request.query, preview],
   );
 
   useEffect(() => {
