@@ -19,6 +19,7 @@ import Search from '@zeit-ui/react-icons/search';
 import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
 import { Link } from 'app/components/Link/Loadable';
+import { ActionButton } from 'sirius-next/packages/common/dist/components/ActionButton';
 interface FooterProps {
   type?: string;
   pathname: string;
@@ -104,9 +105,9 @@ export const Title = ({
 
   const getSearch = useMemo(() => {
     return showSearch ? (
-      <StyledAdvancedSwitchWrapper onClick={() => setFold(!fold)}>
+      <ActionButton onClick={() => setFold(!fold)}>
         {fold ? <Search size={18} /> : <ChevronUp size={18} />}
-      </StyledAdvancedSwitchWrapper>
+      </ActionButton>
     ) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fold]);
@@ -237,25 +238,6 @@ const StyledTableHeaderWrapper = styled.div`
     border-top: 1px solid #e8e9ea;
     padding: 8px 16px 0;
     margin-bottom: -12px;
-  }
-`;
-
-const StyledAdvancedSwitchWrapper = styled.span`
-  min-width: 2.2857rem;
-  height: 2.2857rem;
-  padding: 0 0.4286rem;
-  color: #b1b3b9;
-  border-radius: 0.2857rem;
-  background-color: rgba(0, 84, 254, 0.04);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 84, 254, 0.1);
-    color: #b1b3b9;
   }
 `;
 
