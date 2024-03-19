@@ -1,5 +1,6 @@
 import React, { useEffect, createContext, useContext } from 'react';
-import { useGetTxnStatus } from './useGetTxnStatus';
+import { useGetTxnStatus } from 'sirius-next/packages/common/dist/utils/hooks/useGetTxnStatus';
+import { CFX } from 'utils/constants'
 import { usePortal } from './usePortal';
 import pubsub from '../pubsub';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
@@ -115,7 +116,7 @@ export const useTxnHistory = (opts?: UseTxnHistoryConfig) => {
     TxnHistoryContext,
   );
 
-  const { status } = useGetTxnStatus(pendingRecords.map(r => r.hash));
+  const { status } = useGetTxnStatus(CFX, pendingRecords.map(r => r.hash));
 
   // if keys is undefined, return all records
   const getRecords = function (opts?: GetRecords) {
