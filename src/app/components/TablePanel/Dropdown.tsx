@@ -6,7 +6,7 @@ import { useClickAway } from '@cfxjs/react-ui';
 import clsx from 'clsx';
 import { Check } from '@zeit-ui/react-icons';
 import { media } from 'styles/media';
-import { ActionButton } from 'sirius-next/packages/common/dist/components/ActionButton';
+import Button from 'sirius-next/packages/common/dist/components/Button';
 import MoreHorizontal from '@zeit-ui/react-icons/moreHorizontal';
 
 // options example:
@@ -106,9 +106,9 @@ export const TableSearchDropdown = ({
 
   return (
     <StyledDropdownWrapper>
-      <ActionButton onClick={() => setVisible(!visible)}>
+      <Button type="icon" onClick={() => setVisible(!visible)}>
         <MoreHorizontal size={18} />
-      </ActionButton>
+      </Button>
       {visible && (
         <div className="option-container" ref={dropdownRef}>
           {options.map((o, index) => (

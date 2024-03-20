@@ -15,7 +15,7 @@ import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
-import { Button } from 'app/components/Button/Loadable';
+import Button from 'sirius-next/packages/common/dist/components/Button';
 import { usePlatform } from 'utils/hooks/usePlatform';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
@@ -326,6 +326,7 @@ export function NFTDetail(props) {
           <Card style={{ padding: 0 }}>
             <Button
               className="button-refresh"
+              type="action"
               size="small"
               onClick={handleRefresh}
             >
