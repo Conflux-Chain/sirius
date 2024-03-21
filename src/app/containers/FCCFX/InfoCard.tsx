@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from '@cfxjs/antd';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';
 import styled from 'styled-components';

@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
-import { Card } from '../../components/Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Remark } from '../../components/Remark';
 import { CopyButton } from '../../components/CopyButton';
 import { Input, Button, Link } from '@cfxjs/react-ui';

@@ -1,26 +1,22 @@
 import React from 'react';
 import { Tabs } from '../Tabs';
-import { TablePanel } from '../TablePanel';
 import { useTabTableData } from './useTabTableData';
-import { TablePanelType } from './../TablePanel';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 
 export type { ColumnsType } from '@cfxjs/react-ui/dist/table/table';
 
 export type TabsTablePanelType = {
-  tabs: Array<
-    {
-      hideTotalZero?: boolean;
-      hidden?: boolean;
-      value: string;
-      action?: string;
-      label:
-        | ((total: number, realTotal: number, item: any) => React.ReactNode)
-        | string;
-      content?: React.ReactNode;
-    } & Partial<TablePanelType>
-  >;
+  tabs: Array<{
+    hideTotalZero?: boolean;
+    hidden?: boolean;
+    value: string;
+    action?: string;
+    label:
+      | ((total: number, realTotal: number, item: any) => React.ReactNode)
+      | string;
+    content?: React.ReactNode;
+  }>;
   onTabsChange?: (value: string) => void;
 };
 
@@ -66,7 +62,7 @@ export const TabsTablePanel = ({ tabs, onTabsChange }: TabsTablePanelType) => {
           key={i}
           disabled={item.hidden === true}
         >
-          {item.table ? <TablePanel {...item} /> : item.content}
+          {item.content}
         </Tabs.Item>
       );
     });

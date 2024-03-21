@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Remark } from 'app/components/Remark';
 import styled from 'styled-components';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Form, Input, Button, Row, Col, Select, Collapse } from '@cfxjs/antd';
 import { isContractAddress, isCurrentNetworkAddress } from 'utils';
 import {

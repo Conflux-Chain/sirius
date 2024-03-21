@@ -6,7 +6,7 @@ import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import dayjs from 'dayjs';
 import { PageHeader } from '../../components/PageHeader';
-import { Card } from '../../components/Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { useParams } from 'react-router-dom';
 import { CFX, CONTRACTS } from '../../../utils/constants';
