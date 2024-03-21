@@ -10,7 +10,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { media } from 'styles/media';
 import { toThousands, isCurrentNetworkAddress } from 'utils';
-import { Card } from 'app/components/Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Col, Pagination, Row, Spin, Tag } from '@cfxjs/antd';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';

@@ -20,7 +20,7 @@ import qs from 'query-string';
 import dayjs from 'dayjs';
 import { Description } from 'app/components/Description/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';

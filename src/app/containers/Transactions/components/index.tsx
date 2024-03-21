@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
-import { TableSearchDropdown } from 'app/components/TablePanel';
+import { TableSearchDropdown } from 'app/components/Dropdown';
 import { toThousands } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';

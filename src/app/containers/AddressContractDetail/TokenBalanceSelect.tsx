@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
 import { Description } from 'app/components/Description';
-import { Card } from '../../components/Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { media } from 'styles/media';
@@ -32,7 +32,7 @@ export function TokenBalanceSelect({ address = '' } = {}) {
   );
 }
 
-function Select({ children = [] } = {}) {
+function Select({ children = [] }: { children?: any[] } = {}) {
   const { t } = useTranslation();
   const [expanded, toggle] = useToggle(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -40,15 +40,15 @@ function Select({ children = [] } = {}) {
   const tokenCount = children.length;
 
   const children20 = children
-    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc20)
+    .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc20)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   const children721 = children
-    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc721)
+    .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc721)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   const children1155 = children
-    .filter((c: any) => c && c.transferType === CFX_TOKEN_TYPES.erc1155)
+    .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc1155)
     .map((t, idx) => <SelectItem key={idx} {...t} />);
 
   return (
