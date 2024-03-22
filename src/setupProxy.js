@@ -4,7 +4,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // http-proxy-middleware doc https://www.npmjs.com/package/http-proxy-middleware#example
 
 // const url = 'https://www-stage.confluxscan.net';
-const url = 'https://confluxscan.net/';
+const url = 'https://confluxscan.io/';
 let stat = `${url}`;
 let v1 = `${url}`;
 let rpc = `${url}/rpc`;

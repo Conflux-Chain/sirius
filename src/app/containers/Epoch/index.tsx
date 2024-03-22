@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { blockColunms } from 'utils/tableColumns';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from 'utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 interface epochNumber {

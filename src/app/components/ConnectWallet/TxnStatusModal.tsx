@@ -5,8 +5,7 @@ import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getEllipsStr } from 'sirius-next/packages/common/dist/utils';
-import { getTransactionLoop } from 'sirius-next/packages/common/dist/utils/hooks/useGetTxnStatus';
-import { CFX } from 'utils/constants'
+import { getTransactionLoop } from 'utils/hooks/useGetTxnStatus';
 import lodash from 'lodash';
 
 import imgSuccessBig from 'images/success_big.png';
@@ -109,7 +108,7 @@ export const TxnStatusModal = ({
   useEffect(() => {
     if (show && !oStatus && hash) {
       let timeout;
-      getTransactionLoop(CFX, hash, {
+      getTransactionLoop(hash, {
         callback(receipt) {
           const status = receipt?.status;
           if (!lodash.isNil(status)) {

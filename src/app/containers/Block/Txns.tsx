@@ -1,7 +1,7 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { transactionColunms } from 'utils/tableColumns';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from 'utils/hooks/useAge';
 import lodash from 'lodash';
 
 const TxnHashRenderComponent = transactionColunms.TxnHashRenderComponent;

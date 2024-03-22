@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, blockColunms } from 'utils/tableColumns';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from 'utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 
 export const TransferList = ({ type, address, id, loading }) => {

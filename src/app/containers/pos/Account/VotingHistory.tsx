@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from 'utils/hooks/useAge';
 import { accountColunms, colunms, blockColunms } from 'utils/tableColumns/pos';
 
 export function VotingHistory() {
