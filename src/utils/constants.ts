@@ -2,8 +2,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'sirius-next/packages/common/dist/utils/constants';
 
-export { LOCALSTORAGE_KEYS_MAP }
-
+export { LOCALSTORAGE_KEYS_MAP };
 
 interface ContractsType {
   faucet: string;

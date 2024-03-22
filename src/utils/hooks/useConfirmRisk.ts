@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 import { getPosStatus, getConfirmationRiskByHash } from 'utils/rpcRequest';
 import { transferRisk } from 'sirius-next/packages/common/dist/utils';
 
-
 export const useConfirmRisk = (blockHash: string, epochNumber: number) => {
   const [risk, setRisk] = useState('');
   const ref = useRef(0);
