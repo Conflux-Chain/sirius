@@ -171,7 +171,7 @@ export function App() {
   const [globalData, setGlobalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   moment.locale(lang);
   dayjs.locale(lang);
