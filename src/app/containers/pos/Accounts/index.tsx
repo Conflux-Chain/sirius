@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { accountColunms, colunms } from 'utils/tableColumns/pos';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'utils/hooks/useAge';
+import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
 
 export const List = ({ overview }: { overview?: boolean }) => {
   const [ageFormat, toggleAgeFormat] = useAge();

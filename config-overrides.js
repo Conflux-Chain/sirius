@@ -55,6 +55,7 @@ module.exports = function (config, mode) {
             'node_modules',
             'js-conflux-sdk',
           ),
+          react: path.resolve(__dirname, './node_modules/react'),
         },
       },
       module: {
@@ -82,6 +83,13 @@ module.exports = function (config, mode) {
   }
   return smp.wrap({
     ...config,
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        react: path.resolve(__dirname, './node_modules/react'),
+      },
+    },
     module: {
       ...config.module,
       rules: [
