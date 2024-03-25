@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
-import { TableSearchDropdown } from 'app/components/TablePanel';
+import { TableSearchDropdown } from 'app/components/Dropdown';
 import { toThousands } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
 import qs from 'query-string';
@@ -19,7 +19,7 @@ import Search from '@zeit-ui/react-icons/search';
 import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
 import { Link } from 'app/components/Link/Loadable';
-import { ActionButton } from 'sirius-next/packages/common/dist/components/ActionButton';
+import Button from 'sirius-next/packages/common/dist/components/Button';
 interface FooterProps {
   type?: string;
   pathname: string;
@@ -105,9 +105,9 @@ export const Title = ({
 
   const getSearch = useMemo(() => {
     return showSearch ? (
-      <ActionButton onClick={() => setFold(!fold)}>
+      <Button type="icon" onClick={() => setFold(!fold)}>
         {fold ? <Search size={18} /> : <ChevronUp size={18} />}
-      </ActionButton>
+      </Button>
     ) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fold]);

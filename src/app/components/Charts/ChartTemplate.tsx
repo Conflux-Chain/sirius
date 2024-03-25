@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';

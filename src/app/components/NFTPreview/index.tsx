@@ -4,7 +4,8 @@
  *
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Image, Popover, Skeleton, Spin } from '@cfxjs/antd';
+import { Image, Popover, Skeleton } from '@cfxjs/antd';
+import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
 import { Text } from '../Text/Loadable';

@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { useTranslation, Trans } from 'react-i18next';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';
 import { translations } from 'locales/i18n';
-import { Spin } from '@cfxjs/antd';
+import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import { publishRequestError } from 'utils';
 
 interface ContractAbiProps {

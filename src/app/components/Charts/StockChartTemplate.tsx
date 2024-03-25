@@ -5,7 +5,7 @@ import Exporting from 'highcharts/modules/exporting';
 import ExportData from 'highcharts/modules/export-data';
 import dayjs from 'dayjs';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import lodash from 'lodash';
 import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';

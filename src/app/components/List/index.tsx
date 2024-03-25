@@ -7,7 +7,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from '@cfxjs/react-ui';
 import { useBreakpoint, media } from 'styles/media';
-import { Card } from '../Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description, DescriptionProps } from '../Description';
 
 interface ListProps {

@@ -10,7 +10,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { Spinner } from '@cfxjs/react-ui';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { Link } from 'app/components/Link';

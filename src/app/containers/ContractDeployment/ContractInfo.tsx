@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from 'app/components/FileUpload';
 import { translations } from 'locales/i18n';
-import { Card } from 'app/components/Card';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { isHex } from 'utils';
 import imgInfo from 'images/info.svg';
 import { Tooltip } from 'app/components/Tooltip/Loadable';

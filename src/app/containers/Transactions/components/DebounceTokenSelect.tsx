@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Select, Spin, Tag, Image } from '@cfxjs/antd';
+import { Select, Tag, Image } from '@cfxjs/antd';
+import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components';

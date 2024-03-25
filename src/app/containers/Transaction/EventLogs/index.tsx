@@ -5,7 +5,7 @@ import {
   reqContractAndToken,
 } from 'utils/httpRequest';
 import { toThousands } from 'utils';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Empty } from 'app/components/Empty/Loadable';
 import { CFX } from 'utils/constants';
 import { Description } from 'app/components/Description/Loadable';
