@@ -5,7 +5,7 @@ import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getEllipsStr } from 'sirius-next/packages/common/dist/utils';
-import { getTransactionLoop } from 'utils/hooks/useGetTxnStatus';
+import { getTransactionLoop } from 'sirius-next/packages/common/dist/utils/hooks/useGetTxnStatus';
 import lodash from 'lodash';
 
 import imgSuccessBig from 'images/success_big.png';

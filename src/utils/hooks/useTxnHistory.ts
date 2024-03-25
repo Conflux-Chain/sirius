@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useContext } from 'react';
-import { useGetTxnStatus } from 'utils/hooks/useGetTxnStatus';
+import { useGetTxnStatus } from 'sirius-next/packages/common/dist/utils/hooks/useGetTxnStatus';
 import { usePortal } from './usePortal';
 import pubsub from '../pubsub';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
