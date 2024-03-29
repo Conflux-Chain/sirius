@@ -10,7 +10,6 @@ import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/
 import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
 import { scope } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 import {
   xAxisCustomLabelHour,
   tooltipCustomLabel,
