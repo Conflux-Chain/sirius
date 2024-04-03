@@ -4,7 +4,6 @@ import { translations } from 'locales/i18n';
 import { Space, Modal, Input } from '@cfxjs/antd';
 import { Button } from 'app/components/Button/Loadable';
 import { formatTimeStamp } from 'utils';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { ContentWrapper } from 'utils/tableColumns/utils';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useGlobalData } from 'utils/hooks/useGlobal';
@@ -13,6 +12,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import qs from 'query-string';
 import { CreateAddressLabel } from './CreateAddressLabel';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 const { confirm, warning } = Modal;
 const { Search } = Input;
