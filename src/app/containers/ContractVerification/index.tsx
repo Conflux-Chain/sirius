@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Remark } from 'app/components/Remark';
 import styled from 'styled-components';

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ContractContent } from '../AddressContractDetail/ContractContent';

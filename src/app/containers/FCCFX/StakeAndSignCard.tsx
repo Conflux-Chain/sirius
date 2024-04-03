@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Card } from 'app/components/Card/Loadable';
 import { ActionField } from './ActionField';
 import {
@@ -20,7 +20,7 @@ import { formatBalance } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Modal } from '@cfxjs/antd';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 const { confirm } = Modal;
 

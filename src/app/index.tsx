@@ -22,7 +22,7 @@ import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';

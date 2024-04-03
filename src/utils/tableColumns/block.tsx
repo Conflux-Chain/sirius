@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import styled from 'styled-components';
 import { Text } from 'app/components/Text/Loadable';
 import { Link } from 'app/components/Link/Loadable';

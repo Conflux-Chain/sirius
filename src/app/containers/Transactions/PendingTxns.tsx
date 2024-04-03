@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import BigNumber from 'bignumber.js';
 import { TxnSwitcher, Title } from './components';
 import { isAccountAddress } from 'utils';

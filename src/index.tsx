@@ -23,8 +23,8 @@ import { App } from 'app';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
-import './locales/i18n';
-import { IS_MAINNET, IS_TESTNET } from 'env';
+import 'sirius-next/packages/common/dist/locales/i18n';
+import { IS_MAINNET, IS_TESTNET } from 'sirius-next/packages/common/dist/env';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -55,13 +55,16 @@ if (module.hot) {
   // Hot reloadable translation json files and app
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['./app', './locales/i18n'], () => {
-    ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    Promise.all([completeDetect()]).then(() => {
-      const App = require('./app').App;
-      render(App);
-    });
-  });
+  module.hot.accept(
+    ['./app', 'sirius-next/packages/common/dist/locales/i18n'],
+    () => {
+      ReactDOM.unmountComponentAtNode(MOUNT_NODE);
+      Promise.all([completeDetect()]).then(() => {
+        const App = require('./app').App;
+        render(App);
+      });
+    },
+  );
 }
 
 Promise.all([completeDetect()]).then(() => {

@@ -15,7 +15,9 @@ import pubsub from './pubsub';
 import lodash from 'lodash';
 import { ENSInfoItemType } from 'utils/hooks/useENS';
 import { Nametag } from 'utils/hooks/useNametag';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 import IconCore from 'images/core-space/icon.svg';
 import IconEvm from 'images/espace/icon.svg';
 import IconBtc from 'images/bspace/icon.svg';

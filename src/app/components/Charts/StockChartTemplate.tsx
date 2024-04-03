@@ -11,7 +11,7 @@ import { reqChartData } from 'utils/httpRequest';
 import { useBreakpoint } from 'styles/media';
 import { useHighcharts } from 'utils/hooks/useHighcharts';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { getChartsSubTitle } from 'utils';
 import styled from 'styled-components';
 

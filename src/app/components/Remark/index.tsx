@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 
 export const Remark = function ({
   title: outerTitle,

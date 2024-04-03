@@ -7,7 +7,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
 import { useBreakpoint } from 'styles/media';

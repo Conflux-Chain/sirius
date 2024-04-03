@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Text } from '../Text/Loadable';
 import { getLabelInfo } from '../AddressContainer';
 import { useENS } from 'utils/hooks/useENS';

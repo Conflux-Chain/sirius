@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '../Text/Loadable';
 import { Link } from '../Link/Loadable';
 import { WithTranslation, withTranslation, Translation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import styled from 'styled-components';
 import {
   formatAddress,
@@ -26,7 +26,10 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import ICON_ENS from 'images/logo-cns.svg';
 import { useENS, ENSInfoItemType } from 'utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
-import ENV_CONFIG, { IS_MAINNET, NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  IS_MAINNET,
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 
 interface Props {
   value: string; // address value

@@ -1,4 +1,8 @@
-import { API_HOST_MAP, DOMAIN, IS_STAGE } from 'env/env-constants';
+import {
+  API_HOST_MAP,
+  DOMAIN,
+  IS_STAGE,
+} from 'sirius-next/packages/common/dist/env';
 import { NETWORK_TYPES } from 'env/types';
 import logo from 'images/core-space/logo.svg';
 

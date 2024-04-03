@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'app/components/Link/Loadable';
 import { media, useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { useTabTableData } from 'app/components/TabsTablePanel';
 import { ScanEvent } from 'utils/gaConstants';

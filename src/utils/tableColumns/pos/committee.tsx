@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { ContentWrapper } from '../utils';
 import lodash from 'lodash';
 import { Link } from 'app/components/Link/Loadable';

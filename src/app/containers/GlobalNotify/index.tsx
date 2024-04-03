@@ -3,7 +3,7 @@
  */
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import pubsubLib from 'utils/pubsub';
 import { useNotifications } from '@cfxjs/react-ui';
 import { Notification } from '@cfxjs/react-ui/dist/use-notifications/use-notifications';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { useParams } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Link } from 'app/components/Link';
 import { Modal } from '@cfxjs/react-ui';
 import ReCAPTCHA from 'react-google-recaptcha';

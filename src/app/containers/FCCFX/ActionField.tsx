@@ -3,7 +3,7 @@ import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
 import styled from 'styled-components';
 import { Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Button } from 'app/components/Button/Loadable';
 import { StyledTitle160F1327 } from 'app/components/StyledComponent';
 import { usePortal } from 'utils/hooks/usePortal';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import styled from 'styled-components';
 import { media } from 'styles/media';
 import { PageHeader } from 'app/components/PageHeader';
@@ -28,7 +28,7 @@ import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 const { Search } = Input;
 

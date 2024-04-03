@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Input } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
 
