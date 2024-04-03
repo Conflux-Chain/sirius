@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Form, Input, Button, Modal, InputNumber } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import styled from 'styled-components';
 import { isBase32Address, isCurrentNetworkAddress } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
@@ -12,7 +12,7 @@ import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 export const TransferModal = ({
   id = '',

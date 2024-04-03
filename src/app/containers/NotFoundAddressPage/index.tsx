@@ -8,7 +8,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { media } from 'styles/media';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import notFoundAddress from 'images/home/notFoundAddress.svg';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSearch } from '../../../utils/hooks/useSearch';

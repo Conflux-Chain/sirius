@@ -1,7 +1,7 @@
 import React, { /*useEffect,*/ useMemo } from 'react';
 // import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 // import { useHistory, useLocation } from 'react-router';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {

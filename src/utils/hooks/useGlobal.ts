@@ -1,6 +1,6 @@
 import { NETWORK_OPTIONS, getCurrency } from 'utils/constants';
 import { createGlobalState } from 'react-use';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 // react-use version, to solve useContext can not update global value in App.ts
 export interface ContractsType {

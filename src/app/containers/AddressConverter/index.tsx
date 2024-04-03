@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { media } from 'styles/media';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from '../../components/Card';
 import { Remark } from '../../components/Remark';
@@ -23,7 +23,9 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
 import { getCode } from 'utils/rpcRequest';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 
 interface FormattedAddressesType {
   hexAddress: string;

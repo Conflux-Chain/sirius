@@ -5,7 +5,7 @@ import { hash } from '@ensdomains/eth-ens-namehash';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { isZeroAddress } from 'utils';
 import LogoENS from 'images/logo-cns.svg';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 const registry = CFX.Contract({
   address: ENV_CONFIG.ENV_ENS_REGISTRY_ADDRESS,

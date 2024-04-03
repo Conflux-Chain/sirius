@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
@@ -18,7 +18,9 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 import { Balance } from './Balance';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 
 interface Button {
   className?: string;

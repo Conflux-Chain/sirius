@@ -7,7 +7,7 @@ import { Select } from 'app/components/Select';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
 import { useBreakpoint } from 'styles/media';

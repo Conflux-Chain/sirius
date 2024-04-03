@@ -4,7 +4,7 @@ import { CopyButton } from '../../components/CopyButton';
 import { QrcodeButton } from '../../components/QrcodeButton';
 import { IconButton } from './IconButton';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 
 export function Copy({ address = '' } = {}) {
   return (

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import { DatePicker } from '@cfxjs/react-ui';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import {
   isCurrentNetworkAddress,
   isContractAddress,

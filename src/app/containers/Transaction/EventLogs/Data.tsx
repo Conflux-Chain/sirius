@@ -5,7 +5,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
 import { Link } from '../../../components/Link/Loadable';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { media } from '../../../../styles/media';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { formatAddress } from 'utils';

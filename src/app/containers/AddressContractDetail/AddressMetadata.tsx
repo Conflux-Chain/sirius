@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { media } from 'styles/media';
 import { Modal } from '@cfxjs/react-ui';
 import { Text } from 'app/components/Text';
@@ -28,7 +28,9 @@ import {
   getAccumulateInterestRate,
   getVoteList,
 } from 'utils/rpcRequest';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,

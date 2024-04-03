@@ -5,7 +5,7 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@cfxjs/react-ui';
 import { Link } from '../../components/Link/Loadable';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
@@ -16,7 +16,7 @@ import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
 
 interface RouteParams {
   tokenAddress: string;

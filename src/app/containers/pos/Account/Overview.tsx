@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { Card } from 'app/components/Card/Loadable';
 import { Description } from 'app/components/Description/Loadable';
 import { CopyButton } from 'app/components/CopyButton/Loadable';

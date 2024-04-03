@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import { List } from 'app/components/List/';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
 import { media } from 'styles/media';
@@ -23,7 +23,9 @@ import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 import { Image } from '@cfxjs/antd';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, {
+  NETWORK_TYPES,
+} from 'sirius-next/packages/common/dist/env';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 

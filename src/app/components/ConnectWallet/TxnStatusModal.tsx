@@ -3,7 +3,7 @@ import { Modal } from '@cfxjs/antd';
 import styled from 'styled-components';
 import Loading from 'app/components/Loading';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'locales/i18n';
+import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
 import { getEllipsStr } from 'sirius-next/packages/common/dist/utils';
 import { getTransactionLoop } from 'sirius-next/packages/common/dist/utils/hooks/useGetTxnStatus';
 import lodash from 'lodash';
