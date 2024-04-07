@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@cfxjs/react-ui';
 import { SearchIcon } from '../SearchIcon/Loadable';
-import { DeleteIcon } from '../DeleteIcon/Loadable';
+import { DeleteIcon } from 'sirius-next/packages/common/dist/components/DeleteIcon';
 import styled from 'styled-components';
 type SearchProps = {
   children?: React.ReactNode;
