@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { formatBalance, formatTimeStamp } from 'utils';
