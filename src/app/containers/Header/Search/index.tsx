@@ -11,7 +11,7 @@ import { translations } from 'locales/i18n';
 import { useBreakpoint } from 'styles/media';
 import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@cfxjs/antd';
-import { SearchIcon } from 'app/components/SearchIcon/Loadable';
+import { SearchIcon } from 'sirius-next/packages/common/dist/components/SearchIcon';
 import ClearIcon from 'images/clear.png';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import _ from 'lodash';
