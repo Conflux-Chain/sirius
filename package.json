@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@cfx-kit/dapp-utils": "0.1.5",
     "@cfxjs/antd": "1.0.6",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
     "@cfxjs/use-wallet-react": "0.0.2-6",
@@ -161,6 +162,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-class-properties": "7.23.3",
+    "@babel/plugin-transform-private-methods": "7.24.1",
     "@testing-library/user-event": "12.1.6",
     "babel-loader": "8.1.0",
     "cz-conventional-changelog": "3.3.0",
