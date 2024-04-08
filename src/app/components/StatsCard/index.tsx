@@ -19,7 +19,7 @@ import { usePortal } from '../../../utils/hooks/usePortal';
 import { media } from '../../../styles/media';
 import { monospaceFont } from '../../../styles/variable';
 import { Link } from '../Link';
-import { Description } from '../Description/Loadable';
+import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
 import { IS_TESTNET, HIDE_IN_DOT_NET } from '../../../utils/constants';
