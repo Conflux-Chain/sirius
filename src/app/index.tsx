@@ -180,7 +180,7 @@ export function App() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-      // theme switch by change body classname, reflect to css variable defination
+      // theme switch by change body classname, reflect to css variable definition
       // const classList = document.body.classList;
       // let prev = 'pow';
       // let next = 'pos';

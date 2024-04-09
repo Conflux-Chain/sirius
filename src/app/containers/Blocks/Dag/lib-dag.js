@@ -206,7 +206,7 @@ function createRender(container, width, height) {
   const ctx = canvas.getContext('2d');
   ctx.scale(devicePixelRatio, devicePixelRatio);
 
-  //hit canvas is detatched from dom
+  //hit canvas is detached from dom
   const hitCanvas = document.createElement('canvas');
   hitCanvas.width = width;
   hitCanvas.height = height;
