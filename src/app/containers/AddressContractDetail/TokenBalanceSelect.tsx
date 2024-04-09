@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
-import { Description } from 'app/components/Description';
+import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
