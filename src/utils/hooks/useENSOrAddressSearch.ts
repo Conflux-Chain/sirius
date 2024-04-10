@@ -3,7 +3,7 @@ import { isCurrentNetworkAddress, isZeroAddress } from 'utils';
 import CNSUtil from '@web3identity/cns-util';
 import { NETWORK_ID } from 'utils/constants';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 
 export const useENSOrAddressSearch = value => {
   const { t } = useTranslation();

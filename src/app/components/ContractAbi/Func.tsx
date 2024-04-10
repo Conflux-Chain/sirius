@@ -13,7 +13,7 @@ import OutputParams from './OutputParams';
 import FuncResponse from './FuncResponse';
 import OutputItem from './OutputItem';
 import Error from './Error';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import {
   checkInt,

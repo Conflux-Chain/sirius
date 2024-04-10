@@ -8,7 +8,7 @@ import React, { memo, useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Copy, Qrcode } from './HeadLineButtons';
 import {
   BalanceCard,
@@ -49,9 +49,7 @@ import { getLabelInfo } from 'app/components/AddressContainer';
 import { useENS } from 'utils/hooks/useENS';
 import Nametag from './Nametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
-import ENV_CONFIG, {
-  NETWORK_TYPES,
-} from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface RouteParams {
   address: string;

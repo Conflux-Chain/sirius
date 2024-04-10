@@ -1,8 +1,4 @@
-import ENV_CONFIG, {
-  DOMAIN,
-  IS_DEVNET,
-  IS_STAGE,
-} from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG, { DOMAIN, IS_DEVNET, IS_STAGE } from 'env';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from 'sirius-next/packages/common/dist/utils/constants';

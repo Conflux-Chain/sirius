@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from 'styles/media';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';

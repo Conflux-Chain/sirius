@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Space, Modal, Input } from '@cfxjs/antd';
 import { Button } from 'app/components/Button/Loadable';
 import { formatTimeStamp } from 'utils';

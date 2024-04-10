@@ -6,7 +6,7 @@ import { Col, Row } from '@cfxjs/antd';
 import { StatsCard } from '../../components/StatsCard/Loadable';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '../../components/PageHeader/Loadable';
 import styled from 'styled-components';

@@ -12,7 +12,7 @@ import {
   completeDetect,
   provider,
 } from '@cfxjs/use-wallet-react/conflux/Fluent';
-import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG from 'env';
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { formatNumber, processSponsorStorage } from 'utils';
 import styled from 'styled-components';
 import { Popover } from '@cfxjs/antd';

@@ -6,7 +6,7 @@ import verifiedIcon from 'images/nametag/verified.svg';
 import warningIcon from 'images/nametag/warning.svg';
 import { getLabelInfo } from 'app/components/AddressContainer';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Link as ComponentLink } from 'app/components/Link';
 import { StyledLabelWrapper } from './layouts';
 

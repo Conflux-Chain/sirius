@@ -7,7 +7,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
 import { media } from 'styles/media';
 import { Input, useMessages } from '@cfxjs/react-ui';

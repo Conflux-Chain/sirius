@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
 import { Tooltip } from 'app/components/Tooltip';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { isAccountAddress } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer/Loadable';

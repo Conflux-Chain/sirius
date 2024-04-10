@@ -3,7 +3,7 @@ import { useConfirmRisk } from 'utils/hooks/useConfirmRisk';
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import clsx from 'clsx';
 
 interface Props {

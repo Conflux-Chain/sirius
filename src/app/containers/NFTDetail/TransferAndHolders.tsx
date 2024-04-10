@@ -3,7 +3,7 @@ import React from 'react';
 import { Holders } from './Holders';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { TransferList } from './TransferList';
 
 export const TransferAndHolders = props => {

@@ -11,7 +11,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { media } from 'styles/media';
 import { Footer as FooterComp } from 'app/components/Footer/Loadable';
 import { TextLogo } from 'app/components/TextLogo/Loadable';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
@@ -34,11 +34,7 @@ import {
   Weibo,
   Youtube,
 } from './Icon';
-import ENV_CONFIG, {
-  DOMAIN,
-  IS_FOREIGN_HOST,
-  NETWORK_TYPES,
-} from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG, { DOMAIN, IS_FOREIGN_HOST, NETWORK_TYPES } from 'env';
 import { GlobalDataType, useGlobalData } from 'utils/hooks/useGlobal';
 
 export function Footer() {
