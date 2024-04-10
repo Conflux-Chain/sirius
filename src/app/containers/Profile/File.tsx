@@ -1,5 +1,5 @@
-import React, { createRef } from 'react';
-import { FileUpload } from 'app/components/FileUpload';
+import React, { useRef } from 'react';
+import { FileUpload } from 'sirius-next/packages/common/dist/components/FileUpload';
 import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
@@ -15,11 +15,11 @@ interface Props {
 }
 export const File = ({ onLoading = () => {} }: Props) => {
   const [globalData, setGlobalData] = useGlobalData();
-  const inputRef = createRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
 
   const handleImport = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   const handleFileChange = file => {

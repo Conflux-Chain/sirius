@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -19,7 +19,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
-import { FileUpload } from 'app/components/FileUpload';
+import { FileUpload } from 'sirius-next/packages/common/dist/components/FileUpload';
 import { useMessages } from '@cfxjs/react-ui';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useLocation } from 'react-router-dom';
@@ -44,7 +44,7 @@ export const ContractVerification = () => {
   const [compilers, setCompilers] = useState<Array<any>>([]);
   const [versions, setVersions] = useState<Array<any>>([]);
   const [optimizationValue, setOptimizationValue] = useState<string>('no');
-  const inputRef = createRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [sourceCode, setSourceCode] = useState('');
   const [modalStatus, setModalStatus] = useState('loading');
   const [modalShow, setModalShow] = useState(false);
@@ -166,7 +166,7 @@ export const ContractVerification = () => {
   };
 
   const handleImport = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   const handleFileChange = data => {
