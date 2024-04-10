@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { monospaceFont } from 'styles/variable';
 import { Translation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { Text } from 'app/components/Text/Loadable';

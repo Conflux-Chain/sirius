@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import useSWR, { responseInterface } from 'swr';
 import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
 // import { getCurrency } from 'utils/constants';

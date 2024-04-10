@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col /*, Divider */ } from '@cfxjs/antd';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
 import { Assets } from './Assets';

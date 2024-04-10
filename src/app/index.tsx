@@ -22,7 +22,7 @@ import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
@@ -142,6 +142,10 @@ import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+
+import ENV_CONFIG_LOCAL from 'env';
+import { useEnv } from 'sirius-next/packages/common/dist/store/index';
+
 // @ts-ignore
 window.lodash = lodash;
 
@@ -173,13 +177,10 @@ export function App() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
   const [loading, setLoading] = useState(false);
-
-  moment.locale(lang);
-  dayjs.locale(lang);
+  const { SET_ENV_CONFIG } = useEnv();
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
-
     useEffect(() => {
       // theme switch by change body classname, reflect to css variable defination
       // const classList = document.body.classList;
@@ -335,10 +336,11 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    SET_ENV_CONFIG(ENV_CONFIG_LOCAL);
     getClientVersion().then(v => {
       console.log('conflux-network-version:', v);
     });
-  }, []);
+  }, [SET_ENV_CONFIG]);
 
   return (
     <ConfigProvider locale={i18n.language.includes('zh') ? zhCN : enUS}>

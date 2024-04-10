@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { media } from 'styles/media';
 import SkelontonContainer from 'app/components/SkeletonContainer';
@@ -28,7 +28,7 @@ import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
-import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG from 'env';
 
 interface RouteParams {
   contractAddress: string;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation, Trans } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
 import styled from 'styled-components';
 import AceEditor from 'react-ace';

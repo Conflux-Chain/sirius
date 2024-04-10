@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';

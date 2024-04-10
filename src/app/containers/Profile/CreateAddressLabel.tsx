@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Form, Modal, Input, message } from '@cfxjs/antd';
 import {
   isBase32Address,
@@ -9,7 +9,7 @@ import {
 } from 'utils';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
-import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG from 'env';
 
 type Type = {
   a: string;

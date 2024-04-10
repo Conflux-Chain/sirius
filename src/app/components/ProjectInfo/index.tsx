@@ -14,7 +14,7 @@ import {
   VerifyIcon,
   DetailIcon,
 } from './icons';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Modal, Divider, Image } from '@cfxjs/antd';
 import { Link } from '@cfxjs/react-ui';
 import { sansSerifFont } from 'styles/variable';

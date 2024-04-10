@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Form, Modal, Input, message } from '@cfxjs/antd';
 import { isHash, publishRequestError } from 'utils';
 import { useGlobalData } from 'utils/hooks/useGlobal';

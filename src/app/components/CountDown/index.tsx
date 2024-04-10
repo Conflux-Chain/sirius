@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { getDuration } from '../../../utils';
 import { Text } from '../Text/Loadable';
 

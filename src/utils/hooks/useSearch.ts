@@ -14,9 +14,7 @@ import { tranferToLowerCase } from 'sirius-next/packages/common/dist/utils';
 import { CONTRACTS, CORE_SPACE_CHAIN_IDS } from '../constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
-import ENV_CONFIG, {
-  NETWORK_TYPES,
-} from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 // Search bar hook
 export const useSearch = (value?: string) => {

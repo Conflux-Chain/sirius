@@ -10,7 +10,7 @@ import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { useCheckHook } from './useCheckHook';
 import { Text } from '../Text';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
 import { switchChain } from '@cfxjs/use-wallet-react/conflux/Fluent';
 import { NETWORK_ID } from 'utils/constants';

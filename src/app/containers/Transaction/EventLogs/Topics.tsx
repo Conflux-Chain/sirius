@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Link } from 'app/components/Link';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { media } from 'styles/media';

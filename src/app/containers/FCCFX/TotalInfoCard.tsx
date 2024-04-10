@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { Row, Col, Progress } from '@cfxjs/antd';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { translations } from 'sirius-next/packages/common/dist/locales/i18n';
+import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'app/components/Card/Loadable';
 import { Link } from 'app/components/Link/Loadable';
@@ -35,7 +35,7 @@ import { TransferModal } from './TransferModal';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
-import ENV_CONFIG from 'sirius-next/packages/common/dist/env';
+import ENV_CONFIG from 'env';
 
 const { Text } = Typography;
 
