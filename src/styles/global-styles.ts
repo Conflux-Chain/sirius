@@ -39,7 +39,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-shadow: rgba(30, 61, 228, 0.2);
     --theme-color-search-button-bg: #7789D3;
     --theme-color-search-button-hover-bg: #4665f0;
-    --theme-color-gas-price-line-bg: #1e3de4;
+    --theme-color-gas-price-line-bg: #f0f4f3;
     --theme-color-foot-bg: #26244B;
     --theme-color-foot-highlight: #7789D3;
     --theme-color-link: #1e3de4;
