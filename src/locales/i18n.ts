@@ -10,6 +10,7 @@ import zh_cn_net from 'sirius-next/packages/i18n/cspace/zh_cn/translationForDotN
 import { ConvertedToObjectType } from 'sirius-next/packages/i18n/types/index';
 
 import { HIDE_IN_DOT_NET } from 'utils/constants';
+import { useI18n } from 'sirius-next/packages/common/dist/store/index';
 
 const translationsJson = {
   'en-US': {
@@ -75,5 +76,6 @@ export const i18n = i18next
     },
     () => {
       convertLanguageJsonToObject(en, translations);
+      useI18n.setState({ translations });
     },
   );
