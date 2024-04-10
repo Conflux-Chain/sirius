@@ -144,7 +144,7 @@ import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import ENV_CONFIG_LOCAL from 'env';
-import { useEnv } from 'sirius-next/packages/common/dist/store/index';
+import { useEnv, useI18n } from 'sirius-next/packages/common/dist/store/index';
 
 // @ts-ignore
 window.lodash = lodash;
@@ -178,6 +178,10 @@ export function App() {
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
   const [loading, setLoading] = useState(false);
   const { SET_ENV_CONFIG } = useEnv();
+  const { setTranslations } = useI18n();
+
+  moment.locale(lang);
+  dayjs.locale(lang);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
@@ -337,10 +341,11 @@ export function App() {
 
   useEffect(() => {
     SET_ENV_CONFIG(ENV_CONFIG_LOCAL);
+    setTranslations(translations);
     getClientVersion().then(v => {
       console.log('conflux-network-version:', v);
     });
-  }, [SET_ENV_CONFIG]);
+  }, [SET_ENV_CONFIG, setTranslations]);
 
   return (
     <ConfigProvider locale={i18n.language.includes('zh') ? zhCN : enUS}>
