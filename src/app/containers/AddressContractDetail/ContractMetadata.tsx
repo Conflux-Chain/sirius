@@ -20,14 +20,10 @@ import { Tooltip } from 'app/components/Tooltip/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
-import {
-  ICON_DEFAULT_TOKEN,
-  NETWORK_TYPES,
-  NETWORK_TYPE,
-  ICON_DEFAULT_CONTRACT,
-} from 'utils/constants';
+import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 import { Image } from '@cfxjs/antd';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
@@ -373,7 +369,11 @@ export function ContractMetadata({ address, contractInfo }) {
     },
   ];
 
-  if (![NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+  if (
+    ![NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+      ENV_CONFIG.ENV_NETWORK_TYPE,
+    )
+  ) {
     list = list.filter((_, index) => [0, 1, 2, 4].includes(index));
   }
 

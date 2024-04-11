@@ -3,19 +3,22 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { NetworksType } from './hooks/useGlobal';
 import {
-  IS_PRE_RELEASE,
   NETWORK_ID,
-  NETWORK_TYPE,
-  NETWORK_TYPES,
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
-  RPC_SERVER,
+  CORE_SPACE_CHAIN_IDS,
+  ESPACE_CHAIN_IDS,
+  BSPACE_CHAIN_IDS,
 } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
 import lodash from 'lodash';
 import { ENSInfoItemType } from 'utils/hooks/useENS';
 import { Nametag } from 'utils/hooks/useNametag';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import IconCore from 'images/core-space/icon.svg';
+import IconEvm from 'images/espace/icon.svg';
+import IconBtc from 'images/bspace/icon.svg';
 
 import {
   getEllipsStr,
@@ -437,45 +440,34 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   return network;
 };
 
-const urls = {
-  stage: {
-    1: '//testnet-stage.confluxscan.net',
-    1029: '//www-stage.confluxscan.net',
-    71: '//evmtestnet-stage.confluxscan.net',
-    1030: '//evm-stage.confluxscan.net',
-    8888: '//net8888cfx.confluxscan.net',
-  },
-  online: {
-    1: '//testnet.confluxscan',
-    1029: '//confluxscan',
-    71: '//evmtestnet.confluxscan',
-    1030: '//evm.confluxscan',
-    8888: '//net8888cfx.confluxscan',
-  },
+export const gotoNetwork = (url: string): void => {
+  url && window.location.assign(url);
 };
 
-export const getUrl = (_networkId?: string | number): string => {
-  const networkId =
-    _networkId || (NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1029' : '1');
-  let url = urls.stage[networkId];
-
-  if (!IS_PRE_RELEASE) {
-    url = `${urls.online[networkId]}${
-      window.location.hostname.includes('.io') ? '.io' : '.net'
-    }`;
+export const getNetworkIcon = (
+  id = NaN,
+  props?: {
+    isCore?: boolean;
+    isEvm?: boolean;
+    isBtc?: boolean;
+  },
+) => {
+  const isCore = CORE_SPACE_CHAIN_IDS.includes(id) || props?.isCore;
+  const isEvm = ESPACE_CHAIN_IDS.includes(id) || props?.isEvm;
+  const isBtc = BSPACE_CHAIN_IDS.includes(id) || props?.isBtc;
+  if (isCore) {
+    return IconCore;
+  } else if (isEvm) {
+    return IconEvm;
+  } else if (isBtc) {
+    return IconBtc;
   }
-  return url;
-};
-
-export const gotoNetwork = (networkId: string | number): void => {
-  const url = getUrl(networkId);
-  window.location.assign(url);
 };
 
 export const getAddressInputPlaceholder = () => {
-  if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+  if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET) {
     return 'cfx:...';
-  } else if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+  } else if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET) {
     return 'cfxtest:...';
   } else {
     return '';
@@ -522,7 +514,7 @@ export const publishRequestError = (
         } \n`;
       }
       if (type === 'rpc') {
-        detail += `RPC Url: ${RPC_SERVER} \n`;
+        detail += `RPC Url: ${ENV_CONFIG.ENV_RPC_SERVER} \n`;
         if (!lodash.isNil(e.method)) {
           detail += `Method: ${e.method} \n`;
         }

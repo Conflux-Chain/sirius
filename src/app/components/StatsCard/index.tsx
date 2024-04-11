@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import SkelontonContainer from '../SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import {
@@ -22,7 +22,8 @@ import { Link } from '../Link';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
-import { IS_TESTNET, HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { IS_TESTNET } from 'env';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',

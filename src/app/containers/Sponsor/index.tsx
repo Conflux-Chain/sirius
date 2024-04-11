@@ -21,18 +21,14 @@ import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'app/components/AddressContainer';
-import {
-  TXN_ACTION,
-  RPC_SERVER,
-  CONTRACTS,
-  NETWORK_TYPE,
-} from 'utils/constants';
+import { TXN_ACTION, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
+import ENV_CONFIG from 'env';
 
 interface RouteParams {
   contractAddress: string;
@@ -78,7 +74,11 @@ const getCFXAmount = (value: string | number, zeroUnit = '') => {
 };
 
 export function Sponsor() {
-  const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
+  const faucet = new Faucet(
+    ENV_CONFIG.ENV_RPC_SERVER,
+    CONTRACTS.faucet,
+    CONTRACTS.faucetLast,
+  );
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -260,7 +260,9 @@ export function Sponsor() {
         setErrorMsgForApply(
           t(translations.general.errors.address, {
             network: t(
-              translations.general.networks[NETWORK_TYPE.toLowerCase()],
+              translations.general.networks[
+                ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+              ],
             ),
           }),
         );
@@ -336,7 +338,11 @@ export function Sponsor() {
 
       setErrorMsgForApply(
         t(translations.general.errors.address, {
-          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+          network: t(
+            translations.general.networks[
+              ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+            ],
+          ),
         }),
       );
     }
@@ -367,7 +373,11 @@ export function Sponsor() {
 
       setErrorMsgForApply(
         t(translations.general.errors.address, {
-          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+          network: t(
+            translations.general.networks[
+              ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+            ],
+          ),
         }),
       );
     }

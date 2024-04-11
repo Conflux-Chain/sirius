@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import docCookies from '../../../utils/cookie';
 
 export const GlobalTip = ({ tipKey = '' }: { tipKey: string }) => {

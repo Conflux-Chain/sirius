@@ -92,6 +92,10 @@ module.exports = function (config, mode) {
           __dirname,
           './node_modules/react-router-dom',
         ),
+        'react-i18next': path.resolve(
+          __dirname,
+          './node_modules/react-i18next',
+        ),
       },
     },
     module: {

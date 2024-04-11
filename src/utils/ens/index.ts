@@ -1,26 +1,19 @@
-import {
-  CFX,
-  ENS_REGISTRY_ADDRESS,
-  ENS_PUBLIC_RESOLVER_ADDRESS,
-  // ENS_REVERSE_REGISTRAR_ADDRESS,
-  ENS_COINID_CONFLUX,
-  NETWORK_ID,
-} from 'utils/constants';
+import { CFX, ENS_COINID_CONFLUX, NETWORK_ID } from 'utils/constants';
 import CNSPublicResolverABI from '../contract/CNSPublicResolver.json';
 import CNSRegistryABI from '../contract/CNSRegistry.json';
-// import CNSReverseRegistrarABI from '../contract/CNSReverseRegistrar.json';
 import { hash } from '@ensdomains/eth-ens-namehash';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { isZeroAddress } from 'utils';
 import LogoENS from 'images/logo-cns.svg';
+import ENV_CONFIG from 'env';
 
 const registry = CFX.Contract({
-  address: ENS_REGISTRY_ADDRESS,
+  address: ENV_CONFIG.ENV_ENS_REGISTRY_ADDRESS,
   abi: CNSRegistryABI,
 });
 
 const publicResolver = CFX.Contract({
-  address: ENS_PUBLIC_RESOLVER_ADDRESS,
+  address: ENV_CONFIG.ENV_ENS_PUBLIC_RESOLVER_ADDRESS,
   abi: CNSPublicResolverABI,
 });
 

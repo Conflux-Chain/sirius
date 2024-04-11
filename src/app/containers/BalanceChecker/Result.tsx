@@ -1,4 +1,4 @@
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import { Card as AntdCard, Avatar } from '@cfxjs/antd';
 import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import DateIcon from '../../../images/balance-checker/date.png';

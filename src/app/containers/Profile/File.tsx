@@ -55,7 +55,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
         let updateAmount = 0;
         // New imports have higher priority
         const tags = lodash
-          .unionWith(addressNameTags, oldList, (arrVal, othVal) => {
+          .unionWith<any>(addressNameTags, oldList, (arrVal, othVal) => {
             if (arrVal.a === othVal.a) {
               if (arrVal.l !== othVal.l) {
                 updateAmount += 1;
@@ -108,7 +108,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
         let updateAmount = 0;
         // New imports have higher priority
         const notes = lodash
-          .unionWith(txPrivateNotes, oldList, (arrVal, othVal) => {
+          .unionWith<any>(txPrivateNotes, oldList, (arrVal, othVal) => {
             if (arrVal.h === othVal.h) {
               if (arrVal.n !== othVal.n) {
                 updateAmount += 1;

@@ -4,35 +4,24 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // http-proxy-middleware doc https://www.npmjs.com/package/http-proxy-middleware#example
 
 // const url = 'https://www-stage.confluxscan.net';
-const url = 'https://confluxscan.io/';
-let stat = `${url}`;
-let v1 = `${url}`;
-let rpc = `${url}/rpc`;
-let rpcv2 = `${url}/rpcv2`;
-let confluxDag = `${url}`;
 
-if (process.env.REACT_APP_TestNet === 'true') {
-  const testnet = 'https://testnet-stage.confluxscan.net/';
-  // const testnet = 'https://testnet.confluxscan.net/';
-  stat = `${testnet}`;
-  v1 = `${testnet}`;
-  rpc = `${testnet}/rpc`;
-  rpcv2 = `${testnet}/rpcv2`;
-  confluxDag = `${testnet}`;
-} else if (process.env.REACT_APP_PrivateNet === 'true') {
-  const url = 'https://net8888cfx.confluxscan.net/';
-  stat = `${url}/`;
-  v1 = `${url}/`;
-  rpc = `${url}/rpc`;
-  rpcv2 = `${url}/rpcv2`;
-  confluxDag = `${url}/`;
+const configs = {
+  core_mainnet_url: 'https://confluxscan.net/',
+  core_testnet_url: 'https://testnet-stage.confluxscan.net/',
+  core_devnet_url: 'https://net8888cfx.confluxscan.net/',
+};
+let url = configs.core_mainnet_url;
+if (process.env.REACT_APP_CORE_TESTNET === 'true') {
+  url = configs.core_testnet_url;
+} else if (process.env.REACT_APP_CORE_DEVNET === 'true') {
+  url = configs.core_devnet_url;
 }
 
 module.exports = app => {
   app.use(
     '/stat',
     createProxyMiddleware({
-      target: stat,
+      target: url,
       changeOrigin: true,
       secure: false,
     }),
@@ -49,7 +38,7 @@ module.exports = app => {
   app.use(
     '/v1',
     createProxyMiddleware({
-      target: v1,
+      target: url,
       changeOrigin: true,
       secure: false,
     }),
@@ -57,7 +46,7 @@ module.exports = app => {
   app.use(
     '/rpc',
     createProxyMiddleware({
-      target: rpc,
+      target: `${url}/rpc`,
       changeOrigin: true,
       secure: false,
     }),
@@ -65,7 +54,7 @@ module.exports = app => {
   app.use(
     '/rpcv2',
     createProxyMiddleware({
-      target: rpcv2,
+      target: `${url}/rpcv2`,
       changeOrigin: true,
       secure: false,
     }),
@@ -73,7 +62,7 @@ module.exports = app => {
   app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
-      target: confluxDag,
+      target: url,
       changeOrigin: true,
       secure: false,
     }),

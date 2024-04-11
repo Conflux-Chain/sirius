@@ -12,7 +12,7 @@ import {
   AccountInfoType,
 } from './Common';
 import { usePortal } from 'utils/hooks/usePortal';
-import { TXN_ACTION, FC_EXCHANGE_ADDRESS } from 'utils/constants';
+import { TXN_ACTION } from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { StyledTitle200F1327 } from 'app/components/StyledComponent';
@@ -20,6 +20,7 @@ import { formatBalance } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Modal } from '@cfxjs/antd';
+import ENV_CONFIG from 'env';
 
 const { confirm } = Modal;
 
@@ -55,7 +56,11 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     try {
       const value = SDK.Drip.fromCFX(stakedFC);
       const hash = await fcContract
-        .send(FC_EXCHANGE_ADDRESS, value, SDK.format.hexAddress(accounts[0]))
+        .send(
+          ENV_CONFIG.ENV_FC_EXCHANGE_ADDRESS,
+          value,
+          SDK.format.hexAddress(accounts[0]),
+        )
         .sendTransaction({
           from: accounts[0],
         });
