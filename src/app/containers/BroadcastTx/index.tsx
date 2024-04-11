@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader';
 import imgWarning from 'images/warning.png';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';

@@ -10,7 +10,7 @@ import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Link } from 'app/components/Link/Loadable';
 import clsx from 'clsx';
 import { Row, Col, Tag } from '@cfxjs/antd';

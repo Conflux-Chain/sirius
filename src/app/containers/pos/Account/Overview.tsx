@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Card } from 'app/components/Card/Loadable';
-import { Description } from 'app/components/Description/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
+import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { toThousands, formatTimeStamp } from 'utils';

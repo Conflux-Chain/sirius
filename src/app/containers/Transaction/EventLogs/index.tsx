@@ -5,10 +5,10 @@ import {
   reqContractAndToken,
 } from 'utils/httpRequest';
 import { toThousands } from 'utils';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Empty } from 'app/components/Empty/Loadable';
 import { CFX } from 'utils/constants';
-import { Description } from 'app/components/Description/Loadable';
+import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import styled from 'styled-components';
 import _ from 'lodash';
 import SkeletonContainer from 'app/components/SkeletonContainer';
@@ -187,7 +187,7 @@ const EventLog = ({ log }) => {
               title={
                 <strong>{t(translations.transaction.logs.address)}</strong>
               }
-              small
+              size="small"
               noBorder
             >
               <Address
@@ -200,7 +200,7 @@ const EventLog = ({ log }) => {
               <Description
                 className="description"
                 title={t(translations.transaction.logs.name)}
-                small
+                size="small"
                 noBorder
               >
                 <Event fnName={fnName} args={args} />
@@ -209,7 +209,7 @@ const EventLog = ({ log }) => {
             <Description
               className="description"
               title={t(translations.transaction.logs.topics)}
-              small
+              size="small"
               noBorder
             >
               <Topics
@@ -222,7 +222,7 @@ const EventLog = ({ log }) => {
               <Description
                 className="description"
                 title={<i>{t(translations.transaction.logs.data)}</i>}
-                small
+                size="small"
                 noBorder
               >
                 <Data

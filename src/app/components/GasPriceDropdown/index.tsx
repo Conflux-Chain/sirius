@@ -294,7 +294,7 @@ const GasMarketWrapper = styled.div`
     div {
       width: 25%;
       height: 8px;
-      background: #f0f4f3;
+      background: var(--theme-color-gas-price-line-bg);
     }
     div:nth-child(1) {
       border-radius: 4px 0 0 4px;
@@ -304,7 +304,7 @@ const GasMarketWrapper = styled.div`
     }
     .active {
       width: 50%;
-      background: #1e3de4;
+      background: var(--theme-color-primary);
     }
   }
   .gasPriceMarketMid {
@@ -319,7 +319,7 @@ const GasMarketWrapper = styled.div`
     .activeLine {
       width: 1px;
       height: 12px;
-      background: #1e3de4;
+      background: var(--theme-color-primary);
       position: absolute;
       margin-top: -10px;
       left: 50%;
@@ -335,7 +335,7 @@ const GasMarketWrapper = styled.div`
       color: #424a71;
     }
     .active {
-      color: #1e3de4;
+      color: var(--theme-color-primary);
     }
     .left {
       text-align: left;
@@ -415,7 +415,7 @@ const Trigger = styled.div`
   cursor: pointer;
   font-weight: 500;
   .value {
-    color: #1e3de4;
+    color: var(--theme-color-primary);
   }
 `;
 
@@ -434,13 +434,9 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   div:first-child {
-    display: flex;
     color: #20253a;
     font-size: 16px;
     font-weight: 500;
-  }
-  .blockHeight {
-    min-width: 100px;
   }
 `;
 const GasModuleWrapper = styled.div`

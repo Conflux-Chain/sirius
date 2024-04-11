@@ -4,18 +4,18 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Link } from 'app/components/Link/Loadable';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
 import { Row, Col, Collapse, Tooltip, message, Typography } from '@cfxjs/antd';
-import { Description } from 'app/components/Description/Loadable';
+import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
 import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
-import { Button } from 'app/components/Button/Loadable';
+import Button from 'sirius-next/packages/common/dist/components/Button';
 import { usePlatform } from 'utils/hooks/usePlatform';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
@@ -327,6 +327,7 @@ export function NFTDetail(props) {
           <Card style={{ padding: 0 }}>
             <Button
               className="button-refresh"
+              type="action"
               size="small"
               onClick={handleRefresh}
             >

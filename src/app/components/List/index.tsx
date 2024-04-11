@@ -7,8 +7,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from '@cfxjs/react-ui';
 import { useBreakpoint, media } from 'styles/media';
-import { Card } from '../Card';
-import { Description, DescriptionProps } from '../Description';
+import { Card } from 'sirius-next/packages/common/dist/components/Card';
+import {
+  Description,
+  DescriptionProps,
+} from 'sirius-next/packages/common/dist/components/Description';
 
 interface ListProps {
   list: Array<DescriptionProps | null>;
@@ -44,7 +47,7 @@ export const List = ({ list, className }: ListProps) => {
         {list.map((item, index) => (
           <Description
             key={`desc_${index}`}
-            small
+            size="small"
             className={`list-desp ${item == null ? 'list-empty' : ''}`}
             title={item != null ? item.title : ''}
             noBorder={item != null ? noBorder(index) : true}
