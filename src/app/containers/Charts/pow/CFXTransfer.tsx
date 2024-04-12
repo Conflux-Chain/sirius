@@ -2,12 +2,10 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 import BigNumber from 'bignumber.js';
 
 export function CFXTransfer({ preview = false }: ChildProps) {
@@ -16,12 +14,14 @@ export function CFXTransfer({ preview = false }: ChildProps) {
   const tickAmount = preview ? 4 : 6;
 
   const props = {
-    preview: preview,
-    name: 'cfx-transfer',
-    title: t(translations.highcharts.pow.cfxTransfer.title),
-    subtitle: t(translations.highcharts.pow.cfxTransfer.subtitle),
     request: {
       url: OPEN_API_URLS.cfxTransfer,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
@@ -41,8 +41,29 @@ export function CFXTransfer({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pow.cfxTransfer.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pow.cfxTransfer.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pow.breadcrumb.charts),
+            path: '/pow-charts',
+          },
+          {
+            name: t(translations.highcharts.pow.breadcrumb['cfx-transfer']),
+            path: '/pow-charts/cfx-transfer',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pow.cfxTransfer.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -94,9 +115,9 @@ export function CFXTransfer({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

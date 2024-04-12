@@ -2,12 +2,10 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 
 export function Tx({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -34,6 +32,24 @@ export function Tx({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pow.tx.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pow.tx.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pow.breadcrumb.charts),
+            path: '/pow-charts',
+          },
+          {
+            name: t(translations.highcharts.pow.breadcrumb.tx),
+            path: '/pow-charts/tx',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pow.tx.title),
       },
@@ -54,9 +70,9 @@ export function Tx({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

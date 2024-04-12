@@ -2,12 +2,9 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  // StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
 import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
 import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { scope } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 import {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { ChartTemplate, ChildProps } from 'app/components/Charts/ChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 import SDK from 'js-conflux-sdk';
-import { Wrapper } from './Wrapper';
 import BigNumber from 'bignumber.js';
 
 export function TotalSupply({ preview = false }: ChildProps) {
@@ -56,6 +57,28 @@ export function TotalSupply({ preview = false }: ChildProps) {
       },
     },
     options: {
+      chart: {
+        type: 'pie',
+      },
+      header: {
+        optionShow: false,
+        title: {
+          text: t(translations.highcharts.pow.totalSupply.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pow.totalSupply.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pow.breadcrumb.charts),
+            path: '/pow-charts',
+          },
+          {
+            name: t(translations.highcharts.pow.breadcrumb['supply']),
+            path: '/pow-charts/supply',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pow.totalSupply.title),
       },
@@ -71,9 +94,9 @@ export function TotalSupply({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <ChartTemplate {...props}></ChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }
