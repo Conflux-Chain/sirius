@@ -2,12 +2,10 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 
 export function TotalReward({ preview = false }: ChildProps) {
   const { t } = useTranslation();
@@ -19,6 +17,12 @@ export function TotalReward({ preview = false }: ChildProps) {
     subtitle: t(translations.highcharts.pos.totalReward.subtitle),
     request: {
       url: OPEN_API_URLS.PoSTotalReward,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map((d, i) => {
@@ -31,8 +35,29 @@ export function TotalReward({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pos.totalReward.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pos.totalReward.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pos.breadcrumb.charts),
+            path: '/pos-charts',
+          },
+          {
+            name: t(translations.highcharts.pos.breadcrumb['total-reward']),
+            path: '/pos-charts/total-reward',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pos.totalReward.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -57,9 +82,9 @@ export function TotalReward({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }
