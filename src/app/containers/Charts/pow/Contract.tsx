@@ -42,6 +42,8 @@ export function Contract({
         type: 'line',
       },
       header: {
+        breadcrumbShow: false,
+        titleShow: false,
         title: {
           text: t(translations.highcharts.pow.contract.title),
         },
