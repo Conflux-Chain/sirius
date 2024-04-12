@@ -292,7 +292,7 @@ export const AddressContainer = withTranslation()(
       nametag,
       nametagInfo,
     }: Props & WithTranslation) => {
-      const [globalData = {}] = useGlobalData();
+      const [globalData] = useGlobalData();
 
       let ENSMap = {};
 
@@ -333,7 +333,7 @@ export const AddressContainer = withTranslation()(
           const gENSLabel = ENSMap[fContractCreated]?.name;
           // global private name tag
           const gAddressLabel =
-            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
+            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[fContractCreated];
 
           if (showAddressLabel && gAddressLabel) {
             const { label } = getLabelInfo(gAddressLabel, 'tag');
@@ -455,7 +455,7 @@ export const AddressContainer = withTranslation()(
       const gENSLabel = ENSMap[cfxAddress]?.name;
       // global private name tag
       const gAddressLabel =
-        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
+        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel]?.[cfxAddress];
 
       if (showAddressLabel && gAddressLabel) {
         const { label } = getLabelInfo(gAddressLabel, 'tag');

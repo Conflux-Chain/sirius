@@ -27,7 +27,7 @@ interface Button {
 }
 
 export const Button = ({ className, onClick, showBalance }: Button) => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { authConnectStatus, accounts } = usePortal();
   const account = accounts[0];
