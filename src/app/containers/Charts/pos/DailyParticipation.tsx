@@ -2,24 +2,24 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 import BigNumber from 'bignumber.js';
 
 export function DailyParticipation({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'participation-rate',
-    title: t(translations.highcharts.pos.participation.title),
-    subtitle: t(translations.highcharts.pos.participation.subtitle),
     request: {
       url: OPEN_API_URLS.PoSDailyParticipationRate,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map((d, i) => {
@@ -35,8 +35,31 @@ export function DailyParticipation({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pos.participation.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pos.participation.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pos.breadcrumb.charts),
+            path: '/pos-charts',
+          },
+          {
+            name: t(
+              translations.highcharts.pos.breadcrumb['participation-rate'],
+            ),
+            path: '/pos-charts/participation-rate',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pos.participation.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -60,9 +83,9 @@ export function DailyParticipation({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

@@ -2,12 +2,11 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
+import { scope } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 import { xAxisCustomLabelYear } from 'utils/hooks/useHighcharts';
 
 export function Assets({ preview = false }: ChildProps) {
@@ -16,15 +15,11 @@ export function Assets({ preview = false }: ChildProps) {
   const tickAmount = preview ? 4 : 6;
 
   const props = {
-    preview: preview,
-    name: 'assets',
-    title: t(translations.highcharts.nft.assets.title),
-    subtitle: t(translations.highcharts.nft.assets.subtitle),
     request: {
       url: OPEN_API_URLS.nftAssets,
       query: {
         intervalType: 'month',
-        limit: 2000,
+        limit: preview ? '30' : '2000',
       },
       formatter: data => {
         const data1: any = [];
@@ -43,8 +38,29 @@ export function Assets({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.nft.assets.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.nft.assets.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.nft.breadcrumb.charts),
+            path: '/nft-charts',
+          },
+          {
+            name: t(translations.highcharts.nft.breadcrumb.assets),
+            path: '/nft-charts/assets',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.nft.assets.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -93,12 +109,16 @@ export function Assets({ preview = false }: ChildProps) {
           ...xAxisCustomLabelYear,
         },
       },
+      intervalScope: {
+        month: scope.month,
+        day: scope.day,
+      },
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

@@ -2,23 +2,23 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from 'sirius-next/packages/common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from 'sirius-next/packages/common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 
 export function AccountGrowth({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'account-growth',
-    title: t(translations.highcharts.pow.accountGrowth.title),
-    subtitle: t(translations.highcharts.pow.accountGrowth.subtitle),
     request: {
       url: OPEN_API_URLS.accountGrowth,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map(s => [
@@ -34,8 +34,29 @@ export function AccountGrowth({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pow.accountGrowth.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pow.accountGrowth.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pow.breadcrumb.charts),
+            path: '/pow-charts',
+          },
+          {
+            name: t(translations.highcharts.pow.breadcrumb['account-growth']),
+            path: '/pow-charts/account-growth',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pow.accountGrowth.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -56,9 +77,9 @@ export function AccountGrowth({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }
