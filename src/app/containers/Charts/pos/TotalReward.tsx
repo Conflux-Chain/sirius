@@ -11,10 +11,6 @@ export function TotalReward({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'total-reward',
-    title: t(translations.highcharts.pos.totalReward.title),
-    subtitle: t(translations.highcharts.pos.totalReward.subtitle),
     request: {
       url: OPEN_API_URLS.PoSTotalReward,
       query: preview

@@ -11,10 +11,6 @@ export function Contracts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.pow.contracts.title),
-    subtitle: t(translations.highcharts.pow.contracts.subtitle),
     request: {
       url: OPEN_API_URLS.contracts,
       formatter: data => {

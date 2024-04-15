@@ -12,10 +12,6 @@ export function TotalSupply({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    name: 'supply',
-    preview,
-    title: t(translations.highcharts.pow.totalSupply.title),
-    subtitle: t(translations.highcharts.pow.totalSupply.subtitle),
     request: {
       url: OPEN_API_URLS.supply,
       formatter: data => {

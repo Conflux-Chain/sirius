@@ -16,10 +16,6 @@ export function TPS({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'tps',
-    title: t(translations.highcharts.pow.tps.title),
-    subtitle: t(translations.highcharts.pow.tps.subtitle),
     request: {
       url: OPEN_API_URLS.tps,
       query: preview

@@ -15,10 +15,6 @@ export function Holders({ preview = false }: ChildProps) {
   const tickAmount = preview ? 4 : 6;
 
   const props = {
-    preview: preview,
-    name: 'holders',
-    title: t(translations.highcharts.nft.holders.title),
-    subtitle: t(translations.highcharts.nft.holders.subtitle),
     request: {
       url: OPEN_API_URLS.nftHolders,
       query: {

@@ -11,10 +11,6 @@ export function Tx({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'tx',
-    title: t(translations.highcharts.pow.tx.title),
-    subtitle: t(translations.highcharts.pow.tx.subtitle),
     request: {
       url: OPEN_API_URLS.tx,
       formatter: data => {
