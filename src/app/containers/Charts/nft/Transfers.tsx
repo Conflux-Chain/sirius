@@ -15,10 +15,6 @@ export function Transfers({ preview = false }: ChildProps) {
   const tickAmount = preview ? 4 : 6;
 
   const props = {
-    preview: preview,
-    name: 'transfers',
-    title: t(translations.highcharts.nft.transfers.title),
-    subtitle: t(translations.highcharts.nft.transfers.subtitle),
     request: {
       url: OPEN_API_URLS.nftTransfers,
       query: {

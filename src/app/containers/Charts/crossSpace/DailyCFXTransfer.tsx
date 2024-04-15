@@ -12,10 +12,6 @@ export function DailyCFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'daily-cfx-transfer',
-    title: t(translations.highcharts.crossSpace.dailyCFXTransfer.title),
-    subtitle: t(translations.highcharts.crossSpace.dailyCFXTransfer.subtitle),
     request: {
       url: OPEN_API_URLS.CrossSpaceDailyCFXTransfer,
       query: {

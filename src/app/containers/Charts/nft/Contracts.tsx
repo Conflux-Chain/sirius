@@ -15,10 +15,6 @@ export function Contracts({ preview = false }: ChildProps) {
   const tickAmount = preview ? 4 : 6;
 
   const props = {
-    preview: preview,
-    name: 'contracts',
-    title: t(translations.highcharts.nft.contracts.title),
-    subtitle: t(translations.highcharts.nft.contracts.subtitle),
     request: {
       url: OPEN_API_URLS.nftContracts,
       query: {
