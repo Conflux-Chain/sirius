@@ -35,13 +35,13 @@ import {
   Youtube,
 } from './Icon';
 import ENV_CONFIG, { DOMAIN, IS_FOREIGN_HOST, NETWORK_TYPES } from 'env';
-import { GlobalDataType, useGlobalData } from 'utils/hooks/useGlobal';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 
 export function Footer() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
   const [globalData] = useGlobalData();
-  const { networkId, networks } = globalData as GlobalDataType;
+  const { networkId, networks } = globalData;
   const network = getNetwork(networks, networkId);
 
   const left = [<TextLogo key="logo" color="var(--theme-color-gray0)" />];

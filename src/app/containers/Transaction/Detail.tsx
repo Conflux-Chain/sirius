@@ -67,7 +67,7 @@ const getStorageFee = byteSize =>
 // Transaction Detail Page
 export const Detail = () => {
   const [visible, setVisible] = useState(false);
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
   const [transactionDetail, setTransactionDetail] = useState<any>({});
@@ -714,7 +714,7 @@ export const Detail = () => {
       )
     : 0;
   const txNoteMap = globalData[LOCALSTORAGE_KEYS_MAP.txPrivateNote];
-  const txNote = txNoteMap[routeHash];
+  const txNote = txNoteMap?.[routeHash];
 
   const txNoteProps = {
     stage: txNote ? 'edit' : 'create',
