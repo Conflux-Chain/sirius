@@ -6,7 +6,7 @@ import { Row, Col, Progress } from '@cfxjs/antd';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import { TotalInfoType } from './Common';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { useBreakpoint, media } from 'styles/media';
 
 export function TotalInfoCard({ info }: { info: TotalInfoType }) {

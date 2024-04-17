@@ -3,7 +3,7 @@ import { FileUpload } from 'sirius-next/packages/common/dist/components/FileUplo
 import { NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';

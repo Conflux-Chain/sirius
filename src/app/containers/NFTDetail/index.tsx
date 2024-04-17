@@ -14,7 +14,7 @@ import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import Button from 'sirius-next/packages/common/dist/components/Button';
 import { usePlatform } from 'utils/hooks/usePlatform';
 
