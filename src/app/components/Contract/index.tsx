@@ -34,7 +34,7 @@ import { TXN_ACTION } from 'utils/constants';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
 import { Text } from 'app/components/Text/Loadable';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 
 interface Props {
   contractDetail: any;

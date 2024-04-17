@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { Tx, AccountGrowth } from '../Charts/pow/Loadable';
 
 function Info(title, number: any) {

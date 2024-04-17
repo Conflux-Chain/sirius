@@ -7,7 +7,7 @@ import { padLeft } from 'utils';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import NFTIcon from 'images/fccfx/nft.png';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { Tooltip } from '@cfxjs/antd';
 
 interface PropsType {
