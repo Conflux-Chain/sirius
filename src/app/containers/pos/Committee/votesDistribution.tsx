@@ -1,5 +1,8 @@
 import React from 'react';
-import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import {
+  TablePanel as TablePanelNew,
+  sortDirections,
+} from 'app/components/TablePanelNew';
 import { colunms, committeeColunms } from 'utils/tableColumns/pos';
 
 export function VotesDistribution({ data, loading }) {
@@ -14,10 +17,8 @@ export function VotesDistribution({ data, loading }) {
       ...committeeColunms.votes,
       key: 'votingPower',
       dataIndex: 'votingPower',
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'ascend', 'descend'] as Array<
-        'descend' | 'ascend'
-      >,
+      defaultSortOrder: sortDirections[0],
+      sortDirections,
       showSorterTooltip: false,
       sorter: (a, b) => a.votingPower - b.votingPower,
     },

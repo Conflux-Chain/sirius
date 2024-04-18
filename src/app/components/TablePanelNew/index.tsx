@@ -15,12 +15,19 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { Empty } from 'app/components/Empty/Loadable';
 
+type SortOrder = 'descend' | 'ascend' | null;
+type SortDirections = SortOrder[];
+
+export const sortDirections: SortDirections = ['descend', 'ascend', 'descend'];
+
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
   title?: ((info: any) => React.ReactNode) | React.ReactNode;
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
   hideDefaultTitle?: boolean;
   hideShadow?: boolean;
+  // sort list by reverse param or sort param
+  sortParam?: 'reverse' | 'sort';
   // customize and rename sort key
   sortKeyMap?: {
     [index: string]: string;
@@ -155,6 +162,7 @@ export const TablePanel = ({
   className,
   sortKeyMap = {},
   showSorterTooltip = false,
+  sortParam = 'reverse',
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -196,6 +204,15 @@ export const TablePanel = ({
   useEffect(() => {
     if (outerUrl) {
       const { url } = qs.parseUrl(outerUrl);
+      const query = { ...getQuery } as qs.ParsedQuery<string>;
+      if (sortParam === 'sort') {
+        if (query.reverse === 'false') {
+          query.sort = 'asc';
+        } else {
+          query.sort = 'desc';
+        }
+        delete query.reverse;
+      }
 
       setState({
         ...state,
@@ -204,9 +221,7 @@ export const TablePanel = ({
 
       sendRequest({
         url: url,
-        query: {
-          ...getQuery,
-        },
+        query,
       })
         .then(resp => {
           setState({

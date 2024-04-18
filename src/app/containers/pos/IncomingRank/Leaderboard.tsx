@@ -1,13 +1,10 @@
 import React from 'react';
 import { colunms, incomingRankColunms } from 'utils/tableColumns/pos';
 import { utils } from 'utils/tableColumns';
-import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-
-const sortConfig = {
-  sortDirections: ['descend', 'ascend', 'descend'] as Array<
-    'descend' | 'ascend'
-  >,
-};
+import {
+  TablePanel as TablePanelNew,
+  sortDirections,
+} from 'app/components/TablePanelNew';
 
 export const Leaderboard = () => {
   const url = '/stat/pos-reward-rank?reverse=true&orderBy=all';
@@ -22,28 +19,28 @@ export const Leaderboard = () => {
     {
       ...incomingRankColunms.day(1),
       sorter: true,
-      ...sortConfig,
+      sortDirections,
     },
     {
       ...incomingRankColunms.day(7),
       sorter: true,
-      ...sortConfig,
+      sortDirections,
     },
     {
       ...incomingRankColunms.day(14),
       sorter: true,
-      ...sortConfig,
+      sortDirections,
     },
     {
       ...incomingRankColunms.day(30),
       sorter: true,
-      ...sortConfig,
+      sortDirections,
     },
     {
       ...incomingRankColunms.day('all'),
-      defaultSortOrder: 'descend' as 'descend',
+      defaultSortOrder: sortDirections[0],
       sorter: true,
-      ...sortConfig,
+      sortDirections,
     },
   ].map((item, i) => ({
     ...item,

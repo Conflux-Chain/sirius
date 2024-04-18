@@ -21,13 +21,7 @@ export const List = () => {
     },
     transactionColunms.status,
     transactionColunms.type,
-    {
-      ...colunms.age(ageFormat, toggleAgeFormat),
-      sorter: true,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
-      showSorterTooltip: false,
-    },
+    colunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({
     ...item,
     width: columnsWidth[i],
