@@ -10,7 +10,7 @@ import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
 import { Row, Col, Collapse, Tooltip, message, Typography } from '@cfxjs/antd';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { useBreakpoint } from 'styles/media';
