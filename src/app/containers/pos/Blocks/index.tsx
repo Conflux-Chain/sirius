@@ -14,13 +14,7 @@ export const List = () => {
   const url = '/stat/list-pos-block?orderBy=height&reverse=true';
   const columnsWidth = [4, 4, 4, 4, 5];
   const columns = [
-    {
-      ...blockColunms.blockHeight,
-      sorter: true,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
-      showSorterTooltip: false,
-    },
+    blockColunms.blockHeight,
     {
       ...colunms.posBlockHash,
       key: 'hash',
