@@ -18,7 +18,7 @@ import CRC1155bg from 'images/token/crc1155bg.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
 import { Tag } from '@cfxjs/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';

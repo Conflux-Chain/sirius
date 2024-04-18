@@ -12,7 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Spinner } from '@cfxjs/react-ui';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { Link } from 'app/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
-import { Tooltip } from 'app/components/Tooltip';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { isAccountAddress } from 'utils';
@@ -40,12 +40,13 @@ export const QrcodeButton = ({
   return (
     <>
       <Tooltip
-        text={tooltipText || t(translations.general.qrcodeButton.clickToShow)}
+        title={tooltipText || t(translations.general.qrcodeButton.clickToShow)}
       >
         <div
           onClick={handleClick}
           style={{
             cursor: 'pointer',
+            display: 'flex',
           }}
         >
           <svg
