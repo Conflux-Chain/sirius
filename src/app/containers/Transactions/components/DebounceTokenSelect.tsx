@@ -16,7 +16,7 @@ import {
 } from 'utils/httpRequest';
 import qs from 'query-string';
 import { formatAddress } from 'utils';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import Info from '@zeit-ui/react-icons/info';
 
 const { Option, OptGroup } = Select;
@@ -262,11 +262,9 @@ export function DebounceTokenSelect<
             <>
               {t(translations.general.advancedSearch.others.recommend)}
               <Tooltip
-                className="download-csv-tooltip"
-                text={t(
+                title={t(
                   translations.general.advancedSearch.others.recommendTip,
                 )}
-                placement="top"
               >
                 <StyledInfoIconWrapper>
                   <Info size={14} />

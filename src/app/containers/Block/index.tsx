@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import {
   TabLabel,
   TabsTablePanel,
@@ -73,10 +73,7 @@ export function Block() {
             {bp === 's' ? (
               t(translations.block.tabs.transactions)
             ) : (
-              <Tooltip
-                text={t(translations.toolTip.block.transactions)}
-                placement="top"
-              >
+              <Tooltip title={t(translations.toolTip.block.transactions)}>
                 {t(translations.block.tabs.transactions)}
               </Tooltip>
             )}
@@ -98,10 +95,7 @@ export function Block() {
             {bp === 's' ? (
               t(translations.block.tabs.referenceBlocks)
             ) : (
-              <Tooltip
-                text={t(translations.toolTip.block.referenceBlocks)}
-                placement="top"
-              >
+              <Tooltip title={t(translations.toolTip.block.referenceBlocks)}>
                 {t(translations.block.tabs.referenceBlocks)}
               </Tooltip>
             )}

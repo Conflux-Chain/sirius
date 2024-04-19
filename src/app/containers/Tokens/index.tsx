@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { tokenColunms, utils } from 'utils/tableColumns';
 import styled from 'styled-components';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import queryString from 'query-string';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -210,12 +210,10 @@ export function Tokens() {
       <PageHeader>
         {title}
         <Tooltip
-          hoverable
-          text={t(translations.tokens.crcTip, {
+          title={t(translations.tokens.crcTip, {
             crc: tokenType.replace('CRC', 'CRC-'),
             erc: tokenType.replace('CRC', 'ERC-'),
           })}
-          placement="top"
         >
           <IconWrapper>
             <img src={imgInfo} alt="?" />
@@ -237,6 +235,7 @@ export function Tokens() {
 }
 
 const IconWrapper = styled.div`
+  display: inline-block;
   padding-left: 0.2857rem;
   width: 1.2857rem;
   cursor: pointer;

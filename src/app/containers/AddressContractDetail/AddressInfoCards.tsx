@@ -8,7 +8,7 @@ import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from 'app/components/Text/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import imgBalance from 'images/contract-address/balance.svg';
 import imgToken from 'images/contract-address/token.svg';
 import imgStorage from 'images/contract-address/storage.svg';
@@ -27,7 +27,7 @@ export function BalanceCard({ accountInfo }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.balance)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.balance)}>
           {t(translations.general.balance)}
         </Tooltip>
       }
@@ -55,7 +55,7 @@ export function TokensCard({ address }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.token)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.token)}>
           {t(translations.general.token)}
         </Tooltip>
       }
@@ -147,7 +147,7 @@ export function NonceCard({ accountInfo }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.nonce)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.nonce)}>
           {t(translations.general.nonce)}
         </Tooltip>
       }
