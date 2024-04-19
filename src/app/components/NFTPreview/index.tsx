@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
-import { Tooltip } from '@cfxjs/antd';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
 import { addIPFSGateway } from 'utils';

@@ -17,7 +17,7 @@ import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';
 import { abi as stakingAbi } from 'utils/contract/staking.json';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { Link } from 'app/components/Link/Loadable';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
@@ -221,7 +221,7 @@ export function AddressMetadata({ address, accountInfo }) {
             {
               title: (
                 <Tooltip
-                  text={
+                  title={
                     <>
                       {t(translations.toolTip.address.stakedBegin)}
                       {ENV_CONFIG.ENV_NETWORK_TYPE ===
@@ -272,7 +272,7 @@ export function AddressMetadata({ address, accountInfo }) {
             {
               title: (
                 <Tooltip
-                  text={
+                  title={
                     <>
                       {t(translations.toolTip.address.lockedBegin)}
                       {ENV_CONFIG.ENV_NETWORK_TYPE ===

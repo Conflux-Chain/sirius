@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from 'app/components/List/Loadable';
 import { Text } from 'app/components/Text/Loadable';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
@@ -118,7 +118,7 @@ export const Basic = ({
 
   const fieldPrice = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.price)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.price)}>
         {t(translations.token.price)}
       </Tooltip>
     ),
@@ -138,7 +138,7 @@ export const Basic = ({
 
   const fieldMarketCap = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.marketCap)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.marketCap)}>
         {t(translations.token.marketCap, {
           interpolation: { escapeValue: false },
         })}
@@ -154,7 +154,7 @@ export const Basic = ({
 
   const fieldContractAddress = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.contract)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.contract)}>
         {t(translations.token.contract)}
       </Tooltip>
     ),
@@ -171,7 +171,7 @@ export const Basic = ({
 
   const fieldDecimal = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.decimals)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.decimals)}>
         {t(translations.token.decimals)}
       </Tooltip>
     ),
@@ -184,7 +184,7 @@ export const Basic = ({
 
   const fieldTotalSupply = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.totalSupply)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.totalSupply)}>
         {t(translations.token.totalSupplay)}
       </Tooltip>
     ),
@@ -209,7 +209,7 @@ export const Basic = ({
 
   const fieldHolders = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.holders)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.holders)}>
         {t(translations.token.holders)}
       </Tooltip>
     ),
@@ -251,7 +251,7 @@ export const Basic = ({
 
   const fieldTransfers = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.transfers)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.transfers)}>
         {t(translations.token.transfers)}
       </Tooltip>
     ),
@@ -264,7 +264,7 @@ export const Basic = ({
   };
   const fieldProjectInfo = {
     title: (
-      <Tooltip text={t(translations.toolTip.token.transfers)} placement="top">
+      <Tooltip title={t(translations.toolTip.token.transfers)}>
         {t(translations.general.table.token.projectInfo.projectInfo)}
       </Tooltip>
     ),

@@ -24,7 +24,7 @@ import { AddressContainer } from '../../app/components/AddressContainer';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
-import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
@@ -340,8 +340,7 @@ export const marketCap = {
     <ContentWrapper right>
       <IconWrapper>
         <Tooltip
-          hoverable
-          text={
+          title={
             <Translation>
               {t => (
                 <div
@@ -352,7 +351,6 @@ export const marketCap = {
               )}
             </Translation>
           }
-          placement="top"
         >
           <img src={imgInfo} alt="?" />
         </Tooltip>

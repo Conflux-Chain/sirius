@@ -10,7 +10,7 @@ import { translations } from 'locales/i18n';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { isHex } from 'utils';
 import imgInfo from 'images/info.svg';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 
 const AceEditorStyle = {
   width: '100%',
@@ -160,11 +160,7 @@ export const ContractInfo = ({ onChange }) => {
           <StyledLabelWrapper>
             <div>
               constructor arguments{' '}
-              <Tooltip
-                hoverable
-                text={t(translations.contractDeployment.tip)}
-                placement="top"
-              >
+              <Tooltip title={t(translations.contractDeployment.tip)}>
                 <img src={imgInfo} alt="?" width="14px" />
               </Tooltip>
             </div>
