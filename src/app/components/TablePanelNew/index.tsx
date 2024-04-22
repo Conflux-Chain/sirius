@@ -13,7 +13,7 @@ import { toThousands, formatNumber } from 'utils';
 import { useBreakpoint } from 'styles/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from 'app/components/Empty/Loadable';
+import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
 
 type SortOrder = 'descend' | 'ascend' | null;
 type SortDirections = SortOrder[];
