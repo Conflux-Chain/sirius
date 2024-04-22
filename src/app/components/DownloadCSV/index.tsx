@@ -6,7 +6,7 @@ import { Link } from 'app/components/Link';
 import { Modal } from '@cfxjs/react-ui';
 import ReCAPTCHA from 'react-google-recaptcha';
 import iconInfo from 'images/info.svg';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import querystring from 'query-string';
 
 export const DownloadCSV = ({ url: outerUrl }) => {
@@ -38,11 +38,7 @@ export const DownloadCSV = ({ url: outerUrl }) => {
 
   return (
     <StyledDownloadCSVWrapper>
-      <Tooltip
-        className="download-csv-tooltip"
-        text={t(translations.general.downloadCSV.latest5000records)}
-        placement="top"
-      >
+      <Tooltip title={t(translations.general.downloadCSV.latest5000records)}>
         <IconWrapper>
           <img
             src={iconInfo}
@@ -74,14 +70,10 @@ export const DownloadCSV = ({ url: outerUrl }) => {
 const StyledDownloadCSVWrapper = styled.div`
   text-align: right;
   margin-bottom: -1rem;
-  .tooltip.download-csv-tooltip + .tooltip-content {
-    div.tooltip-arrow {
-      left: -0.8571rem !important;
-    }
-  }
 `;
 
 const IconWrapper = styled.div`
+  display: inline-block;
   padding-right: 0.2857rem;
   width: 1.2857rem;
   cursor: pointer;

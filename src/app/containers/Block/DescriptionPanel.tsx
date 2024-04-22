@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { Link } from 'app/components/Link/Loadable';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { Security } from 'app/components/Security/Loadable';
 import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
 import { AddressContainer } from 'app/components/AddressContainer';
@@ -36,10 +36,7 @@ export function DescriptionPanel({ data, loading }) {
     <Card>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.blockHeight)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.blockHeight)}>
             {t(translations.block.blockHeight)}
           </Tooltip>
         }
@@ -50,7 +47,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.epoch)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.epoch)}>
             {t(translations.block.epoch)}
           </Tooltip>
         }
@@ -62,10 +59,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.difficulty)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.difficulty)}>
             {t(translations.block.difficulty)}
           </Tooltip>
         }
@@ -76,7 +70,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.miner)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.miner)}>
             {t(translations.block.miner)}
           </Tooltip>
         }
@@ -92,7 +86,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.reward)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.reward)}>
             {t(translations.block.reward)}
           </Tooltip>
         }
@@ -103,10 +97,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.security)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.security)}>
             {t(translations.block.security)}
           </Tooltip>
         }
@@ -117,7 +108,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.blame)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.blame)}>
             {t(translations.block.blame)}
           </Tooltip>
         }
@@ -126,10 +117,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.posBlockHash)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.posBlockHash)}>
             {t(translations.block.posBlockHash)}
           </Tooltip>
         }
@@ -146,10 +134,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.blockHash)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.blockHash)}>
             {t(translations.block.blockHash)}
           </Tooltip>
         }
@@ -160,10 +145,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.parentHash)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.parentHash)}>
             {t(translations.block.parentHash)}
           </Tooltip>
         }
@@ -179,7 +161,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.nonce)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.nonce)}>
             {t(translations.block.nonce)}
           </Tooltip>
         }
@@ -188,10 +170,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.gasUsedLimit)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.gasUsedLimit)}>
             {t(translations.block.gasUsed)}
           </Tooltip>
         }
@@ -206,10 +185,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip
-            text={t(translations.toolTip.block.timestamp)}
-            placement="top"
-          >
+          <Tooltip title={t(translations.toolTip.block.timestamp)}>
             {t(translations.block.timestamp)}
           </Tooltip>
         }
@@ -220,7 +196,7 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip text={t(translations.toolTip.block.size)} placement="top">
+          <Tooltip title={t(translations.toolTip.block.size)}>
             {t(translations.block.size)}
           </Tooltip>
         }

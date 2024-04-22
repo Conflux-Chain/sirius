@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNametag } from 'utils/hooks/useNametag';
-import { Tooltip } from '@cfxjs/antd';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import externallinkIcon from 'images/nametag/externallink.svg';
 import verifiedIcon from 'images/nametag/verified.svg';
 import warningIcon from 'images/nametag/warning.svg';

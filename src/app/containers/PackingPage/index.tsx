@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { media } from 'styles/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
-import { CopyButton } from '../../components/CopyButton/Loadable';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import imgPacking from 'images/home/packing.svg';
 
 interface RouteParams {

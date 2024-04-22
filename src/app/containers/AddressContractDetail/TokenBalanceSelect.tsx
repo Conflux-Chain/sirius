@@ -119,10 +119,7 @@ function SelectItem({
   const content = (
     <SelectItemContent key="content">
       <SelectItemContentBalance key="balance">
-        <Text
-          hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}
-          getPopupContainer={triggerNode => triggerNode}
-        >
+        <Text hoverValue={formatBalance(balance, decimal, true) + ' ' + symbol}>
           {formatBalance(balance, decimal) + ' ' + symbol}
         </Text>
       </SelectItemContentBalance>
@@ -138,7 +135,6 @@ function SelectItem({
                   })
                 : '--'
             }`}
-            getPopupContainer={triggerNode => triggerNode}
           >
             <Price showTooltip={false}>
               {new BigNumber(price)

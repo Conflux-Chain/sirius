@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CopyButton } from '../../components/CopyButton';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { QrcodeButton } from '../../components/QrcodeButton';
 import { IconButton } from './IconButton';
 import { useTranslation } from 'react-i18next';
@@ -114,7 +114,7 @@ const HeadAddressLineButton = styled.div`
   height: 1.15rem;
   border-radius: 50%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   background-color: #dbdde4;
   line-height: 12px;

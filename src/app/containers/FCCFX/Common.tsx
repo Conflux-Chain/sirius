@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Tooltip } from '@cfxjs/antd';
+import { Image } from '@cfxjs/antd';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import imgInfo from 'images/info.svg';
 import styled from 'styled-components';
 import { NETWORK_ID } from 'utils/constants';

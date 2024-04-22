@@ -14,7 +14,7 @@ import { isValidCfxAddress } from '@conflux-dev/conflux-address-js';
 import { transactionColunms, tokenColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { Select } from 'app/components/Select';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';

@@ -16,7 +16,7 @@ import { IconButton } from './IconButton';
 import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
@@ -35,7 +35,6 @@ const WarnningButton = ({ address }) => {
       <IconButton
         className="metadata-tooltip-btn"
         size={16}
-        tooltipContentClassName="warnning-tooltip"
         viewBox={!isZeroAddress(address) ? '0 0 1024 1024' : '0 0 16 16'}
         tooltipText={
           <WarnningTooltipWrapper>
@@ -98,14 +97,6 @@ const WarnningButton = ({ address }) => {
 };
 
 const WarnningButtonWrapper = styled.div`
-  .warnning-tooltip.tooltip-content {
-    max-width: 30rem;
-    text-align: center;
-    padding: 0.43rem 0.86rem;
-    ${media.s} {
-      max-width: 15rem;
-    }
-  }
   .icon.metadata-tooltip-btn {
     margin-left: 1rem;
   }
@@ -114,7 +105,8 @@ const WarnningTooltipWrapper = styled.div`
   p.warnning-text {
     margin: 0;
   }
-  .warnning-tooltip-link.link {
+  .warnning-tooltip-link.link,
+  .warnning-tooltip-link.link:hover {
     color: #008dff;
   }
 `;
@@ -147,10 +139,7 @@ export function ContractMetadata({ address, contractInfo }) {
   let list = [
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.nameTag)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.nameTag)}>
           {t(translations.contract.nameTag)}
         </Tooltip>
       ),
@@ -180,10 +169,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.contractAdmin)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.contractAdmin)}>
           {t(translations.contract.contractAdmin)}
         </Tooltip>
       ),
@@ -211,10 +197,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.tokenTracker)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.tokenTracker)}>
           {t(translations.contract.tokenTracker)}
         </Tooltip>
       ),
@@ -241,10 +224,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.storageSponsor)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.storageSponsor)}>
           {t(translations.contract.storageSponsor)}
         </Tooltip>
       ),
@@ -281,10 +261,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.contractCreator)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.contractCreator)}>
           {t(translations.contract.creator)}
         </Tooltip>
       ),
@@ -335,10 +312,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.gasFeeSponsor)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.gasFeeSponsor)}>
           {t(translations.contract.gasSponsor)}
         </Tooltip>
       ),

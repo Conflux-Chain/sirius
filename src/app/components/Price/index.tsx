@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { formatPrice } from './../../../utils';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 
 export const Price = ({
   children,
@@ -22,7 +22,7 @@ export const Price = ({
 
   return fullPrice && showTooltip ? (
     <Tooltip
-      text={
+      title={
         <span
           style={{
             whiteSpace: 'nowrap',
