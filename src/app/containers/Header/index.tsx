@@ -82,12 +82,6 @@ export const Header = memo(() => {
       href: 'https://github.com/Conflux-Chain/sirius/issues',
     },
     {
-      title: [t(translations.header.report), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.report,
-      afterClick: menuClick,
-      href: '/report',
-    },
-    {
       title: [
         t(translations.header.suggestionBox),
         <Check size={18} key="check" />,
