@@ -4,7 +4,7 @@ import { Bookmark } from '@zeit-ui/react-icons';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Text } from '../Text/Loadable';
-import { getLabelInfo } from '../AddressContainer';
+import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useENS } from 'utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 

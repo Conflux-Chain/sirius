@@ -27,6 +27,8 @@ import ICON_ENS from 'images/logo-cns.svg';
 import { useENS, ENSInfoItemType } from 'utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 import ENV_CONFIG, { IS_MAINNET, NETWORK_TYPES } from 'env';
+import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
+import { RenderAddress } from 'sirius-next/packages/common/dist/components/AddressContainer';
 
 interface Props {
   value: string; // address value
@@ -63,215 +65,213 @@ const defaultPCSuffixAddressSize = IS_MAINNET ? 8 : 4;
 const defaultPCSuffixPosAddressSize = 10;
 const defaultMobileSuffixAddressSize = 4;
 
-export const getLabelInfo = (label, type) => {
-  if (label) {
-    let trans: string = '';
-    let icon: React.ReactNode = null;
+export { getLabelInfo };
+// export const getLabelInfo = (label, type) => {
+//   if (label) {
+//     let trans: string = '';
+//     let icon: React.ReactNode = null;
 
-    if (type === 'tag') {
-      trans = translations.profile.tip.label;
-      icon = <Bookmark color="var(--theme-color-gray2)" size={16} />;
-    } else if (type === 'ens') {
-      trans = translations.ens.label;
-      icon = (
-        <img
-          src={ICON_ENS}
-          style={{
-            marginBottom: '3px',
-            marginRight: '2px',
-          }}
-          alt=""
-        />
-      );
-      // nametag from official operational staff
-    } else if (type === 'nametag') {
-      trans = translations.nametag.label;
-      icon = <Hash color="var(--theme-color-gray2)" size={16} />;
-    }
+//     if (type === 'tag') {
+//       trans = translations.profile.tip.label;
+//       icon = <Bookmark color="var(--theme-color-gray2)" size={16} />;
+//     } else if (type === 'ens') {
+//       trans = translations.ens.label;
+//       icon = (
+//         <img
+//           src={ICON_ENS}
+//           style={{
+//             marginBottom: '3px',
+//             marginRight: '2px',
+//           }}
+//           alt=""
+//         />
+//       );
+//       // nametag from official operational staff
+//     } else if (type === 'nametag') {
+//       trans = translations.nametag.label;
+//       icon = <Hash color="var(--theme-color-gray2)" size={16} />;
+//     }
 
-    // change different label with different style
-    // label = <mark>{label}</mark>
+//     // change different label with different style
+//     // label = <mark>{label}</mark>
 
-    return {
-      label,
-      icon: (
-        <IconWrapper>
-          <Text span hoverValue={<Translation>{t => t(trans)}</Translation>}>
-            {icon}
-          </Text>
-        </IconWrapper>
-      ),
-    };
-  }
+//     return {
+//       label,
+//       icon: (
+//         <IconWrapper>
+//           <Text span hoverValue={<Translation>{t => t(trans)}</Translation>}>
+//             {icon}
+//           </Text>
+//         </IconWrapper>
+//       ),
+//     };
+//   }
 
-  return {
-    label: '',
-    icon: null,
-  };
-};
+//   return {
+//     label: '',
+//     icon: null,
+//   };
+// };
 
 // ≈ 2.5 ms
-const RenderAddress = ({
-  cfxAddress,
-  alias,
-  hoverValue,
-  hrefAddress,
-  content,
-  link = true,
-  isFull = false,
-  isFullNameTag = false,
-  style = {},
-  maxWidth,
-  suffixSize = defaultPCSuffixAddressSize,
-  prefix = null,
-  suffix = null,
-  type = 'pow',
-  addressLabel = '',
-  ENSLabel = '',
-  nametag = '',
-  hideAliasPrefixInHover = false,
-}: any) => {
-  const aftercontent =
-    type === 'pow'
-      ? cfxAddress &&
-        !isFull &&
-        !ENSLabel &&
-        !nametag &&
-        !addressLabel &&
-        !alias
-        ? cfxAddress.substr(-suffixSize)
-        : ''
-      : '';
+// const RenderAddress = ({
+//   cfxAddress,
+//   alias,
+//   hoverValue,
+//   hrefAddress,
+//   content,
+//   link = true,
+//   isFull = false,
+//   isFullNameTag = false,
+//   style = {},
+//   maxWidth,
+//   suffixSize = defaultPCSuffixAddressSize,
+//   prefix = null,
+//   suffix = null,
+//   type = 'pow',
+//   addressLabel = '',
+//   ENSLabel = '',
+//   nametag = '',
+// }: any) => {
+//   const aftercontent =
+//     type === 'pow'
+//       ? cfxAddress &&
+//         !isFull &&
+//         !ENSLabel &&
+//         !nametag &&
+//         !addressLabel &&
+//         !alias
+//         ? cfxAddress.substr(-suffixSize)
+//         : ''
+//       : '';
 
-  let text: React.ReactNode = null;
+//   let text: React.ReactNode = null;
 
-  if (link) {
-    if (typeof link === 'string') {
-      text = (
-        <LinkWrapper
-          style={style}
-          href={link}
-          maxwidth={
-            (content || alias) && isFullNameTag ? 1000 : isFull ? 430 : maxWidth
-          }
-          alias={alias}
-          aftercontent={aftercontent}
-        >
-          <span>{content || alias || cfxAddress}</span>
-        </LinkWrapper>
-      );
-    } else {
-      const href = `/${type === 'pow' ? 'address' : 'pos/accounts'}/${
-        hrefAddress || cfxAddress
-      }`;
-      text = (
-        <LinkWrapper
-          style={style}
-          href={href}
-          maxwidth={
-            (content || ENSLabel || nametag || addressLabel || alias) &&
-            isFullNameTag
-              ? 1000
-              : isFull
-              ? 430
-              : maxWidth
-          }
-          alias={alias}
-          aftercontent={aftercontent}
-        >
-          <span>
-            {content ||
-              ENSLabel ||
-              nametag ||
-              addressLabel ||
-              alias ||
-              cfxAddress}
-          </span>
-        </LinkWrapper>
-      );
-    }
-  } else {
-    text = (
-      <PlainWrapper
-        style={style}
-        maxwidth={
-          (content || ENSLabel || nametag || addressLabel || alias) &&
-          isFullNameTag
-            ? 1000
-            : isFull
-            ? 430
-            : maxWidth
-        }
-        alias={alias}
-        aftercontent={aftercontent}
-      >
-        <span>
-          {content ||
-            ENSLabel ||
-            nametag ||
-            addressLabel ||
-            alias ||
-            cfxAddress}
-        </span>
-      </PlainWrapper>
-    );
-  }
+//   if (link) {
+//     if (typeof link === 'string') {
+//       text = (
+//         <LinkWrapper
+//           style={style}
+//           href={link}
+//           maxwidth={
+//             (content || alias) && isFullNameTag ? 1000 : isFull ? 430 : maxWidth
+//           }
+//           alias={alias}
+//           aftercontent={aftercontent}
+//         >
+//           <span>{content || alias || cfxAddress}</span>
+//         </LinkWrapper>
+//       );
+//     } else {
+//       const href = `/${type === 'pow' ? 'address' : 'pos/accounts'}/${
+//         hrefAddress || cfxAddress
+//       }`;
+//       text = (
+//         <LinkWrapper
+//           style={style}
+//           href={href}
+//           maxwidth={
+//             (content || ENSLabel || nametag || addressLabel || alias) &&
+//             isFullNameTag
+//               ? 1000
+//               : isFull
+//               ? 430
+//               : maxWidth
+//           }
+//           alias={alias}
+//           aftercontent={aftercontent}
+//         >
+//           <span>
+//             {content ||
+//               ENSLabel ||
+//               nametag ||
+//               addressLabel ||
+//               alias ||
+//               cfxAddress}
+//           </span>
+//         </LinkWrapper>
+//       );
+//     }
+//   } else {
+//     text = (
+//       <PlainWrapper
+//         style={style}
+//         maxwidth={
+//           (content || ENSLabel || nametag || addressLabel || alias) &&
+//           isFullNameTag
+//             ? 1000
+//             : isFull
+//             ? 430
+//             : maxWidth
+//         }
+//         alias={alias}
+//         aftercontent={aftercontent}
+//       >
+//         <span>
+//           {content ||
+//             ENSLabel ||
+//             nametag ||
+//             addressLabel ||
+//             alias ||
+//             cfxAddress}
+//         </span>
+//       </PlainWrapper>
+//     );
+//   }
 
-  return (
-    <AddressWrapper>
-      {prefix}
-      <Text
-        span
-        hoverValue={
-          <>
-            {ENSLabel ? (
-              <div>
-                <span>
-                  <Translation>{t => t(translations.ens.tip)}</Translation>
-                </span>
-                {ENSLabel}
-              </div>
-            ) : null}
-            {nametag ? (
-              <div>
-                <span>
-                  <Translation>{t => t(translations.nametag.tip)}</Translation>
-                </span>
-                {nametag}
-              </div>
-            ) : null}
-            {addressLabel ? (
-              <div>
-                <span>
-                  <Translation>
-                    {t => t(translations.profile.address.myNameTag)}
-                  </Translation>
-                </span>
-                {addressLabel}
-              </div>
-            ) : null}
-            {alias ? (
-              <>
-                {!hideAliasPrefixInHover && (
-                  <span>
-                    <Translation>
-                      {t => t(translations.profile.address.publicNameTag)}
-                    </Translation>
-                  </span>
-                )}
-                {alias}
-              </>
-            ) : null}
-            <div>{hoverValue || cfxAddress}</div>
-          </>
-        }
-      >
-        {text}
-      </Text>
-      {suffix}
-    </AddressWrapper>
-  );
-};
+//   return (
+//     <AddressWrapper>
+//       {prefix}
+//       <Text
+//         span
+//         hoverValue={
+//           <>
+//             {ENSLabel ? (
+//               <div>
+//                 <span>
+//                   <Translation>{t => t(translations.ens.tip)}</Translation>
+//                 </span>
+//                 {ENSLabel}
+//               </div>
+//             ) : null}
+//             {nametag ? (
+//               <div>
+//                 <span>
+//                   <Translation>{t => t(translations.nametag.tip)}</Translation>
+//                 </span>
+//                 {nametag}
+//               </div>
+//             ) : null}
+//             {addressLabel ? (
+//               <div>
+//                 <span>
+//                   <Translation>
+//                     {t => t(translations.profile.address.myNameTag)}
+//                   </Translation>
+//                 </span>
+//                 {addressLabel}
+//               </div>
+//             ) : null}
+//             {alias ? (
+//               <>
+//                 <span>
+//                   <Translation>
+//                     {t => t(translations.profile.address.publicNameTag)}
+//                   </Translation>
+//                 </span>
+//                 {alias}
+//               </>
+//             ) : null}
+//             <div>{hoverValue || cfxAddress}</div>
+//           </>
+//         }
+//       >
+//         {text}
+//       </Text>
+//       {suffix}
+//     </AddressWrapper>
+//   );
+// };
 
 export const AddressContainer = withTranslation()(
   React.memo(
@@ -361,6 +361,7 @@ export const AddressContainer = withTranslation()(
           }
 
           return RenderAddress({
+            translations,
             content: txtContractCreation,
             cfxAddress: '',
             alias: alias,
@@ -399,6 +400,7 @@ export const AddressContainer = withTranslation()(
         const url = `${window.location.protocol}${network.url}/address/${hexAddress}`;
 
         return RenderAddress({
+          translations,
           cfxAddress: hexAddress,
           alias: formatString(hexAddress, 'hexAddress'),
           hoverValue: hexAddress,
@@ -421,6 +423,7 @@ export const AddressContainer = withTranslation()(
         const tip = t(translations.general.invalidAddress);
 
         return RenderAddress({
+          translations,
           cfxAddress: value,
           alias,
           hoverValue: `${tip}: ${value}`,
@@ -493,6 +496,7 @@ export const AddressContainer = withTranslation()(
         );
 
         return RenderAddress({
+          translations,
           cfxAddress,
           alias,
           addressLabel,
@@ -531,6 +535,7 @@ export const AddressContainer = withTranslation()(
 
       if (isMe) {
         return RenderAddress({
+          translations,
           cfxAddress,
           alias,
           addressLabel,
@@ -558,6 +563,7 @@ export const AddressContainer = withTranslation()(
       }
 
       return RenderAddress({
+        translations,
         cfxAddress,
         alias,
         addressLabel,
@@ -602,6 +608,7 @@ export const PoSAddressContainer = withTranslation()(
       if (!isPosAddress(value)) {
         const tip = t(translations.general.invalidPosAddress);
         return RenderAddress({
+          translations,
           cfxAddress: value,
           alias,
           hoverValue: `${tip}: ${value}`,
@@ -636,6 +643,7 @@ export const PoSAddressContainer = withTranslation()(
 
       if (isMe) {
         return RenderAddress({
+          translations,
           cfxAddress: value,
           alias,
           link,
@@ -663,6 +671,7 @@ export const PoSAddressContainer = withTranslation()(
       }
 
       return RenderAddress({
+        translations,
         cfxAddress: value,
         alias,
         link,

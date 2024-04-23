@@ -10,7 +10,6 @@ import {
   ESPACE_CHAIN_IDS,
   BSPACE_CHAIN_IDS,
 } from 'utils/constants';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
 import lodash from 'lodash';
 import { ENSInfoItemType } from 'utils/hooks/useENS';

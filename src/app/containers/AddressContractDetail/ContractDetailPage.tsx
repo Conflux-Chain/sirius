@@ -45,7 +45,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
-import { getLabelInfo } from 'app/components/AddressContainer';
+import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useENS } from 'utils/hooks/useENS';
 import Nametag from './Nametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
