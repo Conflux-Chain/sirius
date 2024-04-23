@@ -38,7 +38,6 @@ import utc from 'dayjs/plugin/utc';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
-import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
@@ -607,7 +606,6 @@ export function App() {
                           component={BlocknumberCalc}
                         />
                         <Route exact path="/swap" component={Swap} />
-                        <Route exact path="/report" component={Report} />
                         <Route
                           exact
                           path={['/networkError', '/networkError/:network']}

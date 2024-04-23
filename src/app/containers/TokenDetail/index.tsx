@@ -83,11 +83,6 @@ export function TokenDetail() {
           {t(translations.general.address.more.balanceChecker)}
         </RouterLink>
       </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/report?address=${tokenAddress}`}>
-          {t(translations.general.address.more.report)}
-        </RouterLink>
-      </Menu.Item>
     </MenuWrapper>
   );
 
