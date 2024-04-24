@@ -11,7 +11,7 @@ import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import clsx from 'clsx';
 import { Row, Col, Tag } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';

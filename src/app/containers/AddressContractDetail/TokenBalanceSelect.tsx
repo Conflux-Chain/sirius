@@ -8,7 +8,7 @@ import { useClickAway, useToggle } from 'react-use';
 import { media } from 'styles/media';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
-import { Link } from 'react-router-dom';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Text } from '../../components/Text';
 import { formatBalance } from 'utils/index';
 import { CFX_TOKEN_TYPES } from '../../../utils/constants';
@@ -105,7 +105,7 @@ function SelectItem({
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>
-        <Link to={`/token/${address}`}>{name}</Link>
+        <Link href={`/token/${address}`}>{name}</Link>
       </SelectItemTextTitle>
     </SelectItemTitle>
   );

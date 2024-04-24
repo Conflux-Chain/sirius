@@ -29,7 +29,7 @@ import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@cfxjs/antd';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
@@ -70,9 +70,9 @@ export const AddressDetailPage = memo(() => {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
-        <RouterLink to={`/balance-checker?address=${address}`}>
+        <Link href={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
       <Menu.Item>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -123,12 +123,12 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
-            <RouterLink to={`/cns-search?text=${label}`}>
+            <Link href={`/cns-search?text=${label}`}>
               <StyledLabelWrapper show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>
-            </RouterLink>{' '}
+            </Link>{' '}
             <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>

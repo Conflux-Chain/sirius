@@ -7,7 +7,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Search } from './Search';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import { media, useBreakpoint } from 'styles/media';
@@ -643,13 +643,13 @@ export const Header = memo(() => {
 
   const brand = (
     <LogoWrapper>
-      <RouterLink to="/">
+      <Link href="/">
         <img
           className="confi-logo"
           alt="conflux scan logo"
           src={ENV_CONFIG.ENV_LOGO}
         />
-      </RouterLink>
+      </Link>
     </LogoWrapper>
   );
   const mainMenu = [...startLinksJSX];

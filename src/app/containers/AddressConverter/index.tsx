@@ -14,7 +14,8 @@ import { PageHeader } from '../../components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Remark } from '../../components/Remark';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { Input, Button, Link } from '@cfxjs/react-ui';
+import { Input, Button } from '@cfxjs/react-ui';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import { useParams } from 'react-router-dom';

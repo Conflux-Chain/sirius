@@ -25,7 +25,7 @@ import { NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import BigNumber from 'bignumber.js';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import ENV_CONFIG from 'env';

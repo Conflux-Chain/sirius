@@ -7,7 +7,7 @@ import warningIcon from 'images/nametag/warning.svg';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link as ComponentLink } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { StyledLabelWrapper } from './layouts';
 
 const Nametag = ({ address }) => {
@@ -34,7 +34,7 @@ const Nametag = ({ address }) => {
 
   if (nametag?.website) {
     tag = (
-      <ComponentLink
+      <Link
         href={
           nametag?.website.startsWith('http')
             ? nametag?.website
@@ -50,7 +50,7 @@ const Nametag = ({ address }) => {
             alt="external-link-icon"
           ></img>
         </StyledLabelWrapper>
-      </ComponentLink>
+      </Link>
     );
   }
 

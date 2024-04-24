@@ -18,7 +18,7 @@ import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';
 import { abi as stakingAbi } from 'utils/contract/staking.json';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';

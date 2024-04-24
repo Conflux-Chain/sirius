@@ -7,7 +7,7 @@ import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButt
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import styled from 'styled-components';
 import { media } from 'styles/media';
 import { Typography } from '@cfxjs/antd';

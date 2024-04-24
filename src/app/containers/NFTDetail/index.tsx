@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
 import { Row, Col, Collapse, message, Typography } from '@cfxjs/antd';
