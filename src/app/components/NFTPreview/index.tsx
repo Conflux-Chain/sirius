@@ -23,7 +23,7 @@ import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
 import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
-import { Link as ALink } from 'app/components/Link/Loadable';
+import { Link as ALink } from 'sirius-next/packages/common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { ThreeD } from './3D';

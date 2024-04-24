@@ -7,7 +7,7 @@ import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButt
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { toThousands, formatTimeStamp } from 'utils';
 import lodash from 'lodash';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 
 export function Overview({ data, loading }) {
   const { t } = useTranslation();

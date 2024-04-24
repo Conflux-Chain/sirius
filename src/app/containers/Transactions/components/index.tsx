@@ -18,7 +18,7 @@ import {
 import Search from '@zeit-ui/react-icons/search';
 import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import Button from 'sirius-next/packages/common/dist/components/Button';
 interface FooterProps {
   type?: string;

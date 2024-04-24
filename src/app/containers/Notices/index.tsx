@@ -4,7 +4,7 @@ import FAQNotification from 'images/notice/FAQNotification.png';
 import updateNotification from 'images/notice/updateNotification.png';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import styled from 'styled-components';
 import { media } from 'styles/media';
 

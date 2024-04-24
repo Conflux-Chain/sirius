@@ -13,7 +13,7 @@ import { Spinner } from '@cfxjs/react-ui';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { CountDown } from 'app/components/CountDown/Loadable';

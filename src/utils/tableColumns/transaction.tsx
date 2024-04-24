@@ -3,7 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Text } from 'app/components/Text/Loadable';
 import { Status } from 'app/components/TxnComponents';
 import {

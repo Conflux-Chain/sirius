@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import { ColumnAge } from '../utils';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { Text } from 'app/components/Text/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import lodash from 'lodash';
 
 export const age = (
