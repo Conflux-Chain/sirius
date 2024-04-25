@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Skeleton } from '@cfxjs/react-ui';
+import { Skeleton } from 'sirius-next/packages/common/dist/components/Skeleton';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { translations } from 'locales/i18n';
 import { Basic } from './Basic';

@@ -6,7 +6,7 @@ import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { hideInDotNet } from 'utils';
 import { TransactionAction } from 'app/components/TransactionAction';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
 import _ from 'lodash';
 

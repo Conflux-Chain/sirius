@@ -6,7 +6,7 @@ import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
 import { Text } from 'app/components/Text/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import imgBalance from 'images/contract-address/balance.svg';

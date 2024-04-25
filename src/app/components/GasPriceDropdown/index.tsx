@@ -8,7 +8,7 @@ import { reqGasPrice } from 'utils/httpRequest';
 import { useInterval } from 'react-use';
 
 import { fromDripToGdrip } from 'utils';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 
 import IconGas from 'images/icon-gas.svg';
 import IconRefresh from 'images/refresh.svg';
