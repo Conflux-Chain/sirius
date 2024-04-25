@@ -12,7 +12,7 @@ import {
   toThousands,
   publishRequestError,
 } from 'utils';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';

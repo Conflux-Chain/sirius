@@ -16,7 +16,7 @@ import { media } from 'styles/media';
 import { Text } from 'app/components/Text';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';

@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';

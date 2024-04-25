@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import SkelontonContainer from '../SkeletonContainer';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import {
   formatNumber,
@@ -697,7 +697,7 @@ export const StatsCard = ({
         ) : null}
         {category === 'transaction' ? total : null}
       </HeaderWrapper>
-      <SkelontonContainer
+      <SkeletonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
         <div
@@ -722,7 +722,7 @@ export const StatsCard = ({
                   }
                   key={c['title']}
                 >
-                  <SkelontonContainer
+                  <SkeletonContainer
                     shown={lodash.isNil(statsData[c['index']])}
                   >
                     {lodash.isNil(statsData[c['index']])
@@ -732,7 +732,7 @@ export const StatsCard = ({
                       : formatNumber(statsData[c['index']], {
                           withUnit: false,
                         })}
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </Description>
               ))}
             </>
@@ -748,7 +748,7 @@ export const StatsCard = ({
             </table>
           )}
         </div>
-      </SkelontonContainer>
+      </SkeletonContainer>
     </CardWrapper>
   );
 };

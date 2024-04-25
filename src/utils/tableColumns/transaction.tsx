@@ -22,7 +22,7 @@ import {
 } from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { useBreakpoint } from 'styles/media';
 import { PendingReason } from './PendingReason';
 

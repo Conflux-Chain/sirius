@@ -4,7 +4,8 @@
  *
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Image, Popover, Skeleton } from '@cfxjs/antd';
+import { Image, Popover } from '@cfxjs/antd';
+import { ImageSkeleton } from 'sirius-next/packages/common/dist/components/ImageSkeleton';
 import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
@@ -298,7 +299,7 @@ export const NFTPreview = React.memo(
                     />
                   )
                 ) : isFirstTime ? (
-                  <Skeleton.Image />
+                  <ImageSkeleton />
                 ) : (
                   <Image
                     width={500}
@@ -424,7 +425,7 @@ export const NFTPreview = React.memo(
                   />
                 )
               ) : isFirstTime ? (
-                <Skeleton.Image />
+                <ImageSkeleton />
               ) : (
                 <Image
                   width={500}

@@ -13,7 +13,7 @@ import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { useBreakpoint } from 'styles/media';
 import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import Button from 'sirius-next/packages/common/dist/components/Button';
