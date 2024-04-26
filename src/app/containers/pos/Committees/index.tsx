@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { committeeColunms } from 'utils/tableColumns/pos';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export const List = ({ overview }: { overview?: boolean }) => {

@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { Row, Col } from '@cfxjs/antd';
 import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import { StyledLink } from 'app/components/StyledComponent';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Notice } from './Notice';
 import { InfoCard } from './InfoCard';
 import { StakeAndSignCard } from './StakeAndSignCard';
