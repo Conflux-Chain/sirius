@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 
 export const noticeInfo = {
   hot: false,

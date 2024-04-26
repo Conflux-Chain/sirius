@@ -32,7 +32,7 @@ import { Dropdown, Menu } from '@cfxjs/antd';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';

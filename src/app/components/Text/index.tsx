@@ -5,7 +5,7 @@ import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components';
 import { selectText } from 'sirius-next/packages/common/dist/utils';
 import clsx from 'clsx';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 
 type TextProps = {
   children?: React.ReactNode;

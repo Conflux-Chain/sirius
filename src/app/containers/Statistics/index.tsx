@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 import { StatsType } from '../../components/StatsCard';
 // TODO antd slimming
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { reqTopStatistics } from '../../../utils/httpRequest';

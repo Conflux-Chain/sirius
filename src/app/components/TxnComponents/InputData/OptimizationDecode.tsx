@@ -9,7 +9,7 @@ import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Text } from 'app/components/Text/Loadable';
 import { Event } from '../Event';
 // import Info from '@zeit-ui/react-icons/info';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { AddressLabel } from '../AddressLabel';
 
 export const OptimizationDecode = ({

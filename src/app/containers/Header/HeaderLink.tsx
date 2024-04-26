@@ -2,7 +2,10 @@ import React, { MouseEventHandler, ReactNode, useRef } from 'react';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { useRouteMatch } from 'react-router-dom';
-import { media, useBreakpoint } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import { ChevronDown } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { ScanEvent } from '../../../utils/gaConstants';

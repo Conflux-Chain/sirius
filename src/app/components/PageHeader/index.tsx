@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import styled from 'styled-components';
-import { media } from './../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 
 export const PageHeader = ({
   children,

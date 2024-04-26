@@ -16,7 +16,7 @@ import { token } from '../../../utils/tableColumns/token';
 import { Text } from '../Text/Loadable';
 import BigNumber from 'bignumber.js';
 import { usePortal } from '../../../utils/hooks/usePortal';
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { monospaceFont } from '../../../styles/variable';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';

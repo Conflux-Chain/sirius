@@ -6,7 +6,10 @@
 import clsx from 'clsx';
 import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import styled from 'styled-components';
-import { media, useBreakpoint } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
 import { GasPriceDropdown } from 'app/components/GasPriceDropdown';
 

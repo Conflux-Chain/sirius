@@ -23,7 +23,7 @@ import {
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { PendingReason } from './PendingReason';
 
 import iconViewTxn from 'images/view-txn.png';

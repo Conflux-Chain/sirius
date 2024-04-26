@@ -6,7 +6,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from 'sirius-next/packages/common/dist/components/Skeleton';
-import { useBreakpoint, media } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import {
   Description,

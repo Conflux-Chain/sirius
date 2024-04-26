@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import { DescriptionPanel } from './DescriptionPanel';
 import styled from 'styled-components';
 import { reqBlockDetail } from 'utils/httpRequest';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { useHistory } from 'react-router-dom';
 
 import { Txns } from './Txns';

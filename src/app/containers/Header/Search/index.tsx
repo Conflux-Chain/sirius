@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@cfxjs/antd';
 import { SearchIcon } from 'sirius-next/packages/common/dist/components/SearchIcon';

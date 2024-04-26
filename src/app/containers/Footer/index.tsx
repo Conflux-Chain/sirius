@@ -8,7 +8,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { Footer as FooterComp } from 'sirius-next/packages/common/dist/components/Footer';
 import { TextLogo } from 'app/components/TextLogo/Loadable';
 import { translations } from 'locales/i18n';

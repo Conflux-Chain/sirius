@@ -20,7 +20,10 @@ import {
   TotalInfoType,
   Tip,
 } from './Common';
-import { useBreakpoint, media } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
