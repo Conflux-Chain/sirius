@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';

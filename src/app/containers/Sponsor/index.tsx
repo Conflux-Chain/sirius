@@ -23,7 +23,7 @@ import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';

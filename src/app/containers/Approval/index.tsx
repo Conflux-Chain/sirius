@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { PageHeader } from 'app/components/PageHeader';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Input, Button, Switch } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, formatBalance } from 'utils';

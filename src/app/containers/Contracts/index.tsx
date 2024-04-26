@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { useTableData } from 'app/components/TabsTablePanel/useTableData';
 import { contractColunms, utils } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';

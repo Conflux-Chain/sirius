@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Form, Input, Checkbox, Button, Row, Col } from '@cfxjs/antd';

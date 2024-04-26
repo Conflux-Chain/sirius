@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import dayjs from 'dayjs';
-import { PageHeader } from '../../components/PageHeader';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Input, Button } from '@cfxjs/react-ui';
 import { useParams } from 'react-router-dom';

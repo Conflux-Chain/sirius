@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Button, Textarea } from '@cfxjs/react-ui';
 import styled from 'styled-components';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import imgWarning from 'images/warning.png';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { trackEvent } from 'utils/ga';

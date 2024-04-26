@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Remark } from 'app/components/Remark';
 import styled from 'styled-components';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';

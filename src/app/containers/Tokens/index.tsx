@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { tokenColunms, utils } from 'utils/tableColumns';
 import styled from 'styled-components';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';

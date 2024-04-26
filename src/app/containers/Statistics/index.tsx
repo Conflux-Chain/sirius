@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '../../components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { StatsType } from '../../components/StatsCard';
