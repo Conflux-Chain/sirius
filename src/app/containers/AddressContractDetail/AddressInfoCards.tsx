@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';

@@ -5,7 +5,7 @@ import { Description } from 'sirius-next/packages/common/dist/components/Descrip
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { toThousands, isCurrentNetworkAddress } from 'utils';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Col, Pagination, Row, Tag } from '@cfxjs/antd';

@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { Text } from 'app/components/Text';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';

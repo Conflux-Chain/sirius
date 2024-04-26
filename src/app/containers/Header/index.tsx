@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Search } from './Search';
 import { ConnectWallet } from 'app/components/ConnectWallet';
-import { media, useBreakpoint } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';

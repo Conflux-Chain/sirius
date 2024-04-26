@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { TableSearchDropdown } from 'sirius-next/packages/common/dist/components/Dropdown';
 import { toThousands } from 'utils';
 import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';

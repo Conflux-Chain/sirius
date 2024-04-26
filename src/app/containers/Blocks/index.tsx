@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { blockColunms } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';

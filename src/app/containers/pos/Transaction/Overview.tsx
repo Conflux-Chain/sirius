@@ -9,7 +9,7 @@ import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';

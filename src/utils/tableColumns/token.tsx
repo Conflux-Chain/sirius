@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Text } from 'app/components/Text/Loadable';
 import queryString from 'query-string';
-import { media } from 'styles/media';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
   formatBalance,
@@ -29,7 +28,10 @@ import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
-import { useBreakpoint } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from 'sirius-next/packages/common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';

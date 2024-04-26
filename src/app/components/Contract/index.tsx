@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { Input, useMessages } from '@cfxjs/react-ui';
 import {
   ICON_DEFAULT_CONTRACT,

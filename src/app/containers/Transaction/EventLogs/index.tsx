@@ -21,7 +21,7 @@ import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from 'app/components/TxnComponents/Event';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
 interface Props {
