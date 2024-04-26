@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { List } from 'app/components/List/';
+import { List } from 'sirius-next/packages/common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
@@ -216,7 +216,6 @@ export function AddressMetadata({ address, accountInfo }) {
     return (
       <>
         <List
-          className="staking"
           list={[
             {
               title: (
