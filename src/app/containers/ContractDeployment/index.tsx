@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { TXN_ACTION } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
-import { Remark } from '../../components/Remark';
+import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
 
 export function ContractDeployment() {
   const { t } = useTranslation();
