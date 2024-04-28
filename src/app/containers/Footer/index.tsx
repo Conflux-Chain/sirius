@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { Footer as FooterComp } from 'sirius-next/packages/common/dist/components/Footer';
-import { TextLogo } from 'app/components/TextLogo/Loadable';
+import { TextLogo } from 'sirius-next/packages/common/dist/components/TextLogo';
 import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
