@@ -278,7 +278,7 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
 
   .data-item {
     display: flex;
-    align-items: flex-start;
+    align-items: baseline;
 
     .data-item-title {
       margin-right: 0.3571rem;
