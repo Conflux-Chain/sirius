@@ -22,7 +22,7 @@ import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
-import { Remark } from 'app/components/Remark';
+import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
 import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';

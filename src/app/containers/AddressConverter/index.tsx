@@ -12,7 +12,7 @@ import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Remark } from '../../components/Remark';
+import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { Input, Button } from '@cfxjs/react-ui';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
