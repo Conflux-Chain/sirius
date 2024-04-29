@@ -11,7 +11,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from '../Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 // import { useENS } from 'utils/hooks/useENS';
 import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
@@ -76,7 +76,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           } else if (addressLabel) {
             buttonText = (
               <StyledAddressLabelWrapper>
-                <Text span hoverValue={t(translations.profile.tip.label)}>
+                <Text tag="span" hoverValue={t(translations.profile.tip.label)}>
                   <Bookmark color="var(--theme-color-gray2)" size={16} />
                 </Text>
                 {addressLabel}

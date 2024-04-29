@@ -26,7 +26,7 @@ import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
 import BigNumber from 'bignumber.js';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 
 const { Search } = Input;
 

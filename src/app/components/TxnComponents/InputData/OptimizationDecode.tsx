@@ -6,7 +6,7 @@ import { formatAddress } from 'utils';
 import _ from 'lodash';
 import { ContractDetail } from '../ContractDetail';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { Event } from '../Event';
 // import Info from '@zeit-ui/react-icons/info';
 import { media } from 'sirius-next/packages/common/dist/utils/media';

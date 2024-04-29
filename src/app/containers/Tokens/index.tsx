@@ -12,7 +12,7 @@ import queryString from 'query-string';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useLocation } from 'react-router-dom';
 import { formatNumber, formatLargeNumber } from 'utils';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { monospaceFont } from 'styles/variable';
 
 import imgInfo from 'images/info.svg';

@@ -3,7 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands, fromDripToCfx, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import lodash from 'lodash';
 import { PoSAddressContainer } from 'app/components/AddressContainer/Loadable';
 import VotingPowerIcon from 'images/voting-power.svg';
@@ -246,7 +246,7 @@ export const incoming = {
     return (
       <ContentWrapper right>
         {!lodash.isNil(value) ? (
-          <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+          <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
             {`${fromDripToCfx(value)} CFX`}
           </Text>
         ) : (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import {
   formatNumber,
@@ -66,7 +66,7 @@ export const hashWithPivot = {
     return (
       <StyledHashWrapper>
         <Link href={`/block/${value}`}>
-          <Text span hoverValue={value} maxWidth="100px">
+          <Text tag="span" hoverValue={value} maxWidth="100px">
             {value}
           </Text>
         </Link>
@@ -102,7 +102,7 @@ export const avgGasPrice = {
   key: 'avgGasPrice',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${roundToFixedPrecision(
         fromDripToGdrip(value, false, {
           precision: 6,
@@ -181,7 +181,7 @@ export const reward = {
   width: 1,
   render: value =>
     value ? (
-      <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
         {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (
@@ -224,7 +224,7 @@ export const gasLimit = {
   dataIndex: 'gasLimit',
   key: 'gasLimit',
   width: 1,
-  render: value => <Text span>{toThousands(value)}</Text>,
+  render: value => <Text tag="span">{toThousands(value)}</Text>,
 };
 
 const StyledHashWrapper = styled.span`

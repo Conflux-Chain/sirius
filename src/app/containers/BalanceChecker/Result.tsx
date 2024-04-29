@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import TokenIcon from '../../../images/balance-checker/token-icon.png';
-import { Text } from '../../components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { formatNumber, fromDripToCfx } from '../../../utils';
 import { useCfxBalance } from '../../../utils/api';
 

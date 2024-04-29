@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
