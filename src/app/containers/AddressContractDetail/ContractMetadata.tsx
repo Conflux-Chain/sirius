@@ -13,7 +13,7 @@ import { translations } from 'locales/i18n';
 import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { Text } from 'app/components/Text';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
@@ -294,7 +294,10 @@ export function ContractMetadata({ address, contractInfo }) {
                     <LinkWrap
                       href={`/transaction/${contractInfo.transactionHash}`}
                     >
-                      <Text span hoverValue={contractInfo.transactionHash}>
+                      <Text
+                        tag="span"
+                        hoverValue={contractInfo.transactionHash}
+                      >
                         {formatString(contractInfo.transactionHash, 'address')}
                       </Text>
                     </LinkWrap>

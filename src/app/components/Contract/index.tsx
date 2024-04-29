@@ -33,7 +33,7 @@ import { packContractAndToken } from 'utils/contractManagerTool';
 import { TXN_ACTION } from 'utils/constants';
 import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { CheckCircleIcon } from 'app/containers/AddressContractDetail/ContractContent';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 
 interface Props {

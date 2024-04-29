@@ -3,7 +3,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import queryString from 'query-string';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
@@ -187,7 +187,7 @@ export const token = {
           <Translation>
             {t => (
               <Text
-                span
+                tag="span"
                 hoverValue={
                   row.name || row.symbol
                     ? `${row?.name || t(translations.general.notAvailable)} (${
@@ -239,7 +239,7 @@ export const Token2 = ({ row }) => {
               >
                 {
                   <Text
-                    span
+                    tag="span"
                     hoverValue={
                       row?.transferTokenInfo?.name
                         ? `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`
@@ -494,7 +494,7 @@ export const quantity = {
       ? opt.decimals
       : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
     return value ? (
-      <Text span hoverValue={formatBalance(value, decimals, true)}>
+      <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
       </Text>
     ) : (
@@ -574,7 +574,7 @@ export const balance = (decimal, price, transferType) => ({
       {transferType === CFX_TOKEN_TYPES.erc1155 ? (
         <ThTipWrap>
           <Text
-            span
+            tag="span"
             hoverValue={
               <Translation>
                 {t => t(translations.general.table.token.erc1155QuantityTip)}
@@ -606,11 +606,17 @@ export const balance = (decimal, price, transferType) => ({
                 keepDecimals: true,
               }) || 0
             ) < +tinyBalanceThreshold ? (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
+              <Text
+                tag="span"
+                hoverValue={formatBalance(value, decimals, true)}
+              >
                 {`< ${tinyBalanceThreshold}`}
               </Text>
             ) : (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
+              <Text
+                tag="span"
+                hoverValue={formatBalance(value, decimals, true)}
+              >
                 {formatBalance(value, decimals, false, {
                   precision: decimalPlace,
                   keepZero: true,
@@ -619,7 +625,7 @@ export const balance = (decimal, price, transferType) => ({
               </Text>
             )
           ) : (
-            <Text span hoverValue={formatBalance(value, decimals, true)}>
+            <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
                 withUnit: false,
               })}
@@ -656,7 +662,7 @@ export const percentage = total => ({
         : null;
     return (
       <ContentWrapper right>
-        <Text span hoverValue={`${percentage}%`}>
+        <Text tag="span" hoverValue={`${percentage}%`}>
           {percentage === null
             ? '-'
             : percentage < 0.001
@@ -684,7 +690,7 @@ export const tokenId = (contractAddress?: string) => ({
   render: (value, row) => {
     return (
       <>
-        <Text span hoverValue={value}>
+        <Text tag="span" hoverValue={value}>
           <SpanWrap>{value || '-'}</SpanWrap>
         </Text>
         {!isZeroAddress(formatAddress(row.to)) && (
@@ -829,7 +835,7 @@ export const traceResult = {
           </span>
         );
         body = (
-          <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
+          <Text tag="span" hoverValue={hoverValue} maxWidth="17.1429rem">
             {returnData}
           </Text>
         );

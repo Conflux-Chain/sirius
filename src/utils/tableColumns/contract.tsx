@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Text } from '../../app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { formatNumber, formatString, getENSInfo, getNametagInfo } from '..';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { ContentWrapper } from './utils';
@@ -36,7 +36,7 @@ export const name = {
   render: row => (
     <StyledIconWrapper>
       <span>
-        <Text span hoverValue={row?.name}>
+        <Text tag="span" hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}
         </Text>
       </span>

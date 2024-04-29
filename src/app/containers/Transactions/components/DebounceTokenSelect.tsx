@@ -6,7 +6,7 @@ import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
@@ -206,7 +206,7 @@ export function DebounceTokenSelect<
         onClose={onClose}
       >
         {label[0]}
-        <Text maxWidth="60px" hoverValue={label[1]} span>
+        <Text maxWidth="60px" hoverValue={label[1]} tag="span">
           {label[1]}
         </Text>
       </Tag>

@@ -7,7 +7,7 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { CountDown } from 'app/components/CountDown/Loadable';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import queryString from 'query-string';
 
 export interface ContentWrapperProps {

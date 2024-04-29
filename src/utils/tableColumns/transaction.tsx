@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import clsx from 'clsx';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
 import {
   fromDripToCfx,
@@ -129,7 +129,7 @@ export const TxnHashRenderComponent = ({
       ) : null}
 
       <Link href={`/transaction/${hash}`}>
-        <Text span hoverValue={hash}>
+        <Text tag="span" hoverValue={hash}>
           <SpanWrap>{hash}</SpanWrap>
         </Text>
       </Link>
@@ -232,7 +232,7 @@ export const value = {
   width: 1,
   render: value =>
     value ? (
-      <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
         {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (
@@ -250,7 +250,7 @@ export const gasPrice = {
   key: 'gasPrice',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${roundToFixedPrecision(
         fromDripToGdrip(value, false, {
           precision: 6,
@@ -273,7 +273,7 @@ export const gasFee = {
   key: 'gasFee',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${fromDripToCfx(value, false, {
         precision: 6,
         minNum: 1e-6,
@@ -308,7 +308,7 @@ export const method = {
     }
 
     return (
-      <Text span hoverValue={text}>
+      <Text tag="span" hoverValue={text}>
         <StyledMethodContainerWrapper>
           <StyledMethodWrapper>{text}</StyledMethodWrapper>
         </StyledMethodContainerWrapper>

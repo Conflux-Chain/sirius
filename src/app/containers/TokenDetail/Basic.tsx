@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { List } from 'sirius-next/packages/common/dist/components/List';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';

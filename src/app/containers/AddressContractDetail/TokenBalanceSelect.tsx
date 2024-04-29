@@ -9,7 +9,7 @@ import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from '../../components/Text';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { formatBalance } from 'utils/index';
 import { CFX_TOKEN_TYPES } from '../../../utils/constants';
 import BigNumber from 'bignumber.js';
