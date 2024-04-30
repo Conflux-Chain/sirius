@@ -20,7 +20,7 @@ import lodash from 'lodash';
 import { formatData } from 'app/components/TxnComponents/util';
 import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
-import { AddressContainer } from 'app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { isInnerContractAddress } from 'utils';
 import { SubTabs } from 'app/components/Tabs/Loadable';
 

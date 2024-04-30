@@ -6,7 +6,7 @@ import { formatBalance } from 'utils';
 import { Link } from 'app/components/Link';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { renderAddress } from 'utils/tableColumns/token';
 import clsx from 'clsx';
 import { TokenTypeTag } from './TokenTypeTag';

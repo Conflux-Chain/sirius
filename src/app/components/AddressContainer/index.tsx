@@ -1,70 +1,7 @@
-import React from 'react';
-import { Text } from '../Text/Loadable';
-import { Link } from '../Link/Loadable';
-import { WithTranslation, withTranslation, Translation } from 'react-i18next';
-import { translations } from 'locales/i18n';
-import styled from 'styled-components';
-import {
-  formatAddress,
-  isContractAddress,
-  isInnerContractAddress,
-  isZeroAddress,
-  isAddress,
-  isPosAddress,
-  formatString,
-  getNetwork,
-} from 'utils';
-import { AlertTriangle, File, Bookmark, Hash } from '@zeit-ui/react-icons';
-import ContractIcon from 'images/contract-icon.png';
-import isMeIcon from 'images/me.png';
-import InternalContractIcon from 'images/internal-contract-icon.png';
-import VerifiedIcon from 'images/verified.png';
-import { media, sizes } from 'styles/media';
-import { monospaceFont } from 'styles/variable';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { useGlobalData } from 'utils/hooks/useGlobal';
-import ICON_ENS from 'images/logo-cns.svg';
-import { useENS, ENSInfoItemType } from 'utils/hooks/useENS';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
-import ENV_CONFIG, { IS_MAINNET, NETWORK_TYPES } from 'env';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
-import { RenderAddress } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+export { getLabelInfo, AddressContainer };
 
-interface Props {
-  value: string; // address value
-  alias?: string; // address alias, such as contract name, miner name, default null
-  contractCreated?: string; // contract creation address
-  maxWidth?: number; // address max width for view, default 200/170 for default, 400 for full
-  isFull?: boolean; // show full address, default false
-  isFullNameTag?: boolean; // show full nametag
-  link?: boolean; // add link to address, default true
-  isMe?: boolean; // when `address === portal selected address`, set isMe to true to add special tag, default false
-  suffixAddressSize?: number; // suffix address size, default is 8
-  showIcon?: boolean; // whether show contract icon, default true
-  verify?: boolean; // show verified contract icon or unverified contract icon
-  isEspaceAddress?: boolean; // check the address if is a eSpace hex address, if yes, link to https://evm.confluxscan.net/address/{hex_address}
-  showAddressLabel?: boolean;
-  showENSLabel?: boolean;
-  ensInfo?: {
-    [k: string]: ENSInfoItemType;
-  };
-  showNametag?: boolean;
-  nametag?: string;
-  nametagInfo?: {
-    [k: string]: {
-      address: string;
-      nametag: string;
-    };
-  };
-}
-
-const defaultPCMaxWidth = 138;
-const defaultMobileMaxWidth = IS_MAINNET ? 106 : 140;
-const defaultPCSuffixAddressSize = IS_MAINNET ? 8 : 4;
-const defaultPCSuffixPosAddressSize = 10;
-const defaultMobileSuffixAddressSize = 4;
-
-export { getLabelInfo };
 // export const getLabelInfo = (label, type) => {
 //   if (label) {
 //     let trans: string = '';
@@ -272,508 +209,401 @@ export { getLabelInfo };
 //   );
 // };
 
-export const AddressContainer = withTranslation()(
-  React.memo(
-    ({
-      value,
-      alias,
-      contractCreated,
-      maxWidth,
-      isFull = false,
-      isFullNameTag = false,
-      link = true,
-      isMe = false,
-      suffixAddressSize,
-      showIcon = true,
-      t,
-      verify = false,
-      isEspaceAddress,
-      showAddressLabel = true,
-      showENSLabel = true,
-      showNametag = true,
-      ensInfo,
-      nametag,
-      nametagInfo,
-    }: Props & WithTranslation) => {
-      const [globalData = {}] = useGlobalData();
+// export const AddressContainer = withTranslation()(
+//   React.memo(
+//     ({
+//       value,
+//       alias,
+//       contractCreated,
+//       maxWidth,
+//       isFull = false,
+//       isFullNameTag = false,
+//       link = true,
+//       isMe = false,
+//       suffixAddressSize,
+//       showIcon = true,
+//       t,
+//       verify = false,
+//       isEspaceAddress,
+//       showAddressLabel = true,
+//       showENSLabel = true,
+//       showNametag = true,
+//       ensInfo,
+//       nametag,
+//       nametagInfo,
+//     }: Props & WithTranslation) => {
+//       const [globalData = {}] = useGlobalData();
 
-      let ENSMap = {};
+//       let ENSMap = {};
 
-      if (ensInfo) {
-        ENSMap = ensInfo;
-      } else {
-        // try to get ens name
-        const [m] = useENS({
-          // @ts-ignore
-          address: value || contractCreated ? [value || contractCreated] : [],
-        });
+//       if (ensInfo) {
+//         ENSMap = ensInfo;
+//       } else {
+//         // try to get ens name
+//         const [m] = useENS({
+//           // @ts-ignore
+//           address: value || contractCreated ? [value || contractCreated] : [],
+//         });
 
-        ENSMap = m;
-      }
+//         ENSMap = m;
+//       }
 
-      const suffixSize =
-        suffixAddressSize ||
-        (window.innerWidth <= sizes.m
-          ? defaultMobileSuffixAddressSize
-          : defaultPCSuffixAddressSize);
+//       const suffixSize =
+//         suffixAddressSize ||
+//         (window.innerWidth <= sizes.m
+//           ? defaultMobileSuffixAddressSize
+//           : defaultPCSuffixAddressSize);
 
-      // check if the address is a contract create address
-      if (!value) {
-        const txtContractCreation = t(
-          translations.transaction.contractCreation,
-        );
+//       // check if the address is a contract create address
+//       if (!value) {
+//         const txtContractCreation = t(
+//           translations.transaction.contractCreation,
+//         );
 
-        if (contractCreated) {
-          const fContractCreated = formatAddress(contractCreated);
+//         if (contractCreated) {
+//           const fContractCreated = formatAddress(contractCreated);
 
-          // official name tag
-          let officalNametag: React.ReactNode = null;
-          // private name tag
-          let addressLabel: React.ReactNode = null;
-          // ens name tag
-          let ENSLabel: React.ReactNode = null;
-          // global ens name tag
-          const gENSLabel = ENSMap[fContractCreated]?.name;
-          // global private name tag
-          const gAddressLabel =
-            globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
+//           // official name tag
+//           let officalNametag: React.ReactNode = null;
+//           // private name tag
+//           let addressLabel: React.ReactNode = null;
+//           // ens name tag
+//           let ENSLabel: React.ReactNode = null;
+//           // global ens name tag
+//           const gENSLabel = ENSMap[fContractCreated]?.name;
+//           // global private name tag
+//           const gAddressLabel =
+//             globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][fContractCreated];
 
-          if (showAddressLabel && gAddressLabel) {
-            const { label } = getLabelInfo(gAddressLabel, 'tag');
+//           if (showAddressLabel && gAddressLabel) {
+//             const { label } = getLabelInfo(gAddressLabel, 'tag');
 
-            addressLabel = label;
-          }
+//             addressLabel = label;
+//           }
 
-          if (showNametag && nametagInfo?.[fContractCreated]?.nametag) {
-            const { label } = getLabelInfo(
-              nametagInfo[fContractCreated].nametag,
-              'nametag',
-            );
+//           if (showNametag && nametagInfo?.[fContractCreated]?.nametag) {
+//             const { label } = getLabelInfo(
+//               nametagInfo[fContractCreated].nametag,
+//               'nametag',
+//             );
 
-            officalNametag = label;
-          }
+//             officalNametag = label;
+//           }
 
-          if (showENSLabel && gENSLabel) {
-            const { label } = getLabelInfo(gENSLabel, 'ens');
+//           if (showENSLabel && gENSLabel) {
+//             const { label } = getLabelInfo(gENSLabel, 'ens');
 
-            ENSLabel = label;
-          }
+//             ENSLabel = label;
+//           }
 
-          return RenderAddress({
-            translations,
-            content: txtContractCreation,
-            cfxAddress: '',
-            alias: alias,
-            addressLabel,
-            nametag: officalNametag,
-            ENSLabel,
-            hoverValue: fContractCreated,
-            hrefAddress: fContractCreated,
-            link,
-            isFull,
-            isFullNameTag,
-            maxWidth: 160,
-            suffixSize,
-            prefix: (
-              <IconWrapper>
-                <Text span hoverValue={txtContractCreation}>
-                  <img src={ContractIcon} alt={txtContractCreation} />
-                </Text>
-              </IconWrapper>
-            ),
-          });
-        }
+//           return RenderAddress({
+//             content: txtContractCreation,
+//             cfxAddress: '',
+//             alias: alias,
+//             addressLabel,
+//             nametag: officalNametag,
+//             ENSLabel,
+//             hoverValue: fContractCreated,
+//             hrefAddress: fContractCreated,
+//             link,
+//             isFull,
+//             isFullNameTag,
+//             maxWidth: 160,
+//             suffixSize,
+//             prefix: (
+//               <IconWrapper>
+//                 <Text span hoverValue={txtContractCreation}>
+//                   <img src={ContractIcon} alt={txtContractCreation} />
+//                 </Text>
+//               </IconWrapper>
+//             ),
+//           });
+//         }
 
-        // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
-        return <>--</>;
-      }
+//         // If a txn receipt has no 'to' address or 'contractCreated', show -- for temp
+//         return <>--</>;
+//       }
 
-      if (isEspaceAddress) {
-        const tip = t(translations.general.eSpaceAddress);
-        const hexAddress = SDK.format.hexAddress(value);
-        const networkId =
-          ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
-            ? 1030
-            : 71;
-        const network = getNetwork(globalData.networks, networkId);
-        const url = `${window.location.protocol}${network.url}/address/${hexAddress}`;
+//       if (isEspaceAddress) {
+//         const tip = t(translations.general.eSpaceAddress);
+//         const hexAddress = SDK.format.hexAddress(value);
+//         const networkId =
+//           ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
+//             ? 1030
+//             : 71;
+//         const network = getNetwork(globalData.networks, networkId);
+//         const url = `${window.location.protocol}${network.url}/address/${hexAddress}`;
 
-        return RenderAddress({
-          translations,
-          cfxAddress: hexAddress,
-          alias: formatString(hexAddress, 'hexAddress'),
-          hoverValue: hexAddress,
-          link: url,
-          isFull,
-          maxWidth,
-          suffixSize: 0,
-          prefix: (
-            <IconWrapper>
-              <Text span hoverValue={tip}>
-                <File size={16} color="#17B38A" />
-              </Text>
-            </IconWrapper>
-          ),
-        });
-      }
+//         return RenderAddress({
+//           cfxAddress: hexAddress,
+//           alias: formatString(hexAddress, 'hexAddress'),
+//           hoverValue: hexAddress,
+//           link: url,
+//           isFull,
+//           maxWidth,
+//           suffixSize: 0,
+//           prefix: (
+//             <IconWrapper>
+//               <Text span hoverValue={tip}>
+//                 <File size={16} color="#17B38A" />
+//               </Text>
+//             </IconWrapper>
+//           ),
+//         });
+//       }
 
-      // check if the address is a valid conflux address
-      if (!isAddress(value)) {
-        const tip = t(translations.general.invalidAddress);
+//       // check if the address is a valid conflux address
+//       if (!isAddress(value)) {
+//         const tip = t(translations.general.invalidAddress);
 
-        return RenderAddress({
-          translations,
-          cfxAddress: value,
-          alias,
-          hoverValue: `${tip}: ${value}`,
-          content: alias ? formatString(alias, 'tag') : value,
-          link: false,
-          isFull,
-          isFullNameTag,
-          maxWidth,
-          suffixSize,
-          style: { color: '#e00909' },
-          prefix: (
-            <IconWrapper>
-              <Text span hoverValue={tip}>
-                <AlertTriangle size={16} color="#e00909" />
-              </Text>
-            </IconWrapper>
-          ),
-        });
-      }
+//         return RenderAddress({
+//           cfxAddress: value,
+//           alias,
+//           hoverValue: `${tip}: ${value}`,
+//           content: alias ? formatString(alias, 'tag') : value,
+//           link: false,
+//           isFull,
+//           isFullNameTag,
+//           maxWidth,
+//           suffixSize,
+//           style: { color: '#e00909' },
+//           prefix: (
+//             <IconWrapper>
+//               <Text span hoverValue={tip}>
+//                 <AlertTriangle size={16} color="#e00909" />
+//               </Text>
+//             </IconWrapper>
+//           ),
+//         });
+//       }
 
-      const cfxAddress = formatAddress(value);
+//       const cfxAddress = formatAddress(value);
 
-      // zero address auto set alias
-      if (!alias && isZeroAddress(cfxAddress)) {
-        alias = t(translations.general.zeroAddress);
-      }
+//       // zero address auto set alias
+//       if (!alias && isZeroAddress(cfxAddress)) {
+//         alias = t(translations.general.zeroAddress);
+//       }
 
-      let prefixIcon: React.ReactNode = null;
-      // official name tag
-      let officalNametag: React.ReactNode = null;
-      // private name tag
-      let addressLabel: React.ReactNode = null;
-      // ens name tag
-      let ENSLabel: React.ReactNode = null;
-      // global ens name tag
-      const gENSLabel = ENSMap[cfxAddress]?.name;
-      // global private name tag
-      const gAddressLabel =
-        globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
+//       let prefixIcon: React.ReactNode = null;
+//       // official name tag
+//       let officalNametag: React.ReactNode = null;
+//       // private name tag
+//       let addressLabel: React.ReactNode = null;
+//       // ens name tag
+//       let ENSLabel: React.ReactNode = null;
+//       // global ens name tag
+//       const gENSLabel = ENSMap[cfxAddress]?.name;
+//       // global private name tag
+//       const gAddressLabel =
+//         globalData[LOCALSTORAGE_KEYS_MAP.addressLabel][cfxAddress];
 
-      if (showAddressLabel && gAddressLabel) {
-        const { label } = getLabelInfo(gAddressLabel, 'tag');
+//       if (showAddressLabel && gAddressLabel) {
+//         const { label } = getLabelInfo(gAddressLabel, 'tag');
 
-        addressLabel = label;
-      }
+//         addressLabel = label;
+//       }
 
-      if (showNametag && nametagInfo?.[cfxAddress]?.nametag) {
-        const { label } = getLabelInfo(
-          nametagInfo[cfxAddress].nametag,
-          'nametag',
-        );
+//       if (showNametag && nametagInfo?.[cfxAddress]?.nametag) {
+//         const { label } = getLabelInfo(
+//           nametagInfo[cfxAddress].nametag,
+//           'nametag',
+//         );
 
-        officalNametag = label;
-      }
+//         officalNametag = label;
+//       }
 
-      if (showENSLabel && gENSLabel) {
-        const { label, icon } = getLabelInfo(gENSLabel, 'ens');
+//       if (showENSLabel && gENSLabel) {
+//         const { label, icon } = getLabelInfo(gENSLabel, 'ens');
 
-        ENSLabel = label;
-        prefixIcon = icon;
-      }
+//         ENSLabel = label;
+//         prefixIcon = icon;
+//       }
 
-      if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
-        const typeText = t(
-          isInnerContractAddress(cfxAddress)
-            ? translations.general.internalContract
-            : verify
-            ? translations.general.verifiedContract
-            : translations.general.unverifiedContract,
-        );
+//       if (isContractAddress(cfxAddress) || isInnerContractAddress(cfxAddress)) {
+//         const typeText = t(
+//           isInnerContractAddress(cfxAddress)
+//             ? translations.general.internalContract
+//             : verify
+//             ? translations.general.verifiedContract
+//             : translations.general.unverifiedContract,
+//         );
 
-        return RenderAddress({
-          translations,
-          cfxAddress,
-          alias,
-          addressLabel,
-          ENSLabel,
-          nametag: officalNametag,
-          link,
-          isFull,
-          isFullNameTag,
-          maxWidth,
-          suffixSize,
-          prefix: showIcon ? (
-            <IconWrapper className={`${isFull ? 'icon' : ''}`}>
-              {prefixIcon}
-              <Text span hoverValue={typeText}>
-                <ImgWrapper>
-                  {isInnerContractAddress(cfxAddress) ? (
-                    <img src={InternalContractIcon} alt={typeText} />
-                  ) : (
-                    <>
-                      <img src={ContractIcon} alt={typeText} />
-                      {verify ? (
-                        <img
-                          className={'verified'}
-                          src={VerifiedIcon}
-                          alt={''}
-                        />
-                      ) : null}
-                    </>
-                  )}
-                </ImgWrapper>
-              </Text>
-            </IconWrapper>
-          ) : null,
-        });
-      }
+//         return RenderAddress({
+//           cfxAddress,
+//           alias,
+//           addressLabel,
+//           ENSLabel,
+//           nametag: officalNametag,
+//           link,
+//           isFull,
+//           isFullNameTag,
+//           maxWidth,
+//           suffixSize,
+//           prefix: showIcon ? (
+//             <IconWrapper className={`${isFull ? 'icon' : ''}`}>
+//               {prefixIcon}
+//               <Text span hoverValue={typeText}>
+//                 <ImgWrapper>
+//                   {isInnerContractAddress(cfxAddress) ? (
+//                     <img src={InternalContractIcon} alt={typeText} />
+//                   ) : (
+//                     <>
+//                       <img src={ContractIcon} alt={typeText} />
+//                       {verify ? (
+//                         <img
+//                           className={'verified'}
+//                           src={VerifiedIcon}
+//                           alt={''}
+//                         />
+//                       ) : null}
+//                     </>
+//                   )}
+//                 </ImgWrapper>
+//               </Text>
+//             </IconWrapper>
+//           ) : null,
+//         });
+//       }
 
-      if (isMe) {
-        return RenderAddress({
-          translations,
-          cfxAddress,
-          alias,
-          addressLabel,
-          ENSLabel,
-          nametag: officalNametag,
-          link,
-          isFull,
-          isFullNameTag,
-          maxWidth,
-          suffixSize,
-          suffix: (
-            <IconWrapper>
-              <img
-                src={isMeIcon}
-                alt="is me"
-                style={{
-                  width: 38.5,
-                  marginLeft: 3,
-                  marginBottom: isFull ? 6 : 4,
-                }}
-              />
-            </IconWrapper>
-          ),
-        });
-      }
+//       if (isMe) {
+//         return RenderAddress({
+//           cfxAddress,
+//           alias,
+//           addressLabel,
+//           ENSLabel,
+//           nametag: officalNametag,
+//           link,
+//           isFull,
+//           isFullNameTag,
+//           maxWidth,
+//           suffixSize,
+//           suffix: (
+//             <IconWrapper>
+//               <img
+//                 src={isMeIcon}
+//                 alt="is me"
+//                 style={{
+//                   width: 38.5,
+//                   marginLeft: 3,
+//                   marginBottom: isFull ? 6 : 4,
+//                 }}
+//               />
+//             </IconWrapper>
+//           ),
+//         });
+//       }
 
-      return RenderAddress({
-        translations,
-        cfxAddress,
-        alias,
-        addressLabel,
-        ENSLabel,
-        nametag: officalNametag,
-        link,
-        isFull,
-        isFullNameTag,
-        maxWidth,
-        suffixSize,
-        prefix: prefixIcon,
-      });
-    },
-  ),
-);
+//       return RenderAddress({
+//         cfxAddress,
+//         alias,
+//         addressLabel,
+//         ENSLabel,
+//         nametag: officalNametag,
+//         link,
+//         isFull,
+//         isFullNameTag,
+//         maxWidth,
+//         suffixSize,
+//         prefix: prefixIcon,
+//       });
+//     },
+//   ),
+// );
 
-export const PoSAddressContainer = withTranslation()(
-  React.memo(
-    ({
-      value,
-      alias,
-      maxWidth,
-      isFull = false,
-      isFullNameTag,
-      link = true,
-      isMe = false,
-      suffixAddressSize,
-      t,
-    }: Props & WithTranslation) => {
-      const suffixSize =
-        suffixAddressSize ||
-        (window.innerWidth <= sizes.m
-          ? defaultMobileSuffixAddressSize
-          : defaultPCSuffixPosAddressSize);
+// export const PoSAddressContainer = withTranslation()(
+//   React.memo(
+//     ({
+//       value,
+//       alias,
+//       maxWidth,
+//       isFull = false,
+//       isFullNameTag,
+//       link = true,
+//       isMe = false,
+//       suffixAddressSize,
+//       t,
+//     }: Props & WithTranslation) => {
+//       const suffixSize =
+//         suffixAddressSize ||
+//         (window.innerWidth <= sizes.m
+//           ? defaultMobileSuffixAddressSize
+//           : defaultPCSuffixPosAddressSize);
 
-      if (!value) {
-        return <>--</>;
-      }
+//       if (!value) {
+//         return <>--</>;
+//       }
 
-      // first check if the address is a valid conflux address
-      if (!isPosAddress(value)) {
-        const tip = t(translations.general.invalidPosAddress);
-        return RenderAddress({
-          translations,
-          cfxAddress: value,
-          alias,
-          hoverValue: `${tip}: ${value}`,
-          content: alias
-            ? formatString(alias, 'tag')
-            : formatString(value, 'posAddress'),
-          link: false,
-          isFull,
-          isFullNameTag,
-          maxWidth,
-          suffixSize,
-          style: { color: '#e00909' },
-          prefix: (
-            <IconWrapper>
-              <Text span hoverValue={tip}>
-                <AlertTriangle size={16} color="#e00909" />
-              </Text>
-            </IconWrapper>
-          ),
-          type: 'pos',
-        });
-      }
+//       // first check if the address is a valid conflux address
+//       if (!isPosAddress(value)) {
+//         const tip = t(translations.general.invalidPosAddress);
+//         return RenderAddress({
+//           cfxAddress: value,
+//           alias,
+//           hoverValue: `${tip}: ${value}`,
+//           content: alias
+//             ? formatString(alias, 'tag')
+//             : formatString(value, 'posAddress'),
+//           link: false,
+//           isFull,
+//           isFullNameTag,
+//           maxWidth,
+//           suffixSize,
+//           style: { color: '#e00909' },
+//           prefix: (
+//             <IconWrapper>
+//               <Text span hoverValue={tip}>
+//                 <AlertTriangle size={16} color="#e00909" />
+//               </Text>
+//             </IconWrapper>
+//           ),
+//           type: 'pos',
+//         });
+//       }
 
-      const content = formatString(value, 'posAddress');
+//       const content = formatString(value, 'posAddress');
 
-      // if (!alias) {
-      //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
-      // }
+//       // if (!alias) {
+//       //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
+//       // }
 
-      if (isMe) {
-        return RenderAddress({
-          translations,
-          cfxAddress: value,
-          alias,
-          link,
-          isFull,
-          isFullNameTag,
-          maxWidth,
-          suffixSize,
-          suffix: (
-            <IconWrapper>
-              <img
-                src={isMeIcon}
-                alt="is me"
-                style={{
-                  width: 38.5,
-                  marginLeft: 3,
-                  marginBottom: isFull ? 6 : 4,
-                }}
-              />
-            </IconWrapper>
-          ),
-          content: content,
-          type: 'pos',
-        });
-      }
+//       if (isMe) {
+//         return RenderAddress({
+//           cfxAddress: value,
+//           alias,
+//           link,
+//           isFull,
+//           isFullNameTag,
+//           maxWidth,
+//           suffixSize,
+//           suffix: (
+//             <IconWrapper>
+//               <img
+//                 src={isMeIcon}
+//                 alt="is me"
+//                 style={{
+//                   width: 38.5,
+//                   marginLeft: 3,
+//                   marginBottom: isFull ? 6 : 4,
+//                 }}
+//               />
+//             </IconWrapper>
+//           ),
+//           content: content,
+//           type: 'pos',
+//         });
+//       }
 
-      return RenderAddress({
-        translations,
-        cfxAddress: value,
-        alias,
-        link,
-        isFull,
-        isFullNameTag,
-        maxWidth,
-        suffixSize,
-        type: 'pos',
-        content: content,
-      });
-    },
-  ),
-);
-
-const ImgWrapper = styled.span`
-  position: relative;
-  width: 16px;
-  height: 16px;
-
-  img {
-    width: 16px;
-    height: 16px;
-    vertical-align: bottom;
-    margin-bottom: 5px;
-  }
-
-  .verified {
-    width: 8px;
-    height: 8px;
-    position: absolute;
-    bottom: -1px;
-    right: 1px;
-  }
-`;
-const IconWrapper = styled.span`
-  margin-right: 2px;
-  flex-shrink: 0;
-
-  svg {
-    vertical-align: bottom;
-    margin-bottom: 4px;
-  }
-
-  img {
-    width: 16px;
-    height: 16px;
-    vertical-align: bottom;
-    margin-bottom: 4px;
-  }
-`;
-
-const AddressWrapper = styled.div`
-  display: inline-flex;
-  /* display: inline-block; */
-  font-family: ${monospaceFont};
-`;
-
-const addressStyle = (props: any) => ` 
-  position: relative;
-  box-sizing: border-box;
-  display: inline-flex !important;
-  flex-wrap: nowrap;
-  max-width: ${
-    props.maxwidth || (props.alias ? 160 : defaultPCMaxWidth)
-  }px !important;
-  outline: none;
-  
-  > span {
-    flex: 0 1 auto;  
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  ${media.m} {
-    max-width: ${
-      props.maxwidth || (props.alias ? 140 : defaultMobileMaxWidth)
-    }px !important;
-  }
-
-  &:after {
-    ${!props.aftercontent ? 'display: none;' : ''}
-    content: '${props.aftercontent || ''}';
-    flex: 1 0 auto; 
-    white-space: nowrap;
-    margin-left: -1px;
-  }
-`;
-
-const LinkWrapper = styled(Link)<{
-  maxwidth?: number;
-  aftercontent?: string;
-  alias?: string;
-}>`
-  ${props => addressStyle(props)}
-`;
-
-const PlainWrapper = styled.span<{
-  maxwidth?: number;
-  aftercontent?: string;
-  alias?: string;
-}>`
-  ${props => addressStyle(props)}
-
-  color: #333;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: bottom;
-  cursor: default;
-`;
+//       return RenderAddress({
+//         cfxAddress: value,
+//         alias,
+//         link,
+//         isFull,
+//         isFullNameTag,
+//         maxWidth,
+//         suffixSize,
+//         type: 'pos',
+//         content: content,
+//       });
+//     },
+//   ),
+// );

@@ -8,7 +8,7 @@ import {
   getNametagInfo,
 } from '../../utils/';
 import { ContentWrapper } from './utils';
-import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 
 export const rank = {
   title: (

@@ -20,7 +20,7 @@ import {
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
 import { Remark } from 'app/components/Remark';
 import { PageHeader } from 'app/components/PageHeader/Loadable';

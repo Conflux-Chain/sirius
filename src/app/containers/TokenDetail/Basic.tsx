@@ -10,7 +10,7 @@ import { Text } from 'app/components/Text/Loadable';
 import { Tooltip } from 'app/components/Tooltip/Loadable';
 import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';

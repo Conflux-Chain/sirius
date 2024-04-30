@@ -2,10 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ColumnAge } from '../utils';
-import {
-  PoSAddressContainer,
-  AddressContainer,
-} from 'app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { Text } from 'app/components/Text/Loadable';
 import { Link } from 'app/components/Link/Loadable';
 import lodash from 'lodash';
@@ -32,7 +29,11 @@ export const posAddress = {
   key: 'hex',
   width: 1,
   render: value => {
-    return lodash.isNil(value) ? '--' : <PoSAddressContainer value={value} />;
+    return lodash.isNil(value) ? (
+      '--'
+    ) : (
+      <AddressContainer value={value} isPosAddress={true} />
+    );
   },
 };
 

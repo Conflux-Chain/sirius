@@ -39,7 +39,7 @@ import {
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
@@ -176,7 +176,6 @@ export const Detail = () => {
       setTransferList(list);
 
       const eventlogsResponse = proRes[1];
-      console.log(eventlogsResponse.list);
       setEventlogs(eventlogsResponse.list);
 
       let addressList = list.map(v => v.address);
