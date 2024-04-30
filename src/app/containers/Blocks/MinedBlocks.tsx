@@ -4,7 +4,7 @@ import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 // import { Title /*Footer*/ } from '../Transactions/components/index';
 // import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { AddressContainer } from 'app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { Title } from 'app/containers/Transactions/components';
 
 interface Props {

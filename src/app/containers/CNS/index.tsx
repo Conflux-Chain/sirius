@@ -19,7 +19,7 @@ import { NETWORK_ID } from 'utils/constants';
 import qs from 'query-string';
 import dayjs from 'dayjs';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';

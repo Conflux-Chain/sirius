@@ -28,7 +28,7 @@ import { formatTimeStamp, addIPFSGateway } from 'utils';
 import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
 import _ from 'lodash';
