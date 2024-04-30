@@ -20,11 +20,11 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
-import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
@@ -33,7 +33,7 @@ import { useBreakpoint } from 'styles/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
 import { Price } from '../../app/components/Price/Loadable';
 
@@ -340,8 +340,7 @@ export const marketCap = {
     <ContentWrapper right>
       <IconWrapper>
         <Tooltip
-          hoverable
-          text={
+          title={
             <Translation>
               {t => (
                 <div
@@ -352,7 +351,6 @@ export const marketCap = {
               )}
             </Translation>
           }
-          placement="top"
         >
           <img src={imgInfo} alt="?" />
         </Tooltip>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as UIText } from '@cfxjs/react-ui';
-import { Tooltip } from '@cfxjs/antd';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
 import styled from 'styled-components';
 import { selectText } from 'sirius-next/packages/common/dist/utils';
@@ -13,7 +13,6 @@ type TextProps = {
   maxCount?: number;
   hoverValue?: React.ReactNode;
   hoverValueMaxCount?: number;
-  getPopupContainer?: (elem: React.ReactNode) => React.ReactNode;
 } & Partial<ReactUITextProps>;
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof TextProps>;
 export declare type Props = TextProps & NativeAttrs;
@@ -31,7 +30,6 @@ export const Text = React.memo(
     maxCount,
     hoverValue,
     hoverValueMaxCount: outerHoverValueMaxCount,
-    getPopupContainer,
     ...props
   }: Props) => {
     const bp = useBreakpoint();
@@ -80,10 +78,6 @@ export const Text = React.memo(
     );
 
     const p = { title: tooltipText };
-    if (getPopupContainer) {
-      // @ts-ignore
-      p.getPopupContainer = getPopupContainer;
-    }
     return React.createElement(Tooltip, p, [
       <StyledTextWrapper maxWidth={maxWidth} key="text">
         {/* @ts-ignore */}

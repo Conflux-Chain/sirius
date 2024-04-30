@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Tooltip } from '../Tooltip';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands } from '../../../utils';
@@ -51,7 +51,7 @@ const TabLabel: React.FC<React.PropsWithChildren<LabelProps>> = ({
       {total ? (
         showTooltip ? (
           <Tooltip
-            text={
+            title={
               <StyledTextWrapper>
                 <Text
                   left={left}

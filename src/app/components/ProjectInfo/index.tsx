@@ -527,7 +527,7 @@ const LeftWrapper = styled.div`
   flex-direction: row-reverse;
   align-items: center;
 
-  > span:not(:last-child) {
+  > span:not(:last-of-type) {
     margin-left: -4px; //往左偏移实现重叠效果
   }
 

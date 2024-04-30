@@ -13,7 +13,7 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from '../../components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Remark } from '../../components/Remark';
-import { CopyButton } from '../../components/CopyButton';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { Input, Button, Link } from '@cfxjs/react-ui';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 

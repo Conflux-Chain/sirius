@@ -6,7 +6,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Tooltip } from '../../components/Tooltip';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 
 interface IconButtonProps {
   size?: number;
@@ -14,7 +14,6 @@ interface IconButtonProps {
   url?: string;
   className?: string;
   blank?: boolean;
-  tooltipContentClassName?: string;
   viewBox?: string;
   onClick?: () => void;
 }
@@ -23,7 +22,6 @@ export const IconButton = ({
   size,
   tooltipText,
   className,
-  tooltipContentClassName = '',
   children,
   url,
   blank,
@@ -44,12 +42,7 @@ export const IconButton = ({
 
   return (
     <IconButtonWrap>
-      <Tooltip
-        hoverable
-        placement="top"
-        text={tooltipText}
-        contentClassName={tooltipContentClassName}
-      >
+      <Tooltip title={tooltipText}>
         {url && (
           <RouterLink
             target={blank ? '_blank' : '_self'}

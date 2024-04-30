@@ -18,7 +18,7 @@ import { fcExchangeContract, fcExchangeInterestContract } from './Common';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { TXN_ACTION } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { MyNFTCard } from './MyNFTCard';
 
 // token decimal

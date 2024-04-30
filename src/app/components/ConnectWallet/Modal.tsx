@@ -13,7 +13,7 @@ import { Link as ScanLink } from './Link';
 import { RotateImg } from './RotateImg';
 import { History } from './History';
 // @todo extract an independent component, do not use outside one
-import { CopyButton } from './../CopyButton';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
 import { useCheckHook } from './useCheckHook';
 
 import iconFluent from './assets/fluent.svg';

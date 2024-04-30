@@ -47,7 +47,7 @@ interface RouteParams {
 }
 
 export const AddressDetailPage = memo(() => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const { data: accountInfo } = useAccount(address, [
@@ -63,7 +63,7 @@ export const AddressDetailPage = memo(() => {
   });
 
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
-  const addressLabel = addressLabelMap[address];
+  const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
     () => getLabelInfo(ensMap[address]?.name, 'ens'),

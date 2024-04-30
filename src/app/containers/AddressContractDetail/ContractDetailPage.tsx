@@ -56,7 +56,7 @@ interface RouteParams {
 }
 
 export const ContractDetailPage = memo(() => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const history = useHistory();
@@ -107,7 +107,7 @@ export const ContractDetailPage = memo(() => {
     websiteUrl !== 'http://' &&
     websiteUrl !== t(translations.general.loading);
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
-  const addressLabel = addressLabelMap[address];
+  const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
     () => getLabelInfo(ensMap[address]?.name, 'ens'),

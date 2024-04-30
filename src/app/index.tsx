@@ -216,7 +216,7 @@ export function App() {
   useEffect(() => {
     const key = LOCALSTORAGE_KEYS_MAP.addressLabel;
     const keyTx = LOCALSTORAGE_KEYS_MAP.txPrivateNote;
-    const data = globalData || {};
+    const data = globalData;
 
     // address label
     if (!data[key]) {

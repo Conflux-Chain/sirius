@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { ConnectButton } from 'app/components/ConnectWallet';
 import { Select } from 'app/components/Select';
 import { Input, Button } from '@cfxjs/react-ui';
-import { Tooltip } from 'app/components/Tooltip';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from 'styles/media';
@@ -52,11 +52,7 @@ const SwapItem = ({
   if (selected === 'cfx' && type === 'from') {
     balanceTitle = (
       <>
-        <Tooltip
-          hoverable
-          text={t(translations.swap.availableBalanceTip)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.swap.availableBalanceTip)}>
           <span className="icon-container">
             <img src={imgInfo} alt="?" className="icon-info" />
           </span>
