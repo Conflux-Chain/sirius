@@ -1,44 +1,19 @@
 import { NETWORK_OPTIONS, getCurrency } from 'utils/constants';
 import { createGlobalState } from 'react-use';
 import ENV_CONFIG from 'env';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { useGlobalData as useGlobalDataNext } from 'sirius-next/packages/common/dist/store/index';
+import {
+  GlobalDataType,
+  NetworksType,
+} from 'sirius-next/packages/common/dist/store/types';
+
+export interface ExtendedGlobalDataType
+  extends Omit<GlobalDataType, 'networks'> {
+  networks: NetworksType[];
+}
 
 // react-use version, to solve useContext can not update global value in App.ts
-export interface ContractsType {
-  [index: string]: string | undefined;
-  announcement?: string;
-  faucet?: string;
-  faucetLast?: string;
-  wcfx?: string;
-  governance?: string;
-}
-
-export interface NetworksType {
-  url: string;
-  name: string;
-  id: number;
-}
-
-export interface ENSType {
-  [index: string]: {
-    name: string;
-    expired: number;
-    delayed: number;
-  };
-}
-
-export interface GlobalDataType {
-  networks: Array<NetworksType>;
-  networkId: number;
-  contracts: ContractsType;
-  currency?: string;
-  ens: ENSType;
-  random?: number;
-  [LOCALSTORAGE_KEYS_MAP.addressLabel]?: Record<string, string>;
-  [LOCALSTORAGE_KEYS_MAP.txPrivateNote]?: Record<string, string>;
-}
-
-const defaultGlobalData: GlobalDataType = {
+const defaultGlobalData: ExtendedGlobalDataType = {
   networks: NETWORK_OPTIONS,
   networkId: ENV_CONFIG.ENV_NETWORK_ID,
   contracts: {},
@@ -48,7 +23,12 @@ const defaultGlobalData: GlobalDataType = {
 // @todo, if no default global data, homepage should loading until getProjectConfig return resp
 const _useGlobalData = createGlobalState(defaultGlobalData);
 export const useGlobalData = () => {
-  const [globalData, setGlobalData] = _useGlobalData();
+  const [globalData, setGlobalDataOriginal] = _useGlobalData();
+  const { setGlobalData: setGlobalDataNext } = useGlobalDataNext();
+  const setGlobalData = newData => {
+    setGlobalDataOriginal(newData);
+    setGlobalDataNext(newData);
+  };
   return [globalData || defaultGlobalData, setGlobalData] as const;
 };
 

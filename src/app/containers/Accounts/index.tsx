@@ -10,7 +10,7 @@ import { Select } from 'app/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
-import { AddressContainer } from 'app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { formatAddress } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';

@@ -18,7 +18,7 @@ import { Text } from 'app/components/Text';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';

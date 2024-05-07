@@ -26,3 +26,4 @@ export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
 export const ENV_ENS_REVERSE_REGISTRAR_ADDRESS =
   'cfxtest:acfarpzehntpre0thg8x7dp0ajw4ms328pe1mm17vd';
 export const ENV_LOGO = logo;
+export const ENV_ADDRESS = 'base32';

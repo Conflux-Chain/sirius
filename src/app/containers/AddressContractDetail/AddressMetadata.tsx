@@ -22,7 +22,7 @@ import { Link } from 'app/components/Link/Loadable';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
-import { PoSAddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import {
   getDepositList,
   getAccumulateInterestRate,
@@ -141,9 +141,10 @@ export function AddressMetadata({ address, accountInfo }) {
                 <CenterLine>
                   <Content>
                     {isPoSActived && posAccountInfo?.address ? (
-                      <PoSAddressContainer
+                      <AddressContainer
                         value={posAccountInfo?.address}
-                      ></PoSAddressContainer>
+                        isPosAddress={true}
+                      ></AddressContainer>
                     ) : (
                       '--'
                     )}

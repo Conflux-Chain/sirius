@@ -4,7 +4,7 @@ import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import externallinkIcon from 'images/nametag/externallink.svg';
 import verifiedIcon from 'images/nametag/verified.svg';
 import warningIcon from 'images/nametag/warning.svg';
-import { getLabelInfo } from 'app/components/AddressContainer';
+import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link as ComponentLink } from 'app/components/Link';

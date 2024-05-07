@@ -178,7 +178,6 @@ export function App() {
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
   const [loading, setLoading] = useState(false);
   const { SET_ENV_CONFIG } = useEnv();
-
   moment.locale(lang);
   dayjs.locale(lang);
 
@@ -228,11 +227,8 @@ export function App() {
           };
         }, {});
       }
-
-      setGlobalData({
-        ...globalData,
-        [key]: d,
-      });
+      const _globalData = { ...globalData, [key]: d };
+      setGlobalData(_globalData);
     }
 
     // private tx note
@@ -249,10 +245,8 @@ export function App() {
         }, {});
       }
 
-      setGlobalData({
-        ...globalData,
-        [keyTx]: dTx,
-      });
+      const _globalData = { ...globalData, [keyTx]: dTx };
+      setGlobalData(_globalData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [globalData]);

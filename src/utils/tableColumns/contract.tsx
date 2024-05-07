@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Text } from '../../app/components/Text/Loadable';
 import { formatNumber, formatString, getENSInfo, getNametagInfo } from '..';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { ContentWrapper } from './utils';
 
 interface Query {

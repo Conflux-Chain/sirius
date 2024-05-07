@@ -9,7 +9,7 @@ import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { Security } from 'app/components/Security/Loadable';
 import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { formatAddress } from 'utils';
 
 export function DescriptionPanel({ data, loading }) {

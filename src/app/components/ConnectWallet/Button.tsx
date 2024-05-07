@@ -12,7 +12,7 @@ import { ScanEvent } from 'utils/gaConstants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from '../Text/Loadable';
-import { getLabelInfo } from '../AddressContainer';
+import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useENS } from 'utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 

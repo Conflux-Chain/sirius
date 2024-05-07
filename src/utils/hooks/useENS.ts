@@ -35,7 +35,6 @@ export const useENS = ({
 
   useEffect(() => {
     let controller = new AbortController();
-
     reqENSInfo(fAddress, {
       signal: controller.signal,
       immediately: config.immediately,
@@ -75,3 +74,5 @@ export const useENS = ({
 
   return [map, list, setENS];
 };
+
+(window as any).useENS = useENS;
