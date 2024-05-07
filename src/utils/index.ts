@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { NetworksType } from './hooks/useGlobal';
+import { NetworksType } from 'sirius-next/packages/common/dist/store/types';
 import {
   NETWORK_ID,
   getCurrencySymbol,
