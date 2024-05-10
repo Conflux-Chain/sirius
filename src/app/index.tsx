@@ -313,11 +313,12 @@ export function App() {
           ...globalData,
           ...(resp as object),
         });
-
-        setLoading(false);
       })
       .catch(e => {
         console.log('request frontend config error: ', e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
