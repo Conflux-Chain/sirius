@@ -2161,13 +2161,31 @@
       }
     },
     "accounts": {
-      "title": "Accounts",
+      "title": "Conflux PoS Validators",
       "description": "Accounts",
       "address": "Address",
+      "totalRecord": "A total of {{total}} Validators founds",
+      "tabTitle": "Validators",
+      "posNodeAddress": "PoS Node Address",
+      "votingPower": "Voting Power",
+      "active": "Active",
+      "committeeMember": "Committee Member",
+      "votingShare": "Voting Share",
+      "nodeAge": "Node Age",
+      "isActive": "Yes",
+      "notActive": "No",
+      "elected": "Elected",
+      "notElected": "Not Elected",
       "availableVotes": "Available Rights",
       "currentCommitteeMember": "Current Committee Member",
       "votesInCommittee": "Rights in Committee",
-      "registerDate": "Register Date"
+      "registerDate": "Register Date",
+      "hover": {
+        "active": "Node status",
+        "committeeMember": "PoS consensus is determined by voting by committee members, and some members are replaced every half hour.",
+        "votingShare": "Proportion of total voting power.",
+        "nodeAge": "Age from node creation to present."
+      }
     },
     "account": {
       "title": "Account",

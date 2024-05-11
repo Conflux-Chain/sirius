@@ -624,7 +624,9 @@ export const PoSAddressContainer = withTranslation()(
         });
       }
 
-      const content = formatString(value, 'posAddress');
+      const content = alias
+        ? formatString(alias, 'tag')
+        : formatString(value, 'posAddress');
 
       // if (!alias) {
       //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
