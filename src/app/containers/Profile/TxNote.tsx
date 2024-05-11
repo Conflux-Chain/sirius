@@ -7,7 +7,7 @@ import { formatTimeStamp } from 'utils';
 import { ContentWrapper } from 'utils/tableColumns/utils';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import qs from 'query-string';

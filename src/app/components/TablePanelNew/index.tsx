@@ -10,10 +10,10 @@ import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from 'app/components/Empty/Loadable';
+import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;

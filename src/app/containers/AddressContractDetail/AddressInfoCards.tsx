@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
-import { Text } from 'app/components/Text/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import imgBalance from 'images/contract-address/balance.svg';

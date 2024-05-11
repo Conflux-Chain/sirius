@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Select } from 'app/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { formatAddress } from 'utils';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 

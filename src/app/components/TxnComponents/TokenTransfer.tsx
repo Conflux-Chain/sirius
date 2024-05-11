@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { formatBalance } from 'utils';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';

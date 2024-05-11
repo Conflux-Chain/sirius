@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import styled from 'styled-components';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 
@@ -44,16 +44,16 @@ export const IconButton = ({
     <IconButtonWrap>
       <Tooltip title={tooltipText}>
         {url && (
-          <RouterLink
+          <Link
             target={blank ? '_blank' : '_self'}
-            to={url || ''}
+            href={url || ''}
             className={className}
             style={{
               cursor: 'pointer',
             }}
           >
             {svg}
-          </RouterLink>
+          </Link>
         )}
         {!url && svg}
       </Tooltip>

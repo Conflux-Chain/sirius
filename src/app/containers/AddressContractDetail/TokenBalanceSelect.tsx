@@ -5,11 +5,11 @@ import { Description } from 'sirius-next/packages/common/dist/components/Descrip
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
-import { media } from 'styles/media';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
-import { Link } from 'react-router-dom';
-import { Text } from '../../components/Text';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { formatBalance } from 'utils/index';
 import { CFX_TOKEN_TYPES } from '../../../utils/constants';
 import BigNumber from 'bignumber.js';
@@ -105,7 +105,7 @@ function SelectItem({
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>
-        <Link to={`/token/${address}`}>{name}</Link>
+        <Link href={`/token/${address}`}>{name}</Link>
       </SelectItemTextTitle>
     </SelectItemTitle>
   );

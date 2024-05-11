@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { media } from './media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import {
   sansSerifFont,
   monospaceFont,
@@ -100,6 +100,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   // override @cfxjs/antd styles
+  .ant-tag > .sirius-next-tooltip + .anticon {
+    margin-left: 7px;
+  }
+  .ant-tag-rtl.ant-tag > .sirius-next-tooltip + .anticon {
+    margin-right: 7px;
+    margin-left: 0;
+  }
   .ant-select-item-option-grouped {
     padding-left: 12px;
     margin-left: 12px;

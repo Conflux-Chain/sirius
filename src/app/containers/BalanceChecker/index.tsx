@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button, Divider, Form, Input, Radio } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '../../components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { DatePicker } from '@cfxjs/react-ui';
 import { translations } from 'locales/i18n';
 import {

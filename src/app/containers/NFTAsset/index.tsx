@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { toThousands, isCurrentNetworkAddress } from 'utils';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
 import { Col, Pagination, Row, Tag } from '@cfxjs/antd';
@@ -16,7 +16,7 @@ import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
-import { Empty } from 'app/components/Empty';
+import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
 import {
   reqNFTBalance,
   reqNFTTokens,

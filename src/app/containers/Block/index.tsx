@@ -7,12 +7,12 @@ import {
   TabsTablePanel,
 } from 'app/components/TabsTablePanel/Loadable';
 import { useParams } from 'react-router-dom';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Helmet } from 'react-helmet-async';
 import { DescriptionPanel } from './DescriptionPanel';
 import styled from 'styled-components';
 import { reqBlockDetail } from 'utils/httpRequest';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
 import { useHistory } from 'react-router-dom';
 
 import { Txns } from './Txns';

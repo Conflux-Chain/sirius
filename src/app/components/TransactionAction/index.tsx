@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useCallback } from 'react';
 import { formatAddress, formatBalance } from 'utils';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { decodeData, filterByTokenAddress, MultiAction } from './minibus';
 import styled from 'styled-components';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';

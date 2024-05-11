@@ -8,13 +8,14 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { translations } from 'locales/i18n';
-import { PageHeader } from '../../components/PageHeader';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Remark } from '../../components/Remark';
+import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
 import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { Input, Button, Link } from '@cfxjs/react-ui';
+import { Input, Button } from '@cfxjs/react-ui';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import { useParams } from 'react-router-dom';

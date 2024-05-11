@@ -15,7 +15,7 @@ import { Input, Button } from '@cfxjs/react-ui';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 

@@ -2,11 +2,11 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import { hideInDotNet } from 'utils';
 import { TransactionAction } from 'app/components/TransactionAction';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
 import _ from 'lodash';
 

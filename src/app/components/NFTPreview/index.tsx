@@ -4,11 +4,12 @@
  *
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Image, Popover, Skeleton } from '@cfxjs/antd';
+import { Image, Popover } from '@cfxjs/antd';
+import { ImageSkeleton } from 'sirius-next/packages/common/dist/components/ImageSkeleton';
 import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
-import { Text } from '../Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { translations } from 'locales/i18n';
 import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
@@ -23,7 +24,7 @@ import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
 import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
-import { Link as ALink } from 'app/components/Link/Loadable';
+import { Link as ALink } from 'sirius-next/packages/common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { ThreeD } from './3D';
@@ -298,7 +299,7 @@ export const NFTPreview = React.memo(
                     />
                   )
                 ) : isFirstTime ? (
-                  <Skeleton.Image />
+                  <ImageSkeleton />
                 ) : (
                   <Image
                     width={500}
@@ -392,7 +393,7 @@ export const NFTPreview = React.memo(
               setPreviewIcon(visible ? nftPreviewActive : nftPreview);
             }}
           >
-            <Text span hoverValue={t(translations.general.preview)}>
+            <Text tag="span" hoverValue={t(translations.general.preview)}>
               <img
                 src={previewIcon}
                 alt="Preview"
@@ -424,7 +425,7 @@ export const NFTPreview = React.memo(
                   />
                 )
               ) : isFirstTime ? (
-                <Skeleton.Image />
+                <ImageSkeleton />
               ) : (
                 <Image
                   width={500}

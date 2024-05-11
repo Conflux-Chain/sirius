@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import styled from 'styled-components';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -8,7 +8,7 @@ import { reqGasPrice } from 'utils/httpRequest';
 import { useInterval } from 'react-use';
 
 import { fromDripToGdrip } from 'utils';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 
 import IconGas from 'images/icon-gas.svg';
 import IconRefresh from 'images/refresh.svg';

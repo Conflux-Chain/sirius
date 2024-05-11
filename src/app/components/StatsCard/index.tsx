@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import SkelontonContainer from '../SkeletonContainer';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import {
   formatNumber,
@@ -13,12 +13,12 @@ import {
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
-import { Text } from '../Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import BigNumber from 'bignumber.js';
 import { usePortal } from '../../../utils/hooks/usePortal';
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { monospaceFont } from '../../../styles/variable';
-import { Link } from '../Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Description } from 'sirius-next/packages/common/dist/components/Description';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
@@ -697,7 +697,7 @@ export const StatsCard = ({
         ) : null}
         {category === 'transaction' ? total : null}
       </HeaderWrapper>
-      <SkelontonContainer
+      <SkeletonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
         <div
@@ -722,7 +722,7 @@ export const StatsCard = ({
                   }
                   key={c['title']}
                 >
-                  <SkelontonContainer
+                  <SkeletonContainer
                     shown={lodash.isNil(statsData[c['index']])}
                   >
                     {lodash.isNil(statsData[c['index']])
@@ -732,7 +732,7 @@ export const StatsCard = ({
                       : formatNumber(statsData[c['index']], {
                           withUnit: false,
                         })}
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </Description>
               ))}
             </>
@@ -748,7 +748,7 @@ export const StatsCard = ({
             </table>
           )}
         </div>
-      </SkelontonContainer>
+      </SkeletonContainer>
     </CardWrapper>
   );
 };

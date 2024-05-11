@@ -7,7 +7,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getDuration } from '../../../utils';
-import { Text } from '../Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 
 interface CountDownProps {
   from: number;
@@ -52,7 +52,7 @@ export const CountDown = React.memo(
 
     return (
       <Text
-        span
+        tag="span"
         hoverValue={`${fullLabel[0]} ${t(translations.general.countdown.ago)}`}
       >
         {label[0]} {t(translations.general.countdown.ago)}
