@@ -94,11 +94,6 @@ export const AddressDetailPage = memo(() => {
           )}
         </a>
       </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/report?address=${address}`}>
-          {t(translations.general.address.more.report)}
-        </RouterLink>
-      </Menu.Item>
     </MenuWrapper>
   );
 

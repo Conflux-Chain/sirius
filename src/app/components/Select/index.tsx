@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select as UISelect } from '@cfxjs/react-ui';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { SelectProps } from '@cfxjs/react-ui/dist/select/select';
 import clsx from 'clsx';
 

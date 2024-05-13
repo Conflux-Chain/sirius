@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, ReactNode, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import { Link as UILink } from '@cfxjs/react-ui';
 import { Link as RouterLink, useRouteMatch } from 'react-router-dom';
@@ -108,7 +108,7 @@ const Menu = styled.div<{ name?: string }>`
     &.level-2.matched {
       color: white;
       background-color: var(--theme-color-blue0);
-      :hover {
+      &:hover {
         color: white;
       }
 
@@ -154,6 +154,7 @@ export const HeaderLink: React.FC<{
   afterClick?: any;
   level: number;
   plain?: boolean;
+  children?: React.ReactNode;
 }> = ({
   className,
   href,
@@ -389,7 +390,7 @@ const WrappLink = styled.span`
         color: #fff !important;
         background-color: var(--theme-color-blue0);
       }
-      :hover:not(.matched) {
+      &:hover:not(.matched) {
         color: #fff !important;
         background-color: var(--theme-color-blue0);
       }
@@ -467,7 +468,7 @@ const WrappLink = styled.span`
       color: #aab9eb;
       padding-top: 0.43rem;
       padding-bottom: 0.43rem;
-      :hover {
+      &:hover {
         color: #aab9eb;
       }
       &.level-0 {

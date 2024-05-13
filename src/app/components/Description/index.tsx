@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { media } from 'styles/media';
 import clsx from 'clsx';
 

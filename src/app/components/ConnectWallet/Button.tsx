@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { TxnHistoryContext } from 'utils/hooks/useTxnHistory';

@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled, { keyframes } from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components';
 import clsx from 'clsx';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { Link as ScanLink } from './Link';
@@ -78,7 +78,9 @@ export const Modal = ({
   };
 
   const handleLogin = () => {
-    login().finally(() => onClose());
+    login()
+      .then(() => onClose())
+      .catch(e => console.log('connect wallet error: ', e));
   };
 
   let walletText = t(translations.connectWallet.modal.fluentWallet);
@@ -103,6 +105,7 @@ export const Modal = ({
       </a>
     </div>
   );
+  let handleClick: VoidFunction | undefined = undefined;
 
   if (installed) {
     if (authConnectStatus === AuthConnectStatus.NotConnected) {
@@ -112,6 +115,7 @@ export const Modal = ({
           {logo}
         </>
       );
+      handleClick = handleLogin;
     } else if (authConnectStatus === AuthConnectStatus.Connected) {
       if (isValid) {
         title = t(translations.connectWallet.modal.account);
@@ -187,7 +191,7 @@ export const Modal = ({
       <div className="modal-and-history-container">
         <div className="modal-body">
           <div className="modal-title">{title}</div>
-          <div className={clsx('modal-portal')} onClick={handleLogin}>
+          <div className={clsx('modal-portal')} onClick={handleClick}>
             {portal}
           </div>
           {tip}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from '../../components/Select';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import Globe from '@zeit-ui/react-icons/globe';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';

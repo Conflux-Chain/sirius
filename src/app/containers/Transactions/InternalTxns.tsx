@@ -7,7 +7,7 @@ import { translations } from 'locales/i18n';
 import { AddressContainer } from 'app/components/AddressContainer';
 import { CopyButton } from 'app/components/CopyButton/Loadable';
 import { formatAddress } from 'utils';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 

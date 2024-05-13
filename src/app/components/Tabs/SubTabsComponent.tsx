@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Button } from '@cfxjs/react-ui';
 import clsx from 'clsx';
 import { media } from 'styles/media';

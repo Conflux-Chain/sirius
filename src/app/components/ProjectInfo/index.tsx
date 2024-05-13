@@ -4,7 +4,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import {
   DexIcon,
   CexIcon,

@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Select, Spin, Tag, Image } from '@cfxjs/antd';
 import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
-import styled, { createGlobalStyle } from 'styled-components/macro';
+import styled, { createGlobalStyle } from 'styled-components';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Text } from 'app/components/Text/Loadable';
 import { useTranslation } from 'react-i18next';

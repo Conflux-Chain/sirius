@@ -3,7 +3,7 @@ import { Row, Col } from '@cfxjs/antd';
 import { Card } from 'app/components/Card/Loadable';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useBreakpoint } from 'styles/media';
 
 export const InfoCard = ({ totalInfo, accountInfo }) => {

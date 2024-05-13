@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { media } from 'styles/media';
 import SkelontonContainer from 'app/components/SkeletonContainer';
 import { Search as SearchComp } from 'app/components/Search/Loadable';

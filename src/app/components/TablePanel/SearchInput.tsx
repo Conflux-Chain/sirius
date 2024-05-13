@@ -2,7 +2,7 @@
  * TokenDetail
  */
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { tranferToLowerCase } from 'utils';
 import { Search as SearchComp } from '../Search/Loadable';
 import { CONTRACTS } from 'utils/constants';

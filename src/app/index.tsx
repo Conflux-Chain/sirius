@@ -16,7 +16,7 @@ import {
   useLocation,
   withRouter,
 } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import BigNumber from 'bignumber.js';
 import WebFontLoader from 'webfontloader';
 import { SWRConfig } from 'swr';
@@ -38,7 +38,6 @@ import utc from 'dayjs/plugin/utc';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
-import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
@@ -171,7 +170,7 @@ export function App() {
   const [globalData, setGlobalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   moment.locale(lang);
   dayjs.locale(lang);
@@ -286,6 +285,13 @@ export function App() {
               ),
             ),
           );
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.apis,
+            JSON.stringify({
+              openAPIHost: resp?.OPEN_API_URL,
+              rpcHost: resp?.CONFURA_URL,
+            }),
+          );
           // contract name tag config, hide for temp
           // localStorage.setItem(
           //   LOCALSTORAGE_KEYS_MAP.contractNameTag,
@@ -307,11 +313,12 @@ export function App() {
           ...globalData,
           ...(resp as object),
         });
-
-        setLoading(false);
       })
       .catch(e => {
         console.log('request frontend config error: ', e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -351,6 +358,7 @@ export function App() {
             errorRetryCount: 0,
           }}
         >
+          {/* @ts-ignore */}
           <BrowserRouter>
             <CfxProvider
               theme={{
@@ -599,7 +607,6 @@ export function App() {
                           component={BlocknumberCalc}
                         />
                         <Route exact path="/swap" component={Swap} />
-                        <Route exact path="/report" component={Report} />
                         <Route
                           exact
                           path={['/networkError', '/networkError/:network']}

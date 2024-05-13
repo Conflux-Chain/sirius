@@ -4,7 +4,7 @@ import DateIcon from '../../../images/balance-checker/date.png';
 import dayjs from 'dayjs';
 import BlockIcon from '../../../images/balance-checker/block.png';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import TokenIcon from '../../../images/balance-checker/token-icon.png';
 import { Text } from '../../components/Text/Loadable';

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { media } from 'styles/media';
 import { PageHeader } from 'app/components/PageHeader';
 import { Input, Button, Switch } from '@cfxjs/antd';
@@ -62,6 +62,9 @@ export function Approval() {
         CRC20: ERC20ABI,
         CRC721: ERC721ABI,
         CRC1155: ERC1155ABI,
+        ERC20: ERC20ABI,
+        ERC721: ERC721ABI,
+        ERC1155: ERC1155ABI,
       };
 
       return CFX.Contract({
@@ -219,12 +222,14 @@ export function Approval() {
     });
     const contract = getContract(data.contract, data.tokenInfo.type);
     let tx;
-
-    if (data.tokenInfo.type === 'CRC20') {
+    if (data.tokenInfo.type === 'CRC20' || data.tokenInfo.type === 'ERC20') {
       tx = contract
         .approve(data.spender, 0)
         .sendTransaction({ from: accounts[0] });
-    } else if (data.tokenInfo.type === 'CRC721') {
+    } else if (
+      data.tokenInfo.type === 'CRC721' ||
+      data.tokenInfo.type === 'ERC721'
+    ) {
       if (data.approvalType === 'ApprovalForAll') {
         // revoke all
         tx = contract.setApprovalForAll(data.spender, false).sendTransaction({
@@ -237,7 +242,10 @@ export function Approval() {
           .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
           .sendTransaction({ from: accounts[0] });
       }
-    } else if (data.tokenInfo.type === 'CRC1155') {
+    } else if (
+      data.tokenInfo.type === 'CRC1155' ||
+      data.tokenInfo.type === 'ERC1155'
+    ) {
       tx = contract
         .setApprovalForAll(data.spender, false)
         .sendTransaction({ from: accounts[0] });

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -81,11 +81,6 @@ export function TokenDetail() {
       <Menu.Item>
         <RouterLink to={`/balance-checker?address=${tokenAddress}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
-      </Menu.Item>
-      <Menu.Item>
-        <RouterLink to={`/report?address=${tokenAddress}`}>
-          {t(translations.general.address.more.report)}
         </RouterLink>
       </Menu.Item>
     </MenuWrapper>

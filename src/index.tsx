@@ -8,8 +8,8 @@
 // import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
 import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
@@ -39,6 +39,13 @@ const ConnectedApp = ({ Component }: Props) => (
     </RecoilRoot>
   </HelmetProvider>
 );
+
+// const root = ReactDOM.createRoot(MOUNT_NODE);
+
+// const render = (Component: typeof App) => {
+//   root.render(<ConnectedApp Component={Component} />);
+// };
+
 const render = (Component: typeof App) => {
   ReactDOM.render(<ConnectedApp Component={Component} />, MOUNT_NODE);
 };

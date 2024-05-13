@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import imgArray from 'images/two_array.png';
 import { AddressContainer } from '../AddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';

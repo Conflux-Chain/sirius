@@ -2,7 +2,7 @@ import React from 'react';
 import { Text as UIText } from '@cfxjs/react-ui';
 import { Tooltip } from '@cfxjs/antd';
 import { TextProps as ReactUITextProps } from '@cfxjs/react-ui/dist/text/text';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { selectText } from './../../../utils';
 import clsx from 'clsx';
 import { useBreakpoint } from 'styles/media';
@@ -86,6 +86,7 @@ export const Text = React.memo(
     }
     return React.createElement(Tooltip, p, [
       <StyledTextWrapper maxWidth={maxWidth} key="text">
+        {/* @ts-ignore */}
         <UIText className={clsx('sirius-text', className)} {...props}>
           {child}
         </UIText>

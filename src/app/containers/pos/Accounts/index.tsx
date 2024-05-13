@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { accountColunms, colunms } from 'utils/tableColumns/pos';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import {
+  TablePanel as TablePanelNew,
+  sortDirections,
+} from 'app/components/TablePanelNew';
 import { useAge } from 'utils/hooks/useAge';
 
 export const List = ({ overview }: { overview?: boolean }) => {
@@ -22,8 +25,8 @@ export const List = ({ overview }: { overview?: boolean }) => {
     {
       ...colunms.age(ageFormat, toggleAgeFormat),
       sorter: !overview,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
+      defaultSortOrder: sortDirections[0],
+      sortDirections,
       showSorterTooltip: false,
     },
   ].map((item, i) => ({
@@ -36,6 +39,7 @@ export const List = ({ overview }: { overview?: boolean }) => {
       url={url}
       columns={columns}
       pagination={overview ? false : undefined}
+      sortParam={'sort'}
     ></TablePanelNew>
   );
 };

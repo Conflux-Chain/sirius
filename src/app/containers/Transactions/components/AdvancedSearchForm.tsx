@@ -5,7 +5,7 @@ import {
   isSafeNumberOrNumericStringInput,
   getAddressInputPlaceholder,
 } from 'utils';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import qs from 'query-string';
 import lodash from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';

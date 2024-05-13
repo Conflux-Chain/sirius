@@ -37,7 +37,7 @@ import {
 import ContractIcon from '../../../images/contract-icon.png';
 import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import DownIcon from '../../../images/down.png';
 import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
@@ -157,11 +157,6 @@ export const ContractDetailPage = memo(() => {
           </RouterLink>
         </Menu.Item>
       ) : null}
-      <Menu.Item>
-        <RouterLink to={`/report?address=${address}`}>
-          {t(translations.general.address.more.report)}
-        </RouterLink>
-      </Menu.Item>
       {hasWebsite && (
         <Menu.Item>
           <RouterLink

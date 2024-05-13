@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs as UITabs } from '@cfxjs/react-ui';
 import { TabsProps } from '@cfxjs/react-ui/dist/tabs/tabs';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import clsx from 'clsx';
 import { media } from '../../../styles/media';
 

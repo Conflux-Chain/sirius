@@ -1,54 +1,6 @@
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
 
-interface ContractsType {
-  faucet: string;
-  faucetLast: string;
-  announcement: string;
-  wcfx: string;
-  governance: string;
-  adminControl: string;
-  sponsorWhitelistControl: string;
-  staking: string;
-  context: string;
-  posRegister: string;
-  zero: string;
-}
-
-interface ContractNameTagType {
-  [index: string]: string;
-}
-
-// only for dev and qa, use with caution
-export const IS_PRE_RELEASE =
-  process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('stage') ||
-  window.location.hostname.startsWith('localhost');
-
-export const IS_TESTNET =
-  process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('testnet');
-
-export const IS_PRIVATENET =
-  process.env.REACT_APP_PrivateNet === 'true' ||
-  window.location.hostname.startsWith('net8888');
-
-const RPC_URL = {
-  mainnet: 'https://main.confluxrpc.com',
-  testnet: 'https://test.confluxrpc.com',
-  privatenet: 'https://net8888cfx.confluxrpc.com',
-};
-export const RPC_SERVER = IS_TESTNET
-  ? RPC_URL.testnet
-  : IS_PRIVATENET
-  ? RPC_URL.privatenet
-  : RPC_URL.mainnet;
-
-export enum DEFAULT_NETWORK_IDS {
-  mainnet = 1029,
-  testnet = 1,
-}
-
 /**
  * @todo
  * 1. setNFTCacheInfo cacheKey
@@ -70,6 +22,72 @@ export enum LOCALSTORAGE_KEYS_MAP {
   addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
   txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
   hideInDotNet = 'CONFLUX_SCAN_HIDE_IN_DOT_NET',
+  apis = 'CONFLUX_SCAN_APIS',
+}
+
+interface ContractsType {
+  faucet: string;
+  faucetLast: string;
+  announcement: string;
+  wcfx: string;
+  governance: string;
+  adminControl: string;
+  sponsorWhitelistControl: string;
+  staking: string;
+  context: string;
+  posRegister: string;
+  zero: string;
+}
+
+interface ContractNameTagType {
+  [index: string]: string;
+}
+
+const apiHostMap: {
+  rpcHost?: string;
+  openAPIHost?: string;
+} = (() => {
+  try {
+    const apis = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.apis) ?? '';
+    return JSON.parse(apis);
+  } catch (error) {
+    return {};
+  }
+})();
+
+// only for dev and qa, use with caution
+export const IS_PRE_RELEASE =
+  process.env.REACT_APP_TestNet === 'true' ||
+  window.location.hostname.includes('stage') ||
+  window.location.hostname.startsWith('localhost');
+
+export const IS_TESTNET =
+  process.env.REACT_APP_TestNet === 'true' ||
+  window.location.hostname.includes('testnet');
+
+export const IS_PRIVATENET =
+  process.env.REACT_APP_PrivateNet === 'true' ||
+  window.location.hostname.startsWith('net8888');
+
+const RPC_URL = {
+  mainnet: 'https://main.confluxrpc.com',
+  testnet: 'https://test.confluxrpc.com',
+  privatenet: 'https://net8888cfx.confluxrpc.com',
+};
+export const RPC_SERVER = (() => {
+  if (apiHostMap.rpcHost) {
+    return apiHostMap.rpcHost;
+  }
+  return IS_TESTNET
+    ? RPC_URL.testnet
+    : IS_PRIVATENET
+    ? RPC_URL.privatenet
+    : RPC_URL.mainnet;
+})();
+
+export enum DEFAULT_NETWORK_IDS {
+  mainnet = 1029,
+  testnet = 1,
 }
 
 export const NETWORK_ID = (() => {
@@ -273,14 +291,18 @@ export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
   ? ENS_REVERSE_REGISTRAR_ADDRESSES.testnet
   : ENS_REVERSE_REGISTRAR_ADDRESSES.mainnet;
 
-let APIHost = IS_TESTNET
-  ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-  : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
-if (window.location.host.startsWith('net')) {
-  APIHost = window.location.host.replace(/cfx|eth/, 'api');
-}
-
-export const OPEN_API_HOST = APIHost;
+export const OPEN_API_HOST = (() => {
+  if (apiHostMap.openAPIHost) {
+    return apiHostMap.openAPIHost;
+  }
+  let APIHost = IS_TESTNET
+    ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
+    : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
+  if (window.location.host.startsWith('net')) {
+    APIHost = window.location.host.replace(/cfx|eth/, 'api');
+  }
+  return `https://${APIHost}`;
+})();
 
 export const OPEN_API_URLS = Object.entries({
   // charts
@@ -305,7 +327,7 @@ export const OPEN_API_URLS = Object.entries({
   NFTBalance: '/nft/balances',
 })
   .map(item => ({
-    [item[0]]: `https://${OPEN_API_HOST}${item[1]}`,
+    [item[0]]: `${OPEN_API_HOST}${item[1]}`,
   }))
   .reduce((prev, curr) => ({ ...prev, ...curr }), {});
 

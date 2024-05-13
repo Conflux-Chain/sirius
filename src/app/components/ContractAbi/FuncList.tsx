@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Collapse } from '@cfxjs/antd';
 import { DownOutlined } from '@ant-design/icons';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from '../../../locales/i18n';

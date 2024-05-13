@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<
+  PropsWithChildren<{ message?: string }>
+> {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -20,7 +22,6 @@ class ErrorBoundary extends React.Component {
     // @ts-ignore
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      // @ts-ignore
       return this.props.message || <div>Something went wrong.</div>;
     }
 
