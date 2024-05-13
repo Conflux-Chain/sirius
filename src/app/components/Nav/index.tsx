@@ -8,7 +8,7 @@ import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import styled from 'styled-components';
 import { media, useBreakpoint } from 'styles/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
-import { GasPriceDropdown } from 'app/components/GasPriceDropdown';
+import { GasPriceDropdown } from 'sirius-next/packages/common/dist/components/GasPriceDropdown';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
