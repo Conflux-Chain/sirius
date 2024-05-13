@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import imgArray from 'images/two_array.png';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 
 interface OutputParamsProps {
   output: object;

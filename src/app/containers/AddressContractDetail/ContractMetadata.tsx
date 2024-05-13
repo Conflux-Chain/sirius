@@ -7,25 +7,22 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import { Link as RouterLink } from 'react-router-dom';
-import { List } from 'app/components/List/';
+import { List } from 'sirius-next/packages/common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
-import { media } from 'styles/media';
-import { Text } from 'app/components/Text';
-import { Link as UILink } from '@cfxjs/react-ui';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 import { Image } from '@cfxjs/antd';
 import ENV_CONFIG, { NETWORK_TYPES } from 'env';
-
-const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
 
 const WarnningButton = ({ address }) => {
   const { t, i18n } = useTranslation();
@@ -41,7 +38,7 @@ const WarnningButton = ({ address }) => {
             <p className="warnning-text">
               {t(translations.contractDetail.contractAdminWarning)}
               <br />
-              <UILink
+              <Link
                 target="_blank"
                 className="warnning-tooltip-link"
                 href={
@@ -51,7 +48,7 @@ const WarnningButton = ({ address }) => {
                 }
               >
                 {t(translations.general.viewMore)}
-              </UILink>
+              </Link>
             </p>
           </WarnningTooltipWrapper>
         }
@@ -133,7 +130,7 @@ export function ContractMetadata({ address, contractInfo }) {
     : notAvailableText;
 
   if (tokenInfo.name && isToken) {
-    tokenName = <Link to={`/token/${address}`}>{tokenName}</Link>;
+    tokenName = <Link href={`/token/${address}`}>{tokenName}</Link>;
   }
 
   let list = [
@@ -157,12 +154,12 @@ export function ContractMetadata({ address, contractInfo }) {
               alt={contractInfo.name + 'logo'}
             />
             <Content>{contractInfo.name || notAvailableText}</Content>
-            <RouterLink
+            <Link
               className="contract-info-update"
-              to={`/contract-info/${address}`}
+              href={`/contract-info/${address}`}
             >
               <Edit3 size={18} color="#1e3de4" />
-            </RouterLink>
+            </Link>
           </CenterLine>
         </SkeletonContainer>
       ),
@@ -295,9 +292,12 @@ export function ContractMetadata({ address, contractInfo }) {
                       translations.contractDetail.txOnlyEn,
                     )} `}
                     <LinkWrap
-                      to={`/transaction/${contractInfo.transactionHash}`}
+                      href={`/transaction/${contractInfo.transactionHash}`}
                     >
-                      <Text span hoverValue={contractInfo.transactionHash}>
+                      <Text
+                        tag="span"
+                        hoverValue={contractInfo.transactionHash}
+                      >
                         {formatString(contractInfo.transactionHash, 'address')}
                       </Text>
                     </LinkWrap>

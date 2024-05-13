@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'app/components/Link';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { Modal } from '@cfxjs/react-ui';
 import ReCAPTCHA from 'react-google-recaptcha';
 import iconInfo from 'images/info.svg';

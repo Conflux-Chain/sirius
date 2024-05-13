@@ -9,8 +9,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
-import { PageHeader } from 'app/components/PageHeader';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { Input } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, isZeroAddress } from 'utils';
@@ -25,8 +25,8 @@ import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
 import BigNumber from 'bignumber.js';
-import { Link } from 'app/components/Link/Loadable';
-import { Text } from 'app/components/Text/Loadable';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 
 const { Search } = Input;
 

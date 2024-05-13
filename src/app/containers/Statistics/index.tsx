@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '../../components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { StatsType } from '../../components/StatsCard';
 // TODO antd slimming
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { reqTopStatistics } from '../../../utils/httpRequest';

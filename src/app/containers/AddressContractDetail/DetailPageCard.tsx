@@ -7,7 +7,7 @@
 import React, { memo, ReactNode } from 'react';
 import styled from 'styled-components';
 import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { media } from 'styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 
 interface Props {
   title: string | ReactNode;

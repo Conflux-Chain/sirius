@@ -3,8 +3,8 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ColumnAge } from '../utils';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
-import { Text } from 'app/components/Text/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import lodash from 'lodash';
 
 export const age = (
@@ -51,7 +51,7 @@ export const posBlockHash = {
           row.height || row.block?.height
         }`}
       >
-        <Text span hoverValue={value} maxWidth="100px">
+        <Text tag="span" hoverValue={value} maxWidth="100px">
           {value}
         </Text>
       </Link>
@@ -83,7 +83,7 @@ export const powBlockHash = {
   render: value => {
     return !lodash.isNil(value) ? (
       <Link href={`/block/${value}`}>
-        <Text span hoverValue={value} maxWidth="100px">
+        <Text tag="span" hoverValue={value} maxWidth="100px">
           {value}
         </Text>
       </Link>

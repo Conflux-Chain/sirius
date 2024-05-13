@@ -29,13 +29,13 @@ import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@cfxjs/antd';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
-import { media } from '../../../styles/media';
+import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
 import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
@@ -70,9 +70,9 @@ export const AddressDetailPage = memo(() => {
   const menu = (
     <MenuWrapper>
       <Menu.Item>
-        <RouterLink to={`/balance-checker?address=${address}`}>
+        <Link href={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
       <Menu.Item>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -92,9 +92,9 @@ export const AddressDetailPage = memo(() => {
         </a>
       </Menu.Item>
       <Menu.Item>
-        <RouterLink to={`/report?address=${address}`}>
+        <Link href={`/report?address=${address}`}>
           {t(translations.general.address.more.report)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
     </MenuWrapper>
   );
@@ -128,12 +128,12 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
-            <RouterLink to={`/cns-search?text=${label}`}>
+            <Link href={`/cns-search?text=${label}`}>
               <StyledLabelWrapper show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>
-            </RouterLink>{' '}
+            </Link>{' '}
             <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>
@@ -143,7 +143,10 @@ export const AddressDetailPage = memo(() => {
                 <>
                   {' '}
                   (
-                  <Text span hoverValue={t(translations.profile.tip.label)}>
+                  <Text
+                    tag="span"
+                    hoverValue={t(translations.profile.tip.label)}
+                  >
                     <Bookmark color="var(--theme-color-gray2)" size={16} />
                   </Text>
                   {addressLabel})

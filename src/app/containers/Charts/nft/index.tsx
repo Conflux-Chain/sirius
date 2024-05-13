@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col /*, Divider */ } from '@cfxjs/antd';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
