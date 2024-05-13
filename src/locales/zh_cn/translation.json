@@ -2157,13 +2157,31 @@
       }
     },
     "accounts": {
-      "title": "账户",
+      "title": "Conflux PoS 验证者",
       "description": "账户",
       "address": "地址",
+      "totalRecord": "总共找到 {{total}} 个验证节点",
+      "tabTitle": "验证者",
+      "posNodeAddress": "PoS 节点地址",
+      "votingPower": "投票权",
+      "active": "是否活跃",
+      "committeeMember": "委员会成员",
+      "votingShare": "投票权份额",
+      "nodeAge": "注册时长",
+      "isActive": "是",
+      "notActive": "否",
+      "elected": "已当选",
+      "notElected": "未当选",
       "availableVotes": "可用票数",
       "currentCommitteeMember": "在任委员会成员",
       "votesInCommittee": "在委员会票数",
-      "registerDate": "注册时间"
+      "registerDate": "注册时间",
+      "hover": {
+        "active": "节点状态",
+        "committeeMember": "由委员会成员投票决定共识，每半小时换届部分成员。",
+        "votingShare": "占总投票权的比例",
+        "nodeAge": "节点注册时长"
+      }
     },
     "account": {
       "title": "账户",
