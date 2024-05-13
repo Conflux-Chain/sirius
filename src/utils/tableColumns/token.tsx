@@ -37,7 +37,7 @@ import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
-import { Price } from '../../app/components/Price/Loadable';
+import { Price } from 'sirius-next/packages/common/dist/components/Price';
 
 const fromTypeInfo = {
   arrow: {

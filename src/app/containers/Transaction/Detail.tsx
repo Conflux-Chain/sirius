@@ -16,7 +16,7 @@ import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButt
 import { Link } from 'sirius-next/packages/common/dist/components/Link';
 import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { CountDown } from 'app/components/CountDown/Loadable';
+import { CountDown } from 'sirius-next/packages/common/dist/components/CountDown';
 import {
   reqContract,
   reqTokenList,
