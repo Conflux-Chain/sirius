@@ -521,7 +521,7 @@
       "posNickname": "Validator",
       "pos": "PoS",
       "overview": "Overview",
-      "accounts": "Accounts",
+      "accounts": "Validators",
       "blocks": "Blocks",
       "transactions": "Transactions",
       "committee": "Committee",
@@ -2162,7 +2162,7 @@
     },
     "accounts": {
       "title": "Conflux PoS Validators",
-      "description": "Accounts",
+      "description": "Validators",
       "address": "Address",
       "totalRecord": "A total of {{total}} Validators founds",
       "tabTitle": "Validators",
@@ -2188,8 +2188,8 @@
       }
     },
     "account": {
-      "title": "Account",
-      "description": "Account",
+      "title": "Validator",
+      "description": "Validator",
       "overview": {
         "title": "Overview",
         "posAddress": "Address",
