@@ -38,7 +38,7 @@ import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
-import { useENS } from 'utils/hooks/useENS';
+import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
 import Nametag from './Nametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
@@ -58,16 +58,13 @@ export const AddressDetailPage = memo(() => {
     'stakingBalance',
   ]);
   const [visible, setVisible] = useState(false);
-  const [ensMap] = useENS({
-    address: [address],
-  });
-
+  const { ens } = useENS(address);
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
   const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
-    () => getLabelInfo(ensMap[address]?.name, 'ens'),
-    [address, ensMap],
+    () => getLabelInfo(ens[address]?.name, 'ens'),
+    [address, ens],
   );
 
   const menu = (

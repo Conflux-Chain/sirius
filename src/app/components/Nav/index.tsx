@@ -11,7 +11,7 @@ import {
   media,
 } from 'sirius-next/packages/common/dist/utils/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
-import { GasPriceDropdown } from 'app/components/GasPriceDropdown';
+import { GasPriceDropdown } from 'sirius-next/packages/common/dist/components/GasPriceDropdown';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;

@@ -12,7 +12,6 @@ import {
 } from 'utils/constants';
 import pubsub from './pubsub';
 import lodash from 'lodash';
-import { ENSInfoItemType } from 'utils/hooks/useENS';
 import { Nametag } from 'utils/hooks/useNametag';
 import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 import IconCore from 'images/core-space/icon.svg';
@@ -428,7 +427,11 @@ export const getChartsSubTitle = (title: string): string => {
     return title;
   }
 };
-
+export interface ENSInfoItemType {
+  address: string;
+  name: string;
+  expired?: number;
+}
 interface ENSInfoType {
   [k: string]: ENSInfoItemType;
 }
