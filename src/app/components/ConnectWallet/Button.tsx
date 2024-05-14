@@ -13,8 +13,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
-// import { useENS } from 'utils/hooks/useENS';
-import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
+import { useENS } from 'utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';
@@ -34,10 +33,12 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
   const account = accounts[0];
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook();
-  const { ens } = useENS(account);
+  const [ensMap] = useENS({
+    address: [account],
+  });
   const { label, icon } = useMemo(
-    () => getLabelInfo(ens[account]?.name, 'ens'),
-    [account, ens],
+    () => getLabelInfo(ensMap[account]?.name, 'ens'),
+    [account, ensMap],
   );
 
   let buttonText: React.ReactNode = t(

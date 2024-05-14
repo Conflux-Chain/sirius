@@ -11,7 +11,7 @@ import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
 import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
-import { formatAddress, getENSInfo } from 'utils';
+import { formatAddress } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -80,7 +80,6 @@ export function Accounts() {
                 ? formatAddress(accounts[0]) === formatAddress(value)
                 : false
             }
-            ensInfo={getENSInfo(row)}
           />
         </AccountWrapper>
       ),

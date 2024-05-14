@@ -47,7 +47,7 @@ import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
-import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
+import { useENS } from 'utils/hooks/useENS';
 import Nametag from './Nametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 import ENV_CONFIG, { NETWORK_TYPES } from 'env';
@@ -97,8 +97,9 @@ export const ContractDetailPage = memo(() => {
       });
     }
   }, [address, history]);
-
-  const { ens } = useENS(address);
+  const [ensMap] = useENS({
+    address: [address],
+  });
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
@@ -110,8 +111,8 @@ export const ContractDetailPage = memo(() => {
   const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
-    () => getLabelInfo(ens[address]?.name, 'ens'),
-    [address, ens],
+    () => getLabelInfo(ensMap[address]?.name, 'ens'),
+    [address, ensMap],
   );
 
   const menu = (

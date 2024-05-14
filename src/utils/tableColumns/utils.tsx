@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { monospaceFont } from 'styles/variable';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CountDown } from 'sirius-next/packages/common/dist/components/CountDown';
+import { CountDown } from 'app/components/CountDown/Loadable';
 import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import queryString from 'query-string';

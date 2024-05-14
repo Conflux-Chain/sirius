@@ -26,7 +26,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { getNetwork, getNetworkIcon, gotoNetwork } from 'utils';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
-import { GasPriceDropdown } from 'sirius-next/packages/common/dist/components/GasPriceDropdown';
+import { GasPriceDropdown } from 'app/components/GasPriceDropdown';
 
 import ENV_CONFIG, { DOMAIN, NETWORK_TYPES } from 'env';
 

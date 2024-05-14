@@ -22,7 +22,7 @@ import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButt
 import { formatAddress } from 'utils';
 import { Tag } from '@cfxjs/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
-import { Price } from 'sirius-next/packages/common/dist/components/Price';
+import { Price } from 'app/components/Price/Loadable';
 
 interface SecurityAudit {
   audit: {
