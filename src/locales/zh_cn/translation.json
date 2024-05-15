@@ -2166,7 +2166,7 @@
       "votingPower": "投票权",
       "active": "是否活跃",
       "committeeMember": "委员会成员",
-      "votingShare": "投票权份额",
+      "votingShare": "委员会票权份额",
       "nodeAge": "注册时长",
       "isActive": "是",
       "notActive": "否",
@@ -2179,7 +2179,7 @@
       "hover": {
         "active": "节点状态",
         "committeeMember": "由委员会成员投票决定共识，每半小时换届部分成员。",
-        "votingShare": "占总投票权的比例",
+        "votingShare": "在委员会内持有的有效票数份额",
         "nodeAge": "节点注册时长"
       }
     },

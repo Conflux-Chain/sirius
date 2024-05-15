@@ -2170,7 +2170,7 @@
       "votingPower": "Voting Power",
       "active": "Active",
       "committeeMember": "Committee Member",
-      "votingShare": "Voting Share",
+      "votingShare": "Committee Vote Share",
       "nodeAge": "Node Age",
       "isActive": "Yes",
       "notActive": "No",
@@ -2183,7 +2183,7 @@
       "hover": {
         "active": "Node status",
         "committeeMember": "PoS consensus is determined by voting by committee members, and some members are replaced every half hour.",
-        "votingShare": "Proportion of total voting power.",
+        "votingShare": "Share of valid votes held within the committee.",
         "nodeAge": "Age from node creation to present."
       }
     },
