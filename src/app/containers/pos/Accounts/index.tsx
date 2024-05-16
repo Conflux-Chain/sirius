@@ -10,7 +10,7 @@ import { toThousands } from 'utils';
 export const List = ({ overview }: { overview?: boolean }) => {
   const { t } = useTranslation();
   const url = '/stat/list-pos-account?orderBy=availableVotes&reverse=true';
-  const columnsWidth = [2, 5, 5, 4, 4, 4, 5];
+  const columnsWidth = [2, 5, 5, 2, 4, 5, 5];
   const columns = [
     accountColunms.rank,
     accountColunms.posNodeAddress,

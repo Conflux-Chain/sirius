@@ -16,6 +16,7 @@ import { Tooltip } from '@cfxjs/antd';
 import dayjs from 'dayjs';
 import { CountDown } from 'app/components/CountDown';
 import { CopyButton } from 'app/components/CopyButton';
+import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
 
 export const rank = {
   title: (
@@ -49,6 +50,7 @@ export const posNodeAddress = {
         <PoSAddressContainer
           alias={row.byte32NameTagInfo?.nameTag}
           value={value}
+          hideAliasPrefixInHover
         />
         <CopyButton copyText={value} />
       </PosNodeAddressWrapper>
@@ -96,8 +98,8 @@ const ActiveWrapper = styled.div<{
 `;
 export const active = {
   title: (
-    <Tooltip
-      title={
+    <InfoIconWithTooltip
+      info={
         <Translation>
           {t => t(translations.pos.accounts.hover.active)}
         </Translation>
@@ -106,13 +108,14 @@ export const active = {
       <span>
         <Translation>{t => t(translations.pos.accounts.active)}</Translation>
       </span>
-    </Tooltip>
+    </InfoIconWithTooltip>
   ),
   dataIndex: 'forceRetired',
   key: 'forceRetired',
   width: 1,
-  render: value => {
-    const notActive = value > 0;
+  render: (value, row) => {
+    const notActive =
+      value > 0 || !row.availableVotesInCfx || row.availableVotesInCfx === 0;
     return (
       <ActiveWrapper isActive={!notActive}>
         <IconWrapper src={notActive ? NotActiveIcon : IsActiveIcon} alt="" />
@@ -133,8 +136,8 @@ const CommitteeMemberWrapper = styled.div<{
 `;
 export const committeeMember = {
   title: (
-    <Tooltip
-      title={
+    <InfoIconWithTooltip
+      info={
         <Translation>
           {t => t(translations.pos.accounts.hover.committeeMember)}
         </Translation>
@@ -145,7 +148,7 @@ export const committeeMember = {
           {t => t(translations.pos.accounts.committeeMember)}
         </Translation>
       </span>
-    </Tooltip>
+    </InfoIconWithTooltip>
   ),
   dataIndex: 'votingPower',
   key: 'votingPower',
@@ -167,8 +170,8 @@ export const committeeMember = {
 
 export const votingShare = {
   title: (
-    <Tooltip
-      title={
+    <InfoIconWithTooltip
+      info={
         <Translation>
           {t => t(translations.pos.accounts.hover.votingShare)}
         </Translation>
@@ -179,7 +182,7 @@ export const votingShare = {
           {t => t(translations.pos.accounts.votingShare)}
         </Translation>
       </span>
-    </Tooltip>
+    </InfoIconWithTooltip>
   ),
   dataIndex: 'votingShare',
   key: 'votingShare',
@@ -191,7 +194,7 @@ export const votingShare = {
     ) : (
       <ContentWrapper>
         {formatNumber(value * 100, {
-          precision: 3,
+          precision: 2,
           withUnit: false,
           keepZero: true,
         }) + '%'}
@@ -202,8 +205,8 @@ export const votingShare = {
 
 export const nodeAge = {
   title: (
-    <Tooltip
-      title={
+    <InfoIconWithTooltip
+      info={
         <Translation>
           {t => t(translations.pos.accounts.hover.nodeAge)}
         </Translation>
@@ -212,7 +215,7 @@ export const nodeAge = {
       <span>
         <Translation>{t => t(translations.pos.accounts.nodeAge)}</Translation>
       </span>
-    </Tooltip>
+    </InfoIconWithTooltip>
   ),
   dataIndex: 'createdAt',
   key: 'createdAt',

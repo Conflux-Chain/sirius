@@ -521,7 +521,7 @@
       "posNickname": "Validator",
       "pos": "PoS",
       "overview": "Overview",
-      "accounts": "Accounts",
+      "accounts": "Validators",
       "blocks": "Blocks",
       "transactions": "Transactions",
       "committee": "Committee",
@@ -2162,7 +2162,7 @@
     },
     "accounts": {
       "title": "Conflux PoS Validators",
-      "description": "Accounts",
+      "description": "Validators",
       "address": "Address",
       "totalRecord": "A total of {{total}} Validators founds",
       "tabTitle": "Validators",
@@ -2170,7 +2170,7 @@
       "votingPower": "Voting Power",
       "active": "Active",
       "committeeMember": "Committee Member",
-      "votingShare": "Voting Share",
+      "votingShare": "Committee Vote Share",
       "nodeAge": "Node Age",
       "isActive": "Yes",
       "notActive": "No",
@@ -2183,13 +2183,13 @@
       "hover": {
         "active": "Node status",
         "committeeMember": "PoS consensus is determined by voting by committee members, and some members are replaced every half hour.",
-        "votingShare": "Proportion of total voting power.",
+        "votingShare": "Share of valid votes held within the committee.",
         "nodeAge": "Age from node creation to present."
       }
     },
     "account": {
-      "title": "Account",
-      "description": "Account",
+      "title": "Validator",
+      "description": "Validator",
       "overview": {
         "title": "Overview",
         "posAddress": "Address",
