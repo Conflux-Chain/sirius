@@ -24,7 +24,7 @@ export function HomePage() {
     {
       value: 'accounts',
       action: 'pos-accounts',
-      label: t(translations.pos.accounts.title),
+      label: t(translations.pos.accounts.tabTitle),
       content: <AccountsList overview />,
     },
     {

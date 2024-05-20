@@ -521,7 +521,7 @@
       "posNickname": "Validator",
       "pos": "PoS",
       "overview": "Overview",
-      "accounts": "Accounts",
+      "accounts": "Validators",
       "blocks": "Blocks",
       "transactions": "Transactions",
       "committee": "Committee",
@@ -2161,17 +2161,35 @@
       }
     },
     "accounts": {
-      "title": "Accounts",
-      "description": "Accounts",
+      "title": "Conflux PoS Validators",
+      "description": "Validators",
       "address": "Address",
+      "totalRecord": "A total of {{total}} Validators founds",
+      "tabTitle": "Validators",
+      "posNodeAddress": "PoS Node Address",
+      "votingPower": "Voting Power",
+      "active": "Active",
+      "committeeMember": "Committee Member",
+      "votingShare": "Committee Vote Share",
+      "nodeAge": "Node Age",
+      "isActive": "Yes",
+      "notActive": "No",
+      "elected": "Elected",
+      "notElected": "Not Elected",
       "availableVotes": "Available Rights",
       "currentCommitteeMember": "Current Committee Member",
       "votesInCommittee": "Rights in Committee",
-      "registerDate": "Register Date"
+      "registerDate": "Register Date",
+      "hover": {
+        "active": "Node status",
+        "committeeMember": "PoS consensus is determined by voting by committee members, and some members are replaced every half hour.",
+        "votingShare": "Share of valid votes held within the committee.",
+        "nodeAge": "Age from node creation to present."
+      }
     },
     "account": {
-      "title": "Account",
-      "description": "Account",
+      "title": "Validator",
+      "description": "Validator",
       "overview": {
         "title": "Overview",
         "posAddress": "Address",

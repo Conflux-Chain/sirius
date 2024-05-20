@@ -520,7 +520,7 @@
       "posNickname": "PoS",
       "pos": "PoS",
       "overview": "首页",
-      "accounts": "账户",
+      "accounts": "验证者",
       "blocks": "区块",
       "transactions": "交易",
       "committee": "委员会",
@@ -2157,17 +2157,35 @@
       }
     },
     "accounts": {
-      "title": "账户",
-      "description": "账户",
+      "title": "Conflux PoS 验证者",
+      "description": "验证者",
       "address": "地址",
+      "totalRecord": "总共找到 {{total}} 个验证节点",
+      "tabTitle": "验证者",
+      "posNodeAddress": "PoS 节点地址",
+      "votingPower": "投票权",
+      "active": "是否活跃",
+      "committeeMember": "委员会成员",
+      "votingShare": "委员会票权份额",
+      "nodeAge": "注册时长",
+      "isActive": "是",
+      "notActive": "否",
+      "elected": "已当选",
+      "notElected": "未当选",
       "availableVotes": "可用票数",
       "currentCommitteeMember": "在任委员会成员",
       "votesInCommittee": "在委员会票数",
-      "registerDate": "注册时间"
+      "registerDate": "注册时间",
+      "hover": {
+        "active": "节点状态",
+        "committeeMember": "由委员会成员投票决定共识，每半小时换届部分成员。",
+        "votingShare": "在委员会内持有的有效票数份额",
+        "nodeAge": "节点注册时长"
+      }
     },
     "account": {
-      "title": "账户",
-      "description": "账户",
+      "title": "验证者",
+      "description": "验证者",
       "overview": {
         "title": "概览",
         "posAddress": "地址",

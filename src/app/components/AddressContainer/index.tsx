@@ -57,6 +57,7 @@ interface Props {
       nametag: string;
     };
   };
+  hideAliasPrefixInHover?: boolean; // show full address, default false
 }
 
 const defaultPCMaxWidth = 138;
@@ -133,6 +134,7 @@ const RenderAddress = ({
   addressLabel = '',
   ENSLabel = '',
   nametag = '',
+  hideAliasPrefixInHover = false,
 }: any) => {
   const aftercontent =
     type === 'pow'
@@ -255,11 +257,13 @@ const RenderAddress = ({
             ) : null}
             {alias ? (
               <>
-                <span>
-                  <Translation>
-                    {t => t(translations.profile.address.publicNameTag)}
-                  </Translation>
-                </span>
+                {!hideAliasPrefixInHover && (
+                  <span>
+                    <Translation>
+                      {t => t(translations.profile.address.publicNameTag)}
+                    </Translation>
+                  </span>
+                )}
                 {alias}
               </>
             ) : null}
@@ -585,6 +589,7 @@ export const PoSAddressContainer = withTranslation()(
       link = true,
       isMe = false,
       suffixAddressSize,
+      hideAliasPrefixInHover,
       t,
     }: Props & WithTranslation) => {
       const suffixSize =
@@ -621,10 +626,13 @@ export const PoSAddressContainer = withTranslation()(
             </IconWrapper>
           ),
           type: 'pos',
+          hideAliasPrefixInHover,
         });
       }
 
-      const content = formatString(value, 'posAddress');
+      const content = alias
+        ? formatString(alias, 'tag')
+        : formatString(value, 'posAddress');
 
       // if (!alias) {
       //   alias = CONTRACTS_NAME_LABEL[cfxAddress]; // may use later
@@ -654,6 +662,7 @@ export const PoSAddressContainer = withTranslation()(
           ),
           content: content,
           type: 'pos',
+          hideAliasPrefixInHover,
         });
       }
 
@@ -667,6 +676,7 @@ export const PoSAddressContainer = withTranslation()(
         suffixSize,
         type: 'pos',
         content: content,
+        hideAliasPrefixInHover,
       });
     },
   ),

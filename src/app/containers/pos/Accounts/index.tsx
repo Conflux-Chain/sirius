@@ -2,33 +2,23 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { accountColunms, colunms } from 'utils/tableColumns/pos';
+import { accountColunms } from 'utils/tableColumns/pos';
 import { PageHeader } from 'app/components/PageHeader/Loadable';
-import {
-  TablePanel as TablePanelNew,
-  sortDirections,
-} from 'app/components/TablePanelNew';
-import { useAge } from 'utils/hooks/useAge';
+import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { toThousands } from 'utils';
 
 export const List = ({ overview }: { overview?: boolean }) => {
-  const [ageFormat, toggleAgeFormat] = useAge();
-
-  const url = '/stat/list-pos-account?orderBy=createdAt&reverse=true';
-  const columnsWidth = [4, 4, 4, 4, 5];
+  const { t } = useTranslation();
+  const url = '/stat/list-pos-account?orderBy=availableVotes&reverse=true';
+  const columnsWidth = [2, 5, 5, 2, 4, 5, 5];
   const columns = [
-    colunms.posAddress,
-    accountColunms.currentCommitteeMember,
-    {
-      ...accountColunms.availableVotes,
-    },
-    accountColunms.votesInCommittee,
-    {
-      ...colunms.age(ageFormat, toggleAgeFormat),
-      sorter: !overview,
-      defaultSortOrder: sortDirections[0],
-      sortDirections,
-      showSorterTooltip: false,
-    },
+    accountColunms.rank,
+    accountColunms.posNodeAddress,
+    accountColunms.votingPower,
+    accountColunms.active,
+    accountColunms.committeeMember,
+    accountColunms.votingShare,
+    accountColunms.nodeAge,
   ].map((item, i) => ({
     ...item,
     width: columnsWidth[i],
@@ -39,7 +29,13 @@ export const List = ({ overview }: { overview?: boolean }) => {
       url={url}
       columns={columns}
       pagination={overview ? false : undefined}
-      sortParam={'sort'}
+      title={({ total }) => (
+        <span>
+          {t(translations.pos.accounts.totalRecord, {
+            total: toThousands(total),
+          })}
+        </span>
+      )}
     ></TablePanelNew>
   );
 };
