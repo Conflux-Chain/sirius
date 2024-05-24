@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { media } from 'sirius-next/packages/common/dist/utils/media';
 import { TableSearchDropdown } from 'sirius-next/packages/common/dist/components/Dropdown';
 import { toThousands } from 'utils';
-import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
+import { DownloadCSV } from 'sirius-next/packages/common/dist/components/DownloadCSV';
 import qs from 'query-string';
 import { useParams } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
