@@ -3,7 +3,7 @@ import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms } from 'utils/tableColumns';
 import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { DownloadCSV } from 'app/components/DownloadCSV/Loadable';
+import { DownloadCSV } from 'sirius-next/packages/common/dist/components/DownloadCSV';
 import qs from 'query-string';
 import { Title } from 'app/containers/Transactions/components';
 import { AdvancedSearchFormProps } from 'app/containers/Transactions/components/AdvancedSearchForm';
