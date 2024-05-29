@@ -202,8 +202,8 @@ export const to = {
     else if (row.tokenInfo && row.tokenInfo.name)
       alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
 
-    if (row.contractInfo) {
-      verify = row.contractInfo.verify.result !== 0;
+    if (row.toContractInfo) {
+      verify = row.toContractInfo.verify.result !== 0;
     } else if (row.verified === true) {
       verify = true;
     }
