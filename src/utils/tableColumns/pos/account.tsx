@@ -5,18 +5,18 @@ import { toThousands, fromDripToCfx, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
 import { Text } from 'sirius-next/packages/common/dist/components/Text';
 import lodash from 'lodash';
-import { PoSAddressContainer } from 'app/components/AddressContainer/Loadable';
+import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
 import VotingPowerIcon from 'images/voting-power.svg';
 import IsActiveIcon from 'images/is-active.svg';
 import NotActiveIcon from 'images/not-active.svg';
 import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
-import { Tooltip } from '@cfxjs/antd';
 import dayjs from 'dayjs';
-import { CountDown } from 'app/components/CountDown';
-import { CopyButton } from 'app/components/CopyButton';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { CountDown } from 'sirius-next/packages/common/dist/components/CountDown';
+import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
+import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
+import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
 
 export const rank = {
   title: (
@@ -47,11 +47,12 @@ export const posNodeAddress = {
       '--'
     ) : (
       <PosNodeAddressWrapper>
-        <PoSAddressContainer
+        <AddressContainer
           alias={row.byte32NameTagInfo?.nameTag}
           value={value}
           hideAliasPrefixInHover
-        />
+          isPosAddress={true}
+        ></AddressContainer>
         <CopyButton copyText={value} />
       </PosNodeAddressWrapper>
     );
