@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Popover } from '@cfxjs/antd';
 import { reqPendingTxs } from 'utils/httpRequest';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { formatAddress, formatBalance } from 'utils';
 import BigNumber from 'bignumber.js';
 

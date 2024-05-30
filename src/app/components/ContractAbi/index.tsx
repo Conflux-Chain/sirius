@@ -10,9 +10,9 @@ import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { reqContract } from 'utils/httpRequest';
 import styled from 'styled-components';
 import { useTranslation, Trans } from 'react-i18next';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { translations } from 'locales/i18n';
-import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { publishRequestError } from 'utils';
 
 interface ContractAbiProps {

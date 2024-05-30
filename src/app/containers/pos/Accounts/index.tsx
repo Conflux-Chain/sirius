@@ -2,30 +2,23 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { accountColunms, colunms } from 'utils/tableColumns/pos';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { accountColunms } from 'utils/tableColumns/pos';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { toThousands } from 'utils';
 
 export const List = ({ overview }: { overview?: boolean }) => {
-  const [ageFormat, toggleAgeFormat] = useAge();
-
-  const url = '/stat/list-pos-account?orderBy=createdAt&reverse=true';
-  const columnsWidth = [4, 4, 4, 4, 5];
+  const { t } = useTranslation();
+  const url = '/stat/list-pos-account?orderBy=availableVotes&reverse=true';
+  const columnsWidth = [2, 5, 5, 2, 4, 5, 5];
   const columns = [
-    colunms.posAddress,
-    accountColunms.currentCommitteeMember,
-    {
-      ...accountColunms.availableVotes,
-    },
-    accountColunms.votesInCommittee,
-    {
-      ...colunms.age(ageFormat, toggleAgeFormat),
-      sorter: !overview,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
-      showSorterTooltip: false,
-    },
+    accountColunms.rank,
+    accountColunms.posNodeAddress,
+    accountColunms.votingPower,
+    accountColunms.active,
+    accountColunms.committeeMember,
+    accountColunms.votingShare,
+    accountColunms.nodeAge,
   ].map((item, i) => ({
     ...item,
     width: columnsWidth[i],
@@ -36,6 +29,13 @@ export const List = ({ overview }: { overview?: boolean }) => {
       url={url}
       columns={columns}
       pagination={overview ? false : undefined}
+      title={({ total }) => (
+        <span>
+          {t(translations.pos.accounts.totalRecord, {
+            total: toThousands(total),
+          })}
+        </span>
+      )}
     ></TablePanelNew>
   );
 };

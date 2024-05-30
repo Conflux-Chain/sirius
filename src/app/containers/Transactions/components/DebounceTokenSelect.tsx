@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Select, Tag, Image } from '@cfxjs/antd';
-import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
@@ -16,7 +16,7 @@ import {
 } from 'utils/httpRequest';
 import qs from 'query-string';
 import { formatAddress } from 'utils';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import Info from '@zeit-ui/react-icons/info';
 
 const { Option, OptGroup } = Select;

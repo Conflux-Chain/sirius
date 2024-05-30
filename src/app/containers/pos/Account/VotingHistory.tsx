@@ -1,7 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import {
+  TablePanel as TablePanelNew,
+  sortDirections,
+} from 'app/components/TablePanelNew';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { accountColunms, colunms, blockColunms } from 'utils/tableColumns/pos';
 
 export function VotingHistory() {
@@ -23,20 +26,13 @@ export function VotingHistory() {
       key: 'block.hash',
       dataIndex: ['block', 'hash'],
     },
-    {
-      ...accountColunms.votes,
-      sorter: true,
-      sortDirections: ['descend', 'ascend', 'descend'] as Array<
-        'descend' | 'ascend'
-      >,
-      showSorterTooltip: false,
-    },
+    accountColunms.votes,
     {
       // @ts-ignore
       ...colunms.age(ageFormat, toggleAgeFormat, ['block', 'createdAt']),
       sorter: true,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
+      defaultSortOrder: sortDirections[0],
+      sortDirections,
       showSorterTooltip: false,
     },
   ].map((item, i) => ({

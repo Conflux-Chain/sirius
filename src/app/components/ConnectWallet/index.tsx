@@ -8,7 +8,7 @@ import { Modal } from './Modal';
 import { Button } from './Button';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { useCheckHook } from './useCheckHook';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenColunms } from 'utils/tableColumns';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer } from './components';
 import { CFX_TOKEN_TYPES } from 'utils/constants';

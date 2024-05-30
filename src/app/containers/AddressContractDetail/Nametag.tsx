@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { useNametag } from 'utils/hooks/useNametag';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import externallinkIcon from 'images/nametag/externallink.svg';
 import verifiedIcon from 'images/nametag/verified.svg';
 import warningIcon from 'images/nametag/warning.svg';
-import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { StyledLabelWrapper } from './layouts';
 
 const Nametag = ({ address }) => {

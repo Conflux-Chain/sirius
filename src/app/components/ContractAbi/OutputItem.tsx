@@ -6,9 +6,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import imgArray from 'images/two_array.png';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface OutputParamsProps {
   output: object;

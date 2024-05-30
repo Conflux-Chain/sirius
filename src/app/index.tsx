@@ -23,7 +23,7 @@ import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
@@ -38,7 +38,6 @@ import utc from 'dayjs/plugin/utc';
 
 // pow pages
 import { FCCFX } from './containers/FCCFX';
-import { Report } from './containers/Report';
 import { Swap } from './containers/Swap';
 import { Header } from './containers/Header';
 import { Footer } from './containers/Footer/Loadable';
@@ -66,7 +65,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
-import { Loading } from 'sirius-next/packages/common/dist/components/Loading';
+import { Loading } from '@cfxjs/sirius-next-common/dist/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 // import { CookieTip } from './components/CookieTip';
@@ -144,7 +143,7 @@ import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import ENV_CONFIG_LOCAL from 'env';
-import { useEnv } from 'sirius-next/packages/common/dist/store/index';
+import { useEnv } from '@cfxjs/sirius-next-common/dist/store/index';
 
 // @ts-ignore
 window.lodash = lodash;
@@ -176,7 +175,7 @@ export function App() {
   const [globalData, setGlobalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh-cn' : 'en';
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { SET_ENV_CONFIG } = useEnv();
   moment.locale(lang);
   dayjs.locale(lang);
@@ -322,11 +321,12 @@ export function App() {
           ...(resp as object),
           networks,
         });
-
-        setLoading(false);
       })
       .catch(e => {
         console.log('request frontend config error: ', e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -616,7 +616,6 @@ export function App() {
                           component={BlocknumberCalc}
                         />
                         <Route exact path="/swap" component={Swap} />
-                        <Route exact path="/report" component={Report} />
                         <Route
                           exact
                           path={['/networkError', '/networkError/:network']}

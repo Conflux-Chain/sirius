@@ -15,7 +15,7 @@ import { RecoilRoot } from 'recoil';
 import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
-import 'sirius-next/packages/common/dist/uno.css';
+import '@cfxjs/sirius-next-common/dist/uno.css';
 
 // Import root app
 import { App } from 'app';

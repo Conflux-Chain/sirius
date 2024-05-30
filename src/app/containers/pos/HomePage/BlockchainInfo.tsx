@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { translations } from 'locales/i18n';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { formatBalance, formatTimeStamp } from 'utils';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
 function Info(title, number: any) {
   return (

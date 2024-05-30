@@ -5,12 +5,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { List } from 'sirius-next/packages/common/dist/components/List';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { List } from '@cfxjs/sirius-next-common/dist/components/List';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';
@@ -18,11 +18,11 @@ import CRC1155bg from 'images/token/crc1155bg.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
 import { Tag } from '@cfxjs/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
-import { Price } from 'sirius-next/packages/common/dist/components/Price';
+import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 
 interface SecurityAudit {
   audit: {

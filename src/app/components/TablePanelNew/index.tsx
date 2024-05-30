@@ -3,17 +3,22 @@ import { sendRequest } from 'utils/httpRequest';
 import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@cfxjs/antd';
-import { Select } from 'sirius-next/packages/common/dist/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
+import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
+
+type SortOrder = 'descend' | 'ascend' | null;
+type SortDirections = SortOrder[];
+
+export const sortDirections: SortDirections = ['descend', 'ascend', 'descend'];
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   url?: string;
@@ -21,6 +26,8 @@ interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
   hideDefaultTitle?: boolean;
   hideShadow?: boolean;
+  // sort list by reverse param or sort param
+  sortParam?: 'reverse' | 'sort';
   // customize and rename sort key
   sortKeyMap?: {
     [index: string]: string;
@@ -137,6 +144,7 @@ export const TablePanel = ({
   className,
   sortKeyMap = {},
   showSorterTooltip = false,
+  sortParam = 'reverse',
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -178,6 +186,15 @@ export const TablePanel = ({
   useEffect(() => {
     if (outerUrl) {
       const { url } = qs.parseUrl(outerUrl);
+      const query = { ...getQuery } as qs.ParsedQuery<string>;
+      if (sortParam === 'sort') {
+        if (query.reverse === 'false') {
+          query.sort = 'asc';
+        } else {
+          query.sort = 'desc';
+        }
+        delete query.reverse;
+      }
 
       setState({
         ...state,
@@ -186,9 +203,7 @@ export const TablePanel = ({
 
       sendRequest({
         url: url,
-        query: {
-          ...getQuery,
-        },
+        query,
       })
         .then(resp => {
           setState({

@@ -10,13 +10,13 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { Spinner } from '@cfxjs/react-ui';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { CountDown } from 'sirius-next/packages/common/dist/components/CountDown';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
 import {
   reqContract,
   reqTokenList,
@@ -39,7 +39,7 @@ import {
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';

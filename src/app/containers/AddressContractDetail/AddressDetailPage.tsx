@@ -29,16 +29,16 @@ import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@cfxjs/antd';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
-import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
-import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
+import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
 import Nametag from './Nametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
@@ -90,11 +90,6 @@ export const AddressDetailPage = memo(() => {
             ],
           )}
         </a>
-      </Menu.Item>
-      <Menu.Item>
-        <Link href={`/report?address=${address}`}>
-          {t(translations.general.address.more.report)}
-        </Link>
       </Menu.Item>
     </MenuWrapper>
   );

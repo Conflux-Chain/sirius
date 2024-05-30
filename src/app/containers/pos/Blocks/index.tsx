@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { blockColunms, colunms } from 'utils/tableColumns/pos';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 export const List = () => {
   const [ageFormat, toggleAgeFormat] = useAge();
@@ -14,13 +14,7 @@ export const List = () => {
   const url = '/stat/list-pos-block?orderBy=height&reverse=true';
   const columnsWidth = [4, 4, 4, 4, 5];
   const columns = [
-    {
-      ...blockColunms.blockHeight,
-      sorter: true,
-      defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'descend', 'descend'] as Array<'descend'>,
-      showSorterTooltip: false,
-    },
+    blockColunms.blockHeight,
     {
       ...colunms.posBlockHash,
       key: 'hash',

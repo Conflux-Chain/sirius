@@ -2,8 +2,8 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import {
   formatNumber,
   getPercent,
@@ -15,7 +15,7 @@ import {
   roundToFixedPrecision,
 } from 'utils/';
 import imgPivot from 'images/pivot.svg';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';

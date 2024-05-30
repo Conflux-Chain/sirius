@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Skeleton } from 'sirius-next/packages/common/dist/components/Skeleton';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Skeleton } from '@cfxjs/sirius-next-common/dist/components/Skeleton';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { translations } from 'locales/i18n';
 import { Basic } from './Basic';
 import { Transfers } from './Transfers';
 import { useTokenQuery } from '../../../utils/api';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
@@ -82,11 +82,6 @@ export function TokenDetail() {
       <Menu.Item>
         <Link href={`/balance-checker?address=${tokenAddress}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link href={`/report?address=${tokenAddress}`}>
-          {t(translations.general.address.more.report)}
         </Link>
       </Menu.Item>
     </MenuWrapper>

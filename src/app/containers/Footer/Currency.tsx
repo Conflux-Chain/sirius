@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from 'sirius-next/packages/common/dist/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';

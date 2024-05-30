@@ -1,11 +1,11 @@
 import { NETWORK_OPTIONS, getCurrency } from 'utils/constants';
 import { createGlobalState } from 'react-use';
 import ENV_CONFIG from 'env';
-import { useGlobalData as useGlobalDataNext } from 'sirius-next/packages/common/dist/store/index';
+import { useGlobalData as useGlobalDataNext } from '@cfxjs/sirius-next-common/dist/store/index';
 import {
   GlobalDataType,
   NetworksType,
-} from 'sirius-next/packages/common/dist/store/types';
+} from '@cfxjs/sirius-next-common/dist/store/types';
 
 export interface ExtendedGlobalDataType
   extends Omit<GlobalDataType, 'networks'> {

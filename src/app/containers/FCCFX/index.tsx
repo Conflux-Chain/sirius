@@ -7,9 +7,9 @@ import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
 import { Row, Col } from '@cfxjs/antd';
-import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { StyledLink } from 'app/components/StyledComponent';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Notice } from './Notice';
 import { InfoCard } from './InfoCard';
 import { StakeAndSignCard } from './StakeAndSignCard';
@@ -23,7 +23,7 @@ import {
 import {
   useBreakpoint,
   media,
-} from 'sirius-next/packages/common/dist/utils/media';
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 

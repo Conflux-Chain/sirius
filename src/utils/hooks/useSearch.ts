@@ -10,7 +10,7 @@ import {
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
-import { tranferToLowerCase } from 'sirius-next/packages/common/dist/utils';
+import { tranferToLowerCase } from '@cfxjs/sirius-next-common/dist/utils';
 import { CONTRACTS, CORE_SPACE_CHAIN_IDS } from '../constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';

@@ -1,69 +1,233 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { toThousands, fromDripToCfx } from 'utils';
+import { toThousands, fromDripToCfx, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import VotingPowerIcon from 'images/voting-power.svg';
+import IsActiveIcon from 'images/is-active.svg';
+import NotActiveIcon from 'images/not-active.svg';
+import ElectedIcon from 'images/elected.svg';
+import NotElectedIcon from 'images/not-elected.svg';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
-export const availableVotes = {
+export const rank = {
   title: (
-    <ContentWrapper right>
-      <Translation>
-        {t => t(translations.pos.accounts.availableVotes)}
-      </Translation>
-    </ContentWrapper>
+    <Translation>{t => t(translations.accounts.table.number)}</Translation>
   ),
-  dataIndex: 'availableVotes',
-  key: 'availableVotes',
-  width: 1,
+  dataIndex: 'rank',
+  key: 'rank',
   render: value => {
-    return (
-      <ContentWrapper right>
-        {lodash.isNil(value) ? '--' : toThousands(value)}
-      </ContentWrapper>
-    );
+    return '#' + value;
   },
 };
 
-export const votesInCommittee = {
-  title: (
-    <ContentWrapper right>
-      <Translation>
-        {t => t(translations.pos.accounts.votesInCommittee)}
-      </Translation>
-    </ContentWrapper>
-  ),
-  dataIndex: 'votesInCommittee',
-  key: 'votesInCommittee',
-  width: 1,
-  render: (_, row) => {
-    return (
-      <ContentWrapper right>
-        {lodash.isNil(row?.committeeInfo)
-          ? '--'
-          : toThousands(row.committeeInfo?.votingPower)}
-      </ContentWrapper>
-    );
-  },
-};
-
-export const currentCommitteeMember = {
+const PosNodeAddressWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+export const posNodeAddress = {
   title: (
     <Translation>
-      {t => t(translations.pos.accounts.currentCommitteeMember)}
+      {t => t(translations.pos.accounts.posNodeAddress)}
     </Translation>
   ),
-  dataIndex: 'currentCommitteeMember',
-  key: 'currentCommitteeMember',
+  dataIndex: 'hex',
+  key: 'hex',
+  width: 1,
+  render: (value, row) => {
+    return lodash.isNil(value) ? (
+      '--'
+    ) : (
+      <PosNodeAddressWrapper>
+        <AddressContainer
+          alias={row.byte32NameTagInfo?.nameTag}
+          value={value}
+          hideAliasPrefixInHover
+          isPosAddress={true}
+        ></AddressContainer>
+        <CopyButton copyText={value} />
+      </PosNodeAddressWrapper>
+    );
+  },
+};
+
+const VotingPowerWrapper = styled.div`
+  display: inline-flex;
+  align-items: center;
+  span {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+export const votingPower = {
+  title: (
+    <Translation>{t => t(translations.pos.accounts.votingPower)}</Translation>
+  ),
+  dataIndex: 'availableVotesInCfx',
+  key: 'availableVotesInCfx',
+  width: 1,
+  render: value => {
+    const power = toThousands(
+      formatNumber(value, { keepDecimal: false, withUnit: false }),
+    );
+    return lodash.isNil(value) ? (
+      '--'
+    ) : (
+      <VotingPowerWrapper>
+        <IconWrapper src={VotingPowerIcon} alt="" />
+        <Tooltip title={`${power} CFX`}>{power} CFX</Tooltip>
+      </VotingPowerWrapper>
+    );
+  },
+};
+
+const ActiveWrapper = styled.div<{
+  isActive?: boolean;
+}>`
+  color: ${({ isActive }) => (isActive ? '#4AC2AB' : '#FA5D5D')};
+`;
+export const active = {
+  title: (
+    <InfoIconWithTooltip
+      info={
+        <Translation>
+          {t => t(translations.pos.accounts.hover.active)}
+        </Translation>
+      }
+    >
+      <span>
+        <Translation>{t => t(translations.pos.accounts.active)}</Translation>
+      </span>
+    </InfoIconWithTooltip>
+  ),
+  dataIndex: 'forceRetired',
+  key: 'forceRetired',
+  width: 1,
+  render: (value, row) => {
+    const notActive =
+      value > 0 || !row.availableVotesInCfx || row.availableVotesInCfx === 0;
+    return (
+      <ActiveWrapper isActive={!notActive}>
+        <IconWrapper src={notActive ? NotActiveIcon : IsActiveIcon} alt="" />
+        <Translation>
+          {t =>
+            t(translations.pos.accounts[notActive ? 'notActive' : 'isActive'])
+          }
+        </Translation>
+      </ActiveWrapper>
+    );
+  },
+};
+
+const CommitteeMemberWrapper = styled.div<{
+  elected?: boolean;
+}>`
+  color: ${({ elected }) => (elected ? '#4AC2AB' : '#282D30')};
+`;
+export const committeeMember = {
+  title: (
+    <InfoIconWithTooltip
+      info={
+        <Translation>
+          {t => t(translations.pos.accounts.hover.committeeMember)}
+        </Translation>
+      }
+    >
+      <span>
+        <Translation>
+          {t => t(translations.pos.accounts.committeeMember)}
+        </Translation>
+      </span>
+    </InfoIconWithTooltip>
+  ),
+  dataIndex: 'votingPower',
+  key: 'votingPower',
   width: 1,
   render: (_, row) => {
-    return lodash.isNil(row?.committeeInfo) ? (
+    const elected = row.committeeInfo?.votingPower > 0;
+    return (
+      <CommitteeMemberWrapper elected={elected}>
+        <IconWrapper src={elected ? ElectedIcon : NotElectedIcon} alt="" />
+        <Translation>
+          {t =>
+            t(translations.pos.accounts[elected ? 'elected' : 'notElected'])
+          }
+        </Translation>
+      </CommitteeMemberWrapper>
+    );
+  },
+};
+
+export const votingShare = {
+  title: (
+    <InfoIconWithTooltip
+      info={
+        <Translation>
+          {t => t(translations.pos.accounts.hover.votingShare)}
+        </Translation>
+      }
+    >
+      <span>
+        <Translation>
+          {t => t(translations.pos.accounts.votingShare)}
+        </Translation>
+      </span>
+    </InfoIconWithTooltip>
+  ),
+  dataIndex: 'votingShare',
+  key: 'votingShare',
+  width: 1,
+  render: (_, row) => {
+    const value = row.committeeInfo?.votingShare;
+    return lodash.isNil(value) ? (
       '--'
-    ) : row.committeeInfo?.votingPower > 0 ? (
-      <Translation>{t => t(translations.general.yes)}</Translation>
     ) : (
-      <Translation>{t => t(translations.general.no)}</Translation>
+      <ContentWrapper>
+        {formatNumber(value * 100, {
+          precision: 2,
+          withUnit: false,
+          keepZero: true,
+        }) + '%'}
+      </ContentWrapper>
+    );
+  },
+};
+
+export const nodeAge = {
+  title: (
+    <InfoIconWithTooltip
+      info={
+        <Translation>
+          {t => t(translations.pos.accounts.hover.nodeAge)}
+        </Translation>
+      }
+    >
+      <span>
+        <Translation>{t => t(translations.pos.accounts.nodeAge)}</Translation>
+      </span>
+    </InfoIconWithTooltip>
+  ),
+  dataIndex: 'createdAt',
+  key: 'createdAt',
+  width: 1,
+  render: value => {
+    const second = /^\d+$/.test(value) ? value : dayjs(value).unix();
+
+    return (
+      <ContentWrapper>
+        <CountDown from={second} />
+      </ContentWrapper>
     );
   },
 };
@@ -113,3 +277,7 @@ export const votes = {
     );
   },
 };
+
+const IconWrapper = styled.img`
+  margin-right: 8px;
+`;

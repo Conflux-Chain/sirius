@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import {
   sansSerifFont,
   monospaceFont,

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { blockColunms } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export function Blocks() {

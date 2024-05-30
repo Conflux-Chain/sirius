@@ -7,10 +7,10 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { Footer as FooterComp } from 'sirius-next/packages/common/dist/components/Footer';
-import { TextLogo } from 'sirius-next/packages/common/dist/components/TextLogo';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { Footer as FooterComp } from '@cfxjs/sirius-next-common/dist/components/Footer';
+import { TextLogo } from '@cfxjs/sirius-next-common/dist/components/TextLogo';
 import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
@@ -45,19 +45,6 @@ export function Footer() {
   const network = getNetwork(networks, networkId);
 
   const left = [<TextLogo key="logo" color="var(--theme-color-gray0)" />];
-
-  const reportLink = (
-    <Link
-      className="footer-link"
-      href="/report"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.report,
-      }}
-    >
-      {t(translations.footer.report)}
-    </Link>
-  );
 
   const suggestionBoxLink = iszh ? (
     <Link
@@ -458,7 +445,6 @@ export function Footer() {
         <FooterContent>
           <FooterContentRow>
             <FooterContentLink>{techIssueLink}</FooterContentLink>
-            <FooterContentLink>{reportLink}</FooterContentLink>
             <FooterContentLink>{suggestionBoxLink}</FooterContentLink>
           </FooterContentRow>
         </FooterContent>

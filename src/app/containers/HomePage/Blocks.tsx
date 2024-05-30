@@ -1,7 +1,7 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { blockColunms } from 'utils/tableColumns';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 interface Props {
   url: string;

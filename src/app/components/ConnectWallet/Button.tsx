@@ -11,10 +11,10 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
-import { getLabelInfo } from 'sirius-next/packages/common/dist/components/AddressContainer/label';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
 // import { useENS } from 'utils/hooks/useENS';
-import { useENS } from 'sirius-next/packages/common/dist/utils/hooks/useENS';
+import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';

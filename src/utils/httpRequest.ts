@@ -8,6 +8,8 @@ import {
 } from './constants';
 import lodash from 'lodash';
 import { isAddress } from './index';
+import { fetchNFTMetadata } from '@cfx-kit/dapp-utils/dist/metadata';
+import ENV_CONFIG from 'env';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -258,12 +260,36 @@ export const reqNFTInfo = (extra?: object) => {
   });
 };
 
-export const reqNFTDetail = (extra?: object) => {
+export const _reqNFTDetail = (extra?: object) => {
   return sendRequest({
     url: `/stat/nft/checker/detail`,
     ...extra,
   });
 };
+export const reqNFTDetail = ({
+  address,
+  tokenId,
+  formatServerError,
+  contractType,
+}: {
+  address?: string;
+  tokenId?: string;
+  formatServerError?: (error: unknown, metadata?: object | undefined) => any;
+  contractType?: Parameters<typeof fetchNFTMetadata>[0]['contractType'];
+}) =>
+  fetchNFTMetadata({
+    fetchServer: () =>
+      _reqNFTDetail({
+        query: { contractAddress: address, tokenId },
+      }),
+    formatServerError,
+    nftAddress: address,
+    tokenId,
+    rpcServer: ENV_CONFIG.ENV_RPC_SERVER,
+    method: 'cfx_call',
+    contractType,
+    formatContractMetadata: metadata => ({ detail: { metadata } }),
+  });
 
 export const reqProjectConfig = (extra?: object) => {
   return sendRequest({

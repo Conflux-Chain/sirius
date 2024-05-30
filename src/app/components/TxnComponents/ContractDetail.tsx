@@ -1,6 +1,6 @@
 import React from 'react';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { formatAddress } from 'utils';
 
 interface Props {

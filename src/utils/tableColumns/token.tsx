@@ -2,8 +2,8 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import queryString from 'query-string';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
@@ -19,11 +19,11 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
@@ -31,13 +31,13 @@ import { Popover } from '@cfxjs/react-ui';
 import {
   useBreakpoint,
   media,
-} from 'sirius-next/packages/common/dist/utils/media';
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
-import { Price } from 'sirius-next/packages/common/dist/components/Price';
+import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 
 const fromTypeInfo = {
   arrow: {

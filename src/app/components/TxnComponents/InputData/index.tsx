@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { isContractAddress, isInnerContractAddress } from 'utils';
 import { reqContract } from 'utils/httpRequest';
 import { CFX } from 'utils/constants';
-import { Select } from 'sirius-next/packages/common/dist/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 

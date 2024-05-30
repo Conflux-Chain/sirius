@@ -3,8 +3,8 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
 import {
   fromDripToCfx,
@@ -14,7 +14,7 @@ import {
   getNametagInfo,
   roundToFixedPrecision,
 } from 'utils';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { ColumnAge } from './utils';
 import {
   reqTransactionDetail,
@@ -22,8 +22,8 @@ import {
 } from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { PendingReason } from './PendingReason';
 
 import iconViewTxn from 'images/view-txn.png';
@@ -202,8 +202,8 @@ export const to = {
     else if (row.tokenInfo && row.tokenInfo.name)
       alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
 
-    if (row.contractInfo) {
-      verify = row.contractInfo.verify.result !== 0;
+    if (row.toContractInfo) {
+      verify = row.toContractInfo.verify.result !== 0;
     } else if (row.verified === true) {
       verify = true;
     }

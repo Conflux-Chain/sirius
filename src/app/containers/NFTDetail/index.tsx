@@ -3,24 +3,21 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
 import { Row, Col, Collapse, message, Typography } from '@cfxjs/antd';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
-import Button from 'sirius-next/packages/common/dist/components/Button';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { usePlatform } from 'utils/hooks/usePlatform';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
-import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
 
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
@@ -28,15 +25,14 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 
 import { formatTimeStamp, addIPFSGateway } from 'utils';
-import { NETWORK_ID } from 'utils/constants';
 
 import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
-import ENV_CONFIG from 'env';
+import _ from 'lodash';
 
 const { Text } = Typography;
 
@@ -181,57 +177,26 @@ export function NFTDetail(props) {
     symbol: '',
   });
 
-  const contract721 = useMemo(() => {
-    const CFX = new SDK.Conflux({
-      url: ENV_CONFIG.ENV_RPC_SERVER,
-      networkId: NETWORK_ID,
-    });
-    return CFX.Contract({
-      address: address,
-      abi: ERC721ABI,
-    });
-  }, [address]);
-
-  const contract1155 = useMemo(() => {
-    const CFX = new SDK.Conflux({
-      url: ENV_CONFIG.ENV_RPC_SERVER,
-      networkId: NETWORK_ID,
-    });
-    return CFX.Contract({
-      address: address,
-      abi: ERC1155ABI,
-    });
-  }, [address]);
-
-  const reqNFTContract = useCallback(async () => {
-    try {
-      const tokenURI = await contract721.tokenURI(id);
-      const result = await fetch(tokenURI).then(res => res.json());
-      if (result) {
-        setData({ detail: { metadata: result } });
-      }
-    } catch (error) {}
-    try {
-      const tokenURI = await contract1155.uri(id);
-      const result = await fetch(tokenURI).then(res => res.json());
-      if (result) {
-        setData({ detail: { metadata: result } });
-      }
-    } catch (error) {}
-  }, [id, contract721, contract1155]);
-
   useEffect(() => {
     setLoading(true);
 
     reqNFTDetail({
-      query: { contractAddress: address, tokenId: id },
+      address,
+      tokenId: id,
+      formatServerError: (e: any, metadata) => {
+        const data = e?.response?.result || {};
+        if (metadata) {
+          _.merge(data, {
+            detail: {
+              metadata,
+            },
+          });
+        }
+        return data;
+      },
     })
       .then(data => {
         setData(data);
-      })
-      .catch(e => {
-        setData(e.response?.data || {});
-        reqNFTContract();
       })
       .finally(() => {
         setLoading(false);
@@ -243,7 +208,7 @@ export function NFTDetail(props) {
         symbol,
       });
     });
-  }, [address, id, reqNFTContract]);
+  }, [address, id]);
 
   const handleRefresh = useCallback(
     e => {

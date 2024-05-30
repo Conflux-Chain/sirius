@@ -7,13 +7,13 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Search } from './Search';
 import { ConnectWallet } from 'app/components/ConnectWallet';
 import {
   useBreakpoint,
   media,
-} from 'sirius-next/packages/common/dist/utils/media';
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Nav } from 'app/components/Nav';
 import { genParseLinkFn, HeaderLinks } from './HeaderLink';
 import { Check } from '@zeit-ui/react-icons';
@@ -26,7 +26,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { getNetwork, getNetworkIcon, gotoNetwork } from 'utils';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
-import { GasPriceDropdown } from 'sirius-next/packages/common/dist/components/GasPriceDropdown';
+import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
 
 import ENV_CONFIG, { DOMAIN, NETWORK_TYPES } from 'env';
 
@@ -75,12 +75,6 @@ export const Header = memo(() => {
       name: ScanEvent.menu.action.techIssue,
       afterClick: menuClick,
       href: 'https://github.com/Conflux-Chain/sirius/issues',
-    },
-    {
-      title: [t(translations.header.report), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.report,
-      afterClick: menuClick,
-      href: '/report',
     },
     {
       title: [

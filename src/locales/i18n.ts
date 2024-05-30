@@ -3,14 +3,14 @@ import { initReactI18next } from 'react-i18next';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import en from 'sirius-next/packages/i18n/cspace/en/translation.json';
-import en_net from 'sirius-next/packages/i18n/cspace/en/translationForDotNet.json';
-import zh_cn from 'sirius-next/packages/i18n/cspace/zh_cn/translation.json';
-import zh_cn_net from 'sirius-next/packages/i18n/cspace/zh_cn/translationForDotNet.json';
-import { ConvertedToObjectType } from 'sirius-next/packages/i18n/types/index';
+import en from '@cfxjs/sirius-next-i18n/cspace/en/translation.json';
+import en_net from '@cfxjs/sirius-next-i18n/cspace/en/translationForDotNet.json';
+import zh_cn from '@cfxjs/sirius-next-i18n/cspace/zh_cn/translation.json';
+import zh_cn_net from '@cfxjs/sirius-next-i18n/cspace/zh_cn/translationForDotNet.json';
+import { ConvertedToObjectType } from '@cfxjs/sirius-next-i18n/types/index';
 
 import { HIDE_IN_DOT_NET } from 'utils/constants';
-import { useI18n } from 'sirius-next/packages/common/dist/store/index';
+import { useI18n } from '@cfxjs/sirius-next-common/dist/store/index';
 
 const translationsJson = {
   'en-US': {
