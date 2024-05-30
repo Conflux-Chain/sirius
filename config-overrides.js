@@ -56,6 +56,10 @@ module.exports = function (config, mode) {
             'js-conflux-sdk',
           ),
           react: path.resolve(__dirname, './node_modules/react'),
+          'react-router-dom': path.resolve(
+            __dirname,
+            './node_modules/react-router-dom',
+          ),
         },
       },
       module: {

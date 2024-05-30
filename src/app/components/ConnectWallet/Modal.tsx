@@ -35,7 +35,7 @@ export const Modal = ({
   const { t } = useTranslation();
   const { login, authConnectStatus, accounts, installed } = usePortal();
   const { isValid } = useCheckHook();
-  let inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
+  const inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
 
   useEffect(() => {
     if (show) {
