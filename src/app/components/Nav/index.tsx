@@ -9,9 +9,9 @@ import styled from 'styled-components';
 import {
   useBreakpoint,
   media,
-} from 'sirius-next/packages/common/dist/utils/media';
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
-import { GasPriceDropdown } from 'sirius-next/packages/common/dist/components/GasPriceDropdown';
+import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { QrcodeButton } from '../../components/QrcodeButton';
 import { IconButton } from './IconButton';
 import { useTranslation } from 'react-i18next';

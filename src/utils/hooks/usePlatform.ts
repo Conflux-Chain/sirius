@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import qs from 'query-string';
 
 export const usePlatform = () => {

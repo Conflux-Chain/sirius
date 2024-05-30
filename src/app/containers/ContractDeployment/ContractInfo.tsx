@@ -3,15 +3,15 @@ import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
 import { useMessages } from '@cfxjs/react-ui';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { FileUpload } from 'sirius-next/packages/common/dist/components/FileUpload';
+import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { translations } from 'locales/i18n';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { isHex } from 'utils';
 import imgInfo from 'images/info.svg';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 const AceEditorStyle = {
   width: '100%',

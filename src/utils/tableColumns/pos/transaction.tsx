@@ -2,8 +2,8 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContentWrapper } from '../utils';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import lodash from 'lodash';
 
 export const blockHeight = {

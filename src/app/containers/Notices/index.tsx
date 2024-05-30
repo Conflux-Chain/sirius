@@ -4,9 +4,9 @@ import FAQNotification from 'images/notice/FAQNotification.png';
 import updateNotification from 'images/notice/updateNotification.png';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export const noticeInfo = {
   hot: false,

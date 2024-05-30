@@ -4,7 +4,7 @@ import {
   TablePanel as TablePanelNew,
   sortDirections,
 } from 'app/components/TablePanelNew';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { accountColunms, colunms, blockColunms } from 'utils/tableColumns/pos';
 
 export function VotingHistory() {

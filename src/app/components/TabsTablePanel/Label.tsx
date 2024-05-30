@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands } from '../../../utils';

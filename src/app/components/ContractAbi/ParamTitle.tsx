@@ -6,7 +6,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { translations } from 'locales/i18n';
 import imgInfo from 'images/info.svg';
 

@@ -3,9 +3,9 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands, fromDripToCfx, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import VotingPowerIcon from 'images/voting-power.svg';
 import IsActiveIcon from 'images/is-active.svg';
 import NotActiveIcon from 'images/not-active.svg';
@@ -13,10 +13,10 @@ import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { CountDown } from 'sirius-next/packages/common/dist/components/CountDown';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 export const rank = {
   title: (

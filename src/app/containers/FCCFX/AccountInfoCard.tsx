@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Row, Col } from '@cfxjs/antd';
-import Button from 'sirius-next/packages/common/dist/components/Button';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import {
   StyledTitle1474798C,
   StyledTitle200F1327,
@@ -18,7 +18,7 @@ import { fcExchangeContract, fcExchangeInterestContract } from './Common';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { TXN_ACTION } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { MyNFTCard } from './MyNFTCard';
 
 // token decimal

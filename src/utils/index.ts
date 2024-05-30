@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { NetworksType } from 'sirius-next/packages/common/dist/store/types';
+import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 import {
   NETWORK_ID,
   getCurrencySymbol,
@@ -50,7 +50,7 @@ import {
   convertObjBigNumbersToStrings,
   constprocessResultArray,
   formatLargeNumber,
-} from 'sirius-next/packages/common/dist/utils';
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 import {
   isPosAddress,
@@ -64,7 +64,7 @@ import {
   isInnerContractAddress,
   isSpecialAddress,
   formatAddress as formatAddressCore,
-} from 'sirius-next/packages/common/dist/utils/address';
+} from '@cfxjs/sirius-next-common/dist/utils/address';
 
 export {
   formatNumber,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@cfxjs/antd';
-import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 

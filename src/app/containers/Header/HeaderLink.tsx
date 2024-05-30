@@ -5,11 +5,11 @@ import { useRouteMatch } from 'react-router-dom';
 import {
   useBreakpoint,
   media,
-} from 'sirius-next/packages/common/dist/utils/media';
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import { ChevronDown } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { ScanEvent } from '../../../utils/gaConstants';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
 export type HeaderLinkTitle = ReactNode | Array<ReactNode>;
 

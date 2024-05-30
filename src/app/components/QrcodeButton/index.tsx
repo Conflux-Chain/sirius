@@ -7,11 +7,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
 import { Modal } from '@cfxjs/react-ui';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { isAccountAddress } from 'utils';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 
 interface QrcodeButtonProps {
   value: string;

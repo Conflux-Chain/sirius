@@ -23,7 +23,7 @@ import { SWRConfig } from 'swr';
 import { CfxProvider, CssBaseline } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
@@ -65,7 +65,7 @@ import { AddressContractDetailPage } from './containers/AddressContractDetail/Lo
 import { GlobalNotify } from './containers/GlobalNotify';
 import { Search } from './containers/Search';
 import { AddressConverter } from './containers/AddressConverter';
-import { Loading } from 'sirius-next/packages/common/dist/components/Loading';
+import { Loading } from '@cfxjs/sirius-next-common/dist/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
 // import { CookieTip } from './components/CookieTip';
@@ -143,7 +143,7 @@ import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import ENV_CONFIG_LOCAL from 'env';
-import { useEnv } from 'sirius-next/packages/common/dist/store/index';
+import { useEnv } from '@cfxjs/sirius-next-common/dist/store/index';
 
 // @ts-ignore
 window.lodash = lodash;

@@ -5,13 +5,13 @@ import {
   reqContractAndToken,
 } from 'utils/httpRequest';
 import { toThousands } from 'utils';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 import { CFX } from 'utils/constants';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import styled from 'styled-components';
 import _ from 'lodash';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatAddress } from 'utils';
@@ -21,7 +21,7 @@ import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from 'app/components/TxnComponents/Event';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
 interface Props {

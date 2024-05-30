@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import {
   TabLabel,
   TabsTablePanel,
 } from 'app/components/TabsTablePanel/Loadable';
 import { useParams } from 'react-router-dom';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Helmet } from 'react-helmet-async';
 import { DescriptionPanel } from './DescriptionPanel';
 import styled from 'styled-components';
 import { reqBlockDetail } from 'utils/httpRequest';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useHistory } from 'react-router-dom';
 
 import { Txns } from './Txns';

@@ -1,18 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 
 const { Text } = Typography;
 

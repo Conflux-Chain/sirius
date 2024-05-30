@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { contractColunms, accountColunms, utils } from 'utils/tableColumns';
 import queryString from 'query-string';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';

@@ -7,8 +7,8 @@ import {
   tokenColunms,
   transactionColunms,
 } from 'utils/tableColumns';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
-import { useAge } from 'sirius-next/packages/common/dist/utils/hooks/useAge';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export function CFXTransfers() {

@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
 import {
@@ -20,10 +20,10 @@ import {
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
-import { Remark } from 'sirius-next/packages/common/dist/components/Remark';
-import { PageHeader } from 'sirius-next/packages/common/dist/components/PageHeader';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';

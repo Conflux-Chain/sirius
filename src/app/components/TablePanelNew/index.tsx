@@ -10,10 +10,10 @@ import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
-import { useBreakpoint } from 'sirius-next/packages/common/dist/utils/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from 'sirius-next/packages/common/dist/components/Empty';
+import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 
 type SortOrder = 'descend' | 'ascend' | null;
 type SortDirections = SortOrder[];

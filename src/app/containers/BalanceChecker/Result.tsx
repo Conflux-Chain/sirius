@@ -1,6 +1,6 @@
 import { translations } from 'locales/i18n';
 import { Card as AntdCard, Avatar } from '@cfxjs/antd';
-import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import DateIcon from '../../../images/balance-checker/date.png';
 import dayjs from 'dayjs';
 import BlockIcon from '../../../images/balance-checker/block.png';
@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import TokenIcon from '../../../images/balance-checker/token-icon.png';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatNumber, fromDripToCfx } from '../../../utils';
 import { useCfxBalance } from '../../../utils/api';
 

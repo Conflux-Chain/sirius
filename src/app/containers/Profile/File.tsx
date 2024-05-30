@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { FileUpload } from 'sirius-next/packages/common/dist/components/FileUpload';
+import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
-import { InfoIconWithTooltip } from 'sirius-next/packages/common/dist/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import {
   formatNumber,
@@ -10,16 +10,16 @@ import {
   hideInDotNet,
   toThousands,
 } from '../../../utils';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import BigNumber from 'bignumber.js';
 import { usePortal } from '../../../utils/hooks/usePortal';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { monospaceFont } from '../../../styles/variable';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
 import { HIDE_IN_DOT_NET } from '../../../utils/constants';

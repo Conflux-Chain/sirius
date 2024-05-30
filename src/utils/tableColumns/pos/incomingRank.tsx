@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import { ContentWrapper } from '../utils';
 import lodash from 'lodash';
 import { fromDripToCfx } from 'utils';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 

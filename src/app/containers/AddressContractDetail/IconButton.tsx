@@ -4,9 +4,9 @@
  *
  */
 import React from 'react';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 interface IconButtonProps {
   size?: number;

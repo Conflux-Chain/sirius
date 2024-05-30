@@ -1,21 +1,21 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { ICON_DEFAULT_TOKEN, getCurrencySymbol } from 'utils/constants';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatBalance } from 'utils/index';
 import { CFX_TOKEN_TYPES } from '../../../utils/constants';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Price } from 'sirius-next/packages/common/dist/components/Price';
+import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 import { formatNumber } from 'utils';
 
 const skeletonStyle = { width: '7rem', height: '2.5rem' };

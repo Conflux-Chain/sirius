@@ -5,17 +5,17 @@
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Image, Popover } from '@cfxjs/antd';
-import { ImageSkeleton } from 'sirius-next/packages/common/dist/components/ImageSkeleton';
-import { Spin } from 'sirius-next/packages/common/dist/components/Spin';
+import { ImageSkeleton } from '@cfxjs/sirius-next-common/dist/components/ImageSkeleton';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import tokenIdNotFound from 'images/token/tokenIdNotFound.jpg';
 import styled from 'styled-components';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { translations } from 'locales/i18n';
 import { useTranslation } from 'react-i18next';
 import nftPreviewActive from 'images/token/nftPreviewActive2.svg';
 import nftPreview from 'images/token/nftPreview2.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
 import fetch from 'utils/request';
 import { addIPFSGateway } from 'utils';
@@ -24,9 +24,9 @@ import audioBg from './audio-bg.svg';
 import audioPause from './audio-pause.svg';
 import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
-import { Link as ALink } from 'sirius-next/packages/common/dist/components/Link';
+import { Link as ALink } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { ThreeD } from './3D';
 
 const epiKProtocolKnowledgeBadge =

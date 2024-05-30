@@ -1,28 +1,28 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { List } from 'sirius-next/packages/common/dist/components/List';
+import { List } from '@cfxjs/sirius-next-common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Modal } from '@cfxjs/react-ui';
-import { Text } from 'sirius-next/packages/common/dist/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import {
   fromDripToCfx,
   getTimeByBlockInterval,
   toThousands,
   publishRequestError,
 } from 'utils';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';
 import { abi as stakingAbi } from 'utils/contract/staking.json';
-import { Tooltip } from 'sirius-next/packages/common/dist/components/Tooltip';
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
-import { AddressContainer } from 'sirius-next/packages/common/dist/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import {
   getDepositList,
   getAccumulateInterestRate,

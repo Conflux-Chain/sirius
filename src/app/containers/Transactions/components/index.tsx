@@ -2,10 +2,10 @@ import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
-import { TableSearchDropdown } from 'sirius-next/packages/common/dist/components/Dropdown';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { TableSearchDropdown } from '@cfxjs/sirius-next-common/dist/components/Dropdown';
 import { toThousands } from 'utils';
-import { DownloadCSV } from 'sirius-next/packages/common/dist/components/DownloadCSV';
+import { DownloadCSV } from '@cfxjs/sirius-next-common/dist/components/DownloadCSV';
 import qs from 'query-string';
 import { useParams } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -18,8 +18,8 @@ import {
 import Search from '@zeit-ui/react-icons/search';
 import ChevronUp from '@zeit-ui/react-icons/chevronUp';
 
-import { Link } from 'sirius-next/packages/common/dist/components/Link';
-import Button from 'sirius-next/packages/common/dist/components/Button';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 interface FooterProps {
   type?: string;
   pathname: string;

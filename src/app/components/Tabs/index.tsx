@@ -3,7 +3,7 @@ import { Tabs as UITabs } from '@cfxjs/react-ui';
 import { TabsProps } from '@cfxjs/react-ui/dist/tabs/tabs';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { media } from 'sirius-next/packages/common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 const Tabs = ({ children, className, ...others }: TabsProps) => {
   return (

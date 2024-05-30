@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Card } from 'sirius-next/packages/common/dist/components/Card';
-import { Description } from 'sirius-next/packages/common/dist/components/Description';
-import { CopyButton } from 'sirius-next/packages/common/dist/components/CopyButton';
-import { SkeletonContainer } from 'sirius-next/packages/common/dist/components/SkeletonContainer';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { toThousands } from 'utils';
 import lodash from 'lodash';
 
