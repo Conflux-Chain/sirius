@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '../../components/Select';
+import { Select } from 'sirius-next/packages/common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Globe from '@zeit-ui/react-icons/globe';
@@ -62,7 +62,8 @@ export function Language() {
 
 const StyledWrapper = styled.span`
   position: relative;
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   color: var(--theme-color-gray0);
 
   &:hover {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select } from '../../../components/Select';
+import { Select } from 'sirius-next/packages/common/dist/components/Select';
 import styled from 'styled-components';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
@@ -52,7 +52,7 @@ const SelectedLine = ({
       {index === undefined ? null : <span className="index">{index + 1}</span>}
       {select ? (
         <Select
-          className="select"
+          className="select hover:bg-blue-08 text-[#444] bg-[#FFF] border border-[#444] rounded"
           disableMatchWidth={true}
           size="small"
           value={selected}
@@ -191,7 +191,7 @@ export const Data = ({
       body = (
         <>
           <Select
-            className="select-with-abi"
+            className="select-with-abi  hover:bg-blue-08 text-[#444] bg-[#FFF] border border-[#444] rounded"
             value={value}
             onChange={handleChange}
             size="small"
