@@ -89,7 +89,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
 
           select = (
             <Select
-              className="select hover:bg-blue-08 text-[#444] bg-[#FFF] border border-[#444] rounded"
+              className="select"
               disableMatchWidth={true}
               size="small"
               value={valueMap.hex === valueMap.decode ? 'hex' : name}
@@ -153,15 +153,19 @@ const StyledTopicsWrapper = styled.div`
       align-items: center;
     }
 
-    .select.select {
-      padding-left: 0;
-      height: 1.5714rem;
-      padding: 0 0.7143rem;
-      margin-right: 0.8571rem;
+    .select {
+      margin-right: 12px;
+      color: #444;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
 
       .value {
         padding-left: 0;
       }
+    }
+    .select:hover {
+      background-color: rgba(30, 61, 228, 0.08);
     }
   }
 `;
