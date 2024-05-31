@@ -104,8 +104,6 @@ export const TitleTotal = ({
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        variant="text"
-        dropdownClassName="dropdown"
         lable={t(translations.accounts.downloadButtonText)}
       >
         {['100', '500', '1000', '3000', '5000'].map((o, index) => {

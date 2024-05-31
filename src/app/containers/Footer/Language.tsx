@@ -46,7 +46,6 @@ export function Language() {
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        variant="text"
       >
         {options.map(o => {
           return (

@@ -450,7 +450,6 @@ export function Approval() {
               disableMatchWidth
               size="small"
               className="btnSelectContainer"
-              variant="text"
             >
               {options.map((o, index) => {
                 return (

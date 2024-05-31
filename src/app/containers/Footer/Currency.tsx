@@ -74,8 +74,6 @@ export function Currency() {
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        dropdownClassName="currency-select"
-        variant="text"
       >
         {options.map(o => {
           return (

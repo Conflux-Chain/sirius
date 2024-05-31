@@ -128,7 +128,6 @@ export function Accounts() {
           disableMatchWidth
           size="small"
           className="btnSelectContainer"
-          variant="text"
         >
           {options.map((o, index) => {
             return (
@@ -149,7 +148,6 @@ export function Accounts() {
           disableMatchWidth
           size="small"
           className="btnSelectContainer"
-          variant="text"
           dropdownClassName="dropdown"
           lable={t(translations.accounts.downloadButtonText)}
         >
