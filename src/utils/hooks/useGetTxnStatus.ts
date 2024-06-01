@@ -67,7 +67,7 @@ export const useGetTxnStatus = (
   timeout?: number, // timeout to polling txn status,
   method?, // getTransactionByHash or getTransactionReceipt,
 ) => {
-  // 0 for success, 1 for error occured, null when the transaction is skipped or not packed.
+  // 0 for success, 1 for error occurred, null when the transaction is skipped or not packed.
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [status, setStatus] = useState({});
   const markedHashs = useRef({});
