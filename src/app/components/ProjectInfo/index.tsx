@@ -16,7 +16,7 @@ import {
 } from './icons';
 import { translations } from 'locales/i18n';
 import { Modal, Divider, Image } from '@cfxjs/antd';
-import { Link } from '@cfxjs/react-ui';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { sansSerifFont } from 'styles/variable';
 import iconWarning from 'images/warning.png';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
@@ -527,7 +527,7 @@ const LeftWrapper = styled.div`
   flex-direction: row-reverse;
   align-items: center;
 
-  > span:not(:last-child) {
+  > span:not(:last-of-type) {
     margin-left: -4px; //往左偏移实现重叠效果
   }
 

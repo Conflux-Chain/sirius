@@ -5,13 +5,13 @@ import {
   reqContractAndToken,
 } from 'utils/httpRequest';
 import { toThousands } from 'utils';
-import { Card } from 'app/components/Card/Loadable';
-import { Empty } from 'app/components/Empty/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 import { CFX } from 'utils/constants';
-import { Description } from 'app/components/Description/Loadable';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import styled from 'styled-components';
 import _ from 'lodash';
-import SkeletonContainer from 'app/components/SkeletonContainer';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatAddress } from 'utils';
@@ -21,7 +21,7 @@ import { Topics } from './Topics';
 import { Data } from './Data';
 import { Event } from 'app/components/TxnComponents/Event';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
 interface Props {
@@ -187,7 +187,7 @@ const EventLog = ({ log }) => {
               title={
                 <strong>{t(translations.transaction.logs.address)}</strong>
               }
-              small
+              size="small"
               noBorder
             >
               <Address
@@ -200,7 +200,7 @@ const EventLog = ({ log }) => {
               <Description
                 className="description"
                 title={t(translations.transaction.logs.name)}
-                small
+                size="small"
                 noBorder
               >
                 <Event fnName={fnName} args={args} />
@@ -209,7 +209,7 @@ const EventLog = ({ log }) => {
             <Description
               className="description"
               title={t(translations.transaction.logs.topics)}
-              small
+              size="small"
               noBorder
             >
               <Topics
@@ -222,7 +222,7 @@ const EventLog = ({ log }) => {
               <Description
                 className="description"
                 title={<i>{t(translations.transaction.logs.data)}</i>}
-                small
+                size="small"
                 noBorder
               >
                 <Data

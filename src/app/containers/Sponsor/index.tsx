@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
-import SkelontonContainer from 'app/components/SkeletonContainer';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
 import {
@@ -20,19 +20,15 @@ import {
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import { AddressContainer } from 'app/components/AddressContainer';
-import {
-  TXN_ACTION,
-  RPC_SERVER,
-  CONTRACTS,
-  NETWORK_TYPE,
-} from 'utils/constants';
-import { Remark } from 'app/components/Remark';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { TXN_ACTION, CONTRACTS } from 'utils/constants';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { reqContractList, reqContract } from 'utils/httpRequest';
 import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
+import ENV_CONFIG from 'env';
 
 interface RouteParams {
   contractAddress: string;
@@ -78,7 +74,11 @@ const getCFXAmount = (value: string | number, zeroUnit = '') => {
 };
 
 export function Sponsor() {
-  const faucet = new Faucet(RPC_SERVER, CONTRACTS.faucet, CONTRACTS.faucetLast);
+  const faucet = new Faucet(
+    ENV_CONFIG.ENV_RPC_SERVER,
+    CONTRACTS.faucet,
+    CONTRACTS.faucetLast,
+  );
   const { t } = useTranslation();
   const { contractAddress } = useParams<RouteParams>();
   const [storageSponsorAddress, setStorageSponsorAddress] = useState('');
@@ -260,7 +260,9 @@ export function Sponsor() {
         setErrorMsgForApply(
           t(translations.general.errors.address, {
             network: t(
-              translations.general.networks[NETWORK_TYPE.toLowerCase()],
+              translations.general.networks[
+                ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+              ],
             ),
           }),
         );
@@ -336,7 +338,11 @@ export function Sponsor() {
 
       setErrorMsgForApply(
         t(translations.general.errors.address, {
-          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+          network: t(
+            translations.general.networks[
+              ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+            ],
+          ),
         }),
       );
     }
@@ -367,7 +373,11 @@ export function Sponsor() {
 
       setErrorMsgForApply(
         t(translations.general.errors.address, {
-          network: t(translations.general.networks[NETWORK_TYPE.toLowerCase()]),
+          network: t(
+            translations.general.networks[
+              ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
+            ],
+          ),
         }),
       );
     }
@@ -426,7 +436,7 @@ export function Sponsor() {
               <span className="label">
                 {t(translations.sponsor.storageSponsor)}&nbsp;&nbsp;
               </span>
-              <SkelontonContainer shown={loading}>
+              <SkeletonContainer shown={loading}>
                 {storageSponsorAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
                     <AddressContainer
@@ -439,13 +449,13 @@ export function Sponsor() {
                 ) : (
                   ''
                 )}
-              </SkelontonContainer>
+              </SkeletonContainer>
             </div>
             <div className="currentLabel">
               {t(translations.sponsor.currentAvialStorageQuota)}
             </div>
             <div className="currentFeeContainer">
-              <SkelontonContainer shown={loading}>
+              <SkeletonContainer shown={loading}>
                 {currentStorageFee !== defaultStr ? (
                   <SponsorStorage
                     storageQuota={{
@@ -467,7 +477,7 @@ export function Sponsor() {
                 ) : (
                   defaultStr
                 )}
-              </SkelontonContainer>
+              </SkeletonContainer>
             </div>
             <div className="feeContainer storage">
               <div className="line"></div>
@@ -476,7 +486,7 @@ export function Sponsor() {
                   {t(translations.sponsor.providedStorage)}
                 </div>
                 <div className="innterItem">
-                  <SkelontonContainer shown={loading}>
+                  <SkeletonContainer shown={loading}>
                     {providedStorageFee !== defaultStr ? (
                       <>
                         <span>{providedStorageFeeAmount.amount}</span>
@@ -487,7 +497,7 @@ export function Sponsor() {
                     ) : (
                       defaultStr
                     )}
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </div>
               </div>
               <div className="item">
@@ -495,7 +505,7 @@ export function Sponsor() {
                   {t(translations.sponsor.availStorage)}
                 </div>
                 <div className="innterItem">
-                  <SkelontonContainer shown={loading}>
+                  <SkeletonContainer shown={loading}>
                     {avialStorageFee !== defaultStr ? (
                       <>
                         <span className="fee">
@@ -518,7 +528,7 @@ export function Sponsor() {
                       {storageBoundAmount.unit}/
                       {t(translations.sponsor.applicationUnit)}
                     </span>
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </div>
               </div>
             </div>
@@ -528,7 +538,7 @@ export function Sponsor() {
               <span className="label">
                 {t(translations.sponsor.gasFeeSponsor)}&nbsp;&nbsp;
               </span>
-              <SkelontonContainer shown={loading}>
+              <SkeletonContainer shown={loading}>
                 {gasFeeAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
                     <AddressContainer
@@ -541,13 +551,13 @@ export function Sponsor() {
                 ) : (
                   ''
                 )}
-              </SkelontonContainer>
+              </SkeletonContainer>
             </div>
             <div className="currentLabel">
               {t(translations.sponsor.currentAvialGasFee)}
             </div>
             <div className="currentFeeContainer">
-              <SkelontonContainer shown={loading}>
+              <SkeletonContainer shown={loading}>
                 {currentGasFee !== defaultStr ? (
                   <>
                     <span className="fee">{currentGasFeeAmount.amount}</span>
@@ -556,10 +566,10 @@ export function Sponsor() {
                 ) : (
                   defaultStr
                 )}
-              </SkelontonContainer>
+              </SkeletonContainer>
             </div>
             <div className="upperBoundContainer">
-              <SkelontonContainer shown={loading}>
+              <SkeletonContainer shown={loading}>
                 <span className="label">
                   {t(translations.sponsor.upperBound)}:&nbsp;
                 </span>
@@ -577,7 +587,7 @@ export function Sponsor() {
                 {isUpperBoundFromFoundation ? (
                   <span>{t(translations.sponsor.byFoundation)}</span>
                 ) : null}
-              </SkelontonContainer>
+              </SkeletonContainer>
             </div>
             <div className="feeContainer gas">
               <div className="line"></div>
@@ -586,7 +596,7 @@ export function Sponsor() {
                   {t(translations.sponsor.providedGas)}
                 </div>
                 <div className="innterItem">
-                  <SkelontonContainer shown={loading}>
+                  <SkeletonContainer shown={loading}>
                     {providedGasFee !== defaultStr ? (
                       <>
                         <span>{providedGasFeeAmount.amount}</span>
@@ -597,13 +607,13 @@ export function Sponsor() {
                     ) : (
                       defaultStr
                     )}
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </div>
               </div>
               <div className="item">
                 <div className="label">{t(translations.sponsor.availGas)}</div>
                 <div className="innterItem">
-                  <SkelontonContainer shown={loading}>
+                  <SkeletonContainer shown={loading}>
                     {avialGasFee !== defaultStr ? (
                       <>
                         <span className="fee">{avialGasFeeAmount.amount}</span>
@@ -624,7 +634,7 @@ export function Sponsor() {
                       {gasBoundAmount.unit}/
                       {t(translations.sponsor.applicationUnit)}
                     </span>
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </div>
               </div>
             </div>

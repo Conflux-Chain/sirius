@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@cfxjs/antd';
-import { Remark } from 'app/components/Remark';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 
@@ -39,7 +39,7 @@ export function Notice({ show = false, onClose = () => {} }) {
 
 const StyledRemarkWrapper = styled.div`
   .remark {
-    .content {
+    .remark-content {
       line-height: 24px;
 
       div:not(:last-child) {

@@ -1,29 +1,9 @@
+import ENV_CONFIG, { DOMAIN, IS_DEVNET, IS_STAGE } from 'env';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
-/**
- * @todo
- * 1. setNFTCacheInfo cacheKey
- * 2. GlobalTip
- *
- * @export
- * @enum {number}
- */
-export enum LOCALSTORAGE_KEYS_MAP {
-  reqProjectConfigMD5 = 'CONFLUX_SCAN_REQ_PROJECT_CONFIG_MD5',
-  networkId = 'CONFLUX_SCAN_NETWORK_ID',
-  contracts = 'CONFLUX_SCAN_CONTRACTS',
-  contractNameTag = 'CONFLUX_SCAN_CONTRACT_NAME_TAG',
-  currency = 'CONFLUX_SCAN_LOCALSTORAGE_KEY_CURRENCY',
-  ageFormat = 'CONFLUX_SCAN_TABLE_AGE_FORMAT',
-  cookieAgreed = 'CONFLUXSCAN_COOKIE_AGREED',
-  txnRecords = 'CONFLUXSCAN_TXN_RECORDS',
-  fccfxNotice = 'CONFLUX_SCAN_FCCFX_NOTICE',
-  addressLabel = 'CONFLUX_SCAN_ADDRESS_LABELS',
-  txPrivateNote = 'CONFLUX_SCAN_TX_PRIVATE_NOTES',
-  hideInDotNet = 'CONFLUX_SCAN_HIDE_IN_DOT_NET',
-  apis = 'CONFLUX_SCAN_APIS',
-}
+export { LOCALSTORAGE_KEYS_MAP };
 
 interface ContractsType {
   faucet: string;
@@ -43,57 +23,12 @@ interface ContractNameTagType {
   [index: string]: string;
 }
 
-const apiHostMap: {
-  rpcHost?: string;
-  openAPIHost?: string;
-} = (() => {
-  try {
-    const apis = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.apis) ?? '';
-    return JSON.parse(apis);
-  } catch (error) {
-    return {};
-  }
-})();
-
-// only for dev and qa, use with caution
-export const IS_PRE_RELEASE =
-  process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('stage') ||
-  window.location.hostname.startsWith('localhost');
-
-export const IS_TESTNET =
-  process.env.REACT_APP_TestNet === 'true' ||
-  window.location.hostname.includes('testnet');
-
-export const IS_PRIVATENET =
-  process.env.REACT_APP_PrivateNet === 'true' ||
-  window.location.hostname.startsWith('net8888');
-
-const RPC_URL = {
-  mainnet: 'https://main.confluxrpc.com',
-  testnet: 'https://test.confluxrpc.com',
-  privatenet: 'https://net8888cfx.confluxrpc.com',
-};
-export const RPC_SERVER = (() => {
-  if (apiHostMap.rpcHost) {
-    return apiHostMap.rpcHost;
-  }
-  return IS_TESTNET
-    ? RPC_URL.testnet
-    : IS_PRIVATENET
-    ? RPC_URL.privatenet
-    : RPC_URL.mainnet;
-})();
-
-export enum DEFAULT_NETWORK_IDS {
-  mainnet = 1029,
-  testnet = 1,
-}
+export const CORE_SPACE_CHAIN_IDS = [1029, 1, 8888];
+export const ESPACE_CHAIN_IDS = [1030, 71, 8889];
+export const BSPACE_CHAIN_IDS = [8890];
 
 export const NETWORK_ID = (() => {
-  let networkId = IS_TESTNET
-    ? DEFAULT_NETWORK_IDS.testnet
-    : DEFAULT_NETWORK_IDS.mainnet;
+  let networkId = ENV_CONFIG.ENV_NETWORK_ID;
   let cacheNetworkId = Number(
     localStorage.getItem(LOCALSTORAGE_KEYS_MAP.networkId),
   );
@@ -107,23 +42,6 @@ export const NETWORK_ID = (() => {
 export const HIDE_IN_DOT_NET =
   /.net$/.test(window.location.host) &&
   localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
-
-// network type is come from backend network id, now there are three state, can be extended with special case
-export enum NETWORK_TYPES {
-  mainnet = 'MAINNET',
-  testnet = 'TESTNET',
-  privatenet = 'PRIVATENET',
-}
-
-export const NETWORK_TYPE = (() => {
-  if (NETWORK_ID === 1) {
-    return NETWORK_TYPES.testnet;
-  } else if (NETWORK_ID === 1029) {
-    return NETWORK_TYPES.mainnet;
-  } else {
-    return NETWORK_TYPES.privatenet;
-  }
-})();
 
 export const CONTRACTS: ContractsType = (() => {
   // initial value used for ts check rule
@@ -217,7 +135,7 @@ export const getCurrencySymbol = () => {
 };
 
 export const CFX = new SDK.Conflux({
-  url: RPC_SERVER,
+  url: ENV_CONFIG.ENV_RPC_SERVER,
   networkId: NETWORK_ID,
 });
 
@@ -228,81 +146,6 @@ export const ICON_DEFAULT_TOKEN =
 
 export const POS_NULL_ADDRESS =
   '0000000000000000000000000000000000000000000000000000000000000000';
-
-// only deploy on testnet and mainnet
-enum FC_ADDRESSES {
-  mainnet = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2',
-  testnet = 'cfxtest:achteu1f777f1j1s8s4tvsx5vk5vcbrn4ykxa0fzg1',
-}
-export const FC_ADDRESS = IS_TESTNET
-  ? FC_ADDRESSES.testnet
-  : FC_ADDRESSES.mainnet;
-
-// only deploy on testnet and mainnet
-enum FC_EXCHANGE_ADDRESSES {
-  mainnet = 'cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m',
-  testnet = 'cfxtest:acf6wwargxpp9ddfe7rnagf2ty9gsxs54uptst589y',
-}
-export const FC_EXCHANGE_ADDRESS = IS_TESTNET
-  ? FC_EXCHANGE_ADDRESSES.testnet
-  : FC_EXCHANGE_ADDRESSES.mainnet;
-
-// only deploy on testnet and mainnet
-enum FC_EXCHANGE_INTEREST_ADDRESSES {
-  mainnet = 'cfx:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140',
-  testnet = 'cfxtest:acadrvdd07u69hazg0nkjkpdetvyc5wma6put8949d',
-}
-export const FC_EXCHANGE_INTEREST_ADDRESS = IS_TESTNET
-  ? FC_EXCHANGE_INTEREST_ADDRESSES.testnet
-  : FC_EXCHANGE_INTEREST_ADDRESSES.mainnet;
-
-enum CROSS_SPACE_ADDRESSES {
-  mainnet = 'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv',
-  testnet = 'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2eaeg85p5',
-}
-export const CROSS_SPACE_ADDRESS = IS_TESTNET
-  ? CROSS_SPACE_ADDRESSES.testnet
-  : CROSS_SPACE_ADDRESSES.mainnet;
-
-enum ENS_REGISTRY_ADDRESSES {
-  mainnet = 'cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm',
-  testnet = 'cfxtest:acemru7fu1u8brtyn3hrtae17kbcd4pd9u2m761bta',
-}
-
-export const ENS_REGISTRY_ADDRESS = IS_TESTNET
-  ? ENS_REGISTRY_ADDRESSES.testnet
-  : ENS_REGISTRY_ADDRESSES.mainnet;
-
-enum ENS_PUBLIC_RESOLVER_ADDRESSES {
-  mainnet = 'cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up',
-  testnet = 'cfxtest:acbfyf69zaxau5a23w10dgyrmb0hrz4p9pewn6sejp',
-}
-
-export const ENS_PUBLIC_RESOLVER_ADDRESS = IS_TESTNET
-  ? ENS_PUBLIC_RESOLVER_ADDRESSES.testnet
-  : ENS_PUBLIC_RESOLVER_ADDRESSES.mainnet;
-
-enum ENS_REVERSE_REGISTRAR_ADDRESSES {
-  mainnet = 'cfx:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk',
-  testnet = 'cfxtest:acfarpzehntpre0thg8x7dp0ajw4ms328pe1mm17vd',
-}
-
-export const ENS_REVERSE_REGISTRAR_ADDRESS = IS_TESTNET
-  ? ENS_REVERSE_REGISTRAR_ADDRESSES.testnet
-  : ENS_REVERSE_REGISTRAR_ADDRESSES.mainnet;
-
-export const OPEN_API_HOST = (() => {
-  if (apiHostMap.openAPIHost) {
-    return apiHostMap.openAPIHost;
-  }
-  let APIHost = IS_TESTNET
-    ? `api-testnet${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`
-    : `api${IS_PRE_RELEASE ? '-stage' : ''}.confluxscan.net`;
-  if (window.location.host.startsWith('net')) {
-    APIHost = window.location.host.replace(/cfx|eth/, 'api');
-  }
-  return `https://${APIHost}`;
-})();
 
 export const OPEN_API_URLS = Object.entries({
   // charts
@@ -327,7 +170,7 @@ export const OPEN_API_URLS = Object.entries({
   NFTBalance: '/nft/balances',
 })
   .map(item => ({
-    [item[0]]: `${OPEN_API_HOST}${item[1]}`,
+    [item[0]]: `${ENV_CONFIG.ENV_OPEN_API_HOST}${item[1]}`,
   }))
   .reduce((prev, curr) => ({ ...prev, ...curr }), {});
 
@@ -356,11 +199,72 @@ OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 // table list list limit, max query items is 10,000, exceed will cause backend error
 export const TABLE_LIST_LIMIT = 10000;
 
-export const IS_FOREIGN_HOST = /.io$/.test(window.location.host);
-
 // ens request
 export const ENS_REQUEST_DELAYED_PERIOD = 100;
 export const ENS_REQUEST_EXPIRED_PERIOD = 5000;
 export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
 
 export const ENS_COINID_CONFLUX = 503;
+
+export const NETWORK_OPTIONS = lodash.compact([
+  // core space
+  {
+    name: 'Conflux Core (Hydra)',
+    id: 1029,
+    url: IS_STAGE ? '//www-stage.confluxscan.net' : `//confluxscan${DOMAIN}`,
+  },
+  {
+    name: 'Conflux Core (Testnet)',
+    id: 1,
+    url: IS_STAGE
+      ? '//testnet-stage.confluxscan.net'
+      : `//testnet.confluxscan${DOMAIN}`,
+  },
+  IS_DEVNET && {
+    name: 'Conflux Core (Devnet)',
+    id: 8888,
+    url: IS_STAGE
+      ? '//net8888cfx.confluxscan.net'
+      : `//net8888cfx.confluxscan${DOMAIN}`,
+  },
+  // espace
+  {
+    name: 'Conflux eSpace (Hydra)',
+    id: 1030,
+    url: IS_STAGE
+      ? '//evm-stage.confluxscan.net'
+      : `//evm.confluxscan${DOMAIN}`,
+  },
+  {
+    name: 'Conflux eSpace (Testnet)',
+    id: 71,
+    url: IS_STAGE
+      ? '//evmtestnet-stage.confluxscan.net'
+      : `//evmtestnet.confluxscan${DOMAIN}`,
+  },
+  IS_DEVNET && {
+    name: 'Conflux eSpace (Devnet)',
+    id: 8889,
+    url: '//net8889eth.confluxscan.net',
+  },
+  // TODO-btc
+  // {
+  //   name: 'Conflux eSpace (Hydra)',
+  //   id: 1030,
+  //   url: IS_STAGE
+  //     ? '//evm-stage.confluxscan.net'
+  //     : `//evm.confluxscan${DOMAIN}`,
+  // },
+  // {
+  //   name: 'Conflux eSpace (Testnet)',
+  //   id: 71,
+  //   url: IS_STAGE
+  //     ? '//evmtestnet-stage.confluxscan.net'
+  //     : `//evmtestnet.confluxscan${DOMAIN}`,
+  // },
+  IS_DEVNET && {
+    name: 'Conflux bSpace (Devnet)',
+    id: 8890,
+    url: '//net8890btc.confluxscan.net',
+  },
+]);

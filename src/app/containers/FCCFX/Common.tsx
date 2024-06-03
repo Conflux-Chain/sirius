@@ -1,14 +1,9 @@
 import React from 'react';
-import { Image, Tooltip } from '@cfxjs/antd';
+import { Image } from '@cfxjs/antd';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import imgInfo from 'images/info.svg';
 import styled from 'styled-components';
-import {
-  RPC_SERVER,
-  NETWORK_ID,
-  FC_ADDRESS,
-  FC_EXCHANGE_ADDRESS,
-  FC_EXCHANGE_INTEREST_ADDRESS,
-} from 'utils/constants';
+import { NETWORK_ID } from 'utils/constants';
 import { BigNumber as IBigNumber } from 'bignumber.js';
 import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.json';
 import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
@@ -18,6 +13,7 @@ import {
   completeDetect,
   provider,
 } from '@cfxjs/use-wallet-react/conflux/Fluent';
+import ENV_CONFIG from 'env';
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;
@@ -120,7 +116,7 @@ const StyledCardInfoWrapper = styled.div<{
 `;
 
 export const CFX = new SDK.Conflux({
-  url: RPC_SERVER,
+  url: ENV_CONFIG.ENV_RPC_SERVER,
   networkId: NETWORK_ID,
 });
 
@@ -132,16 +128,16 @@ completeDetect().then(() => {
 });
 
 export const fcExchangeContract = CFX.Contract({
-  address: FC_EXCHANGE_ADDRESS,
+  address: ENV_CONFIG.ENV_FC_EXCHANGE_ADDRESS,
   abi: fcExchangeABI,
 });
 
 export const fcExchangeInterestContract = CFX.Contract({
-  address: FC_EXCHANGE_INTEREST_ADDRESS,
+  address: ENV_CONFIG.ENV_FC_EXCHANGE_INTEREST_ADDRESS,
   abi: fcExchangeInterestABI,
 });
 
 export const fcContract = CFX.Contract({
-  address: FC_ADDRESS,
+  address: ENV_CONFIG.ENV_FC_ADDRESS,
   abi: fcABI,
 });

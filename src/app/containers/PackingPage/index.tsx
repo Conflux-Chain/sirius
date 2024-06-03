@@ -7,10 +7,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
-import { CopyButton } from '../../components/CopyButton/Loadable';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import imgPacking from 'images/home/packing.svg';
 
 interface RouteParams {

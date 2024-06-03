@@ -55,6 +55,11 @@ module.exports = function (config, mode) {
             'node_modules',
             'js-conflux-sdk',
           ),
+          react: path.resolve(__dirname, './node_modules/react'),
+          'react-router-dom': path.resolve(
+            __dirname,
+            './node_modules/react-router-dom',
+          ),
         },
       },
       module: {
@@ -85,6 +90,21 @@ module.exports = function (config, mode) {
   }
   return smp.wrap({
     ...config,
+    resolve: {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        react: path.resolve(__dirname, './node_modules/react'),
+        'react-router-dom': path.resolve(
+          __dirname,
+          './node_modules/react-router-dom',
+        ),
+        'react-i18next': path.resolve(
+          __dirname,
+          './node_modules/react-i18next',
+        ),
+      },
+    },
     module: {
       ...config.module,
       rules: [

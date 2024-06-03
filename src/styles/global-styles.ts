@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { media } from './media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import {
   sansSerifFont,
   monospaceFont,
@@ -32,6 +32,20 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-gray4: ${gray4};
     --theme-color-orange0: ${orange0};
     --theme-color-black0: ${black0};
+    --theme-color-primary: #1e3de4;
+    --theme-color-primary-button-bg: #7789D3;
+    --theme-color-button-bg: rgba(0, 84, 254, 0.8);
+    --theme-color-outline: #7789D3;
+    --theme-color-shadow: rgba(30, 61, 228, 0.2);
+    --theme-color-search-button-bg: #7789D3;
+    --theme-color-search-button-hover-bg: #4665f0;
+    --theme-color-gas-price-line-bg: #f0f4f3;
+    --theme-color-foot-bg: #26244B;
+    --theme-color-foot-highlight: #7789D3;
+    --theme-color-link: #1e3de4;
+    --theme-color-link-hover: #0f23bd;
+    --theme-color-chart-title: #7789D3;
+    --theme-color-chart-link: #1e3de4;
   }
 
   html,
@@ -86,6 +100,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   // override @cfxjs/antd styles
+  .ant-tag > .sirius-next-tooltip + .anticon {
+    margin-left: 7px;
+  }
+  .ant-tag-rtl.ant-tag > .sirius-next-tooltip + .anticon {
+    margin-right: 7px;
+    margin-left: 0;
+  }
   .ant-select-item-option-grouped {
     padding-left: 12px;
     margin-left: 12px;

@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import { ContentWrapper } from '../utils';
 import lodash from 'lodash';
 import { fromDripToCfx } from 'utils';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
@@ -23,7 +23,7 @@ export const totalIncoming = {
     return (
       <ContentWrapper right>
         {!lodash.isNil(value) ? (
-          <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+          <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
             {`${fromDripToCfx(value)} CFX`}
           </Text>
         ) : (

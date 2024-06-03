@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Tooltip } from '@cfxjs/react-ui';
+import { Button } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { usePortal } from 'utils/hooks/usePortal';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ import imgSuccess from 'images/success.png';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from 'utils';
 import { TXN_ACTION } from 'utils/constants';
-import { AddressContainer } from '../AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
 import { trackEvent } from 'utils/ga';
@@ -16,7 +16,6 @@ import { ScanEvent } from 'utils/gaConstants';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 
 interface DappButtonProps {
-  hoverText?: string;
   btnClassName?: string;
   btnDisabled?: boolean;
   // btnText?: string;
@@ -33,7 +32,6 @@ interface DappButtonProps {
 type NativeAttrs = Omit<React.ButtonHTMLAttributes<any>, keyof ButtonProps>;
 export declare type Props = DappButtonProps & NativeAttrs;
 const DappButton = ({
-  hoverText,
   btnClassName,
   btnDisabled,
   contractAddress,
@@ -155,13 +153,7 @@ const DappButton = ({
   );
   return (
     <>
-      {hoverText ? (
-        <Tooltip text={hoverText} placement="top-start">
-          {btnComp}
-        </Tooltip>
-      ) : (
-        <>{btnComp}</>
-      )}
+      {btnComp}
       <TxnStatusModal
         show={modalShow}
         status={modalType}
@@ -200,7 +192,6 @@ const BtnContainer = styled.div`
   }
 `;
 DappButton.defaultProps = {
-  hoverText: '',
   btnClassName: '',
   btnDisabled: false,
   // btnText: '',

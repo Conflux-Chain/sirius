@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Grid } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import {
   formatNumber,
   formatBalance,
@@ -18,11 +18,11 @@ import {
   reqTransferPlot,
   reqTopStatistics,
 } from 'utils/httpRequest';
-import { Link } from 'react-router-dom';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import lodash from 'lodash';
 import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tx, AccountGrowth } from '../Charts/pow/Loadable';
 
 function Info(title, number: any) {
@@ -136,7 +136,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/pow-charts/tx'} className="info-link">
+              <Link href={'/pow-charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
               </Link>,
               `${
@@ -151,7 +151,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to={'/pow-charts/contracts'} className="info-link">
+              <Link href={'/pow-charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
               </Link>,
               `${
@@ -175,7 +175,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
         >
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/pow-charts/tps" className="info-link">
+              <Link href="/pow-charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               lodash.isNil(plotData.tps) ? '--' : plotData.tps,
@@ -206,7 +206,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/pow-charts/blocktime" className="info-link">
+              <Link href="/pow-charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
               </Link>,
               lodash.isNil(plotData.blockTime)
@@ -216,7 +216,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={4}>
             {Info(
-              <Link to="/pow-charts/hashrate" className="info-link">
+              <Link href="/pow-charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
               lodash.isNil(plotData.hashRate) ? '--' : plotData.hashRate,
@@ -260,7 +260,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
           </Grid>
           <Grid xs={24} sm={24} md={2}>
             {Info(
-              <Link to="/pos-charts/daily-accounts" className="info-link">
+              <Link href="/pos-charts/daily-accounts" className="info-link">
                 {t(translations.statistics.pos.totalAccountCount)}
               </Link>,
               POSSummaryInfo.posAccountCount,
@@ -270,7 +270,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
             <>
               <Grid xs={24} sm={24} md={3}>
                 {Info(
-                  <Link to="/pos-charts/daily-staking" className="info-link">
+                  <Link href="/pos-charts/daily-staking" className="info-link">
                     {t(translations.statistics.pos.totalLocked)}
                   </Link>,
                   formatBalance(POSSummaryInfo.totalPosStakingTokens),
@@ -281,7 +281,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   <InfoIconWithTooltip
                     info={t(translations.statistics.pos.apyTip)}
                   >
-                    <Link to="/pos-charts/daily-apy" className="info-link">
+                    <Link href="/pos-charts/daily-apy" className="info-link">
                       {t(translations.statistics.pos.apy)}
                     </Link>
                   </InfoIconWithTooltip>,
@@ -292,7 +292,7 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               </Grid>
               <Grid xs={24} sm={24} md={3}>
                 {Info(
-                  <Link to="/pos-charts/total-reward" className="info-link">
+                  <Link href="/pos-charts/total-reward" className="info-link">
                     {t(translations.statistics.pos.totalInterest)}
                   </Link>,
                   formatBalance(POSSummaryInfo.totalPosRewardDrip),

@@ -29,25 +29,25 @@ import { AddressMetadata, Table } from './Loadable';
 import { isZeroAddress } from '../../../utils';
 import { useAccount } from '../../../utils/api';
 import { Dropdown, Menu } from '@cfxjs/antd';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
-import { media } from '../../../styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
-import { getLabelInfo } from 'app/components/AddressContainer';
-import { useENS } from 'utils/hooks/useENS';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
+import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
 import Nametag from './Nametag';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 interface RouteParams {
   address: string;
 }
 
 export const AddressDetailPage = memo(() => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const { data: accountInfo } = useAccount(address, [
@@ -58,24 +58,21 @@ export const AddressDetailPage = memo(() => {
     'stakingBalance',
   ]);
   const [visible, setVisible] = useState(false);
-  const [ensMap] = useENS({
-    address: [address],
-  });
-
+  const { ens } = useENS(address);
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
-  const addressLabel = addressLabelMap[address];
+  const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
-    () => getLabelInfo(ensMap[address]?.name, 'ens'),
-    [address, ensMap],
+    () => getLabelInfo(ens[address]?.name, 'ens'),
+    [address, ens],
   );
 
   const menu = (
     <MenuWrapper>
       <Menu.Item>
-        <RouterLink to={`/balance-checker?address=${address}`}>
+        <Link href={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
       <Menu.Item>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -126,12 +123,12 @@ export const AddressDetailPage = memo(() => {
             {isZeroAddress(address)
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
-            <RouterLink to={`/cns-search?text=${label}`}>
+            <Link href={`/cns-search?text=${label}`}>
               <StyledLabelWrapper show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>
-            </RouterLink>{' '}
+            </Link>{' '}
             <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>
@@ -141,7 +138,10 @@ export const AddressDetailPage = memo(() => {
                 <>
                   {' '}
                   (
-                  <Text span hoverValue={t(translations.profile.tip.label)}>
+                  <Text
+                    tag="span"
+                    hoverValue={t(translations.profile.tip.label)}
+                  >
                     <Bookmark color="var(--theme-color-gray2)" size={16} />
                   </Text>
                   {addressLabel})

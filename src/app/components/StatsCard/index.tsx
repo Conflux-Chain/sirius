@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { translations } from '../../../locales/i18n';
-import SkelontonContainer from '../SkeletonContainer';
+import { translations } from 'locales/i18n';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
 import {
   formatNumber,
@@ -10,19 +10,20 @@ import {
   hideInDotNet,
   toThousands,
 } from '../../../utils';
-import { AddressContainer } from '../AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
-import { Text } from '../Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import BigNumber from 'bignumber.js';
 import { usePortal } from '../../../utils/hooks/usePortal';
-import { media } from '../../../styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { monospaceFont } from '../../../styles/variable';
-import { Link } from '../Link';
-import { Description } from '../Description/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
-import { IS_TESTNET, HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { HIDE_IN_DOT_NET } from '../../../utils/constants';
+import { IS_TESTNET } from 'env';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -696,7 +697,7 @@ export const StatsCard = ({
         ) : null}
         {category === 'transaction' ? total : null}
       </HeaderWrapper>
-      <SkelontonContainer
+      <SkeletonContainer
         shown={loading || (category === 'token' && loadingTokenInfo)}
       >
         <div
@@ -721,7 +722,7 @@ export const StatsCard = ({
                   }
                   key={c['title']}
                 >
-                  <SkelontonContainer
+                  <SkeletonContainer
                     shown={lodash.isNil(statsData[c['index']])}
                   >
                     {lodash.isNil(statsData[c['index']])
@@ -731,7 +732,7 @@ export const StatsCard = ({
                       : formatNumber(statsData[c['index']], {
                           withUnit: false,
                         })}
-                  </SkelontonContainer>
+                  </SkeletonContainer>
                 </Description>
               ))}
             </>
@@ -747,7 +748,7 @@ export const StatsCard = ({
             </table>
           )}
         </div>
-      </SkelontonContainer>
+      </SkeletonContainer>
     </CardWrapper>
   );
 };

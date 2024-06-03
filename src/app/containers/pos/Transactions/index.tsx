@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { colunms, transactionColunms } from 'utils/tableColumns/pos';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 export const List = () => {
   const [ageFormat, toggleAgeFormat] = useAge();

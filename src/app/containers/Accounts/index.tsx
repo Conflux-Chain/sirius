@@ -3,15 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';
 import styled from 'styled-components';
 import { Select } from 'app/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
-import { AddressContainer } from 'app/components/AddressContainer/Loadable';
-import { formatAddress } from 'utils';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { formatAddress, getENSInfo } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -80,6 +80,7 @@ export function Accounts() {
                 ? formatAddress(accounts[0]) === formatAddress(value)
                 : false
             }
+            ensInfo={getENSInfo(row)}
           />
         </AccountWrapper>
       ),

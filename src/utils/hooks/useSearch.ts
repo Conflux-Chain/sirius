@@ -5,16 +5,16 @@ import {
   isBlockHash,
   isHash,
   isEpochNumber,
-  tranferToLowerCase,
   formatAddress,
   getAddressInfo,
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
-import { CONTRACTS, DEFAULT_NETWORK_IDS } from '../constants';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { tranferToLowerCase } from '@cfxjs/sirius-next-common/dist/utils';
+import { CONTRACTS, CORE_SPACE_CHAIN_IDS } from '../constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 // Search bar hook
 export const useSearch = (value?: string) => {
@@ -49,10 +49,10 @@ export const useSearch = (value?: string) => {
       if (!isCurrentNetworkAddress(innerValue)) {
         if (
           // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
-          [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-            NETWORK_TYPE,
+          [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+            ENV_CONFIG.ENV_NETWORK_TYPE,
           ) &&
-          [DEFAULT_NETWORK_IDS.mainnet, DEFAULT_NETWORK_IDS.testnet].includes(
+          CORE_SPACE_CHAIN_IDS.slice(0, 2).includes(
             getAddressInfo(innerValue)?.netId as number,
           )
         ) {

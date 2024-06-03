@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Image } from '@cfxjs/react-ui';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Button } from 'app/components/Button/Loadable';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { StyledTitle160F1327 } from 'app/components/StyledComponent';
 import { usePortal } from 'utils/hooks/usePortal';
 import { ConnectButton } from 'app/components/ConnectWallet';
@@ -183,7 +183,8 @@ export const ActionField = ({
         <div>
           <ConnectButton>
             <Button
-              type={disabled ? undefined : 'primary'}
+              color={disabled ? undefined : 'primary'}
+              type="action"
               onClick={handleButtonClick}
               disabled={disabled}
             >

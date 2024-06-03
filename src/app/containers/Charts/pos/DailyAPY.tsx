@@ -2,23 +2,23 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 
 export function DailyAPY({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'daily-apy',
-    title: t(translations.highcharts.pos.apy.title),
-    subtitle: t(translations.highcharts.pos.apy.subtitle),
     request: {
       url: OPEN_API_URLS.PoSDailyAPY,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map((d, i) => {
@@ -31,8 +31,29 @@ export function DailyAPY({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pos.apy.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pos.apy.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pos.breadcrumb.charts),
+            path: '/pos-charts',
+          },
+          {
+            name: t(translations.highcharts.pos.breadcrumb['daily-apy']),
+            path: '/pos-charts/daily-apy',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pos.apy.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -55,9 +76,9 @@ export function DailyAPY({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

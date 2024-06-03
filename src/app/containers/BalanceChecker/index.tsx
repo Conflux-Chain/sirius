@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card } from '../../components/Card';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
 import { Button, Divider, Form, Input, Radio } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '../../components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { DatePicker } from '@cfxjs/react-ui';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 import {
   isCurrentNetworkAddress,
   isContractAddress,
@@ -269,7 +269,7 @@ const ButtonGroup = styled.div`
     margin-bottom: 24px;
   }
 
-  .reset {
+  button.reset {
     color: #424a71;
     background: rgba(30, 61, 228, 0.1);
     border-color: transparent;

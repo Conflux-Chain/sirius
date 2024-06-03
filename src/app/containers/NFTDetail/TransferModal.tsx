@@ -7,16 +7,12 @@ import { isBase32Address, isCurrentNetworkAddress } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
 import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
-import {
-  TXN_ACTION,
-  RPC_SERVER,
-  NETWORK_ID,
-  NETWORK_TYPE,
-} from 'utils/constants';
+import { TXN_ACTION, NETWORK_ID } from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import ENV_CONFIG from 'env';
 
 export const TransferModal = ({
   id = '',
@@ -43,7 +39,7 @@ export const TransferModal = ({
 
   const contract = useMemo(() => {
     const CFX = new SDK.Conflux({
-      url: RPC_SERVER,
+      url: ENV_CONFIG.ENV_RPC_SERVER,
       networkId: NETWORK_ID,
     });
 
@@ -97,7 +93,7 @@ export const TransferModal = ({
                 t(translations.nftDetail.error.invalidNetwork, {
                   network: t(
                     translations.general.networks[
-                      String(NETWORK_TYPE).toLowerCase()
+                      ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
                     ],
                   ),
                 }),

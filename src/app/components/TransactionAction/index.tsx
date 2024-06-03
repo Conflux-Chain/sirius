@@ -1,9 +1,9 @@
 import React, { CSSProperties, useEffect, useCallback } from 'react';
 import { formatAddress, formatBalance } from 'utils';
-import { Link } from 'app/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { decodeData, filterByTokenAddress, MultiAction } from './minibus';
 import styled from 'styled-components';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { reqContractAndToken, reqNametag } from 'utils/httpRequest';
 import { useNametagCacheStore } from 'utils/store';
 

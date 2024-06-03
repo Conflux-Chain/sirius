@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '../../components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { DappButton } from '../../components/DappButton/Loadable';
 import { TXN_ACTION } from 'utils/constants';
 import { ContractInfo } from './ContractInfo';
-import { Remark } from '../../components/Remark';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 
 export function ContractDeployment() {
   const { t } = useTranslation();

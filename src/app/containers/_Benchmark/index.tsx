@@ -1,7 +1,7 @@
 import Benchmark, { BenchmarkType } from 'react-component-benchmark';
 import React, { useState } from 'react';
 import { Button } from '@cfxjs/react-ui';
-import { AddressContainer } from '../../components/AddressContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 
 export default function ScanBenchmark() {
   const ref: any = React.useRef();

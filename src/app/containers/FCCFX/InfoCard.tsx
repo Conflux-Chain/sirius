@@ -1,10 +1,10 @@
 import React from 'react';
 import { Row, Col } from '@cfxjs/antd';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';
 import styled from 'styled-components';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export const InfoCard = ({ totalInfo, accountInfo }) => {
   const bp = useBreakpoint();

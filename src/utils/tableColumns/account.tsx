@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import { translations } from 'locales/i18n';
 import {
   toThousands,
   formatNumber,
@@ -8,7 +8,7 @@ import {
   getNametagInfo,
 } from '../../utils/';
 import { ContentWrapper } from './utils';
-import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 
 export const rank = {
   title: (

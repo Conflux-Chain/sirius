@@ -8,7 +8,7 @@ import { TabLabel } from 'app/components/TabsTablePanel/Label';
 import { reqTransactionDetail } from 'utils/httpRequest';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Detail } from './Detail';
 
 import { InternalTxns } from 'app/containers/Transactions/Loadable';

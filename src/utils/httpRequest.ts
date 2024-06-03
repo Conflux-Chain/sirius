@@ -1,6 +1,6 @@
 import qs from 'query-string';
 import fetch from './request';
-import { OPEN_API_URLS, RPC_SERVER } from './constants';
+import { OPEN_API_URLS } from './constants';
 import {
   ENS_REQUEST_EXPIRED_PERIOD,
   ENS_REQUEST_DELAYED_PERIOD,
@@ -9,6 +9,7 @@ import {
 import lodash from 'lodash';
 import { isAddress } from './index';
 import { fetchNFTMetadata } from '@cfx-kit/dapp-utils/dist/metadata';
+import ENV_CONFIG from 'env';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -284,7 +285,7 @@ export const reqNFTDetail = ({
     formatServerError,
     nftAddress: address,
     tokenId,
-    rpcServer: RPC_SERVER,
+    rpcServer: ENV_CONFIG.ENV_RPC_SERVER,
     method: 'cfx_call',
     contractType,
     formatContractMetadata: metadata => ({ detail: { metadata } }),

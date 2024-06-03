@@ -1,23 +1,116 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import fetch from './request';
-import { Buffer } from 'buffer';
-import { NetworksType } from './hooks/useGlobal';
+import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 import {
-  IS_PRE_RELEASE,
   NETWORK_ID,
-  NETWORK_TYPE,
-  NETWORK_TYPES,
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
-  RPC_SERVER,
+  CORE_SPACE_CHAIN_IDS,
+  ESPACE_CHAIN_IDS,
+  BSPACE_CHAIN_IDS,
 } from 'utils/constants';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import pubsub from './pubsub';
 import lodash from 'lodash';
-import { ENSInfoItemType } from 'utils/hooks/useENS';
 import { Nametag } from 'utils/hooks/useNametag';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import IconCore from 'images/core-space/icon.svg';
+import IconEvm from 'images/espace/icon.svg';
+import IconBtc from 'images/bspace/icon.svg';
+
+import {
+  getEllipsStr,
+  toThousands,
+  formatNumber,
+  getPercent,
+  roundToFixedPrecision,
+  formatTimeStamp,
+  fromGdripToDrip,
+  fromCfxToDrip,
+  formatBalance,
+  isHash,
+  isBlockHash,
+  isTxHash,
+  validURL,
+  byteToKb,
+  isObject,
+  checkInt,
+  checkUint,
+  isHex,
+  checkBytes,
+  checkCfxType,
+  sleep,
+  getTimeByBlockInterval,
+  isSafeNumberOrNumericStringInput,
+  isZeroOrPositiveInteger,
+  parseString,
+  getInitialDate,
+  addIPFSGateway,
+  convertBigNumbersToStrings,
+  convertObjBigNumbersToStrings,
+  constprocessResultArray,
+  formatLargeNumber,
+} from '@cfxjs/sirius-next-common/dist/utils';
+
+import {
+  isPosAddress,
+  isCfxHexAddress,
+  isBase32Address,
+  getAddressInfo,
+  isSimplyBase32Address,
+  isAddress,
+  isZeroAddress,
+  isContractAddress,
+  isInnerContractAddress,
+  isSpecialAddress,
+  formatAddress as formatAddressCore,
+} from '@cfxjs/sirius-next-common/dist/utils/address';
+
+export {
+  formatNumber,
+  toThousands,
+  getPercent,
+  roundToFixedPrecision,
+  formatTimeStamp,
+  fromGdripToDrip,
+  fromCfxToDrip,
+  formatBalance,
+  isHash,
+  isBlockHash,
+  isTxHash,
+  validURL,
+  byteToKb,
+  isObject,
+  checkInt,
+  checkUint,
+  isHex,
+  checkBytes,
+  checkCfxType,
+  sleep,
+  getTimeByBlockInterval,
+  isSafeNumberOrNumericStringInput,
+  isZeroOrPositiveInteger,
+  parseString,
+  getInitialDate,
+  addIPFSGateway,
+  convertBigNumbersToStrings,
+  convertObjBigNumbersToStrings,
+  constprocessResultArray,
+  formatLargeNumber,
+};
+
+export {
+  isPosAddress,
+  isCfxHexAddress,
+  isBase32Address,
+  getAddressInfo,
+  isSimplyBase32Address,
+  isAddress,
+  isZeroAddress,
+  isContractAddress,
+  isInnerContractAddress,
+  isSpecialAddress,
+};
 
 dayjs.extend(relativeTime);
 
@@ -28,390 +121,50 @@ dayjs.extend(relativeTime);
  *    "formatAddress(cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t, base32)": "cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t"
  * }
  */
-const ADDRESS_FUNC_CACHE = {};
+// export const formatAddress = (
+//   address: string,
+//   outputType = 'base32', // base32 or hex
+// ): string => {
+//   const CACHE_KEY = `formatAddress(${address}, ${outputType})`;
+//   if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
 
-export const isPosAddress = (address: string): boolean => {
-  try {
-    return address.startsWith('0x') && address.length === 66;
-  } catch (e) {
-    return false;
-  }
+//   let result = address;
+
+//   try {
+//     if (isCfxHexAddress(address)) {
+//       if (outputType === 'base32') {
+//         result = SDK.format.address(address, NETWORK_ID);
+//       }
+//     } else if (isBase32Address(address)) {
+//       if (outputType === 'hex') {
+//         result = SDK.format.hexAddress(address);
+//       } else if (outputType === 'base32') {
+//         const reg = /(.*):(.*):(.*)/;
+//         // compatibility with verbose address, will replace with simply address later
+//         if (typeof address === 'string' && reg.test(address)) {
+//           result = address.replace(reg, '$1:$3').toLowerCase();
+//         }
+//       }
+//     }
+//   } catch (e) {}
+
+//   ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
+
+//   return result;
+// };
+
+export const formatAddress = (address: string, outputType = 'base32') => {
+  return formatAddressCore(address, outputType);
 };
 
-export const isCfxHexAddress = (address: string): boolean => {
-  const CACHE_KEY = `isCfxHexAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
-  try {
-    result = SDK.address.isValidCfxHexAddress(address);
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-};
-
-export const isBase32Address = (address: string): boolean => {
-  const CACHE_KEY = `isBase32Address(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
-  try {
-    result = SDK.address.isValidCfxAddress(address);
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-};
-
-export const formatAddress = (
-  address: string,
-  outputType = 'base32', // base32 or hex
-): string => {
-  const CACHE_KEY = `formatAddress(${address}, ${outputType})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = address;
-
-  try {
-    if (isCfxHexAddress(address)) {
-      if (outputType === 'base32') {
-        result = SDK.format.address(address, NETWORK_ID);
-      }
-    } else if (isBase32Address(address)) {
-      if (outputType === 'hex') {
-        result = SDK.format.hexAddress(address);
-      } else if (outputType === 'base32') {
-        const reg = /(.*):(.*):(.*)/;
-        // compatibility with verbose address, will replace with simply address later
-        if (typeof address === 'string' && reg.test(address)) {
-          result = address.replace(reg, '$1:$3').toLowerCase();
-        }
-      }
-    }
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-};
-
-export const getAddressInfo = (
-  address: string,
-): {
-  netId: number;
-  type: string;
-  hexAddress: ArrayBuffer | string;
-} | null => {
-  const CACHE_KEY = `getAddressInfo(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = null;
-
-  try {
-    if (isCfxHexAddress(address)) {
-      const base32Address = formatAddress(address, 'base32');
-      result = SDK.address.decodeCfxAddress(base32Address);
-    } else if (isBase32Address(address)) {
-      result = SDK.address.decodeCfxAddress(address);
-    }
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-};
-
-export const isSimplyBase32Address = (address: string): boolean => {
-  const CACHE_KEY = `isSimplyBase32Address(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
-  try {
-    result =
-      SDK.address.isValidCfxAddress(address) &&
-      SDK.address.simplifyCfxAddress(address) === address;
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-};
-
-// support hex and base32
-export const isAddress = (address: string): boolean => {
-  try {
-    if (address.startsWith('0x')) {
-      return isCfxHexAddress(address);
-    } else {
-      return isBase32Address(address);
-    }
-  } catch (e) {
-    return false;
-  }
-};
-
-export function isZeroAddress(address: string): boolean {
-  const CACHE_KEY = `isZeroAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
-  try {
-    // @todo, wait for sdk upgrade to accept both base32 and hex address
-    result = SDK.address.isZeroAddress(formatAddress(address, 'hex'));
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-}
-
+// Todo: Distinguish between core and evm
 export function isAccountAddress(address: string): boolean {
   return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
-}
-
-export function isContractAddress(address: string): boolean {
-  return getAddressInfo(address)?.type === 'contract';
-}
-
-export function isInnerContractAddress(address: string): boolean {
-  const CACHE_KEY = `isInnerContractAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result = false;
-
-  try {
-    result = SDK.address.isInternalContractAddress(
-      formatAddress(address, 'hex'),
-    );
-  } catch (e) {}
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
-}
-
-// address start with 0x0, not valid internal contract, but fullnode support
-export function isSpecialAddress(address: string): boolean {
-  const CACHE_KEY = `isSpecialAddress(${address})`;
-  if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-  let result =
-    getAddressInfo(address)?.type === 'builtin' &&
-    !isInnerContractAddress(address);
-
-  ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-  return result;
 }
 
 export function isCurrentNetworkAddress(address: string): boolean {
   return getAddressInfo(address)?.netId === NETWORK_ID;
 }
-
-/**
- * format util fn
- */
-
-export const tranferToLowerCase = (str: string) => {
-  return str ? str.toLowerCase() : '';
-};
-
-function hex2asc(pStr) {
-  let tempstr = '';
-  for (let b = 0; b < pStr.length; b += 2) {
-    tempstr += String.fromCharCode(parseInt(pStr.substr(b, 2), 16));
-  }
-  return tempstr;
-}
-
-export const hex2utf8 = pStr => {
-  let tempstr = '';
-  try {
-    tempstr = decodeURIComponent(
-      pStr.replace(/\s+/g, '').replace(/[0-9a-f]{2}/g, '%$&'),
-    );
-  } catch (err) {
-    tempstr = hex2asc(pStr);
-  }
-  return tempstr;
-};
-
-export const toThousands = (num, delimiter = ',', prevDelimiter = ',') => {
-  if ((typeof num !== 'number' || isNaN(num)) && typeof num !== 'string')
-    return '';
-  let str = num + '';
-  return str
-    .replace(new RegExp(prevDelimiter, 'igm'), '')
-    .split('.')
-    .reduce((acc, cur, index) => {
-      if (index) {
-        return `${acc}.${cur}`;
-      } else {
-        return cur.replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, `$1${delimiter}`);
-      }
-    }, '');
-};
-
-export const getEllipsStr = (str: string, frontNum: number, endNum: number) => {
-  if (str) {
-    const length = str.length;
-    if (endNum === 0 && length <= frontNum) {
-      return str.substring(0, frontNum);
-    }
-    return (
-      str.substring(0, frontNum) +
-      '...' +
-      str.substring(length - endNum, length)
-    );
-  }
-  return '';
-};
-
-// alternative of String.prototype.replaceAll
-export const replaceAll = (str: string, find: string, replace) => {
-  return str.replace(
-    new RegExp(find.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'), 'g'),
-    replace,
-  );
-};
-
-/**
- * 格式化字符串，向下取整
- * @param {number|string} num 数字或字符串，应尽量使用字符串格式，数字格式如果长度超过 Number.MAX_SAFE_INTEGER 或 Number.MIN_SAFE_INTEGER 可能会有精度损失
- * @param {object} opt 配置参数
- * @returns {string} 格式化后字符串格式数字
- * @todo: 支持四舍五入，向上取整
- * @todo: 支持整数位小数设置精度
- * @todo: 支持负数格式化
- */
-export const formatNumber = (num, opt?) => {
-  // 无法通过 bignumber.js 格式化的不处理
-  let bNum = new BigNumber(num).toFixed();
-  if (bNum === 'NaN') {
-    return '';
-  }
-  const option = {
-    precision: 3, // 保留小数精度数（注意整数位小数的精度固定为 3，原因是受千分符影响）
-    keepDecimal: true, // 是否保留小数位（注意如果整数部分带有小数位，则不保留实际小数位，原因是会显示两个小数点，会误解）
-    keepZero: false, // 是否保留小数位的 0（注意此配置优先级高于 precision，会清除 precision 添加的 0）
-    delimiter: ',', // 自定义分隔符
-    withUnit: true, // 是否显示单位
-    unit: '', // 指定单位
-    ...opt,
-  };
-  // 0. 定义返回值
-  let int = '';
-  let decimal = '';
-  let result = '';
-  /**
-   * 1. 定义单位
-   * K - kilo, 10³
-   * M - mega, 10⁶
-   * G - giga, 10⁹
-   * T - tera, 10¹²
-   * P - peta, 10¹⁵
-   * E - exa, 10¹⁸
-   * Z - zetta, 10²¹
-   * Y - yotta, 10²⁴
-   */
-  const UNITS = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-  // 2. 拆分出整数和小数，小数默认值为 0
-  const [intStr, decimalStr = '0'] = bNum.split('.');
-  // 3. 只能处理 27 位数的单位，大于 27 位的字符串从头部截断保留
-  // 3.1 获取大于小数点前 27 位的数字 intStrFront
-  let intStrFront = intStr.slice(-Infinity, -27);
-  // 3.2 获取小数点前 27 位数字 intStrEnd
-  let intStrEnd = intStr.slice(-27);
-  // 4. intStrEnd 转千分符形式
-  const intStrEndAfterToThousands = toThousands(intStrEnd, option.delimiter);
-  // 5. intStrEnd 添加单位，此处不对数字有效性做验证，即可能值为 100.000，100.000k 或 000.000Y
-  let intStrEndWithUnit = '';
-
-  if (option.withUnit === false) {
-    intStrEndWithUnit = intStrEndAfterToThousands;
-  } else {
-    let unitIndex = 1;
-    if (option.unit !== '' && UNITS.includes(option.unit)) {
-      unitIndex =
-        intStrEndAfterToThousands.split(option.delimiter).length -
-        UNITS.findIndex(u => u === option.unit);
-    }
-    if (unitIndex > 0) {
-      intStrEndWithUnit = intStrEndAfterToThousands
-        .split(option.delimiter)
-        .reduce((prev, curr, index, arr) => {
-          const len = arr.length;
-          // 无单位整数，为了后面方便处理统一格式
-          if (len === 1) {
-            return `${curr}.000`;
-          }
-          if (index === 0) {
-            return curr;
-          } else if (index === unitIndex) {
-            return `${prev}.${curr}${UNITS[len - index]}`;
-          } else if (index < unitIndex) {
-            return `${prev},${curr}`;
-          } else {
-            return prev;
-          }
-        }, '');
-    } else {
-      intStrEndWithUnit = intStrEndAfterToThousands;
-    }
-  }
-  // 6. 格式化整数
-  if (intStrFront) {
-    // 如果数字长度超过 27 位，则前面的数字用千分符分割
-    int = `${toThousands(intStrFront, option.delimiter)}${
-      option.delimiter
-    }${intStrEndWithUnit}`;
-  } else {
-    int = intStrEndWithUnit;
-  }
-  // 7. 格式化小数
-  decimal = new BigNumber(`0.${decimalStr}`).toPrecision(option.precision, 1);
-  // 8. 拼接整数，小数和单位
-  let unit = int.slice(-1);
-  let intWithoutUnit = int;
-  if (int && UNITS.includes(unit)) {
-    // 8.1 整数位包含单位，则不显示实际小数部分
-    if (option.keepDecimal) {
-      // 保留整数位整数 + 整数位小数
-      intWithoutUnit = int.slice(-Infinity, -1);
-    } else {
-      // 仅保留整数位整数
-      intWithoutUnit = intWithoutUnit.split('.')[0];
-    }
-    result = `${intWithoutUnit}${unit}`;
-  } else {
-    unit = '';
-    // 8.2 整数位为 0 或无单位整数，拼接小数位
-    if (option.keepDecimal) {
-      result = new BigNumber(int.toString().replace(/,/g, ''))
-        .plus(new BigNumber(decimal))
-        .toFixed(option.precision, 1);
-    } else {
-      result = int.split('.')[0];
-    }
-    intWithoutUnit = result;
-  }
-  // 9. 处理小数部分的 0
-  if (!option.keepZero) {
-    result = `${new BigNumber(
-      replaceAll(intWithoutUnit, option.delimiter, ''),
-    ).toFormat()}${unit}`;
-  }
-  // 10. 格式化千分符
-  result = toThousands(result);
-  return result;
-};
 
 /**
  * 格式化字符串
@@ -550,378 +303,12 @@ export const fromDripToGdrip = (
   return `${result}`;
 };
 
-export const fromGdripToDrip = (num: number | string) =>
-  new BigNumber(num).multipliedBy(10 ** 9);
-
-export const fromCfxToDrip = (num: number | string) =>
-  new BigNumber(num).multipliedBy(10 ** 18);
-
-export const getPercent = (
-  divisor: number | string,
-  dividend: number | string,
-  precision?: number,
-) => {
-  if (Number(dividend) === 0) return 0 + '%';
-  const bnDivisor = new BigNumber(divisor);
-  const bnDividend = new BigNumber(dividend);
-  const percentageNum = formatNumber(
-    bnDivisor.dividedBy(bnDividend).multipliedBy(100).toNumber(),
-  );
-  if (precision || precision === 0) {
-    const percentageNumPrecision = roundToFixedPrecision(
-      percentageNum,
-      precision,
-    );
-    if (percentageNumPrecision === '100.00') {
-      return '100%';
-    } else if (percentageNumPrecision === '0.00') {
-      return '0%';
-    }
-    return roundToFixedPrecision(percentageNum, precision) + '%';
-  }
-
-  return `${percentageNum}%`;
-};
-
-export const roundToFixedPrecision = (
-  number: number | string,
-  precision: number,
-  method: string = 'ROUND',
-) => {
-  if (typeof number === 'string' && number.includes('<')) {
-    return number;
-  }
-
-  const regex = /^([+-]?[0-9]*\.?[0-9]+)(\D*)$/;
-  let matches = String(number).match(regex);
-  if (!matches) {
-    matches = [String(number), ''];
-  }
-  const suffix = matches[2];
-
-  const numberFormat = parseFloat(matches[1]);
-  const factor = Math.pow(10, precision);
-  let resultNum: number;
-
-  switch (method) {
-    case 'FLOOR':
-      resultNum = Math.floor(numberFormat * factor) / factor;
-      break;
-    case 'CEIL':
-      resultNum = Math.ceil(numberFormat * factor) / factor;
-      break;
-    case 'ROUND':
-    default:
-      resultNum = Math.round((numberFormat + Number.EPSILON) * factor) / factor;
-  }
-  return resultNum.toFixed(precision) + suffix;
-};
-
-export const formatTimeStamp = (
-  time: number,
-  type?: 'standard' | 'timezone',
-) => {
-  let result: string;
-  try {
-    switch (type) {
-      case 'standard':
-        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss');
-        break;
-      case 'timezone':
-        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss Z');
-        break;
-      default:
-        result = dayjs(time).format('YYYY-MM-DD HH:mm:ss');
-    }
-  } catch (error) {
-    result = '';
-  }
-  return result;
-};
-
-export const formatBalance = (
-  balance,
-  decimals = 18,
-  isShowFull = false,
-  opt = {},
-  ltValue?,
-) => {
-  try {
-    const num = new BigNumber(balance).div(new BigNumber(10).pow(decimals));
-    if (num.eq(0)) {
-      return num.toFixed();
-    }
-    if (isShowFull) {
-      return toThousands(num.toFixed());
-    }
-    if (ltValue && num.lt(ltValue)) {
-      return `<${ltValue}`;
-    }
-    return formatNumber(num.toString(), opt);
-  } catch {
-    return '';
-  }
-};
-
-interface BodyElement extends HTMLBodyElement {
-  createTextRange?(): Range;
-}
-
-export const selectText = (element: HTMLElement) => {
-  var range,
-    selection,
-    body = document.body as BodyElement;
-  if (body.createTextRange) {
-    range = body.createTextRange();
-    range.moveToElementText(element);
-    range.select();
-  } else if (window.getSelection) {
-    selection = window.getSelection();
-    range = document.createRange();
-    range.selectNodeContents(element);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
-};
-
-export const isHash = (str: string) => {
-  return /^0x[0-9a-fA-F]{64}$/.test(str);
-};
-
-export const isBlockHash = async (str: string) => {
-  if (!isHash(str)) return false;
-  let isBlock = true;
-  try {
-    const block = await fetch(`/v1/block/${str}`);
-    // server side will return {} when no block found
-    if (!block.hash || block.code !== undefined) isBlock = false;
-  } catch (err) {
-    isBlock = false;
-  }
-
-  return isBlock;
-};
-
-export const isTxHash = async (str: string) => {
-  if (!isHash(str)) return false;
-  return !isBlockHash(str);
-};
-
 // Is input match epoch number format
 // 0x??? need to convert to decimal int
 export function isEpochNumber(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
 }
-
-export function validURL(str: string) {
-  var pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
-    'i',
-  ); // fragment locator
-  return !!pattern.test(str);
-}
-
-export function byteToKb(bytes) {
-  return bytes / 1024;
-}
-
-export function isObject(o) {
-  return o !== null && typeof o === 'object' && Array.isArray(o) === false;
-}
-
-export function checkInt(value, type) {
-  const num = Number(type.substr(3));
-  const min = new BigNumber(2).pow(num - 1).multipliedBy(-1);
-  const max = new BigNumber(2).pow(num - 1).minus(1);
-  let isType = false;
-  if (!isNaN(value)) {
-    const valNum = new BigNumber(value);
-    if (
-      valNum.isInteger() &&
-      valNum.isGreaterThanOrEqualTo(min) &&
-      valNum.isLessThanOrEqualTo(max)
-    ) {
-      isType = true;
-    } else {
-      isType = false;
-    }
-  } else {
-    isType = false;
-  }
-  return [isType, num, min.toString(), max.toString()];
-}
-
-export function checkUint(value, type) {
-  const num = Number(type.substr(4));
-  const min = new BigNumber(0);
-  const max = new BigNumber(Math.pow(2, num)).minus(1);
-  let isType = false;
-  if (!isNaN(value)) {
-    const valNum = new BigNumber(value);
-    if (
-      valNum.isInteger() &&
-      valNum.isGreaterThanOrEqualTo(min) &&
-      valNum.isLessThanOrEqualTo(max)
-    ) {
-      isType = true;
-    } else {
-      isType = false;
-    }
-  } else {
-    isType = false;
-  }
-  return [isType, num, min.toFixed(), max.toFixed()];
-}
-
-export function isHex(num, withPrefix = true) {
-  const reg = withPrefix ? /^0x[0-9a-f]*$/i : /^(0x)?[0-9a-f]*$/i;
-  return Boolean(num.match(reg));
-}
-
-export function isEvenLength(str) {
-  const length = str.length;
-  return length > 0 && length % 2 === 0;
-}
-
-export function checkBytes(value, type) {
-  if (type === 'byte') {
-    type = 'bytes1';
-  }
-  const num = Number(type.substr(5));
-  let isBytes = false;
-  if (!value) return [isBytes, num];
-  if (isHex(value) && isEvenLength(value)) {
-    if (num > 0) {
-      const str = value.substr(2);
-      const buffer = Buffer.from(str, 'hex');
-      if (buffer.length === num) {
-        isBytes = true;
-      } else {
-        isBytes = false;
-      }
-    } else {
-      isBytes = true;
-    }
-  } else {
-    isBytes = false;
-  }
-  return [isBytes, num];
-}
-
-export function checkCfxType(value) {
-  if (isNaN(value)) {
-    return false;
-  }
-  const valNum = new BigNumber(value);
-  if (valNum.isNegative()) {
-    return false;
-  }
-  let index = value.indexOf('.');
-  if (index !== -1) {
-    if (value.substr(index + 1).length > 18) {
-      return false;
-    } else {
-      return true;
-    }
-  } else {
-    return true;
-  }
-}
-
-export const sleep = timeout =>
-  new Promise(resolve => setTimeout(resolve, timeout));
-
-// get two block interval time
-export const getTimeByBlockInterval = (minuend = 0, subtrahend = 0) => {
-  const seconds = new BigNumber(minuend)
-    .minus(subtrahend)
-    .dividedBy(2)
-    .toNumber();
-  const dayBase = 86400;
-  const hourBase = 3600;
-  const days = Math.floor(seconds / dayBase);
-  const deltaSecond = seconds - days * 86400;
-  const hours = Math.floor(deltaSecond / hourBase);
-  return { days, hours, seconds };
-};
-
-export const addDays = (date, days) => {
-  var result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-};
-
-/**
- *
- * @param {number|string} data
- * @returns {boolean}
- * @example
- * 0    -> true
- * .    -> true
- * 0.   -> true
- * .0   -> true
- * 0.0  -> true
- * 0..0 -> false
- * x    -> false
- * e    -> false
- * @todo support config, such as negative and exponential notation
- */
-
-/**
- *
- * @param {number|string} data
- * @returns {boolean}
- * @example
- * 0    -> true
- * .    -> false
- * 11   -> true
- * 011  -> false
- * -1   -> false
- */
-export const isSafeNumberOrNumericStringInput = data =>
-  /^\d+\.?\d*$|^\.\d*$/.test(data);
-
-export const isZeroOrPositiveInteger = data => /^(0|[1-9]\d*)$/.test(data);
-
-export const parseString = v => {
-  if (typeof v === 'string' && !v.startsWith('0x')) {
-    return Buffer.from(v);
-  }
-  return v;
-};
-
-// process datepicker initial value
-export const getInitialDate = (minTimestamp, maxTimestamp) => {
-  const startDate = dayjs('2020-10-29T00:00:00+08:00');
-  const endDate = dayjs();
-  const innerMinTimestamp = minTimestamp
-    ? dayjs(new Date(parseInt((minTimestamp + '000') as string)))
-    : startDate;
-  const innerMaxTimestamp = maxTimestamp
-    ? dayjs(new Date(parseInt((maxTimestamp + '000') as string)))
-    : endDate;
-  const disabledDateD1 = date =>
-    date &&
-    (date > innerMaxTimestamp.endOf('day') ||
-      date < startDate.subtract(1, 'day').endOf('day'));
-  const disabledDateD2 = date =>
-    date &&
-    (date < innerMinTimestamp.subtract(1, 'day').endOf('day') ||
-      date > endDate.endOf('day'));
-
-  return {
-    minT: innerMinTimestamp,
-    maxT: innerMaxTimestamp,
-    dMinT: disabledDateD1,
-    dMaxT: disabledDateD2,
-  };
-};
 
 export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   let matchs = networks.filter(n => n.id === id);
@@ -936,45 +323,34 @@ export const getNetwork = (networks: Array<NetworksType>, id: number) => {
   return network;
 };
 
-const urls = {
-  stage: {
-    1: '//testnet-stage.confluxscan.net',
-    1029: '//www-stage.confluxscan.net',
-    71: '//evmtestnet-stage.confluxscan.net',
-    1030: '//evm-stage.confluxscan.net',
-    8888: '//net8888cfx.confluxscan.net',
-  },
-  online: {
-    1: '//testnet.confluxscan',
-    1029: '//confluxscan',
-    71: '//evmtestnet.confluxscan',
-    1030: '//evm.confluxscan',
-    8888: '//net8888cfx.confluxscan',
-  },
+export const gotoNetwork = (url: string): void => {
+  url && window.location.assign(url);
 };
 
-export const getUrl = (_networkId?: string | number): string => {
-  const networkId =
-    _networkId || (NETWORK_TYPE === NETWORK_TYPES.mainnet ? '1029' : '1');
-  let url = urls.stage[networkId];
-
-  if (!IS_PRE_RELEASE) {
-    url = `${urls.online[networkId]}${
-      window.location.hostname.includes('.io') ? '.io' : '.net'
-    }`;
+export const getNetworkIcon = (
+  id = NaN,
+  props?: {
+    isCore?: boolean;
+    isEvm?: boolean;
+    isBtc?: boolean;
+  },
+) => {
+  const isCore = CORE_SPACE_CHAIN_IDS.includes(id) || props?.isCore;
+  const isEvm = ESPACE_CHAIN_IDS.includes(id) || props?.isEvm;
+  const isBtc = BSPACE_CHAIN_IDS.includes(id) || props?.isBtc;
+  if (isCore) {
+    return IconCore;
+  } else if (isEvm) {
+    return IconEvm;
+  } else if (isBtc) {
+    return IconBtc;
   }
-  return url;
-};
-
-export const gotoNetwork = (networkId: string | number): void => {
-  const url = getUrl(networkId);
-  window.location.assign(url);
 };
 
 export const getAddressInputPlaceholder = () => {
-  if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+  if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET) {
     return 'cfx:...';
-  } else if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+  } else if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET) {
     return 'cfxtest:...';
   } else {
     return '';
@@ -1009,7 +385,6 @@ export const publishRequestError = (
   type: 'rpc' | 'http' | 'wallet' | 'code',
 ) => {
   let detail = '';
-
   if (e.code && e.message) {
     if (type === 'code') {
       detail = e.message;
@@ -1022,7 +397,7 @@ export const publishRequestError = (
         } \n`;
       }
       if (type === 'rpc') {
-        detail += `RPC Url: ${RPC_SERVER} \n`;
+        detail += `RPC Url: ${ENV_CONFIG.ENV_RPC_SERVER} \n`;
         if (!lodash.isNil(e.method)) {
           detail += `Method: ${e.method} \n`;
         }
@@ -1044,21 +419,6 @@ export const publishRequestError = (
   });
 };
 
-export const addIPFSGateway = (
-  imgURL: string,
-  IPFSGatewayURL: string,
-): string => {
-  if (
-    typeof imgURL === 'string' &&
-    typeof IPFSGatewayURL === 'string' &&
-    imgURL.startsWith('ipfs://')
-  ) {
-    imgURL = `${IPFSGatewayURL}/${imgURL.replace('ipfs://', 'ipfs/')}`;
-  }
-
-  return imgURL;
-};
-
 export const getChartsSubTitle = (title: string): string => {
   const suffix = window.location.host.substr(-4);
   if (suffix === '.net') {
@@ -1067,7 +427,11 @@ export const getChartsSubTitle = (title: string): string => {
     return title;
   }
 };
-
+export interface ENSInfoItemType {
+  address: string;
+  name: string;
+  expired?: number;
+}
 interface ENSInfoType {
   [k: string]: ENSInfoItemType;
 }
@@ -1243,114 +607,4 @@ export const processSponsorStorage = (p = '0', c = '0') => {
     fCollateral: collateral,
     total,
   };
-};
-
-export const isLikeBigNumber = obj => {
-  if (obj === null || typeof obj !== 'object') {
-    return false;
-  }
-  return 's' in obj && 'e' in obj && 'c' in obj && Array.isArray(obj.c);
-};
-
-type NestedArray = (string | number | BigNumber | NestedArray)[];
-type NestedObject = {
-  [key: string]: BigNumber | string | NestedObject | NestedObject[];
-};
-export const convertBigNumbersToStrings = (input: NestedArray) => {
-  return input.map(item => {
-    if (item instanceof Uint8Array) {
-      return item;
-    }
-    if (Array.isArray(item)) {
-      return convertBigNumbersToStrings(item);
-    } else if (
-      item !== null &&
-      typeof item === 'object' &&
-      !isLikeBigNumber(item)
-    ) {
-      return convertObjBigNumbersToStrings(item);
-    } else if (isLikeBigNumber(item)) {
-      return item.toString(10);
-    } else {
-      return item;
-    }
-  });
-};
-export const convertObjBigNumbersToStrings = input => {
-  const newObj: NestedObject = {};
-  if (Array.isArray(input)) {
-    return convertBigNumbersToStrings(input);
-  }
-  for (let key in input) {
-    if (isLikeBigNumber(input[key])) {
-      newObj[key] = input[key].toString(10);
-    } else if (Array.isArray(input[key])) {
-      newObj[key] = convertBigNumbersToStrings(input[key]);
-    } else if (typeof input[key] === 'object') {
-      newObj[key] = convertObjBigNumbersToStrings(input[key] as NestedObject);
-    } else {
-      newObj[key] = input[key];
-    }
-  }
-  return newObj;
-};
-export const constprocessResultArray = resultArray => {
-  if (typeof resultArray === 'string') {
-    return resultArray;
-  }
-  const processElement = element => {
-    if (Array.isArray(element)) {
-      return element.map(processElement);
-    } else if (element.type && element.type === 'Buffer') {
-      let result = element.data
-        .map(byte => ('00' + byte.toString(16)).slice(-2))
-        .join('');
-      if (!result.startsWith('0x')) {
-        result = '0x' + result;
-      }
-      return result;
-    } else {
-      return element;
-    }
-  };
-
-  const inputArray = Array.isArray(resultArray) ? resultArray : [resultArray];
-  return inputArray.map(processElement);
-};
-
-export const formatLargeNumber = (number: string | number) => {
-  const num = new BigNumber(number);
-
-  if (num.isNaN()) {
-    return { value: null, unit: '' };
-  }
-
-  const T = new BigNumber(10).pow(12);
-  const P = new BigNumber(10).pow(15);
-  const E = new BigNumber(10).pow(18);
-
-  if (num.isGreaterThanOrEqualTo(E)) {
-    const result = num.dividedBy(E);
-    return {
-      value: result.isNaN() ? null : result.toString(),
-      unit: 'E',
-    };
-  } else if (num.isGreaterThanOrEqualTo(P)) {
-    const result = num.dividedBy(P);
-    return {
-      value: result.isNaN() ? null : result.toString(),
-      unit: 'P',
-    };
-  } else if (num.isGreaterThanOrEqualTo(T)) {
-    const result = num.dividedBy(T);
-    return {
-      value: result.isNaN() ? null : result.toString(),
-      unit: 'T',
-    };
-  } else {
-    return {
-      value: num.toString(),
-      unit: '',
-    };
-  }
 };

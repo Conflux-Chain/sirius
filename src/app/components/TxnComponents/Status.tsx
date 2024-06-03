@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Popover } from '@cfxjs/react-ui';
 import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import _ from 'lodash';
 import { PendingReason } from 'utils/tableColumns/PendingReason';
 

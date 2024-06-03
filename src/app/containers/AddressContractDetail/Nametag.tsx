@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { useNametag } from 'utils/hooks/useNametag';
-import { Tooltip } from '@cfxjs/antd';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import externallinkIcon from 'images/nametag/externallink.svg';
 import verifiedIcon from 'images/nametag/verified.svg';
 import warningIcon from 'images/nametag/warning.svg';
-import { getLabelInfo } from 'app/components/AddressContainer';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link as ComponentLink } from 'app/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { StyledLabelWrapper } from './layouts';
 
 const Nametag = ({ address }) => {
@@ -34,7 +34,7 @@ const Nametag = ({ address }) => {
 
   if (nametag?.website) {
     tag = (
-      <ComponentLink
+      <Link
         href={
           nametag?.website.startsWith('http')
             ? nametag?.website
@@ -50,7 +50,7 @@ const Nametag = ({ address }) => {
             alt="external-link-icon"
           ></img>
         </StyledLabelWrapper>
-      </ComponentLink>
+      </Link>
     );
   }
 

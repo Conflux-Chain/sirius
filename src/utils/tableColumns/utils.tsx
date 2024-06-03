@@ -5,9 +5,9 @@ import dayjs from 'dayjs';
 import { monospaceFont } from 'styles/variable';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CountDown } from 'app/components/CountDown/Loadable';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { Text } from 'app/components/Text/Loadable';
+import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import queryString from 'query-string';
 
 export interface ContentWrapperProps {
@@ -93,7 +93,7 @@ export const ColumnAge = ({
           }}
         >
           <Tooltip
-            text={
+            title={
               <Translation>
                 {t =>
                   t(translations.general.table.switchAgeTip, {
@@ -105,20 +105,21 @@ export const ColumnAge = ({
                 }
               </Translation>
             }
-            placement="top"
             key={ageFormat}
           >
-            {ageFormat === 'age' ? (
-              title || (
+            <span>
+              {ageFormat === 'age' ? (
+                title || (
+                  <Translation>
+                    {t => t(translations.general.table.block.age)}
+                  </Translation>
+                )
+              ) : (
                 <Translation>
-                  {t => t(translations.general.table.block.age)}
+                  {t => t(translations.general.table.dateTime)}
                 </Translation>
-              )
-            ) : (
-              <Translation>
-                {t => t(translations.general.table.dateTime)}
-              </Translation>
-            )}
+              )}
+            </span>
           </Tooltip>
         </AgeTHeader>
       </ContentWrapper>

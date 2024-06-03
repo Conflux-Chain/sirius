@@ -7,29 +7,22 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled from 'styled-components';
-import { Link as RouterLink } from 'react-router-dom';
-import { List } from 'app/components/List/';
+import { List } from '@cfxjs/sirius-next-common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useToken } from 'utils/api';
 import { IconButton } from './IconButton';
-import { media } from 'styles/media';
-import { Text } from 'app/components/Text';
-import { Link as UILink } from '@cfxjs/react-ui';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
 import { isZeroAddress, formatString } from 'utils';
-import {
-  ICON_DEFAULT_TOKEN,
-  NETWORK_TYPES,
-  NETWORK_TYPE,
-  ICON_DEFAULT_CONTRACT,
-} from 'utils/constants';
+import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 import { Image } from '@cfxjs/antd';
-
-const Link = ({ to, children }) => <RouterLink to={to}>{children}</RouterLink>;
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 const WarnningButton = ({ address }) => {
   const { t, i18n } = useTranslation();
@@ -39,14 +32,13 @@ const WarnningButton = ({ address }) => {
       <IconButton
         className="metadata-tooltip-btn"
         size={16}
-        tooltipContentClassName="warnning-tooltip"
         viewBox={!isZeroAddress(address) ? '0 0 1024 1024' : '0 0 16 16'}
         tooltipText={
           <WarnningTooltipWrapper>
             <p className="warnning-text">
               {t(translations.contractDetail.contractAdminWarning)}
               <br />
-              <UILink
+              <Link
                 target="_blank"
                 className="warnning-tooltip-link"
                 href={
@@ -56,7 +48,7 @@ const WarnningButton = ({ address }) => {
                 }
               >
                 {t(translations.general.viewMore)}
-              </UILink>
+              </Link>
             </p>
           </WarnningTooltipWrapper>
         }
@@ -102,14 +94,6 @@ const WarnningButton = ({ address }) => {
 };
 
 const WarnningButtonWrapper = styled.div`
-  .warnning-tooltip.tooltip-content {
-    max-width: 30rem;
-    text-align: center;
-    padding: 0.43rem 0.86rem;
-    ${media.s} {
-      max-width: 15rem;
-    }
-  }
   .icon.metadata-tooltip-btn {
     margin-left: 1rem;
   }
@@ -118,7 +102,8 @@ const WarnningTooltipWrapper = styled.div`
   p.warnning-text {
     margin: 0;
   }
-  .warnning-tooltip-link.link {
+  .warnning-tooltip-link.link,
+  .warnning-tooltip-link.link:hover {
     color: #008dff;
   }
 `;
@@ -145,16 +130,13 @@ export function ContractMetadata({ address, contractInfo }) {
     : notAvailableText;
 
   if (tokenInfo.name && isToken) {
-    tokenName = <Link to={`/token/${address}`}>{tokenName}</Link>;
+    tokenName = <Link href={`/token/${address}`}>{tokenName}</Link>;
   }
 
   let list = [
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.nameTag)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.nameTag)}>
           {t(translations.contract.nameTag)}
         </Tooltip>
       ),
@@ -172,22 +154,19 @@ export function ContractMetadata({ address, contractInfo }) {
               alt={contractInfo.name + 'logo'}
             />
             <Content>{contractInfo.name || notAvailableText}</Content>
-            <RouterLink
+            <Link
               className="contract-info-update"
-              to={`/contract-info/${address}`}
+              href={`/contract-info/${address}`}
             >
               <Edit3 size={18} color="#1e3de4" />
-            </RouterLink>
+            </Link>
           </CenterLine>
         </SkeletonContainer>
       ),
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.contractAdmin)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.contractAdmin)}>
           {t(translations.contract.contractAdmin)}
         </Tooltip>
       ),
@@ -215,10 +194,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.tokenTracker)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.tokenTracker)}>
           {t(translations.contract.tokenTracker)}
         </Tooltip>
       ),
@@ -245,10 +221,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.storageSponsor)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.storageSponsor)}>
           {t(translations.contract.storageSponsor)}
         </Tooltip>
       ),
@@ -285,10 +258,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.contractCreator)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.contractCreator)}>
           {t(translations.contract.creator)}
         </Tooltip>
       ),
@@ -322,9 +292,12 @@ export function ContractMetadata({ address, contractInfo }) {
                       translations.contractDetail.txOnlyEn,
                     )} `}
                     <LinkWrap
-                      to={`/transaction/${contractInfo.transactionHash}`}
+                      href={`/transaction/${contractInfo.transactionHash}`}
                     >
-                      <Text span hoverValue={contractInfo.transactionHash}>
+                      <Text
+                        tag="span"
+                        hoverValue={contractInfo.transactionHash}
+                      >
                         {formatString(contractInfo.transactionHash, 'address')}
                       </Text>
                     </LinkWrap>
@@ -339,10 +312,7 @@ export function ContractMetadata({ address, contractInfo }) {
     },
     {
       title: (
-        <Tooltip
-          text={t(translations.toolTip.contract.gasFeeSponsor)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.toolTip.contract.gasFeeSponsor)}>
           {t(translations.contract.gasSponsor)}
         </Tooltip>
       ),
@@ -373,7 +343,11 @@ export function ContractMetadata({ address, contractInfo }) {
     },
   ];
 
-  if (![NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)) {
+  if (
+    ![NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+      ENV_CONFIG.ENV_NETWORK_TYPE,
+    )
+  ) {
     list = list.filter((_, index) => [0, 1, 2, 4].includes(index));
   }
 

@@ -6,7 +6,8 @@
 
 import React, { memo, useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Copy, Qrcode } from './HeadLineButtons';
@@ -18,7 +19,6 @@ import {
 } from './AddressInfoCards';
 import { AddressMetadata, ContractMetadata, Table } from './Loadable';
 import { useContract } from 'utils/api';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import {
   Bottom,
   Head,
@@ -43,20 +43,21 @@ import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
-import { getLabelInfo } from 'app/components/AddressContainer';
-import { useENS } from 'utils/hooks/useENS';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
+import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
 import Nametag from './Nametag';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface RouteParams {
   address: string;
 }
 
 export const ContractDetailPage = memo(() => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { address } = useParams<RouteParams>();
   const history = useHistory();
@@ -96,9 +97,8 @@ export const ContractDetailPage = memo(() => {
       });
     }
   }, [address, history]);
-  const [ensMap] = useENS({
-    address: [address],
-  });
+
+  const { ens } = useENS(address);
 
   const websiteUrl = contractInfo?.website || '';
   const hasWebsite =
@@ -107,31 +107,31 @@ export const ContractDetailPage = memo(() => {
     websiteUrl !== 'http://' &&
     websiteUrl !== t(translations.general.loading);
   const addressLabelMap = globalData[LOCALSTORAGE_KEYS_MAP.addressLabel];
-  const addressLabel = addressLabelMap[address];
+  const addressLabel = addressLabelMap?.[address];
 
   const { label, icon } = useMemo(
-    () => getLabelInfo(ensMap[address]?.name, 'ens'),
-    [address, ensMap],
+    () => getLabelInfo(ens[address]?.name, 'ens'),
+    [address, ens],
   );
 
   const menu = (
     <MenuWrapper>
       {!contractInfo?.verify?.exactMatch ? (
         <Menu.Item>
-          <RouterLink to={`/contract-verification?address=${address}`}>
+          <Link href={`/contract-verification?address=${address}`}>
             {t(translations.general.address.more.verifyContract)}
-          </RouterLink>
+          </Link>
         </Menu.Item>
       ) : null}
       <Menu.Item>
-        <RouterLink to={`/balance-checker?address=${address}`}>
+        <Link href={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
       <Menu.Item>
-        <RouterLink to={`/contract-info/${address}`}>
+        <Link href={`/contract-info/${address}`}>
           {t(translations.general.address.more.editContract)}
-        </RouterLink>
+        </Link>
       </Menu.Item>
       <Menu.Item>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -150,16 +150,18 @@ export const ContractDetailPage = memo(() => {
           )}
         </a>
       </Menu.Item>
-      {[NETWORK_TYPES.testnet, NETWORK_TYPES.mainnet].includes(NETWORK_TYPE) ? (
+      {[NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+        ENV_CONFIG.ENV_NETWORK_TYPE,
+      ) ? (
         <Menu.Item>
-          <RouterLink to={`/sponsor/${address}`}>
+          <Link href={`/sponsor/${address}`}>
             {t(translations.general.address.more.sponsor)}
-          </RouterLink>
+          </Link>
         </Menu.Item>
       ) : null}
       {hasWebsite && (
         <Menu.Item>
-          <RouterLink
+          <Link
             onClick={e => {
               e.preventDefault();
               e.stopPropagation();
@@ -170,10 +172,9 @@ export const ContractDetailPage = memo(() => {
 
               window.open(link);
             }}
-            to=""
           >
             {t(translations.general.address.more.website)}
-          </RouterLink>
+          </Link>
         </Menu.Item>
       )}
     </MenuWrapper>
@@ -212,12 +213,12 @@ export const ContractDetailPage = memo(() => {
               : isSpecialAddress(address)
               ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
-            <RouterLink to={`/cns-search?text=${label}`}>
+            <Link href={`/cns-search?text=${label}`}>
               <StyledLabelWrapper show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>
-            </RouterLink>{' '}
+            </Link>{' '}
             <Nametag address={address}></Nametag>
           </Title>
           <HeadAddressLine>
@@ -239,7 +240,10 @@ export const ContractDetailPage = memo(() => {
                 <>
                   {' '}
                   (
-                  <Text span hoverValue={t(translations.profile.tip.label)}>
+                  <Text
+                    tag="span"
+                    hoverValue={t(translations.profile.tip.label)}
+                  >
                     <Bookmark color="var(--theme-color-gray2)" size={16} />
                   </Text>
                   {addressLabel})
