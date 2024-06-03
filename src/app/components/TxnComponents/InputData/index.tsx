@@ -188,7 +188,7 @@ export const InputData = ({
         size="small"
         className="input-data-select"
         disabled={dataTypeList.length === 1}
-        width="150px"
+        width="180px"
       >
         {dataTypeList.map(dataTypeItem => {
           return (

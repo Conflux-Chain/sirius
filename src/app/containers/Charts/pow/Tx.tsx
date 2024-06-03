@@ -13,6 +13,12 @@ export function Tx({ preview = false }: ChildProps) {
   const props = {
     request: {
       url: OPEN_API_URLS.tx,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map(s => [
