@@ -174,9 +174,7 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Content>
-              {/* TODO: tmp skip loading */}
-              {contractInfo.admin &&
-              contractInfo.admin !== t(translations.general.loading) ? (
+              {contractInfo.admin ? (
                 <AddressContainer
                   value={contractInfo.admin}
                   alias={
@@ -235,11 +233,8 @@ export function ContractMetadata({ address, contractInfo }) {
                 !contractInfo.sponsor.sponsorForCollateral && 'not-available',
               )}
             >
-              {/* TODO: tmp skip loading */}
               {contractInfo.sponsor &&
-              contractInfo.sponsor.sponsorForCollateral &&
-              contractInfo.sponsor.sponsorForCollateral !==
-                t(translations.general.loading) ? (
+              contractInfo.sponsor.sponsorForCollateral ? (
                 [
                   <AddressContainer
                     key={contractInfo.sponsor.sponsorForCollateral}
@@ -286,9 +281,7 @@ export function ContractMetadata({ address, contractInfo }) {
                   !contractInfo.transactionHash && 'not-available',
                 )}
               >
-                {/* TODO: tmp skip loading */}
-                {contractInfo.from &&
-                contractInfo.from !== t(translations.general.loading) ? (
+                {contractInfo.from ? (
                   <AddressContainer value={contractInfo.from} />
                 ) : (
                   notAvailableText
@@ -327,11 +320,7 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Content>
-              {/* TODO: tmp skip loading */}
-              {contractInfo.sponsor &&
-              contractInfo.sponsor.sponsorForGas &&
-              contractInfo.sponsor.sponsorForGas !==
-                t(translations.general.loading) ? (
+              {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
                 [
                   <AddressContainer
                     key={contractInfo.sponsor.sponsorForGas}
