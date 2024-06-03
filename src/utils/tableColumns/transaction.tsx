@@ -203,7 +203,8 @@ export const to = {
       alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
 
     if (row.toContractInfo) {
-      verify = row.toContractInfo.verify.result !== 0;
+      verify =
+        row.toContractInfo.verify && row.toContractInfo.verify.result !== 0;
     } else if (row.verified === true) {
       verify = true;
     }
