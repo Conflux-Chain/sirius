@@ -2375,22 +2375,6 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@cfx-kit/dapp-utils@0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.1.5.tgz#18d6770de96a5d188e20c8b91ba4b4211d9c4bea"
-  integrity sha512-p0FvtQBIcekfRdM2Ydase5VpmmoTe5H1S2Q95PjTXVZlmMwyNq/RXpE+0e/0MztgZzp6T2WgG6u9wxFnIVMP/w==
-  dependencies:
-    "@cfx-kit/utils" "0.0.5"
-    "@ethersproject/abi" "^5.7.0"
-    "@ethersproject/bignumber" "^5.7.0"
-    "@ethersproject/units" "^5.7.0"
-    abitype "^0.9.5"
-    ethers "^6.6.4"
-    jsbi "^4.3.0"
-    ky "^0.33.3"
-    localstorage-enhance "^1.0.8"
-    lodash-es "^4.17.21"
-
 "@cfx-kit/dapp-utils@0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.1.6.tgz#6ac756c68748cbf8e744ecd117fb902b41dfec01"
