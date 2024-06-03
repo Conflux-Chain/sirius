@@ -174,7 +174,9 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Content>
-              {contractInfo.admin ? (
+              {/* TODO: tmp skip loading */}
+              {contractInfo.admin &&
+              contractInfo.admin !== t(translations.general.loading) ? (
                 <AddressContainer
                   value={contractInfo.admin}
                   alias={
@@ -233,8 +235,11 @@ export function ContractMetadata({ address, contractInfo }) {
                 !contractInfo.sponsor.sponsorForCollateral && 'not-available',
               )}
             >
+              {/* TODO: tmp skip loading */}
               {contractInfo.sponsor &&
-              contractInfo.sponsor.sponsorForCollateral ? (
+              contractInfo.sponsor.sponsorForCollateral &&
+              contractInfo.sponsor.sponsorForCollateral !==
+                t(translations.general.loading) ? (
                 [
                   <AddressContainer
                     key={contractInfo.sponsor.sponsorForCollateral}
@@ -322,7 +327,11 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Content>
-              {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
+              {/* TODO: tmp skip loading */}
+              {contractInfo.sponsor &&
+              contractInfo.sponsor.sponsorForGas &&
+              contractInfo.sponsor.sponsorForGas !==
+                t(translations.general.loading) ? (
                 [
                   <AddressContainer
                     key={contractInfo.sponsor.sponsorForGas}
