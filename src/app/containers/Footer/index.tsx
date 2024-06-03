@@ -486,8 +486,10 @@ export function Footer() {
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
-    <CopyRight key="copryRight">{t(translations.footer.copryRight)}</CopyRight>,
-    <span key="ICP">{ICP}</span>,
+    <CopyRight key="copryRight">
+      {t(translations.footer.copryRight)}
+      <span key="ICP">{ICP}</span>
+    </CopyRight>,
   ];
 
   return (
