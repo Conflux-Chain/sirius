@@ -281,7 +281,9 @@ export function ContractMetadata({ address, contractInfo }) {
                   !contractInfo.transactionHash && 'not-available',
                 )}
               >
-                {contractInfo.from ? (
+                {/* TODO: tmp skip loading */}
+                {contractInfo.from &&
+                contractInfo.from !== t(translations.general.loading) ? (
                   <AddressContainer value={contractInfo.from} />
                 ) : (
                   notAvailableText
