@@ -64,6 +64,7 @@ const StyledWrapper = styled.span`
   display: flex;
   align-items: center;
   color: var(--theme-color-gray0);
+  margin-top: -0.33rem;
 
   .btnSelectContainer {
     background-color: var(--theme-color-foot-bg);

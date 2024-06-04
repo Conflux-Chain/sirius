@@ -1126,6 +1126,7 @@ const IconImg = styled.img`
   width: 1.2857rem;
   margin-left: 0.3571rem;
   padding-right: 0.2857rem;
+  margin-top: -0.2765rem;
 `;
 
 const StyledCardWrapper = styled.div`
