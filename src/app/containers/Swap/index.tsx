@@ -10,7 +10,7 @@ import { ScanEvent } from 'utils/gaConstants';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
 import { ConnectButton } from 'app/components/ConnectWallet';
-import { Select } from 'app/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { Input, Button } from '@cfxjs/react-ui';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';

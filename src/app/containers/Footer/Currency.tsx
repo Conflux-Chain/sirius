@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from 'app/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -74,8 +74,6 @@ export function Currency() {
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        dropdownClassName="currency-select"
-        variant="text"
       >
         {options.map(o => {
           return (

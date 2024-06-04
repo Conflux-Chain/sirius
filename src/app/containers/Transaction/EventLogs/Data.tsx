@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select } from '../../../components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import styled from 'styled-components';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
@@ -129,13 +129,27 @@ const StyledSelectItemWrapper = styled.div`
     align-items: center;
   }
 
-  .select.select {
-    height: 22px;
+  .select {
+    position: absolute;
+    right: 0;
     margin-right: 12px;
+    color: #444;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
 
     .value {
       padding-left: 0;
     }
+    ${media.s} {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-bottom: 10px;
+    }
+  }
+  .select:hover {
+    background-color: rgba(30, 61, 228, 0.08);
   }
 `;
 
@@ -191,7 +205,7 @@ export const Data = ({
       body = (
         <>
           <Select
-            className="select-with-abi"
+            className="select"
             value={value}
             onChange={handleChange}
             size="small"
@@ -261,19 +275,27 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
     padding-right: 100px;
   }
 
-  .select.select-with-abi {
+  .select {
     position: absolute;
-    top: 11px;
-    right: 16px;
-    height: 30px;
-    padding: 0 10px;
+    right: 0;
+    margin-right: 12px;
+    color: #444;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
 
+    .value {
+      padding-left: 0;
+    }
     ${media.s} {
       position: relative;
       top: auto;
       right: auto;
       margin-bottom: 10px;
     }
+  }
+  .select:hover {
+    background-color: rgba(30, 61, 228, 0.08);
   }
 
   .data-item {
