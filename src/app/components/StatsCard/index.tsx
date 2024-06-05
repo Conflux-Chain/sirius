@@ -444,6 +444,7 @@ export const StatsCard = ({
               <td>{i + 1}</td>
               <td className="address">
                 <AddressContainer
+                  maxWidth={200}
                   value={d.base32}
                   alias={
                     d.contractInfo && d.contractInfo.name
@@ -497,6 +498,7 @@ export const StatsCard = ({
             <td>{i + 1}</td>
             <td className="address">
               <AddressContainer
+                maxWidth={200}
                 value={d.base32}
                 isMe={
                   accounts && accounts.length > 0
@@ -567,6 +569,7 @@ export const StatsCard = ({
             <td>{i + 1}</td>
             <td className="address">
               <AddressContainer
+                maxWidth={200}
                 value={d.base32}
                 isMe={
                   accounts && accounts.length > 0

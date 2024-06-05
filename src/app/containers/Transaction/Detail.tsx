@@ -672,13 +672,11 @@ export const Detail = () => {
               <Tooltip
                 title={t(translations.transaction.tipOfTokenTransferCount)}
               >
-                <IconWrapper>
-                  <img
-                    src={iconInfo}
-                    alt="warning-icon"
-                    className="download-svg-img"
-                  ></img>
-                </IconWrapper>
+                <IconImg
+                  src={iconInfo}
+                  alt="warning-icon"
+                  className="download-svg-img"
+                />
               </Tooltip>
             ) : null}
           </>
@@ -1124,6 +1122,12 @@ export const Detail = () => {
     </StyledCardWrapper>
   );
 };
+const IconImg = styled.img`
+  width: 1.2857rem;
+  margin-left: 0.3571rem;
+  padding-right: 0.2857rem;
+  margin-top: -0.2765rem;
+`;
 
 const StyledCardWrapper = styled.div`
   .inputLine {
@@ -1262,16 +1266,6 @@ const InlineWrapper = styled.div`
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
-`;
-
-const IconWrapper = styled.div`
-  padding-right: 0.2857rem;
-  width: 1.2857rem;
-  cursor: pointer;
-
-  .download-svg-img {
-    margin-left: 0.3571rem;
-  }
 `;
 
 const StyleToolTipText = styled.div`
