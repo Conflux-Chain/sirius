@@ -63,7 +63,7 @@ export const InputData = ({
           setDataType('original');
           setTip('');
         } else {
-          const isContract = isContractAddress(toHash.toLocaleLowerCase());
+          const isContract = isContractAddress(toHash);
 
           if (isContract) {
             let isAbiError = false;

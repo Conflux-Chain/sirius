@@ -117,10 +117,7 @@ export const Detail = () => {
     try {
       const proArr: Promise<any>[] = [];
       const address = toCheckAddress.to || toCheckAddress;
-      if (
-        typeof address === 'string' &&
-        isContractAddress(address.toLocaleLowerCase())
-      ) {
+      if (typeof address === 'string' && isContractAddress(address)) {
         setIsContract(true);
 
         const contractFields = [
@@ -165,7 +162,7 @@ export const Detail = () => {
 
       if (
         toCheckAddress !== null &&
-        (await isContractAddress(toCheckAddress.toLocaleLowerCase()))
+        (await isContractAddress(toCheckAddress))
       ) {
         const contractResponse = proRes.shift();
         setContractInfo(contractResponse);
