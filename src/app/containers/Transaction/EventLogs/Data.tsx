@@ -57,7 +57,7 @@ const SelectedLine = ({
           size="small"
           value={selected}
           onChange={handleChange}
-          width="7rem"
+          width="7.8rem"
         >
           {options.map(o => (
             <Select.Option key={o.key} value={o.value}>
@@ -210,7 +210,7 @@ export const Data = ({
             onChange={handleChange}
             size="small"
             disableMatchWidth={true}
-            width="7rem"
+            width="7.8rem"
           >
             <Select.Option value="hex">
               {t(translations.transaction.logs.hex)}
