@@ -230,7 +230,7 @@ export const Search = () => {
       !(
         value === '0x0' ||
         isAccountAddress(value) ||
-        // isContractAddress(value) ||
+        // isCoreContractAddress(value) ||
         isInnerContractAddress(value) ||
         isSpecialAddress(value) ||
         isEpochNumber(value) ||

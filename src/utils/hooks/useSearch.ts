@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router';
 import {
   isAccountAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isBlockHash,
   isHash,
   isEpochNumber,
@@ -72,7 +72,7 @@ export const useSearch = (value?: string) => {
         category: ScanEvent.search.category,
         action: isAccountAddress(innerValue)
           ? ScanEvent.search.action.account
-          : isContractAddress(innerValue)
+          : isCoreContractAddress(innerValue)
           ? ScanEvent.search.action.contract
           : ScanEvent.search.action.innerContract,
         label: innerValue,

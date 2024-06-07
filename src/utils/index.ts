@@ -60,7 +60,7 @@ import {
   isSimplyBase32Address,
   isAddress,
   isZeroAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
   formatAddress as formatAddressCore,
@@ -107,7 +107,7 @@ export {
   isSimplyBase32Address,
   isAddress,
   isZeroAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
 };

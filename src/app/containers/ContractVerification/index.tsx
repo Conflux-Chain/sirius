@@ -7,7 +7,7 @@ import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import styled from 'styled-components';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Form, Input, Button, Row, Col, Select, Collapse } from '@cfxjs/antd';
-import { isContractAddress, isCurrentNetworkAddress } from 'utils';
+import { isCoreContractAddress, isCurrentNetworkAddress } from 'utils';
 import {
   reqContractCompiler,
   reqContractLicense,
@@ -253,7 +253,7 @@ export const ContractVerification = () => {
                       const address = value.trim();
 
                       if (
-                        isContractAddress(address) &&
+                        isCoreContractAddress(address) &&
                         SDK.address.isValidCfxAddress(address)
                       ) {
                         return Promise.resolve();

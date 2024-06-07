@@ -30,7 +30,7 @@ import {
   StyledLabelWrapper,
 } from './layouts';
 import {
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
 } from 'utils';
@@ -88,7 +88,7 @@ export const ContractDetailPage = memo(() => {
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
     if (
-      !isContractAddress(address) &&
+      !isCoreContractAddress(address) &&
       !isInnerContractAddress(address) &&
       !isSpecialAddress(address)
     ) {
@@ -280,7 +280,7 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) && (
+        {isCoreContractAddress(address) && (
           <Middle key="middle">
             {contractInfo.stakingBalance != null &&
             contractInfo.stakingBalance !== '0' ? (

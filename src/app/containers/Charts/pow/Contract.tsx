@@ -17,7 +17,7 @@ export function Contract({
     request: {
       url: OPEN_API_URLS.contract,
       query: {
-        limit: '30',
+        limit: '365',
         intervalType: 'day',
         address,
       },

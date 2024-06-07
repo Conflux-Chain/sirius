@@ -30,7 +30,7 @@ import {
   fromDripToCfx,
   getPercent,
   toThousands,
-  isContractAddress,
+  isCoreContractAddress,
   fromDripToGdrip,
   isZeroAddress,
   hideInDotNet,
@@ -116,8 +116,10 @@ export const Detail = () => {
 
     try {
       const proArr: Promise<any>[] = [];
-      const address = toCheckAddress.to || toCheckAddress;
-      if (typeof address === 'string' && isContractAddress(address)) {
+      if (
+        typeof toCheckAddress === 'string' &&
+        isCoreContractAddress(toCheckAddress)
+      ) {
         setIsContract(true);
 
         const contractFields = [
@@ -162,7 +164,7 @@ export const Detail = () => {
 
       if (
         toCheckAddress !== null &&
-        (await isContractAddress(toCheckAddress))
+        (await isCoreContractAddress(toCheckAddress))
       ) {
         const contractResponse = proRes.shift();
         setContractInfo(contractResponse);
