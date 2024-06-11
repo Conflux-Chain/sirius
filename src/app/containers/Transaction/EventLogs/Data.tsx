@@ -52,7 +52,7 @@ const SelectedLine = ({
       {index === undefined ? null : <span className="index">{index + 1}</span>}
       {select ? (
         <Select
-          className="select"
+          className="select selectMulti"
           disableMatchWidth={true}
           size="small"
           value={selected}
@@ -273,6 +273,10 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
 
   .with-abi {
     padding-right: 100px;
+  }
+
+  .selectMulti {
+    position: relative !important;
   }
 
   .select {
