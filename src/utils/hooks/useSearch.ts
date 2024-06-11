@@ -6,7 +6,7 @@ import {
   isHash,
   isEpochNumber,
   formatAddress,
-  getAddressInfo,
+  getCoreAddressInfo,
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
@@ -53,7 +53,7 @@ export const useSearch = (value?: string) => {
             ENV_CONFIG.ENV_NETWORK_TYPE,
           ) &&
           CORE_SPACE_CHAIN_IDS.slice(0, 2).includes(
-            getAddressInfo(innerValue)?.netId as number,
+            getCoreAddressInfo(innerValue)?.netId as number,
           )
         ) {
           history.push('/networkError');

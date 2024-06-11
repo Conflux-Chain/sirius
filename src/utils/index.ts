@@ -56,7 +56,7 @@ import {
   isPosAddress,
   isCfxHexAddress,
   isBase32Address,
-  getAddressInfo,
+  getCoreAddressInfo,
   isSimplyBase32Address,
   isAddress,
   isZeroAddress,
@@ -103,7 +103,7 @@ export {
   isPosAddress,
   isCfxHexAddress,
   isBase32Address,
-  getAddressInfo,
+  getCoreAddressInfo,
   isSimplyBase32Address,
   isAddress,
   isZeroAddress,
@@ -159,11 +159,11 @@ export const formatAddress = (address: string, outputType = 'base32') => {
 
 // Todo: Distinguish between core and evm
 export function isAccountAddress(address: string): boolean {
-  return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
+  return getCoreAddressInfo(address)?.type === 'user' || isZeroAddress(address);
 }
 
 export function isCurrentNetworkAddress(address: string): boolean {
-  return getAddressInfo(address)?.netId === NETWORK_ID;
+  return getCoreAddressInfo(address)?.netId === NETWORK_ID;
 }
 
 /**
