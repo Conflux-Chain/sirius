@@ -28,10 +28,10 @@ export function Contract(props) {
   ]);
   const { data } = useCMContractQuery(
     params,
-    isCoreContractAddress(contractAddress),
+    isCoreContractAddress(contractAddress, false),
   );
   useEffect(() => {
-    if (isCoreContractAddress(contractAddress)) {
+    if (isCoreContractAddress(contractAddress, false)) {
       setLoading(true);
       if (data && data.nonce) {
         setContractDetail(data);

@@ -94,7 +94,7 @@ export function BalanceChecker() {
     return Promise.resolve();
   };
   const validateContractAddress = (rule, contractAddress) => {
-    if (contractAddress && !isCoreContractAddress(contractAddress)) {
+    if (contractAddress && !isCoreContractAddress(contractAddress, false)) {
       return Promise.reject(
         new Error(t(translations.contract.invalidContractAddress)),
       );

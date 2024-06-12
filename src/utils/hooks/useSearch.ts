@@ -72,7 +72,7 @@ export const useSearch = (value?: string) => {
         category: ScanEvent.search.category,
         action: isAccountAddress(innerValue)
           ? ScanEvent.search.action.account
-          : isCoreContractAddress(innerValue)
+          : isCoreContractAddress(innerValue, false)
           ? ScanEvent.search.action.contract
           : ScanEvent.search.action.innerContract,
         label: innerValue,

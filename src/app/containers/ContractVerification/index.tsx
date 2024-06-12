@@ -253,7 +253,7 @@ export const ContractVerification = () => {
                       const address = value.trim();
 
                       if (
-                        isCoreContractAddress(address) &&
+                        isCoreContractAddress(address, false) &&
                         SDK.address.isValidCfxAddress(address)
                       ) {
                         return Promise.resolve();

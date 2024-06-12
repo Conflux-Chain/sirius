@@ -19,7 +19,6 @@ import {
 import {
   byteToKb,
   isCoreContractAddress,
-  isInnerContractAddress,
   validURL,
   getAddressInputPlaceholder,
 } from 'utils';
@@ -387,11 +386,7 @@ export const ContractOrTokenInfo = ({
   }
   function checkAdminThenToken(tokenIcon) {
     if (addressVal) {
-      if (
-        (isCoreContractAddress(addressVal) ||
-          isInnerContractAddress(addressVal)) &&
-        !addressVal.startsWith('0x')
-      ) {
+      if (isCoreContractAddress(addressVal) && !addressVal.startsWith('0x')) {
         setIsAddressError(false);
         setErrorMsgForAddress('');
         if (accounts[0]) {
