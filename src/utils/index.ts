@@ -54,11 +54,10 @@ import {
 
 import {
   isPosAddress,
-  isCfxHexAddress,
   isBase32Address,
   getCoreAddressInfo,
   isSimplyBase32Address,
-  isAddress,
+  isCoreAddress as isAddress,
   isZeroAddress,
   isCoreContractAddress,
   isInnerContractAddress,
@@ -101,7 +100,6 @@ export {
 
 export {
   isPosAddress,
-  isCfxHexAddress,
   isBase32Address,
   getCoreAddressInfo,
   isSimplyBase32Address,
@@ -113,45 +111,6 @@ export {
 };
 
 dayjs.extend(relativeTime);
-
-/**
- * Used to cache address-related function calls provided by js-conflux-sdk, because address operations are expensive and time-consuming
- * For example:
- * {
- *    "formatAddress(cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t, base32)": "cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t"
- * }
- */
-// export const formatAddress = (
-//   address: string,
-//   outputType = 'base32', // base32 or hex
-// ): string => {
-//   const CACHE_KEY = `formatAddress(${address}, ${outputType})`;
-//   if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-//   let result = address;
-
-//   try {
-//     if (isCfxHexAddress(address)) {
-//       if (outputType === 'base32') {
-//         result = SDK.format.address(address, NETWORK_ID);
-//       }
-//     } else if (isBase32Address(address)) {
-//       if (outputType === 'hex') {
-//         result = SDK.format.hexAddress(address);
-//       } else if (outputType === 'base32') {
-//         const reg = /(.*):(.*):(.*)/;
-//         // compatibility with verbose address, will replace with simply address later
-//         if (typeof address === 'string' && reg.test(address)) {
-//           result = address.replace(reg, '$1:$3').toLowerCase();
-//         }
-//       }
-//     }
-//   } catch (e) {}
-
-//   ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-//   return result;
-// };
 
 export const formatAddress = (address: string, outputType = 'base32') => {
   return formatAddressCore(address, outputType);
