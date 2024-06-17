@@ -112,7 +112,10 @@ export {
 
 dayjs.extend(relativeTime);
 
-export const formatAddress = (address: string, outputType = 'base32') => {
+export const formatAddress = (
+  address: string,
+  outputType: 'hex' | 'base32' = 'base32',
+) => {
   return formatAddressCore(address, outputType);
 };
 
