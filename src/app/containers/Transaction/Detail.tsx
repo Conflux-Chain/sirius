@@ -162,10 +162,7 @@ export const Detail = () => {
 
       const proRes = await Promise.all(proArr);
 
-      if (
-        toCheckAddress !== null &&
-        (await isCoreContractAddress(toCheckAddress))
-      ) {
+      if (toCheckAddress !== null && isCoreContractAddress(toCheckAddress)) {
         const contractResponse = proRes.shift();
         setContractInfo(contractResponse);
       }
