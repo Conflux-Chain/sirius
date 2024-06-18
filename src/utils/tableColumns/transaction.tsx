@@ -14,7 +14,7 @@ import {
   getNametagInfo,
   roundToFixedPrecision,
 } from 'utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
 import {
   reqTransactionDetail,
@@ -172,7 +172,7 @@ export const from = {
   key: 'from',
   width: 1,
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
       contractCreated={row.contractCreated}
@@ -210,7 +210,7 @@ export const to = {
     }
 
     return (
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={alias}
         contractCreated={row.contractCreated}

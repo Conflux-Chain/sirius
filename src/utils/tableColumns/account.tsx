@@ -8,7 +8,7 @@ import {
   getNametagInfo,
 } from '../../utils/';
 import { ContentWrapper } from './utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 export const rank = {
   title: (
@@ -25,7 +25,7 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   render: (value, row: any) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       alias={row.name}
       isFull={true}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ColumnAge } from '../utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import lodash from 'lodash';
@@ -32,7 +32,7 @@ export const posAddress = {
     return lodash.isNil(value) ? (
       '--'
     ) : (
-      <AddressContainer value={value} isPosAddress={true} />
+      <CoreAddressContainer value={value} isPosAddress={true} />
     );
   },
 };
@@ -58,18 +58,6 @@ export const posBlockHash = {
     ) : (
       '--'
     );
-  },
-};
-
-export const powAddress = {
-  title: (
-    <Translation>{t => t(translations.pos.common.powAddress)}</Translation>
-  ),
-  dataIndex: 'hex',
-  key: 'hex',
-  width: 1,
-  render: value => {
-    return lodash.isNil(value) ? '--' : <AddressContainer value={value} />;
   },
 };
 

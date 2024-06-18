@@ -5,7 +5,7 @@ import { toThousands, fromDripToCfx, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import VotingPowerIcon from 'images/voting-power.svg';
 import IsActiveIcon from 'images/is-active.svg';
 import NotActiveIcon from 'images/not-active.svg';
@@ -47,12 +47,12 @@ export const posNodeAddress = {
       '--'
     ) : (
       <PosNodeAddressWrapper>
-        <AddressContainer
+        <CoreAddressContainer
           alias={row.byte32NameTagInfo?.nameTag}
           value={value}
           hideAliasPrefixInHover
           isPosAddress={true}
-        ></AddressContainer>
+        ></CoreAddressContainer>
         <CopyButton copyText={value} />
       </PosNodeAddressWrapper>
     );

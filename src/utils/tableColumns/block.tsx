@@ -15,7 +15,7 @@ import {
   roundToFixedPrecision,
 } from 'utils/';
 import imgPivot from 'images/pivot.svg';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
@@ -84,7 +84,7 @@ export const miner = {
   key: 'miner',
   width: 1,
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       ensInfo={getENSInfo(row)}
       nametagInfo={getNametagInfo(row)}

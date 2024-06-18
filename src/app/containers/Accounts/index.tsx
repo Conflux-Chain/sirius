@@ -10,7 +10,7 @@ import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress, getENSInfo } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
@@ -68,7 +68,7 @@ export function Accounts() {
       ...accountColunms.address,
       render: (value, row: any) => (
         <AccountWrapper>
-          <AddressContainer
+          <CoreAddressContainer
             value={value}
             alias={
               row.name ||

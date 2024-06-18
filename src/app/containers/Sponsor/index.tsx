@@ -20,7 +20,7 @@ import {
 import { usePortal } from 'utils/hooks/usePortal';
 import { useParams } from 'react-router-dom';
 import imgWarning from 'images/warning.png';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
@@ -439,7 +439,7 @@ export function Sponsor() {
               <SkeletonContainer shown={loading}>
                 {storageSponsorAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
-                    <AddressContainer
+                    <CoreAddressContainer
                       value={storageSponsorAddress}
                       alias={storageSponsorAddressAlias}
                     />
@@ -541,7 +541,7 @@ export function Sponsor() {
               <SkeletonContainer shown={loading}>
                 {gasFeeAddress ? (
                   errorMsgForApply !== errContractNotFound ? (
-                    <AddressContainer
+                    <CoreAddressContainer
                       value={gasFeeAddress}
                       alias={gasFeeAddressAlias}
                     />

@@ -19,7 +19,7 @@ import { NETWORK_ID } from 'utils/constants';
 import qs from 'query-string';
 import dayjs from 'dayjs';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
@@ -249,32 +249,32 @@ export function CNS() {
           </Description>
           {isZeroAddress(data.resolvedAddress || '') ? null : (
             <Description title={t(translations.cns.resolvedAddress)}>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.resolvedAddress || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
           )}
           <Description title={t(translations.cns.expires)}>
             {data.expires}
           </Description>
           <Description title={t(translations.cns.registrant)}>
-            <AddressContainer
+            <CoreAddressContainer
               isFull={true}
               value={data.registrant || ''}
               showENSLabel={false}
               showAddressLabel={false}
-            ></AddressContainer>
+            ></CoreAddressContainer>
           </Description>
           <Description title={t(translations.cns.controller)}>
-            <AddressContainer
+            <CoreAddressContainer
               isFull={true}
               value={data.controller || ''}
               showENSLabel={false}
               showAddressLabel={false}
-            ></AddressContainer>
+            ></CoreAddressContainer>
           </Description>
           <Description title={t(translations.cns.tokenid)} noBorder>
             {data.namehash
@@ -308,12 +308,12 @@ export function CNS() {
         <>
           <Card style={{ marginBottom: '1rem' }}>
             <Description title={t(translations.cns.address)}>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.address || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
             <Description title={t(translations.cns.reverseRecord)}>
               {
@@ -325,12 +325,12 @@ export function CNS() {
               }
             </Description>
             <Description title={t(translations.cns.registrant)} noBorder>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.registrant || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
           </Card>
           {data.userDomains?.length ? (

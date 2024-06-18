@@ -19,7 +19,7 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
@@ -156,7 +156,7 @@ export const renderAddress = (
 
   return (
     <>
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={alias}
         link={formatAddress(filter) !== formatAddress(value)}
@@ -204,7 +204,7 @@ export const token = {
                     row?.length || 32,
                   )
                 ) : (
-                  <AddressContainer
+                  <CoreAddressContainer
                     value={row?.address}
                     alias={row?.contractName || null}
                     showIcon={false}
@@ -256,7 +256,7 @@ export const Token2 = ({ row }) => {
               </Link>
             ) : (
               <StyledToken2NotAvailableWrapper>
-                <AddressContainer
+                <CoreAddressContainer
                   value={row?.transferTokenInfo?.address}
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
@@ -453,7 +453,7 @@ export const contract = (isFull = false) => ({
       verify = true;
     }
     return (
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         isFull={isFull}
         verify={verify}
@@ -550,7 +550,7 @@ export const account = {
   key: 'account',
   render: (value, row) => (
     <AccountWrapper>
-      <AddressContainer
+      <CoreAddressContainer
         value={value.address}
         alias={
           value.name ||
@@ -882,7 +882,7 @@ export const NFTOwner = {
   key: 'owner',
   render: (value, row) => (
     <AccountWrapper>
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={
           value.name ||
