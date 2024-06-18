@@ -49,7 +49,7 @@ import {
   StorageFee,
   TokenTypeTag,
 } from 'app/components/TxnComponents';
-import { TransactionAction } from '@cfxjs/sirius-next-common/dist/components/TransactionAction';
+import { TransactionAction } from '@cfxjs/sirius-next-common/dist/components/TransactionAction/coreTransactionAction';
 import _ from 'lodash';
 import imgChevronDown from 'images/chevronDown.png';
 import { renderAddress } from 'utils/tableColumns/token';

@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import { hideInDotNet } from 'utils';
-import { TransactionAction } from '@cfxjs/sirius-next-common/dist/components/TransactionAction';
+import { TransactionAction } from '@cfxjs/sirius-next-common/dist/components/TransactionAction/coreTransactionAction';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
 import _ from 'lodash';
