@@ -10,7 +10,7 @@ import {
   hideInDotNet,
   toThousands,
 } from '../../../utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
@@ -443,7 +443,7 @@ export const StatsCard = ({
             <tr key={i}>
               <td>{i + 1}</td>
               <td className="address">
-                <AddressContainer
+                <CoreAddressContainer
                   maxWidth={200}
                   value={d.base32}
                   alias={
@@ -478,7 +478,7 @@ export const StatsCard = ({
               {d.token ? (
                 token.render(d.token)
               ) : (
-                <AddressContainer
+                <CoreAddressContainer
                   value={d.base32address}
                   isMe={
                     accounts && accounts.length > 0
@@ -497,7 +497,7 @@ export const StatsCard = ({
           <tr key={i}>
             <td>{i + 1}</td>
             <td className="address">
-              <AddressContainer
+              <CoreAddressContainer
                 maxWidth={200}
                 value={d.base32}
                 isMe={
@@ -568,7 +568,7 @@ export const StatsCard = ({
           <tr key={i}>
             <td>{i + 1}</td>
             <td className="address">
-              <AddressContainer
+              <CoreAddressContainer
                 maxWidth={200}
                 value={d.base32}
                 isMe={

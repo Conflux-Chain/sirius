@@ -9,7 +9,7 @@ import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/Ske
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Security } from 'app/components/Security/Loadable';
 import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from 'utils';
 
 export function DescriptionPanel({ data, loading }) {
@@ -78,7 +78,7 @@ export function DescriptionPanel({ data, loading }) {
         <SkeletonContainer shown={loading}>
           {
             <>
-              <AddressContainer value={miner} isFull={true} />{' '}
+              <CoreAddressContainer value={miner} isFull={true} />{' '}
               <CopyButton copyText={formatAddress(miner)} />
             </>
           }

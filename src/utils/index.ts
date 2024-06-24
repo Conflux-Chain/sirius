@@ -53,17 +53,18 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 
 import {
-  isPosAddress,
-  isBase32Address,
   getCoreAddressInfo,
-  isSimplyBase32Address,
   isCoreAddress as isAddress,
   isZeroAddress,
   isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
-  formatAddress as formatAddressCore,
+  formatAddress as _formatAddress,
 } from '@cfxjs/sirius-next-common/dist/utils/address';
+import {
+  isBase32Address,
+  isSimplyBase32Address,
+} from '@cfx-kit/dapp-utils/dist/address';
 
 export {
   formatNumber,
@@ -99,7 +100,6 @@ export {
 };
 
 export {
-  isPosAddress,
   isBase32Address,
   getCoreAddressInfo,
   isSimplyBase32Address,
@@ -116,7 +116,7 @@ export const formatAddress = (
   address: string,
   outputType: 'hex' | 'base32' = 'base32',
 ) => {
-  return formatAddressCore(address, outputType);
+  return _formatAddress(address, outputType);
 };
 
 // Todo: Distinguish between core and evm

@@ -10,7 +10,7 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
 import CRC20bg from 'images/token/crc20bg.png';
 import CRC721bg from 'images/token/crc721bg.png';
@@ -161,7 +161,7 @@ export const Basic = ({
     children:
       tokenAddress !== undefined ? (
         <>
-          <AddressContainer value={tokenAddress} />{' '}
+          <CoreAddressContainer value={tokenAddress} />{' '}
           <CopyButton copyText={formatAddress(tokenAddress)} />
         </>
       ) : (

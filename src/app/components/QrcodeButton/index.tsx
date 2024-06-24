@@ -11,7 +11,7 @@ import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { isAccountAddress } from 'utils';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 interface QrcodeButtonProps {
   value: string;
@@ -85,7 +85,7 @@ export const QrcodeButton = ({
             ：
           </AddressType>
           <AddressWrapper onClick={handleClose}>
-            <AddressContainer value={value} showIcon={false} link={false} />
+            <CoreAddressContainer value={value} showIcon={false} link={false} />
           </AddressWrapper>
         </Modal.Content>
       </Modal>

@@ -4,7 +4,7 @@ import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 // import { Title /*Footer*/ } from '../Transactions/components/index';
 // import { CFX_TOKEN_TYPES } from 'utils/constants';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Title } from 'app/containers/Transactions/components';
 
 interface Props {
@@ -24,7 +24,7 @@ export const MinedBlocks = ({ address }: Props) => {
     blockColunms.hashWithPivot,
     {
       ...blockColunms.miner,
-      render: value => <AddressContainer link={false} value={value} />,
+      render: value => <CoreAddressContainer link={false} value={value} />,
     },
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercentWithProgress,

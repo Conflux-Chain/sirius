@@ -20,7 +20,7 @@ import lodash from 'lodash';
 import { formatData } from 'app/components/TxnComponents/util';
 import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { isInnerContractAddress } from 'utils';
 import { SubTabs } from 'app/components/Tabs/Loadable';
 
@@ -347,11 +347,11 @@ const Code = ({ contractInfo }) => {
                 <div>
                   <span>{l.name}: </span>
                   <span>
-                    <AddressContainer
+                    <CoreAddressContainer
                       value={l.address}
                       isFull={true}
                       showIcon={false}
-                    ></AddressContainer>
+                    ></CoreAddressContainer>
                   </span>{' '}
                   <span>
                     {l.exactMatch ? (

@@ -38,7 +38,7 @@ import {
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import clsx from 'clsx';
 import BigNumber from 'bignumber.js';
 import { Security } from 'app/components/Security/Loadable';
@@ -162,10 +162,7 @@ export const Detail = () => {
 
       const proRes = await Promise.all(proArr);
 
-      if (
-        toCheckAddress !== null &&
-        (await isCoreContractAddress(toCheckAddress))
-      ) {
+      if (toCheckAddress !== null && isCoreContractAddress(toCheckAddress)) {
         const contractResponse = proRes.shift();
         setContractInfo(contractResponse);
       }
@@ -265,7 +262,7 @@ export const Detail = () => {
       const addr = formatAddress(address);
       return (
         <span>
-          <AddressContainer value={addr} isFull={isFull} />{' '}
+          <CoreAddressContainer value={addr} isFull={isFull} />{' '}
           {nametags[addr]?.nameTag ? `(${nametags[addr]?.nameTag})` : null}{' '}
           <CopyButton copyText={addr} />
         </span>
@@ -339,7 +336,7 @@ export const Detail = () => {
             <span className="label">
               {t(translations.transaction.contract)}
             </span>
-            <AddressContainer
+            <CoreAddressContainer
               value={transactionDetail['contractCreated']}
               isFull={true}
             />{' '}

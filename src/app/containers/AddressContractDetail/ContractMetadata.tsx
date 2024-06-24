@@ -17,7 +17,7 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
@@ -175,14 +175,7 @@ export function ContractMetadata({ address, contractInfo }) {
           <CenterLine>
             <Content>
               {contractInfo.admin ? (
-                <AddressContainer
-                  value={contractInfo.admin}
-                  alias={
-                    isZeroAddress(contractInfo.admin)
-                      ? t(translations.general.zeroAddress)
-                      : undefined
-                  }
-                />
+                <CoreAddressContainer value={contractInfo.admin} />
               ) : (
                 notAvailableText
               )}
@@ -236,7 +229,7 @@ export function ContractMetadata({ address, contractInfo }) {
               {contractInfo.sponsor &&
               contractInfo.sponsor.sponsorForCollateral ? (
                 [
-                  <AddressContainer
+                  <CoreAddressContainer
                     key={contractInfo.sponsor.sponsorForCollateral}
                     value={contractInfo.sponsor.sponsorForCollateral}
                     alias={
@@ -282,7 +275,7 @@ export function ContractMetadata({ address, contractInfo }) {
                 )}
               >
                 {contractInfo.from ? (
-                  <AddressContainer value={contractInfo.from} />
+                  <CoreAddressContainer value={contractInfo.from} />
                 ) : (
                   notAvailableText
                 )}
@@ -322,7 +315,7 @@ export function ContractMetadata({ address, contractInfo }) {
             <Content>
               {contractInfo.sponsor && contractInfo.sponsor.sponsorForGas ? (
                 [
-                  <AddressContainer
+                  <CoreAddressContainer
                     key={contractInfo.sponsor.sponsorForGas}
                     value={contractInfo.sponsor.sponsorForGas}
                     alias={

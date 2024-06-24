@@ -26,7 +26,7 @@ import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
 import { Link as ALink } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ThreeD } from './3D';
 
 const epiKProtocolKnowledgeBadge =
@@ -339,10 +339,10 @@ export const NFTPreview = React.memo(
                       <span className="title">
                         {t(translations.nftChecker.owner)}:{' '}
                       </span>
-                      <AddressContainer
+                      <CoreAddressContainer
                         value={owner}
                         maxWidth={120}
-                      ></AddressContainer>
+                      ></CoreAddressContainer>
                     </div>
                   )}
                 </div>

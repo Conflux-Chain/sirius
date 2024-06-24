@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 const { Text } = Typography;
 
@@ -59,11 +59,11 @@ export function Overview({ data, loading }) {
         } else if (p === 'address') {
           content = (
             <>
-              <AddressContainer
+              <CoreAddressContainer
                 value={content as string}
                 isFull={true}
                 isPosAddress={true}
-              ></AddressContainer>{' '}
+              ></CoreAddressContainer>{' '}
               <CopyButton copyText={content as string} />
             </>
           );
