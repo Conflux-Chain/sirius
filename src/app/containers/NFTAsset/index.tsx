@@ -15,7 +15,7 @@ import { Col, Pagination, Row, Tag } from '@cfxjs/antd';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 import {
   reqNFTBalance,
@@ -276,7 +276,7 @@ export function NFTAsset({
                   {totalTip}
                   <span>
                     {t(translations.contract.address)}:{' '}
-                    <AddressContainer value={selectedNFT.contract} />
+                    <CoreAddressContainer value={selectedNFT.contract} />
                   </span>
                 </div>
 

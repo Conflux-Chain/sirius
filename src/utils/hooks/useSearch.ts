@@ -1,12 +1,12 @@
 import { useHistory } from 'react-router';
 import {
   isAccountAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isBlockHash,
   isHash,
   isEpochNumber,
   formatAddress,
-  getAddressInfo,
+  getCoreAddressInfo,
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
@@ -53,7 +53,7 @@ export const useSearch = (value?: string) => {
             ENV_CONFIG.ENV_NETWORK_TYPE,
           ) &&
           CORE_SPACE_CHAIN_IDS.slice(0, 2).includes(
-            getAddressInfo(innerValue)?.netId as number,
+            getCoreAddressInfo(innerValue)?.netId as number,
           )
         ) {
           history.push('/networkError');
@@ -72,7 +72,7 @@ export const useSearch = (value?: string) => {
         category: ScanEvent.search.category,
         action: isAccountAddress(innerValue)
           ? ScanEvent.search.action.account
-          : isContractAddress(innerValue)
+          : isCoreContractAddress(innerValue, false)
           ? ScanEvent.search.action.contract
           : ScanEvent.search.action.innerContract,
         label: innerValue,

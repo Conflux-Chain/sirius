@@ -26,7 +26,7 @@ import audioPlay from './audio-play.svg';
 import Link from '@zeit-ui/react-icons/link';
 import { Link as ALink } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ThreeD } from './3D';
 
 const epiKProtocolKnowledgeBadge =
@@ -309,21 +309,22 @@ export const NFTPreview = React.memo(
                   />
                 )}
                 {!!amount && (
-                  <Tooltip title={t(translations.nftChecker.amount)}>
-                    <Tag className="nft-amount">x{amount}</Tag>
+                  <Tooltip
+                    className="nft-amount"
+                    title={t(translations.nftChecker.amount)}
+                  >
+                    <Tag>x{amount}</Tag>
                   </Tooltip>
                 )}
               </div>
               <div className="info">
                 <div className="info-name">
-                  <Tooltip title={imageName}>
-                    <div className="name">{imageName}</div>
+                  <Tooltip className="name" title={imageName}>
+                    {imageName}
                   </Tooltip>
                   {imageUri ? (
-                    <Tooltip title={imageUri}>
-                      <div className="name">
-                        <Link size={12} />
-                      </div>
+                    <Tooltip className="name" title={imageUri}>
+                      <Link size={12} />
                     </Tooltip>
                   ) : null}
                 </div>
@@ -339,10 +340,10 @@ export const NFTPreview = React.memo(
                       <span className="title">
                         {t(translations.nftChecker.owner)}:{' '}
                       </span>
-                      <AddressContainer
+                      <CoreAddressContainer
                         value={owner}
                         maxWidth={120}
-                      ></AddressContainer>
+                      ></CoreAddressContainer>
                     </div>
                   )}
                 </div>
@@ -375,14 +376,12 @@ export const NFTPreview = React.memo(
                 )}
                 {imageName ? (
                   <div className="info-name">
-                    <Tooltip title={imageName}>
-                      <div className="name">{imageName}</div>
+                    <Tooltip className="name" title={imageName}>
+                      {imageName}
                     </Tooltip>
                     {imageUri ? (
-                      <Tooltip title={imageUri}>
-                        <div className="name">
-                          <Link size={12} />
-                        </div>
+                      <Tooltip className="name" title={imageUri}>
+                        <Link size={12} />
                       </Tooltip>
                     ) : null}
                   </div>
@@ -569,8 +568,10 @@ const NFTCard = styled.div`
       position: absolute;
       top: 5px;
       right: 5px;
-      margin: 0;
-      padding: 0 5px;
+      .ant-tag {
+        margin: 0;
+        padding: 0 5px;
+      }
     }
   }
 
@@ -585,6 +586,7 @@ const NFTCard = styled.div`
     }
 
     .name {
+      display: block;
       height: 18px;
       min-width: 12px;
       white-space: nowrap;

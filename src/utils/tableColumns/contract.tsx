@@ -4,7 +4,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatNumber, formatString, getENSInfo, getNametagInfo } from '..';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ContentWrapper } from './utils';
 
 interface Query {
@@ -53,7 +53,7 @@ export const contract = {
   dataIndex: 'address',
   key: 'address',
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       ensInfo={getENSInfo(row)}
       nametagInfo={getNametagInfo(row)}

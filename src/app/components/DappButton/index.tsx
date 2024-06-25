@@ -8,7 +8,7 @@ import imgSuccess from 'images/success.png';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from 'utils';
 import { TXN_ACTION } from 'utils/constants';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { ConnectButton, useCheckHook } from '../../components/ConnectWallet';
 import { trackEvent } from 'utils/ga';
@@ -145,7 +145,7 @@ const DappButton = ({
           <span
             className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
           >
-            <AddressContainer value={accounts[0]} />
+            <CoreAddressContainer value={accounts[0]} />
           </span>
         </>
       )}

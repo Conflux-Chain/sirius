@@ -5,8 +5,7 @@ import { translations } from 'locales/i18n';
 // import { useHistory, useLocation } from 'react-router';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import {
-  isContractAddress,
-  isInnerContractAddress,
+  isCoreContractAddress,
   isZeroAddress,
   // isAccountAddress,
 } from 'utils';
@@ -33,10 +32,7 @@ export function Table({ address, addressInfo }) {
   // const location = useLocation();
   // const history = useHistory();
   // const queries = queryString.parse(location.search);
-  const isContract = useMemo(
-    () => isContractAddress(address) || isInnerContractAddress(address),
-    [address],
-  );
+  const isContract = useMemo(() => isCoreContractAddress(address), [address]);
 
   // useEffect(() => {
   //   history.replace(

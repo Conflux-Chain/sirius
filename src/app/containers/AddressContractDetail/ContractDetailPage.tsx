@@ -30,7 +30,7 @@ import {
   StyledLabelWrapper,
 } from './layouts';
 import {
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
 } from 'utils';
@@ -87,11 +87,7 @@ export const ContractDetailPage = memo(() => {
     // contract created by other contract, such as 0x8a497f33c6f9e12adf918594ffb5ab5083448e45
     // contractInfo.transactionHash === undefined
     // if (!isInnerContractAddress(address) && !contractInfo.transactionHash) {
-    if (
-      !isContractAddress(address) &&
-      !isInnerContractAddress(address) &&
-      !isSpecialAddress(address)
-    ) {
+    if (!isCoreContractAddress(address) && !isSpecialAddress(address)) {
       history.replace(`/notfound/${address}`, {
         type: 'contract',
       });
@@ -280,7 +276,7 @@ export const ContractDetailPage = memo(() => {
           <NonceCard accountInfo={contractInfo} />
         </Top>
         {/* internal contract hide meta data panel */}
-        {isContractAddress(address) && (
+        {isCoreContractAddress(address, false) && (
           <Middle key="middle">
             {contractInfo.stakingBalance != null &&
             contractInfo.stakingBalance !== '0' ? (

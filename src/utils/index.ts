@@ -53,18 +53,18 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 
 import {
-  isPosAddress,
-  isCfxHexAddress,
-  isBase32Address,
-  getAddressInfo,
-  isSimplyBase32Address,
-  isAddress,
+  getCoreAddressInfo,
+  isCoreAddress as isAddress,
   isZeroAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
-  formatAddress as formatAddressCore,
+  formatAddress as _formatAddress,
 } from '@cfxjs/sirius-next-common/dist/utils/address';
+import {
+  isBase32Address,
+  isSimplyBase32Address,
+} from '@cfx-kit/dapp-utils/dist/address';
 
 export {
   formatNumber,
@@ -100,70 +100,32 @@ export {
 };
 
 export {
-  isPosAddress,
-  isCfxHexAddress,
   isBase32Address,
-  getAddressInfo,
+  getCoreAddressInfo,
   isSimplyBase32Address,
   isAddress,
   isZeroAddress,
-  isContractAddress,
+  isCoreContractAddress,
   isInnerContractAddress,
   isSpecialAddress,
 };
 
 dayjs.extend(relativeTime);
 
-/**
- * Used to cache address-related function calls provided by js-conflux-sdk, because address operations are expensive and time-consuming
- * For example:
- * {
- *    "formatAddress(cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t, base32)": "cfxtest:aam833gphcp7ruyv7ncwmead0f4p1x1f0yzrp8tz1t"
- * }
- */
-// export const formatAddress = (
-//   address: string,
-//   outputType = 'base32', // base32 or hex
-// ): string => {
-//   const CACHE_KEY = `formatAddress(${address}, ${outputType})`;
-//   if (ADDRESS_FUNC_CACHE[CACHE_KEY]) return ADDRESS_FUNC_CACHE[CACHE_KEY];
-
-//   let result = address;
-
-//   try {
-//     if (isCfxHexAddress(address)) {
-//       if (outputType === 'base32') {
-//         result = SDK.format.address(address, NETWORK_ID);
-//       }
-//     } else if (isBase32Address(address)) {
-//       if (outputType === 'hex') {
-//         result = SDK.format.hexAddress(address);
-//       } else if (outputType === 'base32') {
-//         const reg = /(.*):(.*):(.*)/;
-//         // compatibility with verbose address, will replace with simply address later
-//         if (typeof address === 'string' && reg.test(address)) {
-//           result = address.replace(reg, '$1:$3').toLowerCase();
-//         }
-//       }
-//     }
-//   } catch (e) {}
-
-//   ADDRESS_FUNC_CACHE[CACHE_KEY] = result;
-
-//   return result;
-// };
-
-export const formatAddress = (address: string, outputType = 'base32') => {
-  return formatAddressCore(address, outputType);
+export const formatAddress = (
+  address: string,
+  outputType: 'hex' | 'base32' = 'base32',
+) => {
+  return _formatAddress(address, outputType);
 };
 
 // Todo: Distinguish between core and evm
 export function isAccountAddress(address: string): boolean {
-  return getAddressInfo(address)?.type === 'user' || isZeroAddress(address);
+  return getCoreAddressInfo(address)?.type === 'user' || isZeroAddress(address);
 }
 
 export function isCurrentNetworkAddress(address: string): boolean {
-  return getAddressInfo(address)?.netId === NETWORK_ID;
+  return getCoreAddressInfo(address)?.netId === NETWORK_ID;
 }
 
 /**

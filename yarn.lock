@@ -2391,10 +2391,27 @@
     localstorage-enhance "^1.0.8"
     lodash-es "^4.17.21"
 
-"@cfx-kit/react-utils@^0.0.28":
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/@cfx-kit/react-utils/-/react-utils-0.0.28.tgz#bf9ae0b8cb94c8217811320c569f3a6dde943123"
-  integrity sha512-WnxQ/oM5fzsjEKW3qWBY/q3ZbTL7B5/XuxI26gkEOL69bWOKdeWJzsQbfGjL6l0SEHX7BXQxQjZ0HqFlvwLj3g==
+"@cfx-kit/dapp-utils@0.2.0", "@cfx-kit/dapp-utils@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.2.0.tgz#362d09dfc2951a77f77b082625aedeb12d5eb1c7"
+  integrity sha512-qW2nhNU88ZTKyFuuex9jPq0aGLLhiEfQ/THKhB3gSRuTKYcc/LQxGFQpoy5lR4I3nSRrmFeaCKAGbZ2xBeuKVg==
+  dependencies:
+    "@cfx-kit/utils" "0.0.5"
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/bignumber" "^5.7.0"
+    "@ethersproject/units" "^5.7.0"
+    "@noble/hashes" "^1.4.0"
+    abitype "^0.9.5"
+    ethers "^6.6.4"
+    jsbi "^4.3.0"
+    ky "^0.33.3"
+    localstorage-enhance "^1.0.8"
+    lodash-es "^4.17.21"
+
+"@cfx-kit/react-utils@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/react-utils/-/react-utils-0.0.29.tgz#d62cb1f14d8c00353108142b6e68600b85754ce9"
+  integrity sha512-dtqQrWEZvegP9E2NC5zN1kN9LR8n6QCW1ZsjxpfN1q0g5Dl5SW/eTuztBjlsXihkZGJL0yHDeLGXABedX8siEw==
   dependencies:
     "@cfx-kit/dapp-utils" "0.1.6"
     "@cfx-kit/utils" "0.0.5"
@@ -2491,12 +2508,13 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-common/-/sirius-next-common-0.0.5.tgz#a449100f5b879e41a3685560afe88f37c5d7a05c"
-  integrity sha512-wMlaTLob5TPMTKEITvDuL/Yeo4K4M4Kt/CFnJ+s5VdVM3kesCtRFfWRjWP8mweZ0e7WBl8004t1JbKPt2F7Bxw==
+"@cfxjs/sirius-next-common@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.0.7.tgz#ccf3dd10abf024708df8e67ea3dc2f113dc85eeb"
+  integrity sha512-s/MLNs1bLTCyuo7t7Q3jQyXIAjIDPrpsH4X/S9mSndGForf1XztiI6c2uYI9+bmQesnb/m21T2CLHhJdHYogBw==
   dependencies:
-    "@cfx-kit/react-utils" "^0.0.28"
+    "@cfx-kit/dapp-utils" "^0.2.0"
+    "@cfx-kit/react-utils" "^0.0.29"
     "@cfx-kit/ui-components" "^0.0.17"
     "@cfxjs/sirius-next-i18n" "0.0.0"
     "@radix-ui/react-select" "^2.0.0"
@@ -3430,6 +3448,11 @@
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.2.tgz#6f26dbc8fbc7205873ce3cee2f690eba0d421b39"
   integrity sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==
+
+"@noble/hashes@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.4.0.tgz#45814aa329f30e4fe0ba49426f49dfccdd066426"
+  integrity sha512-V1JJ1WTRUqHHrOSh597hURcMqVKVGL/ea3kv0gSnEdsEZ0/+VyPghM1lMNGc00z7CIQorSvbKpuJkxvuHbvdbg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

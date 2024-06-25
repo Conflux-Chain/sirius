@@ -96,7 +96,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
               onChange={value => {
                 handleChange(value, d.argName);
               }}
-              width="7rem"
+              width="7.8rem"
               disabled={valueMap.hex === valueMap.decode}
             >
               {availableOptions.map(o => (
@@ -155,7 +155,6 @@ const StyledTopicsWrapper = styled.div`
 
     .select {
       margin-right: 12px;
-      color: #444;
       background-color: #fff;
       border: 1px solid #ccc;
       border-radius: 0.25rem;

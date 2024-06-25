@@ -121,7 +121,9 @@ const ErrorLabel = styled.span`
 `;
 
 const GoTo = styled.a`
-  width: 18rem;
+  min-width: 18rem;
+  width: fit-content;
+  padding: 0 2rem;
   height: 3.5714rem;
   background-color: #fff;
   border-radius: 2.8571rem;
