@@ -46,13 +46,13 @@ export const DexIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip
+    <StyledTooltip
       title={t(
         translations.general.table.token.projectInfo.listedByDecentralized,
       )}
     >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -88,13 +88,13 @@ export const CexIcon = function ({
   );
 
   return hoverable ? (
-    <Tooltip
+    <StyledTooltip
       title={t(
         translations.general.table.token.projectInfo.listedByCentralized,
       )}
     >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -128,9 +128,11 @@ export const AuditIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip title={t(translations.general.table.token.projectInfo.audit)}>
+    <StyledTooltip
+      title={t(translations.general.table.token.projectInfo.audit)}
+    >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -164,9 +166,11 @@ export const BlackListIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip title={t(translations.general.table.token.projectInfo.blackList)}>
+    <StyledTooltip
+      title={t(translations.general.table.token.projectInfo.blackList)}
+    >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -200,11 +204,11 @@ export const CoinMarketIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip
+    <StyledTooltip
       title={t(translations.general.table.token.projectInfo.listedByCMC)}
     >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -240,7 +244,7 @@ export const OxIcon = function ({
   const tip = !isActive
     ? t(translations.general.table.token.projectInfo.notZeroAddress)
     : t(translations.general.table.token.projectInfo.zeroAddress);
-  return hoverable ? <Tooltip title={tip}>{icon}</Tooltip> : icon;
+  return hoverable ? <StyledTooltip title={tip}>{icon}</StyledTooltip> : icon;
 };
 export const SponsorIcon = function ({
   isActive = false,
@@ -271,9 +275,11 @@ export const SponsorIcon = function ({
     </StyledIconWrapper>
   );
   return hoverable ? (
-    <Tooltip title={t(translations.general.table.token.projectInfo.sponsor)}>
+    <StyledTooltip
+      title={t(translations.general.table.token.projectInfo.sponsor)}
+    >
       {icon}
-    </Tooltip>
+    </StyledTooltip>
   ) : (
     icon
   );
@@ -352,7 +358,7 @@ export const VerifyIcon = function ({
   const tip = !isActive
     ? t(translations.general.table.token.projectInfo.unverify)
     : t(translations.general.table.token.projectInfo.verify);
-  return hoverable ? <Tooltip title={tip}>{icon}</Tooltip> : icon;
+  return hoverable ? <StyledTooltip title={tip}>{icon}</StyledTooltip> : icon;
 };
 export const DetailIcon = function ({
   onClick,
@@ -390,11 +396,11 @@ export const DetailIcon = function ({
     title = React.createElement('div', {}, warnings);
   }
   return (
-    <Tooltip title={title}>
+    <StyledTooltip title={title}>
       <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
         {icon}
       </StyledIconWrapper>
-    </Tooltip>
+    </StyledTooltip>
   );
 };
 
@@ -402,5 +408,9 @@ const StyledIconWrapper = styled.span<{
   hoverable?: boolean;
 }>`
   cursor: ${props => (props.hoverable ? 'pointer' : 'inherit')};
+  display: inline-flex;
+`;
+
+const StyledTooltip = styled(Tooltip)`
   display: inline-flex;
 `;
