@@ -29,7 +29,7 @@ import { formatTimeStamp, addIPFSGateway } from 'utils';
 import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
 import _ from 'lodash';
@@ -335,10 +335,10 @@ export function NFTDetail(props) {
                     <SkeletonContainer shown={loading}>
                       {data.owner ? (
                         <>
-                          <AddressContainer
+                          <CoreAddressContainer
                             value={data.owner}
                             isFull={true}
-                          ></AddressContainer>{' '}
+                          ></CoreAddressContainer>{' '}
                           <CopyButton copyText={data.owner} />
                         </>
                       ) : (
@@ -362,10 +362,10 @@ export function NFTDetail(props) {
                               pointerEvents: 'none',
                             }}
                           >
-                            <AddressContainer
+                            <CoreAddressContainer
                               value={address}
                               isFull={true}
-                            ></AddressContainer>
+                            ></CoreAddressContainer>
                           </span>
                         </Link>{' '}
                         <CopyButton copyText={address} />
@@ -394,10 +394,10 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {data.creator ? (
                       <>
-                        <AddressContainer
+                        <CoreAddressContainer
                           value={data.creator}
                           isFull={true}
-                        ></AddressContainer>{' '}
+                        ></CoreAddressContainer>{' '}
                         <CopyButton copyText={data.creator} />
                       </>
                     ) : (

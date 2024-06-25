@@ -6,7 +6,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import imgArray from 'images/two_array.png';
-import { AddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
@@ -27,7 +27,7 @@ const OutputItem = ({ output, value }: Props) => {
     if (type === 'address') {
       valueComp = (
         <span className="value">
-          <AddressContainer value={value} isFull={true} />
+          <CoreAddressContainer value={value} isFull={true} />
         </span>
       );
     } else if (type.startsWith('address') && type.endsWith(']')) {
@@ -37,7 +37,7 @@ const OutputItem = ({ output, value }: Props) => {
           [
           {array.map((v: any, i) => (
             <>
-              <AddressContainer value={v} isFull={true} />
+              <CoreAddressContainer value={v} isFull={true} />
               {i === array.length - 1 ? null : ', '}
             </>
           ))}
