@@ -98,10 +98,6 @@ export function Table({ address, addressInfo }) {
     });
   }
 
-  const clientWidth = document.body.clientWidth;
-  let chartWidth = clientWidth - 36;
-  if (clientWidth > 1350) chartWidth = 1350;
-  if (chartWidth < 365) chartWidth = 365;
   const analysisPanel = () => (
     <StyledTabWrapper>
       <Contract address={address} />
