@@ -48,6 +48,11 @@ export const Leaderboard = () => {
   }));
 
   return (
-    <TablePanelNew url={url} columns={columns} hideDefaultTitle></TablePanelNew>
+    <TablePanelNew
+      url={url}
+      columns={columns}
+      hideDefaultTitle
+      rowKey="accountId"
+    ></TablePanelNew>
   );
 };

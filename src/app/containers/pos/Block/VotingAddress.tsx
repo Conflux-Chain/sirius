@@ -30,6 +30,7 @@ export function VotingAddress({ data, loading }) {
       columns={columns}
       dataSource={data}
       loading={loading}
+      rowKey="account"
     ></TablePanelNew>
   );
 }

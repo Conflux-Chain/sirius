@@ -20,10 +20,13 @@ export function Transactions({ height, loading }) {
         columns={columns}
         dataSource={[]}
         loading={loading}
+        rowKey="hash"
       ></TablePanelNew>
     );
   } else {
     const url = `/stat/list-tx-by-pos-height?height=${height}`;
-    return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+    return (
+      <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
+    );
   }
 }

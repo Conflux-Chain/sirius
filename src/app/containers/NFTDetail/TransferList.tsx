@@ -37,6 +37,9 @@ export const TransferList = ({ type, address, id, loading }) => {
       url={!!type ? url : ''}
       columns={columns}
       loading={loading}
+      rowKey={record =>
+        `${record.transactionHash}-${record.transactionLogIndex}`
+      }
     ></TablePanelNew>
   );
 };

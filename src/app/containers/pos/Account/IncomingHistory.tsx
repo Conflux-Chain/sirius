@@ -30,5 +30,7 @@ export function IncomingHistory() {
     width: columnsWidth[i],
   }));
 
-  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+  return (
+    <TablePanelNew url={url} columns={columns} rowKey="id"></TablePanelNew>
+  );
 }

@@ -336,7 +336,6 @@ TablePanel.defaultProps = {
   url: '',
   scroll: { x: 1200 },
   tableLayout: 'fixed',
-  rowKey: () => Math.random().toString().substr(2),
   title: undefined,
   footer: undefined,
   hideDefaultTitle: false,

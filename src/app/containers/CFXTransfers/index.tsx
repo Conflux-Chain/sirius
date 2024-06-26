@@ -39,7 +39,13 @@ export function CFXTransfers() {
         {t(translations.cfxTransfers.title)}
       </PageHeader>
 
-      <TablePanelNew url={url} columns={columnsCFXTrasfer}></TablePanelNew>
+      <TablePanelNew
+        url={url}
+        columns={columnsCFXTrasfer}
+        rowKey={record =>
+          `${record.transactionHash}-${record.transactionLogIndex}`
+        }
+      ></TablePanelNew>
     </>
   );
 }

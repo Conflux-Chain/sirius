@@ -27,7 +27,9 @@ export const List = () => {
     width: columnsWidth[i],
   }));
 
-  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+  return (
+    <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
+  );
 };
 
 export function Transactions() {

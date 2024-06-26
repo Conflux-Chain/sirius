@@ -32,6 +32,7 @@ export function VotesDistribution({ data, loading }) {
       columns={columns}
       dataSource={data}
       loading={loading}
+      rowKey="address"
     ></TablePanelNew>
   );
 }

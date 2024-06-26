@@ -47,6 +47,7 @@ export function VotingHistory() {
       sortKeyMap={{
         [String(['block', 'createdAt'])]: 'createdAt',
       }}
+      rowKey="blockNumber"
     ></TablePanelNew>
   );
 }
