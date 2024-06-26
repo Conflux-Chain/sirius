@@ -10,7 +10,7 @@ interface Props {
 export const ReferenceBlocks = ({ url }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsWidth = [4, 2, 2, 4, 6, 3, 5, 5];
+  const columnsWidth = [4, 2, 2, 4, 6, 3, 5, 3, 3, 3, 5];
   const columns = [
     blockColunms.epoch,
     blockColunms.position,
@@ -19,6 +19,9 @@ export const ReferenceBlocks = ({ url }: Props) => {
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,
+    blockColunms.gasLimit,
+    blockColunms.burntFee,
+    blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 

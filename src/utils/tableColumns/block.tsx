@@ -146,6 +146,9 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
+    const targetUsage = Number(
+      gasUsed.dividedBy(27000000).minus(1).multipliedBy(100).toFixed(0),
+    );
 
     if (value) {
       return (
@@ -153,7 +156,7 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit, 2)})
+              ({getPercent(row.gasUsed, row.gasLimit, 2)} | {targetUsage}%)
             </span>
           </div>
           <Progress
@@ -225,6 +228,27 @@ export const gasLimit = {
   key: 'gasLimit',
   width: 1,
   render: value => <Text tag="span">{toThousands(value)}</Text>,
+};
+
+export const burntFee = {
+  title: (
+    <StyledGasLimit>
+      <Translation>
+        {t => t(translations.general.table.block.burntFee)}
+      </Translation>
+    </StyledGasLimit>
+  ),
+  dataIndex: 'burntGasFee',
+  key: 'burntGasFee',
+  width: 1,
+  render: value =>
+    value ? (
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 const StyledHashWrapper = styled.span`

@@ -15,7 +15,7 @@ export function Blocks() {
   const url = '/block';
   const [ageFormat, toggleAgeFormat] = useAge();
 
-  const columnsBlocksWidth = [4, 2, 2, 5, 5, 4, 5, 3, 3, 5];
+  const columnsBlocksWidth = [4, 2, 2, 5, 5, 4, 8, 3, 3, 3, 5];
   const columnsBlocks = [
     blockColunms.epoch,
     blockColunms.position,
@@ -25,6 +25,7 @@ export function Blocks() {
     blockColunms.avgGasPrice,
     blockColunms.gasUsedPercentWithProgress,
     blockColunms.gasLimit,
+    blockColunms.burntFee,
     blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({
