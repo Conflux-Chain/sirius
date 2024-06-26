@@ -23,6 +23,7 @@ export const List = ({ overview }: { overview?: boolean }) => {
       url={url}
       columns={columns}
       pagination={overview ? false : undefined}
+      rowKey="epochNumber"
     ></TablePanelNew>
   );
 };

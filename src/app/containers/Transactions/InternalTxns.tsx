@@ -10,6 +10,7 @@ import { formatAddress } from 'utils';
 import styled from 'styled-components';
 import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { uniqueId } from 'lodash';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
@@ -97,6 +98,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
                   ...l,
                   fromContractInfo: contractInfo[l.from] || {},
                   toContractInfo: contractInfo[l.to] || {},
+                  id: uniqueId('InternalTxns-'),
                 };
               });
               setState({
@@ -176,6 +178,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
       dataSource={data}
       loading={loading}
       title={tableHeader}
+      rowKey="id"
     ></TablePanelNew>
   );
 };

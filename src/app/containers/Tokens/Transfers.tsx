@@ -131,6 +131,9 @@ export const Transfers = ({ type, address, decimals }: Props) => {
         columns={columns}
         title={title}
         footer={() => tableFooter}
+        rowKey={record =>
+          `${record.transactionHash}-${record.transactionLogIndex}`
+        }
       ></TablePanelNew>
     </>
   );

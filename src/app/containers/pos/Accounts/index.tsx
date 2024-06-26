@@ -36,6 +36,7 @@ export const List = ({ overview }: { overview?: boolean }) => {
           })}
         </span>
       )}
+      rowKey="rank"
     ></TablePanelNew>
   );
 };

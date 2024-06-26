@@ -24,6 +24,7 @@ export const Holders = ({ address, type, id, loading }: Props) => {
       url={url}
       columns={columns}
       loading={loading}
+      rowKey="owner"
     ></TablePanelNew>
   );
 };
