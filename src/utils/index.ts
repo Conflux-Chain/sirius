@@ -50,6 +50,7 @@ import {
   convertObjBigNumbersToStrings,
   constprocessResultArray,
   formatLargeNumber,
+  getIncreasePercent,
 } from '@cfxjs/sirius-next-common/dist/utils';
 
 import {
@@ -568,3 +569,7 @@ export const processSponsorStorage = (p = '0', c = '0') => {
     total,
   };
 };
+
+export const getCoreGasTargetUsage = (
+  gasUsed: Parameters<typeof getIncreasePercent>[0],
+) => getIncreasePercent(gasUsed, 27000000);

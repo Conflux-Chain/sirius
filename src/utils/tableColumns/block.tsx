@@ -13,7 +13,8 @@ import {
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
-} from 'utils/';
+  getCoreGasTargetUsage,
+} from 'utils';
 import imgPivot from 'images/pivot.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
@@ -146,9 +147,6 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
-    const targetUsage = Number(
-      gasUsed.dividedBy(27000000).minus(1).multipliedBy(100).toFixed(0),
-    );
 
     if (value) {
       return (
@@ -156,7 +154,8 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit, 2)} | {targetUsage}%)
+              ({getPercent(row.gasUsed, row.gasLimit, 2)} |{' '}
+              {getCoreGasTargetUsage(row.gasUsed)}%)
             </span>
           </div>
           <Progress

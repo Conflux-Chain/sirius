@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
@@ -8,12 +8,26 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Security } from 'app/components/Security/Loadable';
-import { getPercent, fromDripToCfx, formatTimeStamp, toThousands } from 'utils';
+import {
+  getPercent,
+  fromDripToCfx,
+  formatTimeStamp,
+  toThousands,
+  getCoreGasTargetUsage,
+} from 'utils';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from 'utils';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import styled from 'styled-components';
+import { fromDripToGdrip } from '@cfxjs/sirius-next-common/dist/utils';
+import { IncreasePercent } from '@cfxjs/sirius-next-common/dist/components/IncreasePercent';
+import imgChevronDown from 'images/chevronDown.png';
+import clsx from 'clsx';
 
 export function DescriptionPanel({ data, loading }) {
   const { t } = useTranslation();
+  const [folded, setFolded] = useState(true);
+  const handleFolded = () => setFolded(folded => !folded);
 
   const {
     hash,
@@ -30,6 +44,10 @@ export function DescriptionPanel({ data, loading }) {
     size,
     gasLimit,
     posReference,
+    rewardDetail,
+    baseFeePerGas,
+    baseFeePerGasRef,
+    burntGasFee,
   } = data || {};
 
   return (
@@ -59,14 +77,34 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.difficulty)}>
-            {t(translations.block.difficulty)}
+          <Tooltip title={t(translations.toolTip.block.security)}>
+            {t(translations.block.security)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          {toThousands(difficulty)} <CopyButton copyText={difficulty} />
+          <Security blockHash={hash} epochNumber={epochNumber}></Security>
         </SkeletonContainer>
+      </Description>
+      <Description
+        title={
+          <Tooltip title={t(translations.toolTip.block.timestamp)}>
+            {t(translations.block.timestamp)}
+          </Tooltip>
+        }
+      >
+        <SkeletonContainer shown={loading}>
+          {formatTimeStamp(timestamp * 1000, 'timezone')}
+        </SkeletonContainer>
+      </Description>
+      <Description
+        title={
+          <Tooltip title={t(translations.toolTip.block.blame)}>
+            {t(translations.block.blame)}
+          </Tooltip>
+        }
+      >
+        <SkeletonContainer shown={loading}>{blame}</SkeletonContainer>
       </Description>
       <Description
         title={
@@ -92,81 +130,72 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {totalReward ? `${fromDripToCfx(totalReward, true)} CFX` : '--'}
+          <ResetTooltipWrapper>
+            <Text
+              hoverValue={
+                rewardDetail && (
+                  <div>
+                    <div>
+                      {t(translations.toolTip.block.powBaseBlockReward, {
+                        amount: `${fromDripToCfx(
+                          rewardDetail.baseReward,
+                          true,
+                        )} CFX`,
+                      })}
+                    </div>
+                    <div>
+                      {t(translations.toolTip.block.transactionFees, {
+                        amount: `${fromDripToCfx(
+                          rewardDetail.txFee,
+                          true,
+                        )} CFX`,
+                      })}
+                    </div>
+                    <div>
+                      {t(translations.toolTip.block.storageInterest, {
+                        amount: `${fromDripToCfx(
+                          rewardDetail.storageCollateralInterest,
+                          true,
+                        )} CFX`,
+                      })}
+                    </div>
+                    <div>
+                      {t(translations.toolTip.block.burntFees, {
+                        amount: `${fromDripToCfx(
+                          rewardDetail.burntGasFee,
+                          true,
+                        )} CFX`,
+                      })}
+                    </div>
+                  </div>
+                )
+              }
+            >
+              {totalReward ? `${fromDripToCfx(totalReward, true)} CFX` : '--'}
+            </Text>
+          </ResetTooltipWrapper>
         </SkeletonContainer>
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.security)}>
-            {t(translations.block.security)}
+          <Tooltip title={t(translations.toolTip.block.difficulty)}>
+            {t(translations.block.difficulty)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          <Security blockHash={hash} epochNumber={epochNumber}></Security>
+          {toThousands(difficulty)} <CopyButton copyText={difficulty} />
         </SkeletonContainer>
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.blame)}>
-            {t(translations.block.blame)}
+          <Tooltip title={t(translations.toolTip.block.size)}>
+            {t(translations.block.size)}
           </Tooltip>
         }
+        noBorder
       >
-        <SkeletonContainer shown={loading}>{blame}</SkeletonContainer>
-      </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.posBlockHash)}>
-            {t(translations.block.posBlockHash)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>
-          {posReference ? (
-            <>
-              {posReference} <CopyButton copyText={posReference} />
-            </>
-          ) : (
-            '--'
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.blockHash)}>
-            {t(translations.block.blockHash)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>
-          {hash} <CopyButton copyText={hash} />
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.parentHash)}>
-            {t(translations.block.parentHash)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>
-          {
-            <>
-              <Link href={`/block/${parentHash}`}>{parentHash}</Link>{' '}
-              <CopyButton copyText={parentHash} />
-            </>
-          }
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.nonce)}>
-            {t(translations.block.nonce)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
+        <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
       </Description>
       <Description
         title={
@@ -185,25 +214,167 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.timestamp)}>
-            {t(translations.block.timestamp)}
+          <Tooltip title={t(translations.toolTip.block.gasTargetUsage)}>
+            {t(translations.block.gasTargetUsage)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          {formatTimeStamp(timestamp * 1000, 'timezone')}
+          <IncreasePercent value={getCoreGasTargetUsage(gasUsed)} />
         </SkeletonContainer>
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.size)}>
-            {t(translations.block.size)}
+          <Tooltip title={t(translations.toolTip.block.baseFeePerGas)}>
+            {t(translations.block.baseFeePerGas)}
           </Tooltip>
         }
-        noBorder
       >
-        <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
+        <SkeletonContainer shown={loading}>
+          {baseFeePerGas
+            ? `${fromDripToGdrip(baseFeePerGas, true)} Gdrip `
+            : '--'}
+          {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
+            <IncreasePercent
+              base={baseFeePerGas}
+              prev={baseFeePerGasRef.prePivot.baseFeePerGas}
+            />
+          )}
+        </SkeletonContainer>
+      </Description>
+      <Description
+        title={
+          <Tooltip title={t(translations.toolTip.block.burntFeesLabel)}>
+            {t(translations.block.burntFeesLabel)}
+          </Tooltip>
+        }
+      >
+        <SkeletonContainer shown={loading}>
+          {burntGasFee ? `${fromDripToCfx(burntGasFee, true)} CFX` : '--'}
+        </SkeletonContainer>
+      </Description>
+      <FoldedWrapper
+        className={clsx({
+          folded: folded,
+        })}
+      >
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.posBlockHash)}>
+              {t(translations.block.posBlockHash)}
+            </Tooltip>
+          }
+        >
+          <SkeletonContainer shown={loading}>
+            {posReference ? (
+              <>
+                {posReference} <CopyButton copyText={posReference} />
+              </>
+            ) : (
+              '--'
+            )}
+          </SkeletonContainer>
+        </Description>
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.blockHash)}>
+              {t(translations.block.blockHash)}
+            </Tooltip>
+          }
+        >
+          <SkeletonContainer shown={loading}>
+            {hash} <CopyButton copyText={hash} />
+          </SkeletonContainer>
+        </Description>
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.parentHash)}>
+              {t(translations.block.parentHash)}
+            </Tooltip>
+          }
+        >
+          <SkeletonContainer shown={loading}>
+            {
+              <>
+                <Link href={`/block/${parentHash}`}>{parentHash}</Link>{' '}
+                <CopyButton copyText={parentHash} />
+              </>
+            }
+          </SkeletonContainer>
+        </Description>
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.nonce)}>
+              {t(translations.block.nonce)}
+            </Tooltip>
+          }
+        >
+          <SkeletonContainer shown={loading}>{nonce}</SkeletonContainer>
+        </Description>
+      </FoldedWrapper>
+      <Description
+        title={
+          <StyledFoldButtonWrapper>
+            <div
+              className={clsx('detailResetFoldButton', {
+                folded: folded,
+              })}
+              onClick={handleFolded}
+            >
+              {t(translations.general[folded ? 'viewMore' : 'showLess'])}
+            </div>
+          </StyledFoldButtonWrapper>
+        }
+      >
+        {' '}
       </Description>
     </Card>
   );
 }
+
+const FoldedWrapper = styled.div`
+  height: inherit;
+  overflow: hidden;
+  &.folded {
+    height: 0;
+  }
+`;
+
+const ResetTooltipWrapper = styled.div`
+  .sirius-next-tooltip {
+    max-width: unset !important;
+  }
+`;
+
+const StyledFoldButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  .detailResetFoldButton {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 0.8571rem 0;
+    font-size: 1rem;
+    color: #002257;
+    cursor: pointer;
+    padding: 0;
+
+    &::after {
+      content: '';
+      background-image: url(${imgChevronDown});
+      transform: rotate(180deg);
+      width: 1.1429rem;
+      height: 1.1429rem;
+      display: inline-block;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-left: 0.3571rem;
+    }
+
+    &.folded::after {
+      transform: rotate(0);
+    }
+  }
+`;
