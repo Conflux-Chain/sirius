@@ -7,9 +7,7 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
 import {
-  fromDripToCfx,
   toThousands,
-  fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
@@ -26,6 +24,10 @@ import { PendingReason } from './PendingReason';
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
 import lodash from 'lodash';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;

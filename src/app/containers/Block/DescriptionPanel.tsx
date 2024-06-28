@@ -10,7 +10,6 @@ import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Security } from 'app/components/Security/Loadable';
 import {
   getPercent,
-  fromDripToCfx,
   formatTimeStamp,
   toThousands,
   getCoreGasTargetUsage,
@@ -19,7 +18,10 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { formatAddress } from 'utils';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import styled from 'styled-components';
-import { fromDripToGdrip } from '@cfxjs/sirius-next-common/dist/utils';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 import { IncreasePercent } from '@cfxjs/sirius-next-common/dist/components/IncreasePercent';
 import imgChevronDown from 'images/chevronDown.png';
 import clsx from 'clsx';
@@ -235,10 +237,16 @@ export function DescriptionPanel({ data, loading }) {
             ? `${fromDripToGdrip(baseFeePerGas, true)} Gdrip `
             : '--'}
           {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
-            <IncreasePercent
-              base={baseFeePerGas}
-              prev={baseFeePerGasRef.prePivot.baseFeePerGas}
-            />
+            <Tooltip
+              title={t(translations.toolTip.block.compareToPivotBlock, {
+                block: baseFeePerGasRef.prePivot.height,
+              })}
+            >
+              <IncreasePercent
+                base={baseFeePerGas}
+                prev={baseFeePerGasRef.prePivot.baseFeePerGas}
+              />
+            </Tooltip>
           )}
         </SkeletonContainer>
       </Description>

@@ -7,9 +7,7 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import {
   formatNumber,
   getPercent,
-  fromDripToCfx,
   toThousands,
-  fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
@@ -20,6 +18,10 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 export const epoch = {
   title: (
@@ -229,11 +231,11 @@ export const gasLimit = {
   render: value => <Text tag="span">{toThousands(value)}</Text>,
 };
 
-export const burntFee = {
+export const burntFees = {
   title: (
     <StyledGasLimit>
       <Translation>
-        {t => t(translations.general.table.block.burntFee)}
+        {t => t(translations.general.table.block.burntFees)}
       </Translation>
     </StyledGasLimit>
   ),

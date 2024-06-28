@@ -10,8 +10,6 @@ import { Search as SearchComp } from 'app/components/Search/Loadable';
 import { DappButton } from 'app/components/DappButton/Loadable';
 import {
   isCurrentNetworkAddress,
-  fromDripToGdrip,
-  fromDripToCfx,
   getAddressInputPlaceholder,
   formatAddress,
   processSponsorStorage,
@@ -29,6 +27,10 @@ import Faucet from 'utils/sponsorFaucet/faucet';
 import { getSponsorInfo as rpcGetSponsorInfo } from 'utils/rpcRequest';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
 import ENV_CONFIG from 'env';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 interface RouteParams {
   contractAddress: string;

@@ -20,7 +20,7 @@ export const ReferenceBlocks = ({ url }: Props) => {
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,
     blockColunms.gasLimit,
-    blockColunms.burntFee,
+    blockColunms.burntFees,
     blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));

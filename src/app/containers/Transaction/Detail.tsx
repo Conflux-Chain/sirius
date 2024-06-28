@@ -27,11 +27,9 @@ import {
 import {
   formatBalance,
   formatTimeStamp,
-  fromDripToCfx,
   getPercent,
   toThousands,
   isCoreContractAddress,
-  fromDripToGdrip,
   isZeroAddress,
   hideInDotNet,
 } from 'utils';
@@ -60,6 +58,10 @@ import { useNametag } from 'utils/hooks/useNametag';
 import iconInfo from 'images/info.svg';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
