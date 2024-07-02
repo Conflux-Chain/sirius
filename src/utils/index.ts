@@ -60,11 +60,9 @@ import {
   isInnerContractAddress,
   isSpecialAddress,
   formatAddress as _formatAddress,
-} from '@cfxjs/sirius-next-common/dist/utils/address';
-import {
   isBase32Address,
   isSimplyBase32Address,
-} from '@cfx-kit/dapp-utils/dist/address';
+} from '@cfxjs/sirius-next-common/dist/utils/address';
 
 export {
   formatNumber,
