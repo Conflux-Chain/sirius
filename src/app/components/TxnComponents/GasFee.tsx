@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import React from 'react';
-import { fromDripToCfx } from 'utils';
 import _ from 'lodash';
 
 import imgSponsoredEn from 'images/sponsored.png';
 import imgSponsoredZh from 'images/sponsored-zh.png';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 export const GasFee = ({ fee, sponsored }) => {
   const { i18n } = useTranslation();

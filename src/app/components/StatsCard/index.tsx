@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
-import {
-  formatNumber,
-  fromDripToCfx,
-  hideInDotNet,
-  toThousands,
-} from '../../../utils';
+import { formatNumber, hideInDotNet, toThousands } from '../../../utils';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from '../../../utils';
 import { token } from '../../../utils/tableColumns/token';
@@ -24,6 +19,7 @@ import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
 import { HIDE_IN_DOT_NET } from '../../../utils/constants';
 import { IS_TESTNET } from 'env';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',

@@ -7,7 +7,6 @@ import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Modal } from '@cfxjs/react-ui';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import {
-  fromDripToCfx,
   getTimeByBlockInterval,
   toThousands,
   publishRequestError,
@@ -29,6 +28,7 @@ import {
   getVoteList,
 } from 'utils/rpcRequest';
 import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
