@@ -12,13 +12,24 @@ module.exports = {
     'prettier/react',
     'prettier/@typescript-eslint',
   ],
-  plugins: ['prettier'],
+  plugins: ['prettier', 'import'],
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'react-hooks/exhaustive-deps': [
       'warn',
       {
         additionalHooks: 'useRecoilCallback',
+      },
+    ],
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          {
+            from: './node_modules/@cfx-kit/dapp-utils/dist/address.js',
+            target: '.',
+          },
+        ],
       },
     ],
   },
