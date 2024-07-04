@@ -126,16 +126,17 @@ export function Block() {
 }
 
 const PivotTagWrapper = styled.span`
-  background-color: #17b38a;
-  color: #fff;
-  font-size: 14px;
-  line-height: 18px;
+  border-radius: 9.5px;
+  background: rgba(0, 206, 125, 0.1);
+  color: #00ce7d;
+  font-size: 10px;
+  line-height: 20px;
   display: inline-block;
-  height: 18px;
-  width: 55px;
-  margin-left: 10px;
-  border-radius: 30px;
+  height: 20px;
+  width: 42px;
+  margin-left: 12px;
   text-align: center;
+  font-weight: 500;
 `;
 const PivotTag = () => <PivotTagWrapper>Pivot</PivotTagWrapper>;
 

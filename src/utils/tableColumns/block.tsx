@@ -149,6 +149,7 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
+    const gasTargetUsage = getCoreGasTargetUsage(row.gasUsed);
 
     if (value) {
       return (
@@ -157,7 +158,8 @@ export const gasUsedPercentWithProgress = {
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
               ({getPercent(row.gasUsed, row.gasLimit, 2)} |{' '}
-              {getCoreGasTargetUsage(row.gasUsed)}%)
+              {!gasTargetUsage.isNegative && '+'}
+              {gasTargetUsage.percent})
             </span>
           </div>
           <Progress
