@@ -25,6 +25,29 @@ import {
 import { IncreasePercent } from '@cfxjs/sirius-next-common/dist/components/IncreasePercent';
 import imgChevronDown from 'images/chevronDown.png';
 import clsx from 'clsx';
+import { Progress } from '@cfxjs/antd';
+
+const GasTargetUsage: React.FC<{
+  gasUsed: string;
+}> = ({ gasUsed }) => {
+  const { isNegative, percent, value } = getCoreGasTargetUsage(gasUsed);
+  return (
+    <GasTargetUsageWrapper>
+      <Progress
+        type="dashboard"
+        size="small"
+        gapDegree={180}
+        showInfo={false}
+        strokeWidth={8}
+        strokeColor={isNegative ? '#FA5D5D' : '#4AC2AB'}
+        trailColor="#eeeeee"
+        percent={Math.abs(value)}
+        width={40}
+      />
+      <IncreasePercent value={percent} showPlus />
+    </GasTargetUsageWrapper>
+  );
+};
 
 export function DescriptionPanel({ data, loading }) {
   const { t } = useTranslation();
@@ -53,7 +76,7 @@ export function DescriptionPanel({ data, loading }) {
   } = data || {};
 
   return (
-    <Card>
+    <StyledCardWrapper>
       <Description
         title={
           <Tooltip title={t(translations.toolTip.block.blockHeight)}>
@@ -195,7 +218,6 @@ export function DescriptionPanel({ data, loading }) {
             {t(translations.block.size)}
           </Tooltip>
         }
-        noBorder
       >
         <SkeletonContainer shown={loading}>{size}</SkeletonContainer>
       </Description>
@@ -222,7 +244,7 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          <IncreasePercent value={getCoreGasTargetUsage(gasUsed)} />
+          <GasTargetUsage gasUsed={gasUsed} />
         </SkeletonContainer>
       </Description>
       <Description
@@ -238,14 +260,28 @@ export function DescriptionPanel({ data, loading }) {
             : '--'}
           {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
             <Tooltip
-              title={t(translations.toolTip.block.compareToPivotBlock, {
-                block: baseFeePerGasRef.prePivot.height,
-              })}
+              title={
+                baseFeePerGasRef?.prePivot?.height && (
+                  <div>
+                    {t(translations.toolTip.block.compareToPivotBlock, {
+                      block: baseFeePerGasRef.prePivot.height,
+                    })}
+                    <CopyButton
+                      copyText={baseFeePerGasRef.prePivot.height}
+                      color="#ECECEC"
+                      className="copy-button-in-tooltip"
+                    />
+                  </div>
+                )
+              }
             >
-              <IncreasePercent
-                base={baseFeePerGas}
-                prev={baseFeePerGasRef.prePivot.baseFeePerGas}
-              />
+              <BaseFeeIncreaseWrapper>
+                <IncreasePercent
+                  base={baseFeePerGas}
+                  prev={baseFeePerGasRef.prePivot.baseFeePerGas}
+                  showArrow
+                />
+              </BaseFeeIncreaseWrapper>
             </Tooltip>
           )}
         </SkeletonContainer>
@@ -258,7 +294,7 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {burntGasFee ? `${fromDripToCfx(burntGasFee, true)} CFX` : '--'}
+          {burntGasFee ? `🔥 ${fromDripToCfx(burntGasFee, true)} CFX` : '--'}
         </SkeletonContainer>
       </Description>
       <FoldedWrapper
@@ -333,12 +369,32 @@ export function DescriptionPanel({ data, loading }) {
             </div>
           </StyledFoldButtonWrapper>
         }
+        noBorder
       >
         {' '}
       </Description>
-    </Card>
+    </StyledCardWrapper>
   );
 }
+
+const BaseFeeIncreaseWrapper = styled.div`
+  display: inline-block;
+  padding: 4px 16px;
+  border: 1px solid #ebeced;
+  margin-left: 16px;
+`;
+
+const GasTargetUsageWrapper = styled.div`
+  display: inline-flex;
+  gap: 16px;
+  height: 22px;
+`;
+
+const StyledCardWrapper = styled(Card)`
+  .copy-button-in-tooltip {
+    margin-left: 8px;
+  }
+`;
 
 const FoldedWrapper = styled.div`
   height: inherit;
