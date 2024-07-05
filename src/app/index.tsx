@@ -113,6 +113,8 @@ import {
   DailyCFXTransferCount as CrossSpaceDailyCFXTransferCount,
 } from './containers/Charts/crossSpace/Loadable';
 
+import { Chart as BurntFeesAnalysis } from './containers/Charts/burntFees/Loadable';
+
 import {
   Chart as NFTChart,
   Assets as NFTAssets,
@@ -717,6 +719,12 @@ export function App() {
                           exact
                           path="/cross-space-charts"
                           component={CrossSpaceChart}
+                        />
+
+                        <Route
+                          exact
+                          path="/burnt-fees-analysis"
+                          component={BurntFeesAnalysis}
                         />
 
                         <Route

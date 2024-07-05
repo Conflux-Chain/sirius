@@ -22,6 +22,7 @@ export const ScanEvent = {
       posCharts: 'PoS Charts',
       nftCharts: 'NFT Charts',
       crossSpaceCharts: 'Cross Space Charts',
+      burntFeesAnalysis: 'Burnt Fees Analysis',
       statistics: 'statistics',
       confluxNetwork: 'official_website',
       fluentWallet: 'portal',

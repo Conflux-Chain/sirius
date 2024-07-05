@@ -164,6 +164,8 @@ export const OPEN_API_URLS = Object.entries({
   nftContracts: '/statistics/nft/contract',
   nftTransfers: '/statistics/nft/transfer',
   approvals: '/account/approvals',
+  cumulativeCFXBurn: '/statistics/burnt/fee',
+  breakdownByBurntType: '/statistics/burnt/fee',
 
   // NFT
   NFTTokens: '/nft/tokens',

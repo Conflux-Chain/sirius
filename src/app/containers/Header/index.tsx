@@ -419,6 +419,16 @@ export const Header = memo(() => {
       href: '/cross-space-charts',
     });
 
+    chartItems.splice(4, 0, {
+      title: [
+        t(translations.header.burntFeesAnalysis),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.burntFeesAnalysis,
+      afterClick: menuClick,
+      href: '/burnt-fees-analysis',
+    });
+
     toolItems.splice(4, 0, {
       title: [
         t(translations.header.balanceChecker),

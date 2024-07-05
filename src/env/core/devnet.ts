@@ -4,11 +4,7 @@ import logo from 'images/core-space/logo.svg';
 
 export const ENV_NETWORK_ID = 8888;
 export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE_DEVNET;
-export const ENV_OPEN_API_HOST =
-  API_HOST_MAP.openAPIHost ||
-  (IS_DEV
-    ? 'https://api.confluxscan.net'
-    : window.location.host.replace(/cfx/, 'api'));
+export const ENV_OPEN_API_HOST = 'https://net8888api.confluxscan.net';
 export const ENV_RPC_SERVER =
   API_HOST_MAP.openAPIHost || 'https://net8888cfx.confluxrpc.com';
 export const ENV_FC_ADDRESS = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2';

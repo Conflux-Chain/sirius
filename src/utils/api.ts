@@ -5,11 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
+import ENV_CONFIG from 'env';
 // import { getCurrency } from 'utils/constants';
 
 export const appendApiPrefix = (url: string) => {
   // for cfx top N
   if (url.startsWith('/stat/')) {
+    return url;
+  }
+  if (url.startsWith(ENV_CONFIG.ENV_OPEN_API_HOST)) {
     return url;
   }
   return `/v1${url}`;
@@ -634,6 +638,22 @@ export const fetchRecentDagBlock = async (opts = {}) => {
 export const useCfxBalance: useApi = (params = {}) => {
   return useSWR(
     Object.keys(params).length ? ['/stat/get-cfx-balance-at', params] : null,
+    simpleGetFetcher,
+  );
+};
+
+export const useBurntFeesStatistics = (params = {}) => {
+  return useSWR(
+    `${ENV_CONFIG.ENV_OPEN_API_HOST}/statistics/burnt/fee`,
+    simpleGetFetcher,
+  );
+};
+
+export const useWCFXTokenInfo = (params = {}) => {
+  return useSWR(
+    Object.keys(params).length
+      ? [`${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos`, params]
+      : null,
     simpleGetFetcher,
   );
 };
