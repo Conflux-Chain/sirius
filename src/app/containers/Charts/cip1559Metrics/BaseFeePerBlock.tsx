@@ -7,30 +7,23 @@ import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Ch
 import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 
-export function CumulativeCFXBurn({ preview = false }: ChildProps) {
+export function BaseFeePerBlock({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     request: {
-      url: OPEN_API_URLS.cumulativeCFXBurn,
+      url: OPEN_API_URLS.baseFeePerBlock,
       query: {
         intervalType: 'day',
-        limit: '365',
+        limit: '2000',
       },
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.statTime).valueOf();
-          data1.push([
-            t,
-            Number(new BigNumber(d.burntGasFeeTotal).div(1e18).toNumber()),
-          ]);
-          data2.push([
-            t,
-            Number(new BigNumber(d.burntStorageFeeTotal).div(1e18).toNumber()),
-          ]);
+          const t = dayjs.utc(d.timestamp * 1000).valueOf();
+          data1.push([t, Number(new BigNumber(d.baseFee).div(1e9).toNumber())]);
         });
 
         return [data1, data2];
@@ -43,9 +36,10 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
       header: {
         titleShow: false,
         breadcrumbShow: false,
+        optionShow: false,
       },
       title: {
-        text: t(translations.highcharts.burntFeesAnalysis.cumulativeCFXBurn),
+        text: t(translations.highcharts.burntFeesAnalysis.BaseFeePerBlock),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -56,11 +50,6 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
       tooltip: {
         shared: true,
       },
-      plotOptions: {
-        area: {
-          stacking: 'normal',
-        },
-      },
       navigator: {
         enabled: false,
       },
@@ -69,22 +58,10 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
       },
       series: [
         {
-          type: 'area',
+          type: 'line',
           name: `<span>${t(
-            translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
+            translations.highcharts.burntFeesAnalysis.baseFee,
           )}</span>`,
-          color: '#7cb5ec',
-          fillOpacity: 1,
-          fillColor: '#7cb5ec',
-        },
-        {
-          type: 'area',
-          name: `<span>${t(
-            translations.highcharts.burntFeesAnalysis['storageBurn'],
-          )}</span>`,
-          color: '#90ed7d',
-          fillOpacity: 1,
-          fillColor: '#90ed7d',
         },
       ],
     },

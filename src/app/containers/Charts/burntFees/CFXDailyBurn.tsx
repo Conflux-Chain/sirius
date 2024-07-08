@@ -7,16 +7,12 @@ import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Ch
 import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 
-export function CumulativeCFXBurn({ preview = false }: ChildProps) {
+export function CFXDailyBurn({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
     request: {
-      url: OPEN_API_URLS.cumulativeCFXBurn,
-      query: {
-        intervalType: 'day',
-        limit: '365',
-      },
+      url: OPEN_API_URLS.cfxDailyBurn,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
@@ -45,7 +41,7 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
         breadcrumbShow: false,
       },
       title: {
-        text: t(translations.highcharts.burntFeesAnalysis.cumulativeCFXBurn),
+        text: t(translations.highcharts.burntFeesAnalysis.CFXDailyBurn),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -57,7 +53,7 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
         shared: true,
       },
       plotOptions: {
-        area: {
+        column: {
           stacking: 'normal',
         },
       },
@@ -69,22 +65,18 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
       },
       series: [
         {
-          type: 'area',
+          type: 'column',
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
           )}</span>`,
           color: '#7cb5ec',
-          fillOpacity: 1,
-          fillColor: '#7cb5ec',
         },
         {
-          type: 'area',
+          type: 'column',
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['storageBurn'],
           )}</span>`,
           color: '#90ed7d',
-          fillOpacity: 1,
-          fillColor: '#90ed7d',
         },
       ],
     },

@@ -114,6 +114,7 @@ import {
 } from './containers/Charts/crossSpace/Loadable';
 
 import { Chart as BurntFeesAnalysis } from './containers/Charts/burntFees/Loadable';
+import { Chart as CIP1559Metrics } from './containers/Charts/cip1559Metrics/Loadable';
 
 import {
   Chart as NFTChart,
@@ -725,6 +726,12 @@ export function App() {
                           exact
                           path="/burnt-fees-analysis"
                           component={BurntFeesAnalysis}
+                        />
+
+                        <Route
+                          exact
+                          path="/cip-1559-metrics"
+                          component={CIP1559Metrics}
                         />
 
                         <Route

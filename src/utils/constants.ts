@@ -166,6 +166,12 @@ export const OPEN_API_URLS = Object.entries({
   approvals: '/account/approvals',
   cumulativeCFXBurn: '/statistics/burnt/fee',
   breakdownByBurntType: '/statistics/burnt/fee',
+  cfxDailyBurn: '/statistics/burnt/fee',
+  burntRateInDaoVoting: '/statistics/burnt/rate',
+  baseFeePerBlock: '/statistics/block/base-fee',
+  averagePriorityFeePerBlock: '/statistics/block/avg-priority-fee',
+  gasUsedPerBlock: '/statistics/block/gas-used',
+  percentageOfTxTypeInBlock: '/statistics/block/txs-by-type',
 
   // NFT
   NFTTokens: '/nft/tokens',

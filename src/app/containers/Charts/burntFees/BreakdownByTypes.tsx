@@ -14,7 +14,6 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
       url: OPEN_API_URLS.breakdownByBurntType,
       formatter: data => {
         let result: any = [];
-        console.log(data);
         if (data) {
           result = [
             {
@@ -54,6 +53,7 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
       series: [
         {
           type: 'pie',
+          colors: ['#7cb5ec', '#90ed7d'],
         },
       ],
     },

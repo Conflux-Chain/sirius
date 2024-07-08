@@ -23,6 +23,7 @@ export const ScanEvent = {
       nftCharts: 'NFT Charts',
       crossSpaceCharts: 'Cross Space Charts',
       burntFeesAnalysis: 'Burnt Fees Analysis',
+      cip1559Metrics: 'CIP-1559 Metrics',
       statistics: 'statistics',
       confluxNetwork: 'official_website',
       fluentWallet: 'portal',

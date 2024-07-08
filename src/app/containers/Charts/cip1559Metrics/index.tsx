@@ -5,11 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StyledChartPreviewWrapper } from '../common/StyledChartPreviewWrapper';
 
-import { CumulativeCFXBurn } from './CumulativeCFXBurn';
-import { BreakdownByTypes } from './BreakdownByTypes';
-import { StatisticsDatas } from './StatisticsData';
-import { CFXDailyBurn } from './CFXDailyBurn';
-import { BurntRateInDaoVoting } from './BurntRateInDaoVoting';
+import { BaseFeePerBlock } from './BaseFeePerBlock';
+import { AveragePriorityFeePerBlock } from './AveragePriorityFeePerBlock';
+import { GasUsedPerBlock } from './GasUsedPerBlock';
+import { PercentageOfTxTypeInBlock } from './PercentageOfTxTypeInBlock';
 
 export function Chart() {
   const { t } = useTranslation();
@@ -17,26 +16,25 @@ export function Chart() {
   return (
     <StyledChartPreviewWrapper>
       <PageHeader
-        subtitle={t(translations.highcharts.burntFeesAnalysis.preview.subtitle)}
+        subtitle={t(
+          translations.highcharts.burntFeesAnalysis['CIP-1559MetricsTips'],
+        )}
       >
-        {t(translations.highcharts.burntFeesAnalysis.preview.title)}
+        {t(translations.highcharts.burntFeesAnalysis['CIP-1559Metrics'])}
       </PageHeader>
 
       <Row gutter={[20, 20]}>
-        <Col xxl={8} xl={8} lg={7} md={24} sm={24} xs={24}>
-          <StatisticsDatas />
-        </Col>
-        <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
-          <BreakdownByTypes />
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <BaseFeePerBlock />
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <CumulativeCFXBurn />
+          <AveragePriorityFeePerBlock />
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <CFXDailyBurn />
+          <GasUsedPerBlock />
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <BurntRateInDaoVoting />
+          <PercentageOfTxTypeInBlock />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>

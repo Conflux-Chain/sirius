@@ -36,14 +36,14 @@ export function StatisticsDatas() {
         <div className="title">
           {t(translations.highcharts.burntFeesAnalysis.totalBurntFees)}
         </div>
-        <div className="data">{totalBurntFees}</div>
+        <div className="data">{totalBurntFees.toFixed(2)}</div>
         <div className="symbol">CFX</div>
       </StatisticsData>
       <StatisticsData>
         <div className="title">
           {t(translations.highcharts.burntFeesAnalysis.marketCap)}
         </div>
-        <div className="data">{marketCap}</div>
+        <div className="data">{marketCap.toFixed(2)}</div>
         <div className="symbol">USD</div>
       </StatisticsData>
     </StatisticsDataWrapper>
