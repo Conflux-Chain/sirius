@@ -59,15 +59,9 @@ export function GasUsedPerBlock({ preview = false }: ChildProps) {
         shared: true,
         xDateFormat: '%Y-%m-%d %H:%M:%S',
       },
-      // navigator: {
-      //   enabled: false,
-      // },
-      // scrollbar: {
-      //   enabled: false,
-      // },
-      // legend: {
-      //   enabled: false,
-      // },
+      rangeSelector: {
+        enabled: false,
+      },
       series: [
         {
           type: 'column',

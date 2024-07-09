@@ -53,7 +53,7 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
       series: [
         {
           type: 'pie',
-          colors: ['#7cb5ec', '#90ed7d'],
+          colors: ['#90ed7d', '#7cb5ec'],
         },
       ],
     },

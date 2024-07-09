@@ -56,10 +56,7 @@ export function AveragePriorityFeePerBlock({ preview = false }: ChildProps) {
         shared: true,
         xDateFormat: '%Y-%m-%d %H:%M:%S',
       },
-      navigator: {
-        enabled: false,
-      },
-      scrollbar: {
+      rangeSelector: {
         enabled: false,
       },
       series: [
@@ -68,6 +65,10 @@ export function AveragePriorityFeePerBlock({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['AveragePriorityFee'],
           )}</span>`,
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
         },
       ],
     },

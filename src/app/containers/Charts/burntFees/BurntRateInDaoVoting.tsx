@@ -46,11 +46,9 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
       },
       tooltip: {
         shared: true,
+        xDateFormat: '%Y-%m-%d %H:%M:%S',
       },
-      navigator: {
-        enabled: false,
-      },
-      scrollbar: {
+      rangeSelector: {
         enabled: false,
       },
       series: [

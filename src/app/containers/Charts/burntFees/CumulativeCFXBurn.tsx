@@ -25,11 +25,11 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([
             t,
-            Number(new BigNumber(d.burntGasFeeTotal).div(1e18).toNumber()),
+            new BigNumber(d.burntGasFeeTotal).div(1e18).toNumber(),
           ]);
           data2.push([
             t,
-            Number(new BigNumber(d.burntStorageFeeTotal).div(1e18).toNumber()),
+            new BigNumber(d.burntStorageFeeTotal).div(1e18).toNumber(),
           ]);
         });
 
@@ -61,10 +61,7 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
           stacking: 'normal',
         },
       },
-      navigator: {
-        enabled: false,
-      },
-      scrollbar: {
+      rangeSelector: {
         enabled: false,
       },
       series: [
@@ -73,18 +70,26 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
           )}</span>`,
-          color: '#7cb5ec',
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
+          color: '#90ed7d',
           fillOpacity: 1,
-          fillColor: '#7cb5ec',
+          fillColor: '#90ed7d',
         },
         {
           type: 'area',
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['storageBurn'],
           )}</span>`,
-          color: '#90ed7d',
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
+          color: '#7cb5ec',
           fillOpacity: 1,
-          fillColor: '#90ed7d',
+          fillColor: '#7cb5ec',
         },
       ],
     },

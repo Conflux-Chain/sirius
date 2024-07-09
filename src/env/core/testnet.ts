@@ -4,7 +4,11 @@ import logo from 'images/core-space/logo-testnet.svg';
 
 export const ENV_NETWORK_ID = 1;
 export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE_TESTNET;
-export const ENV_OPEN_API_HOST = `https://api-testnet-stage.confluxscan${DOMAIN}`; // open api
+export const ENV_OPEN_API_HOST =
+  API_HOST_MAP.openAPIHost ||
+  (IS_STAGE
+    ? `https://api-testnet-stage.confluxscan${DOMAIN}`
+    : `https://api-testnet.confluxscan${DOMAIN}`);
 export const ENV_RPC_SERVER =
   API_HOST_MAP.rpcHost || 'https://test.confluxrpc.com';
 export const ENV_FC_ADDRESS =

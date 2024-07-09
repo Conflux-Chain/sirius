@@ -57,10 +57,7 @@ export function CFXDailyBurn({ preview = false }: ChildProps) {
           stacking: 'normal',
         },
       },
-      navigator: {
-        enabled: false,
-      },
-      scrollbar: {
+      rangeSelector: {
         enabled: false,
       },
       series: [
@@ -69,14 +66,22 @@ export function CFXDailyBurn({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
           )}</span>`,
-          color: '#7cb5ec',
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
+          color: '#90ed7d',
         },
         {
           type: 'column',
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis['storageBurn'],
           )}</span>`,
-          color: '#90ed7d',
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
+          color: '#7cb5ec',
         },
       ],
     },

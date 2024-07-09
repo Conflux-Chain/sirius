@@ -50,10 +50,7 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
       tooltip: {
         shared: true,
       },
-      navigator: {
-        enabled: false,
-      },
-      scrollbar: {
+      rangeSelector: {
         enabled: false,
       },
       series: [
@@ -62,6 +59,10 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
           name: `<span>${t(
             translations.highcharts.burntFeesAnalysis.baseFee,
           )}</span>`,
+          tooltip: {
+            valueDecimals: 2,
+            valueSuffix: ' CFX',
+          },
         },
       ],
     },

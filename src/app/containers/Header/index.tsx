@@ -419,26 +419,6 @@ export const Header = memo(() => {
       href: '/cross-space-charts',
     });
 
-    chartItems.splice(4, 0, {
-      title: [
-        t(translations.header.burntFeesAnalysis),
-        <Check size={18} key="check" />,
-      ],
-      name: ScanEvent.menu.action.burntFeesAnalysis,
-      afterClick: menuClick,
-      href: '/burnt-fees-analysis',
-    });
-
-    chartItems.splice(5, 0, {
-      title: [
-        t(translations.header.cip1559Metrics),
-        <Check size={18} key="check" />,
-      ],
-      name: ScanEvent.menu.action.cip1559Metrics,
-      afterClick: menuClick,
-      href: '/cip-1559-metrics',
-    });
-
     toolItems.splice(4, 0, {
       title: [
         t(translations.header.balanceChecker),
