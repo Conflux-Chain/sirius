@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
@@ -27,7 +28,7 @@ export function AveragePriorityFeePerBlock({ preview = false }: ChildProps) {
           }
 
           timestamps.add(t);
-          data1.push([t, Number(d.avgPriorityFee)]);
+          data1.push([t, new BigNumber(d.avgPriorityFee).div(1e9).toNumber()]);
         });
         return [data1];
       },
@@ -67,7 +68,7 @@ export function AveragePriorityFeePerBlock({ preview = false }: ChildProps) {
           )}</span>`,
           tooltip: {
             valueDecimals: 2,
-            valueSuffix: ' CFX',
+            valueSuffix: ' Gdrip',
           },
         },
       ],

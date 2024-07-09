@@ -61,7 +61,7 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
           )}</span>`,
           tooltip: {
             valueDecimals: 2,
-            valueSuffix: ' CFX',
+            valueSuffix: ' Gdrip',
           },
         },
       ],
