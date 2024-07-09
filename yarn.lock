@@ -2508,15 +2508,15 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.0.7.tgz#ccf3dd10abf024708df8e67ea3dc2f113dc85eeb"
-  integrity sha512-s/MLNs1bLTCyuo7t7Q3jQyXIAjIDPrpsH4X/S9mSndGForf1XztiI6c2uYI9+bmQesnb/m21T2CLHhJdHYogBw==
+"@cfxjs/sirius-next-common@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.2.tgz#49b3d8d3746fa548d85c237acdfa25d9f15faab1"
+  integrity sha512-cXyw/r0DcHtrAuGGKNCQT9bmwpKKepsC4LTdk7K0NxI0yu/TcoKwUwS6dahQE2hfcGtYdHmSmnSsNBOaYu0Dlw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.0"
     "@cfx-kit/react-utils" "^0.0.29"
     "@cfx-kit/ui-components" "^0.0.17"
-    "@cfxjs/sirius-next-i18n" "0.0.0"
+    "@cfxjs/sirius-next-i18n" "0.1.1"
     "@radix-ui/react-select" "^2.0.0"
     "@testing-library/react" "^15.0.5"
     "@types/i18next" "^13.0.0"
@@ -2548,10 +2548,15 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.0.0", "@cfxjs/sirius-next-i18n@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.0.0.tgz#ce8a958e9256b47f060d43ca95820543f150f12d"
-  integrity sha512-QmItYHpPk8dwSxeESmgXqhN1Mkcbu7sed8yN0U1/cqaAOyP9mw7n4LCUyQvQV8zhWzLmiSDgGyTMo4/29c22og==
+"@cfxjs/sirius-next-i18n@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.1.tgz#541d12e51e075fd51eb49794891625309ab27c33"
+  integrity sha512-ciavR4/oPF3xtuuwDfN4lWvaW+R8xmHg5a5cGnysrvkpjVHKHGEK7QZzFdsBgefoAvdC29fEqVFszgJb1RciOA==
+
+"@cfxjs/sirius-next-i18n@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.3.tgz#74f027c700bb609cddffb0387aeb2e9780a2c183"
+  integrity sha512-mXU7V86c7jTmCKYhJuNKnyCv85RymZIP9NkvifjsHm4ZrpQVv8uPhCoDx4GY5sMMRFjxoGo+MvV8FxVOO2lsOQ==
 
 "@cfxjs/use-wallet-react@0.0.2-5":
   version "0.0.2-5"
