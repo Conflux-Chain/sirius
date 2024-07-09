@@ -657,13 +657,8 @@ export const useWCFXTokenInfo = () => {
     ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
       ? wcfxToken
       : wcfxTestToken;
-  return useSWR(
-    [
-      `${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos`,
-      {
-        contracts: wcfx,
-      },
-    ],
-    simpleGetFetcher,
-  );
+
+  const key = `${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos?contracts=${wcfx}`;
+
+  return useSWR(key, simpleGetFetcher);
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
@@ -15,9 +16,10 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         const data1: any = [];
         const data2: any = [];
 
-        data?.list?.map((d, i) => {
-          const t = d.epochNumber;
-          data1.push([t, Number(d['baseFeeShareRate'])]);
+        data?.list.map(d => {
+          let t = dayjs.utc(d.timestamp * 1000).valueOf();
+
+          data1.push([t, Number(d.baseFeeShareRate)]);
           data2.push([t, Number(d.storagePointRate)]);
         });
 
@@ -34,15 +36,18 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         optionShow: false,
       },
       title: {
-        text:
-          t(translations.highcharts.burntFeesAnalysis.burntRateInDaoVoting) +
-          t(translations.highcharts.burntFeesAnalysis.learnMore),
+        text: `${t(
+          translations.highcharts.burntFeesAnalysis.burntRateInDaoVoting,
+        )} <a href="https://confluxhub.io/governance/vote/onchain-dao-voting" target="blank">${t(
+          translations.highcharts.burntFeesAnalysis.learnMore,
+        )}</a>`,
+        useHTML: true,
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
       },
       xAxis: {
-        type: 'category',
+        type: 'datetime',
       },
       tooltip: {
         shared: true,
@@ -55,14 +60,14 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.burntFeesAnalysis['baseFeeBurntRate'],
+            translations.highcharts.burntFeesAnalysis.baseFeeBurntRate,
           )}</span>`,
           color: '#7cb5ec',
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.burntFeesAnalysis['storageBurntRate'],
+            translations.highcharts.burntFeesAnalysis.storageBurntRate,
           )}</span>`,
           color: '#434348',
         },
