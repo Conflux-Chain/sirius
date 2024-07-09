@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 // import { getCurrency } from 'utils/constants';
 
 export const appendApiPrefix = (url: string) => {
@@ -642,18 +642,28 @@ export const useCfxBalance: useApi = (params = {}) => {
   );
 };
 
-export const useBurntFeesStatistics = (params = {}) => {
+export const useBurntFeesStatistics = () => {
   return useSWR(
     `${ENV_CONFIG.ENV_OPEN_API_HOST}/statistics/burnt/fee`,
     simpleGetFetcher,
   );
 };
 
-export const useWCFXTokenInfo = (params = {}) => {
+const wcfxToken = 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx';
+const wcfxTestToken = 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t';
+
+export const useWCFXTokenInfo = () => {
+  const wcfx =
+    ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
+      ? wcfxToken
+      : wcfxTestToken;
   return useSWR(
-    Object.keys(params).length
-      ? [`${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos`, params]
-      : null,
+    [
+      `${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos`,
+      {
+        contracts: wcfx,
+      },
+    ],
     simpleGetFetcher,
   );
 };

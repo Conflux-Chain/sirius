@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
@@ -9,25 +10,19 @@ import {
 
 export function StatisticsDatas() {
   const { t } = useTranslation();
-  const { data } = useBurntFeesStatistics({});
-  const wcfxToken = useMemo(
-    () => ({
-      contracts: 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t',
-    }),
-    [],
-  );
-  const { data: token } = useWCFXTokenInfo(wcfxToken);
+  const { data } = useBurntFeesStatistics();
 
-  const totalBurntFees =
-    (Number(data?.list[0].burntStorageFeeTotal) +
-      Number(data?.list[0].burntGasFeeTotal)) /
-    1e18;
+  const { data: token } = useWCFXTokenInfo();
+
+  const totalBurntFees = new BigNumber(data?.list[0].burntStorageFeeTotal)
+    .plus(new BigNumber(data?.list[0].burntGasFeeTotal))
+    .dividedBy(new BigNumber(1e18));
 
   const marketCap = useMemo(() => {
-    if (totalBurntFees && token) {
-      return totalBurntFees * token[0].priceInUSDT;
+    if (totalBurntFees.isGreaterThan(0) && token) {
+      return totalBurntFees.multipliedBy(new BigNumber(token[0].priceInUSDT));
     }
-    return 0;
+    return new BigNumber(0);
   }, [totalBurntFees, token]);
 
   return (
