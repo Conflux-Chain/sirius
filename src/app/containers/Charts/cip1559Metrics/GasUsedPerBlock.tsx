@@ -53,7 +53,13 @@ export function GasUsedPerBlock({ preview = false }: ChildProps) {
         labels: {
           enabled: false,
         },
-        tickLength: 0,
+      },
+      navigator: {
+        xAxis: {
+          labels: {
+            enabled: false,
+          },
+        },
       },
       tooltip: {
         shared: true,
