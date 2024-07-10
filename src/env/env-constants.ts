@@ -11,7 +11,7 @@ export const IS_CORESPACE_TESTNET =
   /^testnet[.-]/.test(window.location.hostname);
 export const IS_CORESPACE_MAINNET =
   process.env.REACT_APP_CORE_MAINNET === 'true' ||
-  /^(www[.-])|(confluxscan[.])/.test(window.location.hostname);
+  /^((www[.-])|(confluxscan[.]))/.test(window.location.hostname);
 
 export const IS_CORESPACE =
   IS_CORESPACE_MAINNET || IS_CORESPACE_TESTNET || IS_CORESPACE_DEVNET;

@@ -2508,9 +2508,9 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@^0.1.2":
+"@cfxjs/sirius-next-common@0.1.2":
   version "0.1.2"
-  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.2.tgz#49b3d8d3746fa548d85c237acdfa25d9f15faab1"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.2.tgz#49b3d8d3746fa548d85c237acdfa25d9f15faab1"
   integrity sha512-cXyw/r0DcHtrAuGGKNCQT9bmwpKKepsC4LTdk7K0NxI0yu/TcoKwUwS6dahQE2hfcGtYdHmSmnSsNBOaYu0Dlw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.0"
@@ -2550,7 +2550,7 @@
 
 "@cfxjs/sirius-next-i18n@0.1.1":
   version "0.1.1"
-  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.1.tgz#541d12e51e075fd51eb49794891625309ab27c33"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.1.tgz#541d12e51e075fd51eb49794891625309ab27c33"
   integrity sha512-ciavR4/oPF3xtuuwDfN4lWvaW+R8xmHg5a5cGnysrvkpjVHKHGEK7QZzFdsBgefoAvdC29fEqVFszgJb1RciOA==
 
 "@cfxjs/sirius-next-i18n@0.1.3":
