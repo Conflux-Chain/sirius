@@ -9,8 +9,9 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import TokenIcon from '../../../images/balance-checker/token-icon.png';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
-import { formatNumber, fromDripToCfx } from '../../../utils';
+import { formatNumber } from '../../../utils';
 import { useCfxBalance } from '../../../utils/api';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 const isToday = require('dayjs/plugin/isToday');
 dayjs.extend(isToday);

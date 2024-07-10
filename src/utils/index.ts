@@ -50,6 +50,7 @@ import {
   convertObjBigNumbersToStrings,
   constprocessResultArray,
   formatLargeNumber,
+  getIncreasePercent,
 } from '@cfxjs/sirius-next-common/dist/utils';
 
 import {
@@ -60,11 +61,9 @@ import {
   isInnerContractAddress,
   isSpecialAddress,
   formatAddress as _formatAddress,
-} from '@cfxjs/sirius-next-common/dist/utils/address';
-import {
   isBase32Address,
   isSimplyBase32Address,
-} from '@cfx-kit/dapp-utils/dist/address';
+} from '@cfxjs/sirius-next-common/dist/utils/address';
 
 export {
   formatNumber,
@@ -205,64 +204,6 @@ export const getDuration = (pFrom: number, pTo?: number) => {
   } catch (e) {
     return [0, 0, 0, 0];
   }
-};
-
-/**
- *
- * @param num original number
- * @param isShowFull Whether to show all numbers
- */
-export const fromDripToCfx = (
-  num: number | string,
-  isShowFull: boolean = false,
-  _opt = {},
-) => {
-  const opt = {
-    minNum: 0.001,
-    ..._opt,
-  };
-  const bn = new BigNumber(num);
-  let result: string = '0';
-  if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
-    const divideBn = bn.dividedBy(10 ** 18);
-    if (isShowFull) {
-      result = toThousands(divideBn.toFixed());
-    } else {
-      result = divideBn.lt(opt.minNum)
-        ? '< ' + new BigNumber(opt.minNum).toString()
-        : formatNumber(divideBn.toFixed(), opt);
-    }
-  }
-  return result;
-};
-
-/**
- *
- * @param num original number
- * @param isShowFull Whether to show all numbers
- */
-export const fromDripToGdrip = (
-  num: number | string,
-  isShowFull: boolean = false,
-  _opt = {},
-) => {
-  const opt = {
-    minNum: 0.001,
-    ..._opt,
-  };
-  const bn = new BigNumber(num);
-  let result: string = '0';
-  if (!window.isNaN(bn.toNumber()) && bn.toNumber() !== 0) {
-    const divideBn = bn.dividedBy(10 ** 9);
-    if (isShowFull) {
-      result = toThousands(divideBn.toFixed());
-    } else {
-      result = divideBn.lt(opt.minNum)
-        ? '< ' + new BigNumber(opt.minNum).toString()
-        : formatNumber(divideBn.toFixed(), opt);
-    }
-  }
-  return `${result}`;
 };
 
 // Is input match epoch number format
@@ -570,3 +511,7 @@ export const processSponsorStorage = (p = '0', c = '0') => {
     total,
   };
 };
+
+export const getCoreGasTargetUsage = (
+  gasUsed: Parameters<typeof getIncreasePercent>[0],
+) => getIncreasePercent(gasUsed, 27000000);

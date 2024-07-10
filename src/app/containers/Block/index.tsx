@@ -107,17 +107,38 @@ export function Block() {
     },
   ];
 
+  const isPivot =
+    blockDetail.hash && blockDetail.pivotHash === blockDetail.hash;
+
   return (
     <StyledPageWrapper>
       <Helmet>
         <title>{t(translations.block.title)}</title>
         <meta name="description" content={t(translations.block.description)} />
       </Helmet>
-      <PageHeader>{t(translations.block.title)}</PageHeader>
+      <PageHeader>
+        {t(translations.block.title)}
+        {isPivot && <PivotTag />}
+      </PageHeader>
       <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );
 }
+
+const PivotTagWrapper = styled.span`
+  border-radius: 9.5px;
+  background: rgba(0, 206, 125, 0.1);
+  color: #00ce7d;
+  font-size: 10px;
+  line-height: 20px;
+  display: inline-block;
+  height: 20px;
+  width: 42px;
+  margin-left: 12px;
+  text-align: center;
+  font-weight: 500;
+`;
+const PivotTag = () => <PivotTagWrapper>Pivot</PivotTagWrapper>;
 
 const StyledPageWrapper = styled.div`
   margin-bottom: 2.2857rem;

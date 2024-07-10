@@ -18,7 +18,7 @@ export const Epoch = () => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = `/block?minEpochNumber=${number}&maxEpochNumber=${number}`;
 
-  const columnsWidth = [2, 4, 2, 4, 3, 4, 4];
+  const columnsWidth = [2, 4, 2, 4, 3, 4, 3, 3, 3, 4];
   const columns = [
     blockColunms.position,
     blockColunms.hashWithPivot,
@@ -26,6 +26,9 @@ export const Epoch = () => {
     blockColunms.miner,
     blockColunms.difficulty,
     blockColunms.gasUsedPercentWithProgress,
+    blockColunms.gasLimit,
+    blockColunms.burntFees,
+    blockColunms.reward,
     blockColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 

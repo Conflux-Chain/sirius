@@ -7,18 +7,21 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import {
   formatNumber,
   getPercent,
-  fromDripToCfx,
   toThousands,
-  fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
-} from 'utils/';
+  getCoreGasTargetUsage,
+} from 'utils';
 import imgPivot from 'images/pivot.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 export const epoch = {
   title: (
@@ -146,6 +149,7 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
+    const gasTargetUsage = getCoreGasTargetUsage(row.gasUsed);
 
     if (value) {
       return (
@@ -153,7 +157,9 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit, 2)})
+              ({getPercent(row.gasUsed, row.gasLimit, 2)} |{' '}
+              {!gasTargetUsage.isNegative && '+'}
+              {gasTargetUsage.percent})
             </span>
           </div>
           <Progress
@@ -225,6 +231,27 @@ export const gasLimit = {
   key: 'gasLimit',
   width: 1,
   render: value => <Text tag="span">{toThousands(value)}</Text>,
+};
+
+export const burntFees = {
+  title: (
+    <StyledGasLimit>
+      <Translation>
+        {t => t(translations.general.table.block.burntFees)}
+      </Translation>
+    </StyledGasLimit>
+  ),
+  dataIndex: 'burntGasFee',
+  key: 'burntGasFee',
+  width: 1,
+  render: value =>
+    value ? (
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 const StyledHashWrapper = styled.span`
