@@ -18,6 +18,7 @@ import { CFXHolderAccounts } from './CFXHolderAccounts';
 import { AccountGrowth } from './AccountGrowth';
 import { ActiveAccounts } from './ActiveAccounts';
 import { Contracts } from './Contracts';
+import { BurntFeesAnalysis, CIP1559Metrics } from './dashboard';
 import { hideInDotNet } from 'utils';
 
 export function Chart() {
@@ -101,6 +102,15 @@ export function Chart() {
         </Divider>
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <Contracts preview={true} />
+        </Col>
+        <Divider orientation="left">
+          {t(translations.highcharts.pow.preview.dashboard)}
+        </Divider>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <BurntFeesAnalysis />
+        </Col>
+        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+          <CIP1559Metrics />
         </Col>
       </Row>
     </StyledChartPreviewWrapper>
