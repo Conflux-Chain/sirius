@@ -46,6 +46,16 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        labels: {
+          enabled: false,
+        },
+      },
+      navigator: {
+        xAxis: {
+          labels: {
+            enabled: false,
+          },
+        },
       },
       tooltip: {
         shared: true,
