@@ -52,6 +52,16 @@ export function AveragePriorityFeePerBlock({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        labels: {
+          enabled: false,
+        },
+      },
+      navigator: {
+        xAxis: {
+          labels: {
+            enabled: false,
+          },
+        },
       },
       tooltip: {
         shared: true,

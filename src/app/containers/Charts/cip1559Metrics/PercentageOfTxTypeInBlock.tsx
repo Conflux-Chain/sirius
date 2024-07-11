@@ -67,6 +67,16 @@ export function PercentageOfTxTypeInBlock({ preview = false }: ChildProps) {
       },
       xAxis: {
         type: 'datetime',
+        labels: {
+          enabled: false,
+        },
+      },
+      navigator: {
+        xAxis: {
+          labels: {
+            enabled: false,
+          },
+        },
       },
       yAxis: {
         min: 0,
