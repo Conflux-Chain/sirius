@@ -184,14 +184,6 @@ export function DescriptionPanel({ data, loading }) {
                         )} CFX`,
                       })}
                     </div>
-                    <div>
-                      {t(translations.toolTip.block.burntFees, {
-                        amount: `${fromDripToCfx(
-                          rewardDetail.burntGasFee,
-                          true,
-                        )} CFX`,
-                      })}
-                    </div>
                   </div>
                 )
               }

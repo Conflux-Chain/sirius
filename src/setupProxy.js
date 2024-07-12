@@ -7,7 +7,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const configs = {
   core_mainnet_url: 'https://confluxscan.net/',
-  core_testnet_url: 'https://testnet-stage.confluxscan.net/',
+  core_testnet_url: 'https://testnet-stage.confluxscan.io/',
   core_devnet_url: 'https://net8888cfx.confluxscan.net/',
 };
 let url = configs.core_mainnet_url;
