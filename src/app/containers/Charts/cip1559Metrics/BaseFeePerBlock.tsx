@@ -19,14 +19,16 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
       },
       formatter: data => {
         const data1: any = [];
-        const data2: any = [];
 
         data?.list?.map((d, i) => {
-          const t = dayjs.utc(d.timestamp * 1000).valueOf();
-          data1.push([t, Number(new BigNumber(d.baseFee).div(1e9).toNumber())]);
+          data1.push({
+            x: d.epochNumber * 10000 + d.blockIndex,
+            y: Number(new BigNumber(d.baseFee).div(1e9).toNumber()),
+            name: dayjs.utc(d.timestamp * 1000).format('dddd MMM DD, HH:mm:ss'),
+          });
         });
 
-        return [data1, data2];
+        return [data1];
       },
     },
     options: {
@@ -45,7 +47,6 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
         text: t(translations.highcharts.subtitle),
       },
       xAxis: {
-        type: 'datetime',
         labels: {
           enabled: false,
         },
@@ -73,6 +74,7 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
             valueDecimals: 2,
             valueSuffix: ' Gdrip',
           },
+          turboThreshold: 2000,
         },
       ],
     },
