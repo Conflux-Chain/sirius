@@ -253,13 +253,13 @@ export function DescriptionPanel({ data, loading }) {
           {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
             <Tooltip
               title={
-                baseFeePerGasRef?.height && (
+                baseFeePerGasRef?.prePivot?.height && (
                   <div>
                     {t(translations.toolTip.block.compareToPivotBlock, {
-                      block: baseFeePerGasRef.height,
+                      block: baseFeePerGasRef.prePivot.height,
                     })}
                     <CopyButton
-                      copyText={baseFeePerGasRef.height}
+                      copyText={baseFeePerGasRef.prePivot.height}
                       color="#ECECEC"
                       className="copy-button-in-tooltip"
                     />
