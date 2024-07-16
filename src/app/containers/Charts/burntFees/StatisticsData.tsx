@@ -15,17 +15,25 @@ export function StatisticsDatas() {
 
   const { data: token } = useWCFXTokenInfo();
 
-  const list = data?.list.reduce((max, current) => {
-    const maxTime = new Date(max.statTime).getTime();
-    const currentTime = new Date(current.statTime).getTime();
-    return currentTime > maxTime ? current : max;
-  }, data?.list[0]);
+  const recent = useMemo(() => {
+    if (!data?.list || data.list.length === 0) {
+      return undefined;
+    }
 
-  const totalBurntFees = list
-    ? new BigNumber(list.burntStorageFeeTotal)
-        .plus(new BigNumber(list.burntGasFeeTotal))
-        .dividedBy(new BigNumber(1e18))
-    : new BigNumber(0);
+    return data.list.reduce((max, current) => {
+      const maxTime = new Date(max.statTime).getTime();
+      const currentTime = new Date(current.statTime).getTime();
+      return currentTime > maxTime ? current : max;
+    });
+  }, [data]);
+
+  const totalBurntFees = useMemo(() => {
+    if (!recent) return new BigNumber(0);
+
+    return new BigNumber(recent.burntStorageFeeTotal)
+      .plus(new BigNumber(recent.burntGasFeeTotal))
+      .dividedBy(new BigNumber(1e18));
+  }, [recent]);
 
   const marketCap = useMemo(() => {
     if (totalBurntFees.isGreaterThan(0) && token) {

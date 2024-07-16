@@ -14,23 +14,23 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
       url: OPEN_API_URLS.breakdownByBurntType,
       formatter: data => {
         let result: any = [];
-        if (data) {
-          const list = data?.list.reduce((max, current) => {
+        if (data && data.list && data.list.length > 0) {
+          const recent = data.list.reduce((max, current) => {
             const maxTime = new Date(max.statTime).getTime();
             const currentTime = new Date(current.statTime).getTime();
             return currentTime > maxTime ? current : max;
-          }, data?.list[0]);
+          }, data.list[0]);
 
           result = [
             {
               name: t(
                 translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
               ),
-              y: parseInt(new SDK.Drip(list.burntGasFeeTotal).toCFX()),
+              y: parseInt(new SDK.Drip(recent.burntGasFeeTotal).toCFX()),
             },
             {
               name: t(translations.highcharts.burntFeesAnalysis.storageBurn),
-              y: parseInt(new SDK.Drip(list.burntStorageFeeTotal).toCFX()),
+              y: parseInt(new SDK.Drip(recent.burntStorageFeeTotal).toCFX()),
             },
           ];
         }
