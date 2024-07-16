@@ -7,6 +7,7 @@ import {
   useBurntFeesStatistics,
   useWCFXTokenInfo,
 } from '../../../../utils/api';
+import { toThousands } from '@cfxjs/sirius-next-common/dist/utils';
 
 export function StatisticsDatas() {
   const { t } = useTranslation();
@@ -14,9 +15,25 @@ export function StatisticsDatas() {
 
   const { data: token } = useWCFXTokenInfo();
 
-  const totalBurntFees = new BigNumber(data?.list[0].burntStorageFeeTotal)
-    .plus(new BigNumber(data?.list[0].burntGasFeeTotal))
-    .dividedBy(new BigNumber(1e18));
+  const recent = useMemo(() => {
+    if (!data?.list || data.list.length === 0) {
+      return undefined;
+    }
+
+    return data.list.reduce((max, current) => {
+      const maxTime = new Date(max.statTime).getTime();
+      const currentTime = new Date(current.statTime).getTime();
+      return currentTime > maxTime ? current : max;
+    });
+  }, [data]);
+
+  const totalBurntFees = useMemo(() => {
+    if (!recent) return new BigNumber(0);
+
+    return new BigNumber(recent.burntStorageFeeTotal)
+      .plus(new BigNumber(recent.burntGasFeeTotal))
+      .dividedBy(new BigNumber(1e18));
+  }, [recent]);
 
   const marketCap = useMemo(() => {
     if (totalBurntFees.isGreaterThan(0) && token) {
@@ -31,14 +48,14 @@ export function StatisticsDatas() {
         <div className="title">
           {t(translations.highcharts.burntFeesAnalysis.totalBurntFees)}
         </div>
-        <div className="data">{totalBurntFees.toFixed(2)}</div>
+        <div className="data">{toThousands(totalBurntFees.toFixed(2))}</div>
         <div className="symbol">CFX</div>
       </StatisticsData>
       <StatisticsData>
         <div className="title">
           {t(translations.highcharts.burntFeesAnalysis.marketCap)}
         </div>
-        <div className="data">{marketCap.toFixed(2)}</div>
+        <div className="data">{toThousands(marketCap.toFixed(2))}</div>
         <div className="symbol">USD</div>
       </StatisticsData>
     </StatisticsDataWrapper>
