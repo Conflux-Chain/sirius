@@ -21,11 +21,11 @@ export function CFXDailyBurn({ preview = false }: ChildProps) {
           const t = dayjs.utc(d.statTime).valueOf();
           data1.push([
             t,
-            Number(new BigNumber(d.burntGasFeeTotal).div(1e18).toNumber()),
+            Number(new BigNumber(d.burntGasFee).div(1e18).toNumber()),
           ]);
           data2.push([
             t,
-            Number(new BigNumber(d.burntStorageFeeTotal).div(1e18).toNumber()),
+            Number(new BigNumber(d.burntStorageFee).div(1e18).toNumber()),
           ]);
         });
 

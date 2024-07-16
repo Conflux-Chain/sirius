@@ -15,18 +15,22 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
       formatter: data => {
         let result: any = [];
         if (data) {
+          const list = data?.list.reduce((max, current) => {
+            const maxTime = new Date(max.statTime).getTime();
+            const currentTime = new Date(current.statTime).getTime();
+            return currentTime > maxTime ? current : max;
+          }, data?.list[0]);
+
           result = [
             {
               name: t(
                 translations.highcharts.burntFeesAnalysis['1559MetricsBurn'],
               ),
-              y: parseInt(new SDK.Drip(data?.list[0].burntGasFeeTotal).toCFX()),
+              y: parseInt(new SDK.Drip(list.burntGasFeeTotal).toCFX()),
             },
             {
               name: t(translations.highcharts.burntFeesAnalysis.storageBurn),
-              y: parseInt(
-                new SDK.Drip(data?.list[0].burntStorageFeeTotal).toCFX(),
-              ),
+              y: parseInt(new SDK.Drip(list.burntStorageFeeTotal).toCFX()),
             },
           ];
         }
@@ -47,7 +51,11 @@ export function BreakdownByTypes({ preview = false }: ChildProps) {
         text: t(translations.highcharts.burntFeesAnalysis.breakdownByTypes),
       },
       tooltip: {
-        pointFormat: `Amount: <b>{point.y}</b><br>Percentage: <b>{point.percentage:.2f}%</b>`,
+        pointFormat: `${t(
+          translations.highcharts.burntFeesAnalysis.Amount,
+        )}: <b>{point.y}</b><br>${t(
+          translations.highcharts.burntFeesAnalysis.Percentage,
+        )}: <b>{point.percentage:.2f}%</b>`,
         valueSuffix: ' CFX',
       },
       series: [
