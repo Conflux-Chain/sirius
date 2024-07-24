@@ -19,7 +19,7 @@ export function Token({
     request: {
       url: OPEN_API_URLS.token,
       query: {
-        limit: '30',
+        limit: '365',
         intervalType: 'day',
         base32: address,
       },
