@@ -10,7 +10,7 @@ export const ENV_OPEN_API_HOST =
     ? 'https://api.confluxscan.net'
     : window.location.host.replace(/cfx/, 'api'));
 export const ENV_RPC_SERVER =
-  API_HOST_MAP.openAPIHost || 'https://net8888cfx.confluxrpc.com';
+  API_HOST_MAP.rpcHost || 'https://net8888cfx.confluxrpc.com';
 export const ENV_FC_ADDRESS = 'cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2';
 export const ENV_FC_EXCHANGE_ADDRESS =
   'cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m';
