@@ -46,7 +46,7 @@ export const Overview = ({ data }) => {
   }, [tokenTransferTokenInfo]);
   const customInfoList = useMemo(() => {
     if (tokenTransferTokenInfoList.length > 0) {
-      return [contractInfo, ...tokenTransferTokenInfoList];
+      return tokenTransferTokenInfoList;
     }
     return [contractInfo];
   }, [tokenTransferTokenInfoList, contractInfo]);
