@@ -166,12 +166,15 @@ const AddressNameTagContainer: React.FC<AddressNameTagContainerProps> = ({
 
 const customUI: MultiAction = {
   ERC20_Transfer: ({ address, toAddress, value, customInfo }) => {
+    const customInfoToken = filterByTokenAddress(
+      customInfo.token || {},
+      address,
+    );
+    const decimals = customInfoToken?.token?.decimals ?? TokenDecimals;
     return (
       <div style={{ ...StyleWrap }}>
         Transfer
-        <BalanceStyle>
-          {formatBalance(value, customInfo['decimals'] || TokenDecimals, true)}
-        </BalanceStyle>{' '}
+        <BalanceStyle>{formatBalance(value, decimals, true)}</BalanceStyle>{' '}
         {Token(address, customInfo, 'ERC20', ['icon', 'symbol'])} to{' '}
         <Link href={`/address/${formatAddress(toAddress)}`}>
           <AddressNameTagContainer value={formatAddress(toAddress)} />
