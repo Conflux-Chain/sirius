@@ -101,6 +101,7 @@ export const Detail = () => {
     syncTimestamp,
     gasFee,
     gasUsed,
+    gasCharged,
     status,
     data,
     contractCreated,
@@ -119,6 +120,10 @@ export const Detail = () => {
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
+
+  const isValidGasCharged = new BigNumber(gasCharged)
+    .multipliedBy(gasPrice)
+    .isEqualTo(gasFee);
 
   const fetchTxTransfer = async (toCheckAddress, txnhash) => {
     setLoading(true);
@@ -977,7 +982,7 @@ export const Detail = () => {
                   {`${toThousands(gas)} | ${toThousands(gasUsed)} (${getPercent(
                     gasUsed,
                     gas,
-                  )}) | ${toThousands(Math.max(+gasUsed, (+gas * 3) / 4))}`}
+                  )}) | ${isValidGasCharged ? toThousands(gasCharged) : '--'}`}
                 </>
               ) : (
                 <>--</>
