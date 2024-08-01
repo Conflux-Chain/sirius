@@ -117,13 +117,14 @@ export const Detail = () => {
     burntGasFee,
     type,
     typeDesc,
+    txExecErrorMsg,
   } = transactionDetail;
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
 
-  const isValidGasCharged = new BigNumber(gasCharged)
-    .multipliedBy(gasPrice)
-    .isEqualTo(gasFee);
+  const notEnoughCash = txExecErrorMsg && /^NotEnoughCash/.test(txExecErrorMsg);
+  const isValidGasCharged =
+    !notEnoughCash || new BigNumber(gasCharged).isEqualTo(gas);
 
   const fetchTxTransfer = async (toCheckAddress, txnhash) => {
     setLoading(true);
