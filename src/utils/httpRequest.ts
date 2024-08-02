@@ -79,7 +79,7 @@ export const reqContract = fetchWithCache(
   },
   {
     key: 'contract',
-    maxAge: 1000 * 60 * 10,
+    maxAge: 1000 * 60 * 60,
   },
 );
 
@@ -93,7 +93,7 @@ export const reqContractAndToken = fetchWithCache(
   },
   {
     key: 'contract-and-token',
-    maxAge: 1000 * 60 * 10,
+    maxAge: 1000 * 60 * 60,
   },
 );
 
