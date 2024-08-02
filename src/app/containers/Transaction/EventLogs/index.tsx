@@ -94,9 +94,7 @@ const EventLog = ({ log }) => {
           abi = body.abi;
         }
 
-        if (!abi) {
-          throw new Error(`no abi of this contract: ${log.address}`);
-        } else {
+        if (abi) {
           // in case of invalid abi
           let contract = CFX.Contract({
             abi: JSON.parse(abi),
