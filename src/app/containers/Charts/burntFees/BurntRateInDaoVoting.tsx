@@ -17,7 +17,7 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         const data2: any = [];
 
         data?.list.map(d => {
-          let t = dayjs.utc(d.timestamp * 1000).valueOf();
+          let t = dayjs(d.timestamp * 1000).valueOf();
 
           data1.push([t, Number(d.baseFeeBurntRate)]);
           data2.push([t, Number(d.storageBurntRate)]);

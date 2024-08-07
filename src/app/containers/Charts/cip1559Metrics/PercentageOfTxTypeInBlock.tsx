@@ -38,9 +38,9 @@ export function PercentageOfTxTypeInBlock({ preview = false }: ChildProps) {
           const legacyPercentage = total.isZero()
             ? 0
             : legacy.div(total).times(100).toNumber();
-          const name = dayjs
-            .utc(d.timestamp * 1000)
-            .format('dddd MMM DD, HH:mm:ss');
+          const name = dayjs(d.timestamp * 1000).format(
+            'dddd MMM DD, HH:mm:ss',
+          );
 
           data1.push({
             x: d.epochNumber * 10000 + d.blockIndex,
