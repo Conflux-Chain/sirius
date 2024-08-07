@@ -17,10 +17,12 @@ export function Holders({ preview = false }: ChildProps) {
   const props = {
     request: {
       url: OPEN_API_URLS.nftHolders,
-      query: {
-        intervalType: 'month',
-        limit: preview ? '30' : '2000',
-      },
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'month',
+          }
+        : undefined,
       formatter: data => {
         const data1: any = [];
 
