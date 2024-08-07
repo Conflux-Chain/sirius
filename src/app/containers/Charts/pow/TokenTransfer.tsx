@@ -13,6 +13,12 @@ export function TokenTransfer({ preview = false }: ChildProps) {
   const props = {
     request: {
       url: OPEN_API_URLS.tokenTransfer,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
