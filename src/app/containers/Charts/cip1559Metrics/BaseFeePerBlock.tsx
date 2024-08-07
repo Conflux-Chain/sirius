@@ -24,7 +24,7 @@ export function BaseFeePerBlock({ preview = false }: ChildProps) {
           data1.push({
             x: d.epochNumber * 10000 + d.blockIndex,
             y: Number(new BigNumber(d.baseFee).div(1e9).toNumber()),
-            name: dayjs.utc(d.timestamp * 1000).format('dddd MMM DD, HH:mm:ss'),
+            name: dayjs(d.timestamp * 1000).format('dddd MMM DD, HH:mm:ss'),
           });
         });
 

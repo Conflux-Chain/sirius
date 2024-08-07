@@ -1,5 +1,4 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
@@ -17,8 +16,7 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         const data2: any = [];
 
         data?.list.map(d => {
-          let t = dayjs.utc(d.timestamp * 1000).valueOf();
-
+          let t = d.timestamp * 1000;
           data1.push([t, Number(d.baseFeeBurntRate)]);
           data2.push([t, Number(d.storageBurntRate)]);
         });
