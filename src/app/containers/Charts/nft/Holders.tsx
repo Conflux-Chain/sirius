@@ -35,6 +35,7 @@ export function Holders({ preview = false }: ChildProps) {
     options: {
       chart: {
         zoomType: 'x',
+        marginRight: 30,
       },
       header: {
         title: {

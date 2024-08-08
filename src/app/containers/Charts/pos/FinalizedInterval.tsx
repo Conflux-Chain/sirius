@@ -38,10 +38,10 @@ export function FinalizedInterval({ preview = false }: ChildProps) {
       },
       header: {
         title: {
-          text: t(translations.highcharts.pos.dailyAccounts.title),
+          text: t(translations.highcharts.pos.finalizedInterval.title),
         },
         subtitle: {
-          text: t(translations.highcharts.pos.dailyAccounts.subtitle),
+          text: t(translations.highcharts.pos.finalizedInterval.subtitle),
         },
         breadcrumb: [
           {
