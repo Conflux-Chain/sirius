@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export const Main = styled.div`
   padding: 2.29rem 0 0;

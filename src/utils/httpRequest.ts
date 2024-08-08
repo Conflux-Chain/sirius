@@ -1,6 +1,6 @@
 import qs from 'query-string';
 import fetch from './request';
-import { OPEN_API_URLS, RPC_SERVER } from './constants';
+import { OPEN_API_URLS } from './constants';
 import {
   ENS_REQUEST_EXPIRED_PERIOD,
   ENS_REQUEST_DELAYED_PERIOD,
@@ -9,6 +9,8 @@ import {
 import lodash from 'lodash';
 import { isAddress } from './index';
 import { fetchNFTMetadata } from '@cfx-kit/dapp-utils/dist/metadata';
+import ENV_CONFIG from 'env';
+import { fetchWithCache } from '@cfxjs/sirius-next-common/dist/utils/cache';
 
 export const v1Prefix = '/v1';
 export const statPrefix = '/stat';
@@ -67,21 +69,33 @@ export const reqTransactionDetail = (param?: object, extra?: object) => {
   });
 };
 
-export const reqContract = (param?: object, extra?: object) => {
-  return sendRequest({
-    url: `/contract/${param && param['address']}`,
-    query: param,
-    ...extra,
-  });
-};
+export const reqContract = fetchWithCache(
+  (param?: object, extra?: object) => {
+    return sendRequest({
+      url: `/contract/${param && param['address']}`,
+      query: param,
+      ...extra,
+    });
+  },
+  {
+    key: 'contract',
+    maxAge: 1000 * 60 * 60,
+  },
+);
 
-export const reqContractAndToken = (param?: object, extra?: object) => {
-  return sendRequest({
-    url: `/contract-and-token`,
-    query: param,
-    ...extra,
-  });
-};
+export const reqContractAndToken = fetchWithCache(
+  (param?: object, extra?: object) => {
+    return sendRequest({
+      url: `/contract-and-token`,
+      query: param,
+      ...extra,
+    });
+  },
+  {
+    key: 'contract-and-token',
+    maxAge: 1000 * 60 * 60,
+  },
+);
 
 export const reqTransferList = (param?: object, extra?: object) => {
   return sendRequest({
@@ -251,13 +265,19 @@ export const reqTransactions = (extra?: object) => {
   });
 };
 
-export const reqNFTInfo = (extra?: object) => {
-  // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
-  return sendRequest({
-    url: `/stat/nft/checker/preview`,
-    ...extra,
-  });
-};
+export const reqNFTInfo = fetchWithCache(
+  (extra?: object) => {
+    // ?contractAddress=cfx:acb3fcbj8jantg52jbg66pc21jgj2ud02pj1v4hkwn&tokenId=424873
+    return sendRequest({
+      url: `/stat/nft/checker/preview`,
+      ...extra,
+    });
+  },
+  {
+    key: 'nft-preview',
+    maxAge: 1000 * 60 * 10,
+  },
+);
 
 export const _reqNFTDetail = (extra?: object) => {
   return sendRequest({
@@ -284,7 +304,7 @@ export const reqNFTDetail = ({
     formatServerError,
     nftAddress: address,
     tokenId,
-    rpcServer: RPC_SERVER,
+    rpcServer: ENV_CONFIG.ENV_RPC_SERVER,
     method: 'cfx_call',
     contractType,
     formatContractMetadata: metadata => ({ detail: { metadata } }),

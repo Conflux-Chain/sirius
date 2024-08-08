@@ -21,6 +21,7 @@ export const IncomingRankList = () => {
       columns={columns}
       pagination={false}
       hideDefaultTitle
+      rowKey="hex"
     ></TablePanelNew>
   );
 };

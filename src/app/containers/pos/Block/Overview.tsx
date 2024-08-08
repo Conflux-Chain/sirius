@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Card } from 'app/components/Card/Loadable';
-import { Description } from 'app/components/Description/Loadable';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { toThousands, formatTimeStamp } from 'utils';
 import lodash from 'lodash';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
 export function Overview({ data, loading }) {
   const { t } = useTranslation();

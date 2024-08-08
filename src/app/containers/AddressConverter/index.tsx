@@ -8,13 +8,14 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
-import { PageHeader } from '../../components/PageHeader';
-import { Card } from '../../components/Card';
-import { Remark } from '../../components/Remark';
-import { CopyButton } from '../../components/CopyButton';
-import { Input, Button, Link } from '@cfxjs/react-ui';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { Input, Button } from '@cfxjs/react-ui';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import { useParams } from 'react-router-dom';
@@ -22,8 +23,8 @@ import { List } from './List';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { isZeroAddress, isInnerContractAddress } from 'utils';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { getCode } from 'utils/rpcRequest';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface FormattedAddressesType {
   hexAddress: string;
@@ -235,8 +236,8 @@ export function AddressConverter() {
           <Input
             value={address}
             placeholder={
-              [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(
-                NETWORK_TYPE,
+              [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+                ENV_CONFIG.ENV_NETWORK_TYPE,
               )
                 ? 'cfx:... / cfxtest:... / hex'
                 : ''

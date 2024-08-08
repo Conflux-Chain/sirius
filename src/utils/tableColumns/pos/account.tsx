@@ -1,22 +1,23 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { toThousands, fromDripToCfx, formatNumber } from 'utils';
+import { toThousands, formatNumber } from 'utils';
 import { ContentWrapper } from '../utils';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
-import { PoSAddressContainer } from 'app/components/AddressContainer/Loadable';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import VotingPowerIcon from 'images/voting-power.svg';
 import IsActiveIcon from 'images/is-active.svg';
 import NotActiveIcon from 'images/not-active.svg';
 import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
-import { Tooltip } from '@cfxjs/antd';
 import dayjs from 'dayjs';
-import { CountDown } from 'app/components/CountDown';
-import { CopyButton } from 'app/components/CopyButton';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip';
+import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 export const rank = {
   title: (
@@ -47,11 +48,12 @@ export const posNodeAddress = {
       '--'
     ) : (
       <PosNodeAddressWrapper>
-        <PoSAddressContainer
+        <CoreAddressContainer
           alias={row.byte32NameTagInfo?.nameTag}
           value={value}
           hideAliasPrefixInHover
-        />
+          isPosAddress={true}
+        ></CoreAddressContainer>
         <CopyButton copyText={value} />
       </PosNodeAddressWrapper>
     );
@@ -246,7 +248,7 @@ export const incoming = {
     return (
       <ContentWrapper right>
         {!lodash.isNil(value) ? (
-          <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+          <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
             {`${fromDripToCfx(value)} CFX`}
           </Text>
         ) : (

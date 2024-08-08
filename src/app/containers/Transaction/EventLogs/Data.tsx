@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Select } from '../../../components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import styled from 'styled-components';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { NETWORK_ID } from 'utils/constants';
-import { Link } from '../../../components/Link/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from '../../../../styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { formatAddress } from 'utils';
 import { DecodedParams } from 'app/components/TxnComponents/util';
@@ -52,12 +52,12 @@ const SelectedLine = ({
       {index === undefined ? null : <span className="index">{index + 1}</span>}
       {select ? (
         <Select
-          className="select"
+          className="select selectMulti"
           disableMatchWidth={true}
           size="small"
           value={selected}
           onChange={handleChange}
-          width="7rem"
+          width="7.8rem"
         >
           {options.map(o => (
             <Select.Option key={o.key} value={o.value}>
@@ -129,13 +129,27 @@ const StyledSelectItemWrapper = styled.div`
     align-items: center;
   }
 
-  .select.select {
-    height: 22px;
+  .select {
+    position: absolute;
+    right: 0;
     margin-right: 12px;
+    color: #444;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
 
     .value {
       padding-left: 0;
     }
+    ${media.s} {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-bottom: 10px;
+    }
+  }
+  .select:hover {
+    background-color: rgba(30, 61, 228, 0.08);
   }
 `;
 
@@ -191,12 +205,12 @@ export const Data = ({
       body = (
         <>
           <Select
-            className="select-with-abi"
+            className="select"
             value={value}
             onChange={handleChange}
             size="small"
             disableMatchWidth={true}
-            width="7rem"
+            width="7.8rem"
           >
             <Select.Option value="hex">
               {t(translations.transaction.logs.hex)}
@@ -261,19 +275,31 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
     padding-right: 100px;
   }
 
-  .select.select-with-abi {
-    position: absolute;
-    top: 11px;
-    right: 16px;
-    height: 30px;
-    padding: 0 10px;
+  .selectMulti {
+    position: relative !important;
+  }
 
+  .select {
+    position: absolute;
+    right: 0;
+    margin-right: 12px;
+    color: #444;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+
+    .value {
+      padding-left: 0;
+    }
     ${media.s} {
       position: relative;
       top: auto;
       right: auto;
       margin-bottom: 10px;
     }
+  }
+  .select:hover {
+    background-color: rgba(30, 61, 228, 0.08);
   }
 
   .data-item {

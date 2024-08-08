@@ -2,12 +2,9 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ColumnAge } from '../utils';
-import {
-  PoSAddressContainer,
-  AddressContainer,
-} from 'app/components/AddressContainer/Loadable';
-import { Text } from 'app/components/Text/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import lodash from 'lodash';
 
 export const age = (
@@ -32,7 +29,11 @@ export const posAddress = {
   key: 'hex',
   width: 1,
   render: value => {
-    return lodash.isNil(value) ? '--' : <PoSAddressContainer value={value} />;
+    return lodash.isNil(value) ? (
+      '--'
+    ) : (
+      <CoreAddressContainer value={value} isPosAddress={true} />
+    );
   },
 };
 
@@ -50,25 +51,13 @@ export const posBlockHash = {
           row.height || row.block?.height
         }`}
       >
-        <Text span hoverValue={value} maxWidth="100px">
+        <Text tag="span" hoverValue={value} maxWidth="100px">
           {value}
         </Text>
       </Link>
     ) : (
       '--'
     );
-  },
-};
-
-export const powAddress = {
-  title: (
-    <Translation>{t => t(translations.pos.common.powAddress)}</Translation>
-  ),
-  dataIndex: 'hex',
-  key: 'hex',
-  width: 1,
-  render: value => {
-    return lodash.isNil(value) ? '--' : <AddressContainer value={value} />;
   },
 };
 
@@ -82,7 +71,7 @@ export const powBlockHash = {
   render: value => {
     return !lodash.isNil(value) ? (
       <Link href={`/block/${value}`}>
-        <Text span hoverValue={value} maxWidth="100px">
+        <Text tag="span" hoverValue={value} maxWidth="100px">
           {value}
         </Text>
       </Link>

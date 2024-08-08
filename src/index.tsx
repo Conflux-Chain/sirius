@@ -15,6 +15,7 @@ import { RecoilRoot } from 'recoil';
 import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
+import '@cfxjs/sirius-next-common/dist/uno.css';
 
 // Import root app
 import { App } from 'app';
@@ -22,8 +23,8 @@ import { App } from 'app';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
-import './locales/i18n';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import 'locales/i18n';
+import { IS_MAINNET, IS_TESTNET } from 'env';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -54,7 +55,7 @@ if (module.hot) {
   // Hot reloadable translation json files and app
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['./app', './locales/i18n'], () => {
+  module.hot.accept(['./app', 'locales/i18n'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     Promise.all([completeDetect()]).then(() => {
       const App = require('./app').App;
@@ -75,7 +76,7 @@ const brand = `
 └─┘└─┘┘└┘└  ┴─┘└─┘┴ └─  └─┘└─┘┴ ┴┘└┘
  `;
 
-if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
+if (IS_TESTNET) {
   console.log &&
     console.log(
       `%c 
@@ -86,7 +87,7 @@ ${brand}
 `,
       'color:#e4310c;',
     );
-} else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+} else if (IS_MAINNET) {
   console.log &&
     console.log(
       `%c 

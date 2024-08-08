@@ -1,10 +1,10 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Text } from '../../app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatNumber, formatString, getENSInfo, getNametagInfo } from '..';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ContentWrapper } from './utils';
 
 interface Query {
@@ -36,7 +36,7 @@ export const name = {
   render: row => (
     <StyledIconWrapper>
       <span>
-        <Text span hoverValue={row?.name}>
+        <Text tag="span" hoverValue={row?.name}>
           {formatString(`${row?.name}`, 28)}
         </Text>
       </span>
@@ -53,7 +53,7 @@ export const contract = {
   dataIndex: 'address',
   key: 'address',
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       ensInfo={getENSInfo(row)}
       nametagInfo={getNametagInfo(row)}

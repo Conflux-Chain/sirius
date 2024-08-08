@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '../../components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import Globe from '@zeit-ui/react-icons/globe';
@@ -46,7 +46,6 @@ export function Language() {
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        variant="text"
       >
         {options.map(o => {
           return (
@@ -62,28 +61,12 @@ export function Language() {
 
 const StyledWrapper = styled.span`
   position: relative;
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   color: var(--theme-color-gray0);
+  margin-top: -0.33rem;
 
-  &:hover {
-    color: var(--theme-color-blue0);
-
-    .select.sirius-select.btnSelectContainer .value .option {
-      color: var(--theme-color-blue0) !important;
-    }
-  }
-
-  .select.sirius-select.btnSelectContainer {
-    background: transparent;
-    position: absolute;
-    top: -0.6071rem;
-    left: 0.2143rem;
-
-    .value .option {
-      font-weight: normal;
-      &:not(:hover) {
-        color: var(--theme-color-gray0);
-      }
-    }
+  .btnSelectContainer {
+    background-color: var(--theme-color-foot-bg);
   }
 `;

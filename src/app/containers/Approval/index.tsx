@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
-import { PageHeader } from 'app/components/PageHeader';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Input, Button, Switch } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, formatBalance } from 'utils';
@@ -13,21 +13,22 @@ import { reqApprovals } from 'utils/httpRequest';
 import { isValidCfxAddress } from '@conflux-dev/conflux-address-js';
 import { transactionColunms, tokenColunms } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { useAge } from 'utils/hooks/useAge';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
-import { Select } from 'app/components/Select';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi as ERC20ABI } from 'utils/contract/ERC20.json';
 import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
-import { RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import { NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import BigNumber from 'bignumber.js';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useGlobalData } from 'utils/hooks/useGlobal';
+import ENV_CONFIG from 'env';
 
 const { Search } = Input;
 
@@ -52,7 +53,7 @@ export function Approval() {
   const getContract = useCallback(
     (address: string, type: string) => {
       const CFX = new SDK.Conflux({
-        url: RPC_SERVER,
+        url: ENV_CONFIG.ENV_RPC_SERVER,
         networkId: NETWORK_ID,
       });
 
@@ -449,7 +450,6 @@ export function Approval() {
               disableMatchWidth
               size="small"
               className="btnSelectContainer"
-              variant="text"
             >
               {options.map((o, index) => {
                 return (

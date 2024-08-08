@@ -1,20 +1,21 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { DetailPageCard } from './DetailPageCard';
 import { InfoImage } from './InfoImage';
 import { TokenBalanceSelect } from './TokenBalanceSelect';
-import { Text } from 'app/components/Text/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { fromDripToCfx, formatNumber, processSponsorStorage } from 'utils';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { formatNumber, processSponsorStorage } from 'utils';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import imgBalance from 'images/contract-address/balance.svg';
 import imgToken from 'images/contract-address/token.svg';
 import imgStorage from 'images/contract-address/storage.svg';
 import imgNonce from 'images/contract-address/nonce.svg';
 import SponsorStorage from 'app/components/SponsorStorage/Loadable';
 import BigNumber from 'bignumber.js';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 // todo, need to refactor the request, and rewrite skeleton style
 const skeletonStyle = { width: '7rem', height: '2.4rem' };
@@ -27,7 +28,7 @@ export function BalanceCard({ accountInfo }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.balance)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.balance)}>
           {t(translations.general.balance)}
         </Tooltip>
       }
@@ -55,7 +56,7 @@ export function TokensCard({ address }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.token)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.token)}>
           {t(translations.general.token)}
         </Tooltip>
       }
@@ -147,7 +148,7 @@ export function NonceCard({ accountInfo }) {
   return (
     <DetailPageCard
       title={
-        <Tooltip text={t(translations.toolTip.address.nonce)} placement="top">
+        <Tooltip title={t(translations.toolTip.address.nonce)}>
           {t(translations.general.nonce)}
         </Tooltip>
       }

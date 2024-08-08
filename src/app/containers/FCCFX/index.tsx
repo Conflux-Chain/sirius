@@ -3,13 +3,13 @@ import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
-import { Row, Col, Spin } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/antd';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { StyledLink } from 'app/components/StyledComponent';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Notice } from './Notice';
 import { InfoCard } from './InfoCard';
 import { StakeAndSignCard } from './StakeAndSignCard';
@@ -20,8 +20,12 @@ import {
   TotalInfoType,
   Tip,
 } from './Common';
-import { useBreakpoint, media } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 export function FCCFX() {
   const { accounts } = usePortal();

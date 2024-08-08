@@ -3,32 +3,31 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Link } from 'app/components/Link/Loadable';
-import { Text } from 'app/components/Text/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
 import {
-  fromDripToCfx,
   toThousands,
-  fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
 } from 'utils';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
-import {
-  reqTransactionDetail,
-  reqTransactionEventlogs,
-} from 'utils/httpRequest';
+import { reqTransactionDetail } from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { useBreakpoint } from 'styles/media';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { PendingReason } from './PendingReason';
 
 import iconViewTxn from 'images/view-txn.png';
 import iconViewTxnActive from 'images/view-txn-active.svg';
 import lodash from 'lodash';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -54,7 +53,6 @@ export const TxnHashRenderComponent = ({
     status?: string;
     address?: string;
   }>({});
-  const [eventlogs, setEventlogs] = useState<any>([]);
   const bp = useBreakpoint();
 
   const handleClick = () => {
@@ -69,12 +67,6 @@ export const TxnHashRenderComponent = ({
     ).then(body => {
       setTxnDetail(body);
       setLoading(false);
-    });
-    reqTransactionEventlogs({
-      transactionHash: hash,
-      aggregate: false,
-    }).then(body => {
-      setEventlogs(body);
     });
   };
 
@@ -100,9 +92,7 @@ export const TxnHashRenderComponent = ({
                     style={{ width: '25rem', height: '20rem' }}
                   ></SkeletonContainer>
                 ) : (
-                  <Overview
-                    data={{ ...txnDetail, ...eventlogs, status: innerStatus }}
-                  />
+                  <Overview data={{ ...txnDetail, status: innerStatus }} />
                 )}
               </>
             }
@@ -129,7 +119,7 @@ export const TxnHashRenderComponent = ({
       ) : null}
 
       <Link href={`/transaction/${hash}`}>
-        <Text span hoverValue={hash}>
+        <Text tag="span" hoverValue={hash}>
           <SpanWrap>{hash}</SpanWrap>
         </Text>
       </Link>
@@ -172,7 +162,7 @@ export const from = {
   key: 'from',
   width: 1,
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
       contractCreated={row.contractCreated}
@@ -210,7 +200,7 @@ export const to = {
     }
 
     return (
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={alias}
         contractCreated={row.contractCreated}
@@ -233,7 +223,7 @@ export const value = {
   width: 1,
   render: value =>
     value ? (
-      <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
         {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (
@@ -251,7 +241,7 @@ export const gasPrice = {
   key: 'gasPrice',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${roundToFixedPrecision(
         fromDripToGdrip(value, false, {
           precision: 6,
@@ -267,14 +257,14 @@ export const gasPrice = {
 export const gasFee = {
   title: (
     <Translation>
-      {t => t(translations.general.table.transaction.gasFee)}
+      {t => t(translations.general.table.transaction.transactionFee)}
     </Translation>
   ),
   dataIndex: 'gasFee',
   key: 'gasFee',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${fromDripToCfx(value, false, {
         precision: 6,
         minNum: 1e-6,
@@ -309,7 +299,7 @@ export const method = {
     }
 
     return (
-      <Text span hoverValue={text}>
+      <Text tag="span" hoverValue={text}>
         <StyledMethodContainerWrapper>
           <StyledMethodWrapper>{text}</StyledMethodWrapper>
         </StyledMethodContainerWrapper>

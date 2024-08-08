@@ -1,16 +1,17 @@
-import React, { useState, createRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
-import { Link, useMessages } from '@cfxjs/react-ui';
+import { useMessages } from '@cfxjs/react-ui';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { FileUpload } from 'app/components/FileUpload';
+import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { translations } from 'locales/i18n';
-import { Card } from 'app/components/Card';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { isHex } from 'utils';
 import imgInfo from 'images/info.svg';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 const AceEditorStyle = {
   width: '100%',
@@ -36,7 +37,7 @@ const addOx = bytecode => {
 export const ContractInfo = ({ onChange }) => {
   const [bytecode, setBytecode] = useState('');
   const [constructorArguments, setConstructorArguments] = useState('');
-  const inputRef = createRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [, setMessage] = useMessages();
   const { t } = useTranslation();
 
@@ -71,7 +72,7 @@ export const ContractInfo = ({ onChange }) => {
   };
 
   const handleImport = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   const handleFileChange = file => {
@@ -160,11 +161,7 @@ export const ContractInfo = ({ onChange }) => {
           <StyledLabelWrapper>
             <div>
               constructor arguments{' '}
-              <Tooltip
-                hoverable
-                text={t(translations.contractDeployment.tip)}
-                placement="top"
-              >
+              <Tooltip title={t(translations.contractDeployment.tip)}>
                 <img src={imgInfo} alt="?" width="14px" />
               </Tooltip>
             </div>

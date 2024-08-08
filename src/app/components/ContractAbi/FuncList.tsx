@@ -4,7 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
-import { translations } from '../../../locales/i18n';
+import { translations } from 'locales/i18n';
 
 interface FuncListProps {
   type?: string;

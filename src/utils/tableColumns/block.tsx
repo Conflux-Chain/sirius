@@ -2,23 +2,26 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Text } from 'app/components/Text/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import {
   formatNumber,
   getPercent,
-  fromDripToCfx,
   toThousands,
-  fromDripToGdrip,
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
-} from 'utils/';
+  getCoreGasTargetUsage,
+} from 'utils';
 import imgPivot from 'images/pivot.svg';
-import { AddressContainer } from 'app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
 import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 export const epoch = {
   title: (
@@ -66,7 +69,7 @@ export const hashWithPivot = {
     return (
       <StyledHashWrapper>
         <Link href={`/block/${value}`}>
-          <Text span hoverValue={value} maxWidth="100px">
+          <Text tag="span" hoverValue={value} maxWidth="100px">
             {value}
           </Text>
         </Link>
@@ -84,7 +87,7 @@ export const miner = {
   key: 'miner',
   width: 1,
   render: (value, row) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       ensInfo={getENSInfo(row)}
       nametagInfo={getNametagInfo(row)}
@@ -102,7 +105,7 @@ export const avgGasPrice = {
   key: 'avgGasPrice',
   width: 1,
   render: value => (
-    <Text span hoverValue={`${toThousands(value)} drip`}>
+    <Text tag="span" hoverValue={`${toThousands(value)} drip`}>
       {`${roundToFixedPrecision(
         fromDripToGdrip(value, false, {
           precision: 6,
@@ -146,6 +149,7 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
+    const gasTargetUsage = getCoreGasTargetUsage(row.gasUsed);
 
     if (value) {
       return (
@@ -153,7 +157,9 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit, 2)})
+              ({getPercent(row.gasUsed, row.gasLimit, 2)} |{' '}
+              {!gasTargetUsage.isNegative && '+'}
+              {gasTargetUsage.percent})
             </span>
           </div>
           <Progress
@@ -181,7 +187,7 @@ export const reward = {
   width: 1,
   render: value =>
     value ? (
-      <Text span hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
         {`${fromDripToCfx(value)} CFX`}
       </Text>
     ) : (
@@ -224,7 +230,28 @@ export const gasLimit = {
   dataIndex: 'gasLimit',
   key: 'gasLimit',
   width: 1,
-  render: value => <Text span>{toThousands(value)}</Text>,
+  render: value => <Text tag="span">{toThousands(value)}</Text>,
+};
+
+export const burntFees = {
+  title: (
+    <StyledGasLimit>
+      <Translation>
+        {t => t(translations.general.table.block.burntFees)}
+      </Translation>
+    </StyledGasLimit>
+  ),
+  dataIndex: 'burntGasFee',
+  key: 'burntGasFee',
+  width: 1,
+  render: value =>
+    value ? (
+      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
+        {`${fromDripToCfx(value)} CFX`}
+      </Text>
+    ) : (
+      '--'
+    ),
 };
 
 const StyledHashWrapper = styled.span`

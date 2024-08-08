@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
-import { translations } from '../../locales/i18n';
+import { translations } from 'locales/i18n';
 import {
   toThousands,
   formatNumber,
@@ -8,7 +8,7 @@ import {
   getNametagInfo,
 } from '../../utils/';
 import { ContentWrapper } from './utils';
-import { AddressContainer } from '../../app/components/AddressContainer/Loadable';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 export const rank = {
   title: (
@@ -25,7 +25,7 @@ export const address = {
   dataIndex: 'base32address',
   key: 'base32address',
   render: (value, row: any) => (
-    <AddressContainer
+    <CoreAddressContainer
       value={value}
       alias={row.name}
       isFull={true}

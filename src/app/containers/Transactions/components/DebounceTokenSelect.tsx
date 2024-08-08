@@ -1,11 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Select, Spin, Tag, Image } from '@cfxjs/antd';
+import { Select, Tag, Image } from '@cfxjs/antd';
+import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
 import styled, { createGlobalStyle } from 'styled-components';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
-import { Text } from 'app/components/Text/Loadable';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
@@ -15,7 +16,7 @@ import {
 } from 'utils/httpRequest';
 import qs from 'query-string';
 import { formatAddress } from 'utils';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import Info from '@zeit-ui/react-icons/info';
 
 const { Option, OptGroup } = Select;
@@ -205,7 +206,7 @@ export function DebounceTokenSelect<
         onClose={onClose}
       >
         {label[0]}
-        <Text maxWidth="60px" hoverValue={label[1]} span>
+        <Text maxWidth="60px" hoverValue={label[1]} tag="span">
           {label[1]}
         </Text>
       </Tag>
@@ -261,11 +262,9 @@ export function DebounceTokenSelect<
             <>
               {t(translations.general.advancedSearch.others.recommend)}
               <Tooltip
-                className="download-csv-tooltip"
-                text={t(
+                title={t(
                   translations.general.advancedSearch.others.recommendTip,
                 )}
-                placement="top"
               >
                 <StyledInfoIconWrapper>
                   <Info size={14} />

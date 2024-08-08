@@ -7,22 +7,16 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Link } from 'app/components/Link/Loadable';
-import { media } from 'styles/media';
-import { Footer as FooterComp } from 'app/components/Footer/Loadable';
-import { TextLogo } from 'app/components/TextLogo/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { Footer as FooterComp } from '@cfxjs/sirius-next-common/dist/components/Footer';
+import { TextLogo } from '@cfxjs/sirius-next-common/dist/components/TextLogo';
 import { translations } from 'locales/i18n';
 import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
-import {
-  NETWORK_TYPE,
-  NETWORK_TYPES,
-  IS_FOREIGN_HOST,
-  NETWORK_ID,
-  HIDE_IN_DOT_NET,
-} from 'utils/constants';
-import { hideInDotNet, getUrl } from 'utils';
+import { HIDE_IN_DOT_NET } from 'utils/constants';
+import { hideInDotNet, getNetwork } from 'utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 
@@ -40,10 +34,15 @@ import {
   Weibo,
   Youtube,
 } from './Icon';
+import ENV_CONFIG, { DOMAIN, IS_FOREIGN_HOST, NETWORK_TYPES } from 'env';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 
 export function Footer() {
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
+  const [globalData] = useGlobalData();
+  const { networkId, networks } = globalData;
+  const network = getNetwork(networks, networkId);
 
   const left = [<TextLogo key="logo" color="var(--theme-color-gray0)" />];
 
@@ -110,7 +109,7 @@ export function Footer() {
     <Link
       className="footer-link"
       href={
-        NETWORK_TYPE === NETWORK_TYPES.testnet
+        ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
           ? 'https://test.confluxhub.io/'
           : 'https://confluxhub.io/'
       }
@@ -172,7 +171,7 @@ export function Footer() {
   const globalLink = (
     <Link
       className="footer-link"
-      href={`${window.location.protocol}${getUrl(NETWORK_ID)
+      href={`${window.location.protocol}${network.url
         .replace('-stage', '')
         .replace('.net', '.io')}`}
       ga={{
@@ -339,13 +338,9 @@ export function Footer() {
       <Link
         className="footer-link"
         href={
-          NETWORK_TYPE === NETWORK_TYPES.testnet
-            ? IS_FOREIGN_HOST
-              ? 'https://api-testnet.confluxscan.io/doc'
-              : 'https://api-testnet.confluxscan.net/doc'
-            : IS_FOREIGN_HOST
-            ? 'https://api.confluxscan.io/doc'
-            : 'https://api.confluxscan.net/doc'
+          ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+            ? `https://api-testnet.confluxscan${DOMAIN}/doc`
+            : `https://api.confluxscan${DOMAIN}/doc`
         }
         ga={{
           category: ScanEvent.menu.category,
@@ -425,8 +420,8 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            {NETWORK_TYPE === NETWORK_TYPES.mainnet ||
-            NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+            {ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET ||
+            ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET ? (
               <FooterContentLink>
                 {developResourceLinks.developerAPI}
               </FooterContentLink>
@@ -491,8 +486,10 @@ export function Footer() {
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
-    <CopyRight key="copryRight">{t(translations.footer.copryRight)}</CopyRight>,
-    <span key="ICP">{ICP}</span>,
+    <CopyRight key="copryRight">
+      {t(translations.footer.copryRight)}
+      <span key="ICP">{ICP}</span>
+    </CopyRight>,
   ];
 
   return (
@@ -554,6 +551,9 @@ const FooterContent = styled.div`
 `;
 
 const FooterContentRow = styled.div`
+  .link {
+    display: inline-flex;
+  }
   display: flex;
   flex-direction: column;
 `;
@@ -561,6 +561,9 @@ const FooterContentRow = styled.div`
 const FooterContentLink = styled.span`
   margin-bottom: 0.5rem;
 
+  .link {
+    display: inline-flex;
+  }
   .link.footer-link {
     color: var(--theme-color-gray0);
     font-size: 0.86rem;

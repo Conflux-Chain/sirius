@@ -9,16 +9,17 @@ import { RotateImg } from './RotateImg';
 import { useCheckHook } from './useCheckHook';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
-import { Text } from '../Text/Loadable';
-import { getLabelInfo } from '../AddressContainer';
-import { useENS } from 'utils/hooks/useENS';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
+// import { useENS } from 'utils/hooks/useENS';
+import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 import { Balance } from './Balance';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
 
 interface Button {
   className?: string;
@@ -27,18 +28,16 @@ interface Button {
 }
 
 export const Button = ({ className, onClick, showBalance }: Button) => {
-  const [globalData = {}] = useGlobalData();
+  const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const { authConnectStatus, accounts } = usePortal();
   const account = accounts[0];
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook();
-  const [ensMap] = useENS({
-    address: [account],
-  });
+  const { ens } = useENS(account);
   const { label, icon } = useMemo(
-    () => getLabelInfo(ensMap[account]?.name, 'ens'),
-    [account, ensMap],
+    () => getLabelInfo(ens[account]?.name, 'ens'),
+    [account, ens],
   );
 
   let buttonText: React.ReactNode = t(
@@ -77,13 +76,15 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
           } else if (addressLabel) {
             buttonText = (
               <StyledAddressLabelWrapper>
-                <Text span hoverValue={t(translations.profile.tip.label)}>
+                <Text tag="span" hoverValue={t(translations.profile.tip.label)}>
                   <Bookmark color="var(--theme-color-gray2)" size={16} />
                 </Text>
                 {addressLabel}
               </StyledAddressLabelWrapper>
             );
-          } else if (NETWORK_TYPE === NETWORK_TYPES.mainnet) {
+          } else if (
+            ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
+          ) {
             buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
           } else {
             buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');

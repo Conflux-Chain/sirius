@@ -4,12 +4,13 @@ import { fetchWithPrefix } from 'utils/request';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { AddressContainer } from 'app/components/AddressContainer';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
 import styled from 'styled-components';
 import { publishRequestError } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { uniqueId } from 'lodash';
 
 const treeToFlat = tree => {
   let list: Array<any> = [];
@@ -97,6 +98,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
                   ...l,
                   fromContractInfo: contractInfo[l.from] || {},
                   toContractInfo: contractInfo[l.to] || {},
+                  id: uniqueId('InternalTxns-'),
                 };
               });
               setState({
@@ -142,13 +144,13 @@ export const InternalTxns = ({ address, from, to }: Props) => {
 
   const fromContent = (isFull = false) => (
     <span>
-      <AddressContainer value={from} isFull={isFull} />{' '}
+      <CoreAddressContainer value={from} isFull={isFull} />{' '}
       <CopyButton copyText={formatAddress(from)} />
     </span>
   );
   const toContent = (isFull = false) => (
     <span>
-      <AddressContainer value={to} isFull={isFull} />{' '}
+      <CoreAddressContainer value={to} isFull={isFull} />{' '}
       <CopyButton copyText={formatAddress(to)} />
     </span>
   );
@@ -176,6 +178,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
       dataSource={data}
       loading={loading}
       title={tableHeader}
+      rowKey="id"
     ></TablePanelNew>
   );
 };

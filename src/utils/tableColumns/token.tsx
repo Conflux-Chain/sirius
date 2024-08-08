@@ -2,10 +2,9 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Link } from 'app/components/Link/Loadable';
-import { Text } from 'app/components/Text/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import queryString from 'query-string';
-import { media } from 'styles/media';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
   formatBalance,
@@ -20,22 +19,25 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
-import { AddressContainer } from '../../app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
-import { Tooltip } from '../../app/components/Tooltip/Loadable';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
 import { Popover } from '@cfxjs/react-ui';
-import { useBreakpoint } from 'styles/media';
+import {
+  useBreakpoint,
+  media,
+} from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
-import { Price } from '../../app/components/Price/Loadable';
+import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 
 const fromTypeInfo = {
   arrow: {
@@ -154,7 +156,7 @@ export const renderAddress = (
 
   return (
     <>
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={alias}
         link={formatAddress(filter) !== formatAddress(value)}
@@ -185,7 +187,7 @@ export const token = {
           <Translation>
             {t => (
               <Text
-                span
+                tag="span"
                 hoverValue={
                   row.name || row.symbol
                     ? `${row?.name || t(translations.general.notAvailable)} (${
@@ -202,7 +204,7 @@ export const token = {
                     row?.length || 32,
                   )
                 ) : (
-                  <AddressContainer
+                  <CoreAddressContainer
                     value={row?.address}
                     alias={row?.contractName || null}
                     showIcon={false}
@@ -237,7 +239,7 @@ export const Token2 = ({ row }) => {
               >
                 {
                   <Text
-                    span
+                    tag="span"
                     hoverValue={
                       row?.transferTokenInfo?.name
                         ? `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`
@@ -254,7 +256,7 @@ export const Token2 = ({ row }) => {
               </Link>
             ) : (
               <StyledToken2NotAvailableWrapper>
-                <AddressContainer
+                <CoreAddressContainer
                   value={row?.transferTokenInfo?.address}
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
@@ -340,8 +342,7 @@ export const marketCap = {
     <ContentWrapper right>
       <IconWrapper>
         <Tooltip
-          hoverable
-          text={
+          title={
             <Translation>
               {t => (
                 <div
@@ -352,7 +353,6 @@ export const marketCap = {
               )}
             </Translation>
           }
-          placement="top"
         >
           <img src={imgInfo} alt="?" />
         </Tooltip>
@@ -453,7 +453,7 @@ export const contract = (isFull = false) => ({
       verify = true;
     }
     return (
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         isFull={isFull}
         verify={verify}
@@ -494,7 +494,7 @@ export const quantity = {
       ? opt.decimals
       : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
     return value ? (
-      <Text span hoverValue={formatBalance(value, decimals, true)}>
+      <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
         {formatBalance(value, decimals)}
       </Text>
     ) : (
@@ -550,7 +550,7 @@ export const account = {
   key: 'account',
   render: (value, row) => (
     <AccountWrapper>
-      <AddressContainer
+      <CoreAddressContainer
         value={value.address}
         alias={
           value.name ||
@@ -574,7 +574,7 @@ export const balance = (decimal, price, transferType) => ({
       {transferType === CFX_TOKEN_TYPES.erc1155 ? (
         <ThTipWrap>
           <Text
-            span
+            tag="span"
             hoverValue={
               <Translation>
                 {t => t(translations.general.table.token.erc1155QuantityTip)}
@@ -606,11 +606,17 @@ export const balance = (decimal, price, transferType) => ({
                 keepDecimals: true,
               }) || 0
             ) < +tinyBalanceThreshold ? (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
+              <Text
+                tag="span"
+                hoverValue={formatBalance(value, decimals, true)}
+              >
                 {`< ${tinyBalanceThreshold}`}
               </Text>
             ) : (
-              <Text span hoverValue={formatBalance(value, decimals, true)}>
+              <Text
+                tag="span"
+                hoverValue={formatBalance(value, decimals, true)}
+              >
                 {formatBalance(value, decimals, false, {
                   precision: decimalPlace,
                   keepZero: true,
@@ -619,7 +625,7 @@ export const balance = (decimal, price, transferType) => ({
               </Text>
             )
           ) : (
-            <Text span hoverValue={formatBalance(value, decimals, true)}>
+            <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
               {formatBalance(value, decimals, false, {
                 withUnit: false,
               })}
@@ -656,7 +662,7 @@ export const percentage = total => ({
         : null;
     return (
       <ContentWrapper right>
-        <Text span hoverValue={`${percentage}%`}>
+        <Text tag="span" hoverValue={`${percentage}%`}>
           {percentage === null
             ? '-'
             : percentage < 0.001
@@ -684,7 +690,7 @@ export const tokenId = (contractAddress?: string) => ({
   render: (value, row) => {
     return (
       <>
-        <Text span hoverValue={value}>
+        <Text tag="span" hoverValue={value}>
           <SpanWrap>{value || '-'}</SpanWrap>
         </Text>
         {!isZeroAddress(formatAddress(row.to)) && (
@@ -829,7 +835,7 @@ export const traceResult = {
           </span>
         );
         body = (
-          <Text span hoverValue={hoverValue} maxWidth="17.1429rem">
+          <Text tag="span" hoverValue={hoverValue} maxWidth="17.1429rem">
             {returnData}
           </Text>
         );
@@ -876,7 +882,7 @@ export const NFTOwner = {
   key: 'owner',
   render: (value, row) => (
     <AccountWrapper>
-      <AddressContainer
+      <CoreAddressContainer
         value={value}
         alias={
           value.name ||

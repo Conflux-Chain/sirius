@@ -61,6 +61,7 @@ export function RightStatus() {
       columns={columns}
       dataSource={data}
       loading={loading}
+      rowKey={record => `${record.endBlockNumber}-${record.type}`}
     ></TablePanelNew>
   );
 }

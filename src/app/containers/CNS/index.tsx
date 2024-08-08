@@ -9,8 +9,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { media } from 'styles/media';
-import { PageHeader } from 'app/components/PageHeader';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Input } from '@cfxjs/antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, isZeroAddress } from 'utils';
@@ -18,15 +18,15 @@ import CNSUtil from '@web3identity/cns-util';
 import { NETWORK_ID } from 'utils/constants';
 import qs from 'query-string';
 import dayjs from 'dayjs';
-import { Description } from 'app/components/Description/Loadable';
-import { AddressContainer } from 'app/components/AddressContainer';
-import { Card } from 'app/components/Card/Loadable';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
 import BigNumber from 'bignumber.js';
-import { Link } from 'app/components/Link/Loadable';
-import { Text } from 'app/components/Text/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 
 const { Search } = Input;
 
@@ -249,32 +249,32 @@ export function CNS() {
           </Description>
           {isZeroAddress(data.resolvedAddress || '') ? null : (
             <Description title={t(translations.cns.resolvedAddress)}>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.resolvedAddress || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
           )}
           <Description title={t(translations.cns.expires)}>
             {data.expires}
           </Description>
           <Description title={t(translations.cns.registrant)}>
-            <AddressContainer
+            <CoreAddressContainer
               isFull={true}
               value={data.registrant || ''}
               showENSLabel={false}
               showAddressLabel={false}
-            ></AddressContainer>
+            ></CoreAddressContainer>
           </Description>
           <Description title={t(translations.cns.controller)}>
-            <AddressContainer
+            <CoreAddressContainer
               isFull={true}
               value={data.controller || ''}
               showENSLabel={false}
               showAddressLabel={false}
-            ></AddressContainer>
+            ></CoreAddressContainer>
           </Description>
           <Description title={t(translations.cns.tokenid)} noBorder>
             {data.namehash
@@ -308,12 +308,12 @@ export function CNS() {
         <>
           <Card style={{ marginBottom: '1rem' }}>
             <Description title={t(translations.cns.address)}>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.address || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
             <Description title={t(translations.cns.reverseRecord)}>
               {
@@ -325,12 +325,12 @@ export function CNS() {
               }
             </Description>
             <Description title={t(translations.cns.registrant)} noBorder>
-              <AddressContainer
+              <CoreAddressContainer
                 isFull={true}
                 value={data.registrant || ''}
                 showENSLabel={false}
                 showAddressLabel={false}
-              ></AddressContainer>
+              ></CoreAddressContainer>
             </Description>
           </Card>
           {data.userDomains?.length ? (

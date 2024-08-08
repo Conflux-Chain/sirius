@@ -8,10 +8,10 @@ import styled from 'styled-components';
 
 import { Translation, useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@cfxjs/antd';
-import { SearchIcon } from 'app/components/SearchIcon/Loadable';
+import { SearchIcon } from '@cfxjs/sirius-next-common/dist/components/SearchIcon';
 import ClearIcon from 'images/clear.png';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import _ from 'lodash';
@@ -230,7 +230,7 @@ export const Search = () => {
       !(
         value === '0x0' ||
         isAccountAddress(value) ||
-        // isContractAddress(value) ||
+        // isCoreContractAddress(value) ||
         isInnerContractAddress(value) ||
         isSpecialAddress(value) ||
         isEpochNumber(value) ||

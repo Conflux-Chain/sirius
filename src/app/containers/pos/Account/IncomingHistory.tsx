@@ -4,7 +4,7 @@ import {
   TablePanel as TablePanelNew,
   sortDirections,
 } from 'app/components/TablePanelNew';
-import { useAge } from 'utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { accountColunms, colunms } from 'utils/tableColumns/pos';
 
 export function IncomingHistory() {
@@ -30,5 +30,7 @@ export function IncomingHistory() {
     width: columnsWidth[i],
   }));
 
-  return <TablePanelNew url={url} columns={columns}></TablePanelNew>;
+  return (
+    <TablePanelNew url={url} columns={columns} rowKey="id"></TablePanelNew>
+  );
 }

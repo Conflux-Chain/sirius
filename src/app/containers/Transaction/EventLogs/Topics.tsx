@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Select } from 'app/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Link } from 'app/components/Link';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { formatAddress } from 'utils';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
@@ -96,7 +96,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
               onChange={value => {
                 handleChange(value, d.argName);
               }}
-              width="7rem"
+              width="7.8rem"
               disabled={valueMap.hex === valueMap.decode}
             >
               {availableOptions.map(o => (
@@ -153,15 +153,18 @@ const StyledTopicsWrapper = styled.div`
       align-items: center;
     }
 
-    .select.select {
-      padding-left: 0;
-      height: 1.5714rem;
-      padding: 0 0.7143rem;
-      margin-right: 0.8571rem;
+    .select {
+      margin-right: 12px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
 
       .value {
         padding-left: 0;
       }
+    }
+    .select:hover {
+      background-color: rgba(30, 61, 228, 0.08);
     }
   }
 `;

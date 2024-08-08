@@ -2,23 +2,23 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  StockChartTemplate,
-  ChildProps,
-} from 'app/components/Charts/StockChartTemplate';
+import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
+import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/PreviewChartTemplate';
+import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
-import { Wrapper } from './Wrapper';
 
 export function CFXHolderAccounts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
 
   const props = {
-    preview: preview,
-    name: 'cfx-holder-accounts',
-    title: t(translations.highcharts.pow.CFXHolderAccounts.title),
-    subtitle: t(translations.highcharts.pow.CFXHolderAccounts.subtitle),
     request: {
       url: OPEN_API_URLS.cfxHolderAccounts,
+      query: preview
+        ? {
+            limit: '30',
+            intervalType: 'day',
+          }
+        : undefined,
       formatter: data => {
         return [
           data?.list?.map(s => [
@@ -34,8 +34,31 @@ export function CFXHolderAccounts({ preview = false }: ChildProps) {
       chart: {
         zoomType: 'x',
       },
+      header: {
+        title: {
+          text: t(translations.highcharts.pow.CFXHolderAccounts.title),
+        },
+        subtitle: {
+          text: t(translations.highcharts.pow.CFXHolderAccounts.subtitle),
+        },
+        breadcrumb: [
+          {
+            name: t(translations.highcharts.pow.breadcrumb.charts),
+            path: '/pow-charts',
+          },
+          {
+            name: t(
+              translations.highcharts.pow.breadcrumb['cfx-holder-accounts'],
+            ),
+            path: '/pow-charts/cfx-holder-accounts',
+          },
+        ],
+      },
       title: {
         text: t(translations.highcharts.pow.CFXHolderAccounts.title),
+      },
+      subtitle: {
+        text: t(translations.highcharts.subtitle),
       },
       xAxis: {
         type: 'datetime',
@@ -56,9 +79,9 @@ export function CFXHolderAccounts({ preview = false }: ChildProps) {
     },
   };
 
-  return (
-    <Wrapper {...props}>
-      <StockChartTemplate {...props}></StockChartTemplate>
-    </Wrapper>
+  return preview ? (
+    <PreviewChartTemplate {...props}></PreviewChartTemplate>
+  ) : (
+    <StockChartTemplate {...props}></StockChartTemplate>
   );
 }

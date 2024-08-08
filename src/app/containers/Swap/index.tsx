@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import { abi } from 'utils/contract/wcfx.json';
-import { TXN_ACTION, CONTRACTS, RPC_SERVER, NETWORK_ID } from 'utils/constants';
+import { TXN_ACTION, CONTRACTS, NETWORK_ID } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { Card } from 'app/components/Card/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
 import { ConnectButton } from 'app/components/ConnectWallet';
-import { Select } from 'app/components/Select';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { Input, Button } from '@cfxjs/react-ui';
-import { Tooltip } from 'app/components/Tooltip';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
+import ENV_CONFIG from 'env';
 
 // token decimal
 const MAX_DECIMALS = 18;
@@ -51,11 +52,7 @@ const SwapItem = ({
   if (selected === 'cfx' && type === 'from') {
     balanceTitle = (
       <>
-        <Tooltip
-          hoverable
-          text={t(translations.swap.availableBalanceTip)}
-          placement="top"
-        >
+        <Tooltip title={t(translations.swap.availableBalanceTip)}>
           <span className="icon-container">
             <img src={imgInfo} alt="?" className="icon-info" />
           </span>
@@ -191,7 +188,7 @@ export function Swap() {
   const { addRecord } = useTxnHistory();
 
   const CFX = new SDK.Conflux({
-    url: RPC_SERVER,
+    url: ENV_CONFIG.ENV_RPC_SERVER,
     networkId: NETWORK_ID,
   });
 

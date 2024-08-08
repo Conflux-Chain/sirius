@@ -1,18 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Card } from 'app/components/Card/Loadable';
-import { Description } from 'app/components/Description/Loadable';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { formatTimeStamp } from 'utils';
 import lodash from 'lodash';
-import { Link } from 'app/components/Link/Loadable';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { PoSAddressContainer } from 'app/components/AddressContainer/Loadable';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 const { Text } = Typography;
 
@@ -59,10 +59,11 @@ export function Overview({ data, loading }) {
         } else if (p === 'address') {
           content = (
             <>
-              <PoSAddressContainer
+              <CoreAddressContainer
                 value={content as string}
                 isFull={true}
-              ></PoSAddressContainer>{' '}
+                isPosAddress={true}
+              ></CoreAddressContainer>{' '}
               <CopyButton copyText={content as string} />
             </>
           );

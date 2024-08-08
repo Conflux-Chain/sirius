@@ -1,25 +1,26 @@
-import React, { createRef } from 'react';
-import { FileUpload } from 'app/components/FileUpload';
-import { LOCALSTORAGE_KEYS_MAP, NETWORK_ID } from 'utils/constants';
+import React, { useRef } from 'react';
+import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
+import { NETWORK_ID } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import lodash from 'lodash';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { message } from '@cfxjs/antd';
 import MD5 from 'md5.js';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 interface Props {
   onLoading?: (loading: boolean) => void;
 }
 export const File = ({ onLoading = () => {} }: Props) => {
   const [globalData, setGlobalData] = useGlobalData();
-  const inputRef = createRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
 
   const handleImport = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   const handleFileChange = file => {
@@ -55,7 +56,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
         let updateAmount = 0;
         // New imports have higher priority
         const tags = lodash
-          .unionWith(addressNameTags, oldList, (arrVal, othVal) => {
+          .unionWith<any>(addressNameTags, oldList, (arrVal, othVal) => {
             if (arrVal.a === othVal.a) {
               if (arrVal.l !== othVal.l) {
                 updateAmount += 1;
@@ -108,7 +109,7 @@ export const File = ({ onLoading = () => {} }: Props) => {
         let updateAmount = 0;
         // New imports have higher priority
         const notes = lodash
-          .unionWith(txPrivateNotes, oldList, (arrVal, othVal) => {
+          .unionWith<any>(txPrivateNotes, oldList, (arrVal, othVal) => {
             if (arrVal.h === othVal.h) {
               if (arrVal.n !== othVal.n) {
                 updateAmount += 1;

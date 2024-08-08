@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@cfxjs/react-ui';
 import clsx from 'clsx';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface Props {
   tabs: Array<{

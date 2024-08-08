@@ -3,19 +3,20 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { Card } from 'app/components/Card/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
-import { Row, Col, Collapse, Tooltip, message, Typography } from '@cfxjs/antd';
-import { Description } from 'app/components/Description/Loadable';
-import { CopyButton } from 'app/components/CopyButton/Loadable';
+import { Row, Col, Collapse, message, Typography } from '@cfxjs/antd';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { useBreakpoint } from 'styles/media';
-import { InfoIconWithTooltip } from 'app/components/InfoIconWithTooltip/Loadable';
-import { Button } from 'app/components/Button/Loadable';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { usePlatform } from 'utils/hooks/usePlatform';
 
 import AceEditor from 'react-ace';
@@ -28,7 +29,7 @@ import { formatTimeStamp, addIPFSGateway } from 'utils';
 import { TransferAndHolders } from './TransferAndHolders';
 import { TransferModal } from './TransferModal';
 
-import { AddressContainer } from 'app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
 import _ from 'lodash';
@@ -292,6 +293,7 @@ export function NFTDetail(props) {
           <Card style={{ padding: 0 }}>
             <Button
               className="button-refresh"
+              type="action"
               size="small"
               onClick={handleRefresh}
             >
@@ -316,7 +318,7 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {imgURL ? (
                       <div className="image-uri-container">
-                        <Tooltip title={imgURL}>
+                        <Tooltip title={imgURL} className="image-uri-tooltip">
                           <Link href={imgURL} className="image-uri">
                             {imgURL}
                           </Link>
@@ -333,10 +335,10 @@ export function NFTDetail(props) {
                     <SkeletonContainer shown={loading}>
                       {data.owner ? (
                         <>
-                          <AddressContainer
+                          <CoreAddressContainer
                             value={data.owner}
                             isFull={true}
-                          ></AddressContainer>{' '}
+                          ></CoreAddressContainer>{' '}
                           <CopyButton copyText={data.owner} />
                         </>
                       ) : (
@@ -360,10 +362,10 @@ export function NFTDetail(props) {
                               pointerEvents: 'none',
                             }}
                           >
-                            <AddressContainer
+                            <CoreAddressContainer
                               value={address}
                               isFull={true}
-                            ></AddressContainer>
+                            ></CoreAddressContainer>
                           </span>
                         </Link>{' '}
                         <CopyButton copyText={address} />
@@ -392,10 +394,10 @@ export function NFTDetail(props) {
                   <SkeletonContainer shown={loading}>
                     {data.creator ? (
                       <>
-                        <AddressContainer
+                        <CoreAddressContainer
                           value={data.creator}
                           isFull={true}
-                        ></AddressContainer>{' '}
+                        ></CoreAddressContainer>{' '}
                         <CopyButton copyText={data.creator} />
                       </>
                     ) : (
@@ -494,6 +496,10 @@ const StyledWrapper = styled.div`
   .image-uri-container {
     display: flex;
     align-items: center;
+    .image-uri-tooltip {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .link.image-uri {

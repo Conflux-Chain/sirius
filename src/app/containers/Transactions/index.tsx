@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { transactionColunms } from 'utils/tableColumns';
-import { PageHeader } from 'app/components/PageHeader/Loadable';
-import { useAge } from 'utils/hooks/useAge';
+import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
 export function Transactions() {

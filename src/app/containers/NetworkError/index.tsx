@@ -7,12 +7,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
-import { gotoNetwork } from 'utils';
-import { NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { getNetwork, gotoNetwork } from 'utils';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { useGlobalData } from 'utils/hooks/useGlobal';
 
 interface RouteParams {
   network: string;
@@ -22,8 +23,10 @@ interface RouteParams {
 export function NetworkError() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
+  const [globalData] = useGlobalData();
+  const { networks } = globalData;
   const {
-    network = NETWORK_TYPE === NETWORK_TYPES.testnet
+    network = ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
       ? 'Hydra'
       : 'Core (Testnet)',
   } = useParams<RouteParams>();
@@ -43,9 +46,12 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            NETWORK_TYPE === NETWORK_TYPES.testnet
-              ? gotoNetwork('1029')
-              : gotoNetwork('1');
+            const networkId =
+              ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+                ? 1029
+                : 1;
+            const network = getNetwork(networks, networkId);
+            gotoNetwork(network.url);
           }}
         >
           {t(translations.networkError.btn, { network })}
@@ -115,7 +121,9 @@ const ErrorLabel = styled.span`
 `;
 
 const GoTo = styled.a`
-  width: 18rem;
+  min-width: 18rem;
+  width: fit-content;
+  padding: 0 2rem;
   height: 3.5714rem;
   background-color: #fff;
   border-radius: 2.8571rem;

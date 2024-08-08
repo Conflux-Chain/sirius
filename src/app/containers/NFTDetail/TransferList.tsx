@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, blockColunms } from 'utils/tableColumns';
-import { useAge } from 'utils/hooks/useAge';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 
 export const TransferList = ({ type, address, id, loading }) => {
@@ -37,6 +37,9 @@ export const TransferList = ({ type, address, id, loading }) => {
       url={!!type ? url : ''}
       columns={columns}
       loading={loading}
+      rowKey={record =>
+        `${record.transactionHash}-${record.transactionLogIndex}`
+      }
     ></TablePanelNew>
   );
 };

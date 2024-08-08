@@ -3,17 +3,16 @@ import { sendRequest } from 'utils/httpRequest';
 import qs from 'query-string';
 import { useState } from 'react';
 import { Table } from '@cfxjs/antd';
-import { Select } from 'app/components/Select';
-import queryString from 'query-string';
+import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TableProps } from '@cfxjs/antd/es/table';
 import { toThousands, formatNumber } from 'utils';
-import { useBreakpoint } from 'styles/media';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from 'app/components/Empty/Loadable';
+import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 
 type SortOrder = 'descend' | 'ascend' | null;
 type SortDirections = SortOrder[];
@@ -56,8 +55,6 @@ export const TitleTotal = ({
   outerUrl?: string;
 }) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const history = useHistory();
 
   const { url, query } = useMemo(() => {
     if (outerUrl) {
@@ -81,54 +78,28 @@ export const TitleTotal = ({
       </Trans>
     );
 
-  const handleTypeChange = () => {
-    history.push(
-      queryString.stringifyUrl({
-        url: location.pathname,
-        query: {},
-      }),
-    );
-  };
-
-  const handleDownloadItemClick = (e, index, count) => {
-    if (index !== 0) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (query && query.address) {
-        const address = query.address;
-        window.open(
-          `/stat/top-token-holder-csv?address=${address}&limit=${count}`,
-          '_blank',
-        );
-      }
+  const handleDownloadItemClick = count => {
+    if (query && query.address) {
+      const address = query.address;
+      window.open(
+        `/stat/top-token-holder-csv?address=${address}&limit=${count}`,
+        '_blank',
+      );
     }
   };
 
   const csv = (
     <StyledSelectWrapper isEn={false} className="download">
       <Select
-        value={'0'}
-        onChange={handleTypeChange}
+        onChange={handleDownloadItemClick}
         disableMatchWidth
         size="small"
         className="btnSelectContainer"
-        variant="text"
-        dropdownClassName="dropdown"
+        lable={t(translations.accounts.downloadButtonText)}
       >
-        {[
-          t(translations.accounts.downloadButtonText),
-          '100',
-          '500',
-          '1000',
-          '3000',
-          '5000',
-        ].map((o, index) => {
+        {['100', '500', '1000', '3000', '5000'].map((o, index) => {
           return (
-            <Select.Option
-              key={o}
-              value={String(index)}
-              onClick={e => handleDownloadItemClick(e, index, o)}
-            >
+            <Select.Option key={index} value={String(index)}>
               {o}
             </Select.Option>
           );
@@ -365,7 +336,6 @@ TablePanel.defaultProps = {
   url: '',
   scroll: { x: 1200 },
   tableLayout: 'fixed',
-  rowKey: () => Math.random().toString().substr(2),
   title: undefined,
   footer: undefined,
   hideDefaultTitle: false,

@@ -7,9 +7,9 @@ import {
   isCurrentNetworkAddress,
   publishRequestError,
 } from 'utils';
-import { NETWORK_TYPE } from 'utils/constants';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { useGlobalData } from 'utils/hooks/useGlobal';
+import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import ENV_CONFIG from 'env';
 
 type Type = {
   a: string;
@@ -156,7 +156,7 @@ export function CreateAddressLabel({
                 t(translations.nftDetail.error.invalidNetwork, {
                   network: t(
                     translations.general.networks[
-                      String(NETWORK_TYPE).toLowerCase()
+                      ENV_CONFIG.ENV_NETWORK_TYPE.toLowerCase()
                     ],
                   ),
                 }),

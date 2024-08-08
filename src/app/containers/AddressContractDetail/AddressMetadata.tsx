@@ -1,33 +1,34 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { List } from 'app/components/List/';
+import { List } from '@cfxjs/sirius-next-common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { media } from 'styles/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Modal } from '@cfxjs/react-ui';
-import { Text } from 'app/components/Text';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import {
-  fromDripToCfx,
   getTimeByBlockInterval,
   toThousands,
   publishRequestError,
 } from 'utils';
-import SkeletonContainer from 'app/components/SkeletonContainer/Loadable';
-import { CONTRACTS, CFX, NETWORK_TYPE, NETWORK_TYPES } from 'utils/constants';
+import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
+import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
 import { abi as governanceAbi } from 'utils/contract/governance.json';
 import { abi as stakingAbi } from 'utils/contract/staking.json';
-import { Tooltip } from 'app/components/Tooltip/Loadable';
-import { Link } from 'app/components/Link/Loadable';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { getPosAccountInfo } from 'utils/rpcRequest';
 import { reqHomeDashboardOfPOSSummary } from 'utils/httpRequest';
 import lodash from 'lodash';
-import { PoSAddressContainer } from 'app/components/AddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import {
   getDepositList,
   getAccumulateInterestRate,
   getVoteList,
 } from 'utils/rpcRequest';
+import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,
@@ -77,7 +78,9 @@ export function AddressMetadata({ address, accountInfo }) {
 
     if (
       accountInfo.address &&
-      [NETWORK_TYPES.mainnet, NETWORK_TYPES.testnet].includes(NETWORK_TYPE)
+      [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
+        ENV_CONFIG.ENV_NETWORK_TYPE,
+      )
     ) {
       const proArr: any = [];
       proArr.push(getDepositList(address));
@@ -138,9 +141,10 @@ export function AddressMetadata({ address, accountInfo }) {
                 <CenterLine>
                   <Content>
                     {isPoSActived && posAccountInfo?.address ? (
-                      <PoSAddressContainer
+                      <CoreAddressContainer
                         value={posAccountInfo?.address}
-                      ></PoSAddressContainer>
+                        isPosAddress={true}
+                      ></CoreAddressContainer>
                     ) : (
                       '--'
                     )}
@@ -212,15 +216,15 @@ export function AddressMetadata({ address, accountInfo }) {
     return (
       <>
         <List
-          className="staking"
           list={[
             {
               title: (
                 <Tooltip
-                  text={
+                  title={
                     <>
                       {t(translations.toolTip.address.stakedBegin)}
-                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
+                      NETWORK_TYPES.CORE_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
@@ -267,10 +271,11 @@ export function AddressMetadata({ address, accountInfo }) {
             {
               title: (
                 <Tooltip
-                  text={
+                  title={
                     <>
                       {t(translations.toolTip.address.lockedBegin)}
-                      {NETWORK_TYPE === NETWORK_TYPES.testnet ? (
+                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
+                      NETWORK_TYPES.CORE_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
