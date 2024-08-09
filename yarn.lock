@@ -2553,6 +2553,11 @@
   resolved "https://registry.npmjs.org/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.8.tgz#cf1f755b2dd17bf7ff1f939b17209a8998b5d5d5"
   integrity sha512-7As5kZF2lk/Yg9KR4ZTizKhzx+qTZG8RVHp3gy7p65fOXRjDMz57aGud/DBBrgVFJDWlbZRGXp3oiWVhRz9c0g==
 
+"@cfxjs/sirius-next-i18n@0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.9.tgz#9fc9d0cbf6a957dba4713670b8430f421331d0bd"
+  integrity sha512-M1ftr+NvXoEa8NCXHeE80e0Of/0OZPXdm+A9QaMG1pa50kQa7xkyzEKFko81wPf6kBwQdILC9CKyELKUqkLHGA==
+
 "@cfxjs/use-wallet-react@0.0.2-5":
   version "0.0.2-5"
   resolved "https://registry.yarnpkg.com/@cfxjs/use-wallet-react/-/use-wallet-react-0.0.2-5.tgz#d3bd5391e843daaacb4dfcb5671624caa2927332"
