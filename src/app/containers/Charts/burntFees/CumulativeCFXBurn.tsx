@@ -53,6 +53,9 @@ export function CumulativeCFXBurn({ preview = false }: ChildProps) {
       xAxis: {
         type: 'datetime',
       },
+      yAxis: {
+        min: 0,
+      },
       tooltip: {
         shared: true,
       },
