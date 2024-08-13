@@ -19,7 +19,10 @@ import lodash from 'lodash';
 import { NetworkPie } from './NetworkPie';
 import { HIDE_IN_DOT_NET } from '../../../utils/constants';
 import { IS_TESTNET } from 'env';
-import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
+import {
+  fromDripToCfx,
+  fromDripToGdrip,
+} from '@cfxjs/sirius-next-common/dist/utils';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -35,7 +38,7 @@ export enum StatsType {
   topTokensByTxnCount = 'topTokensByTxnCount',
   topTokensByTxnAccountsCount = 'topTokensByTxnAccountsCount',
   topMinersByBlocksMined = 'topMinersByBlocksMined',
-  topAccountsByGasUsed = 'topAccountsByGasUsed',
+  topGasSpenders = 'topGasSpenders',
   topAccountsByTxnCount = 'topAccountsByTxnCount',
   highestNodes = 'highestNodes',
 }
@@ -56,6 +59,17 @@ const cfxValue = (value, opt: any = { showUnit: false }) => (
       ...opt,
     })}
     {opt.showUnit ? ' CFX' : ''}
+  </Text>
+);
+
+const gdripValue = (value, opt: any = { showUnit: true }) => (
+  <Text hoverValue={`${fromDripToGdrip(value, true)} Gdrip`}>
+    {fromDripToGdrip(value, false, {
+      withUnit: false,
+      keepDecimal: false,
+      ...opt,
+    })}
+    {opt.showUnit ? ' Gdrip' : ''}
   </Text>
 );
 
@@ -172,8 +186,9 @@ export const StatsCard = ({
     case StatsType.overviewNetwork:
       columns = [
         {
-          title: t(translations.statistics.overviewColumns.totalGasUsed),
+          title: t(translations.statistics.overviewColumns.totalGasFees),
           index: 'gasUsed',
+          unit: 'Gdrip',
         },
       ];
       action = 'network';
@@ -266,10 +281,10 @@ export const StatsCard = ({
       action = 'topMiner';
       category = 'miner';
       break;
-    case StatsType.topAccountsByGasUsed:
+    case StatsType.topGasSpenders:
       columns = [
         t(translations.statistics.column.address),
-        t(translations.statistics.column.gasUsed),
+        t(translations.statistics.column.fees),
       ];
       action = 'top-gas-used';
       category = 'network';
@@ -575,16 +590,7 @@ export const StatsCard = ({
               />
             </td>
             <td className="text-right">
-              <Text
-                hoverValue={formatNumber(d.gas, {
-                  withUnit: false,
-                })}
-              >
-                {formatNumber(d.gas, {
-                  withUnit: false,
-                  keepDecimal: false,
-                })}
-              </Text>
+              {gdripValue(d.gas)}
 
               <Text
                 hoverValue={
@@ -728,6 +734,8 @@ export const StatsCard = ({
                       ? '--'
                       : c['unit'] === 'CFX'
                       ? cfxValue(statsData[c['index']], { showUnit: true })
+                      : c['unit'] === 'Gdrip'
+                      ? gdripValue(statsData[c['index']])
                       : formatNumber(statsData[c['index']], {
                           withUnit: false,
                         })}

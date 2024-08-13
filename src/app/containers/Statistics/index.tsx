@@ -126,7 +126,7 @@ export function Statistics() {
     <>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content={t(title)} />
+        <meta name="description" content={title} />
       </Helmet>
       <PageHeader>{title}</PageHeader>
       <TabsWrapper value={tabValue} onChange={tabsChange}>
@@ -262,7 +262,7 @@ export function Statistics() {
               <Col span={24}>
                 <StatsCard
                   span={span as string}
-                  type={StatsType.topAccountsByGasUsed}
+                  type={StatsType.topGasSpenders}
                   withChart={true}
                 />
               </Col>
