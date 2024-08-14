@@ -2508,15 +2508,15 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.1.12":
-  version "0.1.12"
-  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.12.tgz#7649a3d0917308e676f51c8e5fa74b451a830d3b"
-  integrity sha512-eWBpv6aNlXjN5DC0O/ZOKj3emi1BXfNmF8Hm5BooNJOFrShLOP7Zfog6i8nwOg8cbQQZ1Nifp0YVKhQO+ltlNA==
+"@cfxjs/sirius-next-common@0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.13.tgz#825718bfee831403cd90c3801b56d9f502da2630"
+  integrity sha512-gBMmaaJEvU8Y8pobge9kOqjh1XPqoTf+YYm7xRa1Tc6VeCVOMDeavjroKwp+936m4frzBtq4uJyglYY2zaONLw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.0"
     "@cfx-kit/react-utils" "^0.0.29"
     "@cfx-kit/ui-components" "^0.0.17"
-    "@cfxjs/sirius-next-i18n" "0.1.8"
+    "@cfxjs/sirius-next-i18n" "0.1.10"
     "@radix-ui/react-select" "^2.0.0"
     "@testing-library/react" "^15.0.5"
     "@types/i18next" "^13.0.0"
@@ -2548,15 +2548,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.1.8":
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.8.tgz#cf1f755b2dd17bf7ff1f939b17209a8998b5d5d5"
-  integrity sha512-7As5kZF2lk/Yg9KR4ZTizKhzx+qTZG8RVHp3gy7p65fOXRjDMz57aGud/DBBrgVFJDWlbZRGXp3oiWVhRz9c0g==
-
-"@cfxjs/sirius-next-i18n@0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.9.tgz#9fc9d0cbf6a957dba4713670b8430f421331d0bd"
-  integrity sha512-M1ftr+NvXoEa8NCXHeE80e0Of/0OZPXdm+A9QaMG1pa50kQa7xkyzEKFko81wPf6kBwQdILC9CKyELKUqkLHGA==
+"@cfxjs/sirius-next-i18n@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.10.tgz#8d78da9ac32fc0764f6d7d78e1bb297d8f659319"
+  integrity sha512-cp7vbaWsg3/OrMOJjJeI5bjouJyksuyx4EWsNj3zCjUbMl8MN12ofkCY90ugLFwy2aWPe8GPDUL1oSTcZ1xSQw==
 
 "@cfxjs/use-wallet-react@0.0.2-5":
   version "0.0.2-5"
