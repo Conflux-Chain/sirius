@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { monospaceFont } from 'styles/variable';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import queryString from 'query-string';
@@ -131,7 +131,7 @@ export const ColumnAge = ({
       return (
         <ContentWrapper right={right}>
           {ageFormat === 'age' ? (
-            <CountDown from={second} />
+            <Age from={second} />
           ) : (
             <div
               style={{

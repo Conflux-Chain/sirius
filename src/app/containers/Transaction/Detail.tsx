@@ -16,7 +16,7 @@ import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
-import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import {
   reqContract,
   reqTokenList,
@@ -822,7 +822,7 @@ export const Detail = () => {
               '--'
             ) : (
               <>
-                <CountDown from={syncTimestamp} retainDurations={4} />
+                <Age from={syncTimestamp} retainDurations={4} />
                 {` (${formatTimeStamp(syncTimestamp * 1000, 'timezone')})`}
               </>
             )}
