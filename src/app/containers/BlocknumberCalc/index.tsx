@@ -19,7 +19,7 @@ const governanceContract = CFX.Contract({
 
 const getPosBlockNumber = async () => {
   const status = await getPosStatus();
-  return String(status.epoch);
+  return String(status.latestCommitted);
 };
 
 export function BlocknumberCalc() {
