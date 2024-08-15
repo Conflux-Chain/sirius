@@ -13,7 +13,7 @@ import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { CountDown } from '@cfxjs/sirius-next-common/dist/components/CountDown';
+import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
@@ -227,7 +227,7 @@ export const nodeAge = {
 
     return (
       <ContentWrapper>
-        <CountDown from={second} />
+        <Age from={second} />
       </ContentWrapper>
     );
   },

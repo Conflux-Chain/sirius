@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { formatNumber } from 'utils';
+import { fromDripToGdrip } from '@cfxjs/sirius-next-common/dist/utils';
 
 export function NetworkPie({ data }) {
   const { t } = useTranslation();
@@ -28,11 +28,8 @@ export function NetworkPie({ data }) {
           }</b><br>${t(translations.statistics.column.address)}: <b>${
             data.address
           }</b><br>${t(
-            translations.statistics.column.gasUsed,
-          )}: <b>${formatNumber(data.value, {
-            withUnit: false,
-            keepDecimal: false,
-          })}</b>`;
+            translations.statistics.column.fees,
+          )}: <b>${fromDripToGdrip(data.value, true)} Gdrip</b>`;
         }
         return '';
       },
@@ -56,6 +53,9 @@ export function NetworkPie({ data }) {
         }),
       },
     ],
+    exporting: {
+      enabled: false,
+    },
   };
 
   return (
