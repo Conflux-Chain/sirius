@@ -53,6 +53,9 @@ export function NetworkPie({ data }) {
         }),
       },
     ],
+    exporting: {
+      enabled: false,
+    },
   };
 
   return (
