@@ -29,8 +29,7 @@ import { Progress } from '@cfxjs/antd';
 
 const GasTargetUsage: React.FC<{
   gasUsed: string;
-  tooltip?: React.ReactNode;
-}> = ({ gasUsed, tooltip }) => {
+}> = ({ gasUsed }) => {
   const { t } = useTranslation();
   const { value, percent } = getCoreGasTargetUsedPercent(gasUsed);
   return (
@@ -50,9 +49,7 @@ const GasTargetUsage: React.FC<{
           display: 'inline',
         }}
       />
-      <Tooltip title={tooltip}>
-        {t(translations.block.gasTarget, { percent })}
-      </Tooltip>
+      {t(translations.block.gasTarget, { percent })}
     </span>
   );
 };
