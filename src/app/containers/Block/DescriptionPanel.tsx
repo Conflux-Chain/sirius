@@ -12,7 +12,7 @@ import {
   getPercent,
   formatTimeStamp,
   toThousands,
-  getCoreGasTargetUsage,
+  getCoreGasTargetUsedPercent,
 } from 'utils';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from 'utils';
@@ -30,22 +30,27 @@ import { Progress } from '@cfxjs/antd';
 const GasTargetUsage: React.FC<{
   gasUsed: string;
 }> = ({ gasUsed }) => {
-  const { isNegative, percent, value } = getCoreGasTargetUsage(gasUsed);
+  const { t } = useTranslation();
+  const { value, percent } = getCoreGasTargetUsedPercent(gasUsed);
   return (
-    <GasTargetUsageWrapper>
+    <span>
       <Progress
         type="dashboard"
         size="small"
-        gapDegree={180}
+        gapDegree={150}
         showInfo={false}
-        strokeWidth={8}
-        strokeColor={isNegative ? '#FA5D5D' : '#4AC2AB'}
+        strokeWidth={10}
+        strokeColor="#1E3DE4"
         trailColor="#eeeeee"
-        percent={Math.abs(value)}
-        width={40}
+        percent={Math.min(value, 100)}
+        width={35}
+        style={{
+          margin: '0 16px',
+          display: 'inline',
+        }}
       />
-      <IncreasePercent value={percent} showPlus />
-    </GasTargetUsageWrapper>
+      {t(translations.block.gasTarget, { percent })}
+    </span>
   );
 };
 
@@ -215,28 +220,25 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.gasUsedLimit)}>
+          <Tooltip title={t(translations.toolTip.block.gasUsed)}>
             {t(translations.block.gasUsed)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          {`${gasLimit || '--'} | ${gasUsed || '--'} (${getPercent(
-            gasUsed,
-            gasLimit,
-            2,
-          )})`}
+          {`${gasUsed || '--'} (${getPercent(gasUsed, gasLimit, 2)})`}
+          <GasTargetUsage gasUsed={gasUsed} />
         </SkeletonContainer>
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.gasTargetUsage)}>
-            {t(translations.block.gasTargetUsage)}
+          <Tooltip title={t(translations.toolTip.block.gasLimit)}>
+            {t(translations.block.gasLimit)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          <GasTargetUsage gasUsed={gasUsed} />
+          {gasLimit || '--'}
         </SkeletonContainer>
       </Description>
       <Description
@@ -374,12 +376,6 @@ const BaseFeeIncreaseWrapper = styled.div`
   padding: 4px 16px;
   border: 1px solid #ebeced;
   margin-left: 16px;
-`;
-
-const GasTargetUsageWrapper = styled.div`
-  display: inline-flex;
-  gap: 16px;
-  height: 22px;
 `;
 
 const StyledCardWrapper = styled(Card)`
