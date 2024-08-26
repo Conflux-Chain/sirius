@@ -90,7 +90,8 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {toThousands(height)} <CopyButton copyText={height} />
+          {toThousands(height)}{' '}
+          <CopyButton copyText={height} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -102,7 +103,7 @@ export function DescriptionPanel({ data, loading }) {
       >
         <SkeletonContainer shown={loading}>
           <Link href={`/epoch/${epochNumber}`}>{toThousands(epochNumber)}</Link>{' '}
-          <CopyButton copyText={epochNumber} />
+          <CopyButton copyText={epochNumber} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -147,7 +148,7 @@ export function DescriptionPanel({ data, loading }) {
           {
             <>
               <CoreAddressContainer value={miner} isFull={true} />{' '}
-              <CopyButton copyText={formatAddress(miner)} />
+              <CopyButton copyText={formatAddress(miner)} className="copy" />
             </>
           }
         </SkeletonContainer>
@@ -206,7 +207,8 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {toThousands(difficulty)} <CopyButton copyText={difficulty} />
+          {toThousands(difficulty)}{' '}
+          <CopyButton copyText={difficulty} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -310,7 +312,8 @@ export function DescriptionPanel({ data, loading }) {
           <SkeletonContainer shown={loading}>
             {posReference ? (
               <>
-                {posReference} <CopyButton copyText={posReference} />
+                {posReference}{' '}
+                <CopyButton copyText={posReference} className="copy" />
               </>
             ) : (
               '--'
@@ -325,7 +328,7 @@ export function DescriptionPanel({ data, loading }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {hash} <CopyButton copyText={hash} />
+            {hash} <CopyButton copyText={hash} className="copy" />
           </SkeletonContainer>
         </Description>
         <Description
@@ -339,7 +342,7 @@ export function DescriptionPanel({ data, loading }) {
             {
               <>
                 <Link href={`/block/${parentHash}`}>{parentHash}</Link>{' '}
-                <CopyButton copyText={parentHash} />
+                <CopyButton copyText={parentHash} className="copy" />
               </>
             }
           </SkeletonContainer>
@@ -385,6 +388,14 @@ const BaseFeeIncreaseWrapper = styled.div`
 const StyledCardWrapper = styled(Card)`
   .copy-button-in-tooltip {
     margin-left: 8px;
+  }
+  .description > .right {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    .copy {
+      margin-left: 5px;
+    }
   }
 `;
 
