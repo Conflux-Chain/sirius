@@ -12,7 +12,7 @@ import {
   getPercent,
   formatTimeStamp,
   toThousands,
-  getCoreGasTargetUsage,
+  getCoreGasTargetUsedPercent,
 } from 'utils';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from 'utils';
@@ -30,22 +30,27 @@ import { Progress } from '@cfxjs/antd';
 const GasTargetUsage: React.FC<{
   gasUsed: string;
 }> = ({ gasUsed }) => {
-  const { isNegative, percent, value } = getCoreGasTargetUsage(gasUsed);
+  const { t } = useTranslation();
+  const { value, percent } = getCoreGasTargetUsedPercent(gasUsed);
   return (
-    <GasTargetUsageWrapper>
+    <span>
       <Progress
         type="dashboard"
         size="small"
-        gapDegree={180}
+        gapDegree={150}
         showInfo={false}
-        strokeWidth={8}
-        strokeColor={isNegative ? '#FA5D5D' : '#4AC2AB'}
+        strokeWidth={10}
+        strokeColor="#1E3DE4"
         trailColor="#eeeeee"
-        percent={Math.abs(value)}
-        width={40}
+        percent={Math.min(value, 100)}
+        width={35}
+        style={{
+          margin: '0 16px',
+          display: 'inline',
+        }}
       />
-      <IncreasePercent value={percent} showPlus />
-    </GasTargetUsageWrapper>
+      {t(translations.block.gasTarget, { percent })}
+    </span>
   );
 };
 
@@ -85,7 +90,8 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {toThousands(height)} <CopyButton copyText={height} />
+          {toThousands(height)}{' '}
+          <CopyButton copyText={height} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -97,7 +103,7 @@ export function DescriptionPanel({ data, loading }) {
       >
         <SkeletonContainer shown={loading}>
           <Link href={`/epoch/${epochNumber}`}>{toThousands(epochNumber)}</Link>{' '}
-          <CopyButton copyText={epochNumber} />
+          <CopyButton copyText={epochNumber} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -142,7 +148,7 @@ export function DescriptionPanel({ data, loading }) {
           {
             <>
               <CoreAddressContainer value={miner} isFull={true} />{' '}
-              <CopyButton copyText={formatAddress(miner)} />
+              <CopyButton copyText={formatAddress(miner)} className="copy" />
             </>
           }
         </SkeletonContainer>
@@ -201,7 +207,8 @@ export function DescriptionPanel({ data, loading }) {
         }
       >
         <SkeletonContainer shown={loading}>
-          {toThousands(difficulty)} <CopyButton copyText={difficulty} />
+          {toThousands(difficulty)}{' '}
+          <CopyButton copyText={difficulty} className="copy" />
         </SkeletonContainer>
       </Description>
       <Description
@@ -215,28 +222,29 @@ export function DescriptionPanel({ data, loading }) {
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.gasUsedLimit)}>
+          <Tooltip title={t(translations.toolTip.block.gasUsed)}>
             {t(translations.block.gasUsed)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          {`${gasLimit || '--'} | ${gasUsed || '--'} (${getPercent(
+          {`${gasUsed ? toThousands(gasUsed) : '--'} (${getPercent(
             gasUsed,
             gasLimit,
             2,
           )})`}
+          <GasTargetUsage gasUsed={gasUsed} />
         </SkeletonContainer>
       </Description>
       <Description
         title={
-          <Tooltip title={t(translations.toolTip.block.gasTargetUsage)}>
-            {t(translations.block.gasTargetUsage)}
+          <Tooltip title={t(translations.toolTip.block.gasLimit)}>
+            {t(translations.block.gasLimit)}
           </Tooltip>
         }
       >
         <SkeletonContainer shown={loading}>
-          <GasTargetUsage gasUsed={gasUsed} />
+          {gasLimit ? toThousands(gasLimit) : '--'}
         </SkeletonContainer>
       </Description>
       <Description
@@ -304,7 +312,8 @@ export function DescriptionPanel({ data, loading }) {
           <SkeletonContainer shown={loading}>
             {posReference ? (
               <>
-                {posReference} <CopyButton copyText={posReference} />
+                {posReference}{' '}
+                <CopyButton copyText={posReference} className="copy" />
               </>
             ) : (
               '--'
@@ -319,7 +328,7 @@ export function DescriptionPanel({ data, loading }) {
           }
         >
           <SkeletonContainer shown={loading}>
-            {hash} <CopyButton copyText={hash} />
+            {hash} <CopyButton copyText={hash} className="copy" />
           </SkeletonContainer>
         </Description>
         <Description
@@ -333,7 +342,7 @@ export function DescriptionPanel({ data, loading }) {
             {
               <>
                 <Link href={`/block/${parentHash}`}>{parentHash}</Link>{' '}
-                <CopyButton copyText={parentHash} />
+                <CopyButton copyText={parentHash} className="copy" />
               </>
             }
           </SkeletonContainer>
@@ -376,15 +385,17 @@ const BaseFeeIncreaseWrapper = styled.div`
   margin-left: 16px;
 `;
 
-const GasTargetUsageWrapper = styled.div`
-  display: inline-flex;
-  gap: 16px;
-  height: 22px;
-`;
-
 const StyledCardWrapper = styled(Card)`
   .copy-button-in-tooltip {
     margin-left: 8px;
+  }
+  .description > .right {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    .copy {
+      margin-left: 5px;
+    }
   }
 `;
 

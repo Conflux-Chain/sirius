@@ -11,7 +11,7 @@ import {
   getENSInfo,
   getNametagInfo,
   roundToFixedPrecision,
-  getCoreGasTargetUsage,
+  getCoreGasTargetUsedPercent,
 } from 'utils';
 import imgPivot from 'images/pivot.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -22,6 +22,7 @@ import {
   fromDripToCfx,
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 export const epoch = {
   title: (
@@ -149,7 +150,10 @@ export const gasUsedPercentWithProgress = {
     const percent = Number(
       gasUsed.dividedBy(row.gasLimit).multipliedBy(100).toFixed(2),
     );
-    const gasTargetUsage = getCoreGasTargetUsage(row.gasUsed);
+    const gasUsedPercent = getPercent(row.gasUsed, row.gasLimit, 2);
+    const { percent: gasTargetUsedPercent } = getCoreGasTargetUsedPercent(
+      row.gasUsed,
+    );
 
     if (value) {
       return (
@@ -157,9 +161,38 @@ export const gasUsedPercentWithProgress = {
           <div className="gas-detail">
             {toThousands(gasUsed.toFixed())}{' '}
             <span className="gas-detail-percent">
-              ({getPercent(row.gasUsed, row.gasLimit, 2)} |{' '}
-              {!gasTargetUsage.isNegative && '+'}
-              {gasTargetUsage.percent})
+              (
+              <Tooltip
+                title={
+                  <Translation>
+                    {t =>
+                      t(
+                        translations.general.table.block.tooltip.gasUsedPercent,
+                        { percent: gasUsedPercent },
+                      )
+                    }
+                  </Translation>
+                }
+              >
+                {gasUsedPercent}
+              </Tooltip>
+              {' | '}
+              <Tooltip
+                title={
+                  <Translation>
+                    {t =>
+                      t(
+                        translations.general.table.block.tooltip
+                          .gasTargetUsedPercent,
+                        { percent: gasTargetUsedPercent },
+                      )
+                    }
+                  </Translation>
+                }
+              >
+                {gasTargetUsedPercent}
+              </Tooltip>
+              )
             </span>
           </div>
           <Progress
