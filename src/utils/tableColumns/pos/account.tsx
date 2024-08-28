@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands, formatNumber } from 'utils';
-import { ContentWrapper } from '../utils';
+import { ColumnAge, ContentWrapper } from '../utils';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -12,8 +12,6 @@ import NotActiveIcon from 'images/not-active.svg';
 import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
-import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
@@ -205,33 +203,14 @@ export const votingShare = {
   },
 };
 
-export const nodeAge = {
-  title: (
-    <InfoIconWithTooltip
-      info={
-        <Translation>
-          {t => t(translations.pos.accounts.hover.nodeAge)}
-        </Translation>
-      }
-    >
-      <span>
-        <Translation>{t => t(translations.pos.accounts.nodeAge)}</Translation>
-      </span>
-    </InfoIconWithTooltip>
-  ),
-  dataIndex: 'createdAt',
-  key: 'createdAt',
-  width: 1,
-  render: value => {
-    const second = /^\d+$/.test(value) ? value : dayjs(value).unix();
-
-    return (
-      <ContentWrapper>
-        <Age from={second} />
-      </ContentWrapper>
-    );
-  },
-};
+export const nodeAge = (ageFormat, toggleAgeFormat) =>
+  ColumnAge({
+    ageFormat,
+    toggleAgeFormat,
+    key: 'createdAt',
+    dataIndex: 'createdAt',
+    ageI18n: translations.pos.accounts.nodeAge,
+  });
 
 export const incoming = {
   title: (
