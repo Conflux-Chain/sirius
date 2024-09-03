@@ -2,7 +2,7 @@ import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { toThousands, formatNumber } from 'utils';
-import { ContentWrapper } from '../utils';
+import { ColumnAge, ContentWrapper } from '../utils';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import lodash from 'lodash';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -12,19 +12,18 @@ import NotActiveIcon from 'images/not-active.svg';
 import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
-import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 export const rank = {
   title: (
     <Translation>{t => t(translations.accounts.table.number)}</Translation>
   ),
-  dataIndex: 'rank',
-  key: 'rank',
+  dataIndex: 'rankAvailableVotes',
+  key: 'rankAvailableVotes',
   render: value => {
     return '#' + value;
   },
@@ -78,6 +77,7 @@ export const votingPower = {
   dataIndex: 'availableVotesInCfx',
   key: 'availableVotesInCfx',
   width: 1,
+  sorter: true,
   render: value => {
     const power = toThousands(
       formatNumber(value, { keepDecimal: false, withUnit: false }),
@@ -112,18 +112,17 @@ export const active = {
       </span>
     </InfoIconWithTooltip>
   ),
-  dataIndex: 'forceRetired',
-  key: 'forceRetired',
+  dataIndex: 'status',
+  key: 'status',
   width: 1,
-  render: (value, row) => {
-    const notActive =
-      value > 0 || !row.availableVotesInCfx || row.availableVotesInCfx === 0;
+  render: value => {
+    const isActive = value === 'Active';
     return (
-      <ActiveWrapper isActive={!notActive}>
-        <IconWrapper src={notActive ? NotActiveIcon : IsActiveIcon} alt="" />
+      <ActiveWrapper isActive={isActive}>
+        <IconWrapper src={isActive ? IsActiveIcon : NotActiveIcon} alt="" />
         <Translation>
           {t =>
-            t(translations.pos.accounts[notActive ? 'notActive' : 'isActive'])
+            t(translations.pos.accounts[isActive ? 'isActive' : 'notActive'])
           }
         </Translation>
       </ActiveWrapper>
@@ -155,6 +154,7 @@ export const committeeMember = {
   dataIndex: 'votingPower',
   key: 'votingPower',
   width: 1,
+  sorter: true,
   render: (_, row) => {
     const elected = row.committeeInfo?.votingPower > 0;
     return (
@@ -189,6 +189,7 @@ export const votingShare = {
   dataIndex: 'votingShare',
   key: 'votingShare',
   width: 1,
+  sorter: true,
   render: (_, row) => {
     const value = row.committeeInfo?.votingShare;
     return lodash.isNil(value) ? (
@@ -205,33 +206,18 @@ export const votingShare = {
   },
 };
 
-export const nodeAge = {
-  title: (
-    <InfoIconWithTooltip
-      info={
-        <Translation>
-          {t => t(translations.pos.accounts.hover.nodeAge)}
-        </Translation>
-      }
-    >
-      <span>
-        <Translation>{t => t(translations.pos.accounts.nodeAge)}</Translation>
-      </span>
-    </InfoIconWithTooltip>
-  ),
-  dataIndex: 'createdAt',
-  key: 'createdAt',
-  width: 1,
-  render: value => {
-    const second = /^\d+$/.test(value) ? value : dayjs(value).unix();
-
-    return (
-      <ContentWrapper>
-        <Age from={second} />
-      </ContentWrapper>
-    );
-  },
-};
+export const nodeAge = (
+  ageFormat: ReturnType<typeof useAge>[0],
+  toggleAgeFormat: ReturnType<typeof useAge>[1],
+) =>
+  ColumnAge({
+    ageFormat,
+    toggleAgeFormat,
+    key: 'createdAt',
+    dataIndex: 'createdAt',
+    ageI18n: translations.pos.accounts.nodeAge,
+    sorter: true,
+  });
 
 export const incoming = {
   title: (

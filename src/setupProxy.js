@@ -60,14 +60,6 @@ module.exports = app => {
     }),
   );
   app.use(
-    '/statistics',
-    createProxyMiddleware({
-      target: `${url}/statistics`,
-      changeOrigin: true,
-      secure: false,
-    }),
-  );
-  app.use(
     /\/\d?\.?conflux-dag\.js/,
     createProxyMiddleware({
       target: url,

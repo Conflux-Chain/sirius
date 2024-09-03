@@ -352,6 +352,13 @@ export const reqPoSAccount = (extra?: object) => {
   });
 };
 
+export const reqPoSAccountOverview = (extra?: object) => {
+  return sendRequest({
+    url: `/stat/pos-account-overview`,
+    ...extra,
+  });
+};
+
 export const reqPoSIncomingHistory = (extra?: object) => {
   return sendRequest({
     url: `/stat/list-pos-account-reward`,

@@ -6,8 +6,10 @@ import { accountColunms } from 'utils/tableColumns/pos';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { toThousands } from 'utils';
+import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 export const List = ({ overview }: { overview?: boolean }) => {
+  const [ageFormat, toggleAgeFormat] = useAge();
   const { t } = useTranslation();
   const url = '/stat/list-pos-account?orderBy=availableVotes&reverse=true';
   const columnsWidth = [2, 5, 5, 2, 4, 5, 5];
@@ -18,7 +20,7 @@ export const List = ({ overview }: { overview?: boolean }) => {
     accountColunms.active,
     accountColunms.committeeMember,
     accountColunms.votingShare,
-    accountColunms.nodeAge,
+    accountColunms.nodeAge(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({
     ...item,
     width: columnsWidth[i],
@@ -36,7 +38,11 @@ export const List = ({ overview }: { overview?: boolean }) => {
           })}
         </span>
       )}
-      rowKey="rank"
+      rowKey="rankAvailableVotes"
+      sortKeyMap={{
+        votingShare: 'votingPower',
+        availableVotesInCfx: 'availableVotes',
+      }}
     ></TablePanelNew>
   );
 };

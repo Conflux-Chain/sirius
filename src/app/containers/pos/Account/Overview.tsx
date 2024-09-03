@@ -6,10 +6,12 @@ import { Description } from '@cfxjs/sirius-next-common/dist/components/Descripti
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { toThousands, formatTimeStamp } from 'utils';
-import { reqPoSAccount } from 'utils/httpRequest';
+import { reqPoSAccountOverview } from 'utils/httpRequest';
 import { useParams } from 'react-router-dom';
 import lodash from 'lodash';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { Tag } from '@cfxjs/antd';
+import styled from 'styled-components';
 
 export function Overview() {
   const { t } = useTranslation();
@@ -22,39 +24,14 @@ export function Overview() {
   useEffect(() => {
     setLoading(true);
 
-    reqPoSAccount({
+    reqPoSAccountOverview({
       query: {
-        identifier: address,
+        address,
       },
     })
-      .then(data => {
-        let inQueuePower = 0;
-        let outQueuePower = 0;
-
-        try {
-          if (Array.isArray(data?.inQueue)) {
-            inQueuePower = data.inQueue.reduce(
-              (prev, curr) => prev + curr.power,
-              0,
-            );
-          }
-
-          if (Array.isArray(data?.outQueue)) {
-            outQueuePower = data.outQueue.reduce(
-              (prev, curr) => prev + curr.power,
-              0,
-            );
-          }
-        } catch (e) {}
-
-        setData({
-          ...data,
-          inQueuePower,
-          outQueuePower,
-        });
-      })
+      .then(setData)
       .catch(e => {
-        console.log('reqPoSAccount error:', e);
+        console.log('reqPoSAccountOverview error:', e);
       })
       .finally(() => {
         setLoading(false);
@@ -65,6 +42,9 @@ export function Overview() {
     <Card>
       <Description title={t(translations.pos.account.overview.posAddress)}>
         <SkeletonContainer shown={loading}>
+          {data.byte32NameTagInfo?.nameTag && (
+            <StyledTag>{data.byte32NameTagInfo.nameTag}</StyledTag>
+          )}
           {address} <CopyButton copyText={address} />
         </SkeletonContainer>
       </Description>
@@ -72,133 +52,121 @@ export function Overview() {
         <SkeletonContainer shown={loading}>
           {lodash.isNil(data.createdAt)
             ? '--'
-            : formatTimeStamp(data.createdAt, 'timezone')}
+            : formatTimeStamp(data.createdAt)}
         </SkeletonContainer>
       </Description>
-      <Description title={t(translations.pos.account.overview.lockingRights)}>
+      <Description title={t(translations.pos.account.overview.nodeType)}>
         <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.inQueue) ? (
-            '--'
-          ) : (
-            <>
-              {toThousands(data.inQueuePower)}{' '}
-              <CopyButton copyText={data.inQueuePower} />
-            </>
-          )}
+          {data.type
+            ? t(translations.pos.account.overview.nodeTypeValue[data.type])
+            : '--'}
         </SkeletonContainer>
       </Description>
-      <Description title={t(translations.pos.account.overview.lockedRights)}>
+      <Description title={t(translations.pos.account.overview.status)}>
         <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.locked) ? (
-            '--'
-          ) : (
-            <>
-              {toThousands(data.locked)} <CopyButton copyText={data.locked} />
-            </>
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description title={t(translations.pos.account.overview.unlockingRights)}>
-        <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.outQueue) ? (
-            '--'
-          ) : (
-            <>
-              {toThousands(data.outQueuePower)}{' '}
-              <CopyButton copyText={data.outQueuePower} />
-            </>
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description title={t(translations.pos.account.overview.unlockRights)}>
-        <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.unlocked) ? (
-            '--'
-          ) : (
-            <>
-              {toThousands(data.unlocked)}{' '}
-              <CopyButton copyText={data.unlocked} />
-            </>
-          )}
+          {data.status
+            ? t(translations.pos.account.overview.statusValue[data.status])
+            : '--'}
         </SkeletonContainer>
       </Description>
       <Description
-        title={t(translations.pos.account.overview.retiredBlocknumber)}
+        title={t(translations.pos.account.overview.totalVotingPower)}
       >
         <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.forceRetired) ? (
+          {lodash.isNil(data.availableVotesInCfx) ? (
             '--'
           ) : (
             <>
-              {toThousands(data.forceRetired)}{' '}
-              <CopyButton copyText={data.forceRetired} />
+              {toThousands(data.availableVotesInCfx ?? 0)}
+              {' CFX'}
             </>
           )}
         </SkeletonContainer>
       </Description>
-      <Description title={t(translations.pos.account.overview.availableVotes)}>
+      {/* <Description title={t(translations.pos.account.overview.staker)}>
         <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.availableVotes) ? (
+          {t(translations.pos.account.overview.stakerValue, {
+            count: toThousands(data.stakers ?? 0),
+          })}
+        </SkeletonContainer>
+      </Description> */}
+      {data.type === 'Public Pos Pool' && (
+        <>
+          <Description title={t(translations.pos.account.overview.poolName)}>
+            <SkeletonContainer shown={loading}>
+              {data.poolInfo?.name}
+            </SkeletonContainer>
+          </Description>
+          <Description
+            title={t(translations.pos.account.overview.poolContractAddress)}
+          >
+            <SkeletonContainer shown={loading}>
+              {data.poolInfo?.address}
+            </SkeletonContainer>
+          </Description>
+          <Description title={t(translations.pos.account.overview.links)}>
+            <SkeletonContainer shown={loading}>
+              {data.byte32NameTagInfo?.website && (
+                <Link href={data.byte32NameTagInfo.website}>
+                  {t(translations.pos.account.overview.linkValue.website)}
+                </Link>
+              )}
+            </SkeletonContainer>
+          </Description>
+        </>
+      )}
+      <Description title={t(translations.pos.account.overview.withdrawable)}>
+        <SkeletonContainer shown={loading}>
+          {lodash.isNil(data.withdrawableInCfx) ? (
             '--'
           ) : (
             <>
-              {toThousands(data.availableVotes)}{' '}
-              <CopyButton copyText={data.availableVotes} />
+              {toThousands(data.withdrawableInCfx ?? 0)}
+              {' CFX'}
+            </>
+          )}
+        </SkeletonContainer>
+      </Description>
+      <Description title={t(translations.pos.account.overview.freezing)}>
+        <SkeletonContainer shown={loading}>
+          {lodash.isNil(data.lockingInCfx) ? (
+            '--'
+          ) : (
+            <>
+              {toThousands(data.lockingInCfx ?? 0)}
+              {' CFX'}
             </>
           )}
         </SkeletonContainer>
       </Description>
       <Description
-        title={t(translations.pos.account.overview.currentCommitteeMember)}
-      >
-        <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.committeeInfo) ? (
-            '--'
-          ) : data.committeeInfo.votingPower > 0 ? (
-            <>
-              {t(translations.general.yes)} {data.committeeInfo.epochNumber}{' '}
-              <CopyButton copyText={data.committeeInfo.epochNumber} />
-            </>
-          ) : (
-            t(translations.general.no)
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={t(translations.pos.account.overview.rightsInCommittee)}
-      >
-        <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.committeeInfo) ? (
-            '--'
-          ) : (
-            <>
-              {data.committeeInfo.votingPower}{' '}
-              <CopyButton copyText={data.committeeInfo.votingPower} />
-            </>
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description title={t(translations.pos.account.overview.totalIncoming)}>
-        <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.totalReward)
-            ? '--'
-            : `${SDK.Drip(data.totalReward).toCFX()} CFX`}
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={t(translations.pos.account.overview.punishment)}
+        title={t(translations.pos.account.overview.unlocking)}
         noBorder
       >
         <SkeletonContainer shown={loading}>
-          {lodash.isNil(data.forfeited)
-            ? '--'
-            : data.forfeited > 0
-            ? `${t(translations.general.yes)} (${data.forfeited} ${t(
-                translations.pos.common.right,
-              )})`
-            : t(translations.general.no)}
+          {lodash.isNil(data.unlockingInCfx) ? (
+            '--'
+          ) : (
+            <>
+              {toThousands(data.unlockingInCfx ?? 0)}
+              {' CFX'}
+            </>
+          )}
         </SkeletonContainer>
       </Description>
     </Card>
   );
 }
+
+const StyledTag = styled(Tag)`
+  padding: 0px 8px;
+  border-radius: 4px;
+  background: #f1f5fe;
+  color: #282d30;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 22px; /* 183.333% */
+  border: none;
+  margin-right: 12px;
+`;
