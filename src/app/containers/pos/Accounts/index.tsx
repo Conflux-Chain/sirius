@@ -38,7 +38,11 @@ export const List = ({ overview }: { overview?: boolean }) => {
           })}
         </span>
       )}
-      rowKey="rank"
+      rowKey="rankAvailableVotes"
+      sortKeyMap={{
+        votingShare: 'votingPower',
+        availableVotesInCfx: 'availableVotes',
+      }}
     ></TablePanelNew>
   );
 };
