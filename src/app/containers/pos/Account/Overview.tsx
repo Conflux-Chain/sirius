@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
@@ -12,6 +12,15 @@ import lodash from 'lodash';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Tag } from '@cfxjs/antd';
 import styled from 'styled-components';
+import { ReactComponent as StatusIcon } from 'images/status.svg';
+import { ReactComponent as WebsiteIcon } from 'images/website.svg';
+
+const statusColorMap = {
+  Active: '#4AC2AB',
+  Retiring: '#FFA500',
+  'Force Retiring': '#FFA500',
+  Forfeited: '#FA5D5D',
+};
 
 export function Overview() {
   const { t } = useTranslation();
@@ -38,12 +47,19 @@ export function Overview() {
       });
   }, [address]);
 
+  const isValidURL = useMemo(() => {
+    return (
+      data.byte32NameTagInfo?.website &&
+      /^https?:\/\//.test(data.byte32NameTagInfo.website)
+    );
+  }, [data.byte32NameTagInfo]);
+
   return (
     <Card>
       <Description title={t(translations.pos.account.overview.posAddress)}>
         <SkeletonContainer shown={loading}>
           {data.byte32NameTagInfo?.nameTag && (
-            <StyledTag>{data.byte32NameTagInfo.nameTag}</StyledTag>
+            <StyledNameTag>{data.byte32NameTagInfo.nameTag}</StyledNameTag>
           )}
           {address} <CopyButton copyText={address} />
         </SkeletonContainer>
@@ -64,9 +80,22 @@ export function Overview() {
       </Description>
       <Description title={t(translations.pos.account.overview.status)}>
         <SkeletonContainer shown={loading}>
-          {data.status
-            ? t(translations.pos.account.overview.statusValue[data.status])
-            : '--'}
+          {data.status ? (
+            <>
+              <StatusIcon
+                style={{
+                  color: statusColorMap[data.status],
+                  marginRight: '5px',
+                }}
+              />
+              {t(translations.pos.account.overview.statusValue[data.status])}
+              {data.status === 'Force Retiring' && (
+                <StyledTag># {data.forceRetired}</StyledTag>
+              )}
+            </>
+          ) : (
+            '--'
+          )}
         </SkeletonContainer>
       </Description>
       <Description
@@ -107,7 +136,14 @@ export function Overview() {
           <Description title={t(translations.pos.account.overview.links)}>
             <SkeletonContainer shown={loading}>
               {data.byte32NameTagInfo?.website && (
-                <Link href={data.byte32NameTagInfo.website}>
+                <Link
+                  href={
+                    isValidURL ? data.byte32NameTagInfo?.website : undefined
+                  }
+                >
+                  <WebsiteIcon
+                    style={{ color: '#737682', marginRight: '6px' }}
+                  />
                   {t(translations.pos.account.overview.linkValue.website)}
                 </Link>
               )}
@@ -158,7 +194,7 @@ export function Overview() {
   );
 }
 
-const StyledTag = styled(Tag)`
+const StyledNameTag = styled(Tag)`
   padding: 0px 8px;
   border-radius: 4px;
   background: #f1f5fe;
@@ -169,4 +205,17 @@ const StyledTag = styled(Tag)`
   line-height: 22px; /* 183.333% */
   border: none;
   margin-right: 12px;
+`;
+
+const StyledTag = styled(Tag)`
+  padding: 0px 8px;
+  border-radius: 4px;
+  background: #fff;
+  color: #282d30;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 22px; /* 183.333% */
+  border: 1px solid #ebeced;
+  margin-left: 12px;
 `;
