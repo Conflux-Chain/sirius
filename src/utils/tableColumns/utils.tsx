@@ -67,6 +67,8 @@ export interface ColumnAgeTypes {
   toggleAgeFormat?: any;
   right?: boolean;
   sorter?: boolean;
+  ageI18n?: string;
+  datetimeI18n?: string;
 }
 
 export const ColumnAge = ({
@@ -77,6 +79,8 @@ export const ColumnAge = ({
   toggleAgeFormat,
   right = false,
   sorter = false,
+  ageI18n = translations.general.table.block.age,
+  datetimeI18n = translations.general.table.dateTime,
 }: ColumnAgeTypes) => {
   return {
     title: (
@@ -97,25 +101,16 @@ export const ColumnAge = ({
               <Translation>
                 {t =>
                   t(translations.general.table.switchAgeTip, {
-                    format:
-                      ageFormat === 'age'
-                        ? t(translations.general.table.dateTime)
-                        : t(translations.general.table.block.age),
+                    format: ageFormat === 'age' ? t(datetimeI18n) : t(ageI18n),
                   })
                 }
               </Translation>
             }
           >
             {ageFormat === 'age' ? (
-              title || (
-                <Translation>
-                  {t => t(translations.general.table.block.age)}
-                </Translation>
-              )
+              title || <Translation>{t => t(ageI18n)}</Translation>
             ) : (
-              <Translation>
-                {t => t(translations.general.table.dateTime)}
-              </Translation>
+              <Translation>{t => t(datetimeI18n)}</Translation>
             )}
           </Tooltip>
         </AgeTHeader>
