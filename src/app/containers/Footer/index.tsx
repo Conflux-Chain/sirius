@@ -19,6 +19,7 @@ import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { hideInDotNet, getNetwork } from 'utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
+import beianImg from 'images/footer/beian.png';
 
 import {
   Conflux,
@@ -390,7 +391,11 @@ export function Footer() {
   const ICP = useMemo(() => {
     return window.location.hostname.includes('confluxscan.net') ? (
       <CopyRight>
-        <Link href="https://beian.miit.gov.cn">沪ICP备20007940号-2</Link>
+        <ICPLink href="https://beian.miit.gov.cn">沪ICP备20007940号-2</ICPLink>
+        <ICPLink href="https://beian.mps.gov.cn/#/query/webSearch?code=31010402333972">
+          <img src={beianImg} alt="" />
+          沪公网安备31010402333972
+        </ICPLink>
       </CopyRight>
     ) : (
       <></>
@@ -486,10 +491,10 @@ export function Footer() {
     <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
   ];
   const rightBottom = [
-    <CopyRight key="copryRight">
-      {t(translations.footer.copryRight)}
-      <span key="ICP">{ICP}</span>
-    </CopyRight>,
+    <div key="copyRight&ICP">
+      <CopyRight key="copyRight">{t(translations.footer.copyRight)}</CopyRight>
+      {ICP}
+    </div>,
   ];
 
   return (
@@ -605,7 +610,8 @@ const FooterContentIconLink = styled.span`
 `;
 
 const CopyRight = styled.span`
-  display: block;
+  display: flex;
+  align-items: center;
   color: var(--theme-color-gray0);
 
   a.link,
@@ -616,6 +622,15 @@ const CopyRight = styled.span`
 
   ${media.s} {
     font-size: 0.71rem;
+  }
+`;
+const ICPLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  img {
+    width: 16px;
+    margin-left: 10px;
+    margin-right: 8px;
   }
 `;
 
