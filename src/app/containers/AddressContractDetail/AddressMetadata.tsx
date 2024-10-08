@@ -75,7 +75,9 @@ export function AddressMetadata({ address, accountInfo }) {
       .catch(e => {
         console.error('get pos homepage summary info error: ', e);
       });
+  }, [address]);
 
+  useEffect(() => {
     if (
       accountInfo.address &&
       [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
@@ -125,7 +127,7 @@ export function AddressMetadata({ address, accountInfo }) {
           setCurrentVotingRights(0);
         });
     }
-  }, [address, accountInfo, governanceContract]);
+  }, [address, accountInfo.address, governanceContract]);
 
   const posMetadata = () => {
     return (
@@ -431,9 +433,13 @@ export function AddressMetadata({ address, accountInfo }) {
                               </Link>
                             </td>
                             <td>
-                              {t(translations.addressDetail.unlockTime, {
-                                days,
-                              })}
+                              {days < 0
+                                ? t(translations.addressDetail.unlockedTime, {
+                                    days: -days,
+                                  })
+                                : t(translations.addressDetail.unlockTime, {
+                                    days,
+                                  })}
                             </td>
                           </tr>
                         );
