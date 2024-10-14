@@ -97,18 +97,11 @@
     "build:dev": "NODE_OPTIONS=--openssl-legacy-provider REACT_APP_DEV=true react-app-rewired build",
     "build:prod": "NODE_OPTIONS=--openssl-legacy-provider react-app-rewired build",
     "build": "yarn build:prod",
-    "build:MEASURE": "NODE_OPTIONS=--openssl-legacy-provider MEASURE=true react-app-rewired build",
     "test": "react-app-rewired  test --env=jest-environment-jsdom-sixteen",
-    "test:u": "react-app-rewired  test --env=jest-environment-jsdom-sixteen --updateSnapshot",
     "eject": "react-scripts eject",
-    "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
-    "start:prod": "yarn build && serve -s build",
     "checkTs": "tsc --noEmit",
     "eslint": "eslint --ext js,ts,tsx",
     "lint": "yarn eslint -- src",
-    "lint:fix": "yarn eslint -- --fix src",
-    "lint:css": "stylelint src/**/*.css",
-    "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
     "prettify": "prettier --write"
   },
   "browserslist": [
