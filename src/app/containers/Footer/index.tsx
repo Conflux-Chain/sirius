@@ -212,7 +212,7 @@ export function Footer() {
           </FooterContentIconLink>
           <FooterContentIconLink>
             <Link
-              href="https://discord.com/invite/aCZkf2C"
+              href="https://discord.gg/confluxnetwork"
               ga={{
                 category: ScanEvent.menu.category,
                 action: ScanEvent.menu.action.discord,
@@ -283,7 +283,7 @@ export function Footer() {
         <>
           <FooterContentIconLink>
             <Link
-              href="https://www.youtube.com/channel/UCFSTmjoSU8jn6DE_4V2TIzA"
+              href="https://www.youtube.com/@confluxnetwork"
               ga={{
                 category: ScanEvent.menu.category,
                 action: ScanEvent.menu.action.youtube,
