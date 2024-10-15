@@ -180,6 +180,30 @@ export const ENV_ADDRESS = 'base32';
    yarn start:demo
    ```
 
+## Run with Docker
+
+Open and modify the `docker-compose.yml` file and run `docker-compose up -d --build`
+
+Modify the values of the following parameters as needed.
+
+```yml
+args:
+  - NETWORK_ID=1029
+  - NETWORK_NAME=Conflux Core (Hydra)
+  - SCAN_BACKEND_API=https://confluxscan.io
+  # CORE_MAINNET CORE_TESTNET or CORE_DEVNET
+  - NETWORK_TYPE=CORE_MAINNET
+  - OPEN_API_HOST=https://api.confluxscan.io
+  - RPC_SERVER=https://main.confluxrpc.com
+  - FC_ADDRESS=cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2
+  - FC_EXCHANGE_ADDRESS=cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m
+  - CROSS_SPACE_ADDRESS=cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv
+  - ENS_REGISTRY_ADDRESS=cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm
+  - ENS_PUBLIC_RESOLVER_ADDRESS=cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up
+  - ENS_REVERSE_REGISTRAR_ADDRESS=cfx:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk
+  - LOGO=
+```
+
 ## What can I do?
 
 Conflux Scan is still in its early stages compared to [Etherscan](https://etherscan.io). So
