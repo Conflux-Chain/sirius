@@ -190,17 +190,25 @@ Modify the values of the following parameters as needed.
 args:
   - NETWORK_ID=1029
   - NETWORK_NAME=Conflux Core (Hydra)
+  # Required
   - SCAN_BACKEND_API=https://confluxscan.io
+  # Required
+  - OPEN_API_HOST=https://api.confluxscan.io
+  # Required
+  - RPC_SERVER=https://main.confluxrpc.com
   # CORE_MAINNET CORE_TESTNET or CORE_DEVNET
   - NETWORK_TYPE=CORE_MAINNET
-  - OPEN_API_HOST=https://api.confluxscan.io
-  - RPC_SERVER=https://main.confluxrpc.com
+  # Not necessary only if you need the FC feature
   - FC_ADDRESS=cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2
+  # Not necessary only if you need the FC feature
+  - FC_EXCHANGE_INTEREST_ADDRESS=cfx:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140
+  # Not necessary only if you need the FC feature
   - FC_EXCHANGE_ADDRESS=cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m
-  - CROSS_SPACE_ADDRESS=cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv
+  # Not necessary only if you need the ENS feature
   - ENS_REGISTRY_ADDRESS=cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm
+  # Not necessary only if you need the ENS feature
   - ENS_PUBLIC_RESOLVER_ADDRESS=cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up
-  - ENS_REVERSE_REGISTRAR_ADDRESS=cfx:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk
+  # The logo url
   - LOGO=
 ```
 
