@@ -17,13 +17,8 @@ export const ENV_FC_EXCHANGE_ADDRESS =
   'cfxtest:acf6wwargxpp9ddfe7rnagf2ty9gsxs54uptst589y';
 export const ENV_FC_EXCHANGE_INTEREST_ADDRESS =
   'cfxtest:acadrvdd07u69hazg0nkjkpdetvyc5wma6put8949d';
-export const ENV_CROSS_SPACE_ADDRESS =
-  'cfxtest:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2eaeg85p5';
 export const ENV_ENS_REGISTRY_ADDRESS =
   'cfxtest:acemru7fu1u8brtyn3hrtae17kbcd4pd9u2m761bta';
 export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
   'cfxtest:acbfyf69zaxau5a23w10dgyrmb0hrz4p9pewn6sejp';
-export const ENV_ENS_REVERSE_REGISTRAR_ADDRESS =
-  'cfxtest:acfarpzehntpre0thg8x7dp0ajw4ms328pe1mm17vd';
 export const ENV_LOGO = logo;
-export const ENV_ADDRESS = 'base32';

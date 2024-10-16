@@ -67,16 +67,11 @@ export const ENV_FC_EXCHANGE_ADDRESS =
   'cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m';
 export const ENV_FC_EXCHANGE_INTEREST_ADDRESS =
   'cfx:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140';
-export const ENV_CROSS_SPACE_ADDRESS =
-  'cfx:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv';
 export const ENV_ENS_REGISTRY_ADDRESS =
   'cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm';
 export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
   'cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up';
-export const ENV_ENS_REVERSE_REGISTRAR_ADDRESS =
-  'cfx:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk';
 export const ENV_LOGO = logo;
-export const ENV_ADDRESS = 'base32';
 ```
 
 ## add chain
@@ -101,16 +96,11 @@ export const ENV_ADDRESS = 'base32';
      'demo:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m';
    export const ENV_FC_EXCHANGE_INTEREST_ADDRESS =
      'demo:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140';
-   export const ENV_CROSS_SPACE_ADDRESS =
-     'demo:aaejuaaaaaaaaaaaaaaaaaaaaaaaaaaaa2sn102vjv';
    export const ENV_ENS_REGISTRY_ADDRESS =
      'demo:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm';
    export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
      'demo:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up';
-   export const ENV_ENS_REVERSE_REGISTRAR_ADDRESS =
-     'demo:acfarpzehntpre0thg8x7dp0ajw4ms328ps634v1zk';
    export const ENV_LOGO = logo;
-   export const ENV_ADDRESS = 'base32';
    ```
 2. add environment variables in package.json's scripts for development
    ```json
