@@ -1,9 +1,10 @@
 import { API_HOST_MAP, IS_DEV } from 'env/env-constants';
-import { NETWORK_TYPES } from 'env/types';
+import { NETWORK_TYPES, CHAIN_TYPES } from 'env/types';
 import logo from 'images/core-space/logo.svg';
 
 export const ENV_NETWORK_ID = 8888;
-export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE_DEVNET;
+export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE;
+export const ENV_CHAIN_TYPE = CHAIN_TYPES.DEVNET;
 export const ENV_OPEN_API_HOST =
   API_HOST_MAP.openAPIHost ||
   (IS_DEV
