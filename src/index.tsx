@@ -18,13 +18,13 @@ import '@cfxjs/antd/dist/@cfxjs/antd.css';
 import '@cfxjs/sirius-next-common/dist/uno.css';
 
 // Import root app
-import { App } from 'app';
+import { App, PageLoading } from 'app';
 
 import { HelmetProvider } from 'react-helmet-async';
 
 // Initialize languages
 import 'locales/i18n';
-import { IS_MAINNET, IS_TESTNET } from 'env';
+import ENV_CONFIG, { IS_MAINNET, IS_TESTNET } from 'env';
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -48,7 +48,12 @@ const ConnectedApp = ({ Component }: Props) => (
 // };
 
 const render = (Component: typeof App) => {
-  ReactDOM.render(<ConnectedApp Component={Component} />, MOUNT_NODE);
+  ReactDOM.render(
+    <ConnectedApp
+      Component={ENV_CONFIG.ENV_NETWORK_ID ? Component : PageLoading}
+    />,
+    MOUNT_NODE,
+  );
 };
 
 if (module.hot) {

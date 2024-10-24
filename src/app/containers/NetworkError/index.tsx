@@ -12,7 +12,7 @@ import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
 import { getNetwork, gotoNetwork } from 'utils';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { IS_CORESPACE, IS_TESTNET } from 'env';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 
 interface RouteParams {
@@ -26,9 +26,7 @@ export function NetworkError() {
   const [globalData] = useGlobalData();
   const { networks } = globalData;
   const {
-    network = ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
-      ? 'Hydra'
-      : 'Core (Testnet)',
+    network = IS_CORESPACE && IS_TESTNET ? 'Hydra' : 'Core (Testnet)',
   } = useParams<RouteParams>();
 
   return (
@@ -46,10 +44,7 @@ export function NetworkError() {
           href="#"
           onClick={e => {
             e.preventDefault();
-            const networkId =
-              ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
-                ? 1029
-                : 1;
+            const networkId = IS_CORESPACE && IS_TESTNET ? 1029 : 1;
             const network = getNetwork(networks, networkId);
             gotoNetwork(network.url);
           }}

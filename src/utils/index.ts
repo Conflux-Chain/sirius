@@ -13,7 +13,7 @@ import {
 import pubsub from './pubsub';
 import lodash from 'lodash';
 import { Nametag } from 'utils/hooks/useNametag';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 import IconCore from 'images/core-space/icon.svg';
 import IconEvm from 'images/espace/icon.svg';
 import IconBtc from 'images/bspace/icon.svg';
@@ -250,9 +250,9 @@ export const getNetworkIcon = (
 };
 
 export const getAddressInputPlaceholder = () => {
-  if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET) {
+  if (IS_CORESPACE && IS_MAINNET) {
     return 'cfx:...';
-  } else if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET) {
+  } else if (IS_CORESPACE && IS_TESTNET) {
     return 'cfxtest:...';
   } else {
     return '';

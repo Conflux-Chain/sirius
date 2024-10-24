@@ -1,0 +1,13 @@
+{
+  "ENV_NETWORK_ID": 1029,
+  "ENV_NETWORK_TYPE": "MAINNET",
+  "ENV_CHAIN_TYPE": "CORE",
+  "ENV_OPEN_API_HOST": "https://api.confluxscan.net",
+  "ENV_RPC_SERVER": "https://main.confluxrpc.com",
+  "ENV_FC_ADDRESS": "cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2",
+  "ENV_FC_EXCHANGE_ADDRESS": "cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m",
+  "ENV_FC_EXCHANGE_INTEREST_ADDRESS": "cfx:acag8dru4527jb1hkmx187w0c7ymtrzkt2schxg140",
+  "ENV_ENS_REGISTRY_ADDRESS": "cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm",
+  "ENV_ENS_PUBLIC_RESOLVER_ADDRESS": "cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up",
+  "ENV_LOGO": "https://confluxscan.io/static/media/logo.1c92ddc8.svg"
+}
