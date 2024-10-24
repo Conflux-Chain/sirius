@@ -27,7 +27,7 @@ import {
   getAccumulateInterestRate,
   getVoteList,
 } from 'utils/rpcRequest';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 const stakingContract = CFX.Contract({
@@ -78,12 +78,7 @@ export function AddressMetadata({ address, accountInfo }) {
   }, [address]);
 
   useEffect(() => {
-    if (
-      accountInfo.address &&
-      [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
-        ENV_CONFIG.ENV_NETWORK_TYPE,
-      )
-    ) {
+    if (accountInfo.address && IS_CORESPACE && (IS_MAINNET || IS_TESTNET)) {
       const proArr: any = [];
       proArr.push(getDepositList(address));
       proArr.push(getAccumulateInterestRate());
@@ -225,8 +220,7 @@ export function AddressMetadata({ address, accountInfo }) {
                   title={
                     <>
                       {t(translations.toolTip.address.stakedBegin)}
-                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
-                      NETWORK_TYPES.CORE_TESTNET ? (
+                      {IS_CORESPACE && IS_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"
@@ -276,8 +270,7 @@ export function AddressMetadata({ address, accountInfo }) {
                   title={
                     <>
                       {t(translations.toolTip.address.lockedBegin)}
-                      {ENV_CONFIG.ENV_NETWORK_TYPE ===
-                      NETWORK_TYPES.CORE_TESTNET ? (
+                      {IS_CORESPACE && IS_TESTNET ? (
                         <a
                           href="https://test.confluxhub.io/governance/dashboard"
                           target="_blank"

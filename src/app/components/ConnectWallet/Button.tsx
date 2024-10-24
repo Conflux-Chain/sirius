@@ -19,7 +19,7 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 import { Balance } from './Balance';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import { IS_CORESPACE, IS_MAINNET } from 'env';
 
 interface Button {
   className?: string;
@@ -82,9 +82,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
                 {addressLabel}
               </StyledAddressLabelWrapper>
             );
-          } else if (
-            ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
-          ) {
+          } else if (IS_CORESPACE && IS_MAINNET) {
             buttonText = account.replace(/(.*:.{3}).*(.{8})/, '$1...$2');
           } else {
             buttonText = account.replace(/(.*:.{3}).*(.{4})/, '$1...$2');
@@ -118,7 +116,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         pending: hasPendingRecords,
         connected: accounts.length && isValid,
         notConnected: !(accounts.length && isValid),
-        switchNetowrk:
+        switchNetwork:
           authConnectStatus !== AuthConnectStatus.NotConnected && !isValid,
       })}
       onClick={onClick}
@@ -151,7 +149,7 @@ const ButtonWrapper = styled.div`
   color: #65709a;
   cursor: pointer;
 
-  &.switchNetowrk {
+  &.switchNetwork {
     .connect-wallet-button-left {
       background: #fbebeb;
       color: #e15c56;
@@ -168,7 +166,7 @@ const ButtonWrapper = styled.div`
     }
   }
 
-  &:not(.pending, .switchNetowrk):hover {
+  &:not(.pending, .switchNetwork):hover {
     background: #ffe872;
 
     .connect-wallet-button-left {

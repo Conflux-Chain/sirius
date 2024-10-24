@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
 import fetch from './request';
-import ENV_CONFIG, { NETWORK_TYPES } from 'env';
+import ENV_CONFIG, { IS_MAINNET, IS_CORESPACE } from 'env';
 // import { getCurrency } from 'utils/constants';
 
 export const appendApiPrefix = (url: string) => {
@@ -653,10 +653,7 @@ const wcfxToken = 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx';
 const wcfxTestToken = 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t';
 
 export const useWCFXTokenInfo = () => {
-  const wcfx =
-    ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET
-      ? wcfxToken
-      : wcfxTestToken;
+  const wcfx = IS_CORESPACE && IS_MAINNET ? wcfxToken : wcfxTestToken;
 
   const key = `${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos?contracts=${wcfx}`;
 

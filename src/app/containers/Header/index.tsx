@@ -28,7 +28,7 @@ import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
 import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
 
-import ENV_CONFIG, { DOMAIN, NETWORK_TYPES } from 'env';
+import ENV_CONFIG, { DOMAIN, IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -323,15 +323,11 @@ export const Header = memo(() => {
     name: ScanEvent.menu.action.crossSpace,
     afterClick: menuClick,
     href:
-      ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+      IS_CORESPACE && IS_TESTNET
         ? 'https://test.confluxhub.io/'
         : 'https://confluxhub.io/',
   });
-  if (
-    [NETWORK_TYPES.CORE_MAINNET, NETWORK_TYPES.CORE_TESTNET].includes(
-      ENV_CONFIG.ENV_NETWORK_TYPE,
-    )
-  ) {
+  if (IS_CORESPACE && (IS_MAINNET || IS_TESTNET)) {
     supportAndHelpMenuItems.unshift({
       title: [
         t(translations.header.developerAPI),
@@ -340,7 +336,7 @@ export const Header = memo(() => {
       name: ScanEvent.menu.action.developerAPI,
       afterClick: menuClick,
       href:
-        ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+        IS_CORESPACE && IS_TESTNET
           ? `https://api-testnet.confluxscan${DOMAIN}/doc`
           : `https://api.confluxscan${DOMAIN}/doc`,
     });
@@ -353,7 +349,7 @@ export const Header = memo(() => {
       name: ScanEvent.menu.action.stakingAndGovernance,
       afterClick: menuClick,
       href:
-        ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+        IS_CORESPACE && IS_TESTNET
           ? 'https://test.confluxhub.io/governance/'
           : 'https://confluxhub.io/governance/',
     });
@@ -370,7 +366,7 @@ export const Header = memo(() => {
     });
   }
 
-  if (ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET) {
+  if (IS_CORESPACE && IS_TESTNET) {
     toolItems.push({
       title: [t(translations.header.faucet), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.faucet,

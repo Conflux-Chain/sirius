@@ -214,7 +214,7 @@ export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
 
 export const ENS_COINID_CONFLUX = 503;
 
-export const NETWORK_OPTIONS = lodash.compact([
+const _NETWORK_OPTIONS = lodash.compact([
   // core space
   {
     name: 'Conflux Core (Hydra)',
@@ -276,3 +276,9 @@ export const NETWORK_OPTIONS = lodash.compact([
     url: '//net8890btc.confluxscan.net',
   },
 ]);
+
+/**
+ * This makes it easy to replace strings directly in the script
+ * @see `docker/setupEnv.js`
+ */
+export const NETWORK_OPTIONS = _NETWORK_OPTIONS;
