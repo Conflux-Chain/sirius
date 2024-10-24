@@ -3,8 +3,8 @@
   "ENV_RPC_SERVER": "https://main.confluxrpc.com",
   
   "ENV_NETWORK_ID": 1029,
-  "ENV_NETWORK_TYPE": "MAINNET",
-  "ENV_CHAIN_TYPE": "CORE",
+  "ENV_NETWORK_TYPE": "CORE",
+  "ENV_CHAIN_TYPE": "MAINNET",
 
   "ENV_FC_ADDRESS": "cfx:achc8nxj7r451c223m18w2dwjnmhkd6rxawrvkvsy2",
   "ENV_FC_EXCHANGE_ADDRESS": "cfx:acdrd6ahf4fmdj6rgw4n9k4wdxrzfe6ex6jc7pw50m",
