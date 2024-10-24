@@ -54,7 +54,8 @@ yarn build REACT_APP_CORE_TESTNET=true
 ```ts
 // src/env/core/xxx.ts
 export const ENV_NETWORK_ID = 1029;
-export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE_MAINNET;
+export const ENV_NETWORK_TYPE = NETWORK_TYPES.CORE;
+export const ENV_CHAIN_TYPE = CHAIN_TYPES.MAINNET;
 export const ENV_OPEN_API_HOST =
   API_HOST_MAP.openAPIHost ||
   (IS_STAGE
@@ -82,7 +83,8 @@ export const ENV_LOGO = logo;
    ```ts
    // src/env/demo/mainnet.ts
    export const ENV_NETWORK_ID = 11111111;
-   export const ENV_NETWORK_TYPE = NETWORK_TYPES.DEMO_MAINNET;
+   export const ENV_NETWORK_TYPE = NETWORK_TYPES.DEMO;
+   export const ENV_CHAIN_TYPE = CHAIN_TYPES.MAINNET;
    export const ENV_OPEN_API_HOST =
      API_HOST_MAP.openAPIHost ||
      (IS_STAGE
@@ -105,30 +107,23 @@ export const ENV_LOGO = logo;
 2. add environment variables in package.json's scripts for development
    ```json
    "scripts": {
-     "start:demo": "NODE_OPTIONS=--openssl-legacy-provider REACT_APP_DEMO_MAINNET=true react-app-rewired start",
+     "start:demo": "REACT_APP_DEMO_MAINNET=true yarn start:base",
    },
    ```
-3. use environment variables in the `src/env/env-constants.ts` file
-   ```ts
-   export const IS_DEMO_MAINNET =
-     process.env.REACT_APP_DEMO_MAINNET === 'true' ||
-     /^((www[.-])|(demoscan[.]))/.test(window.location.hostname);
-   ```
-4. use the chain config in the `src/env/index.ts` file
+3. use the chain config in the `src/env/index.ts` file
    ```ts
    const ENV_CONFIG = (() => {
+     const IS_DEMO_MAINNET =
+       process.env.REACT_APP_DEMO_MAINNET === 'true' ||
+       /^((www[.-])|(demoscan[.]))/.test(window.location.hostname);
      if (IS_DEMO_MAINNET) {
        return DEMO_MAINNET_CONFIG;
-     } else if (IS_DEMO_TESTNET) {
-       return DEMO_TESTNET_CONFIG;
-     } else if (IS_DEMO_DEVNET) {
-       return DEMO_DEVNET_CONFIG;
      }
      // ...
      return DEFAULT_NETWORK_CONFIG;
    })();
    ```
-5. set network option in `src/utils/constants.ts`
+4. set network option in `src/utils/constants.ts`
    ```ts
    export const NETWORK_OPTIONS = lodash.compact([
      // demo
@@ -151,7 +146,7 @@ export const ENV_LOGO = logo;
      },
    ]);
    ```
-6. setup proxy in `src/setupProxy.js` for development
+5. setup proxy in `src/setupProxy.js` for development
    ```ts
    const configs = {
      demo_mainnet_url: 'https://demoscan.net/',
@@ -165,7 +160,7 @@ export const ENV_LOGO = logo;
      url = configs.demo_devnet_url;
    }
    ```
-7. start development
+6. start development
    ```bash
    yarn start:demo
    ```
