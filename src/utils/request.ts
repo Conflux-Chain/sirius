@@ -68,8 +68,9 @@ const parseJSON = async function (response) {
 
 // 检查返回值中是否包含错误
 const checkResponse = function (url, { data, response }, opts) {
-  if (response.status === 200 && data.code === 0) {
-    return data.data;
+  // 兼容 data.status 和 data.result, 是关于 espace 的数据结构
+  if (response.status === 200 && (data.status === '1' || data.code === 0)) {
+    return data.result || data.data;
   } else if (/HEAD/i.test(opts?.method)) {
     // handle of HEAD method
     return response;
