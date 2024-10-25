@@ -25,7 +25,7 @@ const getConfigFromFile = () => {
 
 const DEFAULT_NETWORK_CONFIG = CORESPACE_MAINNET_CONFIG;
 
-const _ENV_CONFIG = (() => {
+const ENV_CONFIG = (() => {
   const IS_STATIC = process.env.REACT_APP_STATIC === 'true';
   if (IS_STATIC) {
     return getConfigFromFile();
@@ -51,12 +51,6 @@ const _ENV_CONFIG = (() => {
 })();
 export * from './env-constants';
 export * from './types';
-
-/**
- * This makes it easy to replace strings directly in the script
- * @see `docker/setupEnv.js`
- */
-const ENV_CONFIG = _ENV_CONFIG;
 
 export const IS_CORESPACE = ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE;
 export const IS_MAINNET = ENV_CONFIG.ENV_CHAIN_TYPE === CHAIN_TYPES.MAINNET;
