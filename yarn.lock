@@ -2391,10 +2391,27 @@
     localstorage-enhance "^1.0.8"
     lodash-es "^4.17.21"
 
-"@cfx-kit/dapp-utils@0.2.0", "@cfx-kit/dapp-utils@^0.2.0":
+"@cfx-kit/dapp-utils@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.2.0.tgz#362d09dfc2951a77f77b082625aedeb12d5eb1c7"
   integrity sha512-qW2nhNU88ZTKyFuuex9jPq0aGLLhiEfQ/THKhB3gSRuTKYcc/LQxGFQpoy5lR4I3nSRrmFeaCKAGbZ2xBeuKVg==
+  dependencies:
+    "@cfx-kit/utils" "0.0.5"
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/bignumber" "^5.7.0"
+    "@ethersproject/units" "^5.7.0"
+    "@noble/hashes" "^1.4.0"
+    abitype "^0.9.5"
+    ethers "^6.6.4"
+    jsbi "^4.3.0"
+    ky "^0.33.3"
+    localstorage-enhance "^1.0.8"
+    lodash-es "^4.17.21"
+
+"@cfx-kit/dapp-utils@^0.2.3":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.2.4.tgz#99d2f19d1222f49914b6935c1383924ae17c05c9"
+  integrity sha512-JcIziIYntf8ujjoYhiyqjOqdM7z5EeWVRuw8/07F8l4M1+nn1QbLus50ykgfVwxzaAQp3KQkzqsjJ2oa8CbFWQ==
   dependencies:
     "@cfx-kit/utils" "0.0.5"
     "@ethersproject/abi" "^5.7.0"
@@ -2508,12 +2525,12 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.16.tgz#0ce62267979a0b2711c352910d7c7b8ba14ecabe"
-  integrity sha512-xWfJi6H5THfONV4L9dZJsJ2f9GOnfyHx3HTtZCxcX9wxAPXysNU7anHIZNP5e/vgELgYhikaKaDDSSkYcgeZuQ==
+"@cfxjs/sirius-next-common@0.1.19":
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.19.tgz#1f93b77cf8fa88b0075195f798e4e408c408156a"
+  integrity sha512-d/Sf/+Mxym/09jHF0+Xhgtmayte4SWPvgfv8ehf7haZ9gz6794O0NUNLZ9vw+5mTzafbk/Pq7uDYeXmLYZjGUA==
   dependencies:
-    "@cfx-kit/dapp-utils" "^0.2.0"
+    "@cfx-kit/dapp-utils" "^0.2.3"
     "@cfx-kit/react-utils" "^0.0.29"
     "@cfx-kit/ui-components" "^0.0.17"
     "@radix-ui/react-select" "^2.0.0"
