@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/StockChartTemplate';
 import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/PreviewChartTemplate';
-import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
-import { scope } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
-import { OPEN_API_URLS } from 'utils/constants';
 import {
+  ChildProps,
   xAxisCustomLabelHour,
   tooltipCustomLabel,
-} from 'utils/hooks/useHighcharts';
+} from '@cfxjs/sirius-next-common/dist/components/Charts/config';
+import { scope } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
+import { OPEN_API_URLS } from 'utils/constants';
 
 export function BlockTime({ preview = false }: ChildProps) {
   const { t } = useTranslation();
