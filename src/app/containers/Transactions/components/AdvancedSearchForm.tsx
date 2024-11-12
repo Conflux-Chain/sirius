@@ -16,7 +16,7 @@ import {
   TokenType,
   getTokenListByAdddress,
 } from './DebounceTokenSelect';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
@@ -57,7 +57,7 @@ export const transformDate = dates => {
     let end = dates[1]
       .format()
       .replace(/^(.*T)(.*)(\+.*)$/, '$123:59:59.999$3');
-    return [dayjs(start), dayjs(end)];
+    return [moment(start), moment(end)];
   }
 };
 
@@ -276,7 +276,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           .filter(t => tokenArray?.includes(t.address))
           .map(t => t.address),
         // special handle with range picker value
-        rangePicker: [minT ? dayjs(minT) : null, maxT ? dayjs(maxT) : null],
+        rangePicker: [minT ? moment(minT) : null, maxT ? moment(maxT) : null],
         minEpochNumber: minEpoch,
         maxEpochNumber: maxEpoch,
       };
@@ -384,9 +384,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ) {
       const dates = transformDate(values.rangePicker)?.map((r, index) => {
         if (!index) {
-          return String(Math.floor(+dayjs(r) / 1000));
+          return String(Math.floor(+moment(r) / 1000));
         } else {
-          return String(Math.round(+dayjs(r) / 1000));
+          return String(Math.round(+moment(r) / 1000));
         }
       });
 
@@ -636,9 +636,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
               style={{ width: '100%' }}
               disabledDate={current => {
                 return (
-                  current > dayjs() ||
+                  current > moment() ||
                   // mainnet release
-                  current < dayjs('2020-10-29T00:00:00+08:00')
+                  current < moment('2020-10-29T00:00:00+08:00')
                 );
               }}
             />
