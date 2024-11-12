@@ -14,7 +14,7 @@ import { ColProps } from '@cfxjs/antd/es/col';
 import {
   DebounceTokenSelect,
   TokenType,
-  getTokenListByAdddress,
+  getTokenListByAddress,
 } from './DebounceTokenSelect';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
@@ -290,7 +290,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     // update token field when init component on first time
     const { tokenArray = [] } = query;
     if (!tokenValue.length || tokenArray?.length) {
-      getTokenListByAdddress(tokenArray as Array<string>).then(resp => {
+      getTokenListByAddress(tokenArray as Array<string>).then(resp => {
         form.setFieldsValue({
           token: resp
             .filter(t => tokenArray?.includes(t.address))
@@ -384,9 +384,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ) {
       const dates = transformDate(values.rangePicker)?.map((r, index) => {
         if (!index) {
-          return String(Math.floor(+moment(r) / 1000));
+          return String(Math.floor(moment(r).valueOf() / 1000));
         } else {
-          return String(Math.round(+moment(r) / 1000));
+          return String(Math.round(moment(r).valueOf() / 1000));
         }
       });
 
@@ -636,9 +636,10 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
               style={{ width: '100%' }}
               disabledDate={current => {
                 return (
-                  current > moment() ||
+                  current.valueOf() > moment().valueOf() ||
                   // mainnet release
-                  current < moment('2020-10-29T00:00:00+08:00')
+                  current.valueOf() <
+                    moment('2020-10-29T00:00:00+08:00').valueOf()
                 );
               }}
             />
