@@ -79,7 +79,7 @@ export async function getTokenListByName(name: string): Promise<TokenType[]> {
   }).then(formatTokenList);
 }
 
-export async function getTokenListByAdddress(
+export async function getTokenListByAddress(
   tokenArray: Array<string>,
 ): Promise<TokenType[]> {
   return reqTokenList({
@@ -176,7 +176,7 @@ export function DebounceTokenSelect<
       setFetchingSearch(true);
       setOptions([]);
 
-      getTokenListByAdddress(token as Array<string>)
+      getTokenListByAddress(token as Array<string>)
         .then(data => {
           setOptions(data as any);
         })
