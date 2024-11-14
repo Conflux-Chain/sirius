@@ -2577,10 +2577,10 @@
     decimal.js "^10.3.1"
     zustand "^4.3.6"
 
-"@cfxjs/use-wallet-react@0.0.2-6":
-  version "0.0.2-6"
-  resolved "https://registry.npmjs.org/@cfxjs/use-wallet-react/-/use-wallet-react-0.0.2-6.tgz#cc50921ddc38f552729a8b997f2176eb9eb61780"
-  integrity sha512-iYA2ytxldQaEPtG9zOvkSwbaFW5vrgH5BGhcH2iik/XK8+hhSo0rzcwt2GGkSLN466V2raW8GxWdq3rNlT8KbQ==
+"@cfxjs/use-wallet-react@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@cfxjs/use-wallet-react/-/use-wallet-react-0.0.4.tgz#8f0057a3e134d27211f7abea04a1bc1ea2b5e994"
+  integrity sha512-ZEVc0vR59dVsxi7KnmJAd5b8SIUu6902fdQAse6WzvLXtBXUUkb8yv/qc0U2NcNCMKP1hOEZYClz+7NCRkD4UA==
   dependencies:
     decimal.js "^10.3.1"
     zustand "^4.3.6"
