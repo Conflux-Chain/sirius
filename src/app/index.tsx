@@ -267,6 +267,7 @@ export function App() {
     setLoading(true);
     reqProjectConfig()
       .then(resp => {
+        delete resp.referer;
         const networks = [...NETWORK_OPTIONS];
         if (networks.every(n => n.id !== resp?.networkId)) {
           networks.push({
