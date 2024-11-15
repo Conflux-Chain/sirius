@@ -39,7 +39,7 @@ export function PercentageOfTxTypeInBlock({ preview = false }: ChildProps) {
             ? 0
             : legacy.div(total).times(100).toNumber();
           const name = dayjs(d.timestamp * 1000).format(
-            'dddd MMM DD, HH:mm:ss',
+            'dddd MMM DD, HH:mm:ss (UTC)',
           );
 
           data1.push({
