@@ -35,7 +35,13 @@ import {
   Weibo,
   Youtube,
 } from './Icon';
-import ENV_CONFIG, { DOMAIN, IS_FOREIGN_HOST, NETWORK_TYPES } from 'env';
+import {
+  DOMAIN,
+  IS_CORESPACE,
+  IS_FOREIGN_HOST,
+  IS_MAINNET,
+  IS_TESTNET,
+} from 'env';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 
 export function Footer() {
@@ -110,7 +116,7 @@ export function Footer() {
     <Link
       className="footer-link"
       href={
-        ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+        IS_CORESPACE && IS_TESTNET
           ? 'https://test.confluxhub.io/'
           : 'https://confluxhub.io/'
       }
@@ -339,7 +345,7 @@ export function Footer() {
       <Link
         className="footer-link"
         href={
-          ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET
+          IS_CORESPACE && IS_TESTNET
             ? `https://api-testnet.confluxscan${DOMAIN}/doc`
             : `https://api.confluxscan${DOMAIN}/doc`
         }
@@ -425,8 +431,7 @@ export function Footer() {
         </FooterContentTitle>
         <FooterContent>
           <FooterContentRow>
-            {ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_MAINNET ||
-            ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE_TESTNET ? (
+            {IS_CORESPACE && (IS_MAINNET || IS_TESTNET) ? (
               <FooterContentLink>
                 {developResourceLinks.developerAPI}
               </FooterContentLink>

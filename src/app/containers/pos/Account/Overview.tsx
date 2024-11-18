@@ -14,6 +14,7 @@ import { Tag } from '@cfxjs/antd';
 import styled from 'styled-components';
 import { ReactComponent as StatusIcon } from 'images/status.svg';
 import { ReactComponent as WebsiteIcon } from 'images/website.svg';
+import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 
 const statusColorMap = {
   Active: '#4AC2AB',
@@ -175,10 +176,7 @@ export function Overview() {
           )}
         </SkeletonContainer>
       </Description>
-      <Description
-        title={t(translations.pos.account.overview.unlocking)}
-        noBorder
-      >
+      <Description title={t(translations.pos.account.overview.unlocking)}>
         <SkeletonContainer shown={loading}>
           {lodash.isNil(data.unlockingInCfx) ? (
             '--'
@@ -188,6 +186,16 @@ export function Overview() {
               {' CFX'}
             </>
           )}
+        </SkeletonContainer>
+      </Description>
+      <Description
+        title={t(translations.pos.account.overview.totalIncome)}
+        noBorder
+      >
+        <SkeletonContainer shown={loading}>
+          {lodash.isNil(data.totalReward)
+            ? '--'
+            : `${fromDripToCfx(data.totalReward, true)} CFX`}
         </SkeletonContainer>
       </Description>
     </Card>

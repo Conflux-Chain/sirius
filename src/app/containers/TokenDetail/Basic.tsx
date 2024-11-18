@@ -196,6 +196,8 @@ export const Basic = ({
             transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
             true,
           )} ${symbol}`}
+          maxCount={47}
+          mobileMaxCount={39}
         >
           {`${formatBalance(
             totalSupply,

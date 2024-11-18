@@ -14,9 +14,9 @@ import { ColProps } from '@cfxjs/antd/es/col';
 import {
   DebounceTokenSelect,
   TokenType,
-  getTokenListByAdddress,
+  getTokenListByAddress,
 } from './DebounceTokenSelect';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
@@ -57,7 +57,7 @@ export const transformDate = dates => {
     let end = dates[1]
       .format()
       .replace(/^(.*T)(.*)(\+.*)$/, '$123:59:59.999$3');
-    return [dayjs(start), dayjs(end)];
+    return [moment(start), moment(end)];
   }
 };
 
@@ -276,7 +276,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
           .filter(t => tokenArray?.includes(t.address))
           .map(t => t.address),
         // special handle with range picker value
-        rangePicker: [minT ? dayjs(minT) : null, maxT ? dayjs(maxT) : null],
+        rangePicker: [minT ? moment(minT) : null, maxT ? moment(maxT) : null],
         minEpochNumber: minEpoch,
         maxEpochNumber: maxEpoch,
       };
@@ -290,7 +290,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     // update token field when init component on first time
     const { tokenArray = [] } = query;
     if (!tokenValue.length || tokenArray?.length) {
-      getTokenListByAdddress(tokenArray as Array<string>).then(resp => {
+      getTokenListByAddress(tokenArray as Array<string>).then(resp => {
         form.setFieldsValue({
           token: resp
             .filter(t => tokenArray?.includes(t.address))
@@ -384,9 +384,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     ) {
       const dates = transformDate(values.rangePicker)?.map((r, index) => {
         if (!index) {
-          return String(Math.floor(+dayjs(r) / 1000));
+          return String(Math.floor(moment(r).valueOf() / 1000));
         } else {
-          return String(Math.round(+dayjs(r) / 1000));
+          return String(Math.round(moment(r).valueOf() / 1000));
         }
       });
 
@@ -636,9 +636,10 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
               style={{ width: '100%' }}
               disabledDate={current => {
                 return (
-                  current > dayjs() ||
+                  current.valueOf() > moment().valueOf() ||
                   // mainnet release
-                  current < dayjs('2020-10-29T00:00:00+08:00')
+                  current.valueOf() <
+                    moment('2020-10-29T00:00:00+08:00').valueOf()
                 );
               }}
             />

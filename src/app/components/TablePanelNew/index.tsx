@@ -99,7 +99,7 @@ export const TitleTotal = ({
       >
         {['100', '500', '1000', '3000', '5000'].map((o, index) => {
           return (
-            <Select.Option key={index} value={String(index)}>
+            <Select.Option key={index} value={o}>
               {o}
             </Select.Option>
           );

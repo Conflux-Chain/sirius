@@ -494,7 +494,12 @@ export const quantity = {
       ? opt.decimals
       : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
     return value ? (
-      <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
+      <Text
+        tag="span"
+        maxCount={23}
+        mobileMaxCount={19}
+        hoverValue={formatBalance(value, decimals, true)}
+      >
         {formatBalance(value, decimals)}
       </Text>
     ) : (
@@ -595,6 +600,12 @@ export const balance = (decimal, price, transferType) => ({
     // Decimal places are determined according to the price
     const decimalPlace = +price > 1 ? (+price).toFixed(0).length + 1 : 2;
     const tinyBalanceThreshold = `0.${Array(decimalPlace).join('0')}1`;
+    const textProps = {
+      tag: 'span',
+      hoverValue: formatBalance(value, decimals, true),
+      maxCount: 43,
+      mobileMaxCount: 35,
+    } as const;
     return (
       <ContentWrapper right>
         {value != null ? (
@@ -606,17 +617,9 @@ export const balance = (decimal, price, transferType) => ({
                 keepDecimals: true,
               }) || 0
             ) < +tinyBalanceThreshold ? (
-              <Text
-                tag="span"
-                hoverValue={formatBalance(value, decimals, true)}
-              >
-                {`< ${tinyBalanceThreshold}`}
-              </Text>
+              <Text {...textProps}>{`< ${tinyBalanceThreshold}`}</Text>
             ) : (
-              <Text
-                tag="span"
-                hoverValue={formatBalance(value, decimals, true)}
-              >
+              <Text {...textProps}>
                 {formatBalance(value, decimals, false, {
                   precision: decimalPlace,
                   keepZero: true,
@@ -625,7 +628,7 @@ export const balance = (decimal, price, transferType) => ({
               </Text>
             )
           ) : (
-            <Text tag="span" hoverValue={formatBalance(value, decimals, true)}>
+            <Text {...textProps}>
               {formatBalance(value, decimals, false, {
                 withUnit: false,
               })}
