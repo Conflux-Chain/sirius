@@ -8,6 +8,11 @@ import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { toThousands } from 'utils';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
+const sortKeyMap = {
+  votingShare: 'votingPower',
+  availableVotesInCfx: 'availableVotes',
+};
+
 export const List = ({ overview }: { overview?: boolean }) => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const { t } = useTranslation();
@@ -39,10 +44,7 @@ export const List = ({ overview }: { overview?: boolean }) => {
         </span>
       )}
       rowKey="rankAvailableVotes"
-      sortKeyMap={{
-        votingShare: 'votingPower',
-        availableVotesInCfx: 'availableVotes',
-      }}
+      sortKeyMap={sortKeyMap}
     ></TablePanelNew>
   );
 };

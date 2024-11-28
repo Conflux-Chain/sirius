@@ -289,7 +289,7 @@ export const ContractDetailPage = memo(() => {
           </Middle>
         )}
         <Bottom key="bottom">
-          <Table key="table" address={address} addressInfo={contractInfo} />
+          <Table key={address} address={address} addressInfo={contractInfo} />
         </Bottom>
         <CreateAddressLabel {...props}></CreateAddressLabel>
       </Main>

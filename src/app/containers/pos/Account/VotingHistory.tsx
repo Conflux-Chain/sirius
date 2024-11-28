@@ -7,6 +7,10 @@ import {
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { accountColunms, colunms, blockColunms } from 'utils/tableColumns/pos';
 
+const sortKeyMap = {
+  [String(['block', 'createdAt'])]: 'createdAt',
+};
+
 export function VotingHistory() {
   const { address } = useParams<{
     address: string;
@@ -44,9 +48,7 @@ export function VotingHistory() {
     <TablePanelNew
       url={url}
       columns={columns}
-      sortKeyMap={{
-        [String(['block', 'createdAt'])]: 'createdAt',
-      }}
+      sortKeyMap={sortKeyMap}
       rowKey="blockNumber"
     ></TablePanelNew>
   );
