@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { EventLogs } from './EventLogs/Loadable';
 import { TabLabel } from 'app/components/TabsTablePanel/Label';
 import { reqTransactionDetail } from 'utils/httpRequest';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Detail } from './Detail';
@@ -18,15 +18,61 @@ export function Transaction() {
   const { hash } = useParams<{
     hash: string;
   }>();
+  const history = useHistory();
   const [txnDetail, setTxnDetail] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [partLoading, setPartLoading] = useState(false); // partial update indicator
+
+  // get txn detail info
+  const fetchTxDetail = useCallback(
+    (initial = true) => {
+      if (initial) {
+        setLoading(true);
+      } else {
+        // only update timestamp & confirmedEpochCount
+        setPartLoading(true);
+      }
+      reqTransactionDetail({
+        hash,
+      })
+        .then(body => {
+          if (!body?.hash) {
+            history.push(`/notfound/${hash}`, {
+              type: 'transaction',
+            });
+          }
+
+          if (body.code) {
+            switch (body.code) {
+              case 30404:
+                history.push(`/notfound/${hash}`, {
+                  type: 'transaction',
+                });
+                break;
+            }
+          } else {
+            //success
+            setTxnDetail(body || {});
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+          setPartLoading(false);
+        });
+    },
+    [history, hash],
+  );
 
   useEffect(() => {
-    reqTransactionDetail({
-      hash,
-    }).then(body => {
-      setTxnDetail(body);
-    });
-  }, [hash]);
+    fetchTxDetail();
+    // auto update tx detail info
+    const autoUpdateDetailIntervalId = setInterval(() => {
+      fetchTxDetail(false);
+    }, 10 * 1000);
+    return () => {
+      clearInterval(autoUpdateDetailIntervalId);
+    };
+  }, [fetchTxDetail]);
 
   const { from, to, eventLogCount } = txnDetail;
 
@@ -34,7 +80,9 @@ export function Transaction() {
     {
       value: 'overview',
       label: t(translations.transaction.overview),
-      content: <Detail />,
+      content: (
+        <Detail data={txnDetail} loading={loading} partLoading={partLoading} />
+      ),
     },
     {
       value: 'internal-txns',
@@ -71,14 +119,6 @@ export function Transaction() {
     </StyledPageWrapper>
   );
 }
-
-Transaction.defaultProps = {
-  from: '',
-  to: '',
-  hash: '',
-  cfxTransferAllCount: 0,
-  eventLogCount: 0,
-};
 
 const StyledPageWrapper = styled.div`
   margin-bottom: 2.2857rem;
