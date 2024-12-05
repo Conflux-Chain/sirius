@@ -1,14 +1,8 @@
-import React, {
-  useCallback,
-  useMemo,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Spinner } from '@cfxjs/react-ui';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
@@ -20,7 +14,6 @@ import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import {
   reqContract,
   reqTokenList,
-  reqTransactionDetail,
   reqTransferList,
   reqTransactionEventlogs,
 } from 'utils/httpRequest';
@@ -68,21 +61,20 @@ const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
 
 // Transaction Detail Page
-export const Detail = () => {
+export const Detail = ({
+  data: transactionDetail,
+  loading: outerLoading,
+  partLoading,
+}) => {
   const [visible, setVisible] = useState(false);
   const [globalData] = useGlobalData();
   const { t, i18n } = useTranslation();
   const [isContract, setIsContract] = useState(false);
-  const [transactionDetail, setTransactionDetail] = useState<any>({});
   const [eventlogs, setEventlogs] = useState<any>([]);
   const [contractInfo, setContractInfo] = useState({});
   const [transferList, setTransferList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [partLoading, setPartLoading] = useState(false); // partial update indicator
+  const [innerLoading, setInnerLoading] = useState(false);
   const [tokenList, setTokenList] = useState([]);
-  const [detailsInfoSetHash, setDetailsInfoSetHash] = useState('');
-  const history = useHistory();
-  const intervalToClear = useRef(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
@@ -123,19 +115,21 @@ export const Detail = () => {
   const [folded, setFolded] = useState(true);
   const nametags = useNametag([from, to]);
 
+  const loading = innerLoading || outerLoading;
   const notEnoughCash = txExecErrorMsg && /^NotEnoughCash/.test(txExecErrorMsg);
   const isValidGasCharged =
     !notEnoughCash || new BigNumber(gasCharged).isEqualTo(gas);
 
-  const fetchTxTransfer = async (toCheckAddress, txnhash) => {
-    setLoading(true);
+  const fetchTxTransfer = async toCheckAddress => {
+    setInnerLoading(true);
 
     try {
       const proArr: Promise<any>[] = [];
-      if (
-        typeof toCheckAddress === 'string' &&
-        isCoreContractAddress(toCheckAddress)
-      ) {
+      const _isContract =
+        isContract ||
+        (typeof toCheckAddress === 'string' &&
+          isCoreContractAddress(toCheckAddress));
+      if (_isContract) {
         setIsContract(true);
 
         const contractFields = [
@@ -162,7 +156,7 @@ export const Detail = () => {
       const transferFields = 'token';
       proArr.push(
         reqTransferList({
-          transactionHash: txnhash,
+          transactionHash: routeHash,
           fields: transferFields,
           limit: 100,
           reverse: false,
@@ -171,14 +165,14 @@ export const Detail = () => {
 
       proArr.push(
         reqTransactionEventlogs({
-          transactionHash: txnhash,
+          transactionHash: routeHash,
           aggregate: false,
         }),
       );
 
       const proRes = await Promise.all(proArr);
 
-      if (toCheckAddress !== null && isCoreContractAddress(toCheckAddress)) {
+      if (_isContract) {
         const contractResponse = proRes.shift();
         setContractInfo(contractResponse);
       }
@@ -201,77 +195,15 @@ export const Detail = () => {
     } catch (e) {
       console.error('fetchTxTransfer error: ', e);
     } finally {
-      setLoading(false);
+      setInnerLoading(false);
     }
   };
 
-  // get txn detail info
-  const fetchTxDetail = useCallback(
-    txnhash => {
-      if (!detailsInfoSetHash || detailsInfoSetHash !== txnhash) {
-        setLoading(true);
-      } else {
-        setPartLoading(true);
-      }
-      reqTransactionDetail({
-        hash: txnhash,
-      }).then(body => {
-        if (body && !body?.hash) {
-          history.push(`/notfound/${routeHash}`, {
-            type: 'transaction',
-          });
-        }
-
-        if (body.code) {
-          switch (body.code) {
-            case 30404:
-              setLoading(false);
-              setPartLoading(false);
-              history.push(`/notfound/${routeHash}`, {
-                type: 'transaction',
-              });
-              break;
-          }
-        } else {
-          //success
-          const txDetailDta = body;
-          setTransactionDetail(txDetailDta || {});
-          if (txnhash !== routeHash) {
-            return;
-          }
-          if (detailsInfoSetHash === txnhash) {
-            // only update timestamp & confirmedEpochCount
-            setPartLoading(false);
-            return;
-          }
-          setDetailsInfoSetHash(txnhash);
-
-          let toCheckAddress = txDetailDta.to;
-          fetchTxTransfer(toCheckAddress, txnhash);
-        }
-      });
-    },
-    [history, routeHash, detailsInfoSetHash],
-  );
-
   useEffect(() => {
-    fetchTxDetail(routeHash);
-
-    // auto update tx detail info
-    const autoUpdateDetailIntervalId = setInterval(() => {
-      fetchTxDetail(routeHash);
-    }, 10 * 1000);
-    return () => {
-      clearInterval(autoUpdateDetailIntervalId);
-    };
+    if (!to) return;
+    fetchTxTransfer(to);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchTxDetail, routeHash]);
-
-  useEffect(() => {
-    return () => {
-      intervalToClear.current = false;
-    };
-  }, [intervalToClear]);
+  }, [to]);
 
   const addressContent = useCallback(
     (isFull = false, address) => {

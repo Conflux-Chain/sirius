@@ -181,16 +181,7 @@ export const useBlockList: useApi = (params, shouldFetch = true, ...rest) => {
     rest[0],
   );
 };
-export const useBlockQuery: useApi = (params, shouldFetch = true, ...rest) => {
-  if (!Array.isArray(params)) params = [params];
-  return useSWR(
-    shouldFetch
-      ? [`/block/${params[0].hash}?${params[0].hash}:''`, ...params]
-      : null,
-    rest[1] || simpleGetFetcher,
-    rest[0],
-  );
-};
+
 export const useTransferList: useApi = (
   params,
   shouldFetch = true,
