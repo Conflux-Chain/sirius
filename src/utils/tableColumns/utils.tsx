@@ -126,7 +126,7 @@ export const ColumnAge = ({
       return (
         <ContentWrapper right={right}>
           {ageFormat === 'age' ? (
-            <Age from={second} />
+            <Age from={second} to={dayjs().valueOf()} />
           ) : (
             <div
               style={{
