@@ -79,6 +79,7 @@ export function DescriptionPanel({ data, loading }) {
     baseFeePerGasRef,
     burntGasFee,
   } = data || {};
+  const isCip1559Enabled = 'baseFeePerGas' in data;
 
   return (
     <StyledCardWrapper>
@@ -233,7 +234,7 @@ export function DescriptionPanel({ data, loading }) {
             gasLimit,
             2,
           )})`}
-          <GasTargetUsage gasUsed={gasUsed} />
+          {isCip1559Enabled && <GasTargetUsage gasUsed={gasUsed} />}
         </SkeletonContainer>
       </Description>
       <Description
@@ -247,56 +248,60 @@ export function DescriptionPanel({ data, loading }) {
           {gasLimit ? toThousands(gasLimit) : '--'}
         </SkeletonContainer>
       </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.baseFeePerGas)}>
-            {t(translations.block.baseFeePerGas)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>
-          {baseFeePerGas
-            ? `${fromDripToGdrip(baseFeePerGas, true)} Gdrip `
-            : '--'}
-          {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
-            <Tooltip
-              title={
-                baseFeePerGasRef?.prePivot?.height && (
-                  <div>
-                    {t(translations.toolTip.block.compareToPivotBlock, {
-                      block: baseFeePerGasRef.prePivot.height,
-                    })}
-                    <CopyButton
-                      copyText={baseFeePerGasRef.prePivot.height}
-                      color="#ECECEC"
-                      className="copy-button-in-tooltip"
-                    />
-                  </div>
-                )
-              }
-            >
-              <BaseFeeIncreaseWrapper>
-                <IncreasePercent
-                  base={baseFeePerGas}
-                  prev={baseFeePerGasRef.prePivot.baseFeePerGas}
-                  showArrow
-                />
-              </BaseFeeIncreaseWrapper>
+      {isCip1559Enabled && (
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.baseFeePerGas)}>
+              {t(translations.block.baseFeePerGas)}
             </Tooltip>
-          )}
-        </SkeletonContainer>
-      </Description>
-      <Description
-        title={
-          <Tooltip title={t(translations.toolTip.block.burntFeesLabel)}>
-            {t(translations.block.burntFeesLabel)}
-          </Tooltip>
-        }
-      >
-        <SkeletonContainer shown={loading}>
-          {burntGasFee ? `🔥 ${fromDripToCfx(burntGasFee, true)} CFX` : '--'}
-        </SkeletonContainer>
-      </Description>
+          }
+        >
+          <SkeletonContainer shown={loading}>
+            {baseFeePerGas
+              ? `${fromDripToGdrip(baseFeePerGas, true)} Gdrip `
+              : '--'}
+            {baseFeePerGas && baseFeePerGasRef?.prePivot?.baseFeePerGas && (
+              <Tooltip
+                title={
+                  baseFeePerGasRef?.prePivot?.height && (
+                    <div>
+                      {t(translations.toolTip.block.compareToPivotBlock, {
+                        block: baseFeePerGasRef.prePivot.height,
+                      })}
+                      <CopyButton
+                        copyText={baseFeePerGasRef.prePivot.height}
+                        color="#ECECEC"
+                        className="copy-button-in-tooltip"
+                      />
+                    </div>
+                  )
+                }
+              >
+                <BaseFeeIncreaseWrapper>
+                  <IncreasePercent
+                    base={baseFeePerGas}
+                    prev={baseFeePerGasRef.prePivot.baseFeePerGas}
+                    showArrow
+                  />
+                </BaseFeeIncreaseWrapper>
+              </Tooltip>
+            )}
+          </SkeletonContainer>
+        </Description>
+      )}
+      {isCip1559Enabled && (
+        <Description
+          title={
+            <Tooltip title={t(translations.toolTip.block.burntFeesLabel)}>
+              {t(translations.block.burntFeesLabel)}
+            </Tooltip>
+          }
+        >
+          <SkeletonContainer shown={loading}>
+            {burntGasFee ? `🔥 ${fromDripToCfx(burntGasFee, true)} CFX` : '--'}
+          </SkeletonContainer>
+        </Description>
+      )}
       <FoldedWrapper
         className={clsx({
           folded: folded,
