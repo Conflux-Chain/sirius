@@ -37,14 +37,10 @@ export function DailyCFXTransfer({ preview = false }: ChildProps) {
       },
       header: {
         title: {
-          text: t(
-            translations.highcharts.crossSpace.dailyCFXTransferCount.title,
-          ),
+          text: t(translations.highcharts.crossSpace.dailyCFXTransfer.title),
         },
         subtitle: {
-          text: t(
-            translations.highcharts.crossSpace.dailyCFXTransferCount.subtitle,
-          ),
+          text: t(translations.highcharts.crossSpace.dailyCFXTransfer.subtitle),
         },
         breadcrumb: [
           {
