@@ -50,7 +50,7 @@ export function Countdown({ target, type }: CountdownProps) {
 
   const countdown = useCallback(() => {
     const seconds = Math.max(target.diff(dayjs(), 'second'), 0);
-    setTimeObj(countTime(seconds));
+    setTimeObj(seconds > 0 ? countTime(seconds) : null);
     setRunning(seconds > 0);
   }, [target]);
 
@@ -72,37 +72,34 @@ export function Countdown({ target, type }: CountdownProps) {
         </div>
       </div>
       <div className="countdown-card-wrapper">
-        {timeObj ? (
-          <>
-            <div className="countdown-card">
-              <span className="countdown-number">{timeObj.days}</span>
-              <span className="countdown-unit">
-                {t(translations.blocknumberCalc.day)}
-              </span>
-            </div>
-            <div className="countdown-card">
-              <span className="countdown-number">{timeObj.hours}</span>
-              <span className="countdown-unit">
-                {t(translations.blocknumberCalc.hour)}
-              </span>
-            </div>
-            <div className="countdown-card">
-              <span className="countdown-number">{timeObj.mins}</span>
-              <span className="countdown-unit">
-                {t(translations.blocknumberCalc.min)}
-              </span>
-            </div>
-            <div className="countdown-card">
-              <span className="countdown-number">{timeObj.secs}</span>
-              <span className="countdown-unit">
-                {t(translations.blocknumberCalc.sec)}
-              </span>
-            </div>
-          </>
-        ) : null}
+        <div className="countdown-card">
+          <span className="countdown-number">{timeObj?.days ?? '--'}</span>
+          <span className="countdown-unit">
+            {t(translations.blocknumberCalc.day)}
+          </span>
+        </div>
+        <div className="countdown-card">
+          <span className="countdown-number">{timeObj?.hours ?? '--'}</span>
+          <span className="countdown-unit">
+            {t(translations.blocknumberCalc.hour)}
+          </span>
+        </div>
+        <div className="countdown-card">
+          <span className="countdown-number">{timeObj?.mins ?? '--'}</span>
+          <span className="countdown-unit">
+            {t(translations.blocknumberCalc.min)}
+          </span>
+        </div>
+        <div className="countdown-card">
+          <span className="countdown-number">{timeObj?.secs ?? '--'}</span>
+          <span className="countdown-unit">
+            {t(translations.blocknumberCalc.sec)}
+          </span>
+        </div>
       </div>
       <StyledTargetDateWrapper>
-        {t(translations.blocknumberCalc.targetDate)}: <span>{targetDate}</span>
+        {t(translations.blocknumberCalc.targetDate)}:{' '}
+        <span>{timeObj ? targetDate : '--'}</span>
       </StyledTargetDateWrapper>
     </CountdownWrapper>
   );
