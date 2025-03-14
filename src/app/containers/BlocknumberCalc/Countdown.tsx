@@ -33,7 +33,7 @@ export function Countdown({ target, type }: CountdownProps) {
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.indexOf('en') > -1;
 
-  const [secs, setSecs] = useState(0);
+  const [running, setRunning] = useState(true);
   const targetDate = useMemo(
     () =>
       target.format(
@@ -49,18 +49,16 @@ export function Countdown({ target, type }: CountdownProps) {
   } | null>(null);
 
   const countdown = useCallback(() => {
-    const seconds = target.diff(dayjs(), 'second');
-    if (seconds >= 0) {
-      setTimeObj(countTime(seconds));
-      setSecs(seconds - 1);
-    }
+    const seconds = Math.max(target.diff(dayjs(), 'second'), 0);
+    setTimeObj(countTime(seconds));
+    setRunning(seconds > 0);
   }, [target]);
 
   useEffect(() => {
     countdown();
   }, [countdown]);
 
-  useInterval(countdown, secs >= 0 ? 1000 : null);
+  useInterval(countdown, running ? 1000 : null);
 
   return (
     <CountdownWrapper>
