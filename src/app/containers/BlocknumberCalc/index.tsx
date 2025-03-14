@@ -263,7 +263,14 @@ export function BlocknumberCalc() {
         {t(translations.blocknumberCalc.title)}
       </PageHeader>
       <ContentWrapper>
-        <Radio options={options} value={type} onChange={setType} />
+        <Radio
+          options={options}
+          value={type}
+          onChange={value => {
+            setError('');
+            setType(value);
+          }}
+        />
         <StyledInputWrapper>
           <div className="calculate-input-wrapper">
             <Input
