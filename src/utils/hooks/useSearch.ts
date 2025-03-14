@@ -10,7 +10,7 @@ import {
   isAddress,
   isCurrentNetworkAddress,
 } from 'utils';
-import { tranferToLowerCase } from '@cfxjs/sirius-next-common/dist/utils';
+import { transferToLowerCase } from '@cfxjs/sirius-next-common/dist/utils';
 import { CONTRACTS, CORE_SPACE_CHAIN_IDS } from '../constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
@@ -30,7 +30,7 @@ export const useSearch = (value?: string) => {
     if (typeof innerValue !== 'string' || innerValue.trim() === '') return;
 
     // cip-37
-    innerValue = tranferToLowerCase(innerValue.trim());
+    innerValue = transferToLowerCase(innerValue.trim());
 
     // zero address support
     if (innerValue === '0x0') {
