@@ -287,17 +287,17 @@ export function BlocknumberCalc() {
             </span>
           </Button>
         </StyledInputWrapper>
-        {target && <Countdown target={target} />}
+        {target && <Countdown target={target} type={type} />}
         <CardWrapper>
           <Card className="blocknumber">
             <span className="title">
-              {t(translations.blocknumberCalc.epoch.current)}
+              {t(translations.blocknumberCalc[type].current)}
             </span>
             <span className="number">#{current ? current : '--'}</span>
           </Card>
           <Card className="blocknumber">
             <span className="title">
-              {t(translations.blocknumberCalc.epoch.remaining)}
+              {t(translations.blocknumberCalc[type].remaining)}
             </span>
             <span className="number">#{remaining}</span>
           </Card>

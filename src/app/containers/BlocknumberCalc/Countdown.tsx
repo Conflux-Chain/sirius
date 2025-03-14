@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface CountdownProps {
+  type: string;
   target: dayjs.Dayjs;
 }
 
@@ -28,7 +29,7 @@ const countTime = (seconds: number) => {
   return { days, hours, mins, secs };
 };
 
-export function Countdown({ target }: CountdownProps) {
+export function Countdown({ target, type }: CountdownProps) {
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.indexOf('en') > -1;
 
@@ -68,7 +69,7 @@ export function Countdown({ target }: CountdownProps) {
         <div className="countdown-tooltip">
           <InfoIconWithTooltip
             size={16}
-            info={t(translations.blocknumberCalc.epoch.tooltip)}
+            info={t(translations.blocknumberCalc[type].tooltip)}
           />
         </div>
       </div>
