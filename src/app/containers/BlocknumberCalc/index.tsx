@@ -217,8 +217,8 @@ export function BlocknumberCalc() {
   }, [input, current, type, getInfo, setCurrent, setTarget, history, t]);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const value = +e.target.value.trim();
-    setInput(value > max ? max.toString() : value.toString());
+    const value = e.target.value.trim();
+    setInput(+value > max ? max.toString() : value);
     setError('');
   };
 
