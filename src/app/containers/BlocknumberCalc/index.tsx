@@ -77,15 +77,28 @@ enum Type {
   pos = 'pos',
 }
 
-const options = [
-  { label: 'Epoch Height', value: Type.epoch },
-  { label: 'PoW Blocks', value: Type.pow },
-  { label: 'PoS Blocks', value: Type.pos },
-];
-
 export function BlocknumberCalc() {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
+
+  const options = useMemo(
+    () => [
+      {
+        label: t(translations.blocknumberCalc.epoch.tab),
+        value: Type.epoch,
+      },
+      {
+        label: t(translations.blocknumberCalc.pow.tab),
+        value: Type.pow,
+      },
+      {
+        label: t(translations.blocknumberCalc.pos.tab),
+        value: Type.pos,
+      },
+    ],
+    [t],
+  );
   const { type: _type, value: _value } = useMemo(() => qs.parse(search), [
     search,
   ]);
@@ -183,7 +196,6 @@ export function BlocknumberCalc() {
     return '--';
   }, [input, current]);
 
-  const { t } = useTranslation();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
