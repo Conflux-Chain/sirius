@@ -120,6 +120,16 @@ export const getPosStatus = async (): Promise<PoSStatusType> =>
       };
     });
 
+export const cfx_getBlockByEpochNumber = async (
+  tag: string | number = 'latest_state',
+  transactionDetail: boolean = false,
+) =>
+  request('cfx_getBlockByEpochNumber', tag, transactionDetail).catch(e => {});
+
+export const pos_getBlockByNumber = async (
+  tag: string | number = 'latest_committed',
+) => request('pos_getBlockByNumber', tag).catch(e => {});
+
 type ConfirmationRiskByHashType = string | null;
 export const getConfirmationRiskByHash = async (
   hash: string,
