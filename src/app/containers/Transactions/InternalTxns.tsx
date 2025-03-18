@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { tokenColunms, transactionColunms } from 'utils/tableColumns';
+import { tokenColumns, transactionColumns } from 'utils/tableColumns';
 import { fetchWithPrefix } from 'utils/request';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
@@ -130,16 +130,16 @@ export const InternalTxns = ({ address, from, to }: Props) => {
 
   const columnsWidth = [3, 4, 4, 3, 3, 5];
   const columns = [
-    tokenColunms.traceType,
+    tokenColumns.traceType,
     {
-      ...tokenColunms.from,
+      ...tokenColumns.from,
       render: (value, row, index) =>
-        tokenColunms.from.render(value, row, undefined, false),
+        tokenColumns.from.render(value, row, undefined, false),
     },
-    tokenColunms.to,
-    transactionColunms.value,
-    tokenColunms.traceOutcome,
-    tokenColunms.traceResult,
+    tokenColumns.to,
+    transactionColumns.value,
+    tokenColumns.traceOutcome,
+    tokenColumns.traceResult,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const fromContent = (isFull = false) => (

@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import {
-  blockColunms,
-  tokenColunms,
-  transactionColunms,
+  blockColumns,
+  tokenColumns,
+  transactionColumns,
 } from 'utils/tableColumns';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
@@ -17,13 +17,13 @@ export function CFXTransfers() {
   const [ageFormat, toggleAgeFormat] = useAge();
 
   const columnsCFXTransferWidth = [4, 4, 8, 7, 4, 5];
-  const columnsCFXTrasfer = [
-    tokenColunms.txnHash,
-    blockColunms.epoch,
-    tokenColunms.from,
-    tokenColunms.to,
-    transactionColunms.value,
-    tokenColunms.age(ageFormat, toggleAgeFormat),
+  const columnsCFXTransfer = [
+    tokenColumns.txnHash,
+    blockColumns.epoch,
+    tokenColumns.from,
+    tokenColumns.to,
+    transactionColumns.value,
+    tokenColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsCFXTransferWidth[i] }));
 
   return (
@@ -41,7 +41,7 @@ export function CFXTransfers() {
 
       <TablePanelNew
         url={url}
-        columns={columnsCFXTrasfer}
+        columns={columnsCFXTransfer}
         rowKey={record =>
           `${record.transactionHash}-${record.transactionLogIndex}`
         }

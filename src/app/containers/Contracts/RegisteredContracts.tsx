@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
-import { contractColunms, accountColunms, utils } from 'utils/tableColumns';
+import { contractColumns, accountColumns, utils } from 'utils/tableColumns';
 import queryString from 'query-string';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 
@@ -20,14 +20,14 @@ export function RegisteredContracts() {
   const columnsWidth = [1, 3, 4, 2, 2];
   const columns = [
     utils.number,
-    contractColunms.name,
-    contractColunms.contract,
+    contractColumns.name,
+    contractColumns.contract,
     {
-      ...accountColunms.balance,
+      ...accountColumns.balance,
       sorter: true,
     },
     {
-      ...contractColunms.transactionCount,
+      ...contractColumns.transactionCount,
       sorter: true,
     },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));

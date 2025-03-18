@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  tokenColunms,
-  transactionColunms,
-  blockColunms,
+  tokenColumns,
+  transactionColumns,
+  blockColumns,
 } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
@@ -19,18 +19,18 @@ export const CFXTxns = ({ address }: Props) => {
 
   const columnsWidth = [4, 4, 8, 7, 2, 4, 5];
   const columns = [
-    tokenColunms.txnHash,
-    blockColunms.epoch,
+    tokenColumns.txnHash,
+    blockColumns.epoch,
     {
-      ...tokenColunms.from,
+      ...tokenColumns.from,
       render(text, record, index) {
-        return tokenColunms.from.render(text, record, index, false);
+        return tokenColumns.from.render(text, record, index, false);
       },
     },
-    tokenColunms.to,
-    tokenColunms.fromType,
-    transactionColunms.value,
-    tokenColunms.age(ageFormat, toggleAgeFormat),
+    tokenColumns.to,
+    tokenColumns.fromType,
+    transactionColumns.value,
+    tokenColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = ({ total, listLimit }) => (

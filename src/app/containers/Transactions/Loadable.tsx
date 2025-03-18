@@ -19,9 +19,9 @@ export const InternalTxns = lazyLoad(
   module => module.InternalTxns,
 );
 
-export const ExcutedTxns = lazyLoad(
-  () => import('./ExcutedTxns'),
-  module => module.ExcutedTxns,
+export const ExecutedTxns = lazyLoad(
+  () => import('./ExecutedTxns'),
+  module => module.ExecutedTxns,
 );
 
 export const CFXTxns = lazyLoad(
@@ -44,7 +44,7 @@ export const CRC1155Txns = lazyLoad(
   module => module.CRC1155Txns,
 );
 
-export const ExcutedAndPendingTxns = lazyLoad(
-  () => import('./ExcutedAndPendingTxns'),
-  module => module.ExcutedAndPendingTxns,
+export const ExecutedAndPendingTxns = lazyLoad(
+  () => import('./ExecutedAndPendingTxns'),
+  module => module.ExecutedAndPendingTxns,
 );
