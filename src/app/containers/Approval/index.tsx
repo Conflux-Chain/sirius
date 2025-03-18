@@ -11,7 +11,7 @@ import { isCurrentNetworkAddress, formatBalance } from 'utils';
 import { NotFound } from './NotFound';
 import { reqApprovals } from 'utils/httpRequest';
 import { isValidCfxAddress } from '@conflux-dev/conflux-address-js';
-import { transactionColunms, tokenColunms } from 'utils/tableColumns';
+import { transactionColumns, tokenColumns } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
@@ -301,12 +301,12 @@ export function Approval() {
     } else {
       const columns = [
         {
-          ...transactionColunms.hash,
+          ...transactionColumns.hash,
           dataIndex: 'hash',
           key: 'hash',
         },
         {
-          ...tokenColunms.token,
+          ...tokenColumns.token,
           dataIndex: 'tokenInfo',
           key: 'tokenInfo',
           render: (value, row) => {
@@ -323,7 +323,7 @@ export function Approval() {
 
             return (
               <div>
-                {tokenColunms.token.render(value)}
+                {tokenColumns.token.render(value)}
                 {formatBalance(row.balance, decimals)} {value.symbol}
               </div>
             );
@@ -382,7 +382,7 @@ export function Approval() {
           key: 'contract',
           width: 1,
           render: (_, row) => {
-            return transactionColunms.to.render(
+            return transactionColumns.to.render(
               row.spenderInfo?.contract?.address || row.spender,
               {
                 contractInfo: {
@@ -395,7 +395,7 @@ export function Approval() {
           },
         },
         {
-          ...transactionColunms.age(ageFormat, toggleAgeFormat),
+          ...transactionColumns.age(ageFormat, toggleAgeFormat),
           dataIndex: 'updatedAt',
           key: 'updatedAt',
         },

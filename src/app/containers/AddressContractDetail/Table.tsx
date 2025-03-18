@@ -5,7 +5,7 @@ import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { isCoreContractAddress, isZeroAddress } from 'utils';
 import { CFX_TOKEN_TYPES, HIDE_IN_DOT_NET } from 'utils/constants';
 import { ContractContent } from './ContractContent';
-import { ExcutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
+import { ExecutedAndPendingTxns } from 'app/containers/Transactions/Loadable';
 import { Contract } from '../Charts/pow/Loadable';
 
 import {
@@ -29,7 +29,7 @@ export const Table = memo(
         value: `transaction`,
         action: 'accountTransactions',
         label: t(translations.general.transactions),
-        content: <ExcutedAndPendingTxns address={address} />,
+        content: <ExecutedAndPendingTxns address={address} />,
       },
       {
         hidden: !addressInfo.cfxTransferTab,
