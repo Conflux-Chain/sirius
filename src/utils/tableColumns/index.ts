@@ -1,15 +1,15 @@
-import * as blockColunms from './block';
-import * as transactionColunms from './transaction';
-import * as tokenColunms from './token';
-import * as contractColunms from './contract';
-import * as accountColunms from './account';
+import * as blockColumns from './block';
+import * as transactionColumns from './transaction';
+import * as tokenColumns from './token';
+import * as contractColumns from './contract';
+import * as accountColumns from './account';
 import * as utils from './utils';
 
 export {
-  blockColunms,
-  transactionColunms,
-  tokenColunms,
-  contractColunms,
-  accountColunms,
+  blockColumns,
+  transactionColumns,
+  tokenColumns,
+  contractColumns,
+  accountColumns,
   utils,
 };

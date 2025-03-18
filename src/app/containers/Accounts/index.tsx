@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TipLabel } from 'app/components/TabsTablePanel/Loadable';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
-import { accountColunms, utils as tableColumnsUtils } from 'utils/tableColumns';
+import { accountColumns, utils as tableColumnsUtils } from 'utils/tableColumns';
 import styled from 'styled-components';
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useLocation, useHistory } from 'react-router';
@@ -63,9 +63,9 @@ export function Accounts() {
 
   let columnsWidth = [2, 9, 4, 3, 3];
   let columns = [
-    accountColunms.rank,
+    accountColumns.rank,
     {
-      ...accountColunms.address,
+      ...accountColumns.address,
       render: (value, row: any) => (
         <AccountWrapper>
           <CoreAddressContainer
@@ -86,13 +86,13 @@ export function Accounts() {
       ),
     },
     {
-      ...accountColunms.balance,
+      ...accountColumns.balance,
       title: <ContentWrapper right>{options[number].name}</ContentWrapper>,
       dataIndex: options[number].rowKey,
       key: options[number].rowKey,
     },
-    accountColunms.percentage,
-    accountColunms.count,
+    accountColumns.percentage,
+    accountColumns.count,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = t(translations.header.accounts);
@@ -117,7 +117,7 @@ export function Accounts() {
   };
 
   const tableTitle = (
-    <StyledTabelTitleWrapper>
+    <StyledTableTitleWrapper>
       <StyledSelectWrapper isEn={isEn}>
         <span className="selectLabel">
           {t(translations.accounts.sortButtonBefore)}
@@ -148,7 +148,7 @@ export function Accounts() {
           disableMatchWidth
           size="small"
           className="btnSelectContainer"
-          lable={t(translations.accounts.downloadButtonText)}
+          label={t(translations.accounts.downloadButtonText)}
         >
           {['100', '500', '1000', '3000', '5000'].map(
             (o: string, index: number) => {
@@ -161,7 +161,7 @@ export function Accounts() {
           )}
         </Select>
       </StyledSelectWrapper>
-    </StyledTabelTitleWrapper>
+    </StyledTableTitleWrapper>
   );
 
   return (
@@ -201,7 +201,7 @@ const StyledTableWrapper = styled.div`
   font-family: ${monospaceFont};
 `;
 
-const StyledTabelTitleWrapper = styled.div`
+const StyledTableTitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;

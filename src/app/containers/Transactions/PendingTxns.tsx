@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { tokenColunms, transactionColunms } from 'utils/tableColumns';
+import { tokenColumns, transactionColumns } from 'utils/tableColumns';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -77,16 +77,16 @@ export const PendingTxns = ({ address }: Props) => {
 
   const columnsWidth = [4, 6, 5, 3, 2, 3, 5];
   const columns = [
-    transactionColunms.hash,
-    tokenColunms.from,
-    tokenColunms.to,
-    transactionColunms.value,
-    transactionColunms.gasPrice,
+    transactionColumns.hash,
+    tokenColumns.from,
+    tokenColumns.to,
+    transactionColumns.value,
+    transactionColumns.gasPrice,
     {
-      ...transactionColunms.gasFee,
+      ...transactionColumns.gasFee,
       render: () => t(translations.transactions.pendingTxnGasFee),
     },
-    transactionColunms.pendingReason,
+    transactionColumns.pendingReason,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const { data, loading, total } = state;
