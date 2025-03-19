@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Form, Input, Button, Modal, InputNumber } from '@cfxjs/antd';
+import { Form, Input, Button, InputNumber } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -13,6 +13,7 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import ENV_CONFIG from 'env';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 
 export const TransferModal = ({
   id = '',
@@ -161,7 +162,9 @@ export const TransferModal = ({
         addRecord({
           hash,
           info: JSON.stringify({
-            code: isNFT721 ? TXN_ACTION.tranferNFT : TXN_ACTION.tranferNFT1155,
+            code: isNFT721
+              ? TXN_ACTION.transferNFT
+              : TXN_ACTION.transferNFT1155,
             description: '',
             hash,
             id: id,

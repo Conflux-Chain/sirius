@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from '@cfxjs/antd';
 import styled from 'styled-components';
 import { Loading } from '@cfxjs/sirius-next-common/dist/components/Loading';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { getEllipsStr } from '@cfxjs/sirius-next-common/dist/utils';
