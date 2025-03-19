@@ -99,6 +99,13 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .qrcode-modal {
+    .qrcode-modal-content {
+      width: fit-content;
+      margin: 0 auto;
+    }
+  }
+
   // override @cfxjs/antd styles
   .ant-tag > .sirius-next-tooltip + .anticon {
     margin-left: 7px;

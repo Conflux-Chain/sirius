@@ -105,7 +105,7 @@ export enum TXN_ACTION {
   writeContract = 103,
   readContract = 104,
   sponsorApplication = 105,
-  contractDeplpy = 106,
+  contractDeploy = 106,
   swapWCFXToCFX = 107,
   swapCFXToWCFX = 108,
   fccfxWithdrawProfit = 109,
@@ -113,8 +113,8 @@ export enum TXN_ACTION {
   fccfxSignToEarnAPY = 111,
   fccfxSignToSyncInterest = 112,
   fccfxWithdrawCFX = 113,
-  tranferNFT = 114,
-  tranferNFT1155 = 115,
+  transferNFT = 114,
+  transferNFT1155 = 115,
 }
 
 export const CURRENCY_SYMBOLS = {
