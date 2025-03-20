@@ -11,9 +11,8 @@ import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 import CheckInCircleFill from '@zeit-ui/react-icons/checkInCircleFill';
 import InfoFill from '@zeit-ui/react-icons/infoFill';
 import styled from 'styled-components';
-import { Collapse } from '@cfxjs/antd';
+import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
 import { CaretRightOutlined } from '@ant-design/icons';
-const { Panel } = Collapse;
 
 enum Status {
   success,
@@ -61,15 +60,19 @@ export function GlobalNotify() {
                     )}
                     className="site-collapse-custom-collapse"
                     ghost
-                  >
-                    <Panel
-                      header={t(translations.general.error.detail)}
-                      key="1"
-                      className="site-collapse-custom-panel"
-                    >
-                      <StyledDetailWrapper>{option.detail}</StyledDetailWrapper>
-                    </Panel>
-                  </Collapse>
+                    items={[
+                      {
+                        key: '1',
+                        header: t(translations.general.error.detail),
+                        className: 'site-collapse-custom-panel',
+                        children: (
+                          <StyledDetailWrapper>
+                            {option.detail}
+                          </StyledDetailWrapper>
+                        ),
+                      },
+                    ]}
+                  />
                 )}
               </div>
             );
