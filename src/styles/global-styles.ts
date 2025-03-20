@@ -544,22 +544,6 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  }
-
-  #cfx-ui-notification {
-    .ant-collapse-header, .ant-collapse-content-box {
-      padding: 2px 2px 0 0px !important;
-      color: #999;
-      display: flex;
-      align-items: center;
-    }
-
-    .ant-collapse-header {
-      margin-left: -2px;
-    }
-  }
-
-
   ul.highcharts-menu {
     padding: 0 !important;
 
