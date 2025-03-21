@@ -99,6 +99,13 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .qrcode-modal {
+    .qrcode-modal-content {
+      width: fit-content;
+      margin: 0 auto;
+    }
+  }
+
   // override @cfxjs/antd styles
   .ant-tag > .sirius-next-tooltip + .anticon {
     margin-left: 7px;
@@ -536,22 +543,6 @@ export const GlobalStyle = createGlobalStyle`
       display: flex;
     }
   }
-
-  }
-
-  #cfx-ui-notification {
-    .ant-collapse-header, .ant-collapse-content-box {
-      padding: 2px 2px 0 0px !important;
-      color: #999;
-      display: flex;
-      align-items: center;
-    }
-
-    .ant-collapse-header {
-      margin-left: -2px;
-    }
-  }
-
 
   ul.highcharts-menu {
     padding: 0 !important;

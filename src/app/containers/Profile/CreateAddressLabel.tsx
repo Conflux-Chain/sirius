@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Form, Modal, Input, message } from '@cfxjs/antd';
+import { Form, Input, message } from '@cfxjs/antd';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import {
   isBase32Address,
   isCurrentNetworkAddress,
@@ -47,18 +48,15 @@ export function CreateAddressLabel({
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const [list, setList] = useState<Type[]>(outerList || []);
-  const [loading, setLoading] = useState(false);
   const [globalData, setGlobalData] = useGlobalData();
 
   useEffect(() => {
     try {
       if (!outerList) {
-        setLoading(true);
         const l = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.addressLabel);
         if (l) {
           setList(JSON.parse(l));
         }
-        setLoading(false);
       } else {
         setList(outerList);
       }
@@ -72,7 +70,7 @@ export function CreateAddressLabel({
   }, [data]);
 
   const handleOk = () => {
-    form.validateFields().then(async function ({ address, label }) {
+    form.validateFields().then(function ({ address, label }) {
       try {
         let newList: Array<Type> = list;
         const timestamp = Math.floor(+new Date() / 1000);
@@ -113,8 +111,6 @@ export function CreateAddressLabel({
           ].concat(newList);
         }
 
-        setLoading(true);
-
         localStorage.setItem(
           LOCALSTORAGE_KEYS_MAP.addressLabel,
           JSON.stringify(newList),
@@ -130,7 +126,6 @@ export function CreateAddressLabel({
           }, {}),
         });
 
-        setLoading(false);
         onOk();
       } catch (e) {
         publishRequestError(e, 'code');
@@ -140,7 +135,6 @@ export function CreateAddressLabel({
 
   const handleCancel = () => {
     form.resetFields();
-    setLoading(false);
     onCancel();
   };
 
@@ -203,7 +197,6 @@ export function CreateAddressLabel({
       cancelText={t(translations.general.buttonCancel)}
       onOk={handleOk}
       onCancel={handleCancel}
-      confirmLoading={loading}
     >
       <Form form={form} name="basic" labelCol={{ span: 5 }} autoComplete="off">
         <Form.Item

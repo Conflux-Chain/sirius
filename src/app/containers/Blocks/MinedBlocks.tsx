@@ -1,5 +1,5 @@
 import React from 'react';
-import { blockColunms } from 'utils/tableColumns';
+import { blockColumns } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 // import { Title /*Footer*/ } from '../Transactions/components/index';
@@ -18,19 +18,19 @@ export const MinedBlocks = ({ address }: Props) => {
 
   const columnsWidth = [3, 2, 2, 5, 6, 3, 5, 3, 3, 5];
   const columns = [
-    blockColunms.epoch,
-    blockColunms.position,
-    blockColunms.txns,
-    blockColunms.hashWithPivot,
+    blockColumns.epoch,
+    blockColumns.position,
+    blockColumns.txns,
+    blockColumns.hashWithPivot,
     {
-      ...blockColunms.miner,
+      ...blockColumns.miner,
       render: value => <CoreAddressContainer link={false} value={value} />,
     },
-    blockColunms.avgGasPrice,
-    blockColunms.gasUsedPercentWithProgress,
-    blockColunms.gasLimit,
-    blockColunms.reward,
-    blockColunms.age(ageFormat, toggleAgeFormat),
+    blockColumns.avgGasPrice,
+    blockColumns.gasUsedPercentWithProgress,
+    blockColumns.gasLimit,
+    blockColumns.reward,
+    blockColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   const title = ({ total, listLimit }) => (

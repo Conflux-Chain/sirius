@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Space, Modal, Input } from '@cfxjs/antd';
+import { Space, Input } from '@cfxjs/antd';
+import { confirm } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { formatTimeStamp } from 'utils';
 import { ContentWrapper } from 'utils/tableColumns/utils';
@@ -14,7 +15,6 @@ import qs from 'query-string';
 import { CreateTxNote } from './CreateTxNote';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
-const { confirm, warning } = Modal;
 const { Search } = Input;
 
 type Type = {
@@ -95,12 +95,10 @@ export function TxNote() {
 
   const handleClickC = (e, hash = '') => {
     if (list.length > 1000) {
-      warning({
+      confirm({
         title: t(translations.general.warning),
-        content: t(translations.general.exceedTip),
-        icon: null,
-        okText: t(translations.general.buttonOk),
-        cancelText: t(translations.general.buttonCancel),
+        children: t(translations.general.exceedTip),
+        cancelText: false,
       });
 
       return;
@@ -127,10 +125,7 @@ export function TxNote() {
   const handleClickD = () => {
     confirm({
       title: t(translations.general.warning),
-      content: t(translations.general.deleteTip),
-      icon: null,
-      okText: t(translations.general.buttonOk),
-      cancelText: t(translations.general.buttonCancel),
+      children: t(translations.general.deleteTip),
       onOk() {
         const newList = list.filter(l => !selectedRowKeys.includes(l.h));
 
@@ -158,9 +153,6 @@ export function TxNote() {
 
         setList(newList);
         setLoading(false);
-      },
-      onCancel() {
-        console.log('Cancel');
       },
     });
   };

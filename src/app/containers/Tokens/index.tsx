@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
-import { tokenColunms, utils } from 'utils/tableColumns';
+import { tokenColumns, utils } from 'utils/tableColumns';
 import styled from 'styled-components';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
@@ -32,14 +32,14 @@ export function Tokens() {
         return utils.number.render(value, row, index, 3);
       },
     },
-    tokenColunms.token,
-    tokenColunms.contract(),
+    tokenColumns.token,
+    tokenColumns.contract(),
     {
-      ...tokenColunms.price,
+      ...tokenColumns.price,
       sorter: true,
     },
     {
-      ...tokenColunms.marketCap,
+      ...tokenColumns.marketCap,
       sorter: true,
       render(value, row, index) {
         const largeShrinkNumber = formatLargeNumber(value);
@@ -68,7 +68,7 @@ export function Tokens() {
       },
     },
     {
-      ...tokenColunms.transfer,
+      ...tokenColumns.transfer,
       sorter: true,
       render(value, row, index) {
         const largeShrinkNumber = formatLargeNumber(value);
@@ -95,11 +95,11 @@ export function Tokens() {
       },
     },
     {
-      ...tokenColunms.holders,
+      ...tokenColumns.holders,
       sorter: true,
     },
     {
-      ...tokenColunms.projectInfo,
+      ...tokenColumns.projectInfo,
       sorter: true,
     },
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
@@ -126,18 +126,18 @@ export function Tokens() {
     columnsWidth = [1, 7, 5, 3, 3, 4];
     columns = [
       utils.number,
-      tokenColunms.token,
-      tokenColunms.contract(),
+      tokenColumns.token,
+      tokenColumns.contract(),
       {
-        ...tokenColunms.transfer,
+        ...tokenColumns.transfer,
         sorter: true,
       },
       {
-        ...tokenColunms.holders,
+        ...tokenColumns.holders,
         sorter: true,
       },
       {
-        ...tokenColunms.projectInfo,
+        ...tokenColumns.projectInfo,
         sorter: true,
         defaultSortOrder: 'descend',
       },
@@ -158,18 +158,18 @@ export function Tokens() {
     columnsWidth = [1, 5, 4, 2, 2, 3];
     columns = [
       utils.number,
-      tokenColunms.token,
-      tokenColunms.contract(),
+      tokenColumns.token,
+      tokenColumns.contract(),
       {
-        ...tokenColunms.transfer,
+        ...tokenColumns.transfer,
         sorter: true,
       },
       {
-        ...tokenColunms.holders,
+        ...tokenColumns.holders,
         sorter: true,
       },
       {
-        ...tokenColunms.projectInfo,
+        ...tokenColumns.projectInfo,
         sorter: true,
         defaultSortOrder: 'descend',
       },

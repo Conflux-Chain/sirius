@@ -1,6 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { blockColunms } from 'utils/tableColumns';
+import { blockColumns } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 
 interface Props {
@@ -12,17 +12,17 @@ export const ReferenceBlocks = ({ url }: Props) => {
 
   const columnsWidth = [4, 2, 2, 4, 6, 3, 5, 3, 3, 3, 5];
   const columns = [
-    blockColunms.epoch,
-    blockColunms.position,
-    blockColunms.txns,
-    blockColunms.hashWithPivot,
-    blockColunms.miner,
-    blockColunms.difficulty,
-    blockColunms.gasUsedPercentWithProgress,
-    blockColunms.gasLimit,
-    blockColunms.burntFees,
-    blockColunms.reward,
-    blockColunms.age(ageFormat, toggleAgeFormat),
+    blockColumns.epoch,
+    blockColumns.position,
+    blockColumns.txns,
+    blockColumns.hashWithPivot,
+    blockColumns.miner,
+    blockColumns.difficulty,
+    blockColumns.gasUsedPercentWithProgress,
+    blockColumns.gasLimit,
+    blockColumns.burntFees,
+    blockColumns.reward,
+    blockColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (

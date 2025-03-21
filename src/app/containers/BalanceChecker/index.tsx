@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
-import { Button, Divider, Form, Input, Radio } from '@cfxjs/antd';
+import { Button, Divider, Form, Input } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
+import { Radio } from '@cfxjs/sirius-next-common/dist/components/Radio';
 import { DatePicker } from '@cfxjs/react-ui';
 import { translations } from 'locales/i18n';
 import {
@@ -22,10 +23,20 @@ export function BalanceChecker() {
   const { search } = useLocation();
   const { t, i18n } = useTranslation();
   const [form] = Form.useForm();
-  const [radioValue, setRadioValue] = useState(3);
+  const [radioValue, setRadioValue] = useState('3');
   const [toggle, setToggle] = useState(true);
   const [resultVisible, setResultVisible] = useState('none');
   const [formData, setFormData] = useState({});
+
+  const options = useMemo(
+    () => [
+      {
+        label: t(translations.balanceChecker.cfxBalance),
+        value: '3',
+      },
+    ],
+    [t],
+  );
 
   const addressInputPlaceholder = useMemo(() => {
     return getAddressInputPlaceholder();
@@ -207,11 +218,11 @@ export function BalanceChecker() {
   );
 
   let formComp = <></>;
-  if (radioValue === 1) {
+  if (radioValue === '1') {
     formComp = TokenBalanceForm;
-  } else if (radioValue === 2) {
+  } else if (radioValue === '2') {
     formComp = TokenSupplyForm;
-  } else if (radioValue === 3) {
+  } else if (radioValue === '3') {
     formComp = CFXForm;
   }
 
@@ -228,17 +239,11 @@ export function BalanceChecker() {
       <CardWrap>
         <Card className={`sirius-list-card`}>
           <RadioGroup>
-            <Radio.Group onChange={onChangeRadio} value={radioValue}>
-              {/*<Radio value={1}>*/}
-              {/*  {t(translations.balanceChecker.tokenQuantity)}*/}
-              {/*</Radio>*/}
-              {/*<Radio value={2}>*/}
-              {/*  {t(translations.balanceChecker.tokenSupply)}*/}
-              {/*</Radio>*/}
-              <Radio value={3}>
-                {t(translations.balanceChecker.cfxBalance)}
-              </Radio>
-            </Radio.Group>
+            <Radio
+              options={options}
+              value={radioValue}
+              onChange={onChangeRadio}
+            />
           </RadioGroup>
           <Divider />
           {formComp}

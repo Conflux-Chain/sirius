@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Form, Modal, Input, message } from '@cfxjs/antd';
+import { Form, Input, message } from '@cfxjs/antd';
 import { isHash, publishRequestError } from 'utils';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 
 type Type = {
   h: string;
@@ -41,18 +42,15 @@ export function CreateTxNote({
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const [list, setList] = useState<Type[]>(outerList || []);
-  const [loading, setLoading] = useState(false);
   const [globalData, setGlobalData] = useGlobalData();
 
   useEffect(() => {
     try {
       if (!outerList) {
-        setLoading(true);
         const l = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.txPrivateNote);
         if (l) {
           setList(JSON.parse(l));
         }
-        setLoading(false);
       } else {
         setList(outerList);
       }
@@ -66,7 +64,7 @@ export function CreateTxNote({
   }, [data]);
 
   const handleOk = () => {
-    form.validateFields().then(async function ({ hash, note }) {
+    form.validateFields().then(function ({ hash, note }) {
       try {
         let newList: Array<Type> = list;
         const timestamp = Math.floor(+new Date() / 1000);
@@ -99,8 +97,6 @@ export function CreateTxNote({
           ].concat(newList);
         }
 
-        setLoading(true);
-
         localStorage.setItem(
           LOCALSTORAGE_KEYS_MAP.txPrivateNote,
           JSON.stringify(newList),
@@ -120,7 +116,6 @@ export function CreateTxNote({
         };
 
         setGlobalData(d);
-        setLoading(false);
         onOk();
       } catch (e) {
         publishRequestError(e, 'code');
@@ -130,7 +125,6 @@ export function CreateTxNote({
 
   const handleCancel = () => {
     form.resetFields();
-    setLoading(false);
     onCancel();
   };
 
@@ -179,7 +173,6 @@ export function CreateTxNote({
       cancelText={t(translations.general.buttonCancel)}
       onOk={handleOk}
       onCancel={handleCancel}
-      confirmLoading={loading}
     >
       <Form form={form} name="basic" labelCol={{ span: 4 }} autoComplete="off">
         <Form.Item

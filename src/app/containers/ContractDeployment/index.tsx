@@ -37,7 +37,7 @@ export function ContractDeployment() {
           contractAddress=""
           data={txData}
           btnDisabled={!contractInfo.bytecode}
-          txnAction={TXN_ACTION.contractDeplpy}
+          txnAction={TXN_ACTION.contractDeploy}
         ></DappButton>
       </StyledButtonWrapper>
       <StyledRemarkWrapper>

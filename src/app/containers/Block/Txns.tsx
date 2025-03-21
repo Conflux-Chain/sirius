@@ -1,10 +1,10 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { transactionColunms } from 'utils/tableColumns';
+import { transactionColumns } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import lodash from 'lodash';
 
-const TxnHashRenderComponent = transactionColunms.TxnHashRenderComponent;
+const TxnHashRenderComponent = transactionColumns.TxnHashRenderComponent;
 
 interface Props {
   url: string;
@@ -16,7 +16,7 @@ export const Txns = ({ url }: Props) => {
   const columnsWidth = [4, 6, 6, 4, 3, 4, 5];
   const columns = [
     {
-      ...transactionColunms.hash,
+      ...transactionColumns.hash,
       render: (_, row) => {
         return (
           <TxnHashRenderComponent
@@ -28,12 +28,12 @@ export const Txns = ({ url }: Props) => {
         );
       },
     },
-    transactionColunms.from,
-    transactionColunms.to,
-    transactionColunms.value,
-    transactionColunms.gasFee,
-    transactionColunms.gasPrice,
-    transactionColunms.age(ageFormat, toggleAgeFormat),
+    transactionColumns.from,
+    transactionColumns.to,
+    transactionColumns.value,
+    transactionColumns.gasFee,
+    transactionColumns.gasPrice,
+    transactionColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
-import { blockColunms } from '../../../utils/tableColumns';
+import { blockColumns } from '../../../utils/tableColumns';
 import { Dag } from './Loadable';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
@@ -17,17 +17,17 @@ export function Blocks() {
 
   const columnsBlocksWidth = [4, 2, 2, 5, 5, 4, 8, 3, 3, 3, 5];
   const columnsBlocks = [
-    blockColunms.epoch,
-    blockColunms.position,
-    blockColunms.txns,
-    blockColunms.hashWithPivot,
-    blockColunms.miner,
-    blockColunms.avgGasPrice,
-    blockColunms.gasUsedPercentWithProgress,
-    blockColunms.gasLimit,
-    blockColunms.burntFees,
-    blockColunms.reward,
-    blockColunms.age(ageFormat, toggleAgeFormat),
+    blockColumns.epoch,
+    blockColumns.position,
+    blockColumns.txns,
+    blockColumns.hashWithPivot,
+    blockColumns.miner,
+    blockColumns.avgGasPrice,
+    blockColumns.gasUsedPercentWithProgress,
+    blockColumns.gasLimit,
+    blockColumns.burntFees,
+    blockColumns.reward,
+    blockColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({
     ...item,
     width: columnsBlocksWidth[i],

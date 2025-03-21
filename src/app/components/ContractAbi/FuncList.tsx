@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Collapse } from '@cfxjs/antd';
+import React, { useMemo, useState } from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from 'locales/i18n';
+import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
 
 interface FuncListProps {
   type?: string;
@@ -14,14 +14,35 @@ interface FuncListProps {
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncListProps>;
 export declare type Props = FuncListProps & NativeAttrs;
-const { Panel } = Collapse;
 const FuncList = ({ type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState([]);
-  const allKeys: string[] = [];
-  data?.forEach(function (value, index) {
-    allKeys.push(`${type}-${index}-${value['name']}`);
-  });
+  const allKeys = useMemo(() => {
+    return (
+      data?.map(function (value, index) {
+        return `${type}-${index}-${value['name']}`;
+      }) ?? []
+    );
+  }, [data, type]);
+  const items: React.ComponentProps<typeof Collapse>['items'] = useMemo(() => {
+    return (
+      data?.map((item, index) => ({
+        key: `${type}-${index}-${item['name']}`,
+        header: `${index + 1}. ${item['name']}`,
+        className: 'panelContainer',
+        children: (
+          <Func
+            data={item}
+            type={type}
+            contractAddress={contractAddress}
+            contract={contract}
+            key={`${type}-${index}-func-${item['name'] || index}`}
+            id={`${type}-${index}-func-${item['name'] || index}`}
+          />
+        ),
+      })) ?? []
+    );
+  }, [data, type, contractAddress, contract]);
   const clickHandler = () => {
     if (activeKey.length === 0) {
       setActiveKey(allKeys as any);
@@ -58,25 +79,8 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
           expandIcon={({ isActive }) => (
             <DownOutlined rotate={isActive ? 180 : 0} />
           )}
-        >
-          {data &&
-            data.map((item, index) => (
-              <Panel
-                header={`${index + 1}. ${item['name']}`}
-                key={`${type}-${index}-${item['name']}`}
-                className="panelContainer"
-              >
-                <Func
-                  data={item}
-                  type={type}
-                  contractAddress={contractAddress}
-                  contract={contract}
-                  key={`${type}-${index}-func-${item['name'] || index}`}
-                  id={`${type}-${index}-func-${item['name'] || index}`}
-                />
-              </Panel>
-            ))}
-        </Collapse>
+          items={items}
+        />
       </Container>
     </>
   );
@@ -98,19 +102,19 @@ const Container = styled.div`
     background-color: transparent;
     border: none;
     .panelContainer {
-      .ant-collapse-header {
+      .collapse-header {
         color: #002257;
         font-size: 14px;
         line-height: 22px;
         padding-left: 12px;
         background-color: #f9fafb;
       }
-      .ant-collapse-content-box {
+      .collapse-content-box {
         padding: 0;
       }
     }
     .panelContainer:nth-child(2n) {
-      .ant-collapse-header {
+      .collapse-header {
         background-color: #fff;
       }
     }

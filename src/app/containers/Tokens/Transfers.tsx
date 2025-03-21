@@ -1,6 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { tokenColunms } from 'utils/tableColumns';
+import { tokenColumns } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { DownloadCSV } from '@cfxjs/sirius-next-common/dist/components/DownloadCSV';
@@ -29,40 +29,40 @@ export const Transfers = ({ type, address, decimals }: Props) => {
 
   let columnsWidth = [3, 6, 6, 4, 4];
   let columns = [
-    tokenColunms.txnHash,
-    tokenColunms.from,
-    tokenColunms.to,
+    tokenColumns.txnHash,
+    tokenColumns.from,
+    tokenColumns.to,
     {
-      ...tokenColunms.quantity,
+      ...tokenColumns.quantity,
       render: (value, row, index) =>
-        tokenColunms.quantity.render(value, row, index, {
+        tokenColumns.quantity.render(value, row, index, {
           decimals,
         }),
     },
-    tokenColunms.age(ageFormat, toggleAgeFormat),
+    tokenColumns.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   if (type === CFX_TOKEN_TYPES.erc721) {
     columnsWidth = [4, 6, 6, 4, 4, 3];
     columns = [
-      tokenColunms.txnHash,
-      tokenColunms.from,
-      tokenColunms.to,
-      tokenColunms.tokenId(),
-      tokenColunms.age(ageFormat, toggleAgeFormat),
-      tokenColunms.details,
+      tokenColumns.txnHash,
+      tokenColumns.from,
+      tokenColumns.to,
+      tokenColumns.tokenId(),
+      tokenColumns.age(ageFormat, toggleAgeFormat),
+      tokenColumns.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
   if (type === CFX_TOKEN_TYPES.erc1155) {
     columnsWidth = [3, 7, 7, 3, 4, 4, 3];
     columns = [
-      tokenColunms.txnHash,
-      tokenColunms.from,
-      tokenColunms.to,
-      tokenColunms.quantity,
-      tokenColunms.tokenId(address),
-      tokenColunms.age(ageFormat, toggleAgeFormat),
-      tokenColunms.details,
+      tokenColumns.txnHash,
+      tokenColumns.from,
+      tokenColumns.to,
+      tokenColumns.quantity,
+      tokenColumns.tokenId(address),
+      tokenColumns.age(ageFormat, toggleAgeFormat),
+      tokenColumns.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
   }
 

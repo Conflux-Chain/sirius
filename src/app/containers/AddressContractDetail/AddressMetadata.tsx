@@ -4,7 +4,7 @@ import { List } from '@cfxjs/sirius-next-common/dist/components/List';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { Modal } from '@cfxjs/react-ui';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import {
   getTimeByBlockInterval,
@@ -49,7 +49,7 @@ export function AddressMetadata({ address, accountInfo }) {
   const [posAccountInfo, setPosAccountInfo] = useState<any>(null);
   const [posLoading, setPosLoading] = useState(false);
   const [checkPosLoading, setCheckPosLoading] = useState(false);
-  const [isPoSActived, setIsPoSActived] = useState(false);
+  const [isPoSActive, setIsPoSActive] = useState(false);
 
   const governanceContract = useMemo(() => {
     return CFX.Contract({
@@ -65,7 +65,7 @@ export function AddressMetadata({ address, accountInfo }) {
         setCheckPosLoading(false);
 
         if (data.latestVoted && parseInt(data.latestVoted) > 0) {
-          setIsPoSActived(true);
+          setIsPoSActive(true);
           setPosLoading(true);
           getPosAccountInfo(address, 'pow')
             .then(data => data && setPosAccountInfo(data))
@@ -137,7 +137,7 @@ export function AddressMetadata({ address, accountInfo }) {
               >
                 <CenterLine>
                   <Content>
-                    {isPoSActived && posAccountInfo?.address ? (
+                    {isPoSActive && posAccountInfo?.address ? (
                       <CoreAddressContainer
                         value={posAccountInfo?.address}
                         isPosAddress={true}
@@ -159,7 +159,7 @@ export function AddressMetadata({ address, accountInfo }) {
               >
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
+                    {!isPoSActive ||
                     lodash.isNil(posAccountInfo?.status?.unlocked)
                       ? '--'
                       : toThousands(posAccountInfo?.status?.unlocked)}
@@ -177,7 +177,7 @@ export function AddressMetadata({ address, accountInfo }) {
               >
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
+                    {!isPoSActive ||
                     lodash.isNil(posAccountInfo?.status?.availableVotes)
                       ? '--'
                       : toThousands(posAccountInfo?.status?.availableVotes)}
@@ -195,7 +195,7 @@ export function AddressMetadata({ address, accountInfo }) {
               >
                 <CenterLine>
                   <Content>
-                    {!isPoSActived ||
+                    {!isPoSActive ||
                     lodash.isNil(posAccountInfo?.status?.locked)
                       ? '--'
                       : toThousands(posAccountInfo?.status?.locked)}
@@ -375,80 +375,76 @@ export function AddressMetadata({ address, accountInfo }) {
 
         <Modal
           closable
-          open={modalShown}
-          onClose={() => {
+          visible={modalShown}
+          onCancel={() => {
             setModalShown(false);
           }}
-          width="600"
+          footer={null}
         >
-          <Modal.Content>
-            <ModalWrapper>
-              <h2>{t(translations.addressDetail.lockedDetailTitle)}</h2>
-              <div className="table-wrapper">
-                <table>
-                  <thead>
+          <ModalWrapper>
+            <h2>{t(translations.addressDetail.lockedDetailTitle)}</h2>
+            <div className="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{t(translations.addressDetail.lockedDetailLocked)}</th>
+                    <th>
+                      {t(
+                        translations.addressDetail
+                          .lockedDetailUnlockBlockNumber,
+                      )}
+                    </th>
+                    <th>
+                      {t(translations.addressDetail.lockedDetailUnlockTime)}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {voteList && voteList.length > 0 ? (
+                    voteList.map((v, i) => {
+                      const { days } = getTimeByBlockInterval(
+                        v.unlockBlockNumber,
+                        currentBlockNumber,
+                      );
+                      return (
+                        <tr key={i}>
+                          <td>
+                            <Text
+                              hoverValue={fromDripToCfx(v.amount || 0, true)}
+                            >
+                              {fromDripToCfx(v.amount || 0)}
+                            </Text>
+                          </td>
+                          <td>
+                            <Link
+                              href={`/block-countdown/${v.unlockBlockNumber}`}
+                            >
+                              {v.unlockBlockNumber}
+                            </Link>
+                          </td>
+                          <td>
+                            {days < 0
+                              ? t(translations.addressDetail.unlockedTime, {
+                                  days: -days,
+                                })
+                              : t(translations.addressDetail.unlockTime, {
+                                  days,
+                                })}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
                     <tr>
-                      <th>
-                        {t(translations.addressDetail.lockedDetailLocked)}
-                      </th>
-                      <th>
-                        {t(
-                          translations.addressDetail
-                            .lockedDetailUnlockBlockNumber,
-                        )}
-                      </th>
-                      <th>
-                        {t(translations.addressDetail.lockedDetailUnlockTime)}
-                      </th>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {voteList && voteList.length > 0 ? (
-                      voteList.map((v, i) => {
-                        const { days } = getTimeByBlockInterval(
-                          v.unlockBlockNumber,
-                          currentBlockNumber,
-                        );
-                        return (
-                          <tr key={i}>
-                            <td>
-                              <Text
-                                hoverValue={fromDripToCfx(v.amount || 0, true)}
-                              >
-                                {fromDripToCfx(v.amount || 0)}
-                              </Text>
-                            </td>
-                            <td>
-                              <Link
-                                href={`/block-countdown/${v.unlockBlockNumber}`}
-                              >
-                                {v.unlockBlockNumber}
-                              </Link>
-                            </td>
-                            <td>
-                              {days < 0
-                                ? t(translations.addressDetail.unlockedTime, {
-                                    days: -days,
-                                  })
-                                : t(translations.addressDetail.unlockTime, {
-                                    days,
-                                  })}
-                            </td>
-                          </tr>
-                        );
-                      })
-                    ) : (
-                      <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </ModalWrapper>
-          </Modal.Content>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </ModalWrapper>
         </Modal>
       </>
     );

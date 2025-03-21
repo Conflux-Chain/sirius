@@ -19,9 +19,7 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { StyledTitle200F1327 } from 'app/components/StyledComponent';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { Modal } from '@cfxjs/antd';
-
-const { confirm } = Modal;
+import { confirm } from '@cfxjs/sirius-next-common/dist/components/Modal';
 
 export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -96,17 +94,13 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     }
   };
 
-  const handleWithdrawButtonClick = async () => {
+  const handleWithdrawButtonClick = () => {
     confirm({
-      icon: null,
-      content: t(translations.fccfx.tip.beforeWithdrawInModal),
+      children: t(translations.fccfx.tip.beforeWithdrawInModal),
       okText: t(translations.fccfx.buttonOk),
       cancelText: t(translations.fccfx.buttonCancel),
       closable: true,
-      onOk() {
-        withdrawHandler();
-      },
-      onCancel() {},
+      onOk: withdrawHandler,
     });
   };
 

@@ -19,10 +19,8 @@ import { StyledTitle200F1327 } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { Modal } from '@cfxjs/antd';
+import { confirm } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import ENV_CONFIG from 'env';
-
-const { confirm } = Modal;
 
 export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -37,7 +35,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     errorMessage: '',
   });
 
-  const unsingedFC = formatBalance(
+  const unsignedFC = formatBalance(
     info.fcUnsigned,
     18,
     false,
@@ -102,17 +100,13 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     setStakedFC(value);
   };
 
-  const handleStakeButtonClick = async () => {
+  const handleStakeButtonClick = () => {
     confirm({
-      icon: null,
-      content: t(translations.fccfx.tip.beforeExchangeInModal),
+      children: t(translations.fccfx.tip.beforeExchangeInModal),
       okText: t(translations.fccfx.buttonOk),
       cancelText: t(translations.fccfx.buttonCancel),
       closable: true,
-      onOk() {
-        exchangeHandler();
-      },
-      onCancel() {},
+      onOk: exchangeHandler,
     });
   };
 
@@ -143,7 +137,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
           code: code,
           description: '',
           hash,
-          value: unsingedFC,
+          value: unsignedFC,
         }),
       });
 
@@ -215,7 +209,7 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
 
       <CardTip
         tip={t(translations.fccfx.tip.unsignedFC, {
-          value: unsingedFC,
+          value: unsignedFC,
         })}
         show={info.fcUnsigned.gt(0)}
       />

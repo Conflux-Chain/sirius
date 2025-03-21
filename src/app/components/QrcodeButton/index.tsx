@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode.react';
-import { Modal } from '@cfxjs/react-ui';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -66,28 +66,28 @@ export const QrcodeButton = ({
         </div>
       </Tooltip>
       <Modal
-        wrapClassName="qrcode-modal"
+        containerClassName="qrcode-modal"
+        contentClassName="qrcode-modal-content"
         width="22rem"
-        open={visible}
-        onClose={handleClose}
+        visible={visible}
+        onCancel={handleClose}
         closable
+        title={title}
+        footer={null}
       >
-        <Modal.Title>{title}</Modal.Title>
-        <Modal.Content>
-          <QRCodeWrapper>
-            <QRCode size={108} value={value} level={'H'} />
-          </QRCodeWrapper>
-          <Title>{t(translations.general.qrcodeButton.scanQRCode)}</Title>
-          <AddressType>
-            {isAccountAddress(value)
-              ? t(translations.general.qrcodeButton.address)
-              : t(translations.general.qrcodeButton.contract)}
-            ：
-          </AddressType>
-          <AddressWrapper onClick={handleClose}>
-            <CoreAddressContainer value={value} showIcon={false} link={false} />
-          </AddressWrapper>
-        </Modal.Content>
+        <QRCodeWrapper>
+          <QRCode size={108} value={value} level={'H'} />
+        </QRCodeWrapper>
+        <Title>{t(translations.general.qrcodeButton.scanQRCode)}</Title>
+        <AddressType>
+          {isAccountAddress(value)
+            ? t(translations.general.qrcodeButton.address)
+            : t(translations.general.qrcodeButton.contract)}
+          ：
+        </AddressType>
+        <AddressWrapper onClick={handleClose}>
+          <CoreAddressContainer value={value} showIcon={false} link={false} />
+        </AddressWrapper>
       </Modal>
     </>
   );

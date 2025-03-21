@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Space, Modal, Input } from '@cfxjs/antd';
+import { Space, Input } from '@cfxjs/antd';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
+import { confirm } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { formatTimeStamp } from 'utils';
 import { ContentWrapper } from 'utils/tableColumns/utils';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
@@ -14,7 +15,6 @@ import qs from 'query-string';
 import { CreateAddressLabel } from './CreateAddressLabel';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
-const { confirm, warning } = Modal;
 const { Search } = Input;
 
 type Type = {
@@ -31,7 +31,6 @@ export function AddressLabel() {
   const [visible, setVisible] = useState(false);
   const [stage, setStage] = useState('create');
   const [list, setList] = useState<Type[]>([]);
-  const [loading, setLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [globalData, setGlobalData] = useGlobalData();
   const [search, setSearch] = useState(() => {
@@ -44,12 +43,10 @@ export function AddressLabel() {
 
   useEffect(() => {
     try {
-      setLoading(true);
       const l = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.addressLabel);
       if (l) {
         setList(JSON.parse(l));
       }
-      setLoading(false);
     } catch (e) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,12 +92,10 @@ export function AddressLabel() {
 
   const handleClickC = (e, address = '') => {
     if (list.length > 1000) {
-      warning({
+      confirm({
         title: t(translations.general.warning),
-        content: t(translations.general.exceedTip),
-        icon: null,
-        okText: t(translations.general.buttonOk),
-        cancelText: t(translations.general.buttonCancel),
+        children: t(translations.general.exceedTip),
+        cancelText: false,
       });
 
       return;
@@ -127,14 +122,9 @@ export function AddressLabel() {
   const handleClickD = () => {
     confirm({
       title: t(translations.general.warning),
-      content: t(translations.general.deleteTip),
-      icon: null,
-      okText: t(translations.general.buttonOk),
-      cancelText: t(translations.general.buttonCancel),
+      children: t(translations.general.deleteTip),
       onOk() {
         const newList = list.filter(l => !selectedRowKeys.includes(l.a));
-
-        setLoading(true);
 
         localStorage.setItem(
           LOCALSTORAGE_KEYS_MAP.addressLabel,
@@ -154,10 +144,6 @@ export function AddressLabel() {
         handleSearch('');
 
         setList(newList);
-        setLoading(false);
-      },
-      onCancel() {
-        console.log('Cancel');
       },
     });
   };
@@ -242,7 +228,6 @@ export function AddressLabel() {
           l => l.a.includes(queryKey) || l.l.includes(queryKey),
         )}
         columns={columns}
-        loading={loading}
         rowKey="a"
         key={Math.random()}
         scroll={{ x: 800 }}

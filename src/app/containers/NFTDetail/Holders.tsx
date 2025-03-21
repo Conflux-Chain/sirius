@@ -1,6 +1,6 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
-import { tokenColunms, utils } from 'utils/tableColumns';
+import { tokenColumns, utils } from 'utils/tableColumns';
 
 interface Props {
   address: string;
@@ -15,8 +15,8 @@ export const Holders = ({ address, type, id, loading }: Props) => {
   let columnsWidth = [2, 10, 10];
   let columns = [
     utils.number,
-    tokenColunms.NFTOwner,
-    tokenColunms.NFTQuantity,
+    tokenColumns.NFTOwner,
+    tokenColumns.NFTQuantity,
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
   return (

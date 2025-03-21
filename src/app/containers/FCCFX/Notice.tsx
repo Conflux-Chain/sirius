@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Modal } from '@cfxjs/antd';
+import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -15,9 +15,7 @@ export function Notice({ show = false, onClose = () => {} }) {
       onOk={onClose}
       onCancel={onClose}
       okText={t(translations.fccfx.notice.confirm)}
-      cancelButtonProps={{
-        hidden: true,
-      }}
+      cancelText={false}
       width="750px"
     >
       <StyledRemarkWrapper>

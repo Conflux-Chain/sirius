@@ -8,7 +8,8 @@ import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
-import { Row, Col, Collapse, message, Typography } from '@cfxjs/antd';
+import { Row, Col, message, Typography } from '@cfxjs/antd';
+import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
@@ -42,18 +43,6 @@ const AceEditorStyle = {
   opacity: 0.62,
   margin: '0.3571rem 0',
 };
-
-interface Props {
-  type: string;
-  address: string;
-  decimals: number;
-}
-
-interface Query {
-  accountAddress?: string;
-  transactionHash?: string;
-  tokenId?: string;
-}
 
 interface StringAttributes {
   trait_type: string;
@@ -162,7 +151,7 @@ const StyledDatePanelWrapper = styled.div`
   }
 `;
 
-export function NFTDetail(props) {
+export function NFTDetail() {
   const { isDapp } = usePlatform();
   const bp = useBreakpoint();
   const { t, i18n } = useTranslation();
@@ -229,7 +218,7 @@ export function NFTDetail(props) {
   const { description = '', attributes = [] } = data.detail?.metadata || {};
 
   const {
-    description: descrptionStr,
+    description: descriptionStr,
     dateTypeAttributes,
     stringTypeAttributes,
   } = useMemo(() => {
@@ -299,173 +288,173 @@ export function NFTDetail(props) {
             >
               {t(translations.general.refresh)}
             </Button>
-            <Collapse defaultActiveKey={['details', 'trait']} ghost>
-              <Collapse.Panel
-                header={t(translations.nftDetail.details)}
-                key="details"
-              >
-                <Description title={t(translations.nftDetail.id)}>
-                  <SkeletonContainer shown={loading}>
-                    {id ? id : '--'}
-                  </SkeletonContainer>
-                </Description>
-                <Description title={t(translations.nftDetail.name)}>
-                  <SkeletonContainer shown={loading}>
-                    {name ? name : '--'}
-                  </SkeletonContainer>
-                </Description>
-                <Description title={t(translations.nftDetail.url)}>
-                  <SkeletonContainer shown={loading}>
-                    {imgURL ? (
-                      <div className="image-uri-container">
-                        <Tooltip title={imgURL} className="image-uri-tooltip">
-                          <Link href={imgURL} className="image-uri">
-                            {imgURL}
-                          </Link>
-                        </Tooltip>
-                        <CopyButton copyText={imgURL} />
-                      </div>
-                    ) : (
-                      '--'
-                    )}
-                  </SkeletonContainer>
-                </Description>
-                {tokenType?.includes('721') && (
-                  <Description title={t(translations.nftDetail.owner)}>
-                    <SkeletonContainer shown={loading}>
-                      {data.owner ? (
-                        <>
-                          <CoreAddressContainer
-                            value={data.owner}
-                            isFull={true}
-                          ></CoreAddressContainer>{' '}
-                          <CopyButton copyText={data.owner} />
-                        </>
-                      ) : (
-                        '--'
+            <Collapse
+              defaultActiveKey={['details', 'trait']}
+              ghost
+              items={[
+                {
+                  key: 'details',
+                  header: t(translations.nftDetail.details),
+                  children: (
+                    <>
+                      <Description title={t(translations.nftDetail.id)}>
+                        <SkeletonContainer shown={loading}>
+                          {id ? id : '--'}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description title={t(translations.nftDetail.name)}>
+                        <SkeletonContainer shown={loading}>
+                          {name ? name : '--'}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description title={t(translations.nftDetail.url)}>
+                        <SkeletonContainer shown={loading}>
+                          {imgURL ? (
+                            <div className="image-uri-container">
+                              <Tooltip
+                                title={imgURL}
+                                className="image-uri-tooltip"
+                              >
+                                <Link href={imgURL} className="image-uri">
+                                  {imgURL}
+                                </Link>
+                              </Tooltip>
+                              <CopyButton copyText={imgURL} />
+                            </div>
+                          ) : (
+                            '--'
+                          )}
+                        </SkeletonContainer>
+                      </Description>
+                      {tokenType?.includes('721') && (
+                        <Description title={t(translations.nftDetail.owner)}>
+                          <SkeletonContainer shown={loading}>
+                            {data.owner ? (
+                              <>
+                                <CoreAddressContainer
+                                  value={data.owner}
+                                  isFull={true}
+                                ></CoreAddressContainer>{' '}
+                                <CopyButton copyText={data.owner} />
+                              </>
+                            ) : (
+                              '--'
+                            )}
+                          </SkeletonContainer>
+                        </Description>
                       )}
-                    </SkeletonContainer>
-                  </Description>
-                )}
-                <Description title={t(translations.nftDetail.type)}>
-                  <SkeletonContainer shown={loading}>
-                    {tokenType ? tokenType : '--'}
-                  </SkeletonContainer>
-                </Description>
-                <Description title={t(translations.nftDetail.address)}>
-                  <SkeletonContainer shown={loading}>
-                    {address ? (
-                      <>
-                        <Link href={`/token/${address}?tab=NFT`}>
-                          <span
-                            style={{
-                              pointerEvents: 'none',
-                            }}
+                      <Description title={t(translations.nftDetail.type)}>
+                        <SkeletonContainer shown={loading}>
+                          {tokenType ? tokenType : '--'}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description title={t(translations.nftDetail.address)}>
+                        <SkeletonContainer shown={loading}>
+                          {address ? (
+                            <>
+                              <Link href={`/token/${address}?tab=NFT`}>
+                                <span
+                                  style={{
+                                    pointerEvents: 'none',
+                                  }}
+                                >
+                                  <CoreAddressContainer
+                                    value={address}
+                                    isFull={true}
+                                  ></CoreAddressContainer>
+                                </span>
+                              </Link>{' '}
+                              <CopyButton copyText={address} />
+                            </>
+                          ) : (
+                            '--'
+                          )}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description
+                        title={
+                          <InfoIconWithTooltip
+                            info={t(translations.nftDetail.contractInfoTip)}
                           >
-                            <CoreAddressContainer
-                              value={address}
-                              isFull={true}
-                            ></CoreAddressContainer>
-                          </span>
-                        </Link>{' '}
-                        <CopyButton copyText={address} />
-                      </>
-                    ) : (
-                      '--'
-                    )}
-                  </SkeletonContainer>
-                </Description>
-                <Description
-                  title={
-                    <InfoIconWithTooltip
-                      info={t(translations.nftDetail.contractInfoTip)}
-                    >
-                      {t(translations.nftDetail.contractInfo)}
-                    </InfoIconWithTooltip>
-                  }
-                >
-                  <SkeletonContainer shown={loading}>
-                    {`${tokenInfo.name ? tokenInfo.name : '--'} (${
-                      tokenInfo.symbol ? tokenInfo.symbol : '--'
-                    })`}
-                  </SkeletonContainer>
-                </Description>
-                <Description title={t(translations.nftDetail.creator)}>
-                  <SkeletonContainer shown={loading}>
-                    {data.creator ? (
-                      <>
-                        <CoreAddressContainer
-                          value={data.creator}
-                          isFull={true}
-                        ></CoreAddressContainer>{' '}
-                        <CopyButton copyText={data.creator} />
-                      </>
-                    ) : (
-                      '--'
-                    )}
-                  </SkeletonContainer>
-                </Description>
-                <Description
-                  title={t(translations.nftDetail.mintedTime)}
-                  noBorder
-                >
-                  <SkeletonContainer shown={loading}>
-                    {data.mintTime
-                      ? formatTimeStamp(data.mintTime, 'timezone')
-                      : '--'}
-                  </SkeletonContainer>
-                </Description>
-              </Collapse.Panel>
-              {!!stringTypeAttributes.length && (
-                <Collapse.Panel
-                  header={t(translations.nftDetail.trait, {
+                            {t(translations.nftDetail.contractInfo)}
+                          </InfoIconWithTooltip>
+                        }
+                      >
+                        <SkeletonContainer shown={loading}>
+                          {`${tokenInfo.name ? tokenInfo.name : '--'} (${
+                            tokenInfo.symbol ? tokenInfo.symbol : '--'
+                          })`}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description title={t(translations.nftDetail.creator)}>
+                        <SkeletonContainer shown={loading}>
+                          {data.creator ? (
+                            <>
+                              <CoreAddressContainer
+                                value={data.creator}
+                                isFull={true}
+                              ></CoreAddressContainer>{' '}
+                              <CopyButton copyText={data.creator} />
+                            </>
+                          ) : (
+                            '--'
+                          )}
+                        </SkeletonContainer>
+                      </Description>
+                      <Description
+                        title={t(translations.nftDetail.mintedTime)}
+                        noBorder
+                      >
+                        <SkeletonContainer shown={loading}>
+                          {data.mintTime
+                            ? formatTimeStamp(data.mintTime, 'timezone')
+                            : '--'}
+                        </SkeletonContainer>
+                      </Description>
+                    </>
+                  ),
+                },
+                !!stringTypeAttributes.length && {
+                  key: 'trait',
+                  header: t(translations.nftDetail.trait, {
                     amount: stringTypeAttributes.length,
-                  })}
-                  key="trait"
-                >
-                  <TraitPanel data={stringTypeAttributes} />
-                </Collapse.Panel>
-              )}
-              {!!dateTypeAttributes.length && (
-                <Collapse.Panel
-                  header={t(translations.nftDetail.datetime)}
-                  key="date"
-                >
-                  <DatePanel data={dateTypeAttributes} />
-                </Collapse.Panel>
-              )}
-              {!!descrptionStr && (
-                <Collapse.Panel
-                  header={t(translations.nftDetail.description)}
-                  key="description"
-                >
-                  <DescriptionPanel data={descrptionStr} />
-                </Collapse.Panel>
-              )}
-              {data.detail?.metadata && (
-                <Collapse.Panel
-                  header={t(translations.nftDetail.metadata)}
-                  key="metadata"
-                >
-                  <AceEditor
-                    style={AceEditorStyle}
-                    mode="json"
-                    theme="tomorrow"
-                    name="inputdata_json"
-                    setOptions={{
-                      showLineNumbers: true,
-                    }}
-                    fontSize="1rem"
-                    showGutter={false}
-                    showPrintMargin={false}
-                    value={JSON.stringify(data.detail?.metadata, null, 4)}
-                    readOnly={true}
-                    height="20.1429rem"
-                    wrapEnabled={true}
-                  />
-                </Collapse.Panel>
-              )}
-            </Collapse>
+                  }),
+                  children: <TraitPanel data={stringTypeAttributes} />,
+                },
+                !!dateTypeAttributes.length && {
+                  key: 'date',
+                  header: t(translations.nftDetail.datetime),
+                  children: <DatePanel data={dateTypeAttributes} />,
+                },
+                !!descriptionStr && {
+                  key: 'description',
+                  header: t(translations.nftDetail.description),
+                  children: <DescriptionPanel data={descriptionStr} />,
+                },
+                data.detail?.metadata && {
+                  key: 'metadata',
+                  header: t(translations.nftDetail.metadata),
+                  children: (
+                    <AceEditor
+                      style={AceEditorStyle}
+                      mode="json"
+                      theme="tomorrow"
+                      name="inputdata_json"
+                      setOptions={{
+                        showLineNumbers: true,
+                      }}
+                      fontSize="1rem"
+                      showGutter={false}
+                      showPrintMargin={false}
+                      value={JSON.stringify(data.detail?.metadata, null, 4)}
+                      readOnly={true}
+                      height="20.1429rem"
+                      wrapEnabled={true}
+                    />
+                  ),
+                },
+              ]}
+            />
           </Card>
         </Col>
       </Row>
