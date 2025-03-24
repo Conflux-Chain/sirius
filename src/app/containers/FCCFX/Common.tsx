@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from '@cfxjs/antd';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import imgInfo from 'images/info.svg';
 import styled from 'styled-components';
