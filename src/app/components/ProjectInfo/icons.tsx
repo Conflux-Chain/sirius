@@ -8,7 +8,7 @@ import { translations } from 'locales/i18n';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import iconWarning from 'images/warning.png';
-import { Image } from '@cfxjs/antd';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 interface IconProp {

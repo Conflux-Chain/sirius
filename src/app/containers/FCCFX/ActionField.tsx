@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { isSafeNumberOrNumericStringInput, formatBalance } from 'utils';
 import styled from 'styled-components';
-import { Image } from '@cfxjs/react-ui';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
@@ -164,10 +164,10 @@ export const ActionField = ({
                       )}
                       <div className="fccfx-actionField-tokenIcon">
                         {tokenType === 'fc' ? (
-                          <Image src={iconFC}></Image>
+                          <Image preview={false} src={iconFC}></Image>
                         ) : null}
                         {tokenType === 'cfx' ? (
-                          <Image src={iconCFX}></Image>
+                          <Image preview={false} src={iconCFX}></Image>
                         ) : null}
                       </div>
                       <div className="fccfx-actionField-tokenName">
