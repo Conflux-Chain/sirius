@@ -15,7 +15,8 @@ import {
   DetailIcon,
 } from './icons';
 import { translations } from 'locales/i18n';
-import { Divider, Image } from '@cfxjs/antd';
+import { Divider } from '@cfxjs/antd';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { sansSerifFont } from 'styles/variable';
