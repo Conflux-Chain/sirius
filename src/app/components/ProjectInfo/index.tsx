@@ -15,7 +15,7 @@ import {
   DetailIcon,
 } from './icons';
 import { translations } from 'locales/i18n';
-import { Divider } from '@cfxjs/antd';
+import { Divider } from '@cfxjs/sirius-next-common/dist/components/Divider';
 import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
@@ -421,93 +421,85 @@ export const ProjectInfo = React.memo(
               .filter(l => l)}
           />
         </IconWrapper>
-        <ModalWrapper>
-          <Modal
-            width="50rem"
-            visible={visible}
-            onCancel={onCloseModal}
-            footer={null}
-            centered={true}
-          >
-            <ModalTitle>
-              {t(translations.general.table.token.projectInfo.projectInfo)} -{' '}
-              {tokenName}
-            </ModalTitle>
-            <Divider />
-            {list.map(({ icon, desc, ...others }) =>
-              React.createElement(ModalItem, { key: Math.random() }, [
-                React.createElement(icon, {
-                  key: `modal-icon-${icon.name}`,
-                  ...others,
-                }),
-                React.createElement(
-                  'span',
-                  {
-                    key: `modal-desc-${icon.name}`,
-                  },
-                  desc,
-                ),
-                others.isWarning ? (
-                  <span
-                    className="modal-icon-warning"
-                    key={`modal-warning-${icon.name}`}
-                  >
-                    <Image
-                      width="18px"
-                      src={iconWarning}
-                      preview={false}
-                    ></Image>
-                  </span>
-                ) : null,
-              ]),
-            )}
-            <Divider />
-            <RemarkTitle>
+        <Modal
+          width="50rem"
+          visible={visible}
+          onCancel={onCloseModal}
+          footer={null}
+          centered={true}
+        >
+          <ModalTitle>
+            {t(translations.general.table.token.projectInfo.projectInfo)} -{' '}
+            {tokenName}
+          </ModalTitle>
+          <Divider />
+          {list.map(({ icon, desc, ...others }) =>
+            React.createElement(ModalItem, { key: Math.random() }, [
+              React.createElement(icon, {
+                key: `modal-icon-${icon.name}`,
+                ...others,
+              }),
+              React.createElement(
+                'span',
+                {
+                  key: `modal-desc-${icon.name}`,
+                },
+                desc,
+              ),
+              others.isWarning ? (
+                <span
+                  className="modal-icon-warning"
+                  key={`modal-warning-${icon.name}`}
+                >
+                  <Image width="18px" src={iconWarning} preview={false}></Image>
+                </span>
+              ) : null,
+            ]),
+          )}
+          <Divider />
+          <RemarkTitle>
+            {t(translations.general.table.token.projectInfo.modal.remarkTitle)}
+          </RemarkTitle>
+          <RemarkContent>
+            <div>
               {t(
-                translations.general.table.token.projectInfo.modal.remarkTitle,
+                translations.general.table.token.projectInfo.modal
+                  .remarkContent1,
               )}
-            </RemarkTitle>
-            <RemarkContent>
-              <div>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .remarkContent1,
-                )}
-              </div>
-              <div>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .remarkContent2,
-                )}
-              </div>
-              <div>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .remarkContent3,
-                )}
-              </div>
-              <div>
-                {t(
-                  translations.general.table.token.projectInfo.modal
-                    .remarkContent4,
-                )}
-              </div>
-            </RemarkContent>
-            <Trans i18nKey="general.table.token.projectInfo.modal.disclaimer">
-              Click to view the
-              <Link
-                href={
-                  lang === 'en'
-                    ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4405402356763-Token-List-Disclaimer-User-Warranties'
-                    : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4405402356763-%E4%BB%A3%E5%B8%81%E5%88%97%E8%A1%A8-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E'
-                }
-                target={'_blank'}
-              >
-                Disclaimer
-              </Link>
-            </Trans>
-          </Modal>
-        </ModalWrapper>
+            </div>
+            <div>
+              {t(
+                translations.general.table.token.projectInfo.modal
+                  .remarkContent2,
+              )}
+            </div>
+            <div>
+              {t(
+                translations.general.table.token.projectInfo.modal
+                  .remarkContent3,
+              )}
+            </div>
+            <div>
+              {t(
+                translations.general.table.token.projectInfo.modal
+                  .remarkContent4,
+              )}
+            </div>
+          </RemarkContent>
+          <Trans i18nKey="general.table.token.projectInfo.modal.disclaimer">
+            Click to view the
+            <Link
+              href={
+                lang === 'en'
+                  ? 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4405402356763-Token-List-Disclaimer-User-Warranties'
+                  : 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4405402356763-%E4%BB%A3%E5%B8%81%E5%88%97%E8%A1%A8-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E'
+              }
+              target={'_blank'}
+            >
+              Disclaimer
+            </Link>
+          </Trans>
+        </Modal>
       </ProjectWrapper>
     );
   },
@@ -577,15 +569,6 @@ const RemarkContent = styled.div`
   border: 1px solid #eeeeef;
   padding: 12px;
   border-radius: 4px;
-`;
-const ModalWrapper = styled.div`
-  .ant-modal-content {
-    border-radius: 5px !important;
-  }
-
-  .ant-divider.ant-divider-horizontal {
-    margin: 12px 0 12px 0;
-  }
 `;
 const ModalTitle = styled.div`
   font-size: 16px;

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
-import { Button, Divider, Form, Input } from '@cfxjs/antd';
+import { Button, Form, Input } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { Divider } from '@cfxjs/sirius-next-common/dist/components/Divider';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Radio } from '@cfxjs/sirius-next-common/dist/components/Radio';
 import { DatePicker } from '@cfxjs/react-ui';
