@@ -12,7 +12,7 @@ export const StyledChartPreviewWrapper = styled.div`
     color: var(--theme-color-blue0);
   }
 
-  div.ant-divider.ant-divider-horizontal {
+  div.divider.divider-horizontal {
     margin: 0;
     color: var(--theme-color-blue0);
   }
