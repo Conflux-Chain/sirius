@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Select, Tag } from '@cfxjs/antd';
+import { Select } from '@cfxjs/antd';
+import { Tag } from '@cfxjs/sirius-next-common/dist/components/Tag';
 import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { SelectProps } from '@cfxjs/antd/es/select';
@@ -331,7 +332,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const StyledTagWrapper = styled.span`
-  .ant-tag {
+  .sirius-tag {
     display: flex;
     align-items: center;
     margin-right: 0.2143rem;

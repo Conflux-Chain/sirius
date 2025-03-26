@@ -36,7 +36,7 @@ import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
-import { Tag } from '@cfxjs/antd';
+import { Tag } from '@cfxjs/sirius-next-common/dist/components/Tag';
 import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 
 const fromTypeInfo = {
@@ -758,7 +758,7 @@ const TraceTypeElement = ({ info }) => {
           placement="top"
           hoverable={true}
           trigger={breakpoint === 's' ? 'click' : 'hover'}
-          contentClassName={clsx('siriuse-status-popover')}
+          contentClassName={clsx('sirius-status-popover')}
         >
           <span className="dot"></span>
         </Popover>
@@ -1040,7 +1040,7 @@ const StyledTractTypeWrapper = styled.span`
     }
   }
 
-  .tooltip-content.siriuse-status-popover {
+  .tooltip-content.sirius-status-popover {
     padding: 0.2857rem 0.8571rem;
 
     .item.title {
