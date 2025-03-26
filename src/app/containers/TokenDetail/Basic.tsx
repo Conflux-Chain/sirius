@@ -20,7 +20,7 @@ import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
-import { Tag } from '@cfxjs/antd';
+import { Tag } from '@cfxjs/sirius-next-common/dist/components/Tag';
 import { ProjectInfo } from '../../components/ProjectInfo';
 import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 

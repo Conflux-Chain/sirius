@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Image } from '@cfxjs/antd';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { padLeft } from 'utils';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import NFTIcon from 'images/fccfx/nft.png';
@@ -88,8 +88,4 @@ const StyledFCCFXNFTWrapper = styled.div<{
   display: inline-block;
   position: relative;
   filter: ${props => (props.isActive ? 'grayscale(0)' : 'grayscale(1)')};
-
-  .ant-image {
-    vertical-align: middle;
-  }
 `;

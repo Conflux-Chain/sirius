@@ -21,26 +21,26 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { isZeroAddress, formatString } from 'utils';
 import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
-import { Image } from '@cfxjs/antd';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 
-const WarnningButton = ({ address }) => {
+const WarningButton = ({ address }) => {
   const { t, i18n } = useTranslation();
 
   return (
-    <WarnningButtonWrapper>
+    <WarningButtonWrapper>
       <IconButton
         className="metadata-tooltip-btn"
         size={16}
         viewBox={!isZeroAddress(address) ? '0 0 1024 1024' : '0 0 16 16'}
         tooltipText={
-          <WarnningTooltipWrapper>
-            <p className="warnning-text">
+          <WarningTooltipWrapper>
+            <p className="warning-text">
               {t(translations.contractDetail.contractAdminWarning)}
               <br />
               <Link
                 target="_blank"
-                className="warnning-tooltip-link"
+                className="warning-tooltip-link"
                 href={
                   i18n.language?.startsWith('zh')
                     ? 'https://juejin.im/post/6876330619798814728'
@@ -50,7 +50,7 @@ const WarnningButton = ({ address }) => {
                 {t(translations.general.viewMore)}
               </Link>
             </p>
-          </WarnningTooltipWrapper>
+          </WarningTooltipWrapper>
         }
       >
         {!isZeroAddress(address) ? (
@@ -89,21 +89,21 @@ const WarnningButton = ({ address }) => {
           </g>
         )}
       </IconButton>
-    </WarnningButtonWrapper>
+    </WarningButtonWrapper>
   );
 };
 
-const WarnningButtonWrapper = styled.div`
+const WarningButtonWrapper = styled.div`
   .icon.metadata-tooltip-btn {
     margin-left: 1rem;
   }
 `;
-const WarnningTooltipWrapper = styled.div`
-  p.warnning-text {
+const WarningTooltipWrapper = styled.div`
+  p.warning-text {
     margin: 0;
   }
-  .warnning-tooltip-link.link,
-  .warnning-tooltip-link.link:hover {
+  .warning-tooltip-link.link,
+  .warning-tooltip-link.link:hover {
     color: #008dff;
   }
 `;
@@ -144,7 +144,7 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Image
-              width={24} // width: 16px + padingRight: 8px = 24px
+              width={24} // width: 16px + paddingRight: 8px = 24px
               style={{
                 paddingRight: '8px',
               }}
@@ -180,7 +180,7 @@ export function ContractMetadata({ address, contractInfo }) {
                 notAvailableText
               )}
             </Content>
-            <WarnningButton key="warning" address={contractInfo.admin} />
+            <WarningButton key="warning" address={contractInfo.admin} />
           </CenterLine>
         </SkeletonContainer>
       ),
@@ -195,7 +195,7 @@ export function ContractMetadata({ address, contractInfo }) {
         <SkeletonContainer shown={loading} style={skeletonStyle}>
           <CenterLine>
             <Image
-              width={24} // width: 16px + padingRight: 8px = 24px
+              width={24} // width: 16px + paddingRight: 8px = 24px
               style={{
                 paddingRight: '8px',
               }}

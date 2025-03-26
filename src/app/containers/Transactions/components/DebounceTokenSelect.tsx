@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { Select, Tag, Image } from '@cfxjs/antd';
+import { Select } from '@cfxjs/antd';
+import { Tag } from '@cfxjs/sirius-next-common/dist/components/Tag';
+import { Image } from '@cfxjs/sirius-next-common/dist/components/Image';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { SelectProps } from '@cfxjs/antd/es/select';
 import debounce from 'lodash/debounce';
@@ -215,7 +217,7 @@ export function DebounceTokenSelect<
 
   return (
     <StyledTagWrapper>
-      <Globalstyle />
+      <GlobalStyle />
       <Select<TokenType>
         filterOption={false}
         onSearch={debounceFetcher}
@@ -308,7 +310,7 @@ export function DebounceTokenSelect<
   );
 }
 
-const Globalstyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   .ant-select-item-option-content {
     display: flex;
     align-items: center;
@@ -330,7 +332,7 @@ const Globalstyle = createGlobalStyle`
 `;
 
 const StyledTagWrapper = styled.span`
-  .ant-tag {
+  .sirius-tag {
     display: flex;
     align-items: center;
     margin-right: 0.2143rem;

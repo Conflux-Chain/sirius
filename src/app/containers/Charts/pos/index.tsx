@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col /*, Divider */ } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/antd';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -32,9 +32,6 @@ export function Chart() {
         </Col>
       </Row>
       <Row gutter={[20, 20]}>
-        {/* <Divider orientation="left">
-          {t(translations.highcharts.pos.preview.finalizedInterval)}
-        </Divider> */}
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <FinalizedInterval preview={true} />
         </Col>
