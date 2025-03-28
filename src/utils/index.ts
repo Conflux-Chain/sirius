@@ -324,7 +324,7 @@ export const publishRequestError = (
 export const getChartsSubTitle = (title: string): string => {
   const suffix = window.location.host.substr(-4);
   if (suffix === '.net') {
-    return title.replace('.io', '.net');
+    return title.replace('.org', '.net');
   } else {
     return title;
   }
