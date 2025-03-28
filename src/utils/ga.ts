@@ -14,7 +14,7 @@ export const devTargetId = 'G-VCXQ7FY6EV';
 // TODO userId bind portal address
 
 export const getTrackId = () => {
-  return window.location.hostname.includes('confluxscan.io')
+  return window.location.hostname.includes('confluxscan.org')
     ? prodTargetId
     : window.location.hostname.includes('confluxnetwork.org')
     ? testTargetId
