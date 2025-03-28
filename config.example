@@ -13,5 +13,5 @@
   "ENV_ENS_REGISTRY_ADDRESS": "cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm",
   "ENV_ENS_PUBLIC_RESOLVER_ADDRESS": "cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up",
   
-  "ENV_LOGO": "https://confluxscan.io/static/media/logo.1c92ddc8.svg"
+  "ENV_LOGO": "https://confluxscan.org/static/media/logo.1c92ddc8.svg"
 }
