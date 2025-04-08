@@ -124,10 +124,6 @@ const StyledInputWrapper = styled.div`
     line-height: 2.2857rem;
     margin: 24px 0 0;
     border: none;
-
-    & > div {
-      top: 0;
-    }
   }
 
   .warningContainer {

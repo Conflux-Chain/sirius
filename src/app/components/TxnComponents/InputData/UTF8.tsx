@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@cfxjs/react-ui';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { hex2utf8 } from '@cfxjs/sirius-next-common/dist/utils';
 import { Wrapper } from './Common';
 
@@ -21,8 +21,9 @@ export const UTF8 = ({ data }: Props) => {
         paddingBottom: 0,
       }}
     >
-      {/* @ts-ignore */}
-      <Text>{str}</Text>
+      <Text hideTooltip singleLine={false}>
+        {str}
+      </Text>
     </Wrapper>
   );
 };
