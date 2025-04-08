@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@cfxjs/react-ui';
+import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Wrapper } from './Common';
 
 interface Props {
@@ -15,8 +15,9 @@ export const Original = ({ data }: Props) => {
         paddingBottom: 0,
       }}
     >
-      {/* @ts-ignore */}
-      <Text>{data}</Text>
+      <Text hideTooltip singleLine={false}>
+        {data}
+      </Text>
     </Wrapper>
   );
 };

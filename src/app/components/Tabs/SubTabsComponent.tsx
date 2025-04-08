@@ -68,10 +68,6 @@ const StyledSubTabsWrapper = styled.div`
       color: #ffffff;
       background-color: rgba(0, 84, 254, 0.8);
     }
-
-    .text {
-      top: 0px !important;
-    }
   }
 
   .subtabs-tabItem-active {
