@@ -14,7 +14,8 @@ import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
-import { Input, Button } from '@cfxjs/react-ui';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
+import { Input } from '@cfxjs/react-ui';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
@@ -273,7 +274,7 @@ export function AddressConverter() {
           <div className="convert-address-error">{errorMessage}</div>
         </div>
         <Button
-          variant="solid"
+          type="action"
           color="primary"
           size="small"
           className="convert-address-button"
@@ -440,7 +441,7 @@ const StyledInputWrapper = styled.div`
     }
   }
 
-  .btn.convert-address-button {
+  .convert-address-button {
     height: 2.2857rem;
     line-height: 2.2857rem;
     margin: 0 0 0 1.1429rem;

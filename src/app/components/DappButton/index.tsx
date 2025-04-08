@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from '@cfxjs/react-ui';
+import Button, {
+  ButtonProps,
+} from '@cfxjs/sirius-next-common/dist/components/Button';
 import { useTranslation } from 'react-i18next';
 import { usePortal } from 'utils/hooks/usePortal';
 import styled from 'styled-components';
 import { translations } from 'locales/i18n';
 import imgSuccess from 'images/success.png';
-import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from 'utils';
 import { TXN_ACTION } from 'utils/constants';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -18,6 +19,7 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 interface DappButtonProps {
   btnClassName?: string;
   btnDisabled?: boolean;
+  loading?: boolean;
   // btnText?: string;
   data?: string;
   contractAddress: string;
@@ -42,6 +44,7 @@ const DappButton = ({
   failCallback,
   closeModalCallback,
   txnAction = TXN_ACTION.default,
+  loading,
   ...props
 }: Props) => {
   const { addRecord } = useTxnHistory();
@@ -123,7 +126,7 @@ const DappButton = ({
       <ConnectButton>
         <Button
           {...props}
-          variant="solid"
+          type="action"
           color="primary"
           // invalid connect wallet button will ignore disabled status, guide user to connect wallet or fixed connect error
           className={`${btnClassName} btnInnerClass ${
@@ -131,6 +134,7 @@ const DappButton = ({
           }`}
           disabled={isValid && btnDisabled}
           onClick={onClickHandler}
+          loading={loading}
         >
           {text}
         </Button>
@@ -182,12 +186,12 @@ const BtnContainer = styled.div`
     color: #97a3b4;
     font-size: 14px;
   }
-  .btnInnerClass.btn {
+  .btnInnerClass {
     height: 30px;
     line-height: 30px;
     min-width: initial;
   }
-  .disabled.btn {
+  .disabled {
     color: #fff;
   }
 `;

@@ -79,6 +79,7 @@ export const ContractOrTokenInfo = ({
   const [errorMsgForTokenSite, setErrorMsgForTokenSite] = useState('');
   const [errorMsgForGateway, setErrorMsgForGateway] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [isAddressError, setIsAddressError] = useState(false);
   const [isAdminError, setIsAdminError] = useState(false);
   const [isErc20Error, setIsErc20Error] = useState(false);
@@ -390,6 +391,7 @@ export const ContractOrTokenInfo = ({
         setIsAddressError(false);
         setErrorMsgForAddress('');
         if (accounts[0]) {
+          setButtonLoading(true);
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
               if (
@@ -398,7 +400,7 @@ export const ContractOrTokenInfo = ({
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {
-                  reqToken({ address: addressVal }).then(tokenInfo => {
+                  return reqToken({ address: addressVal }).then(tokenInfo => {
                     if (tokenInfo.name && tokenInfo.symbol) {
                       setIsErc20Error(false);
                       setWarningMessage('');
@@ -416,7 +418,8 @@ export const ContractOrTokenInfo = ({
                 setWarningMessage('contract.errorNotAdmin');
               }
             })
-            .catch(e => console.error(e));
+            .catch(e => console.error(e))
+            .finally(() => setButtonLoading(false));
         }
       } else {
         setIsAddressError(true);
@@ -693,6 +696,7 @@ export const ContractOrTokenInfo = ({
           data={txData}
           btnDisabled={isDisabled}
           txnAction={TXN_ACTION.contractEdit}
+          loading={buttonLoading}
         ></DappButton>
         <div
           className={`warningContainer ${warningMessage ? 'shown' : 'hidden'}`}

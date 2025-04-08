@@ -1,6 +1,6 @@
 import Benchmark, { BenchmarkType } from 'react-component-benchmark';
 import React, { useState } from 'react';
-import { Button } from '@cfxjs/react-ui';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 export default function ScanBenchmark() {
@@ -17,7 +17,9 @@ export default function ScanBenchmark() {
 
   return (
     <div style={{ padding: 40 }}>
-      <Button onClick={handleStart}>Run Test</Button>
+      <Button type="action" onClick={handleStart}>
+        Run Test
+      </Button>
       <div>
         <p>startTime: {result.startTime}</p>
         <p>endTime: {result.endTime}</p>
