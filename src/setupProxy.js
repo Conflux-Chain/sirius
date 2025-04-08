@@ -6,9 +6,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 // const url = 'https://www-stage.confluxscan.net';
 
 const configs = {
-  core_mainnet_url: 'https://confluxscan.net/',
-  core_testnet_url: 'https://testnet-stage.confluxscan.io/',
-  core_devnet_url: 'https://net8888cfx.confluxscan.net/',
+  core_mainnet_url: 'https://confluxscan.org/',
+  core_testnet_url: 'https://testnet-stage.confluxscan.org/',
+  core_devnet_url: 'https://net8888cfx.confluxscan.org/',
 };
 let url = configs.core_mainnet_url;
 if (process.env.REACT_APP_CORE_TESTNET === 'true') {

@@ -12,7 +12,8 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import qs from 'query-string';
 import { Radio } from '@cfxjs/sirius-next-common/dist/components/Radio';
-import { Input, Button } from '@cfxjs/react-ui';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
+import { Input } from '@cfxjs/react-ui';
 import { Countdown } from './Countdown';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
@@ -293,7 +294,7 @@ export function BlocknumberCalc() {
             <div className="calculate-error">{error}</div>
           </div>
           <Button
-            variant="solid"
+            type="action"
             color="primary"
             size="small"
             className="calculate-button"
@@ -414,7 +415,7 @@ const StyledInputWrapper = styled.div`
     }
   }
 
-  .btn.calculate-button {
+  .calculate-button {
     width: 172px;
     height: 2.2857rem;
     line-height: 2.2857rem;

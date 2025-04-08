@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { Button, Textarea } from '@cfxjs/react-ui';
+import { Textarea } from '@cfxjs/react-ui';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import styled from 'styled-components';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
@@ -65,7 +66,7 @@ export function BroadcastTx() {
         </Card>
         <div>
           <Button
-            variant="solid"
+            type="action"
             color="primary"
             size="small"
             className="button"
@@ -118,7 +119,7 @@ const StyledInputWrapper = styled.div`
     }
   }
 
-  .btn.button {
+  .button {
     height: 2.2857rem;
     line-height: 2.2857rem;
     margin: 24px 0 0;
