@@ -19,7 +19,6 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 interface DappButtonProps {
   btnClassName?: string;
   btnDisabled?: boolean;
-  loading?: boolean;
   // btnText?: string;
   data?: string;
   contractAddress: string;
@@ -44,7 +43,6 @@ const DappButton = ({
   failCallback,
   closeModalCallback,
   txnAction = TXN_ACTION.default,
-  loading,
   ...props
 }: Props) => {
   const { addRecord } = useTxnHistory();
@@ -134,7 +132,6 @@ const DappButton = ({
           }`}
           disabled={isValid && btnDisabled}
           onClick={onClickHandler}
-          loading={loading}
         >
           {text}
         </Button>
@@ -190,6 +187,14 @@ const BtnContainer = styled.div`
     height: 30px;
     line-height: 30px;
     min-width: initial;
+    background-color: var(--theme-color-link);
+    border-color: var(--theme-color-link);
+    --cfx-ui-button-bg: var(--theme-color-link);
+    &:hover {
+      background-color: var(--theme-color-link-hover);
+      border-color: var(--theme-color-link-hover);
+      --cfx-ui-button-bg: var(--theme-color-link-hover);
+    }
   }
   .disabled {
     color: #fff;
