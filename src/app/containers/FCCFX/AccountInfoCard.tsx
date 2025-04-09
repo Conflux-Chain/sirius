@@ -288,6 +288,7 @@ const StyledTotalInfoWrapper = styled.div`
   }
 
   .fccfx-accountInfo-withdrawButton {
+    min-width: 124px;
     margin-top: 12px;
   }
 `;
