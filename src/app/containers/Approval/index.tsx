@@ -5,7 +5,8 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
-import { Input, Button, Switch } from '@cfxjs/antd';
+import { Input, Switch } from '@cfxjs/antd';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { useHistory, useLocation } from 'react-router-dom';
 import { isCurrentNetworkAddress, formatBalance } from 'utils';
 import { NotFound } from './NotFound';
@@ -413,6 +414,7 @@ export function Approval() {
             return (
               <Button
                 size="small"
+                type="action"
                 onClick={() => handleRevoke(row)}
                 disabled={disabled}
               >

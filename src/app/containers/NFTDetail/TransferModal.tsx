@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Form, Input, Button, InputNumber } from '@cfxjs/antd';
+import { Form, Input, InputNumber } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -14,6 +14,7 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import ENV_CONFIG from 'env';
 import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 
 export const TransferModal = ({
   id = '',
@@ -214,7 +215,8 @@ export const TransferModal = ({
   return (
     <StyledWrapper>
       <Button
-        type="primary"
+        type="action"
+        color="primary"
         onClick={showTransferModal}
         className="button-transfer"
         loading={submitLoading}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
-import { Button, Form, Input } from '@cfxjs/antd';
+import { Form, Input } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { Divider } from '@cfxjs/sirius-next-common/dist/components/Divider';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Radio } from '@cfxjs/sirius-next-common/dist/components/Radio';
@@ -249,10 +250,15 @@ export function BalanceChecker() {
           <Divider />
           {formComp}
           <ButtonGroup>
-            <Button type="primary" onClick={onClickLookUp}>
+            <Button type="action" color="primary" onClick={onClickLookUp}>
               {t(translations.balanceChecker.lookUp)}
             </Button>
-            <Button type="primary" className={'reset'} onClick={onClickReset}>
+            <Button
+              type="action"
+              color="primary"
+              className={'reset'}
+              onClick={onClickReset}
+            >
               {t(translations.balanceChecker.reset)}
             </Button>
           </ButtonGroup>
@@ -268,7 +274,7 @@ export function BalanceChecker() {
 }
 
 const ButtonGroup = styled.div`
-  .ant-btn {
+  .sirius-btn {
     width: 133px;
     margin-right: 8px;
     font-weight: 500;
