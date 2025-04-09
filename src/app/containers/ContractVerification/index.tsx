@@ -6,7 +6,8 @@ import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import styled from 'styled-components';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
-import { Form, Input, Button, Row, Col, Select } from '@cfxjs/antd';
+import Button from '@cfxjs/sirius-next-common/dist/components/Button';
+import { Form, Input, Row, Col, Select } from '@cfxjs/antd';
 import { isCoreContractAddress, isCurrentNetworkAddress } from 'utils';
 import {
   reqContractCompiler,
@@ -581,7 +582,8 @@ export const ContractVerification = () => {
               </div>
             ) : null}
             <Button
-              type="primary"
+              type="action"
+              color="primary"
               htmlType="submit"
               loading={loading}
               className="submit-button"
