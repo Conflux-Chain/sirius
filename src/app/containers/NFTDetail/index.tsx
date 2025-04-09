@@ -504,6 +504,7 @@ const StyledWrapper = styled.div`
     right: 10px;
     top: 10px;
     z-index: 2;
+    min-width: 124px;
   }
 
   .right {

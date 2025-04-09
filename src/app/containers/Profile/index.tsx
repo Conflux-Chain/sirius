@@ -82,6 +82,10 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .sirius-btn {
+      min-width: 124px;
+    }
   }
 
   .card.sirius-card {
