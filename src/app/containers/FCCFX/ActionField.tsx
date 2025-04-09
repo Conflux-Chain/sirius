@@ -187,6 +187,9 @@ export const ActionField = ({
               type="action"
               onClick={handleButtonClick}
               disabled={disabled}
+              style={{
+                minWidth: '124px',
+              }}
             >
               {buttonText}
             </Button>
