@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Divider } from '@cfxjs/sirius-next-common/dist/components/Divider';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';

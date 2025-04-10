@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
 import clsx from 'clsx';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { StyledLink } from 'app/components/StyledComponent';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';

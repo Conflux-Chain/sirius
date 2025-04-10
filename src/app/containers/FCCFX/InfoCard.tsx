@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { TotalInfoCard } from './TotalInfoCard';
 import { AccountInfoCard } from './AccountInfoCard';

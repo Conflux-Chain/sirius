@@ -7,7 +7,8 @@ import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import styled from 'styled-components';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
-import { Form, Input, Row, Col, Select } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
+import { Form, Input, Select } from '@cfxjs/antd';
 import { isCoreContractAddress, isCurrentNetworkAddress } from 'utils';
 import {
   reqContractCompiler,
