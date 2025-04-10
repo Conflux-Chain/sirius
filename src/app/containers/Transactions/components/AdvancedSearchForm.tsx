@@ -9,9 +9,10 @@ import styled from 'styled-components';
 import qs from 'query-string';
 import lodash from 'lodash';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Form, Row, Col, Input, Select, DatePicker } from '@cfxjs/antd';
+import { Form, Input, Select, DatePicker } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
-import { ColProps } from '@cfxjs/antd/es/col';
+import { ColProps, ColSize } from '@cfxjs/antd/es/col';
 import {
   DebounceTokenSelect,
   TokenType,
@@ -25,7 +26,14 @@ type SearchFormItemsProps =
   | undefined
   | boolean
   | {
-      col: ColProps;
+      col: Omit<ColProps, 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'> & {
+        xs?: Exclude<ColProps['xs'], ColSize>;
+        sm?: Exclude<ColProps['sm'], ColSize>;
+        md?: Exclude<ColProps['md'], ColSize>;
+        lg?: Exclude<ColProps['lg'], ColSize>;
+        xl?: Exclude<ColProps['xl'], ColSize>;
+        xxl?: Exclude<ColProps['xxl'], ColSize>;
+      };
       disabled?: boolean;
     };
 

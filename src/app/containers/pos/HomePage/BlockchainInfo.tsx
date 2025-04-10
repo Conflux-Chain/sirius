@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Grid } from '@cfxjs/react-ui';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { translations } from 'locales/i18n';
@@ -36,40 +36,36 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   return (
     <CardWrapper>
       <Card className="homepage-info-pos">
-        <Grid.Container
-          gap={1}
-          justify="flex-start"
-          className="stats-container"
-        >
-          <Grid xs={24} sm={24} md={3.2}>
+        <Row gutter={[8, 8]} justify="start" className="stats-container">
+          <Col xs={24} sm={24} lg2={3.2}>
             {Info(
               t(translations.statistics.pos.currentBlockNumber),
               POSSummaryInfo.latestCommitted,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={3}>
+          </Col>
+          <Col xs={24} sm={24} lg2={3}>
             {Info(
               t(translations.statistics.pos.votingBlock),
               POSSummaryInfo.latestVoted,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2}>
+          </Col>
+          <Col xs={24} sm={24} lg2={2}>
             {Info(
               <Link href="/pos-charts/daily-accounts" className="info-link">
                 {t(translations.statistics.pos.totalAccountCount)}
               </Link>,
               POSSummaryInfo.posAccountCount,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={3.5}>
+          </Col>
+          <Col xs={24} sm={24} lg2={3.5}>
             {Info(
               <Link href="/pos-charts/daily-staking" className="info-link">
                 {t(translations.statistics.pos.totalLocked)}
               </Link>,
               formatBalance(POSSummaryInfo.totalPosStakingTokens),
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2.5}>
+          </Col>
+          <Col xs={24} sm={24} lg2={2.5}>
             {Info(
               <InfoIconWithTooltip info={t(translations.statistics.pos.apyTip)}>
                 <Link href="/pos-charts/daily-apy" className="info-link">
@@ -80,16 +76,16 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 ? '--'
                 : String(POSSummaryInfo.apy).substr(0, 4) + '%',
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={3.5}>
+          </Col>
+          <Col xs={24} sm={24} lg2={3.5}>
             {Info(
               <Link href="/pos-charts/total-reward" className="info-link">
                 {t(translations.statistics.pos.totalInterest)}
               </Link>,
               formatBalance(POSSummaryInfo.totalPosRewardDrip),
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={5.2}>
+          </Col>
+          <Col xs={24} sm={24} lg2={5.2}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),
               lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
@@ -105,8 +101,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 </span>
               ),
             )}
-          </Grid>
-        </Grid.Container>
+          </Col>
+        </Row>
       </Card>
     </CardWrapper>
   );
@@ -145,7 +141,7 @@ const CardWrapper = styled.div`
       padding: 0;
     }
 
-    > .item {
+    > .sirius-col {
       &:nth-child(3),
       &:nth-child(5) {
         border-right: 1px solid #e8e9ea;
