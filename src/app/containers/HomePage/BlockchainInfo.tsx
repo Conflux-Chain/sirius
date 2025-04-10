@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Grid } from '@cfxjs/react-ui';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { translations } from 'locales/i18n';
@@ -99,30 +99,30 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
   return (
     <CardWrapper>
       <Card className="homepage-info-pow">
-        <Grid.Container
-          gap={1}
-          justify="flex-start"
+        <Row
+          gutter={[8, 8]}
+          justify="start"
           className="stats-container stats-container-pow-top"
         >
-          <Grid xs={24} sm={24} md={4}>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.home.currentEpoch),
               `${dashboardData.epochNumber ? dashboardData.epochNumber : '--'}`,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.pos.finalizedEpoch),
               POSSummaryInfo.posPivotDecision,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.home.currentBlockNumber),
               `${dashboardData.blockNumber ? dashboardData.blockNumber : '--'}`,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.home.account),
               `${
@@ -134,8 +134,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   : '--'
               }`,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               <Link href={'/pow-charts/tx'} className="info-link">
                 {t(translations.statistics.home.transactions)}
@@ -149,8 +149,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   : '--'
               }`,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               <Link href={'/pow-charts/contracts'} className="info-link">
                 {t(translations.statistics.home.contract)}
@@ -164,25 +164,25 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   : '--'
               }`,
             )}
-          </Grid>
-        </Grid.Container>
+          </Col>
+        </Row>
 
         <div className="stats-container stats-container-split"></div>
 
-        <Grid.Container
-          gap={1}
-          justify="flex-start"
+        <Row
+          gutter={[8, 8]}
+          justify="start"
           className="stats-container stats-container-pow-bottom"
         >
-          <Grid xs={24} sm={24} md={4}>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               <Link href="/pow-charts/tps" className="info-link">
                 {t(translations.charts.tps.title)}
               </Link>,
               lodash.isNil(plotData.tps) ? '--' : plotData.tps,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.charts.tokenTransferTps.title),
               lodash.isNil(transferData?.tps)
@@ -191,8 +191,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                     withUnit: false,
                   }),
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.home.gasUsed),
               `${
@@ -204,8 +204,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   : '--'
               }`,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               <Link href="/pow-charts/blocktime" className="info-link">
                 {t(translations.charts.blockTime.title)}
@@ -214,17 +214,17 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 ? '--'
                 : plotData.blockTime + 's',
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={4}>
+          </Col>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               <Link href="/pow-charts/hashrate" className="info-link">
                 {t(translations.charts.hashRate.title)}
               </Link>,
               lodash.isNil(plotData.hashRate) ? '--' : plotData.hashRate,
             )}
-          </Grid>
+          </Col>
 
-          <Grid xs={24} sm={24} md={4}>
+          <Col xs={24} sm={24} lg2={4}>
             {Info(
               t(translations.statistics.home.minerCount),
               `${
@@ -233,8 +233,8 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                   : '--'
               }`,
             )}
-          </Grid>
-        </Grid.Container>
+          </Col>
+        </Row>
 
         <div className="homepage-infoType-container">
           <img src={iconPow} alt=""></img>
@@ -242,42 +242,38 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
       </Card>
 
       <Card className="homepage-info-pos">
-        <Grid.Container
-          gap={1}
-          justify="flex-start"
-          className="stats-container"
-        >
-          <Grid xs={24} sm={24} md={3}>
+        <Row gutter={[8, 8]} justify="start" className="stats-container">
+          <Col xs={24} sm={24} lg2={3}>
             {Info(
               t(translations.statistics.pos.currentBlockNumber),
               POSSummaryInfo.latestCommitted,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={3}>
+          </Col>
+          <Col xs={24} sm={24} lg2={3}>
             {Info(
               t(translations.statistics.pos.votingBlock),
               POSSummaryInfo.latestVoted,
             )}
-          </Grid>
-          <Grid xs={24} sm={24} md={2}>
+          </Col>
+          <Col xs={24} sm={24} lg2={2}>
             {Info(
               <Link href="/pos-charts/daily-accounts" className="info-link">
                 {t(translations.statistics.pos.totalAccountCount)}
               </Link>,
               POSSummaryInfo.posAccountCount,
             )}
-          </Grid>
+          </Col>
           {hideInDotNet(
             <>
-              <Grid xs={24} sm={24} md={3}>
+              <Col xs={24} sm={24} lg2={3}>
                 {Info(
                   <Link href="/pos-charts/daily-staking" className="info-link">
                     {t(translations.statistics.pos.totalLocked)}
                   </Link>,
                   formatBalance(POSSummaryInfo.totalPosStakingTokens),
                 )}
-              </Grid>
-              <Grid xs={24} sm={24} md={3}>
+              </Col>
+              <Col xs={24} sm={24} lg2={3}>
                 {Info(
                   <InfoIconWithTooltip
                     info={t(translations.statistics.pos.apyTip, {
@@ -298,18 +294,18 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                     ? '--'
                     : String(POSSummaryInfo.apy).substr(0, 4) + '%',
                 )}
-              </Grid>
-              <Grid xs={24} sm={24} md={3}>
+              </Col>
+              <Col xs={24} sm={24} lg2={3}>
                 {Info(
                   <Link href="/pos-charts/total-reward" className="info-link">
                     {t(translations.statistics.pos.totalInterest)}
                   </Link>,
                   formatBalance(POSSummaryInfo.totalPosRewardDrip),
                 )}
-              </Grid>
+              </Col>
             </>,
           )}
-          <Grid xs={24} sm={24} md={5.5}>
+          <Col xs={24} sm={24} lg2={5.5}>
             {Info(
               t(translations.statistics.pos.lastInterestDistributionEpoch),
               lodash.isNil(POSSummaryInfo.lastDistributeBlock) ? (
@@ -325,22 +321,22 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
                 </span>
               ),
             )}
-          </Grid>
-        </Grid.Container>
+          </Col>
+        </Row>
 
         <div className="homepage-infoType-container pos">
           <img src={iconPos} alt=""></img>
         </div>
       </Card>
       <div className="charts">
-        <Grid.Container gap={2.7} justify="center">
-          <Grid xs={24} sm={24} md={12}>
+        <Row gutter={[20, 20]} justify="center">
+          <Col xs={24} sm={24} lg2={12}>
             <Tx preview={true} />
-          </Grid>
-          <Grid xs={24} sm={24} md={12}>
+          </Col>
+          <Col xs={24} sm={24} lg2={12}>
             <AccountGrowth preview={true} />
-          </Grid>
-        </Grid.Container>
+          </Col>
+        </Row>
       </div>
     </CardWrapper>
   );
@@ -362,7 +358,7 @@ const CardWrapper = styled.div`
 
     &.homepage-info-pow {
       .stats-container-pow-top {
-        .item {
+        .sirius-col {
           &:nth-child(3) {
             position: relative;
 
@@ -383,7 +379,7 @@ const CardWrapper = styled.div`
       }
 
       .stats-container-pow-bottom {
-        .item {
+        .sirius-col {
           &:nth-child(3) {
             position: relative;
 
@@ -405,7 +401,7 @@ const CardWrapper = styled.div`
     }
 
     &.homepage-info-pos {
-      .item {
+      .sirius-col {
         &:nth-child(3) {
           position: relative;
 
@@ -484,13 +480,14 @@ const CardWrapper = styled.div`
       padding: 0;
     }
 
-    & > .item {
+    & > .sirius-col {
       ${media.m} {
         max-width: 100%;
         border-right: none !important;
         padding-left: 0 !important;
         border-bottom: 1px solid #e8e9ea;
         margin-right: 36px;
+        flex-shrink: unset !important;
 
         &:last-child {
           border-bottom: none;

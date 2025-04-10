@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from '@cfxjs/antd';
+import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -23,7 +23,7 @@ export function Chart() {
       </PageHeader>
 
       <Row gutter={[20, 20]}>
-        <Col xxl={8} xl={8} lg={7} md={24} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
           <StatisticsDatas />
         </Col>
         <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
