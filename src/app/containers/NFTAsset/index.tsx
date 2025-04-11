@@ -10,7 +10,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { toThousands, isCurrentNetworkAddress } from 'utils';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Pagination } from '@cfxjs/antd';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Tag } from '@cfxjs/sirius-next-common/dist/components/Tag';

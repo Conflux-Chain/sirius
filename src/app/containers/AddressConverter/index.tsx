@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';

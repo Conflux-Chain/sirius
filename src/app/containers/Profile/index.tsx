@@ -8,7 +8,7 @@ import { AddressLabel } from './AddressLabel';
 import { TxNote } from './TxNote';
 import { File } from './File';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { useLocation, useHistory } from 'react-router-dom';
 import qs from 'query-string';
 

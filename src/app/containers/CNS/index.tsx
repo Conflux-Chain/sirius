@@ -20,7 +20,7 @@ import qs from 'query-string';
 import dayjs from 'dayjs';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
 import { NotFound } from './NotFound';
