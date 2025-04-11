@@ -5,7 +5,7 @@ import { translations } from 'locales/i18n';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import styled from 'styled-components';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Form, Input, Select } from '@cfxjs/antd';

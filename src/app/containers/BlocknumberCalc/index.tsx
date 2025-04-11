@@ -17,7 +17,7 @@ import { Input } from '@cfxjs/react-ui';
 import { Countdown } from './Countdown';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import calculateSvg from 'images/calculate.svg';
 import dayjs from 'dayjs';
 import { useMount } from 'react-use';
