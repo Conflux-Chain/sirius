@@ -7,7 +7,7 @@ import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import styled from 'styled-components';
 import { ConnectButton } from 'app/components/ConnectWallet';
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';

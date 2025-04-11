@@ -5,7 +5,7 @@ import {
   reqContractAndToken,
 } from 'utils/httpRequest';
 import { toThousands } from 'utils';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
 import { CFX } from 'utils/constants';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';

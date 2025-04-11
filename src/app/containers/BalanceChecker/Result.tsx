@@ -1,5 +1,6 @@
 import { translations } from 'locales/i18n';
-import { Card as AntdCard, Avatar } from '@cfxjs/antd';
+import { Avatar } from '@cfxjs/antd';
+import { Card, Meta } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import DateIcon from '../../../images/balance-checker/date.png';
 import dayjs from 'dayjs';
@@ -91,7 +92,7 @@ export function Result({ radioValue, resultVisible, formData }) {
   }, [data]);
 
   const TokenQuantityCard = (
-    <AntdCard.Meta
+    <Meta
       avatar={<Avatar src={TokenIcon} />}
       title={t(translations.balanceChecker.tokenQuantity)}
       description={
@@ -106,7 +107,7 @@ export function Result({ radioValue, resultVisible, formData }) {
     />
   );
   const CFXCard = (
-    <AntdCard.Meta
+    <Meta
       avatar={<Avatar src={TokenIcon} />}
       title={t(translations.balanceChecker.cfxBalance)}
       description={
@@ -125,25 +126,27 @@ export function Result({ radioValue, resultVisible, formData }) {
       visible={resultVisible}
     >
       <CardGroup>
-        <AntdCard>
-          <AntdCard.Meta
+        <Card>
+          <Meta
             avatar={<Avatar src={DateIcon} />}
             title={t(translations.balanceChecker.snapshotDate)}
             description={
               loading ? <Spin /> : date === '--' ? date : formatDate(date)
             }
           />
-        </AntdCard>
-        <AntdCard>
-          <AntdCard.Meta
+        </Card>
+        <Card>
+          <Meta
             avatar={<Avatar src={BlockIcon} />}
             title={t(translations.balanceChecker.epoch)}
             description={loading ? <Spin /> : epoch}
           />
-        </AntdCard>
-        <AntdCard>
-          {radioValue === 1 || radioValue === 2 ? TokenQuantityCard : CFXCard}
-        </AntdCard>
+        </Card>
+        <Card>
+          {radioValue === '1' || radioValue === '2'
+            ? TokenQuantityCard
+            : CFXCard}
+        </Card>
       </CardGroup>
     </ResultWrap>
   );
@@ -161,18 +164,18 @@ const ResultWrap = styled.div<{ visible: string }>`
 const CardGroup = styled.div`
   display: flex;
 
-  .ant-card {
+  .sirius-card {
     margin: 0 24px 32px 0;
 
-    .ant-card-meta-title {
+    .sirius-meta-title {
       font-size: 14px;
     }
 
-    .ant-card-meta {
+    .sirius-meta {
       display: flex;
       flex-direction: row-reverse;
 
-      .ant-card-meta-avatar {
+      .sirius-meta-avatar {
         margin-left: 24px;
         padding: 0;
 
@@ -192,7 +195,7 @@ const CardGroup = styled.div`
         }
       }
 
-      .ant-card-meta-description {
+      .sirius-meta-description {
         width: 250px;
 
         p {

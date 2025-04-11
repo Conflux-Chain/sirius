@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Tabs } from '../../components/Tabs';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { StatsCard } from '../../components/StatsCard/Loadable';

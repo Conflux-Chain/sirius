@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { translations } from 'locales/i18n';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { isHex } from 'utils';
 import imgInfo from 'images/info.svg';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';

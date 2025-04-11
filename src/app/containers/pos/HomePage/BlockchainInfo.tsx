@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { useTranslation } from 'react-i18next';
-import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
+import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { translations } from 'locales/i18n';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { formatBalance, formatTimeStamp } from 'utils';
