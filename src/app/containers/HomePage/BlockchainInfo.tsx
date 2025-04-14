@@ -24,6 +24,7 @@ import iconPos from 'images/homepage/pos.png';
 import iconPow from 'images/homepage/pow.png';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tx, AccountGrowth } from '../Charts/pow/Loadable';
+import BigNumber from 'bignumber.js';
 
 function Info(title, number: any) {
   return (
@@ -279,7 +280,15 @@ export function BlockchainInfo({ timestamp = 1 }: { timestamp?: number }) {
               <Grid xs={24} sm={24} md={3}>
                 {Info(
                   <InfoIconWithTooltip
-                    info={t(translations.statistics.pos.apyTip)}
+                    info={t(translations.statistics.pos.apyTip, {
+                      rate1: new BigNumber(POSSummaryInfo.baseR).toFixed(1),
+                      rate2: new BigNumber(POSSummaryInfo.baseR)
+                        .multipliedBy(2)
+                        .toFixed(1),
+                      rate3: new BigNumber(POSSummaryInfo.baseR)
+                        .multipliedBy(3)
+                        .toFixed(1),
+                    })}
                   >
                     <Link href="/pos-charts/daily-apy" className="info-link">
                       {t(translations.statistics.pos.apy)}
