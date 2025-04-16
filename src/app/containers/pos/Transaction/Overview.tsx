@@ -10,11 +10,8 @@ import lodash from 'lodash';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { Typography } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-
-const { Text } = Typography;
 
 export function Overview({ data, loading }) {
   const { t, i18n } = useTranslation();
@@ -204,15 +201,9 @@ const DescriptionInline = ({
       {data.map((d, i) => {
         return (
           <div className="description-inline-item" key={d.key || i}>
-            <Text
-              className="description-inline-item-label"
-              ellipsis={{
-                suffix: ':',
-                tooltip: d.label,
-              }}
-            >
-              {d.label}
-            </Text>{' '}
+            <div className="description-inline-item-label">
+              {d.label}&nbsp;:
+            </div>
             <span className="description-inline-item-content">{d.content}</span>
           </div>
         );
