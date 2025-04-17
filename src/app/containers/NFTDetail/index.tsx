@@ -8,7 +8,7 @@ import { StyledCard as Card } from '@cfxjs/sirius-next-common/dist/components/Ca
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
 import styled from 'styled-components';
-import { message } from '@cfxjs/antd';
+import { message } from '@cfxjs/sirius-next-common/dist/components/Message';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
