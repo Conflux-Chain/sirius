@@ -10,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useRouteMatch } from 'react-router-dom';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { Input, useMessages } from '@cfxjs/react-ui';
+import { Input } from '@cfxjs/react-ui';
+import { message } from '@cfxjs/sirius-next-common/dist/components/Message';
 import {
   ICON_DEFAULT_CONTRACT,
   ICON_DEFAULT_TOKEN,
@@ -60,7 +61,6 @@ export const ContractOrTokenInfo = ({
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
   const { accounts } = usePortal();
-  const [, setMessage] = useMessages();
   const [addressVal, setAddressVal] = useState('');
   const [contractName, setContractName] = useState(() => {
     return updateInfoType === 'token' ? Math.random().toString().substr(2) : ''; // maybe there is not contract name when update token info
@@ -319,12 +319,12 @@ export const ContractOrTokenInfo = ({
     let file = e.target.files[0];
     if (file) {
       if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
-        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+        message.error(t('contract.invalidIconType'));
         return;
       }
 
       if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+        message.error(t('contract.invalidIconSize'));
         return;
       }
 
@@ -341,12 +341,12 @@ export const ContractOrTokenInfo = ({
     let file = e.target.files[0];
     if (file) {
       if (!/\.(gif|jpg|jpeg|png|svg)$/i.test(file.name)) {
-        setMessage({ text: t('contract.invalidIconType'), color: 'error' });
+        message.error(t('contract.invalidIconType'));
         return;
       }
 
       if (byteToKb(file.size) > MAXSIZEFORICON) {
-        setMessage({ text: t('contract.invalidIconSize'), color: 'error' });
+        message.error(t('contract.invalidIconSize'));
         return;
       }
 

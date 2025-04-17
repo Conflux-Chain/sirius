@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import AceEditor from 'react-ace';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
-import { useMessages } from '@cfxjs/react-ui';
+import { message } from '@cfxjs/sirius-next-common/dist/components/Message';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,6 @@ export const ContractInfo = ({ onChange }) => {
   const [bytecode, setBytecode] = useState('');
   const [constructorArguments, setConstructorArguments] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const [, setMessage] = useMessages();
   const { t } = useTranslation();
 
   const textOfInvalidJsonFile = t(translations.general.invalidJsonFile);
@@ -60,10 +59,7 @@ export const ContractInfo = ({ onChange }) => {
         bytecode = code.trim();
       }
       if (!checkBytecode(bytecode)) {
-        setMessage({
-          text: t(translations.general.invalidBytecode),
-          color: 'error',
-        });
+        message.error(t(translations.general.invalidBytecode));
       }
       setBytecode(addOx(bytecode));
     } else {
@@ -87,18 +83,12 @@ export const ContractInfo = ({ onChange }) => {
         throw new Error(textOfInvalidJsonFile);
       }
     } catch (e) {
-      setMessage({
-        text: textOfInvalidJsonFile,
-        color: 'error',
-      });
+      message.error(textOfInvalidJsonFile);
     }
   };
 
   const handleFileError = () => {
-    setMessage({
-      text: textOfInvalidJsonFile,
-      color: 'error',
-    });
+    message.error(textOfInvalidJsonFile);
   };
 
   useEffect(() => {
@@ -121,10 +111,7 @@ export const ContractInfo = ({ onChange }) => {
   const handleConstructorArgumentsInputChange = data => {
     setConstructorArguments(data);
     if (!isHex(data, false)) {
-      setMessage({
-        text: t(translations.general.invalidBytecode),
-        color: 'error',
-      });
+      message.error(t(translations.general.invalidBytecode));
     }
   };
 
