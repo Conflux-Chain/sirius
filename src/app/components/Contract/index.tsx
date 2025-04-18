@@ -46,7 +46,7 @@ interface Props {
 interface RequestBody {
   [key: string]: any;
 }
-const MAXSIZEFORICON = 30; //kb
+const MAX_SIZE_FOR_ICON = 30; //kb
 const fieldsContract = ['token'];
 export const ContractOrTokenInfo = ({
   contractDetail,
@@ -322,7 +322,7 @@ export const ContractOrTokenInfo = ({
         return;
       }
 
-      if (byteToKb(file.size) > MAXSIZEFORICON) {
+      if (byteToKb(file.size) > MAX_SIZE_FOR_ICON) {
         message.error(t('contract.invalidIconSize'));
         return;
       }
@@ -344,7 +344,7 @@ export const ContractOrTokenInfo = ({
         return;
       }
 
-      if (byteToKb(file.size) > MAXSIZEFORICON) {
+      if (byteToKb(file.size) > MAX_SIZE_FOR_ICON) {
         message.error(t('contract.invalidIconSize'));
         return;
       }
