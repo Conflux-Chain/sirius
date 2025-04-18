@@ -33,7 +33,7 @@ const addOx = bytecode => {
   return bytecode;
 };
 
-// @TODO may intergration with contract registration later
+// @TODO may integration with contract registration later
 export const ContractInfo = ({ onChange }) => {
   const [bytecode, setBytecode] = useState('');
   const [constructorArguments, setConstructorArguments] = useState('');
