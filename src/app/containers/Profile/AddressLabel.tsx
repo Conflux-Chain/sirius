@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Space, Input } from '@cfxjs/antd';
+import { Input } from '@cfxjs/antd';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
+import { Space } from '@cfxjs/sirius-next-common/dist/components/Space';
 import { confirm } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import { formatTimeStamp } from 'utils';
 import { ContentWrapper } from 'utils/tableColumns/utils';

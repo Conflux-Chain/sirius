@@ -23,7 +23,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
-import { useMessages } from '@cfxjs/react-ui';
+import { message } from '@cfxjs/sirius-next-common/dist/components/Message';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useLocation } from 'react-router-dom';
 import querystring from 'query-string';
@@ -39,7 +39,6 @@ const AceEditorStyle = {
 export const ContractVerification = () => {
   const { t } = useTranslation();
   const { search } = useLocation();
-  const [, setMessage] = useMessages();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [license, setLicense] = useState<Array<any>>([]);
@@ -181,10 +180,7 @@ export const ContractVerification = () => {
   };
 
   const handleFileError = e => {
-    setMessage({
-      text: e,
-      color: 'error',
-    });
+    message.error(e?.toString?.());
   };
 
   const handleSourceCodeChange = data => {

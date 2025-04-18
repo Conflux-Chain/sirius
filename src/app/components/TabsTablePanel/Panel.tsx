@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs } from '../Tabs';
+import { StyledTabs as Tabs } from '@cfxjs/sirius-next-common/dist/components/Tabs';
 import { useTabTableData } from './useTabTableData';
 import { trackEvent } from '../../../utils/ga';
 import { ScanEvent } from '../../../utils/gaConstants';

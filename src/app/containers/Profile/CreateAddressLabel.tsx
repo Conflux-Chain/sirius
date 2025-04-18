@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Form, Input, message } from '@cfxjs/antd';
+import { Form, Input } from '@cfxjs/antd';
+import { message } from '@cfxjs/sirius-next-common/dist/components/Message';
 import { Modal } from '@cfxjs/sirius-next-common/dist/components/Modal';
 import {
   isBase32Address,

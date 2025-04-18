@@ -23,7 +23,7 @@ import { monospaceFont } from 'styles/variable';
 import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { isInnerContractAddress } from 'utils';
-import { SubTabs } from 'app/components/Tabs/Loadable';
+import { SubTabs } from '@cfxjs/sirius-next-common/dist/components/Tabs';
 
 const AceEditorStyle = {
   width: '100%',

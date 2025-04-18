@@ -1,5 +1,5 @@
 import { translations } from 'locales/i18n';
-import { Avatar } from '@cfxjs/antd';
+import { Avatar } from '@cfxjs/sirius-next-common/dist/components/Avatar';
 import { Card, Meta } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import DateIcon from '../../../images/balance-checker/date.png';
@@ -179,7 +179,7 @@ const CardGroup = styled.div`
         margin-left: 24px;
         padding: 0;
 
-        .ant-avatar {
+        .sirius-avatar {
           width: 48px;
           height: 48px;
           background: #f5f6fa;
