@@ -5,20 +5,19 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import pubsubLib from 'utils/pubsub';
-import { useNotifications } from '@cfxjs/react-ui';
-import { Notification } from '@cfxjs/react-ui/dist/use-notifications/use-notifications';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
 import CheckInCircleFill from '@zeit-ui/react-icons/checkInCircleFill';
 import InfoFill from '@zeit-ui/react-icons/infoFill';
 import styled from 'styled-components';
 import { Collapse } from '@cfxjs/sirius-next-common/dist/components/Collapse';
+import { notification } from '@cfxjs/sirius-next-common/dist/components/Notification';
 import { CaretRightOutlined } from '@ant-design/icons';
 
 enum Status {
   success,
   error,
 }
-interface Props extends Partial<Notification> {
+interface Props {
   type: string; // one of [request, wallet]
   repeat?: boolean; // if trigger again of same code for multiple times
   option?: any; // custom option
@@ -26,7 +25,6 @@ interface Props extends Partial<Notification> {
 
 export function GlobalNotify() {
   const { t } = useTranslation();
-  const [, setNotifications] = useNotifications();
   const codes = useRef({});
 
   useEffect(() => {
@@ -40,7 +38,7 @@ export function GlobalNotify() {
           let icon = <InfoFill color="#ccc" />;
           let title: React.ReactNode = '';
           let content: React.ReactNode = '';
-          let delay: number = 0;
+          let duration: number = 0;
           let code = Math.random().toString(32).substr(2);
 
           if (type === 'request') {
@@ -103,15 +101,15 @@ export function GlobalNotify() {
                 </a>
               </LinkWrapper>
             );
-            delay = 3000;
+            duration = 3000;
             code = option.hash;
           }
 
-          setNotifications({
+          notification({
             icon: icon,
             title: title,
             content: content,
-            delay: delay,
+            duration: duration,
             onClose: () => {
               codes.current[code] = false;
             },
