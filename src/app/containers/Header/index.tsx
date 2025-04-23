@@ -29,6 +29,15 @@ import { Notices } from 'app/containers/Notices/Loadable';
 import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
 
 import ENV_CONFIG, { DOMAIN, IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
+import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
+import lodash from 'lodash';
+
+const hideNetworkInDotNet = n => {
+  if (HIDE_IN_DOT_NET) {
+    return n.id !== 1030 && n.id !== 71;
+  }
+  return n;
+};
 
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
@@ -530,6 +539,36 @@ export const Header = memo(() => {
     });
   }
 
+  const getNetworkLink = (n: NetworksType) => {
+    const isMatch = n.id === networkId;
+    return {
+      title: [
+        <NetWorkWrapper key="network">
+          <img src={getNetworkIcon(n.id)} alt="" />
+          {n.name}
+        </NetWorkWrapper>,
+        isMatch && <Check size={18} key="check" />,
+      ],
+      onClick: () => {
+        trackEvent({
+          category: ScanEvent.preference.category,
+          action: ScanEvent.preference.action.changeNet,
+          label: n.name,
+        });
+
+        menuClick();
+
+        setGlobalData({
+          ...globalData,
+          networkId: n.id,
+        });
+
+        gotoNetwork(n.url);
+      },
+      isMatchedFn: () => isMatch,
+    };
+  };
+
   const endLinks: HeaderLinks = [
     // {
     //   // profile
@@ -548,42 +587,30 @@ export const Header = memo(() => {
           {getNetwork(networks, networkId).name}
         </NetWorkWrapper>
       ),
-      children: networks
-        .filter(n => {
-          if (HIDE_IN_DOT_NET) {
-            return n.id !== 1030 && n.id !== 71;
-          }
-          return n;
-        })
-        .map(n => {
-          const isMatch = n.id === networkId;
-          return {
-            title: [
-              <NetWorkWrapper key="network">
-                <img src={getNetworkIcon(n.id)} alt="" />
-                {n.name}
-              </NetWorkWrapper>,
-              isMatch && <Check size={18} key="check" />,
-            ],
-            onClick: () => {
-              trackEvent({
-                category: ScanEvent.preference.category,
-                action: ScanEvent.preference.action.changeNet,
-                label: n.name,
-              });
-
-              menuClick();
-
-              setGlobalData({
-                ...globalData,
-                networkId: n.id,
-              });
-
-              gotoNetwork(n.url);
-            },
-            isMatchedFn: () => isMatch,
-          };
-        }),
+      children: lodash.compact([
+        {
+          title: false,
+          plain: true,
+          vertical: true,
+          children: networks.mainnet
+            .filter(hideNetworkInDotNet)
+            .map(getNetworkLink),
+        },
+        {
+          title: false,
+          plain: true,
+          vertical: true,
+          children: networks.testnet
+            .filter(hideNetworkInDotNet)
+            .map(getNetworkLink),
+        },
+        networks.devnet.length > 0 && {
+          title: false,
+          plain: true,
+          vertical: true,
+          children: networks.devnet.map(getNetworkLink),
+        },
+      ]),
     },
   ];
 

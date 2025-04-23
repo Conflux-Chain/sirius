@@ -63,6 +63,7 @@ import {
   isBase32Address,
   isSimplyBase32Address,
 } from '@cfxjs/sirius-next-common/dist/utils/address';
+import { ExtendedGlobalDataType } from './hooks/useGlobal';
 
 export {
   formatNumber,
@@ -212,14 +213,21 @@ export function isEpochNumber(str: string) {
   return n !== Infinity && String(n) === str && n >= 0;
 }
 
-export const getNetwork = (networks: Array<NetworksType>, id: number) => {
-  let matchs = networks.filter(n => n.id === id);
+export const getNetwork = (
+  networks: ExtendedGlobalDataType['networks'],
+  id: number,
+) => {
+  const matched = [
+    ...networks.mainnet,
+    ...networks.testnet,
+    ...networks.devnet,
+  ].find(n => n.id === id);
   let network: NetworksType;
 
-  if (matchs) {
-    network = matchs[0];
+  if (matched) {
+    network = matched;
   } else {
-    network = networks[0];
+    network = networks.mainnet[0];
   }
 
   return network;
