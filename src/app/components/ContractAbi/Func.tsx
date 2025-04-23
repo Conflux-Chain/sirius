@@ -87,6 +87,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
                 JSONBigint.parse(value['val']),
               ),
             }
+          : /u?int[\d]{2,3}\[/.test(value['type'])
+          ? {
+              type: 'string',
+              val: convertObjBigNumbersToStrings(
+                JSONBigint.parse(value['val']),
+              ),
+            }
           : value,
       ),
     );
