@@ -268,13 +268,22 @@ export function App() {
     reqProjectConfig()
       .then(resp => {
         delete resp.referer;
-        const networks = [...NETWORK_OPTIONS];
-        if (networks.every(n => n.id !== resp?.networkId)) {
-          networks.push({
-            url: '',
-            name: resp?.networkId,
-            id: resp?.networkId,
-          });
+        const networks = {
+          ...NETWORK_OPTIONS,
+        };
+        if (
+          networks.mainnet.every(n => n.id !== resp?.networkId) &&
+          networks.testnet.every(n => n.id !== resp?.networkId) &&
+          networks.devnet.every(n => n.id !== resp?.networkId)
+        ) {
+          networks.devnet = [
+            ...networks.devnet,
+            {
+              url: '',
+              name: resp?.networkId,
+              id: resp?.networkId,
+            },
+          ];
         }
         // @ts-ignore
         const networkId = resp?.networkId;

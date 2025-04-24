@@ -214,26 +214,12 @@ export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
 
 export const ENS_COINID_CONFLUX = 503;
 
-export const NETWORK_OPTIONS = lodash.compact([
+export const MAINNET_NETWORK_OPTIONS = lodash.compact([
   // core space
   {
     name: 'Conflux Core (Hydra)',
     id: 1029,
     url: IS_STAGE ? '//www-stage.confluxscan.net' : `//confluxscan${DOMAIN}`,
-  },
-  {
-    name: 'Conflux Core (Testnet)',
-    id: 1,
-    url: IS_STAGE
-      ? '//testnet-stage.confluxscan.net'
-      : `//testnet.confluxscan${DOMAIN}`,
-  },
-  IS_DEVNET && {
-    name: 'Conflux Core (Devnet)',
-    id: 8888,
-    url: IS_STAGE
-      ? '//net8888cfx.confluxscan.net'
-      : `//net8888cfx.confluxscan${DOMAIN}`,
   },
   // espace
   {
@@ -243,18 +229,6 @@ export const NETWORK_OPTIONS = lodash.compact([
       ? '//evm-stage.confluxscan.net'
       : `//evm.confluxscan${DOMAIN}`,
   },
-  {
-    name: 'Conflux eSpace (Testnet)',
-    id: 71,
-    url: IS_STAGE
-      ? '//evmtestnet-stage.confluxscan.net'
-      : `//evmtestnet.confluxscan${DOMAIN}`,
-  },
-  IS_DEVNET && {
-    name: 'Conflux eSpace (Devnet)',
-    id: 8889,
-    url: '//net8889eth.confluxscan.net',
-  },
   // TODO-btc
   // {
   //   name: 'Conflux eSpace (Hydra)',
@@ -263,6 +237,24 @@ export const NETWORK_OPTIONS = lodash.compact([
   //     ? '//evm-stage.confluxscan.net'
   //     : `//evm.confluxscan${DOMAIN}`,
   // },
+]);
+export const TESTNET_NETWORK_OPTIONS = lodash.compact([
+  // core space
+  {
+    name: 'Conflux Core (Testnet)',
+    id: 1,
+    url: IS_STAGE
+      ? '//testnet-stage.confluxscan.net'
+      : `//testnet.confluxscan${DOMAIN}`,
+  },
+  {
+    name: 'Conflux eSpace (Testnet)',
+    id: 71,
+    url: IS_STAGE
+      ? '//evmtestnet-stage.confluxscan.net'
+      : `//evmtestnet.confluxscan${DOMAIN}`,
+  },
+  // TODO-btc
   // {
   //   name: 'Conflux eSpace (Testnet)',
   //   id: 71,
@@ -270,9 +262,32 @@ export const NETWORK_OPTIONS = lodash.compact([
   //     ? '//evmtestnet-stage.confluxscan.net'
   //     : `//evmtestnet.confluxscan${DOMAIN}`,
   // },
+]);
+export const DEVNET_NETWORK_OPTIONS = lodash.compact([
+  // core space
+  IS_DEVNET && {
+    name: 'Conflux Core (Devnet)',
+    id: 8888,
+    url: IS_STAGE
+      ? '//net8888cfx.confluxscan.net'
+      : `//net8888cfx.confluxscan${DOMAIN}`,
+  },
+  // espace
+  IS_DEVNET && {
+    name: 'Conflux eSpace (Devnet)',
+    id: 8889,
+    url: '//net8889eth.confluxscan.net',
+  },
+  // TODO-btc
   IS_DEVNET && {
     name: 'Conflux bSpace (Devnet)',
     id: 8890,
     url: '//net8890btc.confluxscan.net',
   },
 ]);
+
+export const NETWORK_OPTIONS = {
+  mainnet: MAINNET_NETWORK_OPTIONS,
+  testnet: TESTNET_NETWORK_OPTIONS,
+  devnet: DEVNET_NETWORK_OPTIONS,
+};
