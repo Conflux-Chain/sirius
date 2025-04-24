@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
+import { Popover } from '@cfxjs/sirius-next-common/dist/components/Popover';
 import { Status } from 'app/components/TxnComponents';
 import {
   toThousands,
@@ -15,7 +16,6 @@ import {
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
-import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
@@ -49,6 +49,7 @@ export const TxnHashRenderComponent = ({
   txExecErrorInfo,
 }: HashProps) => {
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [txnDetail, setTxnDetail] = useState<{
     status?: string;
     address?: string;
@@ -82,8 +83,9 @@ export const TxnHashRenderComponent = ({
         <div className="txn-overview-popup-container">
           <Popover
             className="txn-overview-popup"
-            placement="right"
-            trigger="click"
+            positioning={{
+              placement: 'right',
+            }}
             content={
               <>
                 {loading ? (
@@ -96,8 +98,13 @@ export const TxnHashRenderComponent = ({
                 )}
               </>
             }
+            onClose={() => setVisible(false)}
+            onOpen={() => setVisible(true)}
           >
-            <button className="icon-view-txn-container" onClick={handleClick} />
+            <button
+              className={clsx('icon-view-txn-container', { visible })}
+              onClick={handleClick}
+            />
           </Popover>
         </div>
       ) : null}
@@ -335,12 +342,8 @@ const StyledTransactionHashWrapper = styled.span`
     margin-right: 0.3571rem;
   }
 
-  /* reset tooltip-content style */
-
-  .popover.txn-overview-popup + div.tooltip-content {
-    .items {
-      max-height: inherit;
-    }
+  .txn-overview-popup {
+    display: block;
   }
 
   .icon-view-txn-container {
@@ -355,7 +358,7 @@ const StyledTransactionHashWrapper = styled.span`
     vertical-align: middle;
     border: none;
 
-    &:focus {
+    &.visible {
       background-image: url(${iconViewTxnActive});
     }
   }

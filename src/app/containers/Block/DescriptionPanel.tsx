@@ -413,7 +413,7 @@ const FoldedWrapper = styled.div`
 `;
 
 const ResetTooltipWrapper = styled.div`
-  .sirius-next-tooltip {
+  .sirius-tooltip-container {
     max-width: unset !important;
   }
 `;

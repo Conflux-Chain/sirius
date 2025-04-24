@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
-import { Popover } from '@cfxjs/antd';
+import { Popover } from '@cfxjs/sirius-next-common/dist/components/Popover';
 import { reqPendingTxs } from 'utils/httpRequest';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { formatAddress, formatBalance } from 'utils';
 import BigNumber from 'bignumber.js';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface Props {
   detail?: any;
@@ -229,7 +230,7 @@ export const PendingReason = ({
     return (
       <StyledPendingReasonWrapper>
         <div className="summary">{t(i18n.summary)}</div>
-        <Popover content={content} title="">
+        <Popover content={content}>
           <div className="detail">
             {t(translations.transaction.pending.view)}
           </div>
@@ -279,6 +280,9 @@ const StyledPendingReasonWrapper = styled.div`
 const StyledPendingContentWrapper = styled.div`
   max-width: 450px;
 
+  ${media.s} {
+    max-width: 300px;
+  }
   b {
     color: var(--theme-color-blue0);
   }
