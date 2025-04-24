@@ -11,7 +11,7 @@ import { useClickAway, useToggle } from 'react-use';
 import { ScanEvent } from '../../../utils/gaConstants';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
-export type HeaderLinkTitle = ReactNode | Array<ReactNode>;
+export type HeaderLinkTitle = ReactNode | Array<ReactNode> | false;
 
 export interface HeaderLink {
   title: HeaderLinkTitle;
@@ -24,6 +24,7 @@ export interface HeaderLink {
   matched?: boolean;
   afterClick?: VoidFunction;
   plain?: boolean;
+  vertical?: boolean;
 }
 
 export type HeaderLinks = HeaderLink[];
@@ -41,6 +42,7 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
       matched: customMatched,
       afterClick,
       plain,
+      vertical,
     } = link;
 
     let matched: boolean = customMatched || false;
@@ -67,15 +69,15 @@ export function genParseLinkFn(links: HeaderLinks, level = 0) {
         href={href}
         name={name}
         level={level}
-        className={`navbar-link level-${level} ${
-          plain ? 'plain' : ''
+        className={`navbar-link level-${level} ${plain ? 'plain' : ''} ${
+          vertical ? 'vertical' : ''
         } ${className}`}
         onClick={onClick}
         matched={matched}
         afterClick={afterClick}
         plain={plain}
       >
-        {plain ? <span>{title}</span> : title}
+        {title === false ? null : plain ? <span>{title}</span> : title}
         <SubLinkWrap
           className={`sub-link-wrap level-${level} ${plain ? 'plain' : ''}`}
         >
@@ -107,11 +109,7 @@ const Menu = styled.div<{ name?: string }>`
     }
     &.level-1.matched,
     &.level-2.matched {
-      color: white;
-      background-color: var(--theme-color-blue0);
-      &:hover {
-        color: white;
-      }
+      color: var(--theme-color-primary);
 
       svg {
         margin-left: 1rem;
@@ -279,13 +277,13 @@ const WrappLink = styled.span`
     cursor: pointer;
     font-weight: 500;
     &:hover {
-      color: #1e3de4 !important;
+      color: var(--theme-color-primary) !important;
       //background-color: rgba(100%, 87%, 11%, 70%);
     }
     &.matched {
-      color: #1e3de4 !important;
+      color: var(--theme-color-primary) !important;
       &:hover {
-        color: #1e3de4 !important;
+        color: var(--theme-color-primary) !important;
       }
     }
     * {
@@ -356,12 +354,14 @@ const WrappLink = styled.span`
       padding-top: 0.43rem;
       padding-bottom: 0.43rem;
       &.matched {
-        color: #fff !important;
-        background-color: var(--theme-color-blue0);
+        color: var(--theme-color-primary) !important;
       }
-      &:hover:not(.matched) {
-        color: #fff !important;
-        background-color: var(--theme-color-blue0);
+      &:hover {
+        &:not(.matched) {
+          color: #424a71 !important;
+        }
+        border-radius: 0.14286rem;
+        background: #f5f6fa;
       }
     }
 
@@ -396,7 +396,14 @@ const WrappLink = styled.span`
     }
   }
 
-  &.plain-wrap.level-1 {
+  &.plain-wrap.level-1.vertical:not(:first-child) {
+    display: block;
+    border-top: 1px solid #e8e9ea;
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+
+  &.plain-wrap.level-1:not(.vertical) {
     &:last-child {
       border-left: 1px solid #eee;
     }

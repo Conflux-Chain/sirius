@@ -9,7 +9,11 @@ import {
 
 export interface ExtendedGlobalDataType
   extends Omit<GlobalDataType, 'networks'> {
-  networks: NetworksType[];
+  networks: {
+    mainnet: NetworksType[];
+    testnet: NetworksType[];
+    devnet: NetworksType[];
+  };
 }
 
 // react-use version, to solve useContext can not update global value in App.ts
