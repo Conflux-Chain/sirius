@@ -39,7 +39,7 @@ import warningInfo from '../../../images/info-white.svg';
 import InternalContractIcon from '../../../images/internal-contract-icon.png';
 import styled from 'styled-components';
 import DownIcon from '../../../images/down.png';
-import { Menu } from '@cfxjs/antd';
+import { MenuItem } from '@cfxjs/sirius-next-common/dist/components/Dropdown';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
 import { useGlobalData } from 'utils/hooks/useGlobal';
@@ -113,23 +113,23 @@ export const ContractDetailPage = memo(() => {
   const menu = (
     <MenuWrapper>
       {!contractInfo?.verify?.exactMatch ? (
-        <Menu.Item>
+        <MenuItem>
           <Link href={`/contract-verification?address=${address}`}>
             {t(translations.general.address.more.verifyContract)}
           </Link>
-        </Menu.Item>
+        </MenuItem>
       ) : null}
-      <Menu.Item>
+      <MenuItem>
         <Link href={`/balance-checker?address=${address}`}>
           {t(translations.general.address.more.balanceChecker)}
         </Link>
-      </Menu.Item>
-      <Menu.Item>
+      </MenuItem>
+      <MenuItem>
         <Link href={`/contract-info/${address}`}>
           {t(translations.general.address.more.editContract)}
         </Link>
-      </Menu.Item>
-      <Menu.Item>
+      </MenuItem>
+      <MenuItem>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
           onClick={e => {
@@ -145,16 +145,16 @@ export const ContractDetailPage = memo(() => {
             ],
           )}
         </a>
-      </Menu.Item>
+      </MenuItem>
       {IS_CORESPACE && (IS_MAINNET || IS_TESTNET) ? (
-        <Menu.Item>
+        <MenuItem>
           <Link href={`/sponsor/${address}`}>
             {t(translations.general.address.more.sponsor)}
           </Link>
-        </Menu.Item>
+        </MenuItem>
       ) : null}
       {hasWebsite && (
-        <Menu.Item>
+        <MenuItem>
           <Link
             onClick={e => {
               e.preventDefault();
@@ -169,7 +169,7 @@ export const ContractDetailPage = memo(() => {
           >
             {t(translations.general.address.more.website)}
           </Link>
-        </Menu.Item>
+        </MenuItem>
       )}
     </MenuWrapper>
   );
@@ -249,7 +249,7 @@ export const ContractDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['click']}>
+              <DropdownWrapper overlay={menu}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img
