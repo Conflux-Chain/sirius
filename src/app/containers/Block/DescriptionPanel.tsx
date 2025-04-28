@@ -23,9 +23,9 @@ import {
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { IncreasePercent } from '@cfxjs/sirius-next-common/dist/components/IncreasePercent';
+import { Progress } from '@cfxjs/sirius-next-common/dist/components/Progress';
 import imgChevronDown from 'images/chevronDown.png';
 import clsx from 'clsx';
-import { Progress } from '@cfxjs/antd';
 
 const GasTargetUsage: React.FC<{
   gasUsed: string;
@@ -40,7 +40,7 @@ const GasTargetUsage: React.FC<{
         gapDegree={150}
         showInfo={false}
         strokeWidth={10}
-        strokeColor="#1E3DE4"
+        strokeColor="#1e3de4"
         trailColor="#eeeeee"
         percent={Math.min(value, 100)}
         width={35}

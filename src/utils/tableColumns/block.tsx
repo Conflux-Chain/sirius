@@ -16,12 +16,12 @@ import {
 import imgPivot from 'images/pivot.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ColumnAge } from './utils';
-import { Progress } from '@cfxjs/antd';
 import BigNumber from 'bignumber.js';
 import {
   fromDripToCfx,
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
+import { Progress } from '@cfxjs/sirius-next-common/dist/components/Progress';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 export const epoch = {
