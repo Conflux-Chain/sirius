@@ -208,7 +208,7 @@ export const ContractDetailPage = memo(() => {
               ? t(translations.general.specialAddress)
               : t(translations.general.contract)}
             <Link href={`/cns-search?text=${label}`}>
-              <StyledLabelWrapper show={!!label}>
+              <StyledLabelWrapper $show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>

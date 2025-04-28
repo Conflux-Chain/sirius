@@ -27,7 +27,7 @@ const Nametag = ({ address }) => {
   );
 
   let tag = (
-    <StyledLabelWrapper show={!!labelOfNametag}>
+    <StyledLabelWrapper $show={!!labelOfNametag}>
       # {labelOfNametag}
     </StyledLabelWrapper>
   );
@@ -42,7 +42,7 @@ const Nametag = ({ address }) => {
         }
         target="__blank"
       >
-        <StyledLabelWrapper show={!!labelOfNametag}>
+        <StyledLabelWrapper $show={!!labelOfNametag}>
           # {labelOfNametag}{' '}
           <img
             src={externallinkIcon}
@@ -73,10 +73,10 @@ const Nametag = ({ address }) => {
 
       {nametag?.labels.map(label => (
         <StyledLabelWrapper
-          show={!!nametag?.labels.length}
-          color={nametag?.caution ? '#E15C56' : ''}
-          backgroundColor={nametag?.caution ? '#FBEBEB' : ''}
-          bordered={!!nametag?.caution}
+          $show={!!nametag?.labels.length}
+          $color={nametag?.caution ? '#E15C56' : ''}
+          $backgroundColor={nametag?.caution ? '#FBEBEB' : ''}
+          $bordered={!!nametag?.caution}
         >
           <img
             src={nametag?.caution ? warningIcon : verifiedIcon}

@@ -128,7 +128,7 @@ export const AddressDetailPage = memo(() => {
               ? t(translations.general.zeroAddress)
               : t(translations.general.address.address)}
             <Link href={`/cns-search?text=${label}`}>
-              <StyledLabelWrapper show={!!label}>
+              <StyledLabelWrapper $show={!!label}>
                 {icon}
                 {label}
               </StyledLabelWrapper>
