@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatNumber, processSponsorStorage } from 'utils';
 import styled from 'styled-components';
-import { Popover } from '@cfxjs/antd';
+import { Popover } from '@cfxjs/sirius-next-common/dist/components/Popover';
 import { FileSearchOutlined } from '@ant-design/icons';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface StorageInfo {
   point: string;
@@ -102,6 +103,9 @@ SponsorStorage.propTypes = {
 
 const StyledSponsorStorageContentWrapper = styled.div`
   max-width: 420px;
+  ${media.s} {
+    max-width: 300px;
+  }
   color: #282d30;
   font-size: 14px;
   line-height: 22px;

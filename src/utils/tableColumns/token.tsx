@@ -27,11 +27,7 @@ import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
 import clsx from 'clsx';
-import { Popover } from '@cfxjs/react-ui';
-import {
-  useBreakpoint,
-  media,
-} from '@cfxjs/sirius-next-common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
@@ -730,7 +726,6 @@ export const details = {
 };
 
 const TraceTypeElement = ({ info }) => {
-  const breakpoint = useBreakpoint();
   const { t } = useTranslation();
 
   const outcome = info?.result?.outcome;
@@ -751,17 +746,20 @@ const TraceTypeElement = ({ info }) => {
     <StyledTractTypeWrapper className={clsx(outcome)}>
       {level}
       {outcome && outcome !== 'success' ? (
-        <Popover
-          notSeperateTitle
-          title={t(translations.general.table.token.traceStatusTitle)}
-          content={t(translations.general.table.token.traceStatus[outcome])}
-          placement="top"
-          hoverable={true}
-          trigger={breakpoint === 's' ? 'click' : 'hover'}
-          contentClassName={clsx('sirius-status-popover')}
+        <Tooltip
+          title={
+            <div className="sirius-status-tooltip">
+              <div className="title">
+                {t(translations.general.table.token.traceStatusTitle)}
+              </div>
+              <div className="items">
+                {t(translations.general.table.token.traceStatus[outcome])}
+              </div>
+            </div>
+          }
         >
           <span className="dot"></span>
-        </Popover>
+        </Tooltip>
       ) : null}
       <Text hoverValue={`${info.type}${info.index}`}>
         <div className="type-container">
@@ -1040,21 +1038,18 @@ const StyledTractTypeWrapper = styled.span`
     }
   }
 
-  .tooltip-content.sirius-status-popover {
+  .sirius-status-tooltip {
     padding: 0.2857rem 0.8571rem;
 
     .item.title {
+      margin-left: 0.2857rem;
+      color: #333333;
+      text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       padding: 0;
 
       .icon {
         width: 0.8571rem;
         height: 0.8571rem;
-      }
-
-      .text {
-        margin-left: 0.2857rem;
-        color: #333333;
-        text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
       }
     }
 

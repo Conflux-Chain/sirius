@@ -8,9 +8,6 @@ import styled from 'styled-components';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Popover } from '@cfxjs/react-ui';
-import { PopoverProps } from '@cfxjs/react-ui/dist/popover/popover';
-import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import _ from 'lodash';
 import { PendingReason } from 'utils/tableColumns/PendingReason';
 
@@ -23,9 +20,7 @@ import imgPending from 'images/status/pending.svg';
 interface Props {
   type: string | number;
   variant?: 'dot' | 'text';
-  popoverProps?: Partial<PopoverProps>;
   showMessage?: boolean;
-  showTooltip?: boolean;
   txExecErrorInfo?: {
     type: number;
     message: string;
@@ -41,16 +36,13 @@ const StatusComponent = ({
   type: outerType,
   className,
   variant,
-  popoverProps,
   children,
   showMessage,
-  showTooltip,
   txExecErrorInfo,
   address,
   hash,
   ...others
 }: StatusProps) => {
-  const breakpoint = useBreakpoint();
   const { t } = useTranslation();
   const type = String(_.isNil(outerType) ? '4' : outerType);
   const typeMap = useMemo(
@@ -139,8 +131,6 @@ const StatusComponent = ({
         )}
       </>
     );
-    const { contentClassName: popoverContentClassName, ...popoverOthers } =
-      popoverProps || {};
 
     return (
       <StyledStatusWrapper
@@ -148,28 +138,9 @@ const StatusComponent = ({
         {...others}
       >
         {variant === 'dot' ? (
-          <StyledPopoverWrapper>
-            {showTooltip ? (
-              <Popover
-                notSeperateTitle
-                title={content}
-                content={explanation}
-                placement="auto-start"
-                hoverable={true}
-                hoverableTimeout={1000}
-                trigger={breakpoint === 's' ? 'click' : 'hover'}
-                contentClassName={clsx(
-                  'siriuse-status-popover',
-                  popoverContentClassName,
-                )}
-                {...popoverOthers}
-              >
-                <span className="dot"></span>
-              </Popover>
-            ) : (
-              <span className="dot"></span>
-            )}
-          </StyledPopoverWrapper>
+          <div>
+            <span className="dot"></span>
+          </div>
         ) : (
           content
         )}
@@ -181,7 +152,6 @@ const StatusComponent = ({
 };
 StatusComponent.defaultProps = {
   showMessage: true,
-  showTooltip: false,
 };
 
 export const Status = React.memo(StatusComponent);
@@ -251,36 +221,5 @@ const StyledStatusWrapper = styled.span`
   }
   .split {
     margin-left: 10px;
-  }
-`;
-
-const StyledPopoverWrapper = styled.div`
-  .tooltip-content.siriuse-status-popover {
-    padding: 0.2857rem 0.8571rem;
-    .item.title {
-      padding: 0;
-
-      .icon {
-        width: 0.8571rem;
-        height: 0.8571rem;
-      }
-      .text {
-        margin-left: 0.2857rem;
-        color: #333333;
-        text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
-      }
-    }
-    .items {
-      color: #a4a8b6;
-      text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
-      max-width: 14.2857rem;
-      min-width: 11.7143rem;
-      line-height: 1.0714rem;
-      white-space: break-spaces;
-      padding-bottom: 0.1429rem;
-    }
-    .inner {
-      min-width: inherit;
-    }
   }
 `;

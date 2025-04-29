@@ -386,13 +386,11 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           {type === 'read' &&
             outputShown &&
             outputs.map((item, index) => (
-              <>
-                <OutputItem
-                  output={item}
-                  value={outputValue[index]}
-                  key={id + index}
-                />
-              </>
+              <OutputItem
+                output={item}
+                value={outputValue[index]}
+                key={id + index}
+              />
             ))}
           {<Error message={outputError} />}
         </FuncBody>

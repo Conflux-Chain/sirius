@@ -14,7 +14,10 @@ import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
-import { Dropdown, Menu } from '@cfxjs/antd';
+import {
+  DropdownMenu,
+  MenuItem,
+} from '@cfxjs/sirius-next-common/dist/components/Dropdown';
 import descIcon from 'images/table-desc.svg';
 import ENV_CONFIG from 'env';
 
@@ -74,16 +77,16 @@ export function TokenDetail() {
 
   const menu = (
     <MenuWrapper>
-      <Menu.Item>
+      <MenuItem>
         <Link href={`/token-info/${tokenAddress}`}>
           {t(translations.general.address.more.editToken)}
         </Link>
-      </Menu.Item>
-      <Menu.Item>
+      </MenuItem>
+      <MenuItem>
         <Link href={`/balance-checker?address=${tokenAddress}`}>
           {t(translations.general.address.more.balanceChecker)}
         </Link>
-      </Menu.Item>
+      </MenuItem>
     </MenuWrapper>
   );
 
@@ -129,7 +132,7 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
-            <DropdownWrapper overlay={menu} trigger={['click']}>
+            <DropdownWrapper overlay={menu}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
                 <img
@@ -152,7 +155,7 @@ export function TokenDetail() {
           </HeaderWrap>
         ) : (
           <SkeletonWrap>
-            <Skeleton className="sirius-tokendetail-skeleton" />
+            <Skeleton className="sirius-token-detail-skeleton" />
           </SkeletonWrap>
         )}
         <Basic
@@ -192,7 +195,7 @@ const TokenDetailWrap = styled.div`
 `;
 
 const SkeletonWrap = styled.div`
-  .skeleton.sirius-tokendetail-skeleton.text {
+  .skeleton.sirius-token-detail-skeleton.text {
     width: 8.5714rem;
     height: 2.5714rem;
     margin-bottom: 1.7143rem;
@@ -251,7 +254,7 @@ const HeaderWrap = styled.div`
   }
 `;
 
-export const DropdownWrapper = styled(Dropdown)`
+export const DropdownWrapper = styled(DropdownMenu)`
   position: absolute;
   right: 0;
   bottom: 0;

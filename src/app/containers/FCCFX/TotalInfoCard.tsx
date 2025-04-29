@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { Progress } from '@cfxjs/antd';
 import { Row, Col } from '@cfxjs/sirius-next-common/dist/components/Grid';
 import { StyledTitle1474798C } from 'app/components/StyledComponent';
 import { formatBalance } from 'utils';
 import { TotalInfoType } from './Common';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
+import { Progress } from '@cfxjs/sirius-next-common/dist/components/Progress';
 import {
   useBreakpoint,
   media,
@@ -218,7 +218,7 @@ const StyledTotalInfoWrapper = styled.div`
     margin-left: -1.7143rem;
     height: 100%;
 
-    .ant-progress-circle .ant-progress-text {
+    .sirius-progress-circle .sirius-progress-text {
       font-size: 0.85em;
     }
   }

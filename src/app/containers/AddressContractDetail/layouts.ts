@@ -129,20 +129,20 @@ export const Bottom = styled.section`
 `;
 
 export const StyledLabelWrapper = styled.span<{
-  show: boolean;
-  backgroundColor?: string;
-  color?: string;
-  bordered?: boolean;
+  $show: boolean;
+  $backgroundColor?: string;
+  $color?: string;
+  $bordered?: boolean;
 }>`
-  background-color: ${props => props.backgroundColor || '#ffffff'};
+  background-color: ${props => props.$backgroundColor || '#ffffff'};
   border-radius: 16px;
   font-size: 14px;
   padding: 4px 12px;
   margin-left: 12px;
   height: 32px;
-  display: ${props => (props.show ? 'flex' : 'none')};
+  display: ${props => (props.$show ? 'flex' : 'none')};
   align-items: center;
-  color: ${props => props.color || 'var(--theme-color-gray4);'};
+  color: ${props => props.$color || 'var(--theme-color-gray4);'};
   text-transform: none;
-  border: ${props => (props.bordered ? '1px solid' : 'none')};
+  border: ${props => (props.$bordered ? '1px solid' : 'none')};
 `;

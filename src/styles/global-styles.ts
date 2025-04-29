@@ -284,7 +284,7 @@ export const GlobalStyle = createGlobalStyle`
   .image-preview-popover {
     line-height: 1;
 
-    .ant-popover-inner-content {
+    .sirius-popover-content {
       padding: 16px;
     }
 

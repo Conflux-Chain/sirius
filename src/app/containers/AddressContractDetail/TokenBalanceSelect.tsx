@@ -55,7 +55,7 @@ function Select({ children = [] }: { children?: any[] } = {}) {
     <SelectWrapper ref={selectRef}>
       <SelectTokenBox onClick={() => tokenCount && toggle()}>
         <SelectTokenCount>{tokenCount}</SelectTokenCount>
-        <SelectTokenDropdownIcon expanded={expanded}>
+        <SelectTokenDropdownIcon $expanded={expanded}>
           <ChevronUp color="#7e8295" />
         </SelectTokenDropdownIcon>
         {expanded && (
@@ -187,8 +187,8 @@ const SelectTokenCount = styled.div`
   font-size: 1.27rem;
   font-weight: 700;
 `;
-const SelectTokenDropdownIcon = styled.div<{ expanded: boolean }>`
-  transform: ${props => (props.expanded ? 'unset' : 'rotate(180deg)')};
+const SelectTokenDropdownIcon = styled.div<{ $expanded: boolean }>`
+  transform: ${props => (props.$expanded ? 'unset' : 'rotate(180deg)')};
 `;
 const SelectDropdown = styled.div`
   z-index: 210;

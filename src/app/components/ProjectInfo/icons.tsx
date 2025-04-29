@@ -24,7 +24,7 @@ export const DexIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20">
         <g id="Token-List/Project-Info" stroke="none" fill="none">
           <g
@@ -65,7 +65,7 @@ export const CexIcon = function ({
   const { t } = useTranslation();
 
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20">
         <g id="Token-List/Project-Info" stroke="none" fill="none">
           <g
@@ -106,7 +106,7 @@ export const AuditIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
         <g id="Token-List/Project-Info" stroke="none">
           <g
@@ -182,7 +182,7 @@ export const CoinMarketIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
         <g id="Token-List/Project-Info" stroke="none" fill="none">
           <g
@@ -220,7 +220,7 @@ export const OxIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
         <g id="Token-List/Project-Info" stroke="none" fill="none">
           <g
@@ -253,7 +253,7 @@ export const SponsorIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
         <g id="Token-List/Project-Info" stroke="none" fill="none">
           <g
@@ -291,7 +291,7 @@ export const VerifyIcon = function ({
 }: IconProp) {
   const { t } = useTranslation();
   const icon = (
-    <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+    <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
       {isActive ? (
         <svg
           width="20px"
@@ -397,7 +397,7 @@ export const DetailIcon = function ({
   }
   return (
     <StyledTooltip title={title}>
-      <StyledIconWrapper onClick={onClick} hoverable={hoverable}>
+      <StyledIconWrapper onClick={onClick} $hoverable={hoverable}>
         {icon}
       </StyledIconWrapper>
     </StyledTooltip>
@@ -405,9 +405,9 @@ export const DetailIcon = function ({
 };
 
 const StyledIconWrapper = styled.span<{
-  hoverable?: boolean;
+  $hoverable?: boolean;
 }>`
-  cursor: ${props => (props.hoverable ? 'pointer' : 'inherit')};
+  cursor: ${props => (props.$hoverable ? 'pointer' : 'inherit')};
   display: inline-flex;
 `;
 

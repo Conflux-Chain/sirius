@@ -378,7 +378,7 @@ export const ProjectInfo = React.memo(
 
     return (
       <ProjectWrapper>
-        <IconWrapper left={isDetailPage}>
+        <IconWrapper $left={isDetailPage}>
           <LeftWrapper>
             {list
               .reduce(
@@ -505,7 +505,7 @@ export const ProjectInfo = React.memo(
   },
 );
 
-const IconWrapper = styled('div')<{ left: boolean }>`
+const IconWrapper = styled.div<{ $left: boolean }>`
   height: 24px;
   border-radius: 10px;
   display: flex;
@@ -514,7 +514,7 @@ const IconWrapper = styled('div')<{ left: boolean }>`
   background-color: #edf0f8;
   padding: 0 4px 0 4px;
   width: 160px;
-  float: ${props => (props.left ? 'left' : 'right')};
+  float: ${props => (props.$left ? 'left' : 'right')};
 `;
 const LeftWrapper = styled.div`
   display: flex;
