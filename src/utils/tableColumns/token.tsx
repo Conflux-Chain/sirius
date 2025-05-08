@@ -38,7 +38,7 @@ import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
 import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
-
+import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
 const fromTypeInfo = {
   arrow: {
     src: imgArrow,
@@ -116,7 +116,12 @@ export const renderAddress = (
 
   // dummy address, show name only
   if (row[`${type}ContractInfo`]?.isVirtual) {
-    return row[`${type}ContractInfo`].name;
+    const name = row[`${type}ContractInfo`].name;
+    return (
+      <ValueHighlight scope="address" value={name}>
+        {name}
+      </ValueHighlight>
+    );
   }
 
   if (type === 'from') {
@@ -156,16 +161,18 @@ export const renderAddress = (
 
   return (
     <>
-      <CoreAddressContainer
-        value={value}
-        alias={alias}
-        link={formatAddress(filter) !== formatAddress(value)}
-        contractCreated={row.contractCreated}
-        verify={verify}
-        isEspaceAddress={isEspaceAddress}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
+      <ValueHighlight scope="address" value={value}>
+        <CoreAddressContainer
+          value={value}
+          alias={alias}
+          link={formatAddress(filter) !== formatAddress(value)}
+          contractCreated={row.contractCreated}
+          verify={verify}
+          isEspaceAddress={isEspaceAddress}
+          ensInfo={getENSInfo(row)}
+          nametagInfo={getNametagInfo(row)}
+        />
+      </ValueHighlight>
       {type === 'from' && withArrow && (
         <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
       )}
