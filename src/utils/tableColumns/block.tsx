@@ -4,6 +4,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
 import {
   formatNumber,
   getPercent,
@@ -88,11 +89,13 @@ export const miner = {
   key: 'miner',
   width: 1,
   render: (value, row) => (
-    <CoreAddressContainer
-      value={value}
-      ensInfo={getENSInfo(row)}
-      nametagInfo={getNametagInfo(row)}
-    />
+    <ValueHighlight scope="address" value={value}>
+      <CoreAddressContainer
+        value={value}
+        ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
+      />
+    </ValueHighlight>
   ),
 };
 

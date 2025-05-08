@@ -28,6 +28,7 @@ import {
   fromDripToCfx,
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
+import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -162,13 +163,15 @@ export const from = {
   key: 'from',
   width: 1,
   render: (value, row) => (
-    <CoreAddressContainer
-      value={value}
-      alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
-      contractCreated={row.contractCreated}
-      ensInfo={getENSInfo(row)}
-      nametagInfo={getNametagInfo(row)}
-    />
+    <ValueHighlight scope="address" value={value}>
+      <CoreAddressContainer
+        value={value}
+        alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
+        contractCreated={row.contractCreated}
+        ensInfo={getENSInfo(row)}
+        nametagInfo={getNametagInfo(row)}
+      />
+    </ValueHighlight>
   ),
 };
 
@@ -200,14 +203,16 @@ export const to = {
     }
 
     return (
-      <CoreAddressContainer
-        value={value}
-        alias={alias}
-        contractCreated={row.contractCreated}
-        verify={verify}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
+      <ValueHighlight scope="address" value={value}>
+        <CoreAddressContainer
+          value={value}
+          alias={alias}
+          contractCreated={row.contractCreated}
+          verify={verify}
+          ensInfo={getENSInfo(row)}
+          nametagInfo={getNametagInfo(row)}
+        />
+      </ValueHighlight>
     );
   },
 };
@@ -299,11 +304,13 @@ export const method = {
     }
 
     return (
-      <Text tag="span" hoverValue={text}>
-        <StyledMethodContainerWrapper>
-          <StyledMethodWrapper>{text}</StyledMethodWrapper>
-        </StyledMethodContainerWrapper>
-      </Text>
+      <MethodHighlight scope="method" value={text}>
+        <Text tag="span" hoverValue={text}>
+          <StyledMethodContainerWrapper>
+            <StyledMethodWrapper>{text}</StyledMethodWrapper>
+          </StyledMethodContainerWrapper>
+        </Text>
+      </MethodHighlight>
     );
   },
 };
@@ -377,6 +384,9 @@ const SpanWrap = styled.span`
   vertical-align: bottom;
 `;
 
+const MethodHighlight = styled(ValueHighlight)`
+  padding: 0;
+`;
 const StyledMethodContainerWrapper = styled.span`
   display: flex;
 `;

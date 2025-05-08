@@ -57,6 +57,7 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import dayjs from 'dayjs';
+import { StyledHighlight } from './EventLogs/StyledComponents';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -210,11 +211,11 @@ export const Detail = ({
     (isFull = false, address) => {
       const addr = formatAddress(address);
       return (
-        <span>
+        <StyledHighlight scope="address" value={addr}>
           <CoreAddressContainer value={addr} isFull={isFull} />{' '}
           {nametags[addr]?.nameTag ? `(${nametags[addr]?.nameTag})` : null}{' '}
           <CopyButton copyText={addr} />
-        </span>
+        </StyledHighlight>
       );
     },
     [nametags],

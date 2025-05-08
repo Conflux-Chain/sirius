@@ -33,6 +33,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-orange0: ${orange0};
     --theme-color-black0: ${black0};
     --theme-color-primary: #1e3de4;
+    --theme-color-highlight-bg: #dfe7ff;
     --theme-color-primary-button-bg: #7789D3;
     --theme-color-button-bg: rgba(0, 84, 254, 0.8);
     --theme-color-outline: #7789D3;
