@@ -145,7 +145,7 @@ import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
-import ENV_CONFIG_LOCAL from 'env';
+import ENV_CONFIG_LOCAL, { IS_DEVNET } from 'env';
 import { useEnv } from '@cfxjs/sirius-next-common/dist/store/index';
 
 // @ts-ignore
@@ -268,22 +268,13 @@ export function App() {
     reqProjectConfig()
       .then(resp => {
         delete resp.referer;
-        const networks = {
+        let networks = {
           ...NETWORK_OPTIONS,
         };
-        if (
-          networks.mainnet.every(n => n.id !== resp?.networkId) &&
-          networks.testnet.every(n => n.id !== resp?.networkId) &&
-          networks.devnet.every(n => n.id !== resp?.networkId)
-        ) {
-          networks.devnet = [
-            ...networks.devnet,
-            {
-              url: '',
-              name: resp?.networkId,
-              id: resp?.networkId,
-            },
-          ];
+        if (IS_DEVNET) {
+          networks = {
+            devnet: resp.networks,
+          };
         }
         // @ts-ignore
         const networkId = resp?.networkId;

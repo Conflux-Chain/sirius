@@ -2,12 +2,17 @@ import * as CORESPACE_MAINNET_CONFIG from './core/mainnet';
 import * as CORESPACE_TESTNET_CONFIG from './core/testnet';
 import * as CORESPACE_DEVNET_CONFIG from './core/devnet';
 import { CHAIN_TYPES, NETWORK_TYPES } from './types';
+import merge from 'lodash/merge';
 
 const DEFAULT_NETWORK_CONFIG = CORESPACE_MAINNET_CONFIG;
 
 const ENV_CONFIG = (() => {
   if (window.customConfig && typeof window.customConfig === 'object') {
-    return window.customConfig as typeof DEFAULT_NETWORK_CONFIG;
+    return merge(
+      {},
+      DEFAULT_NETWORK_CONFIG,
+      window.customConfig,
+    ) as typeof DEFAULT_NETWORK_CONFIG;
   }
   const IS_CORESPACE_DEVNET =
     process.env.REACT_APP_CORE_DEVNET === 'true' ||
