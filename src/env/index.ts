@@ -3,32 +3,11 @@ import * as CORESPACE_TESTNET_CONFIG from './core/testnet';
 import * as CORESPACE_DEVNET_CONFIG from './core/devnet';
 import { CHAIN_TYPES, NETWORK_TYPES } from './types';
 
-const getConfigFromFile = () => {
-  const cacheKey = 'STATIC_CONFIG_CACHE';
-  try {
-    const cache = localStorage.getItem(cacheKey);
-    fetch('/config.json').then(response => {
-      response.ok &&
-        response.json().then(res => {
-          const resString = JSON.stringify(res);
-          if (resString !== cache) {
-            localStorage.setItem(cacheKey, resString);
-            window.location.reload();
-          }
-        });
-    });
-    return JSON.parse(cache ?? '') as typeof DEFAULT_NETWORK_CONFIG;
-  } catch (error) {
-    return ({} as unknown) as typeof DEFAULT_NETWORK_CONFIG;
-  }
-};
-
 const DEFAULT_NETWORK_CONFIG = CORESPACE_MAINNET_CONFIG;
 
 const ENV_CONFIG = (() => {
-  const IS_STATIC = process.env.REACT_APP_STATIC === 'true';
-  if (IS_STATIC) {
-    return getConfigFromFile();
+  if (window.customConfig && typeof window.customConfig === 'object') {
+    return window.customConfig as typeof DEFAULT_NETWORK_CONFIG;
   }
   const IS_CORESPACE_DEVNET =
     process.env.REACT_APP_CORE_DEVNET === 'true' ||
