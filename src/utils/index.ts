@@ -217,17 +217,18 @@ export const getNetwork = (
   networks: ExtendedGlobalDataType['networks'],
   id: number,
 ) => {
-  const matched = [
-    ...networks.mainnet,
-    ...networks.testnet,
-    ...networks.devnet,
-  ].find(n => n.id === id);
+  const list = [
+    ...(networks.mainnet ?? []),
+    ...(networks.testnet ?? []),
+    ...(networks.devnet ?? []),
+  ];
+  const matched = list.find(n => n.id === id);
   let network: NetworksType;
 
   if (matched) {
     network = matched;
   } else {
-    network = networks.mainnet[0];
+    network = list[0];
   }
 
   return network;
