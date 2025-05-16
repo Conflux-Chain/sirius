@@ -28,9 +28,9 @@ const ENV_CONFIG = (() => {
   console.warn('Unknown env');
   return DEFAULT_NETWORK_CONFIG;
 })();
+
 export * from './env-constants';
 export * from './types';
-
 export const IS_CORESPACE = ENV_CONFIG.ENV_NETWORK_TYPE === NETWORK_TYPES.CORE;
 export const IS_MAINNET = ENV_CONFIG.ENV_CHAIN_TYPE === CHAIN_TYPES.MAINNET;
 export const IS_TESTNET = ENV_CONFIG.ENV_CHAIN_TYPE === CHAIN_TYPES.TESTNET;
