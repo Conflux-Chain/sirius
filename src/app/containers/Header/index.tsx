@@ -30,7 +30,6 @@ import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasP
 
 import ENV_CONFIG, { DOMAIN, IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
-import lodash from 'lodash';
 
 const hideNetworkInDotNet = n => {
   if (HIDE_IN_DOT_NET) {
@@ -587,13 +586,13 @@ export const Header = memo(() => {
           {getNetwork(networks, networkId).name}
         </NetWorkWrapper>
       ),
-      children: lodash.compact([
+      children: [
         {
           title: false,
           plain: true,
           vertical: true,
           children: networks.mainnet
-            .filter(hideNetworkInDotNet)
+            ?.filter(hideNetworkInDotNet)
             .map(getNetworkLink),
         },
         {
@@ -601,16 +600,16 @@ export const Header = memo(() => {
           plain: true,
           vertical: true,
           children: networks.testnet
-            .filter(hideNetworkInDotNet)
+            ?.filter(hideNetworkInDotNet)
             .map(getNetworkLink),
         },
-        networks.devnet.length > 0 && {
+        {
           title: false,
           plain: true,
           vertical: true,
-          children: networks.devnet.map(getNetworkLink),
+          children: networks.devnet?.map(getNetworkLink),
         },
-      ]),
+      ].filter(i => i.children && i.children.length > 0),
     },
   ];
 
