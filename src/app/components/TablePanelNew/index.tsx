@@ -20,6 +20,7 @@ type SortDirections = SortOrder[];
 export const sortDirections: SortDirections = ['descend', 'ascend', 'descend'];
 
 interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
+  formatResponse?: <T extends Record<string, unknown>>(response: T) => T;
   url?: string;
   title?: ((info: any) => React.ReactNode) | React.ReactNode;
   footer?: ((info: any) => React.ReactNode) | React.ReactNode;
@@ -134,6 +135,7 @@ export const TablePanel = ({
   sortKeyMap = defaultSortKeyMap,
   showSorterTooltip = false,
   sortParam = 'reverse',
+  formatResponse,
   ...others
 }: TableProp) => {
   const history = useHistory();
@@ -206,11 +208,14 @@ export const TablePanel = ({
         query,
       })
         .then(resp => {
+          const formattedResponse = formatResponse
+            ? formatResponse(resp)
+            : resp;
           setState({
             ...state,
-            data: resp.list,
-            total: resp.total,
-            listLimit: resp.listLimit || 0,
+            data: formattedResponse.list,
+            total: formattedResponse.total,
+            listLimit: formattedResponse.listLimit || 0,
             loading: false,
           });
         })
