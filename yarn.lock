@@ -2426,10 +2426,10 @@
     recoil-nexus "^0.5.0"
     zustand "^4.3.9"
 
-"@cfx-kit/ui-components@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@cfx-kit/ui-components/-/ui-components-0.0.17.tgz#be9e13d08839ef6c963d789782560087aaa82c5b"
-  integrity sha512-1WXoZ03c26LCDSrglhNtu+VLX0gAPM+z4koI+Z+nh3Y3JIuK+m/91V+KqwjzVDMVTv9olVVjj7foT0emdAlYSQ==
+"@cfx-kit/ui-components@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/ui-components/-/ui-components-0.0.18.tgz#dcd90f31f311717ce5216897e7445a819955ed1a"
+  integrity sha512-NceDBoLzV71FEAIw7o40GbJ33FofTDexhDaW4WZYpa49Lw7Xu0gKd1+cFXfv5dkhibDRHiFVD2okAvRELR08YA==
 
 "@cfx-kit/utils@0.0.5":
   version "0.0.5"
@@ -2509,14 +2509,14 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.1.27":
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.27.tgz#266b9c0b9c8800e66a7d095427f300faf5c6190f"
-  integrity sha512-Gn4mC96L8SFd/l8OcX+7OlpeEHtYV5dl5iXyeLW4+nTA4MPV0Xyy73wNFB3uDL9j3oCVs84HWSMdZc1TYhPKXA==
+"@cfxjs/sirius-next-common@0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.28.tgz#df433b623925372770433f796e19b7ff8f4def34"
+  integrity sha512-8kfSmEvtdnjIPzp96sdsmBCs5ONzz+67qE5pF4cJrvrKpE4FHCh37+kBFT9bP/XeM819AmhnVnuyiXdm5rBnlA==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.3"
     "@cfx-kit/react-utils" "^0.0.45"
-    "@cfx-kit/ui-components" "^0.0.17"
+    "@cfx-kit/ui-components" "^0.0.18"
     "@radix-ui/react-radio-group" "^1.2.3"
     "@radix-ui/react-select" "^2.0.0"
     "@testing-library/react" "^15.0.5"
@@ -2549,10 +2549,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.1.21":
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.21.tgz#7781a49c5feac6d02592ee839822219963c3913b"
-  integrity sha512-xFOU9iBttViGfR5wI40gMcLtvRArrHYsv0Pn7LdjaObId2vRbNvCTeQeu81jYYgMGeTgf5QGPu2KPVi4WFjfzw==
+"@cfxjs/sirius-next-i18n@0.1.22":
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.22.tgz#a68c780e66d73a8a1df8e7303dea33c795ec6ae8"
+  integrity sha512-ONDr9b/FDcnw6mGH456HpaCFBqvCOYx6+PFIFZ7STzT4APfAmbmm3dSdc32gWn/ED4QUzfghQ6Go7KAA2KUuew==
 
 "@cfxjs/use-wallet-react@0.0.4", "@cfxjs/use-wallet-react@^0.0.4":
   version "0.0.4"

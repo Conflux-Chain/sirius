@@ -4,6 +4,7 @@ import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer, TxnSwitcher } from './components';
 import { isAccountAddress } from 'utils';
+import { formatListResponseWithPhishingInfo } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
 
 interface Props {
   address: string;
@@ -109,6 +110,7 @@ export const ExcutedTxns = ({ address }: Props) => {
       rowKey="hash"
       footer={footer}
       title={title}
+      formatResponse={formatListResponseWithPhishingInfo}
     ></TablePanel>
   );
 };

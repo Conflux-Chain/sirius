@@ -4,7 +4,7 @@ import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer } from './components';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
-
+import { formatListResponseWithPhishingInfo } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
 interface Props {
   address: string;
 }
@@ -69,6 +69,7 @@ export const CRC721Txns = ({ address }: Props) => {
       rowKey={record =>
         `${record.transactionHash}-${record.transactionLogIndex}`
       }
+      formatResponse={formatListResponseWithPhishingInfo}
     ></TablePanel>
   );
 };
