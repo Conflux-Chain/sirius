@@ -3,3 +3,7 @@ declare function setTimeout(
   ms: number,
   ...args: any[]
 ): number;
+
+declare interface Window {
+  customConfig: unknown;
+}
