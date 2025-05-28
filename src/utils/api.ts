@@ -4,55 +4,22 @@ import qs from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { formatBalance } from './index';
-import fetch from './request';
+import {
+  fetchWithPrefix,
+  simpleGetFetcher,
+} from '@cfxjs/sirius-next-common/dist/utils/request';
 import ENV_CONFIG, { IS_MAINNET, IS_CORESPACE } from 'env';
 // import { getCurrency } from 'utils/constants';
 
-export const appendApiPrefix = (url: string) => {
-  // for cfx top N
-  if (url.startsWith('/stat/')) {
-    return url;
-  }
-  if (url.startsWith(ENV_CONFIG.ENV_OPEN_API_HOST)) {
-    return url;
-  }
-  return `/v1${url}`;
-};
-
-export interface Params {
+interface Params {
   [name: string]: string | string[];
 }
 
-export type useApi = (
+type useApi = (
   params?: Params | any[],
   shouldFetch?: boolean,
   ...rest: any[]
 ) => responseInterface<any, any>;
-
-export const simpleGetFetcher = async (...args: any[]) => {
-  let [url, query] = args;
-  if (query) {
-    url = qs.stringifyUrl({ url, query });
-  }
-  return await fetch(appendApiPrefix(url), {
-    method: 'get',
-  });
-};
-
-const simplePostFetcher = async (...args: any[]) => {
-  let [url, params, shouldAppendPrefix] = args;
-  shouldAppendPrefix =
-    shouldAppendPrefix === undefined ? true : shouldAppendPrefix;
-
-  return await fetch(shouldAppendPrefix ? appendApiPrefix(url) : url, {
-    method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
-  });
-};
 
 export const useSWRWithGetFecher = (key, swrOpts = {}) => {
   const isTransferReq =
@@ -61,7 +28,9 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
       typeof key[0] === 'string' &&
       key[0].startsWith('/transfer'));
 
-  const { data, error, mutate } = useSWR(key, simpleGetFetcher, { ...swrOpts });
+  const { data, error, mutate } = useSWR(key, simpleGetFetcher as any, {
+    ...swrOpts,
+  });
 
   let tokenAddress;
 
@@ -81,7 +50,7 @@ export const useSWRWithGetFecher = (key, swrOpts = {}) => {
           query: { addressArray: tokenAddress, fields: 'iconUrl' },
         })
       : null,
-    simpleGetFetcher,
+    simpleGetFetcher as any,
   );
 
   if (tokenData && tokenData.list) {
@@ -277,19 +246,6 @@ export const useCMContractList: useApi = (
     rest[0],
   );
 };
-export const useCMContractCreate: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  // params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/contract', ...params] : null,
-    rest[1] || simplePostFetcher,
-    rest[0],
-  );
-};
 
 export const useAccountTokenList = (
   accountAddress: string,
@@ -308,8 +264,8 @@ export const useAccountTokenList = (
         })
       : null,
     url =>
-      fetch(appendApiPrefix(url))
-        .then(({ total, list }) => {
+      fetchWithPrefix(url)
+        .then(({ total, list }: any) => {
           return {
             loading: false,
             total,
@@ -353,8 +309,8 @@ export const useAccount = (
   return useSWR(
     accountAddress ? url : null,
     url =>
-      fetch(appendApiPrefix(url))
-        .then(rst => {
+      fetchWithPrefix(url)
+        .then((rst: any) => {
           return {
             ...rst,
           };
@@ -420,8 +376,8 @@ export const useContract = (
   return useSWR(
     contractAddress ? url : null,
     url =>
-      fetch(appendApiPrefix(url))
-        .then(rst => {
+      fetchWithPrefix(url)
+        .then((rst: any) => {
           return {
             name: null,
             website: null,
@@ -530,8 +486,8 @@ export const useToken = (
   return useSWR(
     contractAddress ? url : null,
     url =>
-      fetch(appendApiPrefix(url))
-        .then(rst => {
+      fetchWithPrefix(url)
+        .then((rst: any) => {
           const { totalSupply, decimals } = rst;
           return {
             ...rst,
@@ -574,51 +530,10 @@ export const useToken = (
   );
 };
 
-// this is the new api
-export const useTransfers = (query = {}, opts = {}) => {
-  return useSWR(
-    qs.stringifyUrl({
-      url: '/transfer',
-      query,
-    }),
-    url =>
-      fetch(url)
-        .then(rst => {
-          const { list } = rst;
-          return {
-            ...rst,
-            list: list.map(i => {
-              const { value } = i;
-              return {
-                ...i,
-                value: formatBalance(value),
-              };
-            }),
-          };
-        })
-        .catch(error => {
-          return {
-            total: 0,
-            listLimit: 0,
-            list: [],
-          };
-        }),
-    {
-      initialData: {
-        total: 0,
-        listLimit: 0,
-        list: [],
-      },
-      ...opts,
-      revalidateOnMount: true,
-    },
-  );
-};
-
 export const fetchRecentDagBlock = async (opts = {}) => {
   let data;
   try {
-    data = await fetch(appendApiPrefix('/dag'));
+    data = await fetchWithPrefix('/dag');
   } catch (error) {
     data = { total: 0, list: [] };
   }
@@ -633,7 +548,7 @@ export const useCfxBalance: useApi = (params = {}) => {
   );
 };
 
-export const useBurntFeesStatistics = () => {
+export const useBurntFeesStatistics: useApi = () => {
   return useSWR(
     `${ENV_CONFIG.ENV_OPEN_API_HOST}/statistics/burnt/fee`,
     simpleGetFetcher,
@@ -643,7 +558,7 @@ export const useBurntFeesStatistics = () => {
 const wcfxToken = 'cfx:acg158kvr8zanb1bs048ryb6rtrhr283ma70vz70tx';
 const wcfxTestToken = 'cfxtest:achs3nehae0j6ksvy1bhrffsh1rtfrw1f6w1kzv46t';
 
-export const useWCFXTokenInfo = () => {
+export const useWCFXTokenInfo: useApi = () => {
   const wcfx = IS_CORESPACE && IS_MAINNET ? wcfxToken : wcfxTestToken;
 
   const key = `${ENV_CONFIG.ENV_OPEN_API_HOST}/token/tokeninfos?contracts=${wcfx}`;

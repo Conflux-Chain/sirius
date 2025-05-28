@@ -1,7 +1,7 @@
 import { CFX, POS_NULL_ADDRESS } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import lodash from 'lodash';
-import { publishRequestError } from './index';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import BigNumber from 'bignumber.js';
 
 // @ts-ignore

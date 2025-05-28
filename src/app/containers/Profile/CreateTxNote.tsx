@@ -2,7 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Form, Modal, Input, message } from '@cfxjs/antd';
-import { isHash, publishRequestError } from 'utils';
+import { isHash } from '@cfxjs/sirius-next-common/dist/utils';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
