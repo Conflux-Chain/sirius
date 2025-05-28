@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import pubsubLib from 'utils/pubsub';
+import { pubsub } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { useNotifications } from '@cfxjs/react-ui';
 import { Notification } from '@cfxjs/react-ui/dist/use-notifications/use-notifications';
 import XCircleFill from '@zeit-ui/react-icons/xCircleFill';
@@ -31,7 +31,7 @@ export function GlobalNotify() {
   const codes = useRef({});
 
   useEffect(() => {
-    const unsubscribe = pubsubLib.subscribe(
+    const unsubscribe = pubsub.subscribe(
       'notify',
       ({ type, repeat = false, option = {} }: Props) => {
         // only notify once of same code error

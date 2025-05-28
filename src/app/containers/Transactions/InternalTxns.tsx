@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { tokenColunms, transactionColunms } from 'utils/tableColumns';
-import { fetchWithPrefix } from 'utils/request';
+import { fetchWithPrefix } from '@cfxjs/sirius-next-common/dist/utils/request';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -8,7 +8,7 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
 import styled from 'styled-components';
-import { publishRequestError } from 'utils';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { uniqueId } from 'lodash';
 
@@ -88,7 +88,7 @@ export const InternalTxns = ({ address, from, to }: Props) => {
         ...state,
         loading: true,
       });
-      fetchWithPrefix(`/transferTree/${address}`)
+      fetchWithPrefix<any>(`/transferTree/${address}`)
         .then(resp => {
           if (resp?.traceTree) {
             try {

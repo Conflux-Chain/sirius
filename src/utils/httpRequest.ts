@@ -1,5 +1,5 @@
 import qs from 'query-string';
-import fetch from './request';
+import { fetch } from '@cfxjs/sirius-next-common/dist/utils/request';
 import { OPEN_API_URLS } from './constants';
 import {
   ENS_REQUEST_EXPIRED_PERIOD,
@@ -22,7 +22,7 @@ export const sendRequest = config => {
       : `${v1Prefix}${
           config.url.startsWith('/') ? config.url : '/' + config.url
         }`;
-  return fetch(qs.stringifyUrl({ url: url, query: config.query }), {
+  return fetch<any>(qs.stringifyUrl({ url: url, query: config.query }), {
     method: config.type || 'GET',
     body: config.body,
     headers: config.headers,

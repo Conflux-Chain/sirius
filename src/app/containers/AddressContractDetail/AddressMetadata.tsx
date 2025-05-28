@@ -6,11 +6,6 @@ import { translations } from 'locales/i18n';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { Modal } from '@cfxjs/react-ui';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
-import {
-  getTimeByBlockInterval,
-  toThousands,
-  publishRequestError,
-} from 'utils';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
@@ -28,7 +23,12 @@ import {
   getVoteList,
 } from 'utils/rpcRequest';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
-import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
+import {
+  getTimeByBlockInterval,
+  toThousands,
+  fromDripToCfx,
+} from '@cfxjs/sirius-next-common/dist/utils';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 
 const stakingContract = CFX.Contract({
   abi: stakingAbi,

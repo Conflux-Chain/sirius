@@ -2426,10 +2426,10 @@
     recoil-nexus "^0.5.0"
     zustand "^4.3.9"
 
-"@cfx-kit/ui-components@^0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@cfx-kit/ui-components/-/ui-components-0.0.17.tgz#be9e13d08839ef6c963d789782560087aaa82c5b"
-  integrity sha512-1WXoZ03c26LCDSrglhNtu+VLX0gAPM+z4koI+Z+nh3Y3JIuK+m/91V+KqwjzVDMVTv9olVVjj7foT0emdAlYSQ==
+"@cfx-kit/ui-components@^0.0.18":
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/ui-components/-/ui-components-0.0.18.tgz#dcd90f31f311717ce5216897e7445a819955ed1a"
+  integrity sha512-NceDBoLzV71FEAIw7o40GbJ33FofTDexhDaW4WZYpa49Lw7Xu0gKd1+cFXfv5dkhibDRHiFVD2okAvRELR08YA==
 
 "@cfx-kit/utils@0.0.5":
   version "0.0.5"
@@ -2509,14 +2509,14 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.1.27":
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.27.tgz#266b9c0b9c8800e66a7d095427f300faf5c6190f"
-  integrity sha512-Gn4mC96L8SFd/l8OcX+7OlpeEHtYV5dl5iXyeLW4+nTA4MPV0Xyy73wNFB3uDL9j3oCVs84HWSMdZc1TYhPKXA==
+"@cfxjs/sirius-next-common@0.1.29":
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.29.tgz#23143080fba15bdf4779f5ed95e9b9b190d2eaca"
+  integrity sha512-L0gI+LN6oOfssgmQn0QxMUKIbk4LVRxwX+7vOfY+ckG5jlDctxyPM8L0wf+lhIK2nGfp5VE1xZB+Qp9DdAuxMw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.3"
     "@cfx-kit/react-utils" "^0.0.45"
-    "@cfx-kit/ui-components" "^0.0.17"
+    "@cfx-kit/ui-components" "^0.0.18"
     "@radix-ui/react-radio-group" "^1.2.3"
     "@radix-ui/react-select" "^2.0.0"
     "@testing-library/react" "^15.0.5"
