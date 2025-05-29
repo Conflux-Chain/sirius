@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { useSWRWithGetFecher } from 'utils/api';
+import { useSWRWithGetFetcher } from '@cfxjs/sirius-next-common/dist/utils/request';
 
 export const useTableDataByHttp = (
   url: string,
@@ -53,7 +53,7 @@ export const useTableDataByHttp = (
     },
   });
 
-  const { data, error, mutate } = useSWRWithGetFecher(
+  const { data, error, mutate } = useSWRWithGetFetcher(
     shouldFetch ? [urlWithQuery] : null,
   );
 

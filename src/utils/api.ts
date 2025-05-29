@@ -21,61 +21,6 @@ type useApi = (
   ...rest: any[]
 ) => responseInterface<any, any>;
 
-export const useSWRWithGetFecher = (key, swrOpts = {}) => {
-  const isTransferReq =
-    (typeof key === 'string' && key.startsWith('/transfer')) ||
-    (Array.isArray(key) &&
-      typeof key[0] === 'string' &&
-      key[0].startsWith('/transfer'));
-
-  const { data, error, mutate } = useSWR(key, simpleGetFetcher as any, {
-    ...swrOpts,
-  });
-
-  let tokenAddress;
-
-  // deal with token info
-  if (isTransferReq && data && data.list) {
-    tokenAddress = data.list.reduce((acc, trans) => {
-      if (trans.address && !acc.includes(trans.address))
-        acc.push(trans.address);
-      return acc;
-    }, []);
-  }
-
-  const { data: tokenData } = useSWR(
-    tokenAddress
-      ? qs.stringifyUrl({
-          url: '/token',
-          query: { addressArray: tokenAddress, fields: 'iconUrl' },
-        })
-      : null,
-    simpleGetFetcher as any,
-  );
-
-  if (tokenData && tokenData.list) {
-    const newTransferList = data.list.map(trans => {
-      if (tokenAddress.includes(trans.address)) {
-        const tokenInfo = tokenData.list.find(t => t.address === trans.address);
-        if (tokenInfo) return { ...trans, token: { ...tokenInfo } };
-      }
-
-      return trans;
-    });
-
-    return {
-      data: {
-        ...data,
-        list: newTransferList,
-      },
-      error,
-      mutate,
-    };
-  }
-
-  return { data, error, mutate };
-};
-
 export const useDashboardDag: useApi = (
   params,
   shouldFetch = true,
