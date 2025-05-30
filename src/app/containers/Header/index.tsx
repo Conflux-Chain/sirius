@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
@@ -23,12 +23,19 @@ import { ScanEvent } from 'utils/gaConstants';
 import { trackEvent } from 'utils/ga';
 import { useToggle } from 'react-use';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { getNetwork, getNetworkIcon, gotoNetwork } from 'utils';
+import { getNetwork, gotoNetwork } from '@cfxjs/sirius-next-common/dist/utils';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
 import { Notices } from 'app/containers/Notices/Loadable';
 import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
+import { NetworkIcon } from '@cfxjs/sirius-next-common/dist/components/NetworkIcon';
 
-import ENV_CONFIG, { DOMAIN, IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
+import ENV_CONFIG, {
+  DOMAIN,
+  IS_CORESPACE,
+  IS_MAINNET,
+  IS_TESTNET,
+  IS_FC_ENABLED,
+} from 'env';
 import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 
 const hideNetworkInDotNet = n => {
@@ -41,6 +48,10 @@ const hideNetworkInDotNet = n => {
 export const Header = memo(() => {
   const [globalData, setGlobalData] = useGlobalData();
   const { networkId, networks } = globalData;
+  const network = useMemo(() => getNetwork(networks, networkId), [
+    networks,
+    networkId,
+  ]);
 
   const { t, i18n } = useTranslation();
   const zh = '中文';
@@ -319,12 +330,14 @@ export const Header = memo(() => {
     },
   ];
 
-  ecosystemItems.push({
-    title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
-    name: ScanEvent.menu.action.fcCfx,
-    afterClick: menuClick,
-    href: '/fccfx',
-  });
+  if (IS_FC_ENABLED) {
+    ecosystemItems.push({
+      title: [t(translations.header.fcCfx), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.fcCfx,
+      afterClick: menuClick,
+      href: '/fccfx',
+    });
+  }
 
   ecosystemItems.push({
     title: [t(translations.header.crossSpace), <Check size={18} key="check" />],
@@ -543,7 +556,7 @@ export const Header = memo(() => {
     return {
       title: [
         <NetWorkWrapper key="network">
-          <img src={getNetworkIcon(n.id)} alt="" />
+          <NetworkIcon network={n} />
           {n.name}
         </NetWorkWrapper>,
         isMatch && <Check size={18} key="check" />,
@@ -568,51 +581,45 @@ export const Header = memo(() => {
     };
   };
 
-  const endLinks: HeaderLinks = [
-    // {
-    //   // profile
-    //   title: t(translations.header.profile),
-    //   name: ScanEvent.menu.action.home,
-    //   afterClick: menuClick,
-    //   href: '/profile',
-    //   className: 'profile',
-    // },
+  const networkChildren = [
     {
+      title: false,
+      plain: true,
+      vertical: true,
+      children: networks.mainnet
+        ?.filter(hideNetworkInDotNet)
+        .map(getNetworkLink),
+    },
+    {
+      title: false,
+      plain: true,
+      vertical: true,
+      children: networks.testnet
+        ?.filter(hideNetworkInDotNet)
+        .map(getNetworkLink),
+    },
+    {
+      title: false,
+      plain: true,
+      vertical: true,
+      children: networks.devnet?.map(getNetworkLink),
+    },
+  ].filter(i => i.children && i.children.length > 0);
+
+  const endLinks: HeaderLinks = [];
+  if (networkChildren.length > 0) {
+    endLinks.push({
       // switch network
       name: 'switch-network',
       title: (
         <NetWorkWrapper>
-          <img src={getNetworkIcon(networkId)} alt="Network" />
-          {getNetwork(networks, networkId).name}
+          <NetworkIcon network={network} />
+          {network.name}
         </NetWorkWrapper>
       ),
-      children: [
-        {
-          title: false,
-          plain: true,
-          vertical: true,
-          children: networks.mainnet
-            ?.filter(hideNetworkInDotNet)
-            .map(getNetworkLink),
-        },
-        {
-          title: false,
-          plain: true,
-          vertical: true,
-          children: networks.testnet
-            ?.filter(hideNetworkInDotNet)
-            .map(getNetworkLink),
-        },
-        {
-          title: false,
-          plain: true,
-          vertical: true,
-          children: networks.devnet?.map(getNetworkLink),
-        },
-      ].filter(i => i.children && i.children.length > 0),
-    },
-  ];
-
+      children: networkChildren,
+    });
+  }
   if (bp === 'm' || bp === 's') {
     endLinks.push({
       // switch language
@@ -666,7 +673,7 @@ export const Header = memo(() => {
     </div>
   );
 
-  const brand = (
+  const brand = !!ENV_CONFIG.ENV_LOGO && (
     <LogoWrapper>
       <Link href="/">
         <img

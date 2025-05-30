@@ -5,7 +5,7 @@ import { hash } from '@ensdomains/eth-ens-namehash';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { isZeroAddress } from 'utils';
 import LogoENS from 'images/logo-cns.svg';
-import ENV_CONFIG from 'env';
+import ENV_CONFIG, { IS_ENS_ENABLED } from 'env';
 
 const registry = CFX.Contract({
   address: ENV_CONFIG.ENV_ENS_REGISTRY_ADDRESS,
@@ -52,7 +52,7 @@ export async function getAddress(name) {
 }
 
 export function isValidENS(name: string) {
-  return /.*(\.web3|\.dao)$/i.test(name);
+  return IS_ENS_ENABLED && /.*(\.web3|\.dao)$/i.test(name);
 }
 
 export { LogoENS };
