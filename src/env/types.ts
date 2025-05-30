@@ -6,3 +6,17 @@ export enum CHAIN_TYPES {
   TESTNET = 'TESTNET',
   DEVNET = 'DEVNET',
 }
+
+export interface ENVConfig {
+  ENV_LOGO?: string;
+  ENV_NETWORK_ID: number;
+  ENV_NETWORK_TYPE: NETWORK_TYPES;
+  ENV_CHAIN_TYPE: CHAIN_TYPES;
+  ENV_OPEN_API_HOST: string;
+  ENV_RPC_SERVER: string;
+  ENV_FC_ADDRESS?: string;
+  ENV_FC_EXCHANGE_ADDRESS?: string;
+  ENV_FC_EXCHANGE_INTEREST_ADDRESS?: string;
+  ENV_ENS_REGISTRY_ADDRESS?: string;
+  ENV_ENS_PUBLIC_RESOLVER_ADDRESS?: string;
+}

@@ -1,22 +1,15 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 import {
   NETWORK_ID,
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
-  CORE_SPACE_CHAIN_IDS,
-  ESPACE_CHAIN_IDS,
-  BSPACE_CHAIN_IDS,
 } from 'utils/constants';
 import pubsub from './pubsub';
 import lodash from 'lodash';
 import { Nametag } from 'utils/hooks/useNametag';
 import ENV_CONFIG, { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
-import IconCore from 'images/core-space/icon.svg';
-import IconEvm from 'images/espace/icon.svg';
-import IconBtc from 'images/bspace/icon.svg';
 
 import {
   getEllipsStr,
@@ -63,7 +56,6 @@ import {
   isBase32Address,
   isSimplyBase32Address,
 } from '@cfxjs/sirius-next-common/dist/utils/address';
-import { ExtendedGlobalDataType } from './hooks/useGlobal';
 
 export {
   formatNumber,
@@ -212,51 +204,6 @@ export function isEpochNumber(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
 }
-
-export const getNetwork = (
-  networks: ExtendedGlobalDataType['networks'],
-  id: number,
-) => {
-  const list = [
-    ...(networks.mainnet ?? []),
-    ...(networks.testnet ?? []),
-    ...(networks.devnet ?? []),
-  ];
-  const matched = list.find(n => n.id === id);
-  let network: NetworksType;
-
-  if (matched) {
-    network = matched;
-  } else {
-    network = list[0];
-  }
-
-  return network;
-};
-
-export const gotoNetwork = (url: string): void => {
-  url && window.location.assign(url);
-};
-
-export const getNetworkIcon = (
-  id = NaN,
-  props?: {
-    isCore?: boolean;
-    isEvm?: boolean;
-    isBtc?: boolean;
-  },
-) => {
-  const isCore = CORE_SPACE_CHAIN_IDS.includes(id) || props?.isCore;
-  const isEvm = ESPACE_CHAIN_IDS.includes(id) || props?.isEvm;
-  const isBtc = BSPACE_CHAIN_IDS.includes(id) || props?.isBtc;
-  if (isCore) {
-    return IconCore;
-  } else if (isEvm) {
-    return IconEvm;
-  } else if (isBtc) {
-    return IconBtc;
-  }
-};
 
 export const getAddressInputPlaceholder = () => {
   if (IS_CORESPACE && IS_MAINNET) {

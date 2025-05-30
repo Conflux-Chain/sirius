@@ -8,10 +8,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { getNetwork, gotoNetwork } from '@cfxjs/sirius-next-common/dist/utils';
 import { translations } from 'locales/i18n';
 import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
-import { getNetwork, gotoNetwork } from 'utils';
 import { IS_CORESPACE, IS_TESTNET } from 'env';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 

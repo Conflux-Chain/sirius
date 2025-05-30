@@ -4,13 +4,8 @@ import ENV_CONFIG from 'env';
 import { useGlobalData as useGlobalDataNext } from '@cfxjs/sirius-next-common/dist/store/index';
 import { GlobalDataType } from '@cfxjs/sirius-next-common/dist/store/types';
 
-export interface ExtendedGlobalDataType
-  extends Omit<GlobalDataType, 'networks'> {
-  networks: typeof NETWORK_OPTIONS;
-}
-
 // react-use version, to solve useContext can not update global value in App.ts
-const defaultGlobalData: ExtendedGlobalDataType = {
+const defaultGlobalData: GlobalDataType = {
   networks: NETWORK_OPTIONS,
   networkId: ENV_CONFIG.ENV_NETWORK_ID,
   contracts: {},

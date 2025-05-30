@@ -24,10 +24,6 @@ interface ContractNameTagType {
   [index: string]: string;
 }
 
-export const CORE_SPACE_CHAIN_IDS = [1029, 1, 8888];
-export const ESPACE_CHAIN_IDS = [1030, 71, 8889];
-export const BSPACE_CHAIN_IDS = [8890];
-
 export const NETWORK_ID = (() => {
   let networkId = ENV_CONFIG.ENV_NETWORK_ID;
   let cacheNetworkId = Number(
@@ -215,20 +211,26 @@ export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
 
 export const ENS_COINID_CONFLUX = 503;
 
+const protocol = window.location.protocol;
+
 export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
   // core space
   {
     name: 'Conflux Core (Hydra)',
     id: 1029,
-    url: IS_STAGE ? '//www-stage.confluxscan.net' : `//confluxscan${DOMAIN}`,
+    url: IS_STAGE
+      ? `${protocol}//www-stage.confluxscan.net`
+      : `${protocol}//confluxscan${DOMAIN}`,
+    space: 'core',
   },
   // espace
   {
     name: 'Conflux eSpace (Hydra)',
     id: 1030,
     url: IS_STAGE
-      ? '//evm-stage.confluxscan.net'
-      : `//evm.confluxscan${DOMAIN}`,
+      ? `${protocol}//evm-stage.confluxscan.net`
+      : `${protocol}//evm.confluxscan${DOMAIN}`,
+    space: 'evm',
   },
 ];
 export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
@@ -237,16 +239,18 @@ export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux Core (Testnet)',
     id: 1,
     url: IS_STAGE
-      ? '//testnet-stage.confluxscan.net'
-      : `//testnet.confluxscan${DOMAIN}`,
+      ? `${protocol}//testnet-stage.confluxscan.net`
+      : `${protocol}//testnet.confluxscan${DOMAIN}`,
+    space: 'core',
   },
   // espace
   {
     name: 'Conflux eSpace (Testnet)',
     id: 71,
     url: IS_STAGE
-      ? '//evmtestnet-stage.confluxscan.net'
-      : `//evmtestnet.confluxscan${DOMAIN}`,
+      ? `${protocol}//evmtestnet-stage.confluxscan.net`
+      : `${protocol}//evmtestnet.confluxscan${DOMAIN}`,
+    space: 'evm',
   },
 ];
 
