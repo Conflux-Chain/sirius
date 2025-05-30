@@ -6,10 +6,8 @@ import {
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
 } from 'utils/constants';
-import pubsub from './pubsub';
-import lodash from 'lodash';
 import { Nametag } from 'utils/hooks/useNametag';
-import ENV_CONFIG, { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
+import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 
 import {
   getEllipsStr,
@@ -229,53 +227,6 @@ export function padLeft(n, totalLength = 1) {
     return result;
   }
 }
-
-interface ErrorInfoType {
-  url?: string;
-  code?: number;
-  message?: string;
-  data?: string;
-  method?: string;
-}
-
-export const publishRequestError = (
-  e: (Error & ErrorInfoType) | ErrorInfoType,
-  type: 'rpc' | 'http' | 'wallet' | 'code',
-) => {
-  let detail = '';
-  if (e.code && e.message) {
-    if (type === 'code') {
-      detail = e.message;
-    } else {
-      detail = `Error Code: ${e.code} \n`;
-      if (type === 'http') {
-        const origin = window.location.origin;
-        detail += `Rest Api Url: ${
-          e.url?.includes('https://') ? e.url : origin + e.url
-        } \n`;
-      }
-      if (type === 'rpc') {
-        detail += `RPC Url: ${ENV_CONFIG.ENV_RPC_SERVER} \n`;
-        if (!lodash.isNil(e.method)) {
-          detail += `Method: ${e.method} \n`;
-        }
-        if (!lodash.isNil(e.data)) {
-          detail += `Data: ${e.data} \n`;
-        }
-      }
-      detail += `Error Message: ${e.message} \n`;
-    }
-  }
-
-  pubsub.publish('notify', {
-    type: 'request',
-    option: {
-      code: type === 'rpc' ? 30001 : e.code || 20000, // code is used for title, 20000 means unknown issue
-      message: e.message,
-      detail: detail,
-    },
-  });
-};
 
 export const getChartsSubTitle = (title: string): string => {
   const suffix = window.location.host.substr(-4);

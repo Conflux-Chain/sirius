@@ -39,6 +39,8 @@ import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/I
 import { Tag } from '@cfxjs/antd';
 import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
 import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
+import { PhishingAddressContainer } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
+
 const fromTypeInfo = {
   arrow: {
     src: imgArrow,
@@ -523,7 +525,14 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   render: (value, row) => {
-    return <FromWrap>{renderAddress(value, row, 'to', false)}</FromWrap>;
+    return (
+      <PhishingAddressContainer
+        phishingData={row.toPhishingData}
+        address={value}
+      >
+        <FromWrap>{renderAddress(value, row, 'to', false)}</FromWrap>
+      </PhishingAddressContainer>
+    );
   },
 };
 
@@ -535,7 +544,14 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   render: (value, row, _, withArrow = true) => {
-    return <FromWrap>{renderAddress(value, row, 'from', withArrow)}</FromWrap>;
+    return (
+      <PhishingAddressContainer
+        phishingData={row.fromPhishingData}
+        address={value}
+      >
+        <FromWrap>{renderAddress(value, row, 'from', withArrow)}</FromWrap>
+      </PhishingAddressContainer>
+    );
   },
 };
 

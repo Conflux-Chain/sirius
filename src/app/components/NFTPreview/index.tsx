@@ -17,7 +17,7 @@ import nftPreview from 'images/token/nftPreview2.svg';
 import { reqNFTInfo } from 'utils/httpRequest';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import NotFoundIcon from 'images/token/tokenIdNotFound.jpg';
-import fetch from 'utils/request';
+import { fetch } from '@cfxjs/sirius-next-common/dist/utils/request';
 import { addIPFSGateway } from 'utils';
 import audioDesign from './audio-design.svg';
 import audioBg from './audio-bg.svg';
@@ -103,7 +103,7 @@ export const NFTCardInfo = React.memo(
         fetch(imageUri, {
           method: 'HEAD',
         })
-          .then(res => {
+          .then((res: any) => {
             for (let pair of res.headers.entries()) {
               if (pair[0] === 'content-type') {
                 nftType = pair[1].split('/')[0];

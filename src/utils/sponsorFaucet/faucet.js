@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import faucetContract from './SponsorFaucet.js';
 import { CFX, NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { publishRequestError } from './../index';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 
 //suggested factor to make sure gas is enough
 const gas_estimation_ratio_withdraw = 1.8;

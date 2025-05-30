@@ -2,11 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Form, Modal, Input, message } from '@cfxjs/antd';
-import {
-  isBase32Address,
-  isCurrentNetworkAddress,
-  publishRequestError,
-} from 'utils';
+import { isBase32Address, isCurrentNetworkAddress } from 'utils';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 import ENV_CONFIG from 'env';

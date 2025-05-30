@@ -133,7 +133,9 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[fullNameWithType](...objValuesNew);
+          const res = await contract[fullNameWithType](...objValuesNew).call({
+            from: accounts[0],
+          });
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
