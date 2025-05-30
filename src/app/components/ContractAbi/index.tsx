@@ -13,7 +13,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { translations } from 'locales/i18n';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
-import { publishRequestError } from 'utils';
+import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
