@@ -11,7 +11,7 @@ import {
   isCurrentNetworkAddress,
 } from 'utils';
 import { transferToLowerCase } from '@cfxjs/sirius-next-common/dist/utils';
-import { CONTRACTS, CORE_SPACE_CHAIN_IDS } from '../constants';
+import { CONTRACTS } from '../constants';
 import { trackEvent } from '../ga';
 import { ScanEvent } from '../gaConstants';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
@@ -51,9 +51,7 @@ export const useSearch = (value?: string) => {
           // only search network = 1/1029 in mainnet or testnet environment will go to networkERROR page, others will go to 404
           IS_CORESPACE &&
           (IS_MAINNET || IS_TESTNET) &&
-          CORE_SPACE_CHAIN_IDS.slice(0, 2).includes(
-            getCoreAddressInfo(innerValue)?.netId as number,
-          )
+          [1029, 1].includes(getCoreAddressInfo(innerValue)?.netId as number)
         ) {
           history.push('/networkError');
 

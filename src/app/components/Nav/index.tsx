@@ -14,7 +14,7 @@ import { usePlatform } from 'utils/hooks/usePlatform';
 import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
 
 interface Props extends HTMLAttributes<HTMLElement> {
-  brand: ReactNode;
+  brand: false | ReactNode;
   mainMenu: ReactNode;
   topMenu: ReactNode;
   subMenu?: ReactNode;
@@ -46,7 +46,7 @@ export const Nav = memo(
     ...props
   }: Props) => {
     const bp = useBreakpoint();
-    brand = toWrappedArray(brand);
+    brand = brand && toWrappedArray(brand);
     mainMenu = toWrappedArray(mainMenu);
     topMenu = toWrappedArray(topMenu);
     const sourceSubMenu = subMenu;
