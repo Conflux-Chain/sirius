@@ -16,7 +16,8 @@ import { Language } from './Language';
 // import { Currency } from './Currency';
 import { ScanEvent } from 'utils/gaConstants';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
-import { hideInDotNet, getNetwork } from 'utils';
+import { hideInDotNet } from 'utils';
+import { getNetwork } from '@cfxjs/sirius-next-common/dist/utils';
 
 import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
 import beianImg from 'images/footer/beian.png';
@@ -41,6 +42,7 @@ import {
   IS_FOREIGN_HOST,
   IS_MAINNET,
   IS_TESTNET,
+  IS_CONFLUX_FEATURE_ENABLED,
 } from 'env';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 
@@ -178,9 +180,7 @@ export function Footer() {
   const globalLink = (
     <Link
       className="footer-link"
-      href={`${window.location.protocol}${network.url
-        .replace('-stage', '')
-        .replace('.net', '.org')}`}
+      href={`${network.url?.replace('-stage', '').replace('.net', '.org')}`}
       ga={{
         category: ScanEvent.menu.category,
         action: ScanEvent.menu.action.global,
@@ -419,7 +419,7 @@ export function Footer() {
             <FooterContentLink>{websiteLink}</FooterContentLink>
             {hideInDotNet(<FooterContentLink>{portalLink}</FooterContentLink>)}
             {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
-            {HIDE_IN_DOT_NET ? (
+            {HIDE_IN_DOT_NET && IS_CONFLUX_FEATURE_ENABLED ? (
               <FooterContentLink>{globalLink}</FooterContentLink>
             ) : null}
           </FooterContentRow>

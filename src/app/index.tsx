@@ -145,7 +145,10 @@ import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 
-import ENV_CONFIG_LOCAL from 'env';
+import ENV_CONFIG_LOCAL, {
+  IS_CONFLUX_FEATURE_ENABLED,
+  IS_FC_ENABLED,
+} from 'env';
 import { useEnv } from '@cfxjs/sirius-next-common/dist/store/index';
 
 // @ts-ignore
@@ -268,26 +271,15 @@ export function App() {
     reqProjectConfig()
       .then(resp => {
         delete resp.referer;
-        const networks = {
+        let networks = {
           ...NETWORK_OPTIONS,
         };
-        if (
-          networks.mainnet.every(n => n.id !== resp?.networkId) &&
-          networks.testnet.every(n => n.id !== resp?.networkId) &&
-          networks.devnet.every(n => n.id !== resp?.networkId)
-        ) {
-          networks.devnet = [
-            ...networks.devnet,
-            {
-              url: '',
-              name: resp?.networkId,
-              id: resp?.networkId,
-            },
-          ];
+        if (!IS_CONFLUX_FEATURE_ENABLED) {
+          networks = {
+            devnet: resp.networks ?? [],
+          };
         }
-        // @ts-ignore
         const networkId = resp?.networkId;
-        // @ts-ignore
         const md5String = new MD5().update(JSON.stringify(resp)).digest('hex');
 
         if (
@@ -681,7 +673,9 @@ export function App() {
                           path="/_benchmark"
                           component={ScanBenchmark}
                         />
-                        <Route exact path="/fccfx" component={FCCFX} />
+                        {IS_FC_ENABLED && (
+                          <Route exact path="/fccfx" component={FCCFX} />
+                        )}
 
                         <Route exact path="/pos" component={posHomePage} />
                         <Route
