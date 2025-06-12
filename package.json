@@ -7,7 +7,7 @@
     "@cfx-kit/dapp-utils": "0.2.0",
     "@cfxjs/antd": "1.0.6",
     "@cfxjs/react-ui": "2.0.0-alpha.15",
-    "@cfxjs/sirius-next-common": "0.1.30-env",
+    "@cfxjs/sirius-next-common": "0.1.31",
     "@cfxjs/sirius-next-i18n": "0.1.23",
     "@cfxjs/use-wallet-react": "0.0.4",
     "@conflux-dev/conflux-address-js": "1.3.16",
