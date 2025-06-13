@@ -112,6 +112,7 @@ export enum TXN_ACTION {
   fccfxWithdrawCFX = 113,
   tranferNFT = 114,
   tranferNFT1155 = 115,
+  abiVerification = 116,
 }
 
 export const CURRENCY_SYMBOLS = {

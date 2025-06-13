@@ -45,6 +45,7 @@ import { HomePage } from './containers/HomePage/Loadable';
 import { Contract } from './containers/Contract/Loadable';
 import { ContractDeployment } from './containers/ContractDeployment/Loadable';
 import { ContractVerification } from './containers/ContractVerification/Loadable';
+import { ABIVerification } from './containers/ABIVerification/Loadable';
 import { Blocks } from './containers/Blocks/Loadable';
 import { Transactions } from './containers/Transactions/Loadable';
 import { CFXTransfers } from './containers/CFXTransfers/Loadable';
@@ -545,6 +546,11 @@ export function App() {
                           exact
                           path="/contract-verification"
                           component={ContractVerification}
+                        />
+                        <Route
+                          exact
+                          path="/abi-verification"
+                          component={ABIVerification}
                         />
                         <Route
                           exact

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { isCoreContractAddress } from 'utils';
-import { reqContract } from 'utils/httpRequest';
+import { reqAbiByMethodId, reqContract } from 'utils/httpRequest';
 import { CFX } from 'utils/constants';
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
 import { Original } from './Original';
@@ -12,8 +12,7 @@ import { GeneralDecode } from './GeneralDecode';
 import { OptimizationDecode } from './OptimizationDecode';
 import { UTF8 } from './UTF8';
 import styled from 'styled-components';
-
-import imgWarning from 'images/warning.png';
+import { ReactComponent as WarningIcon } from 'images/warning.svg';
 
 interface Props {
   data: string;
@@ -56,6 +55,51 @@ export const InputData = ({
   });
 
   useEffect(() => {
+    const handleDecodeTxData = abi => {
+      if (!abi) return null;
+      try {
+        let contract = CFX.Contract({
+          abi: JSON.parse(abi),
+          address: toHash,
+          decodeByteToHex: true,
+        });
+        return contract.abi.decodeData(originalData);
+      } catch (e) {
+        console.log('decode tx data error: ', e);
+        return null;
+      }
+    };
+    const setResult = (abi, decodedBytecode) => {
+      if (decodedBytecode) {
+        setData(d => ({
+          ...d,
+          jsonData: decodedBytecode,
+        }));
+        setDataTypeList([
+          'original',
+          'json',
+          'generalDecode',
+          'optimizationDecode',
+        ]);
+        setDataType('optimizationDecode');
+      } else {
+        setDataTypeList(['original', 'generalDecode']);
+        setDataType('generalDecode');
+      }
+      if (!abi && !decodedBytecode) {
+        // abi not uploaded and no submitted function abi
+        setTip('contract.abiNotUploaded');
+      } else if (!decodedBytecode) {
+        // abi uploaded, but decode failed
+        setTip('contract.abiError');
+      } else if (!abi) {
+        // abi not uploaded, decode with submitted function abi
+        setTip('contract.similarWarning');
+      } else {
+        // abi uploaded, decode success
+        setTip('');
+      }
+    };
     const fn = async () => {
       try {
         if (!toHash || isContractCreated) {
@@ -66,8 +110,9 @@ export const InputData = ({
           const isContract = isCoreContractAddress(toHash);
 
           if (isContract) {
-            let isAbiError = false;
-            let abi = '';
+            let abiForDecode = '';
+            let contractAbi = '';
+            let decodedBytecode: any = null;
 
             const fields = [
               'address',
@@ -85,55 +130,34 @@ export const InputData = ({
                 address: implementation.address,
                 fields,
               });
-              abi = implementationResp['abi'];
-            } else {
-              abi = resp.abi;
-            }
-
-            try {
-              let contract = CFX.Contract({
-                abi: JSON.parse(abi),
-                address: toHash,
-                decodeByteToHex: true,
-              });
-              let decodedBytecode = contract.abi.decodeData(originalData);
-
-              if (!decodedBytecode) {
-                contract = CFX.Contract({
-                  abi: JSON.parse(resp.abi),
-                  address: toHash,
-                  decodeByteToHex: true,
-                });
-                decodedBytecode = contract.abi.decodeData(originalData);
+              abiForDecode = implementationResp['abi'];
+              contractAbi = abiForDecode;
+              decodedBytecode = await handleDecodeTxData(abiForDecode);
+              if (decodedBytecode) {
+                setResult(contractAbi, decodedBytecode);
+                return;
               }
-
-              setData({
-                ...data,
-                jsonData: decodedBytecode,
-              });
-            } catch (e) {
-              isAbiError = true;
             }
-
-            if (abi && !isAbiError) {
-              setDataTypeList([
-                'original',
-                'json',
-                'generalDecode',
-                'optimizationDecode',
-              ]);
-              setDataType('optimizationDecode');
-              setTip('');
+            abiForDecode = resp.abi;
+            contractAbi = abiForDecode;
+            if (!abiForDecode) {
+              const methodId = originalData.slice(0, 10);
+              const res = await reqAbiByMethodId(methodId);
+              // decode tx data with function abi only if there is only one function
+              if (res && res.list && res.list.length === 1) {
+                // e.g. transfer(address,uint256)
+                const fullName = res.list[0].fullName;
+                // e.g. function transfer(address recipient, uint256 amount) returns (bool)
+                const formatWithArg = res.list[0].formatWithArg;
+                abiForDecode = JSON.stringify([
+                  formatWithArg || `function ${fullName}`,
+                ]);
+              }
             }
-            if (!abi) {
-              setDataTypeList(['original', 'generalDecode']);
-              setDataType('generalDecode');
-              setTip('contract.abiNotUploaded');
-            } else if (toHash !== null && isAbiError) {
-              setDataTypeList(['original', 'generalDecode']);
-              setDataType('generalDecode');
-              setTip('contract.abiError');
+            if (abiForDecode) {
+              decodedBytecode = await handleDecodeTxData(abiForDecode);
             }
+            setResult(contractAbi, decodedBytecode);
           } else {
             setDataTypeList(['original', 'utf8']);
             setDataType('utf8');
@@ -201,9 +225,18 @@ export const InputData = ({
       {getBody(dataType)}
 
       {tip ? (
-        <div className="warningContainer shown">
-          <img src={imgWarning} alt="warning" className="warningImg" />
-          <span className="text">{t(tip)}</span>
+        <div className="abi-warning">
+          <WarningIcon />
+          <span className="tip">
+            <Trans i18nKey={tip}>
+              ABI not uploaded. You can help improve the decoding of this
+              transaction by
+              <a href="/abi-verification" style={{ margin: '0 4px' }}>
+                submitting function signatures
+              </a>
+              .
+            </Trans>
+          </span>
         </div>
       ) : null}
     </StyledInputDataWrapper>
@@ -214,5 +247,19 @@ const StyledInputDataWrapper = styled.div`
   .input-data-select {
     margin-bottom: 16px;
     margin-top: 0;
+  }
+  .abi-warning {
+    margin: 1.4286rem 0 0rem;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 1rem;
+      color: #9b9eac;
+    }
+    .tip {
+      margin-left: 0.5714rem;
+      font-size: 1rem;
+      color: #9b9eac;
+    }
   }
 `;

@@ -17,6 +17,7 @@ export const ScanEvent = {
       sponsor: 'sponsor',
       contractDeployment: 'contract_deployment',
       contractVerification: 'contract_verification',
+      abiVerification: 'abi_verification',
       contractsList: 'contracts_list',
       charts: 'PoW Charts',
       posCharts: 'PoS Charts',

@@ -339,6 +339,14 @@ export const getSponsorInfo = async (...args) => {
   }
 };
 
+export const getTransactionByHash = async (...args) => {
+  try {
+    return request('cfx_getTransactionByHash', ...args);
+  } catch (e) {
+    throw e;
+  }
+};
+
 // export const getAccountPendingTransactions = async (...args) => {
 //   try {
 //     return request('cfx_getAccountPendingTransactions', ...args);
