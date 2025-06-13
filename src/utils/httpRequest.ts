@@ -424,6 +424,16 @@ export const reqRefreshMetadata = (param?: object, extra?: object) => {
   });
 };
 
+export const reqAbiByMethodId = (methodId: string, extra?: object) => {
+  return sendRequest({
+    url: `/stat/list-abi-method`,
+    query: {
+      id: methodId,
+    },
+    ...extra,
+  });
+};
+
 // different from ens
 // maybe send one request, to get all info is better (ens info, nametag info, contract info, token info)
 export const reqNametag = (address: string[], extra?: object) => {

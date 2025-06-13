@@ -132,6 +132,16 @@ export const Header = memo(() => {
       href: '/contract-verification',
     },
     {
+      // abi verification
+      title: [
+        t(translations.header.abiVerification),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.abiVerification,
+      afterClick: menuClick,
+      href: '/abi-verification',
+    },
+    {
       title: t(translations.header.contracts),
       name: ScanEvent.menu.action.contractsList,
       afterClick: menuClick,
