@@ -250,15 +250,19 @@ const Code = ({ contractInfo }) => {
             'margin-bottom-0': !exactMatch && !sourceCode && !abi,
           })}
         >
-          {t(translations.contract.verify.tipLeft)}
-          <Link
-            href={`/contract-verification?address=${SDK.address.simplifyCfxAddress(
-              address,
-            )}`}
-          >
-            {t(translations.contract.verify.tipCenter)}
-          </Link>
-          {t(translations.contract.verify.tipRight)}
+          <Trans i18nKey={translations.contract.verify.tip}>
+            You can now
+            <Link
+              href={`/contract-verification?address=${SDK.address.simplifyCfxAddress(
+                address,
+              )}`}
+            >
+              verify and publish
+            </Link>
+            your contract's source code, or simply
+            <Link href="/abi-verification">submit function signatures</Link> to
+            improve readability.
+          </Trans>
         </div>
       )}
       <div className="contract-sourcecode-and-abi">
@@ -384,6 +388,11 @@ const StyledContractContentCodeWrapper = styled.div`
 
     &.margin-bottom-0 {
       margin-bottom: 0;
+    }
+  }
+  .contract-verify-tip {
+    a {
+      margin: 0 4px;
     }
   }
 

@@ -78,7 +78,7 @@ export const disassembleEvent = (decodedLog, log) => {
       args = args
         .split(', ')
         .filter(a => a !== '')
-        .map(i => {
+        .map((i, index) => {
           let item = i.trim().split(' ');
           const type = item[0];
 
@@ -105,11 +105,14 @@ export const disassembleEvent = (decodedLog, log) => {
             indexCount += 1;
           }
 
-          const argName = item[valueIndex];
-          const value = formatData(decodedLog.object[argName], r.type);
+          // support minimal format abi, which is't have argName
+          const argName =
+            item[valueIndex] === 'undefined' ? `arg${index}` : item[valueIndex];
+          const originalValue = decodedLog.array[index];
+          const value = formatData(originalValue, r.type);
 
           r.argName = argName;
-          r.originalValue = decodedLog.object[argName];
+          r.originalValue = originalValue;
           r.value = value;
           r.formattedValue = value;
 
