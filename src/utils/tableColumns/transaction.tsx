@@ -184,7 +184,7 @@ export const to = {
     </Translation>
   ),
   dataIndex: 'to',
-  key: 'hash',
+  key: 'to',
   width: 1,
   render: (value, row) => {
     let alias = '';
@@ -192,10 +192,12 @@ export const to = {
 
     if (row.toContractInfo && row.toContractInfo.name)
       alias = row.toContractInfo.name;
+    else if (row.toTokenInfo && row.toTokenInfo.name)
+      alias = `${row.toTokenInfo.name}`;
     else if (row.contractInfo && row.contractInfo.name)
       alias = row.contractInfo.name;
     else if (row.tokenInfo && row.tokenInfo.name)
-      alias = `${row.tokenInfo.name} (${row.tokenInfo.symbol || '-'})`;
+      alias = `${row.tokenInfo.name}`;
 
     if (row.toContractInfo) {
       verify =
