@@ -411,6 +411,7 @@ const SpanWrap = styled.span`
 
 const MethodHighlight = styled(ValueHighlight)`
   padding: 0;
+  height: 20px;
 `;
 const StyledMethodContainerWrapper = styled.span`
   display: flex;
@@ -433,7 +434,7 @@ const StyledMethodWrapper = styled.span`
   color: #424a71;
   line-height: 12px;
   max-width: 95px;
-  display: inline-flex;
+  display: inline-block;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

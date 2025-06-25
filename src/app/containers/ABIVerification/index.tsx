@@ -105,7 +105,10 @@ export const ABIVerification = () => {
           data={txData}
           btnDisabled={!txData}
           txnAction={TXN_ACTION.abiVerification}
-          successCallback={() => setAbi('')}
+          successCallback={() => {
+            setAbi('');
+            setTxData('');
+          }}
         ></DappButton>
       </Card>
     </StyledABIVerificationWrapper>
