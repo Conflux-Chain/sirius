@@ -89,8 +89,10 @@ const EventLog = ({ log }) => {
             address: implementation.address,
             fields,
           });
-          abi = implementationResp['abi'];
-        } else {
+          if (implementationResp.verify?.exactMatch) {
+            abi = implementationResp.abi;
+          }
+        } else if (body.verify?.exactMatch) {
           abi = body.abi;
         }
 
