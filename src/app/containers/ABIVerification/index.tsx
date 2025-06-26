@@ -119,4 +119,7 @@ const StyledABIVerificationWrapper = styled.div`
   .card.abi-verification-form-container {
     padding: 0.8571rem 1.4286rem 1.2857rem 1.4286rem;
   }
+  .ace_placeholder {
+    white-space: normal;
+  }
 `;
