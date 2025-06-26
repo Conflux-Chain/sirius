@@ -130,15 +130,19 @@ export const InputData = ({
                 address: implementation.address,
                 fields,
               });
-              abiForDecode = implementationResp['abi'];
-              contractAbi = abiForDecode;
-              decodedBytecode = await handleDecodeTxData(abiForDecode);
-              if (decodedBytecode) {
-                setResult(contractAbi, decodedBytecode);
-                return;
+              if (implementationResp.verify?.exactMatch) {
+                abiForDecode = implementationResp.abi;
+                contractAbi = abiForDecode;
+                decodedBytecode = await handleDecodeTxData(abiForDecode);
+                if (decodedBytecode) {
+                  setResult(contractAbi, decodedBytecode);
+                  return;
+                }
               }
             }
-            abiForDecode = resp.abi;
+            if (resp.verify?.exactMatch) {
+              abiForDecode = resp.abi;
+            }
             contractAbi = abiForDecode;
             if (!abiForDecode) {
               const methodId = originalData.slice(0, 10);
