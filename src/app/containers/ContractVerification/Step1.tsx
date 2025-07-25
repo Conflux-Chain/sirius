@@ -59,6 +59,12 @@ export const Step1: React.FC<{
       compilerLabel: compilers.find(c => c.key === values.compiler)!.value,
     });
   };
+
+  const handleReset = () => {
+    form.resetFields();
+    setCodeFormat(initialValues.codeFormat);
+  };
+
   return (
     <>
       <div className="form-title">
@@ -178,7 +184,7 @@ export const Step1: React.FC<{
             type="default"
             loading={loading}
             className="submit-button"
-            onClick={() => form.resetFields()}
+            onClick={handleReset}
           >
             {t(translations.contractVerification.button.reset)}
           </Button>

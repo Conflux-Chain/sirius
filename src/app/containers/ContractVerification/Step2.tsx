@@ -12,7 +12,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import { DEFAULT_VYPER_CONTRACT_NAME, SOLIDITY_CODE_FORMAT } from './constants';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
-import { EVMAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/EVMAddressContainer';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ReactComponent as ChevronLeftIcon } from 'images/chevron-left.svg';
 import { StyledButtonWrapper, StyledContractInfoRow } from './StyledComponents';
 
@@ -123,6 +123,12 @@ export const Step2: React.FC<{
     });
   };
 
+  const handleReset = () => {
+    form.resetFields();
+    setSourceCode('');
+    setOptimizationValue(DEFAULT_OPTIMIZATION_VALUE);
+  };
+
   return (
     <>
       <FileUpload
@@ -148,11 +154,7 @@ export const Step2: React.FC<{
           {t(translations.contractVerification.contractAddress)}
         </div>
         <div className="contract-info-value">
-          <EVMAddressContainer
-            value={contractDetails.address}
-            isFull
-            isContract={false}
-          />
+          <CoreAddressContainer value={contractDetails.address} isFull />
         </div>
       </StyledContractInfoRow>
       <StyledContractInfoRow>
@@ -482,10 +484,7 @@ export const Step2: React.FC<{
             type="default"
             loading={loading}
             className="submit-button"
-            onClick={() => {
-              form.resetFields();
-              setOptimizationValue(DEFAULT_OPTIMIZATION_VALUE);
-            }}
+            onClick={handleReset}
           >
             {t(translations.contractVerification.button.reset)}
           </Button>
