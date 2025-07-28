@@ -100,7 +100,7 @@ export const Step2: React.FC<{
 
   const handleFileError = e => {
     setMessage({
-      text: e,
+      text: e?.toString?.(),
       color: 'error',
     });
   };
