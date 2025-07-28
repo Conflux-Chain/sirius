@@ -215,6 +215,7 @@ export const ContractVerification = () => {
               setContractDetails({
                 address: searchAddress,
               });
+              setRespErrors([]);
             }}
           />
         )}
