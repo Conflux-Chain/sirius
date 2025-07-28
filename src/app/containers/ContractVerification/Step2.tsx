@@ -89,11 +89,12 @@ export const Step2: React.FC<{
   const handleImport = () => {
     inputRef.current?.click();
   };
-  const handleFileChange = data => {
+  const handleSourceCodeChange = data => {
+    const value = data?.replace(/\r\n/g, '\n');
     try {
-      setSourceCode(data);
+      setSourceCode(value);
       form.setFieldsValue({
-        sourceCode: data,
+        sourceCode: value,
       });
     } catch (e) {}
   };
@@ -102,13 +103,6 @@ export const Step2: React.FC<{
     setMessage({
       text: e?.toString?.(),
       color: 'error',
-    });
-  };
-
-  const handleSourceCodeChange = data => {
-    setSourceCode(data);
-    form.setFieldsValue({
-      sourceCode: data,
     });
   };
 
@@ -133,7 +127,7 @@ export const Step2: React.FC<{
     <>
       <FileUpload
         ref={inputRef}
-        onChange={handleFileChange}
+        onChange={handleSourceCodeChange}
         onError={handleFileError}
         accept={isSolidity ? '.sol' : '.vy'}
       />
