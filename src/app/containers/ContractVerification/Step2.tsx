@@ -97,6 +97,8 @@ export const Step2: React.FC<{
         sourceCode: value,
       });
     } catch (e) {}
+    // reset file input after file upload
+    inputRef.current && (inputRef.current.value = '');
   };
 
   const handleFileError = e => {
