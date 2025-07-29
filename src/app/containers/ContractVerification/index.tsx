@@ -228,9 +228,10 @@ const StyledContractVerificationWrapper = styled.div`
   div.card.contract-verification-form-container {
     padding: 0.8571rem 1.4286rem 1.2857rem 1.4286rem;
     .form-title {
-      font-size: 1.2857rem;
-      font-weight: 500;
-      line-height: 1.2857rem;
+      color: #282d30;
+      font-size: 1rem;
+      font-weight: 450;
+      line-height: 1.7143rem;
       margin-bottom: 1.7143rem;
     }
     .submit-button {

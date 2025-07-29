@@ -97,6 +97,8 @@ export const Step2: React.FC<{
         sourceCode: value,
       });
     } catch (e) {}
+    // reset file input after file upload
+    inputRef.current && (inputRef.current.value = '');
   };
 
   const handleFileError = e => {
@@ -148,7 +150,11 @@ export const Step2: React.FC<{
           {t(translations.contractVerification.contractAddress)}
         </div>
         <div className="contract-info-value">
-          <CoreAddressContainer value={contractDetails.address} isFull />
+          <CoreAddressContainer
+            value={contractDetails.address}
+            isFull
+            showIcon={false}
+          />
         </div>
       </StyledContractInfoRow>
       <StyledContractInfoRow>
@@ -297,6 +303,9 @@ export const Step2: React.FC<{
             </Panel>
           </Collapse>
         )}
+        <div className="form-title">
+          {t(translations.contractVerification.advancedConfiguration)}
+        </div>
         <Row gutter={24}>
           <Col span={24} md={8}>
             <Form.Item
