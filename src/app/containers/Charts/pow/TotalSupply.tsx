@@ -20,14 +20,6 @@ export function TotalSupply({ preview = false }: ChildProps) {
         if (data) {
           result = [
             {
-              name: t(translations.highcharts.pow.totalSupply.fourYearUnlock),
-              y: parseInt(new SDK.Drip(data?.fourYearUnlockBalance).toCFX()),
-            },
-            {
-              name: t(translations.highcharts.pow.totalSupply.zeroAddress),
-              y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
-            },
-            {
               name: t(
                 translations.highcharts.pow.totalSupply.circulatingSupply,
               ),
@@ -39,7 +31,18 @@ export function TotalSupply({ preview = false }: ChildProps) {
                 ).toCFX(),
               ),
             },
+            {
+              name: t(translations.highcharts.pow.totalSupply.zeroAddress),
+              y: parseInt(new SDK.Drip(data?.nullAddressBalance).toCFX()),
+            },
           ];
+
+          if (new BigNumber(data?.fourYearUnlockBalance).gt(0)) {
+            result.push({
+              name: t(translations.highcharts.pow.totalSupply.fourYearUnlock),
+              y: parseInt(new SDK.Drip(data?.fourYearUnlockBalance).toCFX()),
+            });
+          }
 
           if (new BigNumber(data?.twoYearUnlockBalance).gt(0)) {
             result.push({
