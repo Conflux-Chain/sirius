@@ -229,15 +229,27 @@ export const reqContractNameTag = (name: string, extra?: object) => {
   });
 };
 
+export const reqContractCodeFormat = () => {
+  return sendRequest({
+    url: `/contract/code-format`,
+  });
+};
+
 export const reqContractLicense = () => {
   return sendRequest({
     url: `/contract/license`,
   });
 };
 
-export const reqContractCompiler = () => {
+export const reqSolidityContractCompiler = () => {
   return sendRequest({
     url: `/contract/compiler`,
+  });
+};
+
+export const reqVyperContractCompiler = () => {
+  return sendRequest({
+    url: `/contract/vyper-compiler`,
   });
 };
 
