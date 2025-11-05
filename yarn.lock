@@ -13516,6 +13516,23 @@ js-conflux-sdk@2.5.0:
     superagent "^6.1.0"
     websocket "^1.0.35"
 
+js-conflux-sdk@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-2.5.1.tgz#d571ab17de066f563345ec0bb7ee919e2073b40c"
+  integrity sha512-FnQPVfF82yOsgwi0sqOel+hy7Ho9RRO0hvXPLTHi4qZHClu8mCVyr/1VBP1N/WtwBjyeZ9KnkQRykyZlzwmrzQ==
+  dependencies:
+    "@conflux-dev/conflux-address-js" "1.3.16"
+    abi-util-lite "^0.1.0"
+    big.js "^5.2.2"
+    commander "^8.0.0"
+    keccak "^2.0.0"
+    lodash "^4.17.21"
+    rlp "^2.2.7"
+    scrypt-js "^3.0.1"
+    secp256k1 "^3.8.1"
+    superagent "^6.1.0"
+    websocket "^1.0.35"
+
 js-conflux-sdk@^1.1.0:
   version "1.7.3"
   resolved "https://registry.npmjs.org/js-conflux-sdk/-/js-conflux-sdk-1.7.3.tgz"
