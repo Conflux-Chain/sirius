@@ -2509,10 +2509,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.1.33":
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.33.tgz#765842a4e8af20d9bd7ea417d5e58d8be7fb40d9"
-  integrity sha512-Bjzu2huYEBpqkVW9HKwA9NxA6767v6M0zr0W/OSHMxZIdCIP/pAf/Dzz/OZc8n4KaG298ctKeEKGDWSQwFI7bw==
+"@cfxjs/sirius-next-common@0.1.37":
+  version "0.1.37"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.1.37.tgz#14ef1620fce313e0b612020cb3908ca06d1fed90"
+  integrity sha512-gfDfCcarcCc6qRvv1G5lPMuJ+KRcRju4zJ6P+2DGhv1Cbxim8XDMbIlyvsnS2nlI2tr8M8jocvxxOQwfOhhAsw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.3"
     "@cfx-kit/react-utils" "^0.0.45"
@@ -2536,7 +2536,7 @@
     i18next "^19.3.4"
     i18next-browser-languagedetector "^7.2.1"
     jest-environment-jsdom "^29.7.0"
-    js-conflux-sdk "2.5.0"
+    js-conflux-sdk "2.5.1"
     lodash "^4.17.21"
     lucide-react "^0.379.0"
     pako "2.0.2"
@@ -2551,10 +2551,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.29.tgz#324aa3b34344729f971d2581c0145af65df96b2c"
-  integrity sha512-JWXdhs8Qh4igjD+AmlZQ6cTppP5xvi+jr0tW2d90b2gfvUt41IoG28yIbObbtH/psQms525jNYdp1GUkPWyZIg==
+"@cfxjs/sirius-next-i18n@0.1.30":
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.1.30.tgz#0a0758dfd2ff78e90a67675709815ecde4841749"
+  integrity sha512-WLicSKIAOPUPGJgs8HX3vzVhAjwl5TElHN1R/Cwk+3H0TUsTBEwk5EFlcQlR54Uq/isxoZUfPJ7TGmGQDVhOVQ==
 
 "@cfxjs/use-wallet-react@0.0.4", "@cfxjs/use-wallet-react@^0.0.4":
   version "0.0.4"
@@ -13498,23 +13498,6 @@ jiti@^1.21.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.21.0.tgz#7c97f8fe045724e136a397f7340475244156105d"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
-
-js-conflux-sdk@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/js-conflux-sdk/-/js-conflux-sdk-2.5.0.tgz#f9a15e9c914b20aa274d05da4d0f4fe4e0f475f2"
-  integrity sha512-jfUaSUqAik693heCqr20P3EkdZ98ksW4pns35SxHAyiBb4cAsTZ1VfA5DtvCn8h/HcFm9arPKCksSi3MiBdxqQ==
-  dependencies:
-    "@conflux-dev/conflux-address-js" "1.3.16"
-    abi-util-lite "^0.1.0"
-    big.js "^5.2.2"
-    commander "^8.0.0"
-    keccak "^2.0.0"
-    lodash "^4.17.21"
-    rlp "^2.2.7"
-    scrypt-js "^3.0.1"
-    secp256k1 "^3.8.1"
-    superagent "^6.1.0"
-    websocket "^1.0.35"
 
 js-conflux-sdk@2.5.1:
   version "2.5.1"

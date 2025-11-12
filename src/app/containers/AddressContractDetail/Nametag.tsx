@@ -72,19 +72,28 @@ const Nametag = ({ address }) => {
       )}
 
       {nametag?.labels.map(label => (
-        <StyledLabelWrapper
-          show={!!nametag?.labels.length}
-          color={nametag?.caution ? '#E15C56' : ''}
-          backgroundColor={nametag?.caution ? '#FBEBEB' : ''}
-          bordered={!!nametag?.caution}
+        <Tooltip
+          title={
+            label === 'Verified'
+              ? t(translations.nametag.labels.tooltips.verified)
+              : undefined
+          }
+          portalled
         >
-          <img
-            src={nametag?.caution ? warningIcon : verifiedIcon}
-            style={{ marginRight: '6px' }}
-            alt="status-icon"
-          ></img>
-          {label}
-        </StyledLabelWrapper>
+          <StyledLabelWrapper
+            show={!!nametag?.labels.length}
+            color={nametag?.caution ? '#E15C56' : ''}
+            backgroundColor={nametag?.caution ? '#FBEBEB' : ''}
+            bordered={!!nametag?.caution}
+          >
+            <img
+              src={nametag?.caution ? warningIcon : verifiedIcon}
+              style={{ marginRight: '6px' }}
+              alt="status-icon"
+            ></img>
+            {label}
+          </StyledLabelWrapper>
+        </Tooltip>
       ))}
     </>
   );

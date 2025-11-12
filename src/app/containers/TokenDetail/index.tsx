@@ -17,6 +17,7 @@ import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
 import ENV_CONFIG from 'env';
+import verifiedIcon from 'images/nametag/verified.svg';
 
 interface RouteParams {
   tokenAddress: string;
@@ -71,6 +72,9 @@ export function TokenDetail() {
   // }
 
   const isFC = tokenAddress === ENV_CONFIG.ENV_FC_ADDRESS;
+  const isOfficialVerified = data.securityAudit?.officialLabels?.some(
+    i => i === 'Verified',
+  );
 
   const menu = (
     <MenuWrapper>
@@ -129,6 +133,22 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
+            {isOfficialVerified && (
+              <Tooltip title={t(translations.nametag.labels.tooltips.verified)}>
+                <StyledLabelWrapper>
+                  <img
+                    src={verifiedIcon}
+                    style={{
+                      marginRight: '6px',
+                      width: '16px',
+                      height: '16px',
+                    }}
+                    alt="status-icon"
+                  ></img>
+                  Verified
+                </StyledLabelWrapper>
+              </Tooltip>
+            )}
             <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
@@ -266,6 +286,19 @@ export const DropdownWrapper = styled(Dropdown)`
     height: 6px;
     margin-left: 5px;
   }
+`;
+
+const StyledLabelWrapper = styled.span`
+  background-color: #ffffff;
+  border-radius: 16px;
+  font-size: 14px;
+  padding: 4px 12px;
+  margin-left: 12px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  color: var(--theme-color-gray4);
+  text-transform: none;
 `;
 
 // const WarningInfoWrapper = styled.div`
