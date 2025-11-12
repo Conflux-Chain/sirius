@@ -74,10 +74,11 @@ const Nametag = ({ address }) => {
       {nametag?.labels.map(label => (
         <Tooltip
           title={
-            nametag?.caution
-              ? undefined
-              : t(translations.nametag.labels.tooltips.verified)
+            label === 'Verified'
+              ? t(translations.nametag.labels.tooltips.verified)
+              : undefined
           }
+          portalled
         >
           <StyledLabelWrapper
             show={!!nametag?.labels.length}
