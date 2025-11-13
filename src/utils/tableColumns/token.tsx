@@ -509,7 +509,7 @@ export const quantity = {
         mobileMaxCount={19}
         hoverValue={formatBalance(value, decimals, true)}
       >
-        {formatBalance(value, decimals)}
+        {formatBalance(value, decimals, false, {}, '0.001')}
       </Text>
     ) : (
       '--'
@@ -684,7 +684,7 @@ export const percentage = total => ({
         ? new BigNumber(row.balance)
             .dividedBy(new BigNumber(total))
             .multipliedBy(100)
-            .toFixed(8)
+            .toFixed()
         : null;
     return (
       <ContentWrapper right>
