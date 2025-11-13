@@ -51,6 +51,7 @@ export const GlobalStyle = createGlobalStyle`
 
   html,
   body {
+    box-sizing: border-box;
     font-size: 14px;
     font-weight: 400;
     height: 100%;
