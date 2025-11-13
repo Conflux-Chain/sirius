@@ -135,18 +135,15 @@ export function TokenDetail() {
             ) : null}
             {isOfficialVerified && (
               <Tooltip title={t(translations.nametag.labels.tooltips.verified)}>
-                <StyledLabelWrapper>
-                  <img
-                    src={verifiedIcon}
-                    style={{
-                      marginRight: '6px',
-                      width: '16px',
-                      height: '16px',
-                    }}
-                    alt="status-icon"
-                  ></img>
-                  Verified
-                </StyledLabelWrapper>
+                <img
+                  src={verifiedIcon}
+                  style={{
+                    marginLeft: '6px',
+                    width: '16px',
+                    height: '16px',
+                  }}
+                  alt="status-icon"
+                ></img>
               </Tooltip>
             )}
             <DropdownWrapper overlay={menu} trigger={['click']}>
@@ -286,19 +283,6 @@ export const DropdownWrapper = styled(Dropdown)`
     height: 6px;
     margin-left: 5px;
   }
-`;
-
-const StyledLabelWrapper = styled.span`
-  background-color: #ffffff;
-  border-radius: 16px;
-  font-size: 14px;
-  padding: 4px 12px;
-  margin-left: 12px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  color: var(--theme-color-gray4);
-  text-transform: none;
 `;
 
 // const WarningInfoWrapper = styled.div`
