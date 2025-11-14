@@ -684,20 +684,32 @@ export const percentage = total => ({
         ? new BigNumber(row.balance)
             .dividedBy(new BigNumber(total))
             .multipliedBy(100)
-            .toFixed()
+            .toFixed(8)
         : null;
+    const percentageWithPrecision3 =
+      percentage === null
+        ? '-'
+        : percentage < 0.001
+        ? '< 0.001%'
+        : formatNumber(percentage, {
+            precision: 3,
+            withUnit: false,
+            keepZero: true,
+          }) + '%';
+    const percentageWithPrecision8 =
+      percentage === null
+        ? '-'
+        : percentage < 0.00000001
+        ? '< 0.00000001%'
+        : formatNumber(percentage, {
+            precision: 8,
+            withUnit: false,
+            keepZero: true,
+          }) + '%';
     return (
       <ContentWrapper right>
-        <Text tag="span" hoverValue={`${percentage}%`}>
-          {percentage === null
-            ? '-'
-            : percentage < 0.001
-            ? '< 0.001%'
-            : formatNumber(percentage, {
-                precision: 3,
-                withUnit: false,
-                keepZero: true,
-              }) + '%'}
+        <Text tag="span" hoverValue={percentageWithPrecision8}>
+          {percentageWithPrecision3}
         </Text>
       </ContentWrapper>
     );
