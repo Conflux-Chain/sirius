@@ -28,7 +28,7 @@ import { GlobalStyle } from 'styles/global-styles';
 import { TxnHistoryProvider } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
-import { NETWORK_ID, NETWORK_OPTIONS } from 'utils/constants';
+import { IS_SHOW_BANNER, NETWORK_ID, NETWORK_OPTIONS } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
@@ -424,7 +424,7 @@ export function App() {
               ) : (
                 <ScrollToTop>
                   <Header />
-                  <Main key={lang}>
+                  <Main key={lang} $isShowBanner={IS_SHOW_BANNER}>
                     <>
                       <Switch>
                         <Route exact path="/" component={HomePage} />
@@ -936,12 +936,12 @@ export function App() {
   );
 }
 
-const Main = styled.div`
+const Main = styled.div<{ $isShowBanner?: boolean }>`
   box-sizing: border-box;
   position: relative;
   max-width: 1368px;
   margin: 0 auto;
-  padding-top: 106px;
+  padding-top: ${({ $isShowBanner }) => ($isShowBanner ? '156px' : '106px')};
   padding-bottom: 20px;
   min-height: calc(100vh - 260px);
 
@@ -956,7 +956,8 @@ const Main = styled.div`
   }
 
   ${media.s} {
-    padding: 100px 16px 32px;
+    padding: ${({ $isShowBanner }) =>
+      $isShowBanner ? '170px 16px 32px' : '100px 16px 32px'};
     //min-height: calc(100vh - 254px);
   }
 `;

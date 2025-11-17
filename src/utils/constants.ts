@@ -6,6 +6,8 @@ import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 
 export { LOCALSTORAGE_KEYS_MAP };
 
+export const IS_SHOW_BANNER = true;
+
 interface ContractsType {
   faucet: string;
   faucetLast: string;
