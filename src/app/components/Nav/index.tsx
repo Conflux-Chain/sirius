@@ -12,6 +12,9 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { usePlatform } from 'utils/hooks/usePlatform';
 import { GasPriceDropdown } from '@cfxjs/sirius-next-common/dist/components/GasPriceDropdown';
+import { Trans } from 'react-i18next';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { IS_SHOW_BANNER } from 'utils/constants';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: false | ReactNode;
@@ -55,6 +58,23 @@ export const Nav = memo(
 
     return (
       <Outer {...props}>
+        {IS_SHOW_BANNER && (
+          <Container className="banner">
+            <div>
+              <Trans i18nKey="banner.upgradeToUSDT0">
+                <StyledLink
+                  href="https://v2.confluxhub.io/bridge?fromChain=Conflux+Core&toChain=Conflux+eSpace&token=cUSDT"
+                  target="_blank"
+                >
+                  bridge
+                </StyledLink>
+                <StyledLink href="https://usdt0.confluxhub.io" target="_blank">
+                  convert
+                </StyledLink>
+              </Trans>
+            </div>
+          </Container>
+        )}
         <Container>
           <Brand className="navbar-brand">
             {brand}
@@ -242,6 +262,19 @@ const Container = styled.div`
   width: 100%;
   max-width: 1368px;
 
+  &.banner {
+    max-width: unset;
+    background-color: var(--theme-color-gray0);
+    height: 50px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ${media.s} {
+      height: 5rem;
+    }
+  }
+
   &.secondary {
     margin-top: 1.125rem;
     margin-bottom: 1.125rem;
@@ -284,5 +317,17 @@ const Outer = styled.nav`
   // mobile
   ${media.m} {
     min-height: 4rem;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  color: var(--theme-color-primary);
+  text-decoration: underline;
+  margin: 0 5px;
+  &:hover,
+  &:active,
+  &:visited {
+    color: var(--theme-color-primary);
+    text-decoration: underline;
   }
 `;
