@@ -153,6 +153,9 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
         icon: l.iconUrl || ICON_DEFAULT_TOKEN,
         name: l.name || notAvailable,
       };
+      const isOfficialVerified = l.securityAudit?.officialLabels?.some(
+        i => i === 'Verified',
+      );
 
       return {
         key: `${type}-${token.address}`,
@@ -186,6 +189,19 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
                         <span className="tag">
                           {token?.transferType.replace('ERC', 'CRC')}
                         </span>
+                      )}
+                      {isOfficialVerified && (
+                        <img
+                          src={verifiedIcon}
+                          style={{
+                            marginTop: '0',
+                            marginRight: '0',
+                            marginLeft: '8px',
+                            width: '16px',
+                            height: '16px',
+                          }}
+                          alt="status-icon"
+                        ></img>
                       )}
                     </div>
                     {token?.address ? (

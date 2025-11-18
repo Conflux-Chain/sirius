@@ -17,6 +17,7 @@ import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
 import ENV_CONFIG from 'env';
+import verifiedIcon from 'images/nametag/verified.svg';
 
 interface RouteParams {
   tokenAddress: string;
@@ -71,6 +72,9 @@ export function TokenDetail() {
   // }
 
   const isFC = tokenAddress === ENV_CONFIG.ENV_FC_ADDRESS;
+  const isOfficialVerified = data.securityAudit?.officialLabels?.some(
+    i => i === 'Verified',
+  );
 
   const menu = (
     <MenuWrapper>
@@ -129,6 +133,19 @@ export function TokenDetail() {
                 </Link>
               </div>
             ) : null}
+            {isOfficialVerified && (
+              <Tooltip title={t(translations.nametag.labels.tooltips.verified)}>
+                <img
+                  src={verifiedIcon}
+                  style={{
+                    marginLeft: '6px',
+                    width: '16px',
+                    height: '16px',
+                  }}
+                  alt="status-icon"
+                ></img>
+              </Tooltip>
+            )}
             <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
