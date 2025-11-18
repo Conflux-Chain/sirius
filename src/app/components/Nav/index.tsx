@@ -323,9 +323,9 @@ const Outer = styled.nav`
 const StyledLink = styled(Link)`
   color: var(--theme-color-primary);
   text-decoration: underline;
-  margin: 0 5px;
   &:hover,
   &:active,
+  &:focus,
   &:visited {
     color: var(--theme-color-primary);
     text-decoration: underline;
