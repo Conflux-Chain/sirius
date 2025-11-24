@@ -12,13 +12,13 @@ import { translations } from 'locales/i18n';
 import notFoundAddress from 'images/home/notFoundAddress.svg';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSearch } from '../../../utils/hooks/useSearch';
+import { IS_SHOW_BANNER } from 'utils/constants';
 
 interface LocationState {
   state: { type: string };
 }
 
 export function NotFoundAddressPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useTranslation();
   const { contractAddress: keywords = '' } = useParams<{
     contractAddress: string;
@@ -41,7 +41,7 @@ export function NotFoundAddressPage() {
     : t(translations.notFoundAddress.defaultType);
 
   return (
-    <PageWrapper>
+    <PageWrapper $isShowBanner={IS_SHOW_BANNER}>
       <LeftImage alt="404" src={notFoundAddress} />
       <RightWrap>
         <ErrorTitle>
@@ -61,10 +61,11 @@ export function NotFoundAddressPage() {
 }
 
 // wrapper
-const PageWrapper = styled.div`
+const PageWrapper = styled.div<{ $isShowBanner?: boolean }>`
   display: flex;
   position: absolute;
-  height: calc(100% - 8rem);
+  height: ${({ $isShowBanner }) =>
+    $isShowBanner ? 'calc(100% - 8rem - 50px)' : 'calc(100% - 8rem)'};
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -72,8 +73,7 @@ const PageWrapper = styled.div`
   width: 100%;
 
   ${media.s} {
-    height: calc(100% - 116px);
-    width: calc(100% - 32px);
+    position: static;
     align-items: inherit;
     align-content: center;
   }
