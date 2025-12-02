@@ -91,6 +91,11 @@ export const AddressDetailPage = memo(() => {
           )}
         </a>
       </Menu.Item>
+      <Menu.Item>
+        <Link href={`/approval?text=${address}`}>
+          {t(translations.header.approval)}
+        </Link>
+      </Menu.Item>
     </MenuWrapper>
   );
 
