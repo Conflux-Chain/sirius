@@ -28,10 +28,16 @@ export function Token({
         const data2: any = [];
         const data3: any = [];
         const data4: any = [];
+        const token = data?.token || {};
 
         data?.list?.map((d, i) => {
           const t = dayjs.utc(d.day).valueOf();
-          data1.push([t, new BigNumber(d.transferAmount).div(1e18).toNumber()]);
+          data1.push([
+            t,
+            new BigNumber(d.transferAmount)
+              .div(new BigNumber(10).pow(token.decimals ?? 18))
+              .toNumber(),
+          ]);
           data2.push([t, Number(d.transferCount)]);
           data3.push([t, Number(d.uniqueReceiver)]);
           data4.push([t, Number(d.uniqueSender)]);
