@@ -6,19 +6,18 @@ import { StockChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Ch
 import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/Charts/PreviewChartTemplate';
 import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
+import { useChartQueryParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useChartQueryParams';
 
 export function Contracts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
+  const query = useChartQueryParams({
+    preview,
+  });
 
   const props = {
     request: {
       url: OPEN_API_URLS.contracts,
-      query: preview
-        ? {
-            limit: '30',
-            intervalType: 'day',
-          }
-        : undefined,
+      query: query,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];

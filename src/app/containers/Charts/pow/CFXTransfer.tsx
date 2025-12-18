@@ -7,21 +7,21 @@ import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/
 import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 import BigNumber from 'bignumber.js';
+import { useChartQueryParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useChartQueryParams';
 
 export function CFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
+  const query = useChartQueryParams({
+    preview,
+    withoutToday: true,
+  });
 
   const tickAmount = preview ? 4 : 6;
 
   const props = {
     request: {
       url: OPEN_API_URLS.cfxTransfer,
-      query: preview
-        ? {
-            limit: '30',
-            intervalType: 'day',
-          }
-        : undefined,
+      query: query,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];
