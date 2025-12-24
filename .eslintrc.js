@@ -21,17 +21,6 @@ module.exports = {
         additionalHooks: 'useRecoilCallback',
       },
     ],
-    'import/no-restricted-paths': [
-      'error',
-      {
-        zones: [
-          {
-            from: './node_modules/@cfx-kit/dapp-utils/dist/address.js',
-            target: '.',
-          },
-        ],
-      },
-    ],
   },
   overrides: [
     {

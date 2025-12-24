@@ -12,12 +12,18 @@ import {
   reqContractLicense,
   reqContractVerification,
   reqEVMVersion,
+  reqContractCrossSpaceSimilarMatch,
 } from 'utils/httpRequest';
 import { StatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 import { Step1 } from './Step1';
 import { Step2, Step2SubmitData } from './Step2';
+import { CROSS_SPACE_SIMILAR_MATCH_OPTION } from './constants';
+import {
+  StepCrossSpaceSimilarMatch,
+  StepCrossSpaceSimilarMatchSubmitData,
+} from './StepCrossSpaceSimilarMatch';
 
 export const ContractVerification = () => {
   const { t } = useTranslation();
@@ -33,7 +39,7 @@ export const ContractVerification = () => {
     address: searchAddress,
   });
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<1 | 2 | 'cross-space-similar-match'>(1);
   const [codeFormats, setCodeFormats] = useState<
     {
       key: string;
@@ -67,12 +73,13 @@ export const ContractVerification = () => {
     });
 
     reqContractCodeFormat().then(resp => {
-      setCodeFormats(
-        resp.map(r => ({
+      setCodeFormats([
+        ...resp.map(r => ({
           key: r.code,
           value: r.desc,
         })),
-      );
+        CROSS_SPACE_SIMILAR_MATCH_OPTION,
+      ]);
     });
 
     reqContractLicense().then(resp => {
@@ -162,6 +169,38 @@ export const ContractVerification = () => {
       });
   };
 
+  const onCrossSpaceSimilarMatch = (
+    payload: StepCrossSpaceSimilarMatchSubmitData,
+  ) => {
+    setModalStatus('loading');
+    setModalShow(true);
+    setLoading(true);
+    setRespErrors([]);
+
+    reqContractCrossSpaceSimilarMatch(payload)
+      .then(resp => {
+        if (resp.exactMatch) {
+          setModalStatus('success');
+        } else {
+          setModalStatus('error');
+          if (resp.errors?.length) {
+            setRespErrors(resp.errors);
+          } else {
+            // bytecode not match
+            setRespErrors([
+              t(translations.contractVerification.error.notMatch),
+            ]);
+          }
+        }
+      })
+      .catch(e => {
+        setModalStatus('error');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const onStatusModalClose = () => {
     setModalShow(false);
   };
@@ -198,7 +237,11 @@ export const ContractVerification = () => {
             }}
             onNext={data => {
               setContractDetails(d => ({ ...d, ...data }));
-              setStep(2);
+              setStep(
+                data.codeFormat === CROSS_SPACE_SIMILAR_MATCH_OPTION.key
+                  ? 'cross-space-similar-match'
+                  : 2,
+              );
             }}
           />
         )}
@@ -210,6 +253,22 @@ export const ContractVerification = () => {
             contractDetails={contractDetails}
             loading={loading}
             onSubmit={onFinish}
+            onBack={() => {
+              setStep(1);
+              setContractDetails({
+                address: searchAddress,
+              });
+              setRespErrors([]);
+            }}
+          />
+        )}
+        {step === 'cross-space-similar-match' && (
+          <StepCrossSpaceSimilarMatch
+            respErrors={respErrors}
+            contractDetails={contractDetails}
+            loading={loading}
+            modalStatus={modalStatus}
+            onSubmit={onCrossSpaceSimilarMatch}
             onBack={() => {
               setStep(1);
               setContractDetails({

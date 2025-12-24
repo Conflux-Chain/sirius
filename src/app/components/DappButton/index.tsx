@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePortal } from 'utils/hooks/usePortal';
 import styled from 'styled-components';
 import { translations } from 'locales/i18n';
-import imgSuccess from 'images/success.png';
+import imgSuccess from 'images/success.svg';
 import { ButtonProps } from '@cfxjs/react-ui/dist/button/button';
 import { formatAddress } from 'utils';
 import { TXN_ACTION } from 'utils/constants';
