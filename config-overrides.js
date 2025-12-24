@@ -68,6 +68,7 @@ module.exports = function (config, mode) {
       },
       module: {
         ...config.module,
+        unknownContextCritical: false,
         rules: [
           ...config.module.rules,
           {
@@ -111,6 +112,7 @@ module.exports = function (config, mode) {
     },
     module: {
       ...config.module,
+      unknownContextCritical: false,
       rules: [
         ...config.module.rules,
         {
