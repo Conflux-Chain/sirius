@@ -7,17 +7,19 @@ import { PreviewChartTemplate } from '@cfxjs/sirius-next-common/dist/components/
 import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
 import BigNumber from 'bignumber.js';
+import { useChartQueryParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useChartQueryParams';
 
 export function DailyCFXTransfer({ preview = false }: ChildProps) {
   const { t } = useTranslation();
+  const query = useChartQueryParams({
+    preview,
+    withoutToday: true,
+  });
 
   const props = {
     request: {
       url: OPEN_API_URLS.CrossSpaceDailyCFXTransfer,
-      query: {
-        intervalType: 'day',
-        limit: preview ? '30' : '365',
-      },
+      query: query,
       formatter: data => {
         const data1: any = [];
         const data2: any = [];

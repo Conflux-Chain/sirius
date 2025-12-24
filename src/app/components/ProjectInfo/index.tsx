@@ -10,7 +10,6 @@ import {
   CexIcon,
   AuditIcon,
   CoinMarketIcon,
-  OxIcon,
   VerifyIcon,
   DetailIcon,
 } from './icons';
@@ -40,7 +39,6 @@ interface ProjectInfoProp {
       coinMarketCap: string;
     };
     verify: number;
-    zeroAdmin: number;
   };
   tokenName: string;
   isDetailPage?: boolean;
@@ -51,7 +49,7 @@ export const ProjectInfo = React.memo(
     const { t, i18n } = useTranslation();
     const [visible, setVisible] = useState(false);
     const lang = i18n.language.indexOf('en') > -1 ? 'en' : 'zh';
-    const { cex, dex, track, verify, audit, zeroAdmin } = securityAudit;
+    const { cex, dex, track, verify, audit } = securityAudit;
     const [list, setList] = useState<any[]>([]);
     const clickDetail = () => {
       setVisible(true);
@@ -77,31 +75,6 @@ export const ProjectInfo = React.memo(
     };
 
     const coinsList = [
-      {
-        name: 'zeroAdmin',
-        icon: OxIcon,
-        desc: (
-          <span>
-            {zeroAdmin === 1
-              ? t(
-                  translations.general.table.token.projectInfo.modal
-                    .zeroAddress,
-                )
-              : t(
-                  translations.general.table.token.projectInfo.modal
-                    .notZeroAddress,
-                )}
-          </span>
-        ),
-        tip:
-          zeroAdmin === 1
-            ? t(translations.general.table.token.projectInfo.zeroAddress)
-            : t(translations.general.table.token.projectInfo.notZeroAddress),
-        isActive: false,
-        hoverable: false,
-        isWarning: false,
-        onClick: clickDetail,
-      },
       {
         name: 'verify',
         icon: VerifyIcon,
@@ -349,12 +322,12 @@ export const ProjectInfo = React.memo(
         if (securityAudit[c.name] === 1) {
           isActive = true;
         } else if (securityAudit[c.name] === 0) {
-          if (['verify', 'zeroAdmin'].includes(c.name)) {
+          if (['verify'].includes(c.name)) {
             isWarning = true;
           }
         } else {
           if (isAllNull(securityAudit[c.name])) {
-            if (['verify', 'zeroAdmin'].includes(c.name)) {
+            if (['verify'].includes(c.name)) {
               isWarning = true;
             }
           } else {

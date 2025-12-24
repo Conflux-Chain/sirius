@@ -11,19 +11,18 @@ import {
 } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { scope } from '@cfxjs/sirius-next-common/dist/components/Charts/config';
 import { OPEN_API_URLS } from 'utils/constants';
+import { useChartQueryParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useChartQueryParams';
 
 export function TPS({ preview = false }: ChildProps) {
   const { t } = useTranslation();
+  const query = useChartQueryParams({
+    preview,
+  });
 
   const props = {
     request: {
       url: OPEN_API_URLS.tps,
-      query: preview
-        ? {
-            limit: '30',
-            intervalType: 'day',
-          }
-        : undefined,
+      query: query,
       formatter: data => {
         return [
           data?.list?.map(s => [
