@@ -23,6 +23,12 @@ import CheckCircle from '@zeit-ui/react-icons/checkCircle';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { isInnerContractAddress } from 'utils';
 import { SubTabs } from 'app/components/Tabs/Loadable';
+import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import imgInfo from 'images/info.svg';
+import imgSimilarMatch from 'images/similar-match.svg';
+import { useGlobalData } from 'utils/hooks/useGlobal';
+import { getNetwork } from '@cfxjs/sirius-next-common/dist/utils';
+import { shortenAddress } from '@cfx-kit/dapp-utils/dist/address';
 
 const AceEditorStyle = {
   width: '100%',
@@ -35,6 +41,8 @@ export const CheckCircleIcon = (size?) => (
 
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
+  const [globalData] = useGlobalData();
+  const { networks } = globalData;
   const { sourceCode, abi, address, verify = {} } = contractInfo;
   const {
     exactMatch,
@@ -47,9 +55,19 @@ const Code = ({ contractInfo }) => {
     libraries = [],
     evmVersion,
     language,
+    similarMatchAddress,
+    similarMatchNetworkId,
+    crossSpace,
   } = verify;
 
   const isSolidity = language === 'solidity';
+  const isSimilarMatched = !!similarMatchAddress;
+  const similarMatchAddressLink = useMemo(() => {
+    if (!similarMatchAddress) return '';
+    if (!crossSpace) return `/address/${similarMatchAddress}`;
+    const network = getNetwork(networks, similarMatchNetworkId);
+    return `${network.url}/address/${similarMatchAddress}`;
+  }, [similarMatchAddress, crossSpace, similarMatchNetworkId, networks]);
 
   const constructor = useMemo(() => {
     if (constructorArgs && abi && address) {
@@ -203,10 +221,51 @@ const Code = ({ contractInfo }) => {
     <StyledContractContentCodeWrapper>
       {exactMatch ? (
         <>
-          <div className="contract-code-verified">
-            {t(translations.contract.verify.contractCodeVerified)}{' '}
-            <CheckCircleIcon />
-          </div>
+          {isSimilarMatched && (
+            <>
+              <div className="contract-code-verified">
+                <img
+                  src={imgSimilarMatch}
+                  alt="similar-match"
+                  width="16px"
+                  className="mr-6px"
+                />
+                {t(translations.contract.verify.contractCodeSimilarMatch)}
+              </div>
+              <div className="contract-code-similar-match-tips">
+                <div className="contract-code-similar-match-tip">
+                  <img src={imgInfo} alt="info" width="16px" />
+                  <Trans
+                    i18nKey={
+                      translations.contract.verify.similarMatchTips.first
+                    }
+                    values={{
+                      address: shortenAddress(similarMatchAddress),
+                    }}
+                  >
+                    This contract matches the deployed Bytecode of the Source
+                    Code for Contract
+                    <Link href={similarMatchAddressLink}>address</Link>
+                  </Trans>
+                </div>
+                <div className="contract-code-similar-match-tip">
+                  <img src={imgInfo} alt="info" width="16px" />
+                  {t(translations.contract.verify.similarMatchTips.second)}
+                </div>
+              </div>
+            </>
+          )}
+          {!isSimilarMatched && (
+            <div className="contract-code-verified">
+              {t(translations.contract.verify.contractCodeVerified)}{' '}
+              <Tooltip
+                title={t(translations.contract.verify.verifiedTooltip)}
+                className="ml-8px"
+              >
+                <CheckCircleIcon />
+              </Tooltip>
+            </div>
+          )}
           <Row className="contract-code-verify-info">
             <Col span={6} sm={12} xs={24}>
               <span className="verify-info-title">
@@ -387,6 +446,8 @@ const Code = ({ contractInfo }) => {
 
 const StyledContractContentCodeWrapper = styled.div`
   .contract-code-verified {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: bold;
     color: #0f1327;
@@ -395,6 +456,28 @@ const StyledContractContentCodeWrapper = styled.div`
 
     &.margin-bottom-0 {
       margin-bottom: 0;
+    }
+
+    .ml-8px {
+      margin-left: 8px;
+    }
+    .mr-6px {
+      margin-right: 6px;
+    }
+  }
+  .contract-code-similar-match-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 15px 0;
+    .contract-code-similar-match-tip {
+      font-size: 14px;
+      font-weight: 450;
+      color: #74798c;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
   }
   .contract-verify-tip {

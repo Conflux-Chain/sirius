@@ -42,7 +42,6 @@ interface SecurityAudit {
     coinMarketCap: string;
   };
   verify: number;
-  zeroAdmin: number;
 }
 
 export interface BasicProps {

@@ -4,7 +4,10 @@ import { translations } from 'locales/i18n';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { Form, Input, Button, Row, Col, Select } from '@cfxjs/antd';
 import { isCoreContractAddress } from 'utils';
-import { SOLIDITY_CODE_FORMAT } from './constants';
+import {
+  CROSS_SPACE_SIMILAR_MATCH_OPTION,
+  SOLIDITY_CODE_FORMAT,
+} from './constants';
 import { StyledButtonWrapper, StyledRemarkWrapper } from './StyledComponents';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
@@ -45,18 +48,21 @@ export const Step1: React.FC<{
     compiler: string;
   }>();
   const [codeFormat, setCodeFormat] = useState(initialValues.codeFormat);
-  const compilers = !codeFormat
-    ? []
-    : codeFormat === SOLIDITY_CODE_FORMAT
-    ? solidityCompilers
-    : vyperCompilers;
+  const isCrossSpaceSimilarMatch =
+    codeFormat === CROSS_SPACE_SIMILAR_MATCH_OPTION.key;
+  const compilers =
+    !codeFormat || isCrossSpaceSimilarMatch
+      ? []
+      : codeFormat === SOLIDITY_CODE_FORMAT
+      ? solidityCompilers
+      : vyperCompilers;
   const onFinish = () => {
     const values = form.getFieldsValue();
     onNext({
       ...values,
       codeFormatLabel: codeFormats.find(f => f.key === values.codeFormat)!
         .value,
-      compilerLabel: compilers.find(c => c.key === values.compiler)!.value,
+      compilerLabel: compilers.find(c => c.key === values.compiler)?.value,
     });
   };
 
@@ -151,33 +157,35 @@ export const Step1: React.FC<{
               </Select>
             </Form.Item>
           </Col>
-          <Col span={24} md={8}>
-            <Form.Item
-              name="compiler"
-              label={t(translations.contractVerification.compilerVersion)}
-              rules={[
-                {
-                  required: true,
-                  message: t(
-                    translations.contractVerification.error.pleaseSelect,
-                  ),
-                },
-              ]}
-              validateFirst
-            >
-              <Select
-                placeholder={t(
-                  translations.contractVerification.error.pleaseSelect,
-                )}
+          {!isCrossSpaceSimilarMatch && (
+            <Col span={24} md={8}>
+              <Form.Item
+                name="compiler"
+                label={t(translations.contractVerification.compilerVersion)}
+                rules={[
+                  {
+                    required: true,
+                    message: t(
+                      translations.contractVerification.error.pleaseSelect,
+                    ),
+                  },
+                ]}
+                validateFirst
               >
-                {compilers.map(l => (
-                  <Option value={l.key} key={l.key}>
-                    {l.value}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
+                <Select
+                  placeholder={t(
+                    translations.contractVerification.error.pleaseSelect,
+                  )}
+                >
+                  {compilers.map(l => (
+                    <Option value={l.key} key={l.key}>
+                      {l.value}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          )}
         </Row>
         <StyledButtonWrapper>
           <Button
