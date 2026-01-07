@@ -219,7 +219,7 @@ const protocol = window.location.protocol;
 export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
   // core space
   {
-    name: 'Conflux Core (Hydra)',
+    name: 'Conflux Core (Coral)',
     id: 1029,
     url: IS_STAGE
       ? `${protocol}//www-stage.confluxscan.net`
@@ -228,7 +228,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
   },
   // espace
   {
-    name: 'Conflux eSpace (Hydra)',
+    name: 'Conflux eSpace (Coral)',
     id: 1030,
     url: IS_STAGE
       ? `${protocol}//evm-stage.confluxscan.net`
