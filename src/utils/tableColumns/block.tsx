@@ -24,6 +24,7 @@ import {
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { HIDE_IN_DOT_NET } from 'utils/constants';
 
 export const epoch = {
   title: (
@@ -282,8 +283,13 @@ export const burntFees = {
   width: 1,
   render: value =>
     value ? (
-      <Text tag="span" hoverValue={`${fromDripToCfx(value, true)} CFX`}>
-        {`${fromDripToCfx(value)} CFX`}
+      <Text
+        tag="span"
+        hoverValue={`${fromDripToCfx(value, true)} ${
+          HIDE_IN_DOT_NET ? '' : 'CFX'
+        }`}
+      >
+        {`${fromDripToCfx(value)} ${HIDE_IN_DOT_NET ? '' : 'CFX'}`}
       </Text>
     ) : (
       '--'

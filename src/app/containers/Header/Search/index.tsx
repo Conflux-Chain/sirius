@@ -13,7 +13,7 @@ import { useSearch } from 'utils/hooks/useSearch';
 import { AutoComplete, Input, SelectProps, Image } from '@cfxjs/antd';
 import { SearchIcon } from '@cfxjs/sirius-next-common/dist/components/SearchIcon';
 import ClearIcon from 'images/clear.png';
-import { ICON_DEFAULT_TOKEN } from 'utils/constants';
+import { HIDE_IN_DOT_NET, ICON_DEFAULT_TOKEN } from 'utils/constants';
 import _ from 'lodash';
 import { fetchWithPrefix } from '@cfxjs/sirius-next-common/dist/utils/request';
 import {
@@ -147,83 +147,88 @@ const searchResult = (list: any[], notAvailable = '-', type = 'token') => {
       ),
     }));
   } else {
-    return list.map(l => {
-      const token = {
-        ...l,
-        icon: l.iconUrl || ICON_DEFAULT_TOKEN,
-        name: l.name || notAvailable,
-      };
-      const isOfficialVerified = l.securityAudit?.officialLabels?.some(
-        i => i === 'Verified',
-      );
+    return (
+      list
+        // .net版全局搜索不支持搜索到ERC20代币
+        .filter(l => !HIDE_IN_DOT_NET || l.transferType !== 'ERC20')
+        .map(l => {
+          const token = {
+            ...l,
+            icon: l.iconUrl || ICON_DEFAULT_TOKEN,
+            name: l.name || notAvailable,
+          };
+          const isOfficialVerified = l.securityAudit?.officialLabels?.some(
+            i => i === 'Verified',
+          );
 
-      return {
-        key: `${type}-${token.address}`,
-        // add type prefix for duplicate value with different type
-        value: `${type}-${token.address}`,
-        type,
-        label: (
-          <TokenItemWrapper
-            onClick={() => {
-              window.location.href = `/${
-                type === 'token' ? 'token' : 'address'
-              }/${token.address}`;
-            }}
-          >
-            {type === 'token' && (
-              <Image
-                preview={false}
-                src={token?.iconUrl || ICON_DEFAULT_TOKEN}
-                fallback={ICON_DEFAULT_TOKEN}
-                alt="token icon"
-              />
-            )}
-            <span>
-              <Translation>
-                {t => (
-                  <>
-                    <div className="title">
-                      {token?.name}
-                      {token?.symbol ? ` (${token.symbol}) ` : ' '}
-                      {token?.transferType && (
-                        <span className="tag">
-                          {token?.transferType.replace('ERC', 'CRC')}
-                        </span>
-                      )}
-                      {isOfficialVerified && (
-                        <img
-                          src={verifiedIcon}
-                          style={{
-                            marginTop: '0',
-                            marginRight: '0',
-                            marginLeft: '8px',
-                            width: '16px',
-                            height: '16px',
-                          }}
-                          alt="status-icon"
-                        ></img>
-                      )}
-                    </div>
-                    {token?.address ? (
-                      <div className="address">{token?.address}</div>
-                    ) : null}
-                    {/*{token?.website ? (*/}
-                    {/*  <div className="website">{token?.website}</div>*/}
-                    {/*) : null}*/}
-                    {token?.holderCount ? (
-                      <div className="holders">
-                        {token?.holderCount}{' '}
-                        {t(translations.tokens.table.holders)}
-                      </div>
-                    ) : null}
-                  </>
+          return {
+            key: `${type}-${token.address}`,
+            // add type prefix for duplicate value with different type
+            value: `${type}-${token.address}`,
+            type,
+            label: (
+              <TokenItemWrapper
+                onClick={() => {
+                  window.location.href = `/${
+                    type === 'token' ? 'token' : 'address'
+                  }/${token.address}`;
+                }}
+              >
+                {type === 'token' && (
+                  <Image
+                    preview={false}
+                    src={token?.iconUrl || ICON_DEFAULT_TOKEN}
+                    fallback={ICON_DEFAULT_TOKEN}
+                    alt="token icon"
+                  />
                 )}
-              </Translation>
-            </span>
-          </TokenItemWrapper>
-        ),
-      };
-    });
+                <span>
+                  <Translation>
+                    {t => (
+                      <>
+                        <div className="title">
+                          {token?.name}
+                          {token?.symbol ? ` (${token.symbol}) ` : ' '}
+                          {token?.transferType && (
+                            <span className="tag">
+                              {token?.transferType.replace('ERC', 'CRC')}
+                            </span>
+                          )}
+                          {isOfficialVerified && (
+                            <img
+                              src={verifiedIcon}
+                              style={{
+                                marginTop: '0',
+                                marginRight: '0',
+                                marginLeft: '8px',
+                                width: '16px',
+                                height: '16px',
+                              }}
+                              alt="status-icon"
+                            ></img>
+                          )}
+                        </div>
+                        {token?.address ? (
+                          <div className="address">{token?.address}</div>
+                        ) : null}
+                        {/*{token?.website ? (*/}
+                        {/*  <div className="website">{token?.website}</div>*/}
+                        {/*) : null}*/}
+                        {token?.holderCount ? (
+                          <div className="holders">
+                            {token?.holderCount}{' '}
+                            {t(translations.tokens.table.holders)}
+                          </div>
+                        ) : null}
+                      </>
+                    )}
+                  </Translation>
+                </span>
+              </TokenItemWrapper>
+            ),
+          };
+        })
+    );
   }
 };
 

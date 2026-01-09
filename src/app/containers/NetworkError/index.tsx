@@ -26,7 +26,7 @@ export function NetworkError() {
   const [globalData] = useGlobalData();
   const { networks } = globalData;
   const {
-    network = IS_CORESPACE && IS_TESTNET ? 'Hydra' : 'Core (Testnet)',
+    network = IS_CORESPACE && IS_TESTNET ? 'Coral' : 'Core (Testnet)',
   } = useParams<RouteParams>();
 
   return (

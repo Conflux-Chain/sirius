@@ -264,11 +264,7 @@ export const Basic = ({
         : undefined,
   };
   const fieldProjectInfo = {
-    title: (
-      <Tooltip title={t(translations.toolTip.token.transfers)}>
-        {t(translations.general.table.token.projectInfo.projectInfo)}
-      </Tooltip>
-    ),
+    title: t(translations.general.table.token.projectInfo.projectInfo),
     children: securityAudit ? (
       name ? (
         <ProjectInfo

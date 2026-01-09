@@ -6,8 +6,6 @@ import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 
 export { LOCALSTORAGE_KEYS_MAP };
 
-export const IS_SHOW_BANNER = true;
-
 interface ContractsType {
   faucet: string;
   faucetLast: string;
@@ -41,6 +39,8 @@ export const NETWORK_ID = (() => {
 export const HIDE_IN_DOT_NET =
   /.net$/.test(window.location.host) &&
   localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
+
+export const IS_SHOW_BANNER = !HIDE_IN_DOT_NET;
 
 export const CONTRACTS: ContractsType = (() => {
   // initial value used for ts check rule
@@ -219,7 +219,7 @@ const protocol = window.location.protocol;
 export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
   // core space
   {
-    name: 'Conflux Core (Hydra)',
+    name: 'Conflux Core (Coral)',
     id: 1029,
     url: IS_STAGE
       ? `${protocol}//www-stage.confluxscan.net`
@@ -228,7 +228,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
   },
   // espace
   {
-    name: 'Conflux eSpace (Hydra)',
+    name: 'Conflux eSpace (Coral)',
     id: 1030,
     url: IS_STAGE
       ? `${protocol}//evm-stage.confluxscan.net`
