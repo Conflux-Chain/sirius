@@ -410,21 +410,25 @@ export function Footer() {
 
   const rightTop = [
     <FooterWrapper key="right-top">
-      <FooterContentWrapper>
-        <FooterContentTitle>
-          {t(translations.footer.product)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            <FooterContentLink>{websiteLink}</FooterContentLink>
-            {hideInDotNet(<FooterContentLink>{portalLink}</FooterContentLink>)}
-            {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
-            {HIDE_IN_DOT_NET && IS_CONFLUX_FEATURE_ENABLED ? (
-              <FooterContentLink>{globalLink}</FooterContentLink>
-            ) : null}
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
+      {hideInDotNet(
+        <FooterContentWrapper>
+          <FooterContentTitle>
+            {t(translations.footer.product)}
+          </FooterContentTitle>
+          <FooterContent>
+            <FooterContentRow>
+              <FooterContentLink>{websiteLink}</FooterContentLink>
+              {hideInDotNet(
+                <FooterContentLink>{portalLink}</FooterContentLink>,
+              )}
+              {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
+              {HIDE_IN_DOT_NET && IS_CONFLUX_FEATURE_ENABLED ? (
+                <FooterContentLink>{globalLink}</FooterContentLink>
+              ) : null}
+            </FooterContentRow>
+          </FooterContent>
+        </FooterContentWrapper>,
+      )}
       <FooterContentWrapper>
         <FooterContentTitle className="footer-develop-resource">
           {t(translations.footer.developResource.title)}
@@ -436,9 +440,11 @@ export function Footer() {
                 {developResourceLinks.developerAPI}
               </FooterContentLink>
             ) : null}
-            <FooterContentLink>
-              {developResourceLinks.developerDocuments}
-            </FooterContentLink>
+            {hideInDotNet(
+              <FooterContentLink>
+                {developResourceLinks.developerDocuments}
+              </FooterContentLink>,
+            )}
             {/* <FooterContentLink>
               {developResourceLinks.confluxStudio}
             </FooterContentLink>
@@ -511,6 +517,7 @@ export function Footer() {
 const FooterWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  min-height: 112px;
 
   ${media.m} {
     flex-flow: wrap;

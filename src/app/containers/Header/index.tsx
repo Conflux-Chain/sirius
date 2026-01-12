@@ -247,13 +247,6 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: '/blockchain/transactions',
     },
-    {
-      // accounts
-      title: [t(translations.header.accounts), <Check size={18} key="check" />],
-      name: ScanEvent.menu.action.accounts,
-      afterClick: menuClick,
-      href: '/blockchain/accounts',
-    },
   ];
 
   const posItems = [
@@ -414,6 +407,14 @@ export const Header = memo(() => {
       name: ScanEvent.menu.action.tokens20,
       afterClick: menuClick,
       href: '/tokens/crc20',
+    });
+
+    blockchainItems.push({
+      // accounts
+      title: [t(translations.header.accounts), <Check size={18} key="check" />],
+      name: ScanEvent.menu.action.accounts,
+      afterClick: menuClick,
+      href: '/blockchain/accounts',
     });
 
     blockchainItems.push({
