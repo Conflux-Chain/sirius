@@ -574,6 +574,7 @@ export const ContractContent = ({ contractInfo }) => {
     proxy = {},
     implementation = {},
     destroy = {},
+    beacon = {},
   } = contractInfo;
   const [activeIndex, setActiveIndex] = useState(0);
   const [initError, setInitError] = useState(false);
@@ -644,6 +645,7 @@ export const ContractContent = ({ contractInfo }) => {
               address={implementation.address}
               pattern={proxy.proxyPattern}
               proxyAddress={address}
+              beaconAddress={beacon.address}
               key={`contract-implementation-read-${address}`}
             ></ContractAbi>
           ),
@@ -657,6 +659,7 @@ export const ContractContent = ({ contractInfo }) => {
               address={implementation.address}
               pattern={proxy.proxyPattern}
               proxyAddress={address}
+              beaconAddress={beacon.address}
               key={`contract-implementation-write-${address}`}
             ></ContractAbi>
           ),

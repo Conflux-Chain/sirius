@@ -15,6 +15,7 @@ import { translations } from 'locales/i18n';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { usePortal } from 'utils/hooks/usePortal';
+import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
@@ -22,6 +23,7 @@ interface ContractAbiProps {
   abi?: any;
   pattern?: React.ReactNode;
   proxyAddress?: string;
+  beaconAddress?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ContractAbiProps>;
 export declare type Props = ContractAbiProps & NativeAttrs;
@@ -34,6 +36,7 @@ export const ContractAbi = ({
   abi,
   pattern,
   proxyAddress,
+  beaconAddress,
 }: Props) => {
   const { accounts } = usePortal();
   const { t } = useTranslation();
@@ -166,10 +169,45 @@ export const ContractAbi = ({
 
   return (
     <div>
-      {pattern ? (
+      {beaconAddress ? (
+        <StyledContractAbiWrapper>
+          <div>
+            <Trans i18nKey="contract.beacon.pattern1">
+              ABI for the implementation contract at
+              <CoreAddressContainer
+                showIcon={false}
+                link={true}
+                value={address}
+              />
+              using the
+              <Link
+                href="https://eips.ethereum.org/EIPS/eip-1967"
+                target="_blank"
+              >
+                EIP-1967 Beacon Proxy
+              </Link>
+              pattern.
+            </Trans>
+          </div>
+          <div>
+            <Trans i18nKey="contract.beacon.pattern2">
+              Previously recorded to be associated with beacon contract on
+              <CoreAddressContainer
+                showIcon={false}
+                link={true}
+                value={beaconAddress}
+              />
+            </Trans>
+          </div>
+        </StyledContractAbiWrapper>
+      ) : pattern ? (
         <StyledContractAbiWrapper>
           <Trans i18nKey="contract.pattern">
-            <CoreAddressContainer link={true} value={address} />
+            <CoreAddressContainer
+              showIcon={false}
+              link={true}
+              value={address}
+            />
             {pattern}
           </Trans>
         </StyledContractAbiWrapper>
