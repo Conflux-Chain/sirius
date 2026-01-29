@@ -84,8 +84,8 @@ export const OptimizationDecode = ({
               let type: React.ReactNode = a.type;
               if (/\(.*\)/.test(type as string)) {
                 type = (
-                  <span className="optimization-decode-data-item-type-turple">
-                    <span style={{ marginRight: '2px' }}>turple</span>
+                  <span className="optimization-decode-data-item-type-tuple">
+                    <span style={{ marginRight: '2px' }}>tuple</span>
                     {/* <Info size={12} /> */}
                   </span>
                 );
@@ -189,7 +189,7 @@ const StyledOptimizationDecodeWrapper = styled.div`
         align-items: center;
         height: 1.4286rem;
 
-        .optimization-decode-data-item-type-turple {
+        .optimization-decode-data-item-type-tuple {
           display: flex;
           align-items: center;
         }
