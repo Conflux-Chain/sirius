@@ -330,34 +330,45 @@ export const TokenTypeTagWrapper = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  width: 118px;
   height: 30px;
   z-index: 1;
-  padding-right: 5px;
+  padding-left: 20px;
   line-height: 30px;
   text-align: right;
   color: #fff;
+  display: flex;
+  align-items: center;
+  border-top-right-radius: 5px;
+  overflow: hidden;
 
   span {
     display: inline-block;
-    width: 95px;
     font-size: 12px;
-    text-align: center;
+    padding-right: 5px;
   }
 
   &.ERC20 {
-    background: url(${CRC20bg}) no-repeat right top;
+    background: url(${CRC20bg}) no-repeat left top;
     background-size: 118px 30px;
+    span {
+      background-color: #7fd3ff;
+    }
   }
 
   &.ERC721 {
-    background: url(${CRC721bg}) no-repeat right top;
+    background: url(${CRC721bg}) no-repeat left top;
     background-size: 118px 30px;
+    span {
+      background-color: #3150d2;
+    }
   }
 
   &.ERC1155 {
-    background: url(${CRC1155bg}) no-repeat right top;
+    background: url(${CRC1155bg}) no-repeat left top;
     background-size: 118px 30px;
+    span {
+      background-color: #70a1fe;
+    }
   }
 `;
 
