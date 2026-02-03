@@ -7,6 +7,45 @@ const smp = new SpeedMeasurePlugin({
   loaderTopFiles: 10,
 });
 
+// Helper function to configure cssnano to preserve empty CSS variables
+function configureCssNano(minimizer) {
+  if (!minimizer || !minimizer.options) {
+    return minimizer;
+  }
+  // For OptimizeCssAssetsWebpackPlugin
+  if (minimizer.options.cssProcessorPluginOptions) {
+    const options = minimizer.options.cssProcessorPluginOptions;
+    if (Array.isArray(options.preset)) {
+      if (!options.preset[1]) {
+        options.preset[1] = {};
+      }
+      // Preserve empty declarations
+      options.preset[1].discardEmpty = false;
+      options.preset[1].normalizeDeclarations = false;
+      options.preset[1].discardUnknown = false;
+      // Add postcss-custom-properties to prevent removal
+      if (!options.plugins) {
+        options.plugins = [];
+      }
+    }
+  }
+  // For CssMinimizerPlugin (newer versions of react-scripts)
+  if (minimizer.options.minimizerOptions) {
+    minimizer.options.minimizerOptions.preset = minimizer.options
+      .minimizerOptions.preset || ['default'];
+    const preset = minimizer.options.minimizerOptions.preset;
+    if (Array.isArray(preset)) {
+      if (!preset[1]) {
+        preset[1] = {};
+      }
+      preset[1].discardEmpty = false;
+      preset[1].normalizeDeclarations = false;
+      preset[1].discardUnknown = false;
+    }
+  }
+  return minimizer;
+}
+
 module.exports = function (config, mode) {
   if (mode === 'production') {
     return smp.wrap({
@@ -41,9 +80,9 @@ module.exports = function (config, mode) {
             !minimizerConfig.options ||
             !minimizerConfig.options.parallel
           )
-            return minimizerConfig;
+            return configureCssNano(minimizerConfig);
           minimizerConfig.options.parallel = 1;
-          return minimizerConfig;
+          return configureCssNano(minimizerConfig);
         }),
       },
       resolve: {
