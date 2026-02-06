@@ -26,7 +26,7 @@ const IntValueFormatter = ({ value, maxDecimals }: IntValueFormatterProps) => {
         placeholder="Select"
       />
       <img src={imgArray} alt="" className="icon" />
-      <span className="text">Float value</span>
+      <span className="type">Float value</span>
       <span>{floatValue}</span>
     </Container>
   );
@@ -44,8 +44,9 @@ const Container = styled.div`
     margin-right: 3px;
     margin-left: 8px;
   }
-  .text {
+  .type {
     color: #97a3b4;
+    font-style: italic;
   }
   .label {
     display: inline-block;
