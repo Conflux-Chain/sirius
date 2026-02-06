@@ -42,6 +42,7 @@ const Container = styled.div`
     display: inline-block;
     width: 10px;
     margin-right: 3px;
+    margin-left: 8px;
   }
   .text {
     color: #97a3b4;
