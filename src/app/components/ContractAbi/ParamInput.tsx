@@ -163,7 +163,7 @@ const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
             <Add
               className="add-icon"
               onClick={() => {
-                if (!decimals) return;
+                if (decimals === undefined) return;
                 let newVal = value && value['val'] ? value['val'] : 1;
                 newVal += '0'.repeat(decimals);
                 triggerChange({
