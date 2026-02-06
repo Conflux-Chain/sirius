@@ -211,7 +211,7 @@ const Container = styled.div`
   }
   .add-icon {
     width: 16px;
-    margin-left: 5px;
+    margin-left: 8px;
     cursor: pointer;
   }
 `;
