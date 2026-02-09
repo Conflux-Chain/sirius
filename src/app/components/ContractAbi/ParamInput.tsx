@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
+import IntValueFormatter from './IntValueFormatter';
+import { DecimalsSelect } from '@cfxjs/sirius-next-common/dist/components/DecimalsSelect';
+import { MaxDecimals } from './constants';
+import { Add } from '@cfxjs/sirius-next-common/dist/components/Icons';
 
 interface ParamInputProps {
   value?: object;
@@ -12,11 +16,13 @@ interface ParamInputProps {
   onChange?: ({}) => void;
   type: string;
   input?: object;
+  expand?: boolean;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ParamInputProps>;
 export declare type Props = ParamInputProps & NativeAttrs;
 
-const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
+const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
+  const [decimals, setDecimals] = useState<number>();
   const { t } = useTranslation();
   const triggerChange = changedValue => {
     if (onChange) {
@@ -133,7 +139,7 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
   };
 
   return (
-    <>
+    <div>
       <Container>
         {type.startsWith('tuple') ? getTupleFormat(input) : null}
         <Input
@@ -143,10 +149,42 @@ const ParamInput = ({ value, onChange, type, input = {} }: Props) => {
           placeholder={getPlaceholder(type)}
         />
       </Container>
-    </>
+      {expand && (
+        <>
+          <Container className="expand">
+            <span className="label">Add Zero</span>
+            <DecimalsSelect
+              onChange={setDecimals}
+              value={decimals}
+              max={MaxDecimals[type]}
+              mode="pow"
+              placeholder="Select"
+            />
+            <Add
+              className="add-icon"
+              onClick={() => {
+                if (decimals === undefined) return;
+                let newVal = value && value['val'] ? value['val'] : 1;
+                newVal += '0'.repeat(decimals);
+                triggerChange({
+                  val: newVal,
+                  type: type,
+                });
+              }}
+            />
+          </Container>
+          <IntValueFormatter
+            value={value?.['val'] ?? ''}
+            maxDecimals={MaxDecimals[type]}
+          />
+        </>
+      )}
+    </div>
   );
 };
 const Container = styled.div`
+  padding-left: 7px;
+  margin: 8px 0;
   .inputComp {
     margin-top: 8px;
   }
@@ -161,6 +199,20 @@ const Container = styled.div`
     code:after {
       display: none;
     }
+  }
+  &.expand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .label {
+    display: inline-block;
+    width: 110px;
+  }
+  .add-icon {
+    width: 16px;
+    margin-left: 8px;
+    cursor: pointer;
   }
 `;
 export default ParamInput;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Form } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
@@ -7,8 +7,6 @@ import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import lodash from 'lodash';
 import FuncBody from './FuncBody';
-import ParamTitle from './ParamTitle';
-import ParamInput from './ParamInput';
 import OutputParams from './OutputParams';
 import FuncResponse from './FuncResponse';
 import OutputItem from './OutputItem';
@@ -34,6 +32,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import JSONBigint from 'json-bigint';
+import InputItem from './InputItem';
 
 interface FuncProps {
   type?: string;
@@ -236,82 +235,89 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     setErrorMessage('');
     setTxHash('');
   };
-  function getValidator(type: string) {
-    const check = (_: any, value) => {
-      const val = value && value['val'];
+  const getValidator = useCallback(
+    (type: string) => {
+      const check = (_: any, value) => {
+        const val = value && value['val'];
 
-      // tuple or tuple[] support
-      if (type.startsWith('tuple')) {
-        try {
-          JSON.parse(val);
-          return Promise.resolve();
-        } catch {
-          return Promise.reject(t(translations.contract.error.tuple, { type }));
+        // tuple or tuple[] support
+        if (type.startsWith('tuple')) {
+          try {
+            JSON.parse(val);
+            return Promise.resolve();
+          } catch {
+            return Promise.reject(
+              t(translations.contract.error.tuple, { type }),
+            );
+          }
         }
-      }
 
-      // array & multi-dimensional array support
-      if (type.endsWith(']')) {
-        try {
-          JSON.parse(val);
-          return Promise.resolve();
-        } catch {
-          return Promise.reject(t(translations.contract.error.array, { type }));
+        // array & multi-dimensional array support
+        if (type.endsWith(']')) {
+          try {
+            JSON.parse(val);
+            return Promise.resolve();
+          } catch {
+            return Promise.reject(
+              t(translations.contract.error.array, { type }),
+            );
+          }
         }
-      }
 
-      if (type === 'address') {
-        if (isCurrentNetworkAddress(val)) {
+        if (type === 'address') {
+          if (isCurrentNetworkAddress(val)) {
+            return Promise.resolve();
+          }
+          return Promise.reject(t(translations.contract.error.address));
+        } else if (type === 'bool') {
+          if (
+            ['true', 'false', '0', '1'].indexOf(val) !== -1 ||
+            lodash.isBoolean(val)
+          ) {
+            return Promise.resolve();
+          }
+          return Promise.reject(t(translations.contract.error.bool));
+        } else if (type === 'string') {
           return Promise.resolve();
-        }
-        return Promise.reject(t(translations.contract.error.address));
-      } else if (type === 'bool') {
-        if (
-          ['true', 'false', '0', '1'].indexOf(val) !== -1 ||
-          lodash.isBoolean(val)
-        ) {
-          return Promise.resolve();
-        }
-        return Promise.reject(t(translations.contract.error.bool));
-      } else if (type === 'string') {
-        return Promise.resolve();
-      } else if (type.startsWith('int')) {
-        const [isInt, num] = checkInt(val, type);
-        if (isInt) {
-          return Promise.resolve();
-        }
-        return Promise.reject(
-          t(translations.contract.error.int, { num: Number(num) - 1 }),
-        );
-      } else if (type.startsWith('uint')) {
-        const [isUint, num] = checkUint(val, type);
-        if (isUint) {
-          return Promise.resolve();
-        }
-        return Promise.reject(
-          t(translations.contract.error.uint, { num: num }),
-        );
-      } else if (type.startsWith('byte')) {
-        const [isBytes, num] = checkBytes(val, type);
-        if (isBytes) {
-          return Promise.resolve();
-        }
-        if (num === 0) {
-          return Promise.reject(t(translations.contract.error.bytes));
-        } else {
+        } else if (type.startsWith('int')) {
+          const [isInt, num] = checkInt(val, type);
+          if (isInt) {
+            return Promise.resolve();
+          }
           return Promise.reject(
-            t(translations.contract.error.bytesM, { length: num as number }),
+            t(translations.contract.error.int, { num: Number(num) - 1 }),
           );
+        } else if (type.startsWith('uint')) {
+          const [isUint, num] = checkUint(val, type);
+          if (isUint) {
+            return Promise.resolve();
+          }
+          return Promise.reject(
+            t(translations.contract.error.uint, { num: num }),
+          );
+        } else if (type.startsWith('byte')) {
+          const [isBytes, num] = checkBytes(val, type);
+          if (isBytes) {
+            return Promise.resolve();
+          }
+          if (num === 0) {
+            return Promise.reject(t(translations.contract.error.bytes));
+          } else {
+            return Promise.reject(
+              t(translations.contract.error.bytesM, { length: num as number }),
+            );
+          }
+        } else if (type === 'cfx') {
+          if (checkCfxType(val)) {
+            return Promise.resolve();
+          }
+          return Promise.reject(t(translations.contract.error.cfx));
         }
-      } else if (type === 'cfx') {
-        if (checkCfxType(val)) {
-          return Promise.resolve();
-        }
-        return Promise.reject(t(translations.contract.error.cfx));
-      }
-    };
-    return check;
-  }
+      };
+      return check;
+    },
+    [t],
+  );
 
   const btnComp =
     type === 'read' ? (
@@ -350,24 +356,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         <FuncBody>
           {inputsLength > 0
             ? inputs.map((inputItem, index) => (
-                <React.Fragment key={id + 'item' + inputItem.name + index}>
-                  <ParamTitle
-                    name={inputItem.name}
-                    type={inputItem.type}
-                    key={id + 'title' + inputItem.name + index}
-                  />
-                  <Form.Item
-                    name={`name${id}-${inputItem.name || 'input'}-${index}`}
-                    rules={[{ validator: getValidator(inputItem.type) }]}
-                    key={id + 'form' + inputItem.name + index}
-                  >
-                    <ParamInput
-                      input={inputItem}
-                      type={inputItem.type}
-                      key={id + 'input' + inputItem.name + index}
-                    />
-                  </Form.Item>
-                </React.Fragment>
+                <InputItem
+                  key={id + 'item' + inputItem.name + index}
+                  index={index}
+                  parentId={id}
+                  inputItem={inputItem}
+                  getValidator={getValidator}
+                />
               ))
             : null}
           {((type === 'read' && inputsLength > 0) ||
@@ -395,13 +390,11 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           {type === 'read' &&
             outputShown &&
             outputs.map((item, index) => (
-              <>
-                <OutputItem
-                  output={item}
-                  value={outputValue[index]}
-                  key={id + index}
-                />
-              </>
+              <OutputItem
+                output={item}
+                value={outputValue[index]}
+                key={id + index}
+              />
             ))}
           {<Error message={outputError} />}
         </FuncBody>
