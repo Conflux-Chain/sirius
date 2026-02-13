@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { formatABI } from '@cfxjs/sirius-next-common/dist/utils';
 import { packContractABI } from '@cfxjs/sirius-next-common/dist/utils/contractManagerTool';
-import AceEditor from 'react-ace';
+import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
@@ -18,8 +18,6 @@ import { useMessages } from '@cfxjs/react-ui';
 import { debounce } from 'lodash';
 
 const AceEditorStyle = {
-  width: '100%',
-  backgroundColor: '#F8F9FB',
   minHeight: '28.5714rem',
   marginBottom: '24px',
 };
@@ -90,7 +88,6 @@ export const ABIVerification = () => {
           setOptions={{
             wrap: true,
             indentedSoftWrap: false,
-            showLineNumbers: true,
           }}
           height="28rem"
           fontSize="1rem"
