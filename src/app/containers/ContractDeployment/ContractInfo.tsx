@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import AceEditor from 'react-ace';
+import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/theme-github';
 import { useMessages } from '@cfxjs/react-ui';
@@ -14,9 +14,7 @@ import imgInfo from 'images/info.svg';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 
 const AceEditorStyle = {
-  width: '100%',
   height: '200px',
-  backgroundColor: '#F8F9FB',
   opacity: 0.62,
 };
 

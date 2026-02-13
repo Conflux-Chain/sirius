@@ -2519,10 +2519,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.6.tgz#e3730e44b962d7640be2ae8dc5d5d17ed5bc8d65"
-  integrity sha512-ZoIpWvwRIN0us7meEVjrGWgu3PEr8W73uLHMq21kbYtLDQpIA1nAMxNaW7PaUsaVw2VDdS6bQAmCQnyPPK5mJw==
+"@cfxjs/sirius-next-common@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.7.tgz#e86debc676516d924e630bfb09c66c92fb212946"
+  integrity sha512-qsaQMg1aY8ULrWxcBTQtd/2fnmhLHsMGr2N62glyht/o+IWIF8h4ezZOgwHugF/yCvqjECUqsfMJRPr6Wa2iMA==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/react-utils" "^0.0.65"
@@ -2536,6 +2536,7 @@
     "@types/react-google-recaptcha" "^2.1.9"
     "@types/react-router-dom" "^5.3.3"
     "@zeit-ui/react-icons" "^1.3.1"
+    ace-builds "1.4.12"
     bignumber.js "^9.1.2"
     clsx "^2.1.0"
     copyfiles "^2.4.1"
@@ -2551,8 +2552,10 @@
     lucide-react "^0.379.0"
     pako "2.0.2"
     query-string "6.13.1"
+    react-ace "9.1.3"
     react-google-recaptcha "^3.1.0"
     react-i18next "^11.18.6"
+    react-merge-refs "3.0.2"
     react-router-dom "^5.1.2"
     react-use "^17.5.0"
     swr "^2.2.5"
@@ -2561,10 +2564,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.5.tgz#6ccc2bce177c5d715400403f995ac831da7ac772"
-  integrity sha512-ZZ7UsUz0EowI2gT063wMsAR2bXlBPutu9EQlkOLOSvC4abwBY0rDjfrs3zlTWRD8uQEerYy1kRZXVkesKwCCNQ==
+"@cfxjs/sirius-next-i18n@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.6.tgz#7faad920a193b3067ada4cefe665a62cf3d0e809"
+  integrity sha512-+3ouUspepR5kS9lVQoUzKWSAzdDtsaqZ/eRQ188cm6FS1LXOCxbp11DKqFLy3TMoUsFr9Vuf+T6CLGS3veTfVw==
 
 "@cfxjs/use-wallet-react@0.0.4":
   version "0.0.4"
@@ -18547,6 +18550,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-merge-refs@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-3.0.2.tgz#483b4e8029f89d805c4e55c8d22e9b8f77e3b58e"
+  integrity sha512-MSZAfwFfdbEvwkKWP5EI5chuLYnNUxNS7vyS0i1Jp+wtd8J4Ga2ddzhaE68aMol2Z4vCnRM/oGOo1a3V75UPlw==
 
 react-popper@^2.2.3:
   version "2.2.5"
