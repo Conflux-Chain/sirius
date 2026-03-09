@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { ContractAbi } from 'app/components/ContractAbi/Loadable';
 import styled from 'styled-components';
-import AceEditor from 'react-ace';
+import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
@@ -13,7 +13,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import clsx from 'clsx';
-import { Row, Col, Tag } from '@cfxjs/antd';
+import { Row, Col, Tag, message } from '@cfxjs/antd';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { CFX } from 'utils/constants';
 import lodash from 'lodash';
@@ -24,16 +24,13 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { isInnerContractAddress } from 'utils';
 import { SubTabs } from 'app/components/Tabs/Loadable';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { SearchInput } from '@cfxjs/sirius-next-common/dist/components/SearchInput';
 import imgInfo from 'images/info.svg';
 import imgSimilarMatch from 'images/similar-match.svg';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { getNetwork } from '@cfxjs/sirius-next-common/dist/utils';
 import { shortenAddress } from '@cfx-kit/dapp-utils/dist/address';
-
-const AceEditorStyle = {
-  width: '100%',
-  backgroundColor: '#F8F9FB',
-};
+import { useMultiAceSearch } from '@cfxjs/sirius-next-common/dist/utils/hooks/useMultiAceSearch';
 
 export const CheckCircleIcon = (size?) => (
   <CheckCircle size={typeof size === 'number' ? size : 16} color="#7cd77b" />
@@ -42,6 +39,22 @@ export const CheckCircleIcon = (size?) => (
 const Code = ({ contractInfo }) => {
   const { t } = useTranslation();
   const [globalData] = useGlobalData();
+  const {
+    editorListRef,
+    searchValue,
+    total,
+    searchIndex,
+    inSearch,
+    setSearchValue,
+    setEditorIndex,
+    findNext,
+    findPrevious,
+    exitSearch,
+  } = useMultiAceSearch({
+    onSearchEmpty: useCallback(() => {
+      message.warning(t(translations.toolTip.contract.noMatchingSearchResult));
+    }, [t]),
+  });
   const { networks } = globalData;
   const { sourceCode, abi, address, verify = {} } = contractInfo;
   const {
@@ -157,57 +170,59 @@ const Code = ({ contractInfo }) => {
       return (
         <AceEditor
           readOnly
-          style={AceEditorStyle}
+          ref={editor => editor && (editorListRef.current = [editor])}
           mode="solidity"
           theme="tomorrow"
-          name="UNIQUE_ID_OF_DIV"
-          setOptions={{
-            showLineNumbers: true,
-          }}
+          name="UNIQUE_ID_OF_DIV_CODE"
           value={sourceCode}
           wrapEnabled={true}
           height="28rem"
           fontSize="1rem"
-          showGutter={false}
           showPrintMargin={false}
+          onSearchTrigged={exitSearch}
+          onReplaceTrigged={exitSearch}
+          supportFullScreen
         />
       );
     } else if (fSourceCode) {
       const len = fSourceCode.length;
 
       return fSourceCode.map((s, i) => (
-        <React.Fragment key={i}>
-          {isSolidity && (
-            <div className={`multiple-sourcecode-title ${i === 0 && 'first'}`}>
-              {t(translations.contract.sourceCodeFilename, {
-                index: i + 1,
-                total: len,
-                filename: s.key,
-              })}
-            </div>
-          )}
-          <AceEditor
-            readOnly
-            style={AceEditorStyle}
-            mode="solidity"
-            theme="tomorrow"
-            name="UNIQUE_ID_OF_DIV"
-            setOptions={{
-              showLineNumbers: true,
-            }}
-            value={s.content}
-            wrapEnabled={true}
-            height="20rem"
-            fontSize="1rem"
-            showGutter={false}
-            showPrintMargin={false}
-          />
-        </React.Fragment>
+        <AceEditor
+          key={i}
+          title={
+            isSolidity && (
+              <div
+                className={`multiple-sourcecode-title ${i === 0 && 'first'}`}
+              >
+                {t(translations.contract.sourceCodeFilename, {
+                  index: i + 1,
+                  total: len,
+                  filename: s.key,
+                })}
+              </div>
+            )
+          }
+          readOnly
+          ref={editor => editor && (editorListRef.current[i] = editor)}
+          mode="solidity"
+          theme="tomorrow"
+          name={`UNIQUE_ID_OF_DIV_CODE_${i}`}
+          value={s.content}
+          wrapEnabled={true}
+          height="20rem"
+          fontSize="1rem"
+          showPrintMargin={false}
+          onSearchTrigged={exitSearch}
+          onReplaceTrigged={exitSearch}
+          onFocus={() => setEditorIndex(i)}
+          supportFullScreen
+        />
       ));
     } else {
       return null;
     }
-  }, [t, isSolidity, sourceCode]);
+  }, [t, isSolidity, editorListRef, sourceCode, setEditorIndex, exitSearch]);
 
   if (!contractInfo.codeHash && !isInnerContractAddress(address)) {
     return (
@@ -221,6 +236,19 @@ const Code = ({ contractInfo }) => {
     <StyledContractContentCodeWrapper>
       {exactMatch ? (
         <>
+          <SearchInput
+            findNext={findNext}
+            findPrevious={findPrevious}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            current={searchIndex}
+            total={total}
+            wrapperClassName={`search-input ${inSearch ? 'in-search' : ''}`}
+            placeholder={t(translations.toolTip.contract.searchPlaceholder)}
+            searchTips={t(translations.toolTip.contract.searchTips)}
+            inSearch={inSearch}
+            exit={exitSearch}
+          />
           {isSimilarMatched && (
             <>
               <div className="contract-code-verified">
@@ -344,27 +372,24 @@ const Code = ({ contractInfo }) => {
         </div>
         <div>
           {abi && exactMatch ? (
-            <>
-              <div className="contract-sourcecode-and-abi-title">
-                {t(translations.contract.abi)}
-              </div>
-              <AceEditor
-                value={abi}
-                readOnly
-                style={AceEditorStyle}
-                mode="json"
-                theme="tomorrow"
-                name="UNIQUE_ID_OF_DIV"
-                setOptions={{
-                  showLineNumbers: true,
-                }}
-                height="28rem"
-                wrapEnabled={true}
-                fontSize="1rem"
-                showGutter={false}
-                showPrintMargin={false}
-              />
-            </>
+            <AceEditor
+              title={
+                <div className="contract-sourcecode-and-abi-title">
+                  {t(translations.contract.abi)}
+                </div>
+              }
+              value={abi}
+              readOnly
+              mode="json"
+              theme="tomorrow"
+              name="UNIQUE_ID_OF_DIV_ABI"
+              height="28rem"
+              wrapEnabled={true}
+              fontSize="1rem"
+              showGutter={false}
+              showPrintMargin={false}
+              supportFullScreen
+            />
           ) : null}
         </div>
         <div>
@@ -445,6 +470,15 @@ const Code = ({ contractInfo }) => {
 };
 
 const StyledContractContentCodeWrapper = styled.div`
+  .search-input {
+    float: right;
+    &.in-search {
+      position: sticky;
+      top: 200px;
+      z-index: 100;
+      box-shadow: 2px 6px 16px 0 rgba(20, 27, 50, 0.08);
+    }
+  }
   .contract-code-verified {
     display: flex;
     align-items: center;

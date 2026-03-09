@@ -5,7 +5,7 @@ import { Form, Input, Button, Row, Col, Select, Collapse } from '@cfxjs/antd';
 import { isCurrentNetworkAddress } from 'utils';
 import { FileUpload } from '@cfxjs/sirius-next-common/dist/components/FileUpload';
 import { useMessages } from '@cfxjs/react-ui';
-import AceEditor from 'react-ace';
+import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
@@ -19,8 +19,6 @@ import { StyledButtonWrapper, StyledContractInfoRow } from './StyledComponents';
 const { Panel } = Collapse;
 const { Option } = Select;
 const AceEditorStyle = {
-  width: '100%',
-  backgroundColor: '#F8F9FB',
   minHeight: '28.5714rem',
 };
 
@@ -206,7 +204,6 @@ export const Step2: React.FC<{
             setOptions={{
               wrap: true,
               indentedSoftWrap: false,
-              showLineNumbers: true,
             }}
             height="28rem"
             fontSize="1rem"
