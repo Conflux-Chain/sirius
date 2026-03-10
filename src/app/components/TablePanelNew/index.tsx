@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useRef } from 'react';
 import { sendRequest } from 'utils/httpRequest';
 import qs from 'query-string';
 import { Table } from '@cfxjs/antd';
@@ -138,6 +138,7 @@ export const TablePanel = ({
   formatResponse,
   ...others
 }: TableProp) => {
+  const queryIdRef = useRef<number | null>(null);
   const history = useHistory();
   const { pathname, search } = useLocation();
   const bp = useBreakpoint();
@@ -186,6 +187,8 @@ export const TablePanel = ({
 
   useEffect(() => {
     if (queryUrl) {
+      const queryId = Math.random();
+      queryIdRef.current = queryId;
       const query = { ...getQuery } as qs.ParsedQuery<string>;
       query.orderBy =
         sortKeyMap[(query.orderBy as string) ?? ''] || query.orderBy;
@@ -208,22 +211,26 @@ export const TablePanel = ({
         query,
       })
         .then(resp => {
-          const formattedResponse = formatResponse
-            ? formatResponse(resp)
-            : resp;
-          setState({
-            ...state,
-            data: formattedResponse.list,
-            total: formattedResponse.total,
-            listLimit: formattedResponse.listLimit || 0,
-            loading: false,
-          });
+          if (queryId === queryIdRef.current) {
+            const formattedResponse = formatResponse
+              ? formatResponse(resp)
+              : resp;
+            setState({
+              ...state,
+              data: formattedResponse.list,
+              total: formattedResponse.total,
+              listLimit: formattedResponse.listLimit || 0,
+              loading: false,
+            });
+          }
         })
         .catch(e => {
-          setState({
-            ...state,
-            error: e,
-          });
+          if (queryId === queryIdRef.current) {
+            setState({
+              ...state,
+              error: e,
+            });
+          }
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -27,12 +27,15 @@ export function TokenBalanceSelect({ address = '' } = {}) {
 
   return (
     <SkeletonContainer shown={loading} style={skeletonStyle}>
-      <Select>{tokens}</Select>
+      <Select account={address}>{tokens}</Select>
     </SkeletonContainer>
   );
 }
 
-function Select({ children = [] }: { children?: any[] } = {}) {
+function Select({
+  children = [],
+  account = '',
+}: { children?: any[]; account?: string } = {}) {
   const { t } = useTranslation();
   const [expanded, toggle] = useToggle(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -41,15 +44,15 @@ function Select({ children = [] }: { children?: any[] } = {}) {
 
   const children20 = children
     .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc20)
-    .map((t, idx) => <SelectItem key={idx} {...t} />);
+    .map((t, idx) => <SelectItem key={idx} account={account} {...t} />);
 
   const children721 = children
     .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc721)
-    .map((t, idx) => <SelectItem key={idx} {...t} />);
+    .map((t, idx) => <SelectItem key={idx} account={account} {...t} />);
 
   const children1155 = children
     .filter(c => c && c.transferType === CFX_TOKEN_TYPES.erc1155)
-    .map((t, idx) => <SelectItem key={idx} {...t} />);
+    .map((t, idx) => <SelectItem key={idx} account={account} {...t} />);
 
   return (
     <SelectWrapper ref={selectRef}>
@@ -97,6 +100,7 @@ function SelectItem({
   address,
   decimals,
   transferType,
+  account,
 }) {
   const title = (
     <SelectItemTitle key="title">
@@ -105,7 +109,7 @@ function SelectItem({
         alt={`${name} icon`}
       />
       <SelectItemTextTitle>
-        <Link href={`/token/${address}`}>{name}</Link>
+        <Link href={`/token/${address}?a=${account}`}>{name}</Link>
       </SelectItemTextTitle>
     </SelectItemTitle>
   );

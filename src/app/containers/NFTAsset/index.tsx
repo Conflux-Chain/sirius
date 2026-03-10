@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -15,15 +15,13 @@ import { Col, Pagination, Row, Tag } from '@cfxjs/antd';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';
-import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
-import {
-  reqNFTBalance,
-  reqNFTTokens,
-  reqNFT1155Tokens,
-} from 'utils/httpRequest';
+import { reqNFTBalance, reqNFTTokens } from 'utils/httpRequest';
 import qs from 'query-string';
 import { TABLE_LIST_LIMIT } from 'utils/constants';
+import { useAutoSetHolderFilterParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAutoSetHolderFilterParams';
+import { Title } from './Title';
+import { useSearchParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useSearchParams';
 
 type NFTBalancesType = {
   contract: string;
@@ -48,13 +46,15 @@ export function NFTAsset({
   contract?: string;
   type?: string;
 }) {
+  useAutoSetHolderFilterParams(['owner']);
+  const queryIdRef = useRef<number | null>(null);
   const { address } = useParams<{
     address?: string;
   }>();
   const { t } = useTranslation();
   const history = useHistory();
-  const { pathname, search } = useLocation();
-  const { NFTAddress, skip = '0', limit = '12', ...others } = qs.parse(search);
+  const { pathname } = useLocation();
+  const { NFTAddress, skip = '0', limit = '12', ...others } = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [NFTs, setNFTs] = useState<any[]>([]);
@@ -94,25 +94,19 @@ export function NFTAsset({
 
     setLoading(true);
     setHasSearched(true);
+    const queryId = Math.random();
+    queryIdRef.current = queryId;
 
     if (contract) {
-      if (type.includes('1155')) {
-        NFTs = await reqNFT1155Tokens({
-          query: {
-            contractAddr: contract, // default NFT
-            skip: skip,
-            limit: limit,
-          },
-        });
-      } else {
-        NFTs = await reqNFTTokens({
-          query: {
-            contract: contract, // default NFT
-            skip: skip,
-            limit: limit,
-          },
-        });
-      }
+      NFTs = await reqNFTTokens({
+        query: {
+          contract: contract, // default NFT
+          skip: skip,
+          limit: limit,
+          owner: others.owner,
+          tokenId: others.tokenId,
+        },
+      });
 
       // @ts-ignore
       total = NFTs.total;
@@ -141,25 +135,14 @@ export function NFTAsset({
           total = selectedNFT.balance;
           listLimit = selectedNFT.balance;
 
-          if (selectedNFT.type.includes('1155')) {
-            NFTs = await reqNFT1155Tokens({
-              query: {
-                contractAddr: selectedNFT.contract, // default NFT
-                userAddr: address,
-                skip: skip,
-                limit: limit,
-              },
-            });
-          } else {
-            NFTs = await reqNFTTokens({
-              query: {
-                owner: address,
-                contract: selectedNFT.contract, // default NFT
-                skip: skip,
-                limit: limit,
-              },
-            });
-          }
+          NFTs = await reqNFTTokens({
+            query: {
+              owner: address,
+              contract: selectedNFT.contract, // default NFT
+              skip: skip,
+              limit: limit,
+            },
+          });
         }
       }
     }
@@ -167,14 +150,16 @@ export function NFTAsset({
     // @ts-ignore
     // NFTs = NFTs.list.map(n => n.tokenId);
 
-    setNFTBalances(NFTBalances);
-    setSelectedNFT(selectedNFT);
-    setNFTs(NFTs.list);
-    setTotal(total);
-    setLoading(false);
+    if (queryId === queryIdRef.current) {
+      setNFTBalances(NFTBalances);
+      setSelectedNFT(selectedNFT);
+      setNFTs(NFTs.list);
+      setTotal(total);
+      setLoading(false);
 
-    if (listLimit) {
-      setListLimit(listLimit);
+      if (listLimit) {
+        setListLimit(listLimit);
+      }
     }
   };
 
@@ -192,7 +177,13 @@ export function NFTAsset({
     );
   };
 
-  const handleNFTAddressChange = address => {
+  const handleNFTAddressChange = (address: string) => {
+    if (
+      NFTAddress &&
+      (NFTAddress as string).toLowerCase() === address.toLowerCase()
+    ) {
+      return;
+    }
     setNFTs([]);
     history.push(
       qs.stringifyUrl({
@@ -210,7 +201,16 @@ export function NFTAsset({
   useEffect(() => {
     handleNFTSearch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, NFTAddress, skip, limit, contract, type]);
+  }, [
+    address,
+    NFTAddress,
+    skip,
+    limit,
+    contract,
+    type,
+    others.owner,
+    others.tokenId,
+  ]);
 
   // 721 and 1155 show different tip
   let totalTip = '';
@@ -254,6 +254,7 @@ export function NFTAsset({
           ) : null}
 
           <NFTWrapper>
+            <Title total={total} totalTip={totalTip} />
             {!loading && !NFTs.length ? (
               <div className="nodata">
                 <Empty
@@ -271,29 +272,26 @@ export function NFTAsset({
                 />
               </div>
             ) : (
-              <>
-                <div className="total">
-                  {totalTip}
-                  <span>
-                    {t(translations.contract.address)}:{' '}
-                    <CoreAddressContainer value={selectedNFT.contract} />
-                  </span>
-                </div>
-
-                <Row gutter={20}>
-                  {NFTs.map(({ tokenId, amount, owner }) => (
-                    <Col xs={24} sm={12} lg={6} xl={4} key={tokenId}>
-                      <NFTPreview
-                        contractAddress={selectedNFT?.contract}
-                        tokenId={tokenId}
-                        type="card"
-                        amount={amount}
-                        owner={owner}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              </>
+              <Row gutter={20}>
+                {NFTs.map(({ tokenId, amount, owner }) => (
+                  <Col
+                    xs={24}
+                    sm={12}
+                    lg={6}
+                    xl={4}
+                    key={`${tokenId}-${owner}`}
+                    className="nft-card"
+                  >
+                    <NFTPreview
+                      contractAddress={selectedNFT?.contract}
+                      tokenId={tokenId}
+                      type="card"
+                      amount={amount}
+                      owner={owner}
+                    />
+                  </Col>
+                ))}
+              </Row>
             )}
 
             <Pagination
@@ -383,7 +381,7 @@ const NFTWrapper = styled.div`
     }
   }
 
-  .ant-col {
+  .nft-card {
     padding-bottom: 20px;
   }
 `;

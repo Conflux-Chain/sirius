@@ -12,6 +12,7 @@ import { Token } from '../Charts/pow/Loadable';
 import { Transfers as TokenTransfers } from 'app/containers/Tokens/Loadable';
 import { Holders } from './Holders';
 import { NFTAsset } from 'app/containers/NFTAsset';
+import { useSearchParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useSearchParams';
 
 interface TransferProps {
   tokenName: string;
@@ -37,6 +38,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     isRegistered,
   } = tokenData;
   const { t } = useTranslation();
+  const { a: holder } = useSearchParams();
 
   const { data: contractInfo } = useContract(tokenAddress, [
     'name',
@@ -74,6 +76,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
 
   if (
     isRegistered &&
+    !holder &&
     (transferType === CFX_TOKEN_TYPES.erc20 ||
       transferType === CFX_TOKEN_TYPES.erc721 ||
       transferType === CFX_TOKEN_TYPES.erc1155)
@@ -142,7 +145,18 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
     content: <ContractContent contractInfo={contractInfo} />,
   });
 
-  return transferType ? <TabsTablePanel tabs={tabs} /> : null;
+  return transferType ? (
+    <TabsTablePanel
+      tabs={tabs}
+      query={
+        holder
+          ? {
+              a: holder as string,
+            }
+          : undefined
+      }
+    />
+  ) : null;
 }
 
 const StyledTabWrapper = styled.div`
