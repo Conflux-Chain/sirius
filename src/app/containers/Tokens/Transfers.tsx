@@ -7,7 +7,8 @@ import { DownloadCSV } from '@cfxjs/sirius-next-common/dist/components/DownloadC
 import qs from 'query-string';
 import { Title } from 'app/containers/Transactions/components';
 import { AdvancedSearchFormProps } from 'app/containers/Transactions/components/AdvancedSearchForm';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useSearchParams';
+import { useAutoSetHolderFilterParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAutoSetHolderFilterParams';
 
 interface Props {
   type: string;
@@ -22,7 +23,7 @@ interface Query {
 }
 
 export const Transfers = ({ type, address, decimals }: Props) => {
-  const location = useLocation();
+  useAutoSetHolderFilterParams(['from', 'to']);
   const url = `/transfer?address=${address}&transferType=${type}`;
 
   const [ageFormat, toggleAgeFormat] = useAge();
@@ -107,7 +108,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     );
   };
 
-  const { tab, ...query } = qs.parse(location.search || '');
+  const { tab, a: holder, ...query } = useSearchParams();
 
   const tableFooter = (
     <DownloadCSV

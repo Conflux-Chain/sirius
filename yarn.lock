@@ -2519,10 +2519,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.2.9":
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.9.tgz#dbeb58f11065631e7837f12218385f6075f65ded"
-  integrity sha512-+R27eiyVeit2RTSWEoKVBXyzx2nAlx4QkEpb4SNWl50JOiI5P5b/YUmUygbGZ2Tf3HKUChxHKW0r6h7GBH9iSQ==
+"@cfxjs/sirius-next-common@0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.10.tgz#2916e0357f587b6ce665b216993e77a8b2d62a8b"
+  integrity sha512-L+SV++DYiJiqJanB6FUIAFtl3D7BgNDc0hBWvApVOabKPVhcrA4Sh4wsuTa8cFfWByvYSrAX0qtij5ZlypM7mg==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/react-utils" "^0.0.65"
@@ -2558,16 +2558,16 @@
     react-merge-refs "3.0.2"
     react-router-dom "^5.1.2"
     react-use "^17.5.0"
-    swr "^2.2.5"
+    swr "2.2.5"
     tailwind-merge "^2.3.0"
     unocss-preset-animations "^1.0.2"
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.6.tgz#7faad920a193b3067ada4cefe665a62cf3d0e809"
-  integrity sha512-+3ouUspepR5kS9lVQoUzKWSAzdDtsaqZ/eRQ188cm6FS1LXOCxbp11DKqFLy3TMoUsFr9Vuf+T6CLGS3veTfVw==
+"@cfxjs/sirius-next-i18n@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.7.tgz#ab7e8089ae9c1c8c2e78dce421aaa274b37caa6b"
+  integrity sha512-xVCzET+P8GRZjQ2X0S8LetIsL5Jf6B+EyY2ukLDP06gt2CZEcaXgfPhYaoTpkLXLZxf8kEOyCU21mpG/b8XnJA==
 
 "@cfxjs/use-wallet-react@0.0.4":
   version "0.0.4"
@@ -21035,7 +21035,7 @@ swr@0.3.2:
   dependencies:
     fast-deep-equal "2.0.1"
 
-swr@^2.2.5:
+swr@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/swr/-/swr-2.2.5.tgz#063eea0e9939f947227d5ca760cc53696f46446b"
   integrity sha512-QtxqyclFeAsxEUeZIYmsaQ0UjimSq1RZ9Un7I68/0ClKK/U3LoyQunwkQfJZr2fc22DfIXLNDc2wFyTEikCUpg==

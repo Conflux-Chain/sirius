@@ -63,45 +63,34 @@ export function Block() {
     {
       value: 'transactions',
       action: 'blockTransactions',
-      label: () => {
-        return (
-          <TabLabel
-            // total={transactionCount}
-            // realTotal={transactionCount}
-            showTooltip={bp !== 's'}
-          >
-            {bp === 's' ? (
-              t(translations.block.tabs.transactions)
-            ) : (
-              <Tooltip title={t(translations.toolTip.block.transactions)}>
-                {t(translations.block.tabs.transactions)}
-              </Tooltip>
-            )}
-          </TabLabel>
-        );
-      },
+      label: (
+        <TabLabel showTooltip={bp !== 's'}>
+          {bp === 's' ? (
+            t(translations.block.tabs.transactions)
+          ) : (
+            <Tooltip title={t(translations.toolTip.block.transactions)}>
+              {t(translations.block.tabs.transactions)}
+            </Tooltip>
+          )}
+        </TabLabel>
+      ),
       content: <Txns url={`/transaction?blockHash=${hash}`} />,
       hidden: !transactionCount,
     },
     {
       value: 'reference-blocks',
       action: 'blockTransactions',
-      label: () => {
-        return (
-          <TabLabel
-            // total={refereeHashes?.length}
-            showTooltip={bp !== 's'}
-          >
-            {bp === 's' ? (
-              t(translations.block.tabs.referenceBlocks)
-            ) : (
-              <Tooltip title={t(translations.toolTip.block.referenceBlocks)}>
-                {t(translations.block.tabs.referenceBlocks)}
-              </Tooltip>
-            )}
-          </TabLabel>
-        );
-      },
+      label: (
+        <TabLabel showTooltip={bp !== 's'}>
+          {bp === 's' ? (
+            t(translations.block.tabs.referenceBlocks)
+          ) : (
+            <Tooltip title={t(translations.toolTip.block.referenceBlocks)}>
+              {t(translations.block.tabs.referenceBlocks)}
+            </Tooltip>
+          )}
+        </TabLabel>
+      ),
       content: <ReferenceBlocks url={`/block?referredBy=${hash}`} />,
       hidden: !refereeHashes?.length,
     },
