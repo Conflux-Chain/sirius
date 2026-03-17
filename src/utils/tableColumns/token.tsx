@@ -567,7 +567,7 @@ export const fromType = {
   render: value => fromTypeInfo[getFromType(value)].text,
 };
 
-export const account = {
+export const account = (token: string) => ({
   width: 1,
   title: (
     <Translation>
@@ -578,19 +578,25 @@ export const account = {
   key: 'account',
   render: (value, row) => (
     <AccountWrapper>
-      <CoreAddressContainer
-        value={value.address}
-        alias={
-          value.name ||
-          (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
-        }
-        isFull={true}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
+      <Link
+        href={`/token/${formatAddress(token)}?a=${value.address}`}
+        className="link-wrapper"
+      >
+        <CoreAddressContainer
+          value={value.address}
+          alias={
+            value.name ||
+            (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
+          }
+          isFull={true}
+          ensInfo={getENSInfo(row)}
+          nametagInfo={getNametagInfo(row)}
+          link={false}
+        />
+      </Link>
     </AccountWrapper>
   ),
-};
+});
 
 export const balance = (decimal, price, transferType) => ({
   width: 1,
@@ -1007,6 +1013,9 @@ export const LinkA = styled.a`
 `;
 
 export const AccountWrapper = styled.div`
+  .link-wrapper .sirius-text > div {
+    cursor: pointer;
+  }
   img {
     margin-bottom: 6px;
     margin-right: 2px;

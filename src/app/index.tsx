@@ -487,7 +487,9 @@ export function App() {
                               if (isAddress(address)) {
                                 return (
                                   <Redirect
-                                    to={`/token/${formatAddress(address)}`}
+                                    to={`/token/${formatAddress(address)}${
+                                      routeProps.location.search
+                                    }`}
                                   />
                                 );
                               } else {

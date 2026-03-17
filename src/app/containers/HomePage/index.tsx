@@ -9,7 +9,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
-import { useTabTableData } from 'app/components/TabsTablePanel';
 import { ScanEvent } from 'utils/gaConstants';
 import { BlockchainInfo } from './BlockchainInfo';
 import { useInterval } from 'react-use';
@@ -17,6 +16,7 @@ import { Notices } from 'app/containers/Notices/Loadable';
 
 import { Blocks } from './Blocks';
 import { Txns } from './Txns';
+import { useTabs } from 'app/components/Tabs/useTabs';
 
 export function HomePage() {
   const { t } = useTranslation();
@@ -43,7 +43,7 @@ export function HomePage() {
     setTimestamp(+new Date());
   }, 20000);
 
-  const { currentTabValue } = useTabTableData(tabs);
+  const { currentTabValue } = useTabs(tabs);
 
   return (
     <>
