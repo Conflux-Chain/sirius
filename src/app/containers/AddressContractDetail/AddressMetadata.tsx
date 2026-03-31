@@ -222,19 +222,19 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.stakedBegin)}
                       {IS_CORESPACE && IS_TESTNET ? (
                         <a
-                          href="https://test.confluxhub.io/governance/dashboard"
+                          href="https://test.confluxhub.io/stake"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://test.confluxhub.io/governance/dashboard
+                          https://test.confluxhub.io/stake
                         </a>
                       ) : (
                         <a
-                          href="https://governance.confluxnetwork.org/"
+                          href="https://confluxhub.io/stake"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://governance.confluxnetwork.org
+                          https://confluxhub.io/stake
                         </a>
                       )}
                       {t(translations.toolTip.address.stakedEnd)}
@@ -272,19 +272,19 @@ export function AddressMetadata({ address, accountInfo }) {
                       {t(translations.toolTip.address.lockedBegin)}
                       {IS_CORESPACE && IS_TESTNET ? (
                         <a
-                          href="https://test.confluxhub.io/governance/dashboard"
+                          href="https://test.confluxhub.io/stake"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://test.confluxhub.io/governance/dashboard
+                          https://test.confluxhub.io/stake
                         </a>
                       ) : (
                         <a
-                          href="https://governance.confluxnetwork.org/"
+                          href="https://confluxhub.io/stake"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          https://governance.confluxnetwork.org
+                          https://confluxhub.io/stake
                         </a>
                       )}
                       {t(translations.toolTip.address.lockedEnd)}

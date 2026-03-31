@@ -63,7 +63,7 @@ export const Nav = memo(
             <div>
               <Trans i18nKey="banner.upgradeToUSDT0">
                 <StyledLink
-                  href="https://v2.confluxhub.io/bridge?fromChain=Conflux+Core&toChain=Conflux+eSpace&token=cUSDT"
+                  href="https://confluxhub.io/bridge/cross-space?sendSpace=Core&token=cfx:acf2rcsh8payyxpg6xj7b0ztswwh81ute60tsw35j7"
                   target="_blank"
                 >
                   bridge
