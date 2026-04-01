@@ -36,7 +36,7 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
       title: {
         text: `${t(
           translations.highcharts.burntFeesAnalysis.burntRateInDaoVoting,
-        )} <a href="https://confluxhub.io/governance/vote/onchain-dao-voting" target="blank">${t(
+        )} <a href="https://confluxhub.io/vote/chain-params" target="blank">${t(
           translations.highcharts.burntFeesAnalysis.learnMore,
         )}</a>`,
         useHTML: true,
