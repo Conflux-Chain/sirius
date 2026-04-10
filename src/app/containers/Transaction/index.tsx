@@ -95,19 +95,17 @@ export function Transaction() {
     {
       value: 'internal-txns',
       action: 'transactionCfxTransfers',
-      label: t(translations.transaction.internalTxns.title),
-      content: <InternalTxns address={hash} from={from} to={to} key={hash} />,
+      label: t(translations.transaction.txTrace.title),
+      content: <InternalTxns hash={hash} from={from} to={to} key={hash} />,
       // hidden: cfxTransferAllCount < 2,
     },
     {
       value: 'logs',
-      label: () => {
-        return (
-          <TabLabel showTooltip={false}>
-            {t(translations.transaction.logs.title)}
-          </TabLabel>
-        );
-      },
+      label: (
+        <TabLabel showTooltip={false}>
+          {t(translations.transaction.logs.title)}
+        </TabLabel>
+      ),
       content: <EventLogs hash={hash} key={hash}></EventLogs>,
       hidden: !eventLogCount,
     },
