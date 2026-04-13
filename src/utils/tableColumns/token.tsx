@@ -20,18 +20,15 @@ import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
+import { getPocketAlias } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
+import { ProxyContractAddress } from '@cfxjs/sirius-next-common/dist/components/ProxyContractAddress';
 import { ColumnAge, ContentWrapper } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
-import clsx from 'clsx';
-import { Popover } from '@cfxjs/react-ui';
-import {
-  useBreakpoint,
-  media,
-} from '@cfxjs/sirius-next-common/dist/utils/media';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
@@ -97,7 +94,7 @@ const getFromType = (value: string): GetFromTypeReturnValueType => {
 export const renderAddress = (
   value,
   row,
-  type?: 'to' | 'from',
+  type: 'to' | 'from',
   withArrow = true,
 ) => {
   let address = '';
@@ -151,28 +148,52 @@ export const renderAddress = (
         result: 0,
       },
     };
+    let verification: { name?: string } | null = null;
     if (type === 'to') {
       info = row.toContractInfo;
+      verification = row.toVerification;
     } else if (type === 'from') {
       info = row.fromContractInfo;
+      verification = row.fromVerification;
     }
-    verify = info.verify.result !== 0;
+    verify = verification ? !!verification.name : info.verify.result !== 0;
   } catch (e) {}
 
   const isEspaceAddress = !!row[`${type}ESpaceInfo`]?.address;
+
+  if (type === 'to' && row.proxy) {
+    return (
+      <ValueHighlight scope="address" value={value}>
+        <ProxyContractAddress
+          address={value}
+          alias={alias}
+          verify={verify}
+          proxy={row.proxy}
+        />
+      </ValueHighlight>
+    );
+  }
+
+  const pocket = getPocketAlias({
+    type,
+    address: value,
+    pocket: row[`${type}Pocket`],
+  });
 
   return (
     <>
       <ValueHighlight scope="address" value={value}>
         <CoreAddressContainer
           value={value}
-          alias={alias}
-          link={formatAddress(filter) !== formatAddress(value)}
+          alias={pocket ?? alias}
+          link={!pocket && formatAddress(filter) !== formatAddress(value)}
           contractCreated={row.contractCreated}
           verify={verify}
           isEspaceAddress={isEspaceAddress}
           ensInfo={getENSInfo(row)}
           nametagInfo={getNametagInfo(row)}
+          isFull={!!pocket}
+          hideAliasPrefixInHover={!!pocket}
         />
       </ValueHighlight>
       {type === 'from' && withArrow && (
@@ -770,66 +791,6 @@ export const details = {
   },
 };
 
-const TraceTypeElement = ({ info }) => {
-  const breakpoint = useBreakpoint();
-  const { t } = useTranslation();
-
-  const outcome = info?.result?.outcome;
-
-  const level = (
-    <span className="level">
-      <span className="vertical"></span>
-      {info.index
-        .replace(/\d+/g, '')
-        .split('')
-        .map((_, i) => (
-          <span className="horizontal" key={i}></span>
-        ))}
-    </span>
-  );
-
-  return (
-    <StyledTractTypeWrapper className={clsx(outcome)}>
-      {level}
-      {outcome && outcome !== 'success' ? (
-        <Popover
-          notSeperateTitle
-          title={t(translations.general.table.token.traceStatusTitle)}
-          content={t(translations.general.table.token.traceStatus[outcome])}
-          placement="top"
-          hoverable={true}
-          trigger={breakpoint === 's' ? 'click' : 'hover'}
-          contentClassName={clsx('siriuse-status-popover')}
-        >
-          <span className="dot"></span>
-        </Popover>
-      ) : null}
-      <Text hoverValue={`${info.type}${info.index}`}>
-        <div className="type-container">
-          {info.type}
-          {info.index}
-        </div>
-      </Text>
-    </StyledTractTypeWrapper>
-  );
-};
-
-export const traceType = {
-  width: 1,
-  title: (
-    <Translation>
-      {t => (
-        <span style={{ marginLeft: '1rem' }}>
-          {t(translations.general.table.token.traceType)}
-        </span>
-      )}
-    </Translation>
-  ),
-  dataIndex: 'type',
-  key: 'type',
-  render: (_, row) => <TraceTypeElement info={row} />,
-};
-
 export const traceOutcome = {
   width: 1,
   title: (
@@ -1019,102 +980,5 @@ export const AccountWrapper = styled.div`
   img {
     margin-bottom: 6px;
     margin-right: 2px;
-  }
-`;
-const StyledTractTypeWrapper = styled.span`
-  padding-left: 0.2rem;
-
-  .type-container {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 8.5714rem;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .level {
-    .vertical {
-      width: 0.0714rem;
-      height: 0.4286rem;
-      border-left: 1px solid !important;
-      display: inline-block;
-      margin-bottom: 0.1429rem;
-      color: #94a3b6;
-    }
-
-    .horizontal {
-      width: 0.4286rem;
-      height: 0.1429rem;
-      border-top: 1px solid !important;
-      display: inline-block;
-      margin-right: 0.2143rem;
-      margin-bottom: 0.0714rem;
-      color: #94a3b6;
-    }
-  }
-
-  .dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    top: 0.5rem;
-    left: -0.1429rem;
-    display: inline-block;
-    margin-right: 0.2143rem;
-    cursor: pointer;
-  }
-
-  &.success {
-    .dot {
-      background-color: #7cd77b;
-      pointer-events: none;
-    }
-  }
-
-  &.fail {
-    .dot {
-      background-color: #e64e4e;
-    }
-  }
-
-  &.revert {
-    .dot {
-      background-color: #e467b3;
-    }
-  }
-
-  .tooltip-content.siriuse-status-popover {
-    padding: 0.2857rem 0.8571rem;
-
-    .item.title {
-      padding: 0;
-
-      .icon {
-        width: 0.8571rem;
-        height: 0.8571rem;
-      }
-
-      .text {
-        margin-left: 0.2857rem;
-        color: #333333;
-        text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
-      }
-    }
-
-    .items {
-      color: #a4a8b6;
-      text-shadow: 0rem 0.4286rem 1.1429rem rgba(0, 0, 0, 0.08);
-      max-width: 14.2857rem;
-      line-height: 1.0714rem;
-      white-space: break-spaces;
-      padding-bottom: 0.1429rem;
-      background-color: transparent;
-      overflow: hidden !important;
-    }
-
-    .inner {
-      min-width: inherit;
-    }
   }
 `;
