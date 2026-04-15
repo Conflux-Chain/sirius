@@ -144,7 +144,7 @@ function SelectItem({
         <Link href={`/token/${address}?a=${account}`} className="title">
           <span className="name">{name}</span>
           {isOfficialVerified && (
-            <img src={verifiedIcon} className="status-icon" alt="status-icon" />
+            <img src={verifiedIcon} className="status-icon" alt="Verified" />
           )}
         </Link>
       </SelectItemTextTitle>
