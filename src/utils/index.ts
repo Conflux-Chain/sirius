@@ -239,7 +239,6 @@ export const getChartsSubTitle = (title: string): string => {
 export interface ENSInfoItemType {
   address: string;
   name: string;
-  expired?: number;
 }
 interface ENSInfoType {
   [k: string]: ENSInfoItemType;
@@ -256,41 +255,41 @@ export const getENSInfo = (row: {
   minerENSInfo?: ResponseENSInfo;
   base32address?: string;
 }): ENSInfoType => {
-  let result = {};
+  let result: ENSInfoType = {};
 
   try {
-    if (row.from) {
+    if (row.from && row.fromENSInfo?.name) {
       result[row.from] = {
         address: row.from,
-        name: row.fromENSInfo?.name,
+        name: row.fromENSInfo.name,
       };
     }
 
-    if (row.to) {
+    if (row.to && row.toENSInfo?.name && !result[row.to]) {
       result[row.to] = {
         address: row.to,
-        name: row.toENSInfo?.name,
+        name: row.toENSInfo.name,
       };
     }
 
-    if (row.address) {
+    if (row.address && row.ensInfo?.name && !result[row.address]) {
       result[row.address] = {
         address: row.address,
-        name: row.ensInfo?.name,
+        name: row.ensInfo.name,
       };
     }
 
-    if (row.base32address) {
+    if (row.base32address && row.ensInfo?.name && !result[row.base32address]) {
       result[row.base32address] = {
         address: row.base32address,
-        name: row.ensInfo?.name,
+        name: row.ensInfo.name,
       };
     }
 
-    if (row.miner) {
+    if (row.miner && row.minerENSInfo?.name && !result[row.miner]) {
       result[row.miner] = {
         address: row.miner,
-        name: row.minerENSInfo?.name,
+        name: row.minerENSInfo.name,
       };
     }
   } catch (e) {}
