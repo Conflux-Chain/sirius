@@ -7,7 +7,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import iconInfo from 'images/info.svg';
 import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
-import { ContractNameItem, renderAddressWithNameMap } from './utils';
+import { AddressNameMap, renderAddressWithNameMap } from './utils';
 import lodash from 'lodash';
 
 interface CfxTransferItem {
@@ -20,14 +20,14 @@ interface CfxTransferItem {
 
 const From: React.FC<{
   item: CfxTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }> = ({ item, nameMap }) => {
   const renderAddress = renderAddressWithNameMap(nameMap);
   return renderAddress(item.from, item, 'from', false);
 };
 const To: React.FC<{
   item: CfxTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }> = ({ item, nameMap }) => {
   const renderAddress = renderAddressWithNameMap(nameMap);
   return renderAddress(item.to, item, 'to', false);
@@ -47,7 +47,7 @@ const TransferItem = ({
   nameMap,
 }: {
   item: CfxTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }) => {
   return (
     <TransferItemWrapper>
@@ -68,7 +68,7 @@ export const CFXTransfers = memo(
       total: number;
       list: CfxTransferItem[];
     };
-    nameMap?: Record<string, ContractNameItem>;
+    nameMap?: Record<string, AddressNameMap>;
   }) => {
     const { t } = useTranslation();
     const { list = [], total = 0 } = transfers ?? {};

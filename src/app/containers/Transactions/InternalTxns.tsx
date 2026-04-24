@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { formatAddress } from 'utils';
 import styled from 'styled-components';
@@ -11,31 +10,34 @@ import { ListTrace } from './ListTrace';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Switch } from '@cfxjs/sirius-next-common/dist/components/Switch';
 import IconInfo from 'images/info.svg';
+import { AddressNameMap, renderAddressWithNameMap } from '../Transaction/utils';
 
 interface Props {
   hash: string;
   from: string;
   to: string;
+  nameMap?: Record<string, AddressNameMap>;
 }
 
-export const InternalTxns = ({ hash, from, to }: Props) => {
+export const InternalTxns = ({ hash, from, to, nameMap }: Props) => {
   const { t } = useTranslation();
   const [showProxyCall, setShowProxyCall] = useState(false);
   const [viewMode, setViewMode] = useState('tree');
   const { data, isLoading } = useTxTrace(hash, 'core');
   const { list = [], total = 0 } = data ?? {};
+  const renderAddress = renderAddressWithNameMap(nameMap);
 
-  const fromContent = (isFull = false) => (
-    <span>
-      <CoreAddressContainer value={from} isFull={isFull} />{' '}
+  const fromContent = () => (
+    <StyledAddressContainer>
+      {renderAddress(from, { from }, 'from', false)}{' '}
       <CopyButton copyText={formatAddress(from)} />
-    </span>
+    </StyledAddressContainer>
   );
-  const toContent = (isFull = false) => (
-    <span>
-      <CoreAddressContainer value={to} isFull={isFull} />{' '}
+  const toContent = () => (
+    <StyledAddressContainer>
+      {renderAddress(to, { to }, 'to', false)}{' '}
       <CopyButton copyText={formatAddress(to)} />
-    </span>
+    </StyledAddressContainer>
   );
 
   return (
@@ -97,6 +99,11 @@ export const InternalTxns = ({ hash, from, to }: Props) => {
 const StyledContainer = styled.div`
   background: #fff;
   padding: 6px 24px;
+`;
+
+const StyledAddressContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
 `;
 
 const StyledTipWrapper = styled.span`

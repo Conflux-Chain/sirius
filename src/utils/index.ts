@@ -313,38 +313,42 @@ export const getNametagInfo = (row: {
   let result = {};
 
   try {
-    if (row.from) {
+    if (row.from && row.fromNameTagInfo?.nameTag) {
       result[row.from] = {
         address: row.from,
-        nametag: row.fromNameTagInfo?.nameTag,
+        nametag: row.fromNameTagInfo.nameTag,
       };
     }
 
-    if (row.to) {
+    if (row.to && row.toNameTagInfo?.nameTag && !result[row.to]) {
       result[row.to] = {
         address: row.to,
-        nametag: row.toNameTagInfo?.nameTag,
+        nametag: row.toNameTagInfo.nameTag,
       };
     }
 
-    if (row.address) {
+    if (row.address && row.nameTagInfo?.nameTag && !result[row.address]) {
       result[row.address] = {
         address: row.address,
-        nametag: row.nameTagInfo?.nameTag,
+        nametag: row.nameTagInfo.nameTag,
       };
     }
 
-    if (row.base32address) {
+    if (
+      row.base32address &&
+      row.nameTagInfo?.nameTag &&
+      !result[row.base32address]
+    ) {
       result[row.base32address] = {
         address: row.base32address,
-        nametag: row.nameTagInfo?.nameTag,
+        nametag: row.nameTagInfo.nameTag,
       };
     }
 
-    if (row.miner) {
+    if (row.miner && row.minerNameTagInfo?.nameTag && !result[row.miner]) {
       result[row.miner] = {
         address: row.miner,
-        nametag: row.minerNameTagInfo?.nameTag,
+        nametag: row.minerNameTagInfo.nameTag,
       };
     }
   } catch (e) {}
