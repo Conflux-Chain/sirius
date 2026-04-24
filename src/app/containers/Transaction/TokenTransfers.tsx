@@ -6,7 +6,7 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import iconInfo from 'images/info.svg';
 import {
-  ContractNameItem,
+  AddressNameMap,
   getItemByKey,
   renderAddressWithNameMap,
 } from './utils';
@@ -34,7 +34,7 @@ interface TokenTransferItem {
 
 const useTokenInfo = (
   item: TokenTransferItem,
-  nameMap?: Record<string, ContractNameItem>,
+  nameMap?: Record<string, AddressNameMap>,
 ) => {
   const { t } = useTranslation();
   return useMemo(() => {
@@ -74,7 +74,7 @@ const ERC20TransferItem = ({
 }: {
   index: number;
   item: TokenTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
   const renderAddress = renderAddressWithNameMap(nameMap);
@@ -110,7 +110,7 @@ const ERC721TransferItem = ({
 }: {
   index: number;
   item: TokenTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
   const renderAddress = renderAddressWithNameMap(nameMap);
@@ -160,7 +160,7 @@ const ERC1155TransferItem = ({
 }: {
   index: number;
   item: TokenTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
   const renderAddress = renderAddressWithNameMap(nameMap);
@@ -215,7 +215,7 @@ const TransferItem = ({
   index,
 }: {
   item: TokenTransferItem;
-  nameMap?: Record<string, ContractNameItem>;
+  nameMap?: Record<string, AddressNameMap>;
   index: number;
 }) => {
   if (item.transferType === CFX_TOKEN_TYPES.erc20) {
@@ -235,7 +235,7 @@ export const TokenTransfers = memo(
     nameMap,
   }: {
     transferList?: TokenTransferItem[];
-    nameMap?: Record<string, ContractNameItem>;
+    nameMap?: Record<string, AddressNameMap>;
   }) => {
     const { t } = useTranslation();
     if (transferList.length === 0) return null;

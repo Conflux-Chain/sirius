@@ -1,29 +1,45 @@
 import { renderAddress } from 'utils/tableColumns/token';
 
-export interface ContractNameItem {
-  contract: {
+export interface AddressNameMap {
+  contract?: {
     name?: string;
   };
-  token: {
+  token?: {
     name?: string;
     symbol?: string;
     decimals?: number;
-    tokenType?: string;
     iconUrl?: string;
+    website?: string;
+    tokenType?: string;
   };
-  verification: {
+  verification?: {
     name?: string;
   };
-  ens: {
+  eSpace?: {
+    address?: string;
+  };
+  ens?: {
     name?: string;
+  };
+  nameTag?: {
+    nameTag?: string;
+    website?: string;
+    desc?: string;
+    labels?: string[];
+    caution?: string;
+  };
+  implementation?: {
+    name?: string;
+    address?: string;
+    proxyPattern?: string;
   };
 }
 
-export const getItemByKey = <T extends keyof ContractNameItem>(
+export const getItemByKey = <T extends keyof AddressNameMap>(
   key: T,
-  nameMap: Record<string, ContractNameItem> | undefined,
+  nameMap: Record<string, AddressNameMap> | undefined,
   value: string,
-): (ContractNameItem[T] & { address: string }) | null => {
+): (AddressNameMap[T] & { address: string }) | null => {
   const item = nameMap?.[value]?.[key];
   return item
     ? {
@@ -34,7 +50,7 @@ export const getItemByKey = <T extends keyof ContractNameItem>(
 };
 
 export const renderAddressWithNameMap = (
-  nameMap?: Record<string, ContractNameItem>,
+  nameMap?: Record<string, AddressNameMap>,
 ): typeof renderAddress => (...args) => {
   const [value, row, type, withArrow] = args;
   const contractInfo = getItemByKey('contract', nameMap, value);
