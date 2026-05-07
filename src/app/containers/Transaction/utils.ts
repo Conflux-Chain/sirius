@@ -56,6 +56,7 @@ export const renderAddressWithNameMap = (
   const contractInfo = getItemByKey('contract', nameMap, value);
   const tokenInfo = getItemByKey('token', nameMap, value);
   const verification = getItemByKey('verification', nameMap, value);
+  const nameTag = getItemByKey('nameTag', nameMap, value);
   const ens = getItemByKey('ens', nameMap, value);
   // TODO: temp solution for new and old contract/token info structure in api, need to unify in the future
   const additionalInfo =
@@ -65,12 +66,14 @@ export const renderAddressWithNameMap = (
           fromTokenInfo: tokenInfo,
           fromVerification: verification,
           fromENSInfo: ens,
+          fromNameTagInfo: nameTag,
         }
       : {
           toContractInfo: contractInfo,
           toTokenInfo: tokenInfo,
           toVerification: verification,
           toENSInfo: ens,
+          toNameTagInfo: nameTag,
         };
   return renderAddress(
     value,
