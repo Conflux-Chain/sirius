@@ -43,6 +43,7 @@ export const detailExpandColumn = ({
   title: '',
   dataIndex: 'index',
   key: 'detail',
+  width: 1,
   render: (index, row) => {
     const isExpanded = expandedRowKeys.includes(index);
     const isDataEmpty = !row.input || row.input === '0x';
@@ -75,6 +76,7 @@ export const index = ({
   title: 'Index',
   dataIndex: 'index',
   key: 'tree',
+  width: 1,
   render: (index, row) => {
     if (!row.calls || row.calls.length === 0)
       return <span style={{ marginLeft: '26px' }}>{index}</span>;
@@ -160,7 +162,6 @@ const StyledIconWrapper = styled.div`
 `;
 
 const StyledTraceTypeWrapper = styled.span`
-  max-width: 130px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -173,7 +174,6 @@ const StyledTraceTypeWrapper = styled.span`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 8.5714rem;
     display: inline-block;
     vertical-align: middle;
   }
