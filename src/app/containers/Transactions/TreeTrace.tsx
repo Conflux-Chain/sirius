@@ -26,7 +26,7 @@ export const TreeTrace = ({
     return showProxyCall ? data : hideProxyCallInTreeTrace(data);
   }, [data, showProxyCall]);
 
-  const columnsWidth = [150, 150, 140, 280, 280, 120, 150, 50];
+  const columnsWidth = [150, 210, 140, 250, 250, 120, 150, 50];
   const columns = [
     traceColumns.index({
       expandedRowKeys: treeExpandedKeys,
