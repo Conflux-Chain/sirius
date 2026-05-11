@@ -12,6 +12,7 @@ import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import imgPacking from 'images/home/packing.svg';
+import { IS_SHOW_BANNER } from 'utils/constants';
 
 interface RouteParams {
   txHash: string;
@@ -22,7 +23,7 @@ export function PackingPage() {
   const { txHash } = useParams<RouteParams>();
 
   return (
-    <PageWrapper>
+    <PageWrapper $isShowBanner={IS_SHOW_BANNER}>
       <LeftImage alt="packing" src={imgPacking} />
       <RightWrap>
         <ErrorTitle>{t(translations.packing.title)}</ErrorTitle>
@@ -37,10 +38,11 @@ export function PackingPage() {
 }
 
 // wrapper
-const PageWrapper = styled.div`
+const PageWrapper = styled.div<{ $isShowBanner?: boolean }>`
   display: flex;
   position: absolute;
-  height: calc(100% - 8rem);
+  height: ${({ $isShowBanner }) =>
+    $isShowBanner ? 'calc(100% - 8rem - 50px)' : 'calc(100% - 8rem)'};
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;

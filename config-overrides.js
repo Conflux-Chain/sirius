@@ -103,29 +103,50 @@ module.exports = function (config, mode) {
             __dirname,
             './node_modules/react-i18next',
           ),
+          destr: path.resolve(__dirname, './node_modules/destr/dist/index.mjs'),
         },
       },
       module: {
         ...config.module,
-        unknownContextCritical: false,
         rules: [
           ...config.module.rules,
           {
             test: /\.js?$/,
-            include: /(node_modules\/(@cfxjs\/use-wallet-react)|(ethers))/,
+            include: [
+              path.resolve(__dirname, 'node_modules/@cfxjs/use-wallet-react'),
+              path.resolve(__dirname, 'node_modules/@cfx-kit/react-utils'),
+              path.resolve(__dirname, 'node_modules/@cfx-kit/dapp-utils'),
+              path.resolve(__dirname, 'node_modules/viem'),
+              path.resolve(__dirname, 'node_modules/ox'),
+            ],
             use: {
               loader: 'babel-loader',
               options: {
-                plugins: [
-                  '@babel/plugin-transform-class-properties',
-                  '@babel/plugin-transform-private-methods',
+                presets: [
+                  [
+                    '@babel/preset-env',
+                    {
+                      modules: false,
+                      include: [
+                        'transform-numeric-separator',
+                        'transform-class-properties',
+                        'transform-private-methods',
+                        'transform-export-namespace-from',
+                        'transform-logical-assignment-operators',
+                        'transform-nullish-coalescing-operator',
+                        'transform-optional-chaining',
+                        'transform-private-property-in-object',
+                        'transform-class-static-block',
+                      ],
+                    },
+                  ],
                 ],
               },
             },
           },
           {
             test: /\.mjs$/,
-            include: /node_modules\/@mosshqqmosi/,
+            include: [path.resolve(__dirname, 'node_modules/destr')],
             type: 'javascript/auto',
           },
         ],
@@ -147,6 +168,7 @@ module.exports = function (config, mode) {
           __dirname,
           './node_modules/react-i18next',
         ),
+        destr: path.resolve(__dirname, './node_modules/destr/dist/index.mjs'),
       },
     },
     module: {
@@ -156,20 +178,41 @@ module.exports = function (config, mode) {
         ...config.module.rules,
         {
           test: /\.js?$/,
-          include: /(node_modules\/(@cfxjs\/use-wallet-react)|(ethers))/,
+          include: [
+            path.resolve(__dirname, 'node_modules/@cfxjs/use-wallet-react'),
+            path.resolve(__dirname, 'node_modules/@cfx-kit/react-utils'),
+            path.resolve(__dirname, 'node_modules/@cfx-kit/dapp-utils'),
+            path.resolve(__dirname, 'node_modules/viem'),
+            path.resolve(__dirname, 'node_modules/ox'),
+          ],
           use: {
             loader: 'babel-loader',
             options: {
-              plugins: [
-                '@babel/plugin-transform-class-properties',
-                '@babel/plugin-transform-private-methods',
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    modules: false,
+                    include: [
+                      'transform-numeric-separator',
+                      'transform-class-properties',
+                      'transform-private-methods',
+                      'transform-export-namespace-from',
+                      'transform-logical-assignment-operators',
+                      'transform-nullish-coalescing-operator',
+                      'transform-optional-chaining',
+                      'transform-private-property-in-object',
+                      'transform-class-static-block',
+                    ],
+                  },
+                ],
               ],
             },
           },
         },
         {
           test: /\.mjs$/,
-          include: /node_modules\/@mosshqqmosi/,
+          include: [path.resolve(__dirname, 'node_modules/destr')],
           type: 'javascript/auto',
         },
       ],

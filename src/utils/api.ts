@@ -210,11 +210,12 @@ export const useAccountTokenList = (
       : null,
     url =>
       fetchWithPrefix(url)
-        .then(({ total, list }: any) => {
+        .then(({ total, list, nameMap }: any) => {
           return {
             loading: false,
             total,
             list,
+            nameMap,
           };
         })
         .catch(error => {
@@ -222,6 +223,7 @@ export const useAccountTokenList = (
             loading: false,
             total: 0,
             list: [],
+            nameMap: {},
           };
         }),
     {
@@ -229,6 +231,7 @@ export const useAccountTokenList = (
         loading: true,
         total: 0,
         list: [],
+        nameMap: {},
       },
       ...opts,
       revalidateOnMount: true,

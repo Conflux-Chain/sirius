@@ -30,6 +30,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-gray2: ${gray2};
     --theme-color-gray3: ${gray3};
     --theme-color-gray4: ${gray4};
+    --theme-color-green2: #7789D3;
     --theme-color-orange0: ${orange0};
     --theme-color-black0: ${black0};
     --theme-color-primary: #1e3de4;
@@ -47,6 +48,7 @@ export const GlobalStyle = createGlobalStyle`
     --theme-color-link-hover: #0f23bd;
     --theme-color-chart-title: #7789D3;
     --theme-color-chart-link: #1e3de4;
+    --theme-monospace-font: ${monospaceFont};
   }
 
   html,

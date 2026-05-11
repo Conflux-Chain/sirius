@@ -14,6 +14,7 @@ import imgNetworkError from 'images/changeNetwork.png';
 import { useParams } from 'react-router-dom';
 import { IS_CORESPACE, IS_TESTNET } from 'env';
 import { useGlobalData } from 'utils/hooks/useGlobal';
+import { IS_SHOW_BANNER } from 'utils/constants';
 
 interface RouteParams {
   network: string;
@@ -30,7 +31,7 @@ export function NetworkError() {
   } = useParams<RouteParams>();
 
   return (
-    <PageWrapper>
+    <PageWrapper $isShowBanner={IS_SHOW_BANNER}>
       <LeftImage
         alt={t(translations.networkError.title)}
         src={imgNetworkError}
@@ -57,10 +58,11 @@ export function NetworkError() {
 }
 
 // wrapper
-const PageWrapper = styled.div`
+const PageWrapper = styled.div<{ $isShowBanner?: boolean }>`
   display: flex;
   position: absolute;
-  height: calc(100% - 8rem);
+  height: ${({ $isShowBanner }) =>
+    $isShowBanner ? 'calc(100% - 8rem - 50px)' : 'calc(100% - 8rem)'};
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -68,8 +70,7 @@ const PageWrapper = styled.div`
   width: 100%;
 
   ${media.s} {
-    height: calc(100% - 116px);
-    width: calc(100% - 32px);
+    position: static;
     align-items: inherit;
     align-content: center;
   }

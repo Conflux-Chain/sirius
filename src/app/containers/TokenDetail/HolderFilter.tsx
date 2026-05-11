@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { useTokenBalance } from 'utils/hooks/useTokenBalance';
+import {
+  use1155TokenBalance,
+  useTokenBalance,
+} from 'utils/hooks/useTokenBalance';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatBalance } from '@cfxjs/sirius-next-common/dist/utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
@@ -31,6 +34,11 @@ export const HolderFilter = ({ holder, tokenData }: HolderFilterProps) => {
     account: holder,
     enabled: !is1155NFT,
   });
+  const { data: balance1155 } = use1155TokenBalance({
+    address: address,
+    account: holder,
+    enabled: is1155NFT,
+  });
   return (
     <Wrapper contentClassName="card-content">
       <Description
@@ -43,30 +51,28 @@ export const HolderFilter = ({ holder, tokenData }: HolderFilterProps) => {
         <CoreAddressContainer value={holder} isFull showIcon={false} />{' '}
         <CopyButton copyText={holder} />
       </Description>
-      {!is1155NFT && (
-        <Description
-          size="small"
-          vertical
-          title={t(translations.tokens.balance)}
-          className="item"
-          noBorder
+      <Description
+        size="small"
+        vertical
+        title={t(translations.tokens.balance)}
+        className="item"
+        noBorder
+      >
+        <Text
+          hoverValue={`${formatBalance(
+            is1155NFT ? balance1155 : balance,
+            transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
+            true,
+          )} ${symbol}`}
+          maxCount={47}
+          mobileMaxCount={39}
         >
-          <Text
-            hoverValue={`${formatBalance(
-              balance,
-              transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
-              true,
-            )} ${symbol}`}
-            maxCount={47}
-            mobileMaxCount={39}
-          >
-            {`${formatBalance(
-              balance,
-              transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
-            )} ${symbol}`}
-          </Text>
-        </Description>
-      )}
+          {`${formatBalance(
+            is1155NFT ? balance1155 : balance,
+            transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
+          )} ${symbol}`}
+        </Text>
+      </Description>
     </Wrapper>
   );
 };
