@@ -315,7 +315,7 @@ export const StatsCard = ({
         action,
       })
         .then((res = {}) => {
-          if (Object.keys(res)) {
+          if (res && res.list) {
             setData(enhanceDataWithNameMap(res.list, res.nameMap));
             setLoadingTokenInfo(false);
             if (category === 'miner' && res.allDifficulty) {
