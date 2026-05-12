@@ -4,6 +4,7 @@ import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, blockColunms } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 export const TransferList = ({ type, address, id, loading }) => {
   let url = `/transfer?address=${address}&transferType=${type}&tokenId=${id}`;
@@ -40,6 +41,7 @@ export const TransferList = ({ type, address, id, loading }) => {
       rowKey={record =>
         `${record.transactionHash}-${record.transactionLogIndex}`
       }
+      formatResponse={formatListResponseWithNameMap}
     ></TablePanelNew>
   );
 };

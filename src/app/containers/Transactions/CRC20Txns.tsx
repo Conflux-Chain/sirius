@@ -5,6 +5,7 @@ import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer } from './components';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { formatListResponseWithPhishingInfo } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 interface Props {
   address: string;
 }
@@ -67,7 +68,9 @@ export const CRC20Txns = ({ address }: Props) => {
       rowKey={record =>
         `${record.transactionHash}-${record.transactionLogIndex}`
       }
-      formatResponse={formatListResponseWithPhishingInfo}
+      formatResponse={res =>
+        formatListResponseWithNameMap(formatListResponseWithPhishingInfo(res))
+      }
     ></TablePanel>
   );
 };

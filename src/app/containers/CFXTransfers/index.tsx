@@ -10,6 +10,7 @@ import {
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 export function CFXTransfers() {
   const { t } = useTranslation();
@@ -45,6 +46,7 @@ export function CFXTransfers() {
         rowKey={record =>
           `${record.transactionHash}-${record.transactionLogIndex}`
         }
+        formatResponse={formatListResponseWithNameMap}
       ></TablePanelNew>
     </>
   );

@@ -3,14 +3,10 @@ import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
-import { formatNumber, formatString, getENSInfo, getNametagInfo } from '..';
+import { formatNumber, formatString } from '..';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { ContentWrapper } from './utils';
-
-interface Query {
-  accountAddress?: string;
-  transactionHash?: string;
-}
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 export const number = (page = 1, pageSize = 10) => ({
   width: 1,
@@ -52,13 +48,34 @@ export const contract = {
   ),
   dataIndex: 'address',
   key: 'address',
-  render: (value, row) => (
-    <CoreAddressContainer
-      value={value}
-      ensInfo={getENSInfo(row)}
-      nametagInfo={getNametagInfo(row)}
-    />
-  ),
+  render: (value, row) => {
+    const { verify, nametag, ensName } =
+      getAddressNameInfo(value, row.nameMap) || {};
+    const nametagInfo = nametag
+      ? {
+          [value]: {
+            address: value,
+            nametag: nametag,
+          },
+        }
+      : undefined;
+    const ensInfo = ensName
+      ? {
+          [value]: {
+            address: value,
+            name: ensName,
+          },
+        }
+      : undefined;
+    return (
+      <CoreAddressContainer
+        value={value}
+        ensInfo={ensInfo}
+        nametagInfo={nametagInfo}
+        verify={verify}
+      />
+    );
+  },
 };
 
 export const transactionCount = {

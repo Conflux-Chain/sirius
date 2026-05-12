@@ -6,6 +6,7 @@ import { TablePanel } from 'app/components/TablePanelNew';
 // import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { Title } from 'app/containers/Transactions/components';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   address: string;
@@ -81,6 +82,7 @@ export const MinedBlocks = ({ address }: Props) => {
       // footer={footer}
       title={title}
       rowKey="hash"
+      formatResponse={formatListResponseWithNameMap}
     ></TablePanel>
   );
 };

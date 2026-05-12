@@ -1,6 +1,7 @@
 import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, utils } from 'utils/tableColumns';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   address: string;
@@ -25,6 +26,7 @@ export const Holders = ({ address, type, id, loading }: Props) => {
       columns={columns}
       loading={loading}
       rowKey="owner"
+      formatResponse={formatListResponseWithNameMap}
     ></TablePanelNew>
   );
 };

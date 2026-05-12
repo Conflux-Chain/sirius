@@ -9,20 +9,14 @@ import { Title } from 'app/containers/Transactions/components';
 import { AdvancedSearchFormProps } from 'app/containers/Transactions/components/AdvancedSearchForm';
 import { useSearchParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useSearchParams';
 import { useAutoSetHolderFilterParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAutoSetHolderFilterParams';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   type: string;
   address: string;
-  decimals: number;
 }
 
-interface Query {
-  accountAddress?: string;
-  transactionHash?: string;
-  tokenId?: string;
-}
-
-export const Transfers = ({ type, address, decimals }: Props) => {
+export const Transfers = ({ type, address }: Props) => {
   useAutoSetHolderFilterParams(['from', 'to']);
   const url = `/transfer?address=${address}&transferType=${type}`;
 
@@ -33,13 +27,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
     tokenColunms.txnHash,
     tokenColunms.from,
     tokenColunms.to,
-    {
-      ...tokenColunms.quantity,
-      render: (value, row, index) =>
-        tokenColunms.quantity.render(value, row, index, {
-          decimals,
-        }),
-    },
+    tokenColunms.quantity,
     tokenColunms.age(ageFormat, toggleAgeFormat),
   ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
 
@@ -49,7 +37,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       tokenColunms.txnHash,
       tokenColunms.from,
       tokenColunms.to,
-      tokenColunms.tokenId(),
+      tokenColunms.tokenId,
       tokenColunms.age(ageFormat, toggleAgeFormat),
       tokenColunms.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
@@ -61,7 +49,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
       tokenColunms.from,
       tokenColunms.to,
       tokenColunms.quantity,
-      tokenColunms.tokenId(address),
+      tokenColunms.tokenId,
       tokenColunms.age(ageFormat, toggleAgeFormat),
       tokenColunms.details,
     ].map((item, i) => ({ ...item, width: columnsWidth[i] }));
@@ -135,6 +123,7 @@ export const Transfers = ({ type, address, decimals }: Props) => {
         rowKey={record =>
           `${record.transactionHash}-${record.transactionLogIndex}`
         }
+        formatResponse={formatListResponseWithNameMap}
       ></TablePanelNew>
     </>
   );

@@ -8,6 +8,7 @@ import { Dag } from './Loadable';
 import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 export function Blocks() {
   const { t } = useTranslation();
@@ -45,6 +46,7 @@ export function Blocks() {
         url={url}
         columns={columnsBlocks}
         rowKey="hash"
+        formatResponse={formatListResponseWithNameMap}
       ></TablePanelNew>
     </>
   );

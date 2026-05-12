@@ -22,6 +22,7 @@ import { ICON_DEFAULT_TOKEN, ICON_DEFAULT_CONTRACT } from 'utils/constants';
 import Edit3 from '@zeit-ui/react-icons/edit3';
 import { Image } from '@cfxjs/antd';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 export function ContractMetadata({ address, contractInfo }) {
   const { t } = useTranslation();
@@ -47,6 +48,15 @@ export function ContractMetadata({ address, contractInfo }) {
   if (tokenInfo.name && isToken) {
     tokenName = <Link href={`/token/${address}`}>{tokenName}</Link>;
   }
+
+  const sponsorForCollateralNameInfo = getAddressNameInfo(
+    contractInfo.sponsor?.sponsorForCollateral,
+    contractInfo.nameMap,
+  );
+  const sponsorForGasNameInfo = getAddressNameInfo(
+    contractInfo.sponsor?.sponsorForGas,
+    contractInfo.nameMap,
+  );
 
   let list = [
     {
@@ -99,12 +109,29 @@ export function ContractMetadata({ address, contractInfo }) {
                   <CoreAddressContainer
                     key={contractInfo.sponsor.sponsorForCollateral}
                     value={contractInfo.sponsor.sponsorForCollateral}
-                    alias={
-                      contractInfo.sponsor.sponsorForCollateralContractInfo &&
-                      contractInfo.sponsor.sponsorForCollateralContractInfo.name
-                        ? contractInfo.sponsor.sponsorForCollateralContractInfo
-                            .name
-                        : null
+                    alias={sponsorForCollateralNameInfo?.alias}
+                    verify={sponsorForCollateralNameInfo?.verify}
+                    nametagInfo={
+                      sponsorForCollateralNameInfo?.nametag
+                        ? {
+                            [contractInfo.sponsor.sponsorForCollateral]: {
+                              address:
+                                contractInfo.sponsor.sponsorForCollateral,
+                              nametag: sponsorForCollateralNameInfo?.nametag,
+                            },
+                          }
+                        : undefined
+                    }
+                    ensInfo={
+                      sponsorForCollateralNameInfo?.ensName
+                        ? {
+                            [contractInfo.sponsor.sponsorForCollateral]: {
+                              address:
+                                contractInfo.sponsor.sponsorForCollateral,
+                              name: sponsorForCollateralNameInfo?.ensName,
+                            },
+                          }
+                        : undefined
                     }
                   />,
                 ]
@@ -158,11 +185,27 @@ export function ContractMetadata({ address, contractInfo }) {
                   <CoreAddressContainer
                     key={contractInfo.sponsor.sponsorForGas}
                     value={contractInfo.sponsor.sponsorForGas}
-                    alias={
-                      contractInfo.sponsor.sponsorForGasContractInfo &&
-                      contractInfo.sponsor.sponsorForGasContractInfo.name
-                        ? contractInfo.sponsor.sponsorForGasContractInfo.name
-                        : null
+                    alias={sponsorForGasNameInfo?.alias}
+                    verify={sponsorForGasNameInfo?.verify}
+                    nametagInfo={
+                      sponsorForGasNameInfo?.nametag
+                        ? {
+                            [contractInfo.sponsor.sponsorForGas]: {
+                              address: contractInfo.sponsor.sponsorForGas,
+                              nametag: sponsorForGasNameInfo?.nametag,
+                            },
+                          }
+                        : undefined
+                    }
+                    ensInfo={
+                      sponsorForGasNameInfo?.ensName
+                        ? {
+                            [contractInfo.sponsor.sponsorForGas]: {
+                              address: contractInfo.sponsor.sponsorForGas,
+                              name: sponsorForGasNameInfo?.ensName,
+                            },
+                          }
+                        : undefined
                     }
                   />,
                 ]

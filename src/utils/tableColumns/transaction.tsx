@@ -6,14 +6,8 @@ import clsx from 'clsx';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
-import {
-  toThousands,
-  getENSInfo,
-  getNametagInfo,
-  roundToFixedPrecision,
-} from 'utils';
-import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { ColumnAge } from './utils';
+import { toThousands, roundToFixedPrecision } from 'utils';
+import { ColumnAge, renderAddressWithNameMap } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
@@ -31,6 +25,7 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 const StyledHashWrapper = styled.span`
   padding-left: 16px;
@@ -164,17 +159,7 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   width: 1,
-  render: (value, row) => (
-    <ValueHighlight scope="address" value={value}>
-      <CoreAddressContainer
-        value={value}
-        alias={row.fromContractInfo ? row.fromContractInfo.name : ''}
-        contractCreated={row.contractCreated}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
-    </ValueHighlight>
-  ),
+  render: (value, row) => renderAddressWithNameMap(value, row, 'from', false),
 };
 
 export const to = {
@@ -186,37 +171,7 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   width: 1,
-  render: (value, row) => {
-    let alias = '';
-    let verify = false;
-
-    if (row.toTokenInfo && row.toTokenInfo.name) alias = row.toTokenInfo.name;
-    else if (row.toContractInfo && row.toContractInfo.name)
-      alias = row.toContractInfo.name;
-    else if (row.tokenInfo && row.tokenInfo.name) alias = row.tokenInfo.name;
-    else if (row.contractInfo && row.contractInfo.name)
-      alias = row.contractInfo.name;
-
-    if (row.toContractInfo) {
-      verify =
-        row.toContractInfo.verify && row.toContractInfo.verify.result !== 0;
-    } else if (row.verified === true) {
-      verify = true;
-    }
-
-    return (
-      <ValueHighlight scope="address" value={value}>
-        <CoreAddressContainer
-          value={value}
-          alias={alias}
-          contractCreated={row.contractCreated}
-          verify={verify}
-          ensInfo={getENSInfo(row)}
-          nametagInfo={getNametagInfo(row)}
-        />
-      </ValueHighlight>
-    );
-  },
+  render: (value, row) => renderAddressWithNameMap(value, row, 'to', false),
 };
 
 export const value = {
@@ -304,10 +259,7 @@ export const method = {
     } else {
       text = value;
     }
-    const verify =
-      row.toContractInfo &&
-      row.toContractInfo.verify &&
-      row.toContractInfo.verify.result !== 0;
+    const verify = getAddressNameInfo(row.to, row.nameMap)?.verify;
     const showWarning = !value.startsWith('0x') && !verify;
 
     return (

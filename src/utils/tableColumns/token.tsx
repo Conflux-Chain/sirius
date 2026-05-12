@@ -4,204 +4,36 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
-import queryString from 'query-string';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import {
   formatBalance,
   formatNumber,
   formatString,
-  getENSInfo,
   formatAddress,
   isZeroAddress,
-  getNametagInfo,
 } from 'utils';
-import imgArrow from 'images/token/arrow.svg';
-import imgOut from 'images/token/out.svg';
-import imgIn from 'images/token/in.svg';
 import imgInfo from 'images/info.svg';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { getPocketAlias } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
-import { ProxyContractAddress } from '@cfxjs/sirius-next-common/dist/components/ProxyContractAddress';
-import { ColumnAge, ContentWrapper } from './utils';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
+import {
+  ColumnAge,
+  ContentWrapper,
+  fromTypeInfo,
+  getFromType,
+  renderAddressWithNameMap,
+} from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { TxnHashRenderComponent } from './transaction';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
-import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { useTranslation } from 'react-i18next';
 import { monospaceFont } from 'styles/variable';
 import { ProjectInfo } from 'app/components/ProjectInfo';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tag } from '@cfxjs/antd';
 import { Price } from '@cfxjs/sirius-next-common/dist/components/Price';
-import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
 import { PhishingAddressContainer } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
-
-const fromTypeInfo = {
-  arrow: {
-    src: imgArrow,
-    text: (
-      <Translation>
-        {t => t(translations.general.table.token.fromTypeOut)}
-      </Translation>
-    ),
-  },
-  out: {
-    src: imgOut,
-    text: (
-      <Translation>
-        {t => t(translations.general.table.token.fromTypeOut)}
-      </Translation>
-    ),
-  },
-  in: {
-    src: imgIn,
-    text: (
-      <Translation>
-        {t => t(translations.general.table.token.fromTypeIn)}
-      </Translation>
-    ),
-  },
-};
-
-const reg = /address\/(.*)$/;
-
-type GetFromTypeReturnValueType = 'in' | 'out' | 'arrow';
-const getFromType = (value: string): GetFromTypeReturnValueType => {
-  let address = '';
-
-  try {
-    // fixed for multiple request in /address/:hash page
-    let r = reg.exec(window.location.pathname);
-    if (r) {
-      address = r[1];
-    }
-  } catch (e) {}
-
-  const { accountAddress = address } = queryString.parse(
-    window.location.search,
-  );
-  const filter = accountAddress as string;
-
-  return !filter
-    ? 'arrow'
-    : formatAddress(filter) === formatAddress(value)
-    ? 'out'
-    : 'in';
-};
-
-export const renderAddress = (
-  value,
-  row,
-  type: 'to' | 'from',
-  withArrow = true,
-) => {
-  let address = '';
-
-  try {
-    // fixed for multiple request in /address/:hash page
-    let r = reg.exec(window.location.pathname);
-    if (r) {
-      address = r[1];
-    }
-  } catch (e) {}
-
-  const { accountAddress = address } = queryString.parse(
-    window.location.search,
-  );
-  const filter = (accountAddress as string) || '';
-  let alias = '';
-
-  // dummy address, show name only
-  if (row[`${type}ContractInfo`]?.isVirtual) {
-    const name = row[`${type}ContractInfo`].name;
-    return (
-      <ValueHighlight scope="address" value={name}>
-        {name}
-      </ValueHighlight>
-    );
-  }
-
-  if (type === 'from') {
-    if (row.fromTokenInfo && row.fromTokenInfo.name)
-      alias = row.fromTokenInfo.name;
-    else if (row.fromContractInfo && row.fromContractInfo.name)
-      alias = row.fromContractInfo.name;
-  } else if (type === 'to') {
-    if (row.toTokenInfo && row.toTokenInfo.name) alias = row.toTokenInfo.name;
-    else if (row.toContractInfo && row.toContractInfo.name)
-      alias = row.toContractInfo.name;
-    else if (row.tokenInfo && row.tokenInfo.name) alias = row.tokenInfo.name;
-    else if (row.contractInfo && row.contractInfo.name)
-      alias = row.contractInfo.name;
-  }
-
-  let verify = false;
-
-  try {
-    // default verify info
-    let info = {
-      verify: {
-        result: 0,
-      },
-    };
-    let verification: { name?: string } | null = null;
-    if (type === 'to') {
-      info = row.toContractInfo;
-      verification = row.toVerification;
-    } else if (type === 'from') {
-      info = row.fromContractInfo;
-      verification = row.fromVerification;
-    }
-    verify = verification ? !!verification.name : info.verify.result !== 0;
-  } catch (e) {}
-
-  const isEspaceAddress = !!row[`${type}ESpaceInfo`]?.address;
-
-  if (type === 'to' && row.proxy) {
-    return (
-      <ValueHighlight scope="address" value={value}>
-        <ProxyContractAddress
-          value={value}
-          alias={alias}
-          verify={verify}
-          proxy={row.proxy}
-          ensInfo={getENSInfo(row)}
-          nametagInfo={getNametagInfo(row)}
-        />
-      </ValueHighlight>
-    );
-  }
-
-  const pocket = getPocketAlias({
-    type,
-    address: value,
-    pocket: row[`${type}Pocket`],
-  });
-
-  return (
-    <>
-      <ValueHighlight scope="address" value={value}>
-        <CoreAddressContainer
-          value={value}
-          alias={pocket ?? alias}
-          link={!pocket && formatAddress(filter) !== formatAddress(value)}
-          contractCreated={row.contractCreated}
-          verify={verify}
-          isEspaceAddress={isEspaceAddress}
-          ensInfo={getENSInfo(row)}
-          nametagInfo={getNametagInfo(row)}
-          isFull={!!pocket}
-          hideAliasPrefixInHover={!!pocket}
-        />
-      </ValueHighlight>
-      {type === 'from' && withArrow && (
-        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
-      )}
-    </>
-  );
-};
 
 export const token = {
   width: 1,
@@ -236,10 +68,10 @@ export const token = {
                 ) : (
                   <CoreAddressContainer
                     value={row?.address}
-                    alias={row?.contractName || null}
+                    alias={row?.alias}
                     showIcon={false}
-                    ensInfo={getENSInfo(row)}
-                    nametagInfo={getNametagInfo(row)}
+                    ensInfo={row?.ensInfo}
+                    nametagInfo={row?.nametagInfo}
                   />
                 )}
               </Text>
@@ -253,45 +85,59 @@ export const token = {
 
 export const Token2 = ({ row }) => {
   const { t } = useTranslation();
+  const address = row?.address;
+  const { tokenIconUrl, tokenName, tokenSymbol, nametag, ensName, verify } =
+    getAddressNameInfo(address, row.nameMap) || {};
+  const nametagInfo = nametag
+    ? {
+        [address]: {
+          address: address,
+          nametag: nametag,
+        },
+      }
+    : undefined;
+  const ensInfo = ensName
+    ? {
+        [address]: {
+          address: address,
+          name: ensName,
+        },
+      }
+    : undefined;
   return (
     <StyledIconWrapper>
-      {row?.transferTokenInfo && row?.transferTokenInfo?.address // show -- if transferTokenInfo is empty
+      {address
         ? [
             <img
               key="img"
-              src={row?.transferTokenInfo?.iconUrl || ICON_DEFAULT_TOKEN}
+              src={tokenIconUrl || ICON_DEFAULT_TOKEN}
               alt="token icon"
             />,
-            row?.transferTokenInfo?.name && row?.transferTokenInfo?.symbol ? (
-              <Link
-                key="link"
-                href={`/token/${row?.transferTokenInfo?.address}`}
-              >
+            tokenName && tokenSymbol ? (
+              <Link key="link" href={`/token/${address}`}>
                 {
                   <Text
                     tag="span"
                     hoverValue={
-                      row?.transferTokenInfo?.name
-                        ? `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`
-                        : formatAddress(row?.transferTokenInfo?.address)
+                      tokenName
+                        ? `${tokenName} (${tokenSymbol})`
+                        : formatAddress(address)
                     }
                     maxWidth="180px"
                   >
-                    {formatString(
-                      `${row?.transferTokenInfo?.name} (${row?.transferTokenInfo?.symbol})`,
-                      36,
-                    )}
+                    {formatString(`${tokenName} (${tokenSymbol})`, 36)}
                   </Text>
                 }
               </Link>
             ) : (
               <StyledToken2NotAvailableWrapper>
                 <CoreAddressContainer
-                  value={row?.transferTokenInfo?.address}
+                  value={address}
                   alias={t(translations.general.notAvailable)}
                   showIcon={false}
-                  ensInfo={getENSInfo(row)}
-                  nametagInfo={getNametagInfo(row)}
+                  ensInfo={ensInfo}
+                  nametagInfo={nametagInfo}
+                  verify={verify}
                 />
                 &nbsp;
                 <InfoIconWithTooltip
@@ -519,10 +365,10 @@ export const quantity = {
   ),
   dataIndex: 'value',
   key: 'value',
-  render: (value, row, index, opt?) => {
-    const decimals = opt
-      ? opt.decimals
-      : row.transferTokenInfo?.decimals || row.transferTokenInfo?.decimal || 0;
+  render: (value, row) => {
+    const { tokenDecimals } =
+      getAddressNameInfo(row?.address, row.nameMap) || {};
+    const decimals = tokenDecimals || 0;
     return value ? (
       <Text
         tag="span"
@@ -551,7 +397,7 @@ export const to = {
         phishingData={row.toPhishingData}
         address={value}
       >
-        <FromWrap>{renderAddress(value, row, 'to', false)}</FromWrap>
+        <FromWrap>{renderAddressWithNameMap(value, row, 'to', false)}</FromWrap>
       </PhishingAddressContainer>
     );
   },
@@ -570,7 +416,9 @@ export const from = {
         phishingData={row.fromPhishingData}
         address={value}
       >
-        <FromWrap>{renderAddress(value, row, 'from', withArrow)}</FromWrap>
+        <FromWrap>
+          {renderAddressWithNameMap(value, row, 'from', withArrow)}
+        </FromWrap>
       </PhishingAddressContainer>
     );
   },
@@ -597,26 +445,44 @@ export const account = (token: string) => ({
   ),
   dataIndex: 'account',
   key: 'account',
-  render: (value, row) => (
-    <AccountWrapper>
-      <Link
-        href={`/token/${formatAddress(token)}?a=${value.address}`}
-        className="link-wrapper"
-      >
-        <CoreAddressContainer
-          value={value.address}
-          alias={
-            value.name ||
-            (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
-          }
-          isFull={true}
-          ensInfo={getENSInfo(row)}
-          nametagInfo={getNametagInfo(row)}
-          link={false}
-        />
-      </Link>
-    </AccountWrapper>
-  ),
+  render: (value, row) => {
+    const { alias, verify, nametag, ensName } =
+      getAddressNameInfo(value.address, row.nameMap) || {};
+    const nametagInfo = nametag
+      ? {
+          [value.address]: {
+            address: value.address,
+            nametag: nametag,
+          },
+        }
+      : undefined;
+    const ensInfo = ensName
+      ? {
+          [value.address]: {
+            address: value.address,
+            name: ensName,
+          },
+        }
+      : undefined;
+    return (
+      <AccountWrapper>
+        <Link
+          href={`/token/${formatAddress(token)}?a=${value.address}`}
+          className="link-wrapper"
+        >
+          <CoreAddressContainer
+            value={value.address}
+            alias={alias}
+            isFull={true}
+            ensInfo={ensInfo}
+            nametagInfo={nametagInfo}
+            verify={verify}
+            link={false}
+          />
+        </Link>
+      </AccountWrapper>
+    );
+  },
 });
 
 export const balance = (decimal, price, transferType) => ({
@@ -743,7 +609,7 @@ export const percentage = total => ({
   },
 });
 
-export const tokenId = (contractAddress?: string) => ({
+export const tokenId = {
   width: 1,
   title: (
     <Translation>
@@ -759,15 +625,12 @@ export const tokenId = (contractAddress?: string) => ({
           <SpanWrap>{value || '-'}</SpanWrap>
         </Text>
         {!isZeroAddress(formatAddress(row.to)) && (
-          <NFTPreview
-            contractAddress={contractAddress || row?.transferTokenInfo?.address}
-            tokenId={value}
-          />
+          <NFTPreview contractAddress={row?.address} tokenId={value} />
         )}
       </>
     );
   },
-});
+};
 
 export const details = {
   width: 1,
@@ -780,7 +643,7 @@ export const details = {
   key: 'tokenId',
   render: (value, row) => {
     return (
-      <Link href={`/nft/${row.transferTokenInfo?.address}/${value}`}>
+      <Link href={`/nft/${row.address}/${value}`}>
         <Tag color="default">
           <Translation>
             {t => t(translations.general.table.token.view)}
@@ -885,22 +748,38 @@ export const NFTOwner = {
   ),
   dataIndex: 'owner',
   key: 'owner',
-  render: (value, row) => (
-    <AccountWrapper>
-      <CoreAddressContainer
-        value={value}
-        alias={
-          value.name ||
-          (row.ownerTokenInfo && row.ownerTokenInfo.name
-            ? row.ownerTokenInfo.name
-            : null)
+  render: (value, row) => {
+    const { alias, verify, nametag, ensName } =
+      getAddressNameInfo(value.address, row.nameMap) || {};
+    const nametagInfo = nametag
+      ? {
+          [value.address]: {
+            address: value.address,
+            nametag: nametag,
+          },
         }
-        isFull={true}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
-    </AccountWrapper>
-  ),
+      : undefined;
+    const ensInfo = ensName
+      ? {
+          [value.address]: {
+            address: value.address,
+            name: ensName,
+          },
+        }
+      : undefined;
+    return (
+      <AccountWrapper>
+        <CoreAddressContainer
+          value={value}
+          alias={alias}
+          isFull={true}
+          verify={verify}
+          ensInfo={ensInfo}
+          nametagInfo={nametagInfo}
+        />
+      </AccountWrapper>
+    );
+  },
 };
 
 export const NFTQuantity = {
@@ -931,18 +810,6 @@ export const StyledIconWrapper = styled.div`
 
 const FromWrap = styled.div`
   position: relative;
-`;
-
-const ImgWrap = styled.img`
-  position: absolute;
-  width: 36px;
-  height: 20px;
-  right: -0.8571rem;
-  top: 0.1429rem;
-
-  ${media.s} {
-    right: -0.98rem;
-  }
 `;
 
 const SpanWrap = styled.span`
@@ -976,9 +843,5 @@ export const LinkA = styled.a`
 export const AccountWrapper = styled.div`
   .link-wrapper .sirius-text > div {
     cursor: pointer;
-  }
-  img {
-    margin-bottom: 6px;
-    margin-right: 2px;
   }
 `;

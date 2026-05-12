@@ -11,10 +11,12 @@ import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { formatAddress, getENSInfo } from 'utils';
+import { formatAddress } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 const { ContentWrapper } = tableColumnsUtils;
 
@@ -66,24 +68,43 @@ export function Accounts() {
     accountColunms.rank,
     {
       ...accountColunms.address,
-      render: (value, row: any) => (
-        <AccountWrapper>
-          <CoreAddressContainer
-            value={value}
-            alias={
-              row.name ||
-              (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
+      render: (value, row: any) => {
+        const { alias, verify, nametag, ensName } =
+          getAddressNameInfo(value, row.nameMap) || {};
+        const nametagInfo = nametag
+          ? {
+              [value]: {
+                address: value,
+                nametag: nametag,
+              },
             }
-            isFull={true}
-            isMe={
-              accounts && accounts.length > 0
-                ? formatAddress(accounts[0]) === formatAddress(value)
-                : false
+          : undefined;
+        const ensInfo = ensName
+          ? {
+              [value]: {
+                address: value,
+                name: ensName,
+              },
             }
-            ensInfo={getENSInfo(row)}
-          />
-        </AccountWrapper>
-      ),
+          : undefined;
+        return (
+          <AccountWrapper>
+            <CoreAddressContainer
+              value={value}
+              alias={alias}
+              verify={verify}
+              isFull={true}
+              isMe={
+                accounts && accounts.length > 0
+                  ? formatAddress(accounts[0]) === formatAddress(value)
+                  : false
+              }
+              nametagInfo={nametagInfo}
+              ensInfo={ensInfo}
+            />
+          </AccountWrapper>
+        );
+      },
     },
     {
       ...accountColunms.balance,
@@ -187,6 +208,7 @@ export function Accounts() {
           rowKey="base32address"
           pagination={false}
           title={tableTitle}
+          formatResponse={formatListResponseWithNameMap}
         ></TablePanelNew>
       </StyledTableWrapper>
     </>

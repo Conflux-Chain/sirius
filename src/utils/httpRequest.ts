@@ -97,14 +97,6 @@ export const reqContractAndToken = fetchWithCache(
   },
 );
 
-export const reqTransferList = (param?: object, extra?: object) => {
-  return sendRequest({
-    url: `/transfer`,
-    query: param,
-    ...extra,
-  });
-};
-
 export const reqTokenList = (param?: object, extra?: object) => {
   return sendRequest({
     url: `/token`,
@@ -278,13 +270,6 @@ export const reqContractCrossSpaceSimilarMatch = param => {
     headers: {
       'Content-Type': 'application/json',
     },
-  });
-};
-
-export const reqTransactions = (extra?: object) => {
-  return sendRequest({
-    url: `/transaction`,
-    ...extra,
   });
 };
 

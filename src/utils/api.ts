@@ -96,19 +96,6 @@ export const useBlockList: useApi = (params, shouldFetch = true, ...rest) => {
   );
 };
 
-export const useTransferList: useApi = (
-  params,
-  shouldFetch = true,
-  ...rest
-) => {
-  if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/transfer', ...params] : null,
-    rest[1] || simpleGetFetcher,
-    rest[0],
-  );
-};
 export const useContractList: useApi = (
   params,
   shouldFetch = true,
@@ -118,15 +105,6 @@ export const useContractList: useApi = (
   params = useRef(params).current;
   return useSWR(
     shouldFetch ? ['/contract/list', ...params] : null,
-    rest[1] || simpleGetFetcher,
-    rest[0],
-  );
-};
-export const useTokenList: useApi = (params, shouldFetch = true, ...rest) => {
-  if (!Array.isArray(params)) params = [params];
-  params = useRef(params).current;
-  return useSWR(
-    shouldFetch ? ['/token', ...params] : null,
     rest[1] || simpleGetFetcher,
     rest[0],
   );
