@@ -26,7 +26,7 @@ export const ListTrace = ({
     return treeTraceToList(data, showProxyCall);
   }, [data, showProxyCall]);
 
-  const columnsWidth = [350, 150, 250, 250, 120, 150, 50];
+  const columnsWidth = [320, 150, 250, 280, 120, 150, 50];
   const columns = [
     traceColumns.traceType(),
     transactionColunms.method,
