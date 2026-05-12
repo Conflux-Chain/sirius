@@ -7,6 +7,7 @@ import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader
 import { blockColunms } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface epochNumber {
   number: string;
@@ -40,7 +41,12 @@ export const Epoch = () => {
       </Helmet>
       <PageHeader subtitle={number}>{t(translations.epoch.title)}</PageHeader>
 
-      <TablePanelNew url={url} columns={columns} rowKey="hash"></TablePanelNew>
+      <TablePanelNew
+        url={url}
+        columns={columns}
+        rowKey="hash"
+        formatResponse={formatListResponseWithNameMap}
+      ></TablePanelNew>
     </>
   );
 };

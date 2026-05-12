@@ -10,7 +10,8 @@ import { ListTrace } from './ListTrace';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Switch } from '@cfxjs/sirius-next-common/dist/components/Switch';
 import IconInfo from 'images/info.svg';
-import { AddressNameMap, renderAddressWithNameMap } from '../Transaction/utils';
+import { renderAddress } from 'utils/tableColumns/utils';
+import { AddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/request.types';
 
 interface Props {
   hash: string;
@@ -25,17 +26,16 @@ export const InternalTxns = ({ hash, from, to, nameMap }: Props) => {
   const [viewMode, setViewMode] = useState('tree');
   const { data, isLoading } = useTxTrace(hash, 'core');
   const { list = [], total = 0 } = data ?? {};
-  const renderAddress = renderAddressWithNameMap(nameMap);
 
   const fromContent = () => (
     <StyledAddressContainer>
-      {renderAddress(from, { from }, 'from', false)}{' '}
+      {renderAddress(from, { nameMap }, 'from')}{' '}
       <CopyButton copyText={formatAddress(from)} />
     </StyledAddressContainer>
   );
   const toContent = () => (
     <StyledAddressContainer>
-      {renderAddress(to, { to }, 'to', false)}{' '}
+      {renderAddress(to, { nameMap }, 'to')}{' '}
       <CopyButton copyText={formatAddress(to)} />
     </StyledAddressContainer>
   );

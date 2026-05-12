@@ -5,11 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import iconInfo from 'images/info.svg';
-import {
-  AddressNameMap,
-  getItemByKey,
-  renderAddressWithNameMap,
-} from './utils';
 import lodash from 'lodash';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
@@ -17,6 +12,9 @@ import { TokenTypeTag } from 'app/components/TxnComponents';
 import { NFTPreview } from 'app/components/NFTPreview';
 import { formatAddress, isZeroAddress, formatBalance } from 'utils';
 import { DefaultTokenIcon } from '@cfxjs/sirius-next-common/dist/components/Icons';
+import { AddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/request.types';
+import { renderAddress } from 'utils/tableColumns/utils';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 interface TokenTransferItem {
   transactionLogIndex: number;
@@ -42,7 +40,8 @@ const useTokenInfo = (
     let tokenName = 'unknown';
     let tokenSymbol = 'unknown';
     let tokenDecimals = 1;
-    const tokenItem = getItemByKey('token', nameMap, item.address);
+    const tokenItem = getAddressNameInfo(item.address, nameMap)?.originInfo
+      .token;
     if (tokenItem) {
       tokenName = tokenItem.name || t(translations.general.notAvailable);
       tokenSymbol = tokenItem.symbol || t(translations.general.notAvailable);
@@ -77,7 +76,6 @@ const ERC20TransferItem = ({
   nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
-  const renderAddress = renderAddressWithNameMap(nameMap);
   const { imgIcon, nameContainer, tokenDecimals } = useTokenInfo(item, nameMap);
   return (
     <div
@@ -87,10 +85,10 @@ const ERC20TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddress(item.from, item, 'from', false)}
+        {renderAddress(item.from, { nameMap }, 'from')}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
-      <InlineWrapper>{renderAddress(item.to, item, 'to', false)}</InlineWrapper>
+      <InlineWrapper>{renderAddress(item.to, { nameMap }, 'to')}</InlineWrapper>
       <span className="for">{t(translations.transaction.for)}</span>
       <span className="value">
         {lodash.isNil(tokenDecimals)
@@ -113,7 +111,6 @@ const ERC721TransferItem = ({
   nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
-  const renderAddress = renderAddressWithNameMap(nameMap);
   const { imgIcon, nameContainer } = useTokenInfo(item, nameMap);
   return (
     <div
@@ -123,10 +120,24 @@ const ERC721TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddress(item.from, item, 'from', false)}
+        {renderAddress(
+          item.from,
+          {
+            nameMap,
+          },
+          'from',
+        )}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
-      <InlineWrapper>{renderAddress(item.to, item, 'to', false)}</InlineWrapper>
+      <InlineWrapper>
+        {renderAddress(
+          item.to,
+          {
+            nameMap,
+          },
+          'to',
+        )}
+      </InlineWrapper>
       <span className="for">{t(translations.transaction.for)}</span>
       <span className="type">1</span>
       <span>{i18n.language === 'zh-CN' ? '个' : null}</span>
@@ -163,7 +174,6 @@ const ERC1155TransferItem = ({
   nameMap?: Record<string, AddressNameMap>;
 }) => {
   const { t, i18n } = useTranslation();
-  const renderAddress = renderAddressWithNameMap(nameMap);
   const { imgIcon, nameContainer, tokenDecimals } = useTokenInfo(item, nameMap);
   return (
     <div
@@ -173,10 +183,24 @@ const ERC1155TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddress(item.from, item, 'from', false)}
+        {renderAddress(
+          item.from,
+          {
+            nameMap,
+          },
+          'from',
+        )}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
-      <InlineWrapper>{renderAddress(item.to, item, 'to', false)}</InlineWrapper>
+      <InlineWrapper>
+        {renderAddress(
+          item.to,
+          {
+            nameMap,
+          },
+          'to',
+        )}
+      </InlineWrapper>
       <span>{imgIcon}</span>
       <span>{nameContainer}</span> <TokenTypeTag type="crc1155" />
       {item.batch?.map((item, i) => {

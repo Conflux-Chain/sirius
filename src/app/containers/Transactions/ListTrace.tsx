@@ -26,7 +26,7 @@ export const ListTrace = ({
     return treeTraceToList(data, showProxyCall);
   }, [data, showProxyCall]);
 
-  const columnsWidth = [350, 150, 250, 250, 120, 150, 50];
+  const columnsWidth = [320, 150, 250, 280, 120, 150, 50];
   const columns = [
     traceColumns.traceType(),
     transactionColunms.method,
@@ -34,9 +34,19 @@ export const ListTrace = ({
     {
       ...tokenColunms.from,
       render: (value, row) =>
-        tokenColunms.from.render(value, row, undefined, false),
+        tokenColunms.from.render(value, row, undefined, {
+          withArrow: false,
+          showVerificationName: true,
+        }),
     },
-    tokenColunms.to,
+    {
+      ...tokenColunms.to,
+      render: (value, row) =>
+        tokenColunms.to.render(value, row, undefined, {
+          withProxy: true,
+          showVerificationName: true,
+        }),
+    },
     transactionColunms.value,
     traceColumns.gas,
     traceColumns.detailExpandColumn({

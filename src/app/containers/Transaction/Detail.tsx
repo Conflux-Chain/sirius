@@ -11,14 +11,8 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
-import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
-import {
-  formatTimeStamp,
-  getPercent,
-  toThousands,
-  isCoreContractAddress,
-  hideInDotNet,
-} from 'utils';
+import { reqTransactionEventlogs } from 'utils/httpRequest';
+import { formatTimeStamp, getPercent, toThousands, hideInDotNet } from 'utils';
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -36,7 +30,6 @@ import _ from 'lodash';
 import imgChevronDown from 'images/chevronDown.png';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { CreateTxNote } from '../Profile/CreateTxNote';
-import { useNametag } from 'utils/hooks/useNametag';
 import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import {
@@ -48,7 +41,7 @@ import dayjs from 'dayjs';
 import { StyledHighlight } from './EventLogs/StyledComponents';
 import { TokenTransfers } from './TokenTransfers';
 import { CFXTransfers } from './CFXTransfers';
-import { getItemByKey } from './utils';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -63,7 +56,6 @@ export const Detail = ({
   const [globalData] = useGlobalData();
   const { t } = useTranslation();
   const [eventlogs, setEventlogs] = useState<any>([]);
-  const [contractInfo, setContractInfo] = useState({});
   const [innerLoading, setInnerLoading] = useState(false);
   const { hash: routeHash } = useParams<{
     hash: string;
@@ -105,12 +97,7 @@ export const Detail = ({
     cfxTransfers,
     nameMap,
   } = transactionDetail;
-  const isContract = useMemo(
-    () => typeof to === 'string' && isCoreContractAddress(to),
-    [to],
-  );
   const [folded, setFolded] = useState(true);
-  const nametags = useNametag([from, to]);
 
   const loading = innerLoading || outerLoading;
   const notEnoughCash = txExecErrorMsg && /^NotEnoughCash/.test(txExecErrorMsg);
@@ -118,79 +105,54 @@ export const Detail = ({
     !notEnoughCash || new BigNumber(gasCharged).isEqualTo(gas);
 
   useEffect(() => {
-    if (!to) return;
+    if (!routeHash) return;
 
-    const fetchTxInfo = async toCheckAddress => {
+    const fetchTxInfo = async () => {
       setInnerLoading(true);
+      let logs = [];
 
       try {
-        const proArr: Promise<any>[] = [];
-        if (isContract) {
-          const contractFields = [
-            'address',
-            'type',
-            'name',
-            'website',
-            'tokenName',
-            'tokenSymbol',
-            'token',
-            'tokenDecimal',
-            'abi',
-            'bytecode',
-            'iconUrl',
-            'sourceCode',
-            'typeCode',
-          ];
+        const proRes = await reqTransactionEventlogs({
+          transactionHash: routeHash,
+          aggregate: false,
+        });
 
-          proArr.push(
-            reqContract({ address: toCheckAddress, fields: contractFields }),
-          );
-        }
-
-        proArr.push(
-          reqTransactionEventlogs({
-            transactionHash: routeHash,
-            aggregate: false,
-          }),
-        );
-
-        const proRes = await Promise.all(proArr);
-
-        if (isContract) {
-          const contractResponse = proRes.shift();
-          setContractInfo(contractResponse);
-        }
-
-        const eventlogsResponse = proRes[0];
-        setEventlogs(eventlogsResponse.list);
+        logs = proRes.list || [];
       } catch (e) {
         console.error('fetchTxInfo error: ', e);
       } finally {
+        setEventlogs(logs);
         setInnerLoading(false);
       }
     };
-    fetchTxInfo(to);
-  }, [to, isContract, routeHash]);
+    fetchTxInfo();
+  }, [routeHash]);
 
   const addressContent = useCallback(
     (isFull = false, address) => {
       const addr = formatAddress(address);
+      const nameInfo = getAddressNameInfo(addr, nameMap);
       return (
         <span>
           <StyledHighlight scope="address" value={addr}>
-            <CoreAddressContainer value={addr} isFull={isFull} />
+            <CoreAddressContainer
+              value={addr}
+              isFull={isFull}
+              verify={nameInfo?.verify}
+            />
           </StyledHighlight>{' '}
-          {nametags[addr]?.nameTag ? `(${nametags[addr]?.nameTag})` : null}{' '}
+          {nameInfo?.nametag ? `(${nameInfo?.nametag})` : null}{' '}
           <CopyButton copyText={addr} />
         </span>
       );
     },
-    [nametags],
+    [nameMap],
   );
 
   const generatedToAddress = () => {
     if (to) {
-      if (isContract) {
+      const toNameInfo = getAddressNameInfo(to, nameMap);
+      if (toNameInfo?.isContract) {
         return (
           <Description
             title={
@@ -201,23 +163,17 @@ export const Detail = ({
           >
             <SkeletonContainer shown={loading}>
               {t(translations.transaction.contract)}{' '}
-              {contractInfo && (
+              {toNameInfo && (
                 <>
-                  {contractInfo['token'] && contractInfo['token']['iconUrl'] ? (
+                  {toNameInfo.tokenIconUrl ? (
                     <img
                       className="logo"
-                      src={
-                        contractInfo['token'] &&
-                        contractInfo['token']['iconUrl']
-                      }
+                      src={toNameInfo.tokenIconUrl}
                       alt="icon"
                     />
                   ) : null}
                   <Link href={`/address/${formatAddress(to)}`}>
-                    {contractInfo['name'] ||
-                      (contractInfo['token'] && contractInfo['token']['name']
-                        ? `${contractInfo['token']['name']}`
-                        : '')}
+                    {toNameInfo.alias || ''}
                   </Link>{' '}
                 </>
               )}
@@ -318,23 +274,28 @@ export const Detail = ({
     for (let i = 0; i < batchCombinedTransferList.length; i++) {
       const transferItem: any = batchCombinedTransferList[i];
 
-      const tokenItem = getItemByKey('token', nameMap, transferItem.address);
+      const nameInfo = getAddressNameInfo(transferItem.address, nameMap);
+      if (nameInfo) {
+        transferListInfo.push({
+          token: {
+            ...nameInfo.originInfo.token,
+            address: transferItem.address,
+          },
+        });
+      }
+    }
 
+    const toNameInfo = getAddressNameInfo(to, nameMap);
+    if (toNameInfo) {
       transferListInfo.push({
-        token: tokenItem,
+        token: {
+          ...toNameInfo.originInfo.token,
+          address: to,
+        },
       });
     }
-
-    if (_.isObject(contractInfo) && !_.isEmpty(contractInfo)) {
-      let contractInfoCopy: any = contractInfo;
-      if (contractInfoCopy.token && contractInfoCopy.address) {
-        contractInfoCopy.token.address = contractInfoCopy.address;
-      }
-
-      transferListInfo.push(contractInfoCopy);
-    }
     return transferListInfo;
-  }, [contractInfo, nameMap, batchCombinedTransferList]);
+  }, [to, nameMap, batchCombinedTransferList]);
 
   const handleFolded = () => setFolded(folded => !folded);
 

@@ -48,7 +48,7 @@ export const posNodeAddress = {
     ) : (
       <PosNodeAddressWrapper>
         <CoreAddressContainer
-          alias={row.byte32NameTagInfo?.nameTag}
+          nametag={row.byte32NameTagInfo?.nameTag}
           value={value}
           hideAliasPrefixInHover
           isPosAddress={true}

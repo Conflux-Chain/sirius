@@ -5,6 +5,7 @@ import { TablePanel } from 'app/components/TablePanelNew';
 import { Title, Footer, TxnSwitcher } from './components';
 import { isAccountAddress } from 'utils';
 import { formatListResponseWithPhishingInfo } from '@cfxjs/sirius-next-common/dist/components/PhishingAddressContainer';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   address: string;
@@ -23,7 +24,9 @@ export const ExcutedTxns = ({ address }: Props) => {
     {
       ...tokenColunms.from,
       render(text, record, index) {
-        return tokenColunms.from.render(text, record, index, false);
+        return tokenColunms.from.render(text, record, index, {
+          withArrow: false,
+        });
       },
     },
     tokenColunms.to,
@@ -110,7 +113,9 @@ export const ExcutedTxns = ({ address }: Props) => {
       rowKey="hash"
       footer={footer}
       title={title}
-      formatResponse={formatListResponseWithPhishingInfo}
+      formatResponse={res =>
+        formatListResponseWithNameMap(formatListResponseWithPhishingInfo(res))
+      }
     ></TablePanel>
   );
 };

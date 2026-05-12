@@ -11,10 +11,11 @@ import { useLocation, useHistory } from 'react-router';
 import queryString from 'query-string';
 import { usePortal } from 'utils/hooks/usePortal';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { formatAddress, getENSInfo } from 'utils';
+import { formatAddress } from 'utils';
 import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 const { ContentWrapper } = tableColumnsUtils;
 
@@ -66,24 +67,22 @@ export function Accounts() {
     accountColunms.rank,
     {
       ...accountColunms.address,
-      render: (value, row: any) => (
-        <AccountWrapper>
-          <CoreAddressContainer
-            value={value}
-            alias={
-              row.name ||
-              (row.tokenInfo && row.tokenInfo.name ? row.tokenInfo.name : null)
-            }
-            isFull={true}
-            isMe={
-              accounts && accounts.length > 0
-                ? formatAddress(accounts[0]) === formatAddress(value)
-                : false
-            }
-            ensInfo={getENSInfo(row)}
-          />
-        </AccountWrapper>
-      ),
+      render: (value, row: any) => {
+        return (
+          <AccountWrapper>
+            <CoreAddressContainer
+              value={value}
+              nameMap={row.nameMap}
+              isFull={true}
+              isMe={
+                accounts && accounts.length > 0
+                  ? formatAddress(accounts[0]) === formatAddress(value)
+                  : false
+              }
+            />
+          </AccountWrapper>
+        );
+      },
     },
     {
       ...accountColunms.balance,
@@ -187,6 +186,7 @@ export function Accounts() {
           rowKey="base32address"
           pagination={false}
           title={tableTitle}
+          formatResponse={formatListResponseWithNameMap}
         ></TablePanelNew>
       </StyledTableWrapper>
     </>

@@ -7,13 +7,14 @@ import { Description } from '@cfxjs/sirius-next-common/dist/components/Descripti
 import { hideInDotNet } from 'utils';
 import { TransactionAction } from '@cfxjs/sirius-next-common/dist/components/TransactionAction/coreTransactionAction';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
-import { reqContract, reqTransactionEventlogs } from 'utils/httpRequest';
+import { reqTransactionEventlogs } from 'utils/httpRequest';
 import _ from 'lodash';
 
 import { GasFee } from './GasFee';
 import { StorageFee } from './StorageFee';
 import { Nonce } from './Nonce';
 import { Status } from './Status';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 export const Overview = ({ data }) => {
   const { t } = useTranslation();
@@ -31,9 +32,9 @@ export const Overview = ({ data }) => {
     txExecErrorInfo,
     from,
     tokenTransferTokenInfo,
+    nameMap,
   } = data;
 
-  const [contractInfo, setContractInfo] = useState({});
   const [loading, setLoading] = useState(true);
   const [eventlogs, setEventlogs] = useState<any>([]);
   const tokenTransferTokenInfoList = useMemo(() => {
@@ -48,61 +49,42 @@ export const Overview = ({ data }) => {
     if (tokenTransferTokenInfoList.length > 0) {
       return tokenTransferTokenInfoList;
     }
-    return [contractInfo];
-  }, [tokenTransferTokenInfoList, contractInfo]);
-  console.log(customInfoList);
+    const nameInfo = getAddressNameInfo(to, nameMap);
+    if (!nameInfo) return [];
+    return [
+      {
+        token: {
+          ...nameInfo.originInfo.token,
+          address: to,
+        },
+      },
+    ];
+  }, [tokenTransferTokenInfoList, to, nameMap]);
+
   useEffect(() => {
     const fetchData = async () => {
+      if (!hash) return;
+      let logs = [];
       try {
-        if (!hash) return;
         setLoading(true);
 
-        const reqArr: Promise<any>[] = [];
-        if (to) {
-          reqArr.push(
-            reqContract({
-              address: to,
-              fields: ['token'],
-            }),
-          );
-        }
+        const res = await reqTransactionEventlogs({
+          transactionHash: hash,
+          aggregate: false,
+        });
 
-        reqArr.push(
-          reqTransactionEventlogs({
-            transactionHash: hash,
-            aggregate: false,
-          }),
-        );
-
-        const res = await Promise.all(reqArr);
-
-        if (
-          to &&
-          res[0] &&
-          _.isObject(res[0].token) &&
-          !_.isEmpty(res[0].token)
-        ) {
-          setContractInfo({
-            token: { address: res[0].address, ...res[0].token },
-          });
-        }
-
-        const eventlogsIndex = to ? 1 : 0;
-        if (
-          res[eventlogsIndex] &&
-          res[eventlogsIndex].list &&
-          res[eventlogsIndex].list.length > 0
-        ) {
-          setEventlogs(res[eventlogsIndex].list);
+        if (res && res.list && res.list.length > 0) {
+          logs = res.list;
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('fetch event logs error: ', error);
       } finally {
+        setEventlogs(logs);
         setLoading(false);
       }
     };
     fetchData();
-  }, [to, hash]);
+  }, [hash]);
 
   const transactionAction = TransactionAction({
     transaction: data,
