@@ -9,7 +9,7 @@ import iconInfo from 'images/info.svg';
 import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';
 import lodash from 'lodash';
 import { AddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/request.types';
-import { renderAddressWithNameMap } from 'utils/tableColumns/utils';
+import { renderAddress } from 'utils/tableColumns/utils';
 
 interface CfxTransferItem {
   from: string;
@@ -23,13 +23,13 @@ const From: React.FC<{
   item: CfxTransferItem;
   nameMap?: Record<string, AddressNameMap>;
 }> = ({ item, nameMap }) => {
-  return renderAddressWithNameMap(item.from, { nameMap }, 'from', false);
+  return renderAddress(item.from, { nameMap }, 'from');
 };
 const To: React.FC<{
   item: CfxTransferItem;
   nameMap?: Record<string, AddressNameMap>;
 }> = ({ item, nameMap }) => {
-  return renderAddressWithNameMap(item.to, { nameMap }, 'to', false);
+  return renderAddress(item.to, { nameMap }, 'to');
 };
 const Amount: React.FC<{ value: string }> = ({ value }) => {
   const amount = fromDripToCfx(value, true);

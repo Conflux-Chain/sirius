@@ -14,10 +14,7 @@ import imgArrow from 'images/token/arrow.svg';
 import imgOut from 'images/token/out.svg';
 import imgIn from 'images/token/in.svg';
 import { formatAddress } from 'utils';
-import {
-  getAddressNameInfo,
-  getPocketAlias,
-} from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
+import { getPocketAlias } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 import { ProxyContractAddress } from '@cfxjs/sirius-next-common/dist/components/ProxyContractAddress';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
@@ -251,11 +248,19 @@ export const getFromType = (value: string): GetFromTypeReturnValueType => {
     : 'in';
 };
 
-export const renderAddressWithNameMap = (
+export const renderAddress = (
   value,
   row,
   type: 'to' | 'from',
-  withArrow = true,
+  {
+    withArrow = false,
+    withProxy = false,
+    showVerificationName = false,
+  }: {
+    withArrow?: boolean;
+    withProxy?: boolean;
+    showVerificationName?: boolean;
+  } = {},
 ) => {
   let address = '';
 
@@ -271,46 +276,15 @@ export const renderAddressWithNameMap = (
     window.location.search,
   );
   const filter = (accountAddress as string) || '';
-  // let alias = '';
 
-  // dummy address, show name only
-  if (row[`${type}ContractInfo`]?.isVirtual) {
-    const name = row[`${type}ContractInfo`].name;
-    return (
-      <ValueHighlight scope="address" value={name}>
-        {name}
-      </ValueHighlight>
-    );
-  }
-  const { alias, verify, nametag, ensName, isEspaceAddress } =
-    getAddressNameInfo(value, row.nameMap) || {};
-  const nametagInfo = nametag
-    ? {
-        [value]: {
-          address: value,
-          nametag: nametag,
-        },
-      }
-    : undefined;
-  const ensInfo = ensName
-    ? {
-        [value]: {
-          address: value,
-          name: ensName,
-        },
-      }
-    : undefined;
-
-  if (type === 'to' && row.proxy) {
+  if (type === 'to' && withProxy && row.proxy) {
     return (
       <ValueHighlight scope="address" value={value}>
         <ProxyContractAddress
           value={value}
-          alias={alias}
-          verify={verify}
+          nameMap={row.nameMap}
           proxy={row.proxy}
-          ensInfo={ensInfo}
-          nametagInfo={nametagInfo}
+          showVerificationName={showVerificationName}
         />
       </ValueHighlight>
     );
@@ -327,15 +301,12 @@ export const renderAddressWithNameMap = (
       <ValueHighlight scope="address" value={value}>
         <CoreAddressContainer
           value={value}
-          alias={pocket ?? alias}
+          nameMap={row.nameMap}
+          innerName={pocket}
           link={!pocket && formatAddress(filter) !== formatAddress(value)}
           contractCreated={row.contractCreated}
-          verify={verify}
-          isEspaceAddress={isEspaceAddress}
-          ensInfo={ensInfo}
-          nametagInfo={nametagInfo}
           isFull={!!pocket}
-          hideAliasPrefixInHover={!!pocket}
+          showVerificationName={showVerificationName}
         />
       </ValueHighlight>
       {type === 'from' && withArrow && (

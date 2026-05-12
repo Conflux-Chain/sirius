@@ -16,7 +16,6 @@ import { monospaceFont } from 'styles/variable';
 import { AccountWrapper } from 'utils/tableColumns/token';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
-import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 const { ContentWrapper } = tableColumnsUtils;
 
@@ -69,38 +68,17 @@ export function Accounts() {
     {
       ...accountColunms.address,
       render: (value, row: any) => {
-        const { alias, verify, nametag, ensName } =
-          getAddressNameInfo(value, row.nameMap) || {};
-        const nametagInfo = nametag
-          ? {
-              [value]: {
-                address: value,
-                nametag: nametag,
-              },
-            }
-          : undefined;
-        const ensInfo = ensName
-          ? {
-              [value]: {
-                address: value,
-                name: ensName,
-              },
-            }
-          : undefined;
         return (
           <AccountWrapper>
             <CoreAddressContainer
               value={value}
-              alias={alias}
-              verify={verify}
+              nameMap={row.nameMap}
               isFull={true}
               isMe={
                 accounts && accounts.length > 0
                   ? formatAddress(accounts[0]) === formatAddress(value)
                   : false
               }
-              nametagInfo={nametagInfo}
-              ensInfo={ensInfo}
             />
           </AccountWrapper>
         );

@@ -13,7 +13,7 @@ import { NFTPreview } from 'app/components/NFTPreview';
 import { formatAddress, isZeroAddress, formatBalance } from 'utils';
 import { DefaultTokenIcon } from '@cfxjs/sirius-next-common/dist/components/Icons';
 import { AddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/request.types';
-import { renderAddressWithNameMap } from 'utils/tableColumns/utils';
+import { renderAddress } from 'utils/tableColumns/utils';
 import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 interface TokenTransferItem {
@@ -85,12 +85,10 @@ const ERC20TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddressWithNameMap(item.from, { nameMap }, 'from', false)}
+        {renderAddress(item.from, { nameMap }, 'from')}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
-      <InlineWrapper>
-        {renderAddressWithNameMap(item.to, { nameMap }, 'to', false)}
-      </InlineWrapper>
+      <InlineWrapper>{renderAddress(item.to, { nameMap }, 'to')}</InlineWrapper>
       <span className="for">{t(translations.transaction.for)}</span>
       <span className="value">
         {lodash.isNil(tokenDecimals)
@@ -122,24 +120,22 @@ const ERC721TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddressWithNameMap(
+        {renderAddress(
           item.from,
           {
             nameMap,
           },
           'from',
-          false,
         )}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
       <InlineWrapper>
-        {renderAddressWithNameMap(
+        {renderAddress(
           item.to,
           {
             nameMap,
           },
           'to',
-          false,
         )}
       </InlineWrapper>
       <span className="for">{t(translations.transaction.for)}</span>
@@ -187,24 +183,22 @@ const ERC1155TransferItem = ({
       <span className="index">{index + 1}. </span>
       <span className="from">{t(translations.transaction.from)}</span>
       <InlineWrapper>
-        {renderAddressWithNameMap(
+        {renderAddress(
           item.from,
           {
             nameMap,
           },
           'from',
-          false,
         )}
       </InlineWrapper>
       <span className="to">{t(translations.transaction.to)}</span>
       <InlineWrapper>
-        {renderAddressWithNameMap(
+        {renderAddress(
           item.to,
           {
             nameMap,
           },
           'to',
-          false,
         )}
       </InlineWrapper>
       <span>{imgIcon}</span>

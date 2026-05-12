@@ -20,7 +20,9 @@ export const CRC721Txns = ({ address }: Props) => {
     {
       ...tokenColunms.from,
       render(text, record, index) {
-        return tokenColunms.from.render(text, record, index, false);
+        return tokenColunms.from.render(text, record, index, {
+          withArrow: false,
+        });
       },
     },
     tokenColunms.to,

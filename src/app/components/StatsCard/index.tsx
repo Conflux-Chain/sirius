@@ -403,24 +403,6 @@ export const StatsCard = ({
               );
               break;
           }
-          const { alias, verify, nametag, ensName } =
-            getAddressNameInfo(d.base32, d.nameMap) || {};
-          const nametagInfo = nametag
-            ? {
-                [d.base32]: {
-                  address: d.base32,
-                  nametag: nametag,
-                },
-              }
-            : undefined;
-          const ensInfo = ensName
-            ? {
-                [d.base32]: {
-                  address: d.base32,
-                  name: ensName,
-                },
-              }
-            : undefined;
           return (
             <tr key={i}>
               <td>{i + 1}</td>
@@ -428,15 +410,12 @@ export const StatsCard = ({
                 <CoreAddressContainer
                   maxWidth={200}
                   value={d.base32}
-                  alias={alias}
+                  nameMap={d.nameMap}
                   isMe={
                     accounts && accounts.length > 0
                       ? formatAddress(accounts[0]) === formatAddress(d.base32)
                       : false
                   }
-                  verify={verify}
-                  nametagInfo={nametagInfo}
-                  ensInfo={ensInfo}
                 />
               </td>
               <td className="text-right">
@@ -450,24 +429,14 @@ export const StatsCard = ({
         });
       case 'token':
         return data.map((d, i) => {
-          const { originInfo, nametag, ensName, alias } =
-            getAddressNameInfo(d.base32address, d.nameMap) || {};
-          const nametagInfo = nametag
-            ? {
-                [d.base32address]: {
-                  address: d.base32address,
-                  nametag: nametag,
-                },
-              }
-            : undefined;
-          const ensInfo = ensName
-            ? {
-                [d.base32address]: {
-                  address: d.base32address,
-                  name: ensName,
-                },
-              }
-            : undefined;
+          const {
+            originInfo,
+            nametag,
+            ensName,
+            tokenName,
+            contractName,
+            verificationName,
+          } = getAddressNameInfo(d.base32address, d.nameMap) || {};
           return (
             <tr key={i}>
               <td>{i + 1}</td>
@@ -475,9 +444,11 @@ export const StatsCard = ({
                 {originInfo?.token ? (
                   token.render({
                     ...originInfo.token,
-                    alias,
-                    nametagInfo,
-                    ensInfo,
+                    tokenName,
+                    contractName,
+                    verificationName,
+                    ensName,
+                    nametag,
                   })
                 ) : (
                   <CoreAddressContainer

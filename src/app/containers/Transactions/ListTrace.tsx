@@ -34,9 +34,19 @@ export const ListTrace = ({
     {
       ...tokenColunms.from,
       render: (value, row) =>
-        tokenColunms.from.render(value, row, undefined, false),
+        tokenColunms.from.render(value, row, undefined, {
+          withArrow: false,
+          showVerificationName: true,
+        }),
     },
-    tokenColunms.to,
+    {
+      ...tokenColunms.to,
+      render: (value, row) =>
+        tokenColunms.to.render(value, row, undefined, {
+          withProxy: true,
+          showVerificationName: true,
+        }),
+    },
     transactionColunms.value,
     traceColumns.gas,
     traceColumns.detailExpandColumn({

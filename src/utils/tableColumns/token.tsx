@@ -20,7 +20,7 @@ import {
   ContentWrapper,
   fromTypeInfo,
   getFromType,
-  renderAddressWithNameMap,
+  renderAddress,
 } from './utils';
 import BigNumber from 'bignumber.js';
 import { CFX_TOKEN_TYPES } from '../constants';
@@ -68,10 +68,13 @@ export const token = {
                 ) : (
                   <CoreAddressContainer
                     value={row?.address}
-                    alias={row?.alias}
+                    nameMap={row?.nameMap}
+                    tokenName={row?.tokenName}
+                    contractName={row?.contractName}
+                    verificationName={row?.verificationName}
                     showIcon={false}
-                    ensInfo={row?.ensInfo}
-                    nametagInfo={row?.nametagInfo}
+                    ensName={row?.ensName}
+                    nametag={row?.nametag}
                   />
                 )}
               </Text>
@@ -88,22 +91,6 @@ export const Token2 = ({ row }) => {
   const address = row?.address;
   const { tokenIconUrl, tokenName, tokenSymbol, nametag, ensName, verify } =
     getAddressNameInfo(address, row.nameMap) || {};
-  const nametagInfo = nametag
-    ? {
-        [address]: {
-          address: address,
-          nametag: nametag,
-        },
-      }
-    : undefined;
-  const ensInfo = ensName
-    ? {
-        [address]: {
-          address: address,
-          name: ensName,
-        },
-      }
-    : undefined;
   return (
     <StyledIconWrapper>
       {address
@@ -133,10 +120,10 @@ export const Token2 = ({ row }) => {
               <StyledToken2NotAvailableWrapper>
                 <CoreAddressContainer
                   value={address}
-                  alias={t(translations.general.notAvailable)}
+                  tokenName={t(translations.general.notAvailable)}
                   showIcon={false}
-                  ensInfo={ensInfo}
-                  nametagInfo={nametagInfo}
+                  ensName={ensName}
+                  nametag={nametag}
                   verify={verify}
                 />
                 &nbsp;
@@ -391,13 +378,23 @@ export const to = {
   ),
   dataIndex: 'to',
   key: 'to',
-  render: (value, row) => {
+  render: (
+    value,
+    row,
+    _,
+    { withProxy = false, showVerificationName = false } = {},
+  ) => {
     return (
       <PhishingAddressContainer
         phishingData={row.toPhishingData}
         address={value}
       >
-        <FromWrap>{renderAddressWithNameMap(value, row, 'to', false)}</FromWrap>
+        <FromWrap>
+          {renderAddress(value, row, 'to', {
+            withProxy,
+            showVerificationName,
+          })}
+        </FromWrap>
       </PhishingAddressContainer>
     );
   },
@@ -410,14 +407,22 @@ export const from = {
   ),
   dataIndex: 'from',
   key: 'from',
-  render: (value, row, _, withArrow = true) => {
+  render: (
+    value,
+    row,
+    _,
+    { withArrow = true, showVerificationName = false } = {},
+  ) => {
     return (
       <PhishingAddressContainer
         phishingData={row.fromPhishingData}
         address={value}
       >
         <FromWrap>
-          {renderAddressWithNameMap(value, row, 'from', withArrow)}
+          {renderAddress(value, row, 'from', {
+            withArrow,
+            showVerificationName,
+          })}
         </FromWrap>
       </PhishingAddressContainer>
     );
@@ -446,24 +451,6 @@ export const account = (token: string) => ({
   dataIndex: 'account',
   key: 'account',
   render: (value, row) => {
-    const { alias, verify, nametag, ensName } =
-      getAddressNameInfo(value.address, row.nameMap) || {};
-    const nametagInfo = nametag
-      ? {
-          [value.address]: {
-            address: value.address,
-            nametag: nametag,
-          },
-        }
-      : undefined;
-    const ensInfo = ensName
-      ? {
-          [value.address]: {
-            address: value.address,
-            name: ensName,
-          },
-        }
-      : undefined;
     return (
       <AccountWrapper>
         <Link
@@ -471,12 +458,9 @@ export const account = (token: string) => ({
           className="link-wrapper"
         >
           <CoreAddressContainer
+            nameMap={row.nameMap}
             value={value.address}
-            alias={alias}
             isFull={true}
-            ensInfo={ensInfo}
-            nametagInfo={nametagInfo}
-            verify={verify}
             link={false}
           />
         </Link>
@@ -749,33 +733,12 @@ export const NFTOwner = {
   dataIndex: 'owner',
   key: 'owner',
   render: (value, row) => {
-    const { alias, verify, nametag, ensName } =
-      getAddressNameInfo(value.address, row.nameMap) || {};
-    const nametagInfo = nametag
-      ? {
-          [value.address]: {
-            address: value.address,
-            nametag: nametag,
-          },
-        }
-      : undefined;
-    const ensInfo = ensName
-      ? {
-          [value.address]: {
-            address: value.address,
-            name: ensName,
-          },
-        }
-      : undefined;
     return (
       <AccountWrapper>
         <CoreAddressContainer
           value={value}
-          alias={alias}
+          nameMap={row.nameMap}
           isFull={true}
-          verify={verify}
-          ensInfo={ensInfo}
-          nametagInfo={nametagInfo}
         />
       </AccountWrapper>
     );

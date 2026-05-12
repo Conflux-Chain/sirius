@@ -7,7 +7,7 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { Status } from 'app/components/TxnComponents';
 import { toThousands, roundToFixedPrecision } from 'utils';
-import { ColumnAge, renderAddressWithNameMap } from './utils';
+import { ColumnAge, renderAddress } from './utils';
 import { reqTransactionDetail } from 'utils/httpRequest';
 import { Popover } from '@cfxjs/antd';
 import { Overview } from 'app/components/TxnComponents';
@@ -159,7 +159,7 @@ export const from = {
   dataIndex: 'from',
   key: 'from',
   width: 1,
-  render: (value, row) => renderAddressWithNameMap(value, row, 'from', false),
+  render: (value, row) => renderAddress(value, row, 'from'),
 };
 
 export const to = {
@@ -171,7 +171,7 @@ export const to = {
   dataIndex: 'to',
   key: 'to',
   width: 1,
-  render: (value, row) => renderAddressWithNameMap(value, row, 'to', false),
+  render: (value, row) => renderAddress(value, row, 'to'),
 };
 
 export const value = {

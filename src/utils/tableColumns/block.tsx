@@ -90,28 +90,12 @@ export const miner = {
   width: 1,
   render: (value, row) => {
     const { nametag, ensName } = getAddressNameInfo(value, row.nameMap) || {};
-    const nametagInfo = nametag
-      ? {
-          [value]: {
-            address: value,
-            nametag: nametag,
-          },
-        }
-      : undefined;
-    const ensInfo = ensName
-      ? {
-          [value]: {
-            address: value,
-            name: ensName,
-          },
-        }
-      : undefined;
     return (
       <ValueHighlight scope="address" value={value}>
         <CoreAddressContainer
           value={value}
-          ensInfo={ensInfo}
-          nametagInfo={nametagInfo}
+          nametag={nametag}
+          ensName={ensName}
         />
       </ValueHighlight>
     );

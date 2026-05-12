@@ -51,27 +51,11 @@ export const contract = {
   render: (value, row) => {
     const { verify, nametag, ensName } =
       getAddressNameInfo(value, row.nameMap) || {};
-    const nametagInfo = nametag
-      ? {
-          [value]: {
-            address: value,
-            nametag: nametag,
-          },
-        }
-      : undefined;
-    const ensInfo = ensName
-      ? {
-          [value]: {
-            address: value,
-            name: ensName,
-          },
-        }
-      : undefined;
     return (
       <CoreAddressContainer
         value={value}
-        ensInfo={ensInfo}
-        nametagInfo={nametagInfo}
+        ensName={ensName}
+        nametag={nametag}
         verify={verify}
       />
     );
