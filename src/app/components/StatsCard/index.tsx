@@ -444,6 +444,7 @@ export const StatsCard = ({
                 {originInfo?.token ? (
                   token.render({
                     ...originInfo.token,
+                    address: d.base32address,
                     tokenName,
                     contractName,
                     verificationName,
