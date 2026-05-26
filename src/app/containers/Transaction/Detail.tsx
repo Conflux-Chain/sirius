@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import styled from 'styled-components';
@@ -11,7 +11,6 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
-import { reqTransactionEventlogs } from 'utils/httpRequest';
 import { formatTimeStamp, getPercent, toThousands, hideInDotNet } from 'utils';
 import { formatAddress } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
@@ -42,6 +41,7 @@ import { StyledHighlight } from './EventLogs/StyledComponents';
 import { TokenTransfers } from './TokenTransfers';
 import { CFXTransfers } from './CFXTransfers';
 import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
+import { useTxEventLogs } from 'utils/hooks/useTxEventLogs';
 
 const getStorageFee = byteSize =>
   toThousands(new BigNumber(byteSize).dividedBy(1024).toFixed(2));
@@ -55,8 +55,6 @@ export const Detail = ({
   const [visible, setVisible] = useState(false);
   const [globalData] = useGlobalData();
   const { t } = useTranslation();
-  const [eventlogs, setEventlogs] = useState<any>([]);
-  const [innerLoading, setInnerLoading] = useState(false);
   const { hash: routeHash } = useParams<{
     hash: string;
   }>();
@@ -97,36 +95,13 @@ export const Detail = ({
     cfxTransfers,
     nameMap,
   } = transactionDetail;
+  const { data: eventlogs, isLoading: logLoading } = useTxEventLogs(routeHash);
   const [folded, setFolded] = useState(true);
 
-  const loading = innerLoading || outerLoading;
+  const loading = logLoading || outerLoading;
   const notEnoughCash = txExecErrorMsg && /^NotEnoughCash/.test(txExecErrorMsg);
   const isValidGasCharged =
     !notEnoughCash || new BigNumber(gasCharged).isEqualTo(gas);
-
-  useEffect(() => {
-    if (!routeHash) return;
-
-    const fetchTxInfo = async () => {
-      setInnerLoading(true);
-      let logs = [];
-
-      try {
-        const proRes = await reqTransactionEventlogs({
-          transactionHash: routeHash,
-          aggregate: false,
-        });
-
-        logs = proRes.list || [];
-      } catch (e) {
-        console.error('fetchTxInfo error: ', e);
-      } finally {
-        setEventlogs(logs);
-        setInnerLoading(false);
-      }
-    };
-    fetchTxInfo();
-  }, [routeHash]);
 
   const addressContent = useCallback(
     (isFull = false, address) => {
@@ -327,7 +302,7 @@ export const Detail = ({
     () =>
       TransactionAction({
         transaction: transactionDetail,
-        event: eventlogs,
+        event: eventlogs || [],
         customInfo: transferToken,
       }),
     [transactionDetail, eventlogs, transferToken],

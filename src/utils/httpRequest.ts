@@ -83,20 +83,6 @@ export const reqContract = fetchWithCache(
   },
 );
 
-export const reqContractAndToken = fetchWithCache(
-  (param?: object, extra?: object) => {
-    return sendRequest({
-      url: `/contract-and-token`,
-      query: param,
-      ...extra,
-    });
-  },
-  {
-    key: 'contract-and-token',
-    maxAge: 1000 * 60 * 60,
-  },
-);
-
 export const reqTokenList = (param?: object, extra?: object) => {
   return sendRequest({
     url: `/token`,
