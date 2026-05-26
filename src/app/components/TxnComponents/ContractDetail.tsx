@@ -2,24 +2,26 @@ import React from 'react';
 import { ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { formatAddress } from 'utils';
+import { useAddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAddressNameMap';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
-interface Props {
-  info: {
-    contract: any;
-    token: any;
-  };
-}
-
-export const ContractDetail = ({ info }) => {
-  if (info) {
-    const { contract, token } = info;
+export const ContractDetail = ({ address }: { address: string }) => {
+  const { data: nameMap } = useAddressNameMap([address]);
+  const nameInfo = getAddressNameInfo(address, nameMap);
+  if (nameInfo) {
+    const {
+      tokenName,
+      tokenSymbol,
+      tokenIconUrl,
+      contractName,
+      verificationName,
+    } = nameInfo;
     let child: React.ReactNode = null;
 
-    if (token && (token.name || token.symbol)) {
-      const name = token['name'] || '--';
-      let symbol = token['symbol'];
-      symbol = `(${symbol ? symbol : '--'})`;
-      const icon = token['iconUrl'] || ICON_DEFAULT_TOKEN;
+    if (tokenName || tokenSymbol) {
+      const name = tokenName || '--';
+      const symbol = `(${tokenSymbol ? tokenSymbol : '--'})`;
+      const icon = tokenIconUrl || ICON_DEFAULT_TOKEN;
 
       child = (
         <>
@@ -31,14 +33,14 @@ export const ContractDetail = ({ info }) => {
               marginRight: 2,
             }}
           />
-          <Link href={`/token/${formatAddress(token.address)}`}>
+          <Link href={`/token/${formatAddress(address)}`}>
             {name} {symbol}
           </Link>{' '}
         </>
       );
-    } else if (contract && contract.name) {
-      const name = contract['name'];
-      const icon = (token && token['iconUrl']) || ICON_DEFAULT_TOKEN;
+    } else if (contractName || verificationName) {
+      const name = contractName || verificationName;
+      const icon = tokenIconUrl || ICON_DEFAULT_TOKEN;
 
       child = (
         <>
@@ -51,9 +53,7 @@ export const ContractDetail = ({ info }) => {
               marginRight: 2,
             }}
           />
-          <Link href={`/address/${formatAddress(contract.address)}`}>
-            {name}
-          </Link>{' '}
+          <Link href={`/address/${formatAddress(address)}`}>{name}</Link>{' '}
         </>
       );
     }
@@ -61,9 +61,4 @@ export const ContractDetail = ({ info }) => {
     return <> {child}</>;
   }
   return null;
-};
-
-ContractDetail.defaultProps = {
-  showTokenInfo: true,
-  showContractInfo: false,
 };

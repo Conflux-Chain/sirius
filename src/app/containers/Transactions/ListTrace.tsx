@@ -85,7 +85,7 @@ export const ListTrace = ({
                     outcome={record.result?.outcome}
                     isContractCreated={!!record.contractCreated}
                     space="core"
-                    proxy={record.proxy}
+                    implementation={record.proxy?.implAddress}
                   />
                 )}
               </div>

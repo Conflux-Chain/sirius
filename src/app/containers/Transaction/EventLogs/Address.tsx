@@ -4,13 +4,13 @@ import { formatAddress } from 'utils';
 import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
 import { StyledHighlight } from './StyledComponents';
 
-export const Address = ({ address, contract }) => {
+export const Address = ({ address }) => {
   return (
     <>
       <StyledHighlight scope="address" value={address}>
         <Link href={`/address/${address}`}>{formatAddress(address)}</Link>
       </StyledHighlight>
-      <ContractDetail info={contract} />
+      <ContractDetail address={address} />
     </>
   );
 };
