@@ -26,7 +26,7 @@ export const TreeTrace = ({
     return showProxyCall ? data : hideProxyCallInTreeTrace(data);
   }, [data, showProxyCall]);
 
-  const columnsWidth = [150, 210, 140, 250, 250, 120, 150, 50];
+  const columnsWidth = [120, 200, 150, 250, 280, 120, 150, 50];
   const columns = [
     traceColumns.index({
       expandedRowKeys: treeExpandedKeys,
@@ -38,9 +38,19 @@ export const TreeTrace = ({
     {
       ...tokenColunms.from,
       render: (value, row, index) =>
-        tokenColunms.from.render(value, row, undefined, false),
+        tokenColunms.from.render(value, row, undefined, {
+          withArrow: false,
+          showVerificationName: true,
+        }),
     },
-    tokenColunms.to,
+    {
+      ...tokenColunms.to,
+      render: (value, row) =>
+        tokenColunms.to.render(value, row, undefined, {
+          withProxy: true,
+          showVerificationName: true,
+        }),
+    },
     transactionColunms.value,
     traceColumns.gas,
     traceColumns.detailExpandColumn({

@@ -1,14 +1,8 @@
 import React from 'react';
 import { Translation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import {
-  toThousands,
-  formatNumber,
-  getENSInfo,
-  getNametagInfo,
-} from '../../utils/';
+import { toThousands, formatNumber } from '../../utils/';
 import { ContentWrapper } from './utils';
-import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 
 export const rank = {
   title: (
@@ -24,15 +18,6 @@ export const address = {
   ),
   dataIndex: 'base32address',
   key: 'base32address',
-  render: (value, row: any) => (
-    <CoreAddressContainer
-      value={value}
-      alias={row.name}
-      isFull={true}
-      ensInfo={getENSInfo(row)}
-      nametagInfo={getNametagInfo(row)}
-    />
-  ),
 };
 
 export const balance = {

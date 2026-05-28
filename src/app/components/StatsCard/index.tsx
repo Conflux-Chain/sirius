@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
-import { reqTokenList, reqTopStatistics } from '../../../utils/httpRequest';
+import { reqTopStatistics } from '../../../utils/httpRequest';
 import { formatNumber, hideInDotNet, toThousands } from '../../../utils';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { formatAddress } from '../../../utils';
@@ -23,6 +23,8 @@ import {
   fromDripToCfx,
   fromDripToGdrip,
 } from '@cfxjs/sirius-next-common/dist/utils';
+import { enhanceDataWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 export enum StatsType {
   overviewTransactions = 'overviewTransactions',
@@ -313,61 +315,16 @@ export const StatsCard = ({
         action,
       })
         .then((res = {}) => {
-          if (Object.keys(res)) {
-            if (category === 'token') {
-              // inject token info
-              let tokenAddress;
-              let sourceList = res.list;
-
-              tokenAddress = sourceList.reduce((acc, item) => {
-                if (item.base32address && !acc.includes(item.base32address))
-                  acc.push(item.base32address);
-                return acc;
-              }, []);
-
-              if (tokenAddress.length > 0) {
-                reqTokenList({
-                  addressArray: tokenAddress,
-                  fields: 'iconUrl',
-                })
-                  .then(tokens => {
-                    if (tokens && tokens.list) {
-                      const listWithTokenInfo = sourceList.map(item => {
-                        if (tokenAddress.includes(item.base32address)) {
-                          const tokenInfo = tokens.list.find(
-                            t =>
-                              formatAddress(t.address) ===
-                              formatAddress(item.base32address),
-                          );
-                          if (tokenInfo)
-                            return { ...item, token: { ...tokenInfo } };
-                        }
-                        return item;
-                      });
-                      setData(listWithTokenInfo);
-                    } else {
-                      setData(sourceList);
-                    }
-                  })
-                  .catch(e => {
-                    console.error(e);
-                    setData(sourceList);
-                  })
-                  .finally(() => {
-                    setLoadingTokenInfo(false);
-                  });
-              }
-            } else {
-              setData(res.list);
-              setLoadingTokenInfo(false);
-              if (category === 'miner' && res.allDifficulty) {
-                // calc proportion of hashRate
-                setTotalDifficulty(res.allDifficulty + '');
-              }
-              if (category === 'network' && res.totalGas) {
-                // calc proportion of gas used
-                setTotalGas(+(res.totalGas || Infinity));
-              }
+          if (res && res.list) {
+            setData(enhanceDataWithNameMap(res.list, res.nameMap));
+            setLoadingTokenInfo(false);
+            if (category === 'miner' && res.allDifficulty) {
+              // calc proportion of hashRate
+              setTotalDifficulty(res.allDifficulty + '');
+            }
+            if (category === 'network' && res.totalGas) {
+              // calc proportion of gas used
+              setTotalGas(+(res.totalGas || Infinity));
             }
           } else {
             console.error(res);
@@ -446,10 +403,6 @@ export const StatsCard = ({
               );
               break;
           }
-          let verify = false;
-          if (d.contractInfo && d.contractInfo.verify) {
-            verify = d.contractInfo.verify.result !== 0;
-          }
           return (
             <tr key={i}>
               <td>{i + 1}</td>
@@ -457,19 +410,12 @@ export const StatsCard = ({
                 <CoreAddressContainer
                   maxWidth={200}
                   value={d.base32}
-                  alias={
-                    d.tokenInfo && d.tokenInfo.name
-                      ? d.tokenInfo.name
-                      : d.contractInfo && d.contractInfo.name
-                      ? d.contractInfo.name
-                      : null
-                  }
+                  nameMap={d.nameMap}
                   isMe={
                     accounts && accounts.length > 0
                       ? formatAddress(accounts[0]) === formatAddress(d.base32)
                       : false
                   }
-                  verify={verify}
                 />
               </td>
               <td className="text-right">
@@ -482,27 +428,45 @@ export const StatsCard = ({
           );
         });
       case 'token':
-        return data.map((d, i) => (
-          <tr key={i}>
-            <td>{i + 1}</td>
-            <td className="address">
-              {d.token ? (
-                token.render(d.token)
-              ) : (
-                <CoreAddressContainer
-                  value={d.base32address}
-                  isMe={
-                    accounts && accounts.length > 0
-                      ? formatAddress(accounts[0]) ===
-                        formatAddress(d.base32address)
-                      : false
-                  }
-                />
-              )}
-            </td>
-            <td className="text-right">{intValue(d.valueN)}</td>
-          </tr>
-        ));
+        return data.map((d, i) => {
+          const {
+            originInfo,
+            nametag,
+            ensName,
+            tokenName,
+            contractName,
+            verificationName,
+          } = getAddressNameInfo(d.base32address, d.nameMap) || {};
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td className="address">
+                {originInfo?.token ? (
+                  token.render({
+                    ...originInfo.token,
+                    address: d.base32address,
+                    tokenName,
+                    contractName,
+                    verificationName,
+                    ensName,
+                    nametag,
+                  })
+                ) : (
+                  <CoreAddressContainer
+                    value={d.base32address}
+                    isMe={
+                      accounts && accounts.length > 0
+                        ? formatAddress(accounts[0]) ===
+                          formatAddress(d.base32address)
+                        : false
+                    }
+                  />
+                )}
+              </td>
+              <td className="text-right">{intValue(d.valueN)}</td>
+            </tr>
+          );
+        });
       case 'miner':
         return data.map((d, i) => (
           <tr key={i}>

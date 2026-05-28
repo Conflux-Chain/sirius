@@ -9,8 +9,6 @@ import {
   formatNumber,
   getPercent,
   toThousands,
-  getENSInfo,
-  getNametagInfo,
   roundToFixedPrecision,
   getCoreGasTargetUsedPercent,
 } from 'utils';
@@ -25,6 +23,7 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { HIDE_IN_DOT_NET } from 'utils/constants';
+import { getAddressNameInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
 
 export const epoch = {
   title: (
@@ -89,15 +88,18 @@ export const miner = {
   dataIndex: 'miner',
   key: 'miner',
   width: 1,
-  render: (value, row) => (
-    <ValueHighlight scope="address" value={value}>
-      <CoreAddressContainer
-        value={value}
-        ensInfo={getENSInfo(row)}
-        nametagInfo={getNametagInfo(row)}
-      />
-    </ValueHighlight>
-  ),
+  render: (value, row) => {
+    const { nametag, ensName } = getAddressNameInfo(value, row.nameMap) || {};
+    return (
+      <ValueHighlight scope="address" value={value}>
+        <CoreAddressContainer
+          value={value}
+          nametag={nametag}
+          ensName={ensName}
+        />
+      </ValueHighlight>
+    );
+  },
 };
 
 export const avgGasPrice = {

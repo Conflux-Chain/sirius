@@ -2,6 +2,7 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { tokenColunms, utils } from 'utils/tableColumns';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   address: string;
@@ -47,6 +48,7 @@ export const Holders = ({
       url={url}
       columns={columns}
       rowKey={record => record.account.address}
+      formatResponse={formatListResponseWithNameMap}
     ></TablePanelNew>
   );
 };

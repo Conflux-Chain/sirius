@@ -2,6 +2,7 @@ import React from 'react';
 import { TablePanel as TablePanelNew } from 'app/components/TablePanelNew';
 import { blockColunms } from 'utils/tableColumns';
 import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
+import { formatListResponseWithNameMap } from '@cfxjs/sirius-next-common/dist/utils/hooks/useEnhanceDataWithNameMap';
 
 interface Props {
   url: string;
@@ -31,6 +32,7 @@ export const Blocks = ({ url }: Props) => {
       rowKey="hash"
       pagination={false}
       hideDefaultTitle={true}
+      formatResponse={formatListResponseWithNameMap}
     ></TablePanelNew>
   );
 };

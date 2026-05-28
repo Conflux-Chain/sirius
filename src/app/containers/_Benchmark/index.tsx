@@ -38,7 +38,6 @@ export default function ScanBenchmark() {
         component={CoreAddressContainer}
         componentProps={{
           value: '0x8f3f525d17159351e4b34fe766ef139470da0b02',
-          alias: '',
         }}
         onComplete={handleComplete}
         ref={ref}

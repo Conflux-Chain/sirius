@@ -6,7 +6,6 @@ import {
   getCurrencySymbol,
   HIDE_IN_DOT_NET,
 } from 'utils/constants';
-import { Nametag } from 'utils/hooks/useNametag';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 
 import {
@@ -235,125 +234,6 @@ export const getChartsSubTitle = (title: string): string => {
   } else {
     return title;
   }
-};
-export interface ENSInfoItemType {
-  address: string;
-  name: string;
-}
-interface ENSInfoType {
-  [k: string]: ENSInfoItemType;
-}
-type ResponseENSInfo = Pick<ENSInfoItemType, 'name'>;
-export const getENSInfo = (row: {
-  from?: string;
-  fromENSInfo?: ResponseENSInfo;
-  to?: string;
-  toENSInfo?: ResponseENSInfo;
-  address?: string;
-  ensInfo?: ResponseENSInfo;
-  miner?: string;
-  minerENSInfo?: ResponseENSInfo;
-  base32address?: string;
-}): ENSInfoType => {
-  let result: ENSInfoType = {};
-
-  try {
-    if (row.from && row.fromENSInfo?.name) {
-      result[row.from] = {
-        address: row.from,
-        name: row.fromENSInfo.name,
-      };
-    }
-
-    if (row.to && row.toENSInfo?.name && !result[row.to]) {
-      result[row.to] = {
-        address: row.to,
-        name: row.toENSInfo.name,
-      };
-    }
-
-    if (row.address && row.ensInfo?.name && !result[row.address]) {
-      result[row.address] = {
-        address: row.address,
-        name: row.ensInfo.name,
-      };
-    }
-
-    if (row.base32address && row.ensInfo?.name && !result[row.base32address]) {
-      result[row.base32address] = {
-        address: row.base32address,
-        name: row.ensInfo.name,
-      };
-    }
-
-    if (row.miner && row.minerENSInfo?.name && !result[row.miner]) {
-      result[row.miner] = {
-        address: row.miner,
-        name: row.minerENSInfo.name,
-      };
-    }
-  } catch (e) {}
-
-  return result;
-};
-
-export const getNametagInfo = (row: {
-  from?: string;
-  fromNameTagInfo?: Nametag;
-  to?: string;
-  toNameTagInfo?: Nametag;
-  address?: string;
-  nameTagInfo?: Nametag;
-  miner?: string;
-  minerNameTagInfo?: Nametag;
-  base32address?: string;
-}): {
-  [k: string]: { address: string; nametag: string };
-} => {
-  let result = {};
-
-  try {
-    if (row.from && row.fromNameTagInfo?.nameTag) {
-      result[row.from] = {
-        address: row.from,
-        nametag: row.fromNameTagInfo.nameTag,
-      };
-    }
-
-    if (row.to && row.toNameTagInfo?.nameTag && !result[row.to]) {
-      result[row.to] = {
-        address: row.to,
-        nametag: row.toNameTagInfo.nameTag,
-      };
-    }
-
-    if (row.address && row.nameTagInfo?.nameTag && !result[row.address]) {
-      result[row.address] = {
-        address: row.address,
-        nametag: row.nameTagInfo.nameTag,
-      };
-    }
-
-    if (
-      row.base32address &&
-      row.nameTagInfo?.nameTag &&
-      !result[row.base32address]
-    ) {
-      result[row.base32address] = {
-        address: row.base32address,
-        nametag: row.nameTagInfo.nameTag,
-      };
-    }
-
-    if (row.miner && row.minerNameTagInfo?.nameTag && !result[row.miner]) {
-      result[row.miner] = {
-        address: row.miner,
-        nametag: row.minerNameTagInfo.nameTag,
-      };
-    }
-  } catch (e) {}
-
-  return result;
 };
 
 const cSymbol = getCurrencySymbol();

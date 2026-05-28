@@ -9,6 +9,15 @@ import { Age } from '@cfxjs/sirius-next-common/dist/components/Age';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import queryString from 'query-string';
+import { ValueHighlight } from '@cfxjs/sirius-next-common/dist/components/Highlight';
+import imgArrow from 'images/token/arrow.svg';
+import imgOut from 'images/token/out.svg';
+import imgIn from 'images/token/in.svg';
+import { formatAddress } from 'utils';
+import { getPocketAlias } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/utils';
+import { ProxyContractAddress } from '@cfxjs/sirius-next-common/dist/components/ProxyContractAddress';
+import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export interface ContentWrapperProps {
   children: React.ReactNode;
@@ -184,4 +193,137 @@ export const number = {
 
 const StyledNumberWrapper = styled.span`
   white-space: nowrap;
+`;
+
+export const fromTypeInfo = {
+  arrow: {
+    src: imgArrow,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  out: {
+    src: imgOut,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeOut)}
+      </Translation>
+    ),
+  },
+  in: {
+    src: imgIn,
+    text: (
+      <Translation>
+        {t => t(translations.general.table.token.fromTypeIn)}
+      </Translation>
+    ),
+  },
+};
+
+const reg = /address\/(.*)$/;
+
+type GetFromTypeReturnValueType = 'in' | 'out' | 'arrow';
+export const getFromType = (value: string): GetFromTypeReturnValueType => {
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
+  const filter = accountAddress as string;
+
+  return !filter
+    ? 'arrow'
+    : formatAddress(filter) === formatAddress(value)
+    ? 'out'
+    : 'in';
+};
+
+export const renderAddress = (
+  value,
+  row,
+  type: 'to' | 'from',
+  {
+    withArrow = false,
+    withProxy = false,
+    showVerificationName = false,
+  }: {
+    withArrow?: boolean;
+    withProxy?: boolean;
+    showVerificationName?: boolean;
+  } = {},
+) => {
+  let address = '';
+
+  try {
+    // fixed for multiple request in /address/:hash page
+    let r = reg.exec(window.location.pathname);
+    if (r) {
+      address = r[1];
+    }
+  } catch (e) {}
+
+  const { accountAddress = address } = queryString.parse(
+    window.location.search,
+  );
+  const filter = (accountAddress as string) || '';
+
+  if (type === 'to' && withProxy && row.proxy) {
+    return (
+      <ValueHighlight scope="address" value={value}>
+        <ProxyContractAddress
+          value={value}
+          nameMap={row.nameMap}
+          proxy={row.proxy}
+          showVerificationName={showVerificationName}
+        />
+      </ValueHighlight>
+    );
+  }
+
+  const pocket = getPocketAlias({
+    type,
+    address: value,
+    pocket: row[`${type}Pocket`],
+  });
+
+  return (
+    <>
+      <ValueHighlight scope="address" value={value}>
+        <CoreAddressContainer
+          value={value}
+          nameMap={row.nameMap}
+          innerName={pocket}
+          link={!pocket && formatAddress(filter) !== formatAddress(value)}
+          contractCreated={row.contractCreated}
+          isFull={!!pocket}
+          showVerificationName={showVerificationName}
+        />
+      </ValueHighlight>
+      {type === 'from' && withArrow && (
+        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
+      )}
+    </>
+  );
+};
+
+const ImgWrap = styled.img`
+  position: absolute;
+  width: 36px;
+  height: 20px;
+  right: -0.8571rem;
+  top: 0.1429rem;
+
+  ${media.s} {
+    right: -0.98rem;
+  }
 `;

@@ -463,7 +463,7 @@ export function Approval() {
           </div>
           <TablePanelNew
             columns={columns}
-            rowKey="hash"
+            rowKey={record => `${record.hash}-${record.contract}`}
             dataSource={l}
             loading={loading}
             pagination={false}

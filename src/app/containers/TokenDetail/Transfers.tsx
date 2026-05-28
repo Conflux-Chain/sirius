@@ -64,13 +64,7 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
       value: 'transfers',
       action: 'tokenTransfers',
       label: t(translations.token.transfers),
-      content: (
-        <TokenTransfers
-          type={transferType}
-          address={tokenAddress}
-          decimals={decimals}
-        />
-      ),
+      content: <TokenTransfers type={transferType} address={tokenAddress} />,
     },
   ];
 
