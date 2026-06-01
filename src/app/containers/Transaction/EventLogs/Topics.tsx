@@ -4,7 +4,7 @@ import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
-import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
+import { ContractDetail } from '@cfxjs/sirius-next-common/dist/components/InputData/ContractDetail';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 import { StyledHighlight } from './StyledComponents';
@@ -80,7 +80,7 @@ export const Topics = ({ data, signature }) => {
                 <StyledHighlight scope="address" value={value}>
                   <Link href={`/address/${value}`}>{value} </Link>
                 </StyledHighlight>
-                <ContractDetail address={d.cfxAddress}></ContractDetail>
+                <ContractDetail address={d.cfxAddress} addressType="base32" />
                 <AddressLabel address={value} />
               </>
             );
