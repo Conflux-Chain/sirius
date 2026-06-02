@@ -3,7 +3,7 @@
  * OutputParams Component
  *
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 interface OutputParamsProps {
   outputs?: object[];
@@ -12,20 +12,23 @@ type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof OutputParamsProps>;
 export declare type Props = OutputParamsProps & NativeAttrs;
 
 const OutputParams = ({ outputs }: Props) => {
-  let str = '';
-  if (outputs) {
-    outputs.forEach(function (value, index) {
-      str += `${value['name']} <i>(${value['type']})</i>`;
-      if (index !== outputs.length - 1) {
-        str += ', ';
-      }
-    });
-  }
+  const count = outputs ? outputs.length : 0;
   return (
     <>
       <Container>
         <span className="label">Return:</span>
-        <span className="content" dangerouslySetInnerHTML={{ __html: str }} />
+        <span className="content">
+          {outputs?.map((value, index) => {
+            return (
+              <Fragment key={index}>
+                <span>
+                  {value['name']} <i>({value['type']})</i>
+                </span>
+                {index !== count - 1 && <span>, </span>}
+              </Fragment>
+            );
+          })}
+        </span>
       </Container>
     </>
   );

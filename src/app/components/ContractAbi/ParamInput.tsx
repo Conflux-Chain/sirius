@@ -116,21 +116,33 @@ const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
       let returnType = coder?.type || '-';
 
       return (
-        <span
-          className="inputComp-format"
-          dangerouslySetInnerHTML={{
-            __html: t(translations.contract.tupleFormat, {
-              type: input['internalType'] || 'tuple',
-              params: `(${returnName})`,
-              paramsObject:
-                JSON.stringify(CodersToObject(coder)[coder.name]) +
-                '[]'.repeat(arrayCount),
-              paramsArray:
-                returnType.replace(/\(/g, '[').replace(/\)/g, ']') +
-                '[]'.repeat(arrayCount),
-            }),
-          }}
-        />
+        <span className="inputComp-format">
+          <span>
+            {t(translations.contract.tupleType)}
+            <code>{input['internalType'] || 'tuple'}</code>
+          </span>
+          <br />
+          <span>
+            {t(translations.contract.tupleParameterName)}
+            <code>({returnName})</code>
+          </span>
+          <br />
+          <span>
+            {t(translations.contract.tupleParameterArray)}
+            <code>
+              {returnType.replace(/\(/g, '[').replace(/\)/g, ']')}
+              {'[]'.repeat(arrayCount)}
+            </code>
+          </span>
+          <br />
+          <span>
+            {t(translations.contract.tupleParameterObject)}
+            <code>
+              {JSON.stringify(CodersToObject(coder)[coder.name])}
+              {'[]'.repeat(arrayCount)}
+            </code>
+          </span>
+        </span>
       );
     } catch (e) {
       console.error(e);
