@@ -173,25 +173,20 @@ export const ContractAbi = ({
         <StyledContractAbiWrapper>
           <div>
             <Trans i18nKey="contract.beacon.pattern1">
-              ABI for the implementation contract at
-              <CoreAddressContainer
-                showIcon={false}
-                link={true}
-                value={address}
-              />
-              using the
+              This proxy contract uses the
               <Link
                 href="https://eips.ethereum.org/EIPS/eip-1967"
                 target="_blank"
               >
                 EIP-1967 Beacon Proxy
               </Link>
-              pattern.
-            </Trans>
-          </div>
-          <div>
-            <Trans i18nKey="contract.beacon.pattern2">
-              Previously recorded to be associated with beacon contract on
+              pattern. Its current implementation contract is
+              <CoreAddressContainer
+                showIcon={false}
+                link={true}
+                value={address}
+              />
+              , and its Beacon contract is
               <CoreAddressContainer
                 showIcon={false}
                 link={true}
