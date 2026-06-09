@@ -193,11 +193,7 @@ export function NFTDetail(props) {
       formatServerError: (e: any, metadata) => {
         const data = e?.response?.result || {};
         if (metadata) {
-          _.merge(data, {
-            detail: {
-              metadata,
-            },
-          });
+          _.merge(data, metadata);
         }
         return data;
       },
