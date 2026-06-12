@@ -60,6 +60,7 @@ export interface BasicProps {
   transferCount?: number;
   securityAudit?: SecurityAudit;
   website?: string;
+  isLoading?: boolean;
 }
 
 export const tokenTypeTag = (t, transferType: any) => {
@@ -109,6 +110,7 @@ export const Basic = ({
   securityAudit,
   name,
   website,
+  isLoading,
 }: BasicProps) => {
   const { t } = useTranslation();
   if (address && !transferType) {
@@ -130,7 +132,7 @@ export const Basic = ({
         ) : (
           <Price>{price}</Price>
         )
-      ) : address ? (
+      ) : !isLoading ? (
         t(translations.general.notAvailable)
       ) : undefined,
   };
@@ -146,7 +148,7 @@ export const Basic = ({
     children:
       totalPrice !== undefined ? (
         <Price>{totalPrice}</Price>
-      ) : address ? (
+      ) : !isLoading ? (
         t(translations.general.notAvailable)
       ) : undefined,
   };
@@ -174,7 +176,7 @@ export const Basic = ({
         {t(translations.token.decimals)}
       </Tooltip>
     ),
-    children: address
+    children: !isLoading
       ? decimals !== undefined
         ? decimals
         : t(translations.general.notAvailable)
@@ -203,7 +205,7 @@ export const Basic = ({
             transferType === CFX_TOKEN_TYPES.erc20 ? decimals : 0,
           )} ${symbol}`}
         </Text>
-      ) : address ? (
+      ) : !isLoading ? (
         t(translations.general.notAvailable)
       ) : undefined,
   };
@@ -245,7 +247,7 @@ export const Basic = ({
             </>
           ) : undefined}
         </span>
-      ) : address ? (
+      ) : !isLoading ? (
         <span>{t(translations.general.notAvailable)}</span>
       ) : undefined,
   };
@@ -259,7 +261,7 @@ export const Basic = ({
     children:
       transferCount !== undefined
         ? toThousands(transferCount)
-        : address
+        : !isLoading
         ? t(translations.general.notAvailable)
         : undefined,
   };

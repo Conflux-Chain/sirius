@@ -33,7 +33,7 @@ export function TokenDetail() {
     address: tokenAddress,
     fields: ['iconUrl', 'transferCount', 'price', 'totalPrice', 'quoteUrl'],
   };
-  let { data } = useTokenQuery(params, !!tokenAddress);
+  let { data, isValidating } = useTokenQuery(params, !!tokenAddress);
 
   if (!data) {
     data = {};
@@ -179,6 +179,7 @@ export function TokenDetail() {
           {...data}
           tokenAddress={tokenAddress}
           transferType={data.transferType}
+          isLoading={isValidating}
         />
         {holder && data.address && (
           <HolderFilter holder={holder as string} tokenData={data} />
