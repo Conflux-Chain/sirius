@@ -267,15 +267,16 @@ export const Basic = ({
   };
   const fieldProjectInfo = {
     title: t(translations.general.table.token.projectInfo.projectInfo),
-    children: securityAudit ? (
-      name ? (
+    children:
+      securityAudit && name ? (
         <ProjectInfo
           securityAudit={securityAudit}
           tokenName={name}
           isDetailPage={true}
         />
-      ) : undefined
-    ) : undefined,
+      ) : !isLoading ? (
+        t(translations.general.notAvailable)
+      ) : undefined,
   };
   const fieldTokenWebsite = {
     title: t(translations.token.website),
