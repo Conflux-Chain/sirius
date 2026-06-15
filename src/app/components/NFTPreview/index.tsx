@@ -261,6 +261,7 @@ export const NFTPreview = React.memo(
 
         reqNFTInfo({
           query: { contractAddress, tokenId },
+          showErrorMessage: false,
         })
           .then(data => {
             data && handleNFTInfo(data);
