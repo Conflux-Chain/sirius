@@ -27,6 +27,7 @@ export const sendRequest = config => {
     body: config.body,
     headers: config.headers,
     signal: config.signal,
+    showErrorMessage: config.showErrorMessage,
   });
 };
 
