@@ -2361,6 +2361,23 @@
     lodash-es "^4.17.21"
     viem "^2.33.3"
 
+"@cfx-kit/dapp-utils@0.2.15":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/dapp-utils/-/dapp-utils-0.2.15.tgz#fee431283fa7d8c6de9bada4ea81cdbcae0852a5"
+  integrity sha512-l+g31ZZlPowU7GBWyp1ib4Gm46aaZ5N9cVodOM8lDQR9vJRPV2TaU3kaQv7tR3D8Az1iGYjqp+n/eWm6WHCfZA==
+  dependencies:
+    "@cfx-kit/utils" "0.0.11"
+    "@ethersproject/abi" "^5.8.0"
+    "@ethersproject/bignumber" "^5.8.0"
+    "@ethersproject/units" "^5.8.0"
+    "@noble/hashes" "^1.4.0"
+    abitype "^1.0.8"
+    jsbi "^4.3.0"
+    ky "^0.33.3"
+    localstorage-enhance "^1.0.8"
+    lodash-es "^4.17.21"
+    viem "^2.33.3"
+
 "@cfx-kit/react-utils@^0.0.65":
   version "0.0.65"
   resolved "https://registry.yarnpkg.com/@cfx-kit/react-utils/-/react-utils-0.0.65.tgz#49c113d0e596021c9b2479435cc61665b1a06277"
@@ -2387,6 +2404,11 @@
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@cfx-kit/utils/-/utils-0.0.10.tgz#9c0ed2e3ad37f1f792b92afd77241f55c24a7f1c"
   integrity sha512-XTxda2SubEmPIbjY36yG+1+snO2mk9c/s1xBkZb3J16jVohG448OAwWOLIG/XgvE2hboGLpwHABcCK0K0jWW8A==
+
+"@cfx-kit/utils@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@cfx-kit/utils/-/utils-0.0.11.tgz#707046bb613e69dfc733e4dfd30f3eef9dfa3876"
+  integrity sha512-y+tg7pq1XiGZyitd+0ka22I5hfKvnZv33MY0m/CM+j/hWRHfKr9qwGXkbLxZ7K8bVJtE4pp7WJ6mgMI0Os9JEw==
 
 "@cfxjs/antd@1.0.6":
   version "1.0.6"
@@ -2461,10 +2483,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.2.21-fix-error-publish":
-  version "0.2.21-fix-error-publish"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.21-fix-error-publish.tgz#2f43bbde6f722a08f86b9c83784481c01151fb77"
-  integrity sha512-SP7/I2U5pAV0v6sykubhmGwTsqe1A8az3CcPyryCorfO/vxherOu6ROjpNaZ52MgguHpIXRDviul9v3byG3FLw==
+"@cfxjs/sirius-next-common@0.2.21-fix-nft-ipfs-gateway-1":
+  version "0.2.21-fix-nft-ipfs-gateway-1"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.21-fix-nft-ipfs-gateway-1.tgz#3811232674fbd66cf993a3b6a8e873fff5499c24"
+  integrity sha512-fP560z2U4eJlSdBX55Rf3BG0KxZkgqpYCLKpmkA1FlN8A5xtijyJTEWh6zr95YHuHaNn+v/ZvfyKh1oe76FmIg==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/react-utils" "^0.0.65"
