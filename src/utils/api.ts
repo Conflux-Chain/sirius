@@ -9,7 +9,6 @@ import {
   simpleGetFetcher,
 } from '@cfxjs/sirius-next-common/dist/utils/request';
 import ENV_CONFIG, { IS_MAINNET, IS_CORESPACE } from 'env';
-// import { getCurrency } from 'utils/constants';
 
 interface Params {
   [name: string]: string | string[];

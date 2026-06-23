@@ -25,7 +25,7 @@ import {
   media,
 } from '@cfxjs/sirius-next-common/dist/utils/media';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 export function FCCFX() {
   const { accounts } = usePortal();

@@ -283,14 +283,6 @@ export const getClientVersion = async () => {
   }
 };
 
-export const getBalance = async (...args) => {
-  try {
-    return request('cfx_getBalance', ...args);
-  } catch (e) {
-    throw e;
-  }
-};
-
 export const getDepositList = async (...args) => {
   try {
     return request('cfx_getDepositList', ...args);
