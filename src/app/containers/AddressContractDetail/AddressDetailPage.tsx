@@ -40,7 +40,7 @@ import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
 import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
 import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
 import Nametag from './Nametag';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 interface RouteParams {
   address: string;
