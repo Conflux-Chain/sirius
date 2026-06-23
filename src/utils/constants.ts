@@ -4,8 +4,6 @@ import lodash from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 
-export { LOCALSTORAGE_KEYS_MAP };
-
 interface ContractsType {
   faucet: string;
   faucetLast: string;
@@ -18,10 +16,6 @@ interface ContractsType {
   context: string;
   posRegister: string;
   zero: string;
-}
-
-interface ContractNameTagType {
-  [index: string]: string;
 }
 
 export const NETWORK_ID = (() => {
@@ -70,20 +64,6 @@ export const CONTRACTS: ContractsType = (() => {
   return contracts;
 })();
 
-export const CONTRACTS_NAME_LABEL: ContractNameTagType = (() => {
-  let contractNameTag = {};
-  try {
-    const cachedContracts = JSON.parse(
-      localStorage.getItem(LOCALSTORAGE_KEYS_MAP.contractNameTag) as string,
-    );
-    if (Object.prototype.toString.call(cachedContracts) === '[object Object]') {
-      contractNameTag = cachedContracts;
-    }
-  } catch (e) {}
-
-  return contractNameTag;
-})();
-
 export const CFX_TOKEN_TYPES = {
   erc20: 'ERC20',
   erc777: 'ERC777',
@@ -116,23 +96,6 @@ export enum TXN_ACTION {
   tranferNFT1155 = 115,
   abiVerification = 116,
 }
-
-export const CURRENCY_SYMBOLS = {
-  USD: '$',
-  CNY: '¥',
-  GBP: '£',
-  KRW: '₩',
-  RUB: '₽',
-  EUR: '€',
-};
-
-export const getCurrency = () => {
-  return localStorage.getItem(LOCALSTORAGE_KEYS_MAP.currency) || 'USD';
-};
-
-export const getCurrencySymbol = () => {
-  return CURRENCY_SYMBOLS[getCurrency()];
-};
 
 export const CFX = new SDK.Conflux({
   url: ENV_CONFIG.ENV_RPC_SERVER,
@@ -206,11 +169,6 @@ OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 
 // table list list limit, max query items is 10,000, exceed will cause backend error
 export const TABLE_LIST_LIMIT = 10000;
-
-// ens request
-export const ENS_REQUEST_DELAYED_PERIOD = 100;
-export const ENS_REQUEST_EXPIRED_PERIOD = 5000;
-export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
 
 export const ENS_COINID_CONFLUX = 503;
 

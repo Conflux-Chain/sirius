@@ -1,11 +1,7 @@
 import BigNumber from 'bignumber.js';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  NETWORK_ID,
-  getCurrencySymbol,
-  HIDE_IN_DOT_NET,
-} from 'utils/constants';
+import { NETWORK_ID, HIDE_IN_DOT_NET } from 'utils/constants';
 import { IS_CORESPACE, IS_MAINNET, IS_TESTNET } from 'env';
 
 import {
@@ -164,37 +160,6 @@ export const formatString = (
   return result;
 };
 
-/**
- * 获取给定时间戳 from 到给定时间 to 的 duration
- * @param {string | number} from syncTimestamp
- * @param {string | number} to current serverTimestamp or current browserTimestamp
- */
-export const getDuration = (pFrom: number, pTo?: number) => {
-  try {
-    const to = pTo || +new Date();
-    const from = pFrom * 1000;
-
-    if (from > to) {
-      throw new Error('invalid timestamp pair');
-    }
-
-    const dayjsTo = dayjs(to);
-
-    const fullDay = dayjsTo.diff(from, 'day');
-    const fullHour = dayjsTo.diff(from, 'hour');
-    const fullMinute = dayjsTo.diff(from, 'minute');
-
-    const day = dayjsTo.diff(from, 'day');
-    const hour = dayjsTo.subtract(fullDay, 'day').diff(from, 'hour');
-    const minute = dayjsTo.subtract(fullHour, 'hour').diff(from, 'minute');
-    const second = dayjsTo.subtract(fullMinute, 'minute').diff(from, 'second');
-
-    return [day, hour, minute, second];
-  } catch (e) {
-    return [0, 0, 0, 0];
-  }
-};
-
 // Is input match epoch number format
 // 0x??? need to convert to decimal int
 export function isEpochNumber(str: string) {
@@ -226,54 +191,6 @@ export function padLeft(n, totalLength = 1) {
     return result;
   }
 }
-
-export const getChartsSubTitle = (title: string): string => {
-  const suffix = window.location.host.substr(-4);
-  if (suffix === '.net') {
-    return title.replace('.org', '.net');
-  } else {
-    return title;
-  }
-};
-
-const cSymbol = getCurrencySymbol();
-
-export const formatPrice = (
-  price: string | number,
-  symbol: string = cSymbol,
-): string[] => {
-  const p = new BigNumber(price);
-  let precision = 2;
-
-  if (p.eq(0)) {
-    return ['0', ''];
-  } else if (p.lt(0.0001)) {
-    return [
-      '<0.0001',
-      formatNumber(price || 0, {
-        withUnit: false,
-        precision: 18,
-        keepZero: false,
-      }),
-    ];
-  } else if (p.lt(1)) {
-    precision = 4;
-  } else if (p.lt(10)) {
-    precision = 3;
-  } else {
-    precision = 2;
-  }
-
-  return [
-    symbol +
-      formatNumber(price || 0, {
-        withUnit: false,
-        keepZero: false,
-        precision,
-      }),
-    '',
-  ];
-};
 
 export const hideInDotNet = <T>(content: T): T | null => {
   if (HIDE_IN_DOT_NET) {
