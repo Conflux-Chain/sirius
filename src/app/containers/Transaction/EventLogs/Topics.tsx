@@ -113,7 +113,7 @@ export const Topics = ({ data, signature }) => {
           <div key={index} className="topic-item">
             <span className="index">{index + baseIndex}</span>
             {select}
-            {argName && <span className="name">{argName}:</span>}
+            {argName && <span className="name">{argName}: </span>}
             <span className="value">{value}</span>
           </div>
         );
