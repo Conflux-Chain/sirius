@@ -222,7 +222,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux Core (Coral)',
     id: 1029,
     url: IS_STAGE
-      ? `${protocol}//www-stage.confluxscan.net`
+      ? `${protocol}//www-stage.confluxscan${DOMAIN}`
       : `${protocol}//confluxscan${DOMAIN}`,
     space: 'core',
   },
@@ -231,7 +231,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux eSpace (Coral)',
     id: 1030,
     url: IS_STAGE
-      ? `${protocol}//evm-stage.confluxscan.net`
+      ? `${protocol}//evm-stage.confluxscan${DOMAIN}`
       : `${protocol}//evm.confluxscan${DOMAIN}`,
     space: 'evm',
   },
@@ -242,7 +242,7 @@ export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux Core (Testnet)',
     id: 1,
     url: IS_STAGE
-      ? `${protocol}//testnet-stage.confluxscan.net`
+      ? `${protocol}//testnet-stage.confluxscan${DOMAIN}`
       : `${protocol}//testnet.confluxscan${DOMAIN}`,
     space: 'core',
   },
@@ -251,7 +251,7 @@ export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux eSpace (Testnet)',
     id: 71,
     url: IS_STAGE
-      ? `${protocol}//evmtestnet-stage.confluxscan.net`
+      ? `${protocol}//evmtestnet-stage.confluxscan${DOMAIN}`
       : `${protocol}//evmtestnet.confluxscan${DOMAIN}`,
     space: 'evm',
   },
