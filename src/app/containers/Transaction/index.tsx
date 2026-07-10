@@ -15,8 +15,10 @@ import { InternalTxns } from 'app/containers/Transactions/Loadable';
 import { ReactComponent as JsonIcon } from 'images/json.svg';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { viewJson } from '@cfxjs/sirius-next-common/dist/utils';
+import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export function Transaction() {
+  const bp = useBreakpoint();
   const { t } = useTranslation();
   const { hash } = useParams<{
     hash: string;
@@ -135,13 +137,15 @@ export function Transaction() {
       </Helmet>
       <PageHeader>{t(translations.transaction.title)}</PageHeader>
       <div className="content-wrapper">
-        <div className="raw-tx-json-wrapper">
-          <Tooltip title={t(translations.toolTip.tx.getRawTxJson)}>
-            <div className="raw-tx-json" onClick={handleViewRawTxJson}>
-              <JsonIcon style={{ width: '24px', height: '24px' }} />
-            </div>
-          </Tooltip>
-        </div>
+        {bp !== 's' && (
+          <div className="raw-tx-json-wrapper">
+            <Tooltip title={t(translations.toolTip.tx.getRawTxJson)}>
+              <div className="raw-tx-json" onClick={handleViewRawTxJson}>
+                <JsonIcon style={{ width: '24px', height: '24px' }} />
+              </div>
+            </Tooltip>
+          </div>
+        )}
         <TabsTablePanel tabs={tabs} />
       </div>
     </StyledPageWrapper>
