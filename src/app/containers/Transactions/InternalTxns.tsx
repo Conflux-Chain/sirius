@@ -12,6 +12,7 @@ import { Switch } from '@cfxjs/sirius-next-common/dist/components/Switch';
 import IconInfo from 'images/info.svg';
 import { renderAddress } from 'utils/tableColumns/utils';
 import { AddressNameMap } from '@cfxjs/sirius-next-common/dist/utils/request.types';
+import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 interface Props {
   hash: string;
@@ -118,6 +119,10 @@ const StyledTipWrapper = styled.span`
   border-bottom: 1px solid #ebeced;
   .tip-title {
     flex: 1;
+  }
+  ${media.s} {
+    flex-direction: column;
+    height: auto;
   }
 `;
 
