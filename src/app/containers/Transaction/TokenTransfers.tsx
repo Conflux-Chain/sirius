@@ -39,13 +39,13 @@ const useTokenInfo = (
     let imgSrc = '';
     let tokenName = 'unknown';
     let tokenSymbol = 'unknown';
-    let tokenDecimals = 1;
+    let tokenDecimals = 0;
     const tokenItem = getAddressNameInfo(item.address, nameMap)?.originInfo
       .token;
     if (tokenItem) {
       tokenName = tokenItem.name || t(translations.general.notAvailable);
       tokenSymbol = tokenItem.symbol || t(translations.general.notAvailable);
-      tokenDecimals = tokenItem.decimals ?? 1;
+      tokenDecimals = tokenItem.decimals ?? 0;
       imgSrc = tokenItem.iconUrl ?? '';
     }
     const imgIcon = imgSrc ? (
