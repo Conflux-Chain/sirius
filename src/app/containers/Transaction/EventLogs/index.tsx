@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  reqTransactionEventlogs,
-  reqContract,
-  reqContractAndToken,
-} from 'utils/httpRequest';
+import { reqContract } from 'utils/httpRequest';
 import { toThousands } from 'utils';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
@@ -14,7 +10,6 @@ import _ from 'lodash';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { formatAddress } from 'utils';
 
 import { Address } from './Address';
 import { Topics } from './Topics';
@@ -23,12 +18,10 @@ import { Event } from 'app/components/TxnComponents/Event';
 import { disassembleEvent } from 'app/components/TxnComponents/util';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
+import { useTxEventLogs } from 'utils/hooks/useTxEventLogs';
 
 interface Props {
   hash: string;
-  address?: string;
-  abi?: Array<any>;
-  bytecode?: string;
 }
 
 const EventLog = ({ log }) => {
@@ -58,7 +51,6 @@ const EventLog = ({ log }) => {
     };
   });
   const [loading, setLoading] = useState(false);
-  const [contractAndTokenInfo, setContractAndTokenInfo] = useState({});
 
   useEffect(() => {
     const fields = [
@@ -73,9 +65,6 @@ const EventLog = ({ log }) => {
 
     async function fn() {
       try {
-        let outerTopics: Array<{
-          cfxAddress?: string;
-        }> = [];
         let abi = '';
         const body = await reqContract({
           address: log.address,
@@ -130,8 +119,6 @@ const EventLog = ({ log }) => {
             },
           );
 
-          outerTopics = args;
-
           setEventInfo({
             address: log.address,
             fnName: decodedLog.name,
@@ -140,22 +127,6 @@ const EventLog = ({ log }) => {
             data,
             signature: decodedLog.signature,
           });
-        }
-
-        let addressList = outerTopics
-          .map(t => t.cfxAddress)
-          .filter(t => t)
-          .concat(formatAddress(log.address));
-        addressList = _.uniq(addressList);
-
-        if (addressList.length) {
-          reqContractAndToken({
-            address: addressList,
-          })
-            .then(data => {
-              data.total && setContractAndTokenInfo(data.map);
-            })
-            .catch(() => {});
         }
       } catch (e) {
         console.log('eventlog process error: ', e);
@@ -190,10 +161,7 @@ const EventLog = ({ log }) => {
               size="small"
               noBorder
             >
-              <Address
-                address={address}
-                contract={contractAndTokenInfo[formatAddress(address)]}
-              ></Address>
+              <Address address={address}></Address>
               <AddressLabel address={address} />
             </Description>
             {fnName ? (
@@ -212,11 +180,7 @@ const EventLog = ({ log }) => {
               size="small"
               noBorder
             >
-              <Topics
-                data={topics}
-                signature={signature}
-                contractAndTokenInfo={contractAndTokenInfo}
-              />
+              <Topics data={topics} signature={signature} />
             </Description>
             {!!data.length && (
               <Description
@@ -225,11 +189,7 @@ const EventLog = ({ log }) => {
                 size="small"
                 noBorder
               >
-                <Data
-                  data={data}
-                  hexData={log.data}
-                  contractAndTokenInfo={contractAndTokenInfo}
-                />
+                <Data data={data} hexData={log.data} />
               </Description>
             )}
           </div>
@@ -245,29 +205,14 @@ export const EventLogs = ({ hash }: Props) => {
   //   data: '',
   //   address: '',
   // }]
-  const [eventlogs, setEventlogs] = useState<any>([]);
-  const [loading, setLoading] = useState(false);
+  const { data: eventlogs, isLoading } = useTxEventLogs(hash);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setLoading(true);
-    reqTransactionEventlogs({
-      transactionHash: hash,
-      aggregate: false,
-    })
-      .then(body => {
-        setEventlogs(body.list);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [hash]);
 
   return (
     <StyledEventLogsWrapper>
       <Card>
-        {loading ? null : <Empty show={!eventlogs.length} />}
-        {eventlogs.length ? (
+        {isLoading ? null : <Empty show={!eventlogs?.length} />}
+        {eventlogs?.length ? (
           <>
             <div className="eventlog-title-total">
               {t(translations.general.totalRecord, {

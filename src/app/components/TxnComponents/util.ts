@@ -12,7 +12,7 @@ export const getAddress = data => SDK.format.address(data, NETWORK_ID);
  * 1. handle JSON.stringify issue
  */
 export const formatData = (data, type, option?) => {
-  if (!data) return '';
+  if (data === null || data === undefined) return '';
   const _option = option || {
     space: 4,
   };

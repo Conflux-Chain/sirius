@@ -7,8 +7,7 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
-import { formatAddress } from 'utils';
+import { ContractDetail } from '@cfxjs/sirius-next-common/dist/components/InputData/ContractDetail';
 import { DecodedParams } from 'app/components/TxnComponents/util';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 
@@ -156,11 +155,9 @@ const StyledSelectItemWrapper = styled.div`
 export const Data = ({
   data,
   hexData,
-  contractAndTokenInfo,
 }: {
   data: Array<DecodedParams>;
   hexData: string;
-  contractAndTokenInfo: any;
 }) => {
   const { t } = useTranslation();
   if (!data.length) {
@@ -182,12 +179,10 @@ export const Data = ({
           let value: React.ReactNode = <pre>{d.value}</pre>;
 
           if (d.type === 'address') {
-            const contractInfo = contractAndTokenInfo[formatAddress(d.value)];
-
             value = (
               <>
                 <Link href={`/address/${d.value}`}>{d.value} </Link>
-                <ContractDetail info={contractInfo}></ContractDetail>
+                <ContractDetail address={d.value} addressType="base32" />
                 <AddressLabel address={d.value} />
               </>
             );

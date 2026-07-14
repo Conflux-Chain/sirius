@@ -15,7 +15,7 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { getLabelInfo } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/label';
 // import { useENS } from 'utils/hooks/useENS';
 import { useENS } from '@cfxjs/sirius-next-common/dist/utils/hooks/useENS';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 import iconLoadingWhite from './assets/loading-white.svg';
 import { Balance } from './Balance';

@@ -1,4 +1,4 @@
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 export const IS_FOREIGN_HOST = /.org$/.test(window.location.host);
 export const DOMAIN = IS_FOREIGN_HOST ? '.org' : '.net';

@@ -2483,10 +2483,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.2.21-fix-nft-ipfs-gateway-1":
-  version "0.2.21-fix-nft-ipfs-gateway-1"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.21-fix-nft-ipfs-gateway-1.tgz#3811232674fbd66cf993a3b6a8e873fff5499c24"
-  integrity sha512-fP560z2U4eJlSdBX55Rf3BG0KxZkgqpYCLKpmkA1FlN8A5xtijyJTEWh6zr95YHuHaNn+v/ZvfyKh1oe76FmIg==
+"@cfxjs/sirius-next-common@0.2.27":
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.2.27.tgz#41cca424c57f228cf36d3874fca2d3192d550d1e"
+  integrity sha512-cMPNo66Xd44zh/auiFfiB6voz6InY+8qpDRk0nefYuYz/nHoYuwS7fitBiT+hIuZNA1Ugj8C0b0ul80eTqtVFw==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/react-utils" "^0.0.65"
@@ -2524,10 +2524,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.2.10":
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.10.tgz#7ea304c5a401372a6e56e9ff119f94c77a4353e3"
-  integrity sha512-QYG0D0JpFNBgVSifqRPSr5thVXfBqPFkGXdFeqv8CHUKp/4JiE6Y7mgLU9iFkQgC0uR9b2GaplAsyd75PEGbPg==
+"@cfxjs/sirius-next-i18n@0.2.14":
+  version "0.2.14"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.14.tgz#0c3611fd8ccedad9bac7aaf9cf6dab2c2d2290b7"
+  integrity sha512-nUI7WpO7BDW53me/ul7ouJ23Jj200QNWS4WKUzGU0tT8WiOAbeepR0pl7kdBnf4HK/Y9GGEhB0cELIex41UG4A==
 
 "@cfxjs/use-wallet-react@0.0.4":
   version "0.0.4"
@@ -10315,7 +10315,7 @@ extsprintf@1.3.0, extsprintf@^1.2.0:
   resolved "https://registry.npmjs.org/extsprintf/-/extsprintf-1.3.0.tgz"
   integrity sha1-lpGEQOMEGnpBT4xS48V06zw+HgU=
 
-fast-deep-equal@2.0.1, fast-deep-equal@^2.0.1:
+fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz"
   integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
@@ -20757,13 +20757,6 @@ swap-case@^1.1.0:
   dependencies:
     lower-case "^1.1.1"
     upper-case "^1.1.1"
-
-swr@0.3.2:
-  version "0.3.2"
-  resolved "https://registry.npmjs.org/swr/-/swr-0.3.2.tgz"
-  integrity sha512-Bs5Bihq1hQ66O5bdKaL47iZ2nlAaBsd8tTLRLkw9stZeuBEfH7zSuQI95S2TpchL0ybsMq3isWwuso2uPvCfHA==
-  dependencies:
-    fast-deep-equal "2.0.1"
 
 swr@2.2.5:
   version "2.2.5"

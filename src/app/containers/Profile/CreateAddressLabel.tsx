@@ -5,7 +5,7 @@ import { Form, Modal, Input, message } from '@cfxjs/antd';
 import { isBase32Address, isCurrentNetworkAddress } from 'utils';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { useGlobalData } from 'utils/hooks/useGlobal';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 import ENV_CONFIG from 'env';
 
 type Type = {

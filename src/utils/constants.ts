@@ -4,8 +4,6 @@ import lodash from 'lodash';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 import { NetworksType } from '@cfxjs/sirius-next-common/dist/store/types';
 
-export { LOCALSTORAGE_KEYS_MAP };
-
 interface ContractsType {
   faucet: string;
   faucetLast: string;
@@ -18,10 +16,6 @@ interface ContractsType {
   context: string;
   posRegister: string;
   zero: string;
-}
-
-interface ContractNameTagType {
-  [index: string]: string;
 }
 
 export const NETWORK_ID = (() => {
@@ -70,20 +64,6 @@ export const CONTRACTS: ContractsType = (() => {
   return contracts;
 })();
 
-export const CONTRACTS_NAME_LABEL: ContractNameTagType = (() => {
-  let contractNameTag = {};
-  try {
-    const cachedContracts = JSON.parse(
-      localStorage.getItem(LOCALSTORAGE_KEYS_MAP.contractNameTag) as string,
-    );
-    if (Object.prototype.toString.call(cachedContracts) === '[object Object]') {
-      contractNameTag = cachedContracts;
-    }
-  } catch (e) {}
-
-  return contractNameTag;
-})();
-
 export const CFX_TOKEN_TYPES = {
   erc20: 'ERC20',
   erc777: 'ERC777',
@@ -116,23 +96,6 @@ export enum TXN_ACTION {
   tranferNFT1155 = 115,
   abiVerification = 116,
 }
-
-export const CURRENCY_SYMBOLS = {
-  USD: '$',
-  CNY: '¥',
-  GBP: '£',
-  KRW: '₩',
-  RUB: '₽',
-  EUR: '€',
-};
-
-export const getCurrency = () => {
-  return localStorage.getItem(LOCALSTORAGE_KEYS_MAP.currency) || 'USD';
-};
-
-export const getCurrencySymbol = () => {
-  return CURRENCY_SYMBOLS[getCurrency()];
-};
 
 export const CFX = new SDK.Conflux({
   url: ENV_CONFIG.ENV_RPC_SERVER,
@@ -207,11 +170,6 @@ OPEN_API_URLS.NFTDailyCFXTransfer = '/stat/cross-space-cfx';
 // table list list limit, max query items is 10,000, exceed will cause backend error
 export const TABLE_LIST_LIMIT = 10000;
 
-// ens request
-export const ENS_REQUEST_DELAYED_PERIOD = 100;
-export const ENS_REQUEST_EXPIRED_PERIOD = 5000;
-export const ENS_REQUEST_MIN_BUNDLE_SIZE = 100;
-
 export const ENS_COINID_CONFLUX = 503;
 
 const protocol = window.location.protocol;
@@ -222,7 +180,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux Core (Coral)',
     id: 1029,
     url: IS_STAGE
-      ? `${protocol}//www-stage.confluxscan.net`
+      ? `${protocol}//www-stage.confluxscan${DOMAIN}`
       : `${protocol}//confluxscan${DOMAIN}`,
     space: 'core',
   },
@@ -231,7 +189,7 @@ export const MAINNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux eSpace (Coral)',
     id: 1030,
     url: IS_STAGE
-      ? `${protocol}//evm-stage.confluxscan.net`
+      ? `${protocol}//evm-stage.confluxscan${DOMAIN}`
       : `${protocol}//evm.confluxscan${DOMAIN}`,
     space: 'evm',
   },
@@ -242,7 +200,7 @@ export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux Core (Testnet)',
     id: 1,
     url: IS_STAGE
-      ? `${protocol}//testnet-stage.confluxscan.net`
+      ? `${protocol}//testnet-stage.confluxscan${DOMAIN}`
       : `${protocol}//testnet.confluxscan${DOMAIN}`,
     space: 'core',
   },
@@ -251,7 +209,7 @@ export const TESTNET_NETWORK_OPTIONS: NetworksType[] = [
     name: 'Conflux eSpace (Testnet)',
     id: 71,
     url: IS_STAGE
-      ? `${protocol}//evmtestnet-stage.confluxscan.net`
+      ? `${protocol}//evmtestnet-stage.confluxscan${DOMAIN}`
       : `${protocol}//evmtestnet.confluxscan${DOMAIN}`,
     space: 'evm',
   },

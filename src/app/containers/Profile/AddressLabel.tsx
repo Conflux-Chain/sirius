@@ -12,7 +12,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import qs from 'query-string';
 import { CreateAddressLabel } from './CreateAddressLabel';
-import { LOCALSTORAGE_KEYS_MAP } from 'utils/enum';
+import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 const { confirm, warning } = Modal;
 const { Search } = Input;

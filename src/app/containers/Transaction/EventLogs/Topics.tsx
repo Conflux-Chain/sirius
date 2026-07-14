@@ -4,13 +4,12 @@ import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
-import { ContractDetail } from 'app/components/TxnComponents/ContractDetail';
+import { ContractDetail } from '@cfxjs/sirius-next-common/dist/components/InputData/ContractDetail';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { formatAddress } from 'utils';
 import { AddressLabel } from 'app/components/TxnComponents/AddressLabel';
 import { StyledHighlight } from './StyledComponents';
 
-export const Topics = ({ data, signature, contractAndTokenInfo }) => {
+export const Topics = ({ data, signature }) => {
   const { t } = useTranslation();
   const [selectMap, setSelectMap] = useState(() => {
     return data.reduce((prev, curr) => {
@@ -53,12 +52,14 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
       ) : null}
       {data.map((d, index) => {
         let value: React.ReactNode = '';
+        let argName: React.ReactNode = '';
         let select: React.ReactNode = null;
 
         if (typeof d === 'string') {
           value = d;
         } else {
           const name = selectMap[d.argName];
+          argName = d.argName;
           const valueMap: {
             hex: string;
             decode: string;
@@ -76,15 +77,12 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
           value = valueMap[name];
 
           if (name === 'address') {
-            const contractInfo =
-              contractAndTokenInfo[formatAddress(valueMap.decode)];
-
             value = (
               <>
                 <StyledHighlight scope="address" value={value}>
                   <Link href={`/address/${value}`}>{value} </Link>
                 </StyledHighlight>
-                <ContractDetail info={contractInfo}></ContractDetail>
+                <ContractDetail address={d.cfxAddress} addressType="base32" />
                 <AddressLabel address={value} />
               </>
             );
@@ -115,6 +113,7 @@ export const Topics = ({ data, signature, contractAndTokenInfo }) => {
           <div key={index} className="topic-item">
             <span className="index">{index + baseIndex}</span>
             {select}
+            {argName && <span className="name">{argName}: </span>}
             <span className="value">{value}</span>
           </div>
         );

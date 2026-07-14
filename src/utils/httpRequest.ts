@@ -1,20 +1,13 @@
 import qs from 'query-string';
 import { fetch } from '@cfxjs/sirius-next-common/dist/utils/request';
 import { OPEN_API_URLS } from './constants';
-import {
-  ENS_REQUEST_EXPIRED_PERIOD,
-  ENS_REQUEST_DELAYED_PERIOD,
-  ENS_REQUEST_MIN_BUNDLE_SIZE,
-} from './constants';
-import lodash from 'lodash';
-import { isAddress } from './index';
 import { fetchNFTMetadata } from '@cfx-kit/dapp-utils/dist/metadata';
 import ENV_CONFIG from 'env';
 import { fetchWithCache } from '@cfxjs/sirius-next-common/dist/utils/cache';
 import { detectIPFSGateways } from '@cfxjs/sirius-next-common/dist/utils/ipfsGateway';
 
-export const v1Prefix = '/v1';
-export const statPrefix = '/stat';
+const v1Prefix = '/v1';
+const statPrefix = '/stat';
 
 export const sendRequest = config => {
   const url =
@@ -29,23 +22,6 @@ export const sendRequest = config => {
     headers: config.headers,
     signal: config.signal,
     showErrorMessage: config.showErrorMessage,
-  });
-};
-
-export const reqGasPrice = () => {
-  return sendRequest({
-    url: `${statPrefix}/gasprice/tracker`,
-  });
-};
-
-export const reqReport = (param?: object) => {
-  return sendRequest({
-    url: `${statPrefix}/recaptcha/siteverify`,
-    type: 'POST',
-    body: JSON.stringify(param),
-    headers: {
-      'Content-Type': 'application/json',
-    },
   });
 };
 
@@ -85,31 +61,9 @@ export const reqContract = fetchWithCache(
   },
 );
 
-export const reqContractAndToken = fetchWithCache(
-  (param?: object, extra?: object) => {
-    return sendRequest({
-      url: `/contract-and-token`,
-      query: param,
-      ...extra,
-    });
-  },
-  {
-    key: 'contract-and-token',
-    maxAge: 1000 * 60 * 60,
-  },
-);
-
 export const reqTokenList = (param?: object, extra?: object) => {
   return sendRequest({
     url: `/token`,
-    query: param,
-    ...extra,
-  });
-};
-
-export const reqContractList = (param?: object, extra?: object) => {
-  return sendRequest({
-    url: `/contract`,
     query: param,
     ...extra,
   });
@@ -200,13 +154,6 @@ export const reqTopStatistics = (param: any, extra?: object) => {
       ...extra,
     });
   }
-};
-
-export const reqCfxSupply = (extra?: object) => {
-  return sendRequest({
-    url: `/supply`,
-    ...extra,
-  });
 };
 
 export const reqHomeDashboard = (extra?: object) => {
@@ -358,13 +305,6 @@ export const reqHomeDashboardOfPOSSummary = (extra?: object) => {
   });
 };
 
-export const reqPoSAccount = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/pos-account-detail`,
-    ...extra,
-  });
-};
-
 export const reqPoSAccountOverview = (extra?: object) => {
   return sendRequest({
     url: `/stat/pos-account-overview`,
@@ -372,32 +312,7 @@ export const reqPoSAccountOverview = (extra?: object) => {
   });
 };
 
-export const reqPoSIncomingHistory = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/list-pos-account-reward`,
-    ...extra,
-  });
-};
-
-export const reqNFT1155Tokens = (extra?: object) => {
-  return sendRequest({
-    url: `/stat/nft/list1155inventory`,
-    ...extra,
-  });
-};
-
 /** open api, start */
-
-/** charts, start */
-
-export const reqChartData = ({ url, query }) => {
-  return sendRequest({
-    url,
-    query,
-  });
-};
-
-/** charts, end */
 
 export const reqNFTTokens = (extra?: object) => {
   return sendRequest({
@@ -437,16 +352,6 @@ export const reqRefreshMetadata = (param?: object, extra?: object) => {
   });
 };
 
-export const reqAbiByMethodId = (methodId: string, extra?: object) => {
-  return sendRequest({
-    url: `/stat/list-abi-method`,
-    query: {
-      id: methodId,
-    },
-    ...extra,
-  });
-};
-
 // different from ens
 // maybe send one request, to get all info is better (ens info, nametag info, contract info, token info)
 export const reqNametag = (address: string[], extra?: object) => {
@@ -459,140 +364,3 @@ export const reqNametag = (address: string[], extra?: object) => {
     ...extra,
   });
 };
-
-export const reqENSInfoWithNoCache = (address: string[], extra?: object) => {
-  const query = address.reduce((prev, curr, index) => {
-    return !index ? `address=${curr}` : `${prev}&address=${curr}`;
-  }, '');
-  return sendRequest({
-    url: `/ens/reverse/match?${query}`,
-    ...extra,
-  });
-};
-
-export const reqENSInfoWithCache = (() => {
-  // address request status cache
-  const cache = {};
-
-  // TODO add call debounce
-  return (address: string[], extra?: object) => {
-    const toRequestAddress = address.filter(a => {
-      const cA = cache[a];
-      if (!cA || (!cA.requesting && +new Date() > cA.expired)) {
-        cache[a] = {
-          ...cA,
-          requesting: true,
-        };
-        return true;
-      }
-      return false;
-    });
-
-    if (toRequestAddress.length) {
-      const query = toRequestAddress.reduce((prev, curr, index) => {
-        return !index ? `address=${curr}` : `${prev}&address=${curr}`;
-      }, '');
-
-      return sendRequest({
-        url: `/ens/reverse/match?${query}`,
-        ...extra,
-      }).then(data => {
-        const expired = +new Date() + ENS_REQUEST_EXPIRED_PERIOD;
-
-        return toRequestAddress.map(a => {
-          cache[a] = {
-            expired,
-            requesting: false,
-          };
-
-          return {
-            address: a,
-            name: data.map[a].name,
-            expired,
-          };
-        });
-      });
-    } else {
-      return Promise.resolve([]);
-    }
-  };
-})();
-
-export const reqENSInfo = (() => {
-  // request cache
-  const cache = {};
-  // request limit
-  let pendingAddress: string[] = [];
-  let timeout = 0;
-
-  const call = (address, extra) => {
-    const query = address.reduce((prev, curr, index) => {
-      return !index ? `address=${curr}` : `${prev}&address=${curr}`;
-    }, '');
-
-    return sendRequest({
-      url: `/ens/reverse/match?${query}`,
-      ...extra,
-    }).then(data => {
-      const expired = +new Date() + ENS_REQUEST_EXPIRED_PERIOD;
-
-      return address.map(a => {
-        cache[a] = {
-          expired,
-          requesting: false,
-        };
-
-        return {
-          address: a,
-          name: data.map[a]?.name || '',
-          expired,
-        };
-      });
-    });
-  };
-
-  return (address: string[], extra?: object) => {
-    const toRequestAddress = address
-      .filter(a => a && isAddress(a))
-      .map(a => a.toLowerCase())
-      .filter(a => {
-        const cA = cache[a];
-        if (!cA || (!cA.requesting && +new Date() > cA.expired)) {
-          cache[a] = {
-            ...cA,
-            requesting: true,
-          };
-          return true;
-        }
-        return false;
-      });
-
-    if (toRequestAddress.length) {
-      pendingAddress = lodash.uniq(pendingAddress.concat(toRequestAddress));
-
-      if (
-        pendingAddress.length >= ENS_REQUEST_MIN_BUNDLE_SIZE ||
-        // @ts-ignore
-        extra?.immediately
-      ) {
-        const toPendingAddress = pendingAddress.slice(
-          0,
-          ENS_REQUEST_MIN_BUNDLE_SIZE,
-        );
-        pendingAddress = pendingAddress.slice(ENS_REQUEST_MIN_BUNDLE_SIZE);
-        return call(toPendingAddress, extra);
-      } else {
-        clearTimeout(timeout);
-        return new Promise((resolve, reject) => {
-          timeout = setTimeout(() => {
-            const toPendingAddress = pendingAddress;
-            pendingAddress = [];
-            resolve(call(toPendingAddress, extra));
-          }, ENS_REQUEST_DELAYED_PERIOD);
-        });
-      }
-    } else {
-      return Promise.resolve([]);
-    }
-  };
-})();
