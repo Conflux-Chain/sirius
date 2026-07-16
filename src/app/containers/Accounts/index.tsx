@@ -23,7 +23,7 @@ export function Accounts() {
   const { t, i18n } = useTranslation();
   const isEn = i18n.language.startsWith('en');
   // get portal selected address
-  const { accounts } = usePortal();
+  const { account } = usePortal();
 
   const options = [
     {
@@ -75,8 +75,8 @@ export function Accounts() {
               nameMap={row.nameMap}
               isFull={true}
               isMe={
-                accounts && accounts.length > 0
-                  ? formatAddress(accounts[0]) === formatAddress(value)
+                account
+                  ? formatAddress(account) === formatAddress(value)
                   : false
               }
             />

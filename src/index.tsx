@@ -12,7 +12,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from 'serviceWorker';
 import { RecoilRoot } from 'recoil';
-import { completeDetect } from '@cfxjs/use-wallet-react/conflux/Fluent';
+import { FluentConfluxProvider } from '@cfx-kit/react-utils/dist/AccountManagePlugins';
+import { registerWallet } from '@cfx-kit/react-utils/dist/AccountManage';
 import 'sanitize.css/sanitize.css';
 import '@cfxjs/antd/dist/@cfxjs/antd.css';
 import '@cfxjs/sirius-next-common/dist/uno.css';
@@ -25,6 +26,8 @@ import { HelmetProvider } from 'react-helmet-async';
 // Initialize languages
 import 'locales/i18n';
 import ENV_CONFIG, { IS_MAINNET, IS_TESTNET } from 'env';
+
+registerWallet(FluentConfluxProvider);
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -62,16 +65,12 @@ if (module.hot) {
   // have to be constants at compile-time
   module.hot.accept(['./app', 'locales/i18n'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-    Promise.all([completeDetect()]).then(() => {
-      const App = require('./app').App;
-      render(App);
-    });
+    const App = require('./app').App;
+    render(App);
   });
 }
 
-Promise.all([completeDetect()]).then(() => {
-  render(App);
-});
+render(App);
 
 const currentVersion = 'v2.17.0';
 

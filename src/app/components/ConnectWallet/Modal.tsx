@@ -33,7 +33,7 @@ export const Modal = ({
   onClose = () => {},
 }: Modal) => {
   const { t } = useTranslation();
-  const { login, authConnectStatus, accounts, installed } = usePortal();
+  const { login, authConnectStatus, account, installed } = usePortal();
   const { isValid } = useCheckHook();
   const inValidModalTip = t(translations.connectWallet.modal.upgradeTipAddress);
 
@@ -106,13 +106,13 @@ export const Modal = ({
             <span className="modal-portal-connected-title">
               {t(translations.connectWallet.modal.connectedWithFluentWallet)}
             </span>
-            <span className="modal-portal-name">{accounts[0]}</span>
+            <span className="modal-portal-name">{account}</span>
             <span className="modal-portal-connected-tip">
               <span className="modal-portal-connected-copy">
                 {t(translations.connectWallet.modal.copyAddress)}{' '}
-                <CopyButton copyText={accounts[0]} size={10}></CopyButton>
+                <CopyButton copyText={account ?? ''} size={10}></CopyButton>
               </span>
-              <ScanLink href={`/address/${accounts[0]}`}>
+              <ScanLink href={`/address/${account}`}>
                 {t(translations.connectWallet.modal.viewOnConfluxScan)}
               </ScanLink>
             </span>

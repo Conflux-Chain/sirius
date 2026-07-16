@@ -29,7 +29,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
   const [globalData, setGlobalData] = useGlobalData();
   const { t } = useTranslation();
   const { addRecord } = useTxnHistory();
-  const { accounts } = usePortal();
+  const { account, sendTransaction } = usePortal();
   const [loading, setLoading] = useState(false);
   const [txnStatusModal, setTxnStatusModal] = useState({
     show: false,
@@ -104,17 +104,17 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
       let hash;
 
       if (hasPendingProfitLegacy) {
-        hash = await fcExchangeContract
-          .withdraw(SDK.Drip.fromCFX(0))
-          .sendTransaction({
-            from: accounts[0],
-          });
+        const { data, to } = fcExchangeContract.withdraw(SDK.Drip.fromCFX(0));
+        hash = await sendTransaction({
+          data,
+          to,
+        });
       } else {
-        hash = await fcExchangeInterestContract
-          .registerOrWithdraw()
-          .sendTransaction({
-            from: accounts[0],
-          });
+        const { data, to } = fcExchangeInterestContract.registerOrWithdraw();
+        hash = await sendTransaction({
+          data,
+          to,
+        });
       }
 
       setTxnStatusModal({
@@ -205,7 +205,7 @@ export function AccountInfoCard({ info }: { info: AccountInfoType }) {
                   <span>{c.title}</span> {c.tip}
                 </StyledTitle1474798C>
                 <span className="fccfx-accountInfo-number">
-                  {accounts.length
+                  {account
                     ? formatBalance(
                         c.value,
                         18,

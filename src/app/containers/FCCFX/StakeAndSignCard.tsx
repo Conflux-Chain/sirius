@@ -27,7 +27,7 @@ const { confirm } = Modal;
 export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
   const { t } = useTranslation();
-  const { accounts } = usePortal();
+  const { account, sendTransaction } = usePortal();
   const [stakedFC, setStakedFC] = useState('');
   const { addRecord } = useTxnHistory();
   const [txnStatusModal, setTxnStatusModal] = useState({
@@ -55,15 +55,15 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
 
     try {
       const value = SDK.Drip.fromCFX(stakedFC);
-      const hash = await fcContract
-        .send(
-          ENV_CONFIG.ENV_FC_EXCHANGE_ADDRESS,
-          value,
-          SDK.format.hexAddress(accounts[0]),
-        )
-        .sendTransaction({
-          from: accounts[0],
-        });
+      const { data, to } = fcContract.send(
+        ENV_CONFIG.ENV_FC_EXCHANGE_ADDRESS,
+        value,
+        SDK.format.hexAddress(account),
+      );
+      const hash = await sendTransaction({
+        data,
+        to,
+      });
 
       setTxnStatusModal({
         ...txnStatusModal,
@@ -123,11 +123,11 @@ export const StakeAndSignCard = ({ info }: { info: AccountInfoType }) => {
     });
 
     try {
-      const hash = await fcExchangeInterestContract
-        .registerOrWithdraw()
-        .sendTransaction({
-          from: accounts[0],
-        });
+      const { data, to } = fcExchangeInterestContract.registerOrWithdraw();
+      const hash = await sendTransaction({
+        data,
+        to,
+      });
 
       setTxnStatusModal({
         ...txnStatusModal,

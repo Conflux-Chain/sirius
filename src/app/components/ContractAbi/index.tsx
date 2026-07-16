@@ -38,7 +38,7 @@ export const ContractAbi = ({
   proxyAddress,
   beaconAddress,
 }: Props) => {
-  const { accounts } = usePortal();
+  const { account } = usePortal();
   const { t } = useTranslation();
   const [data, setData] = useState<{
     read: DataType;
@@ -98,7 +98,7 @@ export const ContractAbi = ({
                       });
                       batcher.add(
                         contract[fullNameWithType]().request({
-                          from: accounts[0],
+                          from: account,
                         }),
                       );
                     }

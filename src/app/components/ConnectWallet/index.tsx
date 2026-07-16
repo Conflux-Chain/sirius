@@ -12,7 +12,7 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { useLocation } from 'react-router';
-import { switchChain } from '@cfxjs/use-wallet-react/conflux/Fluent';
+import { switchChain } from '@cfx-kit/react-utils/dist/AccountManage';
 import { NETWORK_ID } from 'utils/constants';
 
 interface Props {
@@ -30,7 +30,7 @@ export const ConnectButton = ({ children, profile = false }: Props) => {
     if (!isValid) {
       e.stopPropagation();
       e.preventDefault();
-      switchChain('0x' + NETWORK_ID.toString(16));
+      switchChain(`${NETWORK_ID}`);
     } else if (
       profile ||
       authConnectStatus === AuthConnectStatus.NotConnected

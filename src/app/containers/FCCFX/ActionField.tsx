@@ -50,10 +50,10 @@ export const ActionField = ({
   style,
 }: ActionFieldProps) => {
   const { t } = useTranslation();
-  const { accounts } = usePortal();
+  const { account } = usePortal();
   const [form] = Form.useForm();
 
-  const b = accounts.length
+  const b = account
     ? formatBalance(
         balance,
         18,
@@ -68,7 +68,7 @@ export const ActionField = ({
   // if inactive is true, not check other condition
   const disabled = inactiveButtonDisabled
     ? false
-    : (accounts.length &&
+    : (account &&
         showBalance &&
         balance.lt(new BigNumber(value).multipliedBy(MODULE))) ||
       isZeroInput(value);
