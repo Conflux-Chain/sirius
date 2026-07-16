@@ -6,6 +6,7 @@ import {
   connect,
   sendTransaction,
   useBalance,
+  useRegisteredWallets,
 } from '@cfx-kit/react-utils/dist/AccountManage';
 
 export enum AuthConnectStatus {
@@ -21,6 +22,10 @@ export const usePortal = () => {
   const status = useStatus();
   const account = useAccount();
   const chainId = useChainId();
+  const registeredWallets = useRegisteredWallets();
+  const fluentWallet = registeredWallets.find(
+    wallet => wallet.walletName === walletName,
+  );
 
   const isChainMatch = chainId && Number(chainId) === NETWORK_ID;
 
@@ -32,7 +37,9 @@ export const usePortal = () => {
     ? AuthConnectStatus.Connecting
     : AuthConnectStatus.NotConnected;
 
-  const installed = status !== 'not-installed';
+  const installed = fluentWallet
+    ? fluentWallet.status !== 'not-installed'
+    : false;
 
   const login = () => {
     if (installed && authConnectStatus === AuthConnectStatus.NotConnected) {
