@@ -3,7 +3,7 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 
 export const useCheckHook = function () {
-  const { authConnectStatus, accounts, chainId } = usePortal();
+  const { authConnectStatus, account, chainId } = usePortal();
 
   const isNetworkValid = authConnectStatus !== AuthConnectStatus.NotChainMatch;
 
@@ -11,8 +11,8 @@ export const useCheckHook = function () {
     if (!isNetworkValid) {
       return false;
     }
-    if (accounts[0]) {
-      return SDK.address.isValidCfxAddress(accounts[0]);
+    if (account) {
+      return SDK.address.isValidCfxAddress(account);
     }
     return true;
   };

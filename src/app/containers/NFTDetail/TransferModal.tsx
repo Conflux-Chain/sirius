@@ -23,10 +23,9 @@ export const TransferModal = ({
   const [globalData, setGlobalData] = useGlobalData();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
-  const { provider, accounts } = usePortal();
+  const { account, sendTransaction } = usePortal();
   const [form] = Form.useForm();
   const { addRecord } = useTxnHistory();
-  const account = accounts[0];
   const [submitLoading, setSubmitLoading] = useState(false);
   const [txnStatusModal, setTxnStatusModal] = useState({
     show: false,
@@ -43,12 +42,11 @@ export const TransferModal = ({
       networkId: NETWORK_ID,
     });
 
-    CFX.provider = provider;
     return CFX.Contract({
       address: contractAddress,
       abi: isNFT721 ? ERC721ABI : ERC1155ABI,
     });
-  }, [contractAddress, isNFT721, provider]);
+  }, [contractAddress, isNFT721]);
 
   useEffect(() => {
     async function fn() {
@@ -143,13 +141,21 @@ export const TransferModal = ({
         let hash = '';
 
         if (isNFT721) {
-          hash = await contract
-            .safeTransferFrom(fromAddress, toAddress, tokenId)
-            .sendTransaction({ from: account });
+          const { data, to } = contract.safeTransferFrom(
+            fromAddress,
+            toAddress,
+            tokenId,
+          );
+          hash = await sendTransaction({ data, to });
         } else {
-          hash = await contract
-            .safeTransferFrom(fromAddress, toAddress, tokenId, amount, '0x')
-            .sendTransaction({ from: account });
+          const { data, to } = contract.safeTransferFrom(
+            fromAddress,
+            toAddress,
+            tokenId,
+            amount,
+            '0x',
+          );
+          hash = await sendTransaction({ data, to });
         }
 
         setTxnStatusModal({

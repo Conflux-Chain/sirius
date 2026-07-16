@@ -1,13 +1,12 @@
 import { NETWORK_ID } from 'utils/constants';
 import {
-  provider,
   useStatus,
   useAccount,
   useChainId,
   connect,
   sendTransaction,
   useBalance,
-} from '@cfxjs/use-wallet-react/conflux/Fluent';
+} from '@cfx-kit/react-utils/dist/AccountManage';
 
 export enum AuthConnectStatus {
   Connected = 'connected',
@@ -16,7 +15,8 @@ export enum AuthConnectStatus {
   NotChainMatch = 'not-chainMatch',
 }
 
-// @todo 是否应该和 @cfxjs/react-hooks 合并到一起？
+const walletName = 'Fluent';
+
 export const usePortal = () => {
   const status = useStatus();
   const account = useAccount();
@@ -32,11 +32,11 @@ export const usePortal = () => {
     ? AuthConnectStatus.Connecting
     : AuthConnectStatus.NotConnected;
 
-  const installed = status === 'not-installed' ? 0 : 1; // 0 - not install, 1 - installed
+  const installed = status !== 'not-installed';
 
   const login = () => {
     if (installed && authConnectStatus === AuthConnectStatus.NotConnected) {
-      return connect();
+      return connect(walletName);
     }
     return Promise.reject(
       !installed ? 'wallet is not installed' : 'wallet is connected',
@@ -46,11 +46,10 @@ export const usePortal = () => {
   return {
     installed,
     authConnectStatus,
-    accounts: account ? [account] : [],
+    account: account ? account : undefined,
     chainId, // hex value, 0xNaN mean changing network
     // 用户调用这个函数尤其需要小心，因为如果未登录，只要调用函数，就会在钱包上请求一次连接，因尽量在 useEffectOnce 中使用
     login,
-    provider,
     useBalance,
     sendTransaction,
   };

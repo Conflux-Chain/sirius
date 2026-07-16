@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
@@ -18,7 +18,7 @@ import { useAge } from '@cfxjs/sirius-next-common/dist/utils/hooks/useAge';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import queryString from 'query-string';
-import { usePortal } from 'utils/hooks/usePortal';
+import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { abi as ERC20ABI } from 'utils/contract/ERC20.json';
 import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
@@ -31,10 +31,31 @@ import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import ENV_CONFIG from 'env';
 
+const getContract = (address: string, type: string) => {
+  const CFX = new SDK.Conflux({
+    url: ENV_CONFIG.ENV_RPC_SERVER,
+    networkId: NETWORK_ID,
+  });
+
+  const typeMap = {
+    CRC20: ERC20ABI,
+    CRC721: ERC721ABI,
+    CRC1155: ERC1155ABI,
+    ERC20: ERC20ABI,
+    ERC721: ERC721ABI,
+    ERC1155: ERC1155ABI,
+  };
+
+  return CFX.Contract({
+    abi: typeMap[type],
+    address,
+  });
+};
+
 const { Search } = Input;
 
 export function Approval() {
-  const { accounts, provider } = usePortal();
+  const { account, authConnectStatus, sendTransaction } = usePortal();
   const { t } = useTranslation();
   const [globalData, setGlobalData] = useGlobalData();
   const history = useHistory();
@@ -50,32 +71,6 @@ export function Approval() {
     status: '',
     errorMessage: '',
   });
-
-  const getContract = useCallback(
-    (address: string, type: string) => {
-      const CFX = new SDK.Conflux({
-        url: ENV_CONFIG.ENV_RPC_SERVER,
-        networkId: NETWORK_ID,
-      });
-
-      CFX.provider = provider;
-
-      const typeMap = {
-        CRC20: ERC20ABI,
-        CRC721: ERC721ABI,
-        CRC1155: ERC1155ABI,
-        ERC20: ERC20ABI,
-        ERC721: ERC721ABI,
-        ERC1155: ERC1155ABI,
-      };
-
-      return CFX.Contract({
-        abi: typeMap[type],
-        address,
-      });
-    },
-    [provider],
-  );
 
   const [list, setList] = useState<
     Array<{
@@ -225,32 +220,27 @@ export function Approval() {
     const contract = getContract(data.contract, data.tokenInfo.type);
     let tx;
     if (data.tokenInfo.type === 'CRC20' || data.tokenInfo.type === 'ERC20') {
-      tx = contract
-        .approve(data.spender, 0)
-        .sendTransaction({ from: accounts[0] });
+      tx = sendTransaction(contract.approve(data.spender, 0));
     } else if (
       data.tokenInfo.type === 'CRC721' ||
       data.tokenInfo.type === 'ERC721'
     ) {
       if (data.approvalType === 'ApprovalForAll') {
         // revoke all
-        tx = contract.setApprovalForAll(data.spender, false).sendTransaction({
-          from: accounts[0],
-        });
+        tx = sendTransaction(contract.setApprovalForAll(data.spender, false));
       } else {
         // revoke single tokenId
-        tx = contract
-          // .approve(SDK.format.address(SDK.CONST.ZERO_ADDRESS_HEX, NETWORK_ID), data.value)
-          .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value)
-          .sendTransaction({ from: accounts[0] });
+        tx = sendTransaction(
+          contract
+            // .approve(SDK.format.address(SDK.CONST.ZERO_ADDRESS_HEX, NETWORK_ID), data.value)
+            .approve(SDK.CONST.ZERO_ADDRESS_HEX, data.value),
+        );
       }
     } else if (
       data.tokenInfo.type === 'CRC1155' ||
       data.tokenInfo.type === 'ERC1155'
     ) {
-      tx = contract
-        .setApprovalForAll(data.spender, false)
-        .sendTransaction({ from: accounts[0] });
+      tx = sendTransaction(contract.setApprovalForAll(data.spender, false));
     }
 
     tx.then(hash => {
@@ -289,12 +279,12 @@ export function Approval() {
 
   useEffect(() => {
     // initial search
-    if (!text && accounts.length) {
-      handleSearch(accounts[0]);
-      setInputValue(accounts[0]);
+    if (!text && account) {
+      handleSearch(account);
+      setInputValue(account);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts, text]);
+  }, [account, text]);
 
   const getContent = () => {
     if (msg) {
@@ -408,8 +398,9 @@ export function Approval() {
           width: 1,
           render: (_, row) => {
             const disabled =
-              !accounts.length ||
-              accounts[0].toLowerCase() !== String(text).toLowerCase();
+              authConnectStatus !== AuthConnectStatus.Connected ||
+              !account ||
+              account.toLowerCase() !== String(text).toLowerCase();
 
             return (
               <Button

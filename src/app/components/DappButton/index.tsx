@@ -47,7 +47,7 @@ const DappButton = ({
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   // cip-37 compatible
-  const { accounts, sendTransaction } = usePortal();
+  const { account, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -58,14 +58,14 @@ const DappButton = ({
     ? connectText
     : t(translations.general.connnectWalletSubmit);
 
-  if (accounts[0]) {
+  if (account) {
     text = submitText ? submitText : t(translations.general.submit);
   }
 
   const onClickHandler = () => {
     if (!btnDisabled) {
       const txParams = {
-        from: formatAddress(accounts[0]),
+        from: formatAddress(account ?? ''),
         // txn may create contract, need params 'to' to be undefined
         to: contractAddress ? formatAddress(contractAddress) : undefined,
         data,
@@ -140,12 +140,10 @@ const DappButton = ({
           <img
             src={imgSuccess}
             alt="success"
-            className={`successImg ${accounts[0] ? 'shown' : 'hidden'}`}
+            className={`successImg ${account ? 'shown' : 'hidden'}`}
           />
-          <span
-            className={`accountAddress ${accounts[0] ? 'shown' : 'hidden'}`}
-          >
-            <CoreAddressContainer value={accounts[0]} />
+          <span className={`accountAddress ${account ? 'shown' : 'hidden'}`}>
+            <CoreAddressContainer value={account ?? ''} />
           </span>
         </>
       )}

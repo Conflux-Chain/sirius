@@ -2529,14 +2529,6 @@
   resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.2.14.tgz#0c3611fd8ccedad9bac7aaf9cf6dab2c2d2290b7"
   integrity sha512-nUI7WpO7BDW53me/ul7ouJ23Jj200QNWS4WKUzGU0tT8WiOAbeepR0pl7kdBnf4HK/Y9GGEhB0cELIex41UG4A==
 
-"@cfxjs/use-wallet-react@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@cfxjs/use-wallet-react/-/use-wallet-react-0.0.4.tgz#8f0057a3e134d27211f7abea04a1bc1ea2b5e994"
-  integrity sha512-ZEVc0vR59dVsxi7KnmJAd5b8SIUu6902fdQAse6WzvLXtBXUUkb8yv/qc0U2NcNCMKP1hOEZYClz+7NCRkD4UA==
-  dependencies:
-    decimal.js "^10.3.1"
-    zustand "^4.3.6"
-
 "@cfxjs/use-wallet-react@^0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@cfxjs/use-wallet-react/-/use-wallet-react-0.0.8.tgz#fa287b5d75030e4a940bf00ee4ace844975c5ae6"

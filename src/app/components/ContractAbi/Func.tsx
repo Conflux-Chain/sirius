@@ -47,7 +47,7 @@ export declare type Props = FuncProps & NativeAttrs;
 const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
-  const { accounts, sendTransaction } = usePortal();
+  const { account, sendTransaction } = usePortal();
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -133,7 +133,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         try {
           setQueryLoading(true);
           const res = await contract[fullNameWithType](...objValuesNew).call({
-            from: accounts[0],
+            from: account,
           });
           setOutputError('');
           setQueryLoading(false);
@@ -163,10 +163,10 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         }
         break;
       case 'write':
-        if (accounts[0]) {
+        if (account) {
           let objParams: any[] = [];
           let txParams = {
-            from: formatAddress(accounts[0]),
+            from: formatAddress(account),
             to: formatAddress(contractAddress),
           };
           if (data['stateMutability'] === 'payable') {

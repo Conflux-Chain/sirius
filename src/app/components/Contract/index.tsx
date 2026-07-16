@@ -56,7 +56,7 @@ export const ContractOrTokenInfo = ({
     : 'token';
   const { t, i18n } = useTranslation();
   const lang = i18n.language.includes('zh') ? 'zh' : 'en';
-  const { accounts } = usePortal();
+  const { account } = usePortal();
   const [, setMessage] = useMessages();
   const [addressVal, setAddressVal] = useState('');
   const [contractName, setContractName] = useState(() => {
@@ -143,7 +143,7 @@ export const ContractOrTokenInfo = ({
   useEffect(
     () => {
       let canSubmit = false;
-      if (accounts[0]) {
+      if (account) {
         if (
           !isAddressError &&
           !isAdminError &&
@@ -172,8 +172,7 @@ export const ContractOrTokenInfo = ({
       tokenSite,
       gateway,
       tokenImgSrc,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      accounts[0],
+      account,
       isAddressError,
       isAdminError,
       isErc20Error,
@@ -297,11 +296,11 @@ export const ContractOrTokenInfo = ({
   }, [gateway]);
 
   useEffect(() => {
-    if (accounts[0]) {
+    if (account) {
       checkAdminThenToken(tokenImgSrc);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts[0]]);
+  }, [account]);
   const uploadContractIcon = () => {
     fileContractInputRef.current.click();
   };
@@ -387,12 +386,12 @@ export const ContractOrTokenInfo = ({
       if (isCoreContractAddress(addressVal) && !addressVal.startsWith('0x')) {
         setIsAddressError(false);
         setErrorMsgForAddress('');
-        if (accounts[0]) {
+        if (account) {
           reqContract({ address: addressVal, fields: fieldsContract })
             .then(dataContractInfo => {
               if (
-                dataContractInfo.from === accounts[0] ||
-                dataContractInfo.admin === accounts[0]
+                dataContractInfo.from === account ||
+                dataContractInfo.admin === account
               ) {
                 setIsAdminError(false);
                 if (tokenIcon) {
