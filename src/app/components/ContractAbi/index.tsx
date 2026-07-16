@@ -4,7 +4,7 @@
  *
  */
 import React, { useState, useEffect } from 'react';
-import FuncList from './FuncList';
+import FuncList, { FuncDataItem } from './FuncList';
 import { CFX } from 'utils/constants';
 import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { reqContract } from 'utils/httpRequest';
@@ -28,7 +28,7 @@ interface ContractAbiProps {
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ContractAbiProps>;
 export declare type Props = ContractAbiProps & NativeAttrs;
 
-type DataType = Array<Object>;
+type DataType = Array<FuncDataItem>;
 
 export const ContractAbi = ({
   type = 'read',
@@ -88,24 +88,31 @@ export const ContractAbi = ({
             for (let abiItem of abi) {
               if (abiItem.name !== '' && abiItem.type === 'function') {
                 const stateMutability = abiItem.stateMutability;
+                const fullNameWithType =
+                  formatType({
+                    name: abiItem['name'],
+                    inputs: abiItem['inputs'],
+                  }) || abiItem.name;
                 switch (stateMutability) {
                   case 'pure':
                   case 'view':
                     if (abiItem.inputs && abiItem.inputs.length === 0) {
-                      const fullNameWithType = formatType({
-                        name: abiItem['name'],
-                        inputs: abiItem['inputs'],
-                      });
                       batcher.add(
                         contract[fullNameWithType]().request({
                           from: account,
                         }),
                       );
                     }
-                    dataForRead.push(abiItem);
+                    dataForRead.push({
+                      ...abiItem,
+                      signature: contract[fullNameWithType]?.signature,
+                    });
                     break;
                   case 'nonpayable':
-                    dataForWrite.push(abiItem);
+                    dataForWrite.push({
+                      ...abiItem,
+                      signature: contract[fullNameWithType]?.signature,
+                    });
                     break;
                   case 'payable':
                     const payableObjs = [
@@ -116,7 +123,10 @@ export const ContractAbi = ({
                       },
                     ];
                     abiItem['inputs'] = payableObjs.concat(abiItem['inputs']);
-                    dataForWrite.push(abiItem);
+                    dataForWrite.push({
+                      ...abiItem,
+                      signature: contract[fullNameWithType]?.signature,
+                    });
                     break;
                   default:
                     break;
