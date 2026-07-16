@@ -1,5 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Form } from '@cfxjs/antd';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
+import { Form, FormInstance } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';
 import styled from 'styled-components';
@@ -33,6 +39,8 @@ import { ScanEvent } from 'utils/gaConstants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import JSONBigint from 'json-bigint';
 import InputItem from './InputItem';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { ExternalLink } from '@zeit-ui/react-icons';
 
 interface FuncProps {
   type?: string;
@@ -60,6 +68,18 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
 
+  const formRef = useRef<FormInstance>(null);
+
+  // use full name to evoke contract function for override function compatible
+  const fullNameWithType = useMemo(
+    () =>
+      formatType({
+        name: data['name'],
+        inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
+      }),
+    [data],
+  );
+
   useEffect(() => {
     if (data['value']) {
       setOutputValue(data['value']);
@@ -73,7 +93,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       setOutputError(data['error']);
     }
   }, [data]);
-  const onFinish = async values => {
+  const formatValuesToArgs = values => {
     // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
     const newValues = JSONBigint.parse(
       JSONBigint.stringify(values, (key, value) =>
@@ -96,7 +116,6 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           : value,
       ),
     );
-
     const items: object[] = Object.values(newValues);
     const objValues: any[] = [];
     // Special convert for various types before call sdk
@@ -120,19 +139,28 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       objValues.push(value['val']);
     });
 
-    // use full name to evoke contract function for override function compatible
-    const fullNameWithType = formatType({
-      name: data['name'],
-      inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
-    });
+    const args = convertBigNumbersToStrings(objValues);
 
-    const objValuesNew = convertBigNumbersToStrings(objValues);
+    // change cfx input to value in payable function
+    if (type === 'write' && data['stateMutability'] === 'payable') {
+      return {
+        args: args.slice(1),
+        value: SDK.format.bigUIntHex(SDK.Drip.fromCFX(args[0])),
+      };
+    }
+
+    return {
+      args,
+    };
+  };
+  const onFinish = async values => {
+    const { args, value } = formatValuesToArgs(values);
 
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[fullNameWithType](...objValuesNew).call({
+          const res = await contract[fullNameWithType](...args).call({
             from: account,
           });
           setOutputError('');
@@ -164,22 +192,16 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         break;
       case 'write':
         if (account) {
-          let objParams: any[] = [];
           let txParams = {
             from: formatAddress(account),
             to: formatAddress(contractAddress),
           };
           if (data['stateMutability'] === 'payable') {
-            objParams = objValues.slice(1);
-            txParams['value'] = SDK.format.bigUIntHex(
-              SDK.Drip.fromCFX(objValues[0]),
-            );
-          } else {
-            objParams = objValues;
+            txParams['value'] = value;
           }
           setOutputError('');
           try {
-            const { data: txData } = contract[fullNameWithType](...objParams);
+            const { data: txData } = contract[fullNameWithType](...args);
             txParams['data'] = txData;
           } catch (error) {
             setOutputError(error.message || '');
@@ -319,28 +341,89 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     [t],
   );
 
+  const getCallData = async () => {
+    if (!formRef.current) return;
+    try {
+      await formRef.current.validateFields();
+      const values = formRef.current.getFieldsValue();
+      const objValuesNew = formatValuesToArgs(values);
+      const params = contract[fullNameWithType](...objValuesNew.args);
+      return params.data;
+    } catch (error) {
+      console.log('get calldata failed:', error);
+    }
+  };
+
+  const goToDebug = async () => {
+    const calldata = await getCallData();
+    if (!calldata) return;
+    window.open(
+      `${window.location.origin}/simulate-trace?data=${calldata}&to=${contractAddress}`,
+      '_blank',
+    );
+  };
+
   const btnComp =
     type === 'read' ? (
-      <Button
-        htmlType="submit"
-        variant="solid"
-        color="primary"
-        className="btnComp"
-        loading={queryLoading}
-      >
-        {t(translations.contract.query)}
-      </Button>
-    ) : (
-      <ConnectButton>
+      <ButtonList>
         <Button
           htmlType="submit"
           variant="solid"
           color="primary"
           className="btnComp"
+          loading={queryLoading}
         >
-          {t(translations.contract.write)}
+          {t(translations.contract.query)}
         </Button>
-      </ConnectButton>
+        <Button variant="solid" color="primary" className="btnComp">
+          <CopyButton getCopyText={getCallData} color="#fff">
+            {t(translations.simulateTrace.button.calldata)}
+          </CopyButton>
+        </Button>
+        <Button
+          variant="solid"
+          color="primary"
+          className="btnComp"
+          onClick={goToDebug}
+        >
+          {t(translations.simulateTrace.button.debug)}
+          <ExternalLink size={14} />
+        </Button>
+      </ButtonList>
+    ) : (
+      <ButtonList>
+        <ConnectButton>
+          <Button
+            htmlType="submit"
+            variant="solid"
+            color="primary"
+            className="btnComp"
+          >
+            {t(translations.contract.write)}
+          </Button>
+        </ConnectButton>
+        <ConnectButton>
+          <Button variant="solid" color="primary" className="btnComp">
+            {t(translations.simulateTrace.button.simulate)}
+          </Button>
+        </ConnectButton>
+        <Button variant="solid" color="primary" className="btnComp">
+          <CopyButton getCopyText={getCallData} color="#fff">
+            {t(translations.simulateTrace.button.calldata)}
+          </CopyButton>
+        </Button>
+        <ConnectButton>
+          <Button
+            variant="solid"
+            color="primary"
+            className="btnComp"
+            onClick={goToDebug}
+          >
+            {t(translations.simulateTrace.button.debug)}
+            <ExternalLink size={14} />
+          </Button>
+        </ConnectButton>
+      </ButtonList>
     );
   const openTx = () => {
     window.open(`${window.location.origin}/transaction/${txHash}`);
@@ -348,6 +431,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   return (
     <Container>
       <Form
+        ref={formRef}
         onFinish={onFinish}
         validateTrigger={['onBlur']}
         className="formContainer"
@@ -428,10 +512,19 @@ const Container = styled.div`
     line-height: 30px;
     min-width: initial;
     margin-left: 0;
+    .text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   }
 `;
 const BtnGroup = styled.div`
   margin: 12px 0;
+`;
+const ButtonList = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default Func;
