@@ -171,7 +171,7 @@ WebFontLoader.load({
   },
 });
 
-BigNumber.config({ EXPONENTIAL_AT: [-18, 34] });
+BigNumber.config({ EXPONENTIAL_AT: [-80, 80], DECIMAL_PLACES: 80 });
 
 // @ts-ignore
 window.recaptchaOptions = {

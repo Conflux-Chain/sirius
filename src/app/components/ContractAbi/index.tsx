@@ -74,6 +74,7 @@ export const ContractAbi = ({
         }
 
         const abiJSON = JSON.parse(abiInfo);
+
         const contract = CFX.Contract({
           abi: abiJSON,
           address: proxyAddress || address,
@@ -140,7 +141,7 @@ export const ContractAbi = ({
             dataForRead.forEach(function (dValue) {
               if (dValue['inputs'].length === 0) {
                 const r = batchResult[i];
-                if (r['code']) {
+                if (r?.['code']) {
                   dValue['error'] = r['message'];
                 } else {
                   const val = r;

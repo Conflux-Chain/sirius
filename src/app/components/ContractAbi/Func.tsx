@@ -7,16 +7,11 @@ import React, {
 } from 'react';
 import { Form, FormInstance } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
-import { Buffer } from 'buffer';
 import styled from 'styled-components';
 import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import lodash from 'lodash';
-import FuncBody from './FuncBody';
-import OutputParams from './OutputParams';
-import FuncResponse from './FuncResponse';
 import OutputItem from './OutputItem';
-import Error from './Error';
 import { translations } from 'locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import {
@@ -25,8 +20,6 @@ import {
   checkBytes,
   checkCfxType,
   isCurrentNetworkAddress,
-  convertBigNumbersToStrings,
-  convertObjBigNumbersToStrings,
   constprocessResultArray,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
@@ -36,11 +29,16 @@ import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import JSONBigint from 'json-bigint';
 import InputItem from './InputItem';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
-import { ExternalLink } from '@zeit-ui/react-icons';
+import {
+  Error,
+  FuncBody,
+  FuncResponse,
+  OutputParams,
+  formatValuesToArgs,
+} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 
 interface FuncProps {
   type?: string;
@@ -49,10 +47,17 @@ interface FuncProps {
   contract: object;
   id?: string;
 }
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
-export declare type Props = FuncProps & NativeAttrs;
 
-const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
+const parseResponse = (res: unknown) =>
+  JSONBigint.parse(JSONBigint.stringify(res));
+
+const Func = ({
+  type,
+  data,
+  contractAddress,
+  contract,
+  id = '',
+}: FuncProps) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { account, sendTransaction } = usePortal();
@@ -79,6 +84,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
       }),
     [data],
   );
+  const hasValue = type === 'write' && data['stateMutability'] === 'payable';
 
   useEffect(() => {
     if (data['value']) {
@@ -87,74 +93,13 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     } else {
       setOutputShown(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (data['error']) {
       setOutputShown(false);
       setOutputError(data['error']);
     }
   }, [data]);
-  const formatValuesToArgs = values => {
-    // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
-    const newValues = JSONBigint.parse(
-      JSONBigint.stringify(values, (key, value) =>
-        value === undefined
-          ? { type: 'string', val: '' }
-          : value['type'] === 'tuple'
-          ? {
-              type: 'string',
-              val: convertObjBigNumbersToStrings(
-                JSONBigint.parse(value['val']),
-              ),
-            }
-          : /u?int[\d]{2,3}\[/.test(value['type'])
-          ? {
-              type: 'string',
-              val: convertObjBigNumbersToStrings(
-                JSONBigint.parse(value['val']),
-              ),
-            }
-          : value,
-      ),
-    );
-    const items: object[] = Object.values(newValues);
-    const objValues: any[] = [];
-    // Special convert for various types before call sdk
-    items.forEach(function (value, index) {
-      let val = value['val'];
-      if (value['type'] === 'bool') {
-        if (val === 'true' || val === '1') {
-          value['val'] = true;
-        } else if (val === 'false' || val === '0') {
-          value['val'] = false;
-        }
-      } else if (value['type'].startsWith('tuple')) {
-        value['val'] = JSON.parse(value['val']);
-      } else if (value['type'].endsWith(']')) {
-        // array: convert to array
-        value['val'] = Array.from(JSON.parse(value['val']));
-        // TODO byte array support
-      } else if (value['type'].startsWith('byte')) {
-        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
-      }
-      objValues.push(value['val']);
-    });
-
-    const args = convertBigNumbersToStrings(objValues);
-
-    // change cfx input to value in payable function
-    if (type === 'write' && data['stateMutability'] === 'payable') {
-      return {
-        args: args.slice(1),
-        value: SDK.format.bigUIntHex(SDK.Drip.fromCFX(args[0])),
-      };
-    }
-
-    return {
-      args,
-    };
-  };
   const onFinish = async values => {
-    const { args, value } = formatValuesToArgs(values);
+    const { args, value } = formatValuesToArgs(values, hasValue);
 
     switch (type) {
       case 'read':
@@ -167,19 +112,11 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
             let arr: any[] = [];
-            arr.push(
-              constprocessResultArray(
-                JSONBigint.parse(JSONBigint.stringify(res)),
-              ),
-            );
+            arr.push(constprocessResultArray(parseResponse(res)));
             setOutputValue(arr);
           } else {
             setOutputValue(
-              Object.values(
-                constprocessResultArray(
-                  JSONBigint.parse(JSONBigint.stringify(res)),
-                ),
-              ),
+              Object.values(constprocessResultArray(parseResponse(res))),
             );
           }
           // setOutputValue(res)
@@ -346,21 +283,12 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     try {
       await formRef.current.validateFields();
       const values = formRef.current.getFieldsValue();
-      const objValuesNew = formatValuesToArgs(values);
-      const params = contract[fullNameWithType](...objValuesNew.args);
-      return params.data;
+      const { args } = formatValuesToArgs(values, hasValue);
+      const func = contract[fullNameWithType](...args);
+      return func.data;
     } catch (error) {
       console.log('get calldata failed:', error);
     }
-  };
-
-  const goToDebug = async () => {
-    const calldata = await getCallData();
-    if (!calldata) return;
-    window.open(
-      `${window.location.origin}/simulate-trace?data=${calldata}&to=${contractAddress}`,
-      '_blank',
-    );
   };
 
   const btnComp =
@@ -380,15 +308,6 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             {t(translations.simulateTrace.button.calldata)}
           </CopyButton>
         </Button>
-        <Button
-          variant="solid"
-          color="primary"
-          className="btnComp"
-          onClick={goToDebug}
-        >
-          {t(translations.simulateTrace.button.debug)}
-          <ExternalLink size={14} />
-        </Button>
       </ButtonList>
     ) : (
       <ButtonList>
@@ -402,27 +321,11 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
             {t(translations.contract.write)}
           </Button>
         </ConnectButton>
-        <ConnectButton>
-          <Button variant="solid" color="primary" className="btnComp">
-            {t(translations.simulateTrace.button.simulate)}
-          </Button>
-        </ConnectButton>
         <Button variant="solid" color="primary" className="btnComp">
           <CopyButton getCopyText={getCallData} color="#fff">
             {t(translations.simulateTrace.button.calldata)}
           </CopyButton>
         </Button>
-        <ConnectButton>
-          <Button
-            variant="solid"
-            color="primary"
-            className="btnComp"
-            onClick={goToDebug}
-          >
-            {t(translations.simulateTrace.button.debug)}
-            <ExternalLink size={14} />
-          </Button>
-        </ConnectButton>
       </ButtonList>
     );
   const openTx = () => {
