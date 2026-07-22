@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from 'locales/i18n';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { AbiItem } from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 export interface FuncDataItem {
   name: string;
@@ -17,6 +18,7 @@ interface FuncListProps {
   data?: FuncDataItem[];
   contractAddress: string;
   contract: object;
+  abi: AbiItem[];
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncListProps>;
 export declare type Props = FuncListProps & NativeAttrs;
@@ -37,7 +39,7 @@ const FuncHeader = ({ index, item }: { index: number; item: FuncDataItem }) => {
   );
 };
 
-const FuncList = ({ type, data, contractAddress, contract }: Props) => {
+const FuncList = ({ abi, type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState([]);
   const allKeys: string[] = [];
@@ -95,6 +97,7 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
                   contract={contract}
                   key={`${type}-${index}-func-${item.name || index}`}
                   id={`${type}-${index}-func-${item.name || index}`}
+                  abi={abi}
                 />
               </Panel>
             ))}

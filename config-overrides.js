@@ -103,6 +103,10 @@ module.exports = function (config, mode) {
             __dirname,
             './node_modules/react-i18next',
           ),
+          'bignumber.js': path.resolve(
+            __dirname,
+            './node_modules/bignumber.js',
+          ),
           destr: path.resolve(__dirname, './node_modules/destr/dist/index.mjs'),
         },
       },
@@ -168,6 +172,7 @@ module.exports = function (config, mode) {
           __dirname,
           './node_modules/react-i18next',
         ),
+        'bignumber.js': path.resolve(__dirname, './node_modules/bignumber.js'),
         destr: path.resolve(__dirname, './node_modules/destr/dist/index.mjs'),
       },
     },

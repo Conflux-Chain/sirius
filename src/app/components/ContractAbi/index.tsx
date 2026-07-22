@@ -16,6 +16,7 @@ import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { usePortal } from 'utils/hooks/usePortal';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
+import { AbiItem } from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
@@ -49,6 +50,7 @@ export const ContractAbi = ({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [abiJSON, setAbiJSON] = useState<AbiItem[]>([]);
 
   const [contract, setContract] = useState(() =>
     CFX.Contract({
@@ -74,6 +76,7 @@ export const ContractAbi = ({
         }
 
         const abiJSON = JSON.parse(abiInfo);
+        setAbiJSON(JSON.parse(abiInfo));
 
         const contract = CFX.Contract({
           abi: abiJSON,
@@ -228,6 +231,7 @@ export const ContractAbi = ({
           data={data[type]}
           contractAddress={proxyAddress || address}
           contract={contract}
+          abi={abiJSON}
         ></FuncList>
       ) : (
         <StyledTipWrapper>

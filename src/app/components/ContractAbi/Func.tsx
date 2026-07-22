@@ -21,6 +21,7 @@ import {
   checkCfxType,
   isCurrentNetworkAddress,
   constprocessResultArray,
+  toThousands,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -32,6 +33,7 @@ import { ScanEvent } from 'utils/gaConstants';
 import JSONBigint from 'json-bigint';
 import InputItem from './InputItem';
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { ErrorDecode } from '@cfxjs/sirius-next-common/dist/components/OutputData/ErrorDecode';
 import {
   Error,
   FuncBody,
@@ -39,6 +41,11 @@ import {
   OutputParams,
   formatValuesToArgs,
 } from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
+import {
+  AbiItem,
+  Hex,
+  simulateContract,
+} from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 interface FuncProps {
   type?: string;
@@ -46,12 +53,14 @@ interface FuncProps {
   contractAddress: string;
   contract: object;
   id?: string;
+  abi: AbiItem[];
 }
 
 const parseResponse = (res: unknown) =>
   JSONBigint.parse(JSONBigint.stringify(res));
 
 const Func = ({
+  abi,
   type,
   data,
   contractAddress,
@@ -278,6 +287,94 @@ const Func = ({
     [t],
   );
 
+  const [simulateLoading, setSimulateLoading] = useState(false);
+  const [simulateResult, setSimulateResult] = useState<{
+    success: boolean;
+    result: unknown[] | null;
+  }>({
+    success: false,
+    result: null,
+  });
+  const [simulateError, setSimulateError] = useState('');
+  const [simulateGasError, setSimulateGasError] = useState('');
+  const [simulateGas, setSimulateGas] = useState('');
+
+  const simulateShown = simulateResult.success || simulateError;
+
+  const clearSimulateResult = () => {
+    setSimulateLoading(false);
+    setSimulateGas('');
+    setSimulateGasError('');
+    setSimulateError('');
+    setSimulateResult({
+      success: false,
+      result: null,
+    });
+  };
+
+  const simulateFunctionCall = async () => {
+    if (!formRef.current || !account) return;
+    try {
+      await formRef.current.validateFields();
+      clearSimulateResult();
+      const values = formRef.current.getFieldsValue();
+      const { args, value } = formatValuesToArgs(values, hasValue, false);
+      const func = contract[fullNameWithType](...args);
+      setSimulateLoading(true);
+      let simulateGasLoading = true;
+      let simulateCallLoading = true;
+      func
+        .estimateGasAndCollateral({
+          from: account,
+          value,
+        })
+        .then(gasRes => {
+          setSimulateGas(parseResponse(gasRes).gasUsed);
+        })
+        .catch(error => {
+          setSimulateGasError(error.message);
+        })
+        .finally(() => {
+          simulateGasLoading = false;
+          setSimulateLoading(simulateGasLoading || simulateCallLoading);
+        });
+      simulateContract({
+        address: contractAddress,
+        account,
+        value,
+        abi,
+        args,
+        functionName: data['name'],
+        space: 'core',
+      })
+        .then(({ result: simulateRes }) => {
+          if (outputs.length === 0) {
+            setSimulateResult({
+              success: true,
+              result: [],
+            });
+            return;
+          }
+
+          const result = constprocessResultArray(parseResponse(simulateRes));
+
+          setSimulateResult({
+            success: true,
+            result: outputs.length === 1 ? [result] : Object.values(result),
+          });
+        })
+        .catch(error => {
+          setSimulateError(error?.cause?.raw || error?.message || '');
+        })
+        .finally(() => {
+          simulateCallLoading = false;
+          setSimulateLoading(simulateGasLoading || simulateCallLoading);
+        });
+    } catch (error) {
+      setSimulateError(error.message || '');
+    }
+  };
+
   const getCallData = async () => {
     if (!formRef.current) return;
     try {
@@ -319,6 +416,17 @@ const Func = ({
             className="btnComp"
           >
             {t(translations.contract.write)}
+          </Button>
+        </ConnectButton>
+        <ConnectButton>
+          <Button
+            variant="solid"
+            color="primary"
+            className="btnComp"
+            onClick={simulateFunctionCall}
+            loading={simulateLoading}
+          >
+            {t(translations.simulateTrace.button.simulate)}
           </Button>
         </ConnectButton>
         <Button variant="solid" color="primary" className="btnComp">
@@ -384,6 +492,56 @@ const Func = ({
               />
             ))}
           {<Error message={outputError} />}
+          {simulateShown && (
+            <div className={`simulate-result ${simulateError && 'error'}`}>
+              <div className="simulate-result-title">
+                {t(translations.simulateTrace.simulatedResult)}
+              </div>
+              {simulateResult.success && (
+                <div>
+                  <div className="simulate-result-success">
+                    <span>{t(translations.simulateTrace.success)}</span>
+                    {outputs.length === 0 && (
+                      <div
+                        style={{
+                          marginLeft: '16px',
+                        }}
+                      >
+                        {t(translations.simulateTrace.bool)}
+                      </div>
+                    )}
+                  </div>
+                  {outputs.map((item, index) => (
+                    <OutputItem
+                      output={item}
+                      value={simulateResult.result?.[index]}
+                      key={id + index}
+                    />
+                  ))}
+                </div>
+              )}
+              {simulateError && (
+                <div>
+                  {simulateError.startsWith('0x') ? (
+                    <ErrorDecode
+                      to={contractAddress}
+                      space="core"
+                      errorData={simulateError as Hex}
+                      contentClassName="simulate-error-content"
+                    />
+                  ) : (
+                    simulateError
+                  )}
+                </div>
+              )}
+
+              <div className="simulate-gas">
+                {t(translations.simulateTrace.estimatedGas)}:{' '}
+                {(simulateGas || simulateGasError) &&
+                  (simulateGas ? toThousands(simulateGas) : simulateGasError)}
+              </div>
+            </div>
+          )}
         </FuncBody>
       </Form>
 
@@ -421,9 +579,46 @@ const Container = styled.div`
       gap: 10px;
     }
   }
+  .simulate-result {
+    border-radius: 4px;
+    background: #f8f8fa;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 16px;
+
+    &.error {
+      background: #fbebeb;
+    }
+
+    .simulate-result-success {
+      span {
+        color: #7cd77b;
+      }
+      display: flex;
+    }
+
+    .simulate-result-title {
+      color: #000;
+      font-size: 12px;
+    }
+
+    .simulate-error-content {
+      background-color: unset;
+    }
+
+    .simulate-gas {
+      color: #4f4f4e;
+      font-size: 14px;
+      font-weight: 450;
+      line-height: 22px;
+    }
+  }
 `;
 const BtnGroup = styled.div`
   margin: 12px 0;
+  display: flex;
+  align-items: center;
 `;
 const ButtonList = styled.div`
   display: flex;
