@@ -218,7 +218,7 @@ export function Footer() {
           </FooterContentIconLink>
           <FooterContentIconLink>
             <Link
-              href="https://discord.gg/confluxnetwork"
+              href="https://discord.com/invite/conflux-network"
               ga={{
                 category: ScanEvent.menu.category,
                 action: ScanEvent.menu.action.discord,
