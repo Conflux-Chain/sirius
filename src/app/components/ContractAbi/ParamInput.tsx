@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
-import IntValueFormatter from './IntValueFormatter';
 import { DecimalsSelect } from '@cfxjs/sirius-next-common/dist/components/DecimalsSelect';
-import { MaxDecimals } from './constants';
+import {
+  MaxDecimals,
+  IntValueFormatter,
+} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 import { Add } from '@cfxjs/sirius-next-common/dist/components/Icons';
+import BigNumber from 'bignumber.js';
 
 interface ParamInputProps {
   value?: object;
@@ -176,10 +179,13 @@ const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
               className="add-icon"
               onClick={() => {
                 if (decimals === undefined) return;
-                let newVal = value && value['val'] ? value['val'] : 1;
-                newVal += '0'.repeat(decimals);
+                const newVal = new BigNumber(
+                  value && value['val'] ? value['val'] : 1,
+                );
                 triggerChange({
-                  val: newVal,
+                  val: newVal
+                    .multipliedBy(new BigNumber(10).pow(decimals))
+                    .toString(),
                   type: type,
                 });
               }}

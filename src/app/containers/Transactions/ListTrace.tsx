@@ -80,9 +80,9 @@ export const ListTrace = ({
                   <TraceDetail
                     abi={record.abi}
                     input={record.input}
-                    output={record.result?.returnData}
+                    output={record.output}
                     to={record.to}
-                    outcome={record.result?.outcome}
+                    outcome={record.outcome}
                     isContractCreated={!!record.contractCreated}
                     space="core"
                     implementation={record.proxy?.implAddress}

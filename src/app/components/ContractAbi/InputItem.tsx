@@ -4,10 +4,12 @@
  *
  */
 import React, { useState } from 'react';
-import { NumberType } from './constants';
-import ParamTitle from './ParamTitle';
 import { Form } from '@cfxjs/antd';
 import ParamInput from './ParamInput';
+import {
+  NumberType,
+  ParamTitle,
+} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 
 interface InputItemProps {
   inputItem: any;

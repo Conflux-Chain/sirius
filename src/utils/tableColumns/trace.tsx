@@ -22,13 +22,8 @@ export const gas = {
     if (!gas) return 'N/A';
     const normalizedGas = Number(gas);
     if (Number.isNaN(normalizedGas)) return 'N/A';
-    const gasLeft = row.result?.gasLeft;
-    const normalizedGasLeft =
-      gasLeft === null || gasLeft === undefined ? null : Number(gasLeft);
     const gasUsed =
-      normalizedGasLeft === null || Number.isNaN(normalizedGasLeft)
-        ? '-'
-        : normalizedGas - normalizedGasLeft;
+      row.gasUsed == null || Number.isNaN(row.gasUsed) ? '-' : row.gasUsed;
     return `${gasUsed}/${normalizedGas}`;
   },
 };
@@ -47,8 +42,7 @@ export const detailExpandColumn = ({
   render: (index, row) => {
     const isExpanded = expandedRowKeys.includes(index);
     const isDataEmpty = !row.input || row.input === '0x';
-    const isReturnDataEmpty =
-      !row.result?.returnData || row.result.returnData === '0x';
+    const isReturnDataEmpty = !row.output || row.output === '0x';
     if (isDataEmpty && isReturnDataEmpty) return null;
     return (
       <StyledIconWrapper
@@ -112,7 +106,7 @@ const TraceTypeElement = ({
   info: any;
   withIndex?: boolean;
 }) => {
-  const outcome = info?.result?.outcome;
+  const outcome = info?.outcome;
 
   return (
     <StyledTraceTypeWrapper>

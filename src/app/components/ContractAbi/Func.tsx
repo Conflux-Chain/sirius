@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Form } from '@cfxjs/antd';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
+import { Form, FormInstance } from '@cfxjs/antd';
 import { useTranslation } from 'react-i18next';
-import { Buffer } from 'buffer';
 import styled from 'styled-components';
 import { Button } from '@cfxjs/react-ui';
 import { usePortal } from 'utils/hooks/usePortal';
 import lodash from 'lodash';
-import FuncBody from './FuncBody';
-import OutputParams from './OutputParams';
-import FuncResponse from './FuncResponse';
 import OutputItem from './OutputItem';
-import Error from './Error';
 import { translations } from 'locales/i18n';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import {
@@ -19,9 +20,8 @@ import {
   checkBytes,
   checkCfxType,
   isCurrentNetworkAddress,
-  convertBigNumbersToStrings,
-  convertObjBigNumbersToStrings,
   constprocessResultArray,
+  toThousands,
 } from '../../../utils';
 import { formatAddress } from '../../../utils';
 import { TXN_ACTION } from '../../../utils/constants';
@@ -30,9 +30,22 @@ import { formatType } from 'js-conflux-sdk/src/contract/abi';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import JSONBigint from 'json-bigint';
 import InputItem from './InputItem';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { ErrorDecode } from '@cfxjs/sirius-next-common/dist/components/OutputData/ErrorDecode';
+import {
+  Error,
+  FuncBody,
+  FuncResponse,
+  OutputParams,
+  formatValuesToArgs,
+} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
+import {
+  AbiItem,
+  Hex,
+  simulateContract,
+} from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 interface FuncProps {
   type?: string;
@@ -40,11 +53,20 @@ interface FuncProps {
   contractAddress: string;
   contract: object;
   id?: string;
+  abi: AbiItem[];
 }
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncProps>;
-export declare type Props = FuncProps & NativeAttrs;
 
-const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
+const parseResponse = (res: unknown) =>
+  JSONBigint.parse(JSONBigint.stringify(res));
+
+const Func = ({
+  abi,
+  type,
+  data,
+  contractAddress,
+  contract,
+  id = '',
+}: FuncProps) => {
   const { addRecord } = useTxnHistory();
   const { t } = useTranslation();
   const { account, sendTransaction } = usePortal();
@@ -60,6 +82,19 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   const outputs = (data && data['outputs']) || [];
   const inputsLength = inputs.length;
 
+  const formRef = useRef<FormInstance>(null);
+
+  // use full name to evoke contract function for override function compatible
+  const fullNameWithType = useMemo(
+    () =>
+      formatType({
+        name: data['name'],
+        inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
+      }),
+    [data],
+  );
+  const hasValue = type === 'write' && data['stateMutability'] === 'payable';
+
   useEffect(() => {
     if (data['value']) {
       setOutputValue(data['value']);
@@ -67,91 +102,30 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     } else {
       setOutputShown(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     if (data['error']) {
       setOutputShown(false);
       setOutputError(data['error']);
     }
   }, [data]);
   const onFinish = async values => {
-    // {type: 'string', val: ''} Only string has no set check, it can be '', undefined is an unfilled string,See getValidator type === 'string'.
-    const newValues = JSONBigint.parse(
-      JSONBigint.stringify(values, (key, value) =>
-        value === undefined
-          ? { type: 'string', val: '' }
-          : value['type'] === 'tuple'
-          ? {
-              type: 'string',
-              val: convertObjBigNumbersToStrings(
-                JSONBigint.parse(value['val']),
-              ),
-            }
-          : /u?int[\d]{2,3}\[/.test(value['type'])
-          ? {
-              type: 'string',
-              val: convertObjBigNumbersToStrings(
-                JSONBigint.parse(value['val']),
-              ),
-            }
-          : value,
-      ),
-    );
-
-    const items: object[] = Object.values(newValues);
-    const objValues: any[] = [];
-    // Special convert for various types before call sdk
-    items.forEach(function (value, index) {
-      let val = value['val'];
-      if (value['type'] === 'bool') {
-        if (val === 'true' || val === '1') {
-          value['val'] = true;
-        } else if (val === 'false' || val === '0') {
-          value['val'] = false;
-        }
-      } else if (value['type'].startsWith('tuple')) {
-        value['val'] = JSON.parse(value['val']);
-      } else if (value['type'].endsWith(']')) {
-        // array: convert to array
-        value['val'] = Array.from(JSON.parse(value['val']));
-        // TODO byte array support
-      } else if (value['type'].startsWith('byte')) {
-        value['val'] = Buffer.from(value['val'].substr(2), 'hex');
-      }
-      objValues.push(value['val']);
-    });
-
-    // use full name to evoke contract function for override function compatible
-    const fullNameWithType = formatType({
-      name: data['name'],
-      inputs: data['inputs'].filter(i => i.type !== 'cfx'), // remove cfx item
-    });
-
-    const objValuesNew = convertBigNumbersToStrings(objValues);
+    const { args, value } = formatValuesToArgs(values, hasValue);
 
     switch (type) {
       case 'read':
         try {
           setQueryLoading(true);
-          const res = await contract[fullNameWithType](...objValuesNew).call({
+          const res = await contract[fullNameWithType](...args).call({
             from: account,
           });
           setOutputError('');
           setQueryLoading(false);
           if (data['outputs'].length === 1) {
             let arr: any[] = [];
-            arr.push(
-              constprocessResultArray(
-                JSONBigint.parse(JSONBigint.stringify(res)),
-              ),
-            );
+            arr.push(constprocessResultArray(parseResponse(res)));
             setOutputValue(arr);
           } else {
             setOutputValue(
-              Object.values(
-                constprocessResultArray(
-                  JSONBigint.parse(JSONBigint.stringify(res)),
-                ),
-              ),
+              Object.values(constprocessResultArray(parseResponse(res))),
             );
           }
           // setOutputValue(res)
@@ -164,22 +138,16 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
         break;
       case 'write':
         if (account) {
-          let objParams: any[] = [];
           let txParams = {
             from: formatAddress(account),
             to: formatAddress(contractAddress),
           };
           if (data['stateMutability'] === 'payable') {
-            objParams = objValues.slice(1);
-            txParams['value'] = SDK.format.bigUIntHex(
-              SDK.Drip.fromCFX(objValues[0]),
-            );
-          } else {
-            objParams = objValues;
+            txParams['value'] = value;
           }
           setOutputError('');
           try {
-            const { data: txData } = contract[fullNameWithType](...objParams);
+            const { data: txData } = contract[fullNameWithType](...args);
             txParams['data'] = txData;
           } catch (error) {
             setOutputError(error.message || '');
@@ -319,28 +287,154 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
     [t],
   );
 
+  const [simulateLoading, setSimulateLoading] = useState(false);
+  const [simulateResult, setSimulateResult] = useState<{
+    success: boolean;
+    result: unknown[] | null;
+  }>({
+    success: false,
+    result: null,
+  });
+  const [simulateError, setSimulateError] = useState('');
+  const [simulateGasError, setSimulateGasError] = useState('');
+  const [simulateGas, setSimulateGas] = useState('');
+
+  const simulateShown = simulateResult.success || simulateError;
+
+  const clearSimulateResult = () => {
+    setSimulateLoading(false);
+    setSimulateGas('');
+    setSimulateGasError('');
+    setSimulateError('');
+    setSimulateResult({
+      success: false,
+      result: null,
+    });
+  };
+
+  const simulateFunctionCall = async () => {
+    if (!formRef.current || !account) return;
+    try {
+      clearSimulateResult();
+      await formRef.current.validateFields();
+      const values = formRef.current.getFieldsValue();
+      const { args, value } = formatValuesToArgs(values, hasValue, false);
+      const func = contract[fullNameWithType](...args);
+      setSimulateLoading(true);
+      let simulateGasLoading = true;
+      let simulateCallLoading = true;
+      func
+        .estimateGasAndCollateral({
+          from: account,
+          value,
+        })
+        .then(gasRes => {
+          setSimulateGas(parseResponse(gasRes).gasUsed);
+        })
+        .catch(error => {
+          setSimulateGasError(error.message);
+        })
+        .finally(() => {
+          simulateGasLoading = false;
+          setSimulateLoading(simulateGasLoading || simulateCallLoading);
+        });
+      simulateContract({
+        address: contractAddress,
+        account,
+        value,
+        abi,
+        args,
+        functionName: func.data.slice(0, 10),
+        space: 'core',
+      })
+        .then(({ result: simulateRes }) => {
+          if (outputs.length === 0) {
+            setSimulateResult({
+              success: true,
+              result: [],
+            });
+            return;
+          }
+
+          const result = constprocessResultArray(parseResponse(simulateRes));
+
+          setSimulateResult({
+            success: true,
+            result: outputs.length === 1 ? [result] : Object.values(result),
+          });
+        })
+        .catch(error => {
+          setSimulateError(error?.cause?.raw || error?.message || '');
+        })
+        .finally(() => {
+          simulateCallLoading = false;
+          setSimulateLoading(simulateGasLoading || simulateCallLoading);
+        });
+    } catch (error) {
+      setSimulateError(error.message || '');
+    }
+  };
+
+  const getCallData = async () => {
+    if (!formRef.current) return;
+    try {
+      await formRef.current.validateFields();
+      const values = formRef.current.getFieldsValue();
+      const { args } = formatValuesToArgs(values, hasValue);
+      const func = contract[fullNameWithType](...args);
+      return func.data;
+    } catch (error) {
+      console.log('get calldata failed:', error);
+    }
+  };
+
   const btnComp =
     type === 'read' ? (
-      <Button
-        htmlType="submit"
-        variant="solid"
-        color="primary"
-        className="btnComp"
-        loading={queryLoading}
-      >
-        {t(translations.contract.query)}
-      </Button>
-    ) : (
-      <ConnectButton>
+      <ButtonList>
         <Button
           htmlType="submit"
           variant="solid"
           color="primary"
           className="btnComp"
+          loading={queryLoading}
         >
-          {t(translations.contract.write)}
+          {t(translations.contract.query)}
         </Button>
-      </ConnectButton>
+        <Button variant="solid" color="primary" className="btnComp">
+          <CopyButton getCopyText={getCallData} color="#fff">
+            {t(translations.simulateTrace.button.calldata)}
+          </CopyButton>
+        </Button>
+      </ButtonList>
+    ) : (
+      <ButtonList>
+        <ConnectButton>
+          <Button
+            htmlType="submit"
+            variant="solid"
+            color="primary"
+            className="btnComp"
+          >
+            {t(translations.contract.write)}
+          </Button>
+        </ConnectButton>
+        <ConnectButton>
+          <Button
+            variant="solid"
+            color="primary"
+            className="btnComp"
+            onClick={simulateFunctionCall}
+            loading={simulateLoading}
+          >
+            {t(translations.simulateTrace.button.simulate)}
+          </Button>
+        </ConnectButton>
+        <Button variant="solid" color="primary" className="btnComp">
+          <CopyButton getCopyText={getCallData} color="#fff">
+            {t(translations.simulateTrace.button.calldata)}
+          </CopyButton>
+        </Button>
+      </ButtonList>
     );
   const openTx = () => {
     window.open(`${window.location.origin}/transaction/${txHash}`);
@@ -348,6 +442,7 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
   return (
     <Container>
       <Form
+        ref={formRef}
         onFinish={onFinish}
         validateTrigger={['onBlur']}
         className="formContainer"
@@ -397,6 +492,56 @@ const Func = ({ type, data, contractAddress, contract, id = '' }: Props) => {
               />
             ))}
           {<Error message={outputError} />}
+          {simulateShown && (
+            <div className={`simulate-result ${simulateError && 'error'}`}>
+              <div className="simulate-result-title">
+                {t(translations.simulateTrace.simulatedResult)}
+              </div>
+              {simulateResult.success && (
+                <div>
+                  <div className="simulate-result-success">
+                    <span>{t(translations.simulateTrace.success)}</span>
+                    {outputs.length === 0 && (
+                      <div
+                        style={{
+                          marginLeft: '16px',
+                        }}
+                      >
+                        {t(translations.simulateTrace.bool)}
+                      </div>
+                    )}
+                  </div>
+                  {outputs.map((item, index) => (
+                    <OutputItem
+                      output={item}
+                      value={simulateResult.result?.[index]}
+                      key={id + index}
+                    />
+                  ))}
+                </div>
+              )}
+              {simulateError && (
+                <div>
+                  {simulateError.startsWith('0x') ? (
+                    <ErrorDecode
+                      to={contractAddress}
+                      space="core"
+                      errorData={simulateError as Hex}
+                      contentClassName="simulate-error-content"
+                    />
+                  ) : (
+                    simulateError
+                  )}
+                </div>
+              )}
+
+              <div className="simulate-gas">
+                {t(translations.simulateTrace.estimatedGas)}:{' '}
+                {(simulateGas || simulateGasError) &&
+                  (simulateGas ? toThousands(simulateGas) : simulateGasError)}
+              </div>
+            </div>
+          )}
         </FuncBody>
       </Form>
 
@@ -428,10 +573,56 @@ const Container = styled.div`
     line-height: 30px;
     min-width: initial;
     margin-left: 0;
+    .text {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+  .simulate-result {
+    border-radius: 4px;
+    background: #f8f8fa;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 16px;
+
+    &.error {
+      background: #fbebeb;
+    }
+
+    .simulate-result-success {
+      span {
+        color: #7cd77b;
+      }
+      display: flex;
+    }
+
+    .simulate-result-title {
+      color: #000;
+      font-size: 12px;
+    }
+
+    .simulate-error-content {
+      background-color: unset;
+    }
+
+    .simulate-gas {
+      color: #4f4f4e;
+      font-size: 14px;
+      font-weight: 450;
+      line-height: 22px;
+    }
   }
 `;
 const BtnGroup = styled.div`
   margin: 12px 0;
+  display: flex;
+  align-items: center;
+`;
+const ButtonList = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default Func;
