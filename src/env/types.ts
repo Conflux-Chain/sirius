@@ -7,18 +7,6 @@ export enum CHAIN_TYPES {
   DEVNET = 'DEVNET',
 }
 
-export interface WalletConfig {
-  chainId: number;
-  chainName: string;
-  rpcUrls: string[];
-  blockExplorerUrls: string[];
-  nativeCurrency: {
-    name: string;
-    symbol: string;
-    decimals: number;
-  };
-}
-
 export interface ENVConfig {
   ENV_LOGO?: string;
   ENV_NETWORK_ID: number;
@@ -31,5 +19,4 @@ export interface ENVConfig {
   ENV_FC_EXCHANGE_INTEREST_ADDRESS?: string;
   ENV_ENS_REGISTRY_ADDRESS?: string;
   ENV_ENS_PUBLIC_RESOLVER_ADDRESS?: string;
-  ENV_WALLET_CONFIG?: WalletConfig;
 }

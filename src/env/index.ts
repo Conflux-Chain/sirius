@@ -9,21 +9,7 @@ let isCustom = false;
 const ENV_CONFIG: ENVConfig = (() => {
   if (window.customConfig && typeof window.customConfig === 'object') {
     isCustom = true;
-    const config = window.customConfig as ENVConfig;
-    if (!config.ENV_WALLET_CONFIG) {
-      config.ENV_WALLET_CONFIG = {
-        chainId: config.ENV_NETWORK_ID,
-        chainName: 'Conflux Devnet',
-        rpcUrls: [config.ENV_RPC_SERVER],
-        blockExplorerUrls: [window.location.origin],
-        nativeCurrency: {
-          name: 'Conflux',
-          symbol: 'CFX',
-          decimals: 18,
-        },
-      };
-    }
-    return config;
+    return window.customConfig as ENVConfig;
   }
   const IS_CORESPACE_DEVNET =
     process.env.REACT_APP_CORE_DEVNET === 'true' ||

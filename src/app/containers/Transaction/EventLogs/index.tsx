@@ -24,35 +24,40 @@ interface Props {
   hash: string;
 }
 
+const createRawEventInfo = log => {
+  const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
+    hexValue: w,
+  }));
+
+  return {
+    address: log.address,
+    fnName: null,
+    args: [],
+    topics: log.topics,
+    /**
+     * if contract not register, it has no abi, need to decode data manully
+     * decode params value by split every 64 character
+     *
+     * There is 4 kind value
+     * 2. address: check if it can be decoded to address, by valid top 20 character is all 0, then use sdk.format.address(data) to decode, if throw error, try below
+     * 3. text: sdk.format.hexBuffer(data).toString() to decode
+     * 4. number: sdk.format.bigUInt(data).toString() to decode
+     * 5. hex: original data
+     */
+    data: splitData,
+    signature: null,
+  };
+};
+
 const EventLog = ({ log }) => {
   const { t } = useTranslation();
-  const [eventInfo, setEventInfo] = useState<any>(() => {
-    const splitData = _.words(log.data.substr(2), /.{64}/g).map(w => ({
-      hexValue: w,
-    }));
-
-    return {
-      address: log.address,
-      fnName: null,
-      args: [],
-      topics: log.topics,
-      /**
-       * if contract not register, it has no abi, need to decode data manully
-       * decode params value by split every 64 character
-       *
-       * There is 4 kind value
-       * 2. address: check if it can be decoded to address, by valid top 20 character is all 0, then use sdk.format.address(data) to decode, if throw error, try below
-       * 3. text: sdk.format.hexBuffer(data).toString() to decode
-       * 4. number: sdk.format.bigUInt(data).toString() to decode
-       * 5. hex: original data
-       */
-      data: splitData,
-      signature: null,
-    };
-  });
+  const [eventInfo, setEventInfo] = useState<any>(() =>
+    createRawEventInfo(log),
+  );
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     const fields = [
       'address',
       'abi',
@@ -61,6 +66,7 @@ const EventLog = ({ log }) => {
       // 'bytecode',
       // 'sourceCode', // not need now
     ];
+    setEventInfo(createRawEventInfo(log));
     setLoading(true);
 
     async function fn() {
@@ -119,23 +125,31 @@ const EventLog = ({ log }) => {
             },
           );
 
-          setEventInfo({
-            address: log.address,
-            fnName: decodedLog.name,
-            args,
-            topics,
-            data,
-            signature: decodedLog.signature,
-          });
+          if (!cancelled) {
+            setEventInfo({
+              address: log.address,
+              fnName: decodedLog.name,
+              args,
+              topics,
+              data,
+              signature: decodedLog.signature,
+            });
+          }
         }
       } catch (e) {
         console.log('eventlog process error: ', e);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
-
-      setLoading(false);
     }
 
     fn();
+
+    return () => {
+      cancelled = true;
+    };
   }, [log]);
 
   const { fnName, args, topics, data, address, signature } = eventInfo;

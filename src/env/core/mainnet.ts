@@ -22,14 +22,3 @@ export const ENV_ENS_REGISTRY_ADDRESS =
 export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
   'cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up';
 export const ENV_LOGO = logo;
-export const ENV_WALLET_CONFIG = {
-  chainId: ENV_NETWORK_ID,
-  chainName: 'Conflux Mainnet',
-  rpcUrls: [ENV_RPC_SERVER],
-  blockExplorerUrls: [window.location.origin],
-  nativeCurrency: {
-    name: 'Conflux',
-    symbol: 'CFX',
-    decimals: 18,
-  },
-};
