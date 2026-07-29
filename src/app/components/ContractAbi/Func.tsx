@@ -600,7 +600,9 @@ const Container = styled.div`
 
     .simulate-result-title {
       color: #000;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 450;
+      line-height: 22px;
     }
 
     .simulate-error-content {
