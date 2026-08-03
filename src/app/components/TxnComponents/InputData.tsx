@@ -1,16 +1,14 @@
 import React from 'react';
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import { InputData as InputDataBody } from '@cfxjs/sirius-next-common/dist/components/InputData';
-import {
-  useDecodeFunctionData,
-  Hex,
-} from '@cfxjs/sirius-next-common/dist/utils/hooks/useDecodeFunctionData';
+import { useDecodeFunctionData } from '@cfxjs/sirius-next-common/dist/utils/hooks/useDecodeFunctionData';
 import { useDecodedDataType } from '@cfxjs/sirius-next-common/dist/utils/hooks/useDecodedDataType';
 import { useTranslation, Trans } from 'react-i18next';
 import { translations } from 'locales/i18n';
 
 import styled from 'styled-components';
 import { ReactComponent as WarningIcon } from 'images/warning.svg';
+import { Hex } from '@cfxjs/sirius-next-common/dist/utils/types';
 
 interface Props {
   data: Hex;

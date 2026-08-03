@@ -43,9 +43,9 @@ import {
 } from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 import {
   AbiItem,
-  Hex,
   simulateContract,
 } from '@cfxjs/sirius-next-common/dist/utils/sdk';
+import { Hex } from '@cfxjs/sirius-next-common/dist/utils/types';
 
 interface FuncProps {
   type?: string;
@@ -329,7 +329,7 @@ const Func = ({
           value,
         })
         .then(gasRes => {
-          setSimulateGas(parseResponse(gasRes).gasUsed);
+          setSimulateGas(parseResponse(gasRes).gasLimit);
         })
         .catch(error => {
           setSimulateGasError(error.message);
