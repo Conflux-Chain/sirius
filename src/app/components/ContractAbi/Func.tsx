@@ -364,7 +364,13 @@ const Func = ({
           });
         })
         .catch(error => {
-          setSimulateError(error?.cause?.raw || error?.message || '');
+          setSimulateError(
+            error?.cause?.raw ||
+              error?.cause?.reason ||
+              error?.cause?.shortMessage ||
+              error?.cause?.message ||
+              error?.message,
+          );
         })
         .finally(() => {
           simulateCallLoading = false;
