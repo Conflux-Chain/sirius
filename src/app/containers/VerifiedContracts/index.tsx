@@ -91,7 +91,7 @@ export function VerifiedContracts() {
     url: OPEN_API_URLS.verifiedContractsLatest,
   });
 
-  const columnsWidth = [2, 4, 2, 2, 2, 1, 2, 2, 2];
+  const columnsWidth = [5, 7, 4, 4, 4, 2, 4, 4, 4];
   const columns = [
     verifiedContractsColumns.address,
     verifiedContractsColumns.contractName,
