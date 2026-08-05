@@ -23,7 +23,7 @@ const AceEditorStyle = {
 };
 
 export interface Step2SubmitData {
-  name: string;
+  name?: string;
   license: string;
   sourceCode: string;
   evmVersion: string;
@@ -304,30 +304,30 @@ export const Step2: React.FC<{
           {t(translations.contractVerification.advancedConfiguration)}
         </div>
         <Row gutter={24}>
-          <Col span={24} md={8}>
-            <Form.Item
-              name="name"
-              label={t(translations.contractVerification.contractName)}
-              rules={[
-                {
-                  required: true,
-                  message: t(
-                    translations.contractVerification.error.pleaseEnter,
-                  ),
-                },
-              ]}
-              initialValue={
-                isSolidity ? undefined : DEFAULT_VYPER_CONTRACT_NAME
-              }
-              validateFirst
-            >
-              <Input
-                placeholder={t(
-                  translations.contractVerification.placeholder.contractName,
-                )}
-              />
-            </Form.Item>
-          </Col>
+          {!isSolidity && (
+            <Col span={24} md={8}>
+              <Form.Item
+                name="name"
+                label={t(translations.contractVerification.contractName)}
+                rules={[
+                  {
+                    required: true,
+                    message: t(
+                      translations.contractVerification.error.pleaseEnter,
+                    ),
+                  },
+                ]}
+                initialValue={DEFAULT_VYPER_CONTRACT_NAME}
+                validateFirst
+              >
+                <Input
+                  placeholder={t(
+                    translations.contractVerification.placeholder.contractName,
+                  )}
+                />
+              </Form.Item>
+            </Col>
+          )}
           <Col span={24} md={8}>
             <Form.Item
               name="license"

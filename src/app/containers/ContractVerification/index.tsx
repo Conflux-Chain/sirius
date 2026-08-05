@@ -113,7 +113,7 @@ export const ContractVerification = () => {
       address: string;
       codeFormat: string;
       compiler: string;
-      name: string;
+      name?: string;
       sourceCode: string;
       license: string;
       optimizeRuns?: number;
