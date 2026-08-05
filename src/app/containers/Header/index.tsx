@@ -148,6 +148,11 @@ export const Header = memo(() => {
       afterClick: menuClick,
       href: '/contracts',
     },
+    {
+      title: t(translations.header.verifiedContracts),
+      afterClick: menuClick,
+      href: '/verified-contracts',
+    },
   ];
 
   const toolItems = [

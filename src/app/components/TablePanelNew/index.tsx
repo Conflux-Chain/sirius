@@ -32,6 +32,8 @@ interface TableProp extends Omit<TableProps<any>, 'title' | 'footer'> {
   sortKeyMap?: {
     [index: string]: string;
   };
+  total?: number;
+  listLimit?: number;
 }
 
 interface TableStateProp {
@@ -136,6 +138,8 @@ export const TablePanel = ({
   showSorterTooltip = false,
   sortParam = 'reverse',
   formatResponse,
+  listLimit: _listLimit,
+  total: _total,
   ...others
 }: TableProp) => {
   const queryIdRef = useRef<number | null>(null);
@@ -262,9 +266,12 @@ export const TablePanel = ({
     history.push(url);
   };
 
-  const { data, loading, total: stateTotal, listLimit } = state;
+  const { data, loading, total: stateTotal, listLimit: stateListLimit } = state;
+  const listLimit = _listLimit ?? stateListLimit;
   const total =
-    dataSource && Array.isArray(dataSource) ? dataSource.length : stateTotal;
+    dataSource && Array.isArray(dataSource)
+      ? _total ?? dataSource.length
+      : stateTotal;
 
   let _columns: any = columns;
   if (orderBy !== undefined) {
