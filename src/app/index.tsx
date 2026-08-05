@@ -69,6 +69,7 @@ import { AddressConverter } from './containers/AddressConverter';
 import { Loading } from '@cfxjs/sirius-next-common/dist/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
+import { VerifiedContracts } from './containers/VerifiedContracts/Loadable';
 // import { CookieTip } from './components/CookieTip';
 // import { GlobalTip } from './components/GlobalTip';
 import { NetworkError } from './containers/NetworkError/Loadable';
@@ -93,6 +94,7 @@ import {
   AccountGrowth,
   ActiveAccounts,
   Contracts as ContractsCharts,
+  VerifiedContracts as VerifiedContractsCharts,
 } from './containers/Charts/pow/Loadable';
 
 import {
@@ -608,7 +610,9 @@ export function App() {
                               if (isAddress(address)) {
                                 return (
                                   <Redirect
-                                    to={`/address/${formatAddress(address)}`}
+                                    to={`/address/${formatAddress(address)}${
+                                      routeProps.location.search
+                                    }`}
                                   />
                                 );
                               } else {
@@ -915,6 +919,18 @@ export function App() {
                           exact
                           path="/pow-charts/contracts"
                           component={ContractsCharts}
+                        />
+
+                        <Route
+                          exact
+                          path="/pow-charts/verified-contracts"
+                          component={VerifiedContractsCharts}
+                        />
+
+                        <Route
+                          exact
+                          path="/verified-contracts"
+                          component={VerifiedContracts}
                         />
 
                         <Route exact path="/Profile" component={Profile} />

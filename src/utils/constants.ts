@@ -122,6 +122,7 @@ export const OPEN_API_URLS = Object.entries({
   accountGrowth: '/statistics/account/growth',
   activeAccounts: '/statistics/account/active/overall',
   contracts: '/statistics/contract',
+  verifiedContracts: '/statistics/contract/verified',
   nftAssets: '/statistics/nft/asset',
   nftHolders: '/statistics/nft/holder',
   nftContracts: '/statistics/nft/contract',
@@ -139,6 +140,8 @@ export const OPEN_API_URLS = Object.entries({
   // NFT
   NFTTokens: '/nft/tokens',
   NFTBalance: '/nft/balances',
+  // contracts
+  verifiedContractsLatest: '/contract/verified/latest',
 })
   .map(item => ({
     [item[0]]: `${ENV_CONFIG.ENV_OPEN_API_HOST}${item[1]}`,
