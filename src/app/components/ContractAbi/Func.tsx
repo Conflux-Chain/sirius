@@ -367,6 +367,7 @@ const Func = ({
           setSimulateError(
             error?.cause?.raw ||
               error?.cause?.reason ||
+              error?.cause?.details ||
               error?.cause?.shortMessage ||
               error?.cause?.message ||
               error?.message,
