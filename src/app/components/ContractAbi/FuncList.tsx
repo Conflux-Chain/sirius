@@ -5,22 +5,46 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from 'locales/i18n';
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { AbiItem } from '@cfxjs/sirius-next-common/dist/utils/sdk';
+
+export interface FuncDataItem {
+  name: string;
+  signature?: string;
+}
 
 interface FuncListProps {
   type?: string;
-  data?: object[];
+  data?: FuncDataItem[];
   contractAddress: string;
   contract: object;
+  abi: AbiItem[];
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof FuncListProps>;
 export declare type Props = FuncListProps & NativeAttrs;
 const { Panel } = Collapse;
-const FuncList = ({ type, data, contractAddress, contract }: Props) => {
+
+const FuncHeader = ({ index, item }: { index: number; item: FuncDataItem }) => {
+  return (
+    <FuncHeaderComp>
+      <span>{index + 1}.</span>
+      <span>{item.name}</span>
+      {item.signature && (
+        <div className="signature" onClick={e => e.stopPropagation()}>
+          <span>{item.signature}</span>
+          <CopyButton copyText={item.signature} color="#737682" size={14} />
+        </div>
+      )}
+    </FuncHeaderComp>
+  );
+};
+
+const FuncList = ({ abi, type, data, contractAddress, contract }: Props) => {
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState([]);
   const allKeys: string[] = [];
   data?.forEach(function (value, index) {
-    allKeys.push(`${type}-${index}-${value['name']}`);
+    allKeys.push(`${type}-${index}-${value.name}`);
   });
   const clickHandler = () => {
     if (activeKey.length === 0) {
@@ -62,8 +86,8 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
           {data &&
             data.map((item, index) => (
               <Panel
-                header={`${index + 1}. ${item['name']}`}
-                key={`${type}-${index}-${item['name']}`}
+                header={<FuncHeader index={index} item={item} />}
+                key={`${type}-${index}-${item.name}`}
                 className="panelContainer"
               >
                 <Func
@@ -71,8 +95,9 @@ const FuncList = ({ type, data, contractAddress, contract }: Props) => {
                   type={type}
                   contractAddress={contractAddress}
                   contract={contract}
-                  key={`${type}-${index}-func-${item['name'] || index}`}
-                  id={`${type}-${index}-func-${item['name'] || index}`}
+                  key={`${type}-${index}-func-${item.name || index}`}
+                  id={`${type}-${index}-func-${item.name || index}`}
+                  abi={abi}
                 />
               </Panel>
             ))}
@@ -90,6 +115,23 @@ const HeaderComp = styled.div`
   border-bottom: 1px solid #ebeced;
   .label {
     color: #74798c;
+  }
+`;
+const FuncHeaderComp = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  .signature {
+    padding: 2px 14px;
+    border-radius: 20px;
+    background-color: rgba(119, 137, 211, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #282d30;
+    font-size: 14px;
+    font-weight: 450;
+    line-height: 22px;
   }
 `;
 const Container = styled.div`

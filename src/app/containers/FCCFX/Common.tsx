@@ -9,10 +9,6 @@ import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.
 import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
 import { abi as fcABI } from 'utils/contract/FC.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-import {
-  completeDetect,
-  provider,
-} from '@cfxjs/use-wallet-react/conflux/Fluent';
 import ENV_CONFIG from 'env';
 
 export interface AccountInfoType {
@@ -118,13 +114,6 @@ const StyledCardInfoWrapper = styled.div<{
 export const CFX = new SDK.Conflux({
   url: ENV_CONFIG.ENV_RPC_SERVER,
   networkId: NETWORK_ID,
-});
-
-if (provider) {
-  CFX.provider = provider;
-}
-completeDetect().then(() => {
-  CFX.provider = provider;
 });
 
 export const fcExchangeContract = CFX.Contract({

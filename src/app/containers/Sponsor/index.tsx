@@ -108,7 +108,7 @@ export function Sponsor() {
   const [inputAddressVal, setInputAddressVal] = useState('');
   const [errorMsgForApply, setErrorMsgForApply] = useState('');
   const [txData, setTxData] = useState('');
-  const { accounts } = usePortal();
+  const { account } = usePortal();
   const [storageSponsorInfo, setStorageSponsorInfo] = useState({
     storageQuota: {
       storageCollateral: '0',
@@ -347,7 +347,7 @@ export function Sponsor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractAddress]);
   useEffect(() => {
-    if (!accounts[0]) {
+    if (!account) {
       setCanApply(true);
       if (errorMsgForApply) {
         setErrorMsgForApply('');
@@ -358,7 +358,7 @@ export function Sponsor() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts[0]]);
+  }, [account]);
 
   const failCallback = message => {
     setCanApply(false);

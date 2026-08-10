@@ -10,8 +10,11 @@ import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { ArrowDown } from '@cfxjs/sirius-next-common/dist/components/Icons';
-import { MaxDecimals, NumberType } from './constants';
-import IntValueFormatter from './IntValueFormatter';
+import {
+  MaxDecimals,
+  NumberType,
+  IntValueFormatter,
+} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 
 interface OutputParamsProps {
   output: object;

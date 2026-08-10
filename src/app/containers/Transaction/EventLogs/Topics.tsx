@@ -79,7 +79,7 @@ export const Topics = ({ data, signature }) => {
           if (name === 'address') {
             value = (
               <>
-                <StyledHighlight scope="address" value={value}>
+                <StyledHighlight scope="address" value={value as string}>
                   <Link href={`/address/${value}`}>{value} </Link>
                 </StyledHighlight>
                 <ContractDetail address={d.cfxAddress} addressType="base32" />

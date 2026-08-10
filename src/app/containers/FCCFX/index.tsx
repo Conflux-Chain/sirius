@@ -28,14 +28,14 @@ import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
 
 export function FCCFX() {
-  const { accounts } = usePortal();
+  const { account: _account } = usePortal();
   const { t, i18n } = useTranslation();
   const iszh = i18n.language.includes('zh');
   const [loading, setLoading] = useState(false);
   const bp = useBreakpoint();
 
   // if no account login, use zero address to get summary info
-  const account = accounts[0] || SDK.CONST.ZERO_ADDRESS_HEX;
+  const account = _account || SDK.CONST.ZERO_ADDRESS_HEX;
 
   const [isModalVisible, setIsModalVisible] = useState(() => {
     try {
@@ -69,7 +69,7 @@ export function FCCFX() {
   });
 
   const hasPendingProfitLegacy =
-    accounts.length && !accountInfo.pendingProfitLegacy.eq(0);
+    _account && !accountInfo.pendingProfitLegacy.eq(0);
   const remarkLink = iszh
     ? 'https://confluxscansupportcenter.zendesk.com/hc/zh-cn/articles/4408240776347-FC-%E5%85%91%E6%8D%A2-CFX-%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E'
     : 'https://confluxscansupportcenter.zendesk.com/hc/en-us/articles/4408240776347-FC-to-CFX-None-reversible-Rules';

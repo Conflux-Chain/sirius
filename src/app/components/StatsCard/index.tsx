@@ -118,7 +118,7 @@ export const StatsCard = ({
   );
 
   // get portal selected address
-  const { accounts } = usePortal();
+  const { account } = usePortal();
 
   let columns: any[] = [];
   let action = '';
@@ -412,8 +412,8 @@ export const StatsCard = ({
                   value={d.base32}
                   nameMap={d.nameMap}
                   isMe={
-                    accounts && accounts.length > 0
-                      ? formatAddress(accounts[0]) === formatAddress(d.base32)
+                    account
+                      ? formatAddress(account) === formatAddress(d.base32)
                       : false
                   }
                 />
@@ -455,8 +455,8 @@ export const StatsCard = ({
                   <CoreAddressContainer
                     value={d.base32address}
                     isMe={
-                      accounts && accounts.length > 0
-                        ? formatAddress(accounts[0]) ===
+                      account
+                        ? formatAddress(account) ===
                           formatAddress(d.base32address)
                         : false
                     }
@@ -476,8 +476,8 @@ export const StatsCard = ({
                 maxWidth={200}
                 value={d.base32}
                 isMe={
-                  accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) === formatAddress(d.base32)
+                  account
+                    ? formatAddress(account) === formatAddress(d.base32)
                     : false
                 }
               />
@@ -547,8 +547,8 @@ export const StatsCard = ({
                 maxWidth={200}
                 value={d.base32}
                 isMe={
-                  accounts && accounts.length > 0
-                    ? formatAddress(accounts[0]) === formatAddress(d.base32)
+                  account
+                    ? formatAddress(account) === formatAddress(d.base32)
                     : false
                 }
               />
@@ -582,7 +582,6 @@ export const StatsCard = ({
         return null;
     }
   };
-  const account = accounts[0];
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tableBodyMemo = useMemo(() => tableBody(category, data), [
     category,

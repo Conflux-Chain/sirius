@@ -26,7 +26,7 @@ const { confirm } = Modal;
 export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
   const [globalData, setGlobalData] = useGlobalData();
   const { addRecord } = useTxnHistory();
-  const { accounts } = usePortal();
+  const { sendTransaction } = usePortal();
   const { t } = useTranslation();
   const [withdrawCFX, setWithdrawCFX] = useState('');
   const [txnStatusModal, setTxnStatusModal] = useState({
@@ -57,11 +57,13 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     });
 
     try {
-      const hash = await fcExchangeContract
-        .withdraw(SDK.Drip.fromCFX(withdrawCFX))
-        .sendTransaction({
-          from: accounts[0],
-        });
+      const { data, to } = fcExchangeContract.withdraw(
+        SDK.Drip.fromCFX(withdrawCFX),
+      );
+      const hash = await sendTransaction({
+        data,
+        to,
+      });
 
       setTxnStatusModal({
         ...txnStatusModal,
@@ -117,11 +119,11 @@ export const WithdrawCFXCard = ({ info }: { info: AccountInfoType }) => {
     });
 
     try {
-      const hash = await fcExchangeInterestContract
-        .registerOrWithdraw()
-        .sendTransaction({
-          from: accounts[0],
-        });
+      const { data, to } = fcExchangeInterestContract.registerOrWithdraw();
+      const hash = await sendTransaction({
+        data,
+        to,
+      });
 
       setTxnStatusModal({
         ...txnStatusModal,

@@ -183,7 +183,12 @@ const StyledSwapItemWrapper = styled.div`
 
 export function Swap() {
   const { t } = useTranslation();
-  const { accounts, authConnectStatus, provider, useBalance } = usePortal();
+  const {
+    account,
+    authConnectStatus,
+    useBalance,
+    sendTransaction,
+  } = usePortal();
   const cfx = useBalance();
   const { addRecord } = useTxnHistory();
 
@@ -191,8 +196,6 @@ export function Swap() {
     url: ENV_CONFIG.ENV_RPC_SERVER,
     networkId: NETWORK_ID,
   });
-
-  CFX.provider = provider;
 
   const contract = CFX.Contract({
     address: CONTRACTS.wcfx,
@@ -222,10 +225,10 @@ export function Swap() {
   };
 
   useEffect(() => {
-    if (accounts.length) {
+    if (account) {
       // @todo, the interval maybe not good, need to change
       const interval = setInterval(() => {
-        contract.balanceOf(accounts[0]).then(data => {
+        contract.balanceOf(account).then(data => {
           setWcfx(data.toString());
         });
       }, 2000);
@@ -234,7 +237,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [accounts, authConnectStatus, contract, CFX]);
+  }, [account, authConnectStatus, contract, CFX]);
 
   const handleInputChange = value => {
     setFromToken({
@@ -264,7 +267,9 @@ export function Swap() {
   };
 
   const handleSwap = () => {
-    const value = new BigNumber(fromToken.value).multipliedBy(1e18).toString();
+    const bn = new BigNumber(fromToken.value).multipliedBy(1e18);
+    const value = bn.toString();
+    const hexValue = `0x${bn.toString(16)}`;
     const recordFromValue = formatNumber(fromToken.value, {
       precision: MAX_FORMAT_DECIMALS,
     });
@@ -278,13 +283,13 @@ export function Swap() {
     });
     if (fromToken.type === 'cfx') {
       const code = TXN_ACTION.swapCFXToWCFX;
+      const { data, to } = contract.deposit();
       // deposit
-      contract
-        .deposit()
-        .sendTransaction({
-          from: accounts[0],
-          value,
-        })
+      sendTransaction({
+        value: hexValue,
+        data,
+        to,
+      })
         .then(hash => {
           setShowModal({
             ...showModal,
@@ -330,12 +335,12 @@ export function Swap() {
         });
     } else if (fromToken.type === 'wcfx') {
       const code = TXN_ACTION.swapWCFXToCFX;
+      const { data, to } = contract.withdraw(value);
       // withdraw
-      contract
-        .withdraw(value)
-        .sendTransaction({
-          from: accounts[0],
-        })
+      sendTransaction({
+        data,
+        to,
+      })
         .then(hash => {
           setShowModal({
             ...showModal,
@@ -400,7 +405,7 @@ export function Swap() {
     let buttonText = t(translations.swap.swap);
     let disabled = false;
 
-    if (!accounts.length) {
+    if (!account) {
       buttonText = t(translations.swap.connectWallet);
     } else if (fromValueBN.isNaN() || fromValueBN.eq(0)) {
       buttonText = t(translations.swap.enterAmount);

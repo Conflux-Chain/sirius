@@ -30,13 +30,12 @@ interface Button {
 export const Button = ({ className, onClick, showBalance }: Button) => {
   const [globalData] = useGlobalData();
   const { t } = useTranslation();
-  const { authConnectStatus, accounts } = usePortal();
-  const account = accounts[0];
+  const { authConnectStatus, account } = usePortal();
   const { pendingRecords } = useContext(TxnHistoryContext);
   const { isValid } = useCheckHook();
-  const { ens } = useENS(account);
+  const { ens } = useENS(account ?? null);
   const { label, icon } = useMemo(
-    () => getLabelInfo(ens[account]?.name, 'ens'),
+    () => getLabelInfo(ens[account ?? '']?.name, 'ens'),
     [account, ens],
   );
 
@@ -50,7 +49,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
 
   if (authConnectStatus !== AuthConnectStatus.NotConnected) {
     if (isValid) {
-      if (accounts.length) {
+      if (account) {
         if (hasPendingRecords) {
           buttonStatus = (
             <RotateImg
@@ -114,8 +113,8 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
     <ButtonWrapper
       className={clsx('connect-wallet-button', className, {
         pending: hasPendingRecords,
-        connected: accounts.length && isValid,
-        notConnected: !(accounts.length && isValid),
+        connected: account && isValid,
+        notConnected: !(account && isValid),
         switchNetwork:
           authConnectStatus !== AuthConnectStatus.NotConnected && !isValid,
       })}
@@ -125,7 +124,7 @@ export const Button = ({ className, onClick, showBalance }: Button) => {
         {buttonStatus}
         <span className="text">{buttonText}</span>
       </span>
-      {isValid && accounts.length && showBalance && !hasPendingRecords ? (
+      {isValid && account && showBalance && !hasPendingRecords ? (
         <Balance />
       ) : null}
     </ButtonWrapper>
