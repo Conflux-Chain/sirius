@@ -40,6 +40,7 @@ export interface AdvancedSearchFormProps {
   transactionHash?: SearchFormItemsProps;
   button?: SearchFormItemsProps;
   rangePicker?: SearchFormItemsProps;
+  contractName?: SearchFormItemsProps;
 }
 
 interface QueryProps {
@@ -134,6 +135,15 @@ const defaultProps = {
       xl: 8,
     },
   },
+  contractName: {
+    col: {
+      xs: 24,
+      sm: 6,
+      md: 6,
+      lg: 6,
+      xl: 6,
+    },
+  },
   button: {
     col: {
       xs: 24,
@@ -202,6 +212,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
     nonce,
     transactionHash,
     rangePicker,
+    contractName,
   } = props;
 
   const validators = useMemo(() => {
@@ -318,6 +329,7 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
       to,
       minTimestamp,
       maxTimestamp,
+      contractName,
       ...others
     } = qs.parse(search);
 
@@ -394,6 +406,9 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
         query.minTimestamp = dates[0];
         query.maxTimestamp = dates[1];
       }
+    }
+    if (props.contractName && values.contractName) {
+      query.contractName = values.contractName;
     }
 
     const urlWithQuery = qs.stringifyUrl({
@@ -730,6 +745,25 @@ export const AdvancedSearchForm = (props: AdvancedSearchFormProps) => {
               min="0"
               allowClear
             />
+          </Form.Item>
+        </Col>,
+      );
+    }
+
+    if (contractName) {
+      const col =
+        typeof contractName !== 'boolean'
+          ? contractName?.col
+          : defaultProps.contractName.col;
+
+      children.push(
+        <Col {...col} key="contractName">
+          <Form.Item
+            name="contractName"
+            label={t(translations.general.advancedSearch.label.contractName)}
+            normalize={value => value.trim()}
+          >
+            <Input placeholder="" allowClear />
           </Form.Item>
         </Col>,
       );

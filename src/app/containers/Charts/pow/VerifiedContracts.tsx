@@ -8,7 +8,7 @@ import { ChildProps } from '@cfxjs/sirius-next-common/dist/components/Charts/con
 import { OPEN_API_URLS } from 'utils/constants';
 import { useChartQueryParams } from '@cfxjs/sirius-next-common/dist/utils/hooks/useChartQueryParams';
 
-export function Contracts({ preview = false }: ChildProps) {
+export function VerifiedContracts({ preview = false }: ChildProps) {
   const { t } = useTranslation();
   const query = useChartQueryParams({
     preview,
@@ -17,7 +17,7 @@ export function Contracts({ preview = false }: ChildProps) {
 
   const props = {
     request: {
-      url: OPEN_API_URLS.contracts,
+      url: OPEN_API_URLS.verifiedContracts,
       query: query,
       formatter: data => {
         const data1: any = [];
@@ -38,10 +38,10 @@ export function Contracts({ preview = false }: ChildProps) {
       },
       header: {
         title: {
-          text: t(translations.highcharts.pow.contracts.title),
+          text: t(translations.highcharts.pow.verifiedContracts.title),
         },
         subtitle: {
-          text: t(translations.highcharts.pow.contracts.subtitle),
+          text: t(translations.highcharts.pow.verifiedContracts.subtitle),
         },
         breadcrumb: [
           {
@@ -49,13 +49,15 @@ export function Contracts({ preview = false }: ChildProps) {
             path: '/pow-charts',
           },
           {
-            name: t(translations.highcharts.pow.breadcrumb['contracts']),
-            path: '/pow-charts/contracts',
+            name: t(
+              translations.highcharts.pow.breadcrumb['verifiedContracts'],
+            ),
+            path: '/pow-charts/verified-contracts',
           },
         ],
       },
       title: {
-        text: t(translations.highcharts.pow.contracts.title),
+        text: t(translations.highcharts.pow.verifiedContracts.title),
       },
       subtitle: {
         text: t(translations.highcharts.subtitle),
@@ -65,7 +67,7 @@ export function Contracts({ preview = false }: ChildProps) {
       },
       yAxis: {
         title: {
-          text: t(translations.highcharts.pow.contracts.yAxisTitle),
+          text: t(translations.highcharts.pow.verifiedContracts.yAxisTitle),
         },
       },
       tooltip: {
@@ -75,13 +77,13 @@ export function Contracts({ preview = false }: ChildProps) {
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName,
+            translations.highcharts.pow.verifiedContracts.seriesName,
           )}</span>`,
         },
         {
           type: 'line',
           name: `<span>${t(
-            translations.highcharts.pow.contracts.seriesName2,
+            translations.highcharts.pow.verifiedContracts.seriesName2,
           )}</span>`,
         },
       ],

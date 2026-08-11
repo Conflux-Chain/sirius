@@ -70,6 +70,11 @@ export const Contracts = lazyLoad(
   module => module.Contracts,
 );
 
+export const VerifiedContracts = lazyLoad(
+  () => import('./VerifiedContracts'),
+  module => module.VerifiedContracts,
+);
+
 export const Contract = lazyLoad(
   () => import('./Contract'),
   module => module.Contract,
