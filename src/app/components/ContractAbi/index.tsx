@@ -20,10 +20,10 @@ import { AbiItem } from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 interface ContractAbiProps {
   type?: 'read' | 'write';
-  address: string;
+  contractAddress: string;
   abi?: any;
   pattern?: React.ReactNode;
-  proxyAddress?: string;
+  implementationAddress?: string;
   beaconAddress?: string;
 }
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof ContractAbiProps>;
@@ -33,10 +33,10 @@ type DataType = Array<FuncDataItem>;
 
 export const ContractAbi = ({
   type = 'read',
-  address,
+  contractAddress,
   abi,
   pattern,
-  proxyAddress,
+  implementationAddress,
   beaconAddress,
 }: Props) => {
   const { account } = usePortal();
@@ -55,7 +55,7 @@ export const ContractAbi = ({
   const [contract, setContract] = useState(() =>
     CFX.Contract({
       abi: [],
-      address: proxyAddress || address,
+      address: contractAddress,
     }),
   );
 
@@ -68,7 +68,7 @@ export const ContractAbi = ({
 
         if (!abiInfo) {
           const resp = await reqContract({
-            address,
+            address: implementationAddress || contractAddress,
             fields: ['abi'],
           });
 
@@ -80,7 +80,7 @@ export const ContractAbi = ({
 
         const contract = CFX.Contract({
           abi: abiJSON,
-          address: proxyAddress || address,
+          address: contractAddress,
         });
         setContract(contract);
 
@@ -179,7 +179,7 @@ export const ContractAbi = ({
     fn();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, abi, type]);
+  }, [contractAddress, implementationAddress, abi, type]);
 
   return (
     <div>
@@ -198,7 +198,7 @@ export const ContractAbi = ({
               <CoreAddressContainer
                 showIcon={false}
                 link={true}
-                value={address}
+                value={implementationAddress ?? ''}
               />
               , and its Beacon contract is
               <CoreAddressContainer
@@ -215,7 +215,7 @@ export const ContractAbi = ({
             <CoreAddressContainer
               showIcon={false}
               link={true}
-              value={address}
+              value={implementationAddress ?? ''}
             />
             {pattern}
           </Trans>
@@ -229,7 +229,8 @@ export const ContractAbi = ({
         <FuncList
           type={type}
           data={data[type]}
-          contractAddress={proxyAddress || address}
+          contractAddress={contractAddress}
+          implementationAddress={implementationAddress}
           contract={contract}
           abi={abiJSON}
         ></FuncList>
