@@ -10,6 +10,8 @@ import { translations } from 'locales/i18n';
 import { message } from '@cfxjs/antd';
 import MD5 from 'md5.js';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
+import { sanitizeAddressLabels } from '@cfxjs/sirius-next-common/dist/utils/addressLabel';
+import { sanitizeTxNotes } from '@cfxjs/sirius-next-common/dist/utils/txNote';
 
 interface Props {
   onLoading?: (loading: boolean) => void;
@@ -47,16 +49,27 @@ export const File = ({ onLoading = () => {} }: Props) => {
         return;
       }
 
-      if (addressNameTags !== null && addressNameTags.length > 0) {
+      const importedTags = sanitizeAddressLabels(addressNameTags);
+
+      if (
+        Array.isArray(addressNameTags) &&
+        importedTags.length !== addressNameTags.length
+      ) {
+        message.warning(t(translations.profile.address.error.invalidLabel));
+      }
+
+      if (importedTags.length > 0) {
         const oldTags = localStorage.getItem(
           LOCALSTORAGE_KEYS_MAP.addressLabel,
         );
-        const oldList = oldTags ? JSON.parse(oldTags) : [];
+        const oldList = sanitizeAddressLabels(
+          oldTags ? JSON.parse(oldTags) : [],
+        );
 
         let updateAmount = 0;
         // New imports have higher priority
         const tags = lodash
-          .unionWith<any>(addressNameTags, oldList, (arrVal, othVal) => {
+          .unionWith<any>(importedTags, oldList, (arrVal, othVal) => {
             if (arrVal.a === othVal.a) {
               if (arrVal.l !== othVal.l) {
                 updateAmount += 1;
@@ -100,16 +113,25 @@ export const File = ({ onLoading = () => {} }: Props) => {
         }
       }
 
-      if (txPrivateNotes !== null && txPrivateNotes.length > 0) {
+      const importedNotes = sanitizeTxNotes(txPrivateNotes);
+
+      if (
+        Array.isArray(txPrivateNotes) &&
+        importedNotes.length !== txPrivateNotes.length
+      ) {
+        message.warning(t(translations.profile.tx.error.invalidNote));
+      }
+
+      if (importedNotes.length > 0) {
         const oldNotes = localStorage.getItem(
           LOCALSTORAGE_KEYS_MAP.txPrivateNote,
         );
-        const oldList = oldNotes ? JSON.parse(oldNotes) : [];
+        const oldList = sanitizeTxNotes(oldNotes ? JSON.parse(oldNotes) : []);
 
         let updateAmount = 0;
         // New imports have higher priority
         const notes = lodash
-          .unionWith<any>(txPrivateNotes, oldList, (arrVal, othVal) => {
+          .unionWith<any>(importedNotes, oldList, (arrVal, othVal) => {
             if (arrVal.h === othVal.h) {
               if (arrVal.n !== othVal.n) {
                 updateAmount += 1;
@@ -233,11 +255,11 @@ const StyledFileManagementWrapper = styled.div`
   text-align: right;
 
   .button {
-    color: #1e3de4;
+    color: var(--theme-color-link);
     cursor: pointer;
 
     &:hover {
-      color: #0f23bd;
+      color: var(--theme-color-link-hover);
     }
   }
 `;
