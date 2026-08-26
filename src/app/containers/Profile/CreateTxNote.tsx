@@ -6,6 +6,12 @@ import { isHash } from '@cfxjs/sirius-next-common/dist/utils';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
+import {
+  DEFAULT_TX_NOTE_LENGTH_LIMIT,
+  isValidTxNote,
+  normalizeTxNote,
+  sanitizeTxNotes,
+} from '@cfxjs/sirius-next-common/dist/utils/txNote';
 
 type Type = {
   h: string;
@@ -13,6 +19,8 @@ type Type = {
   t: number;
   u: number;
 };
+
+type ListChangeHandler = (list: Type[]) => void;
 
 type Props = {
   visible: boolean;
@@ -23,7 +31,7 @@ type Props = {
   };
   list?: null | Array<Type>;
   noteLengthLimit?: number;
-  onOk: () => void;
+  onOk: ListChangeHandler;
   onCancel: () => void;
 };
 
@@ -35,13 +43,15 @@ export function CreateTxNote({
     note: '',
   },
   list: outerList,
-  noteLengthLimit = 20,
+  noteLengthLimit = DEFAULT_TX_NOTE_LENGTH_LIMIT,
   onOk = () => {},
   onCancel = () => {},
 }: Props) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const [list, setList] = useState<Type[]>(outerList || []);
+  const [list, setList] = useState<Type[]>(
+    sanitizeTxNotes(outerList || [], noteLengthLimit),
+  );
   const [loading, setLoading] = useState(false);
   const [globalData, setGlobalData] = useGlobalData();
 
@@ -50,16 +60,23 @@ export function CreateTxNote({
       if (!outerList) {
         setLoading(true);
         const l = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.txPrivateNote);
-        if (l) {
-          setList(JSON.parse(l));
+        const rawList = l ? JSON.parse(l) : [];
+        const validList = sanitizeTxNotes(rawList, noteLengthLimit);
+
+        setList(validList);
+        if (l && JSON.stringify(rawList) !== JSON.stringify(validList)) {
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.txPrivateNote,
+            JSON.stringify(validList),
+          );
         }
-        setLoading(false);
       } else {
-        setList(outerList);
+        setList(sanitizeTxNotes(outerList, noteLengthLimit));
       }
     } catch (e) {}
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [outerList]);
+  }, [outerList, noteLengthLimit]);
 
   useEffect(() => {
     form.setFieldsValue(data);
@@ -69,7 +86,8 @@ export function CreateTxNote({
   const handleOk = () => {
     form.validateFields().then(async function ({ hash, note }) {
       try {
-        let newList: Array<Type> = list;
+        const normalizedNote = normalizeTxNote(note);
+        let newList: Array<Type> = [...list];
         const timestamp = Math.floor(+new Date() / 1000);
 
         if (stage === 'create') {
@@ -80,7 +98,7 @@ export function CreateTxNote({
 
           const item: Type = {
             h: hash as string, // hash
-            n: note as string, // note
+            n: normalizedNote, // note
             t: timestamp, // create timestamp
             u: timestamp, // update timestamp
           };
@@ -88,6 +106,9 @@ export function CreateTxNote({
           newList = [item].concat(list);
         } else if (stage === 'edit') {
           const i = list.findIndex(l => l.h === hash);
+          if (i < 0) {
+            return;
+          }
           const old = list[i];
 
           newList.splice(i, 1);
@@ -95,7 +116,7 @@ export function CreateTxNote({
             {
               ...old,
               u: timestamp,
-              n: note as string,
+              n: normalizedNote,
             },
           ].concat(newList);
         }
@@ -122,7 +143,7 @@ export function CreateTxNote({
 
         setGlobalData(d);
         setLoading(false);
-        onOk();
+        onOk(newList);
       } catch (e) {
         publishRequestError(e, 'code');
       }
@@ -151,17 +172,25 @@ export function CreateTxNote({
   const tagValidator = useCallback(() => {
     return {
       validator(_, value) {
-        if (value.length > noteLengthLimit) {
+        const note = normalizeTxNote(value);
+
+        if (note.length > noteLengthLimit) {
           return Promise.reject(
             new Error(
               t(translations.profile.tx.error.invalidNoteRange, {
-                amount: 20,
+                amount: noteLengthLimit,
               }),
             ),
           );
-        } else {
-          return Promise.resolve();
         }
+
+        if (!isValidTxNote(note, noteLengthLimit)) {
+          return Promise.reject(
+            new Error(t(translations.profile.tx.error.invalidNote)),
+          );
+        }
+
+        return Promise.resolve();
       },
     };
   }, [noteLengthLimit, t]);

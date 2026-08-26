@@ -17,6 +17,7 @@ interface FuncListProps {
   type?: string;
   data?: FuncDataItem[];
   contractAddress: string;
+  implementationAddress?: string;
   contract: object;
   abi: AbiItem[];
 }
@@ -39,7 +40,14 @@ const FuncHeader = ({ index, item }: { index: number; item: FuncDataItem }) => {
   );
 };
 
-const FuncList = ({ abi, type, data, contractAddress, contract }: Props) => {
+const FuncList = ({
+  abi,
+  type,
+  data,
+  contractAddress,
+  implementationAddress,
+  contract,
+}: Props) => {
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState([]);
   const allKeys: string[] = [];
@@ -94,6 +102,7 @@ const FuncList = ({ abi, type, data, contractAddress, contract }: Props) => {
                   data={item}
                   type={type}
                   contractAddress={contractAddress}
+                  implementationAddress={implementationAddress}
                   contract={contract}
                   key={`${type}-${index}-func-${item.name || index}`}
                   id={`${type}-${index}-func-${item.name || index}`}

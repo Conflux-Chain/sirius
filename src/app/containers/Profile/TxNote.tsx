@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import qs from 'query-string';
 import { CreateTxNote } from './CreateTxNote';
 import { LOCALSTORAGE_KEYS_MAP } from '@cfxjs/sirius-next-common/dist/utils/constants';
+import { sanitizeTxNotes } from '@cfxjs/sirius-next-common/dist/utils/txNote';
 
 const { confirm, warning } = Modal;
 const { Search } = Input;
@@ -23,6 +24,8 @@ type Type = {
   t: number;
   u: number;
 };
+
+type ListChangeHandler = (list: Type[]) => void;
 
 export function TxNote() {
   const history = useHistory();
@@ -47,10 +50,19 @@ export function TxNote() {
       setLoading(true);
       const l = localStorage.getItem(LOCALSTORAGE_KEYS_MAP.txPrivateNote);
       if (l) {
-        setList(JSON.parse(l));
+        const rawList = JSON.parse(l);
+        const validList = sanitizeTxNotes(rawList);
+
+        setList(validList);
+        if (JSON.stringify(rawList) !== JSON.stringify(validList)) {
+          localStorage.setItem(
+            LOCALSTORAGE_KEYS_MAP.txPrivateNote,
+            JSON.stringify(validList),
+          );
+        }
       }
-      setLoading(false);
     } catch (e) {}
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,7 +75,7 @@ export function TxNote() {
       render(v) {
         return (
           <ContentWrapper monospace>
-            <Link href={`/transaction/${v}`}>{v}</Link>
+            <Link href={`/tx/${v}`}>{v}</Link>
           </ContentWrapper>
         );
       },
@@ -165,8 +177,10 @@ export function TxNote() {
     });
   };
 
-  const handleOk = () => {
-    setVisible(true);
+  const handleOk: ListChangeHandler = newList => {
+    setList(newList);
+    setSelectedRowKeys([]);
+    setVisible(false);
   };
 
   const handleCancel = () => {

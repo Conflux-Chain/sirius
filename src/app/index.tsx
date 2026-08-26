@@ -30,6 +30,8 @@ import { useGlobalData } from 'utils/hooks/useGlobal';
 import { reqProjectConfig } from 'utils/httpRequest';
 import { IS_SHOW_BANNER, NETWORK_ID, NETWORK_OPTIONS } from 'utils/constants';
 import { formatAddress, isSimplyBase32Address, isAddress } from 'utils';
+import { sanitizeAddressLabels } from '@cfxjs/sirius-next-common/dist/utils/addressLabel';
+import { sanitizeTxNotes } from '@cfxjs/sirius-next-common/dist/utils/txNote';
 import MD5 from 'md5.js';
 import lodash from 'lodash';
 import { getClientVersion } from 'utils/rpcRequest';
@@ -69,6 +71,7 @@ import { AddressConverter } from './containers/AddressConverter';
 import { Loading } from '@cfxjs/sirius-next-common/dist/components/Loading';
 import { BlocknumberCalc } from './containers/BlocknumberCalc/Loadable';
 import { BroadcastTx } from './containers/BroadcastTx/Loadable';
+import { VerifiedContracts } from './containers/VerifiedContracts/Loadable';
 // import { CookieTip } from './components/CookieTip';
 // import { GlobalTip } from './components/GlobalTip';
 import { NetworkError } from './containers/NetworkError/Loadable';
@@ -93,6 +96,7 @@ import {
   AccountGrowth,
   ActiveAccounts,
   Contracts as ContractsCharts,
+  VerifiedContracts as VerifiedContractsCharts,
 } from './containers/Charts/pow/Loadable';
 
 import {
@@ -234,12 +238,21 @@ export function App() {
       let d = {};
 
       if (dStr) {
-        d = JSON.parse(dStr).reduce((prev, curr) => {
-          return {
-            ...prev,
-            [curr.a]: curr.l,
-          };
-        }, {});
+        try {
+          const rawList = JSON.parse(dStr);
+          const validList = sanitizeAddressLabels(rawList);
+
+          if (JSON.stringify(rawList) !== JSON.stringify(validList)) {
+            localStorage.setItem(key, JSON.stringify(validList));
+          }
+
+          d = validList.reduce((prev, curr) => {
+            return {
+              ...prev,
+              [curr.a]: curr.l,
+            };
+          }, {});
+        } catch (e) {}
       }
       const _globalData = { ...globalData, [key]: d };
       setGlobalData(_globalData);
@@ -251,12 +264,21 @@ export function App() {
       let dTx = {};
 
       if (dStrTx) {
-        dTx = JSON.parse(dStrTx).reduce((prev, curr) => {
-          return {
-            ...prev,
-            [curr.h]: curr.n,
-          };
-        }, {});
+        try {
+          const rawList = JSON.parse(dStrTx);
+          const validList = sanitizeTxNotes(rawList);
+
+          if (JSON.stringify(rawList) !== JSON.stringify(validList)) {
+            localStorage.setItem(keyTx, JSON.stringify(validList));
+          }
+
+          dTx = validList.reduce((prev, curr) => {
+            return {
+              ...prev,
+              [curr.h]: curr.n,
+            };
+          }, {});
+        } catch (e) {}
       }
 
       const _globalData = { ...globalData, [keyTx]: dTx };
@@ -608,7 +630,9 @@ export function App() {
                               if (isAddress(address)) {
                                 return (
                                   <Redirect
-                                    to={`/address/${formatAddress(address)}`}
+                                    to={`/address/${formatAddress(address)}${
+                                      routeProps.location.search
+                                    }`}
                                   />
                                 );
                               } else {
@@ -915,6 +939,18 @@ export function App() {
                           exact
                           path="/pow-charts/contracts"
                           component={ContractsCharts}
+                        />
+
+                        <Route
+                          exact
+                          path="/pow-charts/verified-contracts"
+                          component={VerifiedContractsCharts}
+                        />
+
+                        <Route
+                          exact
+                          path="/verified-contracts"
+                          component={VerifiedContracts}
                         />
 
                         <Route exact path="/Profile" component={Profile} />

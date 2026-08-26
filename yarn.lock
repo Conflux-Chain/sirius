@@ -2483,10 +2483,10 @@
     react-popper "^2.2.3"
     styled-jsx "^3.2.5"
 
-"@cfxjs/sirius-next-common@0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.3.5.tgz#4341f65332058c91027a6e5387e4a95d803d9572"
-  integrity sha512-w4BYWs4Tci/+N+PALhZ/cV+grZ208O1FuCb0VCS4VsFWWgieG/dpCYB28i/SeoN1AOYt9L35QRs09DJWhlcerQ==
+"@cfxjs/sirius-next-common@0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-common/-/sirius-next-common-0.3.7.tgz#3f0c383095961cd7dba1389ca9e0057414dc20e3"
+  integrity sha512-RvpGl5LORQIRx7jr/gPJtqwjMfPM4hnrNzU+Wru/LTOAgyw2ABvcVKyKRIPqWyctqUqs9borx47/Fu4tsx4DgQ==
   dependencies:
     "@cfx-kit/dapp-utils" "^0.2.12"
     "@cfx-kit/react-utils" "^0.0.65"
@@ -2526,10 +2526,10 @@
     vite "^5.1.6"
     zustand "^4.5.2"
 
-"@cfxjs/sirius-next-i18n@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.3.1.tgz#3359ac85f2900ffba75e2f263c74746da535b826"
-  integrity sha512-Wmsjb94BkwGdpek87nsQRFbrr04mvQdewEtdxr/SwAEZSdgN8NzJRA2Cbzbb+LJ12ao8iL5uj7B1c5Yn3oiOsQ==
+"@cfxjs/sirius-next-i18n@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@cfxjs/sirius-next-i18n/-/sirius-next-i18n-0.3.2.tgz#96da68ea131d97eff445eca4d8d5ae60eed80b0e"
+  integrity sha512-DFJYUBrG2Ld2G4dW+/fKtWbWKDfdZzZS94mCzY//RUsndaYaOpZ43TEdSd5gp91EqCjMuuSFBW97jRDuUVZGRw==
 
 "@cfxjs/use-wallet-react@^0.0.8":
   version "0.0.8"
