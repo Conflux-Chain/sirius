@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { TabsTablePanel } from 'app/components/TabsTablePanel/Loadable';
@@ -14,7 +14,7 @@ import { getTransactionByHash } from 'utils/rpcRequest';
 import { InternalTxns } from 'app/containers/Transactions/Loadable';
 import { ReactComponent as JsonIcon } from 'images/json.svg';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
-import { viewJson } from '@cfxjs/sirius-next-common/dist/utils';
+import { isHash, viewJson } from '@cfxjs/sirius-next-common/dist/utils';
 import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 
 export function Transaction() {
@@ -28,9 +28,13 @@ export function Transaction() {
   const [loading, setLoading] = useState(false);
   const [partLoading, setPartLoading] = useState(false); // partial update indicator
 
-  // get txn detail info
-  const fetchTxDetail = useCallback(
-    (initial = true) => {
+  useEffect(() => {
+    if (!isHash(hash)) {
+      history.push('/404');
+      return;
+    }
+    // get txn detail info
+    const fetchTxDetail = (initial = true) => {
       if (initial) {
         setLoading(true);
       } else {
@@ -64,11 +68,7 @@ export function Transaction() {
           setLoading(false);
           setPartLoading(false);
         });
-    },
-    [history, hash],
-  );
-
-  useEffect(() => {
+    };
     fetchTxDetail();
     // auto update tx detail info
     const autoUpdateDetailIntervalId = setInterval(() => {
@@ -77,7 +77,7 @@ export function Transaction() {
     return () => {
       clearInterval(autoUpdateDetailIntervalId);
     };
-  }, [fetchTxDetail]);
+  }, [history, hash]);
 
   const { from, to, eventLogCount, nameMap } = txnDetail;
 
