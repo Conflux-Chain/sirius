@@ -184,7 +184,7 @@ export function NFTDetail(props) {
     }
   }, [data.detail]);
 
-  useEffect(() => {
+  const fetchNFTData = useCallback(() => {
     setLoading(true);
 
     reqNFTDetail({
@@ -204,6 +204,10 @@ export function NFTDetail(props) {
       .finally(() => {
         setLoading(false);
       });
+  }, [address, id]);
+
+  useEffect(() => {
+    fetchNFTData();
 
     reqToken({ address }).then(({ name, symbol }) => {
       setTokenInfo({
@@ -211,19 +215,20 @@ export function NFTDetail(props) {
         symbol,
       });
     });
-  }, [address, id]);
+  }, [address, id, fetchNFTData]);
 
   const handleRefresh = useCallback(
     e => {
       reqRefreshMetadata({
         contractAddress: address,
         tokenId: id,
-      }).then(() => {
-        message.info(t(translations.nftDetail.refreshTip));
-      });
+      })
+        .then(() => {
+          message.info(t(translations.nftDetail.refreshTip));
+        })
+        .finally(fetchNFTData);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [address, id],
+    [address, id, fetchNFTData, t],
   );
 
   const tokenType = data.type?.replace('ERC', 'CRC');
