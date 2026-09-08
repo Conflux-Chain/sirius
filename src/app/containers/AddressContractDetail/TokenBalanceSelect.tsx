@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useAccountTokenList } from 'utils/api';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
@@ -7,7 +7,7 @@ import { ChevronUp } from '@zeit-ui/react-icons';
 import { useClickAway, useToggle } from 'react-use';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
-import { ICON_DEFAULT_TOKEN } from 'utils/constants';
+import { HIDE_IN_DOT_NET, ICON_DEFAULT_TOKEN } from 'utils/constants';
 import { getCurrencySymbol } from '@cfxjs/sirius-next-common/dist/utils/constants';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
@@ -24,7 +24,11 @@ const skeletonStyle = { width: '7rem', height: '2.5rem' };
 
 export function TokenBalanceSelect({ address = '' } = {}) {
   const { data: tokensData } = useAccountTokenList(address, ['iconUrl']);
-  const tokens = tokensData?.list || [];
+  const tokens = useMemo(() => {
+    return (tokensData?.list || []).filter(
+      t => !HIDE_IN_DOT_NET || t.transferType !== 'ERC20',
+    );
+  }, [tokensData]);
   const loading = tokensData?.loading;
 
   return (
@@ -96,10 +100,12 @@ function Select({
         {expanded && (
           <SelectDropdown>
             <Card className="token-balance-select-content">
-              <Title className="token-type">
-                {t(translations.header.tokens20).replace('Tokens', 'Token')} (
-                {children20.length})
-              </Title>
+              {children20.length > 0 && (
+                <Title className="token-type">
+                  {t(translations.header.tokens20).replace('Tokens', 'Token')} (
+                  {children20.length})
+                </Title>
+              )}
               {children20}
               {children721.length > 0 ? (
                 <Title className="token-type">
