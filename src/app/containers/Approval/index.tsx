@@ -22,7 +22,7 @@ import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
 import { abi as ERC20ABI } from 'utils/contract/ERC20.json';
 import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
 import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
-import { NETWORK_ID } from 'utils/constants';
+import { HIDE_IN_DOT_NET, NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import BigNumber from 'bignumber.js';
 import { NFTPreview } from 'app/components/NFTPreview/Loadable';
@@ -418,10 +418,12 @@ export function Approval() {
         width: [3, 5, 3, 3, 3, 3, 3][i],
       }));
 
-      let l = list;
+      let l = list.filter(
+        t => !HIDE_IN_DOT_NET || t.tokenInfo.type !== 'ERC20',
+      );
       if (viewAll === '0') {
         // filter out balance > 0
-        l = list.filter(item => item.balance !== '0');
+        l = l.filter(item => item.balance !== '0');
       }
 
       return (
