@@ -344,19 +344,20 @@ const Code = ({ contractInfo }) => {
             'margin-bottom-0': !exactMatch && !sourceCode && !abi,
           })}
         >
-          <Trans i18nKey={translations.contract.verify.tip}>
-            You can now
-            <Link
-              href={`/contract-verification?address=${SDK.address.simplifyCfxAddress(
-                address,
-              )}`}
-            >
-              verify and publish
-            </Link>
-            your contract's source code, or simply
-            <Link href="/abi-verification">submit function signatures</Link> to
-            improve readability.
-          </Trans>
+          {t(translations.general.table.token.projectInfo.unverify)}
+          {/* <Trans i18nKey={translations.contract.verify.tip}>
+          You can now
+          <Link
+            href={`/contract-verification?address=${SDK.address.simplifyCfxAddress(
+              address,
+            )}`}
+          >
+            verify and publish
+          </Link>
+          your contract's source code, or simply
+          <Link href="/abi-verification">submit function signatures</Link> to
+          improve readability.
+        </Trans> */}
         </div>
       )}
       <div className="contract-sourcecode-and-abi">
@@ -402,7 +403,7 @@ const Code = ({ contractInfo }) => {
                   {t(translations.contract.constructorArgsTips)}
                 </div> */}
               </div>
-              <div className="pre">
+              <div className="pre constructor-args">
                 <div>{constructor.fullArgs}</div>
                 <div>
                   <div className="split-line">
@@ -470,6 +471,19 @@ const Code = ({ contractInfo }) => {
 };
 
 const StyledContractContentCodeWrapper = styled.div`
+  .bg-\\#fff {
+    background-color: #000;
+  }
+  .border-\\#BDBDBD {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .border-l-\\#BDBDBD {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  input {
+    color: #fafafa;
+    background-color: #000;
+  }
   .search-input {
     float: right;
     &.in-search {
@@ -484,7 +498,7 @@ const StyledContractContentCodeWrapper = styled.div`
     align-items: center;
     font-size: 16px;
     font-weight: bold;
-    color: #0f1327;
+    color: #fafafa;
     line-height: 22px;
     margin: 15px 0;
 
@@ -533,14 +547,35 @@ const StyledContractContentCodeWrapper = styled.div`
 
   .verify-info-title {
     font-size: 14px;
-    color: #74798c;
+    color: #fafafa;
     line-height: 22px;
   }
 
   .verify-info-content {
     font-size: 14px;
-    color: #0f1327;
+    color: rgba(255, 255, 255, 0.5);
     line-height: 22px;
+  }
+
+  .contract-sourcecode-and-abi {
+    span > .bg-\\#F8F9FB {
+      background-color: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      svg {
+        color: #fafafa;
+      }
+      &:hover {
+        background-color: #141414;
+      }
+    }
+    .ace-tomorrow,
+    .ace-tomorrow .ace_gutter {
+      background-color: #000;
+    }
+    .constructor-args {
+      background-color: #000;
+      color: #fafafa;
+    }
   }
 
   .contract-sourcecode-and-abi-title {
@@ -577,7 +612,8 @@ const StyledContractContentCodeWrapper = styled.div`
 
   .contract-library-body {
     font-size: 1rem;
-    background-color: rgb(248, 249, 251);
+    background-color: #000;
+    color: #fafafa;
     padding: 5px 10px;
   }
 
@@ -752,12 +788,22 @@ export const ContractContent = ({ contractInfo }) => {
 };
 
 const ContractBody = styled.div`
-  background-color: #ffffff;
+  color: #fafafa;
+
   border-radius: 4px;
 
   .contract-body-subtabs {
     padding: 0.5714rem 1.2857rem;
-    border-bottom: 1px solid #e8e9ea;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .subtabs-tabItem.btn {
+      color: #fafafa;
+      background-color: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      &.subtabs-tabItem-active,
+      &:hover {
+        background-color: #141414;
+      }
+    }
   }
 `;
 
@@ -766,7 +812,8 @@ const ContractCard = styled(Card)`
 `;
 
 const StyledNullWrapper = styled.div`
-  background-color: var(--theme-color-gray0);
+  background-color: #141414;
+  color: #fafafa;
   margin-top: 1.4286rem;
   padding: 0.4286rem;
 `;

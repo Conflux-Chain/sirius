@@ -149,7 +149,7 @@ export function TokenDetail() {
                 ></img>
               </Tooltip>
             )}
-            <DropdownWrapper overlay={menu} trigger={['click']}>
+            {/* <DropdownWrapper overlay={menu} trigger={['click']}>
               <span onClick={e => e.preventDefault()}>
                 {t(translations.general.address.more.title)}{' '}
                 <img
@@ -157,7 +157,7 @@ export function TokenDetail() {
                   alt={t(translations.general.address.more.title)}
                 />
               </span>
-            </DropdownWrapper>
+            </DropdownWrapper> */}
             {/* {data &&
             typeof data.isRegistered !== 'undefined' &&
             data.isRegistered ? (
@@ -246,12 +246,12 @@ const HeaderWrap = styled.div`
   .basic-name {
     font-size: 1.7143rem;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #fafafa;
     margin: 0 0.6rem;
   }
 
   .basic-symbol {
-    color: #74798c;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 1rem;
   }
 

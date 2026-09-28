@@ -75,12 +75,12 @@ const Left = styled.div`
 `;
 const Right = styled.div``;
 const Title = styled.div`
-  color: #74798c;
+  color: rgba(255, 255, 255, 0.50);
   text-transform: capitalize;
 `;
 const Content = styled.div`
   font-weight: 700;
-  color: #282d30;
+  color: #fafafa;
   font-size: 1.71rem;
 
   ${media.s} {

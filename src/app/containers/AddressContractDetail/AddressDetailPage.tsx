@@ -158,7 +158,7 @@ export const AddressDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['hover']}>
+              {/* <DropdownWrapper overlay={menu} trigger={['hover']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img
@@ -166,7 +166,7 @@ export const AddressDetailPage = memo(() => {
                     alt={t(translations.general.address.more.title)}
                   />
                 </span>
-              </DropdownWrapper>
+              </DropdownWrapper> */}
               {/*<Report address={address} />*/}
             </div>
           </HeadAddressLine>

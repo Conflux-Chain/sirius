@@ -69,12 +69,12 @@ export function ContractMetadata({ address, contractInfo }) {
               alt={contractInfo.name + 'logo'}
             />
             <Content>{contractInfo.name || notAvailableText}</Content>
-            <Link
+            {/* <Link
               className="contract-info-update"
               href={`/contract-info/${address}`}
             >
               <Edit3 size={18} color="#1e3de4" />
-            </Link>
+            </Link> */}
           </CenterLine>
         </SkeletonContainer>
       ),
@@ -198,16 +198,14 @@ export function ContractMetadata({ address, contractInfo }) {
                     {` ${t(translations.contractDetail.at)} ${t(
                       translations.contractDetail.txOnlyEn,
                     )} `}
-                    <LinkWrap
-                      href={`/transaction/${contractInfo.transactionHash}`}
-                    >
+                    <Link href={`/transaction/${contractInfo.transactionHash}`}>
                       <Text
                         tag="span"
                         hoverValue={contractInfo.transactionHash}
                       >
                         {formatString(contractInfo.transactionHash, 'address')}
                       </Text>
-                    </LinkWrap>
+                    </Link>
                     {` ${t(translations.contractDetail.txOnlyZh)} `}
                   </>
                 ) : null}
@@ -249,12 +247,5 @@ const CenterLine = styled.div`
 const Content = styled.span`
   &.not-available.link {
     color: #97a3b4;
-  }
-`;
-
-const LinkWrap = styled(Link)`
-  color: #1e3de4 !important;
-  &:hover {
-    color: #0f23bd !important;
   }
 `;

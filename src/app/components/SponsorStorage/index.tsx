@@ -85,6 +85,7 @@ const SponsorStorage = ({ children, storageUsed, storageQuota }: Props) => {
             ></div>
           </StyledSponsorStorageContentWrapper>
         }
+        placement="bottom"
       >
         <FileSearchOutlined className="icon-file" />
       </Popover>
@@ -102,7 +103,7 @@ SponsorStorage.propTypes = {
 
 const StyledSponsorStorageContentWrapper = styled.div`
   max-width: 420px;
-  color: #282d30;
+  color: #fafafa;
   font-size: 14px;
   line-height: 22px;
 
@@ -112,7 +113,7 @@ const StyledSponsorStorageContentWrapper = styled.div`
   }
 
   .tip {
-    color: #9b9eac;
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .mt10 {

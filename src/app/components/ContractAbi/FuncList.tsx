@@ -133,11 +133,11 @@ const FuncHeaderComp = styled.div`
   .signature {
     padding: 2px 14px;
     border-radius: 20px;
-    background-color: rgba(119, 137, 211, 0.08);
+    background-color: #fff;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #282d30;
+    color: #000;
     font-size: 14px;
     font-weight: 450;
     line-height: 22px;
@@ -150,11 +150,11 @@ const Container = styled.div`
     border: none;
     .panelContainer {
       .ant-collapse-header {
-        color: #002257;
+        color: #fafafa;
         font-size: 14px;
         line-height: 22px;
         padding-left: 12px;
-        background-color: #f9fafb;
+        background-color: #141414;
       }
       .ant-collapse-content-box {
         padding: 0;
@@ -162,7 +162,7 @@ const Container = styled.div`
     }
     .panelContainer:nth-child(2n) {
       .ant-collapse-header {
-        background-color: #fff;
+        background-color: #000;
       }
     }
   }
@@ -170,7 +170,7 @@ const Container = styled.div`
     display: inline-block;
     height: 22px;
     font-size: 14px;
-    color: #1e3de4;
+    color: #60bbf9;
     line-height: 22px;
     cursor: pointer;
     font-weight: 400;

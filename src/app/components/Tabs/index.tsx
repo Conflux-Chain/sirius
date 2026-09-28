@@ -23,7 +23,7 @@ const StyledTabsWrapper = styled.div`
     .tab {
       .label {
         font-size: 1.1429rem;
-        color: rgba(11, 19, 46, 0.6);
+        color: rgba(255, 255, 255, 0.5);
         line-height: 1.7143rem;
         padding: 0.5714rem 0.2857rem;
         font-weight: 500;
@@ -35,13 +35,13 @@ const StyledTabsWrapper = styled.div`
       &:hover {
         .label {
           font-weight: 500;
-          color: #0b132e;
+          color: #fafafa;
         }
       }
       .bottom {
-        height: 0.4286rem;
-        border-top-left-radius: 0.5714rem;
-        border-top-right-radius: 0.5714rem;
+        height: 3px;
+        border-radius: 1px;
+        background-color: #fafafa;
       }
       &.disabled {
         display: none;

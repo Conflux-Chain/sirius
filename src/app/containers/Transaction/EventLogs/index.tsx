@@ -250,7 +250,8 @@ const StyledEventLogsWrapper = styled.div`
 
   .eventlog-title-total {
     padding: 1.1429rem 0;
-    border-bottom: 1px solid #e8e9ea;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fafafa;
   }
 
   .eventlog-content {
@@ -280,7 +281,7 @@ const StyledEventLogsWrapper = styled.div`
 const StyledEventLogWrapper = styled.div`
   min-height: 5.7143rem;
   padding: 0.7143rem 0;
-  border-bottom: 1px solid #e8e9ea;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   &:last-child {
     border-bottom: none;

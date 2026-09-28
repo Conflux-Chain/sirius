@@ -19063,9 +19063,9 @@ textarea.ant-input {
   left: auto;
 }
 .ant-collapse-content {
-  color: rgba(0, 0, 0, 0.85);
-  background-color: #fff;
-  border-top: 1px solid #d9d9d9;
+  color: #fafafa;
+  background-color: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 .ant-collapse-content > .ant-collapse-content-box {
   padding: 16px;
@@ -26917,7 +26917,7 @@ table tr td.ant-table-selection-column .ant-radio-wrapper {
 }
 tr.ant-table-expanded-row > td,
 tr.ant-table-expanded-row:hover > td {
-  background: #fbfbfb;
+  background: transparent;
 }
 tr.ant-table-expanded-row .ant-descriptions-view table {
   width: auto;

@@ -8,7 +8,7 @@ export enum CHAIN_TYPES {
 }
 
 export interface ENVConfig {
-  ENV_LOGO?: string;
+  ENV_LINK: string;
   ENV_NETWORK_ID: number;
   ENV_NETWORK_TYPE: NETWORK_TYPES;
   ENV_CHAIN_TYPE: CHAIN_TYPES;

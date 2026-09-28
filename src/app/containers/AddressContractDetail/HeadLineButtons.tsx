@@ -82,10 +82,11 @@ const HeadAddressLineButton = styled.div`
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #dbdde4;
+  background-color: transparent;
   line-height: 12px;
   .address-line-icon {
     path {

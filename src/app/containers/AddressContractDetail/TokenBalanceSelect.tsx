@@ -219,7 +219,7 @@ const SelectTokenBox = styled.div`
   min-width: 9rem;
   height: 2.57rem;
   border-radius: 0.29rem;
-  border: 0.07rem solid #e8e9ea;
+  border: 1px solid rgba(255, 255, 255, 0.10);
   padding: 0.64rem;
   display: flex;
   flex-direction: row;
@@ -245,7 +245,20 @@ const SelectDropdown = styled.div`
   top: 4.5rem;
   min-width: 400px;
   max-height: 400px;
-  box-shadow: 0.8571rem 0.5714rem 1.7143rem -0.8571rem rgba(20, 27, 50, 0.12);
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(57, 57, 57, 0.14) 0%,
+    rgba(0, 0, 0, 0.1) 20%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(69, 69, 69, 0.15) 100%
+  );
+  box-shadow: 0 2px 2px -2px rgba(255, 255, 255, 0.5) inset,
+    0 -2px 2px -2px rgba(255, 255, 255, 0.7) inset,
+    0 0 0 1px rgba(0, 0, 0, 0.1) inset, -1px 0 0 0 rgba(0, 0, 0, 0.15),
+    1px 0 0 0 rgba(0, 0, 0, 0.15), 0 -1px 0 0 rgba(0, 0, 0, 0.07),
+    0 1px 0 0 rgba(0, 0, 0, 0.07), 0 18px 44px -14px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(14px);
   overflow-y: auto;
 
   .token-balance-select-content.card > .content {
@@ -318,8 +331,7 @@ const SelectItemContentBalance = styled.span``;
 const Title = styled.div`
   display: block;
   font-size: 14px;
-  color: #7e8598;
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 500;
-  border-bottom: 1px solid #e8e9ea;
   line-height: 3rem;
 `;

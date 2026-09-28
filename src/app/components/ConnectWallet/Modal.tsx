@@ -200,7 +200,7 @@ const rotate = keyframes`
   }
 `;
 
-const linkColor = '#0e47ef';
+const linkColor = '#60BBF9';
 const redColor = '#e15c56';
 
 const ModalWrapper = styled.div`
@@ -254,7 +254,10 @@ const ModalWrapper = styled.div`
   .modal-body {
     position: relative;
     width: 39rem;
-    background: #ffffff;
+    background: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+
     padding: 1.7143rem 2.2857rem 2.2857rem;
     box-sizing: border-box;
   }
@@ -262,13 +265,13 @@ const ModalWrapper = styled.div`
   .modal-title {
     font-size: 18px;
     font-weight: 500;
-    color: #333333;
+    color: #fafafa;
   }
 
   .modal-portal {
     width: 34.5rem;
-    border-radius: 0.2857rem;
-    border: 1px solid #cccccc;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 1.1429rem;
     display: flex;
     align-items: center;
@@ -279,7 +282,7 @@ const ModalWrapper = styled.div`
     .modal-portal-connected-title,
     .modal-portal-connected-tip {
       font-size: 14px;
-      color: #74798c;
+      color: #fafafa;
     }
 
     .modal-portal-connected-copy {
@@ -297,7 +300,7 @@ const ModalWrapper = styled.div`
 
     .modal-portal-name {
       font-size: 16px;
-      color: #3a3a3a;
+      color: #fafafa;
       margin: 0.2857rem 0;
     }
 
@@ -315,6 +318,7 @@ const ModalWrapper = styled.div`
 
   .modal-tip {
     margin-top: 1.7143rem;
+    color: #fafafa;
 
     .modal-tip-link {
       color: ${linkColor};

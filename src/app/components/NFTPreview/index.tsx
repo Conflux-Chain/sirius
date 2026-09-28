@@ -512,9 +512,19 @@ const VideoCard = styled.div`
 `;
 
 const NFTCard = styled.div`
-  background-color: #fff;
-  border: 1px solid #ebeced;
-  border-radius: 5px;
+  background-color: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+
+  // &:hover {
+  //   background-color: #141414;
+  // }
+
+  .ant-tag {
+    background-color: #000;
+    color: #fafafa;
+    border: none;
+  }
 
   .ant-image {
     position: relative;
@@ -579,11 +589,15 @@ const NFTCard = styled.div`
   .info {
     padding: 8px 10px 10px;
     font-size: 12px;
-    color: #002257;
+    color: #fafafa;
 
     .info-name {
       display: flex;
       justify-content: space-between;
+    }
+
+    .id {
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .name {

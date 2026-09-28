@@ -362,6 +362,11 @@ const SpanWrap = styled.span`
 const MethodHighlight = styled(ValueHighlight)`
   padding: 0;
   height: 20px;
+  border-radius: 12px;
+  &.border-transparent {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+  }
 `;
 const StyledMethodContainerWrapper = styled.span`
   display: flex;
@@ -376,12 +381,10 @@ const StyledMethodContainerWrapper = styled.span`
   }
 `;
 const StyledMethodWrapper = styled.span`
-  background: rgba(171, 172, 181, 0.1);
-  border-radius: 10px;
   padding: 4px 8px;
   font-size: 10px;
   font-weight: 500;
-  color: #424a71;
+  color: #fafafa;
   line-height: 12px;
   max-width: 95px;
   display: inline-block;

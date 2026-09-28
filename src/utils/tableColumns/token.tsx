@@ -599,12 +599,12 @@ export const tokenId = {
   render: (value, row) => {
     return (
       <>
+        {!isZeroAddress(formatAddress(row.to)) && (
+          <NFTPreview contractAddress={row?.address} tokenId={value} />
+        )}{' '}
         <Text tag="span" hoverValue={value}>
           <SpanWrap>{value || '-'}</SpanWrap>
         </Text>
-        {!isZeroAddress(formatAddress(row.to)) && (
-          <NFTPreview contractAddress={row?.address} tokenId={value} />
-        )}
       </>
     );
   },
@@ -622,7 +622,15 @@ export const details = {
   render: (value, row) => {
     return (
       <Link href={`/nft/${row.address}/${value}`}>
-        <Tag color="default">
+        <Tag
+          color="#FAFAFA"
+          style={{
+            borderRadius: '2px',
+            border: ' 1px solid rgba(255, 255, 255, 0.10)',
+            padding: '1px 8px 3px 8px',
+            backgroundColor: 'transparent',
+          }}
+        >
           <Translation>
             {t => t(translations.general.table.token.view)}
           </Translation>

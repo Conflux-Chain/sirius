@@ -132,9 +132,9 @@ const StyledSelectItemWrapper = styled.div`
     position: absolute;
     right: 0;
     margin-right: 12px;
-    color: #444;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    color: #fafafa;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
 
     .value {
@@ -148,7 +148,7 @@ const StyledSelectItemWrapper = styled.div`
     }
   }
   .select:hover {
-    background-color: rgba(30, 61, 228, 0.08);
+    background-color: transparent;
   }
 `;
 
@@ -259,7 +259,8 @@ export const Data = ({
 
 const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
   padding: 16px ${props => (props.withAbi ? '124px' : '24px')} 16px 16px;
-  background-color: #fafbfc;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fafafa;
   position: relative;
 
   ${media.s} {
@@ -278,9 +279,9 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
     position: absolute;
     right: 0;
     margin-right: 12px;
-    color: #444;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    color: #fafafa;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
 
     .value {
@@ -294,7 +295,7 @@ const StyledDataWrapper = styled.div<{ withAbi: boolean }>`
     }
   }
   .select:hover {
-    background-color: rgba(30, 61, 228, 0.08);
+    background-color: transparent;
   }
 
   .data-item {

@@ -445,19 +445,19 @@ export const ProjectInfo = React.memo(
                     .remarkContent1,
                 )}
               </div>
-              <div>
+              <div className="remark-case">
                 {t(
                   translations.general.table.token.projectInfo.modal
                     .remarkContent2,
                 )}
               </div>
-              <div>
+              <div className="remark-case">
                 {t(
                   translations.general.table.token.projectInfo.modal
                     .remarkContent3,
                 )}
               </div>
-              <div>
+              <div className="remark-case">
                 {t(
                   translations.general.table.token.projectInfo.modal
                     .remarkContent4,
@@ -490,7 +490,7 @@ const IconWrapper = styled('div')<{ left: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #edf0f8;
+  background-color: rgba(255, 255, 255, 0.1);
   padding: 0 4px 0 4px;
   width: 160px;
   float: ${props => (props.left ? 'left' : 'right')};
@@ -545,9 +545,12 @@ const RemarkTitle = styled.div`
 const RemarkContent = styled.div`
   width: 95%;
   margin: 12px auto 12px auto;
-  border: 1px solid #eeeeef;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 12px;
-  border-radius: 4px;
+  .remark-case {
+    color: #ffffff80;
+  }
 `;
 const ModalWrapper = styled.div`
   .ant-modal-content {

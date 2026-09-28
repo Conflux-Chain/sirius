@@ -27,6 +27,7 @@ export const Title = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 0.86rem;
+  color: #fafafa;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -37,7 +38,7 @@ export const Title = styled.div`
 `;
 export const HeadAddressLine = styled.span`
   position: relative;
-  color: #74798c;
+  color: rgba(255, 255, 255, 0.50);
   display: flex;
   flex-direction: row;
   align-items: center;

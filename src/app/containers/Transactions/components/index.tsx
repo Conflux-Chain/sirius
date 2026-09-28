@@ -232,10 +232,24 @@ const StyledTableHeaderWrapper = styled.div`
     .table-title-extra-content {
       flex-grow: 1;
     }
+    .text-\\#b1b3b9 {
+      color: #fafafa;
+      &:hover {
+        color: #fafafa;
+      }
+    }
+    .bg-\\#0054fe0a {
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: #141414;
+      &:hover {
+        background-color: #141414;
+      }
+    }
   }
   .table-header-bottom {
     margin-top: 16px;
-    border-top: 1px solid #e8e9ea;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 8px 16px 0;
     margin-bottom: -12px;
   }

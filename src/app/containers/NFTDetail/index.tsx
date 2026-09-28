@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { NFTPreview } from 'app/components/NFTPreview';
@@ -14,10 +13,8 @@ import { Description } from '@cfxjs/sirius-next-common/dist/components/Descripti
 import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
-import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import Button from '@cfxjs/sirius-next-common/dist/components/Button';
-import { usePlatform } from 'utils/hooks/usePlatform';
 
 import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
@@ -27,12 +24,12 @@ import 'ace-builds/src-noconflict/theme-tomorrow';
 import { formatTimeStamp, addIPFSGateway } from 'utils';
 
 import { TransferAndHolders } from './TransferAndHolders';
-import { TransferModal } from './TransferModal';
 
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import { StyledPageHeader } from 'app/components/PageHeader';
 
 const { Text } = Typography;
 
@@ -162,8 +159,6 @@ const StyledDatePanelWrapper = styled.div`
 `;
 
 export function NFTDetail(props) {
-  const { isDapp } = usePlatform();
-  const bp = useBreakpoint();
   const { t, i18n } = useTranslation();
   const { id, address } = useParams<{
     id: string;
@@ -275,11 +270,11 @@ export function NFTDetail(props) {
           content={t(translations.metadata.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.nftDetail.title)}</PageHeader>
+      <StyledPageHeader>{t(translations.nftDetail.title)}</StyledPageHeader>
 
       <Row gutter={[24, 24]}>
         <Col sm={24} md={8} style={{ width: '100%' }}>
-          <Card style={{ padding: 0 }}>
+          <Card style={{ padding: 0, border: 'none' }}>
             <NFTPreview
               contractAddress={address}
               tokenId={id}
@@ -288,14 +283,6 @@ export function NFTDetail(props) {
               nftInfo={data}
             />
           </Card>
-
-          {((bp !== 's' && bp !== 'm') || isDapp) && (
-            <TransferModal
-              id={id}
-              contractAddress={address}
-              contractType={tokenType}
-            ></TransferModal>
-          )}
         </Col>
         <Col sm={24} md={16} style={{ width: '100%' }}>
           <Card style={{ padding: 0 }}>
@@ -489,9 +476,14 @@ export function NFTDetail(props) {
 }
 
 const StyledWrapper = styled.div`
-  div.ant-collapse-header {
+  .ace-tomorrow,
+  .ace-tomorrow .ace_gutter {
+    background-color: #000;
+  }
+  .ant-collapse > .ant-collapse-item div.ant-collapse-header {
     display: flex;
     align-items: center;
+    color: #fafafa;
   }
 
   .button-transfer {
@@ -520,6 +512,13 @@ const StyledWrapper = styled.div`
     right: 10px;
     top: 10px;
     z-index: 2;
+    color: #fafafa;
+    border-radius: 19px;
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    &:hover {
+      background-color: #141414;
+    }
   }
 
   .right {
