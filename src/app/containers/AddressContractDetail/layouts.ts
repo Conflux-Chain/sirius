@@ -38,7 +38,7 @@ export const Title = styled.div`
 `;
 export const HeadAddressLine = styled.span`
   position: relative;
-  color: rgba(255, 255, 255, 0.50);
+  color: rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -135,7 +135,7 @@ export const StyledLabelWrapper = styled.span<{
   color?: string;
   bordered?: boolean;
 }>`
-  background-color: ${props => props.backgroundColor || '#ffffff'};
+  background-color: ${props => props.backgroundColor || '#141414'};
   border-radius: 16px;
   font-size: 14px;
   padding: 4px 12px;
@@ -143,7 +143,7 @@ export const StyledLabelWrapper = styled.span<{
   height: 32px;
   display: ${props => (props.show ? 'flex' : 'none')};
   align-items: center;
-  color: ${props => props.color || 'var(--theme-color-gray4);'};
+  color: ${props => props.color || '#fafafa'};
   text-transform: none;
-  border: ${props => (props.bordered ? '1px solid' : 'none')};
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
