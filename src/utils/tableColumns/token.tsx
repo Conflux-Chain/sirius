@@ -798,7 +798,7 @@ const ThTipWrap = styled.span`
 `;
 
 export const LinkA = styled.a`
-  color: #1e3de4 !important;
+  color: #60bbf9 !important;
 
   &:hover {
     color: #0f23bd !important;

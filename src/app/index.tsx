@@ -980,18 +980,17 @@ const Main = styled.div<{ $isShowBanner?: boolean }>`
   min-height: calc(100vh - 260px);
 
   ${media.xl} {
-    padding-top: 106px;
+    // padding-top: 106px;
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  ${media.m} {
-    padding-top: 90px;
-  }
+  // ${media.m} {
+  //   padding-top: 90px;
+  // }
 
   ${media.s} {
-    padding: ${({ $isShowBanner }) =>
-      $isShowBanner ? '170px 16px 32px' : '100px 16px 32px'};
+    padding: '0 16px 32px';
     //min-height: calc(100vh - 254px);
   }
 `;

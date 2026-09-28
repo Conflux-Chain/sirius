@@ -119,7 +119,7 @@ const StyledTraitPanelWrapper = styled.div`
   }
 
   .type {
-    color: var(--theme-color-gray4);
+    color: #fafafa;
     font-weight: 500;
     font-size: 12px;
     margin-bottom: 12px;
@@ -150,7 +150,7 @@ const StyledDatePanelWrapper = styled.div`
 
   .type {
     font-size: 14px;
-    color: var(--theme-color-gray4);
+    color: #fafafa;
   }
   .value {
     font-size: 14px;
