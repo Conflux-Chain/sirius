@@ -445,7 +445,7 @@ export function App() {
                   <Main key={lang} $isShowBanner={IS_SHOW_BANNER}>
                     <>
                       <Switch>
-                        {/* <Route exact path="/" component={HomePage} /> */}
+                        <Route exact path="/" component={HomePage} />
                         {/* <Route
                           exact
                           path="/packing/:txHash"

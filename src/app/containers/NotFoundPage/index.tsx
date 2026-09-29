@@ -37,7 +37,7 @@ const PageWrapper = styled.div<{ $isShowBanner?: boolean }>`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  background: #f5f6fa;
+  background: transparent;
   width: 100%;
 
   ${media.s} {
@@ -69,14 +69,14 @@ const ErrorTitle = styled.span`
   display: inline-block;
   font-size: 1.5714rem;
   line-height: 2rem;
-  color: #424242;
+  color: #fafafa;
   font-weight: 500;
   margin-bottom: 1rem;
 `;
 
 const ErrorLabel = styled.span`
   display: inline-block;
-  color: #4b4b4b;
+  color: #fafafa;
   opacity: 0.4;
   font-weight: 500;
   line-height: 1.2857rem;
@@ -87,12 +87,12 @@ const ErrorLabel = styled.span`
 const GoTo = styled.a`
   width: 15.7143rem;
   height: 3.5714rem;
-  background-color: #fff;
+  background-color: #141414;
   border-radius: 2.8571rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #545454;
+  color: #fafafa;
   font-size: 1.1429rem;
   margin-top: 2rem;
 `;

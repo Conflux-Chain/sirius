@@ -96,6 +96,7 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100%;
     min-width: 100%;
     background-color: #000;
+    padding-top: 32px;
   }
 
   .sirius-card {

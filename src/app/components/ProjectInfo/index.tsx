@@ -513,7 +513,6 @@ const LeftWrapper = styled.div`
   }
 
   svg {
-    border: 1px solid white;
     border-radius: 50%;
   }
 `;
