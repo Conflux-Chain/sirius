@@ -54,7 +54,6 @@ const Wrapper = styled.header`
     rgba(255, 255, 255, 0.02) 50%,
     rgba(255, 255, 255, 0.08) 100%
   );
-  margin-top: 32px;
   height: 44px;
   padding: 6px;
   box-shadow: 0 2px 2px -2px rgba(255, 255, 255, 0.5) inset,
