@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
-import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import ENV_CONFIG from 'env';
@@ -28,7 +27,7 @@ export function HomePage() {
           <br />
           <span>请从AmooStore作品详情页进入，可获得完整作品信息</span>
         </div>
-        <Link className="amoo-link" href={ENV_CONFIG.ENV_LINK}>
+        <a className="amoo-link" href={ENV_CONFIG.ENV_LINK}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="6"
@@ -46,7 +45,7 @@ export function HomePage() {
             />
           </svg>
           <span>返回AmooStore</span>
-        </Link>
+        </a>
       </Main>
     </>
   );
