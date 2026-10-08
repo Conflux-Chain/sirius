@@ -32,7 +32,7 @@ export const epoch = {
   dataIndex: 'epochNumber',
   key: 'epochNumber',
   width: 1,
-  render: value => <Link href={`/epoch/${value}`}>{value}</Link>,
+  // render: value => <Link href={`/epoch/${value}`}>{value}</Link>,
 };
 
 export const position = {

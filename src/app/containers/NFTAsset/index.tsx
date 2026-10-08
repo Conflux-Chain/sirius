@@ -312,6 +312,14 @@ export function NFTAsset({
 const StyledResultWrapper = styled.div`
   margin-top: 1.7143rem;
 
+  .sirius-card {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .ant-row {
+    padding: 0 24px;
+  }
+
   .convert-address-description {
     flex-direction: row;
 
@@ -323,26 +331,27 @@ const StyledResultWrapper = styled.div`
 
 const TagsWrapper = styled.div`
   padding: 10px 0 0;
-  border-bottom: 1px solid #ebeced;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
   .ant-tag {
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 10px;
-    background: rgba(30, 61, 228, 0.04);
-    border-radius: 16px;
-    border: none;
+    background: #000;
+    color: rgba(255, 255, 255, 0.50);
     padding: 3px 15px;
     cursor: pointer;
 
     &.current {
-      color: #fff;
-      background: rgba(30, 61, 228, 0.8);
+      color: #000;
+      background: #fafafa;
     }
   }
 `;
 
 const NFTWrapper = styled.div`
   width: 100%;
-  padding: 16px 0 40px;
+  padding-bottom: 40px;
   min-height: 500px;
 
   .nodata {

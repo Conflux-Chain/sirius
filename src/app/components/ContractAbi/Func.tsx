@@ -571,6 +571,9 @@ const Func = ({
   );
 };
 const Container = styled.div`
+  .text-\\#002257 {
+    color: #fafafa;
+  }
   .viewBtn.btn {
     margin-left: 12px;
     height: 30px;

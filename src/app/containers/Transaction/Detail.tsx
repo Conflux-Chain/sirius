@@ -334,9 +334,9 @@ export const Detail = ({
               '--'
             ) : (
               <>
-                <Link href={`/epoch/${epochNumber}`}>
-                  {toThousands(epochNumber)}
-                </Link>{' '}
+                {toThousands(epochNumber)}{' '}
+                {/* <Link href={`/epoch/${epochNumber}`}>
+                </Link>{' '} */}
                 <CopyButton copyText={epochNumber} />
               </>
             )}
@@ -350,9 +350,9 @@ export const Detail = ({
           }
         >
           <SkeletonContainer shown={outerLoading}>
-            <Link href={`/epoch/${epochHeight}`}>
-              {toThousands(epochHeight)}
-            </Link>{' '}
+            {toThousands(epochHeight)}{' '}
+            {/* <Link href={`/epoch/${epochHeight}`}>
+            </Link>{' '} */}
             <CopyButton copyText={epochHeight} />
           </SkeletonContainer>
         </Description>
@@ -368,7 +368,8 @@ export const Detail = ({
               '--'
             ) : (
               <>
-                <Link href={`/block/${blockHash}`}>{blockHash}</Link>{' '}
+                {blockHash}{' '}
+                {/* <Link href={`/block/${blockHash}`}>{blockHash}</Link> */}
                 <CopyButton copyText={blockHash} />
               </>
             )}
@@ -719,6 +720,7 @@ export const Detail = ({
           )}
         </div>
         <Description
+          noBorder
           title={
             <StyledFoldButtonWrapper>
               <div
@@ -734,7 +736,7 @@ export const Detail = ({
         >
           {' '}
         </Description>
-        <Description
+        {/* <Description
           noBorder
           title={
             <Tooltip title={t(translations.profile.tip.note)}>
@@ -745,7 +747,6 @@ export const Detail = ({
           {
             <div>
               {txNote ? <span className="tx-note">{txNote}</span> : null}
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a
                 onClick={e => {
                   e.preventDefault();
@@ -758,7 +759,7 @@ export const Detail = ({
               </a>
             </div>
           }
-        </Description>
+        </Description> */}
       </Card>
       <CreateTxNote {...txNoteProps}></CreateTxNote>
     </StyledCardWrapper>
@@ -776,10 +777,10 @@ const AttributeWrapper = styled.div`
     flex-direction: column;
   }
   .attribute {
-    border: 1px solid #ebeced;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     height: 30px;
     padding: 4px 16px 4px 16px;
-    border-radius: 2px;
   }
 `;
 
@@ -893,7 +894,7 @@ const StyledFoldButtonWrapper = styled.div`
     justify-items: center;
     padding: 0.8571rem 0;
     font-size: 1rem;
-    color: #002257;
+    color: #fafafa;
     cursor: pointer;
     padding: 0;
 

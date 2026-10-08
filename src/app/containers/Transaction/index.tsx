@@ -8,7 +8,6 @@ import { TabLabel } from 'app/components/TabsTablePanel/Label';
 import { reqTransactionDetail } from 'utils/httpRequest';
 import { useHistory, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { PageHeader } from '@cfxjs/sirius-next-common/dist/components/PageHeader';
 import { Detail } from './Detail';
 import { getTransactionByHash } from 'utils/rpcRequest';
 import { InternalTxns } from 'app/containers/Transactions/Loadable';
@@ -16,6 +15,7 @@ import { ReactComponent as JsonIcon } from 'images/json.svg';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { isHash, viewJson } from '@cfxjs/sirius-next-common/dist/utils';
 import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
+import { StyledPageHeader } from 'app/components/PageHeader';
 
 export function Transaction() {
   const bp = useBreakpoint();
@@ -135,7 +135,7 @@ export function Transaction() {
           content={t(translations.transaction.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.transaction.title)}</PageHeader>
+      <StyledPageHeader>{t(translations.transaction.title)}</StyledPageHeader>
       <div className="content-wrapper">
         {bp !== 's' && (
           <div className="raw-tx-json-wrapper">
@@ -165,13 +165,12 @@ const StyledPageWrapper = styled.div`
       align-items: center;
       .raw-tx-json {
         cursor: pointer;
-        background: #fefefe;
-        border: 1px solid #ebeced;
+        border-radius: 100px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         height: 32px;
         display: flex;
         align-items: center;
-        border-radius: 16px;
-        color: #686c7e;
+        color: #fafafa;
         padding: 0 16px;
       }
     }

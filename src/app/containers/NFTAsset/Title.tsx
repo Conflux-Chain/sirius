@@ -192,6 +192,9 @@ export const Title = ({
 
 const StyledTableHeaderWrapper = styled.div`
   margin-bottom: 14px;
+  padding: 16px 12px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #141414;
   .table-header-top {
     display: flex;
     justify-content: space-between;
@@ -210,11 +213,14 @@ const StyledTableHeaderWrapper = styled.div`
 
     .table-title-filter-wrapper {
       display: flex;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
     }
   }
   .table-header-bottom {
     margin-top: 16px;
-    border-top: 1px solid #e8e9ea;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 8px 16px 0;
     margin-bottom: -12px;
   }

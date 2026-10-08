@@ -153,7 +153,7 @@ export const ColumnAge = ({
 
 const AgeTHeader = styled.div`
   display: inline-block;
-  color: #1e3de4;
+  color: #60bbf9;
   cursor: pointer;
 `;
 
@@ -310,20 +310,27 @@ export const renderAddress = (
         />
       </ValueHighlight>
       {type === 'from' && withArrow && (
-        <ImgWrap src={fromTypeInfo[getFromType(value)].src} />
+        <ImgWrap>
+          <img src={fromTypeInfo[getFromType(value)].src} alt="from" />
+        </ImgWrap>
       )}
     </>
   );
 };
 
-const ImgWrap = styled.img`
+const ImgWrap = styled.div`
   position: absolute;
-  width: 36px;
-  height: 20px;
-  right: -0.8571rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  right: 0;
   top: 0.1429rem;
-
-  ${media.s} {
-    right: -0.98rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 14px;
+    height: 14px;
   }
 `;

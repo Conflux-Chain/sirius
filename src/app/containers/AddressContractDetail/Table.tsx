@@ -76,9 +76,9 @@ export const Table = memo(
     }
 
     const analysisPanel = () => (
-      <StyledTabWrapper>
+      <ChartsWrapper>
         <Contract address={address} />
-      </StyledTabWrapper>
+      </ChartsWrapper>
     );
     if (isContract) {
       tabs.push(
@@ -119,7 +119,21 @@ export const Table = memo(
     return <TabsTablePanel key="table" tabs={tabs} />;
   },
 );
-const StyledTabWrapper = styled.div`
+const ChartsWrapper = styled.div`
+  .bg-\\[\\#FFF\\] {
+    background-color: #000;
+  }
+  .color-\\[\\#333\\] {
+    color: #fafafa;
+  }
+  .bg-\\[\\#F7F7F7\\] {
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .bg-\\[\\#E6EBF5\\] {
+    background-color: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
   .card {
     padding: 0.3571rem !important;
 

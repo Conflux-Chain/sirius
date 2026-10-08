@@ -4,668 +4,149 @@
  *
  */
 
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import styled from 'styled-components';
-import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
-import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
-import { Footer as FooterComp } from '@cfxjs/sirius-next-common/dist/components/Footer';
-import { TextLogo } from '@cfxjs/sirius-next-common/dist/components/TextLogo';
-import { translations } from 'locales/i18n';
-import { Language } from './Language';
-// import { Currency } from './Currency';
-import { ScanEvent } from 'utils/gaConstants';
-import { HIDE_IN_DOT_NET } from 'utils/constants';
-import { hideInDotNet } from 'utils';
-import { getNetwork } from '@cfxjs/sirius-next-common/dist/utils';
-
-import iconWechatQrcode from 'images/footer/wechat-qrcode.png';
-import beianImg from 'images/footer/beian.png';
-
-import {
-  Conflux,
-  Discord,
-  Git,
-  KakaoTalk,
-  Medium,
-  Naver,
-  Reddit,
-  Telegram,
-  Twitter,
-  Wechat,
-  Weibo,
-  Youtube,
-} from './Icon';
-import {
-  DOMAIN,
-  IS_CORESPACE,
-  IS_FOREIGN_HOST,
-  IS_MAINNET,
-  IS_TESTNET,
-  IS_CONFLUX_FEATURE_ENABLED,
-} from 'env';
-import { useGlobalData } from 'utils/hooks/useGlobal';
+import ENV_CONFIG from 'env';
+import { AmooLogo } from 'app/components/AmooLogo';
+import AmooPng from 'images/footer-logo.png';
 
 export function Footer() {
-  const { t, i18n } = useTranslation();
-  const iszh = i18n.language.includes('zh');
-  const [globalData] = useGlobalData();
-  const { networkId, networks } = globalData;
-  const network = getNetwork(networks, networkId);
-
-  const left = [<TextLogo key="logo" color="var(--theme-color-gray0)" />];
-
-  const suggestionBoxLink = iszh ? (
-    <Link
-      className="footer-link"
-      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn/requests/new"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.suggestionBox,
-      }}
-    >
-      {t(translations.footer.suggestionBox)}
-    </Link>
-  ) : (
-    <Link
-      className="footer-link"
-      href="https://confluxscansupportcenter.zendesk.com/hc/en-us/requests/new"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.suggestionBox,
-      }}
-    >
-      {t(translations.footer.suggestionBox)}
-    </Link>
-  );
-  const techIssueLink = (
-    <Link
-      className="footer-link"
-      href="https://github.com/Conflux-Chain/sirius/issues"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.techIssue,
-      }}
-    >
-      {t(translations.footer.techIssue)}
-    </Link>
-  );
-  const websiteLink = (
-    <Link
-      className="footer-link"
-      href="https://confluxnetwork.org"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.confluxNetwork,
-      }}
-    >
-      {t(translations.footer.confluxnetwork)}
-    </Link>
-  );
-  const portalLink = (
-    <Link
-      className="footer-link"
-      href="https://fluentwallet.com"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.fluentWallet,
-      }}
-    >
-      {t(translations.footer.fluentwallet)}
-    </Link>
-  );
-  const hubLink = (
-    <Link
-      className="footer-link"
-      href={
-        IS_CORESPACE && IS_TESTNET
-          ? 'https://test.confluxhub.io/'
-          : 'https://confluxhub.io/'
-      }
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.hub,
-      }}
-    >
-      {t(translations.footer.hub)}
-    </Link>
-  );
-  const privacyPolicy = (
-    <Link
-      className="footer-link"
-      href="https://confluxnetwork.org/zh/policy"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.privacyPolicy,
-      }}
-    >
-      {t(translations.footer.aboutUs.privacyPolicy)}
-    </Link>
-  );
-  const terms = (
-    <Link
-      className="footer-link"
-      href="https://confluxnetwork.org/terms"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.terms,
-      }}
-    >
-      {t(translations.footer.aboutUs.terms)}
-    </Link>
-  );
-  const supportCenter = iszh ? (
-    <Link
-      className="footer-link"
-      href="https://confluxscansupportcenter.zendesk.com/hc/zh-cn"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.supportCenter,
-      }}
-    >
-      {t(translations.footer.aboutUs.supportCenter)}
-    </Link>
-  ) : (
-    <Link
-      className="footer-link"
-      href="https://confluxscansupportcenter.zendesk.com/hc/en-us"
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.supportCenter,
-      }}
-    >
-      {t(translations.footer.aboutUs.supportCenter)}
-    </Link>
-  );
-  const globalLink = (
-    <Link
-      className="footer-link"
-      href={`${network.url?.replace('-stage', '').replace('.net', '.org')}`}
-      ga={{
-        category: ScanEvent.menu.category,
-        action: ScanEvent.menu.action.global,
-      }}
-    >
-      {t(translations.footer.global)}
-    </Link>
-  );
-
-  const icons = (
-    <FooterContentIconWrapper>
-      {hideInDotNet(
-        <>
-          <FooterContentIconLink>
-            <Link
-              href="https://twitter.com/Conflux_Network"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.twitter,
-              }}
-            >
-              <Twitter></Twitter>
-            </Link>
-          </FooterContentIconLink>
-          <FooterContentIconLink>
-            <Link
-              href="https://t.me/Conflux_English"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.tme,
-              }}
-            >
-              <Telegram></Telegram>
-            </Link>
-          </FooterContentIconLink>
-          <FooterContentIconLink>
-            <Link
-              href="https://discord.com/invite/conflux-network"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.discord,
-              }}
-            >
-              <Discord></Discord>
-            </Link>
-          </FooterContentIconLink>
-          <FooterContentIconLink>
-            <Link
-              href="https://medium.com/@ConfluxNetwork"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.medium,
-              }}
-            >
-              <Medium></Medium>
-            </Link>
-          </FooterContentIconLink>
-        </>,
-      )}
-      <FooterContentIconLink>
-        <Link
-          href="https://github.com/conflux-chain"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.github,
-          }}
-        >
-          <Git></Git>
-        </Link>
-      </FooterContentIconLink>
-      <FooterContentIconLink>
-        <Link
-          href="https://weibo.com/confluxchain"
-          ga={{
-            category: ScanEvent.menu.category,
-            action: ScanEvent.menu.action.weibo,
-          }}
-        >
-          <Weibo></Weibo>
-        </Link>
-      </FooterContentIconLink>
-      {hideInDotNet(
-        <FooterContentIconLink>
-          <Link
-            href="https://open.kakao.com/o/gmyEjl2b"
-            ga={{
-              category: ScanEvent.menu.category,
-              action: ScanEvent.menu.action.kakao,
-            }}
-          >
-            <KakaoTalk></KakaoTalk>
-          </Link>
-        </FooterContentIconLink>,
-      )}
-      <FooterContentIconLink>
-        <StyledIconWechatWrapper>
-          <img
-            alt="wechat qrcode icon"
-            src={iconWechatQrcode}
-            className="footer-qrcode"
-          />
-          <Wechat></Wechat>
-        </StyledIconWechatWrapper>
-      </FooterContentIconLink>
-      {hideInDotNet(
-        <>
-          <FooterContentIconLink>
-            <Link
-              href="https://www.youtube.com/@confluxnetwork"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.youtube,
-              }}
-            >
-              <Youtube></Youtube>
-            </Link>
-          </FooterContentIconLink>
-          <FooterContentIconLink>
-            <Link
-              href="https://blog.naver.com/conflux-chain"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.naver,
-              }}
-            >
-              <Naver></Naver>
-            </Link>
-          </FooterContentIconLink>
-        </>,
-      )}
-      {hideInDotNet(
-        <>
-          <FooterContentIconLink>
-            <Link
-              href="https://forum.conflux.fun/"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.forum,
-              }}
-            >
-              <Conflux></Conflux>
-            </Link>
-          </FooterContentIconLink>
-          <FooterContentIconLink>
-            <Link
-              href="https://www.reddit.com/r/Conflux_Network/"
-              ga={{
-                category: ScanEvent.menu.category,
-                action: ScanEvent.menu.action.reddit,
-              }}
-            >
-              <Reddit></Reddit>
-            </Link>
-          </FooterContentIconLink>
-        </>,
-      )}
-    </FooterContentIconWrapper>
-  );
-
-  const developResourceLinks = {
-    developerAPI: (
-      <Link
-        className="footer-link"
-        href={
-          IS_CORESPACE && IS_TESTNET
-            ? `https://api-testnet.confluxscan${DOMAIN}/doc`
-            : `https://api.confluxscan${DOMAIN}/doc`
-        }
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.developerAPI,
-        }}
-      >
-        {t(translations.footer.developResource.developerAPI)}
-      </Link>
-    ),
-    developerDocuments: (
-      <Link
-        className="footer-link"
-        href="https://doc.confluxnetwork.org/"
-        ga={{
-          category: ScanEvent.menu.category,
-          action: ScanEvent.menu.action.developerDocuments,
-        }}
-      >
-        {t(translations.footer.developResource.developerDocuments)}
-      </Link>
-    ),
-    // confluxStudio: (
-    //   <Link
-    //     className="footer-link"
-    //     href="https://github.com/ObsidianLabs/ConfluxStudio/"
-    //     ga={{
-    //       category: ScanEvent.menu.category,
-    //       action: ScanEvent.menu.action.confluxStudio,
-    //     }}
-    //   >
-    //     {t(translations.footer.developResource.confluxStudio)}
-    //   </Link>
-    // ),
-    // confluxTruffle: (
-    //   <Link
-    //     className="footer-link"
-    //     href="https://github.com/Conflux-Chain/conflux-truffle/"
-    //     ga={{
-    //       category: ScanEvent.menu.category,
-    //       action: ScanEvent.menu.action.confluxTruffle,
-    //     }}
-    //   >
-    //     {t(translations.footer.developResource.confluxTruffle)}
-    //   </Link>
-    // ),
-  };
-  const ICP = useMemo(() => {
-    return window.location.hostname.includes('confluxscan.net') ? (
-      <CopyRight>
-        <ICPLink href="https://beian.miit.gov.cn">沪ICP备20007940号-2</ICPLink>
-        <ICPLink href="https://beian.mps.gov.cn/#/query/webSearch?code=31010402333972">
-          <img src={beianImg} alt="" />
-          沪公网安备31010402333972
-        </ICPLink>
-      </CopyRight>
-    ) : (
-      <></>
-    );
-  }, []);
-
-  const rightTop = [
-    <FooterWrapper key="right-top">
-      {hideInDotNet(
-        <FooterContentWrapper>
-          <FooterContentTitle>
-            {t(translations.footer.product)}
-          </FooterContentTitle>
-          <FooterContent>
-            <FooterContentRow>
-              <FooterContentLink>{websiteLink}</FooterContentLink>
-              {hideInDotNet(
-                <FooterContentLink>{portalLink}</FooterContentLink>,
-              )}
-              {hideInDotNet(<FooterContentLink>{hubLink}</FooterContentLink>)}
-              {HIDE_IN_DOT_NET && IS_CONFLUX_FEATURE_ENABLED ? (
-                <FooterContentLink>{globalLink}</FooterContentLink>
-              ) : null}
-            </FooterContentRow>
-          </FooterContent>
-        </FooterContentWrapper>,
-      )}
-      <FooterContentWrapper>
-        <FooterContentTitle className="footer-develop-resource">
-          {t(translations.footer.developResource.title)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            {IS_CORESPACE && (IS_MAINNET || IS_TESTNET) ? (
-              <FooterContentLink>
-                {developResourceLinks.developerAPI}
-              </FooterContentLink>
-            ) : null}
-            {hideInDotNet(
-              <FooterContentLink>
-                {developResourceLinks.developerDocuments}
-              </FooterContentLink>,
-            )}
-            {/* <FooterContentLink>
-              {developResourceLinks.confluxStudio}
-            </FooterContentLink>
-            <FooterContentLink>
-              {developResourceLinks.confluxTruffle}
-            </FooterContentLink> */}
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
-      <FooterContentWrapper>
-        <FooterContentTitle className="contact-us">
-          {t(translations.footer.contactUs)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            <FooterContentLink>{techIssueLink}</FooterContentLink>
-            <FooterContentLink>{suggestionBoxLink}</FooterContentLink>
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
-      {hideInDotNet(
-        <FooterContentWrapper>
-          <FooterContentTitle className="footer-tool">
-            {t(translations.footer.aboutUs.title)}
-          </FooterContentTitle>
-          <FooterContent>
-            <FooterContentRow>
-              {IS_FOREIGN_HOST && (
-                <FooterContentLink>{privacyPolicy}</FooterContentLink>
-              )}
-              {IS_FOREIGN_HOST && (
-                <FooterContentLink>{terms}</FooterContentLink>
-              )}
-              <FooterContentLink>{supportCenter}</FooterContentLink>
-            </FooterContentRow>
-          </FooterContent>
-        </FooterContentWrapper>,
-      )}
-      <FooterContentWrapper>
-        <FooterContentTitle className="preference">
-          {t(translations.footer.preference)}
-        </FooterContentTitle>
-        <FooterContent>
-          <FooterContentRow>
-            <FooterContentLink>
-              <Language />
-            </FooterContentLink>
-            {/* <FooterContentLink>
-              <Currency />
-            </FooterContentLink> */}
-          </FooterContentRow>
-        </FooterContent>
-      </FooterContentWrapper>
-    </FooterWrapper>,
-    <FooterContentRow key="right-top-icons">{icons}</FooterContentRow>,
-  ];
-  const rightBottom = [
-    <div key="copyRight&ICP">
-      <CopyRight key="copyRight">{t(translations.footer.copyRight)}</CopyRight>
-      {ICP}
-    </div>,
-  ];
-
   return (
-    <FooterComp left={left} rightTop={rightTop} rightBottom={rightBottom} />
+    <FooterWrapper>
+      <FooterContent>
+        <div className="footer-row">
+          <div className="footer-row-left">
+            <a className="footer-logo" href={ENV_CONFIG.ENV_LINK}>
+              <AmooLogo className="amoo-logo" />
+              <span>AmooStore</span>
+            </a>
+            <div className="footer-message">
+              <div>
+                来源声明：部分 Skill/Agent
+                来源于公开渠道及用户自主上传，使用前请注意识别相关风险，内容版权归原作者所有。
+              </div>
+              <div>
+                侵权处理：如涉版权问题，请发送邮件至amoofeedback@stepx.com，我们将及时核实并予以下架处理。
+              </div>
+            </div>
+          </div>
+          <div className="footer-row-right">
+            <div className="footer-row-link-title">快捷入口</div>
+            <a className="footer-row-link" href={ENV_CONFIG.ENV_LINK}>
+              举报与反馈
+            </a>
+            <a className="footer-row-link" href={ENV_CONFIG.ENV_LINK}>
+              官方文档
+            </a>
+            <a className="footer-row-link" href={ENV_CONFIG.ENV_LINK}>
+              隐私政策
+            </a>
+            <a className="footer-row-link" href={ENV_CONFIG.ENV_LINK}>
+              服务协议
+            </a>
+          </div>
+        </div>
+        <div className="footer-row">
+          <div className="footer-copyright">
+            <span>智源星辰（上海）智能科技有限公司 Copyright © 2026</span>{' '}
+            <span>沪ICP备2026015011号-67</span>
+          </div>
+          <div className="footer-amoo-logo">
+            <img src={AmooPng} alt="amoo" />
+          </div>
+        </div>
+      </FooterContent>
+    </FooterWrapper>
   );
 }
 
-// wrapper
 const FooterWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  min-height: 112px;
-
-  ${media.m} {
-    flex-flow: wrap;
-  }
-`;
-const FooterContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  ${media.m} {
-    margin-bottom: 1.1429rem;
-    width: 50%;
-  }
-`;
-
-// right top
-const FooterContentTitle = styled.span`
-  margin-bottom: 1.07rem;
-  font-weight: 600;
-  color: var(--theme-color-blue0);
-  margin-right: 6rem;
-  /* margin-right: 8.5714rem;
-  width: 5.7143rem;
-
-  &.footer-develop-resource {
-    margin-right: 6rem;
-    width: auto;
-  } */
-  /* 
-  &.footer-tool {
-    margin-right: 12rem;
-  }
-
-  &.contact-us {
-    margin-right: 6rem;
-  } */
-
-  ${media.m} {
-    margin-bottom: 0.86rem;
-    margin-right: inherit;
-  }
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0a0a0a;
 `;
 const FooterContent = styled.div`
-  font-size: 0.86rem;
   display: flex;
-  flex-direction: row;
-`;
-
-const FooterContentRow = styled.div`
-  .link {
-    display: inline-flex;
-  }
-  display: flex;
+  max-width: 1368px;
+  margin: 0 auto;
+  padding-top: 50px;
   flex-direction: column;
-`;
-
-const FooterContentLink = styled.span`
-  margin-bottom: 0.5rem;
-
-  .link {
-    display: inline-flex;
-  }
-  .link.footer-link {
-    color: var(--theme-color-gray0);
-    font-size: 0.86rem;
-    margin-right: 5.1429rem;
-
-    &:hover {
-      color: var(--theme-color-blue0);
-    }
-
-    ${media.m} {
-      margin-right: inherit;
-    }
-  }
-
-  ${media.m} {
-    .link.footer-link {
-      font-size: 0.71rem;
-    }
-  }
-`;
-const FooterContentIconWrapper = styled.div`
-  margin-top: 1.14rem;
-`;
-const FooterContentIconLink = styled.span`
-  margin-right: 0.57rem;
-  svg {
-    width: 1.2rem;
-    height: 1.2rem;
-    color: var(--theme-color-gray2);
-
-    &:hover {
-      color: var(--theme-color-blue0);
-    }
-  }
-
-  ${media.m} {
-    margin-top: 0.86rem;
-  }
-`;
-
-const CopyRight = styled.span`
-  display: flex;
-  align-items: center;
-  color: var(--theme-color-gray0);
-
-  a.link,
-  a.link:hover,
-  a.link:active {
-    color: var(--theme-color-gray0);
-  }
-
-  ${media.s} {
-    font-size: 0.71rem;
-  }
-`;
-const ICPLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  img {
-    width: 16px;
-    margin-left: 10px;
-    margin-right: 8px;
-  }
-`;
-
-const StyledIconWechatWrapper = styled.div`
-  position: relative;
-  display: inline-flex;
-  cursor: pointer;
   justify-content: center;
   align-items: center;
+  gap: 30px;
+  .footer-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .footer-row-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      flex-shrink: 0;
+      .footer-logo {
+        display: flex;
+        height: 32px;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        .amoo-logo {
+          width: 24px;
+          height: 24px;
+          flex-shrink: 0;
+        }
 
-  &:hover {
-    img.footer-qrcode {
-      display: inherit;
+        span {
+          color: #fafafa;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 21px; /* 116.667% */
+          letter-spacing: -0.939px;
+        }
+      }
+      .footer-message {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 200% */
+      }
     }
-  }
-
-  img.footer-qrcode {
-    position: absolute;
-    width: 8.1429rem;
-    height: 8.1429rem;
-    max-width: 8.1429rem;
-    top: -8.2143rem;
-    left: -3.2143rem;
-    display: none;
+    .footer-row-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+      .footer-row-link-title {
+        color: #fafafa;
+        text-align: right;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 17px; /* 141.667% */
+      }
+      .footer-row-link {
+        color: rgba(255, 255, 255, 0.5);
+        text-align: right;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 17px; /* 141.667% */
+      }
+    }
+    .footer-copyright {
+      color: rgba(255, 255, 255, 0.3);
+      text-align: center;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 19px; /* 172.727% */
+      letter-spacing: 0.064px;
+      display: flex;
+      align-items: center;
+    }
+    .footer-amoo-logo img {
+      height: 94px;
+    }
   }
 `;

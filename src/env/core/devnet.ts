@@ -21,4 +21,4 @@ export const ENV_ENS_REGISTRY_ADDRESS =
   'cfx:acemru7fu1u8brtyn3hrtae17kbcd4pd9uwbspvnnm';
 export const ENV_ENS_PUBLIC_RESOLVER_ADDRESS =
   'cfx:acasaruvgf44ss67pxzfs1exvj7k2vyt863f72n6up';
-export const ENV_LOGO = logo;
+export const ENV_LINK = 'https://amoostore.stepaos.com';

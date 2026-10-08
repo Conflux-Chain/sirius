@@ -168,7 +168,10 @@ const Container = styled.div`
     margin-right: 3px;
   }
   .text {
-    color: #97a3b4;
+    color: #fafafa;
+  }
+  .value {
+    color: rgba(255, 255, 255, 0.5);
   }
   .name {
     margin-left: 4px;

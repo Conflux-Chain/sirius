@@ -183,11 +183,7 @@ window.recaptchaOptions = {
 };
 
 export const PageLoading = () => {
-  return (
-    <StyledMaskWrapper>
-      <Loading></Loading>
-    </StyledMaskWrapper>
-  );
+  return <StyledMaskWrapper></StyledMaskWrapper>;
 };
 
 export function App() {
@@ -450,18 +446,18 @@ export function App() {
                     <>
                       <Switch>
                         <Route exact path="/" component={HomePage} />
-                        <Route
+                        {/* <Route
                           exact
                           path="/packing/:txHash"
                           component={PackingPage}
-                        />
+                        /> */}
                         <Route
                           exact
                           path="/notfound/:contractAddress"
                           component={NotFoundAddressPage}
                         />
                         {/* <Route exact path="/contract" component={Contract} /> */}
-                        <Route
+                        {/* <Route
                           exact
                           path={[
                             '/contract-info/:contractAddress',
@@ -489,13 +485,13 @@ export function App() {
                               }
                             }
                           }}
-                        />
-                        <Route exact path="/contracts" component={Contracts} />
+                        /> */}
+                        {/* <Route exact path="/contracts" component={Contracts} />
                         <Route
                           exact
                           path="/registered-contracts"
                           component={RegisteredContracts}
-                        />
+                        /> */}
                         <Route
                           exact
                           path="/token/:tokenAddress"
@@ -521,7 +517,7 @@ export function App() {
                           }}
                         />
                         {/* compatible for previous user bookmark */}
-                        <Route
+                        {/* <Route
                           exact
                           path={[
                             '/blocks-and-transactions',
@@ -550,8 +546,8 @@ export function App() {
                           path="/blockchain/accounts"
                           component={Accounts}
                         />
-                        <Route exact path="/tokens" component={Tokens} />
-                        <Route
+                        <Route exact path="/tokens" component={Tokens} /> */}
+                        {/* <Route
                           exact
                           path="/tokens/:tokenType"
                           render={(routeProps: any) => {
@@ -559,8 +555,8 @@ export function App() {
                               routeProps.match.params.tokenType = routeProps.match.params.tokenType.toUpperCase();
                             return <Tokens {...routeProps} />;
                           }}
-                        />
-                        <Route exact path="/sponsor" component={Sponsor} />
+                        /> */}
+                        {/* <Route exact path="/sponsor" component={Sponsor} />
                         <Route
                           exact
                           path="/contract-deployment"
@@ -607,7 +603,7 @@ export function App() {
                           exact
                           path="/statistics/:statsType"
                           component={Statistics}
-                        />
+                        /> */}
                         <Route
                           exact
                           path="/transaction/:hash"
@@ -615,8 +611,8 @@ export function App() {
                         />
                         {/* Compatible with Etherscan */}
                         <Route exact path="/tx/:hash" component={Transaction} />
-                        <Route exact path="/block/:hash" component={Block} />
-                        <Route exact path="/epoch/:number" component={Epoch} />
+                        {/* <Route exact path="/block/:hash" component={Block} />
+                        <Route exact path="/epoch/:number" component={Epoch} /> */}
                         <Route
                           path="/address/:address"
                           render={(routeProps: any) => {
@@ -641,9 +637,9 @@ export function App() {
                             }
                           }}
                         />
-                        <Route path="/search/:text" component={Search} />
+                        {/* <Route path="/search/:text" component={Search} /> */}
                         {/* Tools */}
-                        <Route
+                        {/* <Route
                           exact
                           path={[
                             '/address-converter',
@@ -750,14 +746,14 @@ export function App() {
                           exact
                           path="/pos/accounts/:address"
                           component={posAccount}
-                        />
+                        /> */}
                         <Route
                           exact
                           path="/nft/:address/:id"
                           component={NFTDetail}
                         />
 
-                        <Route
+                        {/* <Route
                           exact
                           path="/cross-space-charts"
                           component={CrossSpaceChart}
@@ -953,18 +949,18 @@ export function App() {
                           component={VerifiedContracts}
                         />
 
-                        <Route exact path="/Profile" component={Profile} />
+                        <Route exact path="/Profile" component={Profile} /> */}
 
                         <Route component={NotFoundPage} />
                       </Switch>
                     </>
                   </Main>
-                  <Footer />
-                  <GlobalStyle />
+                  {/* <Footer /> */}
                   {/* <CookieTip />
                   <GlobalTip tipKey="addressWarning" /> */}
                 </ScrollToTop>
               )}
+              <GlobalStyle />
               <GlobalNotify />
             </CfxProvider>
           </BrowserRouter>
@@ -979,23 +975,22 @@ const Main = styled.div<{ $isShowBanner?: boolean }>`
   position: relative;
   max-width: 1368px;
   margin: 0 auto;
-  padding-top: ${({ $isShowBanner }) => ($isShowBanner ? '156px' : '106px')};
+  // padding-top: ${({ $isShowBanner }) => ($isShowBanner ? '156px' : '106px')};
   padding-bottom: 20px;
   min-height: calc(100vh - 260px);
 
   ${media.xl} {
-    padding-top: 106px;
+    // padding-top: 106px;
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  ${media.m} {
-    padding-top: 90px;
-  }
+  // ${media.m} {
+  //   padding-top: 90px;
+  // }
 
   ${media.s} {
-    padding: ${({ $isShowBanner }) =>
-      $isShowBanner ? '170px 16px 32px' : '100px 16px 32px'};
+    padding: '0 16px 32px';
     //min-height: calc(100vh - 254px);
   }
 `;
@@ -1006,7 +1001,7 @@ const StyledMaskWrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #ffffff;
+  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;

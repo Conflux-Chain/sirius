@@ -65,7 +65,7 @@ export const InputData = ({
         space="core"
       />
 
-      {tip ? (
+      {/* {tip ? (
         <div className="abi-warning">
           <WarningIcon />
           <span className="tip">
@@ -79,7 +79,7 @@ export const InputData = ({
             </Trans>
           </span>
         </div>
-      ) : null}
+      ) : null} */}
     </StyledInputDataWrapper>
   );
 };
@@ -88,6 +88,23 @@ const StyledInputDataWrapper = styled.div`
   .input-data-select {
     margin-bottom: 16px;
     margin-top: 0;
+    border-radius: 5.25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .bg-\\#f7f7f8 {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    .text-\\#25282d {
+      color: #fafafa;
+    }
+  }
+  .bg-\\#fafbfc {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fafafa;
+  }
+  .ace-tomorrow,
+  .ace-tomorrow .ace_gutter {
+    background-color: #000;
   }
   .abi-warning {
     margin: 1.4286rem 0 0rem;

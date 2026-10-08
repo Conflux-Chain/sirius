@@ -20,7 +20,7 @@ export const TokenTypeTag = ({
 };
 
 const StyledTokenTypeTag = styled.span`
-  color: #ffffff;
+  color: #010101;
   font-size: 10px;
   border-radius: 0.7143rem;
   padding: 0 0.3571rem;

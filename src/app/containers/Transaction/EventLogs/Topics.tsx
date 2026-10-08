@@ -147,7 +147,8 @@ const StyledTopicsWrapper = styled.div`
       flex-shrink: 0;
       width: 1.7143rem;
       height: 1.7143rem;
-      background: #fafbfc;
+      background-color: #141414;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 0.1429rem;
       margin-right: 0.8571rem;
       display: flex;
@@ -157,8 +158,8 @@ const StyledTopicsWrapper = styled.div`
 
     .select {
       margin-right: 12px;
-      background-color: #fff;
-      border: 1px solid #ccc;
+      background-color: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 0.25rem;
 
       .value {
@@ -166,7 +167,7 @@ const StyledTopicsWrapper = styled.div`
       }
     }
     .select:hover {
-      background-color: rgba(30, 61, 228, 0.08);
+      background-color: transparent;
     }
   }
 `;

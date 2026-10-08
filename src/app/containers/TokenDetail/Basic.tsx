@@ -12,9 +12,7 @@ import { formatBalance, toThousands } from 'utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { LinkA } from 'utils/tableColumns/token';
-import CRC20bg from 'images/token/crc20bg.png';
-import CRC721bg from 'images/token/crc721bg.png';
-import CRC1155bg from 'images/token/crc1155bg.png';
+import TokenBG from 'images/token/token-bg.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
@@ -241,7 +239,14 @@ export const Basic = ({
                   {(holderIncreasePercent * 100).toFixed(3)}%)
                 </HolderCountPercentWhenZero>
               )}{' '}
-              <Tag style={{ transform: 'translateY(-1px) scale(0.8)' }}>
+              <Tag
+                style={{
+                  transform: 'translateY(-1px) scale(0.8)',
+                  border: '1px solid rgba(255, 255, 255, 0.10)',
+                  color: '#FAFAFA',
+                  backgroundColor: 'transparent',
+                }}
+              >
                 24H
               </Tag>
             </>
@@ -338,7 +343,8 @@ export const TokenTypeTagWrapper = styled.div`
   padding-left: 20px;
   line-height: 30px;
   text-align: right;
-  color: #fff;
+  color: #000;
+  font-weight: 500;
   display: flex;
   align-items: center;
   border-top-right-radius: 5px;
@@ -350,37 +356,23 @@ export const TokenTypeTagWrapper = styled.div`
     padding-right: 5px;
   }
 
-  &.ERC20 {
-    background: url(${CRC20bg}) no-repeat left top;
-    background-size: 118px 30px;
-    span {
-      background-color: #7fd3ff;
-    }
-  }
-
-  &.ERC721 {
-    background: url(${CRC721bg}) no-repeat left top;
-    background-size: 118px 30px;
-    span {
-      background-color: #3150d2;
-    }
-  }
-
+  &.ERC20,
+  &.ERC721,
   &.ERC1155 {
-    background: url(${CRC1155bg}) no-repeat left top;
+    background: url(${TokenBG}) no-repeat left top;
     background-size: 118px 30px;
     span {
-      background-color: #70a1fe;
+      background-color: #60bbf9;
     }
   }
 `;
 
 const HolderCountPercentWhenUp = styled.span`
-  color: #4ac0aa;
+  color: rgba(255, 255, 255, 0.5);
 `;
 const HolderCountPercentWhenDown = styled.span`
-  color: #e36057;
+  color: rgba(255, 255, 255, 0.5);
 `;
 const HolderCountPercentWhenZero = styled.span`
-  color: #6f7282;
+  color: rgba(255, 255, 255, 0.5);
 `;

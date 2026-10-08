@@ -14,7 +14,7 @@ export const CRC1155Txns = ({ address }: Props) => {
   const [ageFormat, toggleAgeFormat] = useAge();
   const url = `/transfer?accountAddress=${address}&transferType=${CFX_TOKEN_TYPES.erc1155}`;
 
-  const columnsWidth = [3, 7, 6, 2, 2, 3, 6, 4, 2];
+  const columnsWidth = [3, 7, 6, 2, 2, 4, 5, 4, 2];
   const columns = [
     tokenColunms.txnHash,
     {

@@ -98,9 +98,9 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   if (chartWidth < 365) chartWidth = 365;
 
   const analysisPanel = () => (
-    <StyledTabWrapper>
+    <ChartsWrapper>
       <Token address={tokenAddress} type={transferType} />
-    </StyledTabWrapper>
+    </ChartsWrapper>
   );
 
   const analysisTab = {
@@ -153,7 +153,21 @@ export function Transfers({ tokenData }: { tokenData: TransferProps }) {
   ) : null;
 }
 
-const StyledTabWrapper = styled.div`
+const ChartsWrapper = styled.div`
+  .bg-\\[\\#FFF\\] {
+    background-color: #000;
+  }
+  .color-\\[\\#333\\] {
+    color: #fafafa;
+  }
+  .bg-\\[\\#F7F7F7\\] {
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .bg-\\[\\#E6EBF5\\] {
+    background-color: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
   .card {
     padding: 0.3571rem !important;
 

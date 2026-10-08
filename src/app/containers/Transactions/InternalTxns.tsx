@@ -102,8 +102,41 @@ export const InternalTxns = ({ hash, from, to, nameMap }: Props) => {
 };
 
 const StyledContainer = styled.div`
-  background: #fff;
+  background: #000;
   padding: 6px 24px;
+  color: #fafafa;
+  .text-\\#333 {
+    color: #fafafa;
+  }
+  .ant-table-row.\\!bg-\\#f9fafb {
+    background: transparent !important;
+  }
+  .\\!bg-\\#f0f5ff {
+    background: transparent !important;
+  }
+  .text-\\#002257 {
+    color: #fafafa;
+  }
+  .bg-\\#f7f7f8 {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    .text-\\#25282d {
+      color: #fafafa;
+    }
+  }
+  .bg-\\#fafbfc {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fafafa;
+  }
+  .ace-tomorrow,
+  .ace-tomorrow .ace_gutter {
+    background-color: #000;
+  }
+  button.bg-\\#fff {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #fafafa;
+  }
 `;
 
 const StyledAddressContainer = styled.div`
@@ -127,7 +160,7 @@ const StyledTipWrapper = styled.span`
 `;
 
 const StyledCountWrapper = styled.span`
-  color: #1e3de4;
+  color: #60bbf9;
 `;
 const StyledAdvancedWrapper = styled.div`
   display: flex;

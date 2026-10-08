@@ -84,9 +84,6 @@ const Wrapper = styled(Card)`
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  .item.border {
-    border-right: 1px solid #e6e6e6;
-  }
   .item {
     width: 48%;
     ${media.m} {

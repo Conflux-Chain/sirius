@@ -156,7 +156,6 @@ const StyledWrapper = styled.div`
     font-weight: 500;
     color: #7e8598;
     line-height: 1.2857rem;
-    border-bottom: 1px solid #e8e9ea !important;
     padding-bottom: 0.8571rem;
   }
 

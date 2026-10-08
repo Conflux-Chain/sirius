@@ -30,9 +30,7 @@ export const NETWORK_ID = (() => {
   return networkId;
 })();
 
-export const HIDE_IN_DOT_NET =
-  /.net$/.test(window.location.host) &&
-  localStorage.getItem(LOCALSTORAGE_KEYS_MAP.hideInDotNet) !== 'false';
+export const HIDE_IN_DOT_NET = true;
 
 export const IS_SHOW_BANNER = !HIDE_IN_DOT_NET;
 

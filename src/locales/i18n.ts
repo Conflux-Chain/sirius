@@ -66,6 +66,7 @@ export const i18n = i18next
         'zh-CN': ['zh'],
         default: ['en'],
       },
+      lng: 'zh-CN',
       debug:
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',

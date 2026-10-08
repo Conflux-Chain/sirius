@@ -249,7 +249,7 @@ export const ContractDetailPage = memo(() => {
             <div className="icons">
               <Copy address={address} />
               <Qrcode address={address} />
-              <DropdownWrapper overlay={menu} trigger={['click']}>
+              {/* <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
                   <img
@@ -257,7 +257,7 @@ export const ContractDetailPage = memo(() => {
                     alt={t(translations.general.address.more.title)}
                   />
                 </span>
-              </DropdownWrapper>
+              </DropdownWrapper> */}
               {isSpecialAddress(address) ? (
                 <WarningInfoWrapper>
                   <img src={warningInfo} alt="warning" />

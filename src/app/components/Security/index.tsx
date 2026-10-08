@@ -65,7 +65,7 @@ export const Security = React.memo(({ blockHash, epochNumber }: Props) => {
           width="67"
           height="10"
           mask="url(#mask)"
-          fill="#fff"
+          fill="#000"
         />
       </svg>
       <span className={`text`}>{text}</span>
@@ -102,14 +102,14 @@ const StyledSecurityWrapper = styled.span`
 
   &.finalized {
     .img {
-      background: linear-gradient(270deg, #267b54 0%, #7cd77b 100%);
+      background: linear-gradient(270deg, #59bf9c 0%, #7cd77b 100%);
 
       .last-circle {
         animation: none;
       }
     }
     .text {
-      color: #267b54;
+      color: #59bf9c;
     }
   }
   &.high {
