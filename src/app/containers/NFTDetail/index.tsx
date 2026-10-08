@@ -110,20 +110,23 @@ const DescriptionPanel = ({ data = '' }) => {
 
 const StyledTraitPanelWrapper = styled.div`
   .container {
-    border: 1px solid var(--theme-color-blue4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     padding: 1rem;
     text-align: center;
-    background-color: var(--theme-color-blue3);
+    background-color: #141414;
     height: 100%;
-  }
+    .ant-typography {
+      color: rgba(255, 255, 255, 0.5);
+    }
 
-  .type {
-    color: #fafafa;
-    font-weight: 500;
-    font-size: 12px;
-    margin-bottom: 12px;
-    width: 100%;
+    .type {
+      color: #fafafa;
+      font-weight: 500;
+      font-size: 12px;
+      margin-bottom: 12px;
+      width: 100%;
+    }
   }
 
   .value {
