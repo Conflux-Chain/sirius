@@ -16,7 +16,7 @@ import TokenBG from 'images/token/token-bg.png';
 import DownIcon from 'images/token/down.svg';
 import UpIcon from 'images/token/up.svg';
 import FlatIcon from 'images/token/flat.svg';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { formatAddress } from 'utils';
 import { Tag } from '@cfxjs/antd';
 import { ProjectInfo } from '../../components/ProjectInfo';
@@ -161,7 +161,10 @@ export const Basic = ({
       tokenAddress !== undefined ? (
         <>
           <CoreAddressContainer value={tokenAddress} />{' '}
-          <CopyButton copyText={formatAddress(tokenAddress)} />
+          <CopyButton
+            copyText={formatAddress(tokenAddress)}
+            color="#FFFFFF80"
+          />
         </>
       ) : (
         t(translations.general.security.notAvailable)

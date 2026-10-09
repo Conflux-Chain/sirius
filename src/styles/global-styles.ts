@@ -100,7 +100,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .sirius-card {
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
     background-color: transparent;
   }
 
@@ -142,13 +142,19 @@ export const GlobalStyle = createGlobalStyle`
     }
     .ant-table-tbody > tr:hover, .ant-table-tbody > tr:hover > td.ant-table-cell {
       background: rgba(255, 255, 255, 0.06);
+      .ant-table-cell {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    }
+    .ant-table-thead > tr > th {
+      color: rgba(255, 255, 255, 0.50);
     }
     .empty .text-\\#4b4b4b, .empty .text-\\#000 {
       color: #FAFAFA;
     }
   }
 
-  .ant-picker, .ant-input-affix-wrapper, .ant-input, .ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover, .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector, .ant-form-item-has-error .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector  {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-picker, .ant-input-affix-wrapper, .ant-input, .ant-form-item-has-error .ant-input:not(.ant-input-disabled), .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled), .ant-form-item-has-error .ant-input:not(.ant-input-disabled):hover, .ant-form-item-has-error .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover, .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector, .ant-form-item-has-error .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector  {
     background-color: #000;
     color: #FAFAFA;
   }
@@ -161,7 +167,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-box-shadow: 0 0 0 1000px #000 inset;
     caret-color: #fff;
   }
-  .ant-input-group-addon, .ant-picker, .ant-input-affix-wrapper, .ant-input, .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-input-group-addon, .ant-picker, .ant-input-affix-wrapper, .ant-input, .ant-input-group-addon .ant-select.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     border: 1px solid rgba(255, 255, 255, 0.10);
   }
   .ant-input-group-addon {
@@ -169,6 +175,19 @@ export const GlobalStyle = createGlobalStyle`
   }
   .ant-select-arrow {
     color: #FFFFFF80;
+  }
+  .ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused, .ant-select:hover .ant-select-selector, .ant-select-focused .ant-select-selector, .ant-input-affix-wrapper:hover, .ant-picker:hover, .ant-picker-focused {
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+    box-shadow: none;
+  }
+  .ant-picker-range .ant-picker-active-bar {
+    background: #141414;
+  }
+
+  .ant-table-footer {
+    .mb-\\[-1rem\\] {
+      margin-bottom: 0;
+    }
   }
 
   body {
@@ -336,6 +355,18 @@ export const GlobalStyle = createGlobalStyle`
     // hide abi warning in sirius-next trace view
     .mt-1\\.4286rem.text-\\#9b9eac {
       display: none;
+    }
+
+    // highcharts ui 
+    .highcharts-title {
+      color: #fafafa !important;
+      fill: #fafafa !important;
+    }
+    .highcharts-legend-item {
+      text {
+        color: rgba(255, 255, 255, 0.5) !important;
+        fill: rgba(255, 255, 255, 0.5) !important;
+      }
     }
   }
 
@@ -634,7 +665,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .ant-form-item-label > label {
-      color: #74798c;
+      color: rgba(255, 255, 255, 0.50);
     }
 
     .ant-select-selection-placeholder {

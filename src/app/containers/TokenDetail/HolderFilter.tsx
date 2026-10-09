@@ -11,7 +11,7 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { formatBalance } from '@cfxjs/sirius-next-common/dist/utils';
 import { CFX_TOKEN_TYPES } from 'utils/constants';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 

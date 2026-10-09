@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { QrcodeButton } from '../../components/QrcodeButton';
 import { IconButton } from './IconButton';
 import { useTranslation } from 'react-i18next';
@@ -90,14 +90,14 @@ const HeadAddressLineButton = styled.div`
   line-height: 12px;
   .address-line-icon {
     path {
-      fill: #737682;
+      fill: #fafafa;
     }
   }
   &:hover {
-    background-color: #63688a;
+    background-color: rgba(255, 255, 255, 0.1);
     .address-line-icon {
       path {
-        fill: #fff;
+        fill: #fafafa;
       }
     }
   }

@@ -110,7 +110,7 @@ export const Token2 = ({ row }) => {
                         ? `${tokenName} (${tokenSymbol})`
                         : formatAddress(address)
                     }
-                    maxWidth="180px"
+                    maxWidth="165px"
                   >
                     {formatString(`${tokenName} (${tokenSymbol})`, 36)}
                   </Text>
@@ -598,14 +598,14 @@ export const tokenId = {
   key: 'tokenId',
   render: (value, row) => {
     return (
-      <>
+      <TokenIdWrapper>
         {!isZeroAddress(formatAddress(row.to)) && (
           <NFTPreview contractAddress={row?.address} tokenId={value} />
         )}{' '}
         <Text tag="span" hoverValue={value}>
           <SpanWrap>{value || '-'}</SpanWrap>
         </Text>
-      </>
+      </TokenIdWrapper>
     );
   },
 };
@@ -794,6 +794,15 @@ const ThTipWrap = styled.span`
     width: 1.1429rem;
     height: 1.1429rem;
     margin-bottom: 0.2857rem;
+  }
+`;
+
+const TokenIdWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  > span {
+    flex-shrink: 0;
   }
 `;
 

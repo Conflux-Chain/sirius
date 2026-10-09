@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import Func from './Func';
 import { translations } from 'locales/i18n';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from '../StyledComponent';
 import { AbiItem } from '@cfxjs/sirius-next-common/dist/utils/sdk';
 
 export interface FuncDataItem {
@@ -121,9 +121,9 @@ const HeaderComp = styled.div`
   justify-content: space-between;
   align-items: center;
   line-height: 45px;
-  border-bottom: 1px solid #ebeced;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   .label {
-    color: #74798c;
+    color: rgba(255, 255, 255, 0.5);
   }
 `;
 const FuncHeaderComp = styled.div`
@@ -133,14 +133,19 @@ const FuncHeaderComp = styled.div`
   .signature {
     padding: 2px 14px;
     border-radius: 20px;
-    background-color: #fff;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #000;
     font-size: 14px;
     font-weight: 450;
     line-height: 22px;
+
+    color: #fafafa;
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    &:hover {
+      background-color: #141414;
+    }
   }
 `;
 const Container = styled.div`
@@ -149,6 +154,7 @@ const Container = styled.div`
     background-color: transparent;
     border: none;
     .panelContainer {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       .ant-collapse-header {
         color: #fafafa;
         font-size: 14px;
