@@ -15,7 +15,8 @@ import { RecoilRoot } from 'recoil';
 import { FluentConfluxProvider } from '@cfx-kit/react-utils/dist/AccountManagePlugins';
 import { registerWallet } from '@cfx-kit/react-utils/dist/AccountManage';
 import 'sanitize.css/sanitize.css';
-import '@cfxjs/antd/dist/@cfxjs/antd.css';
+// import '@cfxjs/antd/dist/@cfxjs/antd.css';
+import '@cfxjs/antd/dist/@cfxjs/antd.dark.css';
 import '@cfxjs/sirius-next-common/dist/uno.css';
 
 // Import root app

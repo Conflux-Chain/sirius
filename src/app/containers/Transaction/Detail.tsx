@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Spinner } from '@cfxjs/react-ui';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
@@ -820,14 +820,14 @@ const StyledCardWrapper = styled.div`
     }
     .value {
       margin: 0 0.1429rem;
-      color: #002257;
+      color: #60bbf9;
     }
     .type {
       margin: 0 0.1429rem;
     }
     .tokenId {
       margin: 0 0.1429rem;
-      color: #002257;
+      color: #60bbf9;
     }
     .batch {
       margin: 0 0.1429rem 0 1.1429rem;

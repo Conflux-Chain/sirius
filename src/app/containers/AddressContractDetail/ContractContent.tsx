@@ -9,7 +9,7 @@ import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import clsx from 'clsx';
@@ -172,7 +172,7 @@ const Code = ({ contractInfo }) => {
           readOnly
           ref={editor => editor && (editorListRef.current = [editor])}
           mode="solidity"
-          theme="tomorrow"
+          theme="tomorrow_night"
           name="UNIQUE_ID_OF_DIV_CODE"
           value={sourceCode}
           wrapEnabled={true}
@@ -206,7 +206,7 @@ const Code = ({ contractInfo }) => {
           readOnly
           ref={editor => editor && (editorListRef.current[i] = editor)}
           mode="solidity"
-          theme="tomorrow"
+          theme="tomorrow_night"
           name={`UNIQUE_ID_OF_DIV_CODE_${i}`}
           value={s.content}
           wrapEnabled={true}
@@ -382,7 +382,7 @@ const Code = ({ contractInfo }) => {
               value={abi}
               readOnly
               mode="json"
-              theme="tomorrow"
+              theme="tomorrow_night"
               name="UNIQUE_ID_OF_DIV_ABI"
               height="28rem"
               wrapEnabled={true}
@@ -535,7 +535,7 @@ const StyledContractContentCodeWrapper = styled.div`
   }
 
   .contract-code-verify-info {
-    border-bottom: 1px solid #ebeced;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 12px;
 
     .verify-info-item {
@@ -568,8 +568,8 @@ const StyledContractContentCodeWrapper = styled.div`
         background-color: #141414;
       }
     }
-    .ace-tomorrow,
-    .ace-tomorrow .ace_gutter {
+    .ace_editor,
+    .ace_editor .ace_gutter {
       background-color: #000;
     }
     .constructor-args {

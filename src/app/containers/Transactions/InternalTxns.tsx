@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { formatAddress } from 'utils';
 import styled from 'styled-components';
 import { useTxTrace } from '@cfxjs/sirius-next-common/dist/utils/hooks/useTxTrace';
@@ -128,8 +128,8 @@ const StyledContainer = styled.div`
     background: rgba(255, 255, 255, 0.06);
     color: #fafafa;
   }
-  .ace-tomorrow,
-  .ace-tomorrow .ace_gutter {
+  .ace_editor,
+  .ace_editor .ace_gutter {
     background-color: #000;
   }
   button.bg-\\#fff {
@@ -149,7 +149,7 @@ const StyledTipWrapper = styled.span`
   display: flex;
   align-items: center;
   height: 64px;
-  border-bottom: 1px solid #ebeced;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   .tip-title {
     flex: 1;
   }
