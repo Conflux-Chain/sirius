@@ -362,6 +362,43 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
 
+    // sirius-next IntValueFormatter ui
+    .border-\\#E8E9EA {
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    // sirius-next popover ui
+    .sirius-popover-container {
+      [data-part=arrow] {
+        [data-part=arrow-tip] {
+          background: #141414 !important;
+        }
+      }
+      .sirius-popover-content {
+        border-radius: 14px;
+        background: #141414;
+        box-shadow: 0 2px 2px -2px rgba(255, 255, 255, 0.50) inset, 0 -2px 2px -2px rgba(255, 255, 255, 0.70) inset, 0 0 0 1px rgba(0, 0, 0, 0.10) inset, -1px 0 0 0 rgba(0, 0, 0, 0.15), 1px 0 0 0 rgba(0, 0, 0, 0.15), 0 -1px 0 0 rgba(0, 0, 0, 0.07), 0 1px 0 0 rgba(0, 0, 0, 0.07), 0 18px 44px -14px rgba(0, 0, 0, 0.80);
+        backdrop-filter: blur(14px);
+        color: #fafafa;
+        .bg-\\[\\#fff\\] {
+          background: transparent;
+          border-radius: 8px;
+          color: #fafafa;
+          &:hover {
+            background: rgba(255, 255, 255, 0.06);
+          }
+        }
+        input.border-solid {
+          border-radius: 8px;
+          border-color: rgba(255, 255, 255, 0.10);
+          background: transparent;
+        }
+        input.focus\\:border-\\#1E3DE4:focus {
+          border-color: rgba(255, 255, 255, 0.10);
+        }
+      }
+    }
+
     // sirius-next contract create icon ui
     .flex-shrink-0 .relative .align-bottom.mb-\\[3px\\].w-\\[16px\\].h-\\[16px\\] {
       path {

@@ -5,7 +5,6 @@
  */
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import imgArray from 'images/two_array.png';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
@@ -13,8 +12,8 @@ import { ArrowDown } from '@cfxjs/sirius-next-common/dist/components/Icons';
 import {
   MaxDecimals,
   NumberType,
-  IntValueFormatter,
 } from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
+import { IntValueFormatter } from './IntValueFormatter';
 
 interface OutputParamsProps {
   output: object;
@@ -142,7 +141,7 @@ const OutputItem = ({ output, value }: OutputParamsProps) => {
     };
   }, [type, value, output, expand]);
   return (
-    <div>
+    <Wrapper>
       <Container>
         <span className="name text">
           <svg
@@ -175,9 +174,14 @@ const OutputItem = ({ output, value }: OutputParamsProps) => {
       {expand && (
         <IntValueFormatter maxDecimals={MaxDecimals[type]} value={value} />
       )}
-    </div>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  .text-\\#97a3b4 {
+    color: rgba(255, 255, 255, 0.5);
+  }
+`;
 const Container = styled.div`
   display: flex;
   align-items: center;
