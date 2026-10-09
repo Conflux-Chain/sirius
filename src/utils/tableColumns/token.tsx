@@ -780,7 +780,7 @@ const FromWrap = styled.div`
 const SpanWrap = styled.span`
   display: inline-block;
   text-overflow: ellipsis;
-  max-width: 120px;
+  max-width: 110px;
   overflow: hidden;
   vertical-align: bottom;
 `;
