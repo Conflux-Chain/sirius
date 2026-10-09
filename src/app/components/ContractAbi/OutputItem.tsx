@@ -145,7 +145,29 @@ const OutputItem = ({ output, value }: OutputParamsProps) => {
     <div>
       <Container>
         <span className="name text">
-          <img src={imgArray} alt="response params" className="icon" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            className="icon"
+          >
+            <path
+              d="M1.77778 10L5.77778 6L1.77778 2"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#FAFAFA"
+            />
+            <path
+              d="M6.22222 10L10.2222 6L6.22222 2"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#FAFAFA"
+            />
+          </svg>
           {returnName} <span className="type">{returnType}</span>
         </span>
         {valueComp}
@@ -162,11 +184,6 @@ const Container = styled.div`
   padding-left: 7px;
   margin: 8px 0;
   flex-wrap: wrap;
-  img.icon {
-    display: inline-block;
-    width: 10px;
-    margin-right: 3px;
-  }
   .text {
     color: #fafafa;
   }

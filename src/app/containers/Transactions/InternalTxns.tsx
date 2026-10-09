@@ -145,7 +145,7 @@ const StyledAddressContainer = styled.div`
 `;
 
 const StyledTipWrapper = styled.span`
-  color: #94a3b6;
+  color: rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   height: 64px;

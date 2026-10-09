@@ -767,7 +767,7 @@ export const Detail = ({
 };
 
 const GasFeeLabelWrapper = styled.span`
-  color: #74798c;
+  color: #ffffff80;
 `;
 
 const AttributeWrapper = styled.div`

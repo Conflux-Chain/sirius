@@ -15,7 +15,7 @@ import { Col, Pagination, Row, Tag } from '@cfxjs/antd';
 import { Spin } from '@cfxjs/sirius-next-common/dist/components/Spin';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { NFTPreview } from 'app/components/NFTPreview';
-import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
+import { Empty } from 'app/components/Empty';
 import { reqNFTBalance, reqNFTTokens } from 'utils/httpRequest';
 import qs from 'query-string';
 import { TABLE_LIST_LIMIT } from 'utils/constants';

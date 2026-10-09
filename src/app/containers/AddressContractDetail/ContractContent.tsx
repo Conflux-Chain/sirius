@@ -521,7 +521,7 @@ const StyledContractContentCodeWrapper = styled.div`
     .contract-code-similar-match-tip {
       font-size: 14px;
       font-weight: 450;
-      color: #74798c;
+      color: #ffffff80;
       line-height: 22px;
       display: flex;
       align-items: center;
