@@ -335,7 +335,7 @@ const StyledTagWrapper = styled.span`
     align-items: center;
     margin-right: 0.2143rem;
     border-radius: 0.7143rem;
-    background: #e8e9ea;
+    background: rgba(255, 255, 255, 0.1);
     padding: 0.0714rem 0.4286rem 0.0714rem 0.2143rem;
     border: none;
   }
