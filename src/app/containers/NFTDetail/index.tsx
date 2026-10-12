@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { Row, Col, Collapse, message, Typography } from '@cfxjs/antd';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { reqNFTDetail, reqToken, reqRefreshMetadata } from 'utils/httpRequest';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
@@ -19,7 +19,7 @@ import Button from '@cfxjs/sirius-next-common/dist/components/Button';
 import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
 import { formatTimeStamp, addIPFSGateway } from 'utils';
 
@@ -448,7 +448,7 @@ export function NFTDetail(props) {
                   <AceEditor
                     style={AceEditorStyle}
                     mode="json"
-                    theme="tomorrow"
+                    theme="tomorrow_night"
                     name="inputdata_json"
                     fontSize="1rem"
                     showGutter={false}
@@ -479,8 +479,8 @@ export function NFTDetail(props) {
 }
 
 const StyledWrapper = styled.div`
-  .ace-tomorrow,
-  .ace-tomorrow .ace_gutter {
+  .ace_editor,
+  .ace_editor .ace_gutter {
     background-color: #000;
   }
   .ant-collapse > .ant-collapse-item div.ant-collapse-header {

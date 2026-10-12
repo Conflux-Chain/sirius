@@ -9,7 +9,7 @@ import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 import { DEFAULT_VYPER_CONTRACT_NAME, SOLIDITY_CODE_FORMAT } from './constants';
 import { Remark } from '@cfxjs/sirius-next-common/dist/components/Remark';
 import { CoreAddressContainer } from '@cfxjs/sirius-next-common/dist/components/AddressContainer/CoreAddressContainer';
@@ -199,7 +199,7 @@ export const Step2: React.FC<{
           <AceEditor
             style={AceEditorStyle}
             mode="solidity"
-            theme="tomorrow"
+            theme="tomorrow_night"
             name="UNIQUE_ID_OF_DIV"
             setOptions={{
               wrap: true,

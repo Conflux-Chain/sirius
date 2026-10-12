@@ -247,6 +247,7 @@ export const ContractAbi = ({
 
 const StyledContractAbiWrapper = styled.div`
   margin-top: 15px;
+  color: rgba(255, 255, 255, 0.5);
 `;
 
 const StyledTipWrapper = styled.div`

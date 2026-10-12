@@ -11,7 +11,7 @@ import { AceEditor } from '@cfxjs/sirius-next-common/dist/components/AceEditor';
 import 'ace-builds/webpack-resolver';
 import 'ace-mode-solidity/build/remix-ide/mode-solidity';
 import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-tomorrow';
+import 'ace-builds/src-noconflict/theme-tomorrow_night';
 import { DappButton } from 'app/components/DappButton/Loadable';
 import { TXN_ACTION, CONTRACTS } from 'utils/constants';
 import { useMessages } from '@cfxjs/react-ui';
@@ -83,7 +83,7 @@ export const ABIVerification = () => {
         <AceEditor
           style={AceEditorStyle}
           mode="json"
-          theme="tomorrow"
+          theme="tomorrow_night"
           name="abi_json"
           setOptions={{
             wrap: true,

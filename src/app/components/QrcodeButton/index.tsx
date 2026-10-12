@@ -78,13 +78,13 @@ export const QrcodeButton = ({
             <QRCode size={108} value={value} level={'H'} />
           </QRCodeWrapper>
           <Title>{t(translations.general.qrcodeButton.scanQRCode)}</Title>
-          <AddressType>
-            {isAccountAddress(value)
-              ? t(translations.general.qrcodeButton.address)
-              : t(translations.general.qrcodeButton.contract)}
-            ：
-          </AddressType>
-          <AddressWrapper onClick={handleClose}>
+          <AddressWrapper>
+            <AddressType>
+              {isAccountAddress(value)
+                ? t(translations.general.qrcodeButton.address)
+                : t(translations.general.qrcodeButton.contract)}
+              ：
+            </AddressType>
             <CoreAddressContainer value={value} showIcon={false} link={false} />
           </AddressWrapper>
         </Modal.Content>
@@ -95,9 +95,16 @@ export const QrcodeButton = ({
 const QRCodeWrapper = styled.div`
   text-align: center;
   margin-top: 16px !important;
+  display: flex;
+  width: 120px;
+  height: 120px;
+  padding: 6px;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
 `;
 const AddressType = styled.span`
-  color: #a4a8b6;
+  color: rgba(255, 255, 255, 0.5);
   text-align: center;
 `;
 const Title = styled.div`
@@ -105,14 +112,18 @@ const Title = styled.div`
   text-align: center;
   margin: 8px 0 8px 0;
 `;
-const AddressWrapper = styled.span`
-  span {
-    color: #1a42e4 !important;
-    cursor: pointer;
-  }
+const AddressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  div {
+    span {
+      color: #60bbf9 !important;
+      cursor: pointer;
+    }
 
-  span:after {
-    color: #1a42e4 !important;
-    cursor: pointer;
+    span:after {
+      color: #60bbf9 !important;
+      cursor: pointer;
+    }
   }
 `;

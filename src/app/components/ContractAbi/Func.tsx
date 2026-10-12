@@ -32,7 +32,7 @@ import { trackEvent } from 'utils/ga';
 import { ScanEvent } from 'utils/gaConstants';
 import JSONBigint from 'json-bigint';
 import InputItem from './InputItem';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from '../StyledComponent';
 import { ErrorDecode } from '@cfxjs/sirius-next-common/dist/components/OutputData/ErrorDecode';
 import {
   Error,

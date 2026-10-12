@@ -12,7 +12,7 @@ import NotActiveIcon from 'images/not-active.svg';
 import ElectedIcon from 'images/elected.svg';
 import NotElectedIcon from 'images/not-elected.svg';
 import styled from 'styled-components';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/InfoIconWithTooltip';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { fromDripToCfx } from '@cfxjs/sirius-next-common/dist/utils';

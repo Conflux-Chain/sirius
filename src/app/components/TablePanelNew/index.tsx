@@ -11,7 +11,7 @@ import { toThousands, formatNumber } from 'utils';
 import { useBreakpoint } from '@cfxjs/sirius-next-common/dist/utils/media';
 import styled from 'styled-components';
 import clsx from 'clsx';
-import { Empty } from '@cfxjs/sirius-next-common/dist/components/Empty';
+import { Empty } from 'app/components/Empty';
 import { invert } from 'lodash';
 
 type SortOrder = 'descend' | 'ascend' | null;

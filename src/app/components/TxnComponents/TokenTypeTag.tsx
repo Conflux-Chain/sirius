@@ -25,16 +25,5 @@ const StyledTokenTypeTag = styled.span`
   border-radius: 0.7143rem;
   padding: 0 0.3571rem;
   white-space: nowrap;
-
-  &.crc20 {
-    background-color: rgb(104, 206, 252);
-  }
-
-  &.crc721 {
-    background-color: rgb(44, 72, 198);
-  }
-
-  &.crc1155 {
-    background-color: rgb(97, 152, 249);
-  }
+  background-color: #60bbf9;
 `;

@@ -6,12 +6,10 @@ import { translations } from 'locales/i18n';
 import { checkInt, checkUint, checkBytes } from '../../../utils';
 import { valueCoder } from 'js-conflux-sdk/src/contract/abi';
 import { DecimalsSelect } from '@cfxjs/sirius-next-common/dist/components/DecimalsSelect';
-import {
-  MaxDecimals,
-  IntValueFormatter,
-} from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
+import { MaxDecimals } from '@cfxjs/sirius-next-common/dist/components/ContractAbi';
 import { Add } from '@cfxjs/sirius-next-common/dist/components/Icons';
 import BigNumber from 'bignumber.js';
+import { IntValueFormatter } from './IntValueFormatter';
 
 interface ParamInputProps {
   value?: object;
@@ -154,7 +152,7 @@ const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Container>
         {type.startsWith('tuple') ? getTupleFormat(input) : null}
         <Input
@@ -197,9 +195,14 @@ const ParamInput = ({ value, onChange, type, input = {}, expand }: Props) => {
           />
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  .text-\\#97a3b4 {
+    color: rgba(255, 255, 255, 0.5);
+  }
+`;
 const Container = styled.div`
   padding-left: 7px;
   margin: 8px 0;

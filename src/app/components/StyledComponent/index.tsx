@@ -1,3 +1,4 @@
+import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
 import styled from 'styled-components';
 
 /**
@@ -47,4 +48,13 @@ export const StyledTitle160F1327 = styled.span`
   flex-shrink: 0;
   display: flex;
   align-items: center;
+`;
+
+export const StyledCopyButton = styled(CopyButton)`
+  color: #ffffff80;
+  fill: #ffffff80;
+  path {
+    color: #ffffff80;
+    fill: #ffffff80;
+  }
 `;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { Card } from '@cfxjs/sirius-next-common/dist/components/Card';
 import { Description } from '@cfxjs/sirius-next-common/dist/components/Description';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { toThousands, formatTimeStamp } from 'utils';
 import { reqPoSAccountOverview } from 'utils/httpRequest';

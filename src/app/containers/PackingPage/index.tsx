@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { translations } from 'locales/i18n';
 import { useParams } from 'react-router-dom';
-import { CopyButton } from '@cfxjs/sirius-next-common/dist/components/CopyButton';
+import { StyledCopyButton as CopyButton } from 'app/components/StyledComponent';
 import imgPacking from 'images/home/packing.svg';
 import { IS_SHOW_BANNER } from 'utils/constants';
 

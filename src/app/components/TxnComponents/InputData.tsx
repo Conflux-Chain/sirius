@@ -102,8 +102,8 @@ const StyledInputDataWrapper = styled.div`
     background: rgba(255, 255, 255, 0.06);
     color: #fafafa;
   }
-  .ace-tomorrow,
-  .ace-tomorrow .ace_gutter {
+  .ace_editor,
+  .ace_editor .ace_gutter {
     background-color: #000;
   }
   .abi-warning {
