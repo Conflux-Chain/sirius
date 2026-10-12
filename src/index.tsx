@@ -28,6 +28,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import 'locales/i18n';
 import ENV_CONFIG, { IS_MAINNET, IS_TESTNET } from 'env';
 
+console.log('loaded');
+
 registerWallet(FluentConfluxProvider);
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
