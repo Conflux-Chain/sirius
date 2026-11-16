@@ -291,7 +291,7 @@ export const ProjectInfo = React.memo(
                 <Trans
                   i18nKey="general.table.token.projectInfo.modal.uncmc"
                   components={[
-                    null,
+                    <React.Fragment />,
                     <Link
                       href={
                         lang === 'en'

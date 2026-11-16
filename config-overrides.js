@@ -125,6 +125,8 @@ module.exports = function (config, mode) {
               /[\\/]node_modules[\\/]ox[\\/]/,
               path.resolve(__dirname, 'node_modules/@msgpack/msgpack'),
               path.resolve(__dirname, 'node_modules/es-toolkit'),
+              path.resolve(__dirname, 'node_modules/query-string'),
+              path.resolve(__dirname, 'node_modules/filter-obj'),
             ],
             use: {
               loader: 'babel-loader',
@@ -136,6 +138,7 @@ module.exports = function (config, mode) {
                       modules: false,
                       include: [
                         'transform-numeric-separator',
+                        'transform-unicode-sets-regex',
                         'transform-class-properties',
                         'transform-private-methods',
                         'transform-export-namespace-from',
@@ -195,6 +198,8 @@ module.exports = function (config, mode) {
             /[\\/]node_modules[\\/]ox[\\/]/,
             path.resolve(__dirname, 'node_modules/@msgpack/msgpack'),
             path.resolve(__dirname, 'node_modules/es-toolkit'),
+            path.resolve(__dirname, 'node_modules/query-string'),
+            path.resolve(__dirname, 'node_modules/filter-obj'),
           ],
           use: {
             loader: 'babel-loader',
@@ -206,6 +211,7 @@ module.exports = function (config, mode) {
                     modules: false,
                     include: [
                       'transform-numeric-separator',
+                      'transform-unicode-sets-regex',
                       'transform-class-properties',
                       'transform-private-methods',
                       'transform-export-namespace-from',
