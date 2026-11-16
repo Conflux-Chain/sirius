@@ -18,7 +18,7 @@
     "@testing-library/react": "10.0.1",
     "@types/fontfaceobserver": "0.0.6",
     "@types/jest": "25.1.4",
-    "@types/node": "13.9.3",
+    "@types/node": "22.20.5",
     "@types/numeral": "0.0.28",
     "@types/react": "18.2.58",
     "@types/react-dom": "18.2.19",
@@ -114,7 +114,7 @@
   ],
   "engines": {
     "npm": ">=8.6.0",
-    "node": ">=18.0.0"
+    "node": ">=22.12.0 <23"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
@@ -184,6 +184,7 @@
   "resolutions": {
     "@types/react": "18.2.58",
     "@types/react-dom": "18.2.19",
+    "@walletconnect/sign-client": "2.26.0",
     "lodash": "4.17.21"
   }
 }

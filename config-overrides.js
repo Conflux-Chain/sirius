@@ -115,14 +115,16 @@ module.exports = function (config, mode) {
         rules: [
           ...config.module.rules,
           {
-            test: /\.js?$/,
+            test: /\.m?js$/,
             include: [
               path.resolve(__dirname, 'node_modules/@cfxjs/use-wallet-react'),
               path.resolve(__dirname, 'node_modules/@cfx-kit/react-utils'),
               path.resolve(__dirname, 'node_modules/@cfx-kit/dapp-utils'),
               path.resolve(__dirname, 'node_modules/viem'),
               path.resolve(__dirname, 'node_modules/cive'),
-              path.resolve(__dirname, 'node_modules/ox'),
+              /[\\/]node_modules[\\/]ox[\\/]/,
+              path.resolve(__dirname, 'node_modules/@msgpack/msgpack'),
+              path.resolve(__dirname, 'node_modules/es-toolkit'),
             ],
             use: {
               loader: 'babel-loader',
@@ -183,14 +185,16 @@ module.exports = function (config, mode) {
       rules: [
         ...config.module.rules,
         {
-          test: /\.js?$/,
+          test: /\.m?js$/,
           include: [
             path.resolve(__dirname, 'node_modules/@cfxjs/use-wallet-react'),
             path.resolve(__dirname, 'node_modules/@cfx-kit/react-utils'),
             path.resolve(__dirname, 'node_modules/@cfx-kit/dapp-utils'),
             path.resolve(__dirname, 'node_modules/viem'),
             path.resolve(__dirname, 'node_modules/cive'),
-            path.resolve(__dirname, 'node_modules/ox'),
+            /[\\/]node_modules[\\/]ox[\\/]/,
+            path.resolve(__dirname, 'node_modules/@msgpack/msgpack'),
+            path.resolve(__dirname, 'node_modules/es-toolkit'),
           ],
           use: {
             loader: 'babel-loader',

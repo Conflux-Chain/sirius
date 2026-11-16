@@ -36,12 +36,14 @@ Hi! We are really excited that you are interested in contributing to Conflux. Be
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 8+**, and [yarn](https://yarnpkg.com/en/docs/install).
+You will need [Node.js](https://nodejs.org) **22.x (>=22.12.0)** and [Yarn Classic](https://classic.yarnpkg.com/en/docs/install) **1.22.x**. The `.nvmrc`, Docker build and CircleCI jobs use Node.js **22.23.4**.
 
 After cloning the repo, run:
 
 ```bash
-$ yarn # install the dependencies of the project
+$ nvm install
+$ nvm use
+$ yarn install --frozen-lockfile
 ```
 
 Please use yarn instead of npm.
