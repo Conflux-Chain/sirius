@@ -244,3 +244,13 @@ module.exports = function (config, mode) {
     },
   });
 };
+
+// react-app-rewired concatenates package.json Jest arrays with CRA defaults.
+// Replace the ignore rule here so the default cannot block these ESM packages.
+module.exports.jest = config => ({
+  ...config,
+  transformIgnorePatterns: [
+    '[/\\\\]node_modules[/\\\\](?!(?:query-string|filter-obj|split-on-first|@cfxjs[/\\\\]sirius-next-common)[/\\\\]).+\\.(js|jsx|mjs|cjs|ts|tsx)$',
+    '^.+\\.module\\.(css|sass|scss)$',
+  ],
+});
