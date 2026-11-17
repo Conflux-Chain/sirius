@@ -19,9 +19,9 @@ import { InfoIconWithTooltip } from '@cfxjs/sirius-next-common/dist/components/I
 import { Select } from '@cfxjs/sirius-next-common/dist/components/Select';
 import queryString from 'query-string';
 import { AuthConnectStatus, usePortal } from 'utils/hooks/usePortal';
-import { abi as ERC20ABI } from 'utils/contract/ERC20.json';
-import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
-import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
+import ERC20Artifact from 'utils/contract/ERC20.json';
+import ERC721Artifact from 'utils/contract/ERC721.json';
+import ERC1155Artifact from 'utils/contract/ERC1155.json';
 import { HIDE_IN_DOT_NET, NETWORK_ID } from 'utils/constants';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import BigNumber from 'bignumber.js';
@@ -30,6 +30,10 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import ENV_CONFIG from 'env';
+
+const { abi: ERC20ABI } = ERC20Artifact;
+const { abi: ERC721ABI } = ERC721Artifact;
+const { abi: ERC1155ABI } = ERC1155Artifact;
 
 const getContract = (address: string, type: string) => {
   const CFX = new SDK.Conflux({

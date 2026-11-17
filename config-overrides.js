@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const smp = new SpeedMeasurePlugin({
@@ -7,46 +8,54 @@ const smp = new SpeedMeasurePlugin({
   loaderTopFiles: 10,
 });
 
-// Helper function to configure cssnano to preserve empty CSS variables
+// Preserve empty CSS custom properties used by the shared UI styles.
 function configureCssNano(minimizer) {
-  if (!minimizer || !minimizer.options) {
-    return minimizer;
-  }
-  // For OptimizeCssAssetsWebpackPlugin
-  if (minimizer.options.cssProcessorPluginOptions) {
-    const options = minimizer.options.cssProcessorPluginOptions;
+  if (minimizer?.constructor.name === 'CssMinimizerPlugin') {
+    const options = minimizer.options.minimizer.options;
+    options.preset = options.preset || ['default'];
     if (Array.isArray(options.preset)) {
-      if (!options.preset[1]) {
-        options.preset[1] = {};
-      }
-      // Preserve empty declarations
-      options.preset[1].discardEmpty = false;
-      options.preset[1].normalizeDeclarations = false;
-      options.preset[1].discardUnknown = false;
-      // Add postcss-custom-properties to prevent removal
-      if (!options.plugins) {
-        options.plugins = [];
-      }
-    }
-  }
-  // For CssMinimizerPlugin (newer versions of react-scripts)
-  if (minimizer.options.minimizerOptions) {
-    minimizer.options.minimizerOptions.preset = minimizer.options
-      .minimizerOptions.preset || ['default'];
-    const preset = minimizer.options.minimizerOptions.preset;
-    if (Array.isArray(preset)) {
-      if (!preset[1]) {
-        preset[1] = {};
-      }
-      preset[1].discardEmpty = false;
-      preset[1].normalizeDeclarations = false;
-      preset[1].discardUnknown = false;
+      options.preset[1] = {
+        ...options.preset[1],
+        discardEmpty: false,
+      };
     }
   }
   return minimizer;
 }
 
 module.exports = function (config, mode) {
+  // Webpack 5 resolves absolute package aliases before their package metadata.
+  const moduleScope = config.resolve.plugins.find(
+    plugin => plugin.constructor.name === 'ModuleScopePlugin',
+  );
+  if (moduleScope) {
+    moduleScope.allowedPaths.push(
+      path.resolve(__dirname, 'node_modules') + path.sep,
+    );
+  }
+
+  // Webpack 5 no longer injects Node's browser shims used by the Conflux SDK.
+  config.resolve.fallback = {
+    ...config.resolve.fallback,
+    crypto: require.resolve('crypto-browserify'),
+    stream: require.resolve('stream-browserify'),
+    vm: require.resolve('vm-browserify'),
+    buffer: require.resolve('buffer/'),
+  };
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser.js',
+    }),
+  );
+
+  // Shared ESM packages still publish extensionless imports.
+  config.module.rules.push({
+    test: /\.m?js$/,
+    include: /[\\/]node_modules[\\/]/,
+    resolve: { fullySpecified: false },
+  });
+
   if (mode === 'production') {
     return smp.wrap({
       ...config,
@@ -55,7 +64,6 @@ module.exports = function (config, mode) {
         splitChunks: {
           chunks: 'all',
           minSize: 1,
-          maxSize: 0,
           maxAsyncRequests: 30,
           maxInitialRequests: 3,
           cacheGroups: {

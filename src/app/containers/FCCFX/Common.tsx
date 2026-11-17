@@ -5,11 +5,15 @@ import imgInfo from 'images/info.svg';
 import styled from 'styled-components';
 import { NETWORK_ID } from 'utils/constants';
 import { BigNumber as IBigNumber } from 'bignumber.js';
-import { abi as fcExchangeInterestABI } from 'utils/contract/FCExchangeInterest.json';
-import { abi as fcExchangeABI } from 'utils/contract/FCExchange.json';
-import { abi as fcABI } from 'utils/contract/FC.json';
+import FCExchangeInterestArtifact from 'utils/contract/FCExchangeInterest.json';
+import FCExchangeArtifact from 'utils/contract/FCExchange.json';
+import FCArtifact from 'utils/contract/FC.json';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import ENV_CONFIG from 'env';
+
+const { abi: fcExchangeInterestABI } = FCExchangeInterestArtifact;
+const { abi: fcExchangeABI } = FCExchangeArtifact;
+const { abi: fcABI } = FCArtifact;
 
 export interface AccountInfoType {
   fcSigned: IBigNumber;

@@ -5,14 +5,17 @@ import { translations } from 'locales/i18n';
 import styled from 'styled-components';
 import { isBase32Address, isCurrentNetworkAddress } from 'utils';
 import { usePortal } from 'utils/hooks/usePortal';
-import { abi as ERC1155ABI } from 'utils/contract/ERC1155.json';
-import { abi as ERC721ABI } from 'utils/contract/ERC721.json';
+import ERC1155Artifact from 'utils/contract/ERC1155.json';
+import ERC721Artifact from 'utils/contract/ERC721.json';
 import { TXN_ACTION, NETWORK_ID } from 'utils/constants';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { useGlobalData } from 'utils/hooks/useGlobal';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 import ENV_CONFIG from 'env';
+
+const { abi: ERC1155ABI } = ERC1155Artifact;
+const { abi: ERC721ABI } = ERC721Artifact;
 
 export const TransferModal = ({
   id = '',

@@ -9,8 +9,8 @@ import { Text } from '@cfxjs/sirius-next-common/dist/components/Text';
 import { SkeletonContainer } from '@cfxjs/sirius-next-common/dist/components/SkeletonContainer';
 import { CONTRACTS, CFX } from 'utils/constants';
 import ViewMore from 'images/contract-address/viewmore.png';
-import { abi as governanceAbi } from 'utils/contract/governance.json';
-import { abi as stakingAbi } from 'utils/contract/staking.json';
+import governanceArtifact from 'utils/contract/governance.json';
+import stakingArtifact from 'utils/contract/staking.json';
 import { Tooltip } from '@cfxjs/sirius-next-common/dist/components/Tooltip';
 import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 import { getPosAccountInfo } from 'utils/rpcRequest';
@@ -30,10 +30,8 @@ import {
 } from '@cfxjs/sirius-next-common/dist/utils';
 import { publishRequestError } from '@cfxjs/sirius-next-common/dist/utils/pubsub';
 
-const stakingContract = CFX.Contract({
-  abi: stakingAbi,
-  address: CONTRACTS.staking,
-});
+const { abi: governanceAbi } = governanceArtifact;
+const { abi: stakingAbi } = stakingArtifact;
 
 export function AddressMetadata({ address, accountInfo }) {
   const { t } = useTranslation();
@@ -51,6 +49,12 @@ export function AddressMetadata({ address, accountInfo }) {
   const [checkPosLoading, setCheckPosLoading] = useState(false);
   const [isPoSActived, setIsPoSActived] = useState(false);
 
+  const stakingContract = useMemo(() => {
+    return CFX.Contract({
+      abi: stakingAbi,
+      address: CONTRACTS.staking,
+    });
+  }, []);
   const governanceContract = useMemo(() => {
     return CFX.Contract({
       abi: governanceAbi,
@@ -122,7 +126,7 @@ export function AddressMetadata({ address, accountInfo }) {
           setCurrentVotingRights(0);
         });
     }
-  }, [address, accountInfo.address, governanceContract]);
+  }, [address, accountInfo.address, governanceContract, stakingContract]);
 
   const posMetadata = () => {
     return (

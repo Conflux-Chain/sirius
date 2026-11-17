@@ -6,21 +6,12 @@ import path from 'path';
 import nodePlop from 'node-plop';
 
 import { BACKUPFILE_EXTENSION } from '../generators/plopfile';
-import { ComponentProptNames } from '../generators/component';
-import { ContainerProptNames } from '../generators/container';
-import { PlopGenerator as PG } from 'node-plop';
-
-interface PlopGenerator extends PG {
-  runActions?: <T extends string | number>(
-    props: { [P in T]: any },
-  ) => Promise<{ changes: []; failures: [] }>;
-}
+import type { PlopGenerator } from 'node-plop';
 
 process.chdir(path.join(__dirname, '../generators'));
 
-const plop = nodePlop('./plopfile.ts');
-const componentGen = plop.getGenerator('component') as PlopGenerator;
-const containerGen = plop.getGenerator('container') as PlopGenerator;
+let componentGen: PlopGenerator;
+let containerGen: PlopGenerator;
 
 const NAMESPACE = 'RbGenerated';
 
@@ -28,7 +19,7 @@ const componentsPath = path.join(process.cwd(), '../../src/app/components');
 const containersPath = path.join(process.cwd(), '../../src/app/containers');
 
 function runLinting() {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     shell.exec(
       `npm run lint`,
       {
@@ -40,7 +31,7 @@ function runLinting() {
 }
 
 function checkTypescript() {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     shell.exec(
       `npm run checkTs`,
       {
@@ -63,8 +54,8 @@ async function handleResult({
   changes,
   failures,
 }: {
-  changes: [];
-  failures: [];
+  changes: unknown[];
+  failures: unknown[];
 }) {
   return new Promise((resolve, reject) => {
     if (Array.isArray(failures) && failures.length > 0) {
@@ -117,7 +108,7 @@ async function generateComponent() {
     const values = allCombinations[i];
     const name = `${componentNameBase}${i}`;
     const p = componentGen
-      .runActions<ComponentProptNames>({
+      .runActions({
         ComponentName: name,
         wantMemo: values[0],
         wantStyledComponents: values[1],
@@ -151,7 +142,7 @@ async function generateContainer() {
     const values = allCombinations[i];
     const name = `${containerNameBase}${i}`;
     await containerGen
-      .runActions<ContainerProptNames>({
+      .runActions({
         ComponentName: name,
         wantMemo: true,
         wantHeaders: values[0],
@@ -180,6 +171,9 @@ async function generateContainer() {
  * Run
  */
 (async function () {
+  const plop = await nodePlop(path.resolve('plopfile.ts'));
+  componentGen = plop.getGenerator('component') as PlopGenerator;
+  containerGen = plop.getGenerator('container') as PlopGenerator;
   const componentCleanup = await generateComponent().catch(reason => {
     reportErrors(reason);
     return [];

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import { usePortal } from 'utils/hooks/usePortal';
-import { abi } from 'utils/contract/wcfx.json';
-import { TXN_ACTION, CONTRACTS, NETWORK_ID } from 'utils/constants';
+import wcfxArtifact from 'utils/contract/wcfx.json';
+import { TXN_ACTION, CONTRACTS, CFX } from 'utils/constants';
 import { isSafeNumberOrNumericStringInput, formatNumber } from 'utils';
 import { useTxnHistory } from 'utils/hooks/useTxnHistory';
 import { trackEvent } from 'utils/ga';
@@ -17,11 +17,9 @@ import { useTranslation } from 'react-i18next';
 import { translations } from 'locales/i18n';
 import { media } from '@cfxjs/sirius-next-common/dist/utils/media';
 import { TxnStatusModal } from 'app/components/ConnectWallet/TxnStatusModal';
-import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
 
 import imgSwapArrowDown from 'images/swap-arrow-down.png';
 import imgInfo from 'images/info.svg';
-import ENV_CONFIG from 'env';
 
 // token decimal
 const MAX_DECIMALS = 18;
@@ -191,16 +189,12 @@ export function Swap() {
   } = usePortal();
   const cfx = useBalance();
   const { addRecord } = useTxnHistory();
-
-  const CFX = new SDK.Conflux({
-    url: ENV_CONFIG.ENV_RPC_SERVER,
-    networkId: NETWORK_ID,
-  });
-
-  const contract = CFX.Contract({
-    address: CONTRACTS.wcfx,
-    abi,
-  });
+  const wcfxContract = useMemo(() => {
+    return CFX.Contract({
+      abi: wcfxArtifact.abi,
+      address: CONTRACTS.wcfx,
+    });
+  }, []);
 
   const [wcfx, setWcfx] = useState('0');
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -228,7 +222,7 @@ export function Swap() {
     if (account) {
       // @todo, the interval maybe not good, need to change
       const interval = setInterval(() => {
-        contract.balanceOf(account).then(data => {
+        wcfxContract.balanceOf(account).then(data => {
           setWcfx(data.toString());
         });
       }, 2000);
@@ -237,7 +231,7 @@ export function Swap() {
         clearInterval(interval);
       };
     }
-  }, [account, authConnectStatus, contract, CFX]);
+  }, [account, authConnectStatus, wcfxContract]);
 
   const handleInputChange = value => {
     setFromToken({
@@ -283,7 +277,7 @@ export function Swap() {
     });
     if (fromToken.type === 'cfx') {
       const code = TXN_ACTION.swapCFXToWCFX;
-      const { data, to } = contract.deposit();
+      const { data, to } = wcfxContract.deposit();
       // deposit
       sendTransaction({
         value: hexValue,
@@ -335,7 +329,7 @@ export function Swap() {
         });
     } else if (fromToken.type === 'wcfx') {
       const code = TXN_ACTION.swapWCFXToCFX;
-      const { data, to } = contract.withdraw(value);
+      const { data, to } = wcfxContract.withdraw(value);
       // withdraw
       sendTransaction({
         data,
