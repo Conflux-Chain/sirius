@@ -5,8 +5,7 @@
  * code.
  */
 
-// import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
+import './polyfills';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -72,7 +71,7 @@ if (module.hot) {
 
 render(App);
 
-const currentVersion = 'v2.17.0';
+const currentVersion = 'v3.0.0';
 
 const brand = `
 ┌─┐┌─┐┌┐┌┌─┐┬  ┬ ┬─┐ ┬  ┌─┐┌─┐┌─┐┌┐┌ ${currentVersion}

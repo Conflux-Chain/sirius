@@ -6,12 +6,7 @@ const prettierOptions = JSON.parse(
 );
 
 module.exports = {
-  extends: [
-    'react-app',
-    'prettier',
-    'prettier/react',
-    'prettier/@typescript-eslint',
-  ],
+  extends: ['react-app', 'prettier'],
   plugins: ['prettier', 'import'],
   rules: {
     'prettier/prettier': ['error', prettierOptions],
@@ -23,6 +18,11 @@ module.exports = {
     ],
   },
   overrides: [
+    {
+      files: ['**/*.d.ts'],
+      // TypeScript module augmentation uses side-effect React imports.
+      rules: { 'react/no-typos': 'off' },
+    },
     {
       files: ['**/*.ts?(x)'],
       rules: { 'prettier/prettier': ['warn', prettierOptions] },

@@ -38,7 +38,7 @@ export function TxNote() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [globalData, setGlobalData] = useGlobalData();
   const [search, setSearch] = useState(() => {
-    return qs.parse(s).search || '';
+    return String(qs.parse(s).search || '');
   });
   const [data, setData] = useState({
     hash: '',
@@ -212,7 +212,7 @@ export function TxNote() {
     delete: t(translations.general.delete),
   };
 
-  const queryKey = (qs.parse(s).search as string) || '';
+  const queryKey = String(qs.parse(s).search || '');
 
   return (
     <>

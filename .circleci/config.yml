@@ -15,7 +15,7 @@ workflows:
 jobs:
   test:
     docker:
-      - image: cimg/node:18.0
+      - image: cimg/node:22.23.4
 
     working_directory: ~/repo
 
@@ -24,14 +24,14 @@ jobs:
 
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v3-node22-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn --frozen-lockfile --ignore-engines
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          key: v3-node22-dependencies-{{ checksum "yarn.lock" }}
 
       - run: yarn run lint
       - run: yarn test -w 1 --coverage
@@ -39,7 +39,7 @@ jobs:
 
   build:
     docker:
-      - image: cimg/node:18.0
+      - image: cimg/node:22.23.4
 
     working_directory: ~/repo
 
@@ -48,14 +48,14 @@ jobs:
 
       - restore_cache:
           keys:
-            - v2-dependencies-{{ checksum "yarn.lock" }}
+            - v3-node22-dependencies-{{ checksum "yarn.lock" }}
 
-      - run: yarn --frozen-lockfile --ignore-engines
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
-          key: v2-dependencies-{{ checksum "yarn.lock" }}
+          key: v3-node22-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
           name: Build Project
@@ -68,7 +68,7 @@ jobs:
 
   release:
     docker:
-      - image: cimg/node:18.0
+      - image: cimg/node:22.23.4
 
     working_directory: ~/repo
 
