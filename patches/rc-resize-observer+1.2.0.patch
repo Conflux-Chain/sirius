@@ -1,0 +1,96 @@
+diff --git a/node_modules/rc-resize-observer/es/SingleObserver/index.js b/node_modules/rc-resize-observer/es/SingleObserver/index.js
+index 6d40f96..a3cb5be 100644
+--- a/node_modules/rc-resize-observer/es/SingleObserver/index.js
++++ b/node_modules/rc-resize-observer/es/SingleObserver/index.js
+@@ -28,6 +28,7 @@ export default function SingleObserver(props) {
+     return composeRef(originRef, elementRef);
+   }, [originRef, elementRef]); // =========================== Observe ============================
+ 
++  var resizeFrameRef = React.useRef(null);
+   var propsRef = React.useRef(props);
+   propsRef.current = props; // Handler
+ 
+@@ -72,9 +73,15 @@ export default function SingleObserver(props) {
+       onCollectionResize === null || onCollectionResize === void 0 ? void 0 : onCollectionResize(sizeInfo, target, data);
+ 
+       if (onResize) {
+-        // defer the callback but not defer to next frame
+-        Promise.resolve().then(function () {
+-          onResize(sizeInfo, target);
++        // Layout updates must happen outside the current ResizeObserver delivery.
++        if (resizeFrameRef.current !== null) {
++          cancelAnimationFrame(resizeFrameRef.current);
++        }
++        resizeFrameRef.current = requestAnimationFrame(function () {
++          resizeFrameRef.current = null;
++          if (!propsRef.current.disabled && propsRef.current.onResize) {
++            propsRef.current.onResize(sizeInfo, target);
++          }
+         });
+       }
+     }
+@@ -84,10 +91,16 @@ export default function SingleObserver(props) {
+     var currentElement = findDOMNode(elementRef.current) || findDOMNode(wrapperRef.current);
+ 
+     if (currentElement && !disabled) {
++      // A cancelled notification must be reported again after re-observing.
++      sizeRef.current = { width: -1, height: -1, offsetWidth: -1, offsetHeight: -1 };
+       observe(currentElement, onInternalResize);
+     }
+ 
+     return function () {
++      if (resizeFrameRef.current !== null) {
++        cancelAnimationFrame(resizeFrameRef.current);
++        resizeFrameRef.current = null;
++      }
+       return unobserve(currentElement, onInternalResize);
+     };
+   }, [elementRef.current, disabled]); // ============================ Render ============================
+diff --git a/node_modules/rc-resize-observer/lib/SingleObserver/index.js b/node_modules/rc-resize-observer/lib/SingleObserver/index.js
+index c3fd57a..8c97b60 100644
+--- a/node_modules/rc-resize-observer/lib/SingleObserver/index.js
++++ b/node_modules/rc-resize-observer/lib/SingleObserver/index.js
+@@ -46,6 +46,7 @@ function SingleObserver(props) {
+     return (0, _ref.composeRef)(originRef, elementRef);
+   }, [originRef, elementRef]); // =========================== Observe ============================
+ 
++  var resizeFrameRef = React.useRef(null);
+   var propsRef = React.useRef(props);
+   propsRef.current = props; // Handler
+ 
+@@ -88,9 +89,15 @@ function SingleObserver(props) {
+       onCollectionResize === null || onCollectionResize === void 0 ? void 0 : onCollectionResize(sizeInfo, target, data);
+ 
+       if (onResize) {
+-        // defer the callback but not defer to next frame
+-        Promise.resolve().then(function () {
+-          onResize(sizeInfo, target);
++        // Layout updates must happen outside the current ResizeObserver delivery.
++        if (resizeFrameRef.current !== null) {
++          cancelAnimationFrame(resizeFrameRef.current);
++        }
++        resizeFrameRef.current = requestAnimationFrame(function () {
++          resizeFrameRef.current = null;
++          if (!propsRef.current.disabled && propsRef.current.onResize) {
++            propsRef.current.onResize(sizeInfo, target);
++          }
+         });
+       }
+     }
+@@ -100,10 +107,16 @@ function SingleObserver(props) {
+     var currentElement = (0, _findDOMNode.default)(elementRef.current) || (0, _findDOMNode.default)(wrapperRef.current);
+ 
+     if (currentElement && !disabled) {
++      // A cancelled notification must be reported again after re-observing.
++      sizeRef.current = { width: -1, height: -1, offsetWidth: -1, offsetHeight: -1 };
+       (0, _observerUtil.observe)(currentElement, onInternalResize);
+     }
+ 
+     return function () {
++      if (resizeFrameRef.current !== null) {
++        cancelAnimationFrame(resizeFrameRef.current);
++        resizeFrameRef.current = null;
++      }
+       return (0, _observerUtil.unobserve)(currentElement, onInternalResize);
+     };
+   }, [elementRef.current, disabled]); // ============================ Render ============================
