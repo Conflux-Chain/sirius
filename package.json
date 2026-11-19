@@ -78,7 +78,7 @@
     "react-use": "15.3.4",
     "recoil": "0.0.10",
     "sanitize.css": "11.0.0",
-    "serve": "11.3.0",
+    "serve": "14.2.8",
     "shelljs": "0.8.5",
     "stream-browserify": "3.0.0",
     "styled-components": "6.1.8",
