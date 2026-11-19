@@ -189,6 +189,8 @@
     }
   },
   "resolutions": {
+    "**/viem/ws": "8.23.0",
+    "**/@ethersproject/providers/ws": "8.23.0",
     "**/styled-jsx/loader-utils": "1.4.2",
     "@types/react": "18.2.58",
     "@types/react-dom": "18.2.19",
