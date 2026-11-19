@@ -178,7 +178,7 @@
     "patch-package": "8.0.1",
     "postinstall-postinstall": "2.1.0",
     "react-app-rewired": "2.2.1",
-    "semantic-release": "17.2.3",
+    "semantic-release": "24.2.9",
     "speed-measure-webpack-plugin": "1.5.0",
     "tsx": "4.21.0",
     "typescript": "^5.4.2"
