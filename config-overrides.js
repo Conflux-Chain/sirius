@@ -262,11 +262,17 @@ module.exports.devServer = createConfig => (proxy, allowedHost) => {
   delete config.headers; // Use same-origin access for development resources.
   // Keep the trailing slash CRA strips from the middleware path (GHSA-g84c-rxfj-3j2c).
   config.devMiddleware.publicPath = require('react-scripts/config/paths').publicUrlOrPath;
-  config.setupMiddlewares = middlewares => {
+  config.setupMiddlewares = (middlewares, devServer) => {
     const { Router } = require('express');
     const before = Router();
     const after = Router();
-    onBeforeSetupMiddleware({ app: before });
+    onBeforeSetupMiddleware({
+      app: before,
+      // CRA reads `_stats` on each overlay request; WDS 5 updates `stats` on rebuild.
+      get _stats() {
+        return devServer.stats;
+      },
+    });
     onAfterSetupMiddleware({ app: after });
     // Let v5 check the request before CRA's source-map and proxy handlers run.
     const index = middlewares.findIndex(
