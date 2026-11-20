@@ -245,6 +245,13 @@ module.exports = function (config, mode) {
   });
 };
 
+module.exports.devServer = createConfig => (proxy, allowedHost) => {
+  const config = createConfig(proxy, allowedHost);
+  // Keep the trailing slash CRA strips from the middleware path (GHSA-g84c-rxfj-3j2c).
+  config.devMiddleware.publicPath = require('react-scripts/config/paths').publicUrlOrPath;
+  return config;
+};
+
 // react-app-rewired concatenates package.json Jest arrays with CRA defaults.
 // Replace the ignore rule here so the default cannot block these ESM packages.
 module.exports.jest = config => ({
