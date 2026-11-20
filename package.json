@@ -11,9 +11,6 @@
     "@cfxjs/sirius-next-i18n": "0.3.2",
     "@conflux-dev/conflux-address-js": "1.3.16",
     "@ensdomains/eth-ens-namehash": "2.0.15",
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/bignumber": "^5.7.0",
-    "@ethersproject/units": "^5.7.0",
     "@google/model-viewer": "2.1.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "10.0.1",
@@ -47,18 +44,15 @@
     "lodash": "4.18.1",
     "md5.js": "1.3.5",
     "node-plop": "0.32.3",
-    "pako": "2.0.2",
     "plop": "4.0.5",
     "prettier": "2.0.1",
     "process": "0.11.10",
     "qrcode.react": "1.0.0",
     "query-string": "10.0.0",
     "react": "18.2.0",
-    "react-ace": "9.1.3",
     "react-app-polyfill": "3.0.0",
     "react-component-benchmark": "1.0.0",
     "react-dom": "18.2.0",
-    "react-google-recaptcha": "2.1.0",
     "react-helmet-async": "1.0.6",
     "react-i18next": "11.18.6",
     "react-router-dom": "5.1.2",
@@ -73,8 +67,7 @@
     "styled-components": "6.4.3",
     "swr": "2.2.5",
     "vm-browserify": "1.1.2",
-    "webfontloader": "1.6.28",
-    "zustand": "4.1.4"
+    "webfontloader": "1.6.28"
   },
   "scripts": {
     "postinstall": "patch-package --error-on-fail",
@@ -190,7 +183,6 @@
     "**/styled-jsx/loader-utils": "1.4.2",
     "@types/react": "18.2.58",
     "@types/react-dom": "18.2.19",
-    "@walletconnect/sign-client": "2.26.0",
-    "lodash": "4.18.1"
+    "@walletconnect/sign-client": "2.26.0"
   }
 }
