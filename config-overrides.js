@@ -245,6 +245,48 @@ module.exports = function (config, mode) {
   });
 };
 
+module.exports.devServer = createConfig => (proxy, allowedHost) => {
+  const {
+    https,
+    onBeforeSetupMiddleware,
+    onAfterSetupMiddleware,
+    ...config
+  } = createConfig(proxy, allowedHost);
+  config.server =
+    typeof https === 'object'
+      ? { type: 'https', options: https }
+      : https
+      ? 'https'
+      : 'http';
+  config.allowedHosts = 'auto';
+  delete config.headers; // Use same-origin access for development resources.
+  // Keep the trailing slash CRA strips from the middleware path (GHSA-g84c-rxfj-3j2c).
+  config.devMiddleware.publicPath = require('react-scripts/config/paths').publicUrlOrPath;
+  config.setupMiddlewares = (middlewares, devServer) => {
+    const { Router } = require('express');
+    const before = Router();
+    const after = Router();
+    onBeforeSetupMiddleware({
+      app: before,
+      // CRA reads `_stats` on each overlay request; WDS 5 updates `stats` on rebuild.
+      get _stats() {
+        return devServer.stats;
+      },
+    });
+    onAfterSetupMiddleware({ app: after });
+    // Let v5 check the request before CRA's source-map and proxy handlers run.
+    const index = middlewares.findIndex(
+      entry => entry.name === 'webpack-dev-middleware',
+    );
+    if (index < 0)
+      throw new Error('Cannot locate webpack-dev-middleware for CRA setup');
+    middlewares.splice(index, 0, { name: 'cra-before', middleware: before });
+    middlewares.push({ name: 'cra-after', middleware: after });
+    return middlewares;
+  };
+  return config;
+};
+
 // react-app-rewired concatenates package.json Jest arrays with CRA defaults.
 // Replace the ignore rule here so the default cannot block these ESM packages.
 module.exports.jest = config => ({
