@@ -168,7 +168,7 @@
     "@types/lodash": "4.17.0",
     "babel-loader": "8.4.1",
     "cz-conventional-changelog": "3.3.0",
-    "http-proxy-middleware": "1.0.5",
+    "http-proxy-middleware": "2.0.12",
     "jest-fetch-mock": "3.0.3",
     "patch-package": "8.0.1",
     "postcss": "8.5.33",
