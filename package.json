@@ -188,6 +188,7 @@
     }
   },
   "resolutions": {
+    "**/http-proxy-agent/@tootallnate/once": "2.0.1",
     "**/css-minimizer-webpack-plugin/serialize-javascript": "7.1.4",
     "**/rollup-plugin-terser/serialize-javascript": "7.1.4",
     "react-scripts/@svgr/webpack": "6.5.1",
