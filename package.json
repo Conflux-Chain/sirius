@@ -188,6 +188,8 @@
     }
   },
   "resolutions": {
+    "**/css-minimizer-webpack-plugin/serialize-javascript": "7.1.4",
+    "**/rollup-plugin-terser/serialize-javascript": "7.1.4",
     "react-scripts/@svgr/webpack": "6.5.1",
     "react-scripts/resolve-url-loader": "5.0.0",
     "**/viem/ws": "8.23.0",
