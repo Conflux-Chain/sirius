@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "4.7.0",
     "@cfx-kit/dapp-utils": "0.2.15",
     "@cfx-kit/react-utils": "0.0.65",
     "@cfxjs/antd": "1.0.6",
@@ -30,6 +31,7 @@
     "clsx": "1.1.1",
     "core-js": "3.22.5",
     "crypto-browserify": "3.12.1",
+    "dayjs": "1.8.30",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-prettier": "3.1.2",
     "highcharts": "11.4.9",
@@ -43,8 +45,10 @@
     "lint-staged": "10.0.8",
     "lodash": "4.18.1",
     "md5.js": "1.3.5",
+    "moment": "2.31.0",
     "prettier": "2.0.1",
     "process": "0.11.10",
+    "prop-types": "15.7.2",
     "qrcode.react": "1.0.0",
     "query-string": "10.0.0",
     "react": "18.2.0",
@@ -53,6 +57,7 @@
     "react-dom": "18.2.0",
     "react-helmet-async": "1.0.6",
     "react-i18next": "11.18.6",
+    "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
     "react-scripts": "5.0.1",
     "react-test-renderer": "16.13.0",
@@ -132,6 +137,8 @@
     "@types/lodash": "4.17.0",
     "babel-loader": "8.4.1",
     "cz-conventional-changelog": "3.3.0",
+    "destr": "2.0.3",
+    "express": "4.22.3",
     "http-proxy-middleware": "2.0.12",
     "jest-fetch-mock": "3.0.3",
     "patch-package": "8.0.1",
@@ -139,11 +146,13 @@
     "postcss-styled-syntax": "0.7.4",
     "postinstall-postinstall": "2.1.0",
     "react-app-rewired": "2.2.1",
+    "source-map-loader": "3.0.2",
     "speed-measure-webpack-plugin": "1.5.0",
     "stylelint": "16.26.1",
     "stylelint-config-recommended": "17.0.0",
     "tsx": "4.23.15",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "webpack": "5.112.2"
   },
   "config": {
     "commitizen": {
