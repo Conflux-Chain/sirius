@@ -24,6 +24,31 @@ function configureCssNano(minimizer) {
 }
 
 module.exports = function (config, mode) {
+  // Rebuild cached modules when our loader overrides change, as CRA does for its own config.
+  config.cache.buildDependencies.config.push(__filename);
+  // These vendor bundles reference missing sources or contain a generated map URL in a string.
+  const sourceMapRule = config.module.rules.find(
+    rule => rule.loader === require.resolve('source-map-loader'),
+  );
+  if (sourceMapRule) {
+    sourceMapRule.exclude = [
+      sourceMapRule.exclude,
+      /[\\/]@conflux-dev[\\/]conflux-address-js[\\/]node_modules[\\/]jsbi[\\/]dist[\\/]jsbi-umd\.js$/,
+      /[\\/]@cfxjs[\\/]antd[\\/]dist[\\/]@cfxjs[\\/]antd\.css$/,
+      /[\\/]ace-builds[\\/]src-noconflict[\\/]worker-coffee\.js$/,
+    ];
+  }
+
+  // The network logos are used as image URLs. Emit the originals without generating JSX.
+  config.module.rules
+    .find(rule => rule.oneOf)
+    .oneOf.unshift({
+      include: ['logo.svg', 'logo-testnet.svg'].map(name =>
+        path.resolve(__dirname, 'src/images/core-space', name),
+      ),
+      type: 'asset/resource',
+    });
+
   // Webpack 5 resolves absolute package aliases before their package metadata.
   const moduleScope = config.resolve.plugins.find(
     plugin => plugin.constructor.name === 'ModuleScopePlugin',

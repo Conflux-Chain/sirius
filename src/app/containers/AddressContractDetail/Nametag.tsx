@@ -13,17 +13,11 @@ import { StyledLabelWrapper } from './layouts';
 const Nametag = ({ address }) => {
   const { t } = useTranslation();
   const nametags = useNametag([address]);
-  const nametag = {
-    ...nametags[address],
-    labels: nametags[address]?.labels || [],
-  };
-
-  const { label: labelOfNametag /* icon: iconOfNametag */ } = useMemo(
-    () =>
-      nametag
-        ? getLabelInfo(nametag.nameTag, 'nametag')
-        : { label: '', icon: '' },
-    [nametag],
+  const nametag = nametags[address];
+  const nameTag = nametag?.nameTag;
+  const { label: labelOfNametag } = useMemo(
+    () => getLabelInfo(nameTag, 'nametag'),
+    [nameTag],
   );
 
   let tag = (
@@ -71,9 +65,10 @@ const Nametag = ({ address }) => {
         </Tooltip>
       )}
 
-      {nametag?.labels.map(label => (
+      {nametag?.labels?.map(label => (
         <StyledLabelWrapper
-          show={!!nametag?.labels.length}
+          key={label}
+          show
           color={nametag?.caution ? '#E15C56' : ''}
           backgroundColor={nametag?.caution ? '#FBEBEB' : ''}
           bordered={!!nametag?.caution}

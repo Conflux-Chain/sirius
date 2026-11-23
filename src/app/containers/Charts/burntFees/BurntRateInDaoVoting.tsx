@@ -15,7 +15,7 @@ export function BurntRateInDaoVoting({ preview = false }: ChildProps) {
         const data1: any = [];
         const data2: any = [];
 
-        data?.list.map(d => {
+        data?.list.forEach(d => {
           let t = d.timestamp * 1000;
           data1.push([t, Number(d.baseFeeBurntRate)]);
           data2.push([t, Number(d.storageBurntRate)]);

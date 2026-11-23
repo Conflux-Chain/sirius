@@ -42,18 +42,6 @@ const AceEditorStyle = {
   margin: '0.3571rem 0',
 };
 
-interface Props {
-  type: string;
-  address: string;
-  decimals: number;
-}
-
-interface Query {
-  accountAddress?: string;
-  transactionHash?: string;
-  tokenId?: string;
-}
-
 interface StringAttributes {
   trait_type: string;
   value: string;

@@ -13,24 +13,24 @@ import { Link } from '@cfxjs/sirius-next-common/dist/components/Link';
 
 export type HeaderLinkTitle = ReactNode | Array<ReactNode> | false;
 
-export interface HeaderLink {
+export interface HeaderLinkItem {
   title: HeaderLinkTitle;
   href?: string;
   name?: string;
   className?: string;
   onClick?: MouseEventHandler;
-  children?: HeaderLink[];
-  isMatchedFn?: (link: Partial<HeaderLink>) => boolean;
+  children?: HeaderLinkItem[];
+  isMatchedFn?: (link: Partial<HeaderLinkItem>) => boolean;
   matched?: boolean;
   afterClick?: VoidFunction;
   plain?: boolean;
   vertical?: boolean;
 }
 
-export type HeaderLinks = HeaderLink[];
+export type HeaderLinks = HeaderLinkItem[];
 
 export function genParseLinkFn(links: HeaderLinks, level = 0) {
-  function parseLink(link: HeaderLink, idx: number) {
+  function parseLink(link: HeaderLinkItem, idx: number) {
     const {
       title,
       href,
