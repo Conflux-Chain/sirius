@@ -1,6 +1,8 @@
 // Google Analytics gtag version API
 // https://developers.google.com/analytics/devguides/collection/gtagjs
 
+import { matchesDomain } from './hostname';
+
 declare global {
   interface Window {
     gtag: any;
@@ -14,9 +16,10 @@ export const devTargetId = 'G-VCXQ7FY6EV';
 // TODO userId bind portal address
 
 export const getTrackId = () => {
-  return window.location.hostname.includes('confluxscan.org')
+  const { hostname } = window.location;
+  return matchesDomain(hostname, 'confluxscan.org')
     ? prodTargetId
-    : window.location.hostname.includes('confluxnetwork.org')
+    : matchesDomain(hostname, 'confluxnetwork.org')
     ? testTargetId
     : devTargetId;
 };

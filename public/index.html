@@ -51,8 +51,11 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', window.location.hostname.indexOf('confluxscan.org')>-1 ? 'G-35DCFZ7J24'
-      : window.location.hostname.indexOf('confluxnetwork.org')>-1
+    function matchesDomain(hostname, domain) {
+      return hostname === domain || hostname.endsWith('.' + domain);
+    }
+    gtag('config', matchesDomain(window.location.hostname, 'confluxscan.org') ? 'G-35DCFZ7J24'
+      : matchesDomain(window.location.hostname, 'confluxnetwork.org')
         ? 'G-E9KQ6RYSLH'
         : 'G-NNJ4C9C743'
     );
